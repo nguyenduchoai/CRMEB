@@ -55,6 +55,7 @@ APP_DEBUG = true
 
 [APP]
 DEFAULT_TIMEZONE = Asia/Shanghai
+APP_KEY = <khóa riêng, sinh bằng: openssl rand -hex 32>
 
 [DATABASE]
 TYPE = mysql
@@ -84,6 +85,8 @@ SELECT = 0 #Cơ sở dữ liệu
 [QUEUE]
 QUEUE_NAME = xxxx #Tiền tố hàng đợi
 ~~~
+`APP_KEY` là khóa ký JWT, bắt buộc phải là chuỗi ngẫu nhiên riêng cho từng bản cài (thiếu dòng này thì JWT dùng khóa mặc định `default` mà ai cũng biết). Các tính năng tắt sẵn và cách bật: xem mục "Cấu hình bảo mật khi triển khai" trong `README.md` ở thư mục gốc repo.
+
 3.Sửa quyền thư mục (hệ thống linux) thành 777
 /crmeb
 /template
