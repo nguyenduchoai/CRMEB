@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "地址管理",
+  "navigationBarTitleText": "Quản lý địa chỉ",
   "usingComponents": {
     "authorize": "/components/Authorize",
     "home": "/components/home/index"

@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "商品评价",
+  "navigationBarTitleText": "Đánh giá sản phẩm",
   "usingComponents": {
     "authorize": "/components/Authorize"
   }

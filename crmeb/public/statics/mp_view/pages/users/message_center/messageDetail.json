@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "消息详情",
+  "navigationBarTitleText": "Chi tiết tin nhắn",
   "usingComponents": {
     "home": "/components/home/index"
   }

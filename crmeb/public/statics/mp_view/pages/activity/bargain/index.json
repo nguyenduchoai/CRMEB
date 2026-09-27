@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "砍价记录",
+  "navigationBarTitleText": "Lịch sử săn giảm giá",
   "usingComponents": {
     "count-down": "/components/countDown/index",
     "loading": "/components/Loading/index",

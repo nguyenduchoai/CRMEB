@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "退货列表",
+  "navigationBarTitleText": "Danh sách trả hàng",
   "usingComponents": {
     "home": "/components/home/index",
     "empty-page": "/components/emptyPage",

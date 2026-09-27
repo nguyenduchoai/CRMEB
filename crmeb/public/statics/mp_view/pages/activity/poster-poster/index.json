@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "砍价海报",
+  "navigationBarTitleText": "Poster săn giảm giá",
   "usingComponents": {
     "zb-code": "/components/zb-code/zb-code"
   }

@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "添加新发票",
+  "navigationBarTitleText": "Thêm hóa đơn mới",
   "usingComponents": {
     "home": "/components/home/index"
   }

@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "订单详情",
+  "navigationBarTitleText": "Chi tiết đơn hàng",
   "usingComponents": {
     "price-change": "/pages/admin/components/PriceChange/index"
   }

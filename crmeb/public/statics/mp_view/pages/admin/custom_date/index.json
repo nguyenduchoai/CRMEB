@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "选择日期",
+  "navigationBarTitleText": "Chọn ngày",
   "usingComponents": {
     "uni-calendar": "/pages/admin/components/uni-calendar/uni-calendar"
   }
