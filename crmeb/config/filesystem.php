@@ -10,6 +10,9 @@
 // +----------------------------------------------------------------------
 use think\facade\Env;
 
+// Env::get() tự đổi true/false/on/off thành kiểu bool, các giá trị đó không được coi là mật khẩu
+$password = Env::get('filesystem.password', '');
+
 return [
     'default' => Env::get('filesystem.driver', 'public'),
     'disks'   => [
@@ -30,6 +33,6 @@ return [
         ],
         // Các thông tin cấu hình ổ đĩa khác
     ],
-    //Mật khẩu phát triển hệ thống
-    'password' => ''
+    //Mật khẩu phát triển hệ thống (trình sửa file online). Để trống = tắt; chỉ đặt qua [FILESYSTEM] PASSWORD trong .env, không ghi vào đây
+    'password' => is_string($password) ? $password : ''
 ];

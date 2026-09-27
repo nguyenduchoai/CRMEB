@@ -248,6 +248,13 @@ switch ($step) {
                 exit;
             $arr = array();
 
+            //Khóa ký JWT riêng cho bản cài này (không dùng khóa mặc định công khai); kiểm tra trước khi đụng tới cơ sở dữ liệu
+            $appKey = create_app_key();
+            if ($appKey === '') {
+                $arr['msg'] = 'Không tạo được APP_KEY ngẫu nhiên: máy chủ không có nguồn số ngẫu nhiên an toàn (random_bytes/openssl)!';
+                exit(json_encode($arr));
+            }
+
             $dbHost = trim($_POST['dbhost']);
             $_POST['dbport'] = $_POST['dbport'] ?: '3306';
             $dbName = strtolower(trim($_POST['dbname']));
@@ -376,6 +383,7 @@ switch ($step) {
 
             //Đọc file cấu hình, và thay thế bằng dữ liệu cấu hình thực tế 1
             $strConfig = file_get_contents(SITE_DIR . 'install/' . $configFile);
+            $strConfig = str_replace('#APP_KEY#', $appKey, $strConfig);
             $strConfig = str_replace('#DB_HOST#', $dbHost, $strConfig);
             $strConfig = str_replace('#DB_NAME#', $dbName, $strConfig);
             $strConfig = str_replace('#DB_USER#', $dbUser, $strConfig);
@@ -600,6 +608,26 @@ function sp_random_string($len = 8)
         $output .= $chars[mt_rand(0, $charsLen)];
     }
     return $output;
+}
+
+/**
+ * Sinh APP_KEY ngẫu nhiên (64 ký tự hex từ 32 byte ngẫu nhiên an toàn)
+ * @return string Rỗng nếu máy chủ không có nguồn số ngẫu nhiên an toàn
+ */
+function create_app_key()
+{
+    try {
+        return bin2hex(random_bytes(32));
+    } catch (Throwable $e) {
+    }
+    if (function_exists('openssl_random_pseudo_bytes')) {
+        $strong = false;
+        $bytes = openssl_random_pseudo_bytes(32, $strong);
+        if ($bytes !== false && $strong) {
+            return bin2hex($bytes);
+        }
+    }
+    return '';
 }
 
 // Xóa thư mục theo kiểu đệ quy

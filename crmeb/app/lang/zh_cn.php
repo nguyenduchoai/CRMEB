@@ -1260,4 +1260,7 @@ return [
     '此账号已被封禁，无法操作' => '此账号已被封禁，无法操作',
     '个人模版数已达上限，上限25个' => '个人模版数已达上限，上限25个',
     '请检查小程序所属类目' => '请检查小程序所属类目',
+    '在线文件编辑器已关闭，如需使用，请在 .env 文件的 [FILESYSTEM] 中设置 PASSWORD' => '在线文件编辑器已关闭，如需使用，请在 .env 文件的 [FILESYSTEM] 中设置 PASSWORD',
+    'CRUD 代码生成器已关闭，如需使用，请将 .env 文件 [APP] 中的 CRUD_MAKE 设置为 true' => 'CRUD 代码生成器已关闭，如需使用，请将 .env 文件 [APP] 中的 CRUD_MAKE 设置为 true',
+    '在线升级已关闭，如需使用，请将 .env 文件 [UPGRADE] 中的 ONLINE_ENABLE 设置为 true' => '在线升级已关闭，如需使用，请将 .env 文件 [UPGRADE] 中的 ONLINE_ENABLE 设置为 true',
 ];

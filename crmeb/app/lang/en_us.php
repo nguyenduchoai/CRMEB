@@ -1260,4 +1260,7 @@ return [
     'Tài khoản này đã bị khóa, không thể thao tác' => "This account has been banned and cannot be operated",
     'Số lượng mẫu cá nhân đã đạt giới hạn, tối đa 25 mẫu' => "The number of personal templates has reached the upper limit, the upper limit is 25",
     'Vui lòng kiểm tra danh mục của Mini Program' => "Please check the category of the applet",
+    'Trình sửa file online đang tắt, nếu cần dùng, vui lòng đặt mục PASSWORD trong phần [FILESYSTEM] của tệp .env' => "The online file editor is disabled. To use it, set PASSWORD in the [FILESYSTEM] section of the .env file",
+    'Bộ sinh mã CRUD đang tắt, nếu cần dùng, vui lòng đặt mục CRUD_MAKE trong phần [APP] của tệp .env thành true' => "The CRUD code generator is disabled. To use it, set CRUD_MAKE to true in the [APP] section of the .env file",
+    'Nâng cấp trực tuyến đang tắt, nếu cần dùng, vui lòng đặt mục ONLINE_ENABLE trong phần [UPGRADE] của tệp .env thành true' => "Online upgrade is disabled. To use it, set ONLINE_ENABLE to true in the [UPGRADE] section of the .env file",
 ];

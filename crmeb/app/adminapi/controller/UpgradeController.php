@@ -386,8 +386,14 @@ class UpgradeController
     public function setEnv()
     {
         $unique = uniqid();
+        //Giữ khóa ký JWT hiện tại, chỉ sinh khóa mới khi đang trống hoặc là khóa mặc định công khai
+        $appKey = (string)Env::get('app.app_key', '');
+        if (in_array($appKey, ['', 'crmeb', 'default'], true)) {
+            $appKey = bin2hex(random_bytes(32));
+        }
         //Đọc file cấu hình, và thay thế bằng dữ liệu cấu hình thực tế 1
         $strConfig = file_get_contents(root_path() . 'public/install/.env');
+        $strConfig = str_replace('#APP_KEY#', $appKey, $strConfig);
         $strConfig = str_replace('#DB_HOST#', Env::get('DATABASE.HOSTNAME', ''), $strConfig);
         $strConfig = str_replace('#DB_NAME#', Env::get('DATABASE.DATABASE', ''), $strConfig);
         $strConfig = str_replace('#DB_USER#', Env::get('DATABASE.USERNAME', ''), $strConfig);

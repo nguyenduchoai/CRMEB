@@ -462,7 +462,7 @@ class SystemCrud extends AuthController
         if ($pwd == '') {
             return app('json')->fail('Vui lòng nhập mật khẩu quản lý tệp');
         }
-        if (config('filesystem.password') != $pwd) {
+        if (!is_string($pwd) || !hash_equals((string)config('filesystem.password'), $pwd)) {
             return app('json')->fail('Mật khẩu quản lý tệp không đúng');
         }
 

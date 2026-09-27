@@ -22,6 +22,7 @@ use crmeb\services\FileService;
 use crmeb\services\HttpService;
 use crmeb\services\CacheService;
 use crmeb\utils\fileVerification;
+use crmeb\utils\FeatureSwitch;
 use crmeb\exceptions\AdminException;
 use app\dao\system\upgrade\UpgradeLogDao;
 
@@ -75,7 +76,8 @@ class UpgradeServices extends BaseServices
             'version' => implode('.', $recVersion)
         ];
 
-        if (!CacheService::get('upgrade_auth_token')) {
+        //Nâng cấp trực tuyến đang tắt thì không đăng nhập vào upgrade.crmeb.net (trang nâng cấp thủ công vẫn dùng được khi không có mạng ra ngoài)
+        if (FeatureSwitch::enabled(FeatureSwitch::ONLINE_UPGRADE) && !CacheService::get('upgrade_auth_token')) {
             $this->getAuth();
         }
     }
@@ -125,6 +127,7 @@ class UpgradeServices extends BaseServices
      */
     public function getAuth()
     {
+        FeatureSwitch::check(FeatureSwitch::ONLINE_UPGRADE);
         $this->getSign($this->timeStamp);
         $result = HttpService::postRequest(self::LOGIN_URL, $this->requestData);
         if (!$result) {
@@ -255,6 +258,7 @@ class UpgradeServices extends BaseServices
      */
     public function packageDownload(string $packageKey): bool
     {
+        FeatureSwitch::check(FeatureSwitch::ONLINE_UPGRADE);
         $token = md5(time());
 
         //Kiểm tra dung lượng cơ sở dữ liệu
@@ -311,6 +315,7 @@ class UpgradeServices extends BaseServices
      */
     public function download(string $seq, string $url, string $downloadPath, string $fileName, int $timeout = 300)
     {
+        FeatureSwitch::check(FeatureSwitch::ONLINE_UPGRADE);
         ini_set('memory_limit', '-1');
 
         $filePath = $downloadPath . DS . $fileName;
@@ -1900,7 +1905,9 @@ class UpgradeServices extends BaseServices
                 if ($current >= $total) {
                     $step = 3;
                     $progress = 90;
-                    $failedCount = count(array_filter($sqlLogs, fn($log) => $log['status'] === 'failed'));
+                    $failedCount = count(array_filter($sqlLogs, function ($log) {
+                        return $log['status'] === 'failed';
+                    }));
                     $stepDetails['sql'] = $failedCount > 0
                         ? "Thực thi SQL hoàn tất ({$failedCount} mục thất bại)"
                         : 'Thực thi SQL hoàn tất ✓';
