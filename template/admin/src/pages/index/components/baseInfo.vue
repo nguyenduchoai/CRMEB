@@ -9,9 +9,9 @@
         <div>
           <div class="number">{{ item.today }}</div>
           <div class="ivu-pt-8" style="height: 42px">
-            <span>昨日 {{ item.yesterday }}</span>
+            <span>Hôm qua {{ item.yesterday }}</span>
             <span class="ivu-mr">
-              日环比 {{ Number(item.today_ratio) }}%
+              So với hôm qua {{ Number(item.today_ratio) }}%
               <i
                 class="iconColor"
                 :class="[
@@ -54,7 +54,7 @@ export default {
     };
   },
   methods: {
-    // 统计
+    // Thống kê
     getStatistics() {
       headerApi()
         .then(async (res) => {

@@ -11,7 +11,7 @@ class LockService
      * @param $fn
      * @param int $ex
      * @return mixed
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/03/01
      */

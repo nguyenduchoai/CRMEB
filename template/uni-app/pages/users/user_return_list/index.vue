@@ -15,7 +15,7 @@
 				<view class='iconfont icon-daituihuo1 powder' v-if="item.refund_type==4"></view>
 				<view class='iconfont icon-tuikuanzhong powder' v-if="item.refund_type==5"></view>
 				<view class='iconfont icon-yituikuan' v-if="item.refund_type==6"></view>
-				<view class='orderNum'>{{$t(`订单号`)}}：{{item.order_id}}</view>
+				<view class='orderNum'>{{$t(`Mã đơn hàng`)}}：{{item.order_id}}</view>
 				<view class='item acea-row row-between-wrapper' v-for="(items,index) in item.cart_info" :key="index">
 					<view class='pictrue'>
 						<image :src='items.productInfo.attrInfo?items.productInfo.attrInfo.image:items.productInfo.image'>
@@ -33,7 +33,7 @@
 							{{$t(`￥`)}}{{items.productInfo.attrInfo?items.productInfo.attrInfo.price:items.productInfo.price}}</view>
 					</view>
 				</view>
-				<view class='totalSum'>{{$t(`共`)}} {{item.refund_num || 0}} {{$t(`件商品，总金额`)}} <text
+				<view class='totalSum'>{{$t(`Tổng`)}} {{item.refund_num || 0}} {{$t(`sản phẩm, thành tiền`)}} <text
 						class='font-color price'>{{$t(`￥`)}}{{item.refund_price}}</text></view>
 			</view>
 		</view>
@@ -41,7 +41,7 @@
 			<text class='loading iconfont icon-jiazai' :hidden='loading==false'></text>{{loadTitle}}
 		</view>
 		<view v-if="orderList.length == 0  && !loading">
-			<emptyPage :title="$t(`暂无退款订单~`)"></emptyPage>
+			<emptyPage :title="$t(`Chưa có đơn hoàn tiền~`)"></emptyPage>
 		</view>
 		<!-- #ifdef MP -->
 		<!-- <authorize @onLoadFun="onLoadFun" :isAuto="isAuto" :isShowAuth="isShowAuth" @authColse="authColse"></authorize> -->
@@ -82,32 +82,32 @@
 				type: 0,
 				loading: false,
 				loadend: false,
-				loadTitle: this.$t(`加载更多`), //提示语
-				orderList: [], //订单数组
-				orderStatus: -3, //订单状态
+				loadTitle: this.$t(`Tải thêm`), //Câu thông báo
+				orderList: [], //Mảng đơn hàng
+				orderStatus: -3, //Trạng thái đơn hàng
 				page: 1,
 				limit: 20,
-				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false, //是否隐藏授权
+				isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+				isShowAuth: false, //Có ẩn ủy quyền hay không
 				tabsList: [{
 					key: 0,
-					name: this.$t(`全部`)
+					name: this.$t(`Tất cả`)
 				},
 				{
 					key: 1,
-					name: this.$t(`申请中`)
+					name: this.$t(`Đang xử lý`)
 				},
 				// {
 				// 	key: 2,
-				// 	name: '待退货'
+				// 	name: 'Chờ trả hàng'
 				// }, 
 				// {
 				// 	key: 3,
-				// 	name: '退款中'
+				// 	name: 'Đang hoàn tiền'
 				// }, 
 				{
 					key: 2,
-					name: this.$t(`已退款`)
+					name: this.$t(`Đã hoàn tiền`)
 				}]
 			};
 		},
@@ -130,7 +130,7 @@
 			}
 		},
 		/**
-		 * 页面上拉触底事件的处理函数
+		 * Hàm xử lý sự kiện kéo lên đến đáy trang
 		 */
 		onReachBottom: function() {
 			this.getOrderList();
@@ -139,16 +139,16 @@
 			onLoadFun() {
 				this.getOrderList();
 			},
-			// 授权关闭
+			// Đóng ủy quyền
 			authColse: function(e) {
 				this.isShowAuth = e
 			},
 			/**
-			 * 去订单详情
+			 * Đến chi tiết đơn hàng
 			 */
 			goOrderDetails: function(order_id) {
 				if (!order_id) return that.$util.Tips({
-					title: that.$t(`缺少订单号无法查看订单详情`)
+					title: that.$t(`Thiếu mã đơn hàng, không thể xem chi tiết đơn hàng`)
 				});
 				uni.navigateTo({
 					url: '/pages/goods/order_details/index?order_id=' + order_id + '&isReturn=1'
@@ -163,7 +163,7 @@
 				this.getOrderList(index)
 			},
 			/**
-			 * 获取订单列表
+			 * Lấy danh sách đơn hàng
 			 */
 			getOrderList(type) {
 				let that = this;
@@ -183,11 +183,11 @@
 					that.$set(that, 'orderList', that.orderList);
 					that.loadend = loadend;
 					that.loading = false;
-					that.loadTitle = loadend ? that.$t(`我也是有底线的`) : that.$t(`加载更多`);
+					that.loadTitle = loadend ? that.$t(`Đã đến cuối danh sách`) : that.$t(`Tải thêm`);
 					that.page = that.page + 1;
 				}).catch(err => {
 					that.loading = false;
-					that.loadTitle = that.$t(`加载更多`);
+					that.loadTitle = that.$t(`Tải thêm`);
 				});
 			}
 		}

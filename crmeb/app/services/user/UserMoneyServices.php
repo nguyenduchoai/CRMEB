@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,84 +20,84 @@ use crmeb\exceptions\AdminException;
 class UserMoneyServices extends BaseServices
 {
     /**
-     * 用户记录模板
+     * Mẫu bản ghi người dùng
      * @var array[]
      */
     protected $incomeData = [
         'pay_product' => [
-            'title' => '余额支付购买商品',
+            'title' => 'Mua sản phẩm bằng số dư',
             'type' => 'pay_product',
-            'mark' => '余额支付{%num%}元购买商品',
+            'mark' => 'Thanh toán {%num%}đ bằng số dư để mua sản phẩm',
             'status' => 1,
             'pm' => 0
         ],
         'pay_member' => [
-            'title' => '余额支付购买会员',
+            'title' => 'Mua gói thành viên bằng số dư',
             'type' => 'pay_member',
-            'mark' => '余额支付{%num%}元购买会员',
+            'mark' => 'Thanh toán {%num%}đ bằng số dư để mua gói thành viên',
             'status' => 1,
             'pm' => 0
         ],
         'pay_product_refund' => [
-            'title' => '商品退款',
+            'title' => 'Hoàn tiền sản phẩm',
             'type' => 'pay_product_refund',
-            'mark' => '订单退款到余额{%num%}元',
+            'mark' => 'Hoàn tiền đơn hàng vào số dư {%num%}đ',
             'status' => 1,
             'pm' => 1
         ],
         'system_add' => [
-            'title' => '系统增加余额',
+            'title' => 'Hệ thống cộng số dư',
             'type' => 'system_add',
-            'mark' => '系统增加{%num%}余额',
+            'mark' => 'Hệ thống cộng {%num%} vào số dư',
             'status' => 1,
             'pm' => 1
         ],
         'system_sub' => [
-            'title' => '系统减少余额',
+            'title' => 'Hệ thống trừ số dư',
             'type' => 'system_sub',
-            'mark' => '系统扣除{%num%}余额',
+            'mark' => 'Hệ thống trừ {%num%} từ số dư',
             'status' => 1,
             'pm' => 0
         ],
         'user_recharge' => [
-            'title' => '用户充值余额',
+            'title' => 'Người dùng nạp tiền vào số dư',
             'type' => 'recharge',
-            'mark' => '成功充值余额{%price%}元,赠送{%give_price%}元',
+            'mark' => 'Nạp tiền vào số dư thành công {%price%}đ, được tặng {%give_price%}đ',
             'status' => 1,
             'pm' => 1
         ],
         'user_recharge_refund' => [
-            'title' => '用户充值退款',
+            'title' => 'Hoàn tiền nạp của người dùng',
             'type' => 'recharge_refund',
-            'mark' => '退款扣除余额{%num%}元',
+            'mark' => 'Hoàn tiền, trừ số dư {%num%}đ',
             'status' => 1,
             'pm' => 0
         ],
         'brokerage_to_nowMoney' => [
-            'title' => '佣金提现到余额',
+            'title' => 'Rút hoa hồng về số dư',
             'type' => 'extract',
-            'mark' => '佣金提现到余额{%num%}元',
+            'mark' => 'Rút hoa hồng về số dư {%num%}đ',
             'status' => 1,
             'pm' => 1
         ],
         'lottery_use_money' => [
-            'title' => '参与抽奖使用余额',
+            'title' => 'Tham gia quay thưởng dùng số dư',
             'type' => 'lottery_use',
-            'mark' => '参与抽奖使用{%num%}余额',
+            'mark' => 'Tham gia quay thưởng dùng số dư {%num%}',
             'status' => 1,
             'pm' => 0
         ],
         'lottery_give_money' => [
-            'title' => '抽奖中奖赠送余额',
+            'title' => 'Quay trúng thưởng, được tặng số dư',
             'type' => 'lottery_add',
-            'mark' => '抽奖中奖赠送{%num%}余额',
+            'mark' => 'Quay trúng thưởng, được tặng số dư {%num%}',
             'status' => 1,
             'pm' => 1
         ],
         'register_system_add' => [
-            'title' => '新用户注册赠送余额',
+            'title' => 'Người dùng mới đăng ký được tặng số dư',
             'type' => 'register_system_add',
-            'mark' => '新用户注册赠送{%num%}余额',
+            'mark' => 'Người dùng mới đăng ký được tặng số dư {%num%}',
             'status' => 1,
             'pm' => 1
         ],
@@ -113,8 +113,8 @@ class UserMoneyServices extends BaseServices
     }
 
     /**
-     * 写入用户记录
-     * @param string $type 写入类型
+     * Ghi bản ghi người dùng
+     * @param string $type Loại ghi
      * @param int $uid
      * @param int|string|array $number
      * @param int|string $balance
@@ -148,7 +148,7 @@ class UserMoneyServices extends BaseServices
     }
 
     /**
-     * 余额记录
+     * Lịch sử số dư
      * @param $where
      * @return array
      */
@@ -160,12 +160,12 @@ class UserMoneyServices extends BaseServices
         }
         [$page, $limit] = $this->getPageValue();
         $list = $this->dao->getList($where, $page, $limit);
-        //关联用户
+        //Người dùng liên kết
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
         $uids = array_column($list, 'uid');
         $nicknameArr = $userServices->getColumn([['uid', 'in', $uids]], 'nickname', 'uid');
-        //关联订单
+        //Đơn hàng liên quan
         /** @var StoreOrderServices $orderServices */
         $orderServices = app()->make(StoreOrderServices::class);
         /** @var UserRechargeServices $rechargeServices */
@@ -191,7 +191,7 @@ class UserMoneyServices extends BaseServices
     }
 
     /**
-     * 余额记录备注
+     * Ghi chú lịch sử số dư
      * @param $data
      * @return bool
      */
@@ -205,7 +205,7 @@ class UserMoneyServices extends BaseServices
     }
 
     /**
-     * 余额统计基础
+     * Cơ sở thống kê số dư
      * @return array
      * @throws \ReflectionException
      */
@@ -223,14 +223,14 @@ class UserMoneyServices extends BaseServices
     }
 
     /**
-     * 余额趋势
+     * Xu hướng số dư
      * @param $where
      * @return array
      */
     public function getTrend($where)
     {
         $time = explode('-', $where['time']);
-        if (count($time) != 2) throw new AdminException('请选择时间');
+        if (count($time) != 2) throw new AdminException('Vui lòng chọn thời gian');
         $dayCount = (strtotime($time[1]) - strtotime($time[0])) / 86400 + 1;
         $data = [];
         if ($dayCount == 1) {
@@ -246,7 +246,7 @@ class UserMoneyServices extends BaseServices
     }
 
     /**
-     * 余额趋势
+     * Xu hướng số dư
      * @param $time
      * @param $num
      * @param false $excel
@@ -277,8 +277,8 @@ class UserMoneyServices extends BaseServices
         $point_sub = array_column($this->dao->getBalanceTrend($time, $timeType, 'add_time', 'sum(number)', 'sub'), 'num', 'days');
         $data = $series = [];
         foreach ($xAxis as $item) {
-            $data['余额积累'][] = isset($point_add[$item]) ? floatval($point_add[$item]) : 0;
-            $data['余额消耗'][] = isset($point_sub[$item]) ? floatval($point_sub[$item]) : 0;
+            $data['Số dư tích lũy'][] = isset($point_add[$item]) ? floatval($point_add[$item]) : 0;
+            $data['Tiêu dùng số dư'][] = isset($point_sub[$item]) ? floatval($point_sub[$item]) : 0;
         }
         foreach ($data as $key => $item) {
             $series[] = [
@@ -291,13 +291,13 @@ class UserMoneyServices extends BaseServices
     }
 
     /**
-     * 余额来源
+     * Nguồn số dư
      * @param $where
      * @return array
      */
     public function getChannel($where)
     {
-        $bing_xdata = ['系统增加', '用户充值', '佣金提现', '抽奖赠送', '商品退款'];
+        $bing_xdata = ['Hệ thống cộng', 'Nạp tiền người dùng', 'Rút tiền hoa hồng', 'Tặng từ quay thưởng', 'Hoàn tiền sản phẩm'];
         $color = ['#64a1f4', '#3edeb5', '#70869f', '#ffc653', '#fc7d6a'];
         $data = ['system_add', 'recharge', 'extract', 'lottery_add', 'pay_product_refund'];
         $bing_data = [];
@@ -323,13 +323,13 @@ class UserMoneyServices extends BaseServices
     }
 
     /**
-     * 余额类型
+     * Loại số dư
      * @param $where
      * @return array
      */
     public function getType($where)
     {
-        $bing_xdata = ['系统减少', '充值退款', '购买商品', '购买会员'];
+        $bing_xdata = ['Hệ thống trừ', 'Hoàn tiền nạp', 'Mua sản phẩm', 'Mua gói thành viên'];
         $color = ['#64a1f4', '#3edeb5', '#70869f'];
         $data = ['system_sub', 'recharge_refund', 'pay_product', 'pay_member'];
         $bing_data = [];
@@ -379,7 +379,7 @@ class UserMoneyServices extends BaseServices
     }
 
     /**
-     * 根据查询用户充值金额
+     * Truy vấn số tiền nạp của người dùng
      * @param array $where
      * @param string $rechargeSumField
      * @param string $selectType

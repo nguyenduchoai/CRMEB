@@ -30,7 +30,7 @@
             : colorStyle.theme,
         }"
       >
-        {{ titleTxtConfig || '商城头条' }}
+        {{ titleTxtConfig || 'Tin nổi bật' }}
       </div>
       <div
         class="right-box"
@@ -67,7 +67,7 @@
           color: !toneConfig ? titleColor : colorStyle.theme,
         }"
         >
-          {{ titleTxtConfig || '商城头条' }}
+          {{ titleTxtConfig || 'Tin nổi bật' }}
         </div>
         <div
           v-if="!buttonConfig"
@@ -100,10 +100,10 @@ import { mapState } from 'vuex';
 // import theme from "@/mixins/theme";
 export default {
   name: 'home_news_roll',
-  cname: '新闻公告',
+  cname: 'Thông báo tin tức',
   configName: 'c_news_roll',
-  type: 0, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'news', // 外面匹配名称
+  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'news', // Tên khớp bên ngoài
   icon: '#iconzujian-xinwenbobao',
   props: {
     index: {
@@ -144,42 +144,42 @@ export default {
   // mixins: [theme],
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
-        cname: '新闻公告',
+        cname: 'Thông báo tin tức',
         name: 'news',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
         },
-        titleLeft: '展示设置',
-        titleStyle: '公告风格',
-        titleButton: '按钮设置',
-        titleContent: '公告内容',
-        titleRight: '标题样式',
-        titleCurrency: '通用样式',
+        titleLeft: 'Cài đặt hiển thị',
+        titleStyle: 'Phong cách thông báo',
+        titleButton: 'Cài đặt nút',
+        titleContent: 'Nội dung thông báo',
+        titleRight: 'Kiểu tiêu đề',
+        titleCurrency: 'Kiểu chung',
         styleConfig: {
-          title: '选择风格',
+          title: 'Chọn phong cách',
           tabVal: 0,
           tabList: [
             {
-              name: '样式一',
+              name: 'Kiểu 1',
             },
             {
-              name: '样式二',
+              name: 'Kiểu 2',
             },
           ],
         },
         titleConfig: {
-          title: '标题类型',
+          title: 'Loại tiêu đề',
           tabVal: 0,
           tabList: [
             {
-              name: '图片',
+              name: 'Hình ảnh',
             },
             {
-              name: '文字',
+              name: 'Văn bản',
             },
           ],
         },
@@ -187,48 +187,48 @@ export default {
           url: require('@/assets/images/news2.png'),
           type: 'code',
           delType: 0,
-          name: '上传图片',
+          name: 'Tải lên ảnh',
         },
         titleTxtConfig: {
-          title: '标题文字',
-          value: '商城头条',
-          place: '请输入标题文字',
+          title: 'Chữ tiêu đề',
+          value: 'Tin nổi bật',
+          place: 'Vui lòng nhập chữ tiêu đề',
           max: 4,
         },
         rollConfig: {
-          title: '滚动方式',
+          title: 'Kiểu cuộn',
           tabVal: 0,
           tabList: [
             {
-              name: '上下滚动',
+              name: 'Cuộn dọc',
             },
             {
-              name: '左右滚动',
+              name: 'Cuộn ngang',
             },
           ],
         },
         buttonConfig: {
-          title: '右侧按钮',
+          title: 'Nút bên phải',
           tabVal: 0,
           tabList: [
             {
-              name: '显示',
+              name: 'Hiện',
             },
             {
-              name: '隐藏',
+              name: 'Ẩn',
             },
           ],
         },
         textConfig: {
-          title: '右侧文字',
-          value: '更多',
-          place: '请输入右侧文字',
+          title: 'Chữ bên phải',
+          value: 'Xem thêm',
+          place: 'Vui lòng nhập chữ bên phải',
           max: 4,
         },
         linkConfig: {
-          title: '链接',
+          title: 'Liên kết',
           value: '',
-          place: '选择跳转链接',
+          place: 'Chọn liên kết chuyển hướng',
           max: 100,
           type: 'link',
         },
@@ -239,16 +239,16 @@ export default {
             {
               chiild: [
                 {
-                  title: '标题',
-                  val: '标题',
+                  title: 'Tiêu đề',
+                  val: 'Tiêu đề',
                   max: 20,
-                  pla: '输入标题',
+                  pla: 'Nhập tiêu đề',
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   val: '',
                   max: 200,
-                  pla: '输入连接',
+                  pla: 'Nhập liên kết',
                 },
               ],
               show: true,
@@ -256,19 +256,19 @@ export default {
           ],
         },
         toneConfig: {
-          title: '色调',
+          title: 'Tông màu',
           tabVal: 0,
           tabList: [
             {
-              name: '跟随主题风格',
+              name: 'Theo phong cách chủ đề',
             },
             {
-              name: '自定义',
+              name: 'Tùy chỉnh',
             },
           ],
         },
         titleBgColor: {
-          title: '标题背景',
+          title: 'Nền tiêu đề',
           default: [
             {
               item: '#FCEAE9',
@@ -287,7 +287,7 @@ export default {
           ],
         },
         titleColor: {
-          title: '标题文字',
+          title: 'Chữ tiêu đề',
           default: [
             {
               item: '#E93323',
@@ -300,7 +300,7 @@ export default {
           ],
         },
         newsColor: {
-          title: '新闻标题',
+          title: 'Tiêu đề tin tức',
           default: [
             {
               item: '#333333',
@@ -313,7 +313,7 @@ export default {
           ],
         },
         bntColor: {
-          title: '按钮颜色',
+          title: 'Màu nút',
           default: [
             {
               item: '#999999',
@@ -326,7 +326,7 @@ export default {
           ],
         },
         moduleColor: {
-          title: '组件背景',
+          title: 'Nền thành phần',
           default: [
             {
               item: '#fff',
@@ -345,7 +345,7 @@ export default {
           ],
         },
         bottomBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           default: [
             {
               item: '#f5f5f5',
@@ -358,46 +358,46 @@ export default {
           ],
         },
         topConfig: {
-          title: '上边距',
+          title: 'Lề trên',
           val: 0,
           min: 0,
         },
         bottomConfig: {
-          title: '下边距',
+          title: 'Lề dưới',
           val: 0,
           min: 0,
         },
         prConfig: {
-          title: '左右边距',
+          title: 'Lề trái phải',
           val: 0,
           min: 0,
         },
         mbConfig: {
-          title: '页面上间距',
+          title: 'Lề trên trang',
           val: 0,
           min: 0,
         },
         fillet: {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 0,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         // logoConfig: {
-        //     header: '图标设置',
-        //     title: '最多可添加1张图片，建议宽度130 * 36px',
+        //     header: 'Cài đặt biểu tượng',
+        //     title: 'Tối đa thêm 1 ảnh, nên dùng chiều rộng 130 * 36px',
         //     url: require('@/assets/images/news.png')
         // }
       },

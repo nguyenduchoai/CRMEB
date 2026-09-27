@@ -37,7 +37,7 @@
     </div>
     <div class="layout-navbars-breadcrumb-user-icon mr10" v-db-click @click="openMobelPage">
       <i
-        title="商城页面"
+        title="Trang cửa hàng"
         class="el-icon-mobile-phone"
       ></i>
     </div>
@@ -73,17 +73,17 @@ export default {
     return {
       isScreenfull: false,
       isShowUserNewsPopover: false,
-      disabledI18n: 'zh-cn',
+      disabledI18n: 'vi',
       disabledSize: '',
       isDot: false,
     };
   },
   computed: {
-    // 获取用户信息
+    // Lấy thông tin người dùng
     getUserInfos() {
       return this.$store.state.userInfo.userInfo;
     },
-    // 设置弹性盒子布局 flex
+    // Đặt bố cục flexbox
     layoutUserFlexNum() {
       let { layout, isClassicSplitMenu } = this.$store.state.themeConfig.themeConfig;
       let num = '';
@@ -103,41 +103,41 @@ export default {
       this.$refs.searchPopover.doClose();
     },
     /**
-     * 初始化 isDot 属性
-     * @param {boolean} status - 状态值
+     * Khởi tạo thuộc tính isDot
+     * @param {boolean} status - Giá trị trạng thái
      */
     initIsDot(status) {
       this.isDot = status;
     },
     openMobelPage(){
-      // 获取域名
+      // Lấy domain
       window.open(window.location.origin, '_blank')
     },
     /**
-     * 打开新弹窗
+     * Mở popup mới
      */
     openNews() {
-      // 切换 isShowUserNewsPopover 属性值
+      // Chuyển đổi giá trị thuộc tính isShowUserNewsPopover
       this.isShowUserNewsPopover = !this.isShowUserNewsPopover;
-      // 将 isDot 属性设置为 false
+      // Đặt thuộc tính isDot thành false
       this.isDot = false;
     },
 
-    // 搜索点击
+    // Bấm tìm kiếm
     onSearchClick() {
       this.$refs.searchRef.openSearch();
     },
-    // 布局配置点击
+    // Bấm cấu hình bố cục
     onLayoutSetingClick() {
       this.bus.$emit('openSetingsDrawer');
     },
     refresh() {
       this.bus.$emit('onTagsViewRefreshRouterView', this.$route.path);
     },
-    // 全屏点击
+    // Bấm toàn màn hình
     onScreenfullClick() {
       if (!screenfull.isEnabled) {
-        this.$message.warning('暂不不支持全屏');
+        this.$message.warning('Hiện chưa hỗ trợ toàn màn hình');
         return false;
       }
       screenfull.toggle();
@@ -145,10 +145,10 @@ export default {
         if (screenfull.isFullscreen) this.isScreenfull = true;
         else this.isScreenfull = false;
       });
-      // 监听菜单 horizontal.vue 滚动条高度更新
+      // Theo dõi cập nhật chiều cao thanh cuộn của menu horizontal.vue
       this.bus.$emit('updateElScrollBar');
     },
-    // 组件大小改变
+    // Kích thước thành phần thay đổi
     onComponentSizeChange(size) {
       Local.remove('themeConfigPrev');
       this.$store.state.themeConfig.themeConfig.globalComponentSize = size;
@@ -157,7 +157,7 @@ export default {
       this.initComponentSize();
       window.location.reload();
     },
-    // 语言切换
+    // Chuyển ngôn ngữ
     onLanguageChange(lang) {
       Local.remove('themeConfigPrev');
       this.$store.state.themeConfig.themeConfig.globalI18n = lang;
@@ -165,9 +165,12 @@ export default {
       this.$i18n.locale = lang;
       this.initI18n();
     },
-    // 初始化言语国际化
+    // Khởi tạo đa ngôn ngữ (i18n)
     initI18n() {
       switch (Local.get('themeConfigPrev').globalI18n) {
+        case 'vi':
+          this.disabledI18n = 'vi';
+          break;
         case 'zh-cn':
           this.disabledI18n = 'zh-cn';
           break;
@@ -179,7 +182,7 @@ export default {
           break;
       }
     },
-    // 初始化全局组件大小
+    // Khởi tạo kích thước thành phần toàn cục
     initComponentSize() {
       switch (Local.get('themeConfigPrev').globalComponentSize) {
         case '':
@@ -196,7 +199,7 @@ export default {
           break;
       }
     },
-    // `dropdown 下拉菜单` 当前项点击
+    // Bấm mục hiện tại của `dropdown menu thả xuống`
     onDropdownCommand(path) {
       if (path === 'logOut') {
         setTimeout(() => {
@@ -214,7 +217,7 @@ export default {
                 instance.confirmButtonText = this.$t('message.user.logOutExit');
                 AccountLogout().then((res) => {
                   done();
-                  this.$message.success('您已成功退出');
+                  this.$message.success('Bạn đã đăng xuất thành công');
                   this.$store.commit('clearAll');
                   // localStorage.clear();
                   // sessionStorage.clear();
@@ -233,9 +236,9 @@ export default {
             },
           })
             .then(() => {
-              // 清除缓存/token等
+              // Xóa cache / token, v.v.
               Session.clear();
-              // 使用 reload 时，不需要调用 resetRoute() 重置路由
+              // Khi dùng reload, không cần gọi resetRoute() để reset route
               window.location.reload();
             })
             .catch(() => {});

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -36,7 +36,7 @@ class OtherOrderServices extends BaseServices
 {
 
     /**
-     * 初始化，获得dao层句柄
+     * Khởi tạo, lấy handle tầng dao
      * OtherOrderServices constructor.
      * @param OtherOrderDao $dao
      */
@@ -46,7 +46,7 @@ class OtherOrderServices extends BaseServices
     }
 
     /**
-     * 生成会员购买订单数据
+     * Tạo dữ liệu đơn hàng mua thành viên
      * @param array $data
      * @return mixed
      */
@@ -77,7 +77,7 @@ class OtherOrderServices extends BaseServices
     }
 
     /**
-     * 能否领取免费
+     * Có thể nhận miễn phí không
      * @param int $uid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -96,7 +96,7 @@ class OtherOrderServices extends BaseServices
         $freeConfig = array();
         $freeConfig['price'] = 0;
         $freeConfig['pre_price'] = 0;
-        $freeConfig['title'] = "免费会员";
+        $freeConfig['title'] = "Thành viên miễn phí";
         $freeConfig['type'] = "free";
         $freeConfig['vip_day'] = $freeDay ?: 0;
         $userInfo = $userService->get($uid);
@@ -116,7 +116,7 @@ class OtherOrderServices extends BaseServices
         return $freeConfig;
     }
 
-    /**搜索时间转换
+    /**Chuyển đổi thời gian tìm kiếm
      * @param $timeKey
      * @param bool $isNum
      * @throws \Exception
@@ -189,7 +189,7 @@ class OtherOrderServices extends BaseServices
 
 
     /**
-     * 查询会员卡订单数据
+     * Truy vấn dữ liệu đơn hàng thẻ thành viên
      * @param array $where
      * @param string $field
      * @return array|\think\Model|null
@@ -204,11 +204,11 @@ class OtherOrderServices extends BaseServices
 
     /**
      * @param int $uid
-     * @param string $channelType 支付渠道
-     * @param bool $memberType 会员卡类型
-     * @param string $payPrice 支付金额
-     * @param string $payType 支付方式
-     * @param $type 订单类型
+     * @param string $channelType Kênh thanh toán
+     * @param bool $memberType Loại thẻ thành viên
+     * @param string $payPrice Số tiền thanh toán
+     * @param string $payType Phương thức thanh toán
+     * @param $type Loại đơn hàng
      * @return mixed
      * @throws \Exception
      */
@@ -224,7 +224,7 @@ class OtherOrderServices extends BaseServices
             'channel_type' => $channelType,
             'member_code' => "",
         ];
-        if ($type != 3) { //区别 0：免费领取会员 1：购买会员  2：卡密领取会员  3：线下付款
+        if ($type != 3) { //Phân biệt 0: nhận thành viên miễn phí 1: mua thành viên 2: dùng mã thẻ để nhận thành viên 3: thanh toán ngoại tuyến
             if (!$memberType) throw new ApiException(410228);
             list($memberPrice, $isFree, $isPermanent, $overdueTime, $type, $newMemberRight) = $this->checkPayMemberType($memberType, $payPrice, $type, $uid, $mcId);
             $orderInfo['member_price'] = $memberPrice;
@@ -251,7 +251,7 @@ class OtherOrderServices extends BaseServices
         $statusService->save([
             'oid' => $memberOrder['id'],
             'change_type' => $changeType,
-            'change_message' => '订单生成',
+            'change_message' => 'Tạo đơn hàng',
             'change_time' => time(),
             'shop_type' => $type,
         ]);
@@ -259,7 +259,7 @@ class OtherOrderServices extends BaseServices
     }
 
     /**
-     * 免费卡领取支付
+     * Thanh toán khi nhận thẻ miễn phí
      * @param $orderInfo
      * @return bool
      */
@@ -271,13 +271,13 @@ class OtherOrderServices extends BaseServices
         if ($orderInfo['member_type'] != 'free') {
             throw new ApiException(410216);
         }
-        $res = $this->paySuccess($orderInfo, 'yue');//余额支付成功
+        $res = $this->paySuccess($orderInfo, 'yue');//Thanh toán bằng số dư thành công
         return $res;
 
     }
 
     /**
-     * 会员卡支付成功
+     * Thanh toán thẻ thành viên thành công
      * @param array $orderInfo
      * @param string $paytype
      * @return bool
@@ -315,14 +315,14 @@ class OtherOrderServices extends BaseServices
         $res3 = $statusService->save([
             'oid' => $orderInfo['id'],
             'change_type' => 'pay_success',
-            'change_message' => '用户付款成功',
+            'change_message' => 'Người dùng thanh toán thành công',
             'shop_type' => $orderInfo['type'],
             'change_time' => time()
         ]);
 
         $now_money = $userServices->value(['uid' => $orderInfo['uid']], 'now_money');
         $res4 = $userBillServices->income($type, $orderInfo['uid'], $orderInfo['pay_price'], $now_money, $orderInfo['id']);
-        //支付成功后发送消息
+        //Gửi tin nhắn sau khi thanh toán thành công
         OtherOrderJob::dispatch([$orderInfo]);
         $orderInfo['is_channel'] = 2;
         $orderInfo['total_num'] = 1;
@@ -336,7 +336,7 @@ class OtherOrderServices extends BaseServices
             $capitalFlowServices->setFlow($orderInfo, $type);
         }
         $res = $res1 && $res2 && $res3 && $res4;
-        //购买付费会员返佣设置
+        //Cấu hình trả hoa hồng khi mua thành viên trả phí
         if (sys_config('member_brokerage', 0) == 1 && sys_config('brokerage_func_status', 0) == 1) {
             $spread_one = sys_config('is_self_brokerage') ? $orderInfo['uid'] : $userServices->getSpreadUid($orderInfo['uid']);
             $spread_two = sys_config('brokerage_level', 2) == 2 ? $userServices->getSpreadUid($spread_one, [], false) : 0;
@@ -347,13 +347,13 @@ class OtherOrderServices extends BaseServices
         }
 
         $orderInfo['pay_type'] = $paytype;
-        // 小程序订单服务
+        // Service đơn hàng Mini Program
         event('OrderShippingListener', ['member', $orderInfo, 3, '', '']);
         return false !== $res;
     }
 
     /**
-     * 购买付费会员返佣
+     * Trả hoa hồng khi mua thành viên trả phí
      * @param $uid
      * @param $price
      * @param $type
@@ -364,15 +364,15 @@ class OtherOrderServices extends BaseServices
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
         $userInfo = $userServices->get($uid);
-        // 上级推广员返佣之后的金额
+        // Số tiền sau khi trả hoa hồng cho người giới thiệu cấp trên
         $balance = bcadd($userInfo['brokerage_price'], $price, 2);
-        // 添加用户佣金
+        // Thêm hoa hồng người dùng
         $res1 = $userServices->bcInc($uid, 'brokerage_price', $price, 'uid');
         if ($res1) {
-            //冻结时间
+            //Thời gian đóng băng
             $broken_time = intval(sys_config('extract_time'));
             $frozen_time = time() + $broken_time * 86400;
-            // 添加佣金记录
+            // Thêm bản ghi hoa hồng
             /** @var UserBrokerageServices $userBrokerageServices */
             $userBrokerageServices = app()->make(UserBrokerageServices::class);
             $userBrokerageServices->income($type, $uid, [
@@ -385,7 +385,7 @@ class OtherOrderServices extends BaseServices
     }
 
     /**
-     * 修改
+     * Sửa
      * @param $where
      * @param array $data
      * @return \crmeb\basic\BaseModel
@@ -396,7 +396,7 @@ class OtherOrderServices extends BaseServices
     }
 
     /**
-     * 购买会员卡数据校验
+     * Kiểm tra dữ liệu mua thẻ thành viên
      * @param string $memberType
      * @param string $payPrice
      * @param string $type
@@ -421,12 +421,12 @@ class OtherOrderServices extends BaseServices
         if ($payPrice != $price || ($memberType != 'free' && $payPrice <= 0)) throw new ApiException(100100);
         if ($memberType == 'free' && $newMemberRight[$mcId]['vip_day'] <= 0) throw new ApiException(100100);
         switch ($memberType) {
-            case "free"://免费会员
+            case "free"://Thành viên miễn phí
                 $isCanGetFree = $this->isCanGetFree($uid);
                 if ($isCanGetFree['is_record'] == 1) throw new ApiException(410231);
-                $memberPrice = 0.00; //会员卡价格
-                $isFree = 1;//代表免费
-                $isPermanent = 0;//代表非永久
+                $memberPrice = 0.00; //Giá thẻ thành viên
+                $isFree = 1;//Đại diện cho miễn phí
+                $isPermanent = 0;//Đại diện cho không vĩnh viễn
                 $overdueTime = bcadd(bcmul(abs($newMemberRight[$mcId]['vip_day']), "86400", 0), time(), 0);
                 break;
             case "month":
@@ -452,7 +452,7 @@ class OtherOrderServices extends BaseServices
     }
 
     /**
-     * 根据查询用户购买会员金额
+     * Truy vấn số tiền mua thành viên theo người dùng
      * @param array $where
      * @return mixed
      */
@@ -467,7 +467,7 @@ class OtherOrderServices extends BaseServices
     }
 
     /**
-     * 线下收银列表
+     * Danh sách thu ngân tại quầy
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -505,13 +505,13 @@ class OtherOrderServices extends BaseServices
                 $v['nickname'] = $userInfo[$v['uid']]['nickname'] ?? '';
                 switch ($v['pay_type']) {
                     case "yue" :
-                        $v['pay_type'] = "余额";
+                        $v['pay_type'] = "Số dư";
                         break;
                     case "weixin" :
-                        $v['pay_type'] = "微信";
+                        $v['pay_type'] = "WeChat";
                         break;
                     case "alipay" :
-                        $v['pay_type'] = "支付宝";
+                        $v['pay_type'] = "Alipay";
                         break;
                 }
                 $v['true_price'] = bcsub($v['money'], $v['pay_price'], 2);
@@ -522,7 +522,7 @@ class OtherOrderServices extends BaseServices
     }
 
     /**
-     * 获取会员记录
+     * Lấy lịch sử thành viên
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -549,35 +549,35 @@ class OtherOrderServices extends BaseServices
             $memberShipService = app()->make(MemberShipServices::class);
             $shipInfo = $memberShipService->getApiList([]);
             $shipInfo = array_column($shipInfo, 'title', 'type');
-            $shipInfo['owner'] = '自定义';
+            $shipInfo['owner'] = 'Tùy chỉnh';
             foreach ($list as &$v) {
-                $v['member_type'] = $v['member_type'] ? $shipInfo[$v['member_type']] : '其他';
+                $v['member_type'] = $v['member_type'] ? $shipInfo[$v['member_type']] : 'Khác';
                 $v['pay_time'] = date('Y-m-d H:i:s', $v['pay_time']);
                 $v['add_time'] = date('Y-m-d H:i:s', $v['add_time']);
                 $v['overdue_time'] = date('Y-m-d H:i:s', $v['overdue_time']);
                 switch ($v['pay_type']) {
                     case "yue" :
-                        $v['pay_type'] = "余额";
+                        $v['pay_type'] = "Số dư";
                         break;
                     case "weixin" :
-                        $v['pay_type'] = "微信";
+                        $v['pay_type'] = "WeChat";
                         break;
                     case "alipay" :
-                        $v['pay_type'] = "支付宝";
+                        $v['pay_type'] = "Alipay";
                         break;
                     case 'allinpay':
-                        $v['pay_type'] = "通联支付";
+                        $v['pay_type'] = "Allinpay";
                         break;
                     case "admin" :
-                        $v['pay_type'] = "后台赠送";
+                        $v['pay_type'] = "Tặng từ trang quản trị";
                         break;
                 }
-                if ($v['type'] == 0) $v['pay_type'] = "免费领取";
+                if ($v['type'] == 0) $v['pay_type'] = "Nhận miễn phí";
                 if ($v['type'] == 2) {
-                    $v['pay_type'] = "卡密领取";
-                    $v['member_type'] = "卡密激活";
+                    $v['pay_type'] = "Nhận bằng mã thẻ";
+                    $v['member_type'] = "Kích hoạt bằng mã thẻ";
                 }
-                if ($v['type'] == 1 && $v['is_free'] == 1) $v['pay_type'] = "免费领取";
+                if ($v['type'] == 1 && $v['is_free'] == 1) $v['pay_type'] = "Nhận miễn phí";
                 $v['user']['overdue_time'] = date('Y-m-d', $v['user']['overdue_time']) == "1970-01-01" ? "" : date('Y-m-d H:i:s', $v['user']['overdue_time']);
             }
         }

@@ -9,12 +9,12 @@
 						</view>
 						<view class="line1">
 							<text class='default font-num'
-								v-if="addressInfo.is_default">{{$t(`[默认]`)}}</text>{{addressInfo.province}}{{addressInfo.city}}{{addressInfo.district}}{{addressInfo.detail}}
+								v-if="addressInfo.is_default">{{$t(`[Mặc định]`)}}</text>{{addressInfo.province}}{{addressInfo.city}}{{addressInfo.district}}{{addressInfo.detail}}
 						</view>
-						<!-- <view class='setaddress'>设置收货地址</view> -->
+						<!-- <view class='setaddress'>Đặt địa chỉ nhận hàng</view> -->
 					</view>
 					<view class='addressCon' v-else>
-						<view class='setaddress'>{{$t(`设置收货地址`)}}</view>
+						<view class='setaddress'>{{$t(`Thiết lập địa chỉ nhận hàng`)}}</view>
 					</view>
 					<view class='iconfont icon-jiantou'></view>
 				</view>
@@ -23,7 +23,7 @@
 				</view>
 			</view>
 			<view class="orderGoods">
-				<view class='total'>{{$t(`共`)}}{{resData.num}}{{$t(`件商品`)}}</view>
+				<view class='total'>{{$t(`Tổng`)}}{{resData.num}}{{$t(`sản phẩm`)}}</view>
 				<view class='goodWrapper'>
 					<view class='item acea-row row-between-wrapper' @click="jumpCon(cartInfo.product_id)">
 						<view class='pictrue'>
@@ -37,7 +37,7 @@
 							<view class='attr line1' v-if="cartInfo.suk">{{cartInfo.suk}}
 							</view>
 							<view class='money font-color'>
-								{{cartInfo.price}} {{$t(`积分`)}}
+								{{cartInfo.price}} {{$t(`Điểm thưởng`)}}
 							</view>
 						</view>
 					</view>
@@ -45,33 +45,33 @@
 			</view>
 			<view class='wrapper'>
 				<view class='item acea-row row-between-wrapper'>
-					<view>{{$t(`可用积分`)}}</view>
+					<view>{{$t(`Điểm thưởng khả dụng`)}}</view>
 					<view class='discount'>{{resData.integral}}
 					</view>
 				</view>
 				<view class='item acea-row row-between-wrapper'>
-					<view>{{$t(`快递费用`)}}</view>
-					<view class='discount'>{{$t(`免运费`)}}
+					<view>{{$t(`Phí vận chuyển`)}}</view>
+					<view class='discount'>{{$t(`Miễn phí vận chuyển`)}}
 					</view>
 				</view>
 				<view class='item' v-if="textareaStatus">
-					<view>{{$t(`备注信息`)}}</view>
+					<view>{{$t(`Thông tin ghi chú`)}}</view>
 					<view class="placeholder-textarea">
 						<textarea ref='getFocus' v-if="coupon.coupon===false" :focus="textFocus" @input='bindHideKeyboard' value=""
 							name="mark">
 						</textarea>
 						<view class="placeholder" @click="clickTextArea" v-show="!mark">
-							{{$t(`请添加备注（150字以内）`)}}
+							{{$t(`Vui lòng thêm ghi chú (tối đa 150 ký tự)`)}}
 						</view>
 					</view>
 				</view>
 			</view>
 			<view style='height:120rpx;'></view>
 			<view class='footer acea-row row-between-wrapper'>
-				<view>{{$t(`合计`)}}：
-					<text class='font-color'>{{resData.total_price || 0}}{{$t(`积分`)}}</text>
+				<view>{{$t(`Tổng cộng`)}}：
+					<text class='font-color'>{{resData.total_price || 0}}{{$t(`Điểm thưởng`)}}</text>
 				</view>
-				<view class='settlement' style='z-index:100' @tap="goPay">{{$t(`立即兑换`)}}</view>
+				<view class='settlement' style='z-index:100' @tap="goPay">{{$t(`Đổi ngay`)}}</view>
 			</view>
 		</view>
 		<view class="alipaysubmit" v-html="formContent"></view>
@@ -132,66 +132,66 @@
 			return {
 				textFocus:false,
 				textareaStatus: true,
-				//支付方式
+				//Phương thức thanh toán
 				cartArr: [{
-						"name": this.$t(`微信支付`),
+						"name": this.$t(`WeChat Pay`),
 						"icon": "icon-weixin2",
 						value: 'weixin',
-						title: this.$t(`使用微信快捷支付`),
+						title: this.$t(`Thanh toán nhanh qua WeChat`),
 						payStatus: 1,
 					},
 					{
-						"name": this.$t(`支付宝支付`),
+						"name": this.$t(`Thanh toán Alipay`),
 						"icon": "icon-zhifubao",
 						value: 'alipay',
-						title: this.$t(`使用线上支付宝支付`),
+						title: this.$t(`Thanh toán trực tuyến qua Alipay`),
 						payStatus: 1,
 					},
 					{
-						"name": this.$t(`余额支付`),
+						"name": this.$t(`Thanh toán bằng số dư`),
 						"icon": "icon-yuezhifu",
 						value: 'yue',
-						title: this.$t(`可用余额:`),
+						title: this.$t(`Số dư khả dụng:`),
 						payStatus: 1,
 					},
 					{
-						"name": this.$t(`线下支付`),
+						"name": this.$t(`Thanh toán ngoại tuyến`),
 						"icon": "icon-yuezhifu1",
 						value: 'offline',
-						title: this.$t(`选择线下付款方式`),
+						title: this.$t(`Chọn phương thức thanh toán ngoại tuyến`),
 						payStatus: 2,
 					}
 				],
 				formContent: '',
-				payType: 'weixin', //支付方式
-				openType: 1, //优惠券打开方式 1=使用
-				active: 0, //支付方式切换
+				payType: 'weixin', //Phương thức thanh toán
+				openType: 1, //Cách mở phiếu giảm giá, 1 = sử dụng
+				active: 0, //Chuyển đổi phương thức thanh toán
 				coupon: {
 					coupon: false,
 					list: [],
-					statusTile: this.$t(`立即使用`)
-				}, //优惠券组件
+					statusTile: this.$t(`Dùng ngay`)
+				}, //Component phiếu giảm giá
 				address: {
 					address: false
-				}, //地址组件
-				addressInfo: {}, //地址信息
-				pinkId: 0, //拼团id
-				addressId: 0, //地址id
-				couponId: 0, //优惠券id
-				cartId: '', //购物车id
+				}, //Component địa chỉ
+				addressInfo: {}, //Thông tin địa chỉ
+				pinkId: 0, //ID mua chung
+				addressId: 0, //id địa chỉ
+				couponId: 0, //ID phiếu giảm giá
+				cartId: '', //ID giỏ hàng
 				BargainId: 0,
 				combinationId: 0,
 				seckillId: 0,
-				userInfo: {}, //用户信息
-				coupon_price: 0, //优惠券抵扣金额
-				useIntegral: false, //是否使用积分
-				integral_price: 0, //积分抵扣金额
+				userInfo: {}, //Thông tin người dùng
+				coupon_price: 0, //Số tiền giảm từ phiếu giảm giá
+				useIntegral: false, //Có sử dụng điểm thưởng hay không
+				integral_price: 0, //Số tiền khấu trừ bằng điểm thưởng
 				integral: 0,
-				ChangePrice: 0, //使用积分抵扣变动后的金额
-				formIds: [], //收集formid
+				ChangePrice: 0, //Số tiền sau khi dùng điểm thưởng để trừ
+				formIds: [], //Thu thập formid
 				status: 0,
 				is_address: false,
-				toPay: false, //修复进入支付时页面隐藏从新刷新页面
+				toPay: false, //Sửa lỗi khi vào thanh toán trang bị ẩn thì phải tải lại trang
 				shippingType: 0,
 				system_store: {},
 				storePostage: 0,
@@ -209,12 +209,12 @@
 				orderKey: "",
 				// usableCoupon: {},
 				offlinePostage: "",
-				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false, //是否隐藏授权
+				isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+				isShowAuth: false, //Có ẩn ủy quyền hay không
 				from: '',
 				news: 1,
 
-				invTitle: this.$t(`不开发票`),
+				invTitle: this.$t(`Không xuất hóa đơn`),
 				special_invoice: false,
 				invoice_func: false,
 				header_type: '',
@@ -236,7 +236,7 @@
 			this.from = 'routine'
 			// #endif
 			if (!options.unique) return this.$util.Tips({
-				title: this.$t(`请选择要购买的商品`)
+				title: this.$t(`Vui lòng chọn sản phẩm cần mua`)
 			}, {
 				tab: 3,
 				url: 1
@@ -251,7 +251,7 @@
 			this.news = !options.new || options.new === '0' ? 0 : 1;
 			this.invChecked = options.invoice_id || '';
 			this.header_type = options.header_type || '1';
-			this.couponTitle = options.couponTitle || this.$t(`请选择`)
+			this.couponTitle = options.couponTitle || this.$t(`Vui lòng chọn`)
 			// #ifndef APP-PLUS
 			this.textareaStatus = true;
 			// #endif
@@ -266,7 +266,7 @@
 			}
 		},
 		/**
-		 * 生命周期函数--监听页面显示
+		 * Hàm lifecycle -- theo dõi khi trang hiển thị
 		 */
 		onShow: function() {
 			let _this = this
@@ -274,14 +274,14 @@
 				if (res) {
 					_this.system_store = res.address
 				}
-				// 清除监听
+				// Xóa listener
 				uni.$off('handClick');
 			})
 		},
 		methods: {
 			getInvoiceList() {
 				uni.showLoading({
-					title: this.$t(`正在加载…`)
+					title: this.$t(`Đang tải...`)
 				})
 				invoiceList().then(res => {
 					uni.hideLoading();
@@ -292,9 +292,9 @@
 					const result = this.invList.find(item => item.id == this.invChecked);
 					if (result) {
 						let name = '';
-						name += result.header_type === 1 ? this.$t(`个人`) : this.$t(`企业`);
-						name += result.type === 1 ? this.$t(`普通`) : this.$t(`专用`);
-						name += this.$t(`发票`);
+						name += result.header_type === 1 ? this.$t(`Cá nhân`) : this.$t(`Doanh nghiệp`);
+						name += result.type === 1 ? this.$t(`Thường`) : this.$t(`Chuyên dụng`);
+						name += this.$t(`Hóa đơn`);
 						this.invTitle = name;
 					}
 				}).catch(err => {
@@ -305,7 +305,7 @@
 				});
 			},
 			/**
-			 * 事件回调
+			 * Callback sự kiện
 			 *
 			 */
 			onChangeFun: function(e) {
@@ -321,12 +321,12 @@
 				let that = this
 				if (!that.addressId) {
 					return that.$util.Tips({
-						title: that.$t(`请选择收货地址`)
+						title: that.$t(`Vui lòng chọn địa chỉ nhận hàng`)
 					});
 				}
 				if (parseFloat(that.resData.integral) < parseFloat(that.cartInfo.price))
 					return that.$util.Tips({
-						title: that.$t(`可用积分不足！`)
+						title: that.$t(`Điểm thưởng khả dụng không đủ!`)
 					});
 				let data = {
 					addressId: that.addressId,
@@ -345,7 +345,7 @@
 					});
 				});
 			},
-			// 关闭地址弹窗；
+			// Đóng popup địa chỉ;
 			changeClose: function() {
 				this.$set(this.address, 'address', false);
 			},
@@ -382,7 +382,7 @@
 				this.$set(this.coupon, 'list', this.coupon.list);
 			},
 			/**
-			 * 选择地址后改变事件
+			 * Sự kiện thay đổi sau khi chọn địa chỉ
 			 * @param object e
 			 */
 			OnChangeAddress: function(e) {
@@ -395,7 +395,7 @@
 				this.mark = e.detail.value;
 			},
 			/**
-			 * 获取当前订单详细信息
+			 * Lấy thông tin chi tiết đơn hàng hiện tại
 			 * 
 			 */
 			getConfirm: function() {
@@ -414,7 +414,7 @@
 				});
 			},
 			/*
-			 * 提取砍价和拼团id
+			 * Trích xuất id săn giảm giá và mua chung
 			 */
 			getBargainId: function() {
 				let that = this;
@@ -433,7 +433,7 @@
 				}
 			},
 			/*
-			 * 获取默认收货地址或者获取某条地址信息
+			 * Lấy địa chỉ nhận hàng mặc định hoặc lấy thông tin một địa chỉ nào đó
 			 */
 			getaddressInfo: function() {
 				let that = this;
@@ -564,7 +564,7 @@
 	.order-submission .allAddress .nav .item.on::before {
 		position: absolute;
 		bottom: 0;
-		content: "快递配送";
+		content: "Giao qua đơn vị vận chuyển";
 		font-size: 28rpx;
 		display: block;
 		height: 0;
@@ -579,7 +579,7 @@
 	}
 
 	.order-submission .allAddress .nav .item:nth-of-type(2).on::before {
-		content: "到店自提";
+		content: "Nhận tại cửa hàng";
 		border-width: 0 0 80rpx 20rpx;
 		border-radius: 30rpx 7rpx 0 0;
 	}
@@ -591,7 +591,7 @@
 	.order-submission .allAddress .nav .item.on2::before {
 		position: absolute;
 		bottom: 0;
-		content: "到店自提";
+		content: "Nhận tại cửa hàng";
 		font-size: 28rpx;
 		display: block;
 		height: 0;
@@ -605,7 +605,7 @@
 	}
 
 	.order-submission .allAddress .nav .item:nth-of-type(1).on2::before {
-		content: "快递配送";
+		content: "Giao qua đơn vị vận chuyển";
 		border-width: 0 60rpx 60rpx 0;
 		border-radius: 6rpx 40rpx 0 0;
 	}

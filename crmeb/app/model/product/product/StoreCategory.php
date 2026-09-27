@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use crmeb\traits\ModelTrait;
 use think\Model;
 
 /**
- * 商品分类Model
+ * Model danh mục sản phẩm
  * Class StoreCategory
  * @package app\model\product\product
  */
@@ -25,19 +25,19 @@ class StoreCategory extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'store_category';
 
     /**
-     * 添加时间获取器
+     * Getter thời gian thêm
      * @param $value
      * @return false|string
      */
@@ -47,7 +47,7 @@ class StoreCategory extends BaseModel
     }
 
     /**
-     * 获取子集分类查询条件
+     * Lấy điều kiện truy vấn danh mục con
      * @return \think\model\relation\HasMany
      */
     public function children()
@@ -56,7 +56,7 @@ class StoreCategory extends BaseModel
     }
 
     /**
-     * 分类是否显示搜索器
+     * Bộ lọc danh mục có hiển thị hay không
      * @param Model $query
      * @param $value
      * @param $data
@@ -67,7 +67,7 @@ class StoreCategory extends BaseModel
     }
 
     /**
-     * 分类是否显示搜索器
+     * Bộ lọc danh mục có hiển thị hay không
      * @param Model $query
      * @param $value
      * @param $data
@@ -78,7 +78,7 @@ class StoreCategory extends BaseModel
     }
 
     /**
-     * 分类是否显示搜索器
+     * Bộ lọc danh mục có hiển thị hay không
      * @param Model $query
      * @param $value
      * @param $data
@@ -89,7 +89,7 @@ class StoreCategory extends BaseModel
     }
 
     /**
-     * 分类是否显示搜索器
+     * Bộ lọc danh mục có hiển thị hay không
      * @param Model $query
      * @param $value
      * @param $data

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -23,7 +23,7 @@ use crmeb\services\SystemConfigService;
 
 class MemberCardServices extends BaseServices
 {
-    /** 初始化，获得dao层句柄
+    /** Khởi tạo, lấy handle tầng dao
      * MemberCardServices constructor.
      * @param MemberCardDao $memberCardDao
      */
@@ -57,14 +57,14 @@ class MemberCardServices extends BaseServices
                 $list[$k]['phone'] = $userList[$v['use_uid']] ? $userList[$v['use_uid']]['phone'] : "";
             }
             $list[$k]['add_time'] = date('Y-m-d H:i:s', $v['add_time']);
-            $list[$k]['use_time'] = $v['use_time'] != 0 ? date('Y-m-d H:i:s', $v['use_time']) : "未使用";
+            $list[$k]['use_time'] = $v['use_time'] != 0 ? date('Y-m-d H:i:s', $v['use_time']) : "Chưa sử dụng";
         }
         $count = $this->dao->count($where);
         return compact('list', 'count');
 
     }
 
-    /** 生成免费会员卡
+    /** Tạo thẻ thành viên miễn phí
      * @param array $data
      */
     public function addCard(array $data)
@@ -84,7 +84,7 @@ class MemberCardServices extends BaseServices
                 $data['add_time'] = time();
                 $res[] = $data;
             }
-            //数据切片批量插入，提高性能。
+            //Cắt dữ liệu thành từng phần để insert theo lô, giúp tăng hiệu năng.
             $chunk_inster_card = array_chunk($res, 100, true);
             foreach ($chunk_inster_card as $v) {
                 $this->dao->saveAll($v);
@@ -95,7 +95,7 @@ class MemberCardServices extends BaseServices
         }
     }
 
-    /**获取制卡卡号随机数
+    /**Lấy số ngẫu nhiên để tạo mã thẻ
      * @param bool $prefix
      * @param bool $random
      * @return string
@@ -120,7 +120,7 @@ class MemberCardServices extends BaseServices
         }
     }
 
-    /** 领取会员卡
+    /** Nhận thẻ thành viên
      * @param array $data
      * @param int $uid
      */
@@ -149,7 +149,7 @@ class MemberCardServices extends BaseServices
 
 
         /**
-         * 批次卡具体使用期限，业务需要打开即可，勿删。
+         * Thời hạn sử dụng cụ thể của lô thẻ, khi nghiệp vụ cần thì mở lên, không xóa.
          */
         if ($card_info->status != 1) throw new ApiException(400625);
         $this->transaction(function () use ($card_info, $user_info, $batch_info, $memberBatchServices, $userServices, $data) {
@@ -196,7 +196,7 @@ class MemberCardServices extends BaseServices
 
     }
 
-    /**  验证是否存在此类型会员卡
+    /**  Kiểm tra có tồn tại loại thẻ thành viên này không
      * @param string $member_type
      * @return bool
      */
@@ -207,7 +207,7 @@ class MemberCardServices extends BaseServices
         return true;
     }
 
-    /** 获取会员权益和说明配置
+    /** Lấy cấu hình quyền lợi và mô tả thành viên
      * @return array
      */
     public function getMemberRightsInfo()
@@ -227,7 +227,7 @@ class MemberCardServices extends BaseServices
         return ['member_right' => $memberRight['list']];
     }
 
-    /**获取会员卡配置
+    /**Lấy cấu hình thẻ thành viên
      * @return array
      */
     public function getMemberTypeInfo()
@@ -241,7 +241,7 @@ class MemberCardServices extends BaseServices
         return $data;
     }
 
-    /**会员卡数据处理
+    /**Xử lý dữ liệu thẻ thành viên
      * @return array
      */
     public function DoMemberType()
@@ -263,7 +263,7 @@ class MemberCardServices extends BaseServices
         return $data;
     }
 
-    /**会员类型数据
+    /**Dữ liệu loại thành viên
      * @return bool
      */
     public function getMemberTypeValue()
@@ -277,7 +277,7 @@ class MemberCardServices extends BaseServices
         return $new_member_data;
     }
 
-    /**导出会员卡
+    /**Xuất thẻ thành viên
      * @param $where
      * @return \think\Collection
      * @throws \think\db\exception\DataNotFoundException
@@ -307,7 +307,7 @@ class MemberCardServices extends BaseServices
         return $dataArray;
     }
 
-    /**获取会员记录
+    /**Lấy lịch sử thành viên
      * @param array $where
      * @return array
      */
@@ -319,7 +319,7 @@ class MemberCardServices extends BaseServices
     }
 
     /**
-     * 看是否开启会员功能
+     * Xem chức năng thành viên có được mở không
      * @param string $rightType
      * @param bool $get_number
      * @return bool|mixed
@@ -330,7 +330,7 @@ class MemberCardServices extends BaseServices
     public function isOpenMemberCard(string $rightType = '', bool $get_number = true)
     {
         $isOpen = sys_config('member_card_status', 1);
-        //如果传入权益类别，查看是否具有某权益
+        //Nếu truyền vào loại quyền lợi, kiểm tra có quyền lợi đó không
         if (!$rightType) {
             if ($isOpen) return true;
             return false;
@@ -352,7 +352,7 @@ class MemberCardServices extends BaseServices
     }
 
     /**
-     * 修改会员卡状态
+     * Sửa trạng thái thẻ thành viên
      * @param $id
      * @param $status
      * @return bool

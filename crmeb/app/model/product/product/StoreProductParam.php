@@ -6,7 +6,7 @@ use crmeb\basic\BaseModel;
 use crmeb\traits\ModelTrait;
 
 /**
- * 商品参数模型
+ * Model tham số sản phẩm
  * @author wuhaotian
  * @email 442384644@qq.com
  * @date 2024/12/17
@@ -16,13 +16,13 @@ class StoreProductParam extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'store_product_param';

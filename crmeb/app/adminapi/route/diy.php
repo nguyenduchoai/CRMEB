@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -12,95 +12,95 @@
 use think\facade\Route;
 
 /**
- * diy 相关路由
+ * Route liên quan diy
  */
 Route::group('diy', function () {
 
-    //DIY列表
-    Route::get('get_list', 'v1.diy.Diy/getList')->option(['real_name' => 'Diy模板列表']);
-    //DIY列表
-    Route::get('get_info/:id', 'v1.diy.Diy/getInfo')->option(['real_name' => 'Diy模板数据详情']);
-    //DIY列表
-    Route::get('get_diy_info/:id', 'v1.diy.Diy/getDiyInfo')->option(['real_name' => 'Diy模板数据详情']);
-    //删除DIY模板
-    Route::delete('del/:id', 'v1.diy.Diy/del')->option(['real_name' => '删除DIY模板']);
-    //使用DIY模板
-    Route::put('set_status/:id', 'v1.diy.Diy/setStatus')->option(['real_name' => '使用DIY模板']);
-    //获取添加表单
-    Route::get('create', 'v1.diy.Diy/create')->option(['real_name' => '添加表单']);
-    //添加表单
-    Route::post('create', 'v1.diy.Diy/save')->option(['real_name' => '添加DIY']);
-    //保存DIY模板
-    Route::post('save/[:id]', 'v1.diy.Diy/saveData')->option(['real_name' => '添加DIY模板']);
-    //保存DIY模板
-    Route::post('diy_save/[:id]', 'v1.diy.Diy/saveDiyData')->option(['real_name' => '添加DIY模板']);
-    //获取路径
-    Route::get('get_url', 'v1.diy.Diy/getUrl')->option(['real_name' => '获取前端页面路径']);
-    //获取商品分类
-    Route::get('get_category', 'v1.diy.Diy/getCategory')->option(['real_name' => '获取商品分类']);
-    //获取商品
-    Route::get('get_product', 'v1.diy.Diy/getProduct')->option(['real_name' => '获取商品列表']);
-    //获取门店自提开启状态
-    Route::get('get_store_status', 'v1.diy.Diy/getStoreStatus')->option(['real_name' => '获取门店自提开启状态']);
-    //还原默认数据
-    Route::get('recovery/:id', 'v1.diy.Diy/Recovery')->option(['real_name' => '还原Diy默认数据']);
-    //获取所有二级分类
-    Route::get('get_by_category', 'v1.diy.Diy/getByCategory')->option(['real_name' => '获取所有二级分类']);
-    //设置默认数据
-    Route::get('set_recovery/:id', 'v1.diy.Diy/setRecovery')->option(['real_name' => '设置Diy默认数据']);
-    //获取商品列表
-    Route::get('get_product_list', 'v1.diy.Diy/getProductList')->option(['real_name' => '获取商品列表']);
-    //分类、个人中心、一键换色
-    Route::get('get_color_change/:type', 'v1.diy.Diy/getColorChange')->option(['real_name' => '获取风格设置']);
-    //换色和分类保存
-    Route::put('color_change/:status/:type', 'v1.diy.Diy/colorChange')->option(['real_name' => '换色和分类保存']);
-    //个人中心菜单获取
-    Route::get('get_member', 'v1.diy.Diy/getMember')->option(['real_name' => '个人中心详情']);
-    //获取页面链接分类
-    Route::get('get_page_category', 'v1.diy.PageLink/getCategory')->option(['real_name' => '获取页面链接分类']);
-    //获取页面链接
-    Route::get('get_page_link/:cate_id', 'v1.diy.PageLink/getLinks')->option(['real_name' => '获取页面链接']);
-    //个人中心菜单保存
-    Route::post('member_save', 'v1.diy.Diy/memberSaveData')->option(['real_name' => '个人中心保存']);
-    //获取diy小程序二维码
-    Route::get('get_routine_code/:id', 'v1.diy.Diy/getRoutineCode')->option(['real_name' => 'diy小程序预览码']);
-    //开屏广告
-    Route::get('open_adv/info', 'v1.diy.Diy/getOpenAdv')->option(['real_name' => '获取开屏广告']);
-    Route::post('open_adv/add', 'v1.diy.Diy/openAdvAdd')->option(['real_name' => '保存开屏广告']);
-    //推荐商品
-    Route::get('groom_list/:type', 'v1.diy.Diy/getGroomList')->option(['real_name' => '推荐商品']);
+    //Danh sách DIY
+    Route::get('get_list', 'v1.diy.Diy/getList')->option(['real_name' => 'Danh sách mẫu Diy']);
+    //Danh sách DIY
+    Route::get('get_info/:id', 'v1.diy.Diy/getInfo')->option(['real_name' => 'Chi tiết dữ liệu mẫu Diy']);
+    //Danh sách DIY
+    Route::get('get_diy_info/:id', 'v1.diy.Diy/getDiyInfo')->option(['real_name' => 'Chi tiết dữ liệu mẫu Diy']);
+    //Xóa mẫu DIY
+    Route::delete('del/:id', 'v1.diy.Diy/del')->option(['real_name' => 'Xóa mẫu DIY']);
+    //Sử dụng mẫu DIY
+    Route::put('set_status/:id', 'v1.diy.Diy/setStatus')->option(['real_name' => 'Sử dụng mẫu DIY']);
+    //Lấy form thêm
+    Route::get('create', 'v1.diy.Diy/create')->option(['real_name' => 'Biểu mẫu thêm']);
+    //Biểu mẫu thêm
+    Route::post('create', 'v1.diy.Diy/save')->option(['real_name' => 'Thêm DIY']);
+    //Lưu mẫu DIY
+    Route::post('save/[:id]', 'v1.diy.Diy/saveData')->option(['real_name' => 'Thêm mẫu DIY']);
+    //Lưu mẫu DIY
+    Route::post('diy_save/[:id]', 'v1.diy.Diy/saveDiyData')->option(['real_name' => 'Thêm mẫu DIY']);
+    //Lấy đường dẫn
+    Route::get('get_url', 'v1.diy.Diy/getUrl')->option(['real_name' => 'Lấy đường dẫn trang phía người dùng']);
+    //Lấy danh mục sản phẩm
+    Route::get('get_category', 'v1.diy.Diy/getCategory')->option(['real_name' => 'Lấy danh mục sản phẩm']);
+    //Lấy sản phẩm
+    Route::get('get_product', 'v1.diy.Diy/getProduct')->option(['real_name' => 'Lấy danh sách sản phẩm']);
+    //Lấy trạng thái bật nhận tại cửa hàng
+    Route::get('get_store_status', 'v1.diy.Diy/getStoreStatus')->option(['real_name' => 'Lấy trạng thái bật nhận tại cửa hàng']);
+    //Khôi phục dữ liệu mặc định
+    Route::get('recovery/:id', 'v1.diy.Diy/Recovery')->option(['real_name' => 'Khôi phục dữ liệu mặc định Diy']);
+    //Lấy tất cả danh mục cấp 2
+    Route::get('get_by_category', 'v1.diy.Diy/getByCategory')->option(['real_name' => 'Lấy tất cả danh mục cấp 2']);
+    //Đặt dữ liệu mặc định
+    Route::get('set_recovery/:id', 'v1.diy.Diy/setRecovery')->option(['real_name' => 'Đặt dữ liệu mặc định Diy']);
+    //Lấy danh sách sản phẩm
+    Route::get('get_product_list', 'v1.diy.Diy/getProductList')->option(['real_name' => 'Lấy danh sách sản phẩm']);
+    //Danh mục, trang cá nhân, đổi màu nhanh
+    Route::get('get_color_change/:type', 'v1.diy.Diy/getColorChange')->option(['real_name' => 'Lấy cài đặt phong cách']);
+    //Lưu đổi màu và danh mục
+    Route::put('color_change/:status/:type', 'v1.diy.Diy/colorChange')->option(['real_name' => 'Lưu đổi màu và danh mục']);
+    //Lấy menu trang cá nhân
+    Route::get('get_member', 'v1.diy.Diy/getMember')->option(['real_name' => 'Chi tiết trang cá nhân']);
+    //Lấy danh mục liên kết trang
+    Route::get('get_page_category', 'v1.diy.PageLink/getCategory')->option(['real_name' => 'Lấy danh mục liên kết trang']);
+    //Lấy liên kết trang
+    Route::get('get_page_link/:cate_id', 'v1.diy.PageLink/getLinks')->option(['real_name' => 'Lấy liên kết trang']);
+    //Lưu menu trang cá nhân
+    Route::post('member_save', 'v1.diy.Diy/memberSaveData')->option(['real_name' => 'Lưu trang cá nhân']);
+    //Lấy mã QR Mini Program diy
+    Route::get('get_routine_code/:id', 'v1.diy.Diy/getRoutineCode')->option(['real_name' => 'Mã xem trước diy trên Mini Program']);
+    //Quảng cáo màn hình khởi động
+    Route::get('open_adv/info', 'v1.diy.Diy/getOpenAdv')->option(['real_name' => 'Lấy quảng cáo màn hình khởi động']);
+    Route::post('open_adv/add', 'v1.diy.Diy/openAdvAdd')->option(['real_name' => 'Lưu quảng cáo màn hình khởi động']);
+    //Sản phẩm đề xuất
+    Route::get('groom_list/:type', 'v1.diy.Diy/getGroomList')->option(['real_name' => 'Sản phẩm đề xuất']);
 
-    /** 系统链接管理 */
-    Route::get('link/category', 'v1.diy.PageLink/getLinkCategory')->option(['real_name' => '获取链接分类']);
-    Route::get('link/category/form/:cate_id/[:pid]', 'v1.diy.PageLink/getLinkCategoryForm')->option(['real_name' => '链接分类表单']);
-    Route::post('link/category/save/:cate_id', 'v1.diy.PageLink/getLinkCategorySave')->option(['real_name' => '链接分类保存']);
-    Route::delete('link/category/del/:cate_id', 'v1.diy.PageLink/getLinkCategoryDel')->option(['real_name' => '链接分类删除']);
-    Route::get('link/list/:cate_id', 'v1.diy.PageLink/getLinkList')->option(['real_name' => '链接列表']);
-    Route::post('link/save/:id', 'v1.diy.PageLink/getLinkSave')->option(['real_name' => '链接保存']);
-    Route::delete('link/del/:id', 'v1.diy.PageLink/getLinkDel')->option(['real_name' => '链接删除']);
+    /** Quản lý liên kết hệ thống */
+    Route::get('link/category', 'v1.diy.PageLink/getLinkCategory')->option(['real_name' => 'Lấy danh mục liên kết']);
+    Route::get('link/category/form/:cate_id/[:pid]', 'v1.diy.PageLink/getLinkCategoryForm')->option(['real_name' => 'Biểu mẫu danh mục liên kết']);
+    Route::post('link/category/save/:cate_id', 'v1.diy.PageLink/getLinkCategorySave')->option(['real_name' => 'Lưu danh mục liên kết']);
+    Route::delete('link/category/del/:cate_id', 'v1.diy.PageLink/getLinkCategoryDel')->option(['real_name' => 'Xóa danh mục liên kết']);
+    Route::get('link/list/:cate_id', 'v1.diy.PageLink/getLinkList')->option(['real_name' => 'Danh sách liên kết']);
+    Route::post('link/save/:id', 'v1.diy.PageLink/getLinkSave')->option(['real_name' => 'Lưu liên kết']);
+    Route::delete('link/del/:id', 'v1.diy.PageLink/getLinkDel')->option(['real_name' => 'Xóa liên kết']);
 })->middleware([
     \app\http\middleware\AllowOriginMiddleware::class,
     \app\adminapi\middleware\AdminAuthTokenMiddleware::class,
     \app\adminapi\middleware\AdminCheckRoleMiddleware::class,
     \app\adminapi\middleware\AdminLogMiddleware::class
-])->option(['mark' => 'diy', 'mark_name' => '页面装修']);
+])->option(['mark' => 'diy', 'mark_name' => 'Thiết kế giao diện']);
 
 
 /**
- * diy_pro 相关路由
+ * Route liên quan diy_pro
  */
 Route::group('diy_pro', function () {
 
-    Route::get('get_list', 'v1.diy.DiyPro/getList')->option(['real_name' => 'DiyPro模板列表']);
-    Route::get('get_info/:id', 'v1.diy.DiyPro/getInfo')->option(['real_name' => 'DiyPro模板详情']);
-    Route::post('save/:id', 'v1.diy.DiyPro/saveInfo')->option(['real_name' => 'DiyPro模板保存']);
-    Route::get('get_product', 'v1.diy.DiyPro/getProduct')->option(['real_name' => '获取商品列表']);
-    Route::post('update/name/:id', 'v1.diy.DiyPro/updateName')->option(['real_name' => '修改名称']);
-    Route::get('export/data/:id', 'v1.diy.DiyPro/exportDIYData')->option(['real_name' => '导出DIY数据']);
-    Route::post('import/data', 'v1.diy.DiyPro/importDIYData')->option(['real_name' => '导入DIY数据']);
+    Route::get('get_list', 'v1.diy.DiyPro/getList')->option(['real_name' => 'Danh sách mẫu DiyPro']);
+    Route::get('get_info/:id', 'v1.diy.DiyPro/getInfo')->option(['real_name' => 'Chi tiết mẫu DiyPro']);
+    Route::post('save/:id', 'v1.diy.DiyPro/saveInfo')->option(['real_name' => 'Lưu mẫu DiyPro']);
+    Route::get('get_product', 'v1.diy.DiyPro/getProduct')->option(['real_name' => 'Lấy danh sách sản phẩm']);
+    Route::post('update/name/:id', 'v1.diy.DiyPro/updateName')->option(['real_name' => 'Sửa tên']);
+    Route::get('export/data/:id', 'v1.diy.DiyPro/exportDIYData')->option(['real_name' => 'Xuất dữ liệu DIY']);
+    Route::post('import/data', 'v1.diy.DiyPro/importDIYData')->option(['real_name' => 'Nhập dữ liệu DIY']);
 })->middleware([
     \app\http\middleware\AllowOriginMiddleware::class,
     \app\adminapi\middleware\AdminAuthTokenMiddleware::class,
     \app\adminapi\middleware\AdminCheckRoleMiddleware::class,
     \app\adminapi\middleware\AdminLogMiddleware::class
-])->option(['mark' => 'diy_pro', 'mark_name' => '页面装修']);
+])->option(['mark' => 'diy_pro', 'mark_name' => 'Thiết kế giao diện']);

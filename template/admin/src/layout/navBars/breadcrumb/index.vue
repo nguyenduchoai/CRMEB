@@ -23,12 +23,12 @@ export default {
     };
   },
   computed: {
-    // 设置 logo 是否显示
+    // Đặt logo có hiển thị hay không
     setIsShowLogo() {
       let { isShowLogo, layout } = this.$store.state.themeConfig.themeConfig;
       return (isShowLogo && layout === 'classic') || (isShowLogo && layout === 'transverse');
     },
-    // 设置是否显示横向菜单
+    // Đặt có hiển thị menu ngang hay không
     isLayoutTransverse() {
       let { layout, isClassicSplitMenu } = this.$store.state.themeConfig.themeConfig;
       return layout === 'transverse' || (isClassicSplitMenu && layout === 'classic');
@@ -48,11 +48,11 @@ export default {
     this.bus.$off('routesListChange');
   },
   methods: {
-    // 设置路由的过滤
+    // Đặt lọc route
     setFilterRoutes() {
       this.menuList = this.filterRoutesFun(this.$store.state.routesList.routesList);
     },
-    // 设置路由的过滤递归函数
+    // Hàm đệ quy đặt lọc route
     filterRoutesFun(arr) {
       return arr
         .filter((item) => item.path)
@@ -64,7 +64,7 @@ export default {
     },
   },
   watch: {
-    // 监听 vuex 数据变化
+    // Theo dõi thay đổi dữ liệu vuex
     '$store.state': {
       handler(val) {
         if (val.routesList.routesList.length === this.menuList.length) return false;

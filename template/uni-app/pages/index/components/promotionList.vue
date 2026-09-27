@@ -1,5 +1,5 @@
 <template>
-	<!-- 促销列表 -->
+	<!-- Danh sách khuyến mãi -->
 	<view class="index-product-wrapper" v-show="!isSortType" :style="[bottomBgColor]">
 		<view :style="{ height: navBdH + 'px' }" class="nav-bd-box">
 			<view
@@ -72,11 +72,11 @@ export default {
 			// imgStyle: this.dataConfig.imgStyle.type,
 			mbConfig: 0,
 			themeColor: '',
-			titleShow: 0, //标题是否显示
-			opriceShow: 0, //划线价是否显示
-			priceShow: 0, //价格是否显示
-			couponShow: 0, //优惠券标签是否显示
-			titleConfig: 0, //标题位置
+			titleShow: 0, //Tiêu đề có hiển thị hay không
+			opriceShow: 0, //Giá gốc (gạch ngang) có hiển thị hay không
+			priceShow: 0, //Giá có hiển thị hay không
+			couponShow: 0, //Nhãn phiếu giảm giá có hiển thị hay không
+			titleConfig: 0, //Vị trí tiêu đề
 			fontColor: '',
 			labelColor: '',
 			txtColor: '',
@@ -265,12 +265,12 @@ export default {
 					uni.getNetworkType({
 						success: (res) => {
 							if (['wifi', 'unknown'].includes(res.networkType)) {
-								// 监听
+								// Theo dõi (listener)
 								this.observeVideo();
 							}
 							if (['2g', '3g', '4g', '5g'].includes(res.networkType)) {
 								if (this.$store.state.app.autoplay) {
-									// 监听
+									// Theo dõi (listener)
 									this.observeVideo();
 								} else {
 									this.$eventHub.$emit('confirm_video_status');
@@ -397,7 +397,7 @@ export default {
 			// 	}
 			// });
 		},
-		// 促销列表的点击事件；
+		// Sự kiện click danh sách khuyến mãi;
 		changeTab(item) {
 			this.goodType = item.tabVal;
 			this.activeValue = item;
@@ -407,7 +407,7 @@ export default {
 			// let onloadH = true;
 			// this.getGroomList(onloadH);
 		},
-		// 精品推荐
+		// Đề xuất nổi bật
 		getGroomList(onloadH) {
 			let that = this;
 			let type = that.goodType == 0 ? 3 : that.goodType;
@@ -438,16 +438,16 @@ export default {
 					let tempArr = that.$util.SplitArray(list, that.tempArr);
 					that.$set(that, 'tempArr', tempArr.slice(0, this.numConfig));
 					that.loadend = loadend;
-					that.loadTitle = loadend ? '没有更多内容啦~' : '加载更多';
+					that.loadTitle = loadend ? 'Không còn nội dung nào nữa~' : 'Tải thêm';
 					that.page = that.page + 1;
 					that.loading = false;
 				})
 				.catch((res) => {
 					that.loading = false;
-					that.loadTitle = '加载更多';
+					that.loadTitle = 'Tải thêm';
 				});
 		},
-		// 首发新品切换
+		// Chuyển đổi sản phẩm mới ra mắt
 		ProductNavTab(item, index) {
 			this.ProductNavindex = index;
 			this.changeTab(item);
@@ -460,7 +460,7 @@ export default {
 </script>
 
 <style lang="scss">
-// 这里可以自行配置
+// Ở đây có thể tự cấu hình
 $border-radius: 10px;
 
 .index-product-wrapper {

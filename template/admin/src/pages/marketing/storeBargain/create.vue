@@ -2,7 +2,7 @@
   <div>
     <pages-header
       ref="pageHeader"
-      :title="$route.params.id ? '编辑砍价商品' : '添加砍价商品'"
+      :title="$route.params.id ? 'Sửa sản phẩm săn giảm giá' : 'Thêm sản phẩm săn giảm giá'"
       :backUrl="$routeProStr + '/marketing/store_bargain/index'"
     ></pages-header>
     <el-card :bordered="false" shadow="never" class="mt16">
@@ -21,7 +21,7 @@
             :label-position="labelPosition"
             @submit.native.prevent
           >
-            <el-form-item label="选择商品：" prop="image_input" v-show="current === 0">
+            <el-form-item label="Chọn sản phẩm:" prop="image_input" v-show="current === 0">
               <div class="picBox" v-db-click @click="changeGoods">
                 <div class="pictrue" v-if="formValidate.image">
                   <img v-lazy="formValidate.image" />
@@ -33,7 +33,7 @@
             </el-form-item>
             <el-row v-show="current === 1">
               <el-col :span="24">
-                <el-form-item label="商品主图：" prop="image">
+                <el-form-item label="Ảnh chính sản phẩm:" prop="image">
                   <div class="picBox" v-db-click @click="modalPicTap('dan', 'danFrom')">
                     <div class="pictrue" v-if="formValidate.image">
                       <img v-lazy="formValidate.image" />
@@ -45,7 +45,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="商品轮播图：" prop="images">
+                <el-form-item label="Ảnh trình chiếu sản phẩm:" prop="images">
                   <div class="acea-row">
                     <div
                       class="pictrue"
@@ -73,9 +73,9 @@
               </el-col>
               <el-col :span="24">
                 <el-col v-bind="grid">
-                  <el-form-item label="砍价活动名称：" prop="title" label-for="title">
+                  <el-form-item label="Tên chương trình săn giảm giá:" prop="title" label-for="title">
                     <el-input
-                      placeholder="请输入砍价活动名称"
+                      placeholder="Vui lòng nhập tên chương trình săn giảm giá"
                       v-model="formValidate.title"
                       class="content_width"
                       maxlength="30"
@@ -86,9 +86,9 @@
               </el-col>
               <el-col :span="24">
                 <el-col v-bind="grid">
-                  <el-form-item label="砍价活动简介：" prop="info" label-for="info">
+                  <el-form-item label="Giới thiệu chương trình săn giảm giá:" prop="info" label-for="info">
                     <el-input
-                      placeholder="请输入砍价活动简介"
+                      placeholder="Vui lòng nhập giới thiệu chương trình săn giảm giá"
                       type="textarea"
                       :rows="4"
                       v-model="formValidate.info"
@@ -100,7 +100,7 @@
                 </el-col>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="活动时间：" prop="section_time">
+                <el-form-item label="Thời gian chương trình:" prop="section_time">
                   <div>
                     <el-date-picker
                       clearable
@@ -109,29 +109,29 @@
                       format="yyyy-MM-dd HH:mm"
                       value-format="yyyy-MM-dd HH:mm"
                       range-separator="-"
-                      start-placeholder="开始日期"
-                      end-placeholder="结束日期"
+                      start-placeholder="Ngày bắt đầu"
+                      end-placeholder="Ngày kết thúc"
                       @change="onchangeTime"
                       style="width: 460px"
                       v-model="formValidate.section_time"
                     ></el-date-picker>
-                    <div class="grey">设置活动开启结束时间，用户可以在设置时间内发起参与砍价</div>
+                    <div class="grey">Thiết lập thời gian bắt đầu và kết thúc chương trình, người dùng có thể khởi tạo và tham gia săn giảm giá trong thời gian đã thiết lập</div>
                   </div>
                 </el-form-item>
               </el-col>
               <el-col :span="24" v-if="formValidate.virtual_type == 0">
-                <el-form-item label="物流方式：" prop="logistics">
+                <el-form-item label="Phương thức vận chuyển:" prop="logistics">
                   <el-checkbox-group v-model="formValidate.logistics">
-                    <el-checkbox label="1">快递</el-checkbox>
-                    <el-checkbox label="2">到店</el-checkbox>
+                    <el-checkbox label="1">Chuyển phát</el-checkbox>
+                    <el-checkbox label="2">Nhận tại cửa hàng</el-checkbox>
                   </el-checkbox-group>
                 </el-form-item>
               </el-col>
               <el-col :span="24" v-if="formValidate.virtual_type == 0">
-                <el-form-item label="运费设置：" :prop="formValidate.freight != 1 ? 'freight' : ''">
+                <el-form-item label="Cài đặt phí vận chuyển:" :prop="formValidate.freight != 1 ? 'freight' : ''">
                   <el-radio-group v-model="formValidate.freight">
-                    <el-radio :label="2">固定邮费</el-radio>
-                    <el-radio :label="3">运费模板</el-radio>
+                    <el-radio :label="2">Phí vận chuyển cố định</el-radio>
+                    <el-radio :label="3">Mẫu phí vận chuyển</el-radio>
                   </el-radio-group>
                 </el-form-item>
               </el-col>
@@ -146,7 +146,7 @@
                       :min="0"
                       :max="9999999999"
                       v-model="formValidate.postage"
-                      placeholder="请输入金额"
+                      placeholder="Vui lòng nhập số tiền"
                       class="content_width"
                     />
                   </div>
@@ -158,7 +158,7 @@
                     <el-select
                       v-model="formValidate.temp_id"
                       clearable
-                      placeholder="请选择运费模板"
+                      placeholder="Vui lòng chọn mẫu phí vận chuyển"
                       class="content_width"
                     >
                       <el-option
@@ -168,51 +168,51 @@
                         :label="item.name"
                       ></el-option>
                     </el-select>
-                    <span class="addfont" v-db-click @click="freight">新增运费模板</span>
+                    <span class="addfont" v-db-click @click="freight">Thêm mẫu phí vận chuyển</span>
                   </div>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="砍价人数：" prop="people_num" label-for="people_num">
+                <el-form-item label="Số người săn giảm giá:" prop="people_num" label-for="people_num">
                   <div>
                     <el-input-number
                       :controls="false"
-                      placeholder="请输入砍价人数"
+                      placeholder="Vui lòng nhập số người săn giảm giá"
                       element-id="people_num"
                       :min="2"
                       :max="10000"
                       :precision="0"
                       v-model="formValidate.people_num"
                       class="content_width input-number-unit-class"
-                      class-unit="人"
+                      class-unit="người"
                     />
-                    <div class="grey">需要多少人砍价成功</div>
+                    <div class="grey">Cần bao nhiêu người để săn giảm giá thành công</div>
                   </div>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="帮砍次数：" prop="bargain_num" label-for="bargain_num">
+                <el-form-item label="Số lần giúp săn giảm giá:" prop="bargain_num" label-for="bargain_num">
                   <div>
                     <el-input-number
                       :controls="false"
-                      placeholder="请输入帮砍次数"
+                      placeholder="Vui lòng nhập số lần giúp săn giảm giá"
                       :min="1"
                       :max="10000"
                       :precision="0"
                       v-model="formValidate.bargain_num"
                       class="content_width input-number-unit-class"
-                      class-unit="次"
+                      class-unit="lượt"
                     />
                     <div class="grey">
-                      单个商品用户可以帮砍的次数，例：次数设置为1，甲和乙同时将商品A的砍价链接发给丙，丙只能帮甲或乙其中一个人砍价
+                      Số lần một người dùng có thể giúp săn giảm giá cho cùng một sản phẩm, ví dụ: đặt số lần là 1, người A và người B cùng gửi liên kết săn giảm giá sản phẩm X cho người C, thì người C chỉ có thể giúp một trong hai người A hoặc B săn giảm giá
                     </div>
                   </div>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="单位：" prop="unit_name" label-for="unit_name">
+                <el-form-item label="Đơn vị:" prop="unit_name" label-for="unit_name">
                   <el-input
-                    placeholder="请输入单位"
+                    placeholder="Vui lòng nhập đơn vị"
                     element-id="unit_name"
                     v-model="formValidate.unit_name"
                     class="content_width"
@@ -220,27 +220,27 @@
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="购买数量限制：" prop="num">
+                <el-form-item label="Giới hạn số lượng mua:" prop="num">
                   <div>
                     <el-input-number
                       :controls="false"
-                      placeholder="购买数量限制"
+                      placeholder="Giới hạn số lượng mua"
                       :min="1"
                       :max="10000"
                       :precision="0"
                       v-model="formValidate.num"
                       class="content_width input-number-unit-class"
-                      :class-unit="formValidate.unit_name || '件'"
+                      :class-unit="formValidate.unit_name || 'cái'"
                     />
-                    <div class="grey">单个活动每个用户发起砍价次数限制</div>
+                    <div class="grey">Giới hạn số lần mỗi người dùng khởi tạo săn giảm giá trong một chương trình</div>
                   </div>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="排序：">
+                <el-form-item label="Thứ tự sắp xếp:">
                   <el-input-number
                     :controls="false"
-                    placeholder="请输入排序"
+                    placeholder="Vui lòng nhập thứ tự sắp xếp"
                     element-id="sort"
                     :min="0"
                     :max="10000"
@@ -251,7 +251,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="砍价是否参与分销：" props="is_commission" label-for="is_commission">
+                <el-form-item label="Săn giảm giá tham gia tiếp thị liên kết:" props="is_commission" label-for="is_commission">
                   <div>
                     <el-switch
                       class="defineSwitch"
@@ -259,30 +259,30 @@
                       :inactive-value="0"
                       v-model="formValidate.is_commission"
                       size="large"
-                      active-text="开启"
-                      inactive-text="关闭"
+                      active-text="Bật"
+                      inactive-text="Tắt"
                     >
                     </el-switch>
-                    <div class="grey">商品是否参与商城分销返佣</div>
+                    <div class="grey">Sản phẩm có tham gia trả hoa hồng tiếp thị liên kết của cửa hàng hay không</div>
                   </div>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="活动状态：" props="status" label-for="status">
+                <el-form-item label="Trạng thái chương trình:" props="status" label-for="status">
                   <el-switch
                     class="defineSwitch"
                     :active-value="1"
                     :inactive-value="0"
                     v-model="formValidate.status"
                     size="large"
-                    active-text="开启"
-                    inactive-text="关闭"
+                    active-text="Bật"
+                    inactive-text="Tắt"
                   >
                   </el-switch>
                 </el-form-item>
               </el-col>
               <el-col :span="24">
-                <el-form-item label="规格选择：">
+                <el-form-item label="Chọn quy cách:">
                   <el-table :data="specsData" border>
                     <el-table-column width="50">
                       <template slot-scope="scope">
@@ -353,7 +353,7 @@
               </el-col>
             </el-row>
             <div v-if="current === 2">
-              <el-form-item label="内容：">
+              <el-form-item label="Nội dung:">
                 <WangEditor
                   style="width: 90%"
                   :content="formValidate.description"
@@ -362,7 +362,7 @@
               </el-form-item>
             </div>
             <div v-if="current === 3">
-              <el-form-item label="规则：">
+              <el-form-item label="Quy tắc:">
                 <WangEditor
                   style="width: 90%"
                   :content="formValidate.rule"
@@ -377,7 +377,7 @@
                 v-db-click
                 @click="step"
                 :disabled="($route.params.id && $route.params.id !== '0' && current === 1) || current === 0"
-                >上一步</el-button
+                >Bước trước</el-button
               >
               <el-button
                 type="primary"
@@ -385,20 +385,20 @@
                 class="submission"
                 v-db-click
                 @click="next('formValidate')"
-                >{{ current === 3 ? '提交' : '下一步' }}</el-button
+                >{{ current === 3 ? 'Gửi' : 'Bước tiếp theo' }}</el-button
               >
             </el-form-item>
           </el-form>
         </el-col>
       </el-row>
     </el-card>
-    <!-- 选择商品-->
-    <el-dialog :visible.sync="modals" title="商品列表" class="paymentFooter" width="1000px">
+    <!-- Chọn sản phẩm-->
+    <el-dialog :visible.sync="modals" title="Danh sách sản phẩm" class="paymentFooter" width="1000px">
       <goods-list ref="goodslist" @getProductId="getProductId"></goods-list>
     </el-dialog>
 
-    <!-- 上传图片-->
-    <el-dialog :visible.sync="modalPic" width="950px" title="上传商品图" :close-on-click-modal="false">
+    <!-- Tải lên ảnh-->
+    <el-dialog :visible.sync="modalPic" width="950px" title="Tải lên ảnh sản phẩm" :close-on-click-modal="false">
       <uploadPictures
         :isChoice="isChoice"
         @getPic="getPic"
@@ -408,7 +408,7 @@
         v-if="modalPic"
       ></uploadPictures>
     </el-dialog>
-    <!-- 运费模板-->
+    <!-- Mẫu phí vận chuyển-->
     <freight-template ref="template" @addSuccess="productGetTemplate"></freight-template>
   </div>
 </template>
@@ -438,13 +438,13 @@ export default {
       submitOpen: false,
       spinShow: false,
       myConfig: {
-        autoHeightEnabled: false, // 编辑器不自动被内容撑高
-        initialFrameHeight: 500, // 初始容器高度
-        initialFrameWidth: '100%', // 初始容器宽度
+        autoHeightEnabled: false, // Trình soạn thảo không tự động giãn cao theo nội dung
+        initialFrameHeight: 500, // Chiều cao container ban đầu
+        initialFrameWidth: '100%', // Chiều rộng container ban đầu
         UEDITOR_HOME_URL: '/UEditor/',
         serverUrl: '',
       },
-      stepList: ['选择砍价商品', '填写基础信息', '修改商品详情', '修改商品规则'],
+      stepList: ['Chọn sản phẩm săn giảm giá', 'Điền thông tin cơ bản', 'Chỉnh sửa chi tiết sản phẩm', 'Chỉnh sửa quy tắc sản phẩm'],
       isChoice: '',
       current: 0,
       modalPic: false,
@@ -512,20 +512,20 @@ export default {
         temp_id: '',
         attrs: [],
         items: [],
-        logistics: [], //选择物流方式
-        freight: 2, //运费设置
-        postage: 1, //设置运费金额
+        logistics: [], //Chọn phương thức vận chuyển
+        freight: 2, //Cài đặt phí vận chuyển
+        postage: 1, //Thiết lập số tiền phí vận chuyển
         is_commission: 0,
       },
       description: '',
       rule: '',
       ruleValidate: {
-        image: [{ required: true, message: '请选择主图', trigger: 'change' }],
+        image: [{ required: true, message: 'Vui lòng chọn ảnh chính', trigger: 'change' }],
         images: [
           {
             required: true,
             type: 'array',
-            message: '请选择主图',
+            message: 'Vui lòng chọn ảnh chính',
             trigger: 'change',
           },
           {
@@ -535,23 +535,23 @@ export default {
             trigger: 'change',
           },
         ],
-        title: [{ required: true, message: '请输入砍价活动名称', trigger: 'blur' }],
-        info: [{ required: true, message: '请输入砍价活动简介', trigger: 'blur' }],
-        store_name: [{ required: true, message: '请输入砍价商品名称', trigger: 'blur' }],
+        title: [{ required: true, message: 'Vui lòng nhập tên chương trình săn giảm giá', trigger: 'blur' }],
+        info: [{ required: true, message: 'Vui lòng nhập giới thiệu chương trình săn giảm giá', trigger: 'blur' }],
+        store_name: [{ required: true, message: 'Vui lòng nhập tên sản phẩm săn giảm giá', trigger: 'blur' }],
         section_time: [
           {
             required: true,
             type: 'array',
-            message: '请选择活动时间',
+            message: 'Vui lòng chọn thời gian chương trình',
             trigger: 'change',
           },
         ],
-        unit_name: [{ required: true, message: '请输入单位', trigger: 'blur' }],
+        unit_name: [{ required: true, message: 'Vui lòng nhập đơn vị', trigger: 'blur' }],
         price: [
           {
             required: true,
             type: 'number',
-            message: '请输入原价',
+            message: 'Vui lòng nhập giá gốc',
             trigger: 'blur',
           },
         ],
@@ -559,21 +559,21 @@ export default {
           {
             required: true,
             type: 'number',
-            message: '请输入最低购买价',
+            message: 'Vui lòng nhập giá mua thấp nhất',
             trigger: 'blur',
           },
         ],
         // bargain_max_price: [
-        //     { required: true, type: 'number', message: '请输单次砍价最大金额', trigger: 'blur' }
+        //     { required: true, type: 'number', message: 'Vui lòng nhập số tiền tối đa mỗi lần săn giảm giá', trigger: 'blur' }
         // ],
         // bargain_min_price: [
-        //     { required: true, type: 'number', message: '单次砍价最小金额', trigger: 'blur' }
+        //     { required: true, type: 'number', message: 'Số tiền tối thiểu mỗi lần săn giảm giá', trigger: 'blur' }
         // ],
         cost: [
           {
             required: true,
             type: 'number',
-            message: '请输入成本价',
+            message: 'Vui lòng nhập giá vốn',
             trigger: 'blur',
           },
         ],
@@ -581,7 +581,7 @@ export default {
           {
             required: true,
             type: 'number',
-            message: '请输入帮砍次数',
+            message: 'Vui lòng nhập số lần giúp săn giảm giá',
             trigger: 'blur',
           },
         ],
@@ -589,7 +589,7 @@ export default {
           {
             required: true,
             type: 'number',
-            message: '请输入砍价人数',
+            message: 'Vui lòng nhập số người săn giảm giá',
             trigger: 'blur',
           },
         ],
@@ -597,7 +597,7 @@ export default {
           {
             required: true,
             type: 'number',
-            message: '请输入库存',
+            message: 'Vui lòng nhập tồn kho',
             trigger: 'blur',
           },
         ],
@@ -605,14 +605,14 @@ export default {
           {
             required: true,
             type: 'number',
-            message: '请输入单次允许购买数量',
+            message: 'Vui lòng nhập số lượng được phép mua mỗi lần',
             trigger: 'blur',
           },
         ],
         temp_id: [
           {
             required: true,
-            message: '请选择运费模板',
+            message: 'Vui lòng chọn mẫu phí vận chuyển',
             trigger: 'change',
             type: 'number',
           },
@@ -642,20 +642,20 @@ export default {
     this.productGetTemplate();
   },
   methods: {
-    // 详情内容
+    // Nội dung chi tiết
     getEditorContent(data) {
       this.description = data;
     },
-    // 规则内容
+    // Nội dung quy tắc
     getEditorContent2(data) {
       this.rule = data;
     },
-    // 添加运费模板
+    // Thêm mẫu phí vận chuyển
     freight() {
       this.$refs.template.id = 0;
       this.$refs.template.isTemplate = true;
     },
-    // 砍价规格；
+    // Quy cách săn giảm giá;
     productAttrs(row) {
       let that = this;
       productAttrsApi(row.id, 2)
@@ -675,13 +675,13 @@ export default {
       this.currentid = index;
       this.$set(this.formValidate, 'attrs', [this.specsData[index]]);
     },
-    // 获取运费模板；
+    // Lấy mẫu phí vận chuyển;
     productGetTemplate() {
       productGetTemplateApi().then((res) => {
         this.templateList = res.data;
       });
     },
-    // 商品id
+    // id sản phẩm
     getProductId(row) {
       this.modal_loading = false;
       this.modals = false;
@@ -694,7 +694,7 @@ export default {
           store_name: row.store_name,
           image: row.image,
           unit_name: row.unit_name,
-          price: 0, // 不取商品中的原价
+          price: 0, // Không lấy giá gốc trong sản phẩm
           min_price: 0,
           bargain_max_price: 10,
           bargain_min_price: 0.01,
@@ -710,16 +710,16 @@ export default {
           is_hot: row.is_hot,
           status: 0,
           section_time: [],
-          description: row.description, // 不取商品中的
+          description: row.description, // Không lấy trong sản phẩm
           rule: '',
           id: 0,
           product_id: row.id,
           temp_id: row.temp_id,
-          logistics: row.temp_id ? row.temp_id : ['1'], //选择物流方式
-          freight: row.freight, //运费设置
-          postage: row.postage, //设置运费金额
-          custom_form: row.custom_form, //自定义表单数据
-          virtual_type: row.virtual_type, //虚拟商品类型
+          logistics: row.temp_id ? row.temp_id : ['1'], //Chọn phương thức vận chuyển
+          freight: row.freight, //Cài đặt phí vận chuyển
+          postage: row.postage, //Thiết lập số tiền phí vận chuyển
+          custom_form: row.custom_form, //Dữ liệu biểu mẫu tùy chỉnh
+          virtual_type: row.virtual_type, //Loại sản phẩm ảo
           is_commission: row.is_commission,
         };
         this.productAttrs(row);
@@ -728,14 +728,14 @@ export default {
     cancel() {
       this.modals = false;
     },
-    // 移动
+    // Di chuyển
     handleDragStart(e, item) {
       this.dragging = item;
     },
     handleDragEnd(e, item) {
       this.dragging = null;
     },
-    // 首先把div变成可以放置的元素，即重写dragenter/dragover
+    // Đầu tiên biến div thành phần tử có thể thả vào, tức là ghi đè dragenter/dragover
     handleDragOver(e) {
       e.dataTransfer.dropEffect = 'move';
     },
@@ -750,11 +750,11 @@ export default {
       newItems.splice(dst, 0, ...newItems.splice(src, 1));
       this.formValidate.images = newItems;
     },
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.formValidate.section_time = e;
     },
-    // 详情
+    // Chi tiết
     getInfo() {
       this.spinShow = true;
       bargainInfoApi(this.$route.params.id)
@@ -783,7 +783,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 下一步
+    // Bước tiếp theo
     next(name) {
       if (this.current === 3) {
         this.formValidate.description = this.description;
@@ -815,7 +815,7 @@ export default {
         this.$refs[name].validate((valid) => {
           if (valid) {
             if (this.currentid === '') {
-              return this.$message.error('请选择属性规格');
+              return this.$message.error('Vui lòng chọn thuộc tính quy cách');
             } else {
               let val = this.specsData[this.currentid];
               // let formValidate = this.formValidate.attrs[0];
@@ -823,10 +823,10 @@ export default {
               // formValidate.min_price = val.min_price;
               // formValidate.quota = val.quota;
               if (this.formValidate.attrs[0].quota <= 0) {
-                return this.$message.error('砍价限量必须大于0');
+                return this.$message.error('Số lượng giới hạn săn giảm giá phải lớn hơn 0');
               }
               if (this.formValidate.attrs[0].quota > this.formValidate.attrs[0]['stock']) {
-                return this.$message.error('砍价限量不能超过规格库存');
+                return this.$message.error('Số lượng giới hạn săn giảm giá không được vượt quá tồn kho của quy cách');
               }
             }
             this.current += 1;
@@ -834,7 +834,7 @@ export default {
               this.formValidate.description += ' ';
             }, 0);
           } else {
-            return this.$message.warning('请完善您的信息');
+            return this.$message.warning('Vui lòng hoàn thiện thông tin của bạn');
           }
         });
       } else {
@@ -846,30 +846,30 @@ export default {
             }, 0);
           }
         } else {
-          this.$message.warning('请选择商品');
+          this.$message.warning('Vui lòng chọn sản phẩm');
         }
       }
     },
-    // 上一步
+    // Bước trước
     step() {
       this.current--;
     },
-    // 内容
+    // Nội dung
     getContent(val) {
       this.formValidate.description = val;
     },
-    // 规则
+    // Quy tắc
     getRole(val) {
       this.formValidate.rule = val;
     },
-    // 点击商品图
+    // Bấm ảnh sản phẩm
     modalPicTap(tit, picTit, index) {
       this.modalPic = true;
-      this.isChoice = tit === 'dan' ? '单选' : '多选';
+      this.isChoice = tit === 'dan' ? 'Chọn một' : 'Chọn nhiều';
       this.picTit = picTit;
       this.tableIndex = index;
     },
-    // 获取单张图片信息
+    // Lấy thông tin một ảnh
     getPic(pc) {
       switch (this.picTit) {
         case 'danFrom':
@@ -881,7 +881,7 @@ export default {
       }
       this.modalPic = false;
     },
-    // 获取多张图信息
+    // Lấy thông tin nhiều ảnh
     getPicD(pc) {
       this.images = pc;
       this.images.map((item) => {
@@ -894,7 +894,7 @@ export default {
       this.images.splice(i, 1);
       this.formValidate.images.splice(i, 1);
     },
-    // 选择商品
+    // Chọn sản phẩm
     changeGoods() {
       this.modals = true;
       this.$nextTick((e) => {
@@ -904,37 +904,37 @@ export default {
         this.$refs.goodslist.goodsCategory();
       });
     },
-    // 表单验证
+    // Kiểm tra form
     validate(prop, status, error) {
       if (status === false) {
         this.$message.error(error);
       }
     },
-    // 添加自定义弹窗
+    // Thêm popup tùy chỉnh
     addCustomDialog(editorId) {
       window.UE.registerUI(
         'test-dialog',
         function (editor, uiName) {
-          // 创建 dialog
+          // Tạo dialog
           let dialog = new window.UE.ui.Dialog({
-            // 指定弹出层中页面的路径，这里只能支持页面，路径参考常见问题 2
+            // Chỉ định đường dẫn trang trong lớp popup, ở đây chỉ hỗ trợ trang, đường dẫn tham khảo Câu hỏi thường gặp mục 2
             iframeUrl: this.$routeProStr + '/widget.images/index.html?fodder=dialog',
-            // 需要指定当前的编辑器实例
+            // Cần chỉ định thực thể trình soạn thảo hiện tại
             editor: editor,
-            // 指定 dialog 的名字
+            // Chỉ định tên của dialog
             name: uiName,
-            // dialog 的标题
-            title: '上传图片',
-            // 指定 dialog 的外围样式
+            // Tiêu đề của dialog
+            title: 'Tải lên ảnh',
+            // Chỉ định style bên ngoài của dialog
             cssRules: 'width:960px;height:550px;padding:20px;',
           });
           this.dialog = dialog;
           var btn = new window.UE.ui.Button({
             name: 'dialog-button',
-            title: '上传图片',
+            title: 'Tải lên ảnh',
             cssRules: `background-image: url(../../../assets/images/icons.png);background-position: -726px -77px;`,
             onclick: function () {
-              // 渲染dialog
+              // Render dialog
               dialog.render();
               dialog.open();
             },

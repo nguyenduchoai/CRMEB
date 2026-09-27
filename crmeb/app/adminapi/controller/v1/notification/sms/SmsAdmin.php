@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,14 +15,14 @@ use app\services\yihaotong\SmsAdminServices;
 use think\facade\App;
 
 /**
- * 短信账号
+ * Tài khoản SMS
  * Class SmsAdmin
  * @package app\adminapi\controller\v1\sms
  */
 class SmsAdmin extends AuthController
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * SmsAdmin constructor.
      * @param App $app
      * @param SmsAdminServices $services
@@ -34,7 +34,7 @@ class SmsAdmin extends AuthController
     }
 
     /**
-     * 发送验证码
+     * Gửi mã xác thực
      * @return mixed
      */
     public function captcha()
@@ -50,7 +50,7 @@ class SmsAdmin extends AuthController
     }
 
     /**
-     * 修改/注册短信平台账号
+     * Sửa/đăng ký tài khoản nền tảng SMS
      * @return mixed
      */
     public function save()

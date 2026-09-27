@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -35,12 +35,12 @@ class AuthController
     }
 
     /**
-     * 返回用户信息的缓存key，返回是否强制绑定手机号
+     * Trả về key cache thông tin người dùng, trả về có bắt buộc liên kết số điện thoại không
      * @param $code
      * @param string $spread_code
      * @param string $spread_spid
      * @return \think\Response
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/12
      */
@@ -51,14 +51,14 @@ class AuthController
     }
 
     /**
-     * 根据缓存获取token
+     * Lấy token theo cache
      * @param $key
      * @return \think\Response
      * @throws \Psr\SimpleCache\InvalidArgumentException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/12
      */
@@ -69,7 +69,7 @@ class AuthController
     }
 
     /**
-     * 授权获取小程序用户手机号 直接绑定
+     * Ủy quyền lấy số điện thoại người dùng Mini Program, liên kết trực tiếp
      * @param string $code
      * @param string $iv
      * @param string $encryptedData
@@ -93,7 +93,7 @@ class AuthController
     }
 
     /**
-     * 小程序手机号登录
+     * Đăng nhập bằng số điện thoại trên Mini Program
      * @param string $key
      * @param string $phone
      * @param string $captcha
@@ -105,13 +105,13 @@ class AuthController
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/12
      */
     public function phoneLogin($key = '', $phone = '', $captcha = '', $spread_code = '', $spread_spid = '', $code = '')
     {
-        //验证验证码
+        //Xác thực mã xác thực
         $verifyCode = CacheService::get('code_' . $phone);
         if (!$verifyCode)
             return app('json')->fail(410009);
@@ -126,12 +126,12 @@ class AuthController
     }
 
     /**
-     * 小程序绑定手机号
+     * Liên kết số điện thoại trên Mini Program
      * @param string $code
      * @param string $iv
      * @param string $encryptedData
      * @return \think\Response
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/02/24
      */

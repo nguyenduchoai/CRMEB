@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -11,8 +11,8 @@
 import request from '@/libs/request';
 
 /**
- * @description 列表
- * @param {Number} param id {Number} 组合数据id
+ * @description Danh sách
+ * @param {Number} param id {Number} ID dữ liệu tổ hợp
  */
 export function membershipDataListApi(data) {
   return request({
@@ -24,9 +24,9 @@ export function membershipDataListApi(data) {
 }
 
 /**
- * @description 组合数据列表 -- 编辑表单
- * @param {Number} param id {Number} 组合数据列表id
- * @param {Object} param data {Object} 组合数据id对象
+ * @description Danh sách dữ liệu tổ hợp -- Form sửa
+ * @param {Number} param id {Number} ID danh sách dữ liệu tổ hợp
+ * @param {Object} param data {Object} Đối tượng ID dữ liệu tổ hợp
  */
 export function membershipDataEditApi(data, url) {
   return request({
@@ -37,8 +37,8 @@ export function membershipDataEditApi(data, url) {
 }
 
 /**
- * @description 组合数据列表 -- 新增表单
- * @param {Number} param id {Number} 组合数据id
+ * @description Danh sách dữ liệu tổ hợp -- Form thêm mới
+ * @param {Number} param id {Number} ID dữ liệu tổ hợp
  */
 export function membershipDataAddApi(id, url) {
   return request({
@@ -49,8 +49,8 @@ export function membershipDataAddApi(id, url) {
   });
 }
 /**
- * @description 分销任务配置
- * @param {Number} param id {Number} 组合数据id
+ * @description Cấu hình nhiệm vụ tiếp thị liên kết
+ * @param {Number} param id {Number} ID dữ liệu tổ hợp
  */
 export function getTaskNumFormApi(id) {
   return request({
@@ -59,8 +59,8 @@ export function getTaskNumFormApi(id) {
   });
 }
 /**
- * @description 组合数据列表 -- 修改状态
- * @param {Object} param data {Object} 组合数据列表传值
+ * @description Danh sách dữ liệu tổ hợp -- Đổi trạng thái
+ * @param {Object} param data {Object} Truyền giá trị danh sách dữ liệu tổ hợp
  */
 export function membershipSetApi(url) {
   return request({
@@ -71,8 +71,8 @@ export function membershipSetApi(url) {
 }
 
 /**
- * @description 组合数据列表 -- 修改状态
- * @param {Object} param data {Object} 组合数据列表传值
+ * @description Danh sách dữ liệu tổ hợp -- Đổi trạng thái
+ * @param {Object} param data {Object} Truyền giá trị danh sách dữ liệu tổ hợp
  */
 export function levelTaskSetApi(url) {
   return request({
@@ -83,8 +83,8 @@ export function levelTaskSetApi(url) {
 }
 
 /**
- * @description 等级任务列表
- * @param {Number} param id {Number} 组合数据id
+ * @description Danh sách nhiệm vụ theo hạng
+ * @param {Number} param id {Number} ID dữ liệu tổ hợp
  */
 export function levelTaskListDataAddApi(data) {
   return request({
@@ -96,9 +96,9 @@ export function levelTaskListDataAddApi(data) {
 }
 
 /**
- * @description 组合数据列表 -- 编辑表单
- * @param {Number} param id {Number} 组合数据列表id
- * @param {Object} param data {Object} 组合数据id对象
+ * @description Danh sách dữ liệu tổ hợp -- Form sửa
+ * @param {Number} param id {Number} ID danh sách dữ liệu tổ hợp
+ * @param {Object} param data {Object} Đối tượng ID dữ liệu tổ hợp
  */
 export function levelTaskDataEditApi(data, url) {
   return request({
@@ -109,8 +109,8 @@ export function levelTaskDataEditApi(data, url) {
 }
 
 /**
- * @description 组合数据列表 -- 新增表单
- * @param {Number} param id {Number} 组合数据id
+ * @description Danh sách dữ liệu tổ hợp -- Form thêm mới
+ * @param {Number} param id {Number} ID dữ liệu tổ hợp
  */
 export function levelTaskDataAddApi(id, url) {
   return request({

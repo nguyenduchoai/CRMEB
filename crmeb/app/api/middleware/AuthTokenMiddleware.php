@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -31,7 +31,7 @@ class AuthTokenMiddleware implements MiddlewareInterface
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/04/07
      */
@@ -39,7 +39,7 @@ class AuthTokenMiddleware implements MiddlewareInterface
     {
         $authInfo = null;
         $token = trim(ltrim($request->header('Authori-zation'), 'Bearer'));
-        if (!$token) $token = trim(ltrim($request->header('Authorization'), 'Bearer'));//正式版，删除此行，某些服务器无法获取到token调整为 Authori-zation
+        if (!$token) $token = trim(ltrim($request->header('Authorization'), 'Bearer'));//Bản chính thức, xóa dòng này, một số server không lấy được token nên đổi thành Authori-zation
         try {
             /** @var UserAuthServices $service */
             $service = app()->make(UserAuthServices::class);

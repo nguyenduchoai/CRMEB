@@ -10,18 +10,18 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 会话设置
+// | Cài đặt session
 // +----------------------------------------------------------------------
 
 return [
     // session name
     'name'           => '',
-    // SESSION_ID的提交变量,解决flash上传跨域
+    // Biến gửi SESSION_ID, giải quyết upload flash cross-domain
     'var_session_id' => '',
-    // 驱动方式 支持file redis memcache memcached
+    // Kiểu driver, hỗ trợ file redis memcache memcached
     'type'           => 'file',
-    // 过期时间
+    // Thời gian hết hạn
     'expire'         => 10800,
-    // 前缀
+    // Tiền tố
     'prefix'         => '',
 ];

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -37,7 +37,7 @@ use crmeb\utils\Arr;
  * Class StoreSeckillServices
  * @package app\services\activity
  * @method getSeckillIdsArray(array $ids, array $field)
- * @method get(int $id, array $field) 获取一条数据
+ * @method get(int $id, array $field) Lấy một dòng dữ liệu
  */
 class StoreSeckillServices extends BaseServices
 {
@@ -57,7 +57,7 @@ class StoreSeckillServices extends BaseServices
     }
 
     /**
-     * 秒杀是否存在
+     * Flash sale có tồn tại không
      * @param int $id
      * @return int
      */
@@ -73,7 +73,7 @@ class StoreSeckillServices extends BaseServices
             $where[] = ['stop_time', '>=', $time - 86400];
             return $this->dao->getOne($where, $field);
         } else {
-            $seckillTime = sys_data('routine_seckill_time') ?: [];//秒杀时间段
+            $seckillTime = sys_data('routine_seckill_time') ?: [];//Khung giờ flash sale
             $timeInfo = ['time' => 0, 'continued' => 0];
             foreach ($seckillTime as $key => $value) {
                 $currentHour = date('H');
@@ -96,7 +96,7 @@ class StoreSeckillServices extends BaseServices
 
 
     /**
-     * 保存数据
+     * Lưu dữ liệu
      * @param int $id
      * @param array $data
      */
@@ -116,7 +116,7 @@ class StoreSeckillServices extends BaseServices
                 throw new AdminException(100026);
             }
         }
-        //限制编辑
+        //Hạn chế sửa
 //        if ($data['copy'] == 0 && $seckill) {
 //            if ($seckill['stop_time'] + 86400 < time()) {
 //                throw new AdminException(400508);
@@ -162,7 +162,7 @@ class StoreSeckillServices extends BaseServices
                 if (!$res) throw new AdminException(100007);
             } else {
                 if (!$storeProductServices->getOne(['is_del' => 0, 'id' => $data['product_id']])) {
-                    throw new AdminException('无法添加回收站商品');
+                    throw new AdminException('Không thể thêm sản phẩm trong thùng rác');
                 }
                 $data['add_time'] = time();
                 $res = $this->dao->save($data);
@@ -175,7 +175,7 @@ class StoreSeckillServices extends BaseServices
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -194,15 +194,15 @@ class StoreSeckillServices extends BaseServices
             $item['store_name'] = $item['title'];
             if ($item['status']) {
                 if ($item['start_time'] > time()) {
-                    $item['start_name'] = '未开始';
+                    $item['start_name'] = 'Chưa bắt đầu';
                 } else if (bcadd($item['stop_time'], '86400') < time()) {
-                    $item['start_name'] = '已结束';
+                    $item['start_name'] = 'Đã kết thúc';
                     $item['status'] = 0;
                     $stopIds[] = $item['id'];
                 } else if (bcadd($item['stop_time'], '86400') > time() && $item['start_time'] < time()) {
-                    $item['start_name'] = '进行中';
+                    $item['start_name'] = 'Đang diễn ra';
                 }
-            } else $item['start_name'] = '已结束';
+            } else $item['start_name'] = 'Đã kết thúc';
             $end_time = $item['stop_time'] ? date('Y/m/d', (int)$item['stop_time']) : '';
             $item['_stop_time'] = $end_time;
             $item['stop_status'] = $item['stop_time'] + 86400 < time() ? 1 : 0;
@@ -217,7 +217,7 @@ class StoreSeckillServices extends BaseServices
     }
 
     /**
-     * 后台页面设计获取商品列表
+     * Lấy danh sách sản phẩm cho thiết kế giao diện ở trang quản trị
      * @param $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -256,7 +256,7 @@ class StoreSeckillServices extends BaseServices
     }
 
     /**
-     * 首页秒杀数据
+     * Dữ liệu flash sale trang chủ
      * @param $where
      * @return array|int
      * @throws \think\db\exception\DataNotFoundException
@@ -266,7 +266,7 @@ class StoreSeckillServices extends BaseServices
     public function getHomeSeckillList($where)
     {
         $data = [];
-        $seckillTime = sys_data('routine_seckill_time') ?: [];//秒杀时间段
+        $seckillTime = sys_data('routine_seckill_time') ?: [];//Khung giờ flash sale
         $today = strtotime(date('Y-m-d'));
         $timeInfo = ['time' => 0, 'continued' => 0];
         foreach ($seckillTime as $key => $value) {
@@ -292,7 +292,7 @@ class StoreSeckillServices extends BaseServices
     }
 
     /**
-     * 获取秒杀详情
+     * Lấy chi tiết flash sale
      * @param int $id
      * @return array|\think\Model|null
      */
@@ -328,7 +328,7 @@ class StoreSeckillServices extends BaseServices
     }
 
     /**
-     * 获取规格
+     * Lấy phân loại
      * @param int $id
      * @param int $pid
      * @return mixed
@@ -354,22 +354,22 @@ class StoreSeckillServices extends BaseServices
         foreach ($items as $key => $item) {
             $header[] = ['title' => $item['value'], 'key' => 'value' . ($key + 1), 'align' => 'center', 'minWidth' => 80];
         }
-        $header[] = ['title' => '图片', 'slot' => 'pic', 'align' => 'center', 'minWidth' => 120];
-        $header[] = ['title' => '秒杀价', 'slot' => 'price', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '成本价', 'key' => 'cost', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '划线价', 'key' => 'ot_price', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '库存', 'key' => 'stock', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '限量', 'slot' => 'quota', 'type' => 1, 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '重量(KG)', 'key' => 'weight', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '体积(m³)', 'key' => 'volume', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '商品编码', 'key' => 'bar_code', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '条形码', 'key' => 'bar_code_number', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Hình ảnh', 'slot' => 'pic', 'align' => 'center', 'minWidth' => 120];
+        $header[] = ['title' => 'Giá flash sale', 'slot' => 'price', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Giá vốn', 'key' => 'cost', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Giá gốc', 'key' => 'ot_price', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Tồn kho', 'key' => 'stock', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Giới hạn số lượng', 'slot' => 'quota', 'type' => 1, 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Trọng lượng (KG)', 'key' => 'weight', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Thể tích (m³)', 'key' => 'volume', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Mã sản phẩm', 'key' => 'bar_code', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Mã vạch', 'key' => 'bar_code_number', 'align' => 'center', 'minWidth' => 80];
         $attrs['header'] = $header;
         return $attrs;
     }
 
     /**
-     * 获取规格
+     * Lấy phân loại
      * @param $attr
      * @param $id
      * @param $type
@@ -410,7 +410,7 @@ class StoreSeckillServices extends BaseServices
     }
 
     /**
-     * 获取某个时间段的秒杀列表
+     * Lấy danh sách flash sale trong một khoảng thời gian
      * @param int $time
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -439,7 +439,7 @@ class StoreSeckillServices extends BaseServices
     }
 
     /**
-     * 获取秒杀详情
+     * Lấy chi tiết flash sale
      * @param Request $request
      * @param int $id
      * @return mixed
@@ -490,7 +490,7 @@ class StoreSeckillServices extends BaseServices
             $storeInfo['stock'] = 0;
         }
 
-        //获取秒杀商品状态
+        //Lấy trạng thái sản phẩm flash sale
         if ($storeInfo['status'] == 1) {
             if ($storeInfo['start_time'] > time()) {
                 $storeInfo['status'] = 2;
@@ -526,7 +526,7 @@ class StoreSeckillServices extends BaseServices
         $activityEndHour = $timeInfo['time']['value'] + $timeInfo['continued']['value'];
         $storeInfo['last_time'] = (int)bcadd((string)$today, (string)bcmul((string)$activityEndHour, '3600', 0));
 
-        //商品详情
+        //Chi tiết sản phẩm
         $data['storeInfo'] = get_thumb_water($storeInfo, 'big', ['image', 'images']);
         $storeInfoNew = get_thumb_water($storeInfo, 'small');
         $data['storeInfo']['small_image'] = $storeInfoNew['image'];
@@ -545,15 +545,15 @@ class StoreSeckillServices extends BaseServices
         $data['productValue'] = $productValue;
         $data['routine_contact_type'] = sys_config('routine_contact_type', 0);
 
-        //用户访问事件
+        //Sự kiện người dùng truy cập
         event('UserVisitListener', [$uid, $id, 'seckill', $storeInfo['product_id'], 'view']);
-        //浏览记录
+        //Lịch sử xem
         ProductLogJob::dispatch(['visit', ['uid' => $uid, 'product_id' => $storeInfo['product_id']]]);
         return $data;
     }
 
     /**
-     * 获取秒杀数据
+     * Lấy dữ liệu flash sale
      * @param array $ids
      * @param string $field
      * @return array
@@ -579,7 +579,7 @@ class StoreSeckillServices extends BaseServices
     }
 
     /**
-     * 检查秒杀库存
+     * Kiểm tra tồn kho flash sale
      * @param int $uid
      * @param int $seckillId
      * @param int $cartNum
@@ -588,7 +588,7 @@ class StoreSeckillServices extends BaseServices
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/03/01
      */
@@ -599,7 +599,7 @@ class StoreSeckillServices extends BaseServices
         if ($unique == '') {
             $unique = $attrValueServices->value(['product_id' => $seckillId, 'type' => 1], 'unique');
         }
-        //检查商品活动状态
+        //Kiểm tra trạng thái chương trình của sản phẩm
         $StoreSeckillinfo = $this->getSeckillCount($seckillId, '*,title as store_name');
         if ($StoreSeckillinfo['once_num'] < $cartNum) {
             throw new ApiException(410313, ['num' => $StoreSeckillinfo['once_num']]);
@@ -624,7 +624,7 @@ class StoreSeckillServices extends BaseServices
     }
 
     /**
-     * 修改秒杀库存
+     * Sửa tồn kho flash sale
      * @param int $num
      * @param int $seckillId
      * @param string $unique
@@ -632,7 +632,7 @@ class StoreSeckillServices extends BaseServices
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/03/01
      */
@@ -642,11 +642,11 @@ class StoreSeckillServices extends BaseServices
         if ($unique) {
             /** @var StoreProductAttrValueServices $skuValueServices */
             $skuValueServices = app()->make(StoreProductAttrValueServices::class);
-            //减去秒杀商品的sku库存增加销量
+            //Trừ tồn kho SKU sản phẩm flash sale, tăng lượt bán
             $res = false !== $skuValueServices->decProductAttrStock($seckillId, $unique, $num, 1);
-            //减去秒杀库存
+            //Trừ tồn kho flash sale
             $res = $res && $this->dao->decStockIncSales(['id' => $seckillId, 'type' => 1], $num);
-            //减去当前普通商品sku的库存增加销量
+            //Giảm tồn kho sku của sản phẩm thường hiện tại, tăng lượt bán
             $suk = $skuValueServices->value(['unique' => $unique, 'product_id' => $seckillId, 'type' => 1], 'suk');
             $productUnique = $skuValueServices->value(['suk' => $suk, 'product_id' => $product_id, 'type' => 0], 'unique');
             if ($productUnique) {
@@ -657,13 +657,13 @@ class StoreSeckillServices extends BaseServices
         }
         /** @var StoreProductServices $services */
         $services = app()->make(StoreProductServices::class);
-        //减去普通商品库存
+        //Giảm tồn kho sản phẩm thường
         return $res && $services->decProductStock($num, $product_id);
 
     }
 
     /**
-     * 加库存减销量
+     * Tăng tồn kho, giảm lượt bán
      * @param int $num
      * @param int $seckillId
      * @param string $unique
@@ -675,11 +675,11 @@ class StoreSeckillServices extends BaseServices
         if ($unique) {
             /** @var StoreProductAttrValueServices $skuValueServices */
             $skuValueServices = app()->make(StoreProductAttrValueServices::class);
-            //减去秒杀商品的sku库存增加销量
+            //Trừ tồn kho SKU sản phẩm flash sale, tăng lượt bán
             $res = false !== $skuValueServices->incProductAttrStock($seckillId, $unique, $num, 1);
-            //减去秒杀库存
+            //Trừ tồn kho flash sale
             $res = $res && $this->dao->incStockDecSales(['id' => $seckillId, 'type' => 1], $num);
-            //减去当前普通商品sku的库存增加销量
+            //Giảm tồn kho sku của sản phẩm thường hiện tại, tăng lượt bán
             $suk = $skuValueServices->value(['unique' => $unique, 'product_id' => $seckillId], 'suk');
             $productUnique = $skuValueServices->value(['suk' => $suk, 'product_id' => $product_id], 'unique');
             if ($productUnique) {
@@ -690,13 +690,13 @@ class StoreSeckillServices extends BaseServices
         }
         /** @var StoreProductServices $services */
         $services = app()->make(StoreProductServices::class);
-        //减去普通商品库存
+        //Giảm tồn kho sản phẩm thường
         $res = $res && $services->incProductStock($num, $product_id);
         return $res;
     }
 
     /**
-     * 获取一条秒杀商品
+     * Lấy một sản phẩm flash sale
      * @param $id
      * @param string $field
      * @return array|false|\PDOStatement|string|\think\Model
@@ -710,7 +710,7 @@ class StoreSeckillServices extends BaseServices
     }
 
     /**
-     * 秒杀统计
+     * Thống kê flash sale
      * @param $id
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -730,7 +730,7 @@ class StoreSeckillServices extends BaseServices
     }
 
     /**
-     * 秒杀参与人统计
+     * Thống kê người tham gia flash sale
      * @param $id
      * @param string $keyword
      * @return array
@@ -749,7 +749,7 @@ class StoreSeckillServices extends BaseServices
     }
 
     /**
-     * 秒杀订单统计
+     * Thống kê đơn hàng flash sale
      * @param $id
      * @param array $where
      * @return array
@@ -765,20 +765,20 @@ class StoreSeckillServices extends BaseServices
         foreach ($list as &$item) {
             if ($item['status'] == 0) {
                 if ($item['paid'] == 0) {
-                    $item['status'] = '未支付';
+                    $item['status'] = 'Chưa thanh toán';
                 } else {
-                    $item['status'] = '未发货';
+                    $item['status'] = 'Chưa giao hàng';
                 }
             } elseif ($item['status'] == 1) {
-                $item['status'] = '待收货';
+                $item['status'] = 'Chờ nhận hàng';
             } elseif ($item['status'] == 2) {
-                $item['status'] = '待评价';
+                $item['status'] = 'Chờ đánh giá';
             } elseif ($item['status'] == 3) {
-                $item['status'] = '已完成';
+                $item['status'] = 'Đã hoàn thành';
             } elseif ($item['status'] == -2) {
-                $item['status'] = '已退款';
+                $item['status'] = 'Đã hoàn tiền';
             } else {
-                $item['status'] = '未知';
+                $item['status'] = 'Không xác định';
             }
             $item['add_time'] = date('Y-m-d H:i:s', $item['add_time']);
             $item['pay_time'] = $item['pay_time'] ? date('Y-m-d H:i:s', $item['pay_time']) : '';
@@ -791,11 +791,11 @@ class StoreSeckillServices extends BaseServices
         if ($data['section_time']) {
             [$start_time, $end_time] = $data['section_time'];
             if (strtotime($end_time) + 86400 < time()) {
-                throw new AdminException('活动结束时间不能小于当前时间');
+                throw new AdminException('Thời gian kết thúc chương trình không được trước thời điểm hiện tại');
             }
         }
         if ($data['num'] < $data['once_num']) {
-            throw new AdminException('限制单次购买数量不能大于总购买数量');
+            throw new AdminException('Giới hạn số lượng mua mỗi lần không được lớn hơn tổng số lượng mua');
         }
 
         $data['start_day'] = strtotime($data['section_time'][0]);
@@ -840,45 +840,45 @@ class StoreSeckillServices extends BaseServices
                 $seckillData['time_id'] = $timeIds;
                 $seckillData['num'] = $data['num'] ?? 0;
                 $seckillData['once_num'] = $data['once_num'] ?? 0;
-                $seckillData['temp_id'] = $product['temp_id'];//运费设置
-                $seckillData['freight'] = $product['freight'];//运费设置
-                $seckillData['logistics'] = $product['logistics'];//运费设置
-                $seckillData['postage'] = $product['postage'];//邮费
-                $seckillData['custom_form'] = $product['custom_form'];//自定义表单
-                $seckillData['virtual_type'] = $product['virtual_type'];//商品类型
-                $seckillData['is_commission'] = $data['is_commission'];//是否返佣
+                $seckillData['temp_id'] = $product['temp_id'];//Cài đặt phí vận chuyển
+                $seckillData['freight'] = $product['freight'];//Cài đặt phí vận chuyển
+                $seckillData['logistics'] = $product['logistics'];//Cài đặt phí vận chuyển
+                $seckillData['postage'] = $product['postage'];//Phí vận chuyển
+                $seckillData['custom_form'] = $product['custom_form'];//Form tùy chỉnh
+                $seckillData['virtual_type'] = $product['virtual_type'];//Loại sản phẩm
+                $seckillData['is_commission'] = $data['is_commission'];//Có trả hoa hồng không
                 $seckillData['items'] = $attrInfo['items'];
                 $attrs = $attrInfo['attrs'] ?? [];
                 if ($attrs) {
                     $seckillAttrValue = $productInfos[$product['id']]['attrs'] ?? [];
                     if (!$seckillAttrValue) {
-                        throw new AdminException('请选择商品规格');
+                        throw new AdminException('Vui lòng chọn phân loại sản phẩm');
                     }
                     foreach ($seckillAttrValue as $sattr) {
-                        if (!isset($sattr['status']) || !$sattr['status']) {//不参与的规格不验证
+                        if (!isset($sattr['status']) || !$sattr['status']) {//Phân loại không tham gia thì không kiểm tra
                             continue;
                         }
                         if (!isset($sattr['price']) || !$sattr['price']) {
-                            throw new AdminException('请填写商品（' . $product['store_name'] . ' | ' . $sattr['suk'] . '）活动价');
+                            throw new AdminException('Sản phẩm (' . $product['store_name'] . ' | ' . $sattr['suk'] . ') chưa nhập giá khuyến mãi');
                         }
 //                        if ($sattr['price'] > $sattr['ot_price']) {
-//                            throw new AdminException('商品（' . $product['store_name'] . ' | ' . $sattr['suk'] . '）活动价不能大于原价');
+//                            throw new AdminException('Sản phẩm (' . $product['store_name'] . ' | ' . $sattr['suk'] . ') giá chương trình không được lớn hơn giá gốc');
 //                        }
                         if (!isset($sattr['quota']) || !$sattr['quota']) {
-                            throw new AdminException('请填写商品（' . $product['store_name'] . ' | ' . $sattr['suk'] . '）限量');
+                            throw new AdminException('Sản phẩm (' . $product['store_name'] . ' | ' . $sattr['suk'] . ') chưa nhập số lượng giới hạn');
                         }
                     }
                     $seckillAttrValue = array_combine(array_column($seckillAttrValue, 'suk'), $seckillAttrValue);
                     foreach ($attrs as $attr) {
                         $sku = implode(',', $attr['detail']);
                         if (!isset($seckillAttrValue[$sku])) {
-                            throw new AdminException('请重新选择商品规格');
+                            throw new AdminException('Vui lòng chọn lại phân loại sản phẩm');
                         }
                         if (!isset($seckillAttrValue[$sku]['status']) || !$seckillAttrValue[$sku]['status']) {
                             continue;
                         }
                         if (($seckillAttrValue[$sku]['quota'] ?? 0) > $attr['stock']) {
-                            throw new AdminException('限量超过了商品库存');
+                            throw new AdminException('Số lượng giới hạn vượt quá tồn kho sản phẩm');
                         }
                         $attr['quota'] = $attr['quota_show'] = $seckillAttrValue[$sku]['quota'] ?? 0;
                         $attr['price'] = $seckillAttrValue[$sku]['price'] ?? 0;

@@ -12,8 +12,8 @@
         :active-value="1"
         :inactive-value="0"
         v-model="configData.val"
-        active-text="开启"
-        inactive-text="关闭"
+        active-text="Bật"
+        inactive-text="Tắt"
       >
       </el-switch>
     </el-col>

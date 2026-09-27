@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\article\ArticleServices;
 use think\facade\App;
 
 /**
- * 文章管理
+ * Quản lý bài viết
  * Class Article
  * @package app\adminapi\controller\v1\cms
  */
@@ -38,7 +38,7 @@ class Article extends AuthController
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @return mixed
      * @throws \ReflectionException
      * @throws \think\db\exception\DataNotFoundException
@@ -56,7 +56,7 @@ class Article extends AuthController
     }
 
     /**
-     * 保存文章数据
+     * Lưu dữ liệu bài viết
      * @return mixed
      */
     public function save()
@@ -82,7 +82,7 @@ class Article extends AuthController
     }
 
     /**
-     * 获取单个文章数据
+     * Lấy dữ liệu một bài viết
      * @param int $id
      * @return mixed
      * @throws \ReflectionException
@@ -98,7 +98,7 @@ class Article extends AuthController
     }
 
     /**
-     * 删除文章
+     * Xóa bài viết
      * @param int $id
      * @return mixed
      */
@@ -110,7 +110,7 @@ class Article extends AuthController
     }
 
     /**
-     * 文章关联商品
+     * Liên kết sản phẩm với bài viết
      * @param int $id
      * @return mixed
      */
@@ -129,7 +129,7 @@ class Article extends AuthController
     }
 
     /**
-     * 取消商品关联
+     * Hủy liên kết sản phẩm
      * @param int $id
      * @return mixed
      */

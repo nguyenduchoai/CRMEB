@@ -1,33 +1,33 @@
-crmeb/app/model目录用于定义项目的数据模型类。
+Thư mục crmeb/app/model dùng để định nghĩa các lớp mô hình dữ liệu (model) của dự án.
 
-数据模型类的主要作用和特征有:
+Vai trò và đặc điểm chính của lớp mô hình dữ liệu gồm:
 
-1. 每个模型类对应数据库中的一张表。
+1. Mỗi lớp mô hình tương ứng với một bảng trong cơ sở dữ liệu.
 
-2. 类属性定义表结构,与表结构一一对应。
+2. Thuộc tính của lớp định nghĩa cấu trúc bảng, tương ứng một-một với cấu trúc bảng.
 
-3. 包含读写数据相关方法,通过ActiveRecord实现。
+3. Chứa các phương thức liên quan đến đọc/ghi dữ liệu, được triển khai thông qua ActiveRecord.
 
-4. 提供数据与数据库层解耦,统一的数据访问接口。
+4. Tách rời dữ liệu khỏi tầng cơ sở dữ liệu, cung cấp giao diện truy cập dữ liệu thống nhất.
 
-5. 数据验证机制,保证数据完整性和一致性。
+5. Cơ chế xác thực dữ liệu, đảm bảo tính toàn vẹn và nhất quán của dữ liệu.
 
-具体包含:
+Cụ thể bao gồm:
 
-- 定义模型属性,字段名称对应表结构。
+- Định nghĩa thuộc tính của model, tên trường tương ứng với cấu trúc bảng.
 
-- 自动返回属性值和赋值属性值。
+- Tự động trả về và gán giá trị thuộc tính.
 
-- 实现基础的CRUD方法操作数据库。
+- Triển khai các phương thức CRUD cơ bản để thao tác với cơ sở dữ liệu.
 
-- 可扩展自定义数据逻辑和验证规则。
+- Có thể mở rộng logic dữ liệu và quy tắc xác thực tùy chỉnh.
 
-使用模型类可以:
+Sử dụng lớp mô hình có thể:
 
-- 减少直接操作数据库带来的复杂性。
+- Giảm độ phức tạp do thao tác trực tiếp với cơ sở dữ liệu.
 
-- 跨项目重用数据层逻辑。
+- Tái sử dụng logic tầng dữ liệu giữa các dự án.
 
-- 提高项目的可扩展性与复用性。
+- Nâng cao khả năng mở rộng và tái sử dụng của dự án.
 
-所以该目录定义的数据模型层,统一封装了项目运用的数据表模型和操作方式。
+Vì vậy, tầng mô hình dữ liệu được định nghĩa trong thư mục này đóng gói thống nhất các mô hình bảng dữ liệu và cách thao tác mà dự án sử dụng.

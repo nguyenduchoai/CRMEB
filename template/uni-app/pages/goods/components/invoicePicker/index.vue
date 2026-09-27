@@ -2,7 +2,7 @@
 	<view>
 		<view :class="{ mask: invShow }" @touchmove.stop.prevent @click="invClose"></view>
 		<view class="popup" :class="{ on: invShow }">
-			<view class="popup-hd">{{$t(`抬头选择`)}}<text class="iconfont icon-guanbi" @click="invClose"></text></view>
+			<view class="popup-hd">{{$t(`Chọn tiêu đề hóa đơn`)}}<text class="iconfont icon-guanbi" @click="invClose"></text></view>
 			<scroll-view class="popup-bd" scroll-y="true">
 				<radio-group v-if="invList.length" name="inv" @change="invChange">
 					<template v-for="(item, index) in invList">
@@ -14,29 +14,29 @@
 									<view class="name-wrap acea-row row-middle">
 										<view class="name-group">
 											<view class="name">{{item.name}}</view>
-											<view v-if="item.is_default" class="default">{{$t(`默认`)}}</view>
+											<view v-if="item.is_default" class="default">{{$t(`Mặc định`)}}</view>
 										</view>
 									</view>
 									<view class="type" :class="{special: item.type === 2}">
-										{{item.header_type === 1 ? $t(`个人`) : $t(`企业`)}}
-										{{item.type === 1 ? $t(`普通`) : $t(`专用`)}}
+										{{item.header_type === 1 ? $t(`Cá nhân`) : $t(`Doanh nghiệp`)}}
+										{{item.type === 1 ? $t(`Thường`) : $t(`Chuyên dụng`)}}
 									</view>
 								</view>
 								<view class="acea-row row-bottom">
 									<view class="info-wrap">
-										<view class="email">{{$t(`联系邮箱`)}} {{item.email}}</view>
-										<view v-if="item.header_type === 1" class="tel">{{$t(`联系电话`)}}
+										<view class="email">{{$t(`Email liên hệ`)}} {{item.email}}</view>
+										<view v-if="item.header_type === 1" class="tel">{{$t(`Số điện thoại liên hệ`)}}
 											{{item.drawer_phone}}
 										</view>
-										<view v-else class="number">{{$t(`企业税号`)}}{{item.duty_number}}</view>
+										<view v-else class="number">{{$t(`Mã số thuế doanh nghiệp`)}}{{item.duty_number}}</view>
 									</view>
 									<navigator v-if="!isOrder" class="navigator"
 										:url="`/pages/users/user_invoice_form/index?from=order_confirm&id=${item.id}&${urlQuery}`"
-										hover-class="none"><text class="iconfont icon-bianji"></text>{{$t(`编辑`)}}
+										hover-class="none"><text class="iconfont icon-bianji"></text>{{$t(`Sửa`)}}
 									</navigator>
 									<navigator v-else class="navigator"
 										:url="`/pages/users/user_invoice_form/index?from=order_details&id=${item.id}&order_id=${orderId}`"
-										hover-class="none"><text class="iconfont icon-bianji"></text>{{$t(`编辑`)}}
+										hover-class="none"><text class="iconfont icon-bianji"></text>{{$t(`Sửa`)}}
 									</navigator>
 								</view>
 							</view>
@@ -45,21 +45,21 @@
 				</radio-group>
 				<view v-else class="empty">
 					<image :src="imgHost + '/statics/images/noInvoice.png'"></image>
-					<view>{{$t(`您还没有添加发票信息哟`)}}~</view>
+					<view>{{$t(`Bạn chưa thêm thông tin hóa đơn nào`)}}~</view>
 				</view>
 			</scroll-view>
 			<view class="popup-ft">
 				<navigator v-if="!isOrder" class="navigator"
 					:url="`/pages/users/user_invoice_form/index?from=order_confirm&${urlQuery}`" hover-class="none">
-					<text class="iconfont icon-fapiao"></text>{{$t(`添加新的抬头`)}}
+					<text class="iconfont icon-fapiao"></text>{{$t(`Thêm tiêu đề hóa đơn mới`)}}
 				</navigator>
 				<navigator v-else class="navigator"
 					:url="`/pages/users/user_invoice_form/index?order_id=${orderId}&from=order_details&${urlQuery}`"
 					hover-class="none">
-					<text class="iconfont icon-fapiao"></text>{{$t(`添加新的抬头`)}}
+					<text class="iconfont icon-fapiao"></text>{{$t(`Thêm tiêu đề hóa đơn mới`)}}
 				</navigator>
-				<button class="button" plain @click="invCancel">{{$t(`不开发票`)}}</button>
-				<button class="button" plain @click="invSub">{{$t(`确认提交`)}}</button>
+				<button class="button" plain @click="invCancel">{{$t(`Không xuất hóa đơn`)}}</button>
+				<button class="button" plain @click="invSub">{{$t(`Xác nhận gửi`)}}</button>
 			</view>
 		</view>
 	</view>

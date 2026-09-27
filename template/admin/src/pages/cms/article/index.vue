@@ -10,10 +10,10 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="文章分类：" label-for="pid">
+          <el-form-item label="Danh mục bài viết:" label-for="pid">
             <el-cascader
               v-model="artFrom.pid"
-              placeholder="请选择"
+              placeholder="Vui lòng chọn"
               class="treeSel"
               @change="handleCheckChange"
               :options="treeData"
@@ -22,18 +22,18 @@
             >
             </el-cascader>
           </el-form-item>
-          <el-form-item label="文章搜索：" label-for="title">
-            <el-input clearable placeholder="请输入" v-model="artFrom.title" class="form_content_width" />
+          <el-form-item label="Tìm kiếm bài viết:" label-for="title">
+            <el-input clearable placeholder="Vui lòng nhập" v-model="artFrom.title" class="form_content_width" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="userSearchs">查询</el-button>
+            <el-button type="primary" v-db-click @click="userSearchs">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
     <el-card :bordered="false" shadow="never" class="ivu-mt">
       <router-link :to="$routeProStr + '/cms/article/add_article'" v-auth="['cms-article-creat']"
-        ><el-button type="primary" class="bnt">添加文章</el-button></router-link
+        ><el-button type="primary" class="bnt">Thêm bài viết</el-button></router-link
       >
       <el-table
         :data="cmsList"
@@ -41,15 +41,15 @@
         class="mt14"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column label="ID" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="文章图片" min-width="90">
+        <el-table-column label="Hình ảnh bài viết" min-width="90">
           <template slot-scope="scope">
             <div v-if="scope.row.image_input.length !== 0" v-viewer>
               <div class="tabBox_img" v-for="(item, index) in scope.row.image_input" :key="index">
@@ -58,7 +58,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="文章名称" min-width="130">
+        <el-table-column label="Tên bài viết" min-width="130">
           <template slot-scope="scope">
             <el-tooltip placement="top" :open-delay="600">
               <div slot="content">{{ ' [ ' + scope.row.catename + ' ] ' + scope.row.title }}</div>
@@ -66,36 +66,36 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column label="关联商品" min-width="130">
+        <el-table-column label="Liên kết sản phẩm" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.store_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="浏览量" min-width="80">
+        <el-table-column label="Lượt xem" min-width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.visit }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="时间" min-width="130">
+        <el-table-column label="Thời gian" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.add_time | formatDate }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="210">
+        <el-table-column label="Thao tác" fixed="right" width="210">
           <template slot-scope="scope">
-            <a v-db-click @click="edit(scope.row)">编辑</a>
+            <a v-db-click @click="edit(scope.row)">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="artRelation(scope.row, '取消关联', index)">{{
-              scope.row.product_id === 0 ? '关联' : '取消关联'
+            <a v-db-click @click="artRelation(scope.row, 'Hủy liên kết', index)">{{
+              scope.row.product_id === 0 ? 'Liên kết' : 'Hủy liên kết'
             }}</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除文章', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa bài viết', scope.$index)">Xóa</a>
             <el-divider direction="vertical"></el-divider>
             <el-dropdown size="small" @command="onCopy(scope.row, $event)" :transfer="true">
-              <span class="el-dropdown-link">复制链接<i class="el-icon-arrow-down el-icon--right"></i></span>
+              <span class="el-dropdown-link">Sao chép liên kết<i class="el-icon-arrow-down el-icon--right"></i></span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item command="1">移动端链接</el-dropdown-item>
-                <el-dropdown-item command="2">PC端链接</el-dropdown-item>
+                <el-dropdown-item command="1">Liên kết di động</el-dropdown-item>
+                <el-dropdown-item command="2">Liên kết PC</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
           </template>
@@ -111,8 +111,8 @@
         />
       </div>
     </el-card>
-    <!--关联-->
-    <el-dialog :visible.sync="modals" title="商品列表" class="paymentFooter" width="1000px" @closed="cancel">
+    <!--Liên kết-->
+    <el-dialog :visible.sync="modals" title="Danh sách sản phẩm" class="paymentFooter" width="1000px" @closed="cancel">
       <goods-list ref="goodslist" @getProductId="getProductId" v-if="modals"></goods-list>
     </el-dialog>
   </div>
@@ -140,7 +140,7 @@ export default {
       cmsList: [],
       treeData: [],
       list: [],
-      cid: 0, // 移动分类id
+      cid: 0, // ID danh mục di chuyển
       cmsId: 0,
       formValidate: {
         type: 1,
@@ -183,7 +183,7 @@ export default {
     this.getClass();
   },
   methods: {
-    // 关联成功
+    // Liên kết thành công
     getProductId(row) {
       let data = {
         product_id: row.id,
@@ -207,7 +207,7 @@ export default {
     cancel() {
       this.modals = false;
     },
-    // 等级列表
+    // Danh sách hạng
     getList() {
       this.loading = true;
       cmsListApi(this.artFrom)
@@ -222,7 +222,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 分类
+    // Danh mục
     getClass() {
       categoryListApi(this.formValidate)
         .then(async (res) => {
@@ -230,7 +230,7 @@ export default {
           this.treeData = data;
           let obj = {
             id: 0,
-            title: '全部',
+            title: 'Tất cả',
           };
           this.treeData.unshift(obj);
         })
@@ -238,17 +238,17 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 下拉树
+    // Cây thả xuống
     handleCheckChange(data) {
       this.artFrom.pid = data ? data : 0;
       this.artFrom.page = 1;
       this.getList();
     },
-    // 编辑
+    // Sửa
     edit(row) {
       this.$router.push({ path: this.$routeProStr + '/cms/article/add_article/' + row.id });
     },
-    // 关联
+    // Liên kết
     artRelation(row, tit, num) {
       this.rows = row;
       if (row.product_id === 0) {
@@ -271,7 +271,7 @@ export default {
           });
       }
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -289,7 +289,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.artFrom.page = 1;
       this.getList();
@@ -298,10 +298,10 @@ export default {
       let copy_url = type == 1 ? row.copy_url : row.copy_url_pc;
       this.$copyText(copy_url)
         .then((message) => {
-          this.$message.success('复制成功');
+          this.$message.success('Sao chép thành công');
         })
         .catch((err) => {
-          this.$message.error('复制失败');
+          this.$message.error('Sao chép thất bại');
         });
     },
   },

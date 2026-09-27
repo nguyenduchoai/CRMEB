@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use app\services\activity\combination\StorePinkServices;
 use app\services\other\QrcodeServices;
 
 /**
- * 拼团类
+ * Lớp mua chung
  * Class StoreCombinationController
  * @package app\api\controller\activity
  */
@@ -30,7 +30,7 @@ class StoreCombinationController
     }
 
     /**
-     * 拼团列表
+     * Danh sách mua chung
      * @return mixed
      */
     public function lst()
@@ -41,7 +41,7 @@ class StoreCombinationController
 
 
     /**
-     * 拼团商品详情
+     * Chi tiết sản phẩm mua chung
      * @param Request $request
      * @param $id
      * @return mixed
@@ -53,7 +53,7 @@ class StoreCombinationController
     }
 
     /**
-     * 拼团 开团
+     * Mua chung - Mở nhóm
      * @param Request $request
      * @param $id
      * @return mixed
@@ -65,7 +65,7 @@ class StoreCombinationController
     }
 
     /**
-     * 拼团 取消开团
+     * Mua chung - Hủy mở nhóm
      * @param Request $request
      * @return mixed
      */
@@ -84,7 +84,7 @@ class StoreCombinationController
 
 
     /**
-     * 拼团海报
+     * Poster mua chung
      * @param Request $request
      * @return mixed
      */
@@ -103,7 +103,7 @@ class StoreCombinationController
     }
 
     /**
-     * 获取拼团海报详情
+     * Lấy chi tiết poster mua chung
      * @param Request $request
      * @param StorePinkServices $services
      * @param $id
@@ -115,7 +115,7 @@ class StoreCombinationController
     }
 
     /**
-     * 获取秒杀小程序二维码
+     * Lấy mã QR Mini Program flash sale
      * @param Request $request
      * @param $id
      * @return mixed
@@ -133,7 +133,7 @@ class StoreCombinationController
     }
 
     /**
-     * 获取拼团列表轮播图
+     * Lấy ảnh trình chiếu (banner) danh sách mua chung
      */
     public function banner_list()
     {

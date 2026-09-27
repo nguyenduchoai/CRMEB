@@ -4,11 +4,11 @@ import { getCookies, removeCookies } from '@/libs/util';
 
 const service = axios.create({
   baseURL: Setting.apiBaseURL,
-  timeout: 10000, // 请求超时时间
+  timeout: 10000, // Thời gian timeout của request
 });
-axios.defaults.withCredentials = true; // 携带cookie
+axios.defaults.withCredentials = true; // Kèm cookie
 
-// 请求拦截器
+// Interceptor cho request
 service.interceptors.request.use(
   (config) => {
     if (config.kefu) {
@@ -59,7 +59,7 @@ service.interceptors.response.use(
       case 200:
         return obj;
       default:
-        return Promise.reject(obj || { msg: '未知错误' });
+        return Promise.reject(obj || { msg: 'Lỗi không xác định' });
     }
   },
   (error) => {
@@ -70,10 +70,10 @@ export default service;
 
 // function sendRequest(url, method, params, header) {
 //   const instance = axios.create({
-//     baseURL: Setting.apiBaseURL, // 请求的根域名
-//     timeout: 1000, // 请求超时时间
+//     baseURL: Setting.apiBaseURL, // Tên miền gốc của request
+//     timeout: 1000, // Thời gian timeout của request
 //     headers: {
-//       'X-Custom-Header': header, // 自定义头信息
+//       'X-Custom-Header': header, // Thông tin header tùy chỉnh
 //     },
 //   });
 
@@ -81,37 +81,37 @@ export default service;
 //     instance
 //       .get(url, { params: params })
 //       .then((response) => {
-//         // 处理响应数据
+//         // Xử lý dữ liệu phản hồi
 //       })
 //       .catch((error) => {
-//         // 处理错误
+//         // Xử lý lỗi
 //       });
 //   } else if (method === 'POST') {
 //     instance
 //       .post(url, params, { headers: header })
 //       .then((response) => {
-//         // 处理响应数据
+//         // Xử lý dữ liệu phản hồi
 //       })
 //       .catch((error) => {
-//         // 处理错误
+//         // Xử lý lỗi
 //       });
 //   } else if (method === 'PUT') {
 //     instance
 //       .put(url, params, { headers: header })
 //       .then((response) => {
-//         // 处理响应数据
+//         // Xử lý dữ liệu phản hồi
 //       })
 //       .catch((error) => {
-//         // 处理错误
+//         // Xử lý lỗi
 //       });
 //   } else if (method === 'DELETE') {
 //     instance
 //       .delete(url, { headers: header })
 //       .then((response) => {
-//         // 处理响应数据
+//         // Xử lý dữ liệu phản hồi
 //       })
 //       .catch((error) => {
-//         // 处理错误
+//         // Xử lý lỗi
 //       });
 //   }
 

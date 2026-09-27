@@ -10,30 +10,30 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="数据搜索：">
+          <el-form-item label="Tìm kiếm dữ liệu:">
             <el-input
               clearable
-              placeholder="请输入ID,KEY,数据组名称,简介"
+              placeholder="Vui lòng nhập ID, KEY, tên nhóm dữ liệu, mô tả"
               v-model="formValidate.title"
               class="form_content_width"
             />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="userSearchs">查询</el-button>
+            <el-button type="primary" v-db-click @click="userSearchs">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
     <el-card :bordered="false" shadow="never" class="ivu-mt">
-      <el-button type="primary" v-db-click @click="groupAdd('添加数据组')" class="mr20">添加数据组</el-button>
+      <el-button type="primary" v-db-click @click="groupAdd('Thêm nhóm dữ liệu')" class="mr20">Thêm nhóm dữ liệu</el-button>
       <el-table
         :data="tabList"
         ref="table"
         class="mt14"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column label="ID" width="80">
           <template slot-scope="scope">
@@ -45,23 +45,23 @@
             <span>{{ scope.row.config_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="数据组名称" min-width="130">
+        <el-table-column label="Tên nhóm dữ liệu" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="简介" min-width="130">
+        <el-table-column label="Mô tả ngắn" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.info }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="170">
+        <el-table-column label="Thao tác" fixed="right" width="170">
           <template slot-scope="scope">
-            <a v-db-click @click="goList(scope.row)">数据列表</a>
+            <a v-db-click @click="goList(scope.row)">Danh sách dữ liệu</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="edit(scope.row, '编辑')">编辑</a>
+            <a v-db-click @click="edit(scope.row, 'Sửa')">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除数据组', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa nhóm dữ liệu', scope.$index)">Xóa</a>
           </template>
         </el-table-column>
       </el-table>
@@ -75,7 +75,7 @@
         />
       </div>
     </el-card>
-    <!-- 新增 编辑-->
+    <!-- Thêm mới Sửa-->
     <group-from
       ref="groupfroms"
       :titleFrom="titleFrom"
@@ -130,13 +130,13 @@ export default {
     this.getList();
   },
   methods: {
-    // 跳转到组合数据列表页面
+    // Chuyển đến trang danh sách dữ liệu tổ hợp
     goList(row) {
       this.$router.push({
         path: this.$routeProStr + '/system/config/system_group/list/' + row.id,
       });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       groupListApi(this.formValidate)
@@ -151,19 +151,19 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.formValidate.page = 1;
       this.getList();
     },
-    // 点击添加
+    // nhấn để thêm
     groupAdd(title) {
       this.$refs.groupfroms.modals = true;
       this.titleFrom = title;
       this.addId = 'addId';
       this.groupId = 0;
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -182,7 +182,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 编辑
+    // Sửa
     edit(row, title) {
       this.titleFrom = title;
       this.groupId = row.id;

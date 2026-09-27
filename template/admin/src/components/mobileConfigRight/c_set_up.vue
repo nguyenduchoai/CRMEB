@@ -37,7 +37,7 @@ export default {
       configData: {
         tabVal: 0,
       },
-      list: ['内容', '样式'],
+      list: ['Nội dung', 'Kiểu'],
       current: 0,
     };
   },

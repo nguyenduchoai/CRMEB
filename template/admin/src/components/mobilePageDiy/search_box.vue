@@ -9,7 +9,7 @@
     v-if="bgColor.length > 0"
   >
     <img :src="logoUrl" alt="" v-if="logoUrl" />
-    <div class="box" :class="{ on: rollStyle, center: txtPosition }">搜索商品</div>
+    <div class="box" :class="{ on: rollStyle, center: txtPosition }">Tìm kiếm sản phẩm</div>
   </div>
 </template>
 
@@ -17,11 +17,11 @@
 import { mapState } from 'vuex';
 export default {
   name: 'search_box',
-  cname: '搜索框',
+  cname: 'Ô tìm kiếm',
   icon: 'iconsousukuang1',
   configName: 'c_search_box',
-  type: 0, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'headerSerch', // 外面匹配名称
+  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'headerSerch', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -57,7 +57,7 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'headerSerch',
         timestamp: this.num,
@@ -69,17 +69,17 @@ export default {
         //     type: 1,
         //     tabList: [
         //         {
-        //             name: '样式1',
+        //             name: 'Kiểu 1',
         //             icon:'iconsearch_1'
         //         },
         //         {
-        //             name: '样式2',
+        //             name: 'Kiểu 2',
         //             icon:'iconsearch_2'
         //         }
         //     ]
         // },
         bgColor: {
-          title: '背景颜色(渐变)',
+          title: 'Màu nền (chuyển màu)',
           name: 'bgColor',
           default: [
             {
@@ -99,43 +99,43 @@ export default {
           ],
         },
         boxStyle: {
-          title: '边框样式',
+          title: 'Kiểu viền',
           name: 'boxStyle',
           type: 0,
           list: [
             {
-              val: '圆角',
+              val: 'Bo góc',
               icon: 'iconPic_fillet',
             },
             {
-              val: '直角',
+              val: 'Góc vuông',
               icon: 'iconPic_square',
             },
           ],
         },
         txtStyle: {
-          title: '文本位置',
+          title: 'Vị trí văn bản',
           name: 'txtStyle',
           type: 0,
           list: [
             {
-              val: '居左',
+              val: 'Căn trái',
               icon: 'icondoc_left',
             },
             {
-              val: '居中',
+              val: 'Căn giữa',
               icon: 'icondoc_center',
             },
           ],
         },
         prConfig: {
-          title: '背景边距',
+          title: 'Lề nền',
           val: 10,
           min: 0,
         },
-        // 页面间距
+        // Lề trang
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },
@@ -148,7 +148,7 @@ export default {
         },
         logoConfig: {
           type: 1,
-          header: '设置logo',
+          header: 'Cài đặt logo',
           title: '',
           url: '',
         },

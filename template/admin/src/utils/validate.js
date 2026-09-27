@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -36,11 +36,11 @@ function padLeftZero(str) {
  * Created by PanJiaChen on 16/11/18.
  */
 const baseAttr = {
-  min: '%s最小长度为:min',
-  max: '%s最大长度为:max',
-  length: '%s长度必须为:length',
-  range: '%s长度为:range',
-  pattern: '$s格式错误',
+  min: '%s có độ dài tối thiểu là :min',
+  max: '%s có độ dài tối đa là :max',
+  length: '%s phải có độ dài là :length',
+  range: '%s có độ dài trong khoảng :range',
+  pattern: '$s không đúng định dạng',
 };
 
 /**
@@ -142,10 +142,10 @@ export function required(message, opt = {}) {
     ...opt,
   };
 }
-bindMessage(required, '请输入%s');
+bindMessage(required, 'Vui lòng nhập %s');
 
 /**
- * 正确的金额
+ * Số tiền chính xác
  *
  * @param message
  * @returns {*}
@@ -153,7 +153,7 @@ bindMessage(required, '请输入%s');
 export function num(message) {
   return attrs.pattern(/(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/, message);
 }
-bindMessage(num, '%s格式不正确');
+bindMessage(num, '%s không đúng định dạng');
 
 const attrs = Object.keys(baseAttr).reduce((attrs, key) => {
   attrs[key] = (attr, message = '', opt = {}) => {

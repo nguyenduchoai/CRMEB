@@ -1,4 +1,4 @@
-// 定义内容
+// Định nghĩa nội dung
 export default {
   login: {
     placeholder1: '',

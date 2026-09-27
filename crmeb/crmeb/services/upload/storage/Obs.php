@@ -24,25 +24,25 @@ class Obs extends BaseUpload
     protected $secretKey;
 
     /**
-     * 句柄
+     * Handle
      * @var TyClient
      */
     protected $handle;
 
     /**
-     * 空间域名 Domain
+     * Domain của space Domain
      * @var mixed
      */
     protected $uploadUrl;
 
     /**
-     * 存储空间名称  公开空间
+     * Tên space lưu trữ  space công khai
      * @var mixed
      */
     protected $storageName;
 
     /**
-     * COS使用  所属地域
+     * COS sử dụng  region trực thuộc
      * @var mixed|null
      */
     protected $storageRegion;
@@ -57,17 +57,17 @@ class Obs extends BaseUpload
         if (!$isStream) {
             $fileHandle = app()->request->file($file);
             if (!$fileHandle) {
-                return $this->setError('上传的文件不存在');
+                return $this->setError('Tệp tải lên không tồn tại');
             }
             if ($this->validate) {
                 if (!in_array(strtolower(pathinfo($fileHandle->getOriginalName(), PATHINFO_EXTENSION)), $this->validate['fileExt'])) {
-                    return $this->setError('不合法的文件后缀');
+                    return $this->setError('Phần mở rộng tệp không hợp lệ');
                 }
                 if (filesize($fileHandle) > $this->validate['filesize']) {
-                    return $this->setError('文件过大');
+                    return $this->setError('Tệp quá lớn');
                 }
                 if (!in_array($fileHandle->getOriginalMime(), $this->validate['fileMime'])) {
-                    return $this->setError('不合法的文件类型');
+                    return $this->setError('Loại tệp không hợp lệ');
                 }
             }
             $key = $this->saveFileName($fileHandle->getRealPath(), $fileHandle->getOriginalExtension());
@@ -112,7 +112,7 @@ class Obs extends BaseUpload
     }
 
     /**
-     * 初始化
+     * Khởi tạo
      * @param array $config
      * @return mixed|void
      */
@@ -129,7 +129,7 @@ class Obs extends BaseUpload
     }
 
     /**
-     * 实例化cos
+     * Khởi tạo (instance) cos
      * @return TyClient
      */
     protected function app()
@@ -159,16 +159,16 @@ class Obs extends BaseUpload
         $regionData = $this->getRegion();
         $regionData = array_column($regionData, 'value');
         if (!in_array($region, $regionData)) {
-            return $this->setError('COS:无效的区域!');
+            return $this->setError('COS: khu vực không hợp lệ!');
         }
         $this->storageRegion = $region;
         $app = $this->app();
-        //创建桶
+        //Tạo bucket
         try {
             $app->createBucket($name, $region, $acl);
             $data = [
                 'Statement' => [
-                    'Sid' => '公共读' . $name,
+                    'Sid' => 'PublicRead' . $name,
                     'Effect' => 'Allow',
                     'Principal' => [
                         'ID' => ['*']
@@ -288,7 +288,7 @@ class Obs extends BaseUpload
     }
 
     /**
-     * 获取ISO时间格式
+     * Lấy định dạng thời gian ISO
      * @param $time
      * @return string
      * @throws \Exception
@@ -304,7 +304,7 @@ class Obs extends BaseUpload
     }
 
     /**
-     * 缩略图
+     * Ảnh thu nhỏ
      * @param string $filePath
      * @param string $fileName
      * @param string $type
@@ -337,7 +337,7 @@ class Obs extends BaseUpload
     }
 
     /**
-     * 水印
+     * Watermark
      * @param string $filePath
      * @return mixed|string
      */
@@ -351,13 +351,13 @@ class Obs extends BaseUpload
                 $filePath .= '?x-oss-process=image';
             }
             switch ($waterConfig['watermark_type']) {
-                case 1://图片
+                case 1://Hình ảnh
                     if (!$waterConfig['watermark_image']) {
                         throw new AdminException(400722);
                     }
                     $waterPath = $filePath .= '/watermark,image_' . base64_encode($waterConfig['watermark_image']) . ',t_' . $waterConfig['watermark_opacity'] . ',g_' . ($this->position[$waterConfig['watermark_position']] ?? 'nw') . ',x_' . $waterConfig['watermark_x'] . ',y_' . $waterConfig['watermark_y'];
                     break;
-                case 2://文字
+                case 2://Văn bản
                     if (!$waterConfig['watermark_text']) {
                         throw new AdminException(400723);
                     }

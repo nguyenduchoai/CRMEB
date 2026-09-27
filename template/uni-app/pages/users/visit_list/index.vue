@@ -1,11 +1,11 @@
 <template>
-  <!-- 浏览记录 -->
+  <!-- Lịch sử xem -->
 	<view>
 		<view class="record" :style="colorStyle" v-if="visitList.length">
 			<view class="nav acea-row row-between-wrapper">
-				<view class="left">{{$t(`共`)}} <text class="num">{{count}}</text>{{$t(`件商品`)}}</view>
-				<view class="font-num" v-if="!isShowChecked" @click="switchTap">{{$t(`管理`)}}</view>
-				<view v-else @click="switchTap">{{$t(`取消`)}}</view>
+				<view class="left">{{$t(`Tổng`)}} <text class="num">{{count}}</text>{{$t(`sản phẩm`)}}</view>
+				<view class="font-num" v-if="!isShowChecked" @click="switchTap">{{$t(`Quản lý`)}}</view>
+				<view v-else @click="switchTap">{{$t(`Hủy`)}}</view>
 			</view>
 			<view class="list">
 				<checkbox-group @change="checkboxChange">
@@ -23,12 +23,12 @@
 										<checkbox v-if="isShowChecked" :value="(j.id).toString()" :checked="j.checked" class="checkbox" />
 										<view class="masks acea-row row-center-wrapper" v-if="!isShowChecked && j.stock<=0">
 											<view class="bg">
-												<view>{{$t(`已售罄`)}}</view>
+												<view>{{$t(`Đã bán hết`)}}</view>
 											</view>
 										</view>
 										<view class="masks acea-row row-center-wrapper" v-if="!isShowChecked && !j.is_show">
 											<view class="bg">
-												<view>{{$t(`已下架`)}}</view>
+												<view>{{$t(`Đã ngừng bán`)}}</view>
 											</view>
 										</view>
 									</view>
@@ -45,11 +45,11 @@
 			<view class="footer acea-row row-between-wrapper" v-if="isShowChecked">
 				<checkbox-group @change="checkboxAllChange">
 					<checkbox value="all" :checked="isAllSelect" />
-					<text class='checkAll'>{{$t(`全选`)}}</text>
+					<text class='checkAll'>{{$t(`Chọn tất cả`)}}</text>
 				</checkbox-group>
 				<view class="acea-row row-middle">
-					<view class="bnt acea-row row-center-wrapper" @click="collect">{{$t(`收藏`)}}</view>
-					<view class="bnt on acea-row row-center-wrapper" @click="del">{{$t(`删除`)}}</view>
+					<view class="bnt acea-row row-center-wrapper" @click="collect">{{$t(`Yêu thích`)}}</view>
+					<view class="bnt on acea-row row-center-wrapper" @click="del">{{$t(`Xóa`)}}</view>
 				</view>
 			</view>
 		</view>
@@ -57,7 +57,7 @@
 			<view class='pictrue'>
 				<image :src="imgHost + '/statics/images/no-thing.png'"></image>
 			</view>
-			<view class="acea-row row-center-wrapper tip">{{$t(`暂无数据`)}}</view>
+			<view class="acea-row row-center-wrapper tip">{{$t(`Chưa có dữ liệu`)}}</view>
 			<recommend :hostProduct="hostProduct"></recommend>
 		</view>
 	</view>
@@ -92,14 +92,14 @@
 				times: [],
 				isAllSelect: false,
 				hostProduct: [],
-				loadTitle: this.$t(`加载更多`),
+				loadTitle: this.$t(`Tải thêm`),
 				loading: false,
 				loadend: false,
 				visitList: [],
 				limit: 21,
 				page: 1,
-				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false, //是否隐藏授权
+				isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+				isShowAuth: false, //Có ẩn ủy quyền hay không
 				hotScroll: false,
 				hotPage: 1,
 				hotLimit: 10,
@@ -148,7 +148,7 @@
 				})
 				if(!ids.length){
 					return this.$util.Tips({
-						title: '请选择收藏商品'
+						title: 'Vui lòng chọn sản phẩm cần thêm vào yêu thích'
 					});
 				}
 				let str = ids.join(',');
@@ -169,7 +169,7 @@
 				})
 				if(!ids.length){
 					return this.$util.Tips({
-						title: '请选择删除商品'
+						title: 'Vui lòng chọn sản phẩm cần xóa'
 					});
 				}
 				deleteVisitList({ids}).then(res=>{
@@ -266,12 +266,12 @@
 					this.forGoods(0)
 				}
 			},
-			// 授权关闭
+			// Đóng ủy quyền
 			authColse: function(e) {
 				this.isShowAuth = e
 			},
 			/**
-			 * 获取记录产品
+			 * Lấy sản phẩm trong lịch sử
 			 */
 			get_user_visit_list: function() {
 				let that = this;
@@ -308,16 +308,16 @@
 					}
 					let loadend = res.data.list.length < that.limit;
 					that.loadend = loadend;
-					that.loadTitle = loadend ? that.$t(`没有更多内容啦~`) : that.$t(`加载更多`);
+					that.loadTitle = loadend ? that.$t(`Không còn nội dung nào nữa~`) : that.$t(`Tải thêm`);
 					that.page = that.page + 1;
 					that.loading = false;
 				}).catch(err => {
 					that.loading = false;
-					that.loadTitle = that.$t(`加载更多`);
+					that.loadTitle = that.$t(`Tải thêm`);
 				});
 			},
 			/**
-			 * 获取我的推荐
+			 * Lấy gợi ý của tôi
 			 */
 			get_host_product: function() {
 				let that = this;
@@ -339,9 +339,9 @@
 				this.get_host_product();
 			}
 		},
-		// 滚动监听
+		// Theo dõi cuộn (scroll listener)
 		onPageScroll(e) {
-			// 传入scrollTop值并触发所有easy-loadimage组件下的滚动监听事件
+			// Truyền vào giá trị scrollTop và kích hoạt sự kiện theo dõi cuộn của tất cả component easy-loadimage
 			uni.$emit('scroll');
 		},
 	}
@@ -380,10 +380,10 @@
 			position: fixed;
 			bottom: 0;
 			z-index: 30;
-			height: calc(96rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-			height: calc(96rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
-			padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
-			padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
+			height: calc(96rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+			height: calc(96rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
+			padding-bottom: constant(safe-area-inset-bottom); ///Tương thích IOS<11.2/
+			padding-bottom: env(safe-area-inset-bottom); ///Tương thích IOS>11.2/
 
 			.bnt {
 				width: 160rpx;

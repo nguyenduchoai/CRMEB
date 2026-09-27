@@ -20,26 +20,26 @@
 				type: String,
 				default: ""
 			},
-			//距离开始提示文字
+			//Chữ nhắc khoảng cách bắt đầu
 			tipText: {
 				type: String,
-				default: "倒计时"
+				default: "Đếm ngược"
 			},
 			dayText: {
 				type: String,
-				default: "天"
+				default: "ngày"
 			},
 			hourText: {
 				type: String,
-				default: "时"
+				default: "giờ"
 			},
 			minuteText: {
 				type: String,
-				default: "分"
+				default: "phút"
 			},
 			secondText: {
 				type: String,
-				default: "秒"
+				default: "giây"
 			},
 			datatime: {
 				type: Number,
@@ -85,14 +85,14 @@
 				let that = this;
 
 				function runTime() {
-					//时间函数
-					let intDiff = that.datatime - Date.parse(new Date()) / 1000; //获取数据中的时间戳的时间差；
+					//Hàm thời gian
+					let intDiff = that.datatime - Date.parse(new Date()) / 1000; //Lấy độ chênh thời gian của timestamp trong dữ liệu;
 					let day = 0,
 						hour = 0,
 						minute = 0,
 						second = 0;
 					if (intDiff > 0) {
-						//转换时间
+						//Chuyển đổi thời gian
 						if (that.isDay === true) {
 							day = Math.floor(intDiff / (60 * 60 * 24));
 						} else {

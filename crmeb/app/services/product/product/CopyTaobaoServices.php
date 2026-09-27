@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -35,7 +35,7 @@ class CopyTaobaoServices extends BaseServices
     /**
      * @var string
      */
-    public $AttachmentCategoryName = '远程下载';
+    public $AttachmentCategoryName = 'Tải về từ xa';
 
     /**
      * @var string[]
@@ -53,7 +53,7 @@ class CopyTaobaoServices extends BaseServices
     {
         $result = [];
         switch ((int)sys_config('system_product_copy_type')) {
-            case 1://平台
+            case 1://Nền tảng
                 /** @var ServeServices $services */
                 $services = app()->make(ServeServices::class);
                 $resultData = $services->copy('copy')->goods($url);
@@ -101,7 +101,7 @@ class CopyTaobaoServices extends BaseServices
                 $productInfo['attrs'][$attrs_k]['attr_arr'] = array_values($attrs_v['detail']);
                 $productInfo['attrs'][$attrs_k]['is_show'] = 1;
             }
-            $productInfo['activity'] = ['默认', '秒杀', '砍价', '拼团'];
+            $productInfo['activity'] = ['Mặc định', 'Flash sale', 'Săn giảm giá', 'Mua chung'];
             $productInfo['bar_code'] = '';
             $productInfo['browse'] = 0;
             $productInfo['cate_id'] = [];
@@ -159,7 +159,7 @@ $productInfo['protection_list'] = [];
     }
 
     /**
-     * 下载商品详情图片
+     * Tải hình ảnh chi tiết sản phẩm
      * @param int $id
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -167,15 +167,15 @@ $productInfo['protection_list'] = [];
      */
     public function uploadDescriptionImage(int $id)
     {
-        //查询附件分类
+        //Truy vấn danh mục tệp đính kèm
         /** @var SystemAttachmentCategoryServices $systemAttachmentCategoryService */
         $systemAttachmentCategoryService = app()->make(SystemAttachmentCategoryServices::class);
         /** @var StoreDescriptionServices $storeDescriptionServices */
         $storeDescriptionServices = app()->make(StoreDescriptionServices::class);
         $AttachmentCategory = $systemAttachmentCategoryService->getOne(['name' => $this->AttachmentCategoryName]);
-        //不存在则创建
+        //Nếu không tồn tại thì tạo
         if (!$AttachmentCategory) $AttachmentCategory = $systemAttachmentCategoryService->save(['pid' => '0', 'name' => $this->AttachmentCategoryName, 'enname' => '']);
-        //生成附件目录
+        //Tạo thư mục tệp đính kèm
         try {
             if (make_path('attach', 3, true) === '')
                 throw new AdminException(400555);
@@ -184,7 +184,7 @@ $productInfo['protection_list'] = [];
         }
         $description = $storeDescriptionServices->getDescription(['product_id ' => $id, 'type' => 0]);
         if (!$description) throw new AdminException(400556);
-        //替换并下载详情里面的图片默认下载全部图片
+        //Thay thế và tải ảnh trong chi tiết, mặc định tải toàn bộ ảnh
         $description = preg_replace('#<style>.*?</style>#is', '', $description);
         $description = $this->uploadImage([], $description, 1, $AttachmentCategory['id']);
         $storeDescriptionServices->saveDescription((int)$id, $description);
@@ -192,7 +192,7 @@ $productInfo['protection_list'] = [];
     }
 
     /**
-     * 上传图片处理
+     * Xử lý tải ảnh lên
      * @param array $images
      * @param string $html
      * @param int $uploadType
@@ -208,17 +208,17 @@ $productInfo['protection_list'] = [];
         switch ($uploadType) {
             case 0:
                 foreach ($images as $item) {
-                    //下载图片文件
+                    //Tải file ảnh xuống
                     if ($item['w'] && $item['h'])
                         $uploadValue = $this->downloadImage($item['line'], '', 0, 30, $item['w'], $item['h']);
                     else
                         $uploadValue = $this->downloadImage($item['line']);
-                    //下载成功更新数据库
+                    //Tải xuống thành công thì cập nhật cơ sở dữ liệu
                     if (is_array($uploadValue)) {
-                        //TODO 拼接图片地址
+                        //TODO ghép địa chỉ ảnh
                         if ($uploadValue['image_type'] == 1) $imagePath = $siteUrl . $uploadValue['path'];
                         else $imagePath = $uploadValue['path'];
-                        //写入数据库
+                        //Ghi vào cơ sở dữ liệu
                         if (!$uploadValue['is_exists'] && $AttachmentCategoryId) {
                             $systemAttachmentService->save([
                                 'name' => $uploadValue['name'],
@@ -233,7 +233,7 @@ $productInfo['protection_list'] = [];
                                 'pid' => $AttachmentCategoryId
                             ]);
                         }
-                        //组装数组
+                        //Lắp ráp mảng
                         if (isset($item['isTwoArray']) && $item['isTwoArray'])
                             $uploadImage[$item['valuename']][] = $imagePath;
                         else
@@ -250,12 +250,12 @@ $productInfo['protection_list'] = [];
                         else
                             $arcurl = 'http://' . ltrim($item, '\//');
                         $uploadValue = $this->downloadImage($arcurl);
-                        //下载成功更新数据库
+                        //Tải xuống thành công thì cập nhật cơ sở dữ liệu
                         if (is_array($uploadValue)) {
-                            //TODO 拼接图片地址
+                            //TODO ghép địa chỉ ảnh
                             if ($uploadValue['image_type'] == 1) $imagePath = $siteUrl . $uploadValue['path'];
                             else $imagePath = $uploadValue['path'];
-                            //写入数据库
+                            //Ghi vào cơ sở dữ liệu
                             if (!$uploadValue['is_exists'] && $AttachmentCategoryId) {
                                 $systemAttachmentService->save([
                                     'name' => $uploadValue['name'],
@@ -270,10 +270,10 @@ $productInfo['protection_list'] = [];
                                     'pid' => $AttachmentCategoryId
                                 ]);
                             }
-                            //替换图片
+                            //Thay thế ảnh
                             $html = str_replace($item, $imagePath, $html);
                         } else {
-                            //替换掉没有下载下来的图片
+                            //Thay thế ảnh chưa tải xuống được
                             $html = preg_replace('#<img.*?src="' . $item . '"*>#i', '', $html);
                         }
                     }
@@ -300,7 +300,7 @@ $productInfo['protection_list'] = [];
     {
         if (!strlen(trim($url))) return '';
         if (!strlen(trim($name))) {
-            //TODO 获取要下载的文件名称
+            //TODO lấy tên file cần tải xuống
             $downloadImageInfo = $this->getImageExtname($url);
             $ext = $downloadImageInfo['ext_name'];
             $name = $downloadImageInfo['file_name'];
@@ -311,16 +311,16 @@ $productInfo['protection_list'] = [];
         if (!in_array($ext, Config::get('upload.fileExt'))) {
             throw new AdminException(400558);
         }
-        //TODO 获取远程文件所采用的方法
+        //TODO lấy phương thức dùng để tải file từ xa
         if ($type) {
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); //TODO 跳过证书检查
-            if (stripos($url, "https://") !== FALSE) curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);  //TODO 从证书中检查SSL加密算法是否存在
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); //TODO bỏ qua kiểm tra chứng chỉ
+            if (stripos($url, "https://") !== FALSE) curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);  //TODO kiểm tra trong chứng chỉ xem có thuật toán mã hóa SSL không
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('user-agent:' . $_SERVER['HTTP_USER_AGENT']));
-            if (ini_get('open_basedir') == '' && ini_get('safe_mode') == 'Off') curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);//TODO 是否采集301、302之后的页面
+            if (ini_get('open_basedir') == '' && ini_get('safe_mode') == 'Off') curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);//TODO có thu thập trang sau khi chuyển hướng 301, 302 không
             $content = curl_exec($ch);
             curl_close($ch);
         } else {
@@ -355,7 +355,7 @@ $productInfo['protection_list'] = [];
     }
 
     /**
-     * 获取即将要下载的图片扩展名
+     * Lấy phần mở rộng của ảnh sẽ tải xuống
      * @param string $url
      * @param string $ex
      * @return array|string[]
@@ -385,40 +385,40 @@ $productInfo['protection_list'] = [];
     }
 
     /**
-     * 下载远程图片并上传
+     * Tải ảnh từ xa và tải lên
      * @param $image
      * @return false|mixed|string
      * @throws \Exception
      */
     public function downloadCopyImage($image)
     {
-        //查询附件分类
+        //Truy vấn danh mục tệp đính kèm
         /** @var SystemAttachmentCategoryServices $systemAttachmentCategoryService */
         $systemAttachmentCategoryService = app()->make(SystemAttachmentCategoryServices::class);
-        $AttachmentCategory = $systemAttachmentCategoryService->getOne(['name' => '远程下载']);
-        //不存在则创建
+        $AttachmentCategory = $systemAttachmentCategoryService->getOne(['name' => 'Tải về từ xa']);
+        //Nếu không tồn tại thì tạo
         if (!$AttachmentCategory) {
-            $AttachmentCategory = $systemAttachmentCategoryService->save(['pid' => '0', 'name' => '远程下载', 'enname' => '']);
+            $AttachmentCategory = $systemAttachmentCategoryService->save(['pid' => '0', 'name' => 'Tải về từ xa', 'enname' => '']);
         }
 
-        //生成附件目录
+        //Tạo thư mục tệp đính kèm
         if (make_path('attach', 3, true) === '') {
             throw new AdminException(400555);
         }
 
-        //上传图片
+        //Tải lên ảnh
         /** @var SystemAttachmentServices $systemAttachmentService */
         $systemAttachmentService = app()->make(SystemAttachmentServices::class);
         $siteUrl = sys_config('site_url');
         $uploadValue = $this->downloadImage($image);
         if (is_array($uploadValue)) {
-            //TODO 拼接图片地址
+            //TODO ghép địa chỉ ảnh
             if ($uploadValue['image_type'] == 1) {
                 $imagePath = $siteUrl . $uploadValue['path'];
             } else {
                 $imagePath = $uploadValue['path'];
             }
-            //写入数据库
+            //Ghi vào cơ sở dữ liệu
             if (!$uploadValue['is_exists'] && $AttachmentCategory['id']) {
                 $systemAttachmentService->save([
                     'name' => $uploadValue['name'],

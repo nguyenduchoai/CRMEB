@@ -44,7 +44,7 @@
 
 /*
 ===================
-服务器检测/信息输入
+Kiểm tra server / Nhập thông tin
 ===================
 */
 .server::-webkit-scrollbar { width: 0 !important;
@@ -114,7 +114,7 @@
 }
 /*
 ===================
-正确错误
+Đúng/Sai
 ===================
 */
 .correct_span,

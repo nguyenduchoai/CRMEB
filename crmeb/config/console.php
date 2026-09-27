@@ -10,12 +10,12 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 控制台配置
+// | Cấu hình console
 // +----------------------------------------------------------------------
 return [
-    // 执行用户（Windows下无效）
+    // Người dùng thực thi (không có hiệu lực trên Windows)
     'user' => null,
-    // 指令定义
+    // Định nghĩa lệnh (command)
     'commands' => [
         'workerman' => \crmeb\command\Workerman::class,
         'timer' => \crmeb\command\Timer::class,

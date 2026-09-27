@@ -3,7 +3,7 @@
     <div class="i-layout-page-header header-title">
       <span class="ivu-page-header-title mr20">{{ $route.meta.title }}</span>
       <div style="float: right">
-        <el-button class="bnt" type="primary" v-db-click @click="onsubmit('formValidate')">保存</el-button>
+        <el-button class="bnt" type="primary" v-db-click @click="onsubmit('formValidate')">Lưu</el-button>
       </div>
     </div>
     <div class="box-wrapper">
@@ -11,10 +11,10 @@
         <div class="agreement-box">
           <div class="template"></div>
           <div class="htmls_box">
-            <div class="htmls_top">服务协议与隐私政策</div>
+            <div class="htmls_top">Thỏa thuận dịch vụ và Chính sách bảo mật</div>
             <div class="htmls_font">
-              <div class="ok">我同意</div>
-              <div>不同意</div>
+              <div class="ok">Tôi đồng ý</div>
+              <div>Không đồng ý</div>
             </div>
             <div class="htmls" v-html="content"></div>
           </div>
@@ -24,7 +24,7 @@
         <div class="table_box">
           <div>
             <div v-bind="grid">
-              <div class="title">隐私权限页面展示：</div>
+              <div class="title">Hiển thị trang quyền riêng tư:</div>
             </div>
           </div>
           <div>
@@ -95,13 +95,13 @@ export default {
       },
       ruleValidate: {},
       myConfig: {
-        autoHeightEnabled: false, // 编辑器不自动被内容撑高
-        initialFrameHeight: 500, // 初始容器高度
-        initialFrameWidth: '100%', // 初始容器宽度
+        autoHeightEnabled: false, // Trình soạn thảo không tự động giãn cao theo nội dung
+        initialFrameHeight: 500, // Chiều cao container ban đầu
+        initialFrameWidth: '100%', // Chiều rộng container ban đầu
         UEDITOR_HOME_URL: '/UEditor/',
         serverUrl: '',
       },
-      a: 1, //判断的隐私协议
+      a: 1, //Kiểm tra thỏa thuận bảo mật
       guide: 0,
       bgimg: 0,
       columns1: [],
@@ -117,7 +117,7 @@ export default {
       },
       loading: false,
       sginList: [],
-      progress: 0, // 进度条默认0
+      progress: 0, // Thanh tiến trình mặc định 0
       url: '',
       BaseURL: Setting.apiBaseURL.replace(/adminapi/, ''),
       pageId: 0,
@@ -200,7 +200,7 @@ export default {
     getContent(val) {
       this.formValidate.content = val;
     },
-    // 提交数据
+    // Gửi dữ liệu
     onsubmit(name) {
       this.formValidate.content = this.content;
       setAgreement(this.formValidate)
@@ -211,7 +211,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    //详情
+    //Chi tiết
     getAgreement() {
       getAgreement()
         .then(async (res) => {

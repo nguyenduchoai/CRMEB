@@ -8,7 +8,7 @@
         </div>
         <div class="name">{{ txt }}</div>
       </div>
-      <div class="btn" :style="{ borderColor: themeColor, color: themeColor }">关注</div>
+      <div class="btn" :style="{ borderColor: themeColor, color: themeColor }">Đã theo dõi</div>
     </div>
   </div>
 </template>
@@ -17,11 +17,11 @@
 import { mapState, mapMutations } from 'vuex';
 export default {
   name: 'z_wechat_attention',
-  cname: '关注公众号',
+  cname: 'Theo dõi OA WeChat',
   configName: 'c_wechat_attention',
   icon: 'iconguanzhugongzhonghao1',
-  type: 2, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'follow', // 外面匹配名称
+  type: 2, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'follow', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -56,7 +56,7 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'follow',
         timestamp: this.num,
@@ -64,21 +64,21 @@ export default {
           tabVal: 0,
         },
         titleConfig: {
-          title: '名称',
-          value: '标题',
-          place: '请输入标题',
+          title: 'Tên',
+          value: 'Tiêu đề',
+          place: 'Vui lòng nhập tiêu đề',
           max: 30,
         },
         imgConfig: {
-          title: '最多可添加1张图片，建议宽度92 * 92px',
+          title: 'Có thể thêm tối đa 1 ảnh, kích thước đề xuất 92 * 92px',
           url: '',
         },
         codeConfig: {
-          title: '添加二维码，建议宽度92 * 92p',
+          title: 'Thêm mã QR, kích thước đề xuất 92 * 92p',
           url: '',
         },
         themeColor: {
-          title: '主题颜色',
+          title: 'Màu chủ đề',
           default: [
             {
               item: '#F96E29',
@@ -91,7 +91,7 @@ export default {
           ],
         },
         bgColor: {
-          title: '背景颜色',
+          title: 'Màu nền',
           default: [
             {
               item: '#f5f5f5',
@@ -104,7 +104,7 @@ export default {
           ],
         },
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },

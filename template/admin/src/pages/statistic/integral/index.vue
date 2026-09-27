@@ -4,7 +4,7 @@
       <el-form ref="formValidate" :model="formValidate" class="tabform" @submit.native.prevent>
         <el-row :gutter="24">
           <el-col :span="24">
-            <el-form-item label="订单时间：">
+            <el-form-item label="Thời gian đơn hàng:">
               <el-radio-group
                 v-model="formValidate.data"
                 type="button"
@@ -24,8 +24,8 @@
                 type="daterange"
                 value-format="yyyy/MM/dd"
                 range-separator="-"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                start-placeholder="Ngày bắt đầu"
+                end-placeholder="Ngày kết thúc"
               ></el-date-picker>
             </el-form-item> </el-col
         ></el-row>
@@ -36,8 +36,8 @@
     <div class="code-row-bg">
       <el-card :bordered="false" shadow="never" class="ivu-mt">
         <div class="acea-row row-between-wrapper">
-          <div class="statics-header-title">积分来源</div>
-          <div>切换样式</div>
+          <div class="statics-header-title">Nguồn điểm thưởng</div>
+          <div>Đổi kiểu hiển thị</div>
         </div>
         <echarts-new
           :option-data="optionData"
@@ -49,8 +49,8 @@
       </el-card>
       <el-card :bordered="false" shadow="never" class="ivu-mt">
         <div class="acea-row row-between-wrapper">
-          <div class="statics-header-title">积分消耗</div>
-          <div>切换样式</div>
+          <div class="statics-header-title">Điểm thưởng đã dùng</div>
+          <div>Đổi kiểu hiển thị</div>
         </div>
         <echarts-new
           :option-data="optionData"
@@ -77,15 +77,15 @@ export default {
       style: { height: '400px' },
 
       fromList: {
-        title: '选择时间',
+        title: 'Chọn giờ',
         custom: true,
         fromTxt: [
-          { text: '全部', val: '' },
-          { text: '今天', val: 'today' },
-          { text: '本周', val: 'week' },
-          { text: '本月', val: 'month' },
-          { text: '本季度', val: 'quarter' },
-          { text: '本年', val: 'year' },
+          { text: 'Tất cả', val: '' },
+          { text: 'Hôm nay', val: 'today' },
+          { text: 'Tuần này', val: 'week' },
+          { text: 'Tháng này', val: 'month' },
+          { text: 'Quý này', val: 'quarter' },
+          { text: 'Năm nay', val: 'year' },
         ],
       },
       formValidate: {
@@ -96,37 +96,37 @@ export default {
         {
           col: 6,
           count: 0,
-          name: '参与人数(人)',
+          name: 'Số người tham gia (người)',
           className: 'ios-speedometer-outline',
         },
         {
           col: 6,
           count: 0,
-          name: '成团数量(个)',
+          name: 'Số nhóm thành công (nhóm)',
           className: 'md-rose',
         },
         {
           col: 6,
           count: 0,
-          name: '参与人数(人)',
+          name: 'Số người tham gia (người)',
           className: 'ios-speedometer-outline',
         },
         {
           col: 6,
           count: 0,
-          name: '成团数量(个)',
+          name: 'Số nhóm thành công (nhóm)',
           className: 'md-rose',
         },
         {
           col: 6,
           count: 0,
-          name: '参与人数(人)',
+          name: 'Số người tham gia (người)',
           className: 'ios-speedometer-outline',
         },
         {
           col: 6,
           count: 0,
-          name: '成团数量(个)',
+          name: 'Số nhóm thành công (nhóm)',
           className: 'md-rose',
         },
       ],
@@ -138,13 +138,13 @@ export default {
     // this.getTrend();
   },
   methods: {
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e;
       this.dataTime = this.timeVal ? this.timeVal.join('-') : '';
       this.name = this.dataTime;
     },
-    // 统计图
+    // Biểu đồ thống kê
     getTrend() {
       this.spinShow = true;
       statisticUserTrendApi(this.formInline)

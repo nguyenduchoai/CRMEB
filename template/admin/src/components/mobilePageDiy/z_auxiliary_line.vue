@@ -19,11 +19,11 @@
 import { mapState, mapMutations } from 'vuex';
 export default {
   name: 'z_auxiliary_line',
-  cname: '辅助线',
+  cname: 'Đường phân cách',
   configName: 'c_auxiliary_line',
   icon: 'iconfuzhuxian1',
-  type: 2, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'guide', // 外面匹配名称
+  type: 2, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'guide', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -60,12 +60,12 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'guide',
         timestamp: this.num,
         lineColor: {
-          title: '线条颜色',
+          title: 'Màu đường kẻ',
           default: [
             {
               item: '#f5f5f5',
@@ -78,36 +78,36 @@ export default {
           ],
         },
         lineStyle: {
-          title: '线条样式',
+          title: 'Kiểu đường kẻ',
           type: 0,
           list: [
             {
-              val: '虚线',
+              val: 'Nét đứt',
               style: 'dashed',
               icon: '',
             },
             {
-              val: '实线',
+              val: 'Nét liền',
               style: 'solid',
             },
             {
-              val: '点状线',
+              val: 'Nét chấm',
               style: 'dotted',
             },
           ],
         },
         heightConfig: {
-          title: '组件高度',
+          title: 'Chiều cao thành phần',
           val: 1,
           min: 1,
         },
         lrEdge: {
-          title: '左右边距',
+          title: 'Lề trái phải',
           val: 0,
           min: 0,
         },
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },

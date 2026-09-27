@@ -64,7 +64,7 @@ class ClickWordController
             }else if (isset($data['token']) && isset($data['pointJson'])){
                 $service->verification($data['token'], $data['pointJson']);
             } else {
-                throw new \Exception('参数错误！');
+                throw new \Exception('Tham số không hợp lệ!');
             }
         } catch (\Exception $e) {
             $msg = $e->getMessage();

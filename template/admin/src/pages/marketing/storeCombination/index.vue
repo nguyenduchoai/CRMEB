@@ -10,58 +10,58 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="上架状态：">
+          <el-form-item label="Trạng thái đăng bán:">
             <el-select
               v-model="formValidate.is_show"
-              placeholder="请选择"
+              placeholder="Vui lòng chọn"
               clearable
               @change="userSearchs"
               class="form_content_width"
             >
-              <el-option :value="1" label="上架"></el-option>
-              <el-option :value="0" label="下架"></el-option>
+              <el-option :value="1" label="Đang bán"></el-option>
+              <el-option :value="0" label="Ngừng bán"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="拼团搜索：" prop="store_name" label-for="store_name">
+          <el-form-item label="Tìm kiếm mua chung:" prop="store_name" label-for="store_name">
             <el-input
               clearable
-              placeholder="请输入请输入拼团名称/ID"
+              placeholder="Vui lòng nhập tên mua chung/ID"
               v-model="formValidate.store_name"
               class="form_content_width"
             />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="userSearchs">查询</el-button>
+            <el-button type="primary" v-db-click @click="userSearchs">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
     <el-card :bordered="false" shadow="never" class="ivu-mt mt16">
       <el-button v-auth="['marketing-store_combination-create']" type="primary" v-db-click @click="add"
-        >添加拼团商品</el-button
+        >Thêm sản phẩm mua chung</el-button
       >
-      <el-button v-auth="['export-storeCombination']" class="export" v-db-click @click="exports">导出</el-button>
+      <el-button v-auth="['export-storeCombination']" class="export" v-db-click @click="exports">Xuất</el-button>
       <el-table
         :data="tableList"
         class="mt14"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column label="ID" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="拼团图片" min-width="90">
+        <el-table-column label="Hình ảnh mua chung" min-width="90">
           <template slot-scope="scope">
             <div class="tabBox_img" v-viewer>
               <img v-lazy="scope.row.image" />
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="拼团名称" min-width="130">
+        <el-table-column label="Tên mua chung" min-width="130">
           <template slot-scope="scope">
             <el-tooltip placement="top" :open-delay="600">
               <div slot="content">{{ scope.row.title }}</div>
@@ -69,55 +69,55 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column label="原价" min-width="130">
+        <el-table-column label="Giá gốc" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.ot_price }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="拼团价" min-width="130">
+        <el-table-column label="Giá mua chung" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.price }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="拼团人数" min-width="80">
+        <el-table-column label="Số người mua chung" min-width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.count_people }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="参与人数" min-width="80">
+        <el-table-column label="Số người tham gia" min-width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.count_people_all }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="成团数量" min-width="80">
+        <el-table-column label="Số nhóm thành công" min-width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.count_people_pink }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="限量" min-width="80">
+        <el-table-column label="Giới hạn số lượng" min-width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.quota_show }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="限量剩余" min-width="80">
+        <el-table-column label="Số lượng giới hạn còn lại" min-width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.quota }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="活动状态" min-width="100">
+        <el-table-column label="Trạng thái chương trình" min-width="100">
           <template slot-scope="scope">
-            <el-tag size="medium" v-show="scope.row.start_name === '进行中'">进行中</el-tag>
-            <el-tag size="medium" type="warning" v-show="scope.row.start_name === '未开始'">未开始</el-tag>
-            <el-tag size="medium" type="info" v-show="scope.row.start_name === '已结束'">已结束</el-tag>
+            <el-tag size="medium" v-show="scope.row.start_name === 'Đang diễn ra'">Đang diễn ra</el-tag>
+            <el-tag size="medium" type="warning" v-show="scope.row.start_name === 'Chưa bắt đầu'">Chưa bắt đầu</el-tag>
+            <el-tag size="medium" type="info" v-show="scope.row.start_name === 'Đã kết thúc'">Đã kết thúc</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="活动时间" min-width="180">
+        <el-table-column label="Thời gian chương trình" min-width="180">
           <template slot-scope="scope">
-            <p>开始：{{ scope.row.start_time }}</p>
-            <p>结束：{{ scope.row.stop_time }}</p>
+            <p>Bắt đầu: {{ scope.row.start_time }}</p>
+            <p>Kết thúc: {{ scope.row.stop_time }}</p>
           </template>
         </el-table-column>
-        <el-table-column label="上架状态" min-width="150">
+        <el-table-column label="Trạng thái đăng bán" min-width="150">
           <template slot-scope="scope">
             <el-switch
               class="defineSwitch"
@@ -127,21 +127,21 @@
               :value="scope.row.is_show"
               @change="onchangeIsShow(scope.row)"
               size="large"
-              active-text="上架"
-              inactive-text="下架"
+              active-text="Đang bán"
+              inactive-text="Ngừng bán"
             >
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="170">
+        <el-table-column label="Thao tác" fixed="right" width="170">
           <template slot-scope="scope">
-            <a v-if="scope.row.stop_status === 0" v-db-click @click="edit(scope.row)">编辑</a>
+            <a v-if="scope.row.stop_status === 0" v-db-click @click="edit(scope.row)">Sửa</a>
             <el-divider direction="vertical" v-if="scope.row.stop_status === 0" />
-            <a v-db-click @click="copy(scope.row)">复制</a>
+            <a v-db-click @click="copy(scope.row)">Sao chép</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除拼团商品', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa sản phẩm mua chung', scope.$index)">Xóa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="viewInfo(scope.row)">统计</a>
+            <a v-db-click @click="viewInfo(scope.row)">Thống kê</a>
           </template>
         </el-table-column>
       </el-table>
@@ -209,7 +209,7 @@ export default {
     this.getList();
   },
   methods: {
-    // 导出
+    // Xuất
     async exports() {
       let [th, filekey, data, fileName] = [[], [], [], ''];
       let excelData = JSON.parse(JSON.stringify(this.formValidate));
@@ -239,23 +239,23 @@ export default {
       });
     },
 
-    // 添加
+    // Thêm
     add() {
       this.$router.push({ path: this.$routeProStr + '/marketing/store_combination/create' });
     },
-    // 编辑
+    // Sửa
     edit(row) {
       this.$router.push({
         path: this.$routeProStr + '/marketing/store_combination/create/' + row.id + '/0',
       });
     },
-    // 一键复制
+    // Sao chép một chạm
     copy(row) {
       this.$router.push({
         path: this.$routeProStr + '/marketing/store_combination/create/' + row.id + '/1',
       });
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -278,7 +278,7 @@ export default {
         path: this.$routeProStr + '/marketing/store_combination/statistics/' + row.id,
       });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       // this.formValidate.is_show = this.formValidate.is_show
@@ -296,12 +296,12 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.formValidate.page = 1;
       this.getList();
     },
-    // 修改是否显示
+    // Sửa có hiển thị hay không
     onchangeIsShow(row) {
       let data = {
         id: row.id,

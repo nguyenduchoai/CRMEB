@@ -1,6 +1,6 @@
 <template>
   <div class="footer" v-if="footConfig">
-    <p class="tips">图片建议宽度81*81px；鼠标拖拽左侧圆点可调整导航顺序</p>
+    <p class="tips">Kích thước ảnh đề xuất 81*81px; kéo thả chấm tròn bên trái để điều chỉnh thứ tự điều hướng</p>
     <draggable class="dragArea list-group" :list="footConfig" group="peoples" handle=".iconfont">
       <div class="box-item" v-for="(item, index) in footConfig" :key="index">
         <div class="left-tool">
@@ -8,31 +8,31 @@
         </div>
         <div class="right-wrapper">
           <div class="acea-row" v-if="navStyle != 1">
-            <div class="title">图标</div>
+            <div class="title">Biểu tượng</div>
             <div class="img-wrapper">
               <div class="img-item" v-for="(img, j) in item.imgList" @click="modalPicTap(index, j)">
                 <div class="pictrue" v-if="img">
                   <img :src="img" alt="" />
-                  <p class="txt">替换</p>
+                  <p class="txt">Thay thế</p>
                 </div>
                 <div class="empty-img" v-else>
                   <span class="iconfont iconjiahao"></span>
                 </div>
-                <div class="name">{{ j == 0 ? '选中' : '未选中' }}</div>
+                <div class="name">{{ j == 0 ? 'Đã chọn' : 'Chưa chọn' }}</div>
               </div>
             </div>
           </div>
           <div class="c_row-item" v-if="navStyle != 2">
-            <el-col class="label" :span="4"> 名称 </el-col>
+            <el-col class="label" :span="4"> Tên </el-col>
             <el-col class="slider-box" :span="20">
-              <el-input v-model="item.name" placeholder="选填不超过10个字" />
+              <el-input v-model="item.name" placeholder="Không bắt buộc, tối đa 10 ký tự" />
             </el-col>
           </div>
           <div class="c_row-item">
-            <el-col class="label" :span="4"> 链接 </el-col>
+            <el-col class="label" :span="4"> Liên kết </el-col>
             <el-col class="slider-box" :span="20">
               <div>
-                <el-input v-model="item.link" placeholder="选填不超过10个字">
+                <el-input v-model="item.link" placeholder="Không bắt buộc, tối đa 10 ký tự">
                   <i class="el-icon-link" slot="suffix" @click="getLink(index)" />
                 </el-input>
               </div>
@@ -44,9 +44,9 @@
         </div>
       </div>
     </draggable>
-    <el-button class="add-btn" @click="addMenu" v-if="footConfig.length < 5">+ 添加板块</el-button>
+    <el-button class="add-btn" @click="addMenu" v-if="footConfig.length < 5">+ Thêm khối</el-button>
     <div>
-      <el-dialog :visible.sync="modalPic" width="960px" title="上传底部菜单" :mask-closable="false" :z-index="1">
+      <el-dialog :visible.sync="modalPic" width="960px" title="Tải lên menu dưới cùng" :mask-closable="false" :z-index="1">
         <uploadPictures
           :isChoice="isChoice"
           @getPic="getPic"
@@ -89,7 +89,7 @@ export default {
       val2: '',
       footConfig: [],
       modalPic: false,
-      isChoice: '单选',
+      isChoice: 'Chọn một',
       itemIndex: 0,
       itemChildIndex: 0,
       gridBtn: {
@@ -130,13 +130,13 @@ export default {
       this.itemIndex = index;
       this.$refs.linkaddres.modals = true;
     },
-    // 点击图文封面
+    // Click vào ảnh bìa bài viết ảnh-văn
     modalPicTap(parent, child) {
       this.itemIndex = parent;
       this.itemChildIndex = child;
       this.modalPic = true;
     },
-    // 获取图片信息
+    // Lấy thông tin ảnh
     getPic(pc) {
       this.$nextTick(() => {
         this.footConfig[this.itemIndex].imgList[this.itemChildIndex] = pc.att_dir;
@@ -144,22 +144,22 @@ export default {
         this.$store.commit('mobildConfig/footUpdata', this.footConfig);
       });
     },
-    // 添加模块
+    // Thêm mô-đun
     addMenu() {
       let obj = {
         imgList: [this.noPic, this.noPic],
-        name: '自定义',
+        name: 'Tùy chỉnh',
         link: '',
       };
       this.footConfig.push(obj);
     },
     deleteMenu(index) {
       this.$msgbox({
-        title: '提示',
-        message: '是否确定删除该菜单',
+        title: 'Thông báo',
+        message: 'Bạn có chắc chắn muốn xóa menu này không',
         showCancelButton: true,
-        cancelButtonText: '取消',
-        confirmButtonText: '删除',
+        cancelButtonText: 'Hủy',
+        confirmButtonText: 'Xóa',
         iconClass: 'el-icon-warning',
         confirmButtonClass: 'btn-custom-cancel',
       })

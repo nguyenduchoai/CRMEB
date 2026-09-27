@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible.sync="modal" @closed="onCancel" title="商品参数" width="1000px" v-loading="spinShow">
+  <el-dialog :visible.sync="modal" @closed="onCancel" title="Thông số sản phẩm" width="1000px" v-loading="spinShow">
     <el-form
       ref="formDynamic"
       :model="formDynamic"
@@ -11,15 +11,15 @@
       <el-row :gutter="24">
         <el-col :span="24">
           <el-col :span="8">
-            <el-form-item label="模板名称：" prop="rule_name">
-              <el-input placeholder="请输入模板名称" :maxlength="20" v-model.trim="formDynamic.name" />
+            <el-form-item label="Tên mẫu:" prop="rule_name">
+              <el-input placeholder="Vui lòng nhập tên mẫu" :maxlength="20" v-model.trim="formDynamic.name" />
             </el-form-item>
           </el-col>
         </el-col>
         <el-col :span="24">
           <el-col :span="8">
-            <el-form-item label="排序：" prop="rule_name">
-              <el-input type="number" placeholder="请输入排序" :maxlength="20" v-model.trim="formDynamic.sort" />
+            <el-form-item label="Thứ tự sắp xếp:" prop="rule_name">
+              <el-input type="number" placeholder="Vui lòng nhập thứ tự sắp xếp" :maxlength="20" v-model.trim="formDynamic.sort" />
             </el-form-item>
           </el-col>
         </el-col>
@@ -34,20 +34,20 @@
                     </div>
                   </template>
                 </el-table-column>
-                <el-table-column label="参数名称" min-width="80">
+                <el-table-column label="Tên thông số" min-width="80">
                   <template slot-scope="scope">
                     <el-input v-model="scope.row.name"></el-input>
                   </template>
                 </el-table-column>
-                <el-table-column label="参数值" min-width="80">
+                <el-table-column label="Giá trị thông số" min-width="80">
                   <template slot-scope="scope">
                     <el-input v-model="scope.row.value"></el-input>
                   </template>
                 </el-table-column>
 
-                <el-table-column label="操作" fixed="right" width="80">
+                <el-table-column label="Thao tác" fixed="right" width="80">
                   <template slot-scope="scope">
-                    <a class="submission mr15" v-db-click @click="deleteRow(scope.$index)">删除</a>
+                    <a class="submission mr15" v-db-click @click="deleteRow(scope.$index)">Xóa</a>
                   </template>
                 </el-table-column>
               </el-table>
@@ -57,7 +57,7 @@
                 class="submission mr15 mt20"
                 v-db-click
                 @click="handleAddRole"
-                >添加参数</el-button
+                >Thêm thông số</el-button
               >
             </div>
           </el-form-item>
@@ -65,9 +65,9 @@
       </el-row>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button v-db-click @click="onClose">取消</el-button>
+      <el-button v-db-click @click="onClose">Hủy</el-button>
       <el-button type="primary" :loading="modal_loading" v-db-click @click="handleSubmit('formDynamic')"
-        >确定</el-button
+        >Xác nhận</el-button
       >
     </span>
   </el-dialog>
@@ -124,7 +124,7 @@ export default {
   mounted() {},
   methods: {
     setSort() {
-      // ref一定跟table上面的ref一致
+      // ref phải khớp với ref ở trên table
       const el = this.$refs.selection.$el.querySelectorAll('.el-table__body-wrapper > table > tbody')[0];
       this.sortable = Sortable.create(el, {
         ghostClass: 'sortable-ghost',
@@ -132,7 +132,7 @@ export default {
         setData: function (dataTransfer) {
           dataTransfer.setData('Text', '');
         },
-        // 监听拖拽事件结束时触发
+        // Kích hoạt khi sự kiện kéo thả kết thúc
         onEnd: (evt) => {
           this.elChangeExForArray(evt.oldIndex, evt.newIndex, this.formDynamic.value);
         },
@@ -176,16 +176,16 @@ export default {
     deleteRow(index) {
       this.formDynamic.value.splice(index, 1);
     },
-    // 添加按钮
+    // Nút thêm
     addBtn() {
       this.isBtn = true;
     },
-    //修改排序
+    //Sửa thứ tự sắp xếp
     onDragDrop(a, b) {
       console.log(a, b);
       this.formDynamic.value.splice(b, 1, ...this.formDynamic.value.splice(a, 1, this.formDynamic.value[b]));
     },
-    // 详情
+    // Chi tiết
     getIofo(row) {
       this.ids = row.id;
       paramInfoApi(row.id)
@@ -197,12 +197,12 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 提交
+    // Gửi
     handleSubmit(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
           if (this.formDynamic.value.length === 0) {
-            return this.$message.warning('请至少添加一条商品参数！');
+            return this.$message.warning('Vui lòng thêm ít nhất một thông số sản phẩm!');
           }
           this.modal_loading = true;
           paramSaveApi(this.formDynamic)
@@ -236,7 +236,7 @@ export default {
       this.attrsVal = '';
       this.ids = 0;
     },
-    // 删除
+    // Xóa
     handleRemove(index) {
       this.formDynamic.value.splice(index, 1);
     },

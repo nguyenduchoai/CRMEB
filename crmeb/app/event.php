@@ -1,18 +1,18 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 
-/** 事件定义文件
- * 调用事件示例：
- * @param mixed $event 事件名（或者类名）
- * @param mixed $args  参数
+/** File định nghĩa event
+ * Ví dụ gọi event:
+ * @param mixed $event Tên event (hoặc tên class)
+ * @param mixed $args  Tham số
  * event($event,$args);
  * event('OrderCreateAfterListener',$order);
 */ 
@@ -23,28 +23,28 @@ return [
     'listen' => [
         'AppInit' => [],
         'HttpRun' => [],
-        'HttpEnd' => [\app\listener\http\HttpEndListener::class], //HTTP请求结束回调事件
+        'HttpEnd' => [\app\listener\http\HttpEndListener::class], //Event callback khi kết thúc request HTTP
         'LogLevel' => [],
         'LogWrite' => [],
         'QueueStartListener' => [\app\listener\queue\QueueStartListener::class],
         'UserLoginListener' => [\app\listener\user\LoginListener::class],
-        'AdminLoginListener' => [\app\listener\admin\AdminLoginListener::class],//管理员登录
-        'UserRegisterListener' => [\app\listener\user\RegisterListener::class], //用户注册后置事件
-        'WechatAuthListener' => [\app\listener\wechat\AuthListener::class], //用户授权后置事件
-        'OrderCreateAfterListener' => [\app\listener\order\OrderCreateAfterListener::class], //订单创建后置事件
-        'OrderPaySuccessListener' => [\app\listener\order\OrderPaySuccessListener::class], //订单支付成功后置事件
-        'OrderDeliveryListener' => [\app\listener\order\OrderDeliveryListener::class], //订单发货后置事件
-        'OrderTakeListener' => [\app\listener\order\OrderTakeListener::class], //订单收货后置事件
-        'OrderRefundCreateAfterListener' => [\app\listener\order\OrderRefundCreateAfterListener::class], //售后单生成后置事件
-        'OrderRefundCancelAfterListener' => [\app\listener\order\OrderRefundCancelAfterListener::class], //售后单取消后置事件
-        'OutPushListener' => [\app\listener\out\OutPushListener::class], //对外推送事件
-        'UserLevelListener' => [\app\listener\user\UserLevelListener::class], //用户升级事件
-        'UserVisitListener' => [\app\listener\user\UserVisitListener::class], //用户访问事件
-        'NoticeListener' => [\app\listener\notice\NoticeListener::class], //通知->消息事件
-        'CustomNoticeListener' => [\app\listener\notice\CustomNoticeListener::class], //通知->自定义消息发送事件
-        'NotifyListener' => [\app\listener\pay\NotifyListener::class],//支付异步回调
-        'OrderShippingListener' => [\app\listener\order\OrderShippingListener::class],//小程序发货管理
-        'CustomEventListener' => [\app\listener\CustomEventListener::class],//自定义事件
+        'AdminLoginListener' => [\app\listener\admin\AdminLoginListener::class],//Đăng nhập quản trị viên
+        'UserRegisterListener' => [\app\listener\user\RegisterListener::class], //Event sau khi người dùng đăng ký
+        'WechatAuthListener' => [\app\listener\wechat\AuthListener::class], //Sự kiện sau khi người dùng ủy quyền
+        'OrderCreateAfterListener' => [\app\listener\order\OrderCreateAfterListener::class], //Event sau khi tạo đơn hàng
+        'OrderPaySuccessListener' => [\app\listener\order\OrderPaySuccessListener::class], //Event sau khi đơn hàng thanh toán thành công
+        'OrderDeliveryListener' => [\app\listener\order\OrderDeliveryListener::class], //Event sau khi đơn hàng giao hàng
+        'OrderTakeListener' => [\app\listener\order\OrderTakeListener::class], //Event sau khi đơn hàng được nhận hàng
+        'OrderRefundCreateAfterListener' => [\app\listener\order\OrderRefundCreateAfterListener::class], //Event sau khi tạo đơn hậu mãi
+        'OrderRefundCancelAfterListener' => [\app\listener\order\OrderRefundCancelAfterListener::class], //Event sau khi hủy đơn hậu mãi
+        'OutPushListener' => [\app\listener\out\OutPushListener::class], //Event đẩy dữ liệu ra bên ngoài
+        'UserLevelListener' => [\app\listener\user\UserLevelListener::class], //Event nâng cấp người dùng
+        'UserVisitListener' => [\app\listener\user\UserVisitListener::class], //Sự kiện người dùng truy cập
+        'NoticeListener' => [\app\listener\notice\NoticeListener::class], //Event thông báo -> tin nhắn
+        'CustomNoticeListener' => [\app\listener\notice\CustomNoticeListener::class], //Event thông báo -> gửi tin nhắn tùy chỉnh
+        'NotifyListener' => [\app\listener\pay\NotifyListener::class],//Callback thanh toán bất đồng bộ
+        'OrderShippingListener' => [\app\listener\order\OrderShippingListener::class],//Quản lý giao hàng Mini Program
+        'CustomEventListener' => [\app\listener\CustomEventListener::class],//Sự kiện tùy chỉnh
     ],
 ];
 

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,10 +21,10 @@ use app\dao\service\StoreServiceDao;
 use app\services\wechat\WechatUserServices;
 
 /**
- * 客服登录
+ * Đăng nhập CSKH
  * Class LoginServices
  * @package app\services\kefu
- * @method get($id, ?array $field = [], ?array $with = []) 获取一条数据
+ * @method get($id, ?array $field = [], ?array $with = []) Lấy một dòng dữ liệu
  */
 class LoginServices extends BaseServices
 {
@@ -38,7 +38,7 @@ class LoginServices extends BaseServices
     }
 
     /**
-     * 客服账号密码登录
+     * Đăng nhập bằng tài khoản mật khẩu nhân viên CSKH
      * @param string $account
      * @param string $password
      * @return array
@@ -71,7 +71,7 @@ class LoginServices extends BaseServices
     }
 
     /**
-     * 解析token
+     * Phân tích token
      * @param string $token
      * @return array
      * @throws \Psr\SimpleCache\InvalidArgumentException
@@ -82,7 +82,7 @@ class LoginServices extends BaseServices
     public function parseToken(string $token)
     {
         $noCli = !request()->isCli();
-        //检测token是否过期
+        //Kiểm tra token có hết hạn không
         $md5Token = md5($token);
         if (!$token || !CacheService::has($md5Token) || !(CacheService::get($md5Token, '', NULL, 'kefu'))) {
             throw new AuthException(110005);
@@ -93,10 +93,10 @@ class LoginServices extends BaseServices
 
         /** @var JwtAuth $jwtAuth */
         $jwtAuth = app()->make(JwtAuth::class);
-        //设置解析token
+        //Đặt phân tích token
         [$id, $type] = $jwtAuth->parseToken($token);
 
-        //验证token
+        //Xác thực token
         try {
             $jwtAuth->verifyToken();
         } catch (\Throwable $e) {
@@ -104,7 +104,7 @@ class LoginServices extends BaseServices
             throw new AuthException(110006);
         }
 
-        //获取管理员信息
+        //Lấy thông tin quản trị viên
         $adminInfo = $this->dao->get($id);
         if (!$adminInfo || !$adminInfo->id) {
             $noCli && CacheService::delete($md5Token);
@@ -154,7 +154,7 @@ class LoginServices extends BaseServices
     }
 
     /**
-     * 检测有没有人扫描登录
+     * Kiểm tra có ai quét mã đăng nhập không
      * @param string $key
      * @return array|int[]
      * @throws \Psr\SimpleCache\InvalidArgumentException
@@ -166,11 +166,11 @@ class LoginServices extends BaseServices
     {
         $hasKey = CacheService::has($key);
         if ($hasKey === false) {
-            $status = 0;//不存在需要刷新二维码
+            $status = 0;//Không tồn tại thì cần làm mới mã QR
         } else {
             $keyValue = CacheService::get($key);
             if ($keyValue === '0') {
-                $status = 1;//正在扫描中
+                $status = 1;//Đang quét mã
                 $kefuInfo = $this->dao->get(['uniqid' => $key], ['account', 'uniqid']);
                 if ($kefuInfo) {
                     $tokenInfo = $this->authLogin($kefuInfo->account);
@@ -181,7 +181,7 @@ class LoginServices extends BaseServices
                     return $tokenInfo;
                 }
             } else {
-                $status = 2;//没有扫描
+                $status = 2;//Chưa quét mã
             }
         }
         return ['status' => $status];

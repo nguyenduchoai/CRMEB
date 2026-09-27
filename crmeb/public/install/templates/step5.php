@@ -17,25 +17,25 @@ $host = $_SERVER['HTTP_HOST'];
 <body>
 <div class="wrap">
     <div class="title">
-        安装完成
+        Cài đặt hoàn tất
     </div>
 
   <section class="section">
       <div class="title">
           <img src="./images/install/success.png" alt="">
-          <h1>安装成功</h1>
+          <h1>Cài đặt thành công</h1>
       </div>
       <div class="progress">
           <div class="trip p8">
-              为了您站点的安全，安装完成后即可将网站根目录下的“install”文件夹下的所有文件删除，防止重复安装。
+              Để đảm bảo an toàn cho trang web của bạn, sau khi cài đặt xong, bạn có thể xóa toàn bộ tệp trong thư mục “install” ở thư mục gốc của website để tránh cài đặt lại.
           </div>
       </div>
     <div class="bottom-btn">
         <div class="pre btn">
-            <a href="<?php echo 'http://'.$host;?>" class="btn mid">进入前台</a>
+            <a href="<?php echo 'http://'.$host;?>" class="btn mid">Vào cửa hàng</a>
         </div>
         <div class="admin btn">
-            <a href="<?php echo 'http://'.$host;?>/admin" class="btn btn_submit J_install_btn mid">进入后台</a>
+            <a href="<?php echo 'http://'.$host;?>/admin" class="btn btn_submit J_install_btn mid">Vào trang quản trị</a>
         </div>
       </div>
     </div>

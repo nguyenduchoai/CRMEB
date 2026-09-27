@@ -72,7 +72,7 @@ class Index
                 $service = new BlockPuzzleCaptchaService($config);
                 break;
             default:
-                throw new ParamException('captchaType参数不正确！');
+                throw new ParamException('Tham số captchaType không đúng!');
         }
         return $service;
     }

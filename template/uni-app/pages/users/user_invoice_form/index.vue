@@ -3,72 +3,72 @@
 		<form @submit="formSubmit">
 			<view class="panel">
 				<view class="acea-row row-middle">
-					<view>{{$t(`抬头类型`)}}</view>
+					<view>{{$t(`Loại tiêu đề hóa đơn`)}}</view>
 					<radio-group name="header_type" @change="changeTitleType">
 						<label>
-							<radio class="disabled" value="1" :checked="header_type === '1'" /><text>{{$t(`个人`)}}</text>
+							<radio class="disabled" value="1" :checked="header_type === '1'" /><text>{{$t(`Cá nhân`)}}</text>
 						</label>
 						<label>
-							<radio value="2" :checked="header_type === '2'" /><text>{{$t(`企业`)}}</text>
+							<radio value="2" :checked="header_type === '2'" /><text>{{$t(`Doanh nghiệp`)}}</text>
 						</label>
 					</radio-group>
 				</view>
 				<view class="acea-row row-middle" v-if="basicConfigData.special_invoice_status === '1' && header_type === '2'">
-					<view>{{$t(`发票类型`)}}</view>
+					<view>{{$t(`Loại hóa đơn`)}}</view>
 					<text class="w-fill" @click="callType">
-						<text>{{ type === '2' ? $t(`增值税电子专用发票`) : $t(`增值税电子普通发票`) }} </text>
+						<text>{{ type === '2' ? $t(`Hóa đơn điện tử VAT chuyên dụng`) : $t(`Hóa đơn điện tử VAT thông thường`) }} </text>
 						<text class="iconfont icon-xiangyou"></text>
 					</text>
 
 				</view>
 				<view class="acea-row row-middle">
-					<view>{{$t(`发票抬头`)}}</view>
-					<input name="name" :value="name" :placeholder="header_type === '1' ? $t(`需要开具发票的姓名`) : $t(`需要开具发票的企业名称`)" />
+					<view>{{$t(`Tiêu đề hóa đơn`)}}</view>
+					<input name="name" :value="name" :placeholder="header_type === '1' ? $t(`Họ tên cần xuất hóa đơn`) : $t(`Tên doanh nghiệp cần xuất hóa đơn`)" />
 				</view>
 				<view v-show="header_type === '2'" class="acea-row row-middle">
-					<view>{{$t(`税号`)}}</view>
-					<input name="duty_number" :value="duty_number" :placeholder="$t(`纳税人识别号`)" />
+					<view>{{$t(`Mã số thuế`)}}</view>
+					<input name="duty_number" :value="duty_number" :placeholder="$t(`Mã số thuế`)" />
 				</view>
 				<view class="acea-row row-middle">
-					<view>{{$t(`手机号`)}}</view>
-					<input name="drawer_phone" :value="drawer_phone" :placeholder="$t(`您的手机号`)" />
+					<view>{{$t(`Số điện thoại`)}}</view>
+					<input name="drawer_phone" :value="drawer_phone" :placeholder="$t(`Số điện thoại của bạn`)" />
 				</view>
 				<view class="acea-row row-middle">
-					<view>{{$t(`邮箱`)}}</view>
-					<input name="email" :value="email" :placeholder="$t(`您的联系邮箱`)" />
+					<view>{{$t(`Email`)}}</view>
+					<input name="email" :value="email" :placeholder="$t(`Email liên hệ của bạn`)" />
 				</view>
 			</view>
 			<view v-show="type === '2'" class="panel">
 				<view class="acea-row row-middle">
-					<view>{{$t(`开户银行`)}}</view>
-					<input name="bank" :value="bank" :placeholder="$t(`您的开户银行`)" />
+					<view>{{$t(`Ngân hàng mở tài khoản`)}}</view>
+					<input name="bank" :value="bank" :placeholder="$t(`Ngân hàng mở tài khoản của bạn`)" />
 				</view>
 				<view class="acea-row row-middle">
-					<view>{{$t(`银行账号`)}}</view>
-					<input name="card_number" :value="card_number" :placeholder="$t(`您的银行账号`)" />
+					<view>{{$t(`Số tài khoản ngân hàng`)}}</view>
+					<input name="card_number" :value="card_number" :placeholder="$t(`Số tài khoản ngân hàng của bạn`)" />
 				</view>
 				<view class="acea-row row-middle">
-					<view>{{$t(`企业地址`)}}</view>
-					<input name="address" :value="address" :placeholder="$t(`您所在的企业地址`)" />
+					<view>{{$t(`Địa chỉ doanh nghiệp`)}}</view>
+					<input name="address" :value="address" :placeholder="$t(`Địa chỉ doanh nghiệp của bạn`)" />
 				</view>
 				<view class="acea-row row-middle">
-					<view>{{$t(`企业电话`)}}</view>
-					<input name="tell" :value="tell" :placeholder="$t(`您的企业电话`)" />
+					<view>{{$t(`Điện thoại doanh nghiệp`)}}</view>
+					<input name="tell" :value="tell" :placeholder="$t(`Số điện thoại doanh nghiệp của bạn`)" />
 				</view>
 			</view>
 			<checkbox-group class="acea-row row-middle panel" name="is_default">
 				<label>
-					<checkbox :checked="is_default.length !== 0" /><text>{{$t(`设置为默认抬头`)}}</text>
+					<checkbox :checked="is_default.length !== 0" /><text>{{$t(`Đặt làm tiêu đề hóa đơn mặc định`)}}</text>
 				</label>
 			</checkbox-group>
 			<view class="button-section">
-				<button class="button" form-type="submit">{{$t(`保存`)}}</button>
-				<navigator class="navigator" :url="backUrl" hover-class="none">{{$t(`取消`)}}</navigator>
+				<button class="button" form-type="submit">{{$t(`Lưu`)}}</button>
+				<navigator class="navigator" :url="backUrl" hover-class="none">{{$t(`Hủy`)}}</navigator>
 			</view>
 		</form>
 		<view :class="{ mask: popupType }"></view>
 		<view class="popup" :class="{ on: popupType }">
-			<view class="title">{{$t(`发票类型选择`)}}<text class="iconfont icon-guanbi" @click="closeType"></text></view>
+			<view class="title">{{$t(`Chọn loại hóa đơn`)}}<text class="iconfont icon-guanbi" @click="closeType"></text></view>
 			<scroll-view scroll-y="true">
 				<radio-group name="invoice-type" @change="changeType">
 					<template v-for="item in invoiceTypeList">
@@ -105,28 +105,28 @@
 		data() {
 			return {
 				invoiceTypeList: [{
-						name: this.$t(`增值税电子普通发票`),
+						name: this.$t(`Hóa đơn điện tử VAT thông thường`),
 						value: '1',
-						info: this.$t(`纸质发票开出后将以邮寄形式交付`)
+						info: this.$t(`Hóa đơn giấy sau khi xuất sẽ được gửi qua đường bưu điện`)
 					},
 					{
-						name: this.$t(`增值税电子专用发票`),
+						name: this.$t(`Hóa đơn điện tử VAT chuyên dụng`),
 						value: '2',
-						info: this.$t(`纸质发票开出后将以邮寄形式交付`)
+						info: this.$t(`Hóa đơn giấy sau khi xuất sẽ được gửi qua đường bưu điện`)
 					}
 				],
-				id: '', // 修改时为必须参数
-				header_type: '1', // 抬头类型1: 个人2： 企业
-				type: '1', // 发票类型1：普通2：专用
-				drawer_phone: '', // 开票人手机号
-				name: '', // 名称（发票抬头）
-				duty_number: '', // 税号（个人为非必需，企业是必需参数）
-				tell: '', // 公司注册电话
-				address: '', // 注册地址
-				bank: '', // 开户行
-				card_number: '', // 银行卡号
-				is_default: [], // 是否默认
-				email: '', // 邮箱
+				id: '', // Là tham số bắt buộc khi sửa
+				header_type: '1', // Loại thông tin xuất hóa đơn 1: cá nhân 2: doanh nghiệp
+				type: '1', // Loại hóa đơn 1: thông thường, 2: chuyên dụng
+				drawer_phone: '', // Số điện thoại người yêu cầu xuất hóa đơn
+				name: '', // Tên (thông tin xuất hóa đơn)
+				duty_number: '', // Mã số thuế (không bắt buộc với cá nhân, bắt buộc với doanh nghiệp)
+				tell: '', // Số điện thoại đăng ký công ty
+				address: '', // Địa chỉ đăng ký
+				bank: '', // Ngân hàng mở tài khoản
+				card_number: '', // Số thẻ ngân hàng
+				is_default: [], // Đặt làm mặc định
+				email: '', // Email
 				popupType: false,
 				typeName: '',
 				urlQuery: '',
@@ -154,7 +154,7 @@
 		onLoad(options) {
 
 			if (options.id) uni.setNavigationBarTitle({
-				title: '编辑发票'
+				title: 'Sửa hóa đơn'
 			})
 			for (let key in options) {
 				switch (key) {
@@ -189,10 +189,10 @@
 			this.typeName = invoiceItem.name;
 		},
 		methods: {
-			// 获取发票数据
+			// Lấy dữ liệu hóa đơn
 			getInvoiceDetail() {
 				uni.showLoading({
-					title: this.$t(`加载中`)
+					title: this.$t(`Đang tải`)
 				});
 				invoiceDetail(this.id).then(res => {
 					uni.hideLoading();
@@ -216,7 +216,7 @@
 					});
 				});
 			},
-			// 保存
+			// Lưu
 			formSubmit(e) {
 				let that = this;
 				const formData = e.detail.value;
@@ -224,31 +224,31 @@
 				if (formData.header_type === '1') {
 					if (!formData.name) {
 						return uni.showToast({
-							title: that.$t(`请输入需要开具发票的姓名`),
+							title: that.$t(`Vui lòng nhập họ tên cần xuất hóa đơn`),
 							icon: 'none'
 						});
 					}
 					if (!formData.drawer_phone) {
 						return uni.showToast({
-							title: that.$t(`请输入您的手机号`),
+							title: that.$t(`Vui lòng nhập số điện thoại của bạn`),
 							icon: 'none'
 						});
 					}
 					if (!/^1(3|4|5|7|8|9|6)\d{9}$/i.test(formData.drawer_phone)) {
 						return uni.showToast({
-							title: that.$t(`请正确输入您的手机号`),
+							title: that.$t(`Vui lòng nhập đúng số điện thoại của bạn`),
 							icon: 'none'
 						});
 					}
 					if (!formData.email) {
 						return uni.showToast({
-							title: that.$t(`请输入您的联系邮箱`),
+							title: that.$t(`Vui lòng nhập email liên hệ của bạn`),
 							icon: 'none'
 						});
 					}
 					if (!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(formData.email)) {
 						return uni.showToast({
-							title: that.$t(`请正确输入您的联系邮箱`),
+							title: that.$t(`Vui lòng nhập đúng email liên hệ của bạn`),
 							icon: 'none'
 						});
 					}
@@ -257,43 +257,43 @@
 					if (formData.type === '1') {
 						if (!formData.name) {
 							return uni.showToast({
-								title: that.$t(`请输入需要开具发票的企业名称`),
+								title: that.$t(`Vui lòng nhập tên doanh nghiệp cần xuất hóa đơn`),
 								icon: 'none'
 							});
 						}
 						if (!formData.duty_number) {
 							return uni.showToast({
-								title: that.$t(`请输入纳税人识别号`),
+								title: that.$t(`Vui lòng nhập mã số thuế`),
 								icon: 'none'
 							});
 						}
 						if (!/[0-9A-HJ-NPQRTUWXY]{2}\d{6}[0-9A-HJ-NPQRTUWXY]{10}/.test(formData.duty_number)) {
 							return uni.showToast({
-								title: that.$t(`请正确输入纳税人识别号`),
+								title: that.$t(`Vui lòng nhập đúng mã số thuế`),
 								icon: 'none'
 							});
 						}
 						if (!formData.drawer_phone) {
 							return uni.showToast({
-								title: that.$t(`请输入您的手机号`),
+								title: that.$t(`Vui lòng nhập số điện thoại của bạn`),
 								icon: 'none'
 							});
 						}
 						if (!/^1(3|4|5|7|8|9|6)\d{9}$/i.test(formData.drawer_phone)) {
 							return uni.showToast({
-								title: that.$t(`请正确输入您的手机号`),
+								title: that.$t(`Vui lòng nhập đúng số điện thoại của bạn`),
 								icon: 'none'
 							});
 						}
 						if (!formData.email) {
 							return uni.showToast({
-								title: that.$t(`请输入您的联系邮箱`),
+								title: that.$t(`Vui lòng nhập email liên hệ của bạn`),
 								icon: 'none'
 							});
 						}
 						if (!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(formData.email)) {
 							return uni.showToast({
-								title: that.$t(`请正确输入您的联系邮箱`),
+								title: that.$t(`Vui lòng nhập đúng email liên hệ của bạn`),
 								icon: 'none'
 							});
 						}
@@ -301,73 +301,73 @@
 					if (formData.type === '2') {
 						if (!formData.name) {
 							return uni.showToast({
-								title: that.$t(`请输入需要开具发票的企业名称`),
+								title: that.$t(`Vui lòng nhập tên doanh nghiệp cần xuất hóa đơn`),
 								icon: 'none'
 							});
 						}
 						if (!formData.duty_number) {
 							return uni.showToast({
-								title: that.$t(`请输入纳税人识别号`),
+								title: that.$t(`Vui lòng nhập mã số thuế`),
 								icon: 'none'
 							});
 						}
 						if (!/[0-9A-HJ-NPQRTUWXY]{2}\d{6}[0-9A-HJ-NPQRTUWXY]{10}/.test(formData.duty_number)) {
 							return uni.showToast({
-								title: that.$t(`请正确输入纳税人识别号`),
+								title: that.$t(`Vui lòng nhập đúng mã số thuế`),
 								icon: 'none'
 							});
 						}
 						if (!formData.drawer_phone) {
 							return uni.showToast({
-								title: that.$t(`请输入您的手机号`),
+								title: that.$t(`Vui lòng nhập số điện thoại của bạn`),
 								icon: 'none'
 							});
 						}
 						if (!/^1(3|4|5|7|8|9|6)\d{9}$/i.test(formData.drawer_phone)) {
 							return uni.showToast({
-								title: that.$t(`请正确输入您的手机号`),
+								title: that.$t(`Vui lòng nhập đúng số điện thoại của bạn`),
 								icon: 'none'
 							});
 						}
 						if (!formData.email) {
 							return uni.showToast({
-								title: that.$t(`请输入您的联系邮箱`),
+								title: that.$t(`Vui lòng nhập email liên hệ của bạn`),
 								icon: 'none'
 							});
 						}
 						if (!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(formData.email)) {
 							return uni.showToast({
-								title: that.$t(`请正确输入您的联系邮箱`),
+								title: that.$t(`Vui lòng nhập đúng email liên hệ của bạn`),
 								icon: 'none'
 							});
 						}
 						if (!formData.bank) {
 							return uni.showToast({
-								title: that.$t(`请输入您的开户银行`),
+								title: that.$t(`Vui lòng nhập ngân hàng mở tài khoản của bạn`),
 								icon: 'none'
 							});
 						}
 						if (!formData.card_number) {
 							return uni.showToast({
-								title: that.$t(`请输入您的银行账号`),
+								title: that.$t(`Vui lòng nhập số tài khoản ngân hàng của bạn`),
 								icon: 'none'
 							});
 						}
 						if (!/^\d{16}|\d{19}$/.test(formData.card_number)) {
 							return uni.showToast({
-								title: that.$t(`请正确输入您的银行账号`),
+								title: that.$t(`Vui lòng nhập đúng số tài khoản ngân hàng của bạn`),
 								icon: 'none'
 							});
 						}
 						if (!formData.address) {
 							return uni.showToast({
-								title: that.$t(`请输入您所在的企业地址`),
+								title: that.$t(`Vui lòng nhập địa chỉ doanh nghiệp của bạn`),
 								icon: 'none'
 							});
 						}
 						if (!formData.tell) {
 							return uni.showToast({
-								title: that.$t(`请输入您的企业电话`),
+								title: that.$t(`Vui lòng nhập số điện thoại doanh nghiệp của bạn`),
 								icon: 'none'
 							});
 						}
@@ -377,7 +377,7 @@
 				formData.id = this.id;
 
 				uni.showLoading({
-					title: that.$t(`保存中`)
+					title: that.$t(`Đang lưu`)
 				});
 				invoiceSave(formData).then(res => {
 					uni.showToast({
@@ -422,18 +422,18 @@
 					});
 				});
 			},
-			// 调起发票类型弹窗
+			// Mở popup chọn loại hóa đơn
 			callType() {
 				if (this.header_type == 2) {
 					this.popupType = true;
 				} else {
 					uni.showToast({
-						title: this.$t(`个人仅支持普通发票`),
+						title: this.$t(`Cá nhân chỉ được xuất hóa đơn thông thường`),
 						icon: 'none'
 					});
 				}
 			},
-			// 选择发票类型
+			// Chọn loại hóa đơn
 			changeType(e) {
 				const type = e.detail.value,
 					invoiceItem = this.invoiceTypeList.find(item => item.value === type);
@@ -444,11 +444,11 @@
 				this.type = type;
 				this.popupType = false;
 			},
-			// 关闭发票弹窗
+			// Đóng popup hóa đơn
 			closeType() {
 				this.popupType = false;
 			},
-			// 选择抬头类型
+			// Chọn loại thông tin xuất hóa đơn
 			changeTitleType(e) {
 				this.header_type = e.detail.value;
 				this.type = '1';

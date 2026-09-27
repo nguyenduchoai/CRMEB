@@ -81,7 +81,7 @@ if(!function_exists('parse_args')){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>系统发生错误</title>
+    <title>Hệ thống đã xảy ra lỗi</title>
     <style>
         body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td { margin:0; padding:0; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box;}
         body { background:#fff; color:#555; font-size:14px; font-family: "Microsoft Yahei"; }
@@ -147,8 +147,8 @@ if(!function_exists('parse_args')){
                 </div>
             </div>
             <div class="question">
-                <div class="btn">查看错误代码<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAABtElEQVRoQ+2Y3SoFURiGv+dmHHABTt2AM1FSkkRKUlIi2SmpnRJKJElJbWduwCGX4U6Wds3sttkz3/x8a+2xa83hNGvN87zvrFnTIBN+MOH8EgXabjA2EBswJhAfIWOA5uGxAXOExgliA0UBOuemReRYRL6AG2PQhcODNJDA90RkJrnzO7AYQsK7QA58yh1EwquAAh9MwptABfggEl4EFPiOiCwMrQXvEmYBBf4MOAm9JkwCCtw5cJTGHVKisYACdQEcZl+ZoSQaCSgwXeCgZHMb3h/Ma6K2gAJ/CeyXbVa+m6gloNz8Ctgrgw+xJioLKPDXwG5VeN8SlQQU+Ftgpy68T4lSAQX+DthuCu9LQhVQ4O+BLSu8D4lCAQX+EdjwBW+VyBVQ4J+Add/wFokRAQX+GVgLBd9U4o+AAv8CrIaGbyKRFfgWkdkM6CuwMi74ChIPwGZ63UDAOTcnIp8Z0DdgedzwZRLAgDvbwIeIzCcT9ICltuAViQ5wOtJA/4RzbkpE+p8FP0C3bfiMRO4vmtKd+L9IFHFEgbYbig3EBowJxEfIGKB5eGzAHKFxgtiAMUDz8F/6UtIxXjMNGgAAAABJRU5ErkJggg=="></div>
-                <div class="btn on"><a style="color: #ffffff" href="javascript:history.back(-1)">返回上一页</a></div>
+                <div class="btn">Xem đoạn mã lỗi<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAABtElEQVRoQ+2Y3SoFURiGv+dmHHABTt2AM1FSkkRKUlIi2SmpnRJKJElJbWduwCGX4U6Wds3sttkz3/x8a+2xa83hNGvN87zvrFnTIBN+MOH8EgXabjA2EBswJhAfIWOA5uGxAXOExgliA0UBOuemReRYRL6AG2PQhcODNJDA90RkJrnzO7AYQsK7QA58yh1EwquAAh9MwptABfggEl4EFPiOiCwMrQXvEmYBBf4MOAm9JkwCCtw5cJTGHVKisYACdQEcZl+ZoSQaCSgwXeCgZHMb3h/Ma6K2gAJ/CeyXbVa+m6gloNz8Ctgrgw+xJioLKPDXwG5VeN8SlQQU+Ftgpy68T4lSAQX+DthuCu9LQhVQ4O+BLSu8D4lCAQX+EdjwBW+VyBVQ4J+Add/wFokRAQX+GVgLBd9U4o+AAv8CrIaGbyKRFfgWkdkM6CuwMi74ChIPwGZ63UDAOTcnIp8Z0DdgedzwZRLAgDvbwIeIzCcT9ICltuAViQ5wOtJA/4RzbkpE+p8FP0C3bfiMRO4vmtKd+L9IFHFEgbYbig3EBowJxEfIGKB5eGzAHKFxgtiAMUDz8F/6UtIxXjMNGgAAAABJRU5ErkJggg=="></div>
+                <div class="btn on"><a style="color: #ffffff" href="javascript:history.back(-1)">Quay lại trang trước</a></div>
             </div>
         </div>
     </div>
@@ -194,15 +194,15 @@ if(!function_exists('parse_args')){
             }
        });
         var ol    = $('ol', $('.prettyprint')[0]);
-        // 设置出错行
+        // Thiết lập dòng bị lỗi
         var err_line = $('.line-' + LINE, ol[0])[0];
         if(err_line) err_line.className = err_line.className + ' line-error';
         $.getScript('//cdn.bootcss.com/prettify/r298/prettify.min.js', function(){
             prettyPrint();
 
-            // 解决Firefox浏览器一个很诡异的问题
-            // 当代码高亮后，ol的行号莫名其妙的错位
-            // 但是只要刷新li里面的html重新渲染就没有问题了
+            // Khắc phục một lỗi rất kỳ lạ của trình duyệt Firefox
+            // Sau khi code được highlight, số dòng của ol bị lệch một cách vô lý
+            // Nhưng chỉ cần render lại html bên trong li là hết lỗi
             if(window.navigator.userAgent.indexOf('Firefox') >= 0){
                 ol[0].innerHTML = ol[0].innerHTML;
             }

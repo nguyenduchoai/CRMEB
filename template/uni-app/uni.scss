@@ -1,57 +1,57 @@
 /**
- * 这里是uni-app内置的常用样式变量
+ * Đây là các biến style thường dùng có sẵn (built-in) của uni-app
  *
- * uni-app 官方扩展插件及插件市场（https://ext.dcloud.net.cn）上很多三方插件均使用了这些样式变量
- * 如果你是插件开发者，建议你使用scss预处理，并在插件代码中直接使用这些变量（无需 import 这个文件），方便用户通过搭积木的方式开发整体风格一致的App
+ * Plugin mở rộng chính thức của uni-app và nhiều plugin bên thứ ba trên chợ plugin (https://ext.dcloud.net.cn) đều dùng các biến style này
+ * Nếu bạn là nhà phát triển plugin, nên dùng bộ xử lý trước scss, và dùng trực tiếp các biến này trong code plugin (không cần import file này), giúp người dùng dễ dàng lắp ghép để phát triển App có phong cách đồng nhất
  *
  */
 
 /**
- * 如果你是App开发者（插件使用者），你可以通过修改这些变量来定制自己的插件主题，实现自定义主题功能
+ * Nếu bạn là nhà phát triển App (người dùng plugin), bạn có thể sửa các biến này để tùy chỉnh theme cho plugin của mình, thực hiện chức năng theme tùy chỉnh
  *
- * 如果你的项目同样使用了scss预处理，你也可以直接在你的 scss 代码中使用如下变量，同时无需 import 这个文件
+ * Nếu dự án của bạn cũng dùng bộ xử lý trước scss, bạn cũng có thể dùng trực tiếp các biến sau trong code scss của mình, và không cần import file này
  */
 
-/* 颜色变量 */
+/* Biến màu */
 
-/* 行为相关颜色 */
+/* Màu liên quan hành vi */
 $uni-color-primary: #007aff;
 $uni-color-success: #4cd964;
 $uni-color-warning: #f0ad4e;
 $uni-color-error: #dd524d;
 
-/* crmeb颜色变量 */
-$theme-color:#E93323; // 主题色-主色
-$theme-color-opacity:rgba(233,51,35,.6); // 主题色-透明色
-$bg-star: #f62c2c;  // 主题渐变色-开始
-$bg-end:#f96e29; // 主题渐变色-结束
-$kf-theme : #3875EA; // 客服主题色
-$kf-star:#3875EA; // 客服渐变色
-$kf-end:#1890FC; // 客服渐变色
-$bg-star1: #F73730;  // 主题渐变色1-开始
-$bg-end1:#F86429;   // 主题渐变色1-结束
+/* Biến màu của CRMEB */
+$theme-color:#E93323; // Màu chủ đề - màu chính
+$theme-color-opacity:rgba(233,51,35,.6); // Màu chủ đề - màu trong suốt
+$bg-star: #f62c2c;  // Màu gradient chủ đề - bắt đầu
+$bg-end:#f96e29; // Màu gradient chủ đề - kết thúc
+$kf-theme : #3875EA; // Màu chủ đề CSKH
+$kf-star:#3875EA; // Màu gradient CSKH
+$kf-end:#1890FC; // Màu gradient CSKH
+$bg-star1: #F73730;  // Màu gradient chủ đề 1 - bắt đầu
+$bg-end1:#F86429;   // Màu gradient chủ đề 1 - kết thúc
 
 
 
-/* 背景颜色 */
+/* Màu nền */
 $uni-bg-color:#ffffff;
 $uni-page-bg-color:#f5f5f5;
 // $uni-page-bg-color:#fff;
 $uni-bg-color-grey:#f8f8f8;
-$uni-bg-color-hover:#f1f1f1;//点击状态颜色
-$uni-bg-color-mask:rgba(0, 0, 0, 0.4);//遮罩颜色
+$uni-bg-color-hover:#f1f1f1;//Màu trạng thái khi nhấn
+$uni-bg-color-mask:rgba(0, 0, 0, 0.4);//Màu lớp phủ (mask)
 
-/* 边框颜色 */
+/* Màu viền */
 $uni-border-color:#c8c7cc;
 
-/* 尺寸变量 */
+/* Biến kích thước */
 
-/* 文字尺寸 */
+/* Kích thước chữ */
 $uni-font-size-sm:24upx;
 $uni-font-size-base:28upx;
 $uni-font-size-lg:32upx;
 
-/* 图片尺寸 */
+/* Kích thước hình ảnh */
 $uni-img-size-sm:40upx;
 $uni-img-size-base:52upx;
 $uni-img-size-lg:80upx;
@@ -61,28 +61,28 @@ $uni-border-radius-sm: 4upx;
 $uni-border-radius-base: 6upx;
 $uni-border-radius-lg: 12upx;
 $uni-border-radius-circle: 50%;
-$uni-border-radius-index: 12rpx; // 首页模块radius
-/* 水平间距 */
+$uni-border-radius-index: 12rpx; // Radius module trang chủ
+/* Khoảng cách ngang */
 $uni-spacing-row-sm: 10px;
 $uni-spacing-row-base: 20upx;
 $uni-spacing-row-lg: 30upx;
-$uni-index-margin-col: 30rpx; // 模块水平magin
-/* 垂直间距 */
+$uni-index-margin-col: 30rpx; // Magin ngang module
+/* Khoảng cách dọc */
 $uni-spacing-col-sm: 8upx;
 $uni-spacing-col-base: 16upx;
 $uni-spacing-col-lg: 24upx;
-$uni-index-margin-row: 20rpx; // 模块垂直magin
-/* 透明度 */
-$uni-opacity-disabled: 0.3; // 组件禁用态的透明度
+$uni-index-margin-row: 20rpx; // Magin dọc module
+/* Độ trong suốt */
+$uni-opacity-disabled: 0.3; // Độ trong suốt (opacity) trạng thái disable của component
 $uni-index-box-shadow: 0rpx 3rpx 10rpx 2rpx rgba(0, 0, 0, 0.03);
-/* 文章场景相关 */
-$uni-color-title: #2C405A; // 文章标题颜色
+/* Liên quan đến kịch bản bài viết */
+$uni-color-title: #2C405A; // Màu tiêu đề bài viết
 $uni-font-size-title:40upx;
-$uni-color-subtitle: #555555; // 二级标题颜色
+$uni-color-subtitle: #555555; // Màu tiêu đề cấp 2
 $uni-font-size-subtitle:36upx;
-$uni-color-paragraph: #3F536E; // 文章段落颜色
+$uni-color-paragraph: #3F536E; // Màu đoạn văn bài viết
 $uni-font-size-paragraph:30upx;
-$uni-color-tip: #ccc; // 底部提示文字颜色
+$uni-color-tip: #ccc; // Màu chữ gợi ý ở dưới cùng
 
-// 首页字号
+// Cỡ chữ trang chủ
 $uni-index-title-font-size: 34rpx;

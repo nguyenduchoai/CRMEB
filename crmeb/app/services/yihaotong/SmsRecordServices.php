@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,10 +15,10 @@ namespace app\services\yihaotong;
 use app\dao\sms\SmsRecordDao;
 use app\services\BaseServices;
 /**
- * 短信发送记录
+ * Lịch sử gửi SMS
  * Class SmsRecordServices
  * @package app\services\message\sms
- * @method save(array $data) 保存数据
+ * @method save(array $data) Lưu dữ liệu
  * @method getColumn(array $where, ?string $field, ?string $key = '')
  * @method update(int $id, array $data, ?string $field = '')
  * @method getCodeNull
@@ -26,7 +26,7 @@ use app\services\BaseServices;
 class SmsRecordServices extends BaseServices
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * SmsRecordServices constructor.
      * @param SmsRecordDao $dao
      */

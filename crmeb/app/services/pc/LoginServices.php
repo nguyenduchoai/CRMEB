@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -23,7 +23,7 @@ use crmeb\services\oauth\OAuth;
 class LoginServices extends BaseServices
 {
     /**
-     * 扫码登陆
+     * Đăng nhập bằng quét mã
      * @param string $key
      * @return array|int[]
      * @throws \Psr\SimpleCache\InvalidArgumentException
@@ -32,11 +32,11 @@ class LoginServices extends BaseServices
     {
         $hasKey = CacheService::has($key);
         if ($hasKey === false) {
-            $status = 0;//不存在需要刷新二维码
+            $status = 0;//Không tồn tại thì cần làm mới mã QR
         } else {
             $keyValue = CacheService::get($key);
             if ($keyValue === 0) {
-                $status = 1;//正在扫描中
+                $status = 1;//Đang quét mã
                 /** @var UserServices $user */
                 $user = app()->make(UserServices::class);
                 $userInfo = $user->get(['uniqid' => $key], ['account', 'uniqid']);
@@ -49,14 +49,14 @@ class LoginServices extends BaseServices
                     return $tokenInfo;
                 }
             } else {
-                $status = 2;//没有扫描
+                $status = 2;//Chưa quét mã
             }
         }
         return ['status' => $status];
     }
 
     /**
-     * 扫码登陆
+     * Đăng nhập bằng quét mã
      * @param string $account
      * @param string|null $password
      * @return array
@@ -130,7 +130,7 @@ class LoginServices extends BaseServices
         if (!$user) {
             $user = $wechatUserServices->wechatOauthAfter($createData);
         } else {
-            //更新用户信息
+            //Cập nhật thông tin người dùng
             $wechatUserServices->wechatUpdata([$user['uid'], $wechatInfo]);
         }
         $token = $this->createToken((int)$user->uid, 'api');

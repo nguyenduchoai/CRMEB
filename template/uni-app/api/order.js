@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2024 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -11,8 +11,8 @@
 import request from "@/utils/request.js";
 
 /**
- * 获取购物车列表
- * @param numType boolean true 购物车数量,false=购物车产品数量
+ * Lấy danh sách giỏ hàng
+ * @param numType boolean true Số lượng giỏ hàng, false=số lượng sản phẩm trong giỏ hàng
  */
 export function getCartCounts(numType) {
 	return request.get("cart/count", {
@@ -20,7 +20,7 @@ export function getCartCounts(numType) {
 	});
 }
 /**
- * 获取购物车列表
+ * Lấy danh sách giỏ hàng
  * 
  */
 export function getCartList(data) {
@@ -28,7 +28,7 @@ export function getCartList(data) {
 }
 
 /**
- * 修改购物车
+ * Sửa giỏ hàng
  * 
  */
 export function getResetCart(data) {
@@ -36,9 +36,9 @@ export function getResetCart(data) {
 }
 
 /**
- * 修改购物车数量
- * @param int cartId  购物车id
- * @param int number 修改数量
+ * Cập nhật số lượng giỏ hàng
+ * @param int cartId  ID giỏ hàng
+ * @param int number Sửa số lượng
  */
 export function changeCartNum(cartId, number) {
 	return request.post("cart/num", {
@@ -47,8 +47,8 @@ export function changeCartNum(cartId, number) {
 	});
 }
 /**
- * 清除购物车
- * @param object ids join(',') 切割成字符串
+ * Xóa giỏ hàng
+ * @param object ids join(',') Cắt thành chuỗi
  */
 export function cartDel(ids) {
 	if (typeof ids === 'object')
@@ -58,7 +58,7 @@ export function cartDel(ids) {
 	});
 }
 /**
- * 订单列表
+ * Danh sách đơn hàng
  * @param object data
  */
 export function getOrderList(data) {
@@ -66,7 +66,7 @@ export function getOrderList(data) {
 }
 
 /**
- * 订单产品信息
+ * Thông tin sản phẩm đơn hàng
  * @param string unique 
  */
 export function orderProduct(unique) {
@@ -76,7 +76,7 @@ export function orderProduct(unique) {
 }
 
 /**
- * 订单评价
+ * Đánh giá đơn hàng
  * @param object data
  * 
  */
@@ -85,7 +85,7 @@ export function orderComment(data) {
 }
 
 /**
- * 订单支付
+ * Thanh toán đơn hàng
  * @param object data
  */
 export function orderPay(data) {
@@ -93,7 +93,7 @@ export function orderPay(data) {
 }
 
 /**
- * 删除已退款和拒绝退款的订单
+ * Xóa đơn hàng đã hoàn tiền và bị từ chối hoàn tiền
  * @param string uni
  * 
  */
@@ -102,14 +102,14 @@ export function refundOrderDel(uni) {
 }
 
 /**
- * 订单统计数据
+ * Dữ liệu thống kê đơn hàng
  */
 export function orderData() {
 	return request.get('order/data')
 }
 
 /**
- * 订单取消
+ * Hủy đơn hàng
  * @param string id
  * 
  */
@@ -120,7 +120,7 @@ export function orderCancel(id) {
 }
 
 /**
- * 删除已完成订单
+ * Xóa đơn hàng đã hoàn thành
  * @param string uni
  * 
  */
@@ -131,21 +131,21 @@ export function orderDel(uni) {
 }
 
 /**
- * 礼品订单详情
+ * Chi tiết đơn hàng quà tặng
  * @param string uni 
  */
 export function getGiftOrderDetail(id) {
 	return request.get('order/gift_detail/' + id);
 }
 /**
- * 订单详情
+ * Chi tiết đơn hàng
  * @param string uni 
  */
 export function getOrderDetail(uni, cart_id) {
 	return request.get('order/detail/' + uni + `${cart_id ? `/${cart_id}`:''}`);
 }
 /**
- * 退款订单详情
+ * Chi tiết đơn hoàn tiền
  * @param string uni 
  */
 export function getRefundOrderDetail(uni, cart_id) {
@@ -153,7 +153,7 @@ export function getRefundOrderDetail(uni, cart_id) {
 }
 
 /**
- * 再次下单
+ * Đặt hàng lại
  * @param string uni
  * 
  */
@@ -164,7 +164,7 @@ export function orderAgain(uni) {
 }
 
 /**
- * 订单收货
+ * Xác nhận đã nhận hàng
  * @param string uni
  * 
  */
@@ -175,14 +175,14 @@ export function orderTake(uni) {
 }
 
 /**
- * 订单查询物流信息
+ * Đơn hàng tra cứu thông tin vận chuyển
  * @returns {*}
  */
 export function express(uni, type) {
 	return request.get("order/express/" + uni + `${type?'/refund':''}`);
 }
 /**
- * 订单查询物流信息
+ * Đơn hàng tra cứu thông tin vận chuyển
  * @returns {*}
  */
 export function adminExpress(uni, type) {
@@ -190,7 +190,7 @@ export function adminExpress(uni, type) {
 }
 
 /**
- * 获取退款理由
+ * Lấy lý do hoàn tiền
  * 
  */
 export function ordeRefundReason() {
@@ -198,7 +198,7 @@ export function ordeRefundReason() {
 }
 
 /**
- * 订单退款审核
+ * Duyệt hoàn tiền đơn hàng
  * @param object data
  */
 export function orderRefundVerify(data) {
@@ -206,7 +206,7 @@ export function orderRefundVerify(data) {
 }
 
 /**
- * 订单确认获取订单详细信息
+ * Xác nhận đơn hàng lấy thông tin chi tiết đơn hàng
  * @param string cartId
  */
 export function orderConfirm(data) {
@@ -214,7 +214,7 @@ export function orderConfirm(data) {
 }
 
 /**
- * 获取确认订单页面是否展示快递配送和到店自提
+ * Lấy trạng thái hiển thị giao hàng và nhận tại cửa hàng trên trang xác nhận đơn hàng
  * @param string cartId
  */
 export function checkShipping(cartId, news) {
@@ -225,7 +225,7 @@ export function checkShipping(cartId, news) {
 }
 
 /**
- * 获取当前金额能使用的优惠卷
+ * Lấy phiếu giảm giá có thể dùng với số tiền hiện tại
  * @param string price
  * 
  */
@@ -234,7 +234,7 @@ export function getCouponsOrderPrice(price, data) {
 }
 
 /**
- * 订单创建
+ * Tạo đơn hàng
  * @param string key
  * @param object data
  * 
@@ -244,7 +244,7 @@ export function orderCreate(key, data) {
 }
 
 /**
- * 计算订单金额
+ * Tính số tiền đơn hàng
  * @param key
  * @param data
  * @returns {*}
@@ -254,7 +254,7 @@ export function postOrderComputed(key, data) {
 }
 
 /**
- * 订单优惠券
+ * Phiếu giảm giá đơn hàng
  * @param key
  * @param data
  * @returns {*}
@@ -264,7 +264,7 @@ export function orderCoupon(orderId) {
 }
 
 /**
- * 计算会员线下付款金额
+ * Tính số tiền thành viên thanh toán ngoại tuyến
  * @param {Object} data
  */
 export function offlineCheckPrice(data) {
@@ -272,7 +272,7 @@ export function offlineCheckPrice(data) {
 }
 
 /**
- * 线下扫码付款
+ * Thanh toán quét mã ngoại tuyến
  * @param {Object} data
  */
 export function offlineCreate(data) {
@@ -280,21 +280,21 @@ export function offlineCreate(data) {
 }
 
 /**
- * 支付方式开关
+ * Bật/tắt phương thức thanh toán
  */
 export function orderOfflinePayType() {
 	return request.get('order/offline/pay/type');
 }
 
 /**
- * 开票记录
+ * Lịch sử xuất hóa đơn
  */
 export function orderInvoiceList(data) {
 	return request.get('v2/order/invoice_list', data);
 }
 
 /**
- * 开票订单详情
+ * Chi tiết đơn hàng xuất hóa đơn
  * @param {Object} id
  */
 export function orderInvoiceDetail(id) {
@@ -303,7 +303,7 @@ export function orderInvoiceDetail(id) {
 
 
 /**
- * 支付宝支付
+ * Thanh toán Alipay
  * @param {Object} key
  * @param {Object} quitUrl
  */
@@ -318,7 +318,7 @@ export function aliPay(key, quitUrl) {
 
 
 /**
- * 退货物流单号提交
+ * Gửi mã vận đơn trả hàng
  * @param {Object} data
  */
 export function refundExpress(data) {
@@ -326,35 +326,35 @@ export function refundExpress(data) {
 }
 
 /**
- * 分类购物车列表
+ * Danh sách giỏ hàng theo danh mục
  */
 export function vcartList() {
 	return request.get("v2/cart_list");
 }
 
 /**
- * 退款商品列表
+ * Danh sách sản phẩm hoàn tiền
  */
 export function refundGoodsList(orderId) {
 	return request.get(`order/refund/cart_info/${orderId}`);
 }
 
 /**
- * 申请退款商品列表
+ * Danh sách sản phẩm yêu cầu hoàn tiền
  */
 export function postRefundGoods(data) {
 	return request.post(`order/refund/cart_info`, data);
 }
 
 /**
- * 退款商品提交
+ * Gửi sản phẩm hoàn tiền
  */
 export function returnGoodsSubmit(id, data) {
 	return request.post(`order/refund/apply/${id}`, data);
 }
 
 /**
- * 新订单列表 2.1版本
+ * Danh sách đơn hàng mới, phiên bản 2.1
  * @param object data
  */
 export function getNewOrderList(data) {
@@ -362,7 +362,7 @@ export function getNewOrderList(data) {
 }
 
 /**
- * 退款订单详情
+ * Chi tiết đơn hoàn tiền
  * @param string uni 
  */
 export function refundOrderDetail(uni) {
@@ -370,7 +370,7 @@ export function refundOrderDetail(uni) {
 }
 
 /**
- * 放弃申请退款
+ * Hủy yêu cầu hoàn tiền
  * @param string uni 
  */
 export function cancelRefundOrder(uni) {
@@ -378,7 +378,7 @@ export function cancelRefundOrder(uni) {
 }
 
 /**
- * 收银台订单信息
+ * Thông tin đơn hàng thu ngân
  * @param object data
  */
 export function getCashierOrder(orderId, type) {
@@ -386,7 +386,7 @@ export function getCashierOrder(orderId, type) {
 }
 
 /**
- * 发票地址获取
+ * Lấy địa chỉ hóa đơn
  * @param object data
  */
 export function getInvoiceLink(id) {
@@ -394,7 +394,7 @@ export function getInvoiceLink(id) {
 }
 
 /**
- * 领取礼物
+ * Nhận quà
  * @param orderId
  * @param data
  */

@@ -2,19 +2,19 @@
   <div>
     <el-drawer
       :visible.sync="modal"
-      :title="formValidate.id ? '编辑定时任务' : '添加定时任务'"
+      :title="formValidate.id ? 'Sửa tác vụ định kỳ' : 'Thêm tác vụ định kỳ'"
       size="1000px"
       @closed="initData"
     >
       <el-form v-if="modal" class="pb-20" ref="formValidate" :model="formValidate" label-width="97px" label-colon>
-        <el-form-item label="任务名称：" v-if="currentTab === '1'">
+        <el-form-item label="Tên nhiệm vụ:" v-if="currentTab === '1'">
           <el-row :gutter="10">
             <el-col :span="24">
-              <el-input v-model="formValidate.name" type="text" placeholder="请输入任务名称"></el-input>
+              <el-input v-model="formValidate.name" type="text" placeholder="Vui lòng nhập tên nhiệm vụ"></el-input>
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item label="执行周期：" required>
+        <el-form-item label="Chu kỳ thực thi:" required>
           <el-row :gutter="14">
             <el-col :span="4">
               <el-select v-model="formValidate.type">
@@ -34,7 +34,7 @@
             <el-col v-if="[8].includes(formValidate.type)" :span="4">
               <div class="input-number-wrapper">
                 <el-input-number :controls="false" v-model="formValidate.month" :max="12" :min="1"></el-input-number>
-                <span class="suffix">月</span>
+                <span class="suffix">Tháng</span>
               </div>
             </el-col>
             <el-col v-if="[4, 7, 8].includes(formValidate.type)" :span="4">
@@ -45,7 +45,7 @@
                   :max="formValidate.type === 4 ? 10000 : 31"
                   :min="1"
                 ></el-input-number>
-                <span class="suffix">日</span>
+                <span class="suffix">CN</span>
               </div>
             </el-col>
             <el-col v-if="[3, 4, 5, 6, 7, 8].includes(formValidate.type)" :span="4">
@@ -56,7 +56,7 @@
                   :max="23"
                   :min="0"
                 ></el-input-number>
-                <span class="suffix">时</span>
+                <span class="suffix">giờ</span>
               </div>
             </el-col>
             <el-col v-if="[2, 3, 4, 5, 6, 7, 8].includes(formValidate.type)" :span="4">
@@ -67,7 +67,7 @@
                   :max="formValidate.type === 2 ? 36000 : 59"
                   :min="0"
                 ></el-input-number>
-                <span class="suffix">分</span>
+                <span class="suffix">phút</span>
               </div>
             </el-col>
             <el-col v-if="[1, 5, 6, 7].includes(formValidate.type)" :span="4">
@@ -78,7 +78,7 @@
                   :max="formValidate.type === 1 ? 36000 : 59"
                   :min="0"
                 ></el-input-number>
-                <span class="suffix">秒</span>
+                <span class="suffix">giây</span>
               </div>
             </el-col>
           </el-row>
@@ -86,50 +86,50 @@
             <div class="trip">{{ trip }}</div>
           </el-row>
         </el-form-item>
-        <el-form-item label="任务说明：">
+        <el-form-item label="Mô tả tác vụ:">
           <el-row :gutter="10">
             <el-col :span="24">
               <el-input
                 v-model="formValidate.content"
                 type="textarea"
                 :autosize="{ minRows: 3, maxRows: 5 }"
-                placeholder="请输入任务说明"
+                placeholder="Vui lòng nhập mô tả tác vụ"
               ></el-input>
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item label="执行代码：" v-if="currentTab === '1'">
+        <el-form-item label="Mã thực thi:" v-if="currentTab === '1'">
           <el-row :gutter="10">
             <el-col :span="24">
               <div ref="container" id="container" class="monaco-editor"></div>
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item label="开发密码：" v-if="currentTab === '1'">
+        <el-form-item label="Mật khẩu phát triển:" v-if="currentTab === '1'">
           <el-row :gutter="10">
             <el-col :span="24">
               <el-input
                 v-model="formValidate.password"
                 type="password"
-                placeholder="请输入系统开发密码，开发密码在crmeb/config/filesystem.php中修改password"
+                placeholder="Vui lòng nhập mật khẩu phát triển hệ thống, mật khẩu phát triển được sửa tại password trong crmeb/config/filesystem.php"
               ></el-input>
             </el-col>
           </el-row>
         </el-form-item>
-        <el-form-item label="是否开启：">
+        <el-form-item label="Bật:">
           <el-row :gutter="10">
             <el-col :span="12">
               <el-switch :active-value="1" :inactive-value="0" v-model="formValidate.is_open" size="large">
-                <span slot="open">开启</span>
-                <span slot="close">关闭</span>
+                <span slot="open">Bật</span>
+                <span slot="close">Tắt</span>
               </el-switch>
             </el-col>
           </el-row>
         </el-form-item>
       </el-form>
       <span class="dialog-footer">
-        <el-button v-db-click @click="modal = false">取 消</el-button>
-        <el-button type="primary" v-db-click @click="handleSubmit">提 交</el-button>
+        <el-button v-db-click @click="modal = false">Hủy</el-button>
+        <el-button type="primary" v-db-click @click="handleSubmit">Gửi</el-button>
       </span>
     </el-drawer>
   </div>
@@ -151,35 +151,35 @@ export default {
       modal: false,
       typeList: [
         {
-          name: '每隔N秒',
+          name: 'Mỗi N giây',
           value: 1,
         },
         {
-          name: '每隔N分钟',
+          name: 'Mỗi N phút',
           value: 2,
         },
         {
-          name: '每隔N小时',
+          name: 'Mỗi N giờ',
           value: 3,
         },
         {
-          name: '每隔N天',
+          name: 'Mỗi N ngày',
           value: 4,
         },
         {
-          name: '每天',
+          name: 'Hằng ngày',
           value: 5,
         },
         {
-          name: '每星期',
+          name: 'Hằng tuần',
           value: 6,
         },
         {
-          name: '每月',
+          name: 'Hằng tháng',
           value: 7,
         },
         {
-          name: '每年',
+          name: 'Hằng năm',
           value: 8,
         },
       ],
@@ -187,7 +187,7 @@ export default {
       loading: false,
       formValidate: {
         name: '',
-        mark: 'customTimer', //键
+        mark: 'customTimer', //Khóa
         content: '',
         is_open: 0,
         type: 1,
@@ -201,15 +201,15 @@ export default {
       },
       trip: '',
       weekList: [
-        { label: '周一', value: 1 },
-        { label: '周二', value: 2 },
-        { label: '周三', value: 3 },
-        { label: '周四', value: 4 },
-        { label: '周五', value: 5 },
-        { label: '周六', value: 6 },
-        { label: '周日', value: 7 },
+        { label: 'Thứ 2', value: 1 },
+        { label: 'Thứ 3', value: 2 },
+        { label: 'Thứ 4', value: 3 },
+        { label: 'Thứ 5', value: 4 },
+        { label: 'Thứ 6', value: 5 },
+        { label: 'Thứ 7', value: 6 },
+        { label: 'Chủ nhật', value: 7 },
       ],
-      editor: '', //当前编辑器对象
+      editor: '', //Đối tượng trình soạn thảo hiện tại
     };
   },
   watch: {
@@ -217,28 +217,28 @@ export default {
       handler(nVal, oVal) {
         switch (nVal.type) {
           case 1:
-            this.trip = `每隔${nVal.second}秒执行一次`;
+            this.trip = `Thực thi mỗi ${nVal.second} giây một lần`;
             break;
           case 2:
-            this.trip = `每隔${nVal.minute}分钟执行一次`;
+            this.trip = `Thực thi mỗi ${nVal.minute} phút một lần`;
             break;
           case 3:
-            this.trip = `每隔${nVal.hour}小时的${nVal.minute}分执行一次`;
+            this.trip = `Thực thi mỗi ${nVal.hour} giờ một lần vào phút thứ ${nVal.minute}`;
             break;
           case 4:
-            this.trip = `每隔${nVal.day}天的${nVal.hour}时${nVal.minute}分执行一次`;
+            this.trip = `Thực thi mỗi ${nVal.day} ngày một lần vào lúc ${nVal.hour} giờ ${nVal.minute} phút`;
             break;
           case 5:
-            this.trip = `每天${nVal.hour}时${nVal.minute}分${nVal.second}秒执行一次`;
+            this.trip = `Thực thi hằng ngày vào lúc ${nVal.hour} giờ ${nVal.minute} phút ${nVal.second} giây`;
             break;
           case 6:
-            this.trip = `每个星期${nVal.week}的${nVal.hour}时${nVal.minute}分${nVal.second}秒执行一次`;
+            this.trip = `Thực thi vào ngày thứ ${nVal.week} hằng tuần lúc ${nVal.hour} giờ ${nVal.minute} phút ${nVal.second} giây`;
             break;
           case 7:
-            this.trip = `每月${nVal.day}日的${nVal.hour}时${nVal.minute}分${nVal.second}秒执行一次`;
+            this.trip = `Thực thi vào ngày ${nVal.day} hằng tháng lúc ${nVal.hour} giờ ${nVal.minute} phút ${nVal.second} giây`;
             break;
           case 8:
-            this.trip = `每年${nVal.month}月${nVal.day}日的${nVal.hour}时${nVal.minute}分${nVal.second}秒执行一次`;
+            this.trip = `Thực thi vào ngày ${nVal.day} tháng ${nVal.month} hằng năm lúc ${nVal.hour} giờ ${nVal.minute} phút ${nVal.second} giây`;
             break;
         }
       },
@@ -257,28 +257,28 @@ export default {
       }
     },
     /**
-     * 初始化编辑器
+     * Khởi tạo trình soạn thảo
      */
     initEditor(conetnt = '') {
       try {
         let that = this;
         that.$nextTick(() => {
-          // 初始化编辑器，确保dom已经渲染
+          // Khởi tạo trình soạn thảo, đảm bảo dom đã được render
           that.editor = monaco.editor.create(document.getElementById('container'), {
-            value: conetnt, //编辑器初始显示文字
-            language: 'php', //语言支持自行查阅demo
-            automaticLayout: true, //自动布局
-            theme: 'vs-dark', //官方自带三种主题vs, hc-black, or vs-dark
-            foldingStrategy: 'indentation', // 代码可分小段折叠
-            overviewRulerBorder: false, // 不要滚动条的边框
+            value: conetnt, //Văn bản hiển thị ban đầu của trình soạn thảo
+            language: 'php', //Hỗ trợ ngôn ngữ, tự tham khảo demo
+            automaticLayout: true, //Tự động bố cục
+            theme: 'vs-dark', //Chính thức có sẵn 3 chủ đề vs, hc-black, or vs-dark
+            foldingStrategy: 'indentation', // Code có thể gập theo từng đoạn nhỏ
+            overviewRulerBorder: false, // Không cần viền thanh cuộn
             minimap: { enabled: false },
             scrollbar: {
               vertical: 'hidden',
               horizontal: 'hidden',
             },
             wordWrap: 'on',
-            autoIndent: true, // 自动布局
-            tabSize: 4, // tab缩进长度
+            autoIndent: true, // Tự động bố cục
+            tabSize: 4, // Độ dài thụt lề tab
             autoClosingOvertype: 'always',
             readOnly: false,
           });
@@ -319,11 +319,11 @@ export default {
       } else {
         this.modal = true;
         this.initEditor(
-          "<?php\n\n//示例代码\n\n//直接写入数据库\n\\think\\facade\\Db::name('cache')->insert(['key' => 'custom_timer_' . rand(), 'result' => rand(), 'expire_time' => 0]);\n\n//调用系统方法\napp()->make(\\app\\services\\other\\CacheServices::class)->setDbCache('custom_timer_' . rand(), rand());",
+          "<?php\n\n//Mã ví dụ\n\n//Ghi trực tiếp vào cơ sở dữ liệu\n\\think\\facade\\Db::name('cache')->insert(['key' => 'custom_timer_' . rand(), 'result' => rand(), 'expire_time' => 0]);\n\n//Gọi phương thức hệ thống\napp()->make(\\app\\services\\other\\CacheServices::class)->setDbCache('custom_timer_' . rand(), rand());",
         );
       }
     },
-    // 提交
+    // Gửi
     handleSubmit() {
       console.log(this.currentTab);
       if (this.currentTab === '1') {
@@ -332,7 +332,7 @@ export default {
       }
       if (!this.formValidate.mark) {
         return this.$message.error({
-          message: '请选择任务名称',
+          message: 'Vui lòng chọn tên tác vụ',
           onClose: () => {
             // this.loading = false;
           },
@@ -422,7 +422,7 @@ export default {
   margin-left: 30px;
 }
 .dialog-footer {
-  // 固定在底部
+  // Cố định ở dưới cùng
   position: absolute;
   bottom: 0;
   left: 0;

@@ -1,5 +1,5 @@
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param $id
      * @return \think\Response
      * @date {%DATE%}

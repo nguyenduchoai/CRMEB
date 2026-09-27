@@ -12,10 +12,10 @@
 					</view>
 					<view class="money font-color">
 						<view class="acea-row row-middle">
-							<text class="num">{{ attr.productSelect.price }}{{$t(`积分`)}}</text>
+							<text class="num">{{ attr.productSelect.price }}{{$t(`Điểm thưởng`)}}</text>
 						</view>
-						<text class="stock" v-if='isShow'>{{$t(`库存`)}}: {{ attr.productSelect.stock }}</text>
-						<text class='stock' v-if="limitNum">{{$t(`剩余`)}}: {{attr.productSelect.quota}}</text>
+						<text class="stock" v-if='isShow'>{{$t(`Tồn kho`)}}: {{ attr.productSelect.stock }}</text>
+						<text class='stock' v-if="limitNum">{{$t(`Còn lại`)}}: {{attr.productSelect.quota}}</text>
 					</view>
 				</view>
 				<view class="iconfont icon-guanbi" @click="closeAttr"></view>
@@ -34,7 +34,7 @@
 					</view>
 				</view>
 				<!-- <view class="cart acea-row row-between-wrapper">
-					<view class="title">{{$t(`数量`)}}</view>
+					<view class="title">{{$t(`Số lượng`)}}</view>
 					<view class="carnum acea-row row-left">
 						<view class="item reduce acea-row row-center-wrapper"
 							:class="attr.productSelect.cart_num <= 1 ? 'on' : ''" @click="CartNumDes">
@@ -105,7 +105,7 @@
 				this.$emit('goCat');
 			},
 			/**
-			 * 购物车手动输入数量
+			 * Nhập số lượng thủ công trong giỏ hàng
 			 * 
 			 */
 			bindCode: function(e) {
@@ -136,7 +136,7 @@
 			showImg() {
 				this.$emit('getImg');
 			},
-			//获取被选中属性；
+			//Lấy thuộc tính đã chọn;
 			getCheckedValue: function() {
 				let productAttr = this.attr.productAttr;
 				let value = [];
@@ -182,8 +182,8 @@
 		transform: translate3d(0, 100%, 0);
 		transition: all .3s cubic-bezier(.25, .5, .5, .9);
 		padding-bottom: 140rpx;
-		padding-bottom: calc(140rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-		padding-bottom: calc(140rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+		padding-bottom: calc(140rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+		padding-bottom: calc(140rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 	}
 
 	.product-window.on {

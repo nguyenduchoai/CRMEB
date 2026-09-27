@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,7 +17,7 @@ use app\services\user\UserServices;
 use think\facade\App;
 
 /**
- * 分销商管理控制器
+ * Controller quản lý cộng tác viên
  * Class AgentManage
  * @package app\adminapi\controller\v1\agent
  */
@@ -35,7 +35,7 @@ class AgentManage extends AuthController
     }
 
     /**
-     * 分销管理列表
+     * Danh sách quản lý CTV
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -51,7 +51,7 @@ class AgentManage extends AuthController
     }
 
     /**
-     * 分销头部统计
+     * Thống kê phần đầu trang CTV
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -67,7 +67,7 @@ class AgentManage extends AuthController
     }
 
     /**
-     * 推广人列表
+     * Danh sách người được giới thiệu
      * @return mixed
      */
     public function get_stair_list()
@@ -82,7 +82,7 @@ class AgentManage extends AuthController
     }
 
     /**
-     * 推广人列表头部统计
+     * Thống kê phần đầu danh sách người giới thiệu
      * @return mixed
      */
     public function get_stair_badge()
@@ -97,7 +97,7 @@ class AgentManage extends AuthController
     }
 
     /**
-     * 统计推广订单列表
+     * Thống kê danh sách đơn hàng giới thiệu
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -115,7 +115,7 @@ class AgentManage extends AuthController
     }
 
     /**
-     * 查看公众号推广二维码
+     * Xem mã QR giới thiệu OA WeChat
      * @param string $uid
      * @param string $action
      * @return mixed
@@ -138,7 +138,7 @@ class AgentManage extends AuthController
     }
 
     /**
-     * 获取公众号二维码
+     * Lấy mã QR OA WeChat
      * @param $uid
      * @return array
      */
@@ -152,7 +152,7 @@ class AgentManage extends AuthController
     }
 
     /**
-     * 查看小程序推广二维码
+     * Xem mã QR giới thiệu Mini Program
      * @param string $uid
      */
     public function look_xcx_code($uid = '')
@@ -164,7 +164,7 @@ class AgentManage extends AuthController
     }
 
     /**
-     * 查看H5推广二维码
+     * Xem mã QR giới thiệu H5
      * @param string $uid
      * @return mixed|string
      */
@@ -175,7 +175,7 @@ class AgentManage extends AuthController
     }
 
     /**
-     * 解除单个用户的推广权限
+     * Gỡ quyền giới thiệu của một người dùng
      * @param $uid
      * @return mixed
      */
@@ -186,7 +186,7 @@ class AgentManage extends AuthController
     }
 
     /**
-     * 修改上级推广人
+     * Sửa người giới thiệu
      * @param UserServices $services
      * @return mixed
      */
@@ -216,7 +216,7 @@ class AgentManage extends AuthController
         if ($spreadInfo->spread_uid == $uid) {
             return app('json')->fail(400217);
         }
-        //之前的上级减少推广人数
+        //Giảm số người được giới thiệu của người giới thiệu trước đó
         if ($userInfo->spread_uid) {
             $oldSpread = $services->get($userInfo->spread_uid);
             $oldSpread->spread_count = $oldSpread->spread_count - 1;
@@ -234,7 +234,7 @@ class AgentManage extends AuthController
     }
 
     /**
-     * 取消推广员推广资格
+     * Hủy tư cách giới thiệu của cộng tác viên
      * @param $uid
      * @return mixed
      */
@@ -245,7 +245,7 @@ class AgentManage extends AuthController
     }
 
     /**
-     * 获取赠送分销等级表单
+     * Lấy biểu mẫu tặng cấp độ CTV
      * @param AgentLevelServices $services
      * @param $uid
      * @return mixed
@@ -261,7 +261,7 @@ class AgentManage extends AuthController
     }
 
     /**
-     * 赠送分销等级
+     * Tặng cấp độ CTV
      * @param AgentLevelServices $services
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException

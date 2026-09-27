@@ -1,29 +1,29 @@
-crmeb/app/jobs目录是CRMEB项目队列任务类的代码目录。
+Thư mục crmeb/app/jobs là thư mục mã nguồn chứa các lớp tác vụ hàng đợi của dự án CRMEB.
 
-队列任务在项目开发中有以下几个重要作用:
+Tác vụ hàng đợi có một số vai trò quan trọng sau trong quá trình phát triển dự án:
 
-1. 异步处理。可以将一些耗时较长的任务放入队列以异步处理,不阻塞主线程。
+1. Xử lý bất đồng bộ. Có thể đưa những tác vụ tốn nhiều thời gian vào hàng đợi để xử lý bất đồng bộ, không làm chặn luồng chính.
 
-2. 延迟处理。可以指定队列任务在一定时间后异步执行,比如发送短信或邮件。
+2. Xử lý trì hoãn. Có thể chỉ định tác vụ hàng đợi thực thi bất đồng bộ sau một khoảng thời gian nhất định, ví dụ như gửi SMS hoặc email.
 
-3. 分布处理。可以将队列任务分布到不同服务器进行处理,提高服务器使用效率。
+3. Xử lý phân tán. Có thể phân phối tác vụ hàng đợi đến các máy chủ khác nhau để xử lý, nâng cao hiệu suất sử dụng máy chủ.
 
-此目录下主要包含以下内容:
+Thư mục này chủ yếu bao gồm các nội dung sau:
 
-- 每个任务类对应一个业务任务,实现Job接口。
+- Mỗi lớp tác vụ tương ứng với một tác vụ nghiệp vụ, triển khai interface Job.
 
-- 任务类内定义具体任务业务逻辑,如发送短信/邮件等。
+- Lớp tác vụ định nghĩa logic nghiệp vụ cụ thể của tác vụ, như gửi SMS/email, v.v.
 
-- 通过Broker进行任务的发送和异步处理。
+- Gửi và xử lý bất đồng bộ tác vụ thông qua Broker.
 
-- 支持任务延时、失败重试等功能。
+- Hỗ trợ các chức năng như trì hoãn tác vụ, thử lại khi thất bại, v.v.
 
-使用队列可以使得项目性能更优:
+Sử dụng hàng đợi giúp hiệu năng của dự án tốt hơn:
 
-- 阻塞任务剥离出来异步执行。
+- Tách các tác vụ gây chặn ra để thực thi bất đồng bộ.
 
-- 分布式下每个任务独立运行,不阻塞其他进程。
+- Trong môi trường phân tán, mỗi tác vụ chạy độc lập, không chặn các tiến trình khác.
 
-- 通过Broker复用同一服务,且伸缩性好。
+- Tái sử dụng cùng một dịch vụ thông qua Broker, đồng thời có khả năng mở rộng tốt.
 
-所以此目录负责项目中所有异步任务的编写和调度,起到优化系统性能和扩展能力的重要作用。
+Vì vậy, thư mục này chịu trách nhiệm viết và điều phối tất cả các tác vụ bất đồng bộ trong dự án, đóng vai trò quan trọng trong việc tối ưu hiệu năng và khả năng mở rộng của hệ thống.

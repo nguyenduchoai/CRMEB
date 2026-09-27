@@ -1,14 +1,14 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 /**
- * 布局配置
+ * Cấu hình bố cục
  * */
 import screenfull from 'screenfull';
 import { integralGetOrdes } from '@/api/marketing';
@@ -23,11 +23,11 @@ import { integralGetOrdes } from '@/api/marketing';
 export default {
   namespaced: true,
   state: {
-    orderStatus: '', // 订单状态
-    // orderTime: today().join('-'), // 订单时间
+    orderStatus: '', // Trạng thái đơn hàng
+    // orderTime: today().join('-'), // Thời gian đặt hàng
     orderTime: '',
     orderNum: '',
-    orderType: 0, // 订单状态
+    orderType: 0, // Trạng thái đơn hàng
     fieldKey: '',
     orderChartType: {},
     isDels: false,
@@ -38,34 +38,34 @@ export default {
   },
   mutations: {
     /**
-     * @description 设置设备类型
+     * @description Đặt loại thiết bị
      * @param {Object} state vuex state
-     * @param {String} type 设备类型，可选值为 Mobile、Tablet、Desktop
+     * @param {String} type Loại thiết bị, giá trị có thể chọn là Mobile, Tablet, Desktop
      */
 
     /**
-     * @description 订单号搜索
+     * @description Tìm kiếm theo mã đơn hàng
      */
     getOrderStatus(state, orderStatus) {
       state.orderStatus = orderStatus;
     },
 
     /**
-     * @description 订单状态搜索
+     * @description Tìm kiếm theo trạng thái đơn hàng
      */
     getOrderType(state, orderPayType) {
       state.orderPayType = orderPayType;
     },
 
     /**
-     * @description 时间状态
+     * @description Trạng thái thời gian
      */
     getOrderTime(state, orderTime) {
       state.orderTime = orderTime;
     },
 
     /**
-     * @description 订单选择状态
+     * @description Trạng thái chọn đơn hàng
      */
     getOrderNum(state, orderNum) {
       state.orderNum = orderNum;
@@ -76,28 +76,28 @@ export default {
     },
 
     /**
-     * @description tab切换，选择订单状态
+     * @description Chuyển tab, chọn trạng thái đơn hàng
      */
     onChangeTabs(state, orderType) {
       state.orderType = orderType;
     },
 
     /**
-     * @description  订单状态 全部对象
+     * @description  Trạng thái đơn hàng, đối tượng tất cả
      */
     onChangeChart(state, orderChartType) {
       state.orderChartType = orderChartType;
     },
 
     /**
-     * @description  是否批量删除订单
+     * @description  Có xóa đơn hàng theo lô hay không
      */
     getIsDel(state, isDels) {
       state.isDels = isDels;
     },
 
     /**
-     * @description  批量删除订单的id集合
+     * @description  Tập hợp id đơn hàng xóa theo lô
      */
     getisDelIdListl(state, delIdList) {
       state.delIdList = delIdList;
@@ -105,7 +105,7 @@ export default {
   },
   actions: {
     /**
-     * @description 订单状态
+     * @description Trạng thái đơn hàng
      */
     getOrderTabs({ commit }, data) {
       return new Promise((resolve, reject) => {
@@ -113,7 +113,7 @@ export default {
       });
     },
     /**
-     * @description 初始化监听全屏状态
+     * @description Khởi tạo lắng nghe trạng thái toàn màn hình
      */
     listenFullscreen({ commit }) {
       return new Promise((resolve) => {
@@ -129,7 +129,7 @@ export default {
       });
     },
     /**
-     * @description 切换全屏
+     * @description Chuyển đổi toàn màn hình
      */
     toggleFullscreen({ commit }) {
       return new Promise((resolve) => {

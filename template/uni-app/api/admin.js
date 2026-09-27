@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2024 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -12,7 +12,7 @@
 import request from "@/utils/request.js";
 
 /**
- * 统计数据
+ * Dữ liệu thống kê
  */
 export function getStatisticsInfo() {
 	return request.get("admin/order/statistics", {}, {
@@ -20,7 +20,7 @@ export function getStatisticsInfo() {
 	});
 }
 /**
- * 订单月统计
+ * Thống kê đơn hàng theo tháng
  */
 export function getStatisticsMonth(where) {
 	return request.get("admin/order/data", where, {
@@ -28,7 +28,7 @@ export function getStatisticsMonth(where) {
 	});
 }
 /**
- * 订单月统计
+ * Thống kê đơn hàng theo tháng
  */
 export function getAdminOrderList(where) {
 	return request.get("admin/order/list", where, {
@@ -36,7 +36,7 @@ export function getAdminOrderList(where) {
 	});
 }
 /**
- * 订单改价
+ * Sửa giá đơn hàng
  */
 export function setAdminOrderPrice(data) {
 	return request.post("admin/order/price", data, {
@@ -44,7 +44,7 @@ export function setAdminOrderPrice(data) {
 	});
 }
 /**
- * 订单备注
+ * Ghi chú đơn hàng
  */
 export function setAdminOrderRemark(data) {
 	return request.post("admin/order/remark", data, {
@@ -52,7 +52,7 @@ export function setAdminOrderRemark(data) {
 	});
 }
 /**
- * 订单详情
+ * Chi tiết đơn hàng
  */
 export function getAdminOrderDetail(orderId) {
 	return request.get("admin/order/detail/" + orderId, {}, {
@@ -61,7 +61,7 @@ export function getAdminOrderDetail(orderId) {
 }
 
 /**
- * 退款订单详情
+ * Chi tiết đơn hoàn tiền
  */
 export function getAdminRefundOrderDetail(orderId) {
 	return request.get("admin/refund_order/detail/" + orderId, {}, {
@@ -70,7 +70,7 @@ export function getAdminRefundOrderDetail(orderId) {
 }
 
 /**
- * 订单发货信息获取
+ * Lấy thông tin giao hàng của đơn hàng
  */
 export function getAdminOrderDelivery(orderId) {
 	return request.get(
@@ -81,7 +81,7 @@ export function getAdminOrderDelivery(orderId) {
 }
 
 /**
- * 订单发货保存
+ * Lưu giao hàng đơn hàng
  */
 export function setAdminOrderDelivery(id, data) {
 	return request.post("admin/order/delivery/keep/" + id, data, {
@@ -89,7 +89,7 @@ export function setAdminOrderDelivery(id, data) {
 	});
 }
 /**
- * 订单统计图
+ * Biểu đồ thống kê đơn hàng
  */
 export function getStatisticsTime(data) {
 	return request.get("admin/order/time", data, {
@@ -97,7 +97,7 @@ export function getStatisticsTime(data) {
 	});
 }
 /**
- * 线下付款订单确认付款
+ * Xác nhận thanh toán đơn hàng thanh toán ngoại tuyến
  */
 export function setOfflinePay(data) {
 	return request.post("admin/order/offline", data, {
@@ -105,7 +105,7 @@ export function setOfflinePay(data) {
 	});
 }
 /**
- * 订单确认退款
+ * Xác nhận hoàn tiền đơn hàng
  */
 export function setOrderRefund(data) {
 	return request.post("admin/order/refund", data, {
@@ -114,7 +114,7 @@ export function setOrderRefund(data) {
 }
 
 /**
- * 获取快递公司
+ * Lấy đơn vị vận chuyển
  * @returns {*}
  */
 export function getLogistics(data) {
@@ -124,7 +124,7 @@ export function getLogistics(data) {
 }
 
 /**
- * 订单核销
+ * Xác nhận sử dụng đơn hàng
  * @returns {*}
  */
 export function orderVerific(verify_code, is_confirm) {
@@ -135,7 +135,7 @@ export function orderVerific(verify_code, is_confirm) {
 }
 
 /**
- * 获取物流公司模板
+ * Lấy mẫu của đơn vị vận chuyển
  * @returns {*}
  */
 export function orderExportTemp(data) {
@@ -143,7 +143,7 @@ export function orderExportTemp(data) {
 }
 
 /**
- * 获取订单打印默认配置
+ * Lấy cấu hình in đơn hàng mặc định
  * @returns {*}
  */
 export function orderDeliveryInfo() {
@@ -151,7 +151,7 @@ export function orderDeliveryInfo() {
 }
 
 /**
- * 配送员列表
+ * Danh sách nhân viên giao hàng
  * @returns {*}
  */
 export function orderOrderDelivery() {
@@ -159,7 +159,7 @@ export function orderOrderDelivery() {
 }
 
 /**
- * 退款列表
+ * Danh sách hoàn tiền
  * @returns {*}
  */
 export function orderRefund_order(where) {
@@ -169,7 +169,7 @@ export function orderRefund_order(where) {
 }
 
 /**
- * 订单备注（退款）
+ * Ghi chú đơn hàng (hoàn tiền)
  */
 export function setAdminRefundRemark(data) {
 	return request.post("admin/refund_order/remark", data, {
@@ -178,7 +178,7 @@ export function setAdminRefundRemark(data) {
 }
 
 /**
- * 订单同意退货
+ * Đồng ý trả hàng cho đơn hàng
  */
 export function agreeExpress(data) {
 	return request.post("admin/order/agreeExpress", data, {

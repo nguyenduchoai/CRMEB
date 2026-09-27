@@ -24,7 +24,7 @@ export default {
   name: 'layoutColumns',
   components: { Asides, Headers, Mains, ColumnsAside },
   computed: {
-    // 是否开启固定 header
+    // Có bật cố định header hay không
     isFixedHeader() {
       return this.$store.state.themeConfig.themeConfig.isFixedHeader;
     },

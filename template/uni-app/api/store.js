@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2024 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -11,7 +11,7 @@
 import request from "@/utils/request.js";
 
 /**
- * 获取产品详情
+ * Lấy chi tiết sản phẩm
  * @param int id
  * 
  */
@@ -22,7 +22,7 @@ export function getProductDetail(id) {
 }
 
 /**
- * 产品分享二维码 推广员
+ * Mã QR chia sẻ sản phẩm, cộng tác viên (CTV)
  * @param int id
  */
 // #ifdef H5  || APP-PLUS
@@ -43,9 +43,9 @@ export function getProductCode(id) {
 // #endif
 
 /**
- * 添加收藏
+ * Thêm yêu thích
  * @param int id
- * @param string category product=普通产品,product_seckill=秒杀产品
+ * @param string category product=sản phẩm thường, product_seckill=sản phẩm flash sale
  */
 export function collectAdd(id, category) {
 	return request.post('collect/add', {
@@ -55,9 +55,9 @@ export function collectAdd(id, category) {
 }
 
 /**
- * 删除收藏产品
+ * Xóa sản phẩm yêu thích
  * @param int id
- * @param string category product=普通产品,product_seckill=秒杀产品
+ * @param string category product=sản phẩm thường, product_seckill=sản phẩm flash sale
  */
 export function collectDel(id, category) {
 	return request.post('collect/del', {
@@ -67,7 +67,7 @@ export function collectDel(id, category) {
 }
 
 /**
- * 购车添加
+ * Thêm vào giỏ hàng
  * 
  */
 export function postCartAdd(data) {
@@ -75,7 +75,7 @@ export function postCartAdd(data) {
 }
 
 /**
- * 获取分类列表
+ * Lấy danh sách danh mục
  * 
  */
 export function getCategoryList() {
@@ -85,7 +85,7 @@ export function getCategoryList() {
 }
 
 /**
- * 获取产品列表
+ * Lấy danh sách sản phẩm
  * @param object data
  */
 export function getProductslist(data) {
@@ -97,7 +97,7 @@ export function getProductslist(data) {
 
 
 /**
- * 获取推荐产品
+ * Lấy sản phẩm đề xuất
  * 
  */
 export function getProductHot(page, limit) {
@@ -109,9 +109,9 @@ export function getProductHot(page, limit) {
 	});
 }
 /**
- * 批量收藏
+ * Yêu thích theo lô
  * 
- * @param object id  产品编号 join(',') 切割成字符串
+ * @param object id  Mã sản phẩm join(',') cắt thành chuỗi
  * @param string category 
  */
 export function collectAll(id, category) {
@@ -122,7 +122,7 @@ export function collectAll(id, category) {
 }
 
 /**
- * 首页产品的轮播图和产品信息
+ * Banner trình chiếu sản phẩm và thông tin sản phẩm trang chủ
  * @param int type 
  * 
  */
@@ -133,7 +133,7 @@ export function getGroomList(type, data) {
 }
 
 /**
- * 获取收藏列表
+ * Lấy danh sách yêu thích
  * @param object data
  */
 export function getCollectUserList(data) {
@@ -141,7 +141,7 @@ export function getCollectUserList(data) {
 }
 
 /**
- * 获取产品评论
+ * Lấy đánh giá sản phẩm
  * @param int id
  * @param object data
  * 
@@ -151,7 +151,7 @@ export function getReplyList(id, data) {
 }
 
 /**
- * 产品评价数量和好评度
+ * Số lượng đánh giá sản phẩm và tỷ lệ đánh giá tốt
  * @param int id
  */
 export function getReplyConfig(id) {
@@ -159,7 +159,7 @@ export function getReplyConfig(id) {
 }
 
 /**
- * 获取搜索关键字获取
+ * Lấy từ khóa tìm kiếm
  * 
  */
 export function getSearchKeyword() {
@@ -169,7 +169,7 @@ export function getSearchKeyword() {
 }
 
 /**
- * 门店列表
+ * Danh sách cửa hàng
  * @returns {*}
  */
 export function storeListApi(data) {
@@ -177,7 +177,7 @@ export function storeListApi(data) {
 }
 
 /**
- * 套餐列表
+ * Danh sách combo
  * @param int id
  * 
  */
@@ -188,14 +188,14 @@ export function storeDiscountsList(id) {
 }
 
 /**
- * 购车添加、减少、修改
+ * Thêm, giảm, sửa giỏ hàng
  * 
  */
 export function postCartNum(data) {
 	return request.post('v2/set_cart_num', data);
 }
 /**
- * 代理商申请
+ * Đăng ký đại lý
  * 
  */
 export function create(data) {
@@ -203,7 +203,7 @@ export function create(data) {
 }
 
 /**
- * 代理商规则
+ * Quy định đại lý
  * @param object data
  */
 export function getAgentAgreement(data) {
@@ -213,8 +213,8 @@ export function getAgentAgreement(data) {
 }
 
 /**
- * h5用户发送验证码
- * @param data object 用户手机号
+ * h5 người dùng gửi mã xác thực (OTP)
+ * @param data object Số điện thoại người dùng
  */
 export function registerVerify(data) {
 	return request.post("register/verify", data, {
@@ -223,7 +223,7 @@ export function registerVerify(data) {
 }
 
 /**
- * 验证码key
+ * Key mã xác thực (OTP)
  */
 export function getCodeApi() {
 	return request.get("verify_code", {}, {
@@ -231,7 +231,7 @@ export function getCodeApi() {
 	});
 }
 /**
- * 获取代理商表单信息
+ * Lấy thông tin form đại lý
  */
 export function getHistoryData() {
 	return request.get("agent/apply/info", {}, {
@@ -240,14 +240,14 @@ export function getHistoryData() {
 }
 
 /**
- * 获取首页的属性
+ * Lấy thuộc tính trang chủ
  * @returns {*}
  */
 export function getAttr(id, type) {
 	return request.get("v2/get_attr/" + id + "/" + type);
 }
 /**
- * 获取首页商品列表（所有活动的）
+ * Lấy danh sách sản phẩm trang chủ (tất cả hoạt động)
  * @param object data
  */
 export function getHomeProducts(data) {
@@ -257,7 +257,7 @@ export function getHomeProducts(data) {
 }
 
 /**
- * 预售详情
+ * Chi tiết đặt trước
  * @returns {*}
  */
 export function getPresellProductDetail(id) {
@@ -265,7 +265,7 @@ export function getPresellProductDetail(id) {
 }
 
 /**
- * 获取浏览记录列表
+ * Lấy danh sách lịch sử xem
  * @param object data
  */
 export function getVisitList(data) {
@@ -273,7 +273,7 @@ export function getVisitList(data) {
 }
 
 /**
- * 获取浏览记录列表-删除 
+ * Lấy danh sách lịch sử xem - xóa 
  * @param object data
  */
 export function deleteVisitList(data) {
@@ -281,7 +281,7 @@ export function deleteVisitList(data) {
 }
 
 /**
- * 申请分销员详情接口
+ * API chi tiết đăng ký cộng tác viên (CTV)
  *
  */
 export function userSpreadInfo() {
@@ -289,7 +289,7 @@ export function userSpreadInfo() {
 }
 
 /**
- * 分销员申请
+ * Đơn đăng ký cộng tác viên
  * @param data
  * 
  */
@@ -298,7 +298,7 @@ export function spreadCreateApi(id, data) {
 }
 
 /**
- * 到手价获取
+ * Lấy giá thực nhận
  * 
  */
 export function realPrice(id, unique) {

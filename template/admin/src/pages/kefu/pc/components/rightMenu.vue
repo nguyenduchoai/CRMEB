@@ -9,32 +9,32 @@
           <div class="name line1">{{ activeUserInfo.nickname }}</div>
           <div class="label">
             <template v-if="webType == 2">
-              <span class="label routine">小程序</span>
+              <span class="label routine">Mini Program</span>
             </template>
             <template v-if="webType == 3">
               <span class="label H5">H5</span>
             </template>
             <template v-if="webType == 1">
-              <span class="label wechat">公众号</span>
+              <span class="label wechat">OA WeChat</span>
             </template>
             <template v-if="webType == 0">
-              <span class="label pc">PC端</span>
+              <span class="label pc">PC</span>
             </template>
           </div>
         </div>
         <div class="user-info">
           <div class="item">
-            <span>手机号</span>
-            {{ activeUserInfo.phone || '暂无' }}
+            <span>Số điện thoại</span>
+            {{ activeUserInfo.phone || 'Chưa có' }}
           </div>
           <!-- <div class="item">
-                        <span>分组</span>
+                        <span>Nhóm</span>
                         <el-select v-model="activeUserInfo.group_id" size="small" @change="onChange" style="flex:1;">
                             <el-option v-for="item in userGroup" :value="item.id" :key="item.value">{{ item.group_name }}</el-option>
                         </el-select>
                     </div> -->
           <div class="label-list">
-            <span>分组</span>
+            <span>Nhóm</span>
             <div class="con">
               <div class="label-item">{{ activeUserInfo.group_name }}</div>
             </div>
@@ -43,7 +43,7 @@
             </div>
           </div>
           <div class="label-list">
-            <span>用户标签</span>
+            <span>Nhãn người dùng</span>
             <div class="con">
               <div class="label-item" v-for="(item, index) in activeUserInfo.labelNames" :key="index">
                 {{ item }}
@@ -56,29 +56,29 @@
         </div>
         <div class="user-info">
           <div class="item">
-            <span>用户等级</span>
+            <span>Hạng người dùng</span>
             {{ activeUserInfo.level_name }}
           </div>
           <div class="item">
-            <span>推荐人</span>
+            <span>Người giới thiệu</span>
             {{ activeUserInfo.spread_name }}
           </div>
           <div class="item">
-            <span>用户类型</span>
+            <span>Loại người dùng</span>
             {{ activeUserInfo.user_type | typeFilters }}
           </div>
           <div class="item">
-            <span>余额</span>
+            <span>Số dư</span>
             {{ activeUserInfo.now_money }}
           </div>
-          <div class="item"><span>推广员</span>{{ activeUserInfo.is_promoter ? '是' : '否' }}</div>
+          <div class="item"><span>Cộng tác viên</span>{{ activeUserInfo.is_promoter ? 'Có' : 'Không' }}</div>
           <div class="item">
-            <span>生日</span>
+            <span>Ngày sinh</span>
             {{ activeUserInfo.birthday | getDay }}
           </div>
         </div>
       </div>
-      <empty v-else status="2" msg="暂无用户信息"></empty>
+      <empty v-else status="2" msg="Chưa có thông tin người dùng"></empty>
     </template>
     <template v-if="curStatus == 1">
       <div class="order-wrapper">
@@ -99,7 +99,7 @@
             class="search_box"
             prefix="ios-search"
             @on-enter="orderSearch"
-            placeholder="搜索订单编号"
+            placeholder="Tìm kiếm mã đơn hàng"
             v-model="orderConfig.searchTxt"
           />
         </div>
@@ -141,16 +141,16 @@
                   v-db-click
                   @click.stop="isOrderHidden = !isOrderHidden"
                 >
-                  <span>{{ isOrderHidden ? '展开' : '合上' }}</span>
+                  <span>{{ isOrderHidden ? 'Mở rộng' : 'Thu gọn' }}</span>
                 </div>
                 <div class="order-info">
-                  <div class="info-item"><span>订单编号：</span>{{ item.order_id }}</div>
+                  <div class="info-item"><span>Mã đơn hàng:</span>{{ item.order_id }}</div>
                   <div class="info-item">
-                    <span>{{ item.refund_status == 1 ? '发起时间' : '付款时间' }}：</span
+                    <span>{{ item.refund_status == 1 ? 'Thời gian khởi tạo' : 'Thời gian thanh toán' }}：</span
                     >{{ item.refund_status == 1 ? item.add_time : item._pay_time }}
                   </div>
-                  <div class="info-item"><span>邮费：</span>¥ {{ item.pay_postage }}</div>
-                  <div class="info-item"><span>实收款：</span>¥ {{ item.pay_price }}</div>
+                  <div class="info-item"><span>Phí vận chuyển:</span>¥ {{ item.pay_postage }}</div>
+                  <div class="info-item"><span>Thực nhận:</span>¥ {{ item.pay_price }}</div>
                 </div>
                 <div class="btn-wrapper">
                   <el-button
@@ -159,7 +159,7 @@
                     v-if="item._status._type == 1 && item._status._type != 0 && item.shipping_type != 2"
                     v-db-click
                     @click.stop="openDelivery(item)"
-                    >发货</el-button
+                    >Giao hàng</el-button
                   >
                   <el-button
                     class="btn"
@@ -167,7 +167,7 @@
                     v-if="item.refund_status == 1"
                     v-db-click
                     @click.stop="orderRecord(item.id)"
-                    >退款</el-button
+                    >Hoàn tiền</el-button
                   >
                   <el-button
                     class="btn"
@@ -176,7 +176,7 @@
                     type="primary"
                     @click.stop="orderPaid(item.id)"
                     v-if="item.pay_type == 'offline' && item.paid == 0"
-                    >确认付款</el-button
+                    >Xác nhận thanh toán</el-button
                   >
                   <el-button
                     class="btn"
@@ -184,20 +184,20 @@
                     v-db-click
                     @click.stop="orderEdit(item.id)"
                     v-if="item._status._type == 0"
-                    >改价</el-button
+                    >Đổi giá</el-button
                   >
                   <el-button v-if="item.refund_status == 0" class="btn" ghost v-db-click @click.stop="bindRemark(item)"
-                    >备注</el-button
+                    >Ghi chú</el-button
                   >
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <empty v-if="orderList.length == 0 && orderConfig.type === ''" status="3" msg="暂无订单信息"></empty>
-        <empty v-if="orderList.length == 0 && orderConfig.type === 0" status="4" msg="暂无未支付订单"></empty>
-        <empty v-if="orderList.length == 0 && orderConfig.type == 1" status="5" msg="暂无未发货订单"></empty>
-        <empty v-if="orderList.length == 0 && orderConfig.type == -1" status="6" msg="暂无退款订单"></empty>
+        <empty v-if="orderList.length == 0 && orderConfig.type === ''" status="3" msg="Chưa có thông tin đơn hàng"></empty>
+        <empty v-if="orderList.length == 0 && orderConfig.type === 0" status="4" msg="Không có đơn hàng chưa thanh toán"></empty>
+        <empty v-if="orderList.length == 0 && orderConfig.type == 1" status="5" msg="Không có đơn hàng chưa giao"></empty>
+        <empty v-if="orderList.length == 0 && orderConfig.type == -1" status="6" msg="Chưa có đơn hoàn tiền"></empty>
       </div>
     </template>
     <template v-if="curStatus == 2">
@@ -220,7 +220,7 @@
             @on-enter="productSearch"
             v-model="storeName"
             prefix="ios-search"
-            placeholder="搜索商品名称/ID"
+            placeholder="Tìm kiếm tên sản phẩm/ID"
           />
         </div>
         <div class="list-wrapper" v-if="goodsConfig.buyList.length > 0">
@@ -232,22 +232,22 @@
               <div class="info">
                 <div class="name line1">{{ item.store_name }}</div>
                 <div class="sku">
-                  <span>库存：{{ item.stock }}</span>
-                  <span>销量：{{ item.sales }}</span>
+                  <span>Tồn kho: {{ item.stock }}</span>
+                  <span>Lượt bán: {{ item.sales }}</span>
                 </div>
                 <div class="price">
                   <span>¥{{ item.price }}</span>
-                  <div class="push" v-db-click @click.stop="pushGoods(item)">推送</div>
+                  <div class="push" v-db-click @click.stop="pushGoods(item)">Gửi</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <empty v-else status="3" msg="暂无商品信息"></empty>
+        <empty v-else status="3" msg="Chưa có thông tin sản phẩm"></empty>
       </div>
     </template>
-    <!-- 发货弹窗 -->
-    <el-dialog :visible.sync="isDelivery" title="订单发送货">
+    <!-- Popup giao hàng -->
+    <el-dialog :visible.sync="isDelivery" title="Thực hiện giao đơn hàng">
       <delivery
         v-if="isDelivery"
         :virtualType="virtual_type"
@@ -256,21 +256,21 @@
         :orderId="orderId"
       ></delivery>
     </el-dialog>
-    <!-- 订单备注 -->
-    <el-dialog :visible.sync="isRemarks" title="请修改内容" width="470px" :show-close="true" class="none-radius">
+    <!-- Ghi chú đơn hàng -->
+    <el-dialog :visible.sync="isRemarks" title="Vui lòng sửa nội dung" width="470px" :show-close="true" class="none-radius">
       <remarks :remarkId="remarkId" v-if="isRemarks" @close="deliveryClose" @remarkSuccess="remarkSuccess"></remarks>
     </el-dialog>
-    <!-- 用户标签 -->
-    <el-dialog title="选择用户标签" :visible.sync="isUserLabel" width="470px" class="label-box" :show-close="true">
+    <!-- Nhãn người dùng -->
+    <el-dialog title="Chọn nhãn người dùng" :visible.sync="isUserLabel" width="470px" class="label-box" :show-close="true">
       <p class="label-head" slot="header">
-        <span>选择用户标签</span>
+        <span>Chọn nhãn người dùng</span>
       </p>
       <userLabel v-if="isUserLabel" @close="deliveryClose" :uid="uid" @editLabel="editLabel"></userLabel>
     </el-dialog>
-    <!-- 用户标签 -->
-    <el-dialog :visible.sync="isUserGroup" title="选择分组" width="470px" class="label-box" :show-close="true">
+    <!-- Nhãn người dùng -->
+    <el-dialog :visible.sync="isUserGroup" title="Chọn nhóm" width="470px" class="label-box" :show-close="true">
       <p class="label-head" slot="header">
-        <span>选择分组</span>
+        <span>Chọn nhóm</span>
       </p>
       <userGroup
         v-if="isUserGroup"
@@ -320,7 +320,7 @@ export default {
       type: String | Number,
       default: '',
     },
-    //用户uid
+    //uid người dùng
     uid: {
       type: String | Number,
       default: '',
@@ -333,26 +333,26 @@ export default {
   filters: {
     statusFilters: function (value) {
       const statusMap = {
-        '-1': '申请退款',
-        '-2': '退货成功',
-        0: '待发货',
-        1: '待收货',
-        2: '已收货',
-        3: '待评价',
-        '-1': '已退款',
+        '-1': 'Yêu cầu hoàn tiền',
+        '-2': 'Trả hàng thành công',
+        0: 'Chờ giao hàng',
+        1: 'Chờ nhận hàng',
+        2: 'Đã nhận hàng',
+        3: 'Chờ đánh giá',
+        '-1': 'Đã hoàn tiền',
       };
       return statusMap[value];
     },
     getDay(val) {
       if (val) {
-        return dayjs.unix(val).format('YYYY年M月D日');
+        return dayjs.unix(val).format('D/M/YYYY');
       }
     },
     typeFilters(value) {
       const statusMap = {
         h5: 'H5',
-        wechat: '公众号',
-        routine: '小程序',
+        wechat: 'OA WeChat',
+        routine: 'Mini Program',
         pc: 'PC',
       };
       return statusMap[value];
@@ -368,22 +368,22 @@ export default {
       menuList: [
         {
           key: '',
-          title: '全部',
+          title: 'Tất cả',
         },
         {
           key: 0,
-          title: '未支付',
+          title: 'Chưa thanh toán',
         },
         {
           key: 1,
-          title: '未发货',
+          title: 'Chưa giao hàng',
         },
         {
           key: -1,
-          title: '退款中',
+          title: 'Đang hoàn tiền',
         },
       ],
-      activeUserInfo: '', //用户详情
+      activeUserInfo: '', //Chi tiết người dùng
       curStatus: this.status,
       limit: 15,
       orderConfig: {
@@ -394,21 +394,21 @@ export default {
       orderList: [],
       isOrderScroll: true,
       isOrderHidden: true,
-      isDelivery: false, // 发货弹窗
-      isRemarks: false, // 备注弹窗
-      isUserGroup: false, //分组弹窗
+      isDelivery: false, // Popup giao hàng
+      isRemarks: false, // Popup ghi chú
+      isUserGroup: false, //Popup nhóm
       goodsTab: [
         {
           key: 0,
-          title: '购买',
+          title: 'Mua',
         },
         {
           key: 1,
-          title: '足迹',
+          title: 'Lịch sử xem',
         },
         {
           key: 2,
-          title: '热销',
+          title: 'Bán chạy',
         },
       ],
       isGoodsScroll: true,
@@ -459,24 +459,24 @@ export default {
       Promise.all[(this.getUserInfo(), this.getOrderList(), this.productCart(), this.getUserGroup())];
   },
   methods: {
-    // 设置分组
+    // Đặt nhóm
     onChange(e) {
       if (e) {
       }
     },
-    //获取分组
+    //Lấy nhóm
     getUserGroup() {
       userGroupApi().then((res) => {
         this.userGroup = res.data;
       });
     },
-    // 订单发货
+    // Giao đơn hàng
     openDelivery(item) {
       this.orderId = item.id;
       this.virtual_type = item.virtual_type;
       this.isDelivery = true;
     },
-    // 订单发货成功
+    // Giao hàng đơn hàng thành công
     deliveryOk() {
       this.orderConfig.page = 1;
       this.isOrderScroll = true;
@@ -484,7 +484,7 @@ export default {
       this.getOrderList();
       this.isDelivery = false;
     },
-    // 订单备注
+    // Ghi chú đơn hàng
     bindRemark(item) {
       this.remarkId = item.order_id;
       this.isRemarks = true;
@@ -493,7 +493,7 @@ export default {
       this.remarkId = '';
       this.isRemarks = false;
     },
-    //获取左侧用户列表用户详情
+    //Lấy chi tiết người dùng từ danh sách người dùng bên trái
     getUserInfo() {
       userInfo(this.uid)
         .then((res) => {
@@ -503,7 +503,7 @@ export default {
           this.activeUserInfo = '';
         });
     },
-    // 获取订单列表
+    // Lấy danh sách đơn hàng
     getOrderList() {
       if (!this.isOrderScroll) return;
       getorderList(this.uid, {
@@ -517,7 +517,7 @@ export default {
         this.orderList = this.orderList.concat(res.data);
       });
     },
-    // 订单tab
+    // Tab đơn hàng
     bindTab(item) {
       if (this.orderConfig.type === item.key) return;
       this.orderConfig.type = item.key;
@@ -528,21 +528,21 @@ export default {
         this.getOrderList();
       }
     },
-    // 订单回车
+    // Nhấn enter ở đơn hàng
     orderSearch() {
       this.isOrderScroll = true;
       this.orderList = [];
       this.orderConfig.page = 1;
       this.getOrderList();
     },
-    // 关闭发货模态框
+    // Đóng modal giao hàng
     deliveryClose() {
       this.isUserLabel = false;
       this.isDelivery = false;
       this.isRemarks = false;
       this.isUserGroup = false;
     },
-    // 订单改价
+    // Sửa giá đơn hàng
     orderEdit(id) {
       this.$modalForm(orderEdit(id)).then(() => {
         this.orderConfig.page = 1;
@@ -553,7 +553,7 @@ export default {
     },
     orderPaid(id) {
       this.$modalSure({
-        title: '修改订单为已支付',
+        title: 'chuyển đơn hàng sang đã thanh toán',
         url: `/order/pay_offline/${id}`,
         method: 'post',
         ids: '',
@@ -568,15 +568,15 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 订单退款
+    // Hoàn tiền đơn hàng
     orderRecord(id) {
       this.$modalForm(orderRecord(id)).then(() => this.getOrderList());
     },
-    // 订单加载更多
+    // Đơn hàng tải thêm
     orderReachBottom() {
       this.getOrderList();
     },
-    // 商品加载更多
+    // Sản phẩm tải thêm
     goodsReachBottom() {
       if (this.goodsConfig.type == 0) {
         this.productCart();
@@ -586,7 +586,7 @@ export default {
         this.productHot();
       }
     },
-    // 商品信息tab
+    // Tab thông tin sản phẩm
     bindGoodsTab(item) {
       if (this.goodsConfig.type == item.key) return;
       this.goodsConfig.type = item.key;
@@ -601,7 +601,7 @@ export default {
         this.productHot();
       }
     },
-    // 商品购买记录
+    // Lịch sử mua sản phẩm
     productCart() {
       if (!this.isGoodsScroll) return;
       productCart(this.uid, {
@@ -614,7 +614,7 @@ export default {
         this.goodsConfig.buyList = this.goodsConfig.buyList.concat(res.data);
       });
     },
-    // 商品足迹
+    // Lịch sử xem sản phẩm
     productVisit() {
       if (!this.isGoodsScroll) return;
       productVisit(this.uid, {
@@ -627,7 +627,7 @@ export default {
         this.goodsConfig.buyList = this.goodsConfig.buyList.concat(res.data);
       });
     },
-    // 热销商品
+    // Sản phẩm bán chạy
     productHot() {
       productHot(this.uid, {
         store_name: this.storeName,
@@ -639,7 +639,7 @@ export default {
         this.goodsConfig.buyList = this.goodsConfig.buyList.concat(res.data);
       });
     },
-    // 修改用户标签
+    // Sửa nhãn người dùng
     editLabel() {
       this.isUserLabel = false;
       this.getUserInfo();
@@ -651,11 +651,11 @@ export default {
         this.getUserInfo();
       });
     },
-    // 商品推送
+    // Đẩy sản phẩm
     pushGoods(item) {
       this.$emit('bindPush', item.id);
     },
-    // 商品搜索
+    // Tìm kiếm sản phẩm
     productSearch() {
       this.page = 1;
       this.isGoodsScroll = true;

@@ -1,55 +1,55 @@
-# docker-compose 快速运行项目
-## 1、安装docker
-docker 官网下载
+# Chạy nhanh dự án bằng docker-compose
+## 1、Cài đặt docker
+Tải docker từ trang chính thức
 https://www.docker.com/products/docker-desktop
-或命令安装
+Hoặc cài đặt bằng lệnh
 ```
 curl -sSL https://get.daocloud.io/docker | sh
 ```
-## 2、安装docker-compose
+## 2、Cài đặt docker-compose
 https://www.runoob.com/docker/docker-compose.html
-## 3、下载CRMEB程序
-建议去下载最新开源代码 https://gitee.com/ZhongBangKeJi/CRMEB
-程序放到docker-compose 同级目录下
-## 4、启动项目
+## 3、Tải chương trình CRMEB
+Nên tải mã nguồn mở mới nhất tại https://gitee.com/ZhongBangKeJi/CRMEB
+Đặt chương trình vào thư mục cùng cấp với docker-compose
+## 4、Khởi chạy dự án
 ```
-进入docker-compose目录 cd /docker-compose
+Vào thư mục docker-compose bằng lệnh cd /docker-compose
 
-运行命令：docker-compose up -d
+Lệnh chạy: docker-compose up -d
 ```
-进入PHP容器启动队列、定时任务、长连接命令
+Các lệnh vào container PHP để khởi động hàng đợi, tác vụ định kỳ, kết nối liên tục
 ```
-进入容器：docker exec -it crmeb_php /bin/bash
-进入到项目目录：cd /var/www
-定时任务命令：php think timer start --d
-长连接命令：php think workerman start --d
-队列命令：php think queue:listen --queue
+Vào container: docker exec -it crmeb_php /bin/bash
+Vào thư mục dự án: cd /var/www
+Lệnh tác vụ định kỳ: php think timer start --d
+Lệnh kết nối liên tục: php think workerman start --d
+Lệnh hàng đợi: php think queue:listen --queue
 ```
-## 5、访问CRMEB 系统
+## 5、Truy cập hệ thống CRMEB
 http://localhost:8011/
-## 6、安装CRMEB
-### Mysql数据库信息：
+## 6、Cài đặt CRMEB
+### Thông tin cơ sở dữ liệu Mysql:
 ```
 Host:192.168.10.11
 Post:3306
 user:root
 pwd:123456
 ```
-### Redis信息：
+### Thông tin Redis:
 ```
 Host:192.168.10.10
 Post:6379
 db:0
 pwd:123456
 ```
-## 7、常见问题
-1. 端口被占用进入docker-compose.yml 里面修改端口
+## 7、Sự cố thường gặp
+1. Cổng bị chiếm dụng: vào docker-compose.yml để sửa cổng
 
-2. 如果运行docker-compose up -d 启动失败，请查看docker-compose.yml 修改里面镜像地址或其它配置
+2. Nếu chạy docker-compose up -d mà khởi động thất bại, vui lòng kiểm tra docker-compose.yml và sửa địa chỉ image hoặc các cấu hình khác bên trong
 
-3. Error response from daemon: Address already in use 报错
-  一般情况下是设置的ip被占用，修改下某个容器下的ipv4_address地址
+3. Gặp lỗi Error response from daemon: Address already in use
+  Thông thường là do IP đã thiết lập bị chiếm dụng, hãy sửa địa chỉ ipv4_address của một container nào đó
 
-4. MYSQL容器无法启动，没有任何日志
-  注意m1芯片下需要使用mysql镜像daocloud.io/library/mysql:5.7.5-m15；其他任何情况下都
-   使用mysql:5.7的镜像
+4. Container MYSQL không khởi động được, không có bất kỳ log nào
+  Lưu ý: với chip m1 cần dùng image mysql daocloud.io/library/mysql:5.7.5-m15; trong mọi trường hợp khác đều
+   dùng image mysql:5.7

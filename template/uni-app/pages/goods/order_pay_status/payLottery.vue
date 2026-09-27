@@ -5,26 +5,26 @@
 				<text class="iconfont icon-gou"></text>
 				<view class="pay-status-r">
 					<text class="pay-status-text">
-						{{$t(`支付成功`)}}
+						{{$t(`Thanh toán thành công`)}}
 					</text>
 					<text>
-						{{$t(`支付金额`)}}：{{$t(`￥`)}}{{totalPrice}}
+						{{$t(`Số tiền thanh toán`)}}：{{$t(`￥`)}}{{totalPrice}}
 					</text>
 				</view>
 			</view>
 			<view class="jump">
 				<view class="jump-det" @click="orderDetails">
-					{{$t(`查看订单`)}}
+					{{$t(`Xem đơn hàng`)}}
 				</view>
 				<view class="jump-index" @click="goIndex">
-					{{$t(`返回首页`)}}
+					{{$t(`Về trang chủ`)}}
 				</view>
 			</view>
 		</view>
 		<view class="grids-top" v-show="lotteryShow">
 			<image src="../static/pay-lottery-l.png" mode=""></image>
 			<view class="grids-title">
-				<view>{{$t(`恭喜您`)}}，{{$t(`获得`)}} {{lottery_num}} {{$t(`机会`)}}</view>
+				<view>{{$t(`Chúc mừng bạn`)}}，{{$t(`nhận được`)}} {{lottery_num}} {{$t(`lượt quay thưởng`)}}</view>
 			</view>
 			<image src="../static/pay-lottery-r.png" mode=""></image>
 		</view>
@@ -92,10 +92,10 @@
 				aleartType: 0,
 				aleartStatus: false,
 				lottery_draw_param: {
-					startIndex: 3, //开始抽奖位置，从0开始
-					totalCount: 3, //一共要转的圈数
-					winingIndex: 1, //中奖的位置，从0开始
-					speed: 100 //抽奖动画的速度 [数字越大越慢,默认100]
+					startIndex: 3, //Vị trí bắt đầu quay thưởng, tính từ 0
+					totalCount: 3, //Tổng số vòng cần quay
+					winingIndex: 1, //Vị trí trúng thưởng, tính từ 0
+					speed: 100 //Tốc độ hiệu ứng quay thưởng [số càng lớn càng chậm, mặc định 100]
 				},
 				alData: {},
 				type: '',
@@ -105,8 +105,8 @@
 					paid: 1,
 					_status: {}
 				},
-				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false, //是否隐藏授权
+				isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+				isShowAuth: false, //Có ẩn ủy quyền hay không
 				couponsHidden: true,
 				couponList: [],
 				totalPrice: 0
@@ -166,10 +166,10 @@
 						title: err
 					});
 				})
-				// //props修改在小程序和APP端不成功，所以在这里使用回调函数传参，
+				// //sửa props không thành công trên Mini Program và APP, nên ở đây dùng hàm callback để truyền tham số,
 			},
 			/**
-			 * 去首页关闭当前所有页面
+			 * Về trang chủ và đóng tất cả trang hiện tại
 			 */
 			goIndex: function(e) {
 				uni.switchTab({
@@ -178,12 +178,12 @@
 			},
 			/**
 			 * 
-			 * 去订单详情页面
+			 * Đến trang chi tiết đơn hàng
 			 */
 			goOrderDetails: function(e) {
 				// #ifdef MP
 				uni.showLoading({
-					title: this.$t(`正在加载中`),
+					title: this.$t(`Đang tải`),
 				})
 				openOrderSubscribe().then(res => {
 					uni.hideLoading();
@@ -224,7 +224,7 @@
 				addData.address = data.address.province + data.address.city + data.address.district + data.detail
 				receiveLottery(addData).then(res => {
 					this.$util.Tips({
-						title: this.$t(`领取成功`)
+						title: this.$t(`Nhận thành công`)
 					});
 					this.addressModel = false
 				}).catch(err => {
@@ -250,9 +250,9 @@
 						title: err
 					});
 				})
-				// //props修改在小程序和APP端不成功，所以在这里使用回调函数传参，
+				// //sửa props không thành công trên Mini Program và APP, nên ở đây dùng hàm callback để truyền tham số,
 			},
-			// 抽奖完成
+			// Hoàn tất quay thưởng
 			luck_draw_finish(param) {
 				this.aleartType = 2
 				this.aleartStatus = true

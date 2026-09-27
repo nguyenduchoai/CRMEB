@@ -7,7 +7,7 @@
       <el-col :span="18">
         <el-cascader
           @change="sliderChange"
-          placeholder="请选择品牌"
+          placeholder="Vui lòng chọn thương hiệu"
           size="mini"
           v-model="configData.brandVal"
           :options="brandData"

@@ -14,7 +14,7 @@
     export default {
         name: 'c_ranking',
         componentsName: 'home_ranking',
-        cname: '排行榜',
+        cname: 'Bảng xếp hạng',
         props: {
             activeIndex: {
                 type: null
@@ -252,7 +252,7 @@
 					}
 				}
 			},
-            // 获取组件参数
+            // Lấy tham số thành phần (component)
             getConfig (data) {}
         }
     }

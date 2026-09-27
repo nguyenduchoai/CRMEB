@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -38,12 +38,12 @@ class UserSignServices extends BaseServices
     }
 
     /**
-     * 获取用户是否签到
+     * Lấy trạng thái người dùng đã điểm danh chưa
      * @param int $uid
      * @param string $type
      * @return bool
      * @throws \ReflectionException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/8
      */
@@ -53,11 +53,11 @@ class UserSignServices extends BaseServices
     }
 
     /**
-     * 获取用户累计签到次数
+     * Lấy số lần điểm danh tích lũy của người dùng
      * @param int $uid
      * @return int
      * @throws \ReflectionException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/8
      */
@@ -67,7 +67,7 @@ class UserSignServices extends BaseServices
     }
 
     /**
-     * 设置签到数据
+     * Đặt dữ liệu điểm danh
      * @param $uid
      * @param string $title
      * @param int $number
@@ -76,7 +76,7 @@ class UserSignServices extends BaseServices
      * @param int $exp_num
      * @return bool
      * @throws \think\Exception
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/8
      */
@@ -100,33 +100,33 @@ class UserSignServices extends BaseServices
             $data['number'] = $exp_num;
             $data['category'] = 'exp';
             $data['type'] = 'sign';
-            $data['title'] = $data['mark'] = '签到奖励';
+            $data['title'] = $data['mark'] = 'Phần thưởng điểm danh';
             $data['balance'] = $exp_banlance + $exp_num;
             $data['pm'] = 1;
             $data['status'] = 1;
             if (!$userBill->save($data)) {
                 throw new ApiException(410291);
             }
-            //检测会员等级
+            //Kiểm tra hạng thành viên
             try {
-                //用户升级事件
+                //Event nâng cấp người dùng
                 event('UserLevelListener', [$uid]);
             } catch (\Throwable $e) {
-                Log::error('会员等级升级失败,失败原因:' . $e->getMessage());
+                Log::error('Nâng hạng thành viên thất bại, nguyên nhân:' . $e->getMessage());
             }
         }
         return true;
     }
 
     /**
-     * 获取用户签到列表
+     * Lấy danh sách điểm danh của người dùng
      * @param int $uid
      * @param string $field
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/8
      */
@@ -141,7 +141,7 @@ class UserSignServices extends BaseServices
     }
 
     /**
-     * 用户签到
+     * Người dùng điểm danh
      * @param $uid
      * @return bool|int|mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -153,7 +153,7 @@ class UserSignServices extends BaseServices
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
 
-        //检测用户是否存在
+        //Kiểm tra người dùng có tồn tại không
         $user = $userServices->getUserInfo($uid);
         if (!$user) {
             throw new ApiException(410032);
@@ -161,30 +161,30 @@ class UserSignServices extends BaseServices
 
         $userServices->offMemberLevel($uid);
 
-        //检测今天是否已经签到
+        //Kiểm tra hôm nay đã điểm danh chưa
         if ($this->getIsSign($uid, 'today')) {
             throw new ApiException(410293);
         }
-        $title = '签到奖励';
-        //检测昨天是否签到，如果没有签到，连续签到清0
+        $title = 'Phần thưởng điểm danh';
+        //Kiểm tra hôm qua có điểm danh không, nếu không thì số lần điểm danh liên tục về 0
         if (!$this->getIsSign($uid, 'yesterday')) $user->sign_num = 0;
 
-        //获取签到周期配置，如果周签到，每周一清空连续签到记录，如果月签到，每月一日清空连续签到记录
+        //Lấy cấu hình chu kỳ điểm danh: nếu điểm danh theo tuần, mỗi thứ Hai xóa bản ghi điểm danh liên tục; nếu điểm danh theo tháng, mỗi ngày 1 hàng tháng xóa bản ghi điểm danh liên tục
         $sign_mode = sys_config('sign_mode', -1);
         if ($sign_mode == 1 && date('w') == 1) $user->sign_num = 0;
         if ($sign_mode == 0 && date('d') == 1) $user->sign_num = 0;
 
-        //连续签到天数
+        //Số ngày điểm danh liên tục
         $user->sign_num += 1;
         $continuousDays = $user->sign_num;
-        //累积签到天数
+        //Số ngày điểm danh tích lũy
         $cumulativeDays = $this->dao->getCumulativeDays($sign_mode, $uid);
 
-        //基础签到奖励
+        //Thưởng điểm danh cơ bản
         $sign_point = sys_config('sign_give_point', 0);
         $sign_exp = sys_config('member_func_status', 1) ? sys_config('sign_give_exp', 0) : 0;
 
-        //连续签到和累积签到奖励
+        //Thưởng điểm danh liên tục và điểm danh tích lũy
         $signRewardsServices = app()->make(SystemSignRewardServices::class);
         [$continuousStatus, $continuousRewardPoint, $continuousRewardExp] = $signRewardsServices->getSignRewards(0, $continuousDays);
         [$cumulativeStatus, $cumulativeRewardPoint, $cumulativeRewardExp] = $signRewardsServices->getSignRewards(1, $cumulativeDays);
@@ -199,20 +199,20 @@ class UserSignServices extends BaseServices
             $sign_exp = $cumulativeRewardExp;
         }
 
-        //会员签到积分会员奖励
+        //Thưởng điểm thưởng điểm danh cho thành viên
         if ($user->is_money_level > 0) {
-            //看是否开启签到积分翻倍奖励
+            //Xem có mở thưởng gấp đôi điểm thưởng điểm danh không
             /** @var MemberCardServices $memberCardService */
             $memberCardService = app()->make(MemberCardServices::class);
             $sign_rule_number = $memberCardService->isOpenMemberCard('sign');
             if ($sign_rule_number) {
                 $up_num = (int)$sign_rule_number * $sign_point - $sign_point;
                 $sign_point = (int)$sign_rule_number * $sign_point;
-                if (!$this->getIsSign($uid, 'yesterday')) $title = '签到奖励(SVIP+' . $up_num . ')';
+                if (!$this->getIsSign($uid, 'yesterday')) $title = 'Thưởng điểm danh (SVIP+' . $up_num . ')';
             }
         }
 
-        //增加签到数据
+        //Thêm dữ liệu điểm danh
         $this->transaction(function () use ($uid, $title, $sign_point, $user, $sign_exp) {
             $this->setSignData($uid, $title, $sign_point, $user['integral'], (int)$user['exp'], $sign_exp);
             $user->integral = (int)$user->integral + (int)$sign_point;
@@ -222,7 +222,7 @@ class UserSignServices extends BaseServices
             }
         });
 
-        //自定义事件-用户签到
+        //Sự kiện tùy chỉnh - Người dùng điểm danh
         event('CustomEventListener', ['user_sign', [
             'uid' => $uid,
             'sign_point' => $sign_point,
@@ -234,7 +234,7 @@ class UserSignServices extends BaseServices
     }
 
     /**
-     * 签到用户信息
+     * Thông tin người dùng điểm danh
      * @param int $uid
      * @param $sign
      * @param $integral
@@ -243,7 +243,7 @@ class UserSignServices extends BaseServices
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/8
      */
@@ -255,7 +255,7 @@ class UserSignServices extends BaseServices
         if (!$user) {
             throw new ApiException(100026);
         }
-        //是否统计签到
+        //Có thống kê điểm danh không
         if ($sign || $all) {
             $user['sum_sgin_day'] = $this->getSignSumDay($user['uid']);
             $user['is_day_sgin'] = false;
@@ -264,7 +264,7 @@ class UserSignServices extends BaseServices
                 $user['sign_num'] = 0;
             }
         }
-        //是否统计积分使用情况
+        //Có thống kê tình hình sử dụng điểm thưởng không
         if ($integral || $all) {
             /** @var UserBillServices $userBill */
             $userBill = app()->make(UserBillServices::class);
@@ -283,13 +283,13 @@ class UserSignServices extends BaseServices
     }
 
     /**
-     * 获取签到
+     * Lấy điểm danh
      * @param $uid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/8
      */
@@ -315,39 +315,39 @@ class UserSignServices extends BaseServices
     }
 
     /**
-     * 返回签到列表数据
+     * Trả về dữ liệu danh sách điểm danh
      * @param $uid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/8
      */
     public function signConfig($uid, $signMode = 0)
     {
         if (!$signMode) {
-            //获取周签到还是月签到
+            //Lấy biết là điểm danh theo tuần hay theo tháng
             $signMode = (int)sys_config('sign_mode', 1);
         }
-        //获取签到列表
+        //Lấy danh sách điểm danh
         $startDate = $signMode == 1 ? strtotime('this week Monday') : strtotime('first day of this month midnight');
         $endDate = $signMode == 1 ? strtotime('this week Sunday') : strtotime('last day of this month midnight');
         $dateList = range($startDate, $endDate, 86400);
 
-        //获取已经签到的列表
+        //Lấy danh sách đã điểm danh
         $list = $this->dao->getUserSignList($signMode, $uid);
 
-        //获取累积签到和连续签到
+        //Lấy điểm danh tích lũy và điểm danh liên tục
         $cumulativeSignDays = $this->dao->getCumulativeDays($signMode, $uid);
         $continuousSignDays = app()->make(UserServices::class)->value($uid, 'sign_num');
 
-        //获取累积签到和连续签到奖励
+        //Lấy thưởng điểm danh tích lũy và điểm danh liên tục
         $nextCumulativeSignRewardList = app()->make(SystemSignRewardServices::class)->selectList(['type' => 1], '*', 1, 200, 'days asc')->toArray();
         $nextContinuousSignRewardList = app()->make(SystemSignRewardServices::class)->selectList(['type' => 0], '*', 1, 200, 'days asc')->toArray();
 
-        //下一次连续签到奖励还需签到几天
+        //Cần điểm danh thêm mấy ngày nữa để nhận thưởng điểm danh liên tục lần sau
         $nextContinuousDays = 0;
         foreach ($nextContinuousSignRewardList as $continuousNext) {
             if ($continuousSignDays < $continuousNext['days']) {
@@ -363,7 +363,7 @@ class UserSignServices extends BaseServices
             }
         }
 
-        //整理签到列表数据
+        //Sắp xếp dữ liệu danh sách điểm danh
         $signList = [];
         $i = 0;
         $checkSign = $this->getIsSign($uid, 'today');
@@ -374,10 +374,10 @@ class UserSignServices extends BaseServices
             $signList[$key]['is_sign'] = false;
             $signList[$key]['type'] = 0;
 
-            //判断当前签到日期
+            //Xác định ngày điểm danh hiện tại
             $signList[$key]['sign_day'] = date('Y-m-d', $time) == date('Y-m-d', time());
 
-            //判断今日是否签到
+            //Xác định hôm nay đã điểm danh chưa
             foreach ($list as $value) {
                 if (date('Y-m-d', $time) == date('Y-m-d', $value['add_time'])) {
                     $signList[$key]['is_sign'] = true;
@@ -385,7 +385,7 @@ class UserSignServices extends BaseServices
                 }
             }
 
-            //处理处理签到类型展示，type 0已签到，1积分，2经验，3连续，4累积
+            //Xử lý hiển thị loại điểm danh: type 0 đã điểm danh, 1 điểm thưởng, 2 kinh nghiệm, 3 liên tục, 4 tích lũy
             $signList[$key]['type'] = sys_config('sign_give_point', 0) == 0 && sys_config('member_func_status', 1) == 1 && sys_config('sign_give_exp', 0) > 0 ? 2 : 1;
             $signList[$key]['point'] = (int)sys_config('sign_give_point');
             if (date('Y-m-d', $time) >= date('Y-m-d', time())) {
@@ -405,30 +405,30 @@ class UserSignServices extends BaseServices
             }
         }
 
-        //格式化签到数据
+        //Định dạng dữ liệu điểm danh
         $signList = array_chunk($signList, 7);
 
-        //获取用户签到提醒状态
+        //Lấy trạng thái nhắc nhở điểm danh của người dùng
         $signRemindStatus = app()->make(UserServices::class)->value($uid, 'sign_remind');
 
-        //是否显示签到提醒开关
+        //Có hiển thị công tắc nhắc nhở điểm danh không
         $signRemindSwitch = (int)sys_config('sign_remind', 0);
 
-        //签到功能是否关闭
+        //Chức năng điểm danh có bị tắt không
         $signStatus = (int)sys_config('sign_status', 0);
 
-        //签到功能是否关闭
+        //Chức năng điểm danh có bị tắt không
         $signGivePoint = (int)sys_config('sign_give_point', 0);
 
         return compact('signList', 'continuousSignDays', 'cumulativeSignDays', 'nextContinuousDays', 'nextCumulativeDays', 'signMode', 'checkSign', 'signRemindStatus', 'signRemindSwitch', 'signStatus', 'signGivePoint');
     }
 
     /**
-     * 签到提醒设置
+     * Cài đặt nhắc nhở điểm danh
      * @param $uid
      * @param $status
      * @return bool
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/9
      */
@@ -439,7 +439,7 @@ class UserSignServices extends BaseServices
     }
 
     /**
-     * 签到提醒
+     * Nhắc nhở điểm danh
      * @return bool
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -447,21 +447,21 @@ class UserSignServices extends BaseServices
      */
     public function sendSignRemind()
     {
-        //今天已经发送过，不执行发送提醒逻辑
+        //Hôm nay đã gửi rồi, không thực hiện logic gửi nhắc nhở
         if (CacheService::get('sign_remind_expire')) return true;
-        //当前时间小于每天执行提醒发送的时间，不执行发送提醒逻辑
+        //Thời gian hiện tại nhỏ hơn thời gian gửi nhắc nhở hàng ngày, không thực hiện logic gửi nhắc nhở
         if (time() < strtotime('today ' . sys_config('sign_remind_time'))) return true;
-        //获取需要签到提醒的用户
+        //Lấy người dùng cần nhắc nhở điểm danh
         $list = app()->make(UserServices::class)->getColumn(['sign_remind' => 1], 'phone', 'uid');
         if ($list) {
-            //获取今天已经签到的用户
+            //Lấy người dùng đã điểm danh hôm nay
             $signList = $this->dao->getColumn([['add_time', 'between', [strtotime('today'), strtotime('today 23:59:59')]]], 'uid');
             $noSignList = array_diff_key($list, array_flip($signList));
             foreach ($noSignList as $uid => $phone) {
                 event('NoticeListener', [['uid' => $uid, 'phone' => $phone], 'sign_remind']);
             }
         }
-        //已经发送提醒，写入缓存，禁止当天多次执行
+        //Đã gửi nhắc nhở, ghi vào cache, cấm thực hiện nhiều lần trong ngày
         CacheService::set('sign_remind_expire', 1, strtotime('tomorrow') - time());
         return true;
     }

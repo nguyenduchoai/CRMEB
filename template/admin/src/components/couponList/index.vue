@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog :visible.sync="isTemplate" title="优惠券列表" append-to-body width="1000px">
+    <el-dialog :visible.sync="isTemplate" title="Danh sách phiếu giảm giá" append-to-body width="1000px">
       <el-table
         :data="couponList"
         ref="couponTable"
@@ -8,8 +8,8 @@
         v-loading="loading"
         highlight-current-row
         :row-key="getRowKey"
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
         @selection-change="changeCheckbox"
       >
         <el-table-column v-if="!luckDraw" type="selection" width="55" :reserve-selection="true"> </el-table-column>
@@ -25,51 +25,51 @@
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="优惠券名称" min-width="120">
+        <el-table-column label="Tên phiếu giảm giá" min-width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.title }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="优惠券类型" min-width="100">
+        <el-table-column label="Loại phiếu giảm giá" min-width="100">
           <template slot-scope="scope">
-            <span v-if="scope.row.type === 1">品类券</span>
-            <span v-else-if="scope.row.type === 2">商品券</span>
-            <span v-else-if="scope.row.type === 3">会员券</span>
-            <span v-else>通用券</span>
+            <span v-if="scope.row.type === 1">Phiếu theo danh mục</span>
+            <span v-else-if="scope.row.type === 2">Phiếu theo sản phẩm</span>
+            <span v-else-if="scope.row.type === 3">Phiếu thành viên</span>
+            <span v-else>Phiếu toàn cửa hàng</span>
           </template>
         </el-table-column>
-        <el-table-column label="面值" min-width="100">
+        <el-table-column label="Mệnh giá" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.coupon_price }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="最低消费额" min-width="100">
+        <el-table-column label="Giá trị đơn tối thiểu" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.use_min_price }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="发布数量" min-width="100">
+        <el-table-column label="Số lượng phát hành" min-width="100">
           <template slot-scope="scope">
-            <span v-if="scope.row.is_permanent">不限量</span>
+            <span v-if="scope.row.is_permanent">Không giới hạn</span>
             <div v-else>
-              <span class="fa">发布：{{ scope.row.total_count }}</span>
-              <span class="sheng ml10">剩余：{{ scope.row.remain_count }}</span>
+              <span class="fa">Phát hành: {{ scope.row.total_count }}</span>
+              <span class="sheng ml10">Còn lại: {{ scope.row.remain_count }}</span>
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="有效期限" min-width="100">
+        <el-table-column label="Thời hạn hiệu lực" min-width="100">
           <template slot-scope="scope">
             <div v-if="scope.row.start_time">
               {{ scope.row.start_time | formatDate }} - {{ scope.row.end_time | formatDate }}
             </div>
-            <span v-else>不限时</span>
+            <span v-else>Không giới hạn thời gian</span>
           </template>
         </el-table-column>
-        <el-table-column label="状态" min-width="100">
+        <el-table-column label="Trạng thái" min-width="100">
           <template slot-scope="scope">
-            <el-tag size="medium" v-show="scope.row.status === 1">正常</el-tag>
-            <el-tag size="medium" type="danger" v-show="scope.row.status === 0">未开启</el-tag>
-            <el-tag size="medium" type="info" v-show="scope.row.status === -1">已失效</el-tag>
+            <el-tag size="medium" v-show="scope.row.status === 1">Bình thường</el-tag>
+            <el-tag size="medium" type="danger" v-show="scope.row.status === 0">Chưa bật</el-tag>
+            <el-tag size="medium" type="info" v-show="scope.row.status === -1">Đã hết hiệu lực</el-tag>
           </template>
         </el-table-column>
       </el-table>
@@ -83,8 +83,8 @@
         />
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button v-db-click @click="cancel">取 消</el-button>
-        <el-button type="primary" v-db-click @click="ok">确 定</el-button>
+        <el-button v-db-click @click="cancel">Hủy</el-button>
+        <el-button type="primary" v-db-click @click="ok">Xác nhận</el-button>
       </span>
     </el-dialog>
   </div>
@@ -160,7 +160,7 @@ export default {
       this.currentid = row.id;
       this.productRow = row;
     },
-    //对象数组去重；
+    //Loại bỏ trùng lặp trong mảng object;
     unique(arr) {
       const res = new Map();
       return arr.filter((arr) => !res.has(arr.id) && res.set(arr.id, 1));
@@ -176,9 +176,9 @@ export default {
           let obj = {
             id: item.id,
             title: item.title,
-            full_reduction: item.full_reduction, // 满
-            use_min_price: item.use_min_price, // 满
-            coupon_price: item.coupon_price, // 减
+            full_reduction: item.full_reduction, // Đơn từ
+            use_min_price: item.use_min_price, // Đơn từ
+            coupon_price: item.coupon_price, // Trừ
           };
           cups.push(obj);
           ids.push(item.id);
@@ -202,7 +202,7 @@ export default {
         this.couponList = data.list;
         this.total = data.count;
         this.$nextTick(() => {
-          //确保dom加载完毕
+          //Đảm bảo dom đã tải xong
           this.selectedIds.length && this.setChecked();
           this.showSelectData();
         });
@@ -210,7 +210,7 @@ export default {
       });
     },
     setChecked() {
-      //将new Set()转化为数组
+      //Chuyển new Set() thành mảng
       let ids = [...this.selectedIds];
       this.couponList.forEach((row) => {
         if (ids.includes(row.id)) {
@@ -237,13 +237,13 @@ export default {
     },
     showSelectData() {
       if (this.multipleSelection.length > 0) {
-        // 判断是否存在勾选过的数据
+        // Kiểm tra có dữ liệu đã tick chọn không
         this.couponList.forEach((row) => {
-          // 获取数据列表接口请求到的数据
+          // Dữ liệu lấy được từ API danh sách dữ liệu
           this.multipleSelection.forEach((item) => {
-            // 勾选到的数据
+            // Dữ liệu đã tick chọn
             if (row.id === item.id) {
-              // this.$refs.table.toggleRowSelection(item, true); // 若有重合，则回显该条数据
+              // this.$refs.table.toggleRowSelection(item, true); // Nếu có trùng khớp thì hiển thị lại dòng dữ liệu này
             }
           });
         });

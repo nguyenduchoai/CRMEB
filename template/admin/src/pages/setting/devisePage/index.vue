@@ -1,6 +1,6 @@
 <template>
   <div>
-    <pages-header ref="pageHeader" title="页面设计" :backUrl="$routeProStr + '/setting/pages/devise/0'"></pages-header>
+    <pages-header ref="pageHeader" title="Thiết kế trang" :backUrl="$routeProStr + '/setting/pages/devise/0'"></pages-header>
     <el-card :bordered="false" shadow="never" class="ivu-mt mt15">
       <div class="flex-wrapper">
         <!-- :src="iframeUrl" -->
@@ -61,11 +61,11 @@ export default {
     });
   },
   mounted() {
-    //监听子页面给当前页面传值
+    //Theo dõi trang con truyền giá trị cho trang hiện tại
     window.addEventListener('message', this.handleMessage, false);
   },
   methods: {
-    //接收iframe值
+    //Nhận giá trị iframe
     handleMessage(event) {
       if (event.data.name) {
         let obj = { name: event.data.name, num: event.data.dataName };

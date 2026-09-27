@@ -25,7 +25,7 @@ import rightBtn from '@/components/rightBtn/index.vue';
 export default {
   name: 'c_home_goods_list',
   componentsName: 'home_goods_list',
-  cname: '产品列表',
+  cname: 'Danh sách sản phẩm',
   props: {
     activeIndex: {
       type: null,

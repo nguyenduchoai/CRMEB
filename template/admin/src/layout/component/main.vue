@@ -39,7 +39,7 @@ export default {
     };
   },
   computed: {
-    // 获取布局配置信息
+    // Lấy thông tin cấu hình bố cục
     getThemeConfig() {
       return this.$store.state.themeConfig.themeConfig;
     },
@@ -49,7 +49,7 @@ export default {
     this.initCurrentRouteMeta(this.$route.meta);
   },
   methods: {
-    // 初始化当前路由 meta 信息
+    // Khởi tạo thông tin meta của route hiện tại
     initCurrentRouteMeta(meta) {
       this.isShowLink = false;
       this.currentRouteMeta = meta;
@@ -57,19 +57,19 @@ export default {
         this.isShowLink = true;
       }, 100);
     },
-    // 设置 main 的高度
+    // Đặt chiều cao cho main
     initHeaderHeight() {
       let { isTagsview } = this.$store.state.themeConfig.themeConfig;
       if (isTagsview) return (this.headerHeight = `84px`);
       else return (this.headerHeight = `50px`);
     },
-    // 子组件触发更新
+    // Thành phần con kích hoạt cập nhật
     onGetCurrentRouteMeta() {
       this.initCurrentRouteMeta(this.$route.meta);
     },
   },
   watch: {
-    // 监听 vuex 数据变化
+    // Theo dõi thay đổi dữ liệu vuex
     '$store.state.themeConfig.themeConfig': {
       handler(val) {
         this.headerHeight = val.isTagsview ? '84px' : '50px';
@@ -80,7 +80,7 @@ export default {
       },
       deep: true,
     },
-    // 监听路由的变化
+    // Theo dõi thay đổi route
     $route: {
       handler(to) {
         this.initCurrentRouteMeta(to.meta);

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -40,7 +40,7 @@ class LiveAnchorServices extends BaseServices
     }
 
     /**
-     * 获取某个主播
+     * Lấy thông tin một streamer
      * @param int $id
      * @return array|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
@@ -62,7 +62,7 @@ class LiveAnchorServices extends BaseServices
     }
 
     /**
-     * 添加修改标签表单
+     * Form thêm/sửa nhãn
      * @param int $id
      * @return mixed
      */
@@ -71,24 +71,24 @@ class LiveAnchorServices extends BaseServices
         $anchor = $this->getLiveAnchor($id);
         $field = array();
         if (!$anchor) {
-            $title = '添加主播';
-            $field[] = Form::input('name', '主播名称', '')->maxlength(20)->required('请填写名称');
-            $field[] = Form::input('wechat', '主播微信号', '')->maxlength(32)->required('请填写微信号');
-            $field[] = Form::input('phone', '主播手机号', '')->maxlength(20)->required('请填写手机号');
-            $field[] = Form::frameImage('cover_img', '主播图像', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'cover_img')), '')->icon('el-icon-picture-outline')->width('950px')->height('560px')->Props(['footer' => false])->appendValidate(Validate::str()->required('请选择图像'));
+            $title = 'Thêm streamer';
+            $field[] = Form::input('name', 'Tên streamer', '')->maxlength(20)->required('Vui lòng nhập tên');
+            $field[] = Form::input('wechat', 'ID WeChat của streamer', '')->maxlength(32)->required('Vui lòng nhập ID WeChat');
+            $field[] = Form::input('phone', 'Số điện thoại của streamer', '')->maxlength(20)->required('Vui lòng điền số điện thoại');
+            $field[] = Form::frameImage('cover_img', 'Ảnh streamer', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'cover_img')), '')->icon('el-icon-picture-outline')->width('950px')->height('560px')->Props(['footer' => false])->appendValidate(Validate::str()->required('Vui lòng chọn ảnh'));
         } else {
-            $title = '修改主播';
+            $title = 'Sửa streamer';
             $field[] = Form::hidden('id', $anchor->getData('id'));
-            $field[] = Form::input('name', '主播名称', $anchor->getData('name'))->maxlength(20)->required('请填写名称');
-            $field[] = Form::input('wechat', '主播微信号', $anchor->getData('wechat'))->maxlength(32)->required('请填写微信号');
-            $field[] = Form::input('phone', '主播手机号', $anchor->getData('phone'))->maxlength(20)->required('请填写手机号');
-            $field[] = Form::frameImage('cover_img', '主播图像', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'cover_img')), $anchor->getData('cover_img'))->icon('el-icon-picture-outline')->width('950px')->height('560px')->Props(['footer' => false])->appendValidate(Validate::str()->required('请选择图像'));
+            $field[] = Form::input('name', 'Tên streamer', $anchor->getData('name'))->maxlength(20)->required('Vui lòng nhập tên');
+            $field[] = Form::input('wechat', 'ID WeChat của streamer', $anchor->getData('wechat'))->maxlength(32)->required('Vui lòng nhập ID WeChat');
+            $field[] = Form::input('phone', 'Số điện thoại của streamer', $anchor->getData('phone'))->maxlength(20)->required('Vui lòng điền số điện thoại');
+            $field[] = Form::frameImage('cover_img', 'Ảnh streamer', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'cover_img')), $anchor->getData('cover_img'))->icon('el-icon-picture-outline')->width('950px')->height('560px')->Props(['footer' => false])->appendValidate(Validate::str()->required('Vui lòng chọn ảnh'));
         }
         return create_form($title, $field, $this->url('/live/anchor/save'), 'POST');
     }
 
     /**
-     * 保存标签表单数据
+     * Lưu dữ liệu form nhãn
      * @param int $id
      * @param array $data
      * @return mixed
@@ -125,7 +125,7 @@ class LiveAnchorServices extends BaseServices
     }
 
     /**
-     * 删除
+     * Xóa
      * @param $id
      * @throws \Exception
      */
@@ -146,7 +146,7 @@ class LiveAnchorServices extends BaseServices
     }
 
     /**
-     * 设置是否显示
+     * Thiết lập hiện/ẩn
      * @param int $id
      * @param $is_show
      * @return mixed
@@ -189,7 +189,7 @@ class LiveAnchorServices extends BaseServices
             if ($dataAll) {
                 $this->dao->saveAll($dataAll);
             }
-            //支付成功后发送消息
+            //Gửi tin nhắn sau khi thanh toán thành công
             if (!$is_job) LiveJob::dispatchSecs(120);
             CacheService::set($key, 1, 0);
         }

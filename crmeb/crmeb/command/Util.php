@@ -19,12 +19,12 @@ class Util extends Command
     protected function configure()
     {
         $this->setName('util')
-            ->addArgument('type', Argument::REQUIRED, '类型replace/route/file/apifox')
-            ->addOption('h', null, Option::VALUE_REQUIRED, '替换成当前域名')
-            ->addOption('u', null, Option::VALUE_REQUIRED, '替换的域名')
-            ->addOption('a', null, Option::VALUE_REQUIRED, '应用名')
-            ->addOption('f', null, Option::VALUE_REQUIRED, '导入文件路径，文件只能在项目根目录下或者根目录下的其他文件夹内')
-            ->setDescription('工具类');
+            ->addArgument('type', Argument::REQUIRED, 'Loại replace/route/file/apifox')
+            ->addOption('h', null, Option::VALUE_REQUIRED, 'Thay thế bằng tên miền hiện tại')
+            ->addOption('u', null, Option::VALUE_REQUIRED, 'Tên miền cần thay thế')
+            ->addOption('a', null, Option::VALUE_REQUIRED, 'Tên ứng dụng')
+            ->addOption('f', null, Option::VALUE_REQUIRED, 'Đường dẫn tệp nhập, tệp chỉ được nằm trong thư mục gốc của dự án hoặc các thư mục con của thư mục gốc')
+            ->setDescription('Công cụ tiện ích');
     }
 
     protected function execute(Input $input, Output $output)
@@ -36,17 +36,17 @@ class Util extends Command
                 $host = $input->getOption('h');
                 $url = $input->getOption('u');
                 if (!$host) {
-                    return $output->error('缺少替换域名');
+                    return $output->error('Thiếu tên miền thay thế');
                 }
                 if (!$url) {
-                    return $output->error('缺少替换的域名');
+                    return $output->error('Thiếu tên miền cần thay thế');
                 }
                 $this->replaceSiteUrl($url, $host);
                 break;
             case 'route':
                 $appName = $input->getOption('a');
                 if (!$appName) {
-                    return $output->error('缺少应用名称');
+                    return $output->error('Thiếu tên ứng dụng');
                 }
                 app()->make(SystemRouteServices::class)->syncRoute($appName);
                 break;
@@ -56,30 +56,30 @@ class Util extends Command
             case 'apifox':
                 $filePath = $input->getOption('f');
                 if (!$filePath) {
-                    return $output->error('缺少导入文件地址');
+                    return $output->error('Thiếu đường dẫn tệp nhập');
                 }
                 app()->make(SystemRouteServices::class)->import($filePath);
                 break;
         }
 
-        $output->info('执行成功');
+        $output->info('Thực thi thành công');
     }
 
     protected function replaceSiteUrl(string $url, string $siteUrl)
     {
-        // 解析站点 URL 的协议
+        // Phân tích protocol của URL trang web
         $siteUrlScheme = parse_url($siteUrl)['scheme'];
-        // 将站点 URL 中的协议替换为 JSON 格式
+        // Thay protocol trong URL trang web thành định dạng JSON
         $siteUrlJson = str_replace($siteUrlScheme . '://', $siteUrlScheme . ':\\\/\\\/', $siteUrl);
 
-        // 获取当前 URL 的协议
+        // Lấy protocol của URL hiện tại
         $urlScheme = parse_url($url)['scheme'];
-        // 将当前 URL 中的协议替换为 JSON 格式
+        // Thay protocol trong URL hiện tại thành định dạng JSON
         $urlJson = str_replace($urlScheme . '://', $urlScheme . ':\\\/\\\/', $url);
-        // 获取数据库表前缀
+        // Lấy tiền tố bảng cơ sở dữ liệu
         $prefix = Config::get('database.connections.' . Config::get('database.default') . '.prefix');
 
-        // 构建 SQL 语句数组
+        // Xây dựng mảng câu lệnh SQL
         $sql = [
             "UPDATE `{$prefix}agent_level` SET `image` = replace(`image` ,'{$siteUrl}','{$url}')",
             "UPDATE `{$prefix}agreement` SET `content` = replace(content ,'{$siteUrl}','{$url}')",
@@ -130,7 +130,7 @@ class Util extends Command
             "UPDATE `{$prefix}wechat_user` SET `headimgurl` = replace(headimgurl ,'{$siteUrl}','{$url}')",
         ];
 
-        // 执行 SQL 语句
+        // Thực thi câu lệnh SQL
         return $this->transaction(function () use ($sql) {
             try {
                 foreach ($sql as $item) {

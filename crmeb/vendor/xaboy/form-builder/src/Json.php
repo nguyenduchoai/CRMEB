@@ -25,13 +25,13 @@ class Json
         return static::result(400, $msg, $data);
     }
 
-    public static function uploadSucc($filePath, $msg = '上传成功', $data = [])
+    public static function uploadSucc($filePath, $msg = 'Tải lên thành công', $data = [])
     {
         $data['filePath'] = $filePath;
         return static::succ($msg, $data);
     }
 
-    public static function uploadFail($msg = '上传失败', $data = [])
+    public static function uploadFail($msg = 'Tải lên thất bại', $data = [])
     {
         return static::fail($msg, $data);
     }

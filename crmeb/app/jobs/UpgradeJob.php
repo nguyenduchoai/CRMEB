@@ -8,7 +8,7 @@ use crmeb\traits\QueueTrait;
 use think\facade\Log;
 
 /**
- * 升级包
+ * Gói nâng cấp
  * Class UpgradeJob
  * @package app\jobs
  */
@@ -17,7 +17,7 @@ class UpgradeJob extends BaseJobs
     use QueueTrait;
 
     /**
-     * 下载
+     * Tải xuống
      * @param $seq
      * @param $url
      * @param $filePath
@@ -32,13 +32,13 @@ class UpgradeJob extends BaseJobs
             $services = app()->make(UpgradeServices::class);
             $services->download($seq, $url, $filePath, $filename, $timeout);
         } catch (\Exception $e) {
-            Log::error('升级包下载失败,失败原因:' . $e->getMessage());
+            Log::error('Tải xuống gói nâng cấp thất bại, nguyên nhân:' . $e->getMessage());
         }
         return true;
     }
 
     /**
-     * 数据库备份
+     * Sao lưu cơ sở dữ liệu
      * @param $token
      * @return bool
      */
@@ -49,13 +49,13 @@ class UpgradeJob extends BaseJobs
             $services = app()->make(UpgradeServices::class);
             $services->databaseBackup($token);
         } catch (\Exception $e) {
-            Log::error('数据库备份失败,失败原因:' . $e->getMessage());
+            Log::error('Sao lưu cơ sở dữ liệu thất bại, nguyên nhân:' . $e->getMessage());
         }
         return true;
     }
 
     /**
-     * 项目备份
+     * Sao lưu dự án
      * @param $token
      * @return bool
      */
@@ -66,7 +66,7 @@ class UpgradeJob extends BaseJobs
             $services = app()->make(UpgradeServices::class);
             $services->projectBackup($token);
         } catch (\Exception $e) {
-            Log::error('项目备份失败,失败原因:' . $e->getMessage());
+            Log::error('Sao lưu dự án thất bại, nguyên nhân:' . $e->getMessage());
         }
         return true;
     }

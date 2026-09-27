@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -36,7 +36,7 @@ class AgentLevelServices extends BaseServices
     }
 
     /**
-     * 获取某一个等级信息
+     * Lấy thông tin một hạng
      * @param int $id
      * @param string $field
      * @param array $with
@@ -51,7 +51,7 @@ class AgentLevelServices extends BaseServices
     }
 
     /**
-     * 获取等级列表
+     * Lấy danh sách hạng
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -77,13 +77,13 @@ class AgentLevelServices extends BaseServices
     }
 
     /**
-     * 商城获取分销员等级列表
+     * Lấy danh sách hạng cộng tác viên của cửa hàng
      * @param int $uid
      * @return array
      */
     public function getUserlevelList(int $uid)
     {
-        //商城分销是否开启
+        //Cửa hàng có mở tiếp thị liên kết hay không
         if (!sys_config('brokerage_func_status')) {
             return [];
         }
@@ -93,7 +93,7 @@ class AgentLevelServices extends BaseServices
         if (!$user) {
             throw new ApiException(410032);
         }
-        //检测升级
+        //Kiểm tra nâng hạng
         $this->checkUserLevelFinish($uid);
 
         $list = $this->dao->getList(['is_del' => 0, 'status' => 1]);
@@ -101,7 +101,7 @@ class AgentLevelServices extends BaseServices
             $item['image'] = set_file_url($item['image']);
         }
         $agent_level = $user['agent_level'] ?? 0;
-        //没等级默认最低等级
+        //Không có hạng thì mặc định lấy hạng thấp nhất
         if (!$agent_level) {
             $levelInfo = $list[0] ?? [];
             $levelInfo['grade'] = -1;
@@ -123,7 +123,7 @@ class AgentLevelServices extends BaseServices
     }
 
     /**
-     * 获取下一等级
+     * Lấy hạng tiếp theo
      * @param int $level_id
      * @return array|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
@@ -140,7 +140,7 @@ class AgentLevelServices extends BaseServices
     }
 
     /**
-     * 检测用户是否能升级
+     * Kiểm tra người dùng có thể nâng hạng không
      * @param int $uid
      * @param array $uids
      * @return bool
@@ -150,7 +150,7 @@ class AgentLevelServices extends BaseServices
      */
     public function checkUserLevelFinish(int $uid, array $uids = [])
     {
-        //商城分销是否开启
+        //Cửa hàng có mở tiếp thị liên kết hay không
         if (!sys_config('brokerage_func_status')) {
             return false;
         }
@@ -165,7 +165,7 @@ class AgentLevelServices extends BaseServices
             return false;
         }
         if (!$uids) {
-            //获取上级uid ｜｜ 开启自购返回自己uid
+            //Lấy uid cấp trên || nếu mở tự mua thì trả về uid của chính mình
             $spread_uid = $userServices->getSpreadUid($uid, $userInfo);
             $two_spread_uid = 0;
             if ($spread_uid > 0 && $one_user_info = $userServices->getUserInfo($spread_uid)) {
@@ -199,7 +199,7 @@ class AgentLevelServices extends BaseServices
                 $levelTaskRecordServices = app()->make(AgentLevelTaskRecordServices::class);
                 $ids = array_column($task_list, 'id');
                 $finish_task = $levelTaskRecordServices->count(['level_id' => $levelInfo['id'], 'uid' => $uid, 'task_id' => $ids]);
-                //任务完成升这一等级
+                //Hoàn thành nhiệm vụ thì lên hạng này
                 if ($finish_task >= $levelInfo['task_num']) {
                     $userServices->update($uid, ['agent_level' => $levelInfo['id']]);
                 } else {
@@ -212,7 +212,7 @@ class AgentLevelServices extends BaseServices
     }
 
     /**
-     * 分销等级上浮
+     * Nâng hạng phân phối
      * @param $storeBrokerageRatio
      * @param $storeBrokerageTwo
      * @param $spread_one_uid
@@ -247,32 +247,32 @@ class AgentLevelServices extends BaseServices
     }
 
     /**
-     * 添加等级表单
+     * Form thêm hạng
      * @param int $id
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
      */
     public function createForm()
     {
-        $field[] = Form::input('name', '等级名称')->maxlength(8)->col(24);
-        $field[] = Form::number('grade', '等级', 0)->min(0)->precision(0);
-        $field[] = Form::frameImage('image', '背景图', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'image')))->icon('el-icon-picture-outline')->width('950px')->height('560px')->props(['footer' => false]);
-        $field[] = Form::number('one_brokerage_percent', '一级佣金比例', 0)->appendRule('suffix', [
+        $field[] = Form::input('name', 'Tên cấp bậc')->maxlength(8)->col(24);
+        $field[] = Form::number('grade', 'Cấp bậc', 0)->min(0)->precision(0);
+        $field[] = Form::frameImage('image', 'Ảnh nền', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'image')))->icon('el-icon-picture-outline')->width('950px')->height('560px')->props(['footer' => false]);
+        $field[] = Form::number('one_brokerage_percent', 'Tỷ lệ hoa hồng cấp 1', 0)->appendRule('suffix', [
             'type' => 'div',
             'class' => 'tips-info',
-            'domProps' => ['innerHTML' => '到达该等级之后，一级分佣按照此比例计算佣金']
+            'domProps' => ['innerHTML' => 'Sau khi đạt cấp này, hoa hồng cấp 1 sẽ được tính theo tỷ lệ này']
         ])->max(100)->precision(2);
-        $field[] = Form::number('two_brokerage_percent', '二级佣金比例', 0)->appendRule('suffix', [
+        $field[] = Form::number('two_brokerage_percent', 'Tỷ lệ hoa hồng cấp 2', 0)->appendRule('suffix', [
             'type' => 'div',
             'class' => 'tips-info',
-            'domProps' => ['innerHTML' => '到达该等级之后，二级分佣按照此比例计算佣金']
+            'domProps' => ['innerHTML' => 'Sau khi đạt cấp này, hoa hồng cấp 2 sẽ được tính theo tỷ lệ này']
         ])->min(0)->max(100)->precision(2);
-        $field[] = Form::radio('status', '是否显示', 1)->options([['value' => 1, 'label' => '显示'], ['value' => 0, 'label' => '隐藏']]);
-        return create_form('添加分销员等级', $field, Url::buildUrl('/agent/level'), 'POST');
+        $field[] = Form::radio('status', 'Hiển thị', 1)->options([['value' => 1, 'label' => 'Hiện'], ['value' => 0, 'label' => 'Ẩn']]);
+        return create_form('Thêm cấp CTV', $field, Url::buildUrl('/agent/level'), 'POST');
     }
 
     /**
-     * 获取修改等级表单
+     * Lấy form sửa hạng
      * @param int $id
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -284,26 +284,26 @@ class AgentLevelServices extends BaseServices
             throw new AdminException(100026);
         $field = [];
         $field[] = Form::hidden('id', $id);
-        $field[] = Form::input('name', '等级名称', $levelInfo['name'])->maxlength(8)->col(24);
-        $field[] = Form::number('grade', '等级', $levelInfo['grade'])->min(0)->precision(0);
-        $field[] = Form::frameImage('image', '背景图', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'image')), $levelInfo['image'])->icon('el-icon-picture-outline')->width('950px')->height('560px')->props(['footer' => false]);
-        $field[] = Form::number('one_brokerage_percent', '一级佣金比例', $levelInfo['one_brokerage_percent'])->appendRule('suffix', [
+        $field[] = Form::input('name', 'Tên cấp bậc', $levelInfo['name'])->maxlength(8)->col(24);
+        $field[] = Form::number('grade', 'Cấp bậc', $levelInfo['grade'])->min(0)->precision(0);
+        $field[] = Form::frameImage('image', 'Ảnh nền', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'image')), $levelInfo['image'])->icon('el-icon-picture-outline')->width('950px')->height('560px')->props(['footer' => false]);
+        $field[] = Form::number('one_brokerage_percent', 'Tỷ lệ hoa hồng cấp 1', $levelInfo['one_brokerage_percent'])->appendRule('suffix', [
             'type' => 'div',
             'class' => 'tips-info',
-            'domProps' => ['innerHTML' => '到达该等级之后，一级分佣按照此比例计算佣金']
+            'domProps' => ['innerHTML' => 'Sau khi đạt cấp này, hoa hồng cấp 1 sẽ được tính theo tỷ lệ này']
         ])->max(100)->precision(2);
-        $field[] = Form::number('two_brokerage_percent', '二级佣金比例', $levelInfo['two_brokerage_percent'])->appendRule('suffix', [
+        $field[] = Form::number('two_brokerage_percent', 'Tỷ lệ hoa hồng cấp 2', $levelInfo['two_brokerage_percent'])->appendRule('suffix', [
             'type' => 'div',
             'class' => 'tips-info',
-            'domProps' => ['innerHTML' => '到达该等级之后，二级分佣按照此比例计算佣金']
+            'domProps' => ['innerHTML' => 'Sau khi đạt cấp này, hoa hồng cấp 2 sẽ được tính theo tỷ lệ này']
         ])->min(0)->max(100)->precision(2);
-        $field[] = Form::radio('status', '是否显示', $levelInfo['status'])->options([['value' => 1, 'label' => '显示'], ['value' => 0, 'label' => '隐藏']]);
+        $field[] = Form::radio('status', 'Hiển thị', $levelInfo['status'])->options([['value' => 1, 'label' => 'Hiện'], ['value' => 0, 'label' => 'Ẩn']]);
 
-        return create_form('编辑分销员等级', $field, Url::buildUrl('/agent/level/' . $id), 'PUT');
+        return create_form('Sửa cấp CTV', $field, Url::buildUrl('/agent/level/' . $id), 'PUT');
     }
 
     /**
-     * 赠送分销等级表单
+     * Form tặng hạng phân phối
      * @param int $uid
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -328,12 +328,12 @@ class AgentLevelServices extends BaseServices
             return $menus;
         };
         $field[] = Form::hidden('uid', $uid);
-        $field[] = Form::select('id', '分销等级', $userInfo['agent_level'] != 0 ? $userInfo['agent_level'] : '')->setOptions(Form::setOptions($setOptionLabel))->filterable(true);
-        return create_form('修改分销等级', $field, Url::buildUrl('/agent/give_level'), 'post');
+        $field[] = Form::select('id', 'Cấp độ CTV', $userInfo['agent_level'] != 0 ? $userInfo['agent_level'] : '')->setOptions(Form::setOptions($setOptionLabel))->filterable(true);
+        return create_form('Sửa cấp độ CTV', $field, Url::buildUrl('/agent/give_level'), 'post');
     }
 
     /**
-     * 赠送分销等级
+     * Tặng cấp độ CTV
      * @param int $uid
      * @param int $id
      * @return bool
@@ -360,45 +360,45 @@ class AgentLevelServices extends BaseServices
     }
 
     /**
-     * 获取指定分销等级的任务数量表单
-     * @param int $id 分销等级ID
+     * Lấy form số lượng nhiệm vụ của hạng phân phối chỉ định
+     * @param int $id ID hạng phân phối
      * @return array|string
      */
     public function getTaskNumForm($id)
     {
-        // 获取指定分销等级的信息
+        // Lấy thông tin của hạng phân phối chỉ định
         $levelInfo = $this->getLevelInfo($id);
-        // 构建任务数量输入框
-        $field[] = Form::input('task_num', '完成任务数量', $levelInfo['task_num'])->maxlength(8)->col(24)->info('默认全部完成升级，可设置升级任务数量');
-        // 创建表单并返回HTML字符串
-        return create_form('设置完成任务数量', $field, Url::buildUrl('/agent/set_task_num/' . $id), 'post');
+        // Tạo ô nhập số lượng nhiệm vụ
+        $field[] = Form::input('task_num', 'Số nhiệm vụ cần hoàn thành', $levelInfo['task_num'])->maxlength(8)->col(24)->info('Mặc định phải hoàn thành tất cả nhiệm vụ để lên cấp, có thể thiết lập số nhiệm vụ cần hoàn thành để lên cấp');
+        // Tạo form và trả về chuỗi HTML
+        return create_form('Đặt số lượng nhiệm vụ hoàn thành', $field, Url::buildUrl('/agent/set_task_num/' . $id), 'post');
     }
 
     /**
-     * 设置指定分销等级的任务数量
-     * @param int $id 分销等级ID
-     * @param array $data 包含任务数量的数组
-     * @return bool 返回true表示设置成功
-     * @throws AdminException 如果分销等级不存在或任务数量为空或任务数量大于已有任务数量，则抛出异常
+     * Đặt số lượng nhiệm vụ cho hạng phân phối chỉ định
+     * @param int $id ID hạng phân phối
+     * @param array $data Mảng chứa số lượng nhiệm vụ
+     * @return bool Trả về true nghĩa là đặt thành công
+     * @throws AdminException Nếu hạng phân phối không tồn tại, hoặc số lượng nhiệm vụ trống, hoặc số lượng nhiệm vụ lớn hơn số lượng nhiệm vụ hiện có thì báo lỗi ngoại lệ
      */
     public function setTaskNum($id, $data)
     {
-        // 判断分销等级是否存在
-        if (!$id) throw new AdminException('分销等级不存在');
-        // 判断任务数量是否为空
-        if (!$data['task_num']) throw new AdminException('请输入任务数量');
-        // 获取当前分销等级已有的任务数量
+        // Kiểm tra hạng phân phối có tồn tại không
+        if (!$id) throw new AdminException('Cấp độ CTV không tồn tại');
+        // Kiểm tra số lượng nhiệm vụ có trống không
+        if (!$data['task_num']) throw new AdminException('Vui lòng nhập số lượng nhiệm vụ');
+        // Lấy số lượng nhiệm vụ hiện có của hạng phân phối hiện tại
         $count = app()->make(AgentLevelTaskServices::class)->count(['level_id' => $id, 'is_del' => 0, 'status' => 1]);
-        // 判断任务数量是否大于已有任务数量
-        if ($data['task_num'] > $count) throw new AdminException('任务数量不能大于已有任务数量');
-        // 更新分销等级的任务数量
+        // Kiểm tra số lượng nhiệm vụ có lớn hơn số lượng nhiệm vụ hiện có không
+        if ($data['task_num'] > $count) throw new AdminException('Số lượng nhiệm vụ không được lớn hơn số nhiệm vụ hiện có');
+        // Cập nhật số lượng nhiệm vụ của hạng phân phối
         $this->dao->update($id, ['task_num' => $data['task_num']]);
-        // 返回true表示设置成功
+        // Trả về true nghĩa là đặt thành công
         return true;
     }
 
     /**
-     * 获取分销等级数组
+     * Lấy mảng hạng phân phối
      * @return array
      * @author wuhaotian
      * @email 442384644@qq.com

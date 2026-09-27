@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,13 +21,13 @@ use think\facade\Config;
 abstract class BaseUpload extends BaseStorage
 {
     /**
-     * 缩略图
+     * Ảnh thu nhỏ
      * @var string[]
      */
     protected $thumb = ['big', 'mid', 'small'];
 
     /**
-     * 缩略图配置
+     * Cấu hình ảnh thu nhỏ
      * @var array
      */
     protected $thumbConfig = [
@@ -40,7 +40,7 @@ abstract class BaseUpload extends BaseStorage
         'thumb_small_width' => 100,
     ];
     /**
-     * 水印配置
+     * Cấu hình watermark
      * @var array
      */
     protected $waterConfig = [
@@ -59,35 +59,35 @@ abstract class BaseUpload extends BaseStorage
         'watermark_y' => 0
     ];
     /**
-     * 图片信息
+     * Thông tin ảnh
      * @var array
      */
     protected $fileInfo;
     /**
-     * 下载图片信息
+     * Tải xuống thông tin ảnh
      */
     protected $downFileInfo;
 
     /**
-     * 要生成缩略图、水印的图片地址
+     * Địa chỉ ảnh cần tạo ảnh thu nhỏ, watermark
      * @var string
      */
     protected $filePath;
 
     /**
-     * 验证配置
+     * Xác thực cấu hình
      * @var string
      */
     protected $validate;
 
     /**
-     * 保存路径
+     * Đường dẫn lưu
      * @var string
      */
     protected $path = '';
 
     /**
-     * 是否自动裁剪
+     * Có tự động cắt (crop) không
      * @var bool
      */
     protected $authThumb = false;
@@ -103,7 +103,7 @@ abstract class BaseUpload extends BaseStorage
     }
 
     /**
-     * 设置处理缩略图、水印图片路径
+     * Đặt đường dẫn xử lý ảnh thu nhỏ, watermark
      * @param string $filePath
      * @return $this
      */
@@ -114,7 +114,7 @@ abstract class BaseUpload extends BaseStorage
     }
 
     /**
-     * 是否自动裁剪
+     * Có tự động cắt (crop) không
      * @param bool $auth
      * @return $this
      */
@@ -125,7 +125,7 @@ abstract class BaseUpload extends BaseStorage
     }
 
     /**
-     * 上传文件路径
+     * Đường dẫn file tải lên
      * @param string $path
      * @return $this
      */
@@ -136,7 +136,7 @@ abstract class BaseUpload extends BaseStorage
     }
 
     /**
-     * 获取文件信息
+     * Lấy thông tin file
      * @return array
      */
     public function getFileInfo()
@@ -145,15 +145,15 @@ abstract class BaseUpload extends BaseStorage
     }
 
     /**
-     * 检测是否是图片
+     * Kiểm tra có phải ảnh không
      * @param $filePath
      * @return bool
      */
     protected function checkImage($filePath)
     {
-        //获取图像信息
+        //Lấy thông tin hình ảnh
         $info = @getimagesize($filePath);
-        //检测图像合法性
+        //Kiểm tra tính hợp lệ của hình ảnh
         if (false === $info || (IMAGETYPE_GIF === $info[2] && empty($info['bits']))) {
             return false;
         }
@@ -161,7 +161,7 @@ abstract class BaseUpload extends BaseStorage
     }
 
     /**
-     * 验证合法上传域名
+     * Xác thực domain tải lên hợp lệ
      * @param string $url
      * @return string
      */
@@ -174,7 +174,7 @@ abstract class BaseUpload extends BaseStorage
     }
 
     /**
-     * 获取系统配置
+     * Lấy cấu hình hệ thống
      * @return mixed
      */
     protected function getConfig()
@@ -186,7 +186,7 @@ abstract class BaseUpload extends BaseStorage
     }
 
     /**
-     * 设置验证规则
+     * Đặt quy tắc xác thực
      * @param array|null $validate
      * @return $this
      */
@@ -200,7 +200,7 @@ abstract class BaseUpload extends BaseStorage
     }
 
     /**
-     * 验证目录是否正确
+     * Xác thực thư mục có đúng không
      * @param string $key
      * @return false|string
      */
@@ -214,7 +214,7 @@ abstract class BaseUpload extends BaseStorage
     }
 
     /**
-     * 提取文件名
+     * Trích xuất tên file
      * @param string $path
      * @param string $ext
      * @return string
@@ -225,7 +225,7 @@ abstract class BaseUpload extends BaseStorage
     }
 
     /**
-     * 提取文件后缀以及之前部分
+     * Trích xuất phần mở rộng file và phần trước đó
      * @param string $path
      * @return false|string[]
      */
@@ -245,7 +245,7 @@ abstract class BaseUpload extends BaseStorage
     }
 
     /**
-     * 获取图片地址
+     * Lấy địa chỉ ảnh
      * @param string $filePath
      * @param bool $is_parse_url
      * @return string
@@ -255,7 +255,7 @@ abstract class BaseUpload extends BaseStorage
         $path = $filePath ?: $this->filePath;
         if ($is_parse_url) {
             $data = parse_url($path);
-            //远程地址处理
+            //Xử lý địa chỉ từ xa
             if (isset($data['host']) && isset($data['path'])) {
                 if (file_exists(app()->getRootPath() . 'public' . $data['path'])) {
                     $path = $data['path'];
@@ -266,7 +266,7 @@ abstract class BaseUpload extends BaseStorage
     }
 
     /**
-     * 获取文件类型和大小
+     * Lấy loại và kích thước file
      * @param string $url
      * @param bool $isData
      * @return array
@@ -299,7 +299,7 @@ abstract class BaseUpload extends BaseStorage
     }
 
     /**
-     * 获取上传信息
+     * Lấy thông tin tải lên
      * @return array
      */
     public function getUploadInfo()
@@ -330,7 +330,7 @@ abstract class BaseUpload extends BaseStorage
     }
 
     /**
-     * 获取下载信息
+     * Lấy thông tin tải xuống
      * @return array
      */
     public function getDownloadInfo()
@@ -357,7 +357,7 @@ abstract class BaseUpload extends BaseStorage
     }
 
     /**
-     * 检测文件内容
+     * Kiểm tra nội dung file
      * @param $fileHandle
      * @return bool|void
      * @author wuhaotian
@@ -372,36 +372,36 @@ abstract class BaseUpload extends BaseStorage
             fclose($stream);
         }
         if (preg_match('/think|app|php|log|phar|Socket|Channel|Flysystem|Psr6Cache|Cached|Request|debug|Psr6Cachepool|eval/i', $content)) {
-            return $this->setError('文件内容不合法');
+            return $this->setError('Nội dung tệp không hợp lệ');
         }
     }
 
     /**
-     * 文件上传
+     * Tải tệp lên
      * @return mixed
      */
     abstract public function move(string $file = 'file');
 
     /**
-     * 文件流上传
+     * Tải lên bằng file stream
      * @return mixed
      */
     abstract public function stream($fileContent, string $key = null);
 
     /**
-     * 删除文件
+     * Xóa file
      * @return mixed
      */
     abstract public function delete(string $filePath);
 
     /**
-     * 实例化上传
+     * Khởi tạo (instance) upload
      * @return mixed
      */
     abstract protected function app();
 
     /**
-     * 拉取空间
+     * Lấy space
      * @param string $region
      * @param bool $line
      * @param bool $shared
@@ -410,7 +410,7 @@ abstract class BaseUpload extends BaseStorage
     abstract public function listbuckets(string $region, bool $line = false, bool $shared = false);
 
     /**
-     * 创建空间
+     * Tạo space
      * @param string $name
      * @param string $region
      * @return mixed
@@ -418,20 +418,20 @@ abstract class BaseUpload extends BaseStorage
     abstract public function createBucket(string $name, string $region);
 
     /**
-     * 获得区域
+     * Lấy region
      * @return mixed
      */
     abstract public function getRegion();
 
     /**
-     * 删除空间
+     * Xóa không gian lưu trữ (bucket)
      * @param string $name
      * @return mixed
      */
     abstract public function deleteBucket(string $name);
 
     /**
-     * 绑定自定义域名
+     * Gắn domain tùy chỉnh
      * @param string $name
      * @param string $domain
      * @param string|null $region
@@ -440,7 +440,7 @@ abstract class BaseUpload extends BaseStorage
     abstract public function bindDomian(string $name, string $domain, string $region = null);
 
     /**
-     * 设置跨域
+     * Đặt CORS
      * @param string $name
      * @param string $region
      * @return mixed
@@ -448,19 +448,19 @@ abstract class BaseUpload extends BaseStorage
     abstract public function setBucketCors(string $name, string $region);
 
     /**
-     * 获取上传密钥
+     * Lấy key tải lên
      * @return mixed
      */
     abstract public function getTempKeys();
 
     /**
-     * 获取缩略图
+     * Lấy ảnh thu nhỏ
      * @return mixed
      */
     abstract public function thumb(string $filePath = '');
 
     /**
-     * 添加水印
+     * Thêm watermark
      * @return mixed
      */
     abstract public function water(string $filePath = '');

@@ -10,19 +10,19 @@ class LangType extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'lang_type';
 
     /**
-     * is_del搜索器
+     * Bộ lọc is_del
      * @param $query
      * @param $value
      */
@@ -32,7 +32,7 @@ class LangType extends BaseModel
     }
 
     /**
-     * status搜索器
+     * Bộ lọc status
      * @param $query
      * @param $value
      */

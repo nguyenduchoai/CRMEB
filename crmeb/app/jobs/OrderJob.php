@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -35,7 +35,7 @@ use think\exception\ValidateException;
 use think\facade\Log;
 
 /**
- * 订单消息队列
+ * Hàng đợi tin nhắn đơn hàng
  * Class OrderJob
  * @package crmeb\jobs
  */
@@ -44,42 +44,42 @@ class OrderJob extends BaseJobs
     use QueueTrait;
 
     /**
-     * 执行订单支付成功发送消息
+     * Thực hiện gửi tin nhắn khi đơn hàng thanh toán thành công
      * @param $order
      * @return bool
      */
     public function doJob($order)
     {
-        //计算商品节省金额
+        //Tính số tiền tiết kiệm được của sản phẩm
         try {
             $this->setEconomizeMoney($order);
         } catch (\Throwable $e) {
-            Log::error('计算节省金额,失败原因:' . $e->getMessage());
+            Log::error('Tính số tiền tiết kiệm thất bại, nguyên nhân:' . $e->getMessage());
         }
-        //更新用户支付订单数量
+        //Cập nhật số đơn hàng đã thanh toán của người dùng
         try {
             $this->setUserPayCountAndPromoter($order);
         } catch (\Throwable $e) {
-            Log::error('更新用户订单数失败,失败原因:' . $e->getMessage());
+            Log::error('Cập nhật số đơn hàng của người dùng thất bại, nguyên nhân:' . $e->getMessage());
         }
-        //增加用户标签
+        //Thêm nhãn người dùng
         try {
             $this->setUserLabel($order);
         } catch (\Throwable $e) {
-            Log::error('用户标签添加失败,失败原因:' . $e->getMessage());
+            Log::error('Thêm nhãn người dùng thất bại, nguyên nhân:' . $e->getMessage());
         }
         try {
-            if (in_array($order['is_channel'], [0, 2])) {//公众号发送模板消息
+            if (in_array($order['is_channel'], [0, 2])) {//OA WeChat gửi tin nhắn mẫu
                 $this->sendOrderPaySuccessCustomerService($order, 1);
-            } else if (in_array($order['is_channel'], [1, 2])) {//小程序发送模板消息
+            } else if (in_array($order['is_channel'], [1, 2])) {//Mini Program gửi tin nhắn mẫu
                 $this->sendOrderPaySuccessCustomerService($order, 0);
             }
         } catch (\Exception $e) {
-            throw new ValidateException('发送客服消息,短信消息失败,失败原因:' . $e->getMessage());
+            throw new ValidateException('Gửi tin nhắn CSKH, tin nhắn SMS thất bại, nguyên nhân:' . $e->getMessage());
         }
 
 
-        //打印小票
+        //In hóa đơn
 //        $switch = sys_config('pay_success_printing_switch') ? true : false;
 //        if ($switch) {
 //            try {
@@ -87,29 +87,29 @@ class OrderJob extends BaseJobs
 //                $orderServices = app()->make(StoreOrderServices::class);
 //                $orderServices->orderPrint($order, $order['cart_id']);
 //            } catch (\Throwable $e) {
-//                Log::error('打印小票发生错误,错误原因:' . $e->getMessage());
+//                Log::error('In hóa đơn xảy ra lỗi, nguyên nhân lỗi:' . $e->getMessage());
 //            }
 //        }
 
-        //检测会员等级
+        //Kiểm tra hạng thành viên
         try {
             /** @var UserLevelServices $levelServices */
             $levelServices = app()->make(UserLevelServices::class);
             $levelServices->detection((int)$order['uid']);
         } catch (\Throwable $e) {
-            Log::error('会员等级升级失败,失败原因:' . $e->getMessage());
+            Log::error('Nâng hạng thành viên thất bại, nguyên nhân:' . $e->getMessage());
         }
-        //向后台发送新订单消息
+        //Gửi tin nhắn đơn hàng mới đến trang quản trị
         try {
             ChannelService::instance()->send('NEW_ORDER', ['order_id' => $order['order_id']]);
         } catch (\Throwable $e) {
-            Log::error('向后台发送新订单消息失败,失败原因:' . $e->getMessage());
+            Log::error('Gửi thông báo đơn hàng mới đến trang quản trị thất bại, nguyên nhân:' . $e->getMessage());
         }
         return true;
     }
 
     /**
-     * 设置用户购买次数和检测时候成为推广人
+     * Thiết lập số lần mua của người dùng và kiểm tra thời điểm trở thành người giới thiệu
      * @param $order
      */
     public function setUserPayCountAndPromoter($order)
@@ -133,7 +133,7 @@ class OrderJob extends BaseJobs
     }
 
     /**
-     * 设置用户购买的标签
+     * Thiết lập nhãn theo lượt mua của người dùng
      * @param $order
      */
     public function setUserLabel($order)
@@ -167,9 +167,9 @@ class OrderJob extends BaseJobs
 
 
     /**
-     * 订单支付成功后给客服发送客服消息
+     * Gửi tin nhắn cho CSKH sau khi đơn hàng thanh toán thành công
      * @param $order
-     * @param int $type 1 公众号 0 小程序
+     * @param int $type 1 OA WeChat 0 Mini Program
      * @return string
      */
     public function sendOrderPaySuccessCustomerService($order, $type = 0)
@@ -196,20 +196,20 @@ class OrderJob extends BaseJobs
                     $userInfo = $userInfo->toArray();
                     if ($userInfo['subscribe'] && $userInfo['openid']) {
                         if ($item['customer']) {
-                            // 统计管理开启  推送图文消息
-                            $head = '订单提醒 订单号：' . $order['order_id'];
+                            // Thống kê quản lý mở  đẩy tin nhắn hình ảnh và văn bản
+                            $head = 'Thông báo đơn hàng - Mã đơn hàng:' . $order['order_id'];
                             $url = sys_config('site_url') . '/pages/admin/orderDetail/index?id=' . $order['order_id'];
                             $description = '';
                             $image = sys_config('site_logo');
                             if (isset($order['seckill_id']) && $order['seckill_id'] > 0) {
-                                $description .= '秒杀商品：' . $seckillServices->value(['id' => $order['seckill_id']], 'title');
+                                $description .= 'Sản phẩm flash sale:' . $seckillServices->value(['id' => $order['seckill_id']], 'title');
                                 $image = $seckillServices->value(['id' => $order['seckill_id']], 'image');
                             } else if (isset($order['combination_id']) && $order['combination_id'] > 0) {
-                                $description .= '拼团商品：' . $pinkServices->value(['id' => $order['combination_id']], 'title');
+                                $description .= 'Sản phẩm mua chung:' . $pinkServices->value(['id' => $order['combination_id']], 'title');
                                 $image = $pinkServices->value(['id' => $order['combination_id']], 'image');
                             } else if (isset($order['bargain_id']) && $order['bargain_id'] > 0) {
                                 $title = $bargainServices->value(['id' => $order['bargain_id']], 'title');
-                                $description .= '砍价商品：' . $title;
+                                $description .= 'Sản phẩm săn giảm giá:' . $title;
                                 $image = $bargainServices->value(['id' => $order['bargain_id']], 'image');
                             } else {
                                 $productIds = $cartInfoServices->getCartIdsProduct($order['id']);
@@ -225,16 +225,16 @@ class OrderJob extends BaseJobs
                             try {
                                 WechatService::staffService()->message($message)->to($userInfo['openid'])->send();
                             } catch (\Exception $e) {
-                                Log::error($userInfo['nickname'] . '发送失败' . $e->getMessage());
+                                Log::error($userInfo['nickname'] . 'Gửi thất bại' . $e->getMessage());
                             }
                         } else {
-                            // 推送文字消息
-                            $head = "客服提醒：亲,您有一个新订单 \r\n订单单号:{$order['order_id']}\r\n支付金额：￥{$order['pay_price']}\r\n备注信息：{$order['mark']}\r\n订单来源：小程序";
-                            if ($type) $head = "客服提醒：亲,您有一个新订单 \r\n订单单号:{$order['order_id']}\r\n支付金额：￥{$order['pay_price']}\r\n备注信息：{$order['mark']}\r\n订单来源：公众号";
+                            // Đẩy tin nhắn văn bản
+                            $head = "Nhắc nhở CSKH: Bạn có một đơn hàng mới \r\nMã đơn hàng: {$order['order_id']}\r\nSố tiền thanh toán: ₫{$order['pay_price']}\r\nGhi chú: {$order['mark']}\r\nNguồn đơn hàng: Mini Program";
+                            if ($type) $head = "Nhắc nhở CSKH: Bạn có một đơn hàng mới \r\nMã đơn hàng: {$order['order_id']}\r\nSố tiền thanh toán: ₫{$order['pay_price']}\r\nGhi chú: {$order['mark']}\r\nNguồn đơn hàng: OA WeChat";
                             try {
                                 WechatService::staffService()->message($head)->to($userInfo['openid'])->send();
                             } catch (\Exception $e) {
-                                Log::error($userInfo['nickname'] . '发送失败' . $e->getMessage());
+                                Log::error($userInfo['nickname'] . 'Gửi thất bại' . $e->getMessage());
                             }
                         }
                     }
@@ -245,7 +245,7 @@ class OrderJob extends BaseJobs
     }
 
     /**
-     * 计算节约金额
+     * Tính số tiền tiết kiệm
      * @param $order
      * @return false|mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -266,7 +266,7 @@ class OrderJob extends BaseJobs
         $memberCardService = app()->make(MemberCardServices::class);
         $getOne = $economizeService->getOne(['order_id' => $order['order_id']]);
         if ($getOne) return false;
-        //看是否是会员
+        //Kiểm tra có phải là thành viên hay không
         $userInfo = $userService->getUserInfo($order['uid']);
         if ($userInfo && $userInfo['is_money_level'] > 0) {
             $save = [];
@@ -275,7 +275,7 @@ class OrderJob extends BaseJobs
             $save['pay_price'] = $order['pay_price'];
             $save['order_id'] = $order['order_id'];
             $save['uid'] = $order['uid'];
-            //计算商品节约金额
+            //Tính số tiền tiết kiệm của sản phẩm
             $isOpenVipPrice = $memberCardService->isOpenMemberCard('vip_price');
             if ($isOpenVipPrice) {
                 $cartInfo = $cartInfoService->getOrderCartInfo($order['id']);
@@ -289,14 +289,14 @@ class OrderJob extends BaseJobs
                 }
                 $save['member_price'] = $memberPrice;
             }
-            //计算邮费节约金额
+            //Tính số tiền tiết kiệm phí vận chuyển
             $isOpenExpress = $memberCardService->isOpenMemberCard('express');
             if ($isOpenExpress) {
                 $expressTotalMoney = bcdiv($order['total_postage'], bcdiv($isOpenExpress, 100, 2), 2);
                 $save['postage_price'] = bcsub($expressTotalMoney, $order['total_postage'], 2);
             }
 
-            //计算会员券节省金额
+            //Tính số tiền tiết kiệm từ phiếu giảm giá thành viên
             if ($order['coupon_id']) {
                 $couponMoney = $couponService->get($order['coupon_id'], ['*'], ['issue']);
                 if ($couponMoney && $couponMoney['receive_type']) {

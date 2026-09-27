@@ -6,14 +6,14 @@
       </el-col>
       <el-col :span="configData.type == 'ranges' ? 24 : configData.type == 'form' ? 19 : 18" class="slider-box">
         <el-input v-model="configData.value" :placeholder="configData.place" :maxlength="configData.max">
-          <i v-if="configData.title == '链接'" class="el-icon-link" slot="suffix" @click="getLink(configData)" />
+          <i v-if="configData.title == 'Liên kết'" class="el-icon-link" slot="suffix" @click="getLink(configData)" />
         </el-input>
       </el-col>
     </div>
     <linkaddress
       ref="linkaddres"
       @linkUrl="linkUrl"
-      v-if="configData.type != 'form' && (configData.title == '链接' || configData.type == 'link')"
+      v-if="configData.type != 'form' && (configData.title == 'Liên kết' || configData.type == 'link')"
     ></linkaddress>
   </div>
 </template>
@@ -59,7 +59,7 @@ export default {
       this.configData.value = e;
     },
     getLink(configData) {
-      if (configData.title != '链接' && configData.type != 'link') {
+      if (configData.title != 'Liên kết' && configData.type != 'link') {
         return;
       }
       this.$refs.linkaddres.modals = true;

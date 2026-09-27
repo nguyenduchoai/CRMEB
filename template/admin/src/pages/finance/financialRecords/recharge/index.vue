@@ -10,7 +10,7 @@
           inline
           @submit.native.prevent
         >
-          <el-form-item label="时间选择：">
+          <el-form-item label="Chọn thời gian:">
             <el-date-picker
               clearable
               v-model="timeVal"
@@ -19,104 +19,104 @@
               @change="onchangeTime"
               format="yyyy/MM/dd"
               value-format="yyyy/MM/dd"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              start-placeholder="Ngày bắt đầu"
+              end-placeholder="Ngày kết thúc"
               :picker-options="pickerOptions"
               style="width: 250px"
               class="mr20"
             ></el-date-picker>
           </el-form-item>
-          <el-form-item label="支付类型：">
+          <el-form-item label="Loại thanh toán:">
             <el-select
               clearable
               v-model="formValidate.paid"
-              placeholder="请选择"
+              placeholder="Vui lòng chọn"
               @change="selChange"
               class="form_content_width"
             >
-              <el-option value="" label="全部"></el-option>
-              <el-option value="1" label="已支付"></el-option>
-              <el-option value="0" label="未支付"></el-option>
+              <el-option value="" label="Tất cả"></el-option>
+              <el-option value="1" label="Đã thanh toán"></el-option>
+              <el-option value="0" label="Chưa thanh toán"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="搜索：">
+          <el-form-item label="Tìm kiếm:">
             <el-input
               clearable
-              placeholder="请输入用户昵称、订单号"
+              placeholder="Vui lòng nhập biệt danh người dùng, mã đơn hàng"
               v-model="formValidate.nickname"
               class="form_content_width"
             />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="selChange">查询</el-button>
+            <el-button type="primary" v-db-click @click="selChange">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
     <cards-data :cardLists="cardLists" v-if="cardLists.length >= 0"></cards-data>
     <el-card :bordered="false" shadow="never">
-      <el-button v-auth="['export-userRecharge']" class="mr" v-db-click @click="exports">导出</el-button>
-      <el-table ref="table" :data="tabList" class="mt14" v-loading="loading" empty-text="暂无数据"
+      <el-button v-auth="['export-userRecharge']" class="mr" v-db-click @click="exports">Xuất</el-button>
+      <el-table ref="table" :data="tabList" class="mt14" v-loading="loading" empty-text="Chưa có dữ liệu"
         ><el-table-column label="ID" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="头像" min-width="90">
+        <el-table-column label="Ảnh đại diện" min-width="90">
           <template slot-scope="scope">
             <div class="tabBox_img" v-viewer>
               <img v-lazy="scope.row.avatar ? scope.row.avatar : require('../../../../assets/images/moren.jpg')" />
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="用户昵称" min-width="130">
+        <el-table-column label="Biệt danh người dùng" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.nickname }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="订单号" min-width="130">
+        <el-table-column label="Mã đơn hàng" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.order_id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="支付金额" min-width="130">
+        <el-table-column label="Số tiền thanh toán" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.price }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="是否支付" min-width="130">
+        <el-table-column label="Đã thanh toán" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.paid_type }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="充值类型" min-width="130">
+        <el-table-column label="Loại nạp tiền" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row._recharge_type }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="支付时间" min-width="130">
+        <el-table-column label="Thời gian thanh toán" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row._pay_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="100">
+        <el-table-column label="Thao tác" width="100">
           <template slot-scope="scope">
             <a
               href="javascript:void(0);"
               v-if="scope.row.refund_price <= 0 && scope.row.paid && scope.row.recharge_type != 'system'"
               v-db-click
               @click="refund(scope.row)"
-              >退款</a
+              >Hoàn tiền</a
             >
             <!--                    <el-divider direction="vertical"  v-if="scope.row.paid"/>-->
             <a
               href="javascript:void(0);"
               v-if="scope.row.paid === 0"
               v-db-click
-              @click="del(scope.row, '此条充值记录', scope.$index)"
-              >删除</a
+              @click="del(scope.row, 'xóa bản ghi nạp tiền này', scope.$index)"
+              >Xóa</a
             >
-            <span class="refund" v-if="scope.row.refund_price > 0">已退款</span>
+            <span class="refund" v-if="scope.row.refund_price > 0">Đã hoàn tiền</span>
           </template>
         </el-table-column>
       </el-table>
@@ -130,7 +130,7 @@
         />
       </div>
     </el-card>
-    <!-- 退款表单-->
+    <!-- Form hoàn tiền-->
     <edit-from ref="edits" :FromData="FromData" @submitFail="submitFail"></edit-from>
   </div>
 </template>
@@ -181,7 +181,7 @@ export default {
     this.getUserRecharge();
   },
   methods: {
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -200,7 +200,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 退款
+    // Hoàn tiền
     refund(row) {
       refundEditApi(row.id)
         .then(async (res) => {
@@ -214,12 +214,12 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 编辑提交成功
+    // Sửa gửi thành công
     submitFail() {
       this.getList();
       this.getUserRecharge();
     },
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e;
       this.formValidate.data = this.timeVal ? this.timeVal.join('-') : '';
@@ -227,7 +227,7 @@ export default {
       this.getList();
       this.getUserRecharge();
     },
-    // 选择时间
+    // Chọn giờ
     selectChange(tab) {
       this.formValidate.data = tab;
       this.timeVal = [];
@@ -235,13 +235,13 @@ export default {
       this.getList();
       this.getUserRecharge();
     },
-    // 选择
+    // Chọn
     selChange(x) {
       this.formValidate.page = 1;
       this.getList();
       this.getUserRecharge();
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       rechargelistApi(this.formValidate)
@@ -256,7 +256,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 小方块
+    // Ô vuông nhỏ
     getUserRecharge() {
       userRechargeApi({
         data: this.formValidate.data,
@@ -271,7 +271,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 导出
+    // Xuất
     exports() {
       let formValidate = this.formValidate;
       let data = {

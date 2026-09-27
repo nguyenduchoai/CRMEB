@@ -1,7 +1,7 @@
 FROM phpdockerio/php:7.4-fpm AS crmeb_php
 WORKDIR "/var/www"
 
-# 扩展依赖
+# Phụ thuộc mở rộng
 RUN apt-get update; \
     apt-get -y --no-install-recommends install \
         php7.4-bcmath \ 

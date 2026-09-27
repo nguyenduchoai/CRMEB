@@ -1,16 +1,16 @@
 <template>
   <div style="width: 100%">
-    <el-dialog :visible.sync="modals" title="用户详情" :close-on-click-modal="false" width="720px">
+    <el-dialog :visible.sync="modals" title="Chi tiết người dùng" :close-on-click-modal="false" width="720px">
       <div class="" v-loading="spinShow">
         <div class="dashboard-workplace-header-tip">
           <div class="dashboard-workplace-header-tip-desc">
-            <span class="dashboard-workplace-header-tip-desc-sp">姓名：{{ detailsData.nickname }}</span>
+            <span class="dashboard-workplace-header-tip-desc-sp">Họ tên: {{ detailsData.nickname }}</span>
             <span class="dashboard-workplace-header-tip-desc-sp"
-              >上级推广人：{{ detailsData.spread_name ? detailsData.spread_name : '无' }}</span
+              >Người giới thiệu: {{ detailsData.spread_name ? detailsData.spread_name : 'Không có' }}</span
             >
-            <span class="dashboard-workplace-header-tip-desc-sp">佣金总收入：{{ detailsData.number }}</span>
-            <span class="dashboard-workplace-header-tip-desc-sp">用户余额：{{ detailsData.now_money }}</span>
-            <span class="dashboard-workplace-header-tip-desc-sp">创建时间：{{ detailsData.add_time }}</span>
+            <span class="dashboard-workplace-header-tip-desc-sp">Tổng thu nhập hoa hồng: {{ detailsData.number }}</span>
+            <span class="dashboard-workplace-header-tip-desc-sp">Số dư người dùng: {{ detailsData.now_money }}</span>
+            <span class="dashboard-workplace-header-tip-desc-sp">Thời gian tạo: {{ detailsData.add_time }}</span>
           </div>
         </div>
       </div>
@@ -24,13 +24,13 @@
       >
         <el-row :gutter="24">
           <!--                    <el-col :span="8">-->
-          <!--                        <el-form-item label="订单号/昵称：">-->
-          <!--                            <el-input enter-button placeholder="请输入" element-id="name" v-model="formValidate.nickname"-->
+          <!--                        <el-form-item label="Mã đơn hàng/Biệt danh:">-->
+          <!--                            <el-input enter-button placeholder="Vui lòng nhập" element-id="name" v-model="formValidate.nickname"-->
           <!--                                   clearable/>-->
           <!--                        </el-form-item>-->
           <!--                    </el-col>-->
           <el-col :span="12">
-            <el-form-item label="时间范围：" class="tab_data">
+            <el-form-item label="Khoảng thời gian:" class="tab_data">
               <el-date-picker
                 clearable
                 :editable="false"
@@ -38,14 +38,14 @@
                 format="yyyy-MM-dd"
                 value-format="yyyy-MM-dd"
                 type="daterange"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                start-placeholder="Ngày bắt đầu"
+                end-placeholder="Ngày kết thúc"
                 style="width: 100%"
               ></el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="4">
-            <el-button type="primary" v-db-click @click="userSearchs">搜索</el-button>
+            <el-button type="primary" v-db-click @click="userSearchs">Tìm kiếm</el-button>
           </el-col>
         </el-row>
       </el-form>
@@ -53,21 +53,21 @@
         :data="tabList"
         ref="table"
         v-loading="loading"
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
         class="table"
       >
-        <el-table-column label="佣金金额" min-width="130">
+        <el-table-column label="Số tiền hoa hồng" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.number }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="获得时间" min-width="130">
+        <el-table-column label="Thời gian nhận" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row._add_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="备注" min-width="130">
+        <el-table-column label="Ghi chú" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.mark }}</span>
           </template>
@@ -102,8 +102,8 @@ export default {
         nickname: '',
         start_time: '',
         end_time: '',
-        page: 1, // 当前页
-        limit: 20, // 每页显示条数
+        page: 1, // Trang hiện tại
+        limit: 20, // Số mục hiển thị mỗi trang
       },
       total: 0,
       tabList: [],
@@ -124,12 +124,12 @@ export default {
     }
   },
   methods: {
-    // 时间
+    // Thời gian
     onchangeTime(e) {
       this.formValidate.start_time = e[0];
       this.formValidate.end_time = e[1];
     },
-    // 详情
+    // Chi tiết
     getDetails(id) {
       this.Ids = id;
       this.spinShow = true;
@@ -149,7 +149,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       extractlistApi(this.Ids, this.formValidate)
@@ -164,7 +164,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 搜索
+    // Tìm kiếm
     userSearchs() {
       this.formValidate.page = 1;
       this.getList();

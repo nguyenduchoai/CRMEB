@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,23 +16,23 @@ use think\facade\Config;
 use think\cache\TagSet;
 
 /**
- * CRMEB 缓存类
+ * Class cache CRMEB
  * Class CacheService
  * @package crmeb\services
  */
 class CacheService
 {
     /**
-     * 过期时间
+     * Thời gian hết hạn
      * @var int
      */
     protected static $expire;
 
     /**
-     * 写入缓存
-     * @param string $name 缓存名称
-     * @param mixed $value 缓存值
-     * @param int|null $expire 缓存时间，为0读取系统缓存时间
+     * Ghi cache
+     * @param string $name Tên cache
+     * @param mixed $value Giá trị cache
+     * @param int|null $expire Thời gian cache, bằng 0 thì đọc thời gian cache của hệ thống
      */
     public static function set(string $name, $value, int $expire = 0, string $tag = 'crmeb')
     {
@@ -44,7 +44,7 @@ class CacheService
     }
 
     /**
-     * 如果不存在则写入缓存
+     * Nếu không tồn tại thì ghi vào cache
      * @param string $name
      * @param mixed $default
      * @param int|null $expire
@@ -69,7 +69,7 @@ class CacheService
     }
 
     /**
-     * 读取缓存
+     * Đọc cache
      * @param string $name
      * @param mixed $default
      * @return mixed|string
@@ -80,7 +80,7 @@ class CacheService
     }
 
     /**
-     * 删除缓存
+     * Xóa cache
      * @param string $name
      * @return bool
      */
@@ -90,7 +90,7 @@ class CacheService
     }
 
     /**
-     * 清空缓存池
+     * Xóa toàn bộ cache pool
      * @return bool
      */
     public static function clear(string $tag = 'crmeb')
@@ -99,9 +99,9 @@ class CacheService
     }
 
     /**
-     * 清空全部缓存
+     * Xóa toàn bộ cache
      * @return bool
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/12/19
      */
@@ -111,7 +111,7 @@ class CacheService
     }
 
     /**
-     * 检查缓存是否存在
+     * Kiểm tra cache có tồn tại không
      * @param string $key
      * @return bool
      */
@@ -125,7 +125,7 @@ class CacheService
     }
 
     /**
-     * 指定缓存类型
+     * Chỉ định loại cache
      * @param string $type
      * @param string $tag
      * @return TagSet
@@ -136,7 +136,7 @@ class CacheService
     }
 
     /**
-     * 检查锁
+     * Kiểm tra khóa (lock)
      * @param string $key
      * @param int $timeout
      * @return bool
@@ -149,7 +149,7 @@ class CacheService
         if ($mutexRes) {
             return true;
         }
-        //就算意外退出，下次进来也会检查key，防止死锁
+        //Dù có thoát bất ngờ, lần sau vào cũng sẽ kiểm tra key, tránh deadlock
         $time = Cache::store('redis')->handler()->get($readMutexKey);
         if ($curTime > $time) {
             Cache::store('redis')->handler()->del($readMutexKey);
@@ -159,9 +159,9 @@ class CacheService
     }
 
     /**
-     * 删除锁
+     * Xóa khóa (lock)
      * @param string $key
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2022/11/22
      */
@@ -173,12 +173,12 @@ class CacheService
 
 
     /**
-     * 数据库锁
+     * Khóa cơ sở dữ liệu
      * @param $key
      * @param $fn
      * @param int $ex
      * @return mixed
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/03/01
      */

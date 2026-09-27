@@ -57,11 +57,11 @@ import { mapState } from 'vuex';
 // import theme from "@/mixins/theme";
 export default {
   name: 'search_box',
-  cname: '搜索框',
+  cname: 'Ô tìm kiếm',
   icon: '#iconzujian-sousuokuang',
   configName: 'c_search_box',
-  type: 0, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'headerSerch', // 外面匹配名称
+  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'headerSerch', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -130,39 +130,39 @@ export default {
   // mixins: [theme],
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
-        cname: '搜索框',
+        cname: 'Ô tìm kiếm',
         name: 'headerSerch',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
         },
-        titleLeft: '展示设置',
-        titleSearch: '搜索内容',
-        titleHotWords: '搜索热词',
-        titleRight: '搜索框',
-        titleCurrency: '通用样式',
-        titleTxt: '文字设置',
+        titleLeft: 'Cài đặt hiển thị',
+        titleSearch: 'Nội dung tìm kiếm',
+        titleHotWords: 'Từ khóa tìm kiếm phổ biến',
+        titleRight: 'Ô tìm kiếm',
+        titleCurrency: 'Kiểu chung',
+        titleTxt: 'Cài đặt chữ',
         styleConfig: {
-          title: '选择风格',
+          title: 'Chọn phong cách',
           tabVal: 0,
           tabList: [
             {
-              name: '搜索',
+              name: 'Tìm kiếm',
             },
             {
-              name: '标题',
+              name: 'Tiêu đề',
             },
           ],
         },
         styleTypeConfig: {
-          title: '样式类型',
+          title: 'Kiểu dáng',
           tabVal: 1,
           tabList: [
             {
-              name: '标题',
+              name: 'Tiêu đề',
             },
             {
               name: 'logo',
@@ -170,29 +170,29 @@ export default {
           ],
         },
         logoConfig: {
-          info: '建议：144px * 44px',
+          info: 'Đề xuất: 144px * 44px',
           url: '',
           type: 'code',
           delType: 1,
-          name: 'logo图',
+          name: 'Ảnh logo',
         },
         titleConfig: {
-          title: '标题',
-          value: '标题',
-          place: '请输入标题',
+          title: 'Tiêu đề',
+          value: 'Tiêu đề',
+          place: 'Vui lòng nhập tiêu đề',
           max: 6,
         },
         linkConfig: {
-          title: '链接',
+          title: 'Liên kết',
           value: '',
-          place: '请选择链接',
+          place: 'Vui lòng chọn liên kết',
           max: 100,
           type: 'link',
         },
         tipConfig: {
-          title: '提示文字',
-          value: '搜索商品',
-          place: '填写内容',
+          title: 'Chữ gợi ý',
+          value: 'Tìm kiếm sản phẩm',
+          place: 'Điền nội dung',
           max: 20,
         },
         hotWords: {
@@ -203,46 +203,46 @@ export default {
           ],
         },
         numConfig: {
-          placeholder: '设置搜索热词显示时间',
-          title: '显示时间',
+          placeholder: 'Đặt thời gian hiển thị từ khóa phổ biến',
+          title: 'Thời gian hiển thị',
           val: 3,
           type: 'words',
         },
         txtFixConfig: {
-          title: '文字位置',
+          title: 'Vị trí chữ',
           tabVal: 0,
           tabList: [
             {
-              name: '左对齐',
+              name: 'Căn trái',
             },
             {
-              name: '居中对齐',
+              name: 'Căn giữa',
             },
             {
-              name: '右对齐',
+              name: 'Căn phải',
             },
           ],
         },
         txtStyleConfig: {
-          title: '文字样式',
+          title: 'Kiểu chữ',
           tabVal: 0,
           tabList: [
             {
-              name: '正常',
+              name: 'Bình thường',
               style: 'normal',
             },
             {
-              name: '倾斜',
+              name: 'In nghiêng',
               style: 'italic',
             },
             {
-              name: '加粗',
+              name: 'In đậm',
               style: 'bold',
             },
           ],
         },
         txtColor: {
-          title: '文字颜色',
+          title: 'Màu chữ',
           default: [
             {
               item: '#333333',
@@ -255,12 +255,12 @@ export default {
           ],
         },
         txtSize: {
-          title: '文字大小',
+          title: 'Cỡ chữ',
           val: 15,
           min: 0,
         },
         searchBoxColor: {
-          title: '搜索框',
+          title: 'Ô tìm kiếm',
           default: [
             {
               item: '#F5F5F5',
@@ -273,7 +273,7 @@ export default {
           ],
         },
         tipColor: {
-          title: '提示文字',
+          title: 'Chữ gợi ý',
           default: [
             {
               item: '#CCCCCC',
@@ -286,7 +286,7 @@ export default {
           ],
         },
         hotWordsColor: {
-          title: '热词文字',
+          title: 'Chữ từ khóa phổ biến',
           default: [
             {
               item: '#888',
@@ -299,7 +299,7 @@ export default {
           ],
         },
         moduleColor: {
-          title: '组件背景',
+          title: 'Nền thành phần',
           default: [
             {
               item: '#fff',
@@ -318,7 +318,7 @@ export default {
           ],
         },
         bottomBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           default: [
             {
               item: '#fff',
@@ -331,34 +331,34 @@ export default {
           ],
         },
         topConfig: {
-          title: '上边距',
+          title: 'Lề trên',
           val: 0,
           min: 0,
         },
         bottomConfig: {
-          title: '下边距',
+          title: 'Lề dưới',
           val: 0,
           min: 0,
         },
         prConfig: {
-          title: '左右边距',
+          title: 'Lề trái phải',
           val: 0,
           min: 0,
         },
         fillet: {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 0,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],

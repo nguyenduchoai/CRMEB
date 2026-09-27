@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,14 +18,14 @@ use app\services\wechat\WechatKeyServices;
 use think\facade\App;
 
 /**
- * 关键字管理  控制器
+ * Controller quản lý từ khóa
  * Class Reply
  * @package app\admin\controller\wechat
  */
 class Reply extends AuthController
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * Menus constructor.
      * @param App $app
      * @param WechatReplyServices $services
@@ -37,7 +37,7 @@ class Reply extends AuthController
     }
 
     /**
-     * 关注回复
+     * Trả lời khi theo dõi
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -54,7 +54,7 @@ class Reply extends AuthController
     }
 
     /**
-     * 关键字回复列表
+     * Danh sách trả lời theo từ khóa
      * @return mixed
      */
     public function index()
@@ -69,7 +69,7 @@ class Reply extends AuthController
     }
 
     /**
-     * 关键字详情
+     * Chi tiết từ khóa
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -82,7 +82,7 @@ class Reply extends AuthController
     }
 
     /**
-     * 保存关键字
+     * Lưu từ khóa
      * @param int $id
      * @return mixed
      */
@@ -115,7 +115,7 @@ class Reply extends AuthController
     }
 
     /**
-     * 删除关键字
+     * Xóa từ khóa
      * @param $id
      * @return mixed
      */
@@ -135,7 +135,7 @@ class Reply extends AuthController
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param $id
      * @param $status
      * @return mixed
@@ -148,7 +148,7 @@ class Reply extends AuthController
     }
 
     /**
-     * 生成关注回复二维码
+     * Tạo mã QR trả lời khi theo dõi
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException

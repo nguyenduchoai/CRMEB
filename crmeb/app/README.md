@@ -1,70 +1,70 @@
-### 系统目录介绍优化方案
+### Phương án tối ưu phần giới thiệu thư mục hệ thống
 
-#### 1. 引言
-在优化系统目录介绍时，我们的目标是使目录结构更加清晰、易于理解，并突出每个目录的核心功能和作用。
+#### 1. Lời mở đầu
+Khi tối ưu phần giới thiệu thư mục hệ thống, mục tiêu của chúng tôi là giúp cấu trúc thư mục rõ ràng, dễ hiểu hơn, đồng thời làm nổi bật chức năng cốt lõi và vai trò của từng thư mục.
 
-#### 2. 目录结构优化概述
-我们将通过以下几个步骤来优化目录介绍：
-- **明确目录层级**：清晰展示主目录与子目录的关系。
-- **突出核心功能**：简要概括每个目录的主要作用和包含的文件类型。
-- **增加示例或用途说明**：对于关键目录，提供简短的示例或用途描述，帮助开发者快速理解。
+#### 2. Tổng quan về tối ưu cấu trúc thư mục
+Chúng tôi sẽ tối ưu phần giới thiệu thư mục qua các bước sau:
+- **Làm rõ phân cấp thư mục**: Thể hiện rõ mối quan hệ giữa thư mục chính và thư mục con.
+- **Làm nổi bật chức năng cốt lõi**: Tóm tắt ngắn gọn vai trò chính của từng thư mục và các loại tệp mà thư mục đó chứa.
+- **Bổ sung ví dụ hoặc mô tả công dụng**: Với các thư mục quan trọng, cung cấp ví dụ hoặc mô tả công dụng ngắn gọn, giúp lập trình viên nhanh chóng nắm bắt.
 
-#### 3. 优化后的目录介绍
+#### 3. Giới thiệu thư mục sau khi tối ưu
 
 ##### app/
-- **核心目录**：存放应用程序的核心代码和资源。
-- **包含内容**：业务逻辑、控制器、模型、视图等。
+- **Thư mục cốt lõi**: Chứa mã nguồn và tài nguyên cốt lõi của ứng dụng.
+- **Nội dung bao gồm**: Logic nghiệp vụ, controller, model, view, v.v.
 
 ###### app/adminapi/
-- **功能**：管理端应用控制器。
-- **用途**：处理管理端用户请求、业务逻辑和数据交互。
-- **示例**：管理员登录、权限管理等。
+- **Chức năng**: Controller của ứng dụng phía quản trị.
+- **Công dụng**: Xử lý yêu cầu của người dùng phía quản trị, logic nghiệp vụ và tương tác dữ liệu.
+- **Ví dụ**: Đăng nhập quản trị viên, quản lý quyền, v.v.
 
 ###### app/api/
-- **功能**：用户端应用控制器。
-- **用途**：处理用户端请求、业务逻辑和数据交互。
-- **示例**：用户注册、商品浏览等。
+- **Chức năng**: Controller của ứng dụng phía người dùng.
+- **Công dụng**: Xử lý yêu cầu từ phía người dùng, logic nghiệp vụ và tương tác dữ liệu.
+- **Ví dụ**: Đăng ký người dùng, xem sản phẩm, v.v.
 
 ###### app/dao/
-- **功能**：数据访问对象（DAO）。
-- **用途**：封装数据访问操作，提供统一接口。
-- **文件类型**：类文件。
+- **Chức năng**: Đối tượng truy cập dữ liệu (DAO).
+- **Công dụng**: Đóng gói các thao tác truy cập dữ liệu, cung cấp interface thống nhất.
+- **Loại tệp**: Tệp lớp (class).
 
 ###### app/http/
-- **功能**：HTTP请求和响应跨域中间键。
-- **用途**：处理跨域请求，确保前后端通信顺畅。
+- **Chức năng**: Middleware CORS cho yêu cầu và phản hồi HTTP.
+- **Công dụng**: Xử lý các yêu cầu cross-domain (CORS), đảm bảo giao tiếp giữa frontend và backend thông suốt.
 
 ###### app/jobs/
-- **功能**：消息队列任务。
-- **用途**：处理异步任务，如邮件发送、数据同步等。
+- **Chức năng**: Tác vụ hàng đợi tin nhắn.
+- **Công dụng**: Xử lý các tác vụ bất đồng bộ như gửi email, đồng bộ dữ liệu, v.v.
 
 ###### app/kefuapi/
-- **功能**：客服端应用控制器。
-- **用途**：处理客服端请求、业务逻辑和数据交互。
-- **示例**：客服聊天、工单处理等。
+- **Chức năng**: Controller của ứng dụng phía CSKH.
+- **Công dụng**: Xử lý yêu cầu từ phía CSKH, logic nghiệp vụ và tương tác dữ liệu.
+- **Ví dụ**: Chat CSKH, xử lý phiếu hỗ trợ (ticket), v.v.
 
 ###### app/lang/
-- **功能**：语言包。
-- **用途**：支持多语言功能，提供不同语言的文本资源。
+- **Chức năng**: Gói ngôn ngữ.
+- **Công dụng**: Hỗ trợ tính năng đa ngôn ngữ, cung cấp tài nguyên văn bản cho các ngôn ngữ khác nhau.
 
 ###### app/listener/
-- **功能**：事件监听器。
-- **用途**：监听和处理系统事件，如用户登录、订单生成等。
+- **Chức năng**: Trình lắng nghe sự kiện (event listener).
+- **Công dụng**: Lắng nghe và xử lý các sự kiện hệ thống như người dùng đăng nhập, tạo đơn hàng, v.v.
 
 ###### app/model/
-- **功能**：模型类。
-- **用途**：封装数据访问操作，提供统一接口。
-- **与dao区别**：模型类更侧重于业务逻辑层面的数据操作。
+- **Chức năng**: Lớp model.
+- **Công dụng**: Đóng gói các thao tác truy cập dữ liệu, cung cấp interface thống nhất.
+- **Khác biệt so với dao**: Lớp model tập trung nhiều hơn vào các thao tác dữ liệu ở tầng logic nghiệp vụ.
 
 ###### app/outapi/
-- **功能**：对外接口应用控制器。
-- **用途**：处理外部系统请求、业务逻辑和数据交互。
-- **示例**：第三方支付回调、API对接等。
+- **Chức năng**: Controller của ứng dụng API đối ngoại.
+- **Công dụng**: Xử lý yêu cầu từ hệ thống bên ngoài, logic nghiệp vụ và tương tác dữ liệu.
+- **Ví dụ**: Callback thanh toán của bên thứ ba, tích hợp API, v.v.
 
 ###### app/service/
-- **功能**：服务类。
-- **用途**：封装业务逻辑和数据交互操作，提供统一服务接口。
-- **示例**：用户服务、订单服务等。
+- **Chức năng**: Lớp dịch vụ (service).
+- **Công dụng**: Đóng gói logic nghiệp vụ và các thao tác tương tác dữ liệu, cung cấp interface dịch vụ thống nhất.
+- **Ví dụ**: Dịch vụ người dùng, dịch vụ đơn hàng, v.v.
 
-#### 4. 结语
-通过上述优化，我们使`app`目录及其子目录的介绍更加清晰、条理分明。每个目录的核心功能和用途都得到了突出展示，有助于开发者快速理解和定位代码。同时，增加的示例和用途说明也进一步降低了理解门槛，提升了开发效率。
+#### 4. Lời kết
+Thông qua các bước tối ưu trên, chúng tôi đã giúp phần giới thiệu thư mục `app` và các thư mục con trở nên rõ ràng, mạch lạc hơn. Chức năng cốt lõi và công dụng của từng thư mục đều được làm nổi bật, giúp lập trình viên nhanh chóng hiểu và định vị mã nguồn. Đồng thời, các ví dụ và mô tả công dụng được bổ sung cũng giúp giảm bớt rào cản tiếp cận và nâng cao hiệu quả phát triển.

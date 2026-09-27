@@ -3,7 +3,7 @@
 		<view class="header acea-row row-middle">
 			<view class="state">{{ title }}</view>
 			<view class="data">
-				<view class="order-num">{{$t(`订单`)}}：{{ orderInfo.order_id }}</view>
+				<view class="order-num">{{$t(`Đơn hàng`)}}：{{ orderInfo.order_id }}</view>
 				<view>
 					<span class="time">{{ orderInfo._add_time }}</span>
 				</view>
@@ -12,7 +12,7 @@
 		<view class="remarks acea-row row-between-wrapper" v-if="goname != 'looks'">
 			<span class="iconfont icon-zhinengkefu-"></span>
 			<input class="line1" style="text-align: left;" :value="
-          orderInfo.remark ? orderInfo.remark : $t(`订单未备注，点击添加备注信息`)
+          orderInfo.remark ? orderInfo.remark : $t(`Đơn hàng chưa có ghi chú, nhấn để thêm ghi chú`)
         " disabled @click="modify('1')" />
 		</view>
 		<view class="orderingUser acea-row row-middle">
@@ -24,11 +24,11 @@
         }}<span class="phone">{{ orderInfo.user_phone }}</span>
 				<!-- #ifdef H5 -->
 				<span class="copy copy-data"
-					:data-clipboard-text="`${orderInfo.real_name} ${orderInfo.user_phone} ${orderInfo.user_address}`">{{$t(`复制`)}}</span>
+					:data-clipboard-text="`${orderInfo.real_name} ${orderInfo.user_phone} ${orderInfo.user_address}`">{{$t(`Sao chép`)}}</span>
 				<!-- #endif -->
 				<!-- #ifndef H5 -->
 				<span class="copy copy-data"
-					@click="copyNum(`${orderInfo.real_name} ${orderInfo.user_phone} ${orderInfo.user_address}`)">{{$t(`复制`)}}</span>
+					@click="copyNum(`${orderInfo.real_name} ${orderInfo.user_phone} ${orderInfo.user_address}`)">{{$t(`Sao chép`)}}</span>
 				<!-- #endif -->
 			</view>
 			<view>{{ orderInfo.user_address }}</view>
@@ -59,42 +59,42 @@
 			</navigator>
 		</view>
 		<view class="public-total" v-if="orderInfo.total_num">
-			{{$t(`共`)}}{{ orderInfo.total_num }}{{$t(`件商品，应支付`)}}
-			<span class="money">{{$t(`￥`)}}{{ orderInfo.pay_price }}</span> ( {{$t(`邮费`)}} {{$t(`￥`)}}{{
+			{{$t(`Tổng`)}}{{ orderInfo.total_num }}{{$t(`sản phẩm, cần thanh toán`)}}
+			<span class="money">{{$t(`￥`)}}{{ orderInfo.pay_price }}</span> ( {{$t(`Phí vận chuyển`)}} {{$t(`￥`)}}{{
         orderInfo.pay_postage
       }}
 			)
 		</view>
 		<view class="wrapper" v-if="orderInfo.order_id">
 			<view class="item acea-row row-between">
-				<view>{{$t(`订单编号`)}}：</view>
+				<view>{{$t(`Mã đơn hàng`)}}：</view>
 				<view class="conter acea-row row-middle row-right">
 					{{ orderInfo.order_id
           }}
 					<!-- #ifdef H5 -->
-					<span class="copy copy-data" :data-clipboard-text="orderInfo.order_id">{{$t(`复制`)}}</span>
+					<span class="copy copy-data" :data-clipboard-text="orderInfo.order_id">{{$t(`Sao chép`)}}</span>
 					<!-- #endif -->
 					<!-- #ifndef H5 -->
-					<span class="copy copy-data" @click="copyNum(orderInfo.order_id)">{{$t(`复制`)}}</span>
+					<span class="copy copy-data" @click="copyNum(orderInfo.order_id)">{{$t(`Sao chép`)}}</span>
 					<!-- #endif -->
 				</view>
 			</view>
 			<view class="item acea-row row-between">
-				<view>{{$t(`下单时间`)}}：</view>
+				<view>{{$t(`Thời gian đặt hàng`)}}：</view>
 				<view class="conter">{{ orderInfo._add_time }}</view>
 			</view>
 			<view class="item acea-row row-between">
-				<view>{{$t(`支付状态`)}}：</view>
+				<view>{{$t(`Trạng thái thanh toán`)}}：</view>
 				<view class="conter">
-					{{ orderInfo.paid == 1 ? $t(`已支付`) : $t(`未支付`) }}
+					{{ orderInfo.paid == 1 ? $t(`Đã thanh toán`) : $t(`Chưa thanh toán`) }}
 				</view>
 			</view>
 			<view class="item acea-row row-between">
-				<view>{{$t(`支付方式`)}}：</view>
+				<view>{{$t(`Phương thức thanh toán`)}}：</view>
 				<view class="conter">{{ payType }}</view>
 			</view>
 			<view class="item acea-row row-between">
-				<view>{{$t(`买家留言`)}}：</view>
+				<view>{{$t(`Lời nhắn của người mua`)}}：</view>
 				<view class="conter">{{ orderInfo.mark }}</view>
 			</view>
 		</view>
@@ -112,59 +112,59 @@
 		</view>
 		<view class="wrapper">
 			<view class='item acea-row row-between'>
-				<view>{{$t(`商品总价`)}}：</view>
+				<view>{{$t(`Tổng giá sản phẩm`)}}：</view>
 				<view class='conter'>
 					{{$t(`￥`)}}{{(parseFloat(orderInfo.total_price || 0)+parseFloat(orderInfo.vip_true_price || 0)).toFixed(2)}}
 				</view>
 			</view>
 			<view class='item acea-row row-between' v-if="orderInfo.pay_postage > 0">
-				<view>{{$t(`配送运费`)}}：</view>
+				<view>{{$t(`Phí vận chuyển`)}}：</view>
 				<view class='conter'>{{$t(`￥`)}}{{parseFloat(orderInfo.pay_postage).toFixed(2)}}</view>
 			</view>
 			<view v-if="orderInfo.levelPrice > 0" class='item acea-row row-between'>
-				<view>{{$t(`用户等级优惠`)}}：</view>
+				<view>{{$t(`Ưu đãi hạng thành viên`)}}：</view>
 				<view class='conter'>-{{$t(`￥`)}}{{parseFloat(orderInfo.levelPrice).toFixed(2)}}</view>
 			</view>
 			<view v-if="orderInfo.memberPrice > 0" class='item acea-row row-between'>
-				<view>{{$t(`付费会员优惠`)}}：</view>
+				<view>{{$t(`Ưu đãi thành viên trả phí`)}}：</view>
 				<view class='conter'>-{{$t(`￥`)}}{{parseFloat(orderInfo.memberPrice).toFixed(2)}}</view>
 			</view>
 			<view class='item acea-row row-between' v-if='orderInfo.coupon_price > 0'>
-				<view>{{$t(`优惠券抵扣`)}}：</view>
+				<view>{{$t(`Giảm từ phiếu giảm giá`)}}：</view>
 				<view class='conter'>-{{$t(`￥`)}}{{parseFloat(orderInfo.coupon_price).toFixed(2)}}</view>
 			</view>
 			<view class='item acea-row row-between' v-if="orderInfo.use_integral > 0">
-				<view>{{$t(`积分抵扣`)}}：</view>
+				<view>{{$t(`Khấu trừ bằng điểm thưởng`)}}：</view>
 				<view class='conter'>-{{$t(`￥`)}}{{parseFloat(orderInfo.deduction_price).toFixed(2)}}</view>
 			</view>
-			<view class='actualPay acea-row row-right'>{{$t(`实付款`)}}：<text class='money'>{{$t(`￥`)}}{{parseFloat(orderInfo.pay_price || 0).toFixed(2)}}</text></view>
+			<view class='actualPay acea-row row-right'>{{$t(`Thực thanh toán`)}}：<text class='money'>{{$t(`￥`)}}{{parseFloat(orderInfo.pay_price || 0).toFixed(2)}}</text></view>
 		</view>
 
 		<view class="wrapper" v-if="
         orderInfo.delivery_type != 'fictitious' && orderInfo._status._type === 2
       ">
 			<view class="item acea-row row-between">
-				<view>{{$t(`配送方式`)}}：</view>
+				<view>{{$t(`Phương thức giao hàng`)}}：</view>
 				<view class="conter" v-if="orderInfo.delivery_type === 'express'">
-					{{$t(`快递`)}}
+					{{$t(`Chuyển phát`)}}
 				</view>
-				<view class="conter" v-if="orderInfo.delivery_type === 'send'">{{$t(`送货`)}}</view>
+				<view class="conter" v-if="orderInfo.delivery_type === 'send'">{{$t(`Cửa hàng tự giao`)}}</view>
 			</view>
 			<view class="item acea-row row-between">
-				<view v-if="orderInfo.delivery_type === 'express'">{{$t(`快递公司`)}}：</view>
-				<view v-if="orderInfo.delivery_type === 'send'">{{$t(`送货人`)}}：</view>
+				<view v-if="orderInfo.delivery_type === 'express'">{{$t(`Đơn vị vận chuyển`)}}：</view>
+				<view v-if="orderInfo.delivery_type === 'send'">{{$t(`Người giao hàng`)}}：</view>
 				<view class="conter">{{ orderInfo.delivery_name }}</view>
 			</view>
 			<view class="item acea-row row-between">
-				<view v-if="orderInfo.delivery_type === 'express'">{{$t(`快递单号`)}}：</view>
-				<view v-if="orderInfo.delivery_type === 'send'">{{$t(`送货人电话`)}}：</view>
+				<view v-if="orderInfo.delivery_type === 'express'">{{$t(`Mã vận đơn`)}}：</view>
+				<view v-if="orderInfo.delivery_type === 'send'">{{$t(`Số điện thoại người giao hàng`)}}：</view>
 				<view class="conter">
 					{{ orderInfo.delivery_id}}
 					<!-- #ifdef H5 -->
-					<span class="copy copy-data" :data-clipboard-text="orderInfo.delivery_id">{{$t(`复制`)}}</span>
+					<span class="copy copy-data" :data-clipboard-text="orderInfo.delivery_id">{{$t(`Sao chép`)}}</span>
 					<!-- #endif -->
 					<!-- #ifndef H5 -->
-					<span class="copy copy-data" @click="copyNum(orderInfo.delivery_id)">{{$t(`复制`)}}</span>
+					<span class="copy copy-data" @click="copyNum(orderInfo.delivery_id)">{{$t(`Sao chép`)}}</span>
 					<!-- #endif -->
 				</view>
 			</view>
@@ -173,29 +173,29 @@
 		<view class="footer acea-row row-right row-middle" v-if="goname != 'looks'">
 			<view class="more"></view>
 			<view class="bnt cancel" @click="modify('0')" v-if="types == 0">
-				{{$t(`一键改价`)}}
+				{{$t(`Sửa giá nhanh`)}}
 			</view>
 			<view class="bnt cancel" @click="modify('2')" v-if="types == -1 && orderInfo.refund_type == 1">
-				{{$t(`立即退款`)}}
+				{{$t(`Hoàn tiền ngay`)}}
 			</view>
 			<view class="bnt cancel" @click="agreeExpress(orderInfo.id)"
 				v-if="types == -1 && orderInfo.refund_type == 2">
-				{{$t(`同意退货`)}}
+				{{$t(`Đồng ý trả hàng`)}}
 			</view>
-			<view class="wait" v-if="types == -1 && orderInfo.refund_type == 4">{{$t(`待用户发货`)}}</view>
-			<view class="bnt cancel" @click="modify('1')">{{$t(`订单备注`)}}</view>
+			<view class="wait" v-if="types == -1 && orderInfo.refund_type == 4">{{$t(`Chờ khách gửi trả hàng`)}}</view>
+			<view class="bnt cancel" @click="modify('1')">{{$t(`Ghi chú đơn hàng`)}}</view>
 			<view class="bnt cancel" v-if="orderInfo.pay_type === 'offline' && orderInfo.paid === 0"
 				@click="offlinePay">
-				{{$t(`确认付款`)}}
+				{{$t(`Xác nhận thanh toán`)}}
 			</view>
 			<navigator class='bnt cancel'
 				v-if="orderInfo.delivery_type == 'express' && orderInfo.status==1"
 				hover-class='none' :url="'/pages/goods/goods_logistics/index?is_admin=1&orderId='+ orderInfo.order_id">
-				{{$t(`查看物流`)}}
+				{{$t(`Xem vận chuyển`)}}
 			</navigator>
 			<navigator class="bnt delivery"
 				v-if="types == 1 && orderInfo.shipping_type === 1 && (orderInfo.pinkStatus === null || orderInfo.pinkStatus === 2)"
-				:url="'/pages/admin/delivery/index?id='+orderInfo.order_id">{{$t(`去发货`)}}</navigator>
+				:url="'/pages/admin/delivery/index?id='+orderInfo.order_id">{{$t(`Giao hàng`)}}</navigator>
 		</view>
 		<PriceChange :change="change" :orderInfo="orderInfo" v-on:closechange="changeclose($event)"
 			v-on:savePrice="savePrice" :status="status"></PriceChange>
@@ -270,12 +270,12 @@
 				// var clipboard = new Clipboard(copybtn);
 				clipboard.on('success', function(e) {
 					self.$util.Tips({
-						title: self.$t(`复制成功`)
+						title: self.$t(`Sao chép thành công`)
 					})
 				});
 				clipboard.on('error', function(e) {
 					self.$util.Tips({
-						title: self.$t(`复制失败`)
+						title: self.$t(`Sao chép thất bại`)
 					})
 				});
 			});
@@ -299,7 +299,7 @@
 				fn(that.order_id).then(
 					res => {
 						that.orderInfo = res.data;
-						//处理自定义留言非必填项的数据展示
+						//Xử lý hiển thị dữ liệu của mục lời nhắn tùy chỉnh không bắt buộc
 
 						that.types = res.data._status._type;
 						that.title = res.data._status._title;
@@ -350,7 +350,7 @@
 				if (that.status == 0) {
 					if (!isMoney(price)) {
 						return that.$util.Tips({
-							title: that.$t(`请输入正确的金额`)
+							title: that.$t(`Vui lòng nhập số tiền hợp lệ`)
 						});
 					}
 					data.price = price;
@@ -358,14 +358,14 @@
 						res => {
 							that.change = false;
 							that.$util.Tips({
-								title: that.$t(`改价成功`),
+								title: that.$t(`Đổi giá thành công`),
 								icon: 'success'
 							}, '/pages/admin/orderDetail/index?id=' + res.data.order_id + '&types=0')
 						},
 						err => {
 							that.change = false;
 							that.$util.Tips({
-								title: that.$t(`改价失败`),
+								title: that.$t(`Đổi giá thất bại`),
 								icon: 'none'
 							})
 						}
@@ -373,7 +373,7 @@
 				} else if (that.status == 2) {
 					if (!isMoney(refund_price)) {
 						return that.$util.Tips({
-							title: that.$t(`请输入正确的金额`)
+							title: that.$t(`Vui lòng nhập số tiền hợp lệ`)
 						});
 					}
 					data.price = refund_price;
@@ -396,7 +396,7 @@
 				} else {
 					if (!remark) {
 						return that.$util.Tips({
-							title: that.$t(`请输入备注`)
+							title: that.$t(`Vui lòng nhập ghi chú`)
 						})
 					}
 					data.remark = remark;
@@ -468,7 +468,7 @@
 </script>
 
 <style>
-	/*商户管理订单详情*/
+	/*Chi tiết đơn hàng quản lý của cửa hàng*/
 	.pos-order-details .header {
 		background: linear-gradient(to right, #2291f8 0%, #1cd1dc 100%);
 		background: -webkit-linear-gradient(to right, #2291f8 0%, #1cd1dc 100%);
@@ -600,7 +600,7 @@
 		height: 100%;
 	}
 
-	/*订单详情*/
+	/*Chi tiết đơn hàng*/
 	.order-details .header {
 		padding: 0 30upx;
 		height: 150upx;

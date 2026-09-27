@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -22,13 +22,13 @@ class OtherOrder extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'other_order';
@@ -37,7 +37,7 @@ class OtherOrder extends BaseModel
 
     // protected $hidden = ['add_time', 'is_del', 'uid'];
 
-    /**订单类型
+    /**Loại đơn hàng
      * @param $query
      * @param $value
      */
@@ -56,7 +56,7 @@ class OtherOrder extends BaseModel
         $query->where('paid', $value);
     }
 
-    /**支付方式不属于
+    /**Phương thức thanh toán không thuộc
      * @param $query
      * @param $value
      */
@@ -66,7 +66,7 @@ class OtherOrder extends BaseModel
     }
 
     /**
-     * 用户来源
+     * Nguồn người dùng
      * @param Model $query
      * @param $value
      */
@@ -75,7 +75,7 @@ class OtherOrder extends BaseModel
         if ($value != '') $query->where('channel_type', $value);
     }
 
-    /**订单id搜索器
+    /**Bộ lọc id đơn hàng
      * @param $query
      * @param $value
      */
@@ -88,7 +88,7 @@ class OtherOrder extends BaseModel
     }
 
     /**
-     * 一对一关联用户表
+     * Liên kết một-một với bảng người dùng
      * @return \think\model\relation\HasOne
      */
     public function user()
@@ -96,7 +96,7 @@ class OtherOrder extends BaseModel
         return $this->hasOne(User::class, 'uid', 'uid')->field(['uid', 'nickname', 'phone', 'spread_uid', 'overdue_time']);
     }
 
-    /**会员类型
+    /**Loại thành viên
      * @param $query
      * @param $value
      */
@@ -116,7 +116,7 @@ class OtherOrder extends BaseModel
 
     }
 
-    /**支付方式
+    /**Phương thức thanh toán
      * @param $query
      * @param $value
      */

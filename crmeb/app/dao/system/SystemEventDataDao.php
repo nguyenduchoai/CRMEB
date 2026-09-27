@@ -8,7 +8,7 @@ use app\model\system\SystemEventData;
 class SystemEventDataDao extends BaseDao
 {
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string

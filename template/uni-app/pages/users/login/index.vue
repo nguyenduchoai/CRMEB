@@ -9,31 +9,31 @@
 					<view class="item">
 						<view class="acea-row row-middle">
 							<image src="../static/phone_1.png" style="width: 24rpx; height: 34rpx"></image>
-							<input type="text" :placeholder="$t(`输入手机号码`)" v-model="account" maxlength="11" required />
+							<input type="text" :placeholder="$t(`Nhập số điện thoại`)" v-model="account" maxlength="11" required />
 						</view>
 					</view>
 					<view class="item">
 						<view class="acea-row row-middle">
 							<image src="../static/code_1.png" style="width: 28rpx; height: 32rpx"></image>
-							<input type="password" :placeholder="$t(`填写登录密码`)" v-model="password" required />
+							<input type="password" :placeholder="$t(`Nhập mật khẩu đăng nhập`)" v-model="password" required />
 						</view>
 					</view>
 				</form>
 				<!-- <navigator class="forgetPwd" hover-class="none" url="/pages/users/retrievePassword/index">
-					<span class="iconfont icon-wenti"></span>忘记密码
+					<span class="iconfont icon-wenti"></span>Quên mật khẩu
 				</navigator> -->
 			</view>
 			<view class="list" v-if="current !== 0 || appLoginStatus || appleLoginStatus">
 				<view class="item">
 					<view class="acea-row row-middle">
 						<image src="../static/phone_1.png" style="width: 24rpx; height: 34rpx"></image>
-						<input type="text" :placeholder="$t(`输入手机号码`)" v-model="account" :maxlength="11" />
+						<input type="text" :placeholder="$t(`Nhập số điện thoại`)" v-model="account" :maxlength="11" />
 					</view>
 				</view>
 				<view class="item">
 					<view class="acea-row row-middle">
 						<image src="../static/code_2.png" style="width: 28rpx; height: 32rpx"></image>
-						<input type="text" :placeholder="$t(`填写验证码`)" :maxlength="6" class="codeIput" v-model="captcha" />
+						<input type="text" :placeholder="$t(`Nhập mã xác thực`)" :maxlength="6" class="codeIput" v-model="captcha" />
 						<button class="code" :disabled="disabled" :class="disabled === true ? 'on' : ''" @click="code">
 							{{ text }}
 						</button>
@@ -42,24 +42,24 @@
 				<!-- 	<view class="item" v-if="isShowCode">
 					<view class="acea-row row-middle">
 						<image src="../static/code_2.png" style="width: 28rpx; height: 32rpx;"></image>
-						<input type="text" :placeholder="$t(`填写验证码`)" class="codeIput" v-model="codeVal" />
+						<input type="text" :placeholder="$t(`Điền mã xác thực`)" class="codeIput" v-model="codeVal" />
 						<view class="code" @click="again"><img :src="codeUrl" /></view>
 					</view>
 				</view> -->
 			</view>
-			<view class="logon" @click="loginMobile" v-if="current !== 0">{{ $t(`登录`) }}</view>
-			<view class="logon" @click="submit" v-if="current === 0">{{ $t(`登录`) }}</view>
+			<view class="logon" @click="loginMobile" v-if="current !== 0">{{ $t(`Đăng nhập`) }}</view>
+			<view class="logon" @click="submit" v-if="current === 0">{{ $t(`Đăng nhập`) }}</view>
 			<!-- #ifndef APP-PLUS -->
 			<view class="tips">
-				<view v-if="current == 0" @click="current = 1">{{ $t(`快速登录`) }}</view>
-				<view v-if="current == 1" @click="current = 0">{{ $t(`账号登录`) }}</view>
+				<view v-if="current == 0" @click="current = 1">{{ $t(`Đăng nhập nhanh`) }}</view>
+				<view v-if="current == 1" @click="current = 0">{{ $t(`Đăng nhập tài khoản`) }}</view>
 			</view>
 			<!-- #endif -->
 			<!-- #ifdef APP-PLUS -->
 			<view class="appLogin" v-if="!appLoginStatus && !appleLoginStatus">
 				<view class="hds">
 					<span class="line"></span>
-					<p>{{ $t(`其他方式登录`) }}</p>
+					<p>{{ $t(`Đăng nhập bằng cách khác`) }}</p>
 					<span class="line"></span>
 				</view>
 				<view class="btn-wrapper">
@@ -81,10 +81,10 @@
 			<view class="protocol">
 				<checkbox-group @change="ChangeIsDefault">
 					<checkbox :class="inAnimation ? 'trembling' : ''" @animationend="inAnimation = false" :checked="protocol ? true : false" />
-					{{ $t(`已阅读并同意`) }}
-					<text class="main-color" @click="privacy(4)">{{ $t(`《用户协议》`) }}</text>
-					{{ $t(`与`) }}
-					<text class="main-color" @click="privacy(3)">{{ $t(`《隐私协议》`) }}</text>
+					{{ $t(`Đã đọc và đồng ý`) }}
+					<text class="main-color" @click="privacy(4)">{{ $t(`“Thỏa thuận người dùng”`) }}</text>
+					{{ $t(`và`) }}
+					<text class="main-color" @click="privacy(3)">{{ $t(`“Chính sách bảo mật”`) }}</text>
 				</checkbox-group>
 			</view>
 		</view>
@@ -122,7 +122,7 @@ export default {
 			copyRight: '',
 			inAnimation: false,
 			protocol: false,
-			navList: [this.$t(`快速登录`), this.$t(`账号登录`)],
+			navList: [this.$t(`Đăng nhập nhanh`), this.$t(`Đăng nhập tài khoản`)],
 			current: 1,
 			account: '',
 			password: '',
@@ -134,11 +134,11 @@ export default {
 			codeUrl: '',
 			codeVal: '',
 			isShowCode: false,
-			appLoginStatus: false, // 微信登录强制绑定手机号码状态
-			appUserInfo: null, // 微信登录保存的用户信息
-			appleLoginStatus: false, // 苹果登录强制绑定手机号码状态
+			appLoginStatus: false, // Trạng thái bắt buộc liên kết số điện thoại khi đăng nhập WeChat
+			appUserInfo: null, // Thông tin người dùng lưu khi đăng nhập WeChat
+			appleLoginStatus: false, // Trạng thái bắt buộc liên kết số điện thoại khi đăng nhập Apple
 			appleUserInfo: null,
-			appleShow: false, // 苹果登录版本必须要求ios13以上的
+			appleShow: false, // Đăng nhập Apple yêu cầu phiên bản phải từ iOS 13 trở lên
 			keyLock: true,
 			captchaType: 'clickWord',
 		};
@@ -178,14 +178,14 @@ export default {
 				url: '/pages/users/privacy/index?type=' + type
 			});
 		},
-		// IOS 版本号判断
+		// Kiểm tra số phiên bản IOS
 		getSystem(system) {
 			let str;
 			system.toLowerCase().indexOf('ios') === -1 ? (str = system) : (str = system.split(' ')[1]);
 			if (str.indexOf('.')) return str.split('.')[0] >= 13;
 			return str >= 13;
 		},
-		// 苹果登录
+		// Đăng nhập Apple
 		appleLogin() {
 			let self = this;
 			this.account = '';
@@ -193,11 +193,11 @@ export default {
 			if (!self.protocol) {
 				this.inAnimation = true;
 				return self.$util.Tips({
-					title: '请先阅读并同意协议'
+					title: 'Vui lòng đọc và đồng ý với thỏa thuận trước'
 				});
 			}
 			uni.showLoading({
-				title: this.$t(`登录中`)
+				title: this.$t(`Đang đăng nhập`)
 			});
 			uni.login({
 				provider: 'apple',
@@ -211,7 +211,7 @@ export default {
 						},
 						fail() {
 							uni.showToast({
-								title: self.$t(`获取用户信息失败`),
+								title: self.$t(`Lấy thông tin người dùng thất bại`),
 								icon: 'none',
 								duration: 2000
 							});
@@ -226,7 +226,7 @@ export default {
 				}
 			});
 		},
-		// 苹果登录Api
+		// API đăng nhập Apple
 		appleLoginApi() {
 			let self = this;
 			appleLogin({
@@ -238,8 +238,8 @@ export default {
 				.then(({ data }) => {
 					if (data.isbind) {
 						uni.showModal({
-							title: self.$t(`提示`),
-							content: self.$t(`请绑定手机号后，继续操作`),
+							title: self.$t(`Thông báo`),
+							content: self.$t(`Vui lòng liên kết số điện thoại để tiếp tục thao tác`),
 							showCancel: false,
 							success: function (res) {
 								if (res.confirm) {
@@ -263,19 +263,19 @@ export default {
 				})
 				.catch((error) => {
 					uni.showModal({
-						title: self.$t(`提示`),
-						content: self.$t(`错误信息`) + `${error}`,
+						title: self.$t(`Thông báo`),
+						content: self.$t(`Thông tin lỗi`) + `${error}`,
 						success: function (res) {
 							if (res.confirm) {
-								console.log(self.$t(`用户点击确定`));
+								console.log(self.$t(`Người dùng nhấn Xác nhận`));
 							} else if (res.cancel) {
-								console.log(self.$t(`用户点击取消`));
+								console.log(self.$t(`Người dùng nhấn Hủy`));
 							}
 						}
 					});
 				});
 		},
-		// App微信登录
+		// Đăng nhập WeChat trên App
 		wxLogin() {
 			let self = this;
 			this.account = '';
@@ -283,16 +283,16 @@ export default {
 			if (!self.protocol) {
 				this.inAnimation = true;
 				return self.$util.Tips({
-					title: '请先阅读并同意协议'
+					title: 'Vui lòng đọc và đồng ý với thỏa thuận trước'
 				});
 			}
 			uni.showLoading({
-				title: self.$t(`登录中`)
+				title: self.$t(`Đang đăng nhập`)
 			});
 			uni.login({
 				provider: 'weixin',
 				success: function (loginRes) {
-					// 获取用户信息
+					// Lấy thông tin người dùng
 					uni.getUserInfo({
 						provider: 'weixin',
 						success: function (infoRes) {
@@ -301,7 +301,7 @@ export default {
 						},
 						fail() {
 							uni.showToast({
-								title: self.$t(`获取用户信息失败`),
+								title: self.$t(`Lấy thông tin người dùng thất bại`),
 								icon: 'none',
 								duration: 2000
 							});
@@ -313,7 +313,7 @@ export default {
 				},
 				fail() {
 					uni.showToast({
-						title: self.$t(`登录失败`),
+						title: self.$t(`Đăng nhập thất bại`),
 						icon: 'none',
 						duration: 2000
 					});
@@ -331,8 +331,8 @@ export default {
 				.then(({ data }) => {
 					if (data.isbind) {
 						uni.showModal({
-							title: self.$t(`提示`),
-							content: self.$t(`请绑定手机号后，继续操作`),
+							title: self.$t(`Thông báo`),
+							content: self.$t(`Vui lòng liên kết số điện thoại để tiếp tục thao tác`),
 							showCancel: false,
 							success: function (res) {
 								if (res.confirm) {
@@ -356,13 +356,13 @@ export default {
 				})
 				.catch((error) => {
 					uni.showModal({
-						title: self.$t(`提示`),
-						content: self.$t(`错误信息`) + `${error}`,
+						title: self.$t(`Thông báo`),
+						content: self.$t(`Thông tin lỗi`) + `${error}`,
 						success: function (res) {
 							if (res.confirm) {
-								console.log(self.$t(`用户点击确定`));
+								console.log(self.$t(`Người dùng nhấn Xác nhận`));
 							} else if (res.cancel) {
-								console.log(self.$t(`用户点击取消`));
+								console.log(self.$t(`Người dùng nhấn Hủy`));
 							}
 						}
 					});
@@ -389,16 +389,16 @@ export default {
 			if (!that.protocol) {
 				this.inAnimation = true;
 				return that.$util.Tips({
-					title: '请先阅读并同意协议'
+					title: 'Vui lòng đọc và đồng ý với thỏa thuận trước'
 				});
 			}
 			if (!that.account)
 				return that.$util.Tips({
-					title: that.$t(`请填写手机号码`)
+					title: that.$t(`Vui lòng điền số điện thoại`)
 				});
 			if (!/^1(3|4|5|7|8|9|6)\d{9}$/i.test(that.account))
 				return that.$util.Tips({
-					title: that.$t(`请输入正确的手机号码`)
+					title: that.$t(`Vui lòng nhập đúng số điện thoại`)
 				});
 			this.$refs.verify.show();
 		},
@@ -413,24 +413,24 @@ export default {
 			if (!that.protocol) {
 				this.inAnimation = true;
 				return that.$util.Tips({
-					title: '请先阅读并同意协议'
+					title: 'Vui lòng đọc và đồng ý với thỏa thuận trước'
 				});
 			}
 			if (!that.account)
 				return that.$util.Tips({
-					title: that.$t(`请填写手机号码`)
+					title: that.$t(`Vui lòng điền số điện thoại`)
 				});
 			if (!/^1(3|4|5|7|8|9|6)\d{9}$/i.test(that.account))
 				return that.$util.Tips({
-					title: that.$t(`请输入正确的手机号码`)
+					title: that.$t(`Vui lòng nhập đúng số điện thoại`)
 				});
 			if (!that.captcha)
 				return that.$util.Tips({
-					title: that.$t(`请填写验证码`)
+					title: that.$t(`Vui lòng điền mã xác thực`)
 				});
 			if (!/^[\w\d]+$/i.test(that.captcha))
 				return that.$util.Tips({
-					title: that.$t(`请输入正确的验证码`)
+					title: that.$t(`Vui lòng nhập đúng mã xác thực`)
 				});
 			if (that.appLoginStatus) {
 				that.wxLoginApi();
@@ -441,7 +441,7 @@ export default {
 					this.keyLock = !this.keyLock;
 				} else {
 					return that.$util.Tips({
-						title: that.$t(`请勿重复点击`)
+						title: that.$t(`Vui lòng không nhấn liên tục`)
 					});
 				}
 				loginMobile({
@@ -482,32 +482,32 @@ export default {
 			if (!that.protocol) {
 				this.inAnimation = true;
 				return that.$util.Tips({
-					title: '请先阅读并同意协议'
+					title: 'Vui lòng đọc và đồng ý với thỏa thuận trước'
 				});
 			}
 			if (!that.account)
 				return that.$util.Tips({
-					title: that.$t(`请填写手机号码`)
+					title: that.$t(`Vui lòng điền số điện thoại`)
 				});
 			if (!/^1(3|4|5|7|8|9|6)\d{9}$/i.test(that.account))
 				return that.$util.Tips({
-					title: that.$t(`请输入正确的手机号码`)
+					title: that.$t(`Vui lòng nhập đúng số điện thoại`)
 				});
 			if (!that.captcha)
 				return that.$util.Tips({
-					title: that.$t(`请填写验证码`)
+					title: that.$t(`Vui lòng điền mã xác thực`)
 				});
 			if (!/^[\w\d]+$/i.test(that.captcha))
 				return that.$util.Tips({
-					title: that.$t(`请输入正确的验证码`)
+					title: that.$t(`Vui lòng nhập đúng mã xác thực`)
 				});
 			if (!that.password)
 				return that.$util.Tips({
-					title: that.$t(`请填写密码`)
+					title: that.$t(`Vui lòng điền mật khẩu`)
 				});
 			if (/^([0-9]|[a-z]|[A-Z]){0,6}$/i.test(that.password))
 				return that.$util.Tips({
-					title: that.$t(`您输入的密码过于简单`)
+					title: that.$t(`Mật khẩu bạn nhập quá đơn giản`)
 				});
 			register({
 				account: that.account,
@@ -532,16 +532,16 @@ export default {
 			if (!that.protocol) {
 				this.inAnimation = true;
 				return that.$util.Tips({
-					title: '请先阅读并同意协议'
+					title: 'Vui lòng đọc và đồng ý với thỏa thuận trước'
 				});
 			}
 			if (!that.account)
 				return that.$util.Tips({
-					title: that.$t(`请填写手机号码`)
+					title: that.$t(`Vui lòng điền số điện thoại`)
 				});
 			if (!/^1(3|4|5|7|8|9|6)\d{9}$/i.test(that.account))
 				return that.$util.Tips({
-					title: that.$t(`请输入正确的手机号码`)
+					title: that.$t(`Vui lòng nhập đúng số điện thoại`)
 				});
 			if (that.formItem == 2) that.type = 'register';
 
@@ -572,26 +572,26 @@ export default {
 			if (!that.protocol) {
 				this.inAnimation = true;
 				return that.$util.Tips({
-					title: '请先阅读并同意协议'
+					title: 'Vui lòng đọc và đồng ý với thỏa thuận trước'
 				});
 			}
 			if (!that.account)
 				return that.$util.Tips({
-					title: that.$t(`请填写账号`)
+					title: that.$t(`Vui lòng điền tài khoản`)
 				});
 			if (!/^[\w\d]{5,16}$/i.test(that.account))
 				return that.$util.Tips({
-					title: that.$t(`请输入正确的账号`)
+					title: that.$t(`Vui lòng nhập đúng tài khoản`)
 				});
 			if (!that.password)
 				return that.$util.Tips({
-					title: that.$t(`请填写密码`)
+					title: that.$t(`Vui lòng điền mật khẩu`)
 				});
 			if (this.keyLock) {
 				this.keyLock = !this.keyLock;
 			} else {
 				return that.$util.Tips({
-					title: that.$t(`请勿重复点击`)
+					title: that.$t(`Vui lòng không nhấn liên tục`)
 				});
 			}
 			loginH5({

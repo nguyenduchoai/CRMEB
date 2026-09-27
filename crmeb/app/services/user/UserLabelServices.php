@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -22,7 +22,7 @@ use think\facade\Route as Url;
  *
  * Class UserLabelServices
  * @package app\services\user
- *  * @method getColumn(array $where, string $field, string $key = '') 获取某个字段数组
+ *  * @method getColumn(array $where, string $field, string $key = '') Lấy mảng của một trường (field)
  */
 class UserLabelServices extends BaseServices
 {
@@ -37,7 +37,7 @@ class UserLabelServices extends BaseServices
     }
 
     /**
-     * 获取某一本标签
+     * Lấy một nhãn
      * @param $id
      * @return array|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
@@ -50,7 +50,7 @@ class UserLabelServices extends BaseServices
     }
 
     /**
-     * 获取所有用户标签
+     * Lấy tất cả nhãn người dùng
      * @param array $where
      * @param array|string[] $field
      * @return array
@@ -64,7 +64,7 @@ class UserLabelServices extends BaseServices
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -79,7 +79,7 @@ class UserLabelServices extends BaseServices
     }
 
     /**
-     * 添加修改标签表单
+     * Form thêm/sửa nhãn
      * @param int $id
      * @param int $cateId
      * @return array
@@ -91,25 +91,25 @@ class UserLabelServices extends BaseServices
         $field = array();
         /** @var UserLabelCateServices $service */
         $service = app()->make(UserLabelCateServices::class);
-        $options[] = ['value' => 0, 'label' => '全部'];
+        $options[] = ['value' => 0, 'label' => 'Tất cả'];
         foreach ($service->getLabelCateAll() as $item) {
             $options[] = ['value' => $item['id'], 'label' => $item['name']];
         }
         if (!$label) {
-            $title = '添加标签';
-            $field[] = Form::select('label_cate', '标签分类', $cateId)->setOptions($options);
-            $field[] = Form::input('label_name', '标签名称', '')->required();
+            $title = 'Thêm nhãn';
+            $field[] = Form::select('label_cate', 'Danh mục nhãn', $cateId)->setOptions($options);
+            $field[] = Form::input('label_name', 'Tên nhãn', '')->required();
         } else {
-            $title = '修改标签';
-            $field[] = Form::select('label_cate', '分类', (int)$label->getData('label_cate'))->setOptions($options);
+            $title = 'Sửa nhãn';
+            $field[] = Form::select('label_cate', 'Danh mục', (int)$label->getData('label_cate'))->setOptions($options);
             $field[] = Form::hidden('id', $label->getData('id'));
-            $field[] = Form::input('label_name', '标签名称', $label->getData('label_name'))->required('请填写标签名称');
+            $field[] = Form::input('label_name', 'Tên nhãn', $label->getData('label_name'))->required('Vui lòng nhập tên nhãn');
         }
         return create_form($title, $field, Url::buildUrl('/user/user_label/save'), 'POST');
     }
 
     /**
-     * 保存标签表单数据
+     * Lưu dữ liệu form nhãn
      * @param int $id
      * @param array $data
      * @return mixed
@@ -149,7 +149,7 @@ class UserLabelServices extends BaseServices
     }
 
     /**
-     * 删除
+     * Xóa
      * @param int $id
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
@@ -167,7 +167,7 @@ class UserLabelServices extends BaseServices
     }
 
     /**
-     * tree处理 分类、标签数据
+     * Xử lý tree - dữ liệu danh mục, nhãn
      * @param array $cate
      * @param array $label
      * @return array

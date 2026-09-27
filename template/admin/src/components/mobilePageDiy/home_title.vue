@@ -21,11 +21,11 @@
 import { mapState } from 'vuex';
 export default {
   name: 'home_title',
-  cname: '标题',
+  cname: 'Tiêu đề',
   icon: 'iconbiaoti1',
   configName: 'c_home_title',
-  type: 2, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'titles', // 外面匹配名称
+  type: 2, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'titles', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -68,19 +68,19 @@ export default {
           tabVal: 0,
         },
         titleConfig: {
-          title: '标题',
-          value: '标题',
-          place: '请输入标题',
+          title: 'Tiêu đề',
+          value: 'Tiêu đề',
+          place: 'Vui lòng nhập tiêu đề',
           max: 10,
         },
         linkConfig: {
-          title: '链接',
+          title: 'Liên kết',
           value: '',
-          place: '请输入链接地址',
+          place: 'Vui lòng nhập địa chỉ liên kết',
           max: 100,
         },
         themeColor: {
-          title: '字体颜色',
+          title: 'Màu chữ',
           name: 'themeColor',
           default: [
             {
@@ -94,7 +94,7 @@ export default {
           ],
         },
         titleColor: {
-          title: '背景颜色',
+          title: 'Màu nền',
           default: [
             {
               item: '#fff',
@@ -107,74 +107,74 @@ export default {
           ],
         },
         bgStyle: {
-          title: '背景样式',
+          title: 'Kiểu nền',
           name: 'bgStyle',
           type: 0,
           list: [
             {
-              val: '直角',
+              val: 'Góc vuông',
               icon: 'iconPic_square',
             },
             {
-              val: '圆角',
+              val: 'Bo góc',
               icon: 'iconPic_fillet',
             },
           ],
         },
         prConfig: {
-          title: '背景边距',
+          title: 'Lề nền',
           val: 0,
           min: 0,
         },
         textPosition: {
-          title: '文本位置',
+          title: 'Vị trí văn bản',
           type: 0,
           list: [
             {
-              val: '居左',
+              val: 'Căn trái',
               style: 'left',
               icon: 'icondoc_left',
             },
             {
-              val: '居中',
+              val: 'Căn giữa',
               style: 'center',
               icon: 'icondoc_center',
             },
             {
-              val: '居右',
+              val: 'Căn phải',
               style: 'right',
               icon: 'icondoc_right',
             },
           ],
         },
         textStyle: {
-          title: '文本样式',
+          title: 'Kiểu văn bản',
           type: 0,
           list: [
             {
-              val: '正常',
+              val: 'Bình thường',
               style: 'normal',
               icon: 'icondoc_general',
             },
             {
-              val: '斜体',
+              val: 'In nghiêng',
               style: 'italic',
               icon: 'icondoc_skew',
             },
             {
-              val: '加粗',
+              val: 'In đậm',
               style: 'bold',
               icon: 'icondoc_bold',
             },
           ],
         },
         fontSize: {
-          title: '文本大小',
+          title: 'Cỡ chữ',
           val: 12,
           min: 12,
         },
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },

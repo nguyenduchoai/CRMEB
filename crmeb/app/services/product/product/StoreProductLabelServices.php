@@ -29,7 +29,7 @@ class StoreProductLabelServices extends BaseServices
     public function labelInfo($id)
     {
         $info = $this->dao->get($id);
-        if (!$info) throw new AdminException('数据不存在');
+        if (!$info) throw new AdminException('Dữ liệu không tồn tại');
         return $info->toArray();
     }
 

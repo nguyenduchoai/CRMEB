@@ -40,13 +40,13 @@ class StoreProductLabel extends AuthController
             ['sort', 0],
         ]);
         $this->labelCateServices->labelCateSave($id, $data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     public function labelCateDel($id)
     {
         $this->labelCateServices->labelCateDel($id);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 
 
@@ -84,25 +84,25 @@ class StoreProductLabel extends AuthController
             ['is_show', 1],
         ]);
         $this->labelServices->labelSave($data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     public function labelDel($id)
     {
         $this->labelServices->labelDel($id);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 
     public function labelIsShow($id, $is_show)
     {
         $this->labelServices->labelIsShow($id, $is_show);
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
     public function labelStatus($id, $status)
     {
         $this->labelServices->labelStatus($id, $status);
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
     public function labelUseList()

@@ -1,11 +1,11 @@
 <?php
 /**
  *  +----------------------------------------------------------------------
- *  | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+ *  | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
  *  +----------------------------------------------------------------------
  *  | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
  *  +----------------------------------------------------------------------
- *  | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+ *  | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
  *  +----------------------------------------------------------------------
  *  | Author: CRMEB Team <admin@crmeb.com>
  *  +----------------------------------------------------------------------
@@ -21,6 +21,6 @@ class QueueStartListener
 
     public function handle(Output $output)
     {
-        $output->writeln('消息队列已启动，正在运行中，windows请不要关闭命令行。linux请使用Supervisor进行进程守护');
+        $output->writeln('Hàng đợi tin nhắn đã khởi động và đang chạy, trên windows vui lòng không đóng cửa sổ dòng lệnh. Trên linux vui lòng dùng Supervisor để giám sát tiến trình');
     }
 }

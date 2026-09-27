@@ -1,21 +1,21 @@
 /**
-* @1900-2100区间内的公历、农历互转
+* @Chuyển đổi qua lại dương lịch, âm lịch trong khoảng 1900-2100
 * @charset UTF-8
 * @github  https://github.com/jjonline/calendar.js
-* @Author  Jea杨(JJonline@JJonline.Cn)
+* @Author  Jea Yang (JJonline@JJonline.Cn)
 * @Time    2014-7-21
 * @Time    2016-8-13 Fixed 2033hex、Attribution Annals
 * @Time    2016-9-25 Fixed lunar LeapMonth Param Bug
 * @Time    2017-7-24 Fixed use getTerm Func Param Error.use solar year,NOT lunar year
 * @Version 1.0.3
-* @公历转农历：calendar.solar2lunar(1987,11,01); //[you can ignore params of prefix 0]
-* @农历转公历：calendar.lunar2solar(1987,09,10); //[you can ignore params of prefix 0]
+* @Chuyển dương lịch sang âm lịch: calendar.solar2lunar(1987,11,01); //[you can ignore params of prefix 0]
+* @Chuyển âm lịch sang dương lịch: calendar.lunar2solar(1987,09,10); //[you can ignore params of prefix 0]
 */
 /* eslint-disable */
 var calendar = {
 
   /**
-      * 农历1900-2100的润大小信息表
+      * Bảng thông tin tháng đủ/thiếu (nhuận) của âm lịch giai đoạn 1900-2100
       * @Array Of Property
       * @return Hex
       */
@@ -43,45 +43,45 @@ var calendar = {
     0x0d520], // 2100
 
   /**
-      * 公历每个月份的天数普通表
+      * Bảng số ngày thông thường của từng tháng dương lịch
       * @Array Of Property
       * @return Number
       */
   solarMonth: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
 
   /**
-      * 天干地支之天干速查表
-      * @Array Of Property trans["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"]
+      * Bảng tra nhanh Thiên Can trong Can Chi
+      * @Array Of Property trans["Giáp","Ất","Bính","Đinh","Mậu","Kỷ","Canh","Tân","Nhâm","Quý"]
       * @return Cn string
       */
-  Gan: ['\u7532', '\u4e59', '\u4e19', '\u4e01', '\u620a', '\u5df1', '\u5e9a', '\u8f9b', '\u58ec', '\u7678'],
+  Gan: ['Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý'],
 
   /**
-      * 天干地支之地支速查表
+      * Bảng tra nhanh Địa Chi trong Can Chi
       * @Array Of Property
-      * @trans["子","丑","寅","卯","辰","巳","午","未","申","酉","戌","亥"]
+      * @trans["Tý","Sửu","Dần","Mão","Thìn","Tỵ","Ngọ","Mùi","Thân","Dậu","Tuất","Hợi"]
       * @return Cn string
       */
-  Zhi: ['\u5b50', '\u4e11', '\u5bc5', '\u536f', '\u8fb0', '\u5df3', '\u5348', '\u672a', '\u7533', '\u9149', '\u620c', '\u4ea5'],
+  Zhi: ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'],
 
   /**
-      * 天干地支之地支速查表<=>生肖
+      * Bảng tra nhanh Địa Chi <=> con giáp
       * @Array Of Property
-      * @trans["鼠","牛","虎","兔","龙","蛇","马","羊","猴","鸡","狗","猪"]
+      * @trans["Chuột","Trâu","Hổ","Thỏ","Rồng","Rắn","Ngựa","Dê","Khỉ","Gà","Chó","Lợn"]
       * @return Cn string
       */
-  Animals: ['\u9f20', '\u725b', '\u864e', '\u5154', '\u9f99', '\u86c7', '\u9a6c', '\u7f8a', '\u7334', '\u9e21', '\u72d7', '\u732a'],
+  Animals: ['Chuột', 'Trâu', 'Hổ', 'Mèo', 'Rồng', 'Rắn', 'Ngựa', 'Dê', 'Khỉ', 'Gà', 'Chó', 'Lợn'],
 
   /**
-      * 24节气速查表
+      * Bảng tra nhanh 24 tiết khí
       * @Array Of Property
-      * @trans["小寒","大寒","立春","雨水","惊蛰","春分","清明","谷雨","立夏","小满","芒种","夏至","小暑","大暑","立秋","处暑","白露","秋分","寒露","霜降","立冬","小雪","大雪","冬至"]
+      * @trans["Tiểu hàn","Đại hàn","Lập xuân","Vũ thủy","Kinh trập","Xuân phân","Thanh minh","Cốc vũ","Lập hạ","Tiểu mãn","Mang chủng","Hạ chí","Tiểu thử","Đại thử","Lập thu","Xử thử","Bạch lộ","Thu phân","Hàn lộ","Sương giáng","Lập đông","Tiểu tuyết","Đại tuyết","Đông chí"]
       * @return Cn string
       */
-  solarTerm: ['\u5c0f\u5bd2', '\u5927\u5bd2', '\u7acb\u6625', '\u96e8\u6c34', '\u60ca\u86f0', '\u6625\u5206', '\u6e05\u660e', '\u8c37\u96e8', '\u7acb\u590f', '\u5c0f\u6ee1', '\u8292\u79cd', '\u590f\u81f3', '\u5c0f\u6691', '\u5927\u6691', '\u7acb\u79cb', '\u5904\u6691', '\u767d\u9732', '\u79cb\u5206', '\u5bd2\u9732', '\u971c\u964d', '\u7acb\u51ac', '\u5c0f\u96ea', '\u5927\u96ea', '\u51ac\u81f3'],
+  solarTerm: ['Tiểu hàn', 'Đại hàn', 'Lập xuân', 'Vũ thủy', 'Kinh trập', 'Xuân phân', 'Thanh minh', 'Cốc vũ', 'Lập hạ', 'Tiểu mãn', 'Mang chủng', 'Hạ chí', 'Tiểu thử', 'Đại thử', 'Lập thu', 'Xử thử', 'Bạch lộ', 'Thu phân', 'Hàn lộ', 'Sương giáng', 'Lập đông', 'Tiểu tuyết', 'Đại tuyết', 'Đông chí'],
 
   /**
-      * 1900-2100各年的24节气日期速查表
+      * Bảng tra nhanh ngày 24 tiết khí của các năm 1900-2100
       * @Array Of Property
       * @return 0x string For splice
       */
@@ -154,31 +154,31 @@ var calendar = {
     '7ec967f0e37f14998082b0787b06bd', '7f07e7f0e47f531b0723b0b6fb0721', '7f0e27f1487f531b0b0bb0b6fb0722'],
 
   /**
-      * 数字转中文速查表
+      * Bảng tra nhanh chuyển số thành chữ Hán
       * @Array Of Property
-      * @trans ['日','一','二','三','四','五','六','七','八','九','十']
+      * @trans ['ngày','một','hai','ba','bốn','năm','sáu','bảy','tám','chín','mười']
       * @return Cn string
       */
-  nStr1: ['\u65e5', '\u4e00', '\u4e8c', '\u4e09', '\u56db', '\u4e94', '\u516d', '\u4e03', '\u516b', '\u4e5d', '\u5341'],
+  nStr1: ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'],
 
   /**
-      * 日期转农历称呼速查表
+      * Bảng tra nhanh chuyển ngày thành cách gọi âm lịch
       * @Array Of Property
-      * @trans ['初','十','廿','卅']
+      * @trans ['đầu','mười','hai mươi','ba mươi']
       * @return Cn string
       */
-  nStr2: ['\u521d', '\u5341', '\u5eff', '\u5345'],
+  nStr2: ['Mùng'],
 
   /**
-      * 月份转农历称呼速查表
+      * Bảng tra nhanh chuyển tháng thành cách gọi âm lịch
       * @Array Of Property
-      * @trans ['正','一','二','三','四','五','六','七','八','九','十','冬','腊']
+      * @trans ['Giêng','một','hai','ba','bốn','năm','sáu','bảy','tám','chín','mười','Đông','Chạp']
       * @return Cn string
       */
-  nStr3: ['\u6b63', '\u4e8c', '\u4e09', '\u56db', '\u4e94', '\u516d', '\u4e03', '\u516b', '\u4e5d', '\u5341', '\u51ac', '\u814a'],
+  nStr3: ['Giêng', 'Hai', 'Ba', 'Tư', 'Năm', 'Sáu', 'Bảy', 'Tám', 'Chín', 'Mười', 'Mười Một', 'Chạp'],
 
   /**
-      * 返回农历y年一整年的总天数
+      * Trả về tổng số ngày của cả năm âm lịch y
       * @param lunar Year
       * @return Number
       * @eg:var count = calendar.lYearDays(1987) ;//count=387
@@ -190,17 +190,17 @@ var calendar = {
   },
 
   /**
-      * 返回农历y年闰月是哪个月；若y年没有闰月 则返回0
+      * Trả về tháng nhuận của năm âm lịch y là tháng mấy; nếu năm y không có tháng nhuận thì trả về 0
       * @param lunar Year
       * @return Number (0-12)
       * @eg:var leapMonth = calendar.leapMonth(1987) ;//leapMonth=6
       */
-  leapMonth: function (y) { // 闰字编码 \u95f0
+  leapMonth: function (y) { // tháng nhuận
     return (this.lunarInfo[y - 1900] & 0xf)
   },
 
   /**
-      * 返回农历y年闰月的天数 若该年没有闰月则返回0
+      * Trả về số ngày của tháng nhuận năm âm lịch y; nếu năm đó không có tháng nhuận thì trả về 0
       * @param lunar Year
       * @return Number (0、29、30)
       * @eg:var leapMonthDay = calendar.leapDays(1987) ;//leapMonthDay=29
@@ -213,26 +213,26 @@ var calendar = {
   },
 
   /**
-      * 返回农历y年m月（非闰月）的总天数，计算m为闰月时的天数请使用leapDays方法
+      * Trả về tổng số ngày của tháng m (không phải tháng nhuận) năm âm lịch y, muốn tính số ngày khi m là tháng nhuận thì dùng phương thức leapDays
       * @param lunar Year
       * @return Number (-1、29、30)
       * @eg:var MonthDay = calendar.monthDays(1987,9) ;//MonthDay=29
       */
   monthDays: function (y, m) {
-    if (m > 12 || m < 1) { return -1 }// 月份参数从1至12，参数错误返回-1
+    if (m > 12 || m < 1) { return -1 }// Tham số tháng từ 1 đến 12, tham số sai thì trả về -1
     return ((this.lunarInfo[y - 1900] & (0x10000 >> m)) ? 30 : 29)
   },
 
   /**
-      * 返回公历(!)y年m月的天数
+      * Trả về số ngày của tháng m năm dương lịch(!) y
       * @param solar Year
       * @return Number (-1、28、29、30、31)
       * @eg:var solarMonthDay = calendar.leapDays(1987) ;//solarMonthDay=30
       */
   solarDays: function (y, m) {
-    if (m > 12 || m < 1) { return -1 } // 若参数错误 返回-1
+    if (m > 12 || m < 1) { return -1 } // Nếu tham số sai thì trả về -1
     var ms = m - 1
-    if (ms == 1) { // 2月份的闰平规律测算后确认返回28或29
+    if (ms == 1) { // Tháng 2 sau khi tính quy luật năm nhuận/thường thì xác nhận trả về 28 hoặc 29
       return (((y % 4 == 0) && (y % 100 != 0) || (y % 400 == 0)) ? 29 : 28)
     } else {
       return (this.solarMonth[ms])
@@ -240,44 +240,44 @@ var calendar = {
   },
 
   /**
-     * 农历年份转换为干支纪年
-     * @param  lYear 农历年的年份数
+     * Chuyển năm âm lịch thành năm Can Chi
+     * @param  lYear Số năm của năm âm lịch
      * @return Cn string
      */
   toGanZhiYear: function (lYear) {
     var ganKey = (lYear - 3) % 10
     var zhiKey = (lYear - 3) % 12
-    if (ganKey == 0) ganKey = 10// 如果余数为0则为最后一个天干
-    if (zhiKey == 0) zhiKey = 12// 如果余数为0则为最后一个地支
-    return this.Gan[ganKey - 1] + this.Zhi[zhiKey - 1]
+    if (ganKey == 0) ganKey = 10// Nếu số dư là 0 thì là Thiên Can cuối cùng
+    if (zhiKey == 0) zhiKey = 12// Nếu số dư là 0 thì là Địa Chi cuối cùng
+    return this.Gan[ganKey - 1] + ' ' + this.Zhi[zhiKey - 1]
   },
 
   /**
-     * 公历月、日判断所属星座
+     * Xác định cung hoàng đạo theo tháng, ngày dương lịch
      * @param  cMonth [description]
      * @param  cDay [description]
      * @return Cn string
      */
   toAstro: function (cMonth, cDay) {
-    var s = '\u9b54\u7faf\u6c34\u74f6\u53cc\u9c7c\u767d\u7f8a\u91d1\u725b\u53cc\u5b50\u5de8\u87f9\u72ee\u5b50\u5904\u5973\u5929\u79e4\u5929\u874e\u5c04\u624b\u9b54\u7faf'
+    var s = ['Ma Kết', 'Bảo Bình', 'Song Ngư', 'Bạch Dương', 'Kim Ngưu', 'Song Tử', 'Cự Giải', 'Sư Tử', 'Xử Nữ', 'Thiên Bình', 'Thiên Yết', 'Nhân Mã', 'Ma Kết']
     var arr = [20, 19, 21, 21, 21, 22, 23, 23, 23, 23, 22, 22]
-    return s.substr(cMonth * 2 - (cDay < arr[cMonth - 1] ? 2 : 0), 2) + '\u5ea7'// 座
+    return 'Cung ' + s[cMonth - (cDay < arr[cMonth - 1] ? 1 : 0)]
   },
 
   /**
-      * 传入offset偏移量返回干支
-      * @param offset 相对甲子的偏移量
+      * Truyền vào offset (độ lệch), trả về Can Chi
+      * @param offset Độ lệch tương đối so với Giáp Tý
       * @return Cn string
       */
   toGanZhi: function (offset) {
-    return this.Gan[offset % 10] + this.Zhi[offset % 12]
+    return this.Gan[offset % 10] + ' ' + this.Zhi[offset % 12]
   },
 
   /**
-      * 传入公历(!)y年获得该年第n个节气的公历日期
-      * @param y公历年(1900-2100)；n二十四节气中的第几个节气(1~24)；从n=1(小寒)算起
+      * Truyền vào năm dương lịch(!) y, lấy ngày dương lịch của tiết khí thứ n trong năm đó
+      * @param y là năm dương lịch (1900-2100); n là tiết khí thứ mấy trong 24 tiết khí (1~24); tính từ n=1 (Tiểu hàn)
       * @return day Number
-      * @eg:var _24 = calendar.getTerm(1987,3) ;//_24=4;意即1987年2月4日立春
+      * @eg:var _24 = calendar.getTerm(1987,3) ;//_24=4; nghĩa là ngày 4/2/1987 là Lập xuân
       */
   getTerm: function (y, n) {
     if (y < 1900 || y > 2100) { return -1 }
@@ -326,77 +326,61 @@ var calendar = {
   },
 
   /**
-      * 传入农历数字月份返回汉语通俗表示法
+      * Truyền vào số tháng âm lịch, trả về cách gọi thông dụng bằng chữ Hán
       * @param lunar month
       * @return Cn string
-      * @eg:var cnMonth = calendar.toChinaMonth(12) ;//cnMonth='腊月'
+      * @eg:var cnMonth = calendar.toChinaMonth(12) ;//cnMonth='Chạp'
       */
-  toChinaMonth: function (m) { // 月 => \u6708
-    if (m > 12 || m < 1) { return -1 } // 若参数错误 返回-1
-    var s = this.nStr3[m - 1]
-    s += '\u6708'// 加上月字
-    return s
+  toChinaMonth: function (m) { // tháng âm lịch => tên gọi
+    if (m > 12 || m < 1) { return -1 } // Nếu tham số sai thì trả về -1
+    return 'Tháng ' + this.nStr3[m - 1]
   },
 
   /**
-      * 传入农历日期数字返回汉字表示法
+      * Truyền vào số ngày âm lịch, trả về cách viết bằng chữ Hán
       * @param lunar day
       * @return Cn string
-      * @eg:var cnDay = calendar.toChinaDay(21) ;//cnMonth='廿一'
+      * @eg:var cnDay = calendar.toChinaDay(21) ;//cnMonth='hai mươi mốt'
       */
-  toChinaDay: function (d) { // 日 => \u65e5
-    var s
-    switch (d) {
-      case 10:
-        s = '\u521d\u5341'; break
-      case 20:
-        s = '\u4e8c\u5341'; break
-        break
-      case 30:
-        s = '\u4e09\u5341'; break
-        break
-      default :
-        s = this.nStr2[Math.floor(d / 10)]
-        s += this.nStr1[d % 10]
-    }
-    return (s)
+  toChinaDay: function (d) { // ngày âm lịch => tên gọi (Mùng 1 ... Mùng 10, 11 ... 30)
+    return d <= 10 ? this.nStr2[0] + ' ' + d : String(d)
   },
 
   /**
-      * 年份转生肖[!仅能大致转换] => 精确划分生肖分界线是“立春”
+      * Chuyển năm sang con giáp [!chỉ có thể chuyển đổi gần đúng] => Ranh giới phân chia con giáp chính xác là “Lập xuân”
       * @param y year
       * @return Cn string
-      * @eg:var animal = calendar.getAnimal(1987) ;//animal='兔'
+      * @eg:var animal = calendar.getAnimal(1987) ;//animal='Thỏ'
       */
   getAnimal: function (y) {
     return this.Animals[(y - 4) % 12]
   },
 
   /**
-      * 传入阳历年月日获得详细的公历、农历object信息 <=>JSON
+      * Truyền vào năm tháng ngày dương lịch để lấy object thông tin chi tiết dương lịch, âm lịch <=>JSON
       * @param y  solar year
       * @param m  solar month
       * @param d  solar day
       * @return JSON object
       * @eg:console.log(calendar.solar2lunar(1987,11,01));
       */
-  solar2lunar: function (y, m, d) { // 参数区间1900.1.31~2100.12.31
-    // 年份限定、上限
+  solar2lunar: function (y, m, d) { // Khoảng tham số 1900.1.31~2100.12.31
+    // Giới hạn năm, giới hạn trên
     if (y < 1900 || y > 2100) {
-      return -1// undefined转换为数字变为NaN
+      return -1// undefined chuyển thành số sẽ ra NaN
     }
-    // 公历传参最下限
+    // Giới hạn dưới của tham số dương lịch truyền vào
     if (y == 1900 && m == 1 && d < 31) {
       return -1
     }
-    // 未传参  获得当天
+    // Không truyền tham số thì lấy ngày hôm nay
     if (!y) {
       var objDate = new Date()
     } else {
       var objDate = new Date(y, parseInt(m) - 1, d)
     }
     var i; var leap = 0; var temp = 0
-    // 修正ymd参数
+    // Chuẩn hóa tham số ymd
     var y = objDate.getFullYear()
     var m = objDate.getMonth() + 1
     var d = objDate.getDate()
@@ -409,38 +393,38 @@ var calendar = {
       offset += temp; i--
     }
 
-    // 是否今天
+    // Có phải hôm nay hay không
     var isTodayObj = new Date()
     var isToday = false
     if (isTodayObj.getFullYear() == y && isTodayObj.getMonth() + 1 == m && isTodayObj.getDate() == d) {
       isToday = true
     }
-    // 星期几
+    // Thứ mấy trong tuần
     var nWeek = objDate.getDay()
     var cWeek = this.nStr1[nWeek]
-    // 数字表示周几顺应天朝周一开始的惯例
+    // Số biểu thị thứ mấy theo quy ước tuần bắt đầu từ thứ Hai
     if (nWeek == 0) {
       nWeek = 7
     }
-    // 农历年
+    // Năm âm lịch
     var year = i
-    var leap = this.leapMonth(i) // 闰哪个月
+    var leap = this.leapMonth(i) // Nhuận tháng nào
     var isLeap = false
 
-    // 效验闰月
+    // Kiểm tra tháng nhuận
     for (i = 1; i < 13 && offset > 0; i++) {
-      // 闰月
+      // Tháng nhuận
       if (leap > 0 && i == (leap + 1) && isLeap == false) {
         --i
-        isLeap = true; temp = this.leapDays(year) // 计算农历闰月天数
+        isLeap = true; temp = this.leapDays(year) // Tính số ngày tháng nhuận âm lịch
       } else {
-        temp = this.monthDays(year, i)// 计算农历普通月天数
+        temp = this.monthDays(year, i)// Tính số ngày tháng thường âm lịch
       }
-      // 解除闰月
+      // Bỏ tháng nhuận
       if (isLeap == true && i == (leap + 1)) { isLeap = false }
       offset -= temp
     }
-    // 闰月导致数组下标重叠取反
+    // Tháng nhuận khiến chỉ số mảng bị trùng nên phải đảo ngược
     if (offset == 0 && leap > 0 && i == leap + 1) {
       if (isLeap) {
         isLeap = false
@@ -451,26 +435,26 @@ var calendar = {
     if (offset < 0) {
       offset += temp; --i
     }
-    // 农历月
+    // Tháng âm lịch
     var month = i
-    // 农历日
+    // Ngày âm lịch
     var day = offset + 1
-    // 天干地支处理
+    // Xử lý Can Chi
     var sm = m - 1
     var gzY = this.toGanZhiYear(year)
 
-    // 当月的两个节气
+    // Hai tiết khí của tháng đó
     // bugfix-2017-7-24 11:03:38 use lunar Year Param `y` Not `year`
-    var firstNode = this.getTerm(y, (m * 2 - 1))// 返回当月「节」为几日开始
-    var secondNode = this.getTerm(y, (m * 2))// 返回当月「节」为几日开始
+    var firstNode = this.getTerm(y, (m * 2 - 1))// Trả về “tiết” của tháng đó bắt đầu từ ngày nào
+    var secondNode = this.getTerm(y, (m * 2))// Trả về “tiết” của tháng đó bắt đầu từ ngày nào
 
-    // 依据12节气修正干支月
+    // Dựa theo 12 tiết khí để chuẩn hóa tháng Can Chi
     var gzM = this.toGanZhi((y - 1900) * 12 + m + 11)
     if (d >= firstNode) {
       gzM = this.toGanZhi((y - 1900) * 12 + m + 12)
     }
 
-    // 传入的日期的节气与否
+    // Ngày truyền vào có phải là tiết khí hay không
     var isTerm = false
     var Term = null
     if (firstNode == d) {
@@ -481,31 +465,31 @@ var calendar = {
       isTerm = true
       Term = this.solarTerm[m * 2 - 1]
     }
-    // 日柱 当月一日与 1900/1/1 相差天数
+    // Trụ ngày: số ngày chênh lệch giữa ngày 1 của tháng đó với 1/1/1900
     var dayCyclical = Date.UTC(y, sm, 1, 0, 0, 0, 0) / 86400000 + 25567 + 10
     var gzD = this.toGanZhi(dayCyclical + d - 1)
-    // 该日期所属的星座
+    // Cung hoàng đạo của ngày đó
     var astro = this.toAstro(m, d)
 
-    return { 'lYear': year, 'lMonth': month, 'lDay': day, 'Animal': this.getAnimal(year), 'IMonthCn': (isLeap ? '\u95f0' : '') + this.toChinaMonth(month), 'IDayCn': this.toChinaDay(day), 'cYear': y, 'cMonth': m, 'cDay': d, 'gzYear': gzY, 'gzMonth': gzM, 'gzDay': gzD, 'isToday': isToday, 'isLeap': isLeap, 'nWeek': nWeek, 'ncWeek': '\u661f\u671f' + cWeek, 'isTerm': isTerm, 'Term': Term, 'astro': astro }
+    return { 'lYear': year, 'lMonth': month, 'lDay': day, 'Animal': this.getAnimal(year), 'IMonthCn': (isLeap ? 'Nhuận ' : '') + this.toChinaMonth(month), 'IDayCn': this.toChinaDay(day), 'cYear': y, 'cMonth': m, 'cDay': d, 'gzYear': gzY, 'gzMonth': gzM, 'gzDay': gzD, 'isToday': isToday, 'isLeap': isLeap, 'nWeek': nWeek, 'ncWeek': cWeek, 'isTerm': isTerm, 'Term': Term, 'astro': astro }
   },
 
   /**
-      * 传入农历年月日以及传入的月份是否闰月获得详细的公历、农历object信息 <=>JSON
+      * Truyền vào năm tháng ngày âm lịch và tháng truyền vào có phải tháng nhuận hay không để lấy object thông tin chi tiết dương lịch, âm lịch <=>JSON
       * @param y  lunar year
       * @param m  lunar month
       * @param d  lunar day
-      * @param isLeapMonth  lunar month is leap or not.[如果是农历闰月第四个参数赋值true即可]
+      * @param isLeapMonth  lunar month is leap or not.[nếu là tháng nhuận âm lịch thì chỉ cần gán tham số thứ tư là true]
       * @return JSON object
       * @eg:console.log(calendar.lunar2solar(1987,9,10));
       */
-  lunar2solar: function (y, m, d, isLeapMonth) { // 参数区间1900.1.31~2100.12.1
+  lunar2solar: function (y, m, d, isLeapMonth) { // Khoảng tham số 1900.1.31~2100.12.1
     var isLeapMonth = !!isLeapMonth
     var leapOffset = 0
     var leapMonth = this.leapMonth(y)
     var leapDay = this.leapDays(y)
-    if (isLeapMonth && (leapMonth != m)) { return -1 }// 传参要求计算该闰月公历 但该年得出的闰月与传参的月份并不同
-    if (y == 2100 && m == 12 && d > 1 || y == 1900 && m == 1 && d < 31) { return -1 }// 超出了最大极限值
+    if (isLeapMonth && (leapMonth != m)) { return -1 }// Tham số yêu cầu tính dương lịch của tháng nhuận đó nhưng tháng nhuận tính ra của năm đó lại không giống tháng truyền vào
+    if (y == 2100 && m == 12 && d > 1 || y == 1900 && m == 1 && d < 31) { return -1 }// Vượt quá giá trị giới hạn tối đa
     var day = this.monthDays(y, m)
     var _day = day
     // bugFix 2016-9-25
@@ -513,9 +497,9 @@ var calendar = {
     if (isLeapMonth) {
       _day = this.leapDays(y, m)
     }
-    if (y < 1900 || y > 2100 || d > _day) { return -1 }// 参数合法性效验
+    if (y < 1900 || y > 2100 || d > _day) { return -1 }// Kiểm tra tính hợp lệ của tham số
 
-    // 计算农历的时间差
+    // Tính khoảng chênh lệch thời gian âm lịch
     var offset = 0
     for (var i = 1900; i < y; i++) {
       offset += this.lYearDays(i)
@@ -523,16 +507,16 @@ var calendar = {
     var leap = 0; var isAdd = false
     for (var i = 1; i < m; i++) {
       leap = this.leapMonth(y)
-      if (!isAdd) { // 处理闰月
+      if (!isAdd) { // Xử lý tháng nhuận
         if (leap <= i && leap > 0) {
           offset += this.leapDays(y); isAdd = true
         }
       }
       offset += this.monthDays(y, i)
     }
-    // 转换闰月农历 需补充该年闰月的前一个月的时差
+    // Khi chuyển đổi âm lịch tháng nhuận cần bổ sung chênh lệch thời gian của tháng trước tháng nhuận của năm đó
     if (isLeapMonth) { offset += day }
-    // 1900年农历正月一日的公历时间为1900年1月30日0时0分0秒(该时间也是本农历的最开始起始点)
+    // Thời điểm dương lịch của ngày 1 tháng Giêng âm lịch năm 1900 là 0 giờ 0 phút 0 giây ngày 30/1/1900 (đây cũng là điểm bắt đầu của âm lịch này)
     var stmap = Date.UTC(1900, 1, 30, 0, 0, 0)
     var calObj = new Date((offset + d - 31) * 86400000 + stmap)
     var cY = calObj.getUTCFullYear()

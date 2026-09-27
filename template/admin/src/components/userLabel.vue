@@ -1,6 +1,6 @@
 <template>
   <div class="label-wrapper">
-    <div v-if="!labelList[0]" class="nonefont">暂无标签</div>
+    <div v-if="!labelList[0]" class="nonefont">Chưa có nhãn</div>
     <div v-else class="label-box" v-for="(item, index) in labelList" :key="index">
       <div class="title">{{ item.name }}</div>
       <div class="list">
@@ -17,8 +17,8 @@
       </div>
     </div>
     <div class="acea-row row-right mt20">
-      <el-button v-db-click @click="cancel">取 消</el-button>
-      <el-button type="primary" v-db-click @click="subBtn">确 定</el-button>
+      <el-button v-db-click @click="cancel">Hủy</el-button>
+      <el-button type="primary" v-db-click @click="subBtn">Xác nhận</el-button>
     </div>
   </div>
 </template>
@@ -96,7 +96,7 @@ export default {
         label.disabled = true;
       }
     },
-    // 确定
+    // Xác nhận
     subBtn() {
       let unLaberids = [];
       if (this.only_get) {

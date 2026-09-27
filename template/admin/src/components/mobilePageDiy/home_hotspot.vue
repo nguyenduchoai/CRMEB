@@ -35,11 +35,11 @@
 import { mapState, mapMutations } from 'vuex';
 export default {
   name: 'home_hotspot',
-  cname: '热区',
+  cname: 'Vùng nóng',
   configName: 'c_hotspot',
   icon: 'iconrequ1',
-  type: 0, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'hotspot', // 外面匹配名称
+  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'hotspot', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -76,28 +76,28 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
-        cname: '热区',
+        cname: 'Vùng nóng',
         name: 'hotspot',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
         },
-        titleLeft: '内容设置',
-        titleRight: '通用样式',
+        titleLeft: 'Cài đặt nội dung',
+        titleRight: 'Kiểu chung',
         picStyle: {
           url: '',
           list: [],
         },
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },
         bgColor: {
-          title: '背景颜色',
+          title: 'Màu nền',
           name: 'bgColor',
           default: [
             {
@@ -111,7 +111,7 @@ export default {
           ],
         },
         // bottomBgColor: {
-        //   title: '底部背景',
+        //   title: 'Nền phía dưới',
         //   name: 'bottomBgColor',
         //   default: [
         //     {
@@ -125,39 +125,39 @@ export default {
         //   ],
         // },
         // topConfig: {
-        //   title: '上边距',
+        //   title: 'Khoảng cách trên',
         //   val: 0,
         //   min: 0,
         // },
         // bottomConfig: {
-        //   title: '下边距',
+        //   title: 'Khoảng cách dưới',
         //   val: 0,
         //   min: 0,
         // },
         // prConfig: {
-        //   title: '左右边距',
+        //   title: 'Khoảng cách trái phải',
         //   val: 0,
         //   min: 0,
         // },
         // mbConfig: {
-        //   title: '页面上间距',
+        //   title: 'Khoảng cách trên trang',
         //   val: 0,
         //   min: 0,
         // },
         // fillet: {
-        //   title: '背景圆角',
+        //   title: 'Góc tròn nền',
         //   type: 0,
         //   list: [
         //     {
-        //       val: '全部',
+        //       val: 'Tất cả',
         //       icon: 'iconcaozuo-zhengti',
         //     },
         //     {
-        //       val: '单个',
+        //       val: 'Đơn lẻ',
         //       icon: 'iconcaozuo-bianjiao',
         //     },
         //   ],
-        //   valName: '圆角值',
+        //   valName: 'Giá trị góc tròn',
         //   val: 0,
         //   min: 0,
         //   valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],

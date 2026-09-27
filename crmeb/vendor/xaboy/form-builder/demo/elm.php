@@ -20,10 +20,10 @@ use FormBuilder\UI\Iview\Components\DatePicker;
 class GoodsForm extends ElmFormHandle
 {
     protected $action = 'save.php';
-    protected $title = '测试 Handle';
+    protected $title = 'Kiểm thử Handle';
     protected $fieldTitles = [
-        'start_time' => '开启时间',
-        'star' => '点赞'
+        'start_time' => 'Thời gian bắt đầu',
+        'star' => 'Lượt thích'
     ];
 
     protected $scene = 'get';
@@ -39,7 +39,7 @@ class GoodsForm extends ElmFormHandle
      */
     public function goods_name_field()
     {
-        return Elm::input('goods_name', '商品名称')->required();
+        return Elm::input('goods_name', 'Tên sản phẩm')->required();
     }
 
     /**
@@ -51,7 +51,7 @@ class GoodsForm extends ElmFormHandle
      */
     public function goods_info_field()
     {
-        return Elm::textarea('goods_info', '商品简介');
+        return Elm::textarea('goods_info', 'Mô tả ngắn sản phẩm');
     }
 
     /**
@@ -62,7 +62,7 @@ class GoodsForm extends ElmFormHandle
      */
     public function is_open_field()
     {
-        return Elm::switches('is_open', '是否开启');
+        return Elm::switches('is_open', 'Bật');
     }
 
     /**

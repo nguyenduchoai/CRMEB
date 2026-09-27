@@ -8,11 +8,11 @@
 import { mapState, mapMutations } from 'vuex';
 export default {
   name: 'z_auxiliary_box',
-  cname: '辅助空白',
+  cname: 'Khoảng trống',
   configName: 'c_auxiliary_box',
   icon: 'iconfuzhukongbai1',
-  type: 2, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'blankPage', // 外面匹配名称
+  type: 2, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'blankPage', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -49,12 +49,12 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'blankPage',
         timestamp: this.num,
         bgColor: {
-          title: '背景颜色',
+          title: 'Màu nền',
           name: 'bgColor',
           default: [
             {
@@ -68,7 +68,7 @@ export default {
           ],
         },
         heightConfig: {
-          title: '组件高度',
+          title: 'Chiều cao thành phần',
           val: 10,
           min: 1,
         },

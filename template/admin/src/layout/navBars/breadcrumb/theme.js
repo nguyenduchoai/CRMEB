@@ -5,7 +5,7 @@ export const themeList = {
     '--prev-color-primary': '#0256FF',
     '--prev-color-text-white': '#fff',
     '--prev-bg-menu-hover-ba-color': '#0256FF',
-    '--prev-bg-topBar': '#fff', //顶部菜单栏颜色
+    '--prev-bg-topBar': '#fff', //Màu thanh menu phía trên
     '--prev-bg-topBarColor': '#282c34',
     '--prev-bg-columnsMenuBar': '#282c34',
     '--prev-bg-columnsMenuBarColor': '#fff',
@@ -35,8 +35,8 @@ export const themeList = {
     '--prev-bg-menuBarColor': '#fff',
     '--prev-color-primary': '#41b584',
     '--prev-color-text-white': '#fff',
-    '--prev-bg-menu-hover-ba-color': '#41b584', // 菜单选中背景色
-    '--prev-bg-topBar': '#fff', //顶部菜单栏颜色
+    '--prev-bg-menu-hover-ba-color': '#41b584', // Màu nền khi menu được chọn
+    '--prev-bg-topBar': '#fff', //Màu thanh menu phía trên
     '--prev-bg-topBarColor': '#282c34',
     '--prev-bg-columnsMenuBar': '#282c34',
     '--prev-bg-columnsMenuBarColor': '#fff',
@@ -67,8 +67,8 @@ export const themeList = {
     '--prev-bg-menuBarColor': '#fff',
     '--prev-color-primary': '#6954f0',
     '--prev-color-text-white': '#fff',
-    '--prev-bg-menu-hover-ba-color': '#6954f0', // 菜单选中背景色
-    '--prev-bg-topBar': '#fff', //顶部菜单栏颜色
+    '--prev-bg-menu-hover-ba-color': '#6954f0', // Màu nền khi menu được chọn
+    '--prev-bg-topBar': '#fff', //Màu thanh menu phía trên
     '--prev-bg-topBarColor': '#282c34',
     '--prev-bg-columnsMenuBar': '#282c34',
     '--prev-bg-columnsMenuBarColor': '#fff',
@@ -97,8 +97,8 @@ export const themeList = {
     '--prev-bg-menuBarColor': '#fff',
     '--prev-color-primary': '#f34d37',
     '--prev-color-text-white': '#fff',
-    '--prev-bg-menu-hover-ba-color': '#f34d37', // 菜单选中背景色
-    '--prev-bg-topBar': '#fff', //顶部菜单栏颜色
+    '--prev-bg-menu-hover-ba-color': '#f34d37', // Màu nền khi menu được chọn
+    '--prev-bg-topBar': '#fff', //Màu thanh menu phía trên
     '--prev-bg-topBarColor': '#282c34',
     '--prev-bg-columnsMenuBar': '#282c34',
     '--prev-bg-columnsMenuBarColor': '#fff',

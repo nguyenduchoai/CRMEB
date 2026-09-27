@@ -5,33 +5,33 @@
         <div class="left">
           <!--                    -->
           <img class="icon" :src="imgUrl" alt="" />
-          <span>拼团活动</span>
+          <span>Hoạt động mua chung</span>
           <div class="avatar-wrapper">
             <img src="@/assets/images/ren1.png" alt="" />
             <img src="@/assets/images/ren2.png" alt="" />
           </div>
-          <p class="num">1234人拼团成功</p>
+          <p class="num">1234 người mua chung thành công</p>
         </div>
-        <div class="right">更多</div>
+        <div class="right">Xem thêm</div>
       </div>
       <div class="list-wrapper">
         <div class="item" v-for="(item, index) in list" :key="index" :style="{ marginRight: listRight + 'px' }">
           <div class="img-box">
             <img v-if="item.img" :src="item.img" alt="" />
             <div v-else class="empty-box"><span class="iconfont-diy icontupian"></span></div>
-            <div class="num" v-if="joinShow">{{ item.num }}参团</div>
+            <div class="num" v-if="joinShow">{{ item.num }} người tham gia</div>
           </div>
           <div class="info">
             <div class="title line1" v-if="titleShow">{{ item.name }}</div>
             <div class="price">
-              <span class="label" :style="{ background: txtBg, color: txtColor }" v-if="pinkShow">拼团价</span>
+              <span class="label" :style="{ background: txtBg, color: txtColor }" v-if="pinkShow">Giá mua chung</span>
               <p class="num" :style="{ color: txtColor }" v-if="priceShow">
                 <span>￥</span>
                 {{ item.price }}
               </p>
             </div>
           </div>
-          <div class="btn" :style="{ background: txtColor }" v-if="bntShow">参与拼团</div>
+          <div class="btn" :style="{ background: txtColor }" v-if="bntShow">Tham gia mua chung</div>
         </div>
       </div>
     </div>
@@ -42,11 +42,11 @@
 import { mapState } from 'vuex';
 export default {
   name: 'home_pink',
-  cname: '拼团',
+  cname: 'Mua chung',
   icon: 'iconpintuan1',
   configName: 'c_home_pink',
-  type: 1, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'combination', // 外面匹配名称
+  type: 1, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'combination', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -82,7 +82,7 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'combination',
         timestamp: this.num,
@@ -93,27 +93,27 @@ export default {
           val: 3,
         },
         priceShow: {
-          title: '是否显示价格',
+          title: 'Hiển thị giá',
           val: true,
         },
         bntShow: {
-          title: '是否显示按钮',
+          title: 'Hiển thị nút',
           val: true,
         },
         titleShow: {
-          title: '是否显示名称',
+          title: 'Hiển thị tên',
           val: true,
         },
         pinkShow: {
-          title: '是否显示拼团标签',
+          title: 'Hiển thị nhãn mua chung',
           val: true,
         },
         joinShow: {
-          title: '是否显示参团标签',
+          title: 'Hiển thị nhãn số người tham gia',
           val: true,
         },
         txtColor: {
-          title: '文字背景色',
+          title: 'Màu nền chữ',
           name: 'themeColor',
           default: [
             {
@@ -127,22 +127,22 @@ export default {
           ],
         },
         conStyle: {
-          title: '背景样式',
+          title: 'Kiểu nền',
           name: 'conStyle',
           type: 1,
           list: [
             {
-              val: '直角',
+              val: 'Góc vuông',
               icon: 'iconPic_square',
             },
             {
-              val: '圆角',
+              val: 'Bo góc',
               icon: 'iconPic_fillet',
             },
           ],
         },
         bgColor: {
-          title: '背景颜色',
+          title: 'Màu nền',
           name: 'themeColor',
           default: [
             {
@@ -156,12 +156,12 @@ export default {
           ],
         },
         prConfig: {
-          title: '背景边距',
+          title: 'Lề nền',
           val: 10,
           min: 0,
         },
         themeColor: {
-          title: '主题风格',
+          title: 'Chủ đề giao diện',
           name: 'themeColor',
           default: [
             {
@@ -174,39 +174,39 @@ export default {
             },
           ],
         },
-        // 页面间距
+        // Lề trang
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },
-        // 左右间距
+        // Khoảng cách trái phải
         lrConfig: {
-          title: '左右边距',
+          title: 'Lề trái phải',
           val: 10,
           min: 0,
         },
         imgConfig: {
-          title: '最多可添加1张图片，建议宽度18 * 18px',
+          title: 'Có thể thêm tối đa 1 ảnh, kích thước đề xuất 18 * 18px',
           url: 'http://pro.crmeb.net/static/images/group02.gif',
         },
       },
       list: [
         {
           img: '',
-          name: '小米家用电饭煲',
+          name: 'Nồi cơm điện gia đình Xiaomi',
           price: '234',
           num: '1234',
         },
         {
           img: '',
-          name: '小米家用电饭煲',
+          name: 'Nồi cơm điện gia đình Xiaomi',
           price: '234',
           num: '1234',
         },
         {
           img: '',
-          name: '小米家用电饭煲',
+          name: 'Nồi cơm điện gia đình Xiaomi',
           price: '234',
           num: '1234',
         },

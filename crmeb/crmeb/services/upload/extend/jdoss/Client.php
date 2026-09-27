@@ -1,11 +1,11 @@
 <?php
 /**
  *  +----------------------------------------------------------------------
- *  | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+ *  | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
  *  +----------------------------------------------------------------------
  *  | Copyright (c) 2016~2022 https://www.crmeb.com All rights reserved.
  *  +----------------------------------------------------------------------
- *  | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+ *  | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
  *  +----------------------------------------------------------------------
  *  | Author: CRMEB Team <admin@crmeb.com>
  *  +----------------------------------------------------------------------
@@ -18,9 +18,9 @@ use crmeb\exceptions\UploadException;
 use crmeb\services\upload\BaseClient;
 
 /**
- * 京东云上传
+ * Tải lên JD Cloud
  * Class Client
- * @author 等风来
+ * @author Deng Fenglai
  * @email 136327134@qq.com
  * @date 2023/5/18
  * @package crmeb\services\upload\extend\jdoss
@@ -40,13 +40,13 @@ class Client extends BaseClient
     protected $secretKey;
 
     /**
-     * 桶名
+     * Tên bucket
      * @var string
      */
     protected $bucketName;
 
     /**
-     * 地区
+     * Khu vực
      * @var string
      */
     protected $region;
@@ -61,7 +61,7 @@ class Client extends BaseClient
      */
     protected $baseUrl = 's3.<REGION>.jdcloud-oss.com';
 
-    //默认地域
+    //Region mặc định
     const DEFAULT_REGION = 'cn-north-1';
 
     /**
@@ -78,11 +78,11 @@ class Client extends BaseClient
     }
 
     /**
-     * 检测桶，不存在返回true
+     * Kiểm tra bucket, không tồn tại thì trả về true
      * @param string $bucket
      * @param string $region
      * @return array|bool|\crmeb\services\upload\extend\cos\SimpleXMLElement
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2022/10/17
      */
@@ -99,9 +99,9 @@ class Client extends BaseClient
 
 
     /**
-     * 获取桶列表
+     * Lấy danh sách bucket
      * @return array|\crmeb\services\upload\extend\cos\SimpleXMLElement
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/18
      */
@@ -135,35 +135,35 @@ class Client extends BaseClient
     }
 
     /**
-     * 获取请求域名
+     * Lấy domain yêu cầu
      * @param string $bucket
      * @param string $region
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/18
      */
     protected function getRequestUrl(string $bucket = '', string $region = self::DEFAULT_REGION)
     {
         if (!$this->accessKeyId) {
-            throw new UploadException('请传入SecretId');
+            throw new UploadException('Vui lòng cung cấp SecretId');
         }
         if (!$this->secretKey) {
-            throw new UploadException('请传入SecretKey');
+            throw new UploadException('Vui lòng cung cấp SecretKey');
         }
 
         return ($bucket ? $bucket . '.' : '') . 's3.' . $region . '.jdcloud-oss.com';
     }
 
     /**
-     * 发起请求
+     * Khởi tạo yêu cầu
      * @param string $url
      * @param string $method
      * @param array $data
      * @param array $clientHeader
      * @param int $timeout
      * @return array|\crmeb\services\upload\extend\cos\SimpleXMLElement
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/18
      */
@@ -231,7 +231,7 @@ class Client extends BaseClient
     }
 
     /**
-     * 生成签名
+     * Tạo chữ ký
      * @param string $region
      * @param string $httpMethod
      * @param string $canonicalUri
@@ -241,7 +241,7 @@ class Client extends BaseClient
      * @param $payload
      * @param string $service
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/18
      */
@@ -273,19 +273,19 @@ class Client extends BaseClient
         return [
             [
                 'value' => 'cn-north-1',
-                'label' => '华北-北京',
+                'label' => 'Bắc Trung Quốc - Beijing',
             ],
             [
                 'value' => 'cn-south-1',
-                'label' => '华南-广州',
+                'label' => 'Nam Trung Quốc - Guangzhou',
             ],
             [
                 'value' => 'cn-east-2',
-                'label' => '华东-上海',
+                'label' => 'Đông Trung Quốc - Shanghai',
             ],
             [
                 'value' => 'cn-east-1',
-                'label' => '华东-宿迁',
+                'label' => 'Đông Trung Quốc - Suqian',
             ]
         ];
     }

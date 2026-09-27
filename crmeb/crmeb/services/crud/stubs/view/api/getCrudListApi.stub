@@ -1,5 +1,5 @@
 /**
- * 获取列表数据
+ * Lấy dữ liệu danh sách
  * @param params
  * @return {*}
  */

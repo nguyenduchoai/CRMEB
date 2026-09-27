@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -41,7 +41,7 @@ class StoreOrderInvoiceController
     }
 
     /**
-     * 订单开票
+     * Xuất hóa đơn cho đơn hàng
      * @param Request $request
      * @return mixed
      */
@@ -56,7 +56,7 @@ class StoreOrderInvoiceController
     }
 
     /**
-     * 开票记录
+     * Lịch sử xuất hóa đơn
      * @param Request $request
      * @return mixed
      */
@@ -67,7 +67,7 @@ class StoreOrderInvoiceController
     }
 
     /**
-     * 订单详情
+     * Chi tiết đơn hàng
      * @param \app\Request $request
      * @param $uni
      * @return mixed
@@ -80,9 +80,9 @@ class StoreOrderInvoiceController
         $order = $order->toArray();
         $orderInvoice = $this->services->getOne(['order_id' => $order['id']]);
         $order['invoice'] = $orderInvoice;
-        //是否开启门店自提
+        //Bật nhận tại cửa hàng
         $store_self_mention = sys_config('store_self_mention');
-        //关闭门店自提后 订单隐藏门店信息
+        //Sau khi tắt nhận tại cửa hàng, ẩn thông tin cửa hàng trong đơn hàng
         if ($store_self_mention == 0) $order['shipping_type'] = 1;
         if ($order['verify_code']) {
             $verify_code = $order['verify_code'];
@@ -114,14 +114,14 @@ class StoreOrderInvoiceController
             $order['code'] = $url;
         }
         $order['mapKey'] = sys_config('tengxun_map_key');
-        $order['yue_pay_status'] = (int)sys_config('balance_func_status') && (int)sys_config('yue_pay_status') == 1 ? (int)1 : (int)2;//余额支付 1 开启 2 关闭
-        $order['pay_weixin_open'] = (int)sys_config('pay_weixin_open') ?? 0;//微信支付 1 开启 0 关闭
-        $order['ali_pay_status'] = (bool)sys_config('ali_pay_status');//支付宝支付 1 开启 0 关闭
+        $order['yue_pay_status'] = (int)sys_config('balance_func_status') && (int)sys_config('yue_pay_status') == 1 ? (int)1 : (int)2;//Thanh toán bằng số dư: 1 là bật, 2 là tắt
+        $order['pay_weixin_open'] = (int)sys_config('pay_weixin_open') ?? 0;//WeChat Pay: 1 là bật, 0 là tắt
+        $order['ali_pay_status'] = (bool)sys_config('ali_pay_status');//Thanh toán Alipay: 1 là bật, 0 là tắt
         return app('json')->success($services->tidyOrder($order, true, true));
     }
 
     /**
-     * 前端下载电子发票
+     * Tải hóa đơn điện tử ở frontend
      * @param $id
      * @return \think\Response
      * @author wuhaotian

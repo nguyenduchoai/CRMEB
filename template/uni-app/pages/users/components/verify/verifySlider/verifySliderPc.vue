@@ -15,7 +15,7 @@
 				</transition>
 			</view>
 		</view>
-		<!-- 公共部分 -->
+		<!-- Phần chung -->
 		<view v-if="backImgBase" class="verify-bar-area" :style="{
         width: setSize.imgWidth,
         height: barSize.height,
@@ -54,7 +54,7 @@
 <script type="text/babel">
 	/**
  * VerifySlide
- * @description 滑块
+ * @description Thanh trượt
  * */
 import { aesEncrypt } from "../utils/ase";
 import { resetSize } from "../utils/util";
@@ -74,7 +74,7 @@ export default {
       type: String,
       default: "1"
     },
-    // 弹出式pop，固定fixed
+    // Dạng pop-up (pop), cố định (fixed)
     mode: {
       type: String,
       default: "fixed"
@@ -85,7 +85,7 @@ export default {
     },
     explain: {
       type: String,
-      default: "向右滑动完成验证"
+      default: "Kéo sang phải để hoàn tất xác minh"
     },
     imgSize: {
       type: Object,
@@ -121,14 +121,14 @@ export default {
   },
   data() {
     return {
-      secretKey: "", // 后端返回的加密秘钥 字段
-      passFalg: "", // 是否通过的标识
-      backImgBase: "", // 验证码背景图片
-      blockBackImgBase: "", // 验证滑块的背景图片
-      backToken: "", // 后端返回的唯一token值
-      startMoveTime: "", // 移动开始的时间
-      endMovetime: "", // 移动结束的时间
-      tipsBackColor: "", // 提示词的背景颜色
+      secretKey: "", // Trường khóa mã hóa do backend trả về
+      passFalg: "", // Cờ đánh dấu có đạt hay không
+      backImgBase: "", // Ảnh nền mã xác thực
+      blockBackImgBase: "", // Ảnh nền của thanh trượt xác thực
+      backToken: "", // Giá trị token duy nhất do backend trả về
+      startMoveTime: "", // Thời điểm bắt đầu di chuyển
+      endMovetime: "", // Thời điểm kết thúc di chuyển
+      tipsBackColor: "", // Màu nền của chữ gợi ý
       tipWords: "",
       text: "",
       finishText: "",
@@ -142,13 +142,13 @@ export default {
       left: 0,
       moveBlockLeft: undefined,
       leftBarWidth: undefined,
-      // 移动中样式
+      // Kiểu khi đang di chuyển
       moveBlockBackgroundColor: undefined,
       leftBarBorderColor: "#ddd",
       iconColor: undefined,
       iconClass: "icon-right",
-      status: false, // 鼠标状态
-      isEnd: false, // 是够验证完成
+      status: false, // Trạng thái chuột
+      isEnd: false, // Đã xác thực xong hay chưa
       showRefresh: true,
       transitionLeft: "",
       transitionWidth: ""
@@ -163,7 +163,7 @@ export default {
     }
   },
   watch: {
-    // type变化则全面刷新
+    // Khi type thay đổi thì làm mới toàn bộ
     type: {
       immediate: true,
       handler() {
@@ -172,7 +172,7 @@ export default {
     }
   },
   mounted() {
-    // 禁止拖拽
+    // Không cho kéo thả
     this.$el.onselectstart = function() {
       return false;
     };
@@ -182,7 +182,7 @@ export default {
       this.text = this.explain;
       this.getPictrue();
       this.$nextTick(() => {
-        const setSize = this.resetSize(this); // 重新设置宽度高度
+        const setSize = this.resetSize(this); // Đặt lại chiều rộng chiều cao
         for (const key in setSize) {
           this.$set(this.setSize, key, setSize[key]);
         }
@@ -198,7 +198,7 @@ export default {
         _this.move(e);
       });
 
-      // 鼠标松开
+      // Thả chuột
       window.removeEventListener("touchend", function() {
         _this.end();
       });
@@ -213,7 +213,7 @@ export default {
         _this.move(e);
       });
 
-      // 鼠标松开
+      // Thả chuột
       window.addEventListener("touchend", function() {
         _this.end();
       });
@@ -222,21 +222,21 @@ export default {
       });
     },
 
-    // 鼠标按下
+    // Nhấn chuột
     start: function(e) {
       e.preventDefault();
       e = e || window.event;
       if (!e.touches.length) {
-        // 兼容PC端
+        // Tương thích PC
         var x = e.clientX;
       } else {
-        // 兼容移动端
+        // Tương thích di động
         var x = e.touches[0].pageX;
       }
       this.startLeft = Math.floor(
         x - this.barArea.getBoundingClientRect().left
       );
-      this.startMoveTime = +new Date(); // 开始滑动的时间
+      this.startMoveTime = +new Date(); // Thời điểm bắt đầu trượt
       if (this.isEnd == false) {
         this.text = "";
         this.moveBlockBackgroundColor = "#337ab7";
@@ -246,19 +246,19 @@ export default {
         this.status = true;
       }
     },
-    // 鼠标移动
+    // Di chuyển chuột
     move: function(e) {
       e = e || window.event;
       if (this.status && this.isEnd == false) {
         if (!e.touches) {
-          // 兼容PC端
+          // Tương thích PC
           var x = e.clientX;
         } else {
-          // 兼容移动端
+          // Tương thích di động
           var x = e.touches[0].pageX;
         }
         var bar_area_left = this.barArea.getBoundingClientRect().left;
-        var move_block_left = x - bar_area_left; // 小方块相对于父元素的left值
+        var move_block_left = x - bar_area_left; // Giá trị left của ô vuông nhỏ so với phần tử cha
         if (
           move_block_left >=
           this.barArea.offsetWidth -
@@ -273,17 +273,17 @@ export default {
         if (move_block_left <= 0) {
           move_block_left = parseInt(parseInt(this.blockSize.width) / 2);
         }
-        // 拖动后小方块的left值
+        // Giá trị left của ô vuông nhỏ sau khi kéo
         this.moveBlockLeft = move_block_left - this.startLeft + "px";
         this.leftBarWidth = move_block_left - this.startLeft + "px";
       }
     },
 
-    // 鼠标松开
+    // Thả chuột
     end: function() {
       this.endMovetime = +new Date();
       var _this = this;
-      // 判断是否重合
+      // Kiểm tra có trùng nhau không
       if (this.status && this.isEnd == false) {
         var moveLeftDistance = parseInt(
           (this.moveBlockLeft || "").replace("px", "")
@@ -323,7 +323,7 @@ export default {
         	}, 1500)
         	this.passFalg = true
         	this.tipWords =
-        		`${((this.endMovetime-this.startMoveTime)/1000).toFixed(2)}s验证成功`
+        		`Xác minh thành công trong ${((this.endMovetime-this.startMoveTime)/1000).toFixed(2)}s`
         	setTimeout(() => {
         		this.tipWords = ""
         		this.$emit('success', {
@@ -340,7 +340,7 @@ export default {
         		this.refresh();
         	}, 1000);
         	this.$parent.$emit('error', this)
-        	this.tipWords = "验证失败"
+        	this.tipWords = "Xác minh thất bại"
         	setTimeout(() => {
         		this.tipWords = ""
         	}, 1000)
@@ -372,12 +372,12 @@ export default {
         this.text = this.explain;
       }, 300);
     },
-		// 请求背景图片和验证图片
+		// Yêu cầu ảnh nền và ảnh xác thực
 		getPictrue() {
 			let data = {
 				captchaType: this.captchaType,
 				clientUid: uni.getStorageSync('slider'),
-				ts: Date.now(), // 现在的时间戳
+				ts: Date.now(), // Timestamp hiện tại
 			}
 			getAjcaptcha(data).then((result) => {
 				let res = result.data
@@ -479,7 +479,7 @@ export default {
 	}
 
 	/* ---------------------------- */
-	/*常规验证码*/
+	/*Mã xác thực thông thường*/
 	.verify-code {
 		font-size: 20px;
 		text-align: center;
@@ -530,7 +530,7 @@ export default {
 	}
 
 
-	/*滑动验证码*/
+	/*Mã xác thực dạng trượt*/
 	.verify-bar-area {
 		position: relative;
 		background: #FFFFFF;
@@ -622,7 +622,7 @@ export default {
 		z-index: 3;
 	}
 
-	/*字体图标的css*/
+	/*CSS của font chữ biểu tượng (icon font)*/
 	/*@font-face {font-family: "iconfont";*/
 	/*src: url('../fonts/iconfont.eot?t=1508229193188'); !* IE9*!*/
 	/*src: url('../fonts/iconfont.eot?t=1508229193188#iefix') format('embedded-opentype'), !* IE6-IE8 *!*/

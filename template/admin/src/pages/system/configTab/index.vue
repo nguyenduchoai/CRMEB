@@ -10,37 +10,37 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="是否显示：">
+          <el-form-item label="Hiển thị:">
             <el-select
               v-model="formValidate.status"
-              placeholder="请选择"
+              placeholder="Vui lòng chọn"
               clearable
               @change="userSearchs"
               class="form_content_width"
             >
-              <el-option value="1" label="显示"></el-option>
-              <el-option value="0" label="不显示"></el-option>
+              <el-option value="1" label="Hiện"></el-option>
+              <el-option value="0" label="Không hiển thị"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="分类名称：" label-for="status2">
-            <el-input clearable placeholder="请输入分类名称" v-model="formValidate.title" class="form_content_width" />
+          <el-form-item label="Tên danh mục:" label-for="status2">
+            <el-input clearable placeholder="Vui lòng nhập tên danh mục" v-model="formValidate.title" class="form_content_width" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="userSearchs">查询分类</el-button>
+            <el-button type="primary" v-db-click @click="userSearchs">Tìm kiếm danh mục</el-button>
           </el-form-item>
           <div>
-            <el-form-item label="配置名称：" label-for="status2">
-              <el-input clearable placeholder="请输入配置名称" v-model="config_name" class="form_content_width" />
+            <el-form-item label="Tên cấu hình:" label-for="status2">
+              <el-input clearable placeholder="Vui lòng nhập tên cấu hình" v-model="config_name" class="form_content_width" />
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" v-db-click @click="searchConfig">查询配置</el-button>
+              <el-button type="primary" v-db-click @click="searchConfig">Tra cứu cấu hình</el-button>
             </el-form-item>
           </div>
         </el-form>
       </div>
     </el-card>
     <el-card :bordered="false" shadow="never" class="ivu-mt">
-      <el-button type="primary" v-db-click @click="classAdd" class="mr20">添加配置分类</el-button>
+      <el-button type="primary" v-db-click @click="classAdd" class="mr20">Thêm danh mục cấu hình</el-button>
       <vxe-table
         :border="false"
         class="vxeTable mt14"
@@ -53,9 +53,9 @@
         row-id="id"
       >
         <vxe-table-column field="id" title="ID" tooltip width="85"></vxe-table-column>
-        <vxe-table-column field="title" tree-node title="分类名称" min-width="150"></vxe-table-column>
-        <vxe-table-column field="eng_title" title="分类字段" min-width="150"></vxe-table-column>
-        <vxe-table-column field="statuss" title="状态" width="250">
+        <vxe-table-column field="title" tree-node title="Tên danh mục" min-width="150"></vxe-table-column>
+        <vxe-table-column field="eng_title" title="Trường danh mục" min-width="150"></vxe-table-column>
+        <vxe-table-column field="statuss" title="Trạng thái" width="250">
           <template v-slot="{ row }">
             <el-switch
               :active-value="1"
@@ -68,13 +68,13 @@
             </el-switch>
           </template>
         </vxe-table-column>
-        <vxe-table-column field="action" title="操作" width="160" fixed="right">
+        <vxe-table-column field="action" title="Thao tác" width="160" fixed="right">
           <template v-slot="{ row, index }">
-            <a v-db-click @click="goList(row)">配置列表</a>
+            <a v-db-click @click="goList(row)">Danh sách cấu hình</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="edit(row)">编辑</a>
+            <a v-db-click @click="edit(row)">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(row, '删除分类', index)">删除</a>
+            <a v-db-click @click="del(row, 'Xóa danh mục', index)">Xóa</a>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -89,7 +89,7 @@
       </div>
     </el-card>
 
-    <!-- 新建  编辑表单-->
+    <!-- Tạo mới  Sửa biểu mẫu-->
     <edit-from ref="edits" :update="true" :FromData="FromData" @submitFail="submitFail"></edit-from>
   </div>
 </template>
@@ -138,13 +138,13 @@ export default {
     this.getList();
   },
   methods: {
-    // 跳转到配置列表页面
+    // Chuyển đến trang danh sách cấu hình
     goList(row) {
       this.$router.push({
         path: this.$routeProStr + '/system/config/system_config_tab/list/' + row.id,
       });
     },
-    // 添加配置分类
+    // Thêm danh mục cấu hình
     classAdd() {
       classAddApi()
         .then(async (res) => {
@@ -155,7 +155,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 编辑
+    // Sửa
     edit(row) {
       classEditApi(row.id)
         .then(async (res) => {
@@ -169,7 +169,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -188,7 +188,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       this.formValidate.status = this.formValidate.status || '';
@@ -204,25 +204,25 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.formValidate.page = 1;
       this.getList();
     },
-    //搜索配置项
+    //Tìm kiếm mục cấu hình
     searchConfig() {
       if (this.config_name == '') {
-        return this.$message.error('请输入要搜索的配置名称');
+        return this.$message.error('Vui lòng nhập tên cấu hình cần tìm');
       }
       this.$router.push({
         path: this.$routeProStr + '/system/config/system_config_tab/list/0?config_name=' + this.config_name,
       });
     },
-    // 修改成功
+    // Sửa thành công
     submitFail() {
       //   this.getList();
     },
-    // 修改是否显示
+    // Sửa có hiển thị hay không
     onchangeIsShow(row) {
       let data = {
         id: row.id,

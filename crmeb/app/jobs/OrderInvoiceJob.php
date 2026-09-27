@@ -11,7 +11,7 @@ class OrderInvoiceJob extends BaseJobs
     use QueueTrait;
 
     /**
-     * 自动开票队列
+     * Hàng đợi tự động xuất hóa đơn
      * @param $id
      * @return bool
      * @author wuhaotian
@@ -33,7 +33,7 @@ class OrderInvoiceJob extends BaseJobs
     }
 
     /**
-     * 自动冲红队列
+     * Hàng đợi tự động hủy hóa đơn
      * @param $id
      * @return bool
      * @author wuhaotian

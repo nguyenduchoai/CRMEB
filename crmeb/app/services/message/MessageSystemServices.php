@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,12 +17,12 @@ use app\services\BaseServices;
 use crmeb\exceptions\ApiException;
 
 /**
- * 站内信services类
+ * Class services thông báo nội bộ
  * Class MessageSystemServices
  * @package app\services\system
- * @method save(array $data) 保存数据
- * @method mixed saveAll(array $data) 批量保存数据
- * @method update($id, array $data, ?string $key = null) 修改数据
+ * @method save(array $data) Lưu dữ liệu
+ * @method mixed saveAll(array $data) Lưu dữ liệu theo lô
+ * @method update($id, array $data, ?string $key = null) Dữ liệu cần chỉnh sửa
  *
  */
 class MessageSystemServices extends BaseServices
@@ -38,7 +38,7 @@ class MessageSystemServices extends BaseServices
     }
 
     /**
-     * 站内信列表
+     * Danh sách thông báo nội bộ
      * @param $uid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -63,7 +63,7 @@ class MessageSystemServices extends BaseServices
     }
 
     /**
-     * 站内信详情
+     * Chi tiết thông báo nội bộ
      * @param $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException

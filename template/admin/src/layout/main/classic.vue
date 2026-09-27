@@ -21,7 +21,7 @@ export default {
   name: 'layoutClassic',
   components: { Asides, Headers, Mains, TagsView },
   computed: {
-    // 获取布局配置信息
+    // Lấy thông tin cấu hình bố cục
     getThemeConfig() {
       return this.$store.state.themeConfig.themeConfig;
     },

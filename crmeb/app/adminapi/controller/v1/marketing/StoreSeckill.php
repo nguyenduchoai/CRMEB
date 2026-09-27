@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,7 +18,7 @@ use crmeb\services\CacheService;
 use think\facade\App;
 
 /**
- * 限时秒杀  控制器
+ * Controller flash sale giới hạn thời gian
  * Class StoreSeckill
  * @package app\admin\controller\store
  */
@@ -31,7 +31,7 @@ class StoreSeckill extends AuthController
     }
 
     /**
-     * 显示资源列表
+     * Hiển thị danh sách resource
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -52,7 +52,7 @@ class StoreSeckill extends AuthController
     }
 
     /**
-     * 详情
+     * Chi tiết
      * @param $id
      * @return mixed
      */
@@ -63,7 +63,7 @@ class StoreSeckill extends AuthController
     }
 
     /**
-     * 保存秒杀商品
+     * Lưu sản phẩm flash sale
      * @param int $id
      */
     public function save($id)
@@ -87,9 +87,9 @@ class StoreSeckill extends AuthController
             ['attrs', []],
             ['items', []],
             ['copy', 0],
-            ['logistics', []],//物流方式
-            ['freight', 1],//运费设置
-            ['postage', 0],//邮费
+            ['logistics', []],//Hình thức vận chuyển
+            ['freight', 1],//Cài đặt phí vận chuyển
+            ['postage', 0],//Phí vận chuyển
             ['custom_form', ''],
             ['virtual_type', 0],
             ['is_commission', 0],
@@ -100,7 +100,7 @@ class StoreSeckill extends AuthController
     }
 
     /**
-     * 删除秒杀
+     * Xóa flash sale
      * @param $id
      * @return mixed
      */
@@ -118,7 +118,7 @@ class StoreSeckill extends AuthController
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param $id
      * @param $status
      * @return mixed
@@ -128,7 +128,7 @@ class StoreSeckill extends AuthController
         if ($status == 1) {
             $info = $this->services->get($id);
             if ($info['stop_time'] < time()) {
-                return app('json')->fail('活动已结束，无法继续上架');
+                return app('json')->fail('Hoạt động đã kết thúc, không thể tiếp tục đăng bán');
             }
         }
         $this->services->update($id, ['status' => $status]);
@@ -136,7 +136,7 @@ class StoreSeckill extends AuthController
     }
 
     /**
-     * 秒杀时间段列表
+     * Danh sách khung giờ flash sale
      * @return mixed
      */
     public function time_list()
@@ -151,7 +151,7 @@ class StoreSeckill extends AuthController
     }
 
     /**
-     * 秒杀统计
+     * Thống kê flash sale
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -165,7 +165,7 @@ class StoreSeckill extends AuthController
     }
 
     /**
-     * 秒杀参与人统计
+     * Thống kê người tham gia flash sale
      * @param $id
      * @return mixed
      */
@@ -178,7 +178,7 @@ class StoreSeckill extends AuthController
     }
 
     /**
-     * 秒杀订单统计
+     * Thống kê đơn hàng flash sale
      * @param $id
      * @return mixed
      */
@@ -222,18 +222,18 @@ class StoreSeckill extends AuthController
             ['product_infos', []]
         ]);
         $this->services->seckillActivitySave($id, $data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     public function seckillActivityDel($id)
     {
         app()->make(StoreActivityServices::class)->activityDel($id, 1);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 
     public function seckillActivityStatus($id, $status)
     {
         app()->make(StoreActivityServices::class)->activityStatus($id, $status, 1);
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 }

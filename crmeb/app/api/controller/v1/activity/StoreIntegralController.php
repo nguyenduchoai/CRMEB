@@ -15,7 +15,7 @@ class StoreIntegralController
     }
 
     /**
-     * 积分商城首页数据
+     * Dữ liệu trang chủ cửa hàng đổi điểm
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -23,7 +23,7 @@ class StoreIntegralController
      */
     public function index()
     {
-        $data['banner'] = sys_data('integral_shop_banner') ?? [];//TODO 积分商城banner
+        $data['banner'] = sys_data('integral_shop_banner') ?? [];//TODO Banner cửa hàng đổi điểm
         $where = ['is_show' => 1];
         $where['is_host'] = 1;
         $data['list'] = $this->services->getIntegralList($where);
@@ -31,7 +31,7 @@ class StoreIntegralController
     }
 
     /**
-     * 商品列表
+     * Danh sách sản phẩm
      * @param Request $request
      * @return mixed
      */
@@ -48,7 +48,7 @@ class StoreIntegralController
     }
 
     /**
-     * 积分商品详情
+     * Chi tiết sản phẩm đổi điểm
      * @param Request $request
      * @param $id
      * @return mixed

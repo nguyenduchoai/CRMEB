@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -11,7 +11,7 @@
 import request from '@/libs/request';
 
 /**
- * 同步路由权限
+ * Đồng bộ quyền route
  */
 export function syncRoute(appName) {
   return request({
@@ -20,7 +20,7 @@ export function syncRoute(appName) {
   });
 }
 /**
- * 新增路由分类
+ * Thêm danh mục route
  */
 export function routeCate(appName) {
   return request({
@@ -29,7 +29,7 @@ export function routeCate(appName) {
   });
 }
 /**
- * 路由树
+ * Cây route
  */
 export function routeList(apiType) {
   return request({
@@ -39,7 +39,7 @@ export function routeList(apiType) {
 }
 
 /**
- * 添加/编辑接口
+ * Thêm/sửa API
  * @param {*} data
  * @returns
  */
@@ -52,7 +52,7 @@ export function routeSave(data) {
 }
 
 /**
- * 接口信息详情
+ * Chi tiết thông tin API
  * @param {*} data
  * @returns
  */
@@ -63,7 +63,7 @@ export function routeDet(id) {
   });
 }
 /**
- * 接口分类编辑
+ * Sửa danh mục API
  * @param {*} data
  * @returns
  */
@@ -75,8 +75,8 @@ export function routeEdit(id, appName) {
 }
 
 /**
- * @description 修改名称
- * @param {Object} data data {Object} 传值
+ * @description Sửa tên
+ * @param {Object} data data {Object} Truyền giá trị
  */
 export function interfaceEditName(data) {
   return request({
@@ -87,7 +87,7 @@ export function interfaceEditName(data) {
 }
 
 /**
- * @description 删除
+ * @description Xóa
  */
 export function routeDel(id) {
   return request({
@@ -96,7 +96,7 @@ export function routeDel(id) {
   });
 }
 /**
- * @description 删除
+ * @description Xóa
  */
 export function routeCateDel(id) {
   return request({
@@ -106,7 +106,7 @@ export function routeCateDel(id) {
 }
 
 /**
- * 接口信息详情
+ * Chi tiết thông tin API
  * @param {*} data
  * @returns
  */

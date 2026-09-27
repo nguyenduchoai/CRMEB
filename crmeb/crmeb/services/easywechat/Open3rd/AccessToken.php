@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -22,19 +22,19 @@ use crmeb\services\HttpService;
 class AccessToken extends HttpService
 {
     /**
-     * 第三方平台 appid
+     * appid nền tảng bên thứ ba
      * @var string
      */
     protected $component_appid;
 
     /**
-     * 第三方平台 appsecret
+     * appsecret nền tảng bên thứ ba
      * @var string
      */
     protected $component_appsecret;
 
     /**
-     * 微信后台推送的 ticket
+     * ticket được đẩy từ backend WeChat
      * @var string
      */
     protected $component_verify_ticket;
@@ -45,25 +45,25 @@ class AccessToken extends HttpService
     protected $cache;
 
     /**
-     * 第三方平台token
+     * token nền tảng bên thứ ba
      * @var string
      */
     protected $component_access_token;
 
     /**
-     * 授权方appid
+     * appid của bên ủy quyền
      * @var string
      */
     protected $authorizer_appid;
 
     /**
-     * 接口调用令牌（在授权的公众号/小程序具备 API 权限时，才有此返回值）
+     * Token gọi API (chỉ có giá trị trả về này khi OA WeChat/Mini Program được ủy quyền có quyền API)
      * @var string
      */
     protected $authorizer_access_token;
 
     /**
-     * 刷新令牌（在授权的公众号具备API权限时，才有此返回值），刷新令牌主要用于第三方平台获取和刷新已授权用户的 authorizer_access_token。一旦丢失，只能让用户重新授权，才能再次拿到新的刷新令牌。用户重新授权后，之前的刷新令牌会失效
+     * Refresh token (chỉ có giá trị trả về này khi OA WeChat được ủy quyền có quyền API), refresh token chủ yếu dùng để nền tảng bên thứ ba lấy và làm mới authorizer_access_token của người dùng đã ủy quyền. Nếu bị mất, chỉ có thể để người dùng ủy quyền lại thì mới lấy được refresh token mới. Sau khi người dùng ủy quyền lại, refresh token trước đó sẽ mất hiệu lực
      * @var string
      */
     protected $authorizer_refresh_token;
@@ -74,17 +74,17 @@ class AccessToken extends HttpService
     protected $cacheTokenPrefix = "component_access_token_crmeb";
 
     /**
-     * 获取第三方平台token
+     * Lấy token nền tảng bên thứ ba
      * @var string
      */
     const TOKEN_URL = 'https://api.weixin.qq.com/cgi-bin/component/api_component_token';
 
     /**
-     * 使用授权码获取授权信息
+     * Dùng mã ủy quyền để lấy thông tin ủy quyền
      */
     const AUTH_INFO = 'https://api.weixin.qq.com/cgi-bin/component/api_query_auth';
     /**
-     * 获取、刷新接口调用token
+     * Lấy, làm mới token gọi API
      */
     const AUTHORIZER_TOKEN = 'https://api.weixin.qq.com/cgi-bin/component/api_authorizer_token';
 
@@ -109,7 +109,7 @@ class AccessToken extends HttpService
     }
 
     /**
-     * 获取配置
+     * Lấy cấu hình
      * @return array
      */
     public function getConfig()
@@ -146,7 +146,7 @@ class AccessToken extends HttpService
     }
 
     /**
-     * 获取第三方缓存token
+     * Lấy token cache của bên thứ ba
      * @return mixed
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
@@ -166,28 +166,28 @@ class AccessToken extends HttpService
     }
 
     /**
-     * 从服务器获取token
+     * Lấy token từ server
      * @return mixed
      */
     public function getTokenFromServer()
     {
         $config = $this->getConfig();
         if (!$config['component_appid'] || !$config['component_appsecret']) {
-            throw new ApiException('请先配置第三方component_appid、component_appsecret');
+            throw new ApiException('Vui lòng cấu hình component_appid, component_appsecret của bên thứ ba trước');
         }
         if (!$config['component_verify_ticket']) {
-            throw new ApiException('未配置微信开放平台或者未收到推送ticket,请等待10分钟后再试');
+            throw new ApiException('Chưa cấu hình WeChat Open Platform hoặc chưa nhận được ticket được đẩy về, vui lòng đợi 10 phút rồi thử lại');
         }
         $res = $this->postRequest(self::TOKEN_URL, $config);
         $res = json_decode($res, true);
         if (!$res || $res['errcode'] != 0 || !isset($res['component_access_token']) || !$res['component_access_token']) {
-            throw new ApiException('获取component_access_token失败,原因：' . $res['errmsg']);
+            throw new ApiException('Lấy component_access_token thất bại, lý do:' . $res['errmsg']);
         }
         return $res;
     }
 
     /**
-     * 获取授权方token
+     * Lấy token của bên ủy quyền
      * @param $authorizer_appid
      * @return mixed
      */
@@ -199,7 +199,7 @@ class AccessToken extends HttpService
             $refreshTokenKey = md5('authorizer_refresh_token' . $authorizer_appid . '_' . $this->cacheTokenPrefix);
             $authorizer_refresh_token = $this->cache->get($refreshTokenKey);
             if (!$authorizer_refresh_token) {
-                throw new ApiException('请重新授权');
+                throw new ApiException('Vui lòng ủy quyền lại');
             }
             $res = $this->freshAuthorizationToken($authorizer_appid, $authorizer_refresh_token);
             $this->cache->set(md5('authorizer_access_token' . $res['authorizer_appid'] . '_' . $this->cacheTokenPrefix), $res['authorizer_access_token'], $res['expires_in'] ? $res['expires_in'] - 200 : 7000);
@@ -210,22 +210,22 @@ class AccessToken extends HttpService
     }
 
     /**
-     * 获取授权信息
-     * @param $authorization_code 授权码
-     * @return authorizer_appid    string    授权方 appid
-     * @return authorizer_access_token string    接口调用令牌（在授权的公众号/小程序具备 API 权限时，才有此返回值）
-     * @return authorizer_refresh_token    string    刷新令牌（在授权的公众号具备API权限时，才有此返回值），刷新令牌主要用于第三方平台获取和刷新已授权用户的 authorizer_access_token。一旦丢失，只能让用户重新授权，才能再次拿到新的刷新令牌。用户重新授权后，之前的刷新令牌会失效
+     * Lấy thông tin ủy quyền
+     * @param $authorization_code Mã ủy quyền
+     * @return authorizer_appid    string    appid của bên ủy quyền
+     * @return authorizer_access_token string    Token gọi API (chỉ có giá trị trả về này khi OA WeChat/Mini Program được ủy quyền có quyền API)
+     * @return authorizer_refresh_token    string    Refresh token (chỉ có giá trị trả về này khi OA WeChat được ủy quyền có quyền API), refresh token chủ yếu dùng để nền tảng bên thứ ba lấy và làm mới authorizer_access_token của người dùng đã ủy quyền. Nếu bị mất, chỉ có thể để người dùng ủy quyền lại thì mới lấy được refresh token mới. Sau khi người dùng ủy quyền lại, refresh token trước đó sẽ mất hiệu lực
      * @return array|bool|mixed
      */
     public function getAuthorizationInfo($authorization_code)
     {
         $res = $this->httpRequest(self::AUTH_INFO, ['authorization_code' => $authorization_code], false);
         if (!$res || $res['errcode'] != 0 || !isset($res['authorization_info']) || !$res['authorization_info']) {
-            throw new ApiException('获取authorizer_access_token失败');
+            throw new ApiException('Lấy authorizer_access_token thất bại');
         }
         $res = $res['authorization_info'];
         $this->cache->set(md5('authorizer_access_token' . $res['authorizer_appid'] . '_' . $this->cacheTokenPrefix), $res['authorizer_access_token'], $res['expires_in'] ? $res['expires_in'] - 200 : 7000);
-        //在授权的公众号具备API权限时，才有此返回值
+        //Chỉ có giá trị trả về này khi OA WeChat được ủy quyền có quyền API
         if (isset($res['authorizer_refrsh_token'])) {
             $this->cache->set(md5('authorizer_refresh_token' . $res['authorizer_appid'] . '_' . $this->cacheTokenPrefix), $res['authorizer_refrsh_token'], 30 * 24 * 3600);
         }
@@ -233,25 +233,25 @@ class AccessToken extends HttpService
     }
 
     /**
-     *  获取/刷新接口调用令牌
-     * @param $authorizer_appid 授权方appid
-     * @param $authorizer_refresh_token 刷新令牌，获取授权信息时得到
-     * @return authorizer_access_token    string    授权方令牌
-     * @return authorizer_refresh_token    string    刷新令牌
+     *  Lấy/làm mới token gọi API
+     * @param $authorizer_appid appid của bên ủy quyền
+     * @param $authorizer_refresh_token Refresh token, có được khi lấy thông tin ủy quyền
+     * @return authorizer_access_token    string    Token của bên ủy quyền
+     * @return authorizer_refresh_token    string    Refresh token
      * @return array|bool|mixed
      */
     public function freshAuthorizationToken($authorizer_appid, $authorizer_refresh_token)
     {
         $res = $this->postRequest(self::AUTHORIZER_TOKEN, ['component_access_token' => $this->component_access_token, 'authorizer_appid' => $authorizer_appid, 'authorizer_refresh_token' => $authorizer_refresh_token]);
         if (!$res || $res['errcode'] != 0 || !isset($res['authorizer_access_token']) || !$res['authorizer_access_token']) {
-            throw new ApiException('刷新authorizer_access_token失败,请重新获取授权');
+            throw new ApiException('Làm mới authorizer_access_token thất bại, vui lòng ủy quyền lại');
         }
         return $res;
     }
 
 
     /**
-     * 请求
+     * Gửi yêu cầu
      * @param string $url
      * @param array $data
      * @param string $method
@@ -263,44 +263,44 @@ class AccessToken extends HttpService
         if (!$is_atuh) {
             $this->getComponentToken();
             if (!$this->component_access_token) {
-                throw new ApiException('配置已更改或component_access_token已失效');
+                throw new ApiException('Cấu hình đã thay đổi hoặc component_access_token đã hết hiệu lực');
             }
             $url .= '?component_access_token=' . $this->component_access_token;
             $data = array_merge($data, ['component_appid' => $this->component_appid]);
         } else {
             if (!$this->authorizer_appid) {
-                throw new ApiException('缺少授权方authorizer_appid');
+                throw new ApiException('Thiếu authorizer_appid của bên ủy quyền');
             }
             $access_token = $this->getAccessToken($this->authorizer_appid);
             if (!$access_token) {
-                throw new ApiException('配置已更改或授权已失效请重新授权');
+                throw new ApiException('Cấu hình đã thay đổi hoặc ủy quyền đã hết hiệu lực, vui lòng ủy quyền lại');
             }
             $url .= '?access_token=' . $access_token;
         }
         $res = $this->request($url, $method, $data);
         if (!$res) {
-            throw new ApiException('请求微信服务器发生异常，请稍后重试');
+            throw new ApiException('Gửi yêu cầu đến máy chủ WeChat gặp lỗi, vui lòng thử lại sau');
         }
         return json_decode($res, true) ?: false;
     }
 
     /**
-     * XML数据转换成array数组
+     * Chuyển dữ liệu XML thành mảng array
      * @param string $xml
      * @return array
      */
     public function xmlToArray($xml)
     {
-        // 禁止引用外部xml实体
+        // Cấm tham chiếu thực thể (entity) xml bên ngoài
         libxml_disable_entity_loader(true);
         $res = simplexml_load_string($xml, 'SimpleXMLElement', LIBXML_NOCDATA);
         return (array)$res;
     }
 
     /**
-     * 对解密后的明文进行补位删除
-     * @param decrypted 解密后的明文
-     * @return 删除填充补位后的明文
+     * Xóa phần đệm (padding) của bản rõ sau khi giải mã
+     * @param decrypted Bản rõ sau khi giải mã
+     * @return Bản rõ sau khi xóa phần đệm (padding)
      */
     public function decode($text)
     {
@@ -313,15 +313,15 @@ class AccessToken extends HttpService
     }
 
     /**
-     * 对密文进行解密
-     * @param string $encodingAesKey 解密
-     * @param string $encrypted 需要解密的密文
-     * @return string 解密得到的明文
+     * Giải mã bản mã hóa (ciphertext)
+     * @param string $encodingAesKey Giải mã
+     * @param string $encrypted Bản mã hóa cần giải mã
+     * @return string Bản rõ có được sau khi giải mã
      */
     public function decrypt($encodingAesKey, $encrypted)
     {
         try {
-            //使用BASE64对需要解密的字符串进行解码
+            //Dùng BASE64 để decode chuỗi cần giải mã
             $ciphertext_dec = base64_decode($encrypted);
             $iv = substr(base64_decode($encodingAesKey . "="), 0, 16);
             $decrypted = openssl_decrypt($ciphertext_dec, 'AES-256-CBC', $this->key, OPENSSL_RAW_DATA | OPENSSL_ZERO_PADDING, $iv);
@@ -329,9 +329,9 @@ class AccessToken extends HttpService
             throw new ApiException($e->getMessage());
         }
         try {
-            //去除补位字符
+            //Bỏ ký tự đệm (padding)
             $result = $this->decode($decrypted);
-            //去除16位随机字符串,网络字节序和AppId
+            //Bỏ chuỗi ngẫu nhiên 16 ký tự, network byte order và AppId
             if (strlen($result) < 16)
                 return "";
             $content = substr($result, 16, strlen($result));

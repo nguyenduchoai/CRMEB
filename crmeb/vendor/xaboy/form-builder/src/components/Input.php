@@ -98,7 +98,7 @@ class Input extends FormComponentDriver
         $this->placeholder($this->getPlaceHolder());
     }
 
-    protected function getPlaceHolder($pre = '请输入')
+    protected function getPlaceHolder($pre = 'Vui lòng nhập')
     {
         return parent::getPlaceHolder($pre);
     }

@@ -8,7 +8,7 @@
       <div class="hd">
         <div class="left">
           <img :src="imgUrl" alt="" />
-          <p>限时秒杀</p>
+          <p>Flash sale giờ vàng</p>
           <div class="time">
             <span :style="{ background: countDownColor, color: themeColor }">00</span>
             <em>:</em>
@@ -17,7 +17,7 @@
             <span :style="{ background: countDownColor, color: themeColor }">00</span>
           </div>
         </div>
-        <div class="right">更多</div>
+        <div class="right">Xem thêm</div>
       </div>
       <div class="list-wrapper">
         <div class="list-item" v-for="(item, index) in list" :index="index" :style="{ marginRight: listRight + 'px' }">
@@ -25,12 +25,12 @@
             <img :src="item.img" alt="" v-if="item.img" />
             <div class="empty-box"><span class="iconfont-diy icontupian"></span></div>
             <div v-if="discountShow" class="discount" :style="{ borderColor: themeColor, color: themeColor }">
-              {{ item.discount }}折起
+              Chỉ từ {{ item.discount }}/10 giá gốc
             </div>
           </div>
           <div class="title line1" v-if="titleShow">{{ item.name }}</div>
           <div class="price">
-            <span class="label" :style="{ background: themeColor }" v-if="seckillShow">抢</span>
+            <span class="label" :style="{ background: themeColor }" v-if="seckillShow">Mua</span>
             <span class="num-label" :style="{ color: themeColor }" v-if="priceShow">￥</span>
             <span class="num" :style="{ color: themeColor }" v-if="priceShow">{{ item.price }}</span>
           </div>
@@ -44,11 +44,11 @@
 import { mapState, mapMutations } from 'vuex';
 export default {
   name: 'home_seckill',
-  cname: '秒杀',
+  cname: 'Flash sale',
   configName: 'c_home_seckill',
   icon: 'iconmiaosha1',
-  type: 1, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'seckill', // 外面匹配名称
+  type: 1, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'seckill', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -85,7 +85,7 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'seckill',
         timestamp: this.num,
@@ -93,7 +93,7 @@ export default {
           tabVal: 0,
         },
         countDownColor: {
-          title: '倒计时背景色',
+          title: 'Màu nền đồng hồ đếm ngược',
           name: 'countDownColor',
           default: [
             {
@@ -107,7 +107,7 @@ export default {
           ],
         },
         themeColor: {
-          title: '主题风格',
+          title: 'Chủ đề giao diện',
           name: 'themeColor',
           default: [
             {
@@ -121,22 +121,22 @@ export default {
           ],
         },
         conStyle: {
-          title: '背景样式',
+          title: 'Kiểu nền',
           name: 'conStyle',
           type: 1,
           list: [
             {
-              val: '直角',
+              val: 'Góc vuông',
               icon: 'iconPic_square',
             },
             {
-              val: '圆角',
+              val: 'Bo góc',
               icon: 'iconPic_fillet',
             },
           ],
         },
         bgColor: {
-          title: '背景颜色',
+          title: 'Màu nền',
           name: 'themeColor',
           default: [
             {
@@ -150,61 +150,61 @@ export default {
           ],
         },
         prConfig: {
-          title: '背景边距',
+          title: 'Lề nền',
           val: 10,
           min: 0,
         },
         priceShow: {
-          title: '是否显示价格',
+          title: 'Hiển thị giá',
           val: true,
         },
         discountShow: {
-          title: '是否显示折扣标签',
+          title: 'Hiển thị nhãn chiết khấu',
           val: true,
         },
         titleShow: {
-          title: '是否显示名称',
+          title: 'Hiển thị tên',
           val: true,
         },
         seckillShow: {
-          title: '抢购标签',
+          title: 'Nhãn mua ngay',
           val: true,
         },
         numberConfig: {
           val: 3,
         },
         lrConfig: {
-          title: '左右边距',
+          title: 'Lề trái phải',
           val: 10,
           min: 0,
         },
-        // 页面间距
+        // Lề trang
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },
         imgConfig: {
-          title: '最多可添加1张图片，建议宽度18 * 18px',
+          title: 'Có thể thêm tối đa 1 ảnh, kích thước đề xuất 18 * 18px',
           url: 'http://pro.crmeb.net/static/images/spike-icon-002.gif',
         },
       },
       list: [
         {
           img: '',
-          name: '小米家用电饭煲小米家用电饭煲',
+          name: 'Nồi cơm điện gia đình Xiaomi Nồi cơm điện gia đình Xiaomi',
           price: '234',
           discount: '1.2',
         },
         {
           img: '',
-          name: '小米家用电饭煲小米家用电饭煲',
+          name: 'Nồi cơm điện gia đình Xiaomi Nồi cơm điện gia đình Xiaomi',
           price: '234',
           discount: '1.2',
         },
         {
           img: '',
-          name: '小米家用电饭煲小米家用电饭煲',
+          name: 'Nồi cơm điện gia đình Xiaomi Nồi cơm điện gia đình Xiaomi',
           price: '234',
           discount: '1.2',
         },

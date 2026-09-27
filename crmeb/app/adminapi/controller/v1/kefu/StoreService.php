@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,7 +21,7 @@ use crmeb\services\CacheService;
 use think\facade\App;
 
 /**
- * 客服管理
+ * Quản lý CSKH
  * Class StoreService
  * @package app\admin\controller\store
  */
@@ -39,7 +39,7 @@ class StoreService extends AuthController
     }
 
     /**
-     * 显示资源列表
+     * Hiển thị danh sách resource
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -51,7 +51,7 @@ class StoreService extends AuthController
     }
 
     /**
-     * 显示创建资源表单页
+     * Hiển thị trang form tạo resource
      * @param UserWechatuserServices $services
      * @return mixed
      */
@@ -71,7 +71,7 @@ class StoreService extends AuthController
     }
 
     /**
-     * 添加客服表单
+     * Biểu mẫu thêm nhân viên CSKH
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
@@ -81,7 +81,7 @@ class StoreService extends AuthController
     }
 
     /**
-     * 保存新建的资源
+     * Lưu resource mới tạo
      * @return mixed
      */
     public function save()
@@ -151,7 +151,7 @@ class StoreService extends AuthController
     }
 
     /**
-     * 显示编辑资源表单页
+     * Hiển thị trang form sửa resource
      * @param $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -162,7 +162,7 @@ class StoreService extends AuthController
     }
 
     /**
-     * 保存新建的资源
+     * Lưu resource mới tạo
      * @param $id
      * @return mixed
      */
@@ -211,7 +211,7 @@ class StoreService extends AuthController
     }
 
     /**
-     * 删除指定资源
+     * Xóa resource được chỉ định
      * @param int $id
      * @return \think\Response
      */
@@ -224,7 +224,7 @@ class StoreService extends AuthController
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param UserServices $services
      * @param $id
      * @param $status
@@ -245,7 +245,7 @@ class StoreService extends AuthController
     }
 
     /**
-     * 聊天记录
+     * Lịch sử trò chuyện
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -263,7 +263,7 @@ class StoreService extends AuthController
 
 
     /**
-     * 聊天记录
+     * Lịch sử trò chuyện
      * @param StoreServiceLogServices $services
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -293,7 +293,7 @@ class StoreService extends AuthController
     }
 
     /**
-     * 客服登录
+     * Đăng nhập CSKH
      * @param LoginServices $services
      * @param $id
      * @return mixed

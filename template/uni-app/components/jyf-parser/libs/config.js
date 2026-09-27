@@ -1,22 +1,22 @@
-/* 配置文件 */
+/* Tệp cấu hình */
 // #ifdef MP-WEIXIN
-const canIUse = wx.canIUse('editor'); // 高基础库标识，用于兼容
+const canIUse = wx.canIUse('editor'); // Cờ base library cao, dùng để tương thích
 // #endif
 module.exports = {
-	// 过滤器函数
+	// Hàm filter
 	filter: null,
-	// 代码高亮函数
+	// Hàm tô sáng code
 	highlight: null,
-	// 文本处理函数
+	// Hàm xử lý văn bản
 	onText: null,
 	blankChar: makeMap(' ,\xA0,\t,\r,\n,\f'),
-	// 块级标签，将被转为 div
+	// Thẻ block-level, sẽ được chuyển thành div
 	blockTags: makeMap('address,article,aside,body,caption,center,cite,footer,header,html,nav,section' + (
 		// #ifdef MP-WEIXIN
 		canIUse ? '' :
 		// #endif
 		',pre')),
-	// 将被移除的标签
+	// Thẻ sẽ bị xóa
 	ignoreTags: makeMap(
 		'area,base,basefont,canvas,command,frame,input,isindex,keygen,link,map,meta,param,script,source,style,svg,textarea,title,track,use,wbr'
 		// #ifdef MP-WEIXIN
@@ -26,23 +26,23 @@ module.exports = {
 		+ ',embed,iframe'
 		// #endif
 	),
-	// 只能被 rich-text 显示的标签
+	// Thẻ chỉ có thể hiển thị bằng rich-text
 	richOnlyTags: makeMap('a,colgroup,fieldset,legend,picture,table'
 		// #ifdef MP-WEIXIN
 		+ (canIUse ? ',bdi,bdo,caption,rt,ruby' : '')
 		// #endif
 	),
-	// 自闭合的标签
+	// Thẻ tự đóng
 	selfClosingTags: makeMap(
 		'area,base,basefont,br,col,circle,ellipse,embed,frame,hr,img,input,isindex,keygen,line,link,meta,param,path,polygon,rect,source,track,use,wbr'
 	),
-	// 信任的属性
+	// Thuộc tính tin cậy
 	trustAttrs: makeMap(
 		'align,alt,app-id,author,autoplay,border,cellpadding,cellspacing,class,color,colspan,controls,data-src,dir,face,height,href,id,ignore,loop,media,muted,name,path,poster,rowspan,size,span,src,start,style,type,unit-id,width,xmlns'
 	),
-	// bool 型的属性
+	// Thuộc tính kiểu bool
 	boolAttrs: makeMap('autoplay,controls,ignore,loop,muted'),
-	// 信任的标签
+	// Thẻ tin cậy
 	trustTags: makeMap(
 		'a,abbr,ad,audio,b,blockquote,br,code,col,colgroup,dd,del,dl,dt,div,em,fieldset,h1,h2,h3,h4,h5,h6,hr,i,img,ins,label,legend,li,ol,p,q,source,span,strong,sub,sup,table,tbody,td,tfoot,th,thead,tr,title,ul,video'
 		// #ifdef MP-WEIXIN
@@ -52,7 +52,7 @@ module.exports = {
 		+ ',embed,iframe'
 		// #endif
 	),
-	// 默认的标签样式
+	// Style mặc định của thẻ
 	userAgentStyles: {
 		address: 'font-style:italic',
 		big: 'display:inline;font-size:1.2em',

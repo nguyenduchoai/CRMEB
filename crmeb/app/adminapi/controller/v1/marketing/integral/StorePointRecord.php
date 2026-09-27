@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\activity\integral\StorePointRecordServices;
 use think\facade\App;
 
 /**
- * 积分记录
+ * Lịch sử điểm thưởng
  */
 class StorePointRecord extends AuthController
 {
@@ -30,7 +30,7 @@ class StorePointRecord extends AuthController
     }
 
     /**
-     * 积分记录
+     * Lịch sử điểm thưởng
      * @return mixed
      */
     public function pointRecord()
@@ -44,7 +44,7 @@ class StorePointRecord extends AuthController
     }
 
     /**
-     * 积分记录备注
+     * Ghi chú lịch sử điểm thưởng
      * @return mixed
      */
     public function pointRecordRemark($id = 0)
@@ -57,7 +57,7 @@ class StorePointRecord extends AuthController
     }
 
     /**
-     * 积分统计基础信息
+     * Thông tin cơ bản thống kê điểm thưởng
      * @return mixed
      */
     public function getBasic()
@@ -70,7 +70,7 @@ class StorePointRecord extends AuthController
     }
 
     /**
-     * 积分统计趋势图
+     * Biểu đồ xu hướng thống kê điểm thưởng
      * @return mixed
      */
     public function getTrend()
@@ -83,7 +83,7 @@ class StorePointRecord extends AuthController
     }
 
     /**
-     * 积分来源
+     * Nguồn điểm thưởng
      * @return mixed
      */
     public function getChannel()
@@ -96,7 +96,7 @@ class StorePointRecord extends AuthController
     }
 
     /**
-     * 积分消耗
+     * Điểm thưởng đã dùng
      * @return mixed
      */
     public function getType()

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,7 +18,7 @@ use app\services\system\SystemDatabackupServices;
 
 
 /**
- * 数据备份
+ * Sao lưu dữ liệu
  * Class SystemDatabackup
  * @package app\admin\controller\system
  *
@@ -26,7 +26,7 @@ use app\services\system\SystemDatabackupServices;
 class SystemDatabackup extends AuthController
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * SystemDatabackup constructor.
      * @param App $app
      * @param SystemDatabackupServices $services
@@ -38,7 +38,7 @@ class SystemDatabackup extends AuthController
     }
 
     /**
-     * 获取数据库表
+     * Lấy bảng cơ sở dữ liệu
      */
     public function index()
     {
@@ -46,7 +46,7 @@ class SystemDatabackup extends AuthController
     }
 
     /**
-     * 查看表结构 详情
+     * Xem chi tiết cấu trúc bảng
      */
     public function read()
     {
@@ -57,9 +57,9 @@ class SystemDatabackup extends AuthController
     }
 
     /**
-     * 更新数据表或者表字段备注
+     * Cập nhật ghi chú bảng dữ liệu hoặc trường của bảng
      * @return \think\Response
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/04/11
      */
@@ -82,7 +82,7 @@ class SystemDatabackup extends AuthController
     }
 
     /**
-     * 优化表
+     * Tối ưu bảng
      */
     public function optimize()
     {
@@ -94,7 +94,7 @@ class SystemDatabackup extends AuthController
     }
 
     /**
-     * 修复表
+     * Sửa chữa bảng
      */
     public function repair()
     {
@@ -106,7 +106,7 @@ class SystemDatabackup extends AuthController
     }
 
     /**
-     * 备份表
+     * Bảng backup
      */
     public function backup()
     {
@@ -118,7 +118,7 @@ class SystemDatabackup extends AuthController
     }
 
     /**
-     * 获取备份记录表
+     * Lấy bảng lịch sử backup
      */
     public function fileList()
     {
@@ -126,7 +126,7 @@ class SystemDatabackup extends AuthController
     }
 
     /**
-     * 删除备份记录表
+     * Xóa bảng lịch sử backup
      */
     public function delFile()
     {
@@ -136,7 +136,7 @@ class SystemDatabackup extends AuthController
     }
 
     /**
-     * 导入备份记录表
+     * Nhập bảng lịch sử backup
      */
     public function import()
     {
@@ -183,7 +183,7 @@ class SystemDatabackup extends AuthController
     }
 
     /**
-     * 下载备份记录表
+     * Tải bảng lịch sử backup
      */
     public function downloadFile()
     {

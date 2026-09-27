@@ -20,7 +20,7 @@ class StoreIntegralOrderController
     }
 
     /**
-     * 订单确认
+     * Xác nhận đơn hàng
      * @param Request $request
      * @return mixed
      */
@@ -38,7 +38,7 @@ class StoreIntegralOrderController
     }
 
     /**
-     * 订单创建
+     * Tạo đơn hàng
      * @param Request $request
      * @return mixed
      * @throws \Psr\SimpleCache\InvalidArgumentException
@@ -63,14 +63,14 @@ class StoreIntegralOrderController
         $productInfo = is_object($productInfo) ? $productInfo->toArray() : $productInfo;
 
         $num = (int)$num;
-        //判断积分商品限量
+        //Kiểm tra giới hạn số lượng sản phẩm đổi điểm
         $storeIntegralServices->checkoutProductStock($uid, $productInfo['product_id'], $num, $unique);
         $order = $this->services->createOrder($uid, $addressId, $mark, $request->user()->toArray(), $num, $productInfo);
         return app('json')->status('success', 410203, ['orderId' => $order['order_id']]);
     }
 
     /**
-     * 订单详情
+     * Chi tiết đơn hàng
      * @param Request $request
      * @param $uni
      * @return mixed
@@ -86,7 +86,7 @@ class StoreIntegralOrderController
     }
 
     /**
-     * 订单列表
+     * Danh sách đơn hàng
      * @param Request $request
      * @return mixed
      */
@@ -100,7 +100,7 @@ class StoreIntegralOrderController
     }
 
     /**
-     * 订单收货
+     * Xác nhận đã nhận hàng
      * @param Request $request
      * @return mixed
      */
@@ -118,7 +118,7 @@ class StoreIntegralOrderController
     }
 
     /**
-     * 订单 查看物流
+     * Đơn hàng - Xem vận chuyển
      * @param Request $request
      * @param ExpressServices $expressServices
      * @param $uni
@@ -141,7 +141,7 @@ class StoreIntegralOrderController
     }
 
     /**
-     * 订单删除
+     * Xóa đơn hàng
      * @param Request $request
      * @return mixed
      */

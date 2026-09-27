@@ -2,31 +2,31 @@
   <div>
     <el-card :bordered="false" :body-style="{ padding: '0 20px 20px' }">
       <el-tabs>
-        <el-tab-pane label="数据库列表">
+        <el-tab-pane label="Danh sách cơ sở dữ liệu">
           <!--          <el-card :bordered="false" shadow="never" class="tableBox">-->
           <div class="mb10">
-            <!--              <span class="ivu-pl-8 mr10">数据库表列表</span>-->
-            <el-button v-db-click @click="getBackup">备份</el-button>
-            <el-button v-db-click @click="getOptimize">优化表</el-button>
-            <el-button v-db-click @click="getRepair">修复表</el-button>
-            <el-button v-db-click @click="exportData(1)">导出文件</el-button>
+            <!--              <span class="ivu-pl-8 mr10">Danh sách bảng cơ sở dữ liệu</span>-->
+            <el-button v-db-click @click="getBackup">Sao lưu</el-button>
+            <el-button v-db-click @click="getOptimize">Tối ưu bảng</el-button>
+            <el-button v-db-click @click="getRepair">Sửa chữa bảng</el-button>
+            <el-button v-db-click @click="exportData(1)">Xuất tệp</el-button>
           </div>
           <el-table
             ref="selection"
             :data="tabList2"
             v-loading="loading"
-            empty-text="暂无数据"
+            empty-text="Chưa có dữ liệu"
             @select="onSelectTab"
             @select-all="onSelectTab"
             class="mt14"
           >
             <el-table-column type="selection" width="55"> </el-table-column>
-            <el-table-column label="表名称" min-width="100">
+            <el-table-column label="Tên bảng" min-width="100">
               <template slot-scope="scope">
                 <span>{{ scope.row.name }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="备注" min-width="100">
+            <el-table-column label="Ghi chú" min-width="100">
               <template slot-scope="scope">
                 <div class="mark">
                   <div v-if="scope.row.is_edit" class="table-mark" v-db-click @click="isEditMark(scope.row)">
@@ -36,34 +36,34 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="类型" min-width="100">
+            <el-table-column label="Loại" min-width="100">
               <template slot-scope="scope">
                 <span>{{ scope.row.engine }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="大小" min-width="100">
+            <el-table-column label="Kích thước" min-width="100">
               <template slot-scope="scope">
                 <span>{{ scope.row.data_length }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="更新时间" min-width="100">
+            <el-table-column label="Thời gian cập nhật" min-width="100">
               <template slot-scope="scope">
                 <span>{{ scope.row.update_time }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="行数" min-width="100">
+            <el-table-column label="Số dòng" min-width="100">
               <template slot-scope="scope">
                 <span>{{ scope.row.rows }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="操作" fixed="right" width="70">
+            <el-table-column label="Thao tác" fixed="right" width="70">
               <template slot-scope="scope">
-                <a v-db-click @click="Info(scope.row)">详情</a>
+                <a v-db-click @click="Info(scope.row)">Chi tiết</a>
               </template>
             </el-table-column>
           </el-table>
           <!--          </el-card>-->
-          <!-- 详情模态框-->
+          <!-- Modal chi tiết-->
           <el-drawer
             :visible.sync="modals"
             :wrapperClosable="false"
@@ -74,36 +74,36 @@
               ref="selection"
               :data="tabList3"
               v-loading="loading2"
-              empty-text="暂无数据"
+              empty-text="Chưa có dữ liệu"
               max-height="600"
               size="small"
             >
-              <el-table-column label="字段名" min-width="100">
+              <el-table-column label="Tên trường" min-width="100">
                 <template slot-scope="scope">
                   <span>{{ scope.row.COLUMN_NAME }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="数据类型" min-width="100">
+              <el-table-column label="Loại dữ liệu" min-width="100">
                 <template slot-scope="scope">
                   <span>{{ scope.row.COLUMN_TYPE }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="默认值" min-width="100">
+              <el-table-column label="Giá trị mặc định" min-width="100">
                 <template slot-scope="scope">
                   <span>{{ scope.row.COLUMN_DEFAULT }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="允许非空" min-width="100">
+              <el-table-column label="Cho phép NULL" min-width="100">
                 <template slot-scope="scope">
                   <span>{{ scope.row.IS_NULLABLE }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="自动递增" min-width="100">
+              <el-table-column label="Tự động tăng" min-width="100">
                 <template slot-scope="scope">
                   <span>{{ scope.row.EXTRA }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="备注" min-width="100">
+              <el-table-column label="Ghi chú" min-width="100">
                 <template slot-scope="scope">
                   <div class="mark">
                     <div v-if="scope.row.is_edit" class="table-mark" v-db-click @click="isEditMark(scope.row)">
@@ -121,16 +121,16 @@
             </el-table>
           </el-drawer>
         </el-tab-pane>
-        <el-tab-pane label="备份列表">
+        <el-tab-pane label="Danh sách sao lưu">
           <el-table
             ref="selection"
             :data="tabList"
             v-loading="loading3"
-            empty-text="暂无数据"
+            empty-text="Chưa có dữ liệu"
             highlight-current-row
             size="small"
           >
-            <el-table-column label="备份名称" min-width="200">
+            <el-table-column label="Tên bản sao lưu" min-width="200">
               <template slot-scope="scope">
                 <span>{{ scope.row.filename }}</span>
               </template>
@@ -140,7 +140,7 @@
                 <span>{{ scope.row.part }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="大小" min-width="100">
+            <el-table-column label="Kích thước" min-width="100">
               <template slot-scope="scope">
                 <span>{{ scope.row.size }}</span>
               </template>
@@ -150,29 +150,29 @@
                 <span>{{ scope.row.compress }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="时间" min-width="100">
+            <el-table-column label="Thời gian" min-width="100">
               <template slot-scope="scope">
                 <span>{{ scope.row.backtime }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="操作" fixed="right" width="140">
+            <el-table-column label="Thao tác" fixed="right" width="140">
               <template slot-scope="scope">
-                <a v-db-click @click="ImportFile(scope.row)">导入</a>
+                <a v-db-click @click="ImportFile(scope.row)">Nhập</a>
                 <el-divider direction="vertical"></el-divider>
-                <a v-db-click @click="del(scope.row, '删除该备份', scope.$index)">删除</a>
+                <a v-db-click @click="del(scope.row, 'Xóa bản sao lưu này', scope.$index)">Xóa</a>
                 <el-divider direction="vertical"></el-divider>
-                <a v-db-click @click="download(scope.row)">下载</a>
+                <a v-db-click @click="download(scope.row)">Tải xuống</a>
               </template>
             </el-table-column>
           </el-table>
         </el-tab-pane>
       </el-tabs>
     </el-card>
-    <el-dialog :visible.sync="markModal" width="470px" title="修改备注" @closed="cancel">
+    <el-dialog :visible.sync="markModal" width="470px" title="Sửa ghi chú" @closed="cancel">
       <el-input v-model="mark"></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button v-db-click @click="cancel">取 消</el-button>
-        <el-button type="primary" v-db-click @click="ok">确 定</el-button>
+        <el-button v-db-click @click="cancel">Hủy</el-button>
+        <el-button type="primary" v-db-click @click="ok">Xác nhận</el-button>
       </span>
     </el-dialog>
   </div>
@@ -223,7 +223,7 @@ export default {
     fileUrl() {
       const search = '/adminapi/';
       const start = Setting.apiBaseURL.indexOf(search);
-      return Setting.apiBaseURL.substring(0, start); // 截取字符串
+      return Setting.apiBaseURL.substring(0, start); // Cắt chuỗi
     },
   },
   created() {
@@ -253,7 +253,7 @@ export default {
     cancel() {
       this.mark = '';
     },
-    // 导入
+    // Nhập
     ImportFile(row) {
       filesImportApi({
         part: row.part,
@@ -268,7 +268,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 删除备份记录表
+    // Xóa bảng lịch sử backup
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -288,7 +288,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 上传头部token
+    // Token trong header khi tải lên
     getToken() {
       this.Token = getCookies('token');
     },
@@ -306,16 +306,16 @@ export default {
           this.$message.error(res);
         });
     },
-    // 导出备份记录表
+    // Xuất bảng lịch sử sao lưu
     exportData() {
       const columns = this.columns.slice(1, 7);
       this.$refs.selection.exportCsv({
-        filename: '导出',
+        filename: 'Xuất',
         columns: columns,
         data: this.tabList2,
       });
     },
-    // 全选
+    // Chọn tất cả
     onSelectTab(selection) {
       this.selectionList = selection;
       let tables = [];
@@ -326,10 +326,10 @@ export default {
         tables: tables.join(','),
       };
     },
-    // 备份表
+    // Bảng backup
     getBackup() {
       if (this.selectionList.length === 0) {
-        return this.$message.warning('请选择表');
+        return this.$message.warning('Vui lòng chọn bảng');
       }
       backupBackupApi(this.dataList)
         .then(async (res) => {
@@ -341,7 +341,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 备份记录表列表
+    // Danh sách bảng lịch sử sao lưu
     getfileList() {
       this.loading3 = true;
       filesListApi()
@@ -355,10 +355,10 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 优化表
+    // Tối ưu bảng
     getOptimize() {
       if (this.selectionList.length === 0) {
-        return this.$message.warning('请选择表');
+        return this.$message.warning('Vui lòng chọn bảng');
       }
       backupOptimizeApi(this.dataList)
         .then(async (res) => {
@@ -368,10 +368,10 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 修复表
+    // Sửa chữa bảng
     getRepair() {
       if (this.selectionList.length === 0) {
-        return this.$message.warning('请选择表');
+        return this.$message.warning('Vui lòng chọn bảng');
       }
       backupRepairApi(this.dataList)
         .then(async (res) => {
@@ -381,7 +381,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 数据库列表
+    // Danh sách cơ sở dữ liệu
     getList() {
       this.loading = true;
       backupListApi()
@@ -395,7 +395,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 详情
+    // Chi tiết
     Info(row) {
       this.rows = row;
       this.modals = true;

@@ -6,14 +6,14 @@
 				<numberScroll :num='payPriceShow' color="#E93323" width='30' height='50' fontSize='50'></numberScroll>
 			</view>
 			<view class="count-down">
-				{{$t(`支付剩余时间`)}}：
+				{{$t(`Thời gian thanh toán còn lại`)}}：
 				<countDown :is-day="false" :tip-text="' '" :day-text="' '" :hour-text="' : '" :minute-text="' : '"
 					:second-text="' '" :datatime="invalidTime"></countDown>
 			</view>
 		</view>
 		<view class="payment">
 			<view class="title">
-				{{$t(`支付方式`)}}
+				{{$t(`Phương thức thanh toán`)}}
 			</view>
 			<view class="item acea-row row-between-wrapper" v-for="(item,index) in cartArr" :key="index"
 				v-show='item.payStatus' @click="payType(item.number || 0, item.value, index)">
@@ -31,8 +31,8 @@
 			</view>
 		</view>
 		<view class="btn">
-			<view class="button acea-row row-center-wrapper" @click='goPay(number, paytype)'>{{$t(`确认支付`)}}</view>
-			<view class="wait-pay" @click="waitPay">{{$t(`暂不支付`)}}</view>
+			<view class="button acea-row row-center-wrapper" @click='goPay(number, paytype)'>{{$t(`Xác nhận thanh toán`)}}</view>
+			<view class="wait-pay" @click="waitPay">{{$t(`Thanh toán sau`)}}</view>
 		</view>
 		<view v-show="false" v-html="formContent"></view>
 	</view>
@@ -58,39 +58,39 @@
 			return {
 				checked: false,
 				datatime: 1676344056,
-				//支付方式
+				//Phương thức thanh toán
 				cartArr: [{
-						"name": this.$t(`微信支付`),
+						"name": this.$t(`WeChat Pay`),
 						"icon": "icon-weixin2",
 						value: 'weixin',
-						title: this.$t(`使用微信快捷支付`),
+						title: this.$t(`Thanh toán nhanh qua WeChat`),
 						payStatus: 1,
 					},
 					{
-						"name": this.$t(`支付宝支付`),
+						"name": this.$t(`Thanh toán Alipay`),
 						"icon": "icon-zhifubao",
 						value: 'alipay',
-						title: this.$t(`使用支付宝支付`),
+						title: this.$t(`Thanh toán bằng Alipay`),
 						payStatus: 1,
 					},
 					{
-						"name": this.$t(`余额支付`),
+						"name": this.$t(`Thanh toán bằng số dư`),
 						"icon": "icon-yuezhifu",
 						value: 'yue',
-						title: this.$t(`可用余额`),
+						title: this.$t(`Số dư khả dụng`),
 						payStatus: 1,
 					},
 					{
-						"name": this.$t(`线下支付`),
+						"name": this.$t(`Thanh toán ngoại tuyến`),
 						"icon": "icon-yuezhifu1",
 						value: 'offline',
-						title: this.$t(`使用线下付款`),
+						title: this.$t(`Sử dụng thanh toán ngoại tuyến`),
 						payStatus: 2,
 					}, {
-						"name": this.$t(`好友代付`),
+						"name": this.$t(`Bạn bè thanh toán hộ`),
 						"icon": "icon-haoyoudaizhifu",
 						value: 'friend',
-						title: this.$t(`找微信好友支付`),
+						title: this.$t(`Nhờ bạn bè WeChat thanh toán`),
 						payStatus: 1,
 					}
 				],
@@ -140,40 +140,40 @@
 		onShow() {
 			let options = wx.getEnterOptionsSync();
 			if (options.scene == '1038' && options.referrerInfo.appId == 'wxef277996acc166c3' && this.initIn) {
-				// 代表从收银台小程序返回
+				// Biểu thị quay về từ Mini Program thu ngân
 				let extraData = options.referrerInfo.extraData;
 				this.initIn = false
 				if (!extraData) {
-					// "当前通过物理按键返回，未接收到返参，建议自行查询交易结果";
+					// "Hiện đang quay lại bằng nút vật lý, chưa nhận được tham số trả về, khuyến nghị tự kiểm tra kết quả giao dịch";
 					this.$util.Tips({
-						title: this.$t(`取消支付`)
+						title: this.$t(`Hủy thanh toán`)
 					}, {
 						tab: 5,
-						url: `/pages/goods/order_pay_status/index?order_id=${this.orderId}&msg=${this.$t(`取消支付`)}&type=3&totalPrice=${this.payPriceShow}&status=2`
+						url: `/pages/goods/order_pay_status/index?order_id=${this.orderId}&msg=${this.$t(`Hủy thanh toán`)}&type=3&totalPrice=${this.payPriceShow}&status=2`
 					});
 				} else {
 					if (extraData.code == 'success') {
 						let url = `/pages/goods/order_pay_status/index?order_id=${this.orderId}&msg=${this.jumpData.msg}&type=3&totalPrice=${this.payPriceShow}`
 						if(this.is_gift) url += '&is_gift=1'
 						this.$util.Tips({
-							title: this.$t(`支付成功`),
+							title: this.$t(`Thanh toán thành công`),
 							icon: 'success'
 						}, {
 							tab: 5,
 							url
 						});
 					} else if (extraData.code == 'cancel') {
-						// "支付已取消";
+						// "Đã hủy thanh toán";
 						this.$util.Tips({
-							title: this.$t(`取消支付`)
+							title: this.$t(`Hủy thanh toán`)
 						}, {
 							tab: 5,
-							url: `/pages/goods/order_pay_status/index?order_id=${this.orderId}&msg=${this.$t(`取消支付`)}&type=3&totalPrice=${this.payPriceShow}&status=2`
+							url: `/pages/goods/order_pay_status/index?order_id=${this.orderId}&msg=${this.$t(`Hủy thanh toán`)}&type=3&totalPrice=${this.payPriceShow}&status=2`
 						});
 					} else {
-						// "支付失败：" + extraData.errmsg;
+						// "Thanh toán thất bại: " + extraData.errmsg;
 						uni.reLaunch({
-							url: `/pages/goods/order_pay_status/index?order_id=${this.orderId}&msg=${this.$t(`支付失败`)}&totalPrice=${this.payPriceShow}`
+							url: `/pages/goods/order_pay_status/index?order_id=${this.orderId}&msg=${this.$t(`Thanh toán thất bại`)}&totalPrice=${this.payPriceShow}`
 						})
 					}
 				}
@@ -182,21 +182,21 @@
 		methods: {
 			getBasicConfig() {
 				basicConfig().then(res => {
-					//微信支付是否开启
+					//WeChat Pay có mở hay không
 					this.cartArr[0].payStatus = res.data.pay_weixin_open || 0
-					//支付宝是否开启
+					//Alipay có mở hay không
 					this.cartArr[1].payStatus = res.data.ali_pay_status || 0;
 					//#ifdef MP
 					this.cartArr[1].payStatus = 0;
 					//#endif
-					//余额支付是否开启
+					//Thanh toán bằng số dư có mở hay không
 					this.cartArr[2].payStatus = res.data.yue_pay_status
 					if (res.data.offline_pay_status) {
 						this.cartArr[3].payStatus = 1
 					} else {
 						this.cartArr[3].payStatus = 0
 					}
-					//好友代付是否开启
+					//Bạn bè thanh toán hộ có mở hay không
 					this.cartArr[4].payStatus = res.data.friend_pay_status || 0;
 					this.getCashierOrder()
 				}).catch(err => {
@@ -208,7 +208,7 @@
 			},
 			getCashierOrder() {
 				uni.showLoading({
-					title: this.$t(`创建订单中`)
+					title: this.$t(`Đang tạo đơn hàng`)
 				});
 				getCashierOrder(this.orderId, this.fromType).then(res => {
 					this.payPrice = this.payPriceShow = res.data.pay_price
@@ -259,20 +259,20 @@
 			},
 			waitPay() {
 				uni.reLaunch({
-					url: '/pages/goods/order_pay_status/index?order_id=' + this.orderId + '&msg=取消支付&type=3' +
+					url: '/pages/goods/order_pay_status/index?order_id=' + this.orderId + '&msg=Hủy thanh toán&type=3' +
 						'&status=2&totalPrice=' + this.payPriceShow
 				})
 			},
 			goPay(number, paytype) {
 				let that = this;
 				if (!that.orderId) return that.$util.Tips({
-					title: that.$t(`请选择要支付的订单`)
+					title: that.$t(`Vui lòng chọn đơn hàng cần thanh toán`)
 				});
 				if (paytype == 'yue' && parseFloat(number) < parseFloat(that.payPriceShow)) return that.$util.Tips({
-					title: that.$t(`余额不足`)
+					title: that.$t(`Số dư không đủ`)
 				});
 				uni.showLoading({
-					title: that.$t(`支付中`)
+					title: that.$t(`Đang thanh toán`)
 				});
 				if (paytype == 'friend' && that.orderId) {
 					uni.hideLoading();
@@ -411,14 +411,14 @@
 										that
 										.seckillId || that.discountId)
 										return that.$util.Tips({
-											title: that.$t(`支付成功`),
+											title: that.$t(`Thanh toán thành công`),
 											icon: 'success'
 										}, {
 											tab: 4,
 											url: goPages
 										});
 									return that.$util.Tips({
-										title: that.$t(`支付成功`),
+										title: that.$t(`Thanh toán thành công`),
 										icon: 'success'
 									}, {
 										tab: 5,
@@ -428,7 +428,7 @@
 								fail: function(e) {
 									uni.hideLoading();
 									return that.$util.Tips({
-										title: that.$t(`取消支付`)
+										title: that.$t(`Hủy thanh toán`)
 									}, {
 										tab: 5,
 										url: goPages + '&status=2'
@@ -436,11 +436,11 @@
 								},
 								complete: function(e) {
 									uni.hideLoading();
-									//关闭当前页面跳转至订单状态
+									//Đóng trang hiện tại, chuyển đến trạng thái đơn hàng
 									if (res.errMsg == 'requestPayment:cancel' || e.errMsg ==
 										'requestOrderPayment:cancel') return that.$util
 										.Tips({
-											title: that.$t(`取消支付`)
+											title: that.$t(`Hủy thanh toán`)
 										}, {
 											tab: 5,
 											url: goPages + '&status=2'
@@ -451,7 +451,7 @@
 							// #ifdef H5
 							this.$wechat.pay(res.data.result.jsConfig).then(res => {
 								return that.$util.Tips({
-									title: that.$t(`支付成功`),
+									title: that.$t(`Thanh toán thành công`),
 									icon: 'success'
 								}, {
 									tab: 5,
@@ -460,13 +460,13 @@
 							}).catch(res => {
 								if (!this.$wechat.isWeixin()) {
 									uni.redirectTo({
-										url: goPages + '&msg=' + that.$t(`支付失败`) +
+										url: goPages + '&msg=' + that.$t(`Thanh toán thất bại`) +
 											'&status=2'
-										// '&msg=支付失败&status=2'
+										// '&msg=Thanh toán thất bại&status=2'
 									})
 								}
 								if (res.errMsg == 'chooseWXPay:cancel') return that.$util.Tips({
-									title: that.$t(`取消支付`)
+									title: that.$t(`Hủy thanh toán`)
 								}, {
 									tab: 5,
 									url: goPages + '&status=2'
@@ -480,7 +480,7 @@
 								success: (e) => {
 									let url = goPages;
 									uni.showToast({
-										title: that.$t(`支付成功`)
+										title: that.$t(`Thanh toán thành công`)
 									})
 									setTimeout(res => {
 										uni.redirectTo({
@@ -491,9 +491,9 @@
 								fail: (e) => {
 									let url = '/pages/goods/order_pay_status/index?order_id=' +
 										orderId +
-										'&msg=' + that.$t(`支付失败`);
+										'&msg=' + that.$t(`Thanh toán thất bại`);
 									uni.showModal({
-										content: that.$t(`支付失败`),
+										content: that.$t(`Thanh toán thất bại`),
 										showCancel: false,
 										success: function(res) {
 											if (res.confirm) {
@@ -512,7 +512,7 @@
 							break;
 						case 'PAY_DEFICIENCY':
 							uni.hideLoading();
-							//余额不足
+							//Số dư không đủ
 							return that.$util.Tips({
 								title: res.msg
 							}, {
@@ -524,7 +524,7 @@
 						case "WECHAT_H5_PAY":
 							uni.hideLoading();
 							that.$util.Tips({
-								title: that.$t(`等待支付中`)
+								title: that.$t(`Đang chờ thanh toán`)
 							}, {
 								tab: 4,
 								url: goPages + '&status=0'
@@ -538,7 +538,7 @@
 							//#ifdef H5
 							uni.hideLoading();
 							that.$util.Tips({
-								title: that.$t(`等待支付中`)
+								title: that.$t(`Đang chờ thanh toán`)
 							}, {
 								tab: 4,
 								url: goPages + '&status=0'
@@ -559,11 +559,11 @@
 								orderInfo: jsConfig,
 								success: (e) => {
 									uni.showToast({
-										title: that.$t(`支付成功`)
+										title: that.$t(`Thanh toán thành công`)
 									})
 									let url = '/pages/goods/order_pay_status/index?order_id=' +
 										orderId +
-										'&msg=' + that.$t(`支付成功`);
+										'&msg=' + that.$t(`Thanh toán thành công`);
 									setTimeout(res => {
 										uni.redirectTo({
 											url: url
@@ -574,9 +574,9 @@
 								fail: (e) => {
 									let url = '/pages/goods/order_pay_status/index?order_id=' +
 										orderId +
-										'&msg=' + that.$t(`支付失败`);
+										'&msg=' + that.$t(`Thanh toán thất bại`);
 									uni.showModal({
-										content: that.$t(`支付失败`),
+										content: that.$t(`Thanh toán thất bại`),
 										showCancel: false,
 										success: function(res) {
 											if (res.confirm) {
@@ -767,8 +767,8 @@
 			flex-direction: column;
 			align-items: center;
 			bottom: 30rpx;
-			bottom: calc(30rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-			bottom: calc(30rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+			bottom: calc(30rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+			bottom: calc(30rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 		}
 
 		.wait-pay {

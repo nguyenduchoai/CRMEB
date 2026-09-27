@@ -3,23 +3,23 @@
     <el-col :span="24">
       <div class="index_from page-account-container">
         <div class="page-account-top">
-          <span class="page-account-top-tit">文件管理登录</span>
+          <span class="page-account-top-tit">Đăng nhập quản lý tệp</span>
         </div>
         <el-form ref="formInline" :model="formInline" :rules="ruleInline" @submit.native.prevent>
           <!-- <el-form-item prop="sms_account" class="maxInpt">
-            <el-input type="text" v-model="formInline.account" prefix="ios-contact-outline" placeholder="请输入手机号" />
+            <el-input type="text" v-model="formInline.account" prefix="ios-contact-outline" placeholder="Vui lòng nhập số điện thoại" />
           </el-form-item> -->
           <el-form-item prop="sms_token" class="maxInpt">
             <el-input
               type="password"
               v-model="formInline.password"
               prefix="ios-lock-outline"
-              placeholder="请输入密码"
+              placeholder="Vui lòng nhập mật khẩu"
             />
           </el-form-item>
           <el-form-item class="maxInpt">
             <el-button type="primary" long size="large" v-db-click @click="handleSubmit('formInline')" class="btn"
-              >登录</el-button
+              >Đăng nhập</el-button
             >
           </el-form-item>
         </el-form>
@@ -35,9 +35,9 @@ export default {
   data() {
     const validatePhone = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error('请填写手机号'));
+        return callback(new Error('Vui lòng điền số điện thoại'));
       } else if (!/^1[3456789]\d{9}$/.test(value)) {
-        callback(new Error('手机号格式不正确!'));
+        callback(new Error('Số điện thoại không đúng định dạng!'));
       } else {
         callback();
       }
@@ -49,7 +49,7 @@ export default {
       },
       ruleInline: {
         // account: [{ required: true, validator: validatePhone, trigger: 'blur' }],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+        password: [{ required: true, message: 'Vui lòng nhập mật khẩu', trigger: 'blur' }],
       },
     };
   },
@@ -68,7 +68,7 @@ export default {
         if (valid) {
           opendirLoginApi(this.formInline)
             .then(async (res) => {
-              this.$message.success('登录成功!');
+              this.$message.success('Đăng nhập thành công!');
               this.$emit('on-Login', res.data);
             })
             .catch((res) => {

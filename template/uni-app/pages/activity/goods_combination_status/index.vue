@@ -7,7 +7,7 @@
 				<div class="money">
 					{{$t(`￥`)}}
 					<span class="num" v-text="storeCombination.price"></span>
-					<span class="team cart-color">{{storeCombination.people + $t(`人拼`)}}</span>
+					<span class="team cart-color">{{storeCombination.people + $t(`người mua chung`)}}</span>
 				</div>
 			</div>
 			<div v-if="pinkBool === -1" class="iconfont icon-pintuanshibai"></div>
@@ -17,20 +17,20 @@
 			<div class="title acea-row row-center-wrapper" v-if="pinkBool === 0">
 				<div class="line"></div>
 				<div class="name acea-row row-center-wrapper">
-					{{$t(`剩余`)}}
+					{{$t(`Còn lại`)}}
 					<CountDown :is-day="false" :tip-text="' '" :day-text="' '" hourText=" : " minute-text=" : "
 						second-text="" :datatime="pinkT.stop_time"></CountDown>
-					{{$t(`结束`)}}
+					{{$t(`là kết thúc`)}}
 				</div>
 				<div class="line"></div>
 			</div>
-			<div class="tips font-num" v-if="pinkBool === 1">{{$t(`恭喜您拼团成功`)}}</div>
-			<div class="tips" v-else-if="pinkBool === -1">{{$t(`还差`)}}{{ count }}{{$t(`人，拼团失败`)}}</div>
-			<div class="tips font-num" v-else-if="pinkBool === 0">{{$t(`拼团中，还差`)}}{{ count }}{{$t(`人拼团成功`)}}</div>
+			<div class="tips font-num" v-if="pinkBool === 1">{{$t(`Chúc mừng bạn đã mua chung thành công`)}}</div>
+			<div class="tips" v-else-if="pinkBool === -1">{{$t(`Còn thiếu`)}}{{ count }}{{$t(`người, mua chung thất bại`)}}</div>
+			<div class="tips font-num" v-else-if="pinkBool === 0">{{$t(`Đang mua chung, còn thiếu`)}}{{ count }}{{$t(`người nữa là mua chung thành công`)}}</div>
 			<div class="list acea-row row-middle"
 				:class="[pinkBool === 1 || pinkBool === -1 ? 'result' : '', iShidden ? 'on' : '']">
 				<div class="pictrue"><img :src="pinkT.avatar" />
-					<view class="dumpling">{{$t(`团长`)}}</view>
+					<view class="dumpling">{{$t(`Trưởng nhóm`)}}</view>
 				</div>
 
 				<div class="acea-row row-middle" v-if="pinkAll.length > 0">
@@ -42,32 +42,32 @@
 			</div>
 			<div v-if="(pinkBool === 1 || pinkBool === -1) && count > 9" class="lookAll acea-row row-center-wrapper"
 				@click="lookAll">
-				{{ iShidden ? $t(`收起`) : $t(`查看更多`) }}
+				{{ iShidden ? $t(`Thu gọn`) : $t(`Xem thêm`) }}
 				<span class="iconfont" :class="iShidden ? 'icon-xiangshang' : 'icon-xiangxia'"></span>
 			</div>
 			<div v-if="userBool === 1 && isOk == 0 && pinkBool === 0">
-				<div class="teamBnt bg-color-red" @click="listenerActionSheet">{{$t(`邀请好友参团`)}}</div>
+				<div class="teamBnt bg-color-red" @click="listenerActionSheet">{{$t(`Mời bạn bè tham gia nhóm`)}}</div>
 			</div>
 			<div class="teamBnt bg-color-red" v-else-if="userBool === 0 && pinkBool === 0 && count > 0" @click="pay">
-				{{$t(`我要参团`)}}
+				{{$t(`Tham gia nhóm`)}}
 			</div>
 			<div class="teamBnt bg-color-red" v-if="pinkBool === 1 || pinkBool === -1"
-				@click="goDetail(storeCombination.id)">{{$t(`再次开团`)}}</div>
+				@click="goDetail(storeCombination.id)">{{$t(`Mở nhóm lại`)}}</div>
 			<div class="cancel" @click="getCombinationRemove"
 				v-if="pinkBool === 0 && userBool === 1 && pinkT.uid == userInfo.uid">
 				<span class="iconfont icon-guanbi3"></span>
-				{{$t(`取消开团`)}}
+				{{$t(`Hủy mở nhóm`)}}
 			</div>
 			<div class="lookOrder" v-if="pinkBool === 1 && orderPid === 0" @click="goOrder">
-				{{$t(`查看订单信息`)}}
+				{{$t(`Xem thông tin đơn hàng`)}}
 				<span class="iconfont icon-xiangyou"></span>
 			</div>
 		</div>
 		<div class="group-recommend">
 			<div class="title acea-row row-between-wrapper">
-				<div>{{$t(`大家都在拼`)}}</div>
+				<div>{{$t(`Mọi người đang mua chung`)}}</div>
 				<div class="more" @click="goList">
-					{{$t(`更多拼团`)}}
+					{{$t(`Xem thêm mua chung`)}}
 					<span class="iconfont icon-jiantou"></span>
 				</div>
 			</div>
@@ -75,7 +75,7 @@
 				<div class="item" v-for="(item, index) in storeCombinationHost" :key="index" @click="goDetail(item.id)">
 					<div class="pictrue">
 						<img :src="item.image" />
-						<div class="team" v-text="item.people + $t(`人团`)"></div>
+						<div class="team" v-text="item.people + $t(`người/nhóm`)"></div>
 					</div>
 					<div class="name line1" v-text="item.title"></div>
 					<div class="money font-color-red" v-text="$t(`￥`) + item.price"></div>
@@ -84,40 +84,40 @@
 		</div>
 		<product-window :attr="attr" :limitNum="storeCombination ? storeCombination.once_num : 0" :iSbnt="1" @myevent="onMyEvent" @ChangeAttr="ChangeAttr"
 			@ChangeCartNum="ChangeCartNum" @iptCartNum="iptCartNum" @attrVal="attrVal" @goCat="goPay"></product-window>
-		<!-- 分享按钮 -->
+		<!-- Nút chia sẻ -->
 		<view class="generate-posters acea-row row-middle" :class="posters ? 'on' : ''">
 			<!-- #ifndef MP -->
 			<button class="item" hover-class='none' v-if="weixinStatus === true" @click="H5ShareBox = true">
 				<!-- <button class="item" hover-class='none' v-if="weixinStatus === true" @click="setShareInfoStatus"> -->
 				<view class="iconfont icon-weixin3"></view>
-				<view class="">{{$t(`发送给朋友`)}}</view>
+				<view class="">{{$t(`Gửi cho bạn bè`)}}</view>
 			</button>
 			<!-- #endif -->
 			<!-- #ifdef MP -->
 			<button class="item" open-type="share" hover-class='none' @click="goFriend">
 				<view class="iconfont icon-weixin3"></view>
-				<view class="">{{$t(`发送给朋友`)}}</view>
+				<view class="">{{$t(`Gửi cho bạn bè`)}}</view>
 			</button>
 			<!-- #endif -->
 			<!-- #ifdef APP-PLUS -->
 			<view class="item" @click="appShare('WXSceneSession')">
 				<view class="iconfont icon-weixin3"></view>
-				<view class="">{{$t(`微信好友`)}}</view>
+				<view class="">{{$t(`Bạn bè WeChat`)}}</view>
 			</view>
 			<view class="item" @click="appShare('WXSenceTimeline')">
 				<view class="iconfont icon-pengyouquan"></view>
-				<view class="">{{$t(`微信朋友圈`)}}</view>
+				<view class="">{{$t(`Khoảnh khắc WeChat`)}}</view>
 			</view>
 			<!-- #endif -->
 			<!-- #ifndef APP-PLUS -->
 			<button class="item" hover-class='none' @tap="goPoster">
 				<view class="iconfont icon-haibao"></view>
-				<view class="">{{$t(`生成海报`)}}</view>
+				<view class="">{{$t(`Tạo poster`)}}</view>
 			</button>
 			<!-- #endif -->
 		</view>
 		<view class="mask" v-if="posters" @click="listenerActionClose"></view>
-		<!-- 发送给朋友图片 -->
+		<!-- Gửi ảnh cho bạn bè -->
 		<view class="share-box" v-if="H5ShareBox">
 			<image :src="imgHost + '/statics/images/share-info.png'" @click="H5ShareBox = false"></image>
 		</view>
@@ -177,18 +177,18 @@
 		data: function() {
 			return {
 				imgHost: HTTP_REQUEST_URL,
-				currentPinkOrder: '', //当前拼团订单
-				isOk: 0, //判断拼团是否完成
-				pinkBool: 0, //判断拼团是否成功|0=失败,1=成功
-				userBool: 0, //判断当前用户是否在团内|0=未在,1=在
-				pinkAll: [], //团员
-				pinkT: [], //团长信息
-				storeCombination: undefined, //拼团产品
-				storeCombinationHost: [], //拼团推荐
+				currentPinkOrder: '', //Đơn hàng mua chung hiện tại
+				isOk: 0, //Kiểm tra mua chung đã hoàn thành hay chưa
+				pinkBool: 0, //Kiểm tra mua chung thành công hay không | 0 = thất bại, 1 = thành công
+				userBool: 0, //Kiểm tra người dùng hiện tại có trong nhóm mua chung hay không | 0 = không, 1 = có
+				pinkAll: [], //Thành viên nhóm
+				pinkT: [], //Thông tin trưởng nhóm
+				storeCombination: undefined, //Sản phẩm mua chung
+				storeCombinationHost: [], //Gợi ý mua chung
 				pinkId: 0,
-				count: 0, //拼团剩余人数
+				count: 0, //Số người còn thiếu để mua chung
 				iShidden: false,
-				isOpen: false, //是否打开属性组件
+				isOpen: false, //Có mở component thuộc tính hay không
 				attr: {
 					cartAttr: false,
 					productSelect: {
@@ -208,11 +208,11 @@
 				userInfo: {},
 				posters: false,
 				weixinStatus: false,
-				H5ShareBox: false, //公众号分享图片
-				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false, //是否隐藏授权
-				attrTxt: this.$t(`请选择`), //属性页面提示
-				attrValue: '', //已选属性,
+				H5ShareBox: false, //Ảnh chia sẻ của OA WeChat
+				isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+				isShowAuth: false, //Có ẩn ủy quyền hay không
+				attrTxt: this.$t(`Vui lòng chọn`), //Gợi ý trên trang thuộc tính
+				attrValue: '', //Thuộc tính đã chọn,
 				orderPid: 0
 			};
 		},
@@ -247,7 +247,7 @@
 				var value = util.getUrlParams(decodeURIComponent(options.scene));
 				if (typeof value === 'object') {
 					if (value.id) options.id = value.id;
-					//记录推广人uid
+					//Ghi lại uid người giới thiệu
 					if (value.pid) app.globalData.spid = value.pid;
 				}
 			}
@@ -262,12 +262,12 @@
 		},
 		//#ifdef MP
 		/**
-		 * 用户点击右上角分享
+		 * Người dùng click chia sẻ ở góc trên phải
 		 */
 		onShareAppMessage: function() {
 			let that = this;
 			return {
-				title: that.$t(`您的好友`) + that.userInfo.nickname + this.$t(`邀请您参团`) + that.storeCombination.title,
+				title: that.$t(`Người bạn`) + that.userInfo.nickname + this.$t(`mời bạn tham gia mua chung`) + that.storeCombination.title,
 				path: '/pages/activity/goods_combination_status/index?id=' + that.pinkId,
 				imageUrl: that.storeCombination.image
 			};
@@ -279,30 +279,30 @@
 			}
 		},
 		methods: {
-			// app分享
+			// Chia sẻ app
 			// #ifdef APP-PLUS
 			appShare(scene) {
 				let that = this
-				let routes = getCurrentPages(); // 获取当前打开过的页面路由数组
-				let curRoute = routes[routes.length - 1].$page.fullPath // 获取当前页面路由，也就是最后一个打开的页面路由
+				let routes = getCurrentPages(); // Lấy mảng route các trang đã từng mở
+				let curRoute = routes[routes.length - 1].$page.fullPath // Lấy route trang hiện tại, tức route trang được mở cuối cùng
 				uni.share({
 					provider: "weixin",
 					scene: scene,
 					type: 0,
 					href: `${HTTP_REQUEST_URL}${curRoute}`,
-					title: that.$t(`您的好友`) + that.userInfo.nickname + that.$t(`邀请您参团`) + that.storeCombination
+					title: that.$t(`Người bạn`) + that.userInfo.nickname + that.$t(`mời bạn tham gia mua chung`) + that.storeCombination
 						.title,
 					imageUrl: that.storeCombination.small_image,
 					success: function(res) {
 						uni.showToast({
-							title: that.$t(`分享成功`),
+							title: that.$t(`Chia sẻ thành công`),
 							icon: 'success'
 						})
 						that.posters = false;
 					},
 					fail: function(err) {
 						uni.showToast({
-							title: that.$t(`分享失败`),
+							title: that.$t(`Chia sẻ thất bại`),
 							icon: 'none',
 							duration: 2000
 						})
@@ -311,17 +311,17 @@
 				});
 			},
 			// #endif
-			// 授权关闭
+			// Đóng ủy quyền
 			authColse: function(e) {
 				this.isShowAuth = e;
 			},
-			// 授权后回调
+			// Callback sau khi ủy quyền
 			onLoadFun: function(e) {
 				this.userInfo = e;
 				this.getCombinationPink();
 			},
 			/**
-			 * 分享打开
+			 * Mở chia sẻ
 			 * 
 			 */
 			listenerActionSheet: function() {
@@ -337,16 +337,16 @@
 
 				}
 			},
-			// 分享关闭
+			// Đóng chia sẻ
 			listenerActionClose: function() {
 				this.posters = false;
 			},
-			// 小程序关闭分享弹窗；
+			// Đóng popup chia sẻ của Mini Program;
 			goFriend: function() {
 				this.posters = false;
 			},
 			/**
-			 * 购物车手动填写
+			 * Điền thủ công vào giỏ hàng
 			 *
 			 */
 			iptCartNum: function(e) {
@@ -360,7 +360,7 @@
 				this.$set(this.attr, 'cartAttr', false);
 				this.$set(this, 'isOpen', false);
 			},
-			//将父级向子集多次传送的函数合二为一；
+			//Hợp nhất các hàm truyền dữ liệu nhiều lần từ cha xuống con thành một;
 			// changeFun: function(opt) {
 			// 	if (typeof opt !== "object") opt = {};
 			// 	let action = opt.action || "";
@@ -371,7 +371,7 @@
 			// 	var that = this;
 			// 	that.attr.cartAttr = res;
 			// },
-			//选择属性；
+			//Chọn thuộc tính;
 			ChangeAttr: function(res) {
 				this.$set(this, 'cart_num', 1);
 				let productSelect = this.productValue[res];
@@ -384,7 +384,7 @@
 					this.$set(this.attr.productSelect, 'product_stock', productSelect.product_stock);
 					this.$set(this.attr.productSelect, 'quota_show', productSelect.quota_show);
 					this.$set(this, 'attrValue', res);
-					this.$set(this, 'attrTxt', this.$t(`已选择`));
+					this.$set(this, 'attrTxt', this.$t(`Đã chọn`));
 				} else {
 					this.$set(this.attr.productSelect, 'image', this.storeCombination.image);
 					this.$set(this.attr.productSelect, 'price', this.storeCombination.price);
@@ -394,18 +394,18 @@
 					this.$set(this.attr.productSelect, 'quota_show', 0);
 					this.$set(this.attr.productSelect, 'product_stock', 0);
 					this.$set(this, 'attrValue', '');
-					this.$set(this, 'attrTxt', this.$t(`请选择`));
+					this.$set(this, 'attrTxt', this.$t(`Vui lòng chọn`));
 				}
 			},
 			ChangeCartNum: function(res) {
-				//changeValue:是否 加|减
-				//获取当前变动属性
+				//changeValue: có tăng hay giảm
+				//Lấy thuộc tính vừa thay đổi hiện tại
 				let productSelect = this.productValue[this.attrValue];
 				if (this.cart_num) {
 					productSelect.cart_num = this.cart_num;
 					this.attr.productSelect.cart_num = this.cart_num;
 				}
-				//如果没有属性,赋值给商品默认库存
+				//Nếu không có thuộc tính, gán bằng tồn kho mặc định của sản phẩm
 				if (productSelect === undefined && !this.attr.productAttr.length) productSelect = this.attr
 					.productSelect;
 				if (productSelect === undefined) return;
@@ -415,7 +415,7 @@
 				let productStock = productSelect.product_stock || 0;
 				let num = this.attr.productSelect;
 				let nums = this.storeCombination.num || 0;
-				//设置默认数据
+				//Đặt dữ liệu mặc định
 				if (productSelect.cart_num == undefined) productSelect.cart_num = 1;
 				if (res) {
 					num.cart_num++;
@@ -464,7 +464,7 @@
 				// 	}
 				// }
 			},
-			//默认选中属性；
+			//Thuộc tính được chọn mặc định;
 			DefaultSelect() {
 				let productAttr = this.attr.productAttr,
 					value = [];
@@ -477,7 +477,7 @@
 				for (let i = 0; i < productAttr.length; i++) {
 					this.$set(productAttr[i], 'index', value[i]);
 				}
-				//sort();排序函数:数字-英文-汉字；
+				//sort(); hàm sắp xếp: số - chữ Anh - chữ Hán;
 				let productSelect = this.productValue[value.join(',')];
 				if (productSelect && productAttr.length) {
 					this.$set(this.attr.productSelect, 'store_name', this.storeCombination.title);
@@ -490,7 +490,7 @@
 					this.$set(this.attr.productSelect, 'quota_show', productSelect.quota_show);
 					this.$set(this, 'attrValue', value.join(','));
 					this.attrValue = value.join(',');
-					this.$set(this, 'attrTxt', this.$t(`已选择`));
+					this.$set(this, 'attrTxt', this.$t(`Đã chọn`));
 				} else if (!productSelect && productAttr.length) {
 					this.$set(this.attr.productSelect, 'store_name', this.storeCombination.title);
 					this.$set(this.attr.productSelect, 'image', this.storeCombination.image);
@@ -501,7 +501,7 @@
 					this.$set(this.attr.productSelect, 'product_stock', 0);
 					this.$set(this.attr.productSelect, 'quota_show', 0);
 					this.$set(this, 'attrValue', '');
-					this.$set(this, 'attrTxt', this.$t(`请选择`));
+					this.$set(this, 'attrTxt', this.$t(`Vui lòng chọn`));
 				} else if (!productSelect && !productAttr.length) {
 					this.$set(this.attr.productSelect, 'store_name', this.storeCombination.title);
 					this.$set(this.attr.productSelect, 'image', this.storeCombination.image);
@@ -512,7 +512,7 @@
 					this.$set(this.attr.productSelect, 'quota_show', 0);
 					this.$set(this.attr.productSelect, 'product_stock', 0);
 					this.$set(this, 'attrValue', '');
-					this.$set(this, 'attrTxt', this.$t(`请选择`));
+					this.$set(this, 'attrTxt', this.$t(`Vui lòng chọn`));
 				}
 			},
 			setProductSelect: function() {
@@ -567,13 +567,13 @@
 					url: '/pages/goods/order_details/index?order_id=' + that.currentPinkOrder
 				});
 			},
-			//拼团列表
+			//Danh sách mua chung
 			goList: function() {
 				uni.navigateTo({
 					url: '/pages/activity/goods_combination/index'
 				});
 			},
-			//拼团详情
+			//Chi tiết mua chung
 			goDetail: function(id) {
 				this.pinkId = id;
 				// this.getCombinationPink();
@@ -584,7 +584,7 @@
 				// 	path: "/activity/group_detail/" + id
 				// });
 			},
-			//拼团信息
+			//Thông tin mua chung
 			getCombinationPink: function() {
 				var that = this;
 				getCombinationPink(that.pinkId)
@@ -611,7 +611,7 @@
 						if (that.attr.productAttr != 0) that.DefaultSelect();
 						if (res.data.is_ok == 1 && res.data.userBool == 0) {
 							return this.$util.Tips({
-								title: that.$t(`你不是该团的成员`),
+								title: that.$t(`Bạn không phải là thành viên của nhóm này`),
 							}, () => {
 								uni.navigateTo({
 									url: '/pages/activity/goods_combination/index'
@@ -634,7 +634,7 @@
 			setOpenShare() {
 				let that = this;
 				let configTimeline = {
-					title: that.$t(`您的好友`) + that.userInfo.nickname + that.$t(`邀请您参团`) + that.storeCombination.title,
+					title: that.$t(`Người bạn`) + that.userInfo.nickname + that.$t(`mời bạn tham gia mua chung`) + that.storeCombination.title,
 					desc: that.storeCombination.title,
 					link: window.location.protocol + '//' + window.location.host +
 						'/pages/activity/goods_combination_status/index?id=' + that.pinkId + '&bargain=' + that
@@ -660,7 +660,7 @@
 				}
 			},
 			//#endif
-			//拼团取消
+			//Hủy mua chung
 			getCombinationRemove: function() {
 				var that = this;
 				postCombinationRemove({
@@ -718,7 +718,7 @@
 		color: #5391f1;
 	}
 
-	/*开团*/
+	/*Mở nhóm mua chung*/
 	.group-con .header {
 		width: 100%;
 		height: 186rpx;

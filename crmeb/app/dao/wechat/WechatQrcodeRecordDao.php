@@ -18,7 +18,7 @@ class WechatQrcodeRecordDao extends BaseDao
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @param $where
      * @param int $page
      * @param int $limit
@@ -38,7 +38,7 @@ class WechatQrcodeRecordDao extends BaseDao
     }
 
     /**
-     * 扫码趋势
+     * Xu hướng quét mã
      * @param $qid
      * @param $time
      * @param $timeType

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -23,7 +23,7 @@ use crmeb\services\app\MiniProgramService;
 use app\services\other\UploadService;
 
 /**
- * 账单类
+ * Lớp hóa đơn/sao kê
  * Class UserBillController
  * @package app\api\controller\user
  */
@@ -41,7 +41,7 @@ class UserBillController
     }
 
     /**
-     * 推广数据    昨天的佣金   累计提现金额  当前佣金
+     * Dữ liệu giới thiệu    Hoa hồng hôm qua   Số tiền đã rút lũy kế  Hoa hồng hiện tại
      * @param Request $request
      * @return mixed
      */
@@ -52,7 +52,7 @@ class UserBillController
     }
 
     /**
-     * 推广订单
+     * Đơn hàng giới thiệu
      * @param Request $request
      * @return mixed
      */
@@ -69,9 +69,9 @@ class UserBillController
     }
 
     /**
-     * 推广佣金明细
+     * Chi tiết hoa hồng giới thiệu
      * @param Request $request
-     * @param $type 0 全部  1 消费  2 充值  3 返佣  4 提现
+     * @param $type 0 Tất cả  1 chi tiêu  2 nạp tiền  3 trả hoa hồng  4 rút tiền
      * @return mixed
      */
     public function spread_commission(Request $request, $type)
@@ -97,9 +97,9 @@ class UserBillController
     }
 
     /**
-     * 推广 佣金/提现 总和
+     * Giới thiệu - Tổng hoa hồng/rút tiền
      * @param Request $request
-     * @param $type 3 佣金  4 提现
+     * @param $type 3 Hoa hồng  4 rút tiền
      * @return mixed
      */
     public function spread_count(Request $request, $type)
@@ -110,7 +110,7 @@ class UserBillController
 
 
     /**
-     * 分销二维码海报生成
+     * Tạo poster mã QR CTV
      * @param Request $request
      * @return mixed
      */
@@ -142,7 +142,7 @@ class UserBillController
         $count = $systemAttachment->getCount([['name', 'LIKE', "$poster%"]]);
         if ($count) {
             $SpreadBanner = $systemAttachment->getLikeNameList($poster);
-            //发生变化 重新生成
+            //Có thay đổi thì tạo lại
             if ($bannerCount != count($SpreadBanner)) {
                 $systemAttachment->delete([['name', 'like', "$poster%"]]);
             } else {
@@ -166,14 +166,14 @@ class UserBillController
             }
         }
         try {
-            $resRoutine = true;//小程序
-            $resWap = true;//公众号
+            $resRoutine = true;//Mini Program
+            $resWap = true;//OA WeChat
             $siteUrl = sys_config('site_url');
             if ($type == 1) {
-                //小程序
+                //Mini Program
                 $name = $user['uid'] . '_' . $user['is_promoter'] . '_user_routine.jpg';
                 $imageInfo = $systemAttachment->getInfo(['name' => $name]);
-                //检测远程文件是否存在
+                //Kiểm tra file từ xa có tồn tại không
                 if (isset($imageInfo['att_dir']) && strstr($imageInfo['att_dir'], 'http') !== false && curl_file_exist($imageInfo['att_dir']) === false) {
                     $imageInfo = null;
                     $systemAttachment->delete(['name' => $name]);
@@ -208,11 +208,11 @@ class UserBillController
                 if (!file_exists($filelink['Bold'])) return app('json')->fail(410168);
                 if (!file_exists($filelink['Normal'])) return app('json')->fail(410169);
                 foreach ($routineSpreadBanner as $key => &$item) {
-                    $posterInfo = '海报生成失败:(';
+                    $posterInfo = 'Tạo poster thất bại :(';
                     $config = array(
                         'image' => array(
                             array(
-                                'url' => $urlCode,     //二维码资源
+                                'url' => $urlCode,     //Resource mã QR
                                 'stream' => 0,
                                 'left' => 114,
                                 'top' => 790,
@@ -228,18 +228,18 @@ class UserBillController
                                 'text' => $user['nickname'],
                                 'left' => 250,
                                 'top' => 840,
-                                'fontPath' => $rootPath . 'public' . DS . $filelink['Bold'],     //字体文件
-                                'fontSize' => 16,             //字号
-                                'fontColor' => '40,40,40',       //字体颜色
+                                'fontPath' => $rootPath . 'public' . DS . $filelink['Bold'],     //File font
+                                'fontSize' => 16,             //Cỡ chữ
+                                'fontColor' => '40,40,40',       //Màu chữ
                                 'angle' => 0,
                             ),
                             array(
-                                'text' => '邀请您加入' . sys_config('site_name'),
+                                'text' => 'Mời bạn tham gia' . sys_config('site_name'),
                                 'left' => 250,
                                 'top' => 880,
-                                'fontPath' => $rootPath . 'public' . DS . $filelink['Normal'],     //字体文件
-                                'fontSize' => 16,             //字号
-                                'fontColor' => '40,40,40',       //字体颜色
+                                'fontPath' => $rootPath . 'public' . DS . $filelink['Normal'],     //File font
+                                'fontSize' => 16,             //Cỡ chữ
+                                'fontColor' => '40,40,40',       //Màu chữ
                                 'angle' => 0,
                             )
                         ),
@@ -257,16 +257,16 @@ class UserBillController
                     }
                 }
             } else if ($type == 2) {
-                //公众号
+                //OA WeChat
                 $name = $user['uid'] . '_' . $user['is_promoter'] . '_user_wap.jpg';
                 $imageInfo = $systemAttachment->getInfo(['name' => $name]);
-                //检测远程文件是否存在
+                //Kiểm tra file từ xa có tồn tại không
                 if (isset($imageInfo['att_dir']) && strstr($imageInfo['att_dir'], 'http') !== false && curl_file_exist($imageInfo['att_dir']) === false) {
                     $imageInfo = null;
                     $systemAttachment->delete(['name' => $name]);
                 }
                 if (!$imageInfo) {
-                    $codeUrl = set_http_type($siteUrl . '?spread=' . $user['uid'], $request->isSsl() ? 0 : 1);//二维码链接
+                    $codeUrl = set_http_type($siteUrl . '?spread=' . $user['uid'], $request->isSsl() ? 0 : 1);//Liên kết mã QR
                     $imageInfo = PosterServices::getQRCodePath($codeUrl, $name);
                     if (is_string($imageInfo)) return app('json')->fail(410167, ['error' => $imageInfo]);
                     $systemAttachment->attachmentAdd($imageInfo['name'], $imageInfo['size'], $imageInfo['type'], $imageInfo['dir'], $imageInfo['thumb_path'], 1, $imageInfo['image_type'], $imageInfo['time'], 2);
@@ -281,11 +281,11 @@ class UserBillController
                 if (!file_exists($filelink['Bold'])) return app('json')->fail(410168);
                 if (!file_exists($filelink['Normal'])) return app('json')->fail(410169);
                 foreach ($routineSpreadBanner as $key => &$item) {
-                    $posterInfo = '海报生成失败:(';
+                    $posterInfo = 'Tạo poster thất bại :(';
                     $config = array(
                         'image' => array(
                             array(
-                                'url' => $urlCode,     //二维码资源
+                                'url' => $urlCode,     //Resource mã QR
                                 'stream' => 0,
                                 'left' => 114,
                                 'top' => 790,
@@ -301,18 +301,18 @@ class UserBillController
                                 'text' => $user['nickname'],
                                 'left' => 250,
                                 'top' => 840,
-                                'fontPath' => $rootPath . 'public' . DS . $filelink['Bold'],     //字体文件
-                                'fontSize' => 16,             //字号
-                                'fontColor' => '40,40,40',       //字体颜色
+                                'fontPath' => $rootPath . 'public' . DS . $filelink['Bold'],     //File font
+                                'fontSize' => 16,             //Cỡ chữ
+                                'fontColor' => '40,40,40',       //Màu chữ
                                 'angle' => 0,
                             ),
                             array(
-                                'text' => '邀请您加入' . sys_config('site_name'),
+                                'text' => 'Mời bạn tham gia' . sys_config('site_name'),
                                 'left' => 250,
                                 'top' => 880,
-                                'fontPath' => $rootPath . 'public' . DS . $filelink['Normal'],     //字体文件
-                                'fontSize' => 16,             //字号
-                                'fontColor' => '40,40,40',       //字体颜色
+                                'fontPath' => $rootPath . 'public' . DS . $filelink['Normal'],     //File font
+                                'fontSize' => 16,             //Cỡ chữ
+                                'fontColor' => '40,40,40',       //Màu chữ
                                 'angle' => 0,
                             )
                         ),
@@ -337,7 +337,7 @@ class UserBillController
     }
 
     /**
-     * 获取小程序二维码
+     * Lấy mã QR Mini Program
      * @param Request $request
      * @return mixed
      * @throws \think\Exception
@@ -350,10 +350,10 @@ class UserBillController
         $user = $request->user();
         /** @var SystemAttachmentServices $systemAttachment */
         $systemAttachment = app()->make(SystemAttachmentServices::class);
-        //小程序
+        //Mini Program
         $name = $user['uid'] . '_' . $user['is_promoter'] . '_user_routine.jpg';
         $imageInfo = $systemAttachment->getInfo(['name' => $name]);
-        //检测远程文件是否存在
+        //Kiểm tra file từ xa có tồn tại không
         if (isset($imageInfo['att_dir']) && strstr($imageInfo['att_dir'], 'http') !== false && curl_file_exist($imageInfo['att_dir']) === false) {
             $imageInfo = null;
             $systemAttachment->delete(['name' => $name]);
@@ -387,7 +387,7 @@ class UserBillController
     }
 
     /**
-     * 获取海报详细信息
+     * Lấy thông tin chi tiết poster
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -424,7 +424,7 @@ class UserBillController
     }
 
     /**
-     * 积分记录
+     * Lịch sử điểm thưởng
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -439,7 +439,7 @@ class UserBillController
     }
 
     /**
-     * 佣金排行
+     * Xếp hạng hoa hồng
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -458,7 +458,7 @@ class UserBillController
     }
 
     /**
-     * 事业部/代理商推广订单
+     * Đơn hàng giới thiệu của đại lý khu vực/đại lý
      * @param Request $request
      * @return mixed
      */

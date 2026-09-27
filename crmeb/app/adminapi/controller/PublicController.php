@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,7 +24,7 @@ class PublicController
 {
 
     /**
-     * 下载文件
+     * Tải xuống tệp
      * @param string $key
      * @return Response|\think\response\File
      */
@@ -47,7 +47,7 @@ class PublicController
     }
 
     /**
-     * 获取workerman请求域名
+     * Lấy tên miền request của workerman
      * @return mixed
      */
     public function getWorkerManUrl()
@@ -56,12 +56,12 @@ class PublicController
     }
 
     /**
-     * 扫码上传
+     * Quét mã để tải lên
      * @param Request $request
      * @param int $upload_type
      * @param int $type
      * @return Response
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/06/13
      */
@@ -91,7 +91,7 @@ class PublicController
     }
 
     /**
-     * 服务器信息
+     * Thông tin máy chủ
      * @return \think\Response
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -100,30 +100,30 @@ class PublicController
     public function getSystemInfo()
     {
         $info['server'] = [
-            ['name' => '服务器系统', 'require' => '类UNIX', 'value' => PHP_OS],
-            ['name' => 'WEB环境', 'require' => 'Apache/Nginx/IIS', 'value' => $_SERVER['SERVER_SOFTWARE']],
+            ['name' => 'Hệ điều hành máy chủ', 'require' => 'Tương tự UNIX', 'value' => PHP_OS],
+            ['name' => 'Môi trường WEB', 'require' => 'Apache/Nginx/IIS', 'value' => $_SERVER['SERVER_SOFTWARE']],
         ];
         $gd_info = function_exists('gd_info') ? gd_info() : array();
         $info['environment'] = [
-            ['name' => 'PHP版本', 'require' => '7.1-7.4', 'value' => phpversion()],
-            ['name' => 'MySql版本', 'require' => '5.6-8.0', 'value' => Db::query("SELECT VERSION()")[0]['VERSION()']],
-            ['name' => 'MySqli', 'require' => '开启', 'value' => function_exists('mysqli_connect')],
-            ['name' => 'Openssl', 'require' => '开启', 'value' => function_exists('openssl_encrypt')],
-            ['name' => 'Session', 'require' => '开启', 'value' => function_exists('session_start')],
-            ['name' => 'Safe_Mode', 'require' => '开启', 'value' => !ini_get('safe_mode')],
-            ['name' => 'GD', 'require' => '开启', 'value' => !empty($gd_info['GD Version'])],
-            ['name' => 'Curl', 'require' => '开启', 'value' => function_exists('curl_init')],
-            ['name' => 'Bcmath', 'require' => '开启', 'value' => function_exists('bcadd')],
-            ['name' => 'Upload', 'require' => '开启', 'value' => (bool)ini_get('file_uploads')],
+            ['name' => 'Phiên bản PHP', 'require' => '7.1-7.4', 'value' => phpversion()],
+            ['name' => 'Phiên bản MySql', 'require' => '5.6-8.0', 'value' => Db::query("SELECT VERSION()")[0]['VERSION()']],
+            ['name' => 'MySqli', 'require' => 'Bật', 'value' => function_exists('mysqli_connect')],
+            ['name' => 'Openssl', 'require' => 'Bật', 'value' => function_exists('openssl_encrypt')],
+            ['name' => 'Session', 'require' => 'Bật', 'value' => function_exists('session_start')],
+            ['name' => 'Safe_Mode', 'require' => 'Bật', 'value' => !ini_get('safe_mode')],
+            ['name' => 'GD', 'require' => 'Bật', 'value' => !empty($gd_info['GD Version'])],
+            ['name' => 'Curl', 'require' => 'Bật', 'value' => function_exists('curl_init')],
+            ['name' => 'Bcmath', 'require' => 'Bật', 'value' => function_exists('bcadd')],
+            ['name' => 'Upload', 'require' => 'Bật', 'value' => (bool)ini_get('file_uploads')],
         ];
 
         $info['permissions'] = [
-            ['name' => 'backup', 'require' => '读写', 'value' => is_readable(root_path('backup')) && is_writable(root_path('backup'))],
-            ['name' => 'public', 'require' => '读写', 'value' => is_readable(root_path('public')) && is_writable(root_path('public'))],
-            ['name' => 'runtime', 'require' => '读写', 'value' => is_readable(root_path('runtime')) && is_writable(root_path('runtime'))],
-            ['name' => '.env', 'require' => '读写', 'value' => is_readable(root_path() . '.env') && is_writable(root_path() . '.env')],
-            ['name' => '.version', 'require' => '读写', 'value' => is_readable(root_path() . '.version') && is_writable(root_path() . '.version')],
-            ['name' => '.constant', 'require' => '读写', 'value' => is_readable(root_path() . '.constant') && is_writable(root_path() . '.constant')],
+            ['name' => 'backup', 'require' => 'Đọc/ghi', 'value' => is_readable(root_path('backup')) && is_writable(root_path('backup'))],
+            ['name' => 'public', 'require' => 'Đọc/ghi', 'value' => is_readable(root_path('public')) && is_writable(root_path('public'))],
+            ['name' => 'runtime', 'require' => 'Đọc/ghi', 'value' => is_readable(root_path('runtime')) && is_writable(root_path('runtime'))],
+            ['name' => '.env', 'require' => 'Đọc/ghi', 'value' => is_readable(root_path() . '.env') && is_writable(root_path() . '.env')],
+            ['name' => '.version', 'require' => 'Đọc/ghi', 'value' => is_readable(root_path() . '.version') && is_writable(root_path() . '.version')],
+            ['name' => '.constant', 'require' => 'Đọc/ghi', 'value' => is_readable(root_path() . '.constant') && is_writable(root_path() . '.constant')],
         ];
         if (function_exists('exec')) {
             $workermanOutput = $timerOutput = $queueOutput = [];
@@ -131,15 +131,15 @@ class PublicController
             exec("ps aux | grep 'php think timer' | grep -v grep", $timerOutput);
             exec("ps aux | grep 'php think queue' | grep -v grep", $queueOutput);
             $info['process'] = [
-                ['name' => '长链接', 'require' => '开启', 'value' => count($workermanOutput) > 0],
-                ['name' => '定时任务', 'require' => '开启', 'value' => count($timerOutput) > 0],
-                ['name' => '消息队列', 'require' => '开启', 'value' => count($queueOutput) > 0],
+                ['name' => 'Kết nối liên tục', 'require' => 'Bật', 'value' => count($workermanOutput) > 0],
+                ['name' => 'Tác vụ định kỳ', 'require' => 'Bật', 'value' => count($timerOutput) > 0],
+                ['name' => 'Hàng đợi tin nhắn', 'require' => 'Bật', 'value' => count($queueOutput) > 0],
             ];
         } else {
             $info['process'] = [
-                ['name' => '长链接', 'require' => '开启', 'value' => file_exists(root_path('runtime') . 'workerman.pid')],
-                ['name' => '定时任务', 'require' => '开启', 'value' => file_exists(root_path('runtime') . '.timer')],
-                ['name' => '消息队列', 'require' => '开启', 'value' => file_exists(root_path('runtime') . '.queue')],
+                ['name' => 'Kết nối liên tục', 'require' => 'Bật', 'value' => file_exists(root_path('runtime') . 'workerman.pid')],
+                ['name' => 'Tác vụ định kỳ', 'require' => 'Bật', 'value' => file_exists(root_path('runtime') . '.timer')],
+                ['name' => 'Hàng đợi tin nhắn', 'require' => 'Bật', 'value' => file_exists(root_path('runtime') . '.queue')],
             ];
         }
         return app('json')->success($info);

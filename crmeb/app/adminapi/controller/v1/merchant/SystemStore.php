@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\adminapi\controller\AuthController;
 use app\services\system\store\SystemStoreServices;
 
 /**
- * 门店管理控制器
+ * Controller quản lý cửa hàng
  * Class SystemAttachment
  * @package app\admin\controller\system
  *
@@ -23,7 +23,7 @@ use app\services\system\store\SystemStoreServices;
 class SystemStore extends AuthController
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * SystemStore constructor.
      * @param App $app
      * @param SystemStoreServices $services
@@ -35,7 +35,7 @@ class SystemStore extends AuthController
     }
 
     /**
-     * 门店列表
+     * Danh sách cửa hàng
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -51,7 +51,7 @@ class SystemStore extends AuthController
     }
 
     /**
-     * 获取门店头部
+     * Lấy phần đầu trang cửa hàng
      * @return mixed
      */
     public function get_header()
@@ -61,7 +61,7 @@ class SystemStore extends AuthController
     }
 
     /**
-     * 门店设置
+     * Cài đặt cửa hàng
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -77,7 +77,7 @@ class SystemStore extends AuthController
     }
 
     /**
-     * 位置选择
+     * Chọn vị trí
      * @return mixed
      */
     public function select_address()
@@ -88,7 +88,7 @@ class SystemStore extends AuthController
     }
 
     /**
-     * 设置单个门店是否显示
+     * Thiết lập hiện/ẩn cho một cửa hàng
      * @param string $is_show
      * @param string $id
      * @return mixed
@@ -105,7 +105,7 @@ class SystemStore extends AuthController
     }
 
     /**
-     * 保存修改门店信息
+     * Lưu chỉnh sửa thông tin cửa hàng
      * @param int $id
      * @return mixed
      */
@@ -142,7 +142,7 @@ class SystemStore extends AuthController
     }
 
     /**
-     * 删除恢复门店
+     * Xóa/khôi phục cửa hàng
      * @param $id
      * @return mixed
      */

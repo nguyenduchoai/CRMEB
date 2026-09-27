@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use app\services\user\UserWechatuserServices;
 use think\facade\App;
 
 /**
- * 配送员管理
+ * Quản lý nhân viên giao hàng
  * Class StoreService
  * @package app\admin\controller\store
  */
@@ -34,7 +34,7 @@ class DeliveryService extends AuthController
     }
 
     /**
-     * 配送员列表
+     * Danh sách nhân viên giao hàng
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -46,7 +46,7 @@ class DeliveryService extends AuthController
     }
 
     /**
-     * 添加客服表单
+     * Biểu mẫu thêm nhân viên CSKH
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
@@ -56,7 +56,7 @@ class DeliveryService extends AuthController
     }
 
     /**
-     * 保存配送员
+     * Lưu người giao hàng
      * @return mixed
      */
     public function save()
@@ -75,7 +75,7 @@ class DeliveryService extends AuthController
     }
 
     /**
-     * 编辑表单
+     * Form sửa
      * @param $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -86,7 +86,7 @@ class DeliveryService extends AuthController
     }
 
     /**
-     * 修改配送员
+     * Sửa nhân viên giao hàng
      * @param $id
      * @return mixed
      */
@@ -104,7 +104,7 @@ class DeliveryService extends AuthController
     }
 
     /**
-     * 删除配送员
+     * Xóa nhân viên giao hàng
      * @param $id
      * @return mixed
      */
@@ -117,7 +117,7 @@ class DeliveryService extends AuthController
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param $id
      * @param $status
      * @return mixed
@@ -130,7 +130,7 @@ class DeliveryService extends AuthController
     }
 
     /**
-     * 获取所有配送员列表
+     * Lấy danh sách tất cả người giao hàng
      * @return mixed
      */
     public function get_delivery_list()

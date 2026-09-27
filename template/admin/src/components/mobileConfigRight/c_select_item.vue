@@ -10,27 +10,27 @@
             :icon="index > 1 ? 'ios-trash-outline' : ''"
             v-model="item.val"
             maxlength="10"
-            placeholder="选填，不超过十个字"
+            placeholder="Không bắt buộc, tối đa 10 ký tự"
             @on-click="bindDelete(index)"
           />
         </div>
         <div class="button acea-row row-between-wrapper" :class="configData.list.length == 0 ? 'on' : ''">
           <div class="bnt acea-row row-center-wrapper" @click="addHotTxt">
             <span class="iconfont iconjia"></span>
-            添加单个选项
+            Thêm từng tùy chọn
           </div>
           <Poptip placement="bottom" trigger="click" width="256" transfer padding="8px" v-model="visible">
             <div class="bnt acea-row row-center-wrapper">
               <span class="iconfont iconjia"></span>
-              批量添加选项
+              Thêm tùy chọn hàng loạt
             </div>
             <div class="batchItem on" slot="content">
-              <div class="title">批量添加选项</div>
-              <div class="tips">可按回车键添加多个选项</div>
+              <div class="title">Thêm tùy chọn hàng loạt</div>
+              <div class="tips">Có thể nhấn Enter để thêm nhiều tùy chọn</div>
               <el-input v-model="batchWord" type="textarea" :autosize="{ minRows: 3, maxRows: 5 }" />
               <div class="batchBnt acea-row row-right">
-                <el-button @click.stop="cancel(1)">取消</el-button>
-                <el-button type="primary" class="ml10" @click.stop="cancel(2)">确定</el-button>
+                <el-button @click.stop="cancel(1)">Hủy</el-button>
+                <el-button type="primary" class="ml10" @click.stop="cancel(2)">Xác nhận</el-button>
               </div>
             </div>
           </Poptip>
@@ -92,7 +92,7 @@ export default {
       };
       this.configData.list.push(obj);
     },
-    // 删除数组
+    // Xóa mảng
     bindDelete(index) {
       this.configData.list.splice(index, 1);
     },

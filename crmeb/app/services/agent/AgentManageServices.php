@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -79,7 +79,7 @@ class AgentManageServices extends BaseServices
     }
 
     /**
-     * 分销头部信息
+     * Thông tin phần đầu trang phân phối
      * @param $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -92,70 +92,70 @@ class AgentManageServices extends BaseServices
         $userServices = app()->make(UserServices::class);
         $uids = $userServices->getAgentUserIds($where);
 
-        //分销员人数
+        //Số lượng cộng tác viên
         $data['uids'] = $uids;
         $data['sum_count'] = count($uids);
 
-        //发展会员人数以及用户的可提现金额
+        //Số lượng thành viên phát triển và số tiền người dùng có thể rút
         $data['spread_sum'] = 0;
         $data['extract_price'] = 0;
         if ($data['sum_count']) {
-            //发展会员人数
+            //Số lượng thành viên phát triển
             $data['spread_sum'] = $userServices->getCount([['spread_uid', 'in', $uids]]);
-            //获取某个用户可提现金额
+            //Lấy số tiền có thể rút của một người dùng
             /** @var UserBrokerageFrozenServices $frozenPrices */
             $frozenPrices = app()->make(UserBrokerageFrozenServices::class);
             $data['extract_price'] = bcsub((string)$userServices->getSumBrokerage(['uid' => $uids]), $frozenPrices->getSumFrozenBrokerage($uids), 2);
         }
 
-        //订单总数，订单金额，提现次数
+        //Tổng số đơn hàng, số tiền đơn hàng, số lần rút tiền
         $data['order_count'] = 0;
         $data['pay_price'] = 0;
         $data['extract_count'] = 0;
         if ($data['sum_count']) {
             /** @var StoreOrderServices $storeOrder */
             $storeOrder = app()->make(StoreOrderServices::class);
-            //订单总数
+            //Tổng số đơn hàng
             $data['order_count'] = $storeOrder->getCount([['uid', 'in', $uids], ['paid', '=', 1], ['refund_status', '=', 0], ['pid', '<=', 0]]);
-            //订单金额
+            //Số tiền đơn hàng
             $data['pay_price'] = $storeOrder->sum([['uid', 'in', $uids], ['paid', '=', 1], ['refund_status', '=', 0], ['pid', '<=', 0]], 'pay_price');
-            //提现次数
+            //Số lần rút tiền
             $data['extract_count'] = app()->make(UserExtractServices::class)->getCount([['uid', 'in', $uids], ['status', '=', 1]]);
         }
 
         return [
             [
-                'name' => '分销员人数(人)',
+                'name' => 'Số CTV (người)',
                 'count' => $data['sum_count'],
                 'className' => 'iconfaqirenshu',
                 'col' => 4,
             ],
             [
-                'name' => '推广用户数量(人)',
+                'name' => 'Số người dùng được giới thiệu (người)',
                 'count' => $data['spread_sum'],
                 'className' => 'icontuiguangrenshu',
                 'col' => 4,
             ],
             [
-                'name' => '订单数(单)',
+                'name' => 'Số đơn hàng (đơn)',
                 'count' => $data['order_count'],
                 'className' => 'icondingdanliang',
                 'col' => 4,
             ],
             [
-                'name' => '订单金额(元)',
+                'name' => 'Số tiền đơn hàng (đ)',
                 'count' => $data['pay_price'],
                 'className' => 'icondingdanjine',
                 'col' => 4,
             ],
             [
-                'name' => '提现次数(次)',
+                'name' => 'Số lần rút tiền (lần)',
                 'count' => $data['extract_count'],
                 'className' => 'iconzhichujine',
                 'col' => 4,
             ],
             [
-                'name' => '未提现金额(元)',
+                'name' => 'Số tiền chưa rút (đ)',
                 'count' => $data['extract_price'],
                 'className' => 'iconjiaoyijine',
                 'col' => 4,
@@ -164,7 +164,7 @@ class AgentManageServices extends BaseServices
     }
 
     /**
-     * 推广人列表
+     * Danh sách người được giới thiệu
      * @param array $where
      * @return mixed
      */
@@ -176,16 +176,16 @@ class AgentManageServices extends BaseServices
         foreach ($data['list'] as &$item) {
             $item['spread_count'] = $item['spreadCount'][0]['spread_count'] ?? 0;
             $item['order_count'] = $item['order'][0]['order_count'] ?? 0;
-            $item['promoter_name'] = $item['is_promoter'] ? '是' : '否';
+            $item['promoter_name'] = $item['is_promoter'] ? 'Có' : 'Không';
             $item['add_time'] = $item['spread_time'] ? date("Y-m-d H:i:s", $item['spread_time']) : '';
         }
         return $data;
     }
 
-    //TODO 废弃
+    //TODO đã loại bỏ
 
     /**
-     * 推广人头部信息
+     * Thông tin phần đầu trang người giới thiệu
      * @param array $where
      * @return array[]
      */
@@ -202,17 +202,17 @@ class AgentManageServices extends BaseServices
         $col = $data['two_number'] > 0 ? 4 : 6;
         return [
             [
-                'name' => '总人数(人)',
+                'name' => 'Tổng số người (người)',
                 'count' => $data['number'],
                 'col' => $col,
             ],
             [
-                'name' => '一级人数(人)',
+                'name' => 'Số người cấp 1 (người)',
                 'count' => $data['one_number'],
                 'col' => $col,
             ],
             [
-                'name' => '二级人数(人)',
+                'name' => 'Số người cấp 2 (người)',
                 'count' => $data['two_number'],
                 'col' => $col,
             ],
@@ -220,7 +220,7 @@ class AgentManageServices extends BaseServices
     }
 
     /**
-     * 推广订单
+     * Đơn hàng giới thiệu
      * @param int $uid
      * @param array $where
      * @return array
@@ -263,7 +263,7 @@ class AgentManageServices extends BaseServices
                 $item['brokerage_price'] = $item['spread_uid'] == $uid ? $item['one_brokerage'] : $item['two_brokerage'];
                 $item['_pay_time'] = $item['pay_time'] ? date('Y-m-d H:i:s', $item['pay_time']) : '';
                 $item['_add_time'] = $item['add_time'] ? date('Y-m-d H:i:s', $item['add_time']) : '';
-                $item['take_time'] = ($change_time = $orderChangTimes[$item['id']] ?? '') ? date('Y-m-d H:i:s', $change_time) : '暂无';
+                $item['take_time'] = ($change_time = $orderChangTimes[$item['id']] ?? '') ? date('Y-m-d H:i:s', $change_time) : 'Chưa có';
             }
         }
         return $data;
@@ -271,7 +271,7 @@ class AgentManageServices extends BaseServices
 
 
     /**
-     * 获取永久二维码
+     * Lấy mã QR vĩnh viễn
      * @param $type
      * @param $id
      * @return array|false|\PDOStatement|string|\think\Model
@@ -286,7 +286,7 @@ class AgentManageServices extends BaseServices
     }
 
     /**
-     * TODO 查看小程序推广二维码
+     * TODO xem mã QR giới thiệu Mini Program
      * @param string $uid
      */
     public function lookXcxCode(int $uid)
@@ -327,7 +327,7 @@ class AgentManageServices extends BaseServices
     }
 
     /**
-     * 查看H5推广二维码
+     * Xem mã QR giới thiệu H5
      * @param string $uid
      * @return mixed|string
      */
@@ -350,7 +350,7 @@ class AgentManageServices extends BaseServices
     }
 
     /**
-     * 清除推广关系
+     * Xóa quan hệ giới thiệu
      * @param int $uid
      * @return mixed
      */
@@ -372,7 +372,7 @@ class AgentManageServices extends BaseServices
     }
 
     /**
-     * 取消推广资格
+     * Hủy tư cách cộng tác viên
      * @param int $uid
      * @return mixed
      */
@@ -390,20 +390,20 @@ class AgentManageServices extends BaseServices
     }
 
     /**
-     * 取消绑定上级
+     * Hủy liên kết người giới thiệu
      * @return bool
      */
     public function removeSpread()
     {
-        //商城分销功能是否开启 0关闭1开启
+        //Chức năng phân phối của cửa hàng có mở không, 0 là tắt, 1 là mở
         if (!sys_config('brokerage_func_status')) return true;
 
-        //绑定类型
+        //Loại liên kết
         $store_brokergae_binding_status = sys_config('store_brokerage_binding_status', 1);
         if ($store_brokergae_binding_status == 1 || $store_brokergae_binding_status == 3) {
             return true;
         } else {
-            //分销绑定类型为时间段且没过期
+            //Loại liên kết phân phối là theo khoảng thời gian và chưa hết hạn
             $store_brokerage_binding_time = (int)sys_config('store_brokerage_binding_time', 30) * 24 * 3600;
             $spread_time = bcsub((string)time(), (string)$store_brokerage_binding_time, 0);
             /** @var UserServices $userServices */
@@ -417,12 +417,12 @@ class AgentManageServices extends BaseServices
     }
 
     /**
-     * 配置绑定类型切换重置绑定时间
+     * Khi đổi loại liên kết trong cấu hình thì đặt lại thời gian liên kết
      * @return bool
      */
     public function resetSpreadTime()
     {
-        //商城分销功能是否开启 0关闭1开启
+        //Chức năng phân phối của cửa hàng có mở không, 0 là tắt, 1 là mở
         if (!sys_config('brokerage_func_status')) return true;
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);

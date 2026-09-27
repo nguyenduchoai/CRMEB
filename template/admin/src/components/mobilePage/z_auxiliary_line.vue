@@ -24,11 +24,11 @@
 import { mapState, mapMutations } from 'vuex';
 export default {
   name: 'z_auxiliary_line',
-  cname: '辅助线',
+  cname: 'Đường phân cách',
   configName: 'c_auxiliary_line',
   icon: '#iconzujian-fuzhuxian',
-  type: 2, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'guide', // 外面匹配名称
+  type: 2, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'guide', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -65,20 +65,20 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
-        cname: '辅助线',
+        cname: 'Đường phân cách',
         name: 'guide',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
         },
-        titleLeft: '展示设置',
-        titleRight: '线条样式',
-        titleCurrent: '通用样式',
+        titleLeft: 'Cài đặt hiển thị',
+        titleRight: 'Kiểu đường kẻ',
+        titleCurrent: 'Kiểu chung',
         lineColor: {
-          title: '线条颜色',
+          title: 'Màu đường kẻ',
           default: [
             {
               item: '#f5f5f5',
@@ -91,7 +91,7 @@ export default {
           ],
         },
         lineBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           default: [
             {
               item: '#E93323',
@@ -104,40 +104,40 @@ export default {
           ],
         },
         lineStyle: {
-          title: '选择样式',
+          title: 'Chọn kiểu',
           tabVal: 1,
           tabList: [
             {
-              name: '虚线',
+              name: 'Nét đứt',
               style: 'dashed',
             },
             {
-              name: '实线',
+              name: 'Nét liền',
               style: 'solid',
             },
             {
-              name: '点状线',
+              name: 'Nét chấm',
               style: 'dotted',
             },
           ],
         },
         topConfig: {
-          title: '上边距',
+          title: 'Lề trên',
           val: 6,
           min: 0,
         },
         bottomConfig: {
-          title: '下边距',
+          title: 'Lề dưới',
           val: 6,
           min: 0,
         },
         lrEdge: {
-          title: '左右边距',
+          title: 'Lề trái phải',
           val: 0,
           min: 0,
         },
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },

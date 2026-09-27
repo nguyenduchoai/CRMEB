@@ -2,30 +2,30 @@
 	<view :style="colorStyle">
 		<view class="mask" @touchmove.prevent :hidden="isShow === false"></view>
 		<view class="product-window" :class="{'on':isShow}">
-			<!-- 关闭 icon -->
+			<!-- Icon đóng -->
 			<!-- <view class="iconfont icon-guanbi" @click="closeAttr"></view> -->
 			<view class="mp-data">
-				<text class="mp-name">{{mpData.siteName}}{{$t(`服务与隐私协议`)}}</text>
+				<text class="mp-name">{{mpData.siteName}}{{$t(`Thỏa thuận dịch vụ và quyền riêng tư`)}}</text>
 			</view>
 			<view class="trip-msg">
 				<view class="trip">
-					{{$t(`欢迎您使用${mpData.siteName}！请仔细阅读以下内容，并作出适当的选择：`)}}
+					{{$t(`Chào mừng bạn sử dụng ${mpData.siteName}! Vui lòng đọc kỹ nội dung sau và đưa ra lựa chọn phù hợp:`)}}
 				</view>
 			</view>
 			<view class="trip-title">
-				{{$t(`隐私政策概要`)}}
+				{{$t(`Tóm tắt Chính sách bảo mật`)}}
 			</view>
 			<view class="trip-msg">
 				<view class="trip">
-					{{$t(`当您点击同意并开始时用产品服务时，即表示您已理解并同息该条款内容，该条款将对您产生法律约束力。如您拒绝，将无法继续下一步操作。`)}}
+					{{$t(`Khi bạn nhấn đồng ý và bắt đầu sử dụng sản phẩm, dịch vụ, điều đó có nghĩa là bạn đã hiểu và đồng ý với nội dung các điều khoản này, và các điều khoản này sẽ có hiệu lực ràng buộc pháp lý đối với bạn. Nếu bạn từ chối, bạn sẽ không thể tiếp tục thao tác tiếp theo.`)}}
 				</view>
 			</view>
-			<view class="main-color" @click.stop="privacy(3)">{{$t(`点击阅读`)}}{{agreementName}}</view>
+			<view class="main-color" @click.stop="privacy(3)">{{$t(`Nhấn để đọc`)}}{{agreementName}}</view>
 			<view class="bottom">
 				<button class="save open" type="default" id="agree-btn" open-type="agreePrivacyAuthorization"
-					@agreeprivacyauthorization="handleAgree">{{$t(`同意并继续`)}}</button>
+					@agreeprivacyauthorization="handleAgree">{{$t(`Đồng ý và tiếp tục`)}}</button>
 				<button class="reject" @click="rejectAgreement">
-					{{$t(`取消`)}}
+					{{$t(`Hủy`)}}
 				</button>
 			</view>
 		</view>
@@ -51,12 +51,12 @@
 			wx.getPrivacySetting({
 				success: res => {
 					if (res.needAuthorization) {
-						// 需要弹出隐私协议
+						// Cần hiện popup thỏa thuận quyền riêng tư
 						this.isShow = true
 						this.agreementName = res.privacyContractName
 					} else {
 						this.$emit('onAgree');
-						// 用户已经同意过隐私协议，所以不需要再弹出隐私协议，也能调用已声明过的隐私接口
+						// Người dùng đã đồng ý thỏa thuận quyền riêng tư nên không cần hiện lại popup, vẫn có thể gọi các API quyền riêng tư đã khai báo
 					}
 				},
 				fail: () => {},
@@ -64,12 +64,12 @@
 			})
 		},
 		methods: {
-			// 同意
+			// Đồng ý
 			handleAgree() {
 				this.isShow = false
 				this.$emit('onAgree');
 			},
-			// 拒绝
+			// Từ chối
 			rejectAgreement() {
 				this.isShow = false
 				uni.switchTab({
@@ -80,7 +80,7 @@
 			closeAttr() {
 				this.$emit('onCloseAgePop');
 			},
-			// 跳转协议
+			// Chuyển đến thỏa thuận
 			privacy(type) {
 				uni.navigateTo({
 					url: "/pages/users/privacy/index?type=" + type
@@ -116,8 +116,8 @@
 		transition: all .3s cubic-bezier(.25, .5, .5, .9);
 		padding: 64rpx 40rpx;
 		padding-bottom: 38rpx;
-		padding-bottom: calc(38rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-		padding-bottom: calc(38rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+		padding-bottom: calc(38rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+		padding-bottom: calc(38rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 		box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.06);
 
 		.icon-guanbi {

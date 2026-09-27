@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -33,7 +33,7 @@ class SystemAdmin extends AuthController
     }
 
     /**
-     * 显示管理员资源列表
+     * Hiển thị danh sách resource quản trị viên
      *
      * @return \think\Response
      */
@@ -50,7 +50,7 @@ class SystemAdmin extends AuthController
     }
 
     /**
-     * 创建表单
+     * Tạo form
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
@@ -60,7 +60,7 @@ class SystemAdmin extends AuthController
     }
 
     /**
-     * 保存管理员
+     * Lưu quản trị viên
      * @return mixed
      */
     public function save()
@@ -82,7 +82,7 @@ class SystemAdmin extends AuthController
     }
 
     /**
-     * 显示编辑资源表单页.
+     * Hiển thị trang form sửa resource.
      *
      * @param int $id
      * @return \think\Response
@@ -97,7 +97,7 @@ class SystemAdmin extends AuthController
     }
 
     /**
-     * 修改管理员信息
+     * Sửa thông tin quản trị viên
      * @param $id
      * @return mixed
      */
@@ -122,7 +122,7 @@ class SystemAdmin extends AuthController
     }
 
     /**
-     * 删除管理员
+     * Xóa quản trị viên
      * @param $id
      * @return mixed
      */
@@ -136,7 +136,7 @@ class SystemAdmin extends AuthController
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param $id
      * @param $status
      * @return mixed
@@ -148,7 +148,7 @@ class SystemAdmin extends AuthController
     }
 
     /**
-     * 获取当前登陆管理员的信息
+     * Lấy thông tin quản trị viên đang đăng nhập
      * @return mixed
      */
     public function info()
@@ -157,7 +157,7 @@ class SystemAdmin extends AuthController
     }
 
     /**
-     * 修改当前登陆admin信息
+     * Sửa thông tin admin đang đăng nhập
      * @return mixed
      */
     public function update_admin()
@@ -183,7 +183,7 @@ class SystemAdmin extends AuthController
     }
 
     /**
-     * 修改当前登陆admin的文件管理密码
+     * Sửa mật khẩu quản lý file của admin đang đăng nhập
      * @return mixed
      */
     public function set_file_password()
@@ -202,7 +202,7 @@ class SystemAdmin extends AuthController
     }
 
     /**
-     * 退出登陆
+     * Đăng xuất
      * @return mixed
      */
     public function logout()

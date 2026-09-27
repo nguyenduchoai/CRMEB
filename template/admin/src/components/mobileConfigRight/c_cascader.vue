@@ -7,7 +7,7 @@
       <el-col :span="19" class="slider-box">
         <el-cascader
           :data="configData.list"
-          placeholder="请选择商品分类"
+          placeholder="Vui lòng chọn danh mục sản phẩm"
           :props="{ multiple: true, checkStrictly: true, emitPath: false }"
           v-model="configData.activeValue"
           filterable

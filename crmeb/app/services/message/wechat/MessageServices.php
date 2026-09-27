@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -31,13 +31,13 @@ class MessageServices extends BaseServices
 {
 
     /**
-     * 扫码
+     * Quét mã
      * @param $message
      * @return array|\EasyWeChat\Message\Image|\EasyWeChat\Message\News|\EasyWeChat\Message\Text|\EasyWeChat\Message\Transfer|\EasyWeChat\Message\Voice|mixed|string
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/02/24
      */
@@ -60,7 +60,7 @@ class MessageServices extends BaseServices
             $thirdType = explode('-', $qrInfo['third_type']);
             $baseUrl = sys_config('site_url');
             if (in_array(strtolower($thirdType[0]), ['spread', 'agent', 'wechatqrcode', 'product', 'combination', 'seckill', 'bargain', 'pink'])) {
-                //扫码需要生成用户流程
+                //Quy trình cần tạo người dùng khi quét mã
                 $spreadUid = $qrInfo['third_id'];
                 $spreadInfo = $userService->get($spreadUid);
                 $is_new = $wechatUser->saveUser($message->FromUserName);
@@ -70,15 +70,15 @@ class MessageServices extends BaseServices
                     switch (strtolower($thirdType[0])) {
                         case 'spread':
                             if ($spreadUid == $uid) {
-                                $response = '自己不能推荐自己';
+                                $response = 'Không thể tự giới thiệu chính mình';
                             } else if (!$userInfo) {
-                                $response = '用户不存在';
+                                $response = 'Người dùng không tồn tại';
                             } else if (!$spreadInfo) {
-                                $response = '上级用户不存在';
+                                $response = 'Người giới thiệu không tồn tại';
                             } else if ($userInfo['spread_uid']) {
-                                $response = '已有推荐人!';
+                                $response = 'Đã có người giới thiệu!';
                             } else if (!$loginService->updateUserInfo(['code' => $spreadUid], $userInfo, $is_new)) {
-                                $response = '绑定推荐人失败!';
+                                $response = 'Liên kết người giới thiệu thất bại!';
                             }
                             $wechatNews['title'] = sys_config('site_name');
                             $wechatNews['image'] = sys_config('wap_login_logo');
@@ -89,23 +89,23 @@ class MessageServices extends BaseServices
                             break;
                         case 'agent':
                             if ($spreadUid == $uid) {
-                                $response = '自己不能推荐自己';
+                                $response = 'Không thể tự giới thiệu chính mình';
                             } else if (!$userInfo) {
-                                $response = '用户不存在';
+                                $response = 'Người dùng không tồn tại';
                             } else if (!$spreadInfo) {
-                                $response = '上级用户不存在';
+                                $response = 'Người giới thiệu không tồn tại';
                             } else if ($userInfo->is_division) {
-                                $response = '您是事业部,不能绑定成为别人的员工';
+                                $response = 'Bạn là đại lý khu vực, không thể liên kết làm nhân viên của người khác';
                             } else if ($userInfo->is_agent) {
-                                $response = '您是代理商,不能绑定成为别人的员工';
+                                $response = 'Bạn là đại lý, không thể liên kết làm nhân viên của người khác';
                             } else if ($loginService->updateUserInfo(['code' => $spreadUid, 'is_staff' => 1], $userInfo, $is_new)) {
-                                $response = '绑定店员成功!';
+                                $response = 'Liên kết nhân viên cửa hàng thành công!';
                             }
                             break;
                         case 'wechatqrcode':
                             /** @var WechatQrcodeServices $wechatQrcodeService */
                             $wechatQrcodeService = app()->make(WechatQrcodeServices::class);
-                            //wechatqrcode类型的二维码数据中,third_id为渠道码的id
+                            //Trong dữ liệu mã QR loại wechatqrcode, third_id là id của mã kênh
                             $qrcodeInfo = $wechatQrcodeService->qrcodeInfo($qrInfo['third_id']);
                             $spreadUid = $qrcodeInfo['uid'];
                             $spreadInfo = $userService->get($spreadUid);
@@ -113,15 +113,15 @@ class MessageServices extends BaseServices
                             $uid = $wechatUser->getFieldValue($message->FromUserName, 'openid', 'uid', ['user_type', '<>', 'h5']);
                             $userInfo = $userService->get($uid);
                             if ($qrcodeInfo['status'] == 0 || $qrcodeInfo['is_del'] == 1 || ($qrcodeInfo['end_time'] < time() && $qrcodeInfo['end_time'] > 0)) {
-                                $response = '二维码已失效';
+                                $response = 'Mã QR đã hết hiệu lực';
                             } else if ($spreadUid == $uid) {
-                                $response = '自己不能推荐自己';
+                                $response = 'Không thể tự giới thiệu chính mình';
                             } else if (!$userInfo) {
-                                $response = '用户不存在';
+                                $response = 'Người dùng không tồn tại';
                             } else if (!$spreadInfo) {
-                                $response = '上级用户不存在';
+                                $response = 'Người giới thiệu không tồn tại';
                             } else if ($loginService->updateUserInfo(['code' => $spreadUid], $userInfo, $is_new)) {
-                                //写入扫码记录,返回内容
+                                //Ghi bản ghi quét mã, trả về nội dung
                                 $response = $wechatQrcodeService->wechatQrcodeRecord($qrcodeInfo, $userInfo, $spreadInfo);
                             }
                             break;
@@ -193,14 +193,14 @@ class MessageServices extends BaseServices
                     $response = $e->getMessage();
                 }
             } else {
-                //扫码不生成用户流程
+                //Quy trình quét mã không tạo người dùng
             }
         }
         return $response;
     }
 
     /**
-     * 取消关注
+     * Bỏ theo dõi
      * @param $message
      */
     public function wechatEventUnsubscribe($message)
@@ -211,13 +211,13 @@ class MessageServices extends BaseServices
     }
 
     /**
-     * 公众号关注
+     * Theo dõi OA WeChat
      * @param $message
      * @return array|\EasyWeChat\Message\Image|\EasyWeChat\Message\News|\EasyWeChat\Message\Text|\EasyWeChat\Message\Transfer|\EasyWeChat\Message\Voice|mixed|string
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/02/24
      */
@@ -240,7 +240,7 @@ class MessageServices extends BaseServices
             $thirdType = explode('-', $qrInfo['third_type']);
             $baseUrl = sys_config('site_url');
             if (in_array(strtolower($thirdType[0]), ['spread', 'agent', 'wechatqrcode', 'product', 'combination', 'seckill', 'bargain', 'pink'])) {
-                //扫码需要生成用户流程
+                //Quy trình cần tạo người dùng khi quét mã
                 $spreadUid = $qrInfo['third_id'];
                 $spreadInfo = $userService->get($spreadUid);
                 $is_new = $wechatUser->saveUser($message->FromUserName);
@@ -250,15 +250,15 @@ class MessageServices extends BaseServices
                     switch (strtolower($thirdType[0])) {
                         case 'spread':
                             if ($spreadUid == $uid) {
-                                $response = '自己不能推荐自己';
+                                $response = 'Không thể tự giới thiệu chính mình';
                             } else if (!$userInfo) {
-                                $response = '用户不存在';
+                                $response = 'Người dùng không tồn tại';
                             } else if (!$spreadInfo) {
-                                $response = '上级用户不存在';
+                                $response = 'Người giới thiệu không tồn tại';
                             } else if ($userInfo['spread_uid']) {
-                                $response = '已有推荐人!';
+                                $response = 'Đã có người giới thiệu!';
                             } else if (!$loginService->updateUserInfo(['code' => $spreadUid], $userInfo, $is_new)) {
-                                $response = '绑定推荐人失败!';
+                                $response = 'Liên kết người giới thiệu thất bại!';
                             }
                             $wechatNews['title'] = sys_config('site_name');
                             $wechatNews['image'] = sys_config('wap_login_logo');
@@ -269,23 +269,23 @@ class MessageServices extends BaseServices
                             break;
                         case 'agent':
                             if ($spreadUid == $uid) {
-                                $response = '自己不能推荐自己';
+                                $response = 'Không thể tự giới thiệu chính mình';
                             } else if (!$userInfo) {
-                                $response = '用户不存在';
+                                $response = 'Người dùng không tồn tại';
                             } else if (!$spreadInfo) {
-                                $response = '上级用户不存在';
+                                $response = 'Người giới thiệu không tồn tại';
                             } else if ($userInfo->is_division) {
-                                $response = '您是事业部,不能绑定成为别人的员工';
+                                $response = 'Bạn là đại lý khu vực, không thể liên kết làm nhân viên của người khác';
                             } else if ($userInfo->is_agent) {
-                                $response = '您是代理商,不能绑定成为别人的员工';
+                                $response = 'Bạn là đại lý, không thể liên kết làm nhân viên của người khác';
                             } else if ($loginService->updateUserInfo(['code' => $spreadUid, 'is_staff' => 1], $userInfo, $is_new)) {
-                                $response = '绑定店员成功!';
+                                $response = 'Liên kết nhân viên cửa hàng thành công!';
                             }
                             break;
                         case 'wechatqrcode':
                             /** @var WechatQrcodeServices $wechatQrcodeService */
                             $wechatQrcodeService = app()->make(WechatQrcodeServices::class);
-                            //wechatqrcode类型的二维码数据中,third_id为渠道码的id
+                            //Trong dữ liệu mã QR loại wechatqrcode, third_id là id của mã kênh
                             $qrcodeInfo = $wechatQrcodeService->qrcodeInfo($qrInfo['third_id']);
                             $spreadUid = $qrcodeInfo['uid'];
                             $spreadInfo = $userService->get($spreadUid);
@@ -293,15 +293,15 @@ class MessageServices extends BaseServices
                             $uid = $wechatUser->getFieldValue($message->FromUserName, 'openid', 'uid', ['user_type', '<>', 'h5']);
                             $userInfo = $userService->get($uid);
                             if ($qrcodeInfo['status'] == 0 || $qrcodeInfo['is_del'] == 1 || ($qrcodeInfo['end_time'] < time() && $qrcodeInfo['end_time'] > 0)) {
-                                $response = '二维码已失效';
+                                $response = 'Mã QR đã hết hiệu lực';
                             } else if ($spreadUid == $uid) {
-                                $response = '自己不能推荐自己';
+                                $response = 'Không thể tự giới thiệu chính mình';
                             } else if (!$userInfo) {
-                                $response = '用户不存在';
+                                $response = 'Người dùng không tồn tại';
                             } else if (!$spreadInfo) {
-                                $response = '上级用户不存在';
+                                $response = 'Người giới thiệu không tồn tại';
                             } else if ($loginService->updateUserInfo(['code' => $spreadUid], $userInfo, $is_new)) {
-                                //写入扫码记录,返回内容
+                                //Ghi bản ghi quét mã, trả về nội dung
                                 $response = $wechatQrcodeService->wechatQrcodeRecord($qrcodeInfo, $userInfo, $spreadInfo);
                             }
                             break;
@@ -373,11 +373,11 @@ class MessageServices extends BaseServices
                     $response = $e->getMessage();
                 }
             } else {
-                //扫码不生成用户流程
+                //Quy trình quét mã không tạo người dùng
             }
         }
 
-        // 更新关注标识
+        // Cập nhật cờ theo dõi
         if (!is_string($response)) {
             $wechatUser->subscribe($message->FromUserName);
         }
@@ -385,7 +385,7 @@ class MessageServices extends BaseServices
     }
 
     /**
-     * 位置 事件
+     * Sự kiện vị trí
      * @param $message
      * @return string
      */
@@ -395,7 +395,7 @@ class MessageServices extends BaseServices
     }
 
     /**
-     * 跳转URL  事件
+     * Sự kiện chuyển hướng URL
      * @param $message
      * @return string
      */
@@ -405,7 +405,7 @@ class MessageServices extends BaseServices
     }
 
     /**
-     * 图片 消息
+     * Tin nhắn hình ảnh
      * @param $message
      * @return string
      */
@@ -415,7 +415,7 @@ class MessageServices extends BaseServices
     }
 
     /**
-     * 语音 消息
+     * Tin nhắn ghi âm
      * @param $message
      * @return string
      */
@@ -425,7 +425,7 @@ class MessageServices extends BaseServices
     }
 
     /**
-     * 视频 消息
+     * Tin nhắn video
      * @param $message
      * @return string
      */
@@ -435,7 +435,7 @@ class MessageServices extends BaseServices
     }
 
     /**
-     * 位置  消息
+     * Tin nhắn vị trí
      */
     public function wechatMessageLocation($message)
     {
@@ -443,7 +443,7 @@ class MessageServices extends BaseServices
     }
 
     /**
-     * 链接   消息
+     * Tin nhắn liên kết
      * @param $message
      * @return string
      */
@@ -453,7 +453,7 @@ class MessageServices extends BaseServices
     }
 
     /**
-     * 其它消息  消息
+     * Tin nhắn khác
      */
     public function wechatMessageOther($message)
     {

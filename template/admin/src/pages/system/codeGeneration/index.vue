@@ -37,8 +37,8 @@
       </el-card>
     </div>
     <el-card :bordered="false" class="fixed-card" :style="{ left: `${fixBottomWidth}` }" shadow="never">
-      <el-button :disabled="!currentTab" class="mr20" v-db-click @click="beforeTab">上一步</el-button>
-      <el-button type="primary" v-db-click @click="nextTab">{{ currentTab == 2 ? '提交' : '下一步' }}</el-button>
+      <el-button :disabled="!currentTab" class="mr20" v-db-click @click="beforeTab">Bước trước</el-button>
+      <el-button type="primary" v-db-click @click="nextTab">{{ currentTab == 2 ? 'Gửi' : 'Bước tiếp theo' }}</el-button>
     </el-card>
   </div>
 </template>
@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       currentTab: 0,
-      headerList: ['基础信息', '字段配置', '存放位置'],
+      headerList: ['Thông tin cơ bản', 'Cấu hình trường', 'Vị trí lưu'],
       formItem: {
         foundation: {
           pid: '',
@@ -86,7 +86,7 @@ export default {
     };
   },
   computed: {
-    // 设置是否显示 tagsView
+    // Đặt có hiển thị tagsView hay không
     fixBottomWidth() {
       let { layout, isCollapse } = this.$store.state.themeConfig.themeConfig;
       let w;
@@ -157,7 +157,7 @@ export default {
     },
     addRow() {
       let foundation = this.formItem.foundation;
-      if (!foundation.tableName) return this.$message.warning('请先填写表名');
+      if (!foundation.tableName) return this.$message.warning('Vui lòng điền tên bảng trước');
       let data = {
         menuName: foundation.menuName,
         tableName: foundation.tableName,
@@ -174,7 +174,7 @@ export default {
               field: 'id',
               field_type: 'int',
               default: '',
-              comment: '自增ID',
+              comment: 'ID tự tăng',
               required: false,
               is_table: true,
               table_name: 'ID',
@@ -191,11 +191,11 @@ export default {
     },
     nextTab() {
       if (this.currentTab == 0) {
-        // if (!this.formItem.foundation.pid) return this.$message.warning('请选择菜单');
-        if (!this.formItem.foundation.tableName) return this.$message.warning('请输入表名');
-        if (!this.formItem.foundation.modelName) return this.$message.warning('请输入模块名');
+        // if (!this.formItem.foundation.pid) return this.$message.warning('Vui lòng chọn menu');
+        if (!this.formItem.foundation.tableName) return this.$message.warning('Vui lòng nhập tên bảng');
+        if (!this.formItem.foundation.modelName) return this.$message.warning('Vui lòng nhập tên module');
         if (!this.formItem.foundation.isTable) {
-          if (!this.$refs.TableForm.tableField.length) return this.$message.warning('请先添加表数据');
+          if (!this.$refs.TableForm.tableField.length) return this.$message.warning('Vui lòng thêm dữ liệu bảng trước');
           if (this.$refs.TableForm.tableField.length)
             for (let i = 0; i < this.$refs.TableForm.tableField.length; i++) {
               const el = this.$refs.TableForm.tableField[i];
@@ -203,7 +203,7 @@ export default {
                 ['addSoftDelete', 'addTimestamps'].indexOf(el.field_type) === -1 &&
                 (!el.field || !el.field_type || !el.comment)
               ) {
-                return this.$message.warning('请完善sql表数据');
+                return this.$message.warning('Vui lòng hoàn thiện dữ liệu bảng sql');
               }
             }
         }
@@ -222,11 +222,11 @@ export default {
         if (this.id) {
           data.id = this.id;
           this.$msgbox({
-            title: '生成提醒',
-            message: '重新提交会重新生成文件,删除、新增、修改的字段将直接从改表中进行修改,请慎重操作！！',
+            title: 'Lưu ý khi tạo',
+            message: 'Gửi lại sẽ tạo lại tệp, các trường bị xóa, thêm mới, sửa đổi sẽ được cập nhật trực tiếp vào bảng này, vui lòng thao tác thận trọng!!',
             showCancelButton: true,
-            cancelButtonText: '取消',
-            confirmButtonText: '确定',
+            cancelButtonText: 'Hủy',
+            confirmButtonText: 'Xác nhận',
             iconClass: 'el-icon-warning',
             confirmButtonClass: 'btn-custom-cancel',
           })
@@ -236,12 +236,12 @@ export default {
             .catch(() => {});
         } else {
           this.$msgbox({
-            title: '生成提醒',
+            title: 'Lưu ý khi tạo',
             message:
-              '生成后本地开发调试会直接加载生成的vue页面；如果是上线后进行生成,可以进行浏览，代码生成列表中的修改文件将不生效。需要重新打包上线！',
+              'Sau khi tạo, môi trường phát triển local sẽ tải trực tiếp trang vue đã tạo; nếu tạo sau khi đã triển khai chính thức, có thể xem trước, nhưng các tệp đã sửa trong danh sách tạo code sẽ không có hiệu lực. Cần đóng gói và triển khai lại!',
             showCancelButton: true,
-            cancelButtonText: '取消',
-            confirmButtonText: '确定',
+            cancelButtonText: 'Hủy',
+            confirmButtonText: 'Xác nhận',
             iconClass: 'el-icon-warning',
             confirmButtonClass: 'btn-custom-cancel',
           })

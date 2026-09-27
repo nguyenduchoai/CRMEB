@@ -9,7 +9,7 @@
           <div class="move-icon">
             <span class="iconfont icondrag2"></span>
           </div>
-          <div class="img-box" v-db-click @click="modalPicTap('单选', index)">
+          <div class="img-box" v-db-click @click="modalPicTap('Chọn một', index)">
             <img :src="item.img" alt="" v-if="item.img" />
             <div class="upload-box" v-else>
               <i class="el-icon-picture-outline" style="font-size: 24px"></i>
@@ -20,7 +20,7 @@
           </div>
           <div class="info">
             <div class="info-item" v-for="(infos, key) in item.info" :key="key">
-              <div class="info-item" v-if="infos.title === '链接'">
+              <div class="info-item" v-if="infos.title === 'Liên kết'">
                 <span>{{ infos.title }}</span>
                 <div class="input-box" v-db-click>
                   <el-input v-model="infos.value" :placeholder="infos.tips" :maxlength="infos.maxlength">
@@ -47,7 +47,7 @@
         <el-dialog
           :visible.sync="modalPic"
           width="950px"
-          title="上传商品图"
+          title="Tải lên ảnh sản phẩm"
           :close-on-click-modal="false"
           :z-index="888"
         >
@@ -69,7 +69,7 @@
           style="width: 100%; height: 40px; border-color: var(--prev-color-primary); color: var(--prev-color-primary)"
           v-db-click
           @click="addBox"
-          >添加图片
+          >Thêm ảnh
         </el-button>
       </div>
     </template>
@@ -112,7 +112,7 @@ export default {
       defaults: {},
       menus: [],
       modalPic: false,
-      isChoice: '单选',
+      isChoice: 'Chọn một',
       gridBtn: {
         xl: 4,
         lg: 8,
@@ -156,14 +156,14 @@ export default {
         info: [
           {
             maxlength: 10,
-            tips: '选填，不超过十个字',
-            title: '标题',
+            tips: 'Không bắt buộc, tối đa 10 ký tự',
+            title: 'Tiêu đề',
             value: '',
           },
           {
             maxlength: 999,
-            tips: '请填写链接',
-            title: '链接',
+            tips: 'Vui lòng nhập liên kết',
+            title: 'Liên kết',
             value: '',
           },
         ],
@@ -184,12 +184,12 @@ export default {
         this.configData[this.configNum][this.name].list.push(obj);
       }
     },
-    // 点击图文封面
+    // Click vào ảnh bìa bài viết ảnh-văn
     modalPicTap(title, index) {
       this.activeIndex = index;
       this.modalPic = true;
     },
-    // 添加自定义弹窗
+    // Thêm popup tùy chỉnh
     addCustomDialog(editorId) {
       window.UE.registerUI(
         'test-dialog',
@@ -198,17 +198,17 @@ export default {
             iframeUrl: settings.routePre + '/widget.images/index.html?fodder=dialog',
             editor: editor,
             name: uiName,
-            title: '上传图片',
+            title: 'Tải lên ảnh',
             cssRules: 'width:960px;height:550px;padding:20px;',
           });
           this.dialog = dialog;
-          // 参考上面的自定义按钮
+          // Tham khảo nút tùy chỉnh ở trên
           var btn = new window.UE.ui.Button({
             name: 'dialog-button',
-            title: '上传图片',
+            title: 'Tải lên ảnh',
             cssRules: `background-image: url(../../../assets/images/icons.png);background-position: -726px -77px;`,
             onclick: function () {
-              // 渲染dialog
+              // Render dialog
               dialog.render();
               dialog.open();
             },
@@ -219,14 +219,14 @@ export default {
         37,
       );
     },
-    // 获取图片信息
+    // Lấy thông tin ảnh
     getPic(pc) {
       this.$nextTick(() => {
         this.configData[this.configNum][this.name].list[this.activeIndex].img = pc.att_dir;
         this.modalPic = false;
       });
     },
-    // 删除
+    // Xóa
     bindDelete(item, index) {
       if (this.configData[this.configNum][this.name].list.length == 1) {
         let lastObj = this.configData[this.configNum][this.name].list[0];

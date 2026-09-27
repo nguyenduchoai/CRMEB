@@ -1,5 +1,5 @@
 <template>
-	<!-- 带背景轮播图 -->
+	<!-- Banner trình chiếu có nền -->
 	<view class="swiperBg" :style="[swiperBgStyle]">
 		<template v-if="dataConfig.swiperConfig.list.length">
 			<view class="colorBg" :style="[colorBgStyle]"></view>
@@ -12,7 +12,7 @@
 						</view>
 					</swiper-item>
 				</swiper>
-				<view class="noPic" v-else>{{ $t(`图片加载中`) }}...</view>
+				<view class="noPic" v-else>{{ $t(`Đang tải ảnh`) }}...</view>
 				<view class="dot acea-row" :style="[dotStyle]">
 					<view class="progress" v-if="dataConfig.docConfig.tabVal == 2" :style="[progressWidth,dotItemStyle]">
 						<view class="inner" :style="[progressValue,dotItemActiveStyle]"></view>
@@ -46,18 +46,18 @@
 				autoplay: true,
 				interval: 3000,
 				duration: 500,
-				imgUrls: [], //图片轮播数据
-				bgColor: '', //轮播背景颜色
-				marginTop: 0, //组件上边距
-				paddinglr: 0, //轮播左右边距
-				docConfig: 0, //指示点样式
-				imgConfig: 0, //是否为圆角
+				imgUrls: [], //Dữ liệu banner trình chiếu ảnh
+				bgColor: '', //Màu nền banner trình chiếu
+				marginTop: 0, //Margin trên của component
+				paddinglr: 0, //Margin trái phải của banner trình chiếu
+				docConfig: 0, //Style chấm chỉ báo
+				imgConfig: 0, //Có phải góc tròn hay không
 				imageH: 0,
 				isColor: 0,
 				txtStyle: 0,
 				dotColor: '',
-				current: 1, //数字指示器当前
-				active: 0, //一般指示器当前
+				current: 1, //Chỉ báo dạng số hiện tại
+				active: 0, //Chỉ báo thông thường hiện tại
 				swiperMargin: ''
 			};
 		},
@@ -183,10 +183,10 @@
 				this.active = e.detail.current;
 				this.current = e.detail.current + 1;
 			},
-			//替换安全域名
+			//Thay domain an toàn
 			setDomain: function(url) {
 				url = url ? url.toString() : '';
-				//本地调试打开,生产请注销
+				//Mở khi debug local, khi lên production hãy comment lại
 				if (url.indexOf("https://") > -1) return url;
 				else return url.replace('http://', 'https://');
 			},
@@ -303,7 +303,7 @@
 				height: 100%;
 			}
 
-			// 圆形指示点
+			// Chấm chỉ báo hình tròn
 			&.circular {
 				/deep/.uni-swiper-dot {
 					width: 10rpx !important;
@@ -316,7 +316,7 @@
 				}
 			}
 
-			// 方形指示点
+			// Chấm chỉ báo hình vuông
 			&.square {
 				/deep/.uni-swiper-dot {
 					width: 20rpx !important;

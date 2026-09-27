@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -36,7 +36,7 @@ class Sms extends AuthController
 
 
     /**
-     * 开通服务
+     * Mở dịch vụ
      * @param string $sign
      * @return mixed
      */
@@ -50,7 +50,7 @@ class Sms extends AuthController
     }
 
     /**
-     * 修改短信签名
+     * Sửa chữ ký SMS
      * @param string $sign
      * @return mixed
      */
@@ -72,7 +72,7 @@ class Sms extends AuthController
     }
 
     /**
-     * 获取短信模板
+     * Lấy mẫu SMS
      * @return mixed
      */
     public function temps()
@@ -87,7 +87,7 @@ class Sms extends AuthController
     }
 
     /**
-     * 申请模板
+     * Đăng ký mẫu
      * @return mixed
      */
     public function apply()
@@ -105,7 +105,7 @@ class Sms extends AuthController
     }
 
     /**
-     * 获取申请记录
+     * Lấy lịch sử yêu cầu
      * @return mixed
      */
     public function applyRecord()

@@ -1,12 +1,12 @@
 <template>
-	<!-- 新闻播报 -->
+	<!-- Bản tin -->
 	<view :style="[newsStyle]" v-if="newsList.length">
 		<view class="news" v-if="dataConfig.styleConfig.tabVal" :style="[newsWrapperStyle]">
 			<view class="acea-row row-between-wrapper news-top">
 				<view v-if="dataConfig.titleConfig.tabVal" :style="[titleStyle]">{{ dataConfig.titleTxtConfig.value }}</view>
 				<image v-else :src="dataConfig.imgConfig.url" mode="heightFix" class="image"></image>
 				<view v-if="!dataConfig.buttonConfig.tabVal" class="more" 
-					@click="moreTab(linkConfig)" :style="[moreStyle]">{{ $t(`更多`) }}<text
+					@click="moreTab(linkConfig)" :style="[moreStyle]">{{ $t(`Xem thêm`) }}<text
 						class="iconfont icon-ic_rightarrow"></text></view>
 			</view>
 			<view class="news-bottom">

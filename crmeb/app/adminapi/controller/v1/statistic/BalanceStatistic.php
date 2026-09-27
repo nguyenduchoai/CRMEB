@@ -19,7 +19,7 @@ class BalanceStatistic extends AuthController
     }
 
     /**
-     * 余额统计基础信息
+     * Thông tin cơ bản thống kê số dư
      * @return mixed
      */
     public function getBasic()
@@ -29,7 +29,7 @@ class BalanceStatistic extends AuthController
     }
 
     /**
-     * 余额统计趋势图
+     * Biểu đồ xu hướng thống kê số dư
      * @return mixed
      */
     public function getTrend()
@@ -42,7 +42,7 @@ class BalanceStatistic extends AuthController
     }
 
     /**
-     * 余额来源
+     * Nguồn số dư
      * @return mixed
      */
     public function getChannel()
@@ -55,7 +55,7 @@ class BalanceStatistic extends AuthController
     }
 
     /**
-     * 余额类型
+     * Loại số dư
      * @return mixed
      */
     public function getType()

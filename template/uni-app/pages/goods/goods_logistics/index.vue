@@ -20,17 +20,17 @@
 					<view class='picTxt acea-row row-between-wrapper'>
 						<view class='iconfont icon-wuliu'></view>
 						<view class='text'>
-							<view><text class='name line1'>{{$t(`快递公司`)}}：</text> {{orderInfo.delivery_name}}</view>
-							<view class='express line1'><text class='name'>{{$t(`快递单号`)}}：</text>
+							<view><text class='name line1'>{{$t(`Đơn vị vận chuyển`)}}：</text> {{orderInfo.delivery_name}}</view>
+							<view class='express line1'><text class='name'>{{$t(`Mã vận đơn`)}}：</text>
 								{{orderInfo.delivery_id}}
 							</view>
 						</view>
 					</view>
 					<!-- #ifndef H5 -->
-					<view class='copy' @tap='copyOrderId'>{{$t(`复制`)}}</view>
+					<view class='copy' @tap='copyOrderId'>{{$t(`Sao chép`)}}</view>
 					<!-- #endif -->
 					<!-- #ifdef H5 -->
-					<view class='copy copy-data' :data-clipboard-text="orderInfo.delivery_id">{{$t(`复制`)}}</view>
+					<view class='copy copy-data' :data-clipboard-text="orderInfo.delivery_id">{{$t(`Sao chép`)}}</view>
 					<!-- #endif -->
 				</view>
 				<view class='item' v-for="(item,index) in expressList" :key="index">
@@ -101,7 +101,7 @@
 		},
 		onLoad: function(options) {
 			if (!options.orderId) return this.$util.Tips({
-				title: this.$t(`缺少订单号`)
+				title: this.$t(`Thiếu mã đơn hàng`)
 			});
 			this.orderId = options.orderId;
 			this.type = options.type;
@@ -119,20 +119,20 @@
 				const clipboard = new ClipboardJS(".copy-data");
 				clipboard.on("success", () => {
 					this.$util.Tips({
-						title: this.$t(`复制成功`)
+						title: this.$t(`Sao chép thành công`)
 					});
 				});
 			});
 			// #endif
 		},
-		// 滚动监听
+		// Theo dõi cuộn (scroll listener)
 		onPageScroll(e) {
-			// 传入scrollTop值并触发所有easy-loadimage组件下的滚动监听事件
+			// Truyền vào giá trị scrollTop và kích hoạt sự kiện theo dõi cuộn của tất cả component easy-loadimage
 			uni.$emit('scroll');
 		},
 		methods: {
 			/**
-			 * 授权回调
+			 * Callback ủy quyền
 			 */
 			onLoadFun: function() {
 				this.getExpress();
@@ -158,7 +158,7 @@
 				});
 			},
 			/**
-			 * 获取我的推荐
+			 * Lấy gợi ý của tôi
 			 */
 			get_host_product: function() {
 				let that = this;

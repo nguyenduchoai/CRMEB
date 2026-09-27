@@ -1,15 +1,15 @@
-crmeb目录在CRMEB项目中的作用是一个特殊目录
+Thư mục crmeb đóng vai trò là một thư mục đặc biệt trong dự án CRMEB
 
-- crmeb目录实际上是整个项目的核心库目录
-- 它包含项目的核心类、traits、异常定义等
-- 这些核心文件提供给整个项目 reused
-- 例如请求处理类、响应处理类等
-- 它实现了项目特定的封装和扩展
-- 使项目各部分能够在一套框架体系下开发
+- Thư mục crmeb thực chất là thư mục thư viện lõi của toàn bộ dự án
+- Nó chứa các lớp lõi, traits, định nghĩa ngoại lệ, v.v. của dự án
+- Các tệp lõi này được cung cấp để toàn bộ dự án tái sử dụng (reused)
+- Ví dụ như lớp xử lý yêu cầu, lớp xử lý phản hồi, v.v.
+- Nó thực hiện việc đóng gói và mở rộng đặc thù của dự án
+- Giúp các phần của dự án có thể được phát triển trong cùng một hệ thống framework
 
-简而言之,crmeb目录:
+Nói ngắn gọn, thư mục crmeb:
 
-- 包含项目的各种核心基础支持类
-- 为整个项目提供基础功能定定义
-- 使项目具备一致性和可扩展性
-- 是项目最核心和基础的代码库
+- Chứa các lớp hỗ trợ nền tảng cốt lõi của dự án
+- Cung cấp định nghĩa các chức năng cơ bản cho toàn bộ dự án
+- Giúp dự án có tính nhất quán và khả năng mở rộng
+- Là thư viện mã nguồn cốt lõi và nền tảng nhất của dự án

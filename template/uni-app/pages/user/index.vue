@@ -5,7 +5,7 @@
 			<view class="sys-head">
 				<view class="sys-bar" :style="{ height: sysHeight }"></view>
 				<!-- #ifdef MP -->
-				<view class="sys-title" :style="member_style == 3 ? 'color:#333' : ''">{{ $t('个人中心') }}</view>
+				<view class="sys-title" :style="member_style == 3 ? 'color:#333' : ''">{{ $t('Trang cá nhân') }}</view>
 				<!-- #endif -->
 				<view class="bg" :style="member_style == 3 ? 'background:#f5f5f5' : ''"></view>
 			</view>
@@ -18,12 +18,12 @@
 						<view class="bg"></view>
 						<view class="user-info">
 							<view>
-								<!-- 注释这个是加的bnt -->
+								<!-- Comment cái này là bnt được thêm vào -->
 								<!-- #ifdef H5 -->
 								<!-- <button class="bntImg" v-if="userInfo.is_complete == 0 && isWeixin"
 									@click="getWechatuserinfo">
 									<image class="avatar" src='/static/images/f.png'></image>
-									<view class="avatarName">{{$t('获取头像')}}</view>
+									<view class="avatarName">{{$t('Lấy ảnh đại diện')}}</view>
 								</button> -->
 								<!-- #endif -->
 								<!-- #ifndef APP-PLUS -->
@@ -48,12 +48,12 @@
 							<view class="info">
 								<!-- #ifdef MP || APP-PLUS -->
 								<view class="name" v-if="!userInfo.uid" @click="openAuto" style="height: 100%; display: flex; align-items: center">
-									{{ $t('请点击授权') }}
+									{{ $t('Vui lòng nhấn để cấp quyền') }}
 								</view>
 								<!-- #endif -->
 								<!-- #ifdef H5 -->
 								<view class="name" v-if="!userInfo.uid" @click="openAuto" style="height: 100%; display: flex; align-items: center">
-									{{ $t(isWeixin ? '请点击授权' : '请点击登录') }}
+									{{ $t(isWeixin ? 'Vui lòng nhấn để cấp quyền' : 'Vui lòng nhấn để đăng nhập') }}
 								</view>
 								<!-- #endif -->
 								<view class="name" v-if="userInfo.uid">
@@ -67,11 +67,11 @@
 									<view class="num-txt">{{ userInfo.phone }}</view>
 								</view>
 								<!-- #ifdef MP -->
-								<button class="phone" v-if="!userInfo.phone && isLogin" open-type="getPhoneNumber" @getphonenumber="getphonenumber">{{ $t(`绑定手机号`) }}</button>
+								<button class="phone" v-if="!userInfo.phone && isLogin" open-type="getPhoneNumber" @getphonenumber="getphonenumber">{{ $t(`Liên kết số điện thoại`) }}</button>
 								<!-- #endif -->
 								<!-- #ifndef MP -->
 								<view class="phone" v-if="!userInfo.phone && isLogin" @tap="bindPhone">
-									{{ $t('绑定手机号') }}
+									{{ $t('Liên kết số điện thoại') }}
 								</view>
 								<!-- #endif -->
 							</view>
@@ -95,36 +95,36 @@
 						<view class="num-wrapper">
 							<view class="num-item" v-if="userInfo.balance_func_status" @click="goMenuPage('/pages/users/user_money/index')">
 								<text class="num">{{ userInfo.now_money || 0 }}</text>
-								<view class="txt">{{ $t('余额') }}</view>
+								<view class="txt">{{ $t('Số dư') }}</view>
 							</view>
 							<view class="num-item" v-else @click="goMenuPage('/pages/users/user_goods_collection/index')">
 								<text class="num">{{ userInfo.collectCount || 0 }}</text>
-								<view class="txt">{{ $t('收藏') }}</view>
+								<view class="txt">{{ $t('Yêu thích') }}</view>
 							</view>
 							<view class="num-item" @click="goMenuPage('/pages/users/user_coupon/index')">
 								<text class="num">{{ userInfo.couponCount || 0 }}</text>
-								<view class="txt">{{ $t('优惠券') }}</view>
+								<view class="txt">{{ $t('Phiếu giảm giá') }}</view>
 							</view>
 							<view class="num-item" @click="goMenuPage('/pages/users/user_integral/index')">
 								<text class="num">{{ userInfo.integral || 0 }}</text>
-								<view class="txt">{{ $t('积分') }}</view>
+								<view class="txt">{{ $t('Điểm thưởng') }}</view>
 							</view>
 						</view>
-						<!-- <view class="sign" @click="goSignIn">签到</view> -->
+						<!-- <view class="sign" @click="goSignIn">Điểm danh</view> -->
 						<view class="cardVipA acea-row row-between-wrapper" v-if="userInfo.svip_open && member_style == 1">
 							<view class="left-box">
-								<view v-if="userInfo.vip_status == 1" class="small">{{ $t('永久') }}</view>
+								<view v-if="userInfo.vip_status == 1" class="small">{{ $t('Vĩnh viễn') }}</view>
 								<view v-else-if="userInfo.vip_status == 3" class="small">
-									{{ $t('会员到期') }}
+									{{ $t('Hạn thành viên') }}
 									{{ userInfo.overdue_time | dateFormat }}
 								</view>
-								<view v-else-if="userInfo.vip_status == -1" class="small">{{ $t('已过期') }}</view>
-								<view v-else-if="userInfo.vip_status == 2" class="small">{{ $t('未开通会员') }}</view>
+								<view v-else-if="userInfo.vip_status == -1" class="small">{{ $t('Đã hết hạn') }}</view>
+								<view v-else-if="userInfo.vip_status == 2" class="small">{{ $t('Chưa đăng ký thành viên') }}</view>
 							</view>
 							<view class="acea-row row-middle">
-								<navigator v-if="userInfo.vip_status == 1" url="/pages/annex/vip_paid/index" hover-class="none" class="btn">{{ $t('查看会员权益') }}</navigator>
+								<navigator v-if="userInfo.vip_status == 1" url="/pages/annex/vip_paid/index" hover-class="none" class="btn">{{ $t('Xem quyền lợi thành viên') }}</navigator>
 								<navigator v-else url="/pages/annex/vip_paid/index" hover-class="none" class="btn">
-									{{ userInfo.overdue_time ? $t('立即续费') : $t('立即激活') }}
+									{{ userInfo.overdue_time ? $t('Gia hạn ngay') : $t('Kích hoạt ngay') }}
 								</navigator>
 								<text class="iconfont icon-jiantou"></text>
 							</view>
@@ -134,18 +134,18 @@
 								<view class="pictrue">
 									<image src="../../static/images/member01.png"></image>
 								</view>
-								<view v-if="userInfo.vip_status == 1" class="small">{{ $t('永久') }}</view>
+								<view v-if="userInfo.vip_status == 1" class="small">{{ $t('Vĩnh viễn') }}</view>
 								<view v-else-if="userInfo.vip_status == 3" class="small">
-									{{ $t('会员到期') }}
+									{{ $t('Hạn thành viên') }}
 									{{ userInfo.overdue_time | dateFormat }}
 								</view>
-								<view v-else-if="userInfo.vip_status == -1" class="small">{{ $t('已过期') }}</view>
-								<view v-else-if="userInfo.vip_status == 2" class="small">{{ $t('未开通会员') }}</view>
+								<view v-else-if="userInfo.vip_status == -1" class="small">{{ $t('Đã hết hạn') }}</view>
+								<view v-else-if="userInfo.vip_status == 2" class="small">{{ $t('Chưa đăng ký thành viên') }}</view>
 							</view>
 							<view class="acea-row">
-								<navigator v-if="userInfo.vip_status == 1" url="/pages/annex/vip_paid/index" hover-class="none" class="btn">{{ $t('会员可享多项权益') }}</navigator>
+								<navigator v-if="userInfo.vip_status == 1" url="/pages/annex/vip_paid/index" hover-class="none" class="btn">{{ $t('Thành viên được hưởng nhiều quyền lợi') }}</navigator>
 								<navigator v-else url="/pages/annex/vip_paid/index" hover-class="none" class="btn">
-									{{ userInfo.overdue_time ? $t('立即续费') : $t('立即激活') }}
+									{{ userInfo.overdue_time ? $t('Gia hạn ngay') : $t('Kích hoạt ngay') }}
 								</navigator>
 								<text class="iconfont icon-jiantou btn"></text>
 							</view>
@@ -153,27 +153,27 @@
 					</view>
 					<view class="card-vip" v-if="userInfo.svip_open && member_style == 2">
 						<view class="left-box">
-							<view class="big">{{ $t('会员可享多项权益') }}</view>
-							<view v-if="userInfo.vip_status == 1" class="small">{{ $t('永久') }}</view>
+							<view class="big">{{ $t('Thành viên được hưởng nhiều quyền lợi') }}</view>
+							<view v-if="userInfo.vip_status == 1" class="small">{{ $t('Vĩnh viễn') }}</view>
 							<view v-else-if="userInfo.vip_status == 3" class="small">
-								{{ $t('会员到期') }}
+								{{ $t('Hạn thành viên') }}
 								{{ userInfo.overdue_time | dateFormat }}
 							</view>
-							<view v-else-if="userInfo.vip_status == -1" class="small">{{ $t('已过期') }}</view>
-							<view v-else-if="userInfo.vip_status == 2" class="small">{{ $t('未开通会员') }}</view>
+							<view v-else-if="userInfo.vip_status == -1" class="small">{{ $t('Đã hết hạn') }}</view>
+							<view v-else-if="userInfo.vip_status == 2" class="small">{{ $t('Chưa đăng ký thành viên') }}</view>
 						</view>
 						<navigator v-if="userInfo.vip_status == 1" url="/pages/annex/vip_paid/index" hover-class="none" class="btn">
-							{{ $t('查看会员权益') }}
+							{{ $t('Xem quyền lợi thành viên') }}
 						</navigator>
 						<navigator v-else url="/pages/annex/vip_paid/index" hover-class="none" class="btn">
-							{{ userInfo.overdue_time ? $t('立即续费') : $t('立即激活') }}
+							{{ userInfo.overdue_time ? $t('Gia hạn ngay') : $t('Kích hoạt ngay') }}
 						</navigator>
 					</view>
 					<view class="order-wrapper" :class="userInfo.svip_open ? '' : 'height'">
 						<view class="order-hd flex">
-							<view class="left">{{ $t('订单中心') }}</view>
+							<view class="left">{{ $t('Trung tâm đơn hàng') }}</view>
 							<view class="right flex" @click="goMenuPage('/pages/goods/order_list/index')" >
-								{{ $t('查看全部') }}
+								{{ $t('Xem tất cả') }}
 								<text class="iconfont icon-jiantou"></text>
 							</view>
 						</view>
@@ -191,7 +191,7 @@
 						</view>
 					</view>
 				</view>
-				<!-- 轮播 -->
+				<!-- Trình chiếu -->
 				<view class="slider-wrapper" v-if="imgUrls.length > 0 && my_banner_status">
 					<swiper
 						indicator-dots="true"
@@ -211,9 +211,9 @@
 						</block>
 					</swiper>
 				</view>
-				<!-- 会员菜单 -->
+				<!-- Menu thành viên -->
 				<view class="user-menus" style="margin-top: 20rpx" v-if="my_menus_status">
-					<view class="menu-title" v-if="my_menus_status == 1">{{ $t('我的服务') }}</view>
+					<view class="menu-title" v-if="my_menus_status == 1">{{ $t('Dịch vụ của tôi') }}</view>
 					<view :class="{ 'list-box': my_menus_status == 1, 'column-box': my_menus_status == 2 }">
 						<!-- #ifdef APP-PLUS || H5 -->
 						<block v-for="(item, index) in MyMenus" :key="index">
@@ -242,21 +242,21 @@
 
 						<button class="item" open-type="contact" v-if="routineContact == 1">
 							<image src="/static/images/contact.png"></image>
-							<text class="name">{{ $t('联系客服') }}</text>
+							<text class="name">{{ $t('Liên hệ CSKH') }}</text>
 							<text class="iconfont icon-jiantou" v-if="my_menus_status == 2"></text>
 						</button>
 						<!-- #endif -->
 						<!-- #ifdef APP-PLUS -->
 						<view class="item" hover-class="none" @click="goMenuPage('/pages/users/privacy/index?type=3')">
 							<image src="/static/images/menu.png"></image>
-							<text class="name">{{ $t('隐私协议') }}</text>
+							<text class="name">{{ $t('Chính sách bảo mật') }}</text>
 							<text class="iconfont icon-jiantou" v-if="my_menus_status == 2"></text>
 						</view>
 						<!-- #endif -->
 					</view>
 				</view>
 				<view class="user-menus" style="margin-top: 20rpx" v-if="business_status && storeMenu.length">
-					<view class="menu-title" v-if="business_status == 1">{{ $t('商家管理') }}</view>
+					<view class="menu-title" v-if="business_status == 1">{{ $t('Quản lý cửa hàng') }}</view>
 					<view :class="{ 'list-box': business_status == 1, 'column-box': business_status == 2 }">
 						<block v-for="(item, index) in storeMenu" :key="index">
 							<view class="item" :url="item.url" hover-class="none" v-if="item.url != '#' && item.url != '/pages/service/index'" @click="goMenuPage(item.url, item.name)">
@@ -309,7 +309,7 @@ export default {
 			var nowTime = new Date();
 			var rest = setTime - nowTime.getTime();
 			var day = parseInt(rest / (60 * 60 * 24 * 1000));
-			// var hour = parseInt(rest/(60*60*1000)%24) //小时
+			// var hour = parseInt(rest/(60*60*1000)%24) //giờ
 			return day + this.$t('day');
 		},
 		dateFormat: function (value) {
@@ -319,32 +319,32 @@ export default {
 	mixins: [colors],
 	data() {
 		return {
-			editModal: false, // 编辑头像信息
-			storeMenu: [], // 商家管理
+			editModal: false, // Sửa thông tin ảnh đại diện
+			storeMenu: [], // Quản lý cửa hàng
 			orderMenu: [
 				{
 					img: 'icon-daifukuan',
-					title: '待付款',
+					title: 'Chờ thanh toán',
 					url: '/pages/goods/order_list/index?status=0'
 				},
 				{
 					img: 'icon-daifahuo',
-					title: '待发货',
+					title: 'Chờ giao hàng',
 					url: '/pages/goods/order_list/index?status=1'
 				},
 				{
 					img: 'icon-daishouhuo',
-					title: '待收货',
+					title: 'Chờ nhận hàng',
 					url: '/pages/goods/order_list/index?status=2'
 				},
 				{
 					img: 'icon-daipingjia',
-					title: '待评价',
+					title: 'Chờ đánh giá',
 					url: '/pages/goods/order_list/index?status=3'
 				},
 				{
 					img: 'icon-a-shouhoutuikuan',
-					title: '售后/退款',
+					title: 'Đổi trả/Hoàn tiền',
 					url: '/pages/users/user_return_list/index'
 				}
 			],
@@ -353,8 +353,8 @@ export default {
 			circular: true,
 			interval: 3000,
 			duration: 500,
-			isAuto: false, //没有授权的不会自动授权
-			isShowAuth: false, //是否隐藏授权
+			isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+			isShowAuth: false, //Có ẩn ủy quyền hay không
 			orderStatusNum: {},
 			userInfo: {},
 			MyMenus: [],
@@ -378,14 +378,14 @@ export default {
 			member_style: 0,
 			my_banner_status: 0,
 			is_diy: uni.getStorageSync('is_diy'),
-			copyRightPic: '/static/images/support.png' //版权图片
+			copyRightPic: '/static/images/support.png' //Ảnh bản quyền
 		};
 	},
 	onLoad(option) {
 		uni.hideTabBar();
 		let that = this;
 		// #ifdef MP
-		// 小程序静默授权
+		// Ủy quyền ngầm Mini Program
 		if (!this.$store.getters.isLogin) {
 			// Routine.getCode()
 			// 	.then(code => {
@@ -403,7 +403,7 @@ export default {
 		// if (that.isLogin == false) {
 		// 	toLogin();
 		// }
-		//获取用户信息回来后授权
+		//Sau khi lấy thông tin người dùng về thì ủy quyền
 		let cacheCode = this.$Cache.get('snsapi_userinfo_code');
 		let res1 = cacheCode ? option.code != cacheCode : true;
 		if (this.isWeixin && option.code && res1 && option.scope === 'snsapi_userinfo') {
@@ -419,8 +419,8 @@ export default {
 		that.$set(that, 'pageHeight', app.globalData.windowHeight);
 		// #endif
 
-		let routes = getCurrentPages(); // 获取当前打开过的页面路由数组
-		let curRoute = routes[routes.length - 1].route; //获取当前页面路由
+		let routes = getCurrentPages(); // Lấy mảng route các trang đã từng mở
+		let curRoute = routes[routes.length - 1].route; //Lấy route trang hiện tại
 		this.activeRouter = '/' + curRoute;
 		this.getCopyRight();
 	},
@@ -430,7 +430,7 @@ export default {
 		let info = uni.createSelectorQuery().select('.sys-head');
 		info
 			.boundingClientRect(function (data) {
-				//data - 各种参数
+				//data - các loại tham số
 				self.mpHeight = data.height;
 			})
 			.exec();
@@ -468,17 +468,17 @@ export default {
 		closeEdit() {
 			this.editModal = false;
 		},
-		// 记录会员访问
+		// Ghi lại lượt truy cập của thành viên
 		setVisit() {
 			setVisit({
 				url: '/pages/user/index'
 			}).then((res) => {});
 		},
-		// 打开授权
+		// Mở ủy quyền
 		openAuto() {
 			toLogin();
 		},
-		// 授权回调
+		// Callback ủy quyền
 		onLoadFun() {
 			this.getUserInfo();
 			this.getMyMenus();
@@ -489,11 +489,11 @@ export default {
 				success: function (res) {}
 			});
 		},
-		// 授权关闭
+		// Đóng ủy quyền
 		authColse: function (e) {
 			this.isShowAuth = e;
 		},
-		// 绑定手机
+		// Liên kết số điện thoại
 		bindPhone() {
 			uni.navigateTo({
 				url: '/pages/users/user_phone/index'
@@ -528,7 +528,7 @@ export default {
 			}
 		},
 		/**
-		 * 获取个人用户信息
+		 * Lấy thông tin người dùng cá nhân
 		 */
 		getUserInfo: function () {
 			let that = this;
@@ -537,19 +537,19 @@ export default {
 				that.$store.commit('SETUID', res.data.uid);
 				that.orderMenu.forEach((item, index) => {
 					switch (item.title) {
-						case '待付款':
+						case 'Chờ thanh toán':
 							item.num = res.data.orderStatusNum.unpaid_count;
 							break;
-						case '待发货':
+						case 'Chờ giao hàng':
 							item.num = res.data.orderStatusNum.unshipped_count;
 							break;
-						case '待收货':
+						case 'Chờ nhận hàng':
 							item.num = res.data.orderStatusNum.received_count;
 							break;
-						case '待评价':
+						case 'Chờ đánh giá':
 							item.num = res.data.orderStatusNum.evaluated_count;
 							break;
-						case '售后/退款':
+						case 'Đổi trả/Hoàn tiền':
 							item.num = res.data.orderStatusNum.refunding_count;
 							break;
 					}
@@ -557,30 +557,30 @@ export default {
 				uni.stopPullDownRefresh();
 			});
 		},
-		//小程序授权api替换 getUserInfo
+		//API ủy quyền Mini Program thay thế getUserInfo
 		getUserProfile() {
 			toLogin();
 		},
 		/**
 		 *
-		 * 获取个人中心图标
+		 * Lấy icon trang cá nhân
 		 */
 		switchTab(order) {
 			this.orderMenu.forEach((item, index) => {
 				switch (item.title) {
-					case '待付款':
+					case 'Chờ thanh toán':
 						item.img = order.dfk;
 						break;
-					case '待发货':
+					case 'Chờ giao hàng':
 						item.img = order.dfh;
 						break;
-					case '待收货':
+					case 'Chờ nhận hàng':
 						item.img = order.dsh;
 						break;
-					case '待评价':
+					case 'Chờ đánh giá':
 						item.img = order.dpj;
 						break;
-					case '售后/退款':
+					case 'Đổi trả/Hoàn tiền':
 						item.img = order.sh;
 						break;
 				}
@@ -597,7 +597,7 @@ export default {
 				let storeMenu = [];
 				let myMenu = [];
 				res.data.routine_my_menus.forEach((el, index, arr) => {
-					if (el.url == '/pages/admin/order/index' || el.url == '/pages/admin/order_cancellation/index' || el.name == '客服接待') {
+					if (el.url == '/pages/admin/order/index' || el.url == '/pages/admin/order_cancellation/index' || el.name == 'Tiếp nhận CSKH') {
 						storeMenu.push(el);
 					} else {
 						myMenu.push(el);
@@ -662,7 +662,7 @@ export default {
 				this.routineContact = Number(res.data.routine_contact_type);
 			});
 		},
-		// 编辑页面
+		// Sửa trang
 		goEdit() {
 			if (this.isLogin == false) {
 				toLogin();
@@ -678,7 +678,7 @@ export default {
 				});
 			}
 		},
-		// 签到
+		// Điểm danh
 		goSignIn() {
 			uni.navigateTo({
 				url: '/pages/users/user_sgin/index'
@@ -694,14 +694,14 @@ export default {
 			if (this.isLogin) {
 				if (url.indexOf('http') === -1) {
 					// #ifdef H5 || APP-PLUS
-					if (name && name === '客服接待') {
+					if (name && name === 'Tiếp nhận CSKH') {
 						// return window.location.href = `${location.origin}${url}`
 						return uni.navigateTo({
 							url: `/pages/annex/web_view/index?url=${location.origin}${url}`
 						});
-					} else if (name && name === '联系客服') {
+					} else if (name && name === 'Liên hệ CSKH') {
 						return getCustomer(url);
-					} else if (name === '订单核销') {
+					} else if (name === 'Xác nhận sử dụng đơn hàng') {
 						return uni.navigateTo({
 							url: url
 						});
@@ -710,7 +710,7 @@ export default {
 					// #endif
 
 					// #ifdef MP
-					if (name && name === '联系客服') {
+					if (name && name === 'Liên hệ CSKH') {
 						return getCustomer(url);
 					}
 					if (url != '#' && url == '/pages/users/user_info/index') {

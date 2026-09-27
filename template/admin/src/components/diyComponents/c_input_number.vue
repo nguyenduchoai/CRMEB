@@ -3,13 +3,13 @@
     <div class="c_row-item">
       <el-col class="label" :span="4">
         <span v-if="datas[name].show">{{ datas[name].title }}</span>
-        <span v-else>数量</span>
+        <span v-else>Số lượng</span>
       </el-col>
       <el-col :span="19" class="slider-box">
         <el-input
           v-model="datas[name].val"
           type="number"
-          placeholder="请输入数量"
+          placeholder="Vui lòng nhập số lượng"
           style="text-align: right; width: 350px"
           @blur="numberVal(datas[name].val)"
           @change="maxNum(datas[name].val)"

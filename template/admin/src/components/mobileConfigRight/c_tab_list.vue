@@ -32,7 +32,7 @@
             <div class="con-item">
               <span>{{ item.dataType.tabList[item.dataType.tabVal].name }}</span>
               <div>
-                <el-input v-if="item.dataType.tabVal == 0" v-model="item.microPage.name" placeholder="选择页面">
+                <el-input v-if="item.dataType.tabVal == 0" v-model="item.microPage.name" placeholder="Chọn trang">
                   <i class="el-icon-link" slot="suffix" @click="getLink(index)" />
                 </el-input>
                 <el-cascader
@@ -43,7 +43,7 @@
                       activeIndex = index;
                     }
                   "
-                  placeholder="请选择分类"
+                  placeholder="Vui lòng chọn danh mục"
                   size="mini"
                   v-model="item.classPage.id"
                   :options="treeSelect"
@@ -63,7 +63,7 @@
     </div>
     <div v-if="configData.list">
       <div class="add-btn" @click="addHotTxt" v-if="configData.list.length < configData.max">
-        <el-button class="btn" type="primary" ghost> <span class="iconfont iconjiahao"></span>添加 </el-button>
+        <el-button class="btn" type="primary" ghost> <span class="iconfont iconjiahao"></span>Thêm </el-button>
       </div>
     </div>
     <!-- <linkaddress
@@ -140,7 +140,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    //商品分类
+    //Danh mục sản phẩm
     sliderChange(e) {
       console.log(e);
       // this.configData.list[this.configData.tabCur].selectConfig.activeValue = e;
@@ -198,7 +198,7 @@ export default {
         this.configData.list.push(obj);
       }
     },
-    // 删除数组
+    // Xóa mảng
     bindDelete(index) {
       if (this.configData.list.length == 1) {
         let itemObj = this.configData.list[0];

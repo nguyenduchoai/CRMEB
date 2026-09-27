@@ -1,6 +1,6 @@
 import { Local } from '@/utils/storage.js';
 
-// 全局组件大小
+// Kích thước component toàn cục
 export const globalComponentSize = Local.get('themeConfigPrev')
   ? Local.get('themeConfigPrev').globalComponentSize
   : 'small';

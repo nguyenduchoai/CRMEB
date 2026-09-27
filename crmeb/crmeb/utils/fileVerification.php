@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -13,7 +13,7 @@ namespace crmeb\utils;
 use Exception;
 
 /**
- * 签名计算
+ * Tính toán chữ ký
  * Class fileVerification
  * @package crmeb\utils
  */
@@ -23,7 +23,7 @@ class fileVerification
     public $fileValue = "";
 
     /**
-     * 项目路径
+     * Đường dẫn project
      * @param string $path
      * @return string
      * @throws Exception
@@ -31,17 +31,17 @@ class fileVerification
     public function getSignature(string $path): string
     {
         if (!is_dir($path) && !is_file($path)) {
-            throw new Exception($path . " 不是有效的文件或目录!");
+            throw new Exception($path . " không phải là tệp hoặc thư mục hợp lệ!");
         }
 
         $appPath = $path . DS . 'app';
         if (!is_dir($appPath)) {
-            throw new Exception($appPath . " 不是有效的目录!");
+            throw new Exception($appPath . " không phải là thư mục hợp lệ!");
         }
 
         $crmebPath = $path . DS . 'crmeb';
         if (!is_dir($crmebPath)) {
-            throw new Exception($crmebPath . " 不是有效的目录!");
+            throw new Exception($crmebPath . " không phải là thư mục hợp lệ!");
         }
 
         $this->path = $appPath;
@@ -52,7 +52,7 @@ class fileVerification
     }
 
     /**
-     * 计算签名
+     * Tính chữ ký
      * @param string $path
      * @return void
      * @throws Exception

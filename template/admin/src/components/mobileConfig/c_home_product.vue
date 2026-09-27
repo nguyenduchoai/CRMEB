@@ -24,7 +24,7 @@ import { getProProduct } from '@/api/diy';
 export default {
   name: 'c_home_product',
   componentsName: 'home_product',
-  cname: '商品选项卡',
+  cname: 'Tab sản phẩm',
   props: {
     activeIndex: {
       type: null,

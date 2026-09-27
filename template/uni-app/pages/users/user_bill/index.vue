@@ -2,9 +2,9 @@
 	<view :style="colorStyle">
 		<view class='bill-details'>
 			<view class='nav acea-row'>
-				<view class='item' :class='type==0 ? "on":""' @click='changeType(0)'>{{$t(`全部`)}}</view>
-				<view class='item' :class='type==1 ? "on":""' @click='changeType(1)'>{{$t(`消费`)}}</view>
-				<view class='item' :class='type==2 ? "on":""' @click='changeType(2)'>{{$t(`充值`)}}</view>
+				<view class='item' :class='type==0 ? "on":""' @click='changeType(0)'>{{$t(`Tất cả`)}}</view>
+				<view class='item' :class='type==1 ? "on":""' @click='changeType(1)'>{{$t(`Chi tiêu`)}}</view>
+				<view class='item' :class='type==2 ? "on":""' @click='changeType(2)'>{{$t(`Nạp tiền`)}}</view>
 			</view>
 			<view class='sign-record'>
 				<view class='list' v-for="(item,index) in userBillList" :key="index">
@@ -26,7 +26,7 @@
 					<text class='loading iconfont icon-jiazai' :hidden='loading==false'></text>{{loadTitle}}
 				</view>
 				<view v-if="userBillList.length == 0">
-					<emptyPage :title="$t(`暂无账单的记录哦～`)"></emptyPage>
+					<emptyPage :title="$t(`Chưa có lịch sử giao dịch nào~`)"></emptyPage>
 				</view>
 			</view>
 		</view>
@@ -64,7 +64,7 @@
 		mixins: [colors],
 		data() {
 			return {
-				loadTitle: this.$t(`加载更多`),
+				loadTitle: this.$t(`Tải thêm`),
 				loading: false,
 				loadend: false,
 				page: 1,
@@ -72,8 +72,8 @@
 				type: 0,
 				userBillList: [],
 				times:[],
-				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false //是否隐藏授权
+				isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+				isShowAuth: false //Có ẩn ủy quyền hay không
 			};
 		},
 		computed: mapGetters(['isLogin']),
@@ -85,30 +85,30 @@
 			}
 		},
 		/**
-		 * 生命周期函数--监听页面加载
+		 * Hàm lifecycle -- theo dõi khi trang load
 		 */
 		onLoad: function(options) {
 			this.type = options.type || 0;
 		},
 		/**
-		 * 页面上拉触底事件的处理函数
+		 * Hàm xử lý sự kiện kéo lên đến đáy trang
 		 */
 		onReachBottom: function() {
 			this.getUserBillList();
 		},
 		methods: {
 			/**
-			 * 授权回调
+			 * Callback ủy quyền
 			 */
 			onLoadFun: function() {
 				this.getUserBillList();
 			},
-			// 授权关闭
+			// Đóng ủy quyền
 			authColse: function(e) {
 				this.isShowAuth = e
 			},
 			/**
-			 * 获取账户明细
+			 * Lấy chi tiết tài khoản
 			 */
 			getUserBillList: function() {
 				let that = this;
@@ -142,16 +142,16 @@
 					}
 					let loadend = res.data.list.length < that.limit;
 					that.loadend = loadend;
-					that.loadTitle = loadend ? that.$t(`我也是有底线的`) : that.$t(`加载更多`);
+					that.loadTitle = loadend ? that.$t(`Đã đến cuối danh sách`) : that.$t(`Tải thêm`);
 					that.page += 1;
 					that.loading = false;
 				}).catch(err=>{
 					that.loading = false;
-					that.loadTitle = that.$t(`加载更多`);
+					that.loadTitle = that.$t(`Tải thêm`);
 				})
 			},
 			/**
-			 * 切换导航
+			 * Chuyển đổi điều hướng
 			 */
 			changeType: function(type) {
 				this.type = type;

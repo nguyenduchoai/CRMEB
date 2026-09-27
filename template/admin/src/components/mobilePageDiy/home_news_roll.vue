@@ -17,10 +17,10 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'home_news_roll',
-  cname: '新闻播报',
+  cname: 'Bản tin',
   configName: 'c_news_roll',
-  type: 0, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'news', // 外面匹配名称
+  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'news', // Tên khớp bên ngoài
   icon: 'iconxinwenbobao1',
   props: {
     index: {
@@ -57,7 +57,7 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'news',
         timestamp: this.num,
@@ -65,29 +65,29 @@ export default {
           tabVal: 0,
         },
         txtStyle: {
-          title: '文本位置',
+          title: 'Vị trí văn bản',
           name: 'txtStyle',
           type: 0,
           list: [
             {
-              val: '居左',
+              val: 'Căn trái',
               icon: 'icondoc_left',
               style: 'left',
             },
             {
-              val: '居中',
+              val: 'Căn giữa',
               icon: 'icondoc_center',
               style: 'center',
             },
             {
-              val: '居右',
+              val: 'Căn phải',
               icon: 'icondoc_right',
               style: 'right',
             },
           ],
         },
         bgColor: {
-          title: '背景颜色',
+          title: 'Màu nền',
           default: [
             {
               item: '#fff',
@@ -100,7 +100,7 @@ export default {
           ],
         },
         txtColor: {
-          title: '文字颜色',
+          title: 'Màu chữ',
           default: [
             {
               item: '#333',
@@ -113,57 +113,57 @@ export default {
           ],
         },
         listConfig: {
-          title: '最多可添加10个版块；鼠标拖拽左侧圆点可调整版块顺序',
+          title: 'Có thể thêm tối đa 10 khối; kéo thả chấm tròn bên trái để điều chỉnh thứ tự khối',
           max: 10,
           list: [
             {
               chiild: [
                 {
-                  title: '标题',
-                  val: '标题',
+                  title: 'Tiêu đề',
+                  val: 'Tiêu đề',
                   max: 30,
-                  pla: '选填，不超过30个字',
+                  pla: 'Không bắt buộc, tối đa 30 ký tự',
                   empty: true,
                 },
                 {
-                  title: '链接',
-                  val: '链接',
+                  title: 'Liên kết',
+                  val: 'Liên kết',
                   max: 200,
-                  pla: '请输入连接',
+                  pla: 'Vui lòng nhập liên kết',
                 },
               ],
             },
           ],
         },
         bgStyle: {
-          title: '背景样式',
+          title: 'Kiểu nền',
           name: 'bgStyle',
           type: 0,
           list: [
             {
-              val: '直角',
+              val: 'Góc vuông',
               icon: 'iconPic_square',
             },
             {
-              val: '圆角',
+              val: 'Bo góc',
               icon: 'iconPic_fillet',
             },
           ],
         },
         prConfig: {
-          title: '背景边距',
+          title: 'Lề nền',
           val: 0,
           min: 0,
         },
-        // 页面间距
+        // Lề trang
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },
         logoConfig: {
-          header: '图标设置',
-          title: '最多可添加1张图片，建议宽度130 * 36px',
+          header: 'Cài đặt biểu tượng',
+          title: 'Có thể thêm tối đa 1 ảnh, kích thước đề xuất 130 * 36px',
           url: require('@/assets/images/news.png'),
         },
       },

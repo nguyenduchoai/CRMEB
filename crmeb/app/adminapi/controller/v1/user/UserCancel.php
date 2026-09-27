@@ -20,7 +20,7 @@ class UserCancel extends AuthController
     }
 
     /**
-     * 获取注销列表
+     * Lấy danh sách hủy tài khoản
      * @return mixed
      */
     public function getCancelList()
@@ -34,7 +34,7 @@ class UserCancel extends AuthController
     }
 
     /**
-     * 备注
+     * Ghi chú
      * @return mixed
      */
     public function setMark()

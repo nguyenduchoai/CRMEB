@@ -45,19 +45,19 @@ class SystemTicket extends AuthController
             ['status', 1],
         ]);
         $this->services->ticketSave($id, $data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     public function ticketSetStatus($id, $status)
     {
         $this->services->ticketSetStatus($id, $status);
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
     public function ticketDel($id)
     {
         $this->services->ticketDel($id);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 
     public function ticketContent($id)
@@ -83,6 +83,6 @@ class SystemTicket extends AuthController
             ['notice_content', '']
         ]);
         $this->services->ticketContentSave($id, $data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 }

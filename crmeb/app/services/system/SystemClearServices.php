@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,14 +18,14 @@ use think\facade\Config;
 use think\facade\Db;
 
 /**
- * 清除数据
+ * Xóa dữ liệu
  * Class SystemClearServices
  * @package app\services\system
  */
 class SystemClearServices extends BaseServices
 {
     /**
-     * 清除表数据
+     * Xóa dữ liệu bảng
      * @param string|array $table_name
      * @param $status
      */
@@ -47,7 +47,7 @@ class SystemClearServices extends BaseServices
     }
 
     /**
-     * 递归删除文件,只能删除 public/uploads下的文件
+     * Xóa file theo cách đệ quy, chỉ có thể xóa file trong public/uploads
      * @param $dirName
      * @param bool $subdir
      */
@@ -71,27 +71,27 @@ class SystemClearServices extends BaseServices
     }
 
     /**
-     * 替换域名
+     * Thay thế tên miền
      * @param string $url
      * @return mixed
      */
     public function replaceSiteUrl(string $url)
     {
-        // 获取站点 URL
+        // Lấy URL trang web
         $siteUrl = sys_config('site_url');
-        // 解析站点 URL 的协议
+        // Phân tích protocol của URL trang web
         $siteUrlScheme = parse_url($siteUrl)['scheme'];
-        // 将站点 URL 中的协议替换为 JSON 格式
+        // Thay protocol trong URL trang web thành định dạng JSON
         $siteUrlJson = str_replace($siteUrlScheme . '://', $siteUrlScheme . ':\\\/\\\/', $siteUrl);
 
-        // 获取当前 URL 的协议
+        // Lấy protocol của URL hiện tại
         $urlScheme = parse_url($url)['scheme'];
-        // 将当前 URL 中的协议替换为 JSON 格式
+        // Thay protocol trong URL hiện tại thành định dạng JSON
         $urlJson = str_replace($urlScheme . '://', $urlScheme . ':\\\/\\\/', $url);
-        // 获取数据库表前缀
+        // Lấy tiền tố bảng cơ sở dữ liệu
         $prefix = Config::get('database.connections.' . Config::get('database.default') . '.prefix');
 
-        // 构建 SQL 语句数组
+        // Xây dựng mảng câu lệnh SQL
         $sql = [
             "UPDATE `{$prefix}agent_level` SET `image` = replace(`image` ,'{$siteUrl}','{$url}')",
             "UPDATE `{$prefix}agreement` SET `content` = replace(content ,'{$siteUrl}','{$url}')",
@@ -143,7 +143,7 @@ class SystemClearServices extends BaseServices
             "UPDATE `{$prefix}wechat_user` SET `headimgurl` = replace(headimgurl ,'{$siteUrl}','{$url}')",
         ];
 
-        // 执行 SQL 语句
+        // Thực thi câu lệnh SQL
         return $this->transaction(function () use ($sql) {
             try {
                 foreach ($sql as $item) {

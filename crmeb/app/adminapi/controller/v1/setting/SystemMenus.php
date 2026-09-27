@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -19,7 +19,7 @@ use think\facade\App;
 use think\facade\Route;
 
 /**
- * 菜单权限
+ * Quyền menu
  * Class SystemMenus
  * @package app\adminapi\controller\v1\setting
  */
@@ -38,12 +38,12 @@ class SystemMenus extends AuthController
     }
 
     /**
-     * 菜单展示列表
+     * Danh sách hiển thị menu
      * @return \think\Response
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/05/06
      */
@@ -62,7 +62,7 @@ class SystemMenus extends AuthController
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/14
      */
@@ -74,7 +74,7 @@ class SystemMenus extends AuthController
     }
 
     /**
-     * 显示创建资源表单页.
+     * Hiển thị trang form tạo resource.
      *
      * @return \think\Response
      */
@@ -85,7 +85,7 @@ class SystemMenus extends AuthController
     }
 
     /**
-     * 保存菜单权限
+     * Lưu quyền menu
      * @return mixed
      */
     public function save()
@@ -123,9 +123,9 @@ class SystemMenus extends AuthController
     }
 
     /**
-     * 批量保存权限
+     * Lưu quyền hàng loạt
      * @return \think\Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/11
      */
@@ -190,7 +190,7 @@ class SystemMenus extends AuthController
     }
 
     /**
-     * 获取一条菜单权限信息
+     * Lấy thông tin một quyền menu
      * @param int $id
      * @return \think\Response
      */
@@ -204,7 +204,7 @@ class SystemMenus extends AuthController
     }
 
     /**
-     * 修改菜单权限表单获取
+     * Lấy form sửa quyền menu
      * @param int $id
      * @return \think\Response
      */
@@ -217,7 +217,7 @@ class SystemMenus extends AuthController
     }
 
     /**
-     * 修改菜单
+     * Sửa menu
      * @param $id
      * @return mixed
      */
@@ -256,7 +256,7 @@ class SystemMenus extends AuthController
     }
 
     /**
-     * 删除指定资源
+     * Xóa resource được chỉ định
      *
      * @param int $id
      * @return \think\Response
@@ -275,7 +275,7 @@ class SystemMenus extends AuthController
     }
 
     /**
-     * 权限的开启和关闭，显示和隐藏
+     * Bật/tắt và hiện/ẩn quyền
      * @param $id
      * @return mixed
      */
@@ -300,7 +300,7 @@ class SystemMenus extends AuthController
     }
 
     /**
-     * 获取菜单数据
+     * Lấy dữ liệu menu
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -313,10 +313,10 @@ class SystemMenus extends AuthController
     }
 
     /**
-     * 获取路由分类
+     * Lấy danh mục route
      * @param SystemRouteCateServices $service
      * @return \think\Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/25
      */
@@ -326,13 +326,13 @@ class SystemMenus extends AuthController
     }
 
     /**
-     * 获取接口列表
+     * Lấy danh sách API
      * @return array
      */
     public function ruleList(SystemRouteServices $services)
     {
         $cateId = request()->get('cate_id', 0);
-        //获取所有的路由
+        //Lấy tất cả route
         $ruleList = $services->selectList(['cate_id' => $cateId, 'app_name' => 'adminapi'])->toArray();
         return app('json')->success($ruleList);
     }

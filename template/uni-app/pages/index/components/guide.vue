@@ -1,5 +1,5 @@
 <template>
-	<!-- 辅助线 -->
+	<!-- Đường phân cách -->
 	<view v-show="!isSortType">
 		<view class="lines" :style="[lineWrapStyle]">
 			<view class="item" :style="[lineStyle]"></view>

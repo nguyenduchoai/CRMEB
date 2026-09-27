@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -37,7 +37,7 @@ class HomeController
     }
 
     /**
-     * PC端首页轮播图
+     * Ảnh trình chiếu (banner) trang chủ bản PC
      * @return mixed
      */
     public function getBanner()
@@ -47,7 +47,7 @@ class HomeController
     }
 
     /**
-     * 首页分类尚品
+     * Sản phẩm theo danh mục trên trang chủ
      * @return mixed
      */
     public function getCategoryProduct(Request $request)
@@ -57,7 +57,7 @@ class HomeController
     }
 
     /**
-     * 获取手机购买跳转url配置
+     * Lấy cấu hình url chuyển hướng khi mua trên điện thoại
      * @return string
      */
     public function getProductPhoneBuy()
@@ -68,7 +68,7 @@ class HomeController
     }
 
     /**
-     * 付费会员购买二维码
+     * Mã QR mua thành viên trả phí
      * @return mixed
      */
     public function getPayVipCode()
@@ -81,7 +81,7 @@ class HomeController
         if ($type == 1) {
             $codeUrl = $QrcodeService->getWechatQrcodePath($name, $url, false, false);
         } else {
-            //生成小程序地址
+            //Tạo địa chỉ Mini Program
             $codeUrl = $QrcodeService->getRoutineQrcodePath(0, 0, 5, [], false);
         }
         return app('json')->success(['url' => $codeUrl ?: '']);

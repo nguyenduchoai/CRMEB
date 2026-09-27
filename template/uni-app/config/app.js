@@ -1,17 +1,17 @@
 module.exports = {
-	// 小程序 / APP请求配置
+	// Cấu hình request cho Mini Program / APP
 	// #ifdef MP || APP-PLUS
-	// 请求域名 格式： https://您的域名
+	// Domain request, định dạng: https://domain-của-bạn
 	HTTP_REQUEST_URL: `https://demo.crmeb.com`,
 	// #endif
 
-	// H5请求配置
+	// Cấu hình request cho H5
 	// #ifdef H5
-	// H5接口是浏览器地址，非单独部署不用修改
+	// API H5 là địa chỉ trình duyệt, nếu không triển khai riêng thì không cần sửa
 	HTTP_REQUEST_URL: window.location.protocol + "//" + window.location.host,
 	// #endif 
 
-	// 以下配置在不做二开的前提下,不需要做任何的修改
+	// Các cấu hình dưới đây, nếu không phát triển tùy biến thêm thì không cần sửa gì
 	HEADER: {
 		'content-type': 'application/json',
 		//#ifdef H5
@@ -24,12 +24,12 @@ module.exports = {
 		'Form-type': 'app',
 		//#endif
 	},
-	// 回话密钥名称 请勿修改此配置
+	// Tên key phiên (session), vui lòng không sửa cấu hình này
 	TOKENNAME: 'Authori-zation',
-	// 缓存时间 0 永久
+	// Thời gian cache, 0 là vĩnh viễn
 	EXPIRE: 0,
-	//分页最多显示条数
+	//Số dòng hiển thị tối đa khi phân trang
 	LIMIT: 10,
-	// 请求超时限制 默认10秒
+	// Giới hạn timeout request, mặc định 10 giây
 	TIMEOUT: 10000
 }

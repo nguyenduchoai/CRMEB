@@ -1,25 +1,25 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 应用设置
+// | Cài đặt ứng dụng
 // +----------------------------------------------------------------------
 
 return [
-    // 是否强制使用路由
+    // Có bắt buộc dùng route không
     'url_route_must'        => true,
-    // 合并路由规则
+    // Gộp quy tắc route
     'route_rule_merge'      => true,
-    // 路由是否完全匹配
+    // Route có khớp hoàn toàn không
     'route_complete_match'  => true,
-    // 是否自动转换URL中的控制器和操作名
+    // Có tự động chuyển đổi tên controller và action trong URL không
     'url_convert'           => false,
 ];

@@ -31,7 +31,7 @@ class AesUtils
     {
         $ret = openssl_decrypt(base64_decode($str), 'AES-128-ECB', $secretKey,OPENSSL_RAW_DATA);
         if($ret === false){
-            throw new \RuntimeException('请检查密钥是否正确！');
+            throw new \RuntimeException('Vui lòng kiểm tra xem khóa bí mật có chính xác không!');
         }
         return $ret;
     }

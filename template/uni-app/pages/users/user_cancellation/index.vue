@@ -10,22 +10,22 @@
 		</view>
 		<view class="footer">
 			<view class="trip">
-				{{$t(`点击【立即注销】即代表您已经同意《用户注销协议》`)}}
+				{{$t(`Nhấn [Hủy tài khoản ngay] đồng nghĩa với việc bạn đã đồng ý với “Thỏa thuận hủy tài khoản người dùng”`)}}
 			</view>
 			<view class="cancellation flex-aj-center" @click="isCancellation = true">
-				{{$t(`立即注销`)}}
+				{{$t(`Hủy tài khoản ngay`)}}
 			</view>
 		</view>
 		<view class="mark" v-show="isCancellation"></view>
 		<view class="tipaddress" v-show="isCancellation">
 			<view class="top"></view>
 			<view class="bottom">
-				<view class="font1">{{$t(`是否确认注销`)}}</view>
-				<view class="font2">{{$t(`注销后无法恢复，请谨慎操作`)}}</view>
+				<view class="font1">{{$t(`Xác nhận hủy tài khoản`)}}</view>
+				<view class="font2">{{$t(`Tài khoản sau khi hủy sẽ không thể khôi phục, vui lòng cân nhắc kỹ`)}}</view>
 				<view class="btn">
-					<view class="cancellation-btn btn-sty flex-aj-center" @tap="cancelUser">{{$t(`注销`)}}</view>
+					<view class="cancellation-btn btn-sty flex-aj-center" @tap="cancelUser">{{$t(`Hủy tài khoản`)}}</view>
 					<view class="cancel btn-sty flex-aj-center" @tap="isCancellation = false">
-						{{$t(`取消`)}}
+						{{$t(`Hủy`)}}
 					</view>
 				</view>
 			</view>

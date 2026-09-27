@@ -30,23 +30,23 @@
 	// #endif
 
 	/**
-	 * NoticeBar 自定义导航栏
-	 * @description 通告栏组件
+	 * NoticeBar thanh điều hướng tùy chỉnh
+	 * @description Component thanh thông báo
 	 * @tutorial https://ext.dcloud.net.cn/plugin?id=30
-	 * @property {Number} speed 文字滚动的速度，默认100px/秒
-	 * @property {String} text 显示文字
-	 * @property {String} backgroundColor 背景颜色
-	 * @property {String} color 文字颜色
-	 * @property {String} moreColor 查看更多文字的颜色
-	 * @property {String} moreText 设置“查看更多”的文本
-	 * @property {Boolean} single = [true|false] 是否单行
-	 * @property {Boolean} scrollable = [true|false] 是否滚动，为true时，NoticeBar为单行
-	 * @property {Boolean} showIcon = [true|false] 是否显示左侧喇叭图标
-	 * @property {Boolean} showClose = [true|false] 是否显示左侧关闭按钮
-	 * @property {Boolean} showGetMore = [true|false] 是否显示右侧查看更多图标，为true时，NoticeBar为单行
-	 * @event {Function} click 点击 NoticeBar 触发事件
-	 * @event {Function} close 关闭 NoticeBar 触发事件
-	 * @event {Function} getmore 点击”查看更多“时触发事件
+	 * @property {Number} speed Tốc độ cuộn chữ, mặc định 100px/giây
+	 * @property {String} text Chữ hiển thị
+	 * @property {String} backgroundColor Màu nền
+	 * @property {String} color Màu chữ
+	 * @property {String} moreColor Màu chữ “xem thêm”
+	 * @property {String} moreText Đặt văn bản “xem thêm”
+	 * @property {Boolean} single = [true|false] Có phải một dòng hay không
+	 * @property {Boolean} scrollable = [true|false] Có cuộn hay không, khi true thì NoticeBar là một dòng
+	 * @property {Boolean} showIcon = [true|false] Có hiển thị icon loa bên trái hay không
+	 * @property {Boolean} showClose = [true|false] Có hiển thị nút đóng bên trái hay không
+	 * @property {Boolean} showGetMore = [true|false] Có hiển thị icon “xem thêm” bên phải hay không, khi true thì NoticeBar là một dòng
+	 * @event {Function} click Sự kiện kích hoạt khi click NoticeBar
+	 * @event {Function} close Sự kiện kích hoạt khi đóng NoticeBar
+	 * @event {Function} getmore Sự kiện kích hoạt khi click “xem thêm”
 	 */
 
 	export default {
@@ -70,7 +70,7 @@
 				default: '#FFF9EA'
 			},
 			speed: {
-				// 默认1s滚动100px
+				// Mặc định 1 giây cuộn 100px
 				type: Number,
 				default: 100
 			},
@@ -83,27 +83,27 @@
 				default: '#FF9A43'
 			},
 			single: {
-				// 是否单行
+				// Có phải một dòng hay không
 				type: [Boolean, String],
 				default: false
 			},
 			scrollable: {
-				// 是否滚动，添加后控制单行效果取消
+				// Có cuộn hay không, thêm vào thì hủy hiệu ứng một dòng
 				type: [Boolean, String],
 				default: false
 			},
 			showIcon: {
-				// 是否显示左侧icon
+				// Có hiển thị icon bên trái hay không
 				type: [Boolean, String],
 				default: false
 			},
 			showGetMore: {
-				// 是否显示右侧查看更多
+				// Có hiển thị “xem thêm” bên phải hay không
 				type: [Boolean, String],
 				default: false
 			},
 			showClose: {
-				// 是否显示左侧关闭按钮
+				// Có hiển thị nút đóng bên trái hay không
 				type: [Boolean, String],
 				default: false
 			}

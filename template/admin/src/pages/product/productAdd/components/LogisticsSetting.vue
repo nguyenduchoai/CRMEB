@@ -1,20 +1,20 @@
 <template>
-  <!--  物流设置 -->
+  <!--  Cài đặt vận chuyển -->
   <el-row>
     <el-col :span="24">
-      <el-form-item label="物流方式：" prop="logistics">
+      <el-form-item label="Phương thức vận chuyển:" prop="logistics">
         <el-checkbox-group v-model="formValidate.logistics" @change="logisticsBtn">
-          <el-checkbox label="1">快递</el-checkbox>
-          <el-checkbox label="2">到店</el-checkbox>
+          <el-checkbox label="1">Chuyển phát</el-checkbox>
+          <el-checkbox label="2">Nhận tại cửa hàng</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
     </el-col>
     <el-col :span="24">
-      <el-form-item label="运费设置：">
+      <el-form-item label="Cài đặt phí vận chuyển:">
         <el-radio-group v-model="formValidate.freight">
-          <!-- <el-radio :label="1">包邮</el-radio> -->
-          <el-radio :label="2">固定邮费</el-radio>
-          <el-radio :label="3">运费模板</el-radio>
+          <!-- <el-radio :label="1">Miễn phí vận chuyển</el-radio> -->
+          <el-radio :label="2">Phí vận chuyển cố định</el-radio>
+          <el-radio :label="3">Mẫu phí vận chuyển</el-radio>
         </el-radio-group>
       </el-form-item>
     </el-col>
@@ -25,9 +25,9 @@
             :controls="false"
             :min="0"
             v-model="formValidate.postage"
-            placeholder="请输入金额"
+            placeholder="Vui lòng nhập số tiền"
             class="input_width maxW input-number-unit-class"
-            class-unit="元"
+            class-unit="đ"
           />
         </div>
       </el-form-item>
@@ -35,7 +35,7 @@
     <el-col :span="24" v-if="formValidate.freight == 3">
       <el-form-item label="" prop="temp_id">
         <div class="acea-row">
-          <el-select v-model="formValidate.temp_id" clearable placeholder="请选择运费模板" class="input_width maxW">
+          <el-select v-model="formValidate.temp_id" clearable placeholder="Vui lòng chọn mẫu phí vận chuyển" class="input_width maxW">
             <el-option
               v-for="(item, index) in templateList"
               :value="item.id"
@@ -43,7 +43,7 @@
               :label="item.name"
             ></el-option>
           </el-select>
-          <span class="addfont" v-db-click @click="addTemp">新增运费模板</span>
+          <span class="addfont" v-db-click @click="addTemp">Thêm mẫu phí vận chuyển</span>
         </div>
       </el-form-item>
     </el-col>

@@ -3,39 +3,39 @@
 		<div class="navs">
 			<div class="list">
 				<div class="item" :class="time == 'today' ? 'on' : ''" @click="setTime('today')">
-					{{ $t(`今天`) }}
+					{{ $t(`Hôm nay`) }}
 				</div>
 				<div class="item" :class="time == 'yesterday' ? 'on' : ''" @click="setTime('yesterday')">
-					{{ $t(`昨天`) }}
+					{{ $t(`Hôm qua`) }}
 				</div>
 				<div class="item" :class="time == 'seven' ? 'on' : ''" @click="setTime('seven')">
-					{{ $t(`最近7天`) }}
+					{{ $t(`7 ngày qua`) }}
 				</div>
 				<div class="item" :class="time == 'month' ? 'on' : ''" @click="setTime('month')">
-					{{ $t(`本月`) }}
+					{{ $t(`Tháng này`) }}
 				</div>
 				<div class="item" :class="time == 'date' ? 'on' : ''" @click="dateTitle">
 					<!-- <span class="iconfont icon-xiangxia"></span>
           <span v-for="(value, index) in renderValues" :key="index">
             {{ value }}</span
           > -->
-					{{ $t(`自定义`) }}
+					{{ $t(`Tùy chỉnh`) }}
 				</div>
 			</div>
 		</div>
 		<div class="wrapper">
-			<div class="title">{{ time == 'date' ? '' : title }}{{ where.type == 1 ? $t(`营业额（元）`) : $t(`订单量（份）`) }}</div>
+			<div class="title">{{ time == 'date' ? '' : title }}{{ where.type == 1 ? $t(`Doanh thu (đ)`) : $t(`Số đơn hàng (đơn)`) }}</div>
 			<div class="money">{{ time_price }}</div>
 			<div class="increase acea-row row-between-wrapper">
 				<div>
-					{{ time == 'date' ? '' : title }}{{ $t(`增长率`) }}：
+					{{ time == 'date' ? '' : title }}{{ $t(`Tỷ lệ tăng trưởng`) }}：
 					<span :class="increase_time_status === 1 ? 'red' : 'green'">
 						{{ increase_time_status === 1 ? '' : '-' }}{{ growth_rate }}%
 						<span class="iconfont" :class="increase_time_status === 1 ? 'icon-xiangshang1' : 'icon-xiangxia2'"></span>
 					</span>
 				</div>
 				<div>
-					{{ time == 'date' ? '' : title }}{{ $t(`增长`) }}：
+					{{ time == 'date' ? '' : title }}{{ $t(`Tăng trưởng`) }}：
 					<span :class="increase_time_status === 1 ? 'red' : 'green'">
 						{{ increase_time_status === 1 ? '' : '-' }}{{ increase_time }}
 						<span class="iconfont" :class="increase_time_status === 1 ? 'icon-xiangshang1' : 'icon-xiangxia2'"></span>
@@ -44,18 +44,18 @@
 			</div>
 		</div>
 		<div class="chart">
-			<div class="chart-title">{{ $t(`单位`) }}（{{ where.type == 1 ? $t(`元.`) : $t(`份`) }}）</div>
+			<div class="chart-title">{{ $t(`Đơn vị`) }}（{{ where.type == 1 ? $t(`đ.`) : $t(`đơn`) }}）</div>
 			<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" disable-scroll="true" @touchstart="touchLineA" @touchmove="moveLineA" @touchend="touchEndLineA"></canvas>
 		</div>
 		<div class="public-wrapper">
 			<div class="title">
 				<span class="iconfont icon-xiangxishuju"></span>
-				{{ $t(`详细数据`) }}
+				{{ $t(`Dữ liệu chi tiết`) }}
 			</div>
 			<div class="nav acea-row row-between-wrapper">
-				<div class="data">{{ $t(`日期`) }}</div>
-				<div class="browse">{{ $t(`订单数`) }}</div>
-				<div class="turnover">{{ $t(`成交额`) }}</div>
+				<div class="data">{{ $t(`Ngày`) }}</div>
+				<div class="browse">{{ $t(`Số đơn hàng`) }}</div>
+				<div class="turnover">{{ $t(`Doanh số`) }}</div>
 			</div>
 			<div class="conter">
 				<div class="item acea-row row-between-wrapper" v-for="(item, index) in list" :key="index">
@@ -117,8 +117,8 @@ export default {
 			weekSwitch: false,
 			ismulti: false,
 			monFirst: true,
-			clean: false, //简洁模式
-			lunar: false, //显示农历
+			clean: false, //Chế độ đơn giản
+			lunar: false, //Hiển thị âm lịch
 			renderValues: [],
 			monthRange: [],
 			current: false,
@@ -127,13 +127,13 @@ export default {
 				stop: '',
 				type: ''
 			},
-			types: '', //类型|order=订单数|price=营业额
-			time: '', //时间|today=今天|yesterday=昨天|month=本月
-			title: '', //时间|today=今天|yesterday=昨天|month=本月
-			growth_rate: '', //增长率
-			increase_time: '', //增长率
-			increase_time_status: '', //增长率
-			time_price: '', //增长率
+			types: '', //Loại | order = số đơn hàng | price = doanh thu
+			time: '', //Thời gian | today = hôm nay | yesterday = hôm qua | month = tháng này
+			title: '', //Thời gian | today = hôm nay | yesterday = hôm qua | month = tháng này
+			growth_rate: '', //Tỷ lệ tăng trưởng
+			increase_time: '', //Tỷ lệ tăng trưởng
+			increase_time_status: '', //Tỷ lệ tăng trưởng
+			time_price: '', //Tỷ lệ tăng trưởng
 			loaded: false,
 			loading: false,
 			filter: {
@@ -202,7 +202,7 @@ export default {
 	},
 	computed: {
 		monthRangeText() {
-			return this.monthRange.length ? this.$t(`固定`) : this.$t(`指定范围`);
+			return this.monthRange.length ? this.$t(`Cố định`) : this.$t(`Khoảng tùy chọn`);
 		}
 	},
 	methods: {
@@ -253,28 +253,28 @@ export default {
 				case 'today':
 					this.where.start = new Date(Date.parse(year + '/' + month + '/' + day)).getTime() / 1000;
 					this.where.stop = new Date(Date.parse(year + '/' + month + '/' + day)).getTime() / 1000 + 24 * 60 * 60 - 1;
-					this.title = this.$t(`今天`);
+					this.title = this.$t(`Hôm nay`);
 					this.getIndex();
 					this.getInfo();
 					break;
 				case 'yesterday':
 					this.where.start = new Date(Date.parse(year + '/' + month + '/' + day)).getTime() / 1000 - 24 * 60 * 60;
 					this.where.stop = new Date(Date.parse(year + '/' + month + '/' + day)).getTime() / 1000 - 1;
-					this.title = this.$t(`昨天`);
+					this.title = this.$t(`Hôm qua`);
 					this.getIndex();
 					this.getInfo();
 					break;
 				case 'month':
 					this.where.start = new Date(year, new Date().getMonth(), 1).getTime() / 1000;
 					this.where.stop = new Date(year, month, 1).getTime() / 1000 - 1;
-					this.title = this.$t(`本月`);
+					this.title = this.$t(`Tháng này`);
 					this.getIndex();
 					this.getInfo();
 					break;
 				case 'seven':
 					this.where.start = new Date(Date.parse(year + '/' + month + '/' + day)).getTime() / 1000 + 24 * 60 * 60 - 7 * 3600 * 24;
 					this.where.stop = new Date(Date.parse(year + '/' + month + '/' + day)).getTime() / 1000 + 24 * 60 * 60 - 1;
-					this.title = this.$t(`最近7天`);
+					this.title = this.$t(`7 ngày qua`);
 					this.getIndex();
 					this.getInfo();
 					break;
@@ -339,7 +339,7 @@ export default {
 				}
 			);
 		},
-		// 创建charts
+		// Tạo charts
 		showLineA(canvasId, chartData) {
 			let _self = this;
 			canvaLineA = new uCharts({
@@ -362,7 +362,7 @@ export default {
 				categories: chartData.categories,
 				series: chartData.series,
 				animation: true,
-				enableScroll: true, //开启图表拖拽功能
+				enableScroll: true, //Mở chức năng kéo thả biểu đồ
 				xAxis: {
 					disableGrid: false,
 					type: 'grid',
@@ -379,7 +379,7 @@ export default {
 					max: 30,
 					format: (val) => {
 						return val.toFixed(0);
-					} //如不写此方法，Y轴刻度默认保留两位小数
+					} //Nếu không viết phương thức này, vạch chia trục Y mặc định giữ hai chữ số thập phân
 				},
 				width: _self.cWidth * _self.pixelRatio,
 				height: _self.cHeight * _self.pixelRatio,
@@ -390,7 +390,7 @@ export default {
 				}
 			});
 		},
-		// charts触摸事件
+		// Sự kiện touch của charts
 		touchLineA(e) {
 			canvaLineA.scrollStart(e);
 		},
@@ -400,7 +400,7 @@ export default {
 		touchEndLineA(e) {
 			canvaLineA.scrollEnd(e);
 		},
-		// 日历确定
+		// Xác nhận lịch
 		confirm(e) {
 			let self = this;
 			if (e.range.after && e.range.before) {
@@ -422,7 +422,7 @@ export default {
 };
 </script>
 <style>
-/*交易额统计*/
+/*Thống kê giá trị giao dịch*/
 .statistical-page .navs {
 	width: 100%;
 	height: 96upx;

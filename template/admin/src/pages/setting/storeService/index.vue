@@ -4,7 +4,7 @@
       <el-row class="mb20">
         <el-col :span="24">
           <el-button v-auth="['setting-store_service-add']" type="primary" v-db-click @click="add" class="mr10"
-            >添加客服</el-button
+            >Thêm nhân viên CSKH</el-button
           >
         </el-col>
       </el-row>
@@ -12,27 +12,27 @@
         :data="tableList"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column label="ID" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="客服头像" min-width="90">
+        <el-table-column label="Ảnh đại diện CSKH" min-width="90">
           <template slot-scope="scope">
             <div class="tabBox_img" v-viewer>
               <img v-lazy="scope.row.avatar" />
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="客服名称" min-width="130">
+        <el-table-column label="Tên nhân viên CSKH" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.wx_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="客服状态" min-width="130">
+        <el-table-column label="Trạng thái CSKH" min-width="130">
           <template slot-scope="scope">
             <el-switch
               class="defineSwitch"
@@ -42,24 +42,24 @@
               :value="scope.row.status"
               @change="onchangeIsShow(scope.row)"
               size="large"
-              active-text="开启"
-              inactive-text="关闭"
+              active-text="Bật"
+              inactive-text="Tắt"
             >
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="添加时间" min-width="130">
+        <el-table-column label="Thời gian thêm" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.add_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="170">
+        <el-table-column label="Thao tác" fixed="right" width="170">
           <template slot-scope="scope">
-            <a v-db-click @click="edit(scope.row)">编辑</a>
+            <a v-db-click @click="edit(scope.row)">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除客服', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa nhân viên CSKH', scope.$index)">Xóa</a>
             <el-divider direction="vertical" v-if="scope.row.status" />
-            <a v-db-click @click="goChat(scope.row)" v-if="scope.row.status">进入工作台</a>
+            <a v-db-click @click="goChat(scope.row)" v-if="scope.row.status">Vào không gian làm việc</a>
           </template>
         </el-table-column>
       </el-table>
@@ -74,31 +74,31 @@
       </div>
     </el-card>
 
-    <!--聊天记录-->
-    <el-dialog :visible.sync="modals3" title="聊天记录" width="720px">
+    <!--Lịch sử trò chuyện-->
+    <el-dialog :visible.sync="modals3" title="Lịch sử trò chuyện" width="720px">
       <div v-if="isChat" class="modelBox">
         <el-table
           v-loading="loading3"
           highlight-current-row
-          no-userFrom-text="暂无数据"
-          no-filtered-userFrom-text="暂无筛选结果"
+          no-userFrom-text="Chưa có dữ liệu"
+          no-filtered-userFrom-text="Không có kết quả phù hợp"
           :data="tableList3"
         >
-          <el-table-column label="用户名称" width="200">
+          <el-table-column label="Tên người dùng" width="200">
             <template slot-scope="scope">
               <span>{{ scope.row.nickname }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="客服头像" min-width="90">
+          <el-table-column label="Ảnh đại diện CSKH" min-width="90">
             <template slot-scope="scope">
               <div class="tabBox_img" v-viewer>
                 <img v-lazy="scope.row.headimgurl" />
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="操作" fixed="right" width="170">
+          <el-table-column label="Thao tác" fixed="right" width="170">
             <template slot-scope="scope">
-              <a v-db-click @click="look(scope.row)">查看对话</a>
+              <a v-db-click @click="look(scope.row)">Xem cuộc trò chuyện</a>
             </template>
           </el-table-column>
         </el-table>
@@ -113,33 +113,33 @@
         </div>
       </div>
       <div v-if="!isChat">
-        <el-button type="primary" v-db-click @click="isChat = true">返回聊天记录</el-button>
+        <el-button type="primary" v-db-click @click="isChat = true">Quay lại lịch sử trò chuyện</el-button>
         <el-table
           v-loading="loading5"
           highlight-current-row
-          no-userFrom-text="暂无数据"
+          no-userFrom-text="Chưa có dữ liệu"
           class="mt14"
-          no-filtered-userFrom-text="暂无筛选结果"
+          no-filtered-userFrom-text="Không có kết quả phù hợp"
           :data="tableList5"
         >
-          <el-table-column label="用户名称" min-width="200">
+          <el-table-column label="Tên người dùng" min-width="200">
             <template slot-scope="scope">
               <span>{{ scope.row.nickname }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="用户头像" min-width="90">
+          <el-table-column label="Ảnh đại diện người dùng" min-width="90">
             <template slot-scope="scope">
               <div class="tabBox_img" v-viewer>
                 <img v-lazy="scope.row.avatar" />
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="发送消息" min-width="200">
+          <el-table-column label="Gửi tin nhắn" min-width="200">
             <template slot-scope="scope">
               <span>{{ scope.row.msn }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="发送时间" min-width="200">
+          <el-table-column label="Thời gian gửi" min-width="200">
             <template slot-scope="scope">
               <span>{{ scope.row.add_time }}</span>
             </template>
@@ -178,8 +178,8 @@ export default {
   filters: {
     typeFilter(status) {
       const statusMap = {
-        wechat: '微信用户',
-        routine: '小程序用户',
+        wechat: 'Người dùng WeChat',
+        routine: 'Người dùng Mini Program',
       };
       return statusMap[status];
     },
@@ -232,16 +232,16 @@ export default {
       },
       timeVal: [],
       fromList: {
-        title: '选择时间',
+        title: 'Chọn giờ',
         custom: true,
         fromTxt: [
-          { text: '全部', val: '' },
-          { text: '今天', val: 'today' },
-          { text: '昨天', val: 'yesterday' },
-          { text: '最近7天', val: 'lately7' },
-          { text: '最近30天', val: 'lately30' },
-          { text: '本月', val: 'month' },
-          { text: '本年', val: 'year' },
+          { text: 'Tất cả', val: '' },
+          { text: 'Hôm nay', val: 'today' },
+          { text: 'Hôm qua', val: 'yesterday' },
+          { text: '7 ngày qua', val: 'lately7' },
+          { text: '30 ngày qua', val: 'lately30' },
+          { text: 'Tháng này', val: 'month' },
+          { text: 'Năm nay', val: 'year' },
         ],
       },
       loading: false,
@@ -261,7 +261,7 @@ export default {
     this.getList();
   },
   methods: {
-    // 进入工作台
+    // Vào không gian làm việc
     goChat(item) {
       kefuLogin(item.id)
         .then((res) => {
@@ -324,13 +324,13 @@ export default {
         }, 2000);
       });
     },
-    // 查看对话
+    // Xem cuộc trò chuyện
     look(row) {
       this.isChat = false;
       this.rowRecord = row;
       this.getChatlist();
     },
-    // 查看对话列表
+    // Xem danh sách cuộc trò chuyện
     getChatlist() {
       this.loading5 = true;
       this.formValidate5.uid = this.rows.uid;
@@ -348,18 +348,18 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 修改成功
+    // Sửa thành công
     submitFail() {
       this.getList();
     },
-    // 聊天记录
+    // Lịch sử trò chuyện
     record(row) {
       this.rows = row;
       this.modals3 = true;
       this.isChat = true;
       this.getListRecord();
     },
-    // 聊天记录列表
+    // Danh sách lịch sử trò chuyện
     getListRecord() {
       this.loading3 = true;
       kefuRecordApi(this.formValidate3, this.rows.id)
@@ -374,7 +374,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 编辑
+    // Sửa
     edit(row) {
       if (this.eidtLoading) return;
       this.eidtLoading = true;
@@ -387,11 +387,11 @@ export default {
           this.eidtLoading = false;
         });
     },
-    // 添加
+    // Thêm
     add() {
       this.$modalForm(kefuaddApi()).then(() => this.getList());
     },
-    // 全选
+    // Chọn tất cả
     onSelectTab(selection) {
       this.selections = selection;
       let data = [];
@@ -400,21 +400,21 @@ export default {
       });
       this.addFrom.uids = data;
     },
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e;
       this.formValidate.data = this.timeVal ? this.timeVal.join('-') : '';
       this.formValidate.page = 1;
       this.getListService();
     },
-    // 选择时间
+    // Chọn giờ
     selectChange(tab) {
       this.formValidate.data = tab;
       this.timeVal = [];
       this.formValidate.page = 1;
       this.getListService();
     },
-    // 客服列表
+    // Danh sách nhân viên CSKH
     getListService() {
       this.loading2 = true(this.formValidate)
         .then(async (res) => {
@@ -436,12 +436,12 @@ export default {
       this.getListService();
       this.addFrom.uids = [];
     },
-    // 搜索
+    // Tìm kiếm
     userSearchs() {
       this.formValidate.page = 1;
       this.getListService();
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -459,7 +459,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       kefuListApi(this.tableFrom)
@@ -474,7 +474,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 修改是否显示
+    // Sửa có hiển thị hay không
     onchangeIsShow(row) {
       let data = {
         id: row.id,
@@ -489,10 +489,10 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 添加客服
+    // Thêm nhân viên CSKH
     putRemark() {
       if (this.addFrom.uids.length === 0) {
-        return this.$message.warning('请选择要添加的客服');
+        return this.$message.warning('Vui lòng chọn nhân viên CSKH cần thêm');
       }
       kefuAddApi(this.addFrom)
         .then(async (res) => {

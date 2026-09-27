@@ -26,7 +26,7 @@ class StoreOrderRefundController
     }
 
     /**
-     * 退款订单列表
+     * Danh sách đơn hoàn tiền
      * @param Request $request
      * @return mixed
      */
@@ -43,7 +43,7 @@ class StoreOrderRefundController
     }
 
     /**
-     * 退款单详情
+     * Chi tiết đơn hoàn tiền
      * @param Request $request
      * @param $uni
      * @return mixed
@@ -55,7 +55,7 @@ class StoreOrderRefundController
     }
 
     /**
-     * 取消申请
+     * Hủy yêu cầu
      * @param Request $request
      * @param $uni
      * @return mixed
@@ -76,7 +76,7 @@ class StoreOrderRefundController
         $this->services->update($orderRefund['id'], ['is_cancel' => 1]);
         $this->services->cancelOrderRefundCartInfo((int)$orderRefund['id'], (int)$orderRefund['store_order_id'], $orderRefund);
 
-        //自定义事件-用户取消退款
+        //Event tùy chỉnh - Người dùng hủy hoàn tiền
         event('CustomEventListener', ['order_refund_cancel', [
             'uid' => $orderRefund['uid'],
             'id' => $orderRefund['id'],
@@ -91,7 +91,7 @@ class StoreOrderRefundController
     }
 
     /**
-     * 用户退货提交快递单号
+     * Người dùng gửi mã vận đơn khi trả hàng
      * @param Request $request
      * @return mixed
      */
@@ -114,7 +114,7 @@ class StoreOrderRefundController
     }
 
     /**
-     * 删除退款单
+     * Xóa đơn hoàn tiền
      * @param Request $request
      * @param $uni
      * @return mixed

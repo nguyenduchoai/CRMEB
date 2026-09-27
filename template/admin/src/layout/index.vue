@@ -1,7 +1,7 @@
 <template>
-  <!-- 判断显示哪个组件 -->
+  <!-- Xác định hiển thị thành phần nào -->
   <Mains v-if="headMenuNoShow" />
-  <!-- 根据主题配置中的布局类型来判断显示哪个组件 -->
+  <!-- Dựa theo loại bố cục trong cấu hình theme để xác định hiển thị thành phần nào -->
   <Defaults v-else-if="getThemeConfig.layout === 'defaults'" />
   <Classic v-else-if="getThemeConfig.layout === 'classic'" />
   <Transverse v-else-if="getThemeConfig.layout === 'transverse'" />
@@ -28,7 +28,7 @@ export default {
     };
   },
   computed: {
-    // 获取布局配置信息
+    // Lấy thông tin cấu hình bố cục
     getThemeConfig() {
       return this.$store.state.themeConfig.themeConfig;
     },
@@ -56,7 +56,7 @@ export default {
   methods: {
     ...mapMutations(['setBreadCrumb', 'setTagNavList', 'addTag', 'setLocal', 'setHomeRoute', 'closeTag']),
 
-    // 窗口大小改变时(适配移动端)
+    // Khi kích thước cửa sổ thay đổi (tương thích di động)
     onLayoutResize() {
       if (!Local.get('oldLayout')) Local.set('oldLayout', this.$store.state.themeConfig.themeConfig.layout);
       const clientWidth = document.body.clientWidth;

@@ -1,9 +1,9 @@
 // +---------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +---------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +---------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +---------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +---------------------------------------------------------------------
@@ -32,7 +32,7 @@ export default {
       name: `${pre}systemRole`,
       meta: {
         auth: ['setting-system-role'],
-        title: '身份管理',
+        title: 'Quản lý vai trò',
       },
       component: () => import('@/pages/setting/systemRole/index'),
     },
@@ -41,7 +41,7 @@ export default {
       name: `${pre}systemAdmin`,
       meta: {
         auth: ['setting-system-list'],
-        title: '管理员列表',
+        title: 'Danh sách quản trị viên',
       },
       component: () => import('@/pages/setting/systemAdmin/index'),
     },
@@ -50,7 +50,7 @@ export default {
       name: `${pre}systemMenus`,
       meta: {
         auth: ['setting-system-menus'],
-        title: '权限规则',
+        title: 'Quy tắc quyền',
       },
       component: () => import('@/pages/setting/systemMenus/index'),
     },
@@ -59,7 +59,7 @@ export default {
       name: `${pre}setSystem`,
       meta: {
         auth: ['setting-system-config'],
-        title: '系统设置',
+        title: 'Cài đặt hệ thống',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -67,7 +67,7 @@ export default {
       path: 'system_config/:type?/:tab_id?',
       name: `${pre}setApp`,
       meta: {
-        title: '系统设置',
+        title: 'Cài đặt hệ thống',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -76,7 +76,7 @@ export default {
       name: `${pre}distributionSet`,
       meta: {
         ...meta,
-        title: '分销配置',
+        title: 'Cấu hình tiếp thị liên kết',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -85,7 +85,7 @@ export default {
       name: `${pre}membershipLevel`,
       meta: {
         ...meta,
-        title: '分销等级',
+        title: 'Cấp độ CTV',
       },
       component: () => import('@/pages/setting/membershipLevel/index'),
     },
@@ -94,7 +94,7 @@ export default {
       name: `${pre}message`,
       meta: {
         auth: ['setting-system-config-message'],
-        title: '短信开关',
+        title: 'Bật/tắt SMS',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -103,7 +103,7 @@ export default {
       name: `${pre}notification`,
       meta: {
         auth: ['setting-notification'],
-        title: '消息管理',
+        title: 'Quản lý thông báo',
       },
       component: () => import('@/pages/setting/notification/index'),
     },
@@ -112,7 +112,7 @@ export default {
       name: `${pre}notificationEdit`,
       meta: {
         auth: ['setting-notification'],
-        title: '消息编辑',
+        title: 'Chỉnh sửa tin nhắn',
         activeMenu: routePre + '/setting/notification/index',
       },
       component: () => import('@/pages/setting/notification/notificationEdit'),
@@ -122,7 +122,7 @@ export default {
       name: `${pre}logistics`,
       meta: {
         auth: ['setting-system-config-logistics'],
-        title: '物流配置',
+        title: 'Cấu hình vận chuyển',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -131,7 +131,7 @@ export default {
       name: `${pre}config`,
       meta: {
         auth: ['setting-sms-sms-config'],
-        title: '一号通账户',
+        title: 'Tài khoản Yihaotong',
       },
       component: () => import('@/pages/notify/smsConfig/index'),
     },
@@ -140,7 +140,7 @@ export default {
       name: `${pre}elec_invoice`,
       meta: {
         auth: ['setting-elec_invoice'],
-        title: '电子发票配置',
+        title: 'Cấu hình hóa đơn điện tử',
       },
       component: () => import('@/pages/notify/smsConfig/elecInvoice'),
     },
@@ -149,7 +149,7 @@ export default {
       name: `${pre}smsTemplateApply`,
       meta: {
         auth: ['setting-sms-config-template'],
-        title: '短信模板',
+        title: 'Mẫu SMS',
       },
       component: () => import('@/pages/notify/smsTemplateApply/index'),
     },
@@ -158,7 +158,7 @@ export default {
       name: `${pre}smsPay`,
       meta: {
         auth: ['setting-sms-sms-template'],
-        title: '短信购买',
+        title: 'Mua gói SMS',
       },
       component: () => import('@/pages/notify/smsPay/index'),
     },
@@ -167,7 +167,7 @@ export default {
       name: `${pre}commons`,
       meta: {
         ...meta,
-        title: '公共短信模板',
+        title: 'Mẫu SMS chung',
       },
       component: () => import('@/pages/notify/smsTemplateApply/index'),
     },
@@ -176,7 +176,7 @@ export default {
       name: `${pre}groupDataIndex`,
       meta: {
         auth: ['setting-system-group_data-index'],
-        title: '首页导航按钮',
+        title: 'Nút điều hướng trang chủ',
       },
       component: () => import('@/pages/system/group/list'),
     },
@@ -185,7 +185,7 @@ export default {
       name: `${pre}groupDataSlide`,
       meta: {
         auth: ['setting-system-group_data-slide'],
-        title: '首页幻灯片',
+        title: 'Ảnh trình chiếu trang chủ',
       },
       component: () => import('@/pages/system/group/list'),
     },
@@ -194,7 +194,7 @@ export default {
       name: `${pre}groupDataSign`,
       meta: {
         auth: ['setting-system-group_data-sign'],
-        title: '签到天数配置',
+        title: 'Cấu hình số ngày điểm danh',
       },
       component: () => import('@/pages/system/group/list'),
     },
@@ -203,7 +203,7 @@ export default {
     //   name: `${pre}groupDataOrder`,
     //   meta: {
     //     auth: ['setting-system-group_data-order'],
-    //     title: '订单详情动态图'
+    //     title: 'Biểu đồ động chi tiết đơn hàng'
     //   },
     //   component: () => import('@/pages/system/group/list')
     // },
@@ -212,7 +212,7 @@ export default {
     //   name: `${pre}groupDataUser`,
     //   meta: {
     //     auth: ['setting-system-group_data-user'],
-    //     title: '个人中心菜单'
+    //     title: 'Menu trang cá nhân'
     //   },
     //   component: () => import('@/pages/system/group/list')
     // },
@@ -221,7 +221,7 @@ export default {
       name: `${pre}groupDataNew`,
       meta: {
         auth: ['setting-system-group_data-new'],
-        title: '首页滚动新闻',
+        title: 'Tin tức cuộn trang chủ',
       },
       component: () => import('@/pages/system/group/list'),
     },
@@ -230,7 +230,7 @@ export default {
       name: `${pre}groupDataNew`,
       meta: {
         auth: ['setting-system-group_data-search'],
-        title: '热门搜索',
+        title: 'Tìm kiếm phổ biến',
       },
       component: () => import('@/pages/system/group/list'),
     },
@@ -239,7 +239,7 @@ export default {
       name: `${pre}groupDataHot`,
       meta: {
         auth: ['setting-system-group_data-hot'],
-        title: '热门榜单推荐',
+        title: 'Gợi ý top bán chạy',
       },
       component: () => import('@/pages/system/group/list'),
     },
@@ -248,7 +248,7 @@ export default {
       name: `${pre}groupDataNewProduct`,
       meta: {
         auth: ['setting-system-group_data-new_product'],
-        title: '首发新品推荐',
+        title: 'Gợi ý hàng mới ra mắt',
       },
       component: () => import('@/pages/system/group/list'),
     },
@@ -257,7 +257,7 @@ export default {
       name: `${pre}groupDataPromotion`,
       meta: {
         auth: ['setting-system-group_data-promotion'],
-        title: '促销单品推荐',
+        title: 'Gợi ý sản phẩm khuyến mãi',
       },
       component: () => import('@/pages/system/group/list'),
     },
@@ -266,7 +266,7 @@ export default {
       name: `${pre}groupDataPoster`,
       meta: {
         auth: ['setting-system-group_data-poster'],
-        title: '个人中心分销海报',
+        title: 'Poster tiếp thị liên kết trang cá nhân',
       },
       component: () => import('@/pages/system/group/list'),
     },
@@ -275,7 +275,7 @@ export default {
       name: `${pre}groupDataBest`,
       meta: {
         auth: ['setting-system-group_data-best'],
-        title: '精品推荐',
+        title: 'Đề xuất nổi bật',
       },
       component: () => import('@/pages/system/group/list'),
     },
@@ -284,7 +284,7 @@ export default {
       name: `${pre}groupDataActivity`,
       meta: {
         auth: ['setting-system-group_data-activity'],
-        title: '首页活动区域图片',
+        title: 'Ảnh khu vực sự kiện trang chủ',
       },
       component: () => import('@/pages/system/group/list'),
     },
@@ -293,7 +293,7 @@ export default {
       name: `${pre}groupDataSystem`,
       meta: {
         auth: ['setting-system-group_data-system'],
-        title: '首页配置',
+        title: 'Cấu hình trang chủ',
       },
       component: () => import('@/pages/system/group/list'),
     },
@@ -302,7 +302,7 @@ export default {
       name: `${pre}groupDataHotMoney`,
       meta: {
         auth: ['admin-setting-system_group_data-hot_money'],
-        title: '首页超值爆款',
+        title: 'Hàng hot giá tốt trang chủ',
       },
       component: () => import('@/pages/system/group/list'),
     },
@@ -311,7 +311,7 @@ export default {
       name: `${pre}systemStore`,
       meta: {
         auth: ['setting-system-config-merchant'],
-        title: '门店设置',
+        title: 'Cài đặt cửa hàng',
       },
       component: () => import('@/pages/setting/systemStore/index'),
     },
@@ -320,7 +320,7 @@ export default {
       name: `${pre}freight`,
       meta: {
         auth: ['setting-freight-express'],
-        title: '物流公司',
+        title: 'Đơn vị vận chuyển',
       },
       component: () => import('@/pages/setting/freight/index'),
     },
@@ -329,7 +329,7 @@ export default {
       name: `${pre}service`,
       meta: {
         auth: ['setting-store-service'],
-        title: '客服管理',
+        title: 'Quản lý CSKH',
       },
       component: () => import('@/pages/setting/storeService/index'),
     },
@@ -338,7 +338,7 @@ export default {
       name: `${pre}dada`,
       meta: {
         auth: ['setting-system-city'],
-        title: '城市数据',
+        title: 'Dữ liệu thành phố',
       },
       component: () => import('@/pages/setting/cityDada/index'),
     },
@@ -347,7 +347,7 @@ export default {
       name: `${pre}templates`,
       meta: {
         auth: ['setting-shipping-templates'],
-        title: '运费模板',
+        title: 'Mẫu phí vận chuyển',
       },
       component: () => import('@/pages/setting/shippingTemplates/index'),
     },
@@ -356,7 +356,7 @@ export default {
       name: `${pre}store`,
       meta: {
         auth: ['setting-merchant-system-store'],
-        title: '提货点',
+        title: 'Điểm nhận hàng',
       },
       component: () => import('@/pages/setting/storeList/index'),
     },
@@ -365,7 +365,7 @@ export default {
       name: `${pre}staff`,
       meta: {
         auth: ['setting-merchant-system-store-staff'],
-        title: '核销员',
+        title: 'Nhân viên xác nhận',
       },
       component: () => import('@/pages/setting/clerkList/index'),
     },
@@ -374,7 +374,7 @@ export default {
       name: `${pre}order`,
       meta: {
         auth: ['setting-merchant-system-verify-order'],
-        title: '核销订单',
+        title: 'Đơn hàng xác nhận sử dụng',
       },
       component: () => import('@/pages/setting/verifyOrder/index'),
     },
@@ -383,7 +383,7 @@ export default {
       name: `${pre}themeStyle`,
       meta: {
         auth: ['admin-setting-theme_style'],
-        title: '主题风格',
+        title: 'Chủ đề giao diện',
       },
       component: () => import('@/pages/setting/themeStyle/index'),
     },
@@ -400,7 +400,7 @@ export default {
       name: `${pre}devise`,
       meta: {
         auth: ['admin-setting-pages-devise'],
-        title: '店铺装修',
+        title: 'Thiết kế giao diện cửa hàng',
       },
       component: () => import('@/pages/setting/devise/list'),
     },
@@ -409,7 +409,7 @@ export default {
       name: `${pre}user`,
       meta: {
         auth: ['admin-setting-pages-user'],
-        title: '个人中心',
+        title: 'Trang cá nhân',
       },
       component: () => import('@/pages/setting/devise/list'),
     },
@@ -418,7 +418,7 @@ export default {
       name: `${pre}link`,
       meta: {
         auth: ['admin-setting-pages-link'],
-        title: '链接管理',
+        title: 'Quản lý liên kết',
       },
       component: () => import('@/pages/setting/link'),
     },
@@ -427,7 +427,7 @@ export default {
       name: `${pre}cate`,
       meta: {
         auth: ['admin-setting-pages-cate'],
-        title: '商品分类',
+        title: 'Danh mục sản phẩm',
       },
       component: () => import('@/pages/setting/devise/list'),
     },
@@ -436,7 +436,7 @@ export default {
       name: `${pre}diy`,
       meta: {
         auth: ['admin-setting-pages-diy'],
-        title: '页面设计',
+        title: 'Thiết kế trang',
         activeMenu: routePre + '/setting/pages/devise',
       },
       component: () => import('@/pages/setting/devisePage/index'),
@@ -446,8 +446,8 @@ export default {
       name: `${pre}index_diy`,
       meta: {
         auth: ['admin-setting-pages-diy'],
-        title: '首页设计',
-        fullScreen: true, //是否全屏显示main区域
+        title: 'Thiết kế trang chủ',
+        fullScreen: true, //Có hiển thị toàn màn hình khu vực main hay không
       },
       component: () => import('@/pages/setting/devise/diyIndex'),
     },
@@ -456,7 +456,7 @@ export default {
       name: `${pre}links`,
       meta: {
         auth: ['admin-setting-pages-links'],
-        title: '页面链接',
+        title: 'Liên kết trang',
       },
       component: () => import('@/pages/setting/devise/links'),
     },
@@ -465,7 +465,7 @@ export default {
       name: `${pre}speechcraft`,
       meta: {
         auth: ['admin-setting-store_service-speechcraft'],
-        title: '客服话术',
+        title: 'Câu trả lời mẫu CSKH',
       },
       component: () => import('@/pages/setting/storeService/speechcraft'),
     },
@@ -474,7 +474,7 @@ export default {
       name: `${pre}feedback`,
       meta: {
         auth: ['admin-setting-store_service-feedback'],
-        title: '用户留言',
+        title: 'Lời nhắn của người dùng',
       },
       component: () => import('@/pages/setting/storeService/feedback'),
     },
@@ -483,7 +483,7 @@ export default {
       name: `${pre}auto_reply`,
       meta: {
         auth: ['admin-setting-store_service-auto_reply'],
-        title: '自动回复',
+        title: 'Trả lời tự động',
       },
       component: () => import('@/pages/setting/storeService/autoReply'),
     },
@@ -492,7 +492,7 @@ export default {
       name: `${pre}groupDataPc`,
       meta: {
         auth: ['setting-system-group_data-pc'],
-        title: 'PC主页轮播',
+        title: 'Ảnh trình chiếu trang chủ PC',
       },
       component: () => import('@/pages/system/group/list'),
     },
@@ -501,7 +501,7 @@ export default {
       name: `${pre}right`,
       meta: {
         auth: ['setting-system-config-member-right'],
-        title: '会员权益',
+        title: 'Quyền lợi thành viên',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -510,7 +510,7 @@ export default {
       name: `${pre}deliveryService`,
       meta: {
         auth: ['setting-delivery-service'],
-        title: '配送员列表',
+        title: 'Danh sách nhân viên giao hàng',
       },
       component: () => import('@/pages/setting/deliveryService/index'),
     },
@@ -519,7 +519,7 @@ export default {
       name: `${pre}systemPcGroupData`,
       meta: {
         auth: ['setting-system-pc_data'],
-        title: 'PC商城',
+        title: 'Cửa hàng PC',
       },
       component: () => import('@/pages/system/group/pc'),
     },
@@ -528,7 +528,7 @@ export default {
       name: `${pre}systemGroupData`,
       meta: {
         auth: ['admin-setting-system_visualization_data'],
-        title: '数据配置',
+        title: 'Cấu hình dữ liệu',
       },
       component: () => import('@/pages/system/group/visualization'),
     },
@@ -537,7 +537,7 @@ export default {
       name: `${pre}storage`,
       meta: {
         auth: ['setting-storage'],
-        title: '储存配置',
+        title: 'Cấu hình lưu trữ',
       },
       component: () => import('@/pages/setting/storage'),
     },
@@ -546,7 +546,7 @@ export default {
       name: `${pre}wechat_config`,
       meta: {
         ...meta,
-        title: '公众号配置',
+        title: 'Cấu hình OA WeChat',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -555,7 +555,7 @@ export default {
       name: `${pre}routine_config`,
       meta: {
         ...meta,
-        title: '小程序配置',
+        title: 'Cấu hình Mini Program',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -564,7 +564,7 @@ export default {
       name: `${pre}app_config`,
       meta: {
         ...meta,
-        title: 'app配置',
+        title: 'Cấu hình app',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -573,7 +573,7 @@ export default {
       name: `${pre}pc_config`,
       meta: {
         ...meta,
-        title: 'PC配置',
+        title: 'Cấu hình PC',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -582,7 +582,7 @@ export default {
       name: `${pre}other_print`,
       meta: {
         auth: ['setting-other-print'],
-        title: '小票打印配置',
+        title: 'Cấu hình in biên lai',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -591,7 +591,7 @@ export default {
       name: `${pre}other_copy`,
       meta: {
         auth: ['setting-other-copy'],
-        title: '商品采集配置',
+        title: 'Cấu hình thu thập sản phẩm',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -600,7 +600,7 @@ export default {
       name: `${pre}other_logistics`,
       meta: {
         auth: ['setting-other-logistics'],
-        title: '物流查询配置',
+        title: 'Cấu hình tra cứu vận chuyển',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -609,7 +609,7 @@ export default {
       name: `${pre}other_electronic`,
       meta: {
         auth: ['setting-other-electronic'],
-        title: '电子面单配置',
+        title: 'Cấu hình vận đơn điện tử',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -618,7 +618,7 @@ export default {
       name: `${pre}other_sms`,
       meta: {
         auth: ['setting-other-sms'],
-        title: '短信功能配置',
+        title: 'Cấu hình chức năng SMS',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -627,7 +627,7 @@ export default {
       name: `${pre}other_pay`,
       meta: {
         auth: ['setting-other-sms'],
-        title: '商城支付配置',
+        title: 'Cấu hình thanh toán cửa hàng',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -636,7 +636,7 @@ export default {
       name: `${pre}notification`,
       meta: {
         auth: ['setting-agreement'],
-        title: '协议设置',
+        title: 'Cài đặt thỏa thuận',
       },
       component: () => import('@/pages/setting/agreement/index'),
     },
@@ -645,7 +645,7 @@ export default {
       name: `${pre}other_print`,
       meta: {
         auth: ['setting-other-out'],
-        title: '对外接口配置',
+        title: 'Cấu hình API bên ngoài',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -654,7 +654,7 @@ export default {
       name: `${pre}systemOutAccount`,
       meta: {
         auth: ['setting-system-out-account-index'],
-        title: '账号列表',
+        title: 'Danh sách tài khoản',
       },
       component: () => import('@/pages/setting/systemOutAccount/index'),
     },
@@ -663,7 +663,7 @@ export default {
       name: `${pre}systemOutAccount`,
       meta: {
         auth: ['setting-system-out-interface-index'],
-        title: '接口文档',
+        title: 'Tài liệu API',
       },
       component: () => import('@/pages/setting/systemOutInterface/index'),
     },
@@ -672,7 +672,7 @@ export default {
       name: `${pre}langList`,
       meta: {
         auth: ['admin-lang-list'],
-        title: '语言列表',
+        title: 'Danh sách ngôn ngữ',
       },
       component: () => import('@/pages/setting/multiLanguage/list'),
     },
@@ -681,7 +681,7 @@ export default {
       name: `${pre}langInfo`,
       meta: {
         auth: ['admin-lang-info'],
-        title: '语言详情',
+        title: 'Chi tiết ngôn ngữ',
       },
       component: () => import('@/pages/setting/multiLanguage/langList'),
     },
@@ -690,7 +690,7 @@ export default {
       name: `${pre}langCountry`,
       meta: {
         auth: ['admin-lang-country'],
-        title: '地区关联语言',
+        title: 'Ngôn ngữ liên kết theo khu vực',
       },
       component: () => import('@/pages/setting/multiLanguage/country'),
     },
@@ -699,7 +699,7 @@ export default {
       name: `${pre}yihaotong_config`,
       meta: {
         ...meta,
-        title: '一号通配置',
+        title: 'Cấu hình Yihaotong',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -708,7 +708,7 @@ export default {
       name: `${pre}lang_config`,
       meta: {
         ...meta,
-        title: '翻译配置',
+        title: 'Cấu hình dịch thuật',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -717,7 +717,7 @@ export default {
       name: `${pre}kefu_config`,
       meta: {
         ...meta,
-        title: '客服配置',
+        title: 'Cấu hình CSKH',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -726,7 +726,7 @@ export default {
       name: `${pre}recharge_config`,
       meta: {
         ...meta,
-        title: '充值配置',
+        title: 'Cấu hình nạp tiền',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -735,7 +735,7 @@ export default {
       name: `${pre}member_config`,
       meta: {
         ...meta,
-        title: '付费会员配置',
+        title: 'Cấu hình thành viên trả phí',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -744,7 +744,7 @@ export default {
       name: `${pre}user_config`,
       meta: {
         ...meta,
-        title: '用户配置',
+        title: 'Cấu hình người dùng',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -753,7 +753,7 @@ export default {
       name: `${pre}order_config`,
       meta: {
         ...meta,
-        title: '订单配置',
+        title: 'Cấu hình đơn hàng',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -762,7 +762,7 @@ export default {
       name: `${pre}sign_config`,
       meta: {
         ...meta,
-        title: '签到配置',
+        title: 'Cấu hình điểm danh',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -772,7 +772,7 @@ export default {
       meta: {
         ...meta,
         auth: ['admin-setting-ticket'],
-        title: '打印机设置',
+        title: 'Cài đặt máy in',
       },
       component: () => import('@/pages/setting/ticket'),
     },
@@ -782,7 +782,7 @@ export default {
       meta: {
         ...meta,
         auth: ['admin-setting-ticket-content'],
-        title: '小票配置',
+        title: 'Cấu hình biên lai',
         activeMenu: routePre + '/setting/ticket',
       },
       component: () => import('@/pages/setting/ticket/content'),

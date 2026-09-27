@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,7 +17,7 @@ use app\services\kefu\service\StoreServiceFeedbackServices;
 use think\facade\App;
 
 /**
- * 客服用户留言反馈
+ * Lời nhắn phản hồi của người dùng gửi CSKH
  * Class StoreServiceFeedback
  * @package app\adminapi\controller\v1\application\wechat
  */
@@ -36,7 +36,7 @@ class StoreServiceFeedback extends AuthController
     }
 
     /**
-     * 获取留言列表
+     * Lấy danh sách lời nhắn
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -53,7 +53,7 @@ class StoreServiceFeedback extends AuthController
     }
 
     /**
-     * 获取修改表单
+     * Lấy form sửa
      * @param $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -70,7 +70,7 @@ class StoreServiceFeedback extends AuthController
     }
 
     /**
-     * 修改
+     * Sửa
      * @param $id
      * @return mixed
      */
@@ -92,7 +92,7 @@ class StoreServiceFeedback extends AuthController
     }
 
     /**
-     * 删除反馈
+     * Xóa phản hồi
      * @param $id
      * @return mixed
      * @throws \Exception

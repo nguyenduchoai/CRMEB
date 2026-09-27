@@ -26,11 +26,11 @@
 import { mapState, mapMutations } from 'vuex';
 export default {
   name: 'home_video',
-  cname: '视频',
+  cname: 'Video',
   configName: 'c_video',
   icon: '#iconzujian-shipin',
-  type: 0, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'videos', // 外面匹配名称
+  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'videos', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -67,32 +67,32 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
-        cname: '视频',
+        cname: 'Video',
         name: 'videos',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
         },
-        titleLeft: '内容设置',
-        titleRight: '通用样式',
+        titleLeft: 'Cài đặt nội dung',
+        titleRight: 'Kiểu chung',
         imgConfig: {
           url: '',
           type: 'code',
           delType: 1,
-          name: '视频封面',
+          name: 'Ảnh bìa video',
         },
         videoConfig: {
           url: '',
           type: 'code',
           video: 1,
           delType: 0,
-          name: '上传视频',
+          name: 'Tải lên video',
         },
         scaleConfig: {
-          title: '视频比例',
+          title: 'Tỷ lệ video',
           tabVal: 0,
           tabList: [
             {
@@ -107,7 +107,7 @@ export default {
           ],
         },
         bottomBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           name: 'bgColor',
           default: [
             {
@@ -121,39 +121,39 @@ export default {
           ],
         },
         topConfig: {
-          title: '上边距',
+          title: 'Lề trên',
           val: 0,
           min: 0,
         },
         bottomConfig: {
-          title: '下边距',
+          title: 'Lề dưới',
           val: 0,
           min: 0,
         },
         prConfig: {
-          title: '左右边距',
+          title: 'Lề trái phải',
           val: 0,
           min: 0,
         },
         mbConfig: {
-          title: '页面上间距',
+          title: 'Lề trên trang',
           val: 0,
           min: 0,
         },
         fillet: {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 0,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -14,7 +14,7 @@ namespace crmeb\services;
 use app\services\system\config\SystemConfigServices;
 use crmeb\utils\Arr;
 
-/** 获取系统配置服务类
+/** Lấy class service cấu hình hệ thống
  * Class SystemConfigService
  * @package service
  */
@@ -23,10 +23,10 @@ class SystemConfigService
     const CACHE_SYSTEM = 'system_config';
 
     /**
-     * 获取单个配置效率更高
+     * Lấy một cấu hình đơn có hiệu suất cao hơn
      * @param string $key
      * @param $default
-     * @param bool $isCaChe 是否获取缓存配置
+     * @param bool $isCaChe Có lấy cấu hình từ cache không
      * @return bool|mixed|string
      */
     public static function get(string $key, $default = '', bool $isCaChe = true)
@@ -46,9 +46,9 @@ class SystemConfigService
     }
 
     /**
-     * 获取多个配置
-     * @param array $keys 示例 [['appid','1'],'appkey']
-     * @param bool $isCaChe 是否获取缓存配置
+     * Lấy nhiều cấu hình
+     * @param array $keys Ví dụ [['appid','1'],'appkey']
+     * @param bool $isCaChe Có lấy cấu hình từ cache không
      * @return array
      */
     public static function more(array $keys, bool $isCaChe = true)

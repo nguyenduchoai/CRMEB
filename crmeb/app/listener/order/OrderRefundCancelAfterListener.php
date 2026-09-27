@@ -6,7 +6,7 @@ use app\jobs\RefundOrderJob;
 use crmeb\interfaces\ListenerInterface;
 
 /**
- * 售后单取消
+ * Hủy đơn hậu mãi
  * Class OrderRefundCancelAfterListener
  * @package app\listener\order
  */

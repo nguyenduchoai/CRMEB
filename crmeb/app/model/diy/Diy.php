@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,13 +21,13 @@ class Diy extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'diy';
@@ -35,7 +35,7 @@ class Diy extends BaseModel
     protected $updateTime = false;
 
     /**
-     * 添加时间获取器
+     * Getter thời gian thêm
      * @param $value
      * @return false|string
      */
@@ -45,17 +45,17 @@ class Diy extends BaseModel
     }
 
     /**
-     * 修改时间获取器
+     * Getter thời gian sửa
      * @param $value
      * @return false|string
      */
     public function getUpdateTimeAttr($value)
     {
-        return $value ? date('Y-m-d H:i:s', $value) : '暂无';
+        return $value ? date('Y-m-d H:i:s', $value) : 'Chưa có';
     }
 
     /**
-     * 类型搜索器
+     * Bộ lọc loại
      * @param Model $query
      * @param $value
      */
@@ -71,7 +71,7 @@ class Diy extends BaseModel
     }
 
     /**
-     * 版本号搜索器
+     * Bộ lọc số phiên bản
      * @param Model $query
      * @param $value
      */
@@ -81,7 +81,7 @@ class Diy extends BaseModel
     }
 
     /**
-     * 是否使用搜索器
+     * Bộ lọc đang sử dụng hay không
      * @param Model $query
      * @param $value
      */
@@ -91,7 +91,7 @@ class Diy extends BaseModel
     }
 
     /**
-     * 名称搜索器
+     * Bộ lọc tên
      * @param Model $query
      * @param $value
      */

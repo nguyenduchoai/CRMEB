@@ -15,7 +15,7 @@
     export default {
         name: 'c_nav_bar',
         componentsName: 'nav_bar',
-        cname: '导航',
+        cname: 'Điều hướng',
         props: {
             activeIndex: {
                 type: null
@@ -248,7 +248,7 @@
             })
         },
         methods: {
-            // 获取组件参数
+            // Lấy tham số thành phần (component)
             getConfig (data) {
 
             },

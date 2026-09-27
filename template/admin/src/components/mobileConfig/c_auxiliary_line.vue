@@ -37,7 +37,7 @@
 				        components: toolCom.c_set_up,
 				        configNme: 'setUp'
 				    }
-				] // 当前页面组件
+				] // Thành phần (component) của trang hiện tại
             }
         },
         watch: {
@@ -115,7 +115,7 @@
             })
         },
         methods: {
-            // 获取组件参数
+            // Lấy tham số thành phần (component)
             getConfig (data) {},
         }
     }

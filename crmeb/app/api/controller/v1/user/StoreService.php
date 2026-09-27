@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,7 +20,7 @@ use app\services\other\CacheServices;
 use crmeb\services\CacheService;
 
 /**
- * 客服类
+ * Lớp chăm sóc khách hàng
  * Class StoreService
  * @package app\api\controller\user
  */
@@ -41,7 +41,7 @@ class StoreService
     }
 
     /**
-     * 客服列表
+     * Danh sách nhân viên CSKH
      * @param StoreServiceServices $services
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -56,7 +56,7 @@ class StoreService
     }
 
     /**
-     * 客服聊天记录
+     * Lịch sử trò chuyện CSKH
      * @param Request $request
      * @param StoreServiceServices $services
      * @param StoreServiceRecordServices $recordServices
@@ -75,7 +75,7 @@ class StoreService
         $uid = $request->uid();
         $uids = array_column($serviceInfoList['list'], 'uid');
         if (!$uidTo) {
-            //自己是客服
+            //Chính là nhân viên chăm sóc khách hàng
             if (in_array($uid, $uids)) {
                 $uids = array_merge(array_diff($uids, [$uid]));
                 if (!$uids) return app('json')->fail(410137);
@@ -88,7 +88,7 @@ class StoreService
         if (!$uids) {
             return app('json')->fail(410136);
         }
-        //上次聊天客服优先对话
+        //Ưu tiên trò chuyện với nhân viên CSKH đã chat lần trước
         $toUid = $recordServices->value(['user_id' => $uid], 'to_uid');
         if (!in_array($toUid, $uids)) {
             $toUid = 0;
@@ -108,7 +108,7 @@ class StoreService
     }
 
     /**
-     * 获取客服页面广告内容
+     * Lấy nội dung quảng cáo trang chăm sóc khách hàng
      * @return mixed
      */
     public function getKfAdv()
@@ -120,7 +120,7 @@ class StoreService
     }
 
     /**
-     * 保存反馈信息
+     * Lưu thông tin phản hồi
      * @param Request $request
      * @param StoreServiceFeedbackServices $services
      * @return mixed
@@ -143,7 +143,7 @@ class StoreService
     }
 
     /**
-     * 客服反馈页面头部文字
+     * Chữ ở phần đầu trang phản hồi CSKH
      * @return mixed
      */
     public function getFeedbackInfo()
@@ -152,7 +152,7 @@ class StoreService
     }
 
     /**
-     * 确认登录
+     * Xác nhận đăng nhập
      * @param Request $request
      * @param StoreServiceServices $services
      * @param string $code
@@ -178,7 +178,7 @@ class StoreService
     }
 
     /**
-     * 获取当前客服和用户的聊天记录
+     * Lấy lịch sử chat giữa nhân viên CSKH hiện tại và người dùng
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException

@@ -1,9 +1,9 @@
 // +---------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +---------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +---------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +---------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +---------------------------------------------------------------------
@@ -32,7 +32,7 @@ export default {
       name: `${pre}wechatMenus`,
       meta: {
         auth: ['application-wechat-menus'],
-        title: '微信菜单',
+        title: 'Menu WeChat',
       },
       component: () => import('@/pages/app/wechat/menus/index'),
     },
@@ -41,7 +41,7 @@ export default {
       name: `${pre}tag`,
       meta: {
         auth: ['wechat-wechat-user-tag'],
-        title: '用户标签',
+        title: 'Nhãn người dùng',
       },
       component: () => import('@/pages/app/wechat/user/tag'),
     },
@@ -50,7 +50,7 @@ export default {
       name: `${pre}group`,
       meta: {
         auth: ['wechat-wechat-user-group'],
-        title: '用户分组',
+        title: 'Nhóm người dùng',
       },
       component: () => import('@/pages/app/wechat/user/tag'),
     },
@@ -59,7 +59,7 @@ export default {
       name: `${pre}message`,
       meta: {
         auth: ['wechat-wechat-user-message'],
-        title: '用户行为记录',
+        title: 'Nhật ký hành vi người dùng',
       },
       component: () => import('@/pages/app/wechat/user/message'),
     },
@@ -68,7 +68,7 @@ export default {
       name: `${pre}newsCategoryIndex`,
       meta: {
         auth: ['wechat-wechat-news-category-index'],
-        title: '图文管理',
+        title: 'Quản lý tin bài',
       },
       component: () => import('@/pages/app/wechat/newsCategory/index'),
     },
@@ -77,7 +77,7 @@ export default {
       name: `${pre}newsCategorySave`,
       meta: {
         auth: ['wechat-wechat-news-category-save'],
-        title: '图文添加',
+        title: 'Thêm tin bài',
         activeMenu: routePre + '/app/wechat/news_category/index',
       },
       component: () => import('@/pages/app/wechat/newsCategory/save'),
@@ -87,7 +87,7 @@ export default {
       name: `${pre}fllow`,
       meta: {
         auth: ['wechat-wechat-reply-subscribe'],
-        title: '微信关注回复',
+        title: 'Trả lời khi theo dõi WeChat',
       },
       component: () => import('@/pages/app/wechat/reply/follow'),
     },
@@ -96,7 +96,7 @@ export default {
       name: `${pre}keyword`,
       meta: {
         auth: ['wechat-wechat-reply-keyword'],
-        title: '关键字回复',
+        title: 'Trả lời theo từ khóa',
       },
       component: () => import('@/pages/app/wechat/reply/keyword'),
     },
@@ -105,7 +105,7 @@ export default {
       name: `${pre}keywordAdd`,
       meta: {
         auth: ['wechat-wechat-reply-save'],
-        title: '关键字添加',
+        title: 'Thêm từ khóa',
         activeMenu: routePre + '/app/wechat/reply/keyword',
       },
       component: () => import('@/pages/app/wechat/reply/follow'),
@@ -115,7 +115,7 @@ export default {
       name: `${pre}replyIndex`,
       meta: {
         auth: ['wechat-wechat-reply-default'],
-        title: '无效关键词回复',
+        title: 'Trả lời từ khóa không khớp',
       },
       component: () => import('@/pages/app/wechat/reply/follow'),
     },
@@ -124,7 +124,7 @@ export default {
       name: `${pre}routineTemplate`,
       meta: {
         auth: ['routine-download'],
-        title: '小程序下载',
+        title: 'Tải xuống Mini Program',
       },
       component: () => import('@/pages/app/routine/download/index'),
     },
@@ -133,7 +133,7 @@ export default {
       name: `${pre}routineLink`,
       meta: {
         auth: ['routine-link'],
-        title: '小程序链接',
+        title: 'Liên kết Mini Program',
       },
       component: () => import('@/pages/app/routine/link/index'),
     },
@@ -142,7 +142,7 @@ export default {
       name: `${pre}version`,
       meta: {
         auth: ['admin-app-version'],
-        title: 'APP版本管理',
+        title: 'Quản lý phiên bản APP',
       },
       component: () => import('@/pages/app/version/index'),
     },
@@ -151,7 +151,7 @@ export default {
       name: `${pre}agreement `,
       meta: {
         auth: ['admin-app-agreement'],
-        title: '隐私协议',
+        title: 'Chính sách bảo mật',
       },
       component: () => import('@/pages/app/app/index'),
     },

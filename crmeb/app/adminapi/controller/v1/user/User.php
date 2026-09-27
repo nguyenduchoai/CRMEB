@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -31,7 +31,7 @@ class User extends AuthController
     }
 
     /**
-     * 用户列表
+     * Danh sách người dùng
      * @return mixed
      */
     public function index()
@@ -71,7 +71,7 @@ class User extends AuthController
     }
 
     /**
-     * 添加用户表单
+     * Form thêm người dùng
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
@@ -81,7 +81,7 @@ class User extends AuthController
     }
 
     /**
-     * 添加编辑用户信息时候的信息
+     * Thông tin khi thêm/sửa thông tin người dùng
      * @param $uid
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -95,7 +95,7 @@ class User extends AuthController
     }
 
     /**
-     * 保存新建用户
+     * Lưu người dùng mới tạo
      * @return mixed
      * @throws \think\Exception
      */
@@ -177,7 +177,7 @@ class User extends AuthController
     }
 
     /**
-     * 获取用户账户详情
+     * Lấy chi tiết tài khoản người dùng
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -193,7 +193,7 @@ class User extends AuthController
     }
 
     /**
-     * 赠送会员等级表单
+     * Form tặng hạng thành viên
      * @param $id
      * @return mixed
      */
@@ -204,7 +204,7 @@ class User extends AuthController
     }
 
     /**
-     * 执行赠送会员等级
+     * Thực hiện tặng hạng thành viên
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -221,7 +221,7 @@ class User extends AuthController
     }
 
     /**
-     * 赠送付费会员时长表单
+     * Form tặng thời hạn thành viên trả phí
      * @param $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -233,7 +233,7 @@ class User extends AuthController
     }
 
     /**
-     * 执行赠送付费会员时长
+     * Thực hiện tặng thời hạn thành viên trả phí
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -250,7 +250,7 @@ class User extends AuthController
     }
 
     /**
-     * 清除会员等级
+     * Xóa hạng thành viên
      * @param $id
      * @return mixed
      */
@@ -261,7 +261,7 @@ class User extends AuthController
     }
 
     /**
-     * 设置会员分组
+     * Thiết lập nhóm thành viên
      * @return mixed
      */
     public function set_group()
@@ -274,7 +274,7 @@ class User extends AuthController
     }
 
     /**
-     * 保存会员分组
+     * Lưu nhóm thành viên
      * @return mixed
      */
     public function save_set_group()
@@ -290,7 +290,7 @@ class User extends AuthController
     }
 
     /**
-     * 设置用户标签
+     * Đặt nhãn người dùng
      * @return mixed
      */
     public function set_label()
@@ -304,7 +304,7 @@ class User extends AuthController
     }
 
     /**
-     * 保存用户标签
+     * Lưu nhãn người dùng
      * @return mixed
      */
     public function save_set_label()
@@ -320,7 +320,7 @@ class User extends AuthController
     }
 
     /**
-     * 编辑其他
+     * Sửa thông tin khác
      * @param $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -332,7 +332,7 @@ class User extends AuthController
     }
 
     /**
-     * 执行编辑其他
+     * Thực hiện sửa thông tin khác
      * @param $id
      * @return mixed
      * @throws \think\Exception
@@ -356,7 +356,7 @@ class User extends AuthController
     }
 
     /**
-     * 编辑会员信息
+     * Sửa thông tin thành viên
      * @param $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -368,7 +368,7 @@ class User extends AuthController
     }
 
     /**
-     * 修改用户
+     * Sửa người dùng
      * @param $id
      * @return mixed
      * @throws \think\Exception
@@ -435,7 +435,7 @@ class User extends AuthController
     }
 
     /**
-     * 获取单个用户信息
+     * Lấy thông tin một người dùng
      * @param $id
      * @return mixed
      */
@@ -450,7 +450,7 @@ class User extends AuthController
     }
 
     /**
-     * 同步微信粉丝用户
+     * Đồng bộ người dùng theo dõi (fan) WeChat
      * @return mixed
      */
     public function syncWechatUsers()
@@ -460,7 +460,7 @@ class User extends AuthController
     }
 
     /**
-     * 新人礼
+     * Quà tặng người mới
      * @return \think\Response
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -477,7 +477,7 @@ class User extends AuthController
     }
 
     /**
-     * 保存新人礼
+     * Lưu quà tặng người mới
      * @return \think\Response
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -495,6 +495,6 @@ class User extends AuthController
             $configServices->update($k, ['value' => json_encode($v)], 'menu_name');
         }
         CacheService::clear();
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 }

@@ -1,7 +1,7 @@
 <template>
   <view :style="[boxStyle]">
     <view>
-      <!-- 单列 -->
+      <!-- Một cột -->
       <view v-if="goodStyleConfig == 0">
         <view class="w-full flex justify-between item bg--w111-fff p-20" :style="[bgRadius]"
               v-for="(item,index) in tempArr" :key="index"
@@ -32,7 +32,7 @@
                          :color="priceColor"></baseMoney>
               <view @tap.stop="addCartChange(item, index)" v-if="!showBtn">
                 <view class="w-96 h-56 rd-28rpx flex-center fs-24 text--w111-fff"
-                      v-if="btnStyle == 0" :style="[btnBgColor]">{{ $t(`购买`) }}</view>
+                      v-if="btnStyle == 0" :style="[btnBgColor]">{{ $t(`Mua`) }}</view>
                 <view class="rd-24rpx w-44 h-44" :style="[btnTextColor]" v-else-if="btnStyle == 1">
                   <view class="flex-center cart-btn">
                     <text class="iconfont icon-ic_increase-2 fs-26"></text>
@@ -57,12 +57,12 @@
               </view>
               <view class="flex justify-between items-end relative">
                 <view class="flex-y-center">
-                  <text class="fs-22 text--w111-999" v-if="checkboxInfo.includes(3)">{{ $t(`已售`) }}{{item.sales}}{{item.unit_name}}</text>
-                  <text class="fs-22 text--w111-999 pl-16" v-if="checkboxInfo.includes(4)">评分{{item.star || 0}}</text>
+                  <text class="fs-22 text--w111-999" v-if="checkboxInfo.includes(3)">{{ $t(`Đã bán`) }}{{item.sales}}{{item.unit_name}}</text>
+                  <text class="fs-22 text--w111-999 pl-16" v-if="checkboxInfo.includes(4)">Điểm đánh giá {{item.star || 0}}</text>
                 </view>
                 <view class="absolute right-0 bottom-0" @tap.stop="addCartChange(item, index)" v-if="!showBtn">
                   <view class="w-96 h-56 rd-28rpx flex-center fs-24 text--w111-fff"
-                        v-if="btnStyle == 0" :style="[btnBgColor]">{{ $t(`购买`) }}</view>
+                        v-if="btnStyle == 0" :style="[btnBgColor]">{{ $t(`Mua`) }}</view>
                   <view class="rd-24rpx w-44 h-44" :style="[btnTextColor]" v-else-if="btnStyle == 1">
                     <view class="flex-center cart-btn">
                       <text class="iconfont icon-ic_increase-2 fs-26"></text>
@@ -80,7 +80,7 @@
           </view>
         </view>
       </view>
-      <!-- 两列瀑布流 -->
+      <!-- Hai cột dạng waterfall -->
       <view class="wf-page" v-if="goodStyleConfig == 1">
         <!-- left -->
         <view>
@@ -135,7 +135,7 @@
                     </view>
                   </view>
                   <view class="flex-between-center mt-20">
-                    <text class="fs-22 text--w111-999" v-if="checkboxInfo.includes(3)">{{ $t(`已售`) }}{{item.sales}}{{item.unit_name}}</text>
+                    <text class="fs-22 text--w111-999" v-if="checkboxInfo.includes(3)">{{ $t(`Đã bán`) }}{{item.sales}}{{item.unit_name}}</text>
                     <view @tap.stop="addCartChange(item, index)" v-if="!showBtn">
                       <view class="rd-24rpx w-44 h-44" :style="[btnTextColor]" v-if="btnStyle == 0">
                         <view class="flex-center cart-btn">
@@ -208,7 +208,7 @@
                     </view>
                   </view>
                   <view class="flex-between-center mt-20">
-                    <text class="fs-22 text--w111-999" v-if="checkboxInfo.includes(3)">{{ $t(`已售`) }}{{item.sales}}{{item.unit_name}}</text>
+                    <text class="fs-22 text--w111-999" v-if="checkboxInfo.includes(3)">{{ $t(`Đã bán`) }}{{item.sales}}{{item.unit_name}}</text>
                     <view @tap.stop="addCartChange(item, index)" v-if="!showBtn">
                       <view class="rd-24rpx w-44 h-44" :style="[btnTextColor]" v-if="btnStyle == 0">
                         <view class="flex-center cart-btn">
@@ -228,7 +228,7 @@
           </view>
         </view>
       </view>
-      <!-- 两列展示(横向) -->
+      <!-- Hiển thị hai cột (ngang) -->
       <view class="pt-32 pr-24 pb-32 pl-24 bg--w111-fff" :style="[bgRadius]" v-if="goodStyleConfig == 3">
         <view class="grid-column-2 grid-gap-20rpx">
           <view class="flex" v-for="(item,index) in tempArr" :key="index" @tap="goDetail(item)">
@@ -250,7 +250,7 @@
           </view>
         </view>
       </view>
-      <!-- 三列 -->
+      <!-- Ba cột -->
       <view class="pt-32 pr-24 pb-32 pl-24 bg--w111-fff" :style="[bgRadius]" v-if="goodStyleConfig == 2">
         <view class="grid-column-3 grid-gap-20rpx">
           <view v-for="(item,index) in tempArr" :key="index" @tap="goDetail(item)">
@@ -284,7 +284,7 @@
           </view>
         </view>
       </view>
-      <!-- 大图展示 -->
+      <!-- Hiển thị ảnh lớn -->
       <view v-if="goodStyleConfig ==4">
         <view class="w-full bg--w111-fff item" :style="[bgRadius]" v-for="(item,index) in tempArr" :key="index" @tap="goDetail(item)">
           <easy-loadimage
@@ -314,7 +314,7 @@
                          :color="priceColor"></baseMoney>
               <view @tap.stop="addCartChange(item, index)" v-if="!showBtn">
                 <view class="w-96 h-56 rd-28rpx flex-center fs-24 text--w111-fff"
-                      v-if="btnStyle == 0" :style="[btnBgColor]">{{ $t(`购买`) }}</view>
+                      v-if="btnStyle == 0" :style="[btnBgColor]">{{ $t(`Mua`) }}</view>
                 <view class="rd-24rpx w-44 h-44" :style="[btnTextColor]" v-else-if="btnStyle == 1">
                   <view class="flex-center cart-btn">
                     <text class="iconfont icon-ic_increase-2 fs-26"></text>
@@ -339,12 +339,12 @@
               </view>
               <view class="flex justify-between items-end">
                 <view class="flex-y-center">
-                  <text class="fs-22 text--w111-999" v-if="checkboxInfo.includes(3)">{{ $t(`已售`) }}{{item.sales}}{{item.unit_name}}</text>
-                  <text class="fs-22 text--w111-999 pl-16" v-if="checkboxInfo.includes(4)">{{ $t(`评分`) }}{{item.star || 0}}</text>
+                  <text class="fs-22 text--w111-999" v-if="checkboxInfo.includes(3)">{{ $t(`Đã bán`) }}{{item.sales}}{{item.unit_name}}</text>
+                  <text class="fs-22 text--w111-999 pl-16" v-if="checkboxInfo.includes(4)">{{ $t(`Điểm đánh giá`) }}{{item.star || 0}}</text>
                 </view>
                 <view @tap.stop="addCartChange(item, index)" v-if="!showBtn">
                   <view class="w-96 h-56 rd-28rpx flex-center fs-24 text--w111-fff"
-                        v-if="btnStyle == 0" :style="[btnBgColor]">{{ $t(`购买`) }}</view>
+                        v-if="btnStyle == 0" :style="[btnBgColor]">{{ $t(`Mua`) }}</view>
                   <view class="rd-24rpx w-44 h-44" :style="[btnTextColor]" v-else-if="btnStyle == 1">
                     <view class="flex-center cart-btn">
                       <text class="iconfont icon-ic_increase-2 fs-26"></text>
@@ -361,7 +361,7 @@
           </view>
         </view>
       </view>
-      <!-- 横向滑动 -->
+      <!-- Vuốt ngang -->
       <view class="pt-32 pb-32 pl-24 bg--w111-fff" :style="[bgRadius]" v-if="goodStyleConfig == 5">
         <scroll-view scroll-x="true" show-scrollbar="false"
                      class="white-nowrap vertical-middle w-full">
@@ -445,21 +445,21 @@ export default {
       },
       id: 0,
       productValue: [],
-      attrValue: '', //已选属性
-      storeName: '', //多属性产品名称
+      attrValue: '', //Thuộc tính đã chọn
+      storeName: '', //Tên sản phẩm nhiều thuộc tính
       storeInfo: {},
-      allList: [],       // 全部列表
-      leftList: [],      // 左边列表
-      rightList: [],     // 右边列表
-      mark: 0,           // 列表标记
-      boxHeight: [],     // 下标0和1分别为左列和右列高度
+      allList: [],       // Toàn bộ danh sách
+      leftList: [],      // Danh sách bên trái
+      rightList: [],     // Danh sách bên phải
+      mark: 0,           // Đánh dấu danh sách
+      boxHeight: [],     // Index 0 và 1 lần lượt là chiều cao cột trái và cột phải
     };
   },
   watch: {
-    // 监听列表数据变化
+    // Theo dõi thay đổi dữ liệu danh sách
     tempArr:  {
       handler(nVal,oVal){
-        // 如果数据为空或新的列表数据少于旧的列表数据（通常为下拉刷新或切换排序或使用筛选器），初始化变量
+        // Nếu dữ liệu rỗng hoặc dữ liệu danh sách mới ít hơn dữ liệu danh sách cũ (thường do kéo để làm mới hoặc đổi sắp xếp hoặc dùng bộ lọc), khởi tạo lại biến
         if (!this.tempArr.length ||
             (this.tempArr.length === this.updateNum && this.tempArr.length <= this.allList.length)) {
           this.allList = [];
@@ -468,7 +468,7 @@ export default {
           this.boxHeight = [];
           this.mark = 0;
         }
-        // 如果列表有值，调用waterfall方法
+        // Nếu danh sách có giá trị, gọi phương thức waterfall
 
         if (this.tempArr.length) {
           this.allList = this.tempArr;
@@ -499,7 +499,7 @@ export default {
       immediate: true,
       deep:true
     },
-    // 监听标记，当标记发生变化，则执行下一个item排序
+    // Theo dõi đánh dấu, khi đánh dấu thay đổi thì thực hiện sắp xếp item tiếp theo
     mark() {
       const len = this.allList.length;
       if (this.mark < len && this.mark !== 0 && this.boxHeight.length) {
@@ -515,7 +515,7 @@ export default {
       cartNum: state => state.indexData.cartNum
     }),
     ...mapGetters(['isLogin', 'uid', 'cartNum']),
-    /*外层盒子样式*/
+    /*Style box ngoài*/
     boxStyle(){
       // let borderRadius = `${this.dataConfig.fillet.val * 2}rpx`;
       // if (this.dataConfig.fillet.type) {
@@ -552,7 +552,7 @@ export default {
     styleConfig(){
       return this.dataConfig.styleConfig.tabVal
     },
-    /*商品图片圆角样式*/
+    /*Style góc tròn ảnh sản phẩm*/
     imgStyle(){
       let borderRadius = `${this.dataConfig.filletImg.val * 2}rpx`;
       if (this.dataConfig.styleConfig.tabVal == 1) {
@@ -571,22 +571,22 @@ export default {
 	  }
       return this.dataConfig.name == 'promotionList'? imgRadius:borderRadius
     },
-    /*商品名称样式*/
+    /*Style tên sản phẩm*/
     productStyle(){
       return {
         color: this.dataConfig.goodsNameColor.color[0].item,
         fontWeight: this.dataConfig.goodsName.tabVal ? 'normal' : 'bold'
       }
     },
-    /* 展示信息 */
+    /* Thông tin hiển thị */
     checkboxInfo(){
       return this.dataConfig.checkboxInfo.type
     },
-    /* 价格颜色 */
+    /* Màu giá */
     priceColor(){
       return this.dataConfig.toneConfig.tabVal ? this.dataConfig.goodsPriceColor.color[0].item : 'var(--view-theme)'
     },
-    /* 划线价颜色 */
+    /* Màu giá gốc (gạch ngang) */
     otPriceColor(){
       return this.dataConfig.goodsPriceColor.color[0].item
     },
@@ -596,7 +596,7 @@ export default {
     showBtn(){
       return this.dataConfig.cartConfig.tabVal
     },
-    /* 按钮颜色 */
+    /* Màu nút */
     btnBgColor(){
       return {
         background: this.dataConfig.toneConfig.tabVal ? `linear-gradient(90deg,${this.dataConfig.bntBgColor.color[0].item} 0%,${this.dataConfig.bntBgColor.color[1].item} 100%)`: 'linear-gradient(90deg, var(--view-theme) 0%, var(--view-gradient) 100%)'
@@ -608,19 +608,19 @@ export default {
         background: this.dataConfig.toneCartConfig.tabVal ? `linear-gradient(90deg, ${this.dataConfig.bntBgColor.color[0].item} 0%, ${this.dataConfig.bntBgColor.color[1].item} 100%)` : 'linear-gradient(90deg, var(--view-theme) 0%, var(--view-gradient) 100%)',
       }
     },
-    /*商品数量*/
+    /*Số lượng sản phẩm*/
     numberConfig(){
       return this.dataConfig.numberConfig.val
     },
-    /*商品模板*/
+    /*Template sản phẩm*/
     goodStyleConfig(){
       return this.dataConfig.styleConfig.tabVal
     },
-    /*检索条件  0综合 1销量 2价格*/
+    /*Điều kiện tìm kiếm  0 tổng hợp  1 lượt bán  2 giá*/
     goodsSort(){
       return this.dataConfig.goodsSort.tabVal
     },
-    /*按照什么方式选择商品 0 指定商品 1 指定品牌 2指定分类 3 商品标签 */
+    /*Chọn sản phẩm theo cách nào: 0 chỉ định sản phẩm  1 chỉ định nhãn hiệu  2 chỉ định danh mục  3 nhãn sản phẩm */
     typeConfig(){
       return this.dataConfig.typeConfig.activeValue
     },
@@ -685,7 +685,7 @@ export default {
         });
       });
     },
-    // 商品详情接口；
+    // API chi tiết sản phẩm;
     getAttrs(id) {
       let that = this;
       getAttr(id, 0).then(res => {
@@ -713,21 +713,21 @@ export default {
         this.$store.commit('indexData/setCartNum', res.data.count)
       });
     },
-    // 瀑布流排序
+    // Sắp xếp dạng thác nước (waterfall)
     waterFall() {
       const i = this.mark;
       if (i == 0) {
-        // 初始化，从左边开始插入
+        // Khởi tạo, chèn bắt đầu từ bên trái
         this.leftList.push(this.allList[i]);
-        // 更新左边列表高度
+        // Cập nhật chiều cao danh sách bên trái
         this.getViewHeight(0);
       } else if (i == 1) {
-        // 第二个item插入，默认为右边插入
+        // Chèn item thứ hai, mặc định chèn bên phải
         this.rightList.push(this.allList[i]);
-        // 更新右边列表高度
+        // Cập nhật chiều cao danh sách bên phải
         this.getViewHeight(1);
       } else {
-        // 根据左右列表高度判断下一个item应该插入哪边
+        // Dựa vào chiều cao danh sách trái phải để xác định item tiếp theo nên chèn vào bên nào
         if(!this.boxHeight.length){
           this.rightList.length < this.leftList.length
               ? this.rightList.push(this.allList[i])
@@ -740,13 +740,13 @@ export default {
             this.leftList.push(this.allList[i])
           }
         }
-        // 更新插入列表高度
+        // Cập nhật chiều cao danh sách sau khi chèn
         this.getViewHeight();
       }
     },
-    // 获取列表高度
+    // Lấy chiều cao danh sách
     getViewHeight() {
-      // 使用nextTick，确保页面更新结束后，再请求高度
+      // Dùng nextTick, đảm bảo sau khi trang cập nhật xong mới request chiều cao
       this.$nextTick(() => {
         setTimeout(()=>{
           uni.createSelectorQuery().in(this).select('#right').boundingClientRect(res => {

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,7 +17,7 @@ use crmeb\services\template\BaseMessage;
 class Baidu extends BaseMessage
 {
     /**
-     * 初始化
+     * Khởi tạo
      * @param array $config
      * @return mixed|void
      */
@@ -27,7 +27,7 @@ class Baidu extends BaseMessage
     }
 
     /**
-     * 发送模板消息
+     * Gửi tin nhắn mẫu
      * @param string $templateId
      * @param array $data
      * @return mixed|void
@@ -38,7 +38,7 @@ class Baidu extends BaseMessage
     }
 
     /**
-     * 添加模板消息
+     * Thêm tin nhắn mẫu
      * @param string $shortId
      * @return mixed|void
      */
@@ -48,7 +48,7 @@ class Baidu extends BaseMessage
     }
 
     /**
-     * 删除模板消息
+     * Xóa tin nhắn mẫu
      * @param string $templateId
      * @return mixed|void
      */
@@ -58,7 +58,7 @@ class Baidu extends BaseMessage
     }
 
     /**
-     * 模板消息列表
+     * Danh sách tin nhắn mẫu
      * @return mixed|void
      */
     public function list()

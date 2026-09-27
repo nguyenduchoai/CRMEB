@@ -1,24 +1,24 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 namespace crmeb\utils;
 
 /**
- * 操作数组帮助类
+ * Class hỗ trợ xử lý mảng
  * Class Arr
  * @package crmeb\utils
  */
 class Arr
 {
     /**
-     * 对数组增加默认值
+     * Thêm giá trị mặc định cho mảng
      * @param array $keys
      * @param array $configList
      * @return array
@@ -40,7 +40,7 @@ class Arr
     }
 
     /**
-     * 获取ivew菜单列表
+     * Lấy danh sách menu ivew
      * @param array $data
      * @return array
      */
@@ -50,7 +50,7 @@ class Arr
     }
 
     /**
-     * 转化iviewUi需要的key值
+     * Chuyển đổi giá trị key mà iviewUi cần
      * @param $data
      * @return array
      */
@@ -79,7 +79,7 @@ class Arr
     }
 
     /**
-     * 获取树型菜单
+     * Lấy menu dạng cây (tree)
      * @param $data
      * @param int $pid
      * @param int $level
@@ -100,7 +100,7 @@ class Arr
     }
 
     /**
-     * 获取子菜单
+     * Lấy submenu
      * @param $arr
      * @param $id
      * @param $lev
@@ -119,7 +119,7 @@ class Arr
     }
 
     /**
-     * 格式化数据
+     * Định dạng dữ liệu
      * @param array $array
      * @param $value
      * @param int $default
@@ -137,7 +137,7 @@ class Arr
     }
 
     /**
-     * 获取二维数组中某个值的集合重新组成数组,并判断数组中的每一项是否为真
+     * Lấy tập hợp một giá trị nào đó trong mảng hai chiều để tạo lại thành mảng, và kiểm tra mỗi phần tử trong mảng có đúng (true) không
      * @param array $data
      * @param string $filed
      * @return array
@@ -152,7 +152,7 @@ class Arr
     }
 
     /**
-     * 数组转字符串去重复
+     * Chuyển mảng thành chuỗi và loại bỏ trùng lặp
      * @param array $data
      * @return false|string[]
      */
@@ -162,7 +162,7 @@ class Arr
     }
 
     /**
-     * 获取数组中去重复过后的指定key值
+     * Lấy giá trị key chỉ định trong mảng sau khi loại bỏ trùng lặp
      * @param array $list
      * @param string $key
      * @return array
@@ -173,7 +173,7 @@ class Arr
     }
 
     /**
-     * 获取数组中随机值
+     * Lấy giá trị ngẫu nhiên trong mảng
      * @param array $data
      * @return bool|mixed
      */

@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2024 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -11,8 +11,8 @@
 import request from "@/utils/request.js";
 
 /**
- * 客服登录
- * @param data object 用户账号密码
+ * Đăng nhập CSKH
+ * @param data object Tài khoản mật khẩu người dùng
  */
 export function kefuLogin(data) {
 	return request.post("login", data, {
@@ -22,7 +22,7 @@ export function kefuLogin(data) {
 }
 
 /**
- * 获取左侧客服聊天用户列表
+ * Lấy danh sách người dùng chat bên trái (CSKH)
  * @constructor
  */
 export function record(data) {
@@ -33,7 +33,7 @@ export function record(data) {
 }
 
 /**
- * 客服话术
+ * Câu trả lời mẫu CSKH
  * @constructor
  */
 export function speeChcraft(data) {
@@ -44,7 +44,7 @@ export function speeChcraft(data) {
 }
 
 /**
- * 客服转接列表
+ * Danh sách chuyển tiếp CSKH
  * @constructor
  */
 export function transferList(data) {
@@ -55,7 +55,7 @@ export function transferList(data) {
 }
 
 /**
- * 商品购买记录
+ * Lịch sử mua sản phẩm
  * @constructor
  */
 export function productCart(id, data) {
@@ -66,7 +66,7 @@ export function productCart(id, data) {
 }
 
 /**
- * 热销商品
+ * Sản phẩm bán chạy
  * @constructor
  */
 export function productHot(id, data) {
@@ -77,7 +77,7 @@ export function productHot(id, data) {
 }
 
 /**
- * 商品足记
+ * Sản phẩm đã xem
  * @constructor
  */
 export function productVisit(id, data) {
@@ -88,7 +88,7 @@ export function productVisit(id, data) {
 }
 
 /**
- * 客服用户聊天列表
+ * Danh sách chat người dùng của CSKH
  * @constructor
  */
 export function serviceList(data) {
@@ -99,7 +99,7 @@ export function serviceList(data) {
 }
 
 /**
- * 客服转接
+ * Chuyển tiếp CSKH
  * @constructor
  */
 export function serviceTransfer(data) {
@@ -110,7 +110,7 @@ export function serviceTransfer(data) {
 }
 
 /**
- * 客服详细信息
+ * Thông tin chi tiết CSKH
  * @constructor
  */
 export function serviceInfo(data) {
@@ -121,7 +121,7 @@ export function serviceInfo(data) {
 }
 
 /**
- * 客服反馈头部信息
+ * Thông tin đầu phản hồi CSKH
  * @constructor
  */
 export function serviceFeedBack() {
@@ -129,7 +129,7 @@ export function serviceFeedBack() {
 }
 
 /**
- * 客服反馈
+ * Phản hồi CSKH
  * @constructor
  */
 export function feedBackPost(data) {
@@ -137,14 +137,14 @@ export function feedBackPost(data) {
 }
 
 /**
- * 检测登录code
+ * Kiểm tra code đăng nhập
  * @constructor
  */
 export function codeStauts(data) {
 	return request.get("user/code", data);
 }
 /**
- * 获取客服端口
+ * Lấy cổng CSKH
  * @constructor
  */
 export function getWorkermanUrl(data) {
@@ -154,7 +154,7 @@ export function getWorkermanUrl(data) {
 }
 
 /**
- * 客服扫码登录code
+ * Code đăng nhập quét mã CSKH
  * @constructor
  */
 export function kefuScanLogin(data) {

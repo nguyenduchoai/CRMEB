@@ -20,10 +20,10 @@ import { mapState, mapMutations } from 'vuex';
 export default {
   name: 'nav_bar',
   configName: 'c_nav_bar',
-  cname: '商品分类',
+  cname: 'Danh mục sản phẩm',
   icon: 'iconfenleidaohang1',
-  type: 0, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'tabNav', // 外面匹配名称
+  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'tabNav', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -59,18 +59,18 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'tabNav',
         timestamp: this.num,
         status: {
-          title: '开关',
+          title: 'Công tắc',
           default: {
             status: false,
           },
         },
         txtColor: {
-          title: '文字颜色',
+          title: 'Màu chữ',
           name: 'txtColor',
           default: [
             {
@@ -84,7 +84,7 @@ export default {
           ],
         },
         bgColor: {
-          title: '背景颜色',
+          title: 'Màu nền',
           name: 'bgColor',
           default: [
             {
@@ -103,28 +103,28 @@ export default {
             },
           ],
         },
-        // 页面间距
+        // Lề trang
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },
       },
       list: [
         {
-          name: '精选',
+          name: 'Tuyển chọn',
         },
         {
-          name: '靓丽美妆',
+          name: 'Mỹ phẩm làm đẹp',
         },
         {
-          name: '母婴',
+          name: 'Mẹ và bé',
         },
         {
-          name: '珠宝饰品',
+          name: 'Trang sức',
         },
         {
-          name: '男装',
+          name: 'Thời trang nam',
         },
       ],
       curIndex: 0,

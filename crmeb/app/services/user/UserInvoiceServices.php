@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -34,7 +34,7 @@ class UserInvoiceServices extends BaseServices
     }
 
     /**
-     * 检测系统设置发票功能
+     * Kiểm tra chức năng hóa đơn trong cài đặt hệ thống
      * @param bool $is_speclial
      * @return bool|array
      */
@@ -49,7 +49,7 @@ class UserInvoiceServices extends BaseServices
     }
 
     /**
-     * 获取单个发票信息
+     * Lấy thông tin một hóa đơn
      * @param int $id
      * @param int $uid
      * @return array
@@ -67,7 +67,7 @@ class UserInvoiceServices extends BaseServices
     }
 
     /**
-     * 检测该发票是否可用
+     * Kiểm tra hóa đơn này có dùng được không
      * @param int $id
      * @param int $uid
      * @return bool
@@ -85,7 +85,7 @@ class UserInvoiceServices extends BaseServices
         if (!$invoice_func['invoice_func']) {
             throw new ApiException(410280);
         }
-        //专用发票
+        //Hóa đơn chuyên dùng
         if ($invoice['type'] == 2) {
             if (!$invoice_func['special_invoice']) {
                 throw new ApiException(410281);
@@ -96,7 +96,7 @@ class UserInvoiceServices extends BaseServices
 
 
     /**
-     * 获取某个用户发票列表
+     * Lấy danh sách hóa đơn của một người dùng
      * @param int $uid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -112,7 +112,7 @@ class UserInvoiceServices extends BaseServices
     }
 
     /**
-     * 获取某个用户默认发票
+     * Lấy hóa đơn mặc định của một người dùng
      * @param int $uid
      * @param string $field
      * @return array|\think\Model|null
@@ -126,7 +126,7 @@ class UserInvoiceServices extends BaseServices
     }
 
     /**
-     * 添加|修改
+     * Thêm|Sửa
      * @param int $uid
      * @param array $data
      * @return array
@@ -148,7 +148,7 @@ class UserInvoiceServices extends BaseServices
                 if ($data['is_default']) {
                     $this->setDefaultInvoice($uid, $id);
                 }
-                return ['type' => 'edit', 'msg' => '修改发票成功', 'data' => []];
+                return ['type' => 'edit', 'msg' => 'Sửa hóa đơn thành công', 'data' => []];
             } else {
                 throw new ApiException(100007);
             }
@@ -161,7 +161,7 @@ class UserInvoiceServices extends BaseServices
                 if ($data['is_default']) {
                     $this->setDefaultInvoice($uid, $id);
                 }
-                return ['type' => 'add', 'msg' => '添加发票成功', 'data' => ['id' => $id]];
+                return ['type' => 'add', 'msg' => 'Thêm hóa đơn thành công', 'data' => ['id' => $id]];
             } else {
                 throw new ApiException(100022);
             }
@@ -169,7 +169,7 @@ class UserInvoiceServices extends BaseServices
     }
 
     /**
-     * 设置默认发票
+     * Đặt hóa đơn mặc định
      * @param int $id
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
@@ -191,7 +191,7 @@ class UserInvoiceServices extends BaseServices
     }
 
     /**
-     * 删除
+     * Xóa
      * @param $id
      * @throws \Exception
      */

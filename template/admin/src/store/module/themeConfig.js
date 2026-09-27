@@ -1,117 +1,117 @@
 /**
- * 修改一下配置时，需要每次都清理 `window.localStorage` 浏览器永久缓存，配置才会生效
+ * Khi sửa cấu hình, mỗi lần đều cần xóa cache vĩnh viễn `window.localStorage` của trình duyệt thì cấu hình mới có hiệu lực
  */
 const themeConfigModule = {
   namespaced: true,
   state: {
     themeConfig: {
-      // 是否开启布局配置抽屉
+      // Có mở drawer cấu hình layout hay không
       isDrawer: false,
 
       /**
-       * 全局主题
+       * Chủ đề chung
        */
-      // 默认 primary 主题颜色
+      // Màu chủ đề primary mặc định
       primary: '#409eff',
-      // 菜单背景色
+      // Màu nền menu
       menuBgColor: '#282c34',
-      // 是否开启深色模式
+      // Có bật chế độ tối hay không
       isIsDark: false,
       themeStyle: 'theme-1',
       /**
-       * 菜单 / 顶栏
-       * 请注意：
-       * 需要同时修改 `/@/theme/common/var.scss` 对应的值，
+       * Menu / Thanh trên cùng
+       * Xin lưu ý:
+       * Cần đồng thời sửa giá trị tương ứng trong `/@/theme/common/var.scss`,
        */
-      // 默认顶栏导航背景颜色
+      // Màu nền điều hướng trên cùng mặc định
       topBar: '#ffffff',
-      // 默认顶栏导航字体颜色
+      // Màu chữ điều hướng trên cùng mặc định
       topBarColor: '#606266',
-      // 默认菜单导航背景颜色
+      // Màu nền điều hướng menu mặc định
       menuBar: '#282c34',
-      // 默认菜单导航字体颜色
+      // Màu chữ điều hướng menu mặc định
       menuBarColor: '#eaeaea',
-      // 默认分栏菜单背景颜色
+      // Màu nền menu phân cột mặc định
       columnsMenuBar: '#282c34',
-      // 默认分栏菜单字体颜色
+      // Màu chữ menu phân cột mặc định
       columnsMenuBarColor: '#e6e6e6',
 
       /**
-       * 界面设置
+       * Cài đặt giao diện
        */
-      // 是否开启菜单水平折叠效果
+      // Có bật hiệu ứng thu gọn menu theo chiều ngang hay không
       isCollapse: false,
-      // 是否开启菜单手风琴效果
+      // Có bật hiệu ứng accordion cho menu hay không
       isUniqueOpened: true,
-      // 是否开启固定 Header
+      // Có bật cố định Header hay không
       isFixedHeader: true,
 
       /**
-       * 界面显示
+       * Hiển thị giao diện
        */
-      // 是否开启侧边栏 Logo
+      // Có bật Logo thanh bên hay không
       isShowLogo: true,
-      // 是否开启 Breadcrumb
+      // Có bật Breadcrumb hay không
       isBreadcrumb: true,
-      // 是否开启 Breadcrumb 图标
+      // Có bật icon Breadcrumb hay không
       isBreadcrumbIcon: false,
-      // 是否开启 Tagsview
+      // Có bật Tagsview hay không
       isTagsview: true,
-      // 是否开启 Tagsview 图标
+      // Có bật icon Tagsview hay không
       isTagsviewIcon: false,
-      // 是否开启 TagsView 缓存
+      // Có bật cache TagsView hay không
       isCacheTagsView: false,
-      // 是否开启 Footer 底部版权信息
+      // Có bật thông tin bản quyền ở Footer hay không
       isFooter: true,
-      // 是否开启灰色模式
+      // Có bật chế độ xám hay không
       isGrayscale: false,
-      // 是否开启色弱模式
+      // Có bật chế độ dành cho người mù màu hay không
       isInvert: false,
       /**
-       * 其它设置
+       * Cài đặt khác
        */
-      // 默认 Tagsview 风格，可选 1、 tags-style-one，自行扩展：
-      // 1、需修改 @/layout/navBars/breadcrumb/setings.vue `getThemeConfig.tagsStyle` el-option
-      // 2、需修改 @/layout/navBars/tagsView/tagsView.vue 代码最底部注释部分 css 样式
+      // Kiểu Tagsview mặc định, có thể chọn 1. tags-style-one, tự mở rộng thêm:
+      // 1. Cần sửa `getThemeConfig.tagsStyle` el-option trong @/layout/navBars/breadcrumb/setings.vue
+      // 2. Cần sửa style css ở phần chú thích cuối code trong @/layout/navBars/tagsView/tagsView.vue
       tagsStyle: 'tags-style-five',
-      // 主页面切换动画：可选值"<slide-right|slide-left|opacitys>"，默认 slide-right
+      // Hiệu ứng chuyển trang chính: giá trị có thể chọn "<slide-right|slide-left|opacitys>", mặc định slide-right
       animation: 'opacitys',
-      // 分栏高亮风格：可选值"<columns-round|columns-card>"，默认 columns-round
+      // Kiểu highlight phân cột: giá trị có thể chọn "<columns-round|columns-card>", mặc định columns-round
       columnsAsideStyle: 'columns-card',
-      // 分栏布局风格：可ƒ选值"<columns-horizontal|columns-vertical>"，默认 columns-horizontal
+      // Kiểu bố cục phân cột: giá trị có thể chọn "<columns-horizontal|columns-vertical>", mặc định columns-horizontal
       columnsAsideLayout: 'columns-vertical',
 
       /**
-       * 布局切换
-       * 注意：为了演示，切换布局时，颜色会被还原成默认，代码位置：/@/layout/navBars/breadcrumb/setings.vue
-       * 中的 `initSetLayoutChange(设置布局切换，重置主题样式)` 方法
+       * Chuyển bố cục
+       * Lưu ý: để minh họa, khi chuyển layout thì màu sẽ được đặt lại về mặc định, vị trí code: /@/layout/navBars/breadcrumb/setings.vue
+       * trong phương thức `initSetLayoutChange(đặt chuyển layout, reset style theme)`
        */
-      // 布局切换：可选值"<defaults|classic|transverse|columns>"，默认 defaults
+      // Chuyển đổi layout: giá trị có thể chọn "<defaults|classic|transverse|columns>", mặc định defaults
       layout: 'columns',
 
       /**
-       * 全局网站标题 / 副标题
+       * Tiêu đề / phụ đề website toàn cục
        */
-      // 网站主标题（菜单导航、浏览器当前网页标题）
+      // Tiêu đề chính của website (điều hướng menu, tiêu đề trang hiện tại trên trình duyệt)
       globalTitle: 'crmeb-admin',
-      // 网站副标题（登录页顶部文字）
+      // Phụ đề website (chữ ở đầu trang đăng nhập)
       globalViceTitle: '',
-      // 网站描述（登录页顶部文字）
+      // Mô tả website (chữ ở đầu trang đăng nhập)
       globalViceDes: 'vue2',
-      // 默认初始语言，可选值"<zh-cn|en|zh-tw>"，默认 zh-cn
-      globalI18n: 'zh-cn',
-      // 默认全局组件大小，可选值"<|medium|small|mini>"，默认 ''
+      // Ngôn ngữ khởi tạo mặc định, giá trị có thể chọn "<zh-cn|en|zh-tw>", mặc định zh-cn
+      globalI18n: 'vi',
+      // Kích thước component toàn cục mặc định, giá trị có thể chọn "<|medium|small|mini>", mặc định ''
       globalComponentSize: '',
     },
   },
   mutations: {
-    // 设置布局配置
+    // Đặt cấu hình layout
     getThemeConfig(state, data) {
       state.themeConfig = data;
     },
   },
   actions: {
-    // 设置布局配置
+    // Đặt cấu hình layout
     setThemeConfig({ commit }, data) {
       commit('getThemeConfig', data);
     },

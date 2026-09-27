@@ -10,25 +10,25 @@ class SystemCrontab extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'system_timer';
 
     /**
-     * 不自动更新update_time
+     * Không tự động cập nhật update_time
      * @var bool
      */
     protected $updateTime = false;
 
     /**
-     * 是否自定义定时任务搜索器
+     * Bộ lọc có phải tác vụ định kỳ tùy chỉnh hay không
      * @param $query
      * @param $value
      * @param $data

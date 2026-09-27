@@ -44,9 +44,9 @@ class DiyProServices extends BaseServices
 
     public function getInfo($id)
     {
-        if (!(int)$id) throw new AdminException('参数错误');
+        if (!(int)$id) throw new AdminException('Tham số không hợp lệ');
         $info = $this->dao->get((int)$id);
-        if (!$info) throw new AdminException('模板不存在');
+        if (!$info) throw new AdminException('Mẫu không tồn tại');
         $info = $info->toArray();
 
         $productServices = app()->make(StoreProductServices::class);
@@ -58,7 +58,7 @@ class DiyProServices extends BaseServices
         if ($info['value']) {
             foreach ($info['value'] as &$item) {
                 switch ($item['name']) {
-                    case 'goodList'://商品列表
+                    case 'goodList'://Danh sách sản phẩm
 
                         $typeConfig = $item['typeConfig']['activeValue'] ?? 0;
                         $where = [];
@@ -73,36 +73,36 @@ class DiyProServices extends BaseServices
                         $where['is_show'] = 1;
                         $where['is_del'] = 0;
                         switch ($typeConfig) {
-                            case 1://指定商品
+                            case 1://Sản phẩm chỉ định
                                 $where['ids'] = $item['goodsList']['ids'] ?? [];
                                 $item['goodsList']['list'] = $productServices->getSearchList($where, 0, 0, ['id,store_name,cate_id,image,IFNULL(sales, 0) + IFNULL(ficti, 0) as sales,price,stock,activity,ot_price,spec_type,recommend_image,unit_name,is_vip,vip_price']);
                                 break;
-                            case 3://指定分类
+                            case 3://Danh mục chỉ định
                                 $cateIds = $item['classList']['classVal'] ?? [];
                                 if ($cateIds) $where['cate_id'] = $cateIds;
                                 $item['productList']['list'] = $productServices->getSearchList($where, 0, $num, ['id,store_name,cate_id,image,IFNULL(sales, 0) + IFNULL(ficti, 0) as sales,price,stock,activity,ot_price,spec_type,recommend_image,unit_name,is_vip,vip_price']);
                                 break;
-                            case 4://商品标签
+                            case 4://Nhãn sản phẩm
                                 $storeLabelIds = $item['goodsLabel']['activeValue'] ?? [];
                                 if ($storeLabelIds) $where['store_label_id'] = $storeLabelIds;
                                 $item['productList']['list'] = $productServices->getSearchList($where, 0, $num, ['id,store_name,cate_id,image,IFNULL(sales, 0) + IFNULL(ficti, 0) as sales,price,stock,activity,ot_price,spec_type,recommend_image,unit_name,is_vip,vip_price']);
                                 break;
                         }
                         break;
-                    case 'articleList'://文章
+                    case 'articleList'://Bài viết
 
                         if ($item['selectConfig']['activeValue'] ?? 0) {
                             $data = $articleServices->getList(['cid' => $item['selectConfig']['activeValue'] ?? 0], 0, $item['numConfig']['val'] ?? 0);
                         }
                         $item['selectList']['list'] = $data['list'] ?? [];
                         break;
-                    case 'promotionList'://促销列表
+                    case 'promotionList'://Danh sách khuyến mãi
                         if (isset($item['tabConfig']['list']) && $item['tabConfig']['list']) {
                             $list = $item['tabConfig']['list'];
                             if ($list) {
                                 foreach ($list as &$tabValue) {
                                     $where = [];
-                                    //选择方式
+                                    //Cách chọn
                                     $selectValue = $tabValue['tabVal'] ?? 0;
                                     $num = $tabValue['numConfig']['val'] ?? 50;
                                     $sort = $tabValue['goodsSort'] ?? 0;
@@ -111,10 +111,10 @@ class DiyProServices extends BaseServices
                                     } elseif ($sort == 2) {
                                         $where['priceOrder'] = 'desc';
                                     }
-                                    if ($selectValue == 1 && isset($tabValue['goodsList']['ids']) && count($tabValue['goodsList']['ids'])) {//手动选商品
+                                    if ($selectValue == 1 && isset($tabValue['goodsList']['ids']) && count($tabValue['goodsList']['ids'])) {//Chọn sản phẩm thủ công
                                         $where['ids'] = $tabValue['goodsList']['ids'];
                                         $tabValue['goodsList']['list'] = $productServices->getSearchList($where, 0, 0, ['id,store_name,cate_id,image,IFNULL(sales, 0) + IFNULL(ficti, 0) as sales,price,stock,activity,ot_price,spec_type,recommend_image,unit_name,is_vip,vip_price']);
-                                    } elseif ((isset($tabValue['selectConfig']['activeValue']) && $tabValue['selectConfig']['activeValue']) || (isset($tabValue['goodsLabel']['activeValue']) && $tabValue['goodsLabel']['activeValue'])) {//选分类 、标签
+                                    } elseif ((isset($tabValue['selectConfig']['activeValue']) && $tabValue['selectConfig']['activeValue']) || (isset($tabValue['goodsLabel']['activeValue']) && $tabValue['goodsLabel']['activeValue'])) {//Chọn danh mục, nhãn
                                         $where['cate_id'] = $tabValue['selectConfig']['activeValue'] ?? 0;
                                         $storeLabelIds = $tabValue['goodsLabel']['activeValue'] ?? [];
                                         if ($storeLabelIds) {
@@ -164,14 +164,14 @@ class DiyProServices extends BaseServices
     public function exportDIYData($id)
     {
         $info = $this->dao->get($id);
-        if (!$info) throw new AdminException('数据不存在');
+        if (!$info) throw new AdminException('Dữ liệu không tồn tại');
         return $info['value'];
     }
 
     public function importDIYData($content)
     {
         $data = [
-            'name' => 'DIY导入数据',
+            'name' => 'Dữ liệu nhập DIY',
             'version' => uniqid(),
             'value' => $content,
             'add_time' => time(),

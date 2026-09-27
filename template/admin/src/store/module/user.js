@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -73,14 +73,14 @@ export default {
     messageTrashCount: (state) => state.messageTrashList.length,
   },
   actions: {
-    // 此方法用来获取未读消息条数，接口只返回数值，不返回消息列表
+    // Phương thức này dùng để lấy số lượng tin nhắn chưa đọc, API chỉ trả về số, không trả về danh sách tin nhắn
     getUnreadMessageCount({ state, commit }) {
       // getUnreadCount().then(res => {
       //   const { data } = res
       //   commit('setMessageCount', data)
       // })
     },
-    // 获取消息列表，其中包含未读、已读、回收站三个列表
+    // Lấy danh sách tin nhắn, gồm 3 danh sách: chưa đọc, đã đọc, thùng rác
     // getMessageList ({ state, commit }) {
     //   return new Promise((resolve, reject) => {
     //     getMessage().then(res => {
@@ -100,7 +100,7 @@ export default {
     //     })
     //   })
     // },
-    // 根据当前点击的消息的id获取内容
+    // Lấy nội dung theo id của tin nhắn đang click
     // getContentByMsgId ({ state, commit }, { msg_id }) {
     //   return new Promise((resolve, reject) => {
     //     let contentItem = state.messageContentStore[msg_id]
@@ -115,7 +115,7 @@ export default {
     //     }
     //   })
     // }
-    // 把一个未读消息标记为已读
+    // Đánh dấu một tin nhắn chưa đọc thành đã đọc
     // hasRead ({ state, commit }, { msg_id }) {
     //   return new Promise((resolve, reject) => {
     //     hasRead(msg_id).then(() => {
@@ -131,7 +131,7 @@ export default {
     //     })
     //   })
     // }
-    // 删除一个已读消息到回收站
+    // Xóa một tin nhắn đã đọc vào thùng rác
     // removeReaded ({ commit }, { msg_id }) {
     //   return new Promise((resolve, reject) => {
     //     removeReaded(msg_id).then(() => {
@@ -146,7 +146,7 @@ export default {
     //     })
     //   })
     // }
-    // 还原一个已删除消息到已读消息
+    // Khôi phục một tin nhắn đã xóa về tin nhắn đã đọc
     // restoreTrash ({ commit }, { msg_id }) {
     //   return new Promise((resolve, reject) => {
     //     restoreTrash(msg_id).then(() => {

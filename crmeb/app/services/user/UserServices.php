@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -46,15 +46,15 @@ use think\facade\Route as Url;
 /**
  * Class UserServices
  * @package app\services\user
- * @method array getUserInfoArray(array $where, string $field, string $key) 根据条件查询对应的用户信息以数组形式返回
- * @method update($id, array $data, ?string $key = null) 修改数据
- * @method get($id, ?array $field = [], ?array $with = []) 获取一条数据
- * @method count(array $where) 获取指定条件下的数量
- * @method value(array $where, string $field) 获取指定的键值
- * @method bcInc($key, string $incField, string $inc, string $keyField = null, int $acc = 2) 高精度加法
- * @method bcDec($key, string $incField, string $inc, string $keyField = null, int $acc = 2) 高精度减法
+ * @method array getUserInfoArray(array $where, string $field, string $key) Tra cứu thông tin người dùng tương ứng theo điều kiện, trả về dạng mảng
+ * @method update($id, array $data, ?string $key = null) Dữ liệu cần chỉnh sửa
+ * @method get($id, ?array $field = [], ?array $with = []) Lấy một dòng dữ liệu
+ * @method count(array $where) Lấy số lượng theo điều kiện chỉ định
+ * @method value(array $where, string $field) Lấy giá trị key chỉ định
+ * @method bcInc($key, string $incField, string $inc, string $keyField = null, int $acc = 2) Phép cộng độ chính xác cao
+ * @method bcDec($key, string $incField, string $inc, string $keyField = null, int $acc = 2) Phép trừ độ chính xác cao
  * @method getTrendData($time, $type, $timeType)
- * @method incPayCount(int $uid) 用户支付成功个数增加
+ * @method incPayCount(int $uid) Tăng số lần thanh toán thành công của người dùng
  */
 class UserServices extends BaseServices
 {
@@ -69,14 +69,14 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 获取用户信息
+     * Lấy thông tin người dùng
      * @param int $uid
      * @param string $field
      * @return array|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/03/01
      */
@@ -87,7 +87,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 获取用户列表
+     * Lấy danh sách người dùng
      * @param array $where
      * @param string $field
      * @return array
@@ -104,7 +104,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 列表条数
+     * Số dòng danh sách
      * @param array $where
      * @return int
      */
@@ -114,7 +114,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 保存用户信息
+     * Lưu thông tin người dùng
      * @param $user
      * @param int $spreadUid
      * @param string $userType
@@ -146,13 +146,13 @@ class UserServices extends BaseServices
         if (!$res)
             throw new AdminException(400684);
 
-        //新用户注册奖励
+        //Thưởng đăng ký cho người dùng mới
         $this->rewardNewUser((int)$res->uid);
 
-        //用户生成后置事件
+        //Sự kiện sau khi tạo người dùng
         event('UserRegisterListener', [$spreadUid, $userType, $user['nickname'], $res->uid, 1]);
 
-        //自定义事件-用户注册
+        //Sự kiện tùy chỉnh - Người dùng đăng ký
         event('CustomEventListener', ['user_register', [
             'uid' => $res->uid,
             'nickname' => $user['nickname'],
@@ -162,10 +162,10 @@ class UserServices extends BaseServices
         ]]);
 
         if ($spreadUid) {
-            //推送消息
+            //Đẩy tin nhắn
             event('NoticeListener', [['spreadUid' => $spreadUid, 'user_type' => $userType, 'nickname' => $user['nickname']], 'bind_spread_uid']);
 
-            //自定义事件-绑定关系
+            //Sự kiện tùy chỉnh - Liên kết quan hệ
             event('CustomEventListener', ['user_spread', [
                 'uid' => $res->uid,
                 'nickname' => $user['nickname'],
@@ -178,7 +178,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 某些条件用户佣金总和
+     * Tổng hoa hồng người dùng theo một số điều kiện
      * @param array $where
      * @return mixed
      */
@@ -188,7 +188,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 根据条件获取用户指定字段列表
+     * Theo điều kiện, lấy danh sách trường chỉ định của người dùng
      * @param array $where
      * @param string $field
      * @param string $key
@@ -200,7 +200,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 获取某个用户的推广下线
+     * Lấy cấp dưới do một người dùng giới thiệu
      */
     public function getSpreadList($uid)
     {
@@ -210,14 +210,14 @@ class UserServices extends BaseServices
         [$page, $limit] = $this->getPageValue();
         $list = $this->dao->getList(['uid' => $uids], 'uid,nickname,real_name,avatar,add_time', $page, $limit);
         foreach ($list as $k => $user) {
-            $list[$k]['type'] = in_array($user['uid'], $one_uids) ? '一级' : '二级';
+            $list[$k]['type'] = in_array($user['uid'], $one_uids) ? 'Cấp 1' : 'Cấp 2';
             $list[$k]['add_time'] = date('Y-m-d', $user['add_time']);
         }
         $count = count($uids);
         return compact('count', 'list');
     }
 
-    /**查找多个uid信息
+    /**Tìm thông tin của nhiều uid
      * @param $uids
      * @param bool $field
      * @return UserDao|bool|\crmeb\basic\BaseModel|mixed|\think\Collection
@@ -229,7 +229,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 获取分销用户
+     * Lấy người dùng là cộng tác viên
      * @param array $where
      * @param string $field
      * @return array
@@ -242,7 +242,7 @@ class UserServices extends BaseServices
         $where_data['status'] = 1;
         $where_data['is_promoter'] = 1;
         $where_data['spread_open'] = 1;
-        //人人分销时  去除分销员字段的限制
+        //Khi ai cũng có thể là CTV tiếp thị liên kết, bỏ giới hạn trường cộng tác viên
         $store_brokerage_statu = sys_config('store_brokerage_statu');
         if ($store_brokerage_statu == 2) unset($where_data['is_promoter']);
         if (isset($where['nickname']) && $where['nickname'] !== '') {
@@ -258,7 +258,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 获取分销员ids
+     * Lấy các ID cộng tác viên (CTV)
      * @param array $where
      * @return array
      * @throws \ReflectionException
@@ -279,7 +279,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 获取推广人列表
+     * Lấy danh sách người giới thiệu
      * @param array $where
      * @param string $field
      * @param int $page
@@ -313,7 +313,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 获取推广人统计
+     * Lấy thống kê người giới thiệu
      * @param array $where
      * @param string $field
      * @param int $page
@@ -363,7 +363,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 写入用户信息
+     * Ghi thông tin người dùng
      * @param array $data
      * @return bool
      */
@@ -375,7 +375,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 重置密码
+     * Đặt lại mật khẩu
      * @param $id
      * @param string $password
      * @return mixed
@@ -388,7 +388,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 增加推广人数
+     * Tăng số người được giới thiệu
      * @param int $uid
      * @param int $num
      * @return bool
@@ -403,7 +403,7 @@ class UserServices extends BaseServices
 
 
     /**
-     * 设置用户登录类型
+     * Đặt loại đăng nhập người dùng
      * @param int $uid
      * @param string $type
      * @return bool
@@ -417,7 +417,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 设置推广员
+     * Đặt người giới thiệu
      * @param int $uid
      * @param int $is_promoter
      * @return bool
@@ -431,7 +431,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 设置用户分组
+     * Đặt nhóm người dùng
      * @param $uids
      * @param int $group_id
      */
@@ -441,7 +441,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 增加用户余额
+     * Tăng số dư người dùng
      * @param int $uid
      * @param float $old_now_money
      * @param float $now_money
@@ -456,7 +456,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 减少用户余额
+     * Giảm số dư người dùng
      * @param int $uid
      * @param float $old_now_money
      * @param float $now_money
@@ -476,7 +476,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 减少用户佣金
+     * Giảm hoa hồng người dùng
      * @param int $uid
      * @param float $brokerage_price
      * @param float $price
@@ -491,7 +491,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 增加用户积分
+     * Tăng điểm thưởng người dùng
      * @param int $uid
      * @param float $old_integral
      * @param float $integral
@@ -506,7 +506,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 减少用户积分
+     * Giảm điểm thưởng người dùng
      * @param int $uid
      * @param float $old_integral
      * @param float $integral
@@ -521,7 +521,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 增加用户经验
+     * Tăng điểm kinh nghiệm người dùng
      * @param int $uid
      * @param float $old_exp
      * @param float $exp
@@ -536,7 +536,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 减少用户经验
+     * Giảm điểm kinh nghiệm người dùng
      * @param int $uid
      * @param float $old_exp
      * @param float $exp
@@ -551,7 +551,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 获取用户标签
+     * Lấy nhãn người dùng
      * @param $uid
      * @return \think\Collection
      * @throws \think\db\exception\DataNotFoundException
@@ -576,7 +576,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 会员列表
+     * Danh sách thành viên
      * @param array $where
      * @return array
      */
@@ -601,40 +601,40 @@ class UserServices extends BaseServices
                         $item['addres'] = $item['country'] . $item['province'] . $item['city'];
                     }
                 }
-                $item['status'] = ($item['status'] == 1) ? '正常' : '禁止';
+                $item['status'] = ($item['status'] == 1) ? 'Bình thường' : 'Bị cấm';
                 $item['birthday'] = $item['birthday'] ? date('Y-m-d', (int)$item['birthday']) : '';
-                $item['extract_count_price'] = $userExtract[$item['uid']] ?? 0;//累计提现
-                $item['spread_uid_nickname'] = $item['spread_uid'] ? ($spread_names[$item['spread_uid']] ?? '') . '/' . $item['spread_uid'] : '无';
-                //用户类型
+                $item['extract_count_price'] = $userExtract[$item['uid']] ?? 0;//Tổng số tiền đã rút (lũy kế)
+                $item['spread_uid_nickname'] = $item['spread_uid'] ? ($spread_names[$item['spread_uid']] ?? '') . '/' . $item['spread_uid'] : 'Không có';
+                //Loại người dùng
                 if ($item['user_type'] == 'routine') {
-                    $item['user_type'] = '小程序';
+                    $item['user_type'] = 'Mini Program';
                 } else if ($item['user_type'] == 'wechat') {
-                    $item['user_type'] = '公众号';
+                    $item['user_type'] = 'OA WeChat';
                 } else if ($item['user_type'] == 'h5') {
                     $item['user_type'] = 'H5';
                 } else if ($item['user_type'] == 'pc') {
                     $item['user_type'] = 'PC';
                 } else if ($item['user_type'] == 'app' || $item['user_type'] == 'apple') {
                     $item['user_type'] = 'APP';
-                } else $item['user_type'] = '其他';
+                } else $item['user_type'] = 'Khác';
                 if ($item['sex'] == 1) {
-                    $item['sex'] = '男';
+                    $item['sex'] = 'Nam';
                 } else if ($item['sex'] == 2) {
-                    $item['sex'] = '女';
-                } else $item['sex'] = '保密';
-                //等级名称
-                $item['level'] = $levelName[$item['level']] ?? '无';
-                //分组名称
-                $item['group_id'] = $userGroup[$item['group_id']] ?? '无';
-                //用户等级
+                    $item['sex'] = 'Nữ';
+                } else $item['sex'] = 'Không công khai';
+                //Tên cấp bậc
+                $item['level'] = $levelName[$item['level']] ?? 'Không có';
+                //Tên nhóm
+                $item['group_id'] = $userGroup[$item['group_id']] ?? 'Không có';
+                //Hạng người dùng
                 $item['vip_name'] = false;
                 $levelInfo = $userLevel[$item['uid']] ?? null;
                 if ($levelInfo) {
                     if ($levelInfo && ($levelInfo['is_forever'] || time() < $levelInfo['valid_time'])) {
-                        $item['vip_name'] = $item['level'] != '无' ? $item['level'] : false;
+                        $item['vip_name'] = $item['level'] != 'Không có' ? $item['level'] : false;
                     }
                 }
-                $item['agent_level_name'] = $agentLevel[$item['agent_level']] ?? '无';
+                $item['agent_level_name'] = $agentLevel[$item['agent_level']] ?? 'Không có';
                 $item['labels'] = $userlabel[$item['uid']] ?? '';
                 $item['isMember'] = $item['is_money_level'] > 0 ? 1 : 0;
                 if (strpos($item['avatar'], '/statics/system_images/') !== false) {
@@ -647,7 +647,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 获取修改页面数据
+     * Lấy dữ liệu trang sửa
      * @param int $id
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -658,18 +658,18 @@ class UserServices extends BaseServices
         if (!$user)
             throw new AdminException(100026);
         $f = array();
-        $f[] = Form::input('uid', '用户编号', $user->getData('uid'))->disabled(true);
-        $f[] = Form::input('real_name', '真实姓名', $user->getData('real_name'));
-        $f[] = Form::input('phone', '手机号码', $user->getData('phone'));
+        $f[] = Form::input('uid', 'ID người dùng', $user->getData('uid'))->disabled(true);
+        $f[] = Form::input('real_name', 'Họ tên', $user->getData('real_name'));
+        $f[] = Form::input('phone', 'Số điện thoại', $user->getData('phone'));
 
-        $f[] = Form::date('birthday', '生日', $user->getData('birthday') ? date('Y-m-d', $user->getData('birthday')) : '');
-        $f[] = Form::input('card_id', '身份证号', $user->getData('card_id'));
-        $f[] = Form::input('addres', '用户地址', $user->getData('addres'));
-        $f[] = Form::textarea('mark', '用户备注', $user->getData('mark'));
-        $f[] = Form::input('pwd', '登录密码')->type('password')->placeholder('不改密码请留空');
-        $f[] = Form::input('true_pwd', '确认密码')->type('password')->placeholder('不改密码请留空');
+        $f[] = Form::date('birthday', 'Ngày sinh', $user->getData('birthday') ? date('Y-m-d', $user->getData('birthday')) : '');
+        $f[] = Form::input('card_id', 'Số CCCD/CMND', $user->getData('card_id'));
+        $f[] = Form::input('addres', 'Địa chỉ người dùng', $user->getData('addres'));
+        $f[] = Form::textarea('mark', 'Ghi chú của người dùng', $user->getData('mark'));
+        $f[] = Form::input('pwd', 'Mật khẩu đăng nhập')->type('password')->placeholder('Để trống nếu không đổi mật khẩu');
+        $f[] = Form::input('true_pwd', 'Xác nhận mật khẩu')->type('password')->placeholder('Để trống nếu không đổi mật khẩu');
 
-        //查询高于当前会员的所有会员等级
+        //Truy vấn tất cả hạng thành viên cao hơn hạng hiện tại
 //        $grade = app()->make(UserLevelServices::class)->getUerLevelInfoByUid($id, 'grade');
         $systemLevelList = app()->make(SystemUserLevelServices::class)->getWhereLevelList([], 'id,name');
         $setOptionLevel = function () use ($systemLevelList) {
@@ -679,7 +679,7 @@ class UserServices extends BaseServices
             }
             return $menus;
         };
-        $f[] = Form::select('level', '用户等级', (int)$user->getData('level'))->setOptions(FormBuilder::setOptions($setOptionLevel))->filterable(true);
+        $f[] = Form::select('level', 'Hạng người dùng', (int)$user->getData('level'))->setOptions(FormBuilder::setOptions($setOptionLevel))->filterable(true);
         $systemGroupList = app()->make(UserGroupServices::class)->getGroupList();
         $setOptionGroup = function () use ($systemGroupList) {
             $menus = [];
@@ -688,7 +688,7 @@ class UserServices extends BaseServices
             }
             return $menus;
         };
-        $f[] = Form::select('group_id', '用户分组', $user->getData('group_id'))->setOptions(FormBuilder::setOptions($setOptionGroup))->filterable(true);
+        $f[] = Form::select('group_id', 'Nhóm người dùng', $user->getData('group_id'))->setOptions(FormBuilder::setOptions($setOptionGroup))->filterable(true);
         $systemLabelList = app()->make(UserLabelServices::class)->getLabelList();
         $labels = app()->make(UserLabelRelationServices::class)->getUserLabels($user['uid']);
         $setOptionLabel = function () use ($systemLabelList) {
@@ -698,19 +698,19 @@ class UserServices extends BaseServices
             }
             return $menus;
         };
-        $f[] = Form::select('label_id', '用户标签', $labels)->setOptions(FormBuilder::setOptions($setOptionLabel))->filterable(true)->multiple(true);
-        $f[] = Form::radio('spread_open', '推广资格', $user->getData('spread_open'))->info('禁用用户的推广资格后，在任何分销模式下该用户都无分销权限')->options([['value' => 1, 'label' => '启用'], ['value' => 0, 'label' => '禁用']]);
-        //分销模式  人人分销
+        $f[] = Form::select('label_id', 'Nhãn người dùng', $labels)->setOptions(FormBuilder::setOptions($setOptionLabel))->filterable(true)->multiple(true);
+        $f[] = Form::radio('spread_open', 'Tư cách cộng tác viên', $user->getData('spread_open'))->info('Sau khi vô hiệu hóa tư cách cộng tác viên của người dùng, người dùng này sẽ không có quyền tiếp thị liên kết trong bất kỳ chế độ tiếp thị liên kết nào')->options([['value' => 1, 'label' => 'Kích hoạt'], ['value' => 0, 'label' => 'Vô hiệu hóa']]);
+        //Chế độ tiếp thị liên kết - ai cũng có thể là CTV
         $storeBrokerageStatus = sys_config('store_brokerage_statu', 1);
         if ($storeBrokerageStatus == 1) {
-            $f[] = Form::radio('is_promoter', '推广员权限', $user->getData('is_promoter'))->info('指定分销模式下，开启或关闭用户的推广权限')->options([['value' => 1, 'label' => '开启'], ['value' => 0, 'label' => '关闭']]);
+            $f[] = Form::radio('is_promoter', 'Quyền cộng tác viên', $user->getData('is_promoter'))->info('Trong chế độ tiếp thị liên kết chỉ định, bật hoặc tắt quyền giới thiệu của người dùng')->options([['value' => 1, 'label' => 'Bật'], ['value' => 0, 'label' => 'Tắt']]);
         }
-        $f[] = Form::radio('status', '用户状态', $user->getData('status'))->options([['value' => 1, 'label' => '开启'], ['value' => 0, 'label' => '锁定']]);
-        return create_form('编辑', $f, Url::buildUrl('/user/user/' . $id), 'PUT');
+        $f[] = Form::radio('status', 'Trạng thái người dùng', $user->getData('status'))->options([['value' => 1, 'label' => 'Bật'], ['value' => 0, 'label' => 'Khóa']]);
+        return create_form('Sửa', $f, Url::buildUrl('/user/user/' . $id), 'PUT');
     }
 
     /**
-     * 添加用户表单
+     * Form thêm người dùng
      * @param int $id
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -718,14 +718,14 @@ class UserServices extends BaseServices
     public function saveForm()
     {
         $f = array();
-        $f[] = Form::input('real_name', '真实姓名', '')->placeholder('请输入真实姓名');
-        $f[] = Form::input('phone', '手机号码', '')->placeholder('请输入手机号码')->required();
-        $f[] = Form::date('birthday', '生日', '')->placeholder('请选择生日');
-        $f[] = Form::input('card_id', '身份证号', '')->placeholder('请输入身份证号');
-        $f[] = Form::input('addres', '用户地址', '')->placeholder('请输入用户地址');
-        $f[] = Form::textarea('mark', '用户备注', '')->placeholder('请输入用户备注');
-        $f[] = Form::input('pwd', '登录密码')->type('password')->placeholder('请输入登录密码');
-        $f[] = Form::input('true_pwd', '确认密码')->type('password')->placeholder('请再次确认密码');
+        $f[] = Form::input('real_name', 'Họ tên', '')->placeholder('Vui lòng nhập họ tên');
+        $f[] = Form::input('phone', 'Số điện thoại', '')->placeholder('Vui lòng nhập số điện thoại')->required();
+        $f[] = Form::date('birthday', 'Ngày sinh', '')->placeholder('Vui lòng chọn ngày sinh');
+        $f[] = Form::input('card_id', 'Số CCCD/CMND', '')->placeholder('Vui lòng nhập số CCCD/CMND');
+        $f[] = Form::input('addres', 'Địa chỉ người dùng', '')->placeholder('Vui lòng nhập địa chỉ người dùng');
+        $f[] = Form::textarea('mark', 'Ghi chú của người dùng', '')->placeholder('Vui lòng nhập ghi chú người dùng');
+        $f[] = Form::input('pwd', 'Mật khẩu đăng nhập')->type('password')->placeholder('Vui lòng nhập mật khẩu đăng nhập');
+        $f[] = Form::input('true_pwd', 'Xác nhận mật khẩu')->type('password')->placeholder('Vui lòng xác nhận lại mật khẩu');
         $systemLevelList = app()->make(SystemUserLevelServices::class)->getWhereLevelList([], 'id,name');
         $setOptionLevel = function () use ($systemLevelList) {
             $menus = [];
@@ -734,7 +734,7 @@ class UserServices extends BaseServices
             }
             return $menus;
         };
-        $f[] = Form::select('level', '用户等级', '')->setOptions(FormBuilder::setOptions($setOptionLevel))->filterable(true);
+        $f[] = Form::select('level', 'Hạng người dùng', '')->setOptions(FormBuilder::setOptions($setOptionLevel))->filterable(true);
         $systemGroupList = app()->make(UserGroupServices::class)->getGroupList();
         $setOptionGroup = function () use ($systemGroupList) {
             $menus = [];
@@ -743,7 +743,7 @@ class UserServices extends BaseServices
             }
             return $menus;
         };
-        $f[] = Form::select('group_id', '用户分组', '')->setOptions(FormBuilder::setOptions($setOptionGroup))->filterable(true);
+        $f[] = Form::select('group_id', 'Nhóm người dùng', '')->setOptions(FormBuilder::setOptions($setOptionGroup))->filterable(true);
         $systemLabelList = app()->make(UserLabelServices::class)->getLabelList();
         $setOptionLabel = function () use ($systemLabelList) {
             $menus = [];
@@ -752,19 +752,19 @@ class UserServices extends BaseServices
             }
             return $menus;
         };
-        $f[] = Form::select('label_id', '用户标签', '')->setOptions(FormBuilder::setOptions($setOptionLabel))->filterable(true)->multiple(true);
-        $f[] = Form::radio('spread_open', '推广资格', 1)->info('禁用用户的推广资格后，在任何分销模式下该用户都无分销权限')->options([['value' => 1, 'label' => '启用'], ['value' => 0, 'label' => '禁用']]);
-        //分销模式  人人分销
+        $f[] = Form::select('label_id', 'Nhãn người dùng', '')->setOptions(FormBuilder::setOptions($setOptionLabel))->filterable(true)->multiple(true);
+        $f[] = Form::radio('spread_open', 'Tư cách cộng tác viên', 1)->info('Sau khi vô hiệu hóa tư cách cộng tác viên của người dùng, người dùng này sẽ không có quyền tiếp thị liên kết trong bất kỳ chế độ tiếp thị liên kết nào')->options([['value' => 1, 'label' => 'Kích hoạt'], ['value' => 0, 'label' => 'Vô hiệu hóa']]);
+        //Chế độ tiếp thị liên kết - ai cũng có thể là CTV
         $storeBrokerageStatus = sys_config('store_brokerage_statu', 1);
         if ($storeBrokerageStatus == 1) {
-            $f[] = Form::radio('is_promoter', '推广员权限', 0)->info('指定分销模式下，开启或关闭用户的推广权限')->options([['value' => 1, 'label' => '开启'], ['value' => 0, 'label' => '关闭']]);
+            $f[] = Form::radio('is_promoter', 'Quyền cộng tác viên', 0)->info('Trong chế độ tiếp thị liên kết chỉ định, bật hoặc tắt quyền giới thiệu của người dùng')->options([['value' => 1, 'label' => 'Bật'], ['value' => 0, 'label' => 'Tắt']]);
         }
-        $f[] = Form::radio('status', '用户状态', 1)->options([['value' => 1, 'label' => '开启'], ['value' => 0, 'label' => '锁定']]);
-        return create_form('添加用户', $f, $this->url('/user/user'), 'POST');
+        $f[] = Form::radio('status', 'Trạng thái người dùng', 1)->options([['value' => 1, 'label' => 'Bật'], ['value' => 0, 'label' => 'Khóa']]);
+        return create_form('Thêm người dùng', $f, $this->url('/user/user'), 'POST');
     }
 
     /**
-     * 修改提交处理
+     * Xử lý gửi sửa
      * @param int $id
      * @param array $data
      * @return bool
@@ -781,13 +781,13 @@ class UserServices extends BaseServices
         $res1 = false;
         $res2 = false;
         $edit = array();
-        if ($data['money_status'] && $data['money']) {//余额增加或者减少
+        if ($data['money_status'] && $data['money']) {//Số dư tăng hoặc giảm
             /** @var UserMoneyServices $userMoneyServices */
             $userMoneyServices = app()->make(UserMoneyServices::class);
-            if ($data['money_status'] == 1) {//增加
+            if ($data['money_status'] == 1) {//Tăng
                 $edit['now_money'] = bcadd($user['now_money'], $data['money'], 2);
                 $res1 = $userMoneyServices->income('system_add', $user['uid'], $data['money'], $edit['now_money'], $data['adminId'] ?? 0);
-                //增加充值记录
+                //Thêm bản ghi nạp tiền
                 $recharge_data = [
                     'order_id' => app()->make(StoreOrderCreateServices::class)->getNewOrderId('cz'),
                     'uid' => $id,
@@ -802,7 +802,7 @@ class UserServices extends BaseServices
                 /** @var UserRechargeServices $rechargeServices */
                 $rechargeServices = app()->make(UserRechargeServices::class);
                 $rechargeServices->save($recharge_data);
-            } else if ($data['money_status'] == 2) {//减少
+            } else if ($data['money_status'] == 2) {//Giảm
                 if ($user['now_money'] > $data['money']) {
                     $edit['now_money'] = bcsub($user['now_money'], $data['money'], 2);
                 } else {
@@ -815,28 +815,28 @@ class UserServices extends BaseServices
         } else {
             $res1 = true;
         }
-        if ($data['integration_status'] && $data['integration']) {//积分增加或者减少
+        if ($data['integration_status'] && $data['integration']) {//Điểm thưởng tăng hoặc giảm
             /** @var UserBillServices $userBill */
             $userBill = app()->make(UserBillServices::class);
             $integral_data = ['link_id' => $data['adminId'] ?? 0, 'number' => $data['integration']];
-            if ($data['integration_status'] == 1) {//增加
+            if ($data['integration_status'] == 1) {//Tăng
                 $edit['integral'] = bcadd($user['integral'], $data['integration'], 2);
                 $integral_data['balance'] = $edit['integral'];
-                $integral_data['title'] = '系统增加积分';
-                $integral_data['mark'] = '系统增加了' . floatval($data['integration']) . '积分';
+                $integral_data['title'] = 'Hệ thống cộng điểm thưởng';
+                $integral_data['mark'] = 'Hệ thống đã cộng' . floatval($data['integration']) . 'Điểm thưởng';
                 $res2 = $userBill->incomeIntegral($user['uid'], 'system_add', $integral_data);
-            } else if ($data['integration_status'] == 2) {//减少
+            } else if ($data['integration_status'] == 2) {//Giảm
                 $edit['integral'] = bcsub($user['integral'], $data['integration'], 2);
                 $integral_data['balance'] = $edit['integral'];
-                $integral_data['title'] = '系统减少积分';
-                $integral_data['mark'] = '系统扣除了' . floatval($data['integration']) . '积分';
+                $integral_data['title'] = 'Hệ thống trừ điểm thưởng';
+                $integral_data['mark'] = 'Hệ thống đã trừ' . floatval($data['integration']) . 'Điểm thưởng';
                 $res2 = $userBill->expendIntegral($user['uid'], 'system_sub', $integral_data);
             }
             event('OutPushListener', ['user_update_push', ['uid' => $id, 'type' => 'point', 'value' => $data['integration_status'] == 2 ? -intval($data['integration']) : $data['integration']]]);
         } else {
             $res2 = true;
         }
-        //修改基本信息
+        //Sửa thông tin cơ bản
         if (!isset($data['is_other']) || !$data['is_other']) {
             app()->make(UserLabelRelationServices::class)->setUserLable([$id], $data['label_id']);
             if (isset($data['pwd']) && $data['pwd'] && $data['pwd'] != $user['pwd']) {
@@ -873,7 +873,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 编辑其他
+     * Sửa thông tin khác
      * @param $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -886,17 +886,17 @@ class UserServices extends BaseServices
         }
         $f = array();
         if ($type == 'money') {
-            $f[] = Form::radio('money_status', '修改余额', 1)->options([['value' => 1, 'label' => '增加'], ['value' => 2, 'label' => '减少']]);
-            $f[] = Form::number('money', '余额', 0)->min(0)->max(999999.99);
+            $f[] = Form::radio('money_status', 'Chỉnh sửa số dư', 1)->options([['value' => 1, 'label' => 'Tăng'], ['value' => 2, 'label' => 'Giảm']]);
+            $f[] = Form::number('money', 'Số dư', 0)->min(0)->max(999999.99);
         } else {
-            $f[] = Form::radio('integration_status', '修改积分', 1)->options([['value' => 1, 'label' => '增加'], ['value' => 2, 'label' => '减少']]);
-            $f[] = Form::number('integration', '积分', 0)->min(0)->precision(0)->max(999999);
+            $f[] = Form::radio('integration_status', 'Chỉnh sửa điểm thưởng', 1)->options([['value' => 1, 'label' => 'Tăng'], ['value' => 2, 'label' => 'Giảm']]);
+            $f[] = Form::number('integration', 'Điểm thưởng', 0)->min(0)->precision(0)->max(999999);
         }
-        return create_form('修改其他', $f, Url::buildUrl('/user/update_other/' . $id), 'PUT');
+        return create_form('Sửa thông tin khác', $f, Url::buildUrl('/user/update_other/' . $id), 'PUT');
     }
 
     /**
-     * 设置会员分组
+     * Thiết lập nhóm thành viên
      * @param $id
      * @return mixed
      */
@@ -914,7 +914,7 @@ class UserServices extends BaseServices
                 }
                 return $menus;
             };
-            $field[] = Form::select('group_id', '用户分组', $user->getData('group_id') != 0 ? $user->getData('group_id') : '')->setOptions(FormBuilder::setOptions($setOptionUserGroup))->filterable(true);
+            $field[] = Form::select('group_id', 'Nhóm người dùng', $user->getData('group_id') != 0 ? $user->getData('group_id') : '')->setOptions(FormBuilder::setOptions($setOptionUserGroup))->filterable(true);
         } else {
             $setOptionUserGroup = function () use ($userGroup) {
                 $menus = [];
@@ -923,14 +923,14 @@ class UserServices extends BaseServices
                 }
                 return $menus;
             };
-            $field[] = Form::select('group_id', '用户分组')->setOptions(FormBuilder::setOptions($setOptionUserGroup))->filterable(true);
+            $field[] = Form::select('group_id', 'Nhóm người dùng')->setOptions(FormBuilder::setOptions($setOptionUserGroup))->filterable(true);
         }
         $field[] = Form::hidden('uids', implode(',', $uids));
-        return create_form('设置用户分组', $field, Url::buildUrl('/user/save_set_group'), 'PUT');
+        return create_form('Đặt nhóm người dùng', $field, Url::buildUrl('/user/save_set_group'), 'PUT');
     }
 
     /**
-     * 保存会员分组
+     * Lưu nhóm thành viên
      * @param $id
      * @return mixed
      */
@@ -948,7 +948,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 设置用户标签
+     * Đặt nhãn người dùng
      * @param $uids
      * @return mixed
      */
@@ -966,7 +966,7 @@ class UserServices extends BaseServices
                 }
                 return $menus;
             };
-            $field[] = Form::select('label_id', '用户标签', $lids)->setOptions(FormBuilder::setOptions($setOptionUserLabel))->filterable(true)->multiple(true);
+            $field[] = Form::select('label_id', 'Nhãn người dùng', $lids)->setOptions(FormBuilder::setOptions($setOptionUserLabel))->filterable(true)->multiple(true);
         } else {
             $setOptionUserLabel = function () use ($userLabel) {
                 $menus = [];
@@ -975,14 +975,14 @@ class UserServices extends BaseServices
                 }
                 return $menus;
             };
-            $field[] = Form::select('label_id', '用户标签')->setOptions(FormBuilder::setOptions($setOptionUserLabel))->filterable(true)->multiple(true);
+            $field[] = Form::select('label_id', 'Nhãn người dùng')->setOptions(FormBuilder::setOptions($setOptionUserLabel))->filterable(true)->multiple(true);
         }
         $field[] = Form::hidden('uids', implode(',', $uids));
-        return create_form('设置用户标签', $field, Url::buildUrl('/user/save_set_label'), 'PUT');
+        return create_form('Đặt nhãn người dùng', $field, Url::buildUrl('/user/save_set_label'), 'PUT');
     }
 
     /**
-     * 保存用户标签
+     * Lưu nhãn người dùng
      * @return mixed
      */
     public function saveSetLabel($uids, $lable_id)
@@ -1001,7 +1001,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 赠送会员等级
+     * Tặng hạng thành viên
      * @param int $uid
      * @return mixed
      * */
@@ -1010,7 +1010,7 @@ class UserServices extends BaseServices
         if (!$this->getUserInfo($id)) {
             throw new AdminException(400214);
         }
-        //查询高于当前会员的所有会员等级
+        //Truy vấn tất cả hạng thành viên cao hơn hạng hiện tại
         $grade = app()->make(UserLevelServices::class)->getUerLevelInfoByUid($id, 'grade');
         $systemLevelList = app()->make(SystemUserLevelServices::class)->getWhereLevelList(['grade', '>', $grade ?? 0], 'id,name');
 
@@ -1021,12 +1021,12 @@ class UserServices extends BaseServices
             }
             return $menus;
         };
-        $field[] = Form::select('level_id', '用户等级')->setOptions(FormBuilder::setOptions($setOptionlevel))->filterable(true);
-        return create_form('赠送等级', $field, Url::buildUrl('/user/save_give_level/' . $id), 'PUT');
+        $field[] = Form::select('level_id', 'Hạng người dùng')->setOptions(FormBuilder::setOptions($setOptionlevel))->filterable(true);
+        return create_form('Tặng hạng', $field, Url::buildUrl('/user/save_give_level/' . $id), 'PUT');
     }
 
     /**
-     * 执行赠送会员等级
+     * Thực hiện tặng hạng thành viên
      * @param int $id
      * @param int $level_id
      * @return mixed
@@ -1043,15 +1043,15 @@ class UserServices extends BaseServices
         $systemLevelServices = app()->make(SystemUserLevelServices::class);
         /** @var UserLevelServices $userLevelServices */
         $userLevelServices = app()->make(UserLevelServices::class);
-        //查询当前选择的会员等级
+        //Truy vấn hạng thành viên đang được chọn
         $systemLevel = $systemLevelServices->getLevel($level_id);
         if (!$systemLevel) throw new AdminException(400699);
-        //检查是否拥有此会员等级
+        //Kiểm tra có đang sở hữu hạng thành viên này không
         $level = $userLevelServices->getWhereLevel(['uid' => $id, 'level_id' => $level_id], 'valid_time,is_forever');
         if ($level && $level['status'] == 1 && $level['is_del'] == 0) {
             throw new AdminException(400700);
         }
-        //保存会员信息
+        //Lưu thông tin thành viên
         if (!$userLevelServices->setUserLevel($id, $level_id, $systemLevel)) {
             throw new AdminException(400219);
         }
@@ -1059,11 +1059,11 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 赠送付费会员时长
+     * Tặng thời hạn thành viên trả phí
      * @param $id
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/03/01
      */
@@ -1074,21 +1074,21 @@ class UserServices extends BaseServices
             throw new AdminException(400214);
         }
         if ($userInfo['is_ever_level'] == 1) {
-            $timeDiff = '永久';
+            $timeDiff = 'Vĩnh viễn';
         } else {
-            $timeDiff = $userInfo['overdue_time'] < time() ? '无' : date('Y-m-d H:i:s', $userInfo['overdue_time']);
+            $timeDiff = $userInfo['overdue_time'] < time() ? 'Không có' : date('Y-m-d H:i:s', $userInfo['overdue_time']);
         }
         $dayDiff = $userInfo['overdue_time'] > time() ? intval(($userInfo['overdue_time'] - time()) / 86400) : 0;
-        $field[] = Form::input('time_diff', '到期时间', $timeDiff)->readonly(true);
+        $field[] = Form::input('time_diff', 'Thời gian hết hạn', $timeDiff)->readonly(true);
         if ($userInfo['is_ever_level'] == 0) {
-            $field[] = Form::input('day_diff', '剩余天数', $dayDiff)->readonly(true);
-            $field[] = Form::number('days', '增加时长(天)')->precision(0)->required();
+            $field[] = Form::input('day_diff', 'Số ngày còn lại', $dayDiff)->readonly(true);
+            $field[] = Form::number('days', 'Thời gian thêm (ngày)')->precision(0)->required();
         }
-        return create_form('赠送付费会员时长', $field, Url::buildUrl('/user/save_give_level_time/' . $id), 'PUT');
+        return create_form('Tặng thời hạn thành viên trả phí', $field, Url::buildUrl('/user/save_give_level_time/' . $id), 'PUT');
     }
 
     /**
-     * 执行赠送付费会员时长
+     * Thực hiện tặng thời hạn thành viên trả phí
      * @param int $id
      * @param int $days
      * @return mixed
@@ -1146,7 +1146,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 清除会员等级
+     * Xóa hạng thành viên
      * @paran int $uid
      * @paran boolean
      * */
@@ -1166,7 +1166,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 用户详细信息
+     * Thông tin chi tiết người dùng
      * @param int $uid
      * @param array $userIfno
      * @return array
@@ -1186,24 +1186,24 @@ class UserServices extends BaseServices
         }
         $userInfo = $this->getUserInfo($uid);
         return [
-            ['name' => '默认收货地址', 'value' => $address ? '收货人:' . $address['real_name'] . '邮编:' . $address['post_code'] . ' 收货人电话:' . $address['phone'] . ' 地址:' . $address['province'] . ' ' . $address['city'] . ' ' . $address['district'] . ' ' . $address['detail'] : ''],
-            ['name' => '手机号码', 'value' => $userInfo['phone']],
-            ['name' => '姓名', 'value' => ''],
-            ['name' => '微信昵称', 'value' => $userInfo['nickname']],
-            ['name' => '头像', 'value' => $userInfo['avatar']],
-            ['name' => '邮箱', 'value' => ''],
-            ['name' => '生日', 'value' => ''],
-            ['name' => '积分', 'value' => $userInfo['integral']],
-            ['name' => '上级推广人', 'value' => $userInfo['spread_uid'] ? $this->getUserInfo($userInfo['spread_uid'], ['nickname'])['nickname'] ?? '' : ''],
-            ['name' => '账户余额', 'value' => $userInfo['now_money']],
-            ['name' => '佣金总收入', 'value' => app()->make(UserBillServices::class)->getBrokerageSum($uid)],
-            ['name' => '提现总金额', 'value' => app()->make(UserExtractServices::class)->getUserExtract($uid)],
+            ['name' => 'Địa chỉ nhận hàng mặc định', 'value' => $address ? 'Người nhận:' . $address['real_name'] . 'Mã bưu chính:' . $address['post_code'] . ' Số điện thoại người nhận:' . $address['phone'] . ' Địa chỉ:' . $address['province'] . ' ' . $address['city'] . ' ' . $address['district'] . ' ' . $address['detail'] : ''],
+            ['name' => 'Số điện thoại', 'value' => $userInfo['phone']],
+            ['name' => 'Họ tên', 'value' => ''],
+            ['name' => 'Biệt danh WeChat', 'value' => $userInfo['nickname']],
+            ['name' => 'Ảnh đại diện', 'value' => $userInfo['avatar']],
+            ['name' => 'Email', 'value' => ''],
+            ['name' => 'Ngày sinh', 'value' => ''],
+            ['name' => 'Điểm thưởng', 'value' => $userInfo['integral']],
+            ['name' => 'Người giới thiệu cấp trên', 'value' => $userInfo['spread_uid'] ? $this->getUserInfo($userInfo['spread_uid'], ['nickname'])['nickname'] ?? '' : ''],
+            ['name' => 'Số dư tài khoản', 'value' => $userInfo['now_money']],
+            ['name' => 'Tổng thu nhập hoa hồng', 'value' => app()->make(UserBillServices::class)->getBrokerageSum($uid)],
+            ['name' => 'Tổng số tiền đã rút', 'value' => app()->make(UserExtractServices::class)->getUserExtract($uid)],
         ];
 
     }
 
     /**
-     * 获取用户详情里面的用户消费能力和用户余额积分等
+     * Lấy khả năng chi tiêu, số dư, điểm thưởng... của người dùng trong trang chi tiết người dùng
      * @param $uid
      * @return array[]
      */
@@ -1217,41 +1217,41 @@ class UserServices extends BaseServices
         $where = ['uid' => $uid, 'paid' => 1, 'refund_status' => 0, 'pid' => 0];
         return [
             [
-                'title' => '余额',
+                'title' => 'Số dư',
                 'value' => $userInfo['now_money'] ?? 0,
-                'key' => '元',
+                'key' => 'đ',
             ],
             [
-                'title' => '总计订单',
+                'title' => 'Tổng số đơn hàng',
                 'value' => $orderServices->count($where),
-                'key' => '笔',
+                'key' => 'đơn',
             ],
             [
-                'title' => '总消费金额',
+                'title' => 'Tổng chi tiêu',
                 'value' => $orderServices->together($where, 'pay_price'),
-                'key' => '元',
+                'key' => 'đ',
             ],
             [
-                'title' => '积分',
+                'title' => 'Điểm thưởng',
                 'value' => $userInfo['integral'] ?? 0,
                 'key' => '',
             ],
             [
-                'title' => '本月订单',
+                'title' => 'Đơn hàng tháng này',
                 'value' => $orderServices->count($where + ['time' => 'month']),
-                'key' => '笔',
+                'key' => 'đơn',
             ],
             [
-                'title' => '本月消费金额',
+                'title' => 'Chi tiêu tháng này',
                 'value' => $orderServices->together($where + ['time' => 'month'], 'pay_price'),
-                'key' => '元',
+                'key' => 'đ',
             ]
         ];
     }
 
 
     /**
-     * 获取用户记录里的积分总数和签到总数和余额变动总数
+     * Lấy tổng điểm thưởng, tổng số lần điểm danh và tổng biến động số dư trong bản ghi người dùng
      * @param $uid
      * @return array
      */
@@ -1266,7 +1266,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 用户详情
+     * Chi tiết người dùng
      * @param int $uid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -1304,7 +1304,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 获取好友
+     * Lấy bạn bè
      * @param int $id
      * @param string $field
      * @return array
@@ -1321,7 +1321,7 @@ class UserServices extends BaseServices
         $systemLevelList = $systemLevelServices->getWhereLevelList([], 'id,name');
         if ($systemLevelServices) $systemLevelServices = array_combine(array_column($systemLevelList, 'id'), $systemLevelList);
         foreach ($list as &$item) {
-            $item['type'] = $systemLevelServices[$item['level']]['name'] ?? '暂无';
+            $item['type'] = $systemLevelServices[$item['level']]['name'] ?? 'Chưa có';
             $item['add_time'] = $item['spread_time'] && is_numeric($item['spread_time']) ? date('Y-m-d H:i:s', $item['spread_time']) : '';
         }
         $count = $this->dao->count(['spread_uid' => $id]);
@@ -1329,8 +1329,8 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 获取单个用户信息
-     * @param $id 用户id
+     * Lấy thông tin một người dùng
+     * @param $id id người dùng
      * @return mixed
      */
     public function oneUserInfo(int $id, string $type)
@@ -1366,7 +1366,7 @@ class UserServices extends BaseServices
         }
     }
 
-    /**获取特定时间用户访问量
+    /**Lấy lượt truy cập của người dùng trong thời gian cụ thể
      * @param $time
      * @param $week
      * @return int
@@ -1376,7 +1376,7 @@ class UserServices extends BaseServices
         return $this->dao->todayLastVisit($time, $week);
     }
 
-    /**获取特定时间新增用户
+    /**Lấy người dùng mới trong khoảng thời gian cụ thể
      * @param $time
      * @param $week
      * @return int
@@ -1387,7 +1387,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 用户图表
+     * Biểu đồ người dùng
      */
     public function userChart()
     {
@@ -1397,10 +1397,10 @@ class UserServices extends BaseServices
         $user_list = $this->dao->userList($starday, $yesterday);
         $chartdata = [];
         $data = [];
-        $chartdata['legend'] = ['用户数'];//分类
-        $chartdata['yAxis']['maxnum'] = 0;//最大值数量
-        $chartdata['xAxis'] = [date('m-d')];//X轴值
-        $chartdata['series'] = [0];//分类1值
+        $chartdata['legend'] = ['Số người dùng'];//Danh mục
+        $chartdata['yAxis']['maxnum'] = 0;//Số lượng giá trị lớn nhất
+        $chartdata['xAxis'] = [date('m-d')];//Giá trị trục X
+        $chartdata['series'] = [0];//Giá trị nhóm 1
         if (!empty($user_list)) {
             foreach ($user_list as $k => $v) {
                 $data['day'][] = $v['day'];
@@ -1408,10 +1408,10 @@ class UserServices extends BaseServices
                 if ($chartdata['yAxis']['maxnum'] < $v['count'])
                     $chartdata['yAxis']['maxnum'] = $v['count'];
             }
-            $chartdata['xAxis'] = $data['day'];//X轴值
-            $chartdata['series'] = $data['count'];//分类1值
+            $chartdata['xAxis'] = $data['day'];//Giá trị trục X
+            $chartdata['series'] = $data['count'];//Giá trị nhóm 1
         }
-        $chartdata['bing_xdata'] = ['未消费用户', '消费一次用户', '留存客户', '回流客户'];
+        $chartdata['bing_xdata'] = ['Người dùng chưa mua hàng', 'Người dùng mua 1 lần', 'Khách hàng duy trì', 'Khách hàng quay lại'];
         $color = ['#5cadff', '#b37feb', '#19be6b', '#ff9900'];
         $pay[0] = $this->dao->count(['pay_count' => 0]);
         $pay[1] = $this->dao->count(['pay_count' => 1]);
@@ -1425,11 +1425,11 @@ class UserServices extends BaseServices
     }
 
     /***********************************************/
-    /************ 前端api services *****************/
+    /************ api services frontend *****************/
     /***********************************************/
 
     /**
-     * 用户信息
+     * Thông tin người dùng
      * @param $info
      * @return mixed
      */
@@ -1440,12 +1440,12 @@ class UserServices extends BaseServices
         $uid = (int)$info['uid'];
         $broken_time = intval(sys_config('extract_time'));
         $search_time = time() - 86400 * $broken_time;
-        //改造时间
+        //Thời gian chuyển đổi
         $search_time = '1970/01/01' . ' - ' . date('Y/m/d H:i:s', $search_time);
-        //可提现佣金
-        //返佣 +
+        //Hoa hồng có thể rút
+        //Trả hoa hồng +
         $brokerage_commission = (string)$userBill->getUsersBokerageSum(['uid' => $uid, 'pm' => 1], $search_time);
-        //退款退的佣金 -
+        //Hoa hồng bị trừ do hoàn tiền -
         $refund_commission = (string)$userBill->getUsersBokerageSum(['uid' => $uid, 'pm' => 0], $search_time);
         $info['broken_commission'] = bcsub($brokerage_commission, $refund_commission, 2);
         if ($info['broken_commission'] < 0)
@@ -1457,7 +1457,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 个人中心
+     * Trang cá nhân
      * @param array $user
      */
     public function personalHome(array $user, $tokenData)
@@ -1490,7 +1490,7 @@ class UserServices extends BaseServices
         $diyServices = app()->make(DiyServices::class);
         /** @var AgentLevelServices $agentLevelServices */
         $agentLevelServices = app()->make(AgentLevelServices::class);
-        //看付费会员是否开启
+        //Kiểm tra thành viên trả phí có mở hay không
         $isOpenMember = $memberCardService->isOpenMemberCard();
         $user['is_open_member'] = $isOpenMember;
         $user['agent_level_name'] = '';
@@ -1505,9 +1505,9 @@ class UserServices extends BaseServices
             }
             $user['agent_level_name'] = $levelInfo && $levelInfo['name'] && $levelInfo['status'] ? $levelInfo['name'] : '';
         }
-        //会员领取优惠券
+        //Thành viên nhận phiếu giảm giá
         // $couponService->sendMemberCoupon($uid);
-        //看是否会员过期
+        //Kiểm tra thành viên có hết hạn không
         $this->offMemberLevel($uid, $userInfo);
         $wechatUserInfo = $wechatUser->getOne(['uid' => $uid, 'user_type' => $tokenData['type']]);
         $user['is_complete'] = $wechatUserInfo['is_complete'] ?? 0;
@@ -1522,8 +1522,8 @@ class UserServices extends BaseServices
             ['uid', '=', $uid], ['pm', '=', 1], ['type', 'in', ['recharge', 'system_add', 'extract', 'register_system_add', 'lottery_add']]
         ], 'number');
         $user['orderStatusSum'] = bcsub((string)$user['recharge'], (string)$user['now_money'], 2);
-        $user['extractTotalPrice'] = $userExtract->getExtractSum(['uid' => $uid, 'status' => 1]);//累计提现
-        $user['extractPrice'] = $user['brokerage_price'];//可提现
+        $user['extractTotalPrice'] = $userExtract->getExtractSum(['uid' => $uid, 'status' => 1]);//Tổng số tiền đã rút (lũy kế)
+        $user['extractPrice'] = $user['brokerage_price'];//Có thể rút
         $user['statu'] = (int)sys_config('store_brokerage_statu');
         if (!$user['is_promoter']) {
             $price = $storeOrder->sum(['paid' => 1, 'refund_status' => 0, 'uid' => $user['uid']], 'pay_price');
@@ -1552,7 +1552,7 @@ class UserServices extends BaseServices
             }
         }
         $user['yesterDay'] = $frozenPrices->getUsersBokerageSum(['uid' => $uid, 'pm' => 1], 'yesterday');
-        $user['recharge_switch'] = (int)sys_config('recharge_switch');//充值开关
+        $user['recharge_switch'] = (int)sys_config('recharge_switch');//Công tắc nạp tiền
         $user['adminid'] = $storeService->checkoutIsService(['uid' => $uid, 'status' => 1, 'customer' => 1]);
         if ($user['phone'] && $user['user_type'] != 'h5') {
             $user['switchUserInfo'][] = $userInfo;
@@ -1569,7 +1569,7 @@ class UserServices extends BaseServices
         } else if (!$user['phone']) {
             $user['switchUserInfo'][] = $userInfo;
         }
-        $user['broken_day'] = (int)sys_config('extract_time');//佣金冻结时间
+        $user['broken_day'] = (int)sys_config('extract_time');//Thời gian đóng băng hoa hồng
         $user['balance_func_status'] = (int)sys_config('balance_func_status', 0);
         $invoice_func = $userInvoice->invoiceFuncStatus();
         $user['invioce_func'] = $invoice_func['invoice_func'];
@@ -1579,14 +1579,14 @@ class UserServices extends BaseServices
         $user['pay_vip_status'] = $user['is_ever_level'] || ($user['is_money_level'] && $user['overdue_time'] > time());
         $user['member_style'] = (int)$diyServices->getColorChange('member');
         if ($user['is_ever_level']) {
-            $user['vip_status'] = 1;//永久会员
+            $user['vip_status'] = 1;//Thành viên vĩnh viễn
         } else {
             if (!$user['is_money_level'] && $user['overdue_time'] && $user['overdue_time'] < time()) {
-                $user['vip_status'] = -1;//开通过已过期
+                $user['vip_status'] = -1;//Đã kích hoạt nhưng đã hết hạn
             } else if (!$user['overdue_time'] && !$user['is_money_level']) {
-                $user['vip_status'] = 2;//没有开通过
+                $user['vip_status'] = 2;//Chưa từng kích hoạt
             } else if ($user['is_money_level'] && $user['overdue_time'] && $user['overdue_time'] > time()) {
-                $user['vip_status'] = 3;//开通了，没有到期
+                $user['vip_status'] = 3;//Đã kích hoạt, chưa hết hạn
             }
         }
         $user['svip_open'] = (bool)sys_config('member_card_status');
@@ -1611,7 +1611,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 用户资金统计
+     * Thống kê tài chính người dùng
      * @param int $uid
      */
     public function balance(int $uid)
@@ -1624,14 +1624,14 @@ class UserServices extends BaseServices
         $userBill = app()->make(UserBillServices::class);
         /** @var StoreOrderServices $storeOrder */
         $storeOrder = app()->make(StoreOrderServices::class);
-        $user['now_money'] = $userInfo['now_money'];//当前总资金
-        $user['recharge'] = $userBill->getRechargeSum($uid);//累计充值
-        $user['orderStatusSum'] = $storeOrder->sum(['uid' => $uid, 'paid' => 1, 'is_del' => 0], 'pay_price');//累计消费
+        $user['now_money'] = $userInfo['now_money'];//Tổng số dư hiện tại
+        $user['recharge'] = $userBill->getRechargeSum($uid);//Tổng số tiền đã nạp (lũy kế)
+        $user['orderStatusSum'] = $storeOrder->sum(['uid' => $uid, 'paid' => 1, 'is_del' => 0], 'pay_price');//Chi tiêu tích lũy
         return $user;
     }
 
     /**
-     * 用户修改信息
+     * Người dùng sửa thông tin
      * @param Request $request
      * @return mixed
      */
@@ -1645,7 +1645,7 @@ class UserServices extends BaseServices
             throw new ApiException(100007);
         }
 
-        //自定义事件-用户修改信息
+        //Sự kiện tùy chỉnh - Người dùng sửa thông tin
         event('CustomEventListener', ['user_change_info', [
             'uid' => $uid,
             'nickname' => $info['nickname'],
@@ -1659,8 +1659,8 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 获取推广人排行
-     * @param $data 查询条件
+     * Lấy bảng xếp hạng người giới thiệu
+     * @param $data Điều kiện truy vấn
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -1684,7 +1684,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 静默绑定推广人
+     * Liên kết ngầm với người giới thiệu
      * @param int $uid
      * @param int $spreadUid
      * @param $code
@@ -1713,22 +1713,22 @@ class UserServices extends BaseServices
         if ($agent_id) {
             $spreadInfo = $this->dao->getOne(['uid' => $agent_id]);
             if ($agent_id == $uid) {
-                return '自己不能推荐自己';
+                return 'Không thể tự giới thiệu chính mình';
             } else if (!$userInfo) {
-                return '用户不存在';
+                return 'Người dùng không tồn tại';
             } else if (!$spreadInfo) {
-                return '上级用户不存在';
+                return 'Người giới thiệu không tồn tại';
             } else if ($userInfo->is_division) {
-                return '您是事业部,不能绑定成为别人的员工';
+                return 'Bạn là đại lý khu vực, không thể liên kết làm nhân viên của người khác';
             } else if ($userInfo->is_agent) {
-                return '您是代理商,不能绑定成为别人的员工';
+                return 'Bạn là đại lý, không thể liên kết làm nhân viên của người khác';
             } else if (app()->make(LoginServices::class)->updateUserInfo(['code' => $agent_id, 'is_staff' => 1], $userInfo, false)) {
-                return '绑定店员成功!';
+                return 'Liên kết nhân viên cửa hàng thành công!';
             }
         }
-        if ($spreadUid == 0) return '不绑定';
+        if ($spreadUid == 0) return 'Không liên kết';
         $userSpreadUid = $this->dao->value(['uid' => $spreadUid], 'spread_uid');
-        //记录好友关系
+        //Ghi quan hệ bạn bè
         if ($spreadUid && $uid && $spreadUid != $uid) {
             /** @var UserFriendsServices $serviceFriend */
             $serviceFriend = app()->make(UserFriendsServices::class);
@@ -1765,14 +1765,14 @@ class UserServices extends BaseServices
             if (!$this->dao->update($uid, $data, 'uid')) {
                 throw new ApiException(410288);
             }
-            return '绑定上级成功，上级uid为' . $spreadUid;
+            return 'Liên kết người giới thiệu thành công, uid người giới thiệu là' . $spreadUid;
         } else {
-            return '不绑定';
+            return 'Không liên kết';
         }
     }
 
     /**
-     * 添加访问记录
+     * Thêm lịch sử truy cập
      * @param Request $request
      * @return mixed
      */
@@ -1803,7 +1803,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 获取活动状态
+     * Lấy trạng thái hoạt động
      * @return mixed
      */
     public function activity()
@@ -1821,10 +1821,10 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 获取用户下级推广人
-     * @param int $uid 当前用户
-     * @param int $grade 等级  0  一级 1 二级
-     * @param string $orderBy 排序
+     * Lấy cấp dưới do người dùng giới thiệu
+     * @param int $uid Người dùng hiện tại
+     * @param int $grade Hạng 0 cấp 1, 1 cấp 2
+     * @param string $orderBy Thứ tự sắp xếp
      * @param string $keyword
      * @return array|bool
      */
@@ -1865,7 +1865,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 获取推广人uids
+     * Lấy các uid người giới thiệu
      * @param int $uid
      * @param bool $one
      * @return array
@@ -1890,7 +1890,7 @@ class UserServices extends BaseServices
 
 
     /**
-     * 检测用户是否是推广员
+     * Kiểm tra người dùng có phải là người giới thiệu không
      * @param int $uid
      * @param $user
      * @return bool
@@ -1903,7 +1903,7 @@ class UserServices extends BaseServices
         if (!$user) {
             return false;
         }
-        //分销是否开启
+        //Tiếp thị liên kết có được mở không
         if (!sys_config('brokerage_func_status')) {
             return false;
         }
@@ -1912,7 +1912,7 @@ class UserServices extends BaseServices
         }
         /** @var StoreOrderServices $storeOrder */
         $storeOrder = app()->make(StoreOrderServices::class);
-        $sumPrice = $storeOrder->sum(['uid' => $uid, 'paid' => 1], 'pay_price');//累计消费
+        $sumPrice = $storeOrder->sum(['uid' => $uid, 'paid' => 1], 'pay_price');//Chi tiêu tích lũy
         $store_brokerage_statu = sys_config('store_brokerage_statu');
         $store_brokerage_price = sys_config('store_brokerage_price');
         if ($user['is_promoter'] || $store_brokerage_statu == 2 || ($store_brokerage_statu == 3 && $sumPrice > $store_brokerage_price)) {
@@ -1925,7 +1925,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 同步微信粉丝用户(后台接口)
+     * Đồng bộ người dùng follower WeChat (interface admin)
      * @return bool
      */
     public function syncWechatUsers()
@@ -1936,7 +1936,7 @@ class UserServices extends BaseServices
             throw new AdminException(400236);
         }
         $key = md5('sync_wechat_users');
-        //一天点击一次
+        //Mỗi ngày bấm một lần
         if (CacheService::get($key)) {
             return true;
         }
@@ -1944,10 +1944,10 @@ class UserServices extends BaseServices
         do {
             $result = WechatService::getUsersList($next_openid);
             $userOpenids = $result['data'];
-            //拆分大数组
+            //Tách mảng lớn
             $opemidArr = array_chunk($userOpenids, 100);
             foreach ($opemidArr as $openids) {
-                //加入同步|更新用户队列
+                //Thêm vào hàng đợi đồng bộ|cập nhật người dùng
                 UserJob::dispatch([$openids]);
             }
             $next_openid = $result['next_openid'];
@@ -1957,7 +1957,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 导入微信粉丝用户
+     * Nhập người dùng follower WeChat
      * @param array $openids
      * @return bool
      */
@@ -2009,11 +2009,11 @@ class UserServices extends BaseServices
         return true;
     }
 
-    /** 修改会员的时间及是否会员状态
-     * @param int $vip_day 会员天数
-     * @param array $user_id 用户id
-     * @param int $is_money_level 会员来源途径
-     * @param bool $member_type 会员卡类型
+    /** Sửa thời gian thành viên và trạng thái có phải thành viên không
+     * @param int $vip_day Số ngày thành viên
+     * @param array $user_id id người dùng
+     * @param int $is_money_level Nguồn thành viên
+     * @param bool $member_type Loại thẻ thành viên
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -2044,7 +2044,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 会员过期改变状态，变为普通会员
+     * Thành viên hết hạn thì đổi trạng thái thành thành viên thường
      * @param $uid
      * @param $userInfo
      * @return bool
@@ -2079,7 +2079,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 增加推广用户佣金
+     * Tăng hoa hồng người dùng được giới thiệu
      * @param int $uid
      * @param int $spread_uid
      * @param array $userInfo
@@ -2094,12 +2094,12 @@ class UserServices extends BaseServices
         if (!$uid || !$spread_uid) {
             return false;
         }
-        //商城分销功能是否开启 0关闭1开启
+        //Chức năng phân phối của cửa hàng có mở không, 0 là tắt, 1 là mở
         if (!sys_config('brokerage_func_status')) return true;
         if (!sys_config('brokerage_user_status')) return true;
-        //获取设置推广佣金单价
+        //Lấy đơn giá hoa hồng giới thiệu đã đặt
         $brokerage_price = sys_config('uni_brokerage_price', 0);
-        //获取推广佣金当日限额
+        //Lấy hạn mức hoa hồng giới thiệu trong ngày
         $day_brokerage_price_upper = sys_config('day_brokerage_price_upper', 0);
         if (!floatval($brokerage_price) || !floatval($day_brokerage_price_upper)) {
             return true;
@@ -2111,11 +2111,11 @@ class UserServices extends BaseServices
             return false;
         }
 
-        //根据手机号码查询此用户注销过，不反推广佣金
+        //Theo số điện thoại, kiểm tra người dùng này đã hủy tài khoản, không trả hoa hồng giới thiệu
         if ($userInfo['phone'] != '' && $this->dao->getCount(['phone' => $userInfo['phone'], 'is_del' => 1])) {
             return false;
         }
-        //根据openid查询此用户注销过，不反推广佣金
+        //Theo openid, kiểm tra người dùng này đã hủy tài khoản, không trả hoa hồng giới thiệu
         $wechatUserServices = app()->make(WechatUserServices::class);
         $openidArray = $wechatUserServices->getColumn(['uid' => $uid], 'openid', 'id');
         if ($wechatUserServices->getCount([['openid', 'in', $openidArray], ['is_del', '=', 1]])) {
@@ -2133,14 +2133,14 @@ class UserServices extends BaseServices
         }
         /** @var UserBrokerageServices $userBrokerageServices */
         $userBrokerageServices = app()->make(UserBrokerageServices::class);
-        // -1不限制
+        // -1 không giới hạn
         if ($day_brokerage_price_upper != -1) {
             if ($day_brokerage_price_upper <= 0) {
                 return true;
             } else {
-                //获取上级用户今日获取推广用户佣金
+                //Lấy hoa hồng giới thiệu người dùng mà cấp trên nhận được trong ngày hôm nay
                 $spread_day_brokerage = $userBrokerageServices->getUserBrokerageSum($spread_uid, ['brokerage_user'], 'today');
-                //超过上限
+                //Vượt hạn mức
                 if (($spread_day_brokerage + $brokerage_price) > $day_brokerage_price_upper) {
                     return true;
                 }
@@ -2148,18 +2148,18 @@ class UserServices extends BaseServices
         }
 
         $spreadPrice = $spread_user['brokerage_price'];
-        // 上级推广员返佣之后的金额
+        // Số tiền sau khi trả hoa hồng cho người giới thiệu cấp trên
         $balance = bcadd($spreadPrice, $brokerage_price, 2);
 
         return $this->transaction(function () use ($uid, $spread_uid, $brokerage_price, $userInfo, $balance, $userBrokerageServices) {
-            // 添加返佣记录
+            // Thêm bản ghi trả hoa hồng
             $res1 = $userBrokerageServices->income('get_user_brokerage', $spread_uid, [
                 'nickname' => $userInfo['nickname'],
                 'number' => floatval($brokerage_price)
             ], $balance, $uid);
-            // 添加用户余额
+            // Thêm số dư người dùng
             $res2 = $this->dao->bcInc($spread_uid, 'brokerage_price', $brokerage_price, 'uid');
-            //给上级发送获得佣金的模板消息
+            //Gửi tin nhắn mẫu nhận hoa hồng cho cấp trên
             /** @var StoreOrderTakeServices $storeOrderTakeServices */
             $storeOrderTakeServices = app()->make(StoreOrderTakeServices::class);
             $storeOrderTakeServices->sendBackOrderBrokerage([], $spread_uid, $brokerage_price, 'user');
@@ -2168,7 +2168,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 获取上级uid
+     * Lấy uid cấp trên
      * @param int $uid
      * @param array $userInfo
      * @param bool $is_spread
@@ -2179,7 +2179,7 @@ class UserServices extends BaseServices
         if (!$uid) {
             return 0;
         }
-        //商城分销功能是否开启 0关闭1开启
+        //Chức năng phân phối của cửa hàng có mở không, 0 là tắt, 1 là mở
         if (!sys_config('brokerage_func_status')) return -1;
         if (!$userInfo) {
             $userInfo = $this->getUserInfo($uid);
@@ -2187,21 +2187,21 @@ class UserServices extends BaseServices
         if (!$userInfo) {
             return 0;
         }
-        //上级的上级不需要检测自购
+        //Cấp trên của cấp trên không cần kiểm tra tự mua
         if ($is_spread) {
-            //开启自购
+            //Mở tự mua
             $is_self_brokerage = sys_config('is_self_brokerage', 0);
             if ($is_self_brokerage && $is_spread) {
                 return $uid;
             }
         }
 
-        //绑定类型
+        //Loại liên kết
         $store_brokergae_binding_status = sys_config('store_brokerage_binding_status', 1);
         if ($store_brokergae_binding_status == 1 || $store_brokergae_binding_status == 3) {
             return $userInfo['spread_uid'];
         }
-        //分销绑定类型为时间段且没过期
+        //Loại liên kết phân phối là theo khoảng thời gian và chưa hết hạn
         $store_brokerage_binding_time = sys_config('store_brokerage_binding_time', 30);
         if ($store_brokergae_binding_status == 2 && ($userInfo['spread_time'] + $store_brokerage_binding_time * 24 * 3600) > time()) {
             return $userInfo['spread_uid'];
@@ -2210,7 +2210,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 获取事业部/代理/员工列表
+     * Lấy danh sách đại lý khu vực/đại lý/nhân viên
      * @param array $where
      * @param string $field
      * @return array
@@ -2227,7 +2227,7 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 添加编辑用户信息时候的信息
+     * Thông tin khi thêm/sửa thông tin người dùng
      * @param $uid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -2262,7 +2262,7 @@ class UserServices extends BaseServices
 
 
     /**
-     * 新用户注册奖励
+     * Thưởng đăng ký cho người dùng mới
      * @param int $id
      * @return bool
      * @throws Exception
@@ -2281,7 +2281,7 @@ class UserServices extends BaseServices
         $reward_money = sys_config('reward_money');
         $reward_integral = sys_config('reward_integral');
         $edit = array();
-        if ($reward_money > 0) {//余额增加
+        if ($reward_money > 0) {//Số dư tăng
             /** @var UserMoneyServices $userMoneyServices */
             $userMoneyServices = app()->make(UserMoneyServices::class);
             $edit['now_money'] = bcadd($user['now_money'], $reward_money, 2);
@@ -2289,14 +2289,14 @@ class UserServices extends BaseServices
         } else {
             $res1 = true;
         }
-        if ($reward_integral > 0) {//积分增加
+        if ($reward_integral > 0) {//Điểm thưởng tăng
             /** @var UserBillServices $userBill */
             $userBill = app()->make(UserBillServices::class);
             $integral_data = ['link_id' => 1, 'number' => $reward_integral];
             $edit['integral'] = bcadd($user['integral'], $reward_integral, 2);
             $integral_data['balance'] = $edit['integral'];
-            $integral_data['title'] = '新用户注册增加积分';
-            $integral_data['mark'] = '新用户注册增加了' . floatval($reward_integral) . '积分';
+            $integral_data['title'] = 'Người dùng mới đăng ký được cộng điểm thưởng';
+            $integral_data['mark'] = 'Người dùng mới đăng ký được cộng' . floatval($reward_integral) . 'Điểm thưởng';
             $res2 = $userBill->incomeIntegral($user['uid'], 'system_add', $integral_data);
         } else {
             $res2 = true;
@@ -2314,13 +2314,13 @@ class UserServices extends BaseServices
     }
 
     /**
-     * 推送用户信息
+     * Đẩy thông tin người dùng
      * @param $data
      * @param $pushUrl
      * @return bool
      */
     public function userUpdate($data, $pushUrl)
     {
-        return out_push($pushUrl, $data, '更新用户信息');
+        return out_push($pushUrl, $data, 'Cập nhật thông tin người dùng');
     }
 }

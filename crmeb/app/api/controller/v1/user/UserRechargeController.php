@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\pay\PayServices;
 use app\services\user\UserRechargeServices;
 
 /**
- * 充值类
+ * Lớp nạp tiền
  * Class UserRechargeController
  * @package app\api\controller\user
  */
@@ -33,7 +33,7 @@ class UserRechargeController
     }
 
     /**
-     * 用户充值
+     * Nạp tiền người dùng
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -64,7 +64,7 @@ class UserRechargeController
     }
 
     /**
-     * TODO 小程序充值 弃用
+     * TODO Nạp tiền qua Mini Program, đã ngừng dùng
      * @param Request $request
      * @return mixed
      */
@@ -85,7 +85,7 @@ class UserRechargeController
     }
 
     /**
-     * TODO 公众号充值 弃用
+     * TODO Nạp tiền qua OA WeChat, đã ngừng dùng
      * @param Request $request
      * @return mixed
      */
@@ -105,7 +105,7 @@ class UserRechargeController
     }
 
     /**
-     * 充值额度选择
+     * Chọn mức nạp tiền
      * @return mixed
      */
     public function index()

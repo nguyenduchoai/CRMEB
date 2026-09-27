@@ -111,7 +111,7 @@ export default {
         }
       });
     },
-    // 头部tab
+    // Tab phần đầu
     getHeader(index) {
       this.spinShow = true;
       return new Promise((resolve, reject) => {
@@ -144,7 +144,7 @@ export default {
           });
       });
     },
-    // 表单
+    // Biểu mẫu
     getFrom() {
       this.spinShow = true;
       return new Promise((resolve, reject) => {
@@ -223,11 +223,11 @@ export default {
         this.getFrom();
       }
     },
-    // 选择
+    // Chọn
     changeTab() {
       this.childrenList();
     },
-    // 提交表单 group
+    // Submit form, group
     onSubmit(formData) {
       request({
         url: this.FromData.action,
@@ -239,7 +239,7 @@ export default {
           if (formData.site_name) {
             localStorage.setItem('ADMIN_TITLE', formData.site_name);
             this.$store.commit('setAdminTitle', formData.site_name);
-            window.document.title = `${formData.site_name} - 系统设置`;
+            window.document.title = `${formData.site_name} - Cài đặt hệ thống`;
           }
         })
         .catch((res) => {

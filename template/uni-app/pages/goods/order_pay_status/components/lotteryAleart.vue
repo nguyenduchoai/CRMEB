@@ -9,7 +9,7 @@
 			<text class="msg">{{$t(aleartData.msg)}}</text>
 		</view>
 		<view class="btn" @click="posterImageClose()">
-			{{$t('我知道了')}}
+			{{$t('Tôi đã hiểu')}}
 		</view>
 	</view>
 </template>
@@ -37,10 +37,10 @@
 			aleartType(type) {
 				if (type === 2) {
 					this.aleartData = {
-						title: '中奖记录',
+						title: 'Lịch sử trúng thưởng',
 						img: this.alData.image,
 						msg: this.alData.prompt,
-						btn: '我知道了',
+						btn: 'Tôi đã hiểu',
 						type: this.alData.type
 					}
 				}
@@ -52,7 +52,7 @@
 			}
 		},
 		methods: {
-			//隐藏弹窗
+			//Ẩn popup
 			posterImageClose() {
 				this.$emit("close", false)
 			},

@@ -2,36 +2,36 @@
 	<view>
 		<view class="priceChange" :class="change === true ? 'on' : ''">
 			<view class="priceTitle">
-				{{ status == 0 ? $t(`一键改价`) : status == 1 ? $t(`订单备注`) : $t(`立即退款`) }}
+				{{ status == 0 ? $t(`Sửa giá nhanh`) : status == 1 ? $t(`Ghi chú đơn hàng`) : $t(`Hoàn tiền ngay`) }}
 				<span class="iconfont icon-guanbi" @click="close"></span>
 			</view>
 			<view class="listChange" v-if="status == 0 || status == 2">
 				<view class="item acea-row row-between-wrapper" v-if="orderInfo.refund_status === 0">
-					<view>{{$t(`商品总价`)}}({{$t(`￥`)}})</view>
+					<view>{{$t(`Tổng giá sản phẩm`)}}({{$t(`￥`)}})</view>
 					<view class="money">
 						{{ orderInfo.total_price }}<span class="iconfont icon-suozi"></span>
 					</view>
 				</view>
 				<view class="item acea-row row-between-wrapper" v-if="orderInfo.refund_status === 0">
-					<view>{{$t(`原始邮费`)}}({{$t(`￥`)}})</view>
+					<view>{{$t(`Phí vận chuyển ban đầu`)}}({{$t(`￥`)}})</view>
 					<view class="money">
 						{{ orderInfo.pay_postage }}<span class="iconfont icon-suozi"></span>
 					</view>
 				</view>
 				<view class="item acea-row row-between-wrapper" v-if="orderInfo.refund_status === 0">
-					<view>{{$t(`实际支付`)}}({{$t(`￥`)}})</view>
+					<view>{{$t(`Thanh toán thực tế`)}}({{$t(`￥`)}})</view>
 					<view class="money">
 						<input type="text" v-model="price" :class="focus === true ? 'on' : ''" @focus="priceChange" />
 					</view>
 				</view>
 				<view class="item acea-row row-between-wrapper" v-if="orderInfo.refund_status === 1">
-					<view>{{$t(`实际支付`)}}({{$t(`￥`)}})</view>
+					<view>{{$t(`Thanh toán thực tế`)}}({{$t(`￥`)}})</view>
 					<view class="money">
 						{{ orderInfo.pay_price }}<span class="iconfont icon-suozi"></span>
 					</view>
 				</view>
 				<view class="item acea-row row-between-wrapper" v-if="orderInfo.refund_status === 1">
-					<view>{{$t(`退款金额`)}}({{$t(`￥`)}})</view>
+					<view>{{$t(`Số tiền hoàn`)}}({{$t(`￥`)}})</view>
 					<view class="money">
 						<input type="text" v-model="refund_price" :class="focus === true ? 'on' : ''"
 							@focus="priceChange" />
@@ -40,16 +40,16 @@
 			</view>
 			<view class="listChange" v-else>
 				<textarea class="pd10" :placeholder="
-            orderInfo.remark ? orderInfo.remark : $t(`请填写备注信息`)
+            orderInfo.remark ? orderInfo.remark : $t(`Vui lòng điền thông tin ghi chú`)
           " v-model="remark"></textarea>
 			</view>
 			<view class="modify" @click="save">
 				{{
-          status == 1 || orderInfo.refund_status == 0 ? $t(`立即修改`) : $t(`确认退款`)
+          status == 1 || orderInfo.refund_status == 0 ? $t(`Lưu chỉnh sửa`) : $t(`Xác nhận hoàn tiền`)
         }}
 			</view>
 			<view class="modify1" @click="refuse" v-if="orderInfo.refund_status == 1 && status == 0">
-				{{$t(`拒绝退款`)}}
+				{{$t(`Từ chối hoàn tiền`)}}
 			</view>
 		</view>
 		<view class="mask" @touchmove.prevent v-show="change === true"></view>

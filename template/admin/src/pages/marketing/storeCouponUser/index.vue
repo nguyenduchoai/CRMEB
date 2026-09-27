@@ -10,32 +10,32 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="是否有效：">
+          <el-form-item label="Trạng thái hiệu lực:">
             <el-select
-              placeholder="请选择"
+              placeholder="Vui lòng chọn"
               clearable
               v-model="tableFrom.status"
               @change="userSearchs"
               class="form_content_width"
             >
-              <el-option value="1" label="已使用"></el-option>
-              <el-option value="0" label="未使用"></el-option>
-              <el-option value="2" label="已过期"></el-option>
+              <el-option value="1" label="Đã sử dụng"></el-option>
+              <el-option value="0" label="Chưa sử dụng"></el-option>
+              <el-option value="2" label="Đã hết hạn"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="领取人：" label-for="nickname">
-            <el-input placeholder="请输入领取人" v-model="tableFrom.nickname" clearable class="form_content_width" />
+          <el-form-item label="Người nhận:" label-for="nickname">
+            <el-input placeholder="Vui lòng nhập người nhận" v-model="tableFrom.nickname" clearable class="form_content_width" />
           </el-form-item>
-          <el-form-item label="优惠券搜索：" label-for="coupon_title">
+          <el-form-item label="Tìm kiếm phiếu giảm giá:" label-for="coupon_title">
             <el-input
               clearable
-              placeholder="请输入优惠券名称"
+              placeholder="Vui lòng nhập tên phiếu giảm giá"
               v-model="tableFrom.coupon_title"
               class="form_content_width"
             />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="userSearchs">查询</el-button>
+            <el-button type="primary" v-db-click @click="userSearchs">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -47,48 +47,48 @@
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="优惠券名称" min-width="150">
+        <el-table-column label="Tên phiếu giảm giá" min-width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.coupon_title }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="领取人" min-width="150">
+        <el-table-column label="Người nhận" min-width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.nickname }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="面值" min-width="150">
+        <el-table-column label="Mệnh giá" min-width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.coupon_price }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="最低消费额" min-width="150">
+        <el-table-column label="Giá trị đơn tối thiểu" min-width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.use_min_price }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="开始使用时间" min-width="150">
+        <el-table-column label="Thời gian bắt đầu sử dụng" min-width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.start_time | formatDate }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="结束使用时间" min-width="150">
+        <el-table-column label="Thời gian kết thúc sử dụng" min-width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.end_time | formatDate }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="获取方式" min-width="150">
+        <el-table-column label="Cách nhận" min-width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.type }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="是否可用" min-width="150">
+        <el-table-column label="Khả dụng" min-width="150">
           <template slot-scope="scope">
             <i class="el-icon-check" v-if="scope.row.is_fail === 0" style="color: #0092dc; font-size: 14px" />
             <i class="el-icon-close" v-else style="color: #ed5565; font-size: 14px" />
           </template>
         </el-table-column>
-        <el-table-column label="状态" min-width="150">
+        <el-table-column label="Trạng thái" min-width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.status }}</span>
           </template>
@@ -154,7 +154,7 @@ export default {
     this.getList();
   },
   methods: {
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       this.tableFrom.status = this.tableFrom.status || '';
@@ -170,7 +170,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.tableFrom.page = 1;
       this.getList();

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use crmeb\traits\ModelTrait;
 use think\Model;
 
 /**
- * TODO 订单修改状态记录Model
+ * TODO Model lịch sử thay đổi trạng thái đơn hàng
  * Class StoreOrderStatus
  * @package app\model\order
  */
@@ -25,7 +25,7 @@ class StoreIntegralOrderStatus extends BaseModel
     use ModelTrait;
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'store_integral_order_status';
@@ -35,7 +35,7 @@ class StoreIntegralOrderStatus extends BaseModel
     protected $createTime = 'change_time';
 
     /**
-     * 订单ID搜索器
+     * Bộ lọc ID đơn hàng
      * @param Model $query
      * @param $value
      * @param $data
@@ -46,7 +46,7 @@ class StoreIntegralOrderStatus extends BaseModel
     }
 
     /**
-     * 变动类型搜索器
+     * Bộ lọc loại thay đổi
      * @param Model $query
      * @param $value
      */

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -32,7 +32,7 @@ class JwtAuth
     protected $token;
 
     /**
-     * 获取token
+     * Lấy token
      * @param int|string $id
      * @param string $type
      * @param array $params
@@ -57,7 +57,7 @@ class JwtAuth
     }
 
     /**
-     * 解析token
+     * Phân tích token
      * @param string $jwt
      * @return array
      */
@@ -70,7 +70,7 @@ class JwtAuth
     }
 
     /**
-     * 验证token
+     * Xác thực token
      */
     public function verifyToken()
     {
@@ -82,7 +82,7 @@ class JwtAuth
     }
 
     /**
-     * 获取token并放入令牌桶
+     * Lấy token và đưa vào token bucket
      * @param $id
      * @param string $type
      * @param array $params

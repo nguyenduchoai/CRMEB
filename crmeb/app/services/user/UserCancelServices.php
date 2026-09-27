@@ -10,7 +10,7 @@ use crmeb\services\CacheService;
 
 class UserCancelServices extends BaseServices
 {
-    protected $status = ['待审核', '已通过', '已拒绝'];
+    protected $status = ['Chờ duyệt', 'Đã duyệt', 'Đã từ chối'];
 
     /**
      * UserExtractServices constructor.
@@ -22,7 +22,7 @@ class UserCancelServices extends BaseServices
     }
 
     /**
-     * 提交用户注销
+     * Gửi yêu cầu hủy tài khoản người dùng
      * @param $userInfo
      * @return mixed
      */
@@ -41,7 +41,7 @@ class UserCancelServices extends BaseServices
 
         $user = $userServices->getUserInfo($uid);
 
-        //自定义事件-用户注销
+        //Sự kiện tùy chỉnh - Người dùng hủy tài khoản
         event('CustomEventListener', ['user_cancel', [
             'uid' => $uid,
             'nickname' => $user['nickname'],
@@ -55,7 +55,7 @@ class UserCancelServices extends BaseServices
     }
 
     /**
-     * 获取注销列表
+     * Lấy danh sách hủy tài khoản
      * @param $where
      * @return array
      */
@@ -73,7 +73,7 @@ class UserCancelServices extends BaseServices
     }
 
     /**
-     * 备注
+     * Ghi chú
      * @param $id
      * @param $mark
      * @return mixed

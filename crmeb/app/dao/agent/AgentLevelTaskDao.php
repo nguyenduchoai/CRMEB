@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -23,7 +23,7 @@ class AgentLevelTaskDao extends BaseDao
 {
 
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -32,7 +32,7 @@ class AgentLevelTaskDao extends BaseDao
     }
 
     /**
-     * 获取等级任务
+     * Lấy nhiệm vụ hạng
      * @param array $where
      * @param string $field
      * @param array $with
@@ -53,7 +53,7 @@ class AgentLevelTaskDao extends BaseDao
     }
 
     /**
-     * 获得所有同类型任务
+     * Lấy tất cả nhiệm vụ cùng loại
      * @param int $type
      * @param int $grade
      * @return array|\think\Model|null

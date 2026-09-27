@@ -1,30 +1,30 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 
 return [
-    //默认支付模式
+    //Chế độ thanh toán mặc định
     'default' => 'wechat_pay',
-    //支付方式
-    'payType' => ['weixin' => '微信支付', 'yue' => '余额支付', 'offline' => '线下支付'],
-    //提现方式
+    //Phương thức thanh toán
+    'payType' => ['weixin' => 'WeChat Pay', 'yue' => 'Thanh toán bằng số dư', 'offline' => 'Thanh toán ngoại tuyến'],
+    //Phương thức rút tiền
     'extractType' => ['alipay', 'bank', 'weixin'],
-    //配送方式
-    'deliveryType' => ['send' => '商家配送', 'express' => '快递配送'],
-    //驱动模式
+    //Phương thức giao hàng
+    'deliveryType' => ['send' => 'Cửa hàng tự giao', 'express' => 'Giao qua đơn vị vận chuyển'],
+    //Chế độ driver
     'stores' => [
-        //微信支付
+        //WeChat Pay
         'wechat_pay' => [],
-        //支付宝支付
+        //Thanh toán Alipay
         'ali_pay' => [],
-        //余额支付
+        //Thanh toán bằng số dư
         'yue' => [],
     ]
 ];

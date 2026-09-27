@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,20 +18,20 @@ use crmeb\traits\ModelTrait;
 use think\Model;
 
 /**
- * TODO 砍价商品Model
+ * TODO Model sản phẩm săn giảm giá
  * Class StoreBargain
  * @package app\model\activity
  */
 class StoreBargain extends BaseModel
 {
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'store_bargain';
@@ -44,8 +44,8 @@ class StoreBargain extends BaseModel
     }
 
     /**
-     * 一对一关联
-     * 商品关联商品商品详情
+     * Liên kết một-một
+     * Sản phẩm liên kết chi tiết sản phẩm
      * @return \think\model\relation\HasOne
      */
     public function description()
@@ -54,7 +54,7 @@ class StoreBargain extends BaseModel
     }
 
     /**
-     * 原价
+     * Giá gốc
      * @return \think\model\relation\HasOne
      */
     public function product()
@@ -67,7 +67,7 @@ class StoreBargain extends BaseModel
     }
 
     /**
-     * 添加时间获取器
+     * Getter thời gian thêm
      * @param $value
      * @return false|string
      */
@@ -78,7 +78,7 @@ class StoreBargain extends BaseModel
     }
 
     /**
-     * 砍价商品名称搜索器
+     * Bộ lọc tên sản phẩm săn giảm giá
      * @param Model $query
      * @param $value
      * @param $data
@@ -89,7 +89,7 @@ class StoreBargain extends BaseModel
     }
 
     /**
-     * 状态搜索器
+     * Bộ lọc trạng thái
      * @param Model $query
      * @param $value
      * @param $data
@@ -100,7 +100,7 @@ class StoreBargain extends BaseModel
     }
 
     /**
-     * 是否推荐搜索器
+     * Bộ lọc có đề xuất hay không
      * @param Model $query
      * @param $value
      * @param $data
@@ -111,7 +111,7 @@ class StoreBargain extends BaseModel
     }
 
     /**
-     * 是否删除搜索器
+     * Bộ lọc đã xóa hay chưa
      * @param Model $query
      * @param $value
      * @param $data
@@ -122,7 +122,7 @@ class StoreBargain extends BaseModel
     }
 
     /**
-     * 商品ID搜索器
+     * Bộ lọc ID sản phẩm
      * @param Model $query
      * @param $value
      * @param $data
@@ -139,7 +139,7 @@ class StoreBargain extends BaseModel
     }
 
     /**
-     * 活动有效时间搜索器
+     * Bộ lọc thời gian hiệu lực hoạt động
      * @param $query
      * @param $value
      */

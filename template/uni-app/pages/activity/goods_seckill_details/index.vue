@@ -1,6 +1,6 @@
 <template>
 	<view :style="colorStyle">
-		<!-- 头部 -->
+		<!-- Phần đầu -->
 
 		<!-- #ifndef APP-PLUS -->
 		<view class="navbar" :style="{ height: navH + 'rpx', opacity: opacity }">
@@ -43,12 +43,12 @@
 							<view class="money">
 								{{ $t(`￥`) }}
 								<text class="num">{{ storeInfo.price || '' }}</text>
-								<text v-if="attribute.productAttr.length && (attribute.productAttr.length ? attribute.productAttr[0].attr_values.length : 0) > 1">{{ $t(`起`) }}</text>
+								<text v-if="attribute.productAttr.length && (attribute.productAttr.length ? attribute.productAttr[0].attr_values.length : 0) > 1">{{ $t(`trở lên`) }}</text>
 								<text class="y-money">{{ $t(`￥`) }}{{ storeInfo.product_price || '' }}</text>
 							</view>
 							<view class="acea-row row-middle">
 								<view class="timeItem" v-if="status == 1">
-									<view>{{ $t(`距秒杀结束仅剩`) }}</view>
+									<view>{{ $t(`Flash sale kết thúc sau`) }}</view>
 									<countDown
 										:is-day="false"
 										:tip-text="' '"
@@ -60,8 +60,8 @@
 										style="margin-top: 4rpx"
 									></countDown>
 								</view>
-								<!-- <view class="timeState" wx:if="{{status == 0}}">已结束</view>
-						  <view class="timeState" wx:if="{{status == 2}}">即将开始</view> -->
+								<!-- <view class="timeState" wx:if="{{status == 0}}">Đã kết thúc</view>
+						  <view class="timeState" wx:if="{{status == 2}}">Sắp bắt đầu</view> -->
 								<!-- <view class='iconfont icon-jiantou'></view> -->
 							</view>
 						</view>
@@ -73,9 +73,9 @@
 							<view class="iconfont icon-fenxiang" @click="listenerActionSheet"></view>
 						</view>
 						<view class="label acea-row row-middle">
-							<!-- <view class='stock'>库存：{{storeInfo.stock}}{{storeInfo.unit_name}}</view> -->
-							<view class="stock">{{ $t(`累计销售`) }}：{{ storeInfo.total ? storeInfo.total : 0 }}{{ $t(storeInfo.unit_name) || '' }}</view>
-							<view>{{ $t(`限量剩余`) }}: {{ storeInfo.quota ? storeInfo.quota : 0 }}{{ $t(storeInfo.unit_name) || '' }}</view>
+							<!-- <view class='stock'>Tồn kho: {{storeInfo.stock}}{{storeInfo.unit_name}}</view> -->
+							<view class="stock">{{ $t(`Tổng đã bán`) }}：{{ storeInfo.total ? storeInfo.total : 0 }}{{ $t(storeInfo.unit_name) || '' }}</view>
+							<view>{{ $t(`Số lượng giới hạn còn lại`) }}: {{ storeInfo.quota ? storeInfo.quota : 0 }}{{ $t(storeInfo.unit_name) || '' }}</view>
 						</view>
 					</view>
 					<view class="attribute acea-row row-between-wrapper" @tap="selecAttr" v-if="attribute.productAttr.length">
@@ -92,23 +92,23 @@
 							<view class="flexs">
 								<image :src="item.image" v-for="(item, index) in skuArr.slice(0, 4)" :key="index" class="attrImg"></image>
 							</view>
-							<view class="switchTxt">{{ $t(`共`) }}{{ skuArr.length }}{{ $t(`种规格可选`) }}</view>
+							<view class="switchTxt">{{ $t(`Tổng`) }}{{ skuArr.length }}{{ $t(`phân loại để chọn`) }}</view>
 						</view>
 					</view>
 				</view>
 				<view class="userEvaluation" id="past1" v-if="replyCount">
 					<view class="title acea-row row-between-wrapper">
-						<view>{{ $t(`用户评价`) }}({{ replyCount }})</view>
+						<view>{{ $t(`Người dùng đánh giá`) }}({{ replyCount }})</view>
 						<navigator class="praise" hover-class="none" :url="'/pages/goods/goods_comment_list/index?product_id=' + storeInfo.product_id">
 							<text class="font-color">{{ replyChance }}%</text>
-							{{ $t(`好评率`) }}
+							{{ $t(`Tỷ lệ đánh giá tốt`) }}
 							<text class="iconfont icon-jiantou"></text>
 						</navigator>
 					</view>
 					<userEvaluation :reply="reply"></userEvaluation>
 				</view>
 				<view class="product-intro" id="past2">
-					<view class="title">{{ $t(`产品介绍`) }}</view>
+					<view class="title">{{ $t(`Giới thiệu sản phẩm`) }}</view>
 					<view class="conter">
 						<!-- <view class="" v-html="storeInfo.description">
 						</view> -->
@@ -126,16 +126,16 @@
 			<view class="footer acea-row row-between-wrapper" :class="{ eject: storeInfo.id }">
 				<navigator hover-class="none" open-type="switchTab" class="item" url="/pages/index/index">
 					<view class="iconfont icon-shouye6"></view>
-					<view class="p_center">{{ $t(`首页`) }}</view>
+					<view class="p_center">{{ $t(`Trang chủ`) }}</view>
 				</navigator>
 				<view @tap="setCollect" class="item">
 					<view class="iconfont icon-shoucang1" v-if="storeInfo.userCollect"></view>
 					<view class="iconfont icon-shoucang" v-else></view>
-					<view class="p_center">{{ $t(`收藏`) }}</view>
+					<view class="p_center">{{ $t(`Yêu thích`) }}</view>
 				</view>
 				<view class="bnt acea-row" v-if="status == 1 && attribute.productSelect.quota > 0 && attribute.productSelect.product_stock > 0">
-					<view class="joinCart bnts" @tap="openAlone" v-if="storeInfo.product_is_show">{{ $t(`单独购买`) }}</view>
-					<view class="buy bnts" :class="!storeInfo.product_is_show ? 'long-btn' : ''" @tap="goCat">{{ $t(`立即购买`) }}</view>
+					<view class="joinCart bnts" @tap="openAlone" v-if="storeInfo.product_is_show">{{ $t(`Mua riêng`) }}</view>
+					<view class="buy bnts" :class="!storeInfo.product_is_show ? 'long-btn' : ''" @tap="goCat">{{ $t(`Mua ngay`) }}</view>
 				</view>
 				<view
 					class="bnt acea-row"
@@ -146,20 +146,20 @@
 						(status == 3 && attribute.productSelect.product_stock <= 0)
 					"
 				>
-					<view class="joinCart bnts" @tap="openAlone" v-if="storeInfo.product_is_show">{{ $t(`单独购买`) }}</view>
-					<view class="buy bnts bg-color-hui" :class="!storeInfo.product_is_show ? 'long-btn' : ''">{{ $t(`已售罄`) }}</view>
+					<view class="joinCart bnts" @tap="openAlone" v-if="storeInfo.product_is_show">{{ $t(`Mua riêng`) }}</view>
+					<view class="buy bnts bg-color-hui" :class="!storeInfo.product_is_show ? 'long-btn' : ''">{{ $t(`Đã bán hết`) }}</view>
 				</view>
 				<view class="bnt acea-row" v-if="!dataShow && status == 1">
-					<view class="joinCart bnts" @tap="openAlone" v-if="storeInfo.product_is_show">{{ $t(`单独购买`) }}</view>
-					<view class="buy bnts bg-color-hui" :class="!storeInfo.product_is_show ? 'long-btn' : ''">{{ $t(`立即购买`) }}</view>
+					<view class="joinCart bnts" @tap="openAlone" v-if="storeInfo.product_is_show">{{ $t(`Mua riêng`) }}</view>
+					<view class="buy bnts bg-color-hui" :class="!storeInfo.product_is_show ? 'long-btn' : ''">{{ $t(`Mua ngay`) }}</view>
 				</view>
 				<view class="bnt acea-row" v-if="status == 2">
-					<view class="joinCart bnts" @tap="openAlone" v-if="storeInfo.product_is_show">{{ $t(`单独购买`) }}</view>
-					<view class="buy bnts bg-color-hui" :class="!storeInfo.product_is_show ? 'long-btn' : ''">{{ $t(`未开始`) }}</view>
+					<view class="joinCart bnts" @tap="openAlone" v-if="storeInfo.product_is_show">{{ $t(`Mua riêng`) }}</view>
+					<view class="buy bnts bg-color-hui" :class="!storeInfo.product_is_show ? 'long-btn' : ''">{{ $t(`Chưa bắt đầu`) }}</view>
 				</view>
 				<view class="bnt acea-row" v-if="status == 0">
-					<view class="joinCart bnts" @tap="openAlone" v-if="storeInfo.product_is_show">{{ $t(`单独购买`) }}</view>
-					<view class="buy bnts bg-color-hui" :class="!storeInfo.product_is_show ? 'long-btn' : ''">{{ $t(`已结束`) }}</view>
+					<view class="joinCart bnts" @tap="openAlone" v-if="storeInfo.product_is_show">{{ $t(`Mua riêng`) }}</view>
+					<view class="buy bnts bg-color-hui" :class="!storeInfo.product_is_show ? 'long-btn' : ''">{{ $t(`Đã kết thúc`) }}</view>
 				</view>
 			</view>
 		</view>
@@ -179,53 +179,53 @@
 		<!-- #ifdef MP -->
 		<!-- <authorize @onLoadFun="onLoadFun" :isAuto="isAuto" :isShowAuth="isShowAuth"></authorize> -->
 		<!-- #endif -->
-		<!-- 分享按钮 -->
+		<!-- Nút chia sẻ -->
 		<view class="generate-posters acea-row row-middle" :class="posters ? 'on' : ''">
 			<!-- #ifndef MP -->
 			<button class="item" hover-class="none" v-if="weixinStatus === true" @click="H5ShareBox = true">
 				<!-- <button class="item" hover-class='none' v-if="weixinStatus === true" @click="setShareInfoStatus"> -->
 				<view class="iconfont icon-weixin3"></view>
-				<view class="">{{ $t(`发送给朋友`) }}</view>
+				<view class="">{{ $t(`Gửi cho bạn bè`) }}</view>
 			</button>
 			<!-- #endif -->
 			<!-- #ifdef MP -->
 			<button class="item" open-type="share" hover-class="none" @click="goFriend">
 				<view class="iconfont icon-weixin3"></view>
-				<view class="">{{ $t(`发送给朋友`) }}</view>
+				<view class="">{{ $t(`Gửi cho bạn bè`) }}</view>
 			</button>
 			<!-- #endif -->
 			<!-- #ifdef APP-PLUS -->
 			<view class="item" @click="appShare('WXSceneSession')">
 				<view class="iconfont icon-weixin3"></view>
-				<view class="">{{ $t(`微信好友`) }}</view>
+				<view class="">{{ $t(`Bạn bè WeChat`) }}</view>
 			</view>
 			<view class="item" @click="appShare('WXSenceTimeline')">
 				<view class="iconfont icon-pengyouquan"></view>
-				<view class="">{{ $t(`微信朋友圈`) }}</view>
+				<view class="">{{ $t(`Khoảnh khắc WeChat`) }}</view>
 			</view>
 			<!-- #endif -->
 			<button class="item" hover-class="none" @tap="goPoster('seckill')">
 				<view class="iconfont icon-haibao"></view>
-				<view class="">{{ $t(`生成海报`) }}</view>
+				<view class="">{{ $t(`Tạo poster`) }}</view>
 			</button>
 		</view>
 		<view class="mask" v-if="posters" @click="listenerActionClose"></view>
 
-		<!-- 海报展示 -->
+		<!-- Hiển thị poster -->
 		<view class="poster-pop" v-if="posterImageStatus">
 			<image src="/static/images/poster-close.png" class="close" @click="posterImageClose"></image>
 			<image class="poster-img" :src="posterImage"></image>
 			<!-- #ifndef H5  -->
-			<view class="save-poster" @click="savePosterPath">{{ $t(`保存到手机`) }}</view>
+			<view class="save-poster" @click="savePosterPath">{{ $t(`Lưu vào điện thoại`) }}</view>
 			<!-- #endif -->
 			<!-- #ifdef H5 -->
-			<view class="keep">{{ $t(`长按图片可以保存到手机`) }}</view>
+			<view class="keep">{{ $t(`Nhấn giữ ảnh để lưu vào điện thoại`) }}</view>
 			<!-- #endif -->
 		</view>
 		<view class="mask1" v-if="posterImageStatus"></view>
 		<canvas class="canvas" canvas-id="myCanvas" v-if="canvasStatus"></canvas>
 		<kefuIcon :ids="storeInfo.product_id" :routineContact="routineContact"></kefuIcon>
-		<!-- 发送给朋友图片 -->
+		<!-- Gửi ảnh cho bạn bè -->
 		<view class="share-box" v-if="H5ShareBox">
 			<image :src="imgHost + '/statics/images/share-info.png'" @click="H5ShareBox = false"></image>
 		</view>
@@ -313,7 +313,7 @@ export default {
 			parameter: {
 				navbar: '1',
 				return: '1',
-				title: this.$t(`抢购详情页`),
+				title: this.$t(`Chi tiết flash sale`),
 				color: false
 			},
 			attribute: {
@@ -323,19 +323,19 @@ export default {
 			},
 			productValue: [],
 			isOpen: false,
-			attr: this.$t(`请选择`),
+			attr: this.$t(`Vui lòng chọn`),
 			attrValue: '',
 			status: 1,
 			isAuto: false,
 			isShowAuth: false,
 			iShidden: false,
-			limitNum: 1, //限制本属性产品的个数；
+			limitNum: 1, //Giới hạn số lượng sản phẩm của thuộc tính này;
 			iSplus: false,
-			replyCount: 0, //总评论数量
-			reply: [], //评论列表
+			replyCount: 0, //Tổng số lượng đánh giá
+			reply: [], //Danh sách đánh giá
 			replyChance: 0,
 			navH: '',
-			navList: [this.$t(`商品`), this.$t(`评价`), this.$t(`详情`)],
+			navList: [this.$t(`Sản phẩm`), this.$t(`Đánh giá`), this.$t(`Chi tiết`)],
 			opacity: 0,
 			scrollY: 0,
 			topArr: [],
@@ -356,16 +356,16 @@ export default {
 			posters: false,
 			weixinStatus: false,
 			posterImageStatus: false,
-			canvasStatus: false, //海报绘图标签
-			storeImage: '', //海报产品图
-			PromotionCode: '', //二维码图片
-			posterImage: '', //海报路径
+			canvasStatus: false, //Thẻ vẽ poster
+			storeImage: '', //Ảnh sản phẩm trên poster
+			PromotionCode: '', //Ảnh mã QR
+			posterImage: '', //Đường dẫn poster
 			posterbackgd: '/static/images/posterbackgd.png',
 			actionSheetHidden: false,
 			cart_num: '',
 			homeTop: 20,
 			returnShow: true,
-			H5ShareBox: false, //公众号分享图片
+			H5ShareBox: false, //Ảnh chia sẻ của OA WeChat
 			routineContact: 0,
 			skuArr: [],
 			selectSku: {},
@@ -392,19 +392,19 @@ export default {
 		var pages = getCurrentPages();
 		if (options.id) {
 			this.id = options.id;
-			//记录推广人uid
+			//Ghi lại uid người giới thiệu
 			if (options.pid) app.globalData.spid = options.pid;
 			if (options.time_id) this.time_id = options.time_id;
 			// if (options.time) this.datatime = Number(options.time);
 		}
 		that.returnShow = pages.length === 1 ? false : true;
 
-		//设置商品列表高度
+		//Đặt chiều cao danh sách sản phẩm
 		uni.getSystemInfo({
 			success: function (res) {
 				that.height = res.windowHeight;
 				statusBarHeight = res.statusBarHeight;
-				//res.windowHeight:获取整个窗口高度为px，*2为rpx；98为头部占据的高度；
+				//res.windowHeight: lấy chiều cao toàn bộ window là px, *2 ra rpx; 98 là chiều cao phần đầu trang chiếm;
 			}
 		});
 		// #ifdef MP
@@ -421,7 +421,7 @@ export default {
 		this.meunHeight = menuButtonInfo.height;
 		this.backH = that.navH / 2 + this.meunHeight / 2;
 
-		//扫码携带参数处理
+		//Xử lý tham số mang theo khi quét mã
 		if (options.scene) {
 			let value = this.$util.getUrlParams(decodeURIComponent(options.scene));
 			if (value.id) {
@@ -429,7 +429,7 @@ export default {
 			} else {
 				return this.$util.Tips(
 					{
-						title: this.$t(`缺少参数无法查看商品`)
+						title: this.$t(`Thiếu tham số, không thể xem sản phẩm`)
 					},
 					{
 						tab: 3,
@@ -437,7 +437,7 @@ export default {
 					}
 				);
 			}
-			//记录推广人uid
+			//Ghi lại uid người giới thiệu
 			if (value.pid) app.globalData.spid = value.pid;
 			if (value.time_id) this.time_id = value.time_id;
 			// if (value.time) this.datatime = value.time
@@ -468,12 +468,12 @@ export default {
 		moreNav() {
 			this.currentPage = !this.currentPage;
 		},
-		// app分享
+		// Chia sẻ app
 		// #ifdef APP-PLUS
 		appShare(scene) {
 			let that = this;
-			let routes = getCurrentPages(); // 获取当前打开过的页面路由数组
-			let curRoute = routes[routes.length - 1].$page.fullPath; // 获取当前页面路由，也就是最后一个打开的页面路由
+			let routes = getCurrentPages(); // Lấy mảng route các trang đã từng mở
+			let curRoute = routes[routes.length - 1].$page.fullPath; // Lấy route trang hiện tại, tức route trang được mở cuối cùng
 			uni.share({
 				provider: 'weixin',
 				scene: scene,
@@ -484,14 +484,14 @@ export default {
 				imageUrl: that.storeInfo.small_image,
 				success: function (res) {
 					uni.showToast({
-						title: this.$t(`分享成功`),
+						title: this.$t(`Chia sẻ thành công`),
 						icon: 'success'
 					});
 					that.posters = false;
 				},
 				fail: function (err) {
 					uni.showToast({
-						title: this.$t(`分享失败`),
+						title: this.$t(`Chia sẻ thất bại`),
 						icon: 'none',
 						duration: 2000
 					});
@@ -501,14 +501,14 @@ export default {
 		},
 		// #endif
 		/**
-		 * 购物车手动填写
+		 * Điền thủ công vào giỏ hàng
 		 *
 		 */
 		iptCartNum: function (e) {
 			this.$set(this.attribute.productSelect, 'cart_num', e);
 			this.$set(this, 'cart_num', e);
 		},
-		// 后退
+		// quay lại
 		returns() {
 			// #ifdef H5
 			return history.back();
@@ -555,9 +555,9 @@ export default {
 						that.skuArr.push(obj);
 					}
 					this.$set(this, 'selectSku', that.skuArr[0]);
-					var navList = [that.$t(`商品`), that.$t(`详情`)];
+					var navList = [that.$t(`Sản phẩm`), that.$t(`Chi tiết`)];
 					if (res.data.replyCount) {
-						navList.splice(1, 0, that.$t(`评价`));
+						navList.splice(1, 0, that.$t(`Đánh giá`));
 					}
 					that.$set(that, 'navList', navList);
 					// #ifdef H5 || APP-PLUS
@@ -583,7 +583,7 @@ export default {
 						},
 						fail: function () {
 							return that.$util.Tips({
-								title: that.$t(`二维码获取失败`)
+								title: that.$t(`Lấy mã QR thất bại`)
 							});
 						}
 					});
@@ -609,8 +609,8 @@ export default {
 				});
 		},
 		/**
-		 * 获取产品分销二维码
-		 * @param function successFn 下载完成回调
+		 * Lấy mã QR tiếp thị liên kết của sản phẩm
+		 * @param function successFn Callback khi tải xong
 		 *
 		 */
 		downloadFilePromotionCode: function (successFn) {
@@ -664,7 +664,7 @@ export default {
 					.catch((err) => {});
 		},
 		/**
-		 * 默认选中属性
+		 * Thuộc tính được chọn mặc định
 		 *
 		 */
 		DefaultSelect: function () {
@@ -680,7 +680,7 @@ export default {
 			for (let i = 0; i < productAttr.length; i++) {
 				this.$set(productAttr[i], 'index', value[i]);
 			}
-			//sort();排序函数:数字-英文-汉字；
+			//sort(); hàm sắp xếp: số - chữ Anh - chữ Hán;
 			let productSelect = this.productValue[value.join(',')];
 			if (productSelect && productAttr.length) {
 				self.$set(self.attribute.productSelect, 'store_name', self.storeInfo.title);
@@ -705,7 +705,7 @@ export default {
 				self.$set(self.attribute.productSelect, 'unique', '');
 				self.$set(self.attribute.productSelect, 'cart_num', 0);
 				self.$set(self, 'attrValue', '');
-				self.$set(self, 'attrTxt', this.$t(`请选择`));
+				self.$set(self, 'attrTxt', this.$t(`Vui lòng chọn`));
 			} else if (!productSelect && !productAttr.length) {
 				self.$set(self.attribute.productSelect, 'store_name', self.storeInfo.title);
 				self.$set(self.attribute.productSelect, 'image', self.storeInfo.image);
@@ -718,7 +718,7 @@ export default {
 				self.$set(self.attribute.productSelect, 'quota', productSelect.quota);
 				self.$set(self.attribute.productSelect, 'product_stock', productSelect.product_stock);
 				self.$set(self, 'attrValue', '');
-				self.$set(self, 'attrTxt', this.$t(`请选择`));
+				self.$set(self, 'attrTxt', this.$t(`Vui lòng chọn`));
 			}
 		},
 		selecAttr: function () {
@@ -729,20 +729,20 @@ export default {
 			this.$set(this, 'isOpen', false);
 		},
 		/**
-		 * 购物车数量加和数量减
+		 * Tăng và giảm số lượng giỏ hàng
 		 *
 		 */
 		ChangeCartNum: function (changeValue) {
-			//changeValue:是否 加|减
-			//获取当前变动属性
+			//changeValue: có tăng hay giảm
+			//Lấy thuộc tính vừa thay đổi hiện tại
 			let productSelect = this.productValue[this.attrValue];
 			if (this.cart_num) {
 				productSelect.cart_num = this.cart_num;
 				this.attribute.productSelect.cart_num = this.cart_num;
 			}
-			//如果没有属性,赋值给商品默认库存
+			//Nếu không có thuộc tính, gán bằng tồn kho mặc định của sản phẩm
 			if (productSelect === undefined && !this.attribute.productAttr.length) productSelect = this.attribute.productSelect;
-			//无属性值即库存为0；不存在加减；
+			//Không có giá trị thuộc tính thì tồn kho là 0; không có tăng giảm;
 			if (productSelect === undefined) return;
 			let stock = productSelect.stock || 0;
 			let quotaShow = productSelect.quota_show || 0;
@@ -751,7 +751,7 @@ export default {
 			let num = this.attribute.productSelect;
 			let nums = this.storeInfo.num || 0;
 			let onceNum = this.storeInfo.once_num || 0;
-			//设置默认数据
+			//Đặt dữ liệu mặc định
 			if (productSelect.cart_num == undefined) productSelect.cart_num = 1;
 			if (changeValue) {
 				num.cart_num++;
@@ -792,7 +792,7 @@ export default {
 			this.attribute.productAttr[val.indexw].index = this.attribute.productAttr[val.indexw].attr_values[val.indexn];
 		},
 		/**
-		 * 属性变动赋值
+		 * Gán giá trị khi thuộc tính thay đổi
 		 *
 		 */
 		ChangeAttr: function (res) {
@@ -809,7 +809,7 @@ export default {
 				this.$set(this.attribute.productSelect, 'quota_show', productSelect.quota_show);
 				this.$set(this, 'attrValue', res);
 
-				this.attrTxt = this.$t(`已选择`);
+				this.attrTxt = this.$t(`Đã chọn`);
 			} else {
 				this.$set(this.attribute.productSelect, 'image', this.storeInfo.image);
 				this.$set(this.attribute.productSelect, 'price', this.storeInfo.price);
@@ -819,7 +819,7 @@ export default {
 				this.$set(this.attribute.productSelect, 'quota', 0);
 				this.$set(this.attribute.productSelect, 'quota_show', 0);
 				this.$set(this, 'attrValue', '');
-				this.attrTxt = this.$t(`已选择`);
+				this.attrTxt = this.$t(`Đã chọn`);
 			}
 		},
 		scroll: function (e) {
@@ -863,7 +863,7 @@ export default {
 				heightArr = [];
 			for (var i = 0; i < that.navList.length; i++) {
 				//productList
-				//获取元素所在位置
+				//Lấy vị trí của phần tử
 				var query = wx.createSelectorQuery().in(this);
 				var idView = '#past' + i;
 				if (!this.replyCount && i == 1) {
@@ -881,7 +881,7 @@ export default {
 			}
 		},
 		/**
-		 * 收藏商品
+		 * Sản phẩm yêu thích
 		 */
 		setCollect: function () {
 			var that = this;
@@ -896,7 +896,7 @@ export default {
 			}
 		},
 		/*
-		 *  单独购买
+		 *  Mua riêng
 		 */
 		openAlone: function () {
 			uni.navigateTo({
@@ -904,21 +904,21 @@ export default {
 			});
 		},
 		/*
-		 *  下订单
+		 *  Đặt hàng
 		 */
 		goCat: function () {
 			var that = this;
 			that.currentPage = false;
 			var productSelect = this.productValue[this.attrValue];
-			//打开属性
+			//Mở thuộc tính
 			if (this.isOpen) this.attribute.cartAttr = true;
 			else this.attribute.cartAttr = !this.attribute.cartAttr;
-			//只有关闭属性弹窗时进行加入购物车
+			//Chỉ thêm vào giỏ hàng khi đóng popup thuộc tính
 			if (this.attribute.cartAttr === true && this.isOpen == false) return (this.isOpen = true);
-			//如果有属性,没有选择,提示用户选择
+			//Nếu có thuộc tính mà chưa chọn, nhắc người dùng chọn
 			if (this.attribute.productAttr.length && productSelect === undefined && this.isOpen == true)
 				return app.$util.Tips({
-					title: that.$t(`请选择属性`)
+					title: that.$t(`Vui lòng chọn thuộc tính`)
 				});
 			postCartAdd({
 				productId: that.storeInfo.product_id,
@@ -942,7 +942,7 @@ export default {
 				});
 		},
 		/**
-		 * 分享打开
+		 * Mở chia sẻ
 		 *
 		 */
 		listenerActionSheet: function () {
@@ -957,27 +957,27 @@ export default {
 				this.posters = true;
 			}
 		},
-		// 分享关闭
+		// Đóng chia sẻ
 		listenerActionClose: function () {
 			this.posters = false;
 		},
-		//隐藏海报
+		//Ẩn poster
 		posterImageClose: function () {
 			this.posterImageStatus = false;
 		},
-		//替换安全域名
+		//Thay domain an toàn
 		setDomain: function (url) {
 			url = url ? url.toString() : '';
-			//本地调试打开,生产请注销
+			//Mở khi debug local, khi lên production hãy comment lại
 			if (url.indexOf('https://') > -1) return url;
 			else return url.replace('http://', 'https://');
 		},
-		// 小程序关闭分享弹窗；
+		// Đóng popup chia sẻ của Mini Program;
 		goFriend: function () {
 			this.posters = false;
 		},
 		/*
-		 * 保存到手机相册
+		 * Lưu vào album điện thoại
 		 */
 		// #ifdef MP
 		savePosterPath: function () {
@@ -993,13 +993,13 @@ export default {
 									success: function (res) {
 										that.posterImageClose();
 										that.$util.Tips({
-											title: that.$t(`保存成功`),
+											title: that.$t(`Lưu thành công`),
 											icon: 'success'
 										});
 									},
 									fail: function (res) {
 										that.$util.Tips({
-											title: that.$t(`保存失败`)
+											title: that.$t(`Lưu thất bại`)
 										});
 									}
 								});
@@ -1011,13 +1011,13 @@ export default {
 							success: function (res) {
 								that.posterImageClose();
 								that.$util.Tips({
-									title: that.$t(`保存成功`),
+									title: that.$t(`Lưu thành công`),
 									icon: 'success'
 								});
 							},
 							fail: function (res) {
 								that.$util.Tips({
-									title: that.$t(`保存失败`)
+									title: that.$t(`Lưu thất bại`)
 								});
 							}
 						});
@@ -1034,13 +1034,13 @@ export default {
 				success: function (res) {
 					that.posterImageClose();
 					that.$util.Tips({
-						title: that.$t(`保存成功`),
+						title: that.$t(`Lưu thành công`),
 						icon: 'success'
 					});
 				},
 				fail: function (res) {
 					that.$util.Tips({
-						title: that.$t(`保存失败`)
+						title: that.$t(`Lưu thất bại`)
 					});
 				}
 			});
@@ -1064,11 +1064,11 @@ export default {
 				});
 			}
 		},
-		//点击sku图片打开轮播图
+		//Click ảnh sku để mở banner trình chiếu
 		showImg(index) {
 			this.$refs.cusPreviewImg.open(this.selectSku.suk);
 		},
-		//滑动轮播图选择商品
+		//Vuốt banner trình chiếu để chọn sản phẩm
 		changeSwitch(e) {
 			let productSelect = this.skuArr[e];
 			this.$set(this, 'selectSku', productSelect);
@@ -1093,7 +1093,7 @@ export default {
 				this.$set(this.attribute.productSelect, 'stock', productSelect.stock);
 				this.$set(this.attribute.productSelect, 'unique', productSelect.id);
 				this.$set(this.attribute.productSelect, 'vipPrice', productSelect.vipPrice);
-				this.$set(this, 'attrTxt', this.$t(`已选择`));
+				this.$set(this, 'attrTxt', this.$t(`Đã chọn`));
 				this.$set(this, 'attrValue', productSelect.suk);
 			}
 		},
@@ -1362,8 +1362,8 @@ export default {
 	z-index: 277;
 	border-top: 1rpx solid #f0f0f0;
 	height: 100rpx;
-	height: calc(100rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-	height: calc(100rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+	height: calc(100rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+	height: calc(100rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 	transform: translate3d(0, 100%, 0);
 	transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
 }

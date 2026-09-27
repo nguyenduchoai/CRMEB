@@ -19,7 +19,7 @@ use think\facade\Route;
 class DivisionServices extends BaseServices
 {
     /**
-     * 获取事业部/代理/员工列表
+     * Lấy danh sách đại lý khu vực/đại lý/nhân viên
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -45,7 +45,7 @@ class DivisionServices extends BaseServices
     }
 
     /**
-     * 下级列表
+     * Danh sách cấp dưới
      * @param $type
      * @param $uid
      * @return array
@@ -76,7 +76,7 @@ class DivisionServices extends BaseServices
     }
 
     /**
-     * 添加编辑事业部表单
+     * Form thêm sửa đại lý khu vực
      * @param $uid
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -98,29 +98,29 @@ class DivisionServices extends BaseServices
             }
         }
         $field = [];
-        $title = '事业部';
-        $field[] = Form::input('division_name', '事业部名称', $userInfo['division_name'] ?? '')->required('请输入事业部名称');
+        $title = 'Đại lý khu vực';
+        $field[] = Form::input('division_name', 'Tên đại lý khu vực', $userInfo['division_name'] ?? '')->required('Vui lòng nhập tên đại lý khu vực');
         if ($uid) {
             $field[] = Form::hidden('uid', $uid);
         } else {
-            $field[] = Form::frameImage('image', '关联用户', $this->url(config('app.admin_prefix', 'admin') . '/system.user/list', ['fodder' => 'image'], true))->icon('el-icon-user')->width('950px')->height('560px')->Props(['srcKey' => 'image', 'footer' => false]);
+            $field[] = Form::frameImage('image', 'Người dùng liên kết', $this->url(config('app.admin_prefix', 'admin') . '/system.user/list', ['fodder' => 'image'], true))->icon('el-icon-user')->width('950px')->height('560px')->Props(['srcKey' => 'image', 'footer' => false]);
         }
         $field[] = Form::hidden('aid', $adminInfo['id'] ?? 0);
-        $field[] = Form::number('division_percent', '佣金比例', $userInfo['division_percent'] ?? '')->placeholder('区域代理佣金比例1-100')->info('填写1-100，如填写50代表返佣50%')->style(['width' => '173px'])->min(0)->max(100)->required();
-        $field[] = Form::date('division_end_time', '到期时间', ($userInfo['division_end_time'] ?? '') != 0 ? date('Y-m-d H:i:s', $userInfo['division_end_time']) : '')->placeholder('区域代理到期时间');
-        $field[] = Form::radio('division_status', '代理状态', $userInfo['division_status'] ?? 1)->options([['label' => '开通', 'value' => 1], ['label' => '关闭', 'value' => 0]]);
-        $field[] = Form::input('account', '管理账号', $adminInfo['account'] ?? '')->required('请填写管理员账号');
-        $field[] = Form::input('pwd', '管理密码')->type('password')->placeholder('请填写管理员密码');
-        $field[] = Form::input('conf_pwd', '确认密码')->type('password')->placeholder('请输入确认密码');
+        $field[] = Form::number('division_percent', 'Tỷ lệ hoa hồng', $userInfo['division_percent'] ?? '')->placeholder('Tỷ lệ hoa hồng của đại lý khu vực 1-100')->info('Nhập 1-100, ví dụ nhập 50 nghĩa là trả hoa hồng 50%')->style(['width' => '173px'])->min(0)->max(100)->required();
+        $field[] = Form::date('division_end_time', 'Thời gian hết hạn', ($userInfo['division_end_time'] ?? '') != 0 ? date('Y-m-d H:i:s', $userInfo['division_end_time']) : '')->placeholder('Thời gian hết hạn đại lý khu vực');
+        $field[] = Form::radio('division_status', 'Trạng thái đại lý', $userInfo['division_status'] ?? 1)->options([['label' => 'Kích hoạt', 'value' => 1], ['label' => 'Tắt', 'value' => 0]]);
+        $field[] = Form::input('account', 'Tài khoản quản trị', $adminInfo['account'] ?? '')->required('Vui lòng điền tài khoản quản trị viên');
+        $field[] = Form::input('pwd', 'Mật khẩu quản trị')->type('password')->placeholder('Vui lòng nhập mật khẩu quản trị viên');
+        $field[] = Form::input('conf_pwd', 'Xác nhận mật khẩu')->type('password')->placeholder('Vui lòng nhập mật khẩu xác nhận');
         /** @var SystemRoleServices $service */
         $service = app()->make(SystemRoleServices::class);
         $options = $service->getRoleFormSelect(1);
-        $field[] = Form::select('roles', '管理员身份', $adminInfo['roles'] ?? [])->setOptions(Form::setOptions($options))->multiple(true)->required('请选择管理员身份');
+        $field[] = Form::select('roles', 'Vai trò quản trị viên', $adminInfo['roles'] ?? [])->setOptions(Form::setOptions($options))->multiple(true)->required('Vui lòng chọn vai trò quản trị viên');
         return create_form($title, $field, Route::buildUrl('/agent/division/save'), 'POST');
     }
 
     /**
-     * 保存事业部数据
+     * Lưu dữ liệu đại lý khu vực
      * @param $data
      * @return mixed
      */
@@ -132,10 +132,10 @@ class DivisionServices extends BaseServices
         $userServices = app()->make(UserServices::class);
         if ($data['aid'] == 0) {
             $userInfo = $userServices->getUserInfo($data['uid'], 'is_division,is_agent,is_staff');
-            if (!$userInfo) throw new AdminException('用户不存在');
-            if ($userInfo['is_division']) throw new AdminException('此用户是事业部，请勿重复添加');
-            if ($userInfo['is_agent']) throw new AdminException('此用户是代理商，无法添加为事业部');
-            if ($userInfo['is_staff']) throw new AdminException('此用户是下级员工，无法添加为事业部');
+            if (!$userInfo) throw new AdminException('Người dùng không tồn tại');
+            if ($userInfo['is_division']) throw new AdminException('Người dùng này đã là đại lý khu vực, vui lòng không thêm lại');
+            if ($userInfo['is_agent']) throw new AdminException('Người dùng này là đại lý, không thể thêm làm đại lý khu vực');
+            if ($userInfo['is_staff']) throw new AdminException('Người dùng này là nhân viên cấp dưới, không thể thêm làm đại lý khu vực');
         }
         $uid = $data['uid'];
         $aid = $data['aid'];
@@ -207,7 +207,7 @@ class DivisionServices extends BaseServices
     }
 
 //    /**
-//     * 生成邀请码
+//     * Tạo mã mời
 //     * @return false|string
 //     */
 //    public function getDivisionInvite()
@@ -215,7 +215,7 @@ class DivisionServices extends BaseServices
 //        /** @var UserServices $userServices */
 //        $userServices = app()->make(UserServices::class);
 //        list($msec, $sec) = explode(' ', microtime());
-//        $num = time() + mt_rand(10, 999999) . '' . substr($msec, 2, 3);//生成随机数
+//        $num = time() + mt_rand(10, 999999) . '' . substr($msec, 2, 3);//tạo số ngẫu nhiên
 //        if (strlen($num) < 12)
 //            $num = str_pad((string)$num, 8, 0, STR_PAD_RIGHT);
 //        else
@@ -227,7 +227,7 @@ class DivisionServices extends BaseServices
 //    }
 
     /**
-     * 添加编辑代理商
+     * Thêm/sửa đại lý
      * @param $uid
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -244,24 +244,24 @@ class DivisionServices extends BaseServices
         foreach ($divisionList['list'] as $item) {
             $options[] = ['value' => $item['uid'], 'label' => $item['division_name']];
         }
-        $field[] = Form::input('division_name', '代理商名称', $userInfo['division_name'] ?? '')->required('请输入代理商名称');
+        $field[] = Form::input('division_name', 'Tên đại lý', $userInfo['division_name'] ?? '')->required('Vui lòng nhập tên đại lý');
         if ($uid) {
             $field[] = Form::hidden('uid', $uid);
             $field[] = Form::hidden('edit', 1);
             $field[] = Form::hidden('division_id', $userInfo['division_id']);
         } else {
-            $field[] = Form::select('division_id', '上级事业部', '')->setOptions(Form::setOptions($options))->filterable(1);
-            $field[] = Form::frameImage('image', '关联用户', $this->url(config('app.admin_prefix', 'admin') . '/system.user/list', ['fodder' => 'image'], true))->icon('el-icon-user')->width('950px')->height('560px')->Props(['srcKey' => 'image', 'footer' => false]);
+            $field[] = Form::select('division_id', 'Đại lý khu vực cấp trên', '')->setOptions(Form::setOptions($options))->filterable(1);
+            $field[] = Form::frameImage('image', 'Người dùng liên kết', $this->url(config('app.admin_prefix', 'admin') . '/system.user/list', ['fodder' => 'image'], true))->icon('el-icon-user')->width('950px')->height('560px')->Props(['srcKey' => 'image', 'footer' => false]);
             $field[] = Form::hidden('edit', 0);
         }
-        $field[] = Form::number('division_percent', '佣金比例', $userInfo['division_percent'] ?? '')->placeholder('代理商佣金比例1-100')->info('填写1-100，如填写50代表返佣50%,但是不能高于上级事业部的比例')->style(['width' => '173px'])->min(0)->max(100)->required();
-        $field[] = Form::date('division_end_time', '到期时间', ($userInfo['division_end_time'] ?? '') != 0 ? date('Y-m-d H:i:s', $userInfo['division_end_time']) : '')->placeholder('代理商代理到期时间');
-        $field[] = Form::radio('division_status', '代理状态', $userInfo['division_status'] ?? 1)->options([['label' => '开通', 'value' => 1], ['label' => '关闭', 'value' => 0]]);
-        return create_form('代理商', $field, Route::buildUrl('/agent/division/agent/save'), 'POST');
+        $field[] = Form::number('division_percent', 'Tỷ lệ hoa hồng', $userInfo['division_percent'] ?? '')->placeholder('Tỷ lệ hoa hồng của đại lý 1-100')->info('Nhập 1-100, ví dụ nhập 50 nghĩa là trả hoa hồng 50%, nhưng không được cao hơn tỷ lệ của đại lý khu vực cấp trên')->style(['width' => '173px'])->min(0)->max(100)->required();
+        $field[] = Form::date('division_end_time', 'Thời gian hết hạn', ($userInfo['division_end_time'] ?? '') != 0 ? date('Y-m-d H:i:s', $userInfo['division_end_time']) : '')->placeholder('Thời gian hết hạn đại lý');
+        $field[] = Form::radio('division_status', 'Trạng thái đại lý', $userInfo['division_status'] ?? 1)->options([['label' => 'Kích hoạt', 'value' => 1], ['label' => 'Tắt', 'value' => 0]]);
+        return create_form('Đại lý', $field, Route::buildUrl('/agent/division/agent/save'), 'POST');
     }
 
     /**
-     * 保存代理商
+     * Lưu đại lý
      * @param $data
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
@@ -296,11 +296,11 @@ class DivisionServices extends BaseServices
         }
         $res = $userServices->update($uid, $agentData);
         if ($res) return true;
-        throw new AdminException('保存失败');
+        throw new AdminException('Lưu thất bại');
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param $status
      * @param $uid
      * @return bool
@@ -321,7 +321,7 @@ class DivisionServices extends BaseServices
     }
 
     /**
-     * 删除事业部/代理商
+     * Xóa đại lý khu vực/đại lý
      * @param $type
      * @param $uid
      * @return mixed
@@ -332,7 +332,7 @@ class DivisionServices extends BaseServices
             /** @var UserServices $userServices */
             $userServices = app()->make(UserServices::class);
             $userInfo = $userServices->getUserInfo($uid);
-            if (!$userInfo) throw new AdminException('用户不存在');
+            if (!$userInfo) throw new AdminException('Người dùng không tồn tại');
             $userInfo = $userInfo->toArray();
             $data = [
                 'division_name' => '',
@@ -363,31 +363,31 @@ class DivisionServices extends BaseServices
     }
 
     /**
-     * 后台添加员工
+     * Thêm nhân viên ở trang quản trị
      * @param $uid
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2024/1/22
      */
     public function getDivisionStaffForm($uid)
     {
         $field = [];
-        $field[] = Form::frameImage('image', '员工', $this->url(config('app.admin_prefix', 'admin') . '/system.user/list', ['fodder' => 'image'], true))->icon('el-icon-user')->width('950px')->height('560px')->Props(['srcKey' => 'image', 'footer' => false]);
-        $field[] = Form::number('division_percent', '佣金比例', '')->placeholder('员工佣金比例1-100')->info('填写1-100，如填写50代表返佣50%,但是不能高于上级代理商的比例')->style(['width' => '173px'])->min(0)->max(100)->required();
+        $field[] = Form::frameImage('image', 'Nhân viên', $this->url(config('app.admin_prefix', 'admin') . '/system.user/list', ['fodder' => 'image'], true))->icon('el-icon-user')->width('950px')->height('560px')->Props(['srcKey' => 'image', 'footer' => false]);
+        $field[] = Form::number('division_percent', 'Tỷ lệ hoa hồng', '')->placeholder('Tỷ lệ hoa hồng của nhân viên 1-100')->info('Nhập 1-100, ví dụ nhập 50 nghĩa là trả hoa hồng 50%, nhưng không được cao hơn tỷ lệ của đại lý cấp trên')->style(['width' => '173px'])->min(0)->max(100)->required();
         $field[] = Form::hidden('agent_id', $uid);
-        return create_form('员工', $field, Route::buildUrl('/agent/division/staff/save'), 'POST');
+        return create_form('Nhân viên', $field, Route::buildUrl('/agent/division/staff/save'), 'POST');
     }
 
     /**
-     * 保存员工
+     * Lưu nhân viên
      * @param $data
      * @return true
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2024/1/22
      */
@@ -397,10 +397,10 @@ class DivisionServices extends BaseServices
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
         $userInfo = $userServices->getUserInfo($data['uid'], 'is_division,is_agent,is_staff,division_id,agent_id,staff_id,division_end_time,division_percent');
-        if (!$userInfo) throw new AdminException('用户不存在');
-        if ($userInfo['is_division']) throw new AdminException('此用户是事业部，无法绑定为员工');
-        if ($userInfo['is_agent']) throw new AdminException('此用户是代理商，无法绑定为员工');
-        if ($userInfo['is_staff'] && $userInfo['agent_id'] == $data['agent_id']) throw new AdminException('此用户是您的员工，请勿重复添加');
+        if (!$userInfo) throw new AdminException('Người dùng không tồn tại');
+        if ($userInfo['is_division']) throw new AdminException('Người dùng này là đại lý khu vực, không thể liên kết làm nhân viên');
+        if ($userInfo['is_agent']) throw new AdminException('Người dùng này là đại lý, không thể liên kết làm nhân viên');
+        if ($userInfo['is_staff'] && $userInfo['agent_id'] == $data['agent_id']) throw new AdminException('Người dùng này đã là nhân viên của bạn, vui lòng không thêm lại');
         $agentInfo = $userServices->getUserInfo($data['agent_id'], 'division_id,agent_id,division_end_time,division_percent');
         $staffData = [
             'spread_uid' => $data['agent_id'],
@@ -423,11 +423,11 @@ class DivisionServices extends BaseServices
         }
         $res = $userServices->update($data['uid'], $staffData);
         if ($res) return true;
-        throw new AdminException('保存失败');
+        throw new AdminException('Lưu thất bại');
     }
 
     /**
-     * 扫码绑定员工
+     * Quét mã để liên kết nhân viên
      * @param $uid
      * @param int $agentId
      * @param int $agentCode
@@ -435,7 +435,7 @@ class DivisionServices extends BaseServices
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2024/2/2
      */
@@ -449,15 +449,15 @@ class DivisionServices extends BaseServices
             }
         }
         if (!$agentId) return false;
-        if ($uid == $agentId) return '自己不能推荐自己';
+        if ($uid == $agentId) return 'Không thể tự giới thiệu chính mình';
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
         $agentInfo = $userServices->getUserInfo($agentId, 'division_id,agent_id,division_end_time,division_percent');
-        if (!$agentInfo) return '上级用户不存在';
+        if (!$agentInfo) return 'Người giới thiệu không tồn tại';
         $userInfo = $userServices->getUserInfo($uid, 'is_division,is_agent,is_staff,division_id,agent_id,staff_id,division_end_time,division_percent');
-        if (!$userInfo) return '用户不存在';
-        if ($userInfo['is_division']) return '您是事业部,不能绑定成为别人的员工';
-        if ($userInfo['is_agent']) return '您是代理商,不能绑定成为别人的员工';
+        if (!$userInfo) return 'Người dùng không tồn tại';
+        if ($userInfo['is_division']) return 'Bạn là đại lý khu vực, không thể liên kết làm nhân viên của người khác';
+        if ($userInfo['is_agent']) return 'Bạn là đại lý, không thể liên kết làm nhân viên của người khác';
         $staffData = [
             'spread_uid' => $agentId,
             'spread_time' => time(),
@@ -475,13 +475,13 @@ class DivisionServices extends BaseServices
             $userServices->update(['staff_id' => $userInfo['uid'], 'not_spread_uid' => $userInfo['uid']], ['staff_id' => 0]);
         }
         $res = $userServices->update($uid, $staffData);
-        if ($res) return '绑定员工成功';
-        return '绑定员工失败';
+        if ($res) return 'Liên kết nhân viên thành công';
+        return 'Liên kết nhân viên thất bại';
     }
 
     /**
-     * 获取返佣比例佣金比例
-     * 当前方法会将获得的佣金逐步的递减
+     * Lấy tỷ lệ trả hoa hồng, tỷ lệ hoa hồng
+     * Phương thức này sẽ giảm dần hoa hồng nhận được
      * @param $uid
      * @param $storeBrokerageRatio
      * @param $storeBrokerageRatioTwo
@@ -492,7 +492,7 @@ class DivisionServices extends BaseServices
     {
         $division_open = (int)sys_config('division_status', 1);
         if (!$division_open) {
-            /** 代理商关闭 */
+            /** Đại lý đã tắt */
             $storeBrokerageOne = $storeBrokerageRatio;
             $storeBrokerageTwo = $storeBrokerageRatioTwo;
             $staffPercent = 0;
@@ -503,7 +503,7 @@ class DivisionServices extends BaseServices
             $userServices = app()->make(UserServices::class);
             $userInfo = $userServices->get($uid);
             if ($userInfo['is_division'] == 1) {
-                /** 自己是事业部 */
+                /** Bản thân là đại lý khu vực */
                 $storeBrokerageOne = 0;
                 $storeBrokerageTwo = 0;
                 $staffPercent = 0;
@@ -514,7 +514,7 @@ class DivisionServices extends BaseServices
                     $divisionPercent = 0;
                 }
             } elseif ($userInfo['is_agent'] == 1) {
-                /** 自己是代理商 */
+                /** Bản thân là đại lý */
                 $divisionInfo = $userServices->get($userInfo['division_id']);
                 $storeBrokerageOne = 0;
                 $storeBrokerageTwo = 0;
@@ -530,8 +530,8 @@ class DivisionServices extends BaseServices
                 } else {
                     $divisionPercent = 0;
                 }
-            } elseif ($userInfo['is_staff'] == 1) { // 自己是员工
-                /** 自己是员工 */
+            } elseif ($userInfo['is_staff'] == 1) { // Bản thân là nhân viên
+                /** Bản thân là nhân viên */
                 $agentInfo = $userServices->get($userInfo['agent_id']);
                 $divisionInfo = $userServices->get($userInfo['division_id']);
                 $storeBrokerageOne = 0;
@@ -554,14 +554,14 @@ class DivisionServices extends BaseServices
                     $divisionPercent = 0;
                 }
             } else {
-                /** 自己是普通用户 */
+                /** Bản thân là người dùng thông thường */
                 $staffInfo = $userServices->get($userInfo['staff_id']);
                 $agentInfo = $userServices->get($userInfo['agent_id']);
                 $divisionInfo = $userServices->get($userInfo['division_id']);
                 if ($userInfo['staff_id']) {
-                    /** 该用户为员工推广 */
+                    /** Người dùng này do nhân viên giới thiệu */
                     if ($userInfo['staff_id'] == $userInfo['spread_uid']) {
-                        /** 员工直接下级 */
+                        /** Cấp dưới trực tiếp của nhân viên */
                         $storeBrokerageOne = $isSelfBrokerage ? $storeBrokerageRatio : 0;
                         $storeBrokerageTwo = 0;
                         if ($staffInfo['division_status'] == 1 && $staffInfo['division_end_time'] > time()) {
@@ -606,7 +606,7 @@ class DivisionServices extends BaseServices
                         }
                     }
                 } elseif ($userInfo['agent_id']) {
-                    /** 该用户为代理商推广 */
+                    /** Người dùng này do đại lý giới thiệu */
                     if ($userInfo['agent_id'] == $userInfo['spread_uid']) {
                         $storeBrokerageOne = $isSelfBrokerage ? $storeBrokerageRatio : 0;
                         $storeBrokerageTwo = 0;
@@ -642,9 +642,9 @@ class DivisionServices extends BaseServices
                         }
                     }
                 } elseif ($userInfo['division_id']) {
-                    /** 该用户为事业部推广 */
+                    /** Người dùng này do đại lý khu vực giới thiệu */
                     if ($userInfo['division_id'] == $userInfo['spread_uid']) {
-                        /** 事业部直接下级 */
+                        /** Cấp dưới trực tiếp của đại lý khu vực */
                         $storeBrokerageOne = $isSelfBrokerage ? $storeBrokerageRatio : 0;
                         $storeBrokerageTwo = 0;
                         $staffPercent = 0;
@@ -669,7 +669,7 @@ class DivisionServices extends BaseServices
                         }
                     }
                 } else {
-                    /** 没有任何代理商关系 */
+                    /** Không có quan hệ đại lý nào */
                     $storeBrokerageOne = $storeBrokerageRatio;
                     $storeBrokerageTwo = $storeBrokerageRatioTwo;
                     $staffPercent = 0;
@@ -682,7 +682,7 @@ class DivisionServices extends BaseServices
     }
 
     /**
-     * 事业部统计
+     * Thống kê đại lý khu vực
      * @param $type
      * @param $time
      * @param $page

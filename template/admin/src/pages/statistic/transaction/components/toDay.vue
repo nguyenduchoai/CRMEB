@@ -3,7 +3,7 @@
     <el-row>
       <el-col v-if="statisticsData" class="br" v-bind="grid">
         <div>
-          <h4 class="title mb15">今日订单金额</h4>
+          <h4 class="title mb15">Giá trị đơn hàng hôm nay</h4>
           <div class="price">
             ￥<i>{{ statisticsData.left.series[0].money }}</i>
           </div>
@@ -21,11 +21,11 @@
       <el-col v-if="statisticsData" v-bind="grid">
         <div class="pl25">
           <div class="toDay">
-            <span class="toDay-title spBlock mb10">今日订单数</span>
+            <span class="toDay-title spBlock mb10">Số đơn hàng hôm nay</span>
             <span class="toDay-number spBlock mb10">{{ statisticsData.right.today.series[0].now_money }}</span>
-            <span class="toDay-time spBlock">昨日：{{ statisticsData.right.today.series[0].last_money }}</span>
+            <span class="toDay-time spBlock">Hôm qua: {{ statisticsData.right.today.series[0].last_money }}</span>
             <span class="toDay-time spBlock"
-              >日环比：
+              >So với hôm qua:
               <i class="content-is" :class="Number(statisticsData.right.today.series[0].rate) >= 0 ? 'up' : 'down'"
                 >{{ Math.floor(statisticsData.right.today.series[0].rate) }}%</i
               >
@@ -45,11 +45,11 @@
               :option-data="optionTodatOrder"
               :styles="styleToday"
             />
-            <span class="toDay-title spBlock mb10">本月订单数</span>
+            <span class="toDay-title spBlock mb10">Số đơn hàng tháng này</span>
             <span class="toDay-number spBlock mb10">{{ statisticsData.right.month[0].now_money }}</span>
-            <span class="toDay-time spBlock">上月：{{ statisticsData.right.month[0].last_money }}</span>
+            <span class="toDay-time spBlock">Tháng trước: {{ statisticsData.right.month[0].last_money }}</span>
             <span class="toDay-time spBlock"
-              >月环比：
+              >So với tháng trước:
               <i class="content-is" :class="Number(statisticsData.right.month[0].rate) >= 0 ? 'up' : 'down'"
                 >{{ Math.floor(statisticsData.right.month[0].rate) }}%</i
               >
@@ -62,11 +62,11 @@
             </span>
           </div>
           <div class="toDay" style="border: none">
-            <span class="toDay-title spBlock mb10">今日支付人数</span>
+            <span class="toDay-title spBlock mb10">Số người thanh toán hôm nay</span>
             <span class="toDay-number spBlock mb10">{{ statisticsData.right.today.series[1].now_money }}</span>
-            <span class="toDay-time spBlock">昨日：{{ statisticsData.right.today.series[1].last_money }}</span>
+            <span class="toDay-time spBlock">Hôm qua: {{ statisticsData.right.today.series[1].last_money }}</span>
             <span class="toDay-time spBlock"
-              >日环比：
+              >So với hôm qua:
               <i class="content-is" :class="Number(statisticsData.right.today.series[1].rate) >= 0 ? 'up' : 'down'"
                 >{{ Math.floor(statisticsData.right.today.series[1].rate) }}%</i
               >
@@ -86,11 +86,11 @@
               :option-data="optionOrderUser"
               :styles="styleToday"
             />
-            <span class="toDay-title spBlock mb10">本月支付人数</span>
+            <span class="toDay-title spBlock mb10">Số người thanh toán tháng này</span>
             <span class="toDay-number spBlock mb10">{{ statisticsData.right.month[1].now_money }}</span>
-            <span class="toDay-time spBlock">上月：{{ statisticsData.right.month[1].last_money }}</span>
+            <span class="toDay-time spBlock">Tháng trước: {{ statisticsData.right.month[1].last_money }}</span>
             <span class="toDay-time spBlock"
-              >月环比：
+              >So với tháng trước:
               <i class="content-is" :class="Number(statisticsData.right.month[1].rate) >= 0 ? 'up' : 'down'"
                 >{{ Math.floor(statisticsData.right.month[1].rate) }}%</i
               >
@@ -125,7 +125,7 @@ export default {
       styleToday: {
         height: '130px',
       },
-      legendData: ['今天', '昨天'],
+      legendData: ['Hôm nay', 'Hôm qua'],
       seriesData: [],
       timer: [],
       grid: {
@@ -136,13 +136,13 @@ export default {
         xs: 24,
       },
       statisticsData: '',
-      optionTodatOrder: {}, // 今日订单数
+      optionTodatOrder: {}, // Số đơn hàng hôm nay
       orderData: {},
       orderUserData: {},
-      optionData: {}, // 今日交易数据
+      optionData: {}, // Dữ liệu giao dịch hôm nay
       listLoading: false,
       optionDataOrder: {},
-      optionOrderUser: {}, // 今日支付人数
+      optionOrderUser: {}, // Số người thanh toán hôm nay
     };
   },
   beforeDestroy() {
@@ -161,7 +161,7 @@ export default {
       this.listLoading = true;
       statisticTopTradeApi({ time: 'today' })
         .then((res) => {
-          // 今日交易数据
+          // Dữ liệu giao dịch hôm nay
           this.statisticsData = res.data;
           const leftOrder = res.data.left;
           const leftToday = [];
@@ -175,7 +175,7 @@ export default {
           });
           const seriesData = [
             {
-              name: '今天',
+              name: 'Hôm nay',
               type: 'line',
               areaStyle: {
                 normal: {
@@ -208,7 +208,7 @@ export default {
               smooth: true,
             },
             {
-              name: '昨天',
+              name: 'Hôm qua',
               type: 'line',
               areaStyle: {
                 normal: {
@@ -248,7 +248,7 @@ export default {
             legend: {
               x: '1px',
               y: '10px',
-              data: ['今天', '昨天'],
+              data: ['Hôm nay', 'Hôm qua'],
             },
             grid: {
               left: '0%',
@@ -272,7 +272,7 @@ export default {
             series: seriesData,
           };
 
-          // 今日订单数
+          // Số đơn hàng hôm nay
           const rightOrder = res.data.right;
           const rightLegendData = rightOrder.today.x;
           const rightTodayOrder = [];
@@ -281,7 +281,7 @@ export default {
           });
           const rightSeriesDataOrder = [
             {
-              name: '今天',
+              name: 'Hôm nay',
               type: 'line',
               areaStyle: {
                 normal: {
@@ -327,7 +327,7 @@ export default {
             legend: {
               x: '1px',
               y: '10px',
-              data: ['今天'],
+              data: ['Hôm nay'],
             },
             grid: {
               left: '0%',
@@ -355,14 +355,14 @@ export default {
             series: rightSeriesDataOrder,
           };
 
-          // 今日支付人数
+          // Số người thanh toán hôm nay
           const rightTodayPay = [];
           Object.keys(rightOrder.today.series[1].value).forEach((key) => {
             rightTodayPay.push(Number(rightOrder.today.series[1].value[key]));
           });
           const seriesDataPay = [
             {
-              name: '今天',
+              name: 'Hôm nay',
               type: 'line',
               areaStyle: {
                 normal: {
@@ -408,7 +408,7 @@ export default {
             legend: {
               x: '1px',
               y: '10px',
-              data: ['今天'],
+              data: ['Hôm nay'],
             },
             grid: {
               left: '0%',

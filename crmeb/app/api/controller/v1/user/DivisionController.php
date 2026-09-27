@@ -28,7 +28,7 @@ class DivisionController
     }
 
     /**
-     * 申请代理商
+     * Đăng ký làm đại lý
      * @param Request $request
      * @param $id
      * @return mixed
@@ -52,7 +52,7 @@ class DivisionController
     }
 
     /**
-     * 申请详情
+     * Chi tiết đăng ký
      * @param Request $request
      * @return mixed
      * @throws DataNotFoundException
@@ -67,7 +67,7 @@ class DivisionController
     }
 
     /**
-     * 移动端获取规则
+     * Lấy quy tắc trên di động
      * @param AgreementServices $agreementServices
      * @return mixed
      * @throws DataNotFoundException
@@ -81,7 +81,7 @@ class DivisionController
     }
 
     /**
-     * 员工列表
+     * Danh sách nhân viên
      * @param Request $request
      * @return mixed
      * @throws DataNotFoundException
@@ -99,7 +99,7 @@ class DivisionController
     }
 
     /**
-     * 设置员工比例
+     * Thiết lập tỷ lệ nhân viên
      * @param Request $request
      * @return mixed
      */
@@ -120,7 +120,7 @@ class DivisionController
     }
 
     /**
-     * 删除员工
+     * Xóa nhân viên
      * @param Request $request
      * @param $uid
      * @return mixed
@@ -136,13 +136,13 @@ class DivisionController
     }
 
     /**
-     * 绑定员工方法
+     * Phương thức liên kết nhân viên
      * @param Request $request
      * @return \think\Response
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2024/2/2
      */
@@ -156,7 +156,7 @@ class DivisionController
         if ($res) {
             return app('json')->success($res);
         } else {
-            return app('json')->fail('无操作');
+            return app('json')->fail('Không có thao tác');
         }
     }
 }

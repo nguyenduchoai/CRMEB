@@ -2,8 +2,8 @@
 	<view :style="colorStyle">
 		<view class='collectionGoods' v-if="collectProductList.length">
 			<view class="title-admin">
-				<view>{{$t(`当前共`)}} <text class="text"> {{count}} </text> {{$t(`件商品`)}}</view>
-				<view class="admin" @click="showRadio">{{checkbox_show?$t(`取消`):$t(`管理`)}}</view>
+				<view>{{$t(`Hiện có`)}} <text class="text"> {{count}} </text> {{$t(`sản phẩm`)}}</view>
+				<view class="admin" @click="showRadio">{{checkbox_show?$t(`Hủy`):$t(`Quản lý`)}}</view>
 			</view>
 			<checkbox-group @change.stop="checkboxChange">
 				<view class='item acea-row' v-for="(item,index) in collectProductList" :key="index">
@@ -12,7 +12,7 @@
 						<view class='pictrue' @click="jump(item)">
 							<image :src="item.image"></image>
 							<view class="invalid acea-row row-center-wrapper" v-if="!item.is_show">
-								已下架
+								Đã ngừng bán
 							</view>
 						</view>
 					</view>
@@ -20,7 +20,7 @@
 						<view class='name line2'>{{item.store_name}}</view>
 						<view class='acea-row row-between-wrapper'>
 							<view class='money font-color'>{{$t(`￥`)}}{{item.price}}</view>
-							<!-- <view class='delete' @click.stop='delCollection(item.pid,index)'>删除</view> -->
+							<!-- <view class='delete' @click.stop='delCollection(item.pid,index)'>Xóa</view> -->
 						</view>
 					</view>
 				</view>
@@ -40,11 +40,11 @@
 			<view>
 				<checkbox-group @change="checkboxAllChange">
 					<checkbox value="all" :checked="!!isAllSelect" />
-					<text class='checkAll'>{{$t(`全选`)}}({{ids.length}})</text>
+					<text class='checkAll'>{{$t(`Chọn tất cả`)}}({{ids.length}})</text>
 				</checkbox-group>
 			</view>
 			<view class='button acea-row row-middle'>
-				<button class='bnt' formType="submit" @click="subDel">{{$t(`取关`)}}</button>
+				<button class='bnt' formType="submit" @click="subDel">{{$t(`Bỏ yêu thích`)}}</button>
 			</view>
 		</view>
 		<!-- #ifdef MP -->
@@ -92,19 +92,19 @@
 				ids: [],
 				hostProduct: [],
 				checkbox_show: false,
-				loadTitle: this.$t(`加载更多`),
+				loadTitle: this.$t(`Tải thêm`),
 				loading: false,
 				loadend: false,
 				collectProductList: [],
 				count: 0,
 				limit: 15,
 				page: 1,
-				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false, //是否隐藏授权
+				isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+				isShowAuth: false, //Có ẩn ủy quyền hay không
 				hotScroll: false,
 				hotPage: 1,
 				hotLimit: 10,
-				isAllSelect: false, //全选
+				isAllSelect: false, //Chọn tất cả
 			};
 		},
 		computed: mapGetters(['isLogin']),
@@ -125,7 +125,7 @@
 			this.getUserCollectProduct();
 		},
 		/**
-		 * 页面上拉触底事件的处理函数
+		 * Hàm xử lý sự kiện kéo lên đến đáy trang
 		 */
 		onReachBottom: function() {
 			this.getUserCollectProduct();
@@ -157,7 +157,7 @@
 					});
 				} else {
 					return that.$util.Tips({
-						title: that.$t(`请选择商品`)
+						title: that.$t(`Vui lòng chọn sản phẩm`)
 					});
 				}
 
@@ -197,13 +197,13 @@
 					})
 				} else {
 					this.$util.Tips({
-						title: this.$t(`该商品已下架`)
+						title: this.$t(`Sản phẩm này đã ngừng bán`)
 					})
 				}
 
 			},
 			/**
-			 * 授权回调
+			 * Callback ủy quyền
 			 */
 			onLoadFun: function() {
 				this.loadend = false;
@@ -212,12 +212,12 @@
 				this.getUserCollectProduct();
 				// this.get_host_product();
 			},
-			// 授权关闭
+			// Đóng ủy quyền
 			authColse(e) {
 				this.isShowAuth = e
 			},
 			/**
-			 * 获取收藏产品
+			 * Lấy sản phẩm yêu thích
 			 */
 			getUserCollectProduct() {
 				let that = this;
@@ -240,17 +240,17 @@
 						.collectProductList);
 					that.$set(that, 'collectProductList', that.collectProductList);
 					that.loadend = loadend;
-					that.loadTitle = loadend ? that.$t(`我也是有底线的`) : that.$t(`加载更多`);
+					that.loadTitle = loadend ? that.$t(`Đã đến cuối danh sách`) : that.$t(`Tải thêm`);
 					if (!that.collectProductList.length && that.page == 1) this.get_host_product();
 					that.page = that.page + 1;
 					that.loading = false;
 				}).catch(err => {
 					that.loading = false;
-					that.loadTitle = that.$t(`加载更多`);
+					that.loadTitle = that.$t(`Tải thêm`);
 				});
 			},
 			/**
-			 * 获取我的推荐
+			 * Lấy gợi ý của tôi
 			 */
 			get_host_product() {
 				let that = this;
@@ -268,9 +268,9 @@
 		onReachBottom() {
 			this.getUserCollectProduct();
 		},
-		// 滚动监听
+		// Theo dõi cuộn (scroll listener)
 		onPageScroll(e) {
-			// 传入scrollTop值并触发所有easy-loadimage组件下的滚动监听事件
+			// Truyền vào giá trị scrollTop và kích hoạt sự kiện theo dõi cuộn của tất cả component easy-loadimage
 			uni.$emit('scroll');
 		},
 	}
@@ -389,8 +389,8 @@
 		// #endif
 		// #ifdef MP || APP-PLUS
 		bottom: 100rpx;
-		bottom: calc(100rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-		bottom: calc(100rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+		bottom: calc(100rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+		bottom: calc(100rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 		// #endif
 	}
 

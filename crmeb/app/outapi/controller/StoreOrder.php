@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use crmeb\services\CacheService;
 use think\facade\App;
 
 /**
- * 订单管理
+ * Quản lý đơn hàng
  * Class StoreOrder
  * @package app\outapi\controller
  */
@@ -35,7 +35,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 获取订单列表
+     * Lấy danh sách đơn hàng
      * @return mixed
      */
     public function lst()
@@ -57,7 +57,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 快递公司列表
+     * Danh sách đơn vị vận chuyển
      * @return mixed
      */
     public function express(ExpressServices $services)
@@ -74,17 +74,17 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 订单发货
-     * @param string $order_id 订单号
+     * Giao đơn hàng
+     * @param string $order_id Mã đơn hàng
      * @return mixed
      */
     public function delivery(string $order_id)
     {
         if (!$order_id) return app('json')->fail(100100);
         $data = $this->request->postMore([
-            ['delivery_name', ''],//快递公司名称
-            ['delivery_id', ''],//快递单号
-            ['delivery_code', ''],//快递公司编码
+            ['delivery_name', ''],//Tên đơn vị vận chuyển
+            ['delivery_id', ''],//Mã vận đơn
+            ['delivery_code', ''],//Mã đơn vị vận chuyển
         ]);
         $data['express_record_type'] = 1;
         $data['type'] = 1;
@@ -92,8 +92,8 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 获取订单可拆分发货商品列表
-     * @param string $order_id 订单号
+     * Lấy danh sách sản phẩm có thể tách để giao trong đơn hàng
+     * @param string $order_id Mã đơn hàng
      * @return mixed
      */
     public function splitCartInfo(string $order_id)
@@ -103,18 +103,18 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 订单拆单发送货
-     * @param string $order_id 订单号
+     * Tách đơn để giao hàng
+     * @param string $order_id Mã đơn hàng
      * @return mixed
      */
     public function splitDelivery(string $order_id)
     {
         if (!$order_id) return app('json')->fail(100100);
         $data = $this->request->postMore([
-            ['delivery_name', ''],//快递公司名称
-            ['delivery_id', ''],//快递单号
-            ['delivery_code', ''],//快递公司编码
-            ['fictitious_content', ''],//虚拟发货内容
+            ['delivery_name', ''],//Tên đơn vị vận chuyển
+            ['delivery_id', ''],//Mã vận đơn
+            ['delivery_code', ''],//Mã đơn vị vận chuyển
+            ['fictitious_content', ''],//Nội dung giao hàng ảo
             ['cart_ids', []]
         ]);
 
@@ -136,8 +136,8 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 确认收货
-     * @param string $order_id 订单号
+     * Xác nhận đã nhận hàng
+     * @param string $order_id Mã đơn hàng
      * @return mixed
      * @throws \Exception
      */
@@ -149,8 +149,8 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 设置发票信息
-     * @param string $order_id 订单号
+     * Thiết lập thông tin hóa đơn
+     * @param string $order_id Mã đơn hàng
      * @return mixed
      */
     public function setInvoice(string $order_id)
@@ -199,8 +199,8 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 设置发票状态
-     * @param string $order_id 订单号
+     * Đặt trạng thái hóa đơn
+     * @param string $order_id Mã đơn hàng
      * @return mixed
      */
     public function setInvoiceStatus(string $order_id)
@@ -224,8 +224,8 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 订单详情
-     * @param string $order_id 订单号
+     * Chi tiết đơn hàng
+     * @param string $order_id Mã đơn hàng
      * @return mixed
      */
     public function read(string $order_id)
@@ -235,8 +235,8 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 修改备注
-     * @param string $order_id 订单号
+     * Sửa ghi chú
+     * @param string $order_id Mã đơn hàng
      * @return mixed
      */
     public function remark(string $order_id)
@@ -256,8 +256,8 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 修改配送信息
-     * @param string $order_id 订单号
+     * Sửa thông tin giao hàng
+     * @param string $order_id Mã đơn hàng
      * @return mixed
      */
     public function updateDistribution(string $order_id)

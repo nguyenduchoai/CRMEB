@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -26,14 +26,14 @@ use app\services\system\attachment\SystemAttachmentServices;
 
 
 /**
- * 清除默认数据理控制器
+ * Controller xóa dữ liệu mặc định
  * Class SystemClearData
  * @package app\admin\controller\system
  */
 class SystemClearData extends AuthController
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * SystemClearData constructor.
      * @param App $app
      * @param SystemClearServices $services
@@ -45,7 +45,7 @@ class SystemClearData extends AuthController
     }
 
     /**
-     * 统一方法
+     * Phương thức chung
      * @param $type
      * @return mixed
      */
@@ -80,7 +80,7 @@ class SystemClearData extends AuthController
     }
 
     /**
-     * 清除用户生成的临时附件
+     * Xóa tệp đính kèm tạm do người dùng tạo
      * @return mixed
      */
     public function userTemp()
@@ -97,7 +97,7 @@ class SystemClearData extends AuthController
     }
 
     /**
-     * 清除回收站商品
+     * Xóa sản phẩm trong thùng rác
      * @return mixed
      */
     public function recycleProduct($id = 0)
@@ -109,7 +109,7 @@ class SystemClearData extends AuthController
         } else {
             $ids = $product->getColumn(['is_del' => 1], 'id');
         }
-        //清除规格表数据
+        //Xóa dữ liệu bảng quy cách
         /** @var StoreProductAttrServices $ProductAttr */
         $productAttr = app()->make(StoreProductAttrServices::class);
         $productAttr->delete([['product_id', 'in', $ids], ['type', '=', '0']]);
@@ -122,27 +122,27 @@ class SystemClearData extends AuthController
         $productAttrValue = app()->make(StoreProductAttrValueServices::class);
         $productAttrValue->delete([['product_id', 'in', $ids], ['type', '=', '0']]);
 
-        //删除商品详情
+        //Xóa chi tiết sản phẩm
         /** @var StoreDescriptionServices $productDescription */
         $productDescription = app()->make(StoreDescriptionServices::class);
         $productDescription->delete([['product_id', 'in', $ids], ['type', '=', '0']]);
 
-        //删除商品关联分类数据
+        //Xóa dữ liệu danh mục liên kết với sản phẩm
         /** @var StoreProductCateServices $productCate */
         $productCate = app()->make(StoreProductCateServices::class);
         $productCate->delete([['product_id', 'in', $ids]]);
 
-        //删除商品关联优惠券数据
+        //Xóa dữ liệu phiếu giảm giá liên kết với sản phẩm
         /** @var StoreProductCouponServices $productCoupon */
         $productCoupon = app()->make(StoreProductCouponServices::class);
         $productCoupon->delete([['product_id', 'in', $ids]]);
 
-        //删除商品收藏记录
+        //Xóa lịch sử yêu thích sản phẩm
         /** @var StoreProductReplyServices $productRelation */
         $productRelation = app()->make(StoreProductReplyServices::class);
         $productRelation->delete([['product_id', 'in', $ids], ['reply_type', '=', 'product']]);
 
-        //删除商品的评论
+        //Xóa đánh giá của sản phẩm
         /** @var StoreProductReplyServices $productReply */
         $productReply = app()->make(StoreProductReplyServices::class);
         $productReply->delete([['product_id', 'in', $ids]]);
@@ -159,7 +159,7 @@ class SystemClearData extends AuthController
     }
 
     /**
-     * 清除用户数据
+     * Xóa dữ liệu người dùng
      * @return mixed
      */
     public function userRelevantData()
@@ -227,7 +227,7 @@ class SystemClearData extends AuthController
     }
 
     /**
-     * 清除商城数据
+     * Xóa dữ liệu cửa hàng
      * @return mixed
      */
     public function storeData()
@@ -339,7 +339,7 @@ class SystemClearData extends AuthController
     }
 
     /**
-     * 清除商品分类
+     * Xóa danh mục sản phẩm
      * @return mixed
      */
     public function categoryData()
@@ -349,7 +349,7 @@ class SystemClearData extends AuthController
     }
 
     /**
-     * 清除订单数据
+     * Xóa dữ liệu đơn hàng
      * @return mixed
      */
     public function orderData()
@@ -372,7 +372,7 @@ class SystemClearData extends AuthController
     }
 
     /**
-     * 清除客服数据
+     * Xóa dữ liệu CSKH
      * @return mixed
      */
     public function kefuData()
@@ -389,7 +389,7 @@ class SystemClearData extends AuthController
     }
 
     /**
-     * 清除微信管理数据
+     * Xóa dữ liệu quản lý WeChat
      * @return mixed
      */
     public function wechatData()
@@ -410,7 +410,7 @@ class SystemClearData extends AuthController
     }
 
     /**
-     * 清除所有附件
+     * Xóa tất cả tệp đính kèm
      * @return mixed
      */
     public function attachmentData()
@@ -423,7 +423,7 @@ class SystemClearData extends AuthController
         return app('json')->success(100046);
     }
 
-    //清除内容分类
+    //Xóa danh mục nội dung
     public function articleData()
     {
         $this->services->clearData([
@@ -434,7 +434,7 @@ class SystemClearData extends AuthController
         return app('json')->success(100046);
     }
 
-    //清除系统记录
+    //Xóa bản ghi hệ thống
     public function systemData()
     {
         $this->services->clearData([
@@ -445,7 +445,7 @@ class SystemClearData extends AuthController
     }
 
     /**
-     * 替换域名方法
+     * Phương thức thay thế tên miền
      * @return mixed
      */
     public function replaceSiteUrl()

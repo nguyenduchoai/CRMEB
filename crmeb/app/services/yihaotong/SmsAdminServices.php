@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,14 +20,14 @@ use crmeb\services\HttpService;
 use crmeb\services\sms\Sms;
 
 /**
- * 短信平台注册登陆
+ * Đăng ký đăng nhập nền tảng SMS
  * Class SmsAdminServices
  * @package app\services\message\sms
  */
 class SmsAdminServices extends BaseServices
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * SmsAdminServices constructor.
      * @param SystemConfigDao $dao
      */
@@ -37,7 +37,7 @@ class SmsAdminServices extends BaseServices
     }
 
     /**
-     * 更新短信配置
+     * Cập nhật cấu hình SMS
      * @param string $account
      * @param string $password
      * @return mixed
@@ -52,7 +52,7 @@ class SmsAdminServices extends BaseServices
     }
 
     /**
-     * 注册短信平台
+     * Đăng ký nền tảng SMS
      * @param string $account
      * @param string $password
      * @param string $url
@@ -74,7 +74,7 @@ class SmsAdminServices extends BaseServices
     }
 
     /**
-     * 发送验证码
+     * Gửi mã xác thực
      * @param string $phone
      * @return mixed
      */
@@ -91,7 +91,7 @@ class SmsAdminServices extends BaseServices
     }
 
     /**
-     * 短信登陆
+     * Đăng nhập SMS
      * @param string $account
      * @param string $token
      * @return bool
@@ -110,7 +110,7 @@ class SmsAdminServices extends BaseServices
 
         $this->updateSmsConfig($account, $token);
 
-        //添加公共短信模板
+        //Thêm mẫu SMS chung
         $templateList = $sms->publictemp([]);
         if ($templateList['status'] != 400) {
             if ($templateList['data']['data']) {
@@ -127,7 +127,7 @@ class SmsAdminServices extends BaseServices
     }
 
     /**
-     * 获取当前登陆的短信账号信息
+     * Lấy thông tin tài khoản SMS đang đăng nhập
      * @return mixed
      */
     public function getSmsData()

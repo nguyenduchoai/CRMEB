@@ -37,10 +37,10 @@
 			aleartType(type) {
 				if (type === 2) {
 					this.aleartData = {
-						title: '抽奖结果',
+						title: 'Kết quả quay thưởng',
 						img: this.alData.image,
 						msg: this.alData.prompt,
-						btn: '好的',
+						btn: 'OK',
 						type: this.alData.type
 					}
 				}
@@ -52,7 +52,7 @@
 			}
 		},
 		methods: {
-			//隐藏弹窗
+			//Ẩn popup
 			posterImageClose(type) {
 				this.$emit("close", false)
 			},

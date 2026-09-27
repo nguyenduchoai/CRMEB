@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -27,20 +27,20 @@ class LuckPrize extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'luck_prize';
 
 
     /**
-     * 关联抽奖
+     * Liên kết quay thưởng
      * @return \think\model\relation\HasOne
      */
     public function lottery()
@@ -49,7 +49,7 @@ class LuckPrize extends BaseModel
     }
 
     /**
-     * 抽奖id搜索器
+     * Bộ lọc id quay thưởng
      * @param $query Model
      * @param $value
      */
@@ -59,7 +59,7 @@ class LuckPrize extends BaseModel
     }
 
     /**
-     * 奖品类型搜索器
+     * Bộ lọc loại giải thưởng
      * @param $query Model
      * @param $value
      */
@@ -69,7 +69,7 @@ class LuckPrize extends BaseModel
     }
 
     /**
-     * 状态搜索器
+     * Bộ lọc trạng thái
      * @param $query Model
      * @param $value
      */
@@ -79,7 +79,7 @@ class LuckPrize extends BaseModel
     }
 
     /**
-     * 是否删除搜索器
+     * Bộ lọc đã xóa hay chưa
      * @param $query Model
      * @param $value
      */

@@ -10,35 +10,35 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="状态：" label-for="status">
+          <el-form-item label="Trạng thái:" label-for="status">
             <el-select
               v-model="formValidate.status"
-              placeholder="请选择"
+              placeholder="Vui lòng chọn"
               @change="userSearchs"
               clearable
               class="form_content_width"
             >
-              <el-option value="1" label="显示"></el-option>
-              <el-option value="0" label="不显示"></el-option>
+              <el-option value="1" label="Hiện"></el-option>
+              <el-option value="0" label="Không hiển thị"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="身份昵称：" label-for="role_name">
+          <el-form-item label="Tên vai trò:" label-for="role_name">
             <el-input
               clearable
-              placeholder="请输入身份昵称"
+              placeholder="Vui lòng nhập tên vai trò"
               v-model="formValidate.role_name"
               class="form_content_width"
             />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="userSearchs">查询</el-button>
+            <el-button type="primary" v-db-click @click="userSearchs">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
     <el-card :bordered="false" shadow="never" v-loading="spinShow">
-      <el-button v-auth="['setting-system_role-add']" type="primary" v-db-click @click="add('添加')"
-        >添加身份</el-button
+      <el-button v-auth="['setting-system_role-add']" type="primary" v-db-click @click="add('Thêm')"
+        >Thêm vai trò</el-button
       >
       <el-table
         :data="tableList"
@@ -46,25 +46,25 @@
         class="mt14"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column label="ID" min-width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="身份昵称" min-width="130">
+        <el-table-column label="Tên vai trò" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.role_name }}</span>
           </template>
         </el-table-column>
-        <!-- <el-table-column label="权限" min-width="1000">
+        <!-- <el-table-column label="Quyền" min-width="1000">
           <template slot-scope="scope">
             <span class="line1">{{ scope.row.rules }}</span>
           </template>
         </el-table-column> -->
-        <el-table-column label="状态" min-width="120">
+        <el-table-column label="Trạng thái" min-width="120">
           <template slot-scope="scope">
             <el-switch
               class="defineSwitch"
@@ -74,17 +74,17 @@
               :value="scope.row.status"
               @change="onchangeIsShow(scope.row)"
               size="large"
-              active-text="显示"
-              inactive-text="隐藏"
+              active-text="Hiện"
+              inactive-text="Ẩn"
             >
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="120">
+        <el-table-column label="Thao tác" fixed="right" width="120">
           <template slot-scope="scope">
-            <a v-db-click @click="edit(scope.row, '编辑')">编辑</a>
+            <a v-db-click @click="edit(scope.row, 'Sửa')">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa', scope.$index)">Xóa</a>
           </template>
         </el-table-column>
       </el-table>
@@ -98,10 +98,10 @@
         />
       </div>
     </el-card>
-    <!-- 新增编辑-->
+    <!-- Thêm mới, sửa-->
     <el-dialog
       :visible.sync="modals"
-      :title="`${modelTit}身份`"
+      :title="`${modelTit} vai trò`"
       :close-on-click-modal="false"
       :show-close="true"
       width="540px"
@@ -115,16 +115,16 @@
         :label-position="labelPosition2"
         @submit.native.prevent
       >
-        <el-form-item label="身份名称：" label-for="role_name" prop="role_name">
-          <el-input placeholder="请输入身份昵称" v-model="formInline.role_name" />
+        <el-form-item label="Tên vai trò:" label-for="role_name" prop="role_name">
+          <el-input placeholder="Vui lòng nhập tên vai trò" v-model="formInline.role_name" />
         </el-form-item>
-        <el-form-item label="是否开启：" prop="status">
+        <el-form-item label="Bật:" prop="status">
           <el-radio-group v-model="formInline.status">
-            <el-radio :label="1">开启</el-radio>
-            <el-radio :label="0">关闭</el-radio>
+            <el-radio :label="1">Bật</el-radio>
+            <el-radio :label="0">Tắt</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="权限：">
+        <el-form-item label="Quyền:">
           <div class="trees-coadd">
             <div class="scollhide">
               <div class="iconlist">
@@ -142,13 +142,13 @@
                 ></el-tree>
               </div>
             </div>
-            <span class="iconlist-btn" @click="changeExpandAll">{{ defaultExpandAll ? '折叠' : '展开' }}</span>
+            <span class="iconlist-btn" @click="changeExpandAll">{{ defaultExpandAll ? 'Thu gọn' : 'Mở rộng' }}</span>
           </div>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button v-db-click @click="onCancel">取 消</el-button>
-        <el-button type="primary" v-db-click @click="handleSubmit('formInline')">提 交</el-button>
+        <el-button v-db-click @click="onCancel">Hủy</el-button>
+        <el-button type="primary" v-db-click @click="handleSubmit('formInline')">Gửi</el-button>
       </span>
     </el-dialog>
   </div>
@@ -189,8 +189,8 @@ export default {
       selectIds: [],
       modelTit: '',
       ruleValidate: {
-        role_name: [{ required: true, message: '请输入身份昵称', trigger: 'blur' }],
-        status: [{ required: true, type: 'number', message: '请选择是否开启', trigger: 'change' }],
+        role_name: [{ required: true, message: 'Vui lòng nhập tên vai trò', trigger: 'blur' }],
+        status: [{ required: true, type: 'number', message: 'Vui lòng chọn bật hoặc tắt', trigger: 'change' }],
         // checked_menus: [
         //     { required: true, validator: validateStatus, trigger: 'change' }
         // ]
@@ -218,7 +218,7 @@ export default {
   },
   methods: {
     changeExpandAll() {
-      // 控制按钮点击之后失焦
+      // Điều khiển việc mất focus sau khi nhấp nút
       if (this.defaultExpandAll) {
         this.defaultExpandAll = false;
         for (let key in this.$refs.tree.store.nodesMap) {
@@ -240,14 +240,14 @@ export default {
       };
       this.selectIds = [];
     },
-    // 添加
+    // Thêm
     add(name) {
       this.formInline.id = 0;
       this.modelTit = name;
       this.modals = true;
       this.getmenusList();
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -265,7 +265,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 修改是否显示
+    // Sửa có hiển thị hay không
     onchangeIsShow(row) {
       let data = {
         id: row.id,
@@ -279,7 +279,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       this.formValidate.status = this.formValidate.status || '';
@@ -295,12 +295,12 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.formValidate.page = 1;
       this.getList();
     },
-    // 编辑
+    // Sửa
     edit(row, name) {
       this.modelTit = name;
       this.formInline.id = row.id;
@@ -308,7 +308,7 @@ export default {
       this.rows = row;
       this.getIofo(row);
     },
-    // 菜单列表
+    // Danh sách menu
     getmenusList() {
       this.spinShow = true;
       menusListApi()
@@ -316,7 +316,7 @@ export default {
           let data = res.data;
           this.menusList = data.menus;
           this.menusList.map((item, index) => {
-            if (item.title === '主页') {
+            if (item.title === 'Trang chủ') {
               // item.checked = true;
               // item.disableCheckbox = true;
               if (item.children.length) {
@@ -335,7 +335,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 详情
+    // Chi tiết
     getIofo(row) {
       this.spinShow = true;
       roleInfoApi(row.id)
@@ -376,16 +376,16 @@ export default {
     },
 
     clickDeal(currentObj, treeStatus, ccc) {
-      // 用于：父子节点严格互不关联时，父节点勾选变化时通知子节点同步变化，实现单向关联。
-      let selected = treeStatus.checkedKeys.indexOf(currentObj.id); // -1未选中
-      // 选中
+      // Dùng để: khi nút cha và nút con hoàn toàn không liên kết với nhau, lúc trạng thái tick của nút cha thay đổi sẽ thông báo cho nút con thay đổi đồng bộ, thực hiện liên kết một chiều.
+      let selected = treeStatus.checkedKeys.indexOf(currentObj.id); // -1 chưa chọn
+      // Đã chọn
       if (selected !== -1) {
-        // 子节点只要被选中父节点就被选中
+        // Chỉ cần nút con được chọn thì nút cha cũng được chọn
         this.selectedParent(currentObj);
-        // 统一处理子节点为相同的勾选状态
+        // Xử lý đồng nhất nút con thành cùng trạng thái tick
         this.uniteChildSame(currentObj, true);
       } else {
-        // 未选中 处理子节点全部未选中
+        // Chưa chọn, xử lý tất cả nút con thành chưa chọn
         if (currentObj.children.length !== 0) {
           this.uniteChildSame(currentObj, false);
         }
@@ -401,14 +401,14 @@ export default {
         if (!selParent && currentObj.pid) this.$refs.tree.setChecked(currentObj.pid, false);
       }
     },
-    // 统一处理子节点为相同的勾选状态
+    // Xử lý đồng nhất nút con thành cùng trạng thái tick
     uniteChildSame(treeList, isSelected) {
       this.$refs.tree.setChecked(treeList.id, isSelected);
       for (let i = 0; i < treeList.children.length; i++) {
         this.uniteChildSame(treeList.children[i], isSelected);
       }
     },
-    // 统一处理父节点为选中
+    // Xử lý đồng nhất nút cha thành được chọn
     selectedParent(currentObj) {
       let currentNode = this.$refs.tree.getNode(currentObj);
       if (currentNode.parent.key !== undefined) {
@@ -419,7 +419,7 @@ export default {
     tidyRes(menus) {
       let data = [];
       menus.map((menu) => {
-        if (menu.title === '主页') {
+        if (menu.title === 'Trang chủ') {
           menu.checked = true;
           // menu.disabled = true;
           if (menu.children.length) {
@@ -454,7 +454,7 @@ export default {
       }
       return data;
     },
-    // 提交
+    // Gửi
     handleSubmit(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
@@ -462,7 +462,7 @@ export default {
             ...this.$refs.tree.getCheckedKeys(),
             ...this.$refs.tree.getHalfCheckedKeys(),
           ];
-          if (this.formInline.checked_menus.length === 0) return this.$message.warning('请至少选择一个权限');
+          if (this.formInline.checked_menus.length === 0) return this.$message.warning('Vui lòng chọn ít nhất một quyền');
           roleCreateApi(this.formInline)
             .then(async (res) => {
               this.$message.success(res.msg);

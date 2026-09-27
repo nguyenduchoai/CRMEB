@@ -1,13 +1,13 @@
 /**
- * 系统内置方法集，正常情况下您不应该修改或移除此文件
+ * Tập hợp phương thức tích hợp sẵn của hệ thống, bình thường bạn không nên sửa hoặc xóa file này
  * */
 
 import { cloneDeep } from 'lodash';
 
 /**
- * @description 根据当前路由，找打顶部菜单名称
- * @param {String} currentPath 当前路径
- * @param {Array} menuList 所有路径
+ * @description Dựa theo route hiện tại, tìm tên menu trên cùng
+ * @param {String} currentPath Đường dẫn hiện tại
+ * @param {Array} menuList Tất cả đường dẫn
  * */
 function getHeaderName(to, menuList) {
   const allMenus = [];
@@ -61,9 +61,9 @@ function transferMenu(menu, headerName) {
 export { getHeaderName };
 
 /**
- * @description 根据当前路由，找打顶部菜单名称
- * @param {String} currentPath 当前路径
- * @param {Array} menuList 所有路径
+ * @description Dựa theo route hiện tại, tìm tên menu trên cùng
+ * @param {String} currentPath Đường dẫn hiện tại
+ * @param {Array} menuList Tất cả đường dẫn
  * */
 function getHeaderSider(menuList) {
   return menuList.filter((item) => item.pid === 0);
@@ -71,9 +71,9 @@ function getHeaderSider(menuList) {
 
 export { getHeaderSider };
 /**
- * @description 根据当前路由，找以及菜单名称
- * @param {String} currentPath 当前路径
- * @param {Array} menuList 所有路径
+ * @description Dựa theo route hiện tại, tìm tên menu
+ * @param {String} currentPath Đường dẫn hiện tại
+ * @param {Array} menuList Tất cả đường dẫn
  * */
 function getOneHeaderName(menuList, path) {
   return menuList.filter((item) => item.path === path);
@@ -82,9 +82,9 @@ function getOneHeaderName(menuList, path) {
 export { getOneHeaderName };
 
 /**
- * @description 根据当前顶栏菜单 name，找到对应的二级菜单
- * @param {Array} menuList 所有的二级菜单
- * @param {String} headerName 当前顶栏菜单的 name
+ * @description Dựa theo name của menu thanh trên cùng hiện tại, tìm menu cấp 2 tương ứng
+ * @param {Array} menuList Tất cả menu cấp 2
+ * @param {String} headerName Name của menu thanh trên cùng hiện tại
  * */
 function getMenuSider(menuList, headerName = '') {
   if (headerName) {
@@ -97,9 +97,9 @@ function getMenuSider(menuList, headerName = '') {
 export { getMenuSider };
 
 /**
- * @description 根据当前路由，找到其所有父菜单 path，作为展开侧边栏 open-names 依据
- * @param {String} currentPath 当前路径
- * @param {Array} menuList 所有路径
+ * @description Dựa theo route hiện tại, tìm tất cả path của menu cha, làm căn cứ cho open-names khi mở sidebar
+ * @param {String} currentPath Đường dẫn hiện tại
+ * @param {Array} menuList Tất cả đường dẫn
  * */
 // function getSiderSubmenu (currentPath, menuList) {
 //     const allMenus = [];
@@ -157,7 +157,7 @@ function transferSubMenu(menu, openNames) {
 export { getSiderSubmenu };
 
 /**
- * @description 递归获取所有子菜单
+ * @description Đệ quy lấy tất cả menu con
  * */
 function getAllSiderMenu(menuList) {
   let allMenus = [];
@@ -188,7 +188,7 @@ function getMenuChildren(menu) {
 export { getAllSiderMenu };
 
 /**
- * @description 将菜单转为平级
+ * @description Chuyển menu thành dạng ngang hàng (flat)
  * */
 function flattenSiderMenu(menuList, newList) {
   menuList.forEach((menu) => {
@@ -205,35 +205,35 @@ function flattenSiderMenu(menuList, newList) {
 export { flattenSiderMenu };
 
 export const findFirstNonNullChildren = (arr) => {
-  // 如果数组为空，返回null
+  // Nếu mảng trống, trả về null
   if (!arr || arr.length === 0) {
     return null;
   }
-  // 找到第一个对象
+  // Tìm đối tượng đầu tiên
   const firstObj = arr[0];
-  // 如果第一个对象没有children属性，返回该对象
+  // Nếu đối tượng đầu tiên không có thuộc tính children, trả về đối tượng đó
   if (!firstObj.children) {
     return firstObj;
   }
 
-  // 如果第一个对象的children属性是数组，
-  // 递归查找children属性中的第一个非null children属性
+  // Nếu thuộc tính children của đối tượng đầu tiên là một mảng,
+  // Đệ quy tìm thuộc tính children đầu tiên khác null trong thuộc tính children
   if (Array.isArray(firstObj.children)) {
     return findFirstNonNullChildren(firstObj.children);
   }
-  // 如果数组中没有非null children属性，返回null
+  // Nếu trong mảng không có thuộc tính children khác null, trả về null
   return null;
 };
 
 export const findFirstNonNullChildrenKeys = (obj, lastArr) => {
   let ids = lastArr;
-  // 如果第一个对象没有children属性，返回该对象
+  // Nếu đối tượng đầu tiên không có thuộc tính children, trả về đối tượng đó
   if (!obj.children) {
     ids.push(obj.id);
     return ids;
   }
-  // 如果第一个对象的children属性是数组，
-  // 递归查找children属性中的第一个非null children属性
+  // Nếu thuộc tính children của đối tượng đầu tiên là một mảng,
+  // Đệ quy tìm thuộc tính children đầu tiên khác null trong thuộc tính children
   if (Array.isArray(obj.children)) {
     ids.push(obj.id);
     return findFirstNonNullChildrenKeys(obj.children[0], ids);
@@ -241,7 +241,7 @@ export const findFirstNonNullChildrenKeys = (obj, lastArr) => {
   return ids;
 };
 
-// 多级嵌套数组处理成一维数组
+// Xử lý mảng lồng nhiều cấp thành mảng một chiều
 export const formatFlatteningRoutes = (arr) => {
   if (arr.length <= 0) return false;
   for (let i = 0; i < arr.length; i++) {
@@ -253,8 +253,8 @@ export const formatFlatteningRoutes = (arr) => {
 };
 
 /**
- * @description 判断列表1中是否包含了列表2中的某一项
- * 因为用户权限 access 为数组，includes 方法无法直接得出结论
+ * @description Kiểm tra danh sách 1 có chứa một mục nào trong danh sách 2 không
+ * Vì quyền người dùng access là một mảng, phương thức includes không thể trực tiếp cho ra kết luận
  * */
 function includeArray(list1, list2) {
   let status = false;

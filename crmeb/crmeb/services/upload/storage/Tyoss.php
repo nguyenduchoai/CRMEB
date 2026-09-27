@@ -23,25 +23,25 @@ class Tyoss extends BaseUpload
     protected $secretKey;
 
     /**
-     * 句柄
+     * Handle
      * @var TyClient
      */
     protected $handle;
 
     /**
-     * 空间域名 Domain
+     * Domain của space Domain
      * @var mixed
      */
     protected $uploadUrl;
 
     /**
-     * 存储空间名称  公开空间
+     * Tên space lưu trữ  space công khai
      * @var mixed
      */
     protected $storageName;
 
     /**
-     * COS使用  所属地域
+     * COS sử dụng  region trực thuộc
      * @var mixed|null
      */
     protected $storageRegion;
@@ -56,17 +56,17 @@ class Tyoss extends BaseUpload
         if (!$isStream) {
             $fileHandle = app()->request->file($file);
             if (!$fileHandle) {
-                return $this->setError('上传的文件不存在');
+                return $this->setError('Tệp tải lên không tồn tại');
             }
             if ($this->validate) {
                 if (!in_array(strtolower(pathinfo($fileHandle->getOriginalName(), PATHINFO_EXTENSION)), $this->validate['fileExt'])) {
-                    return $this->setError('不合法的文件后缀');
+                    return $this->setError('Phần mở rộng tệp không hợp lệ');
                 }
                 if (filesize($fileHandle) > $this->validate['filesize']) {
-                    return $this->setError('文件过大');
+                    return $this->setError('Tệp quá lớn');
                 }
                 if (!in_array($fileHandle->getOriginalMime(), $this->validate['fileMime'])) {
-                    return $this->setError('不合法的文件类型');
+                    return $this->setError('Loại tệp không hợp lệ');
                 }
             }
             $key = $this->saveFileName($fileHandle->getRealPath(), $fileHandle->getOriginalExtension());
@@ -111,7 +111,7 @@ class Tyoss extends BaseUpload
     }
 
     /**
-     * 初始化
+     * Khởi tạo
      * @param array $config
      * @return mixed|void
      */
@@ -128,7 +128,7 @@ class Tyoss extends BaseUpload
     }
 
     /**
-     * 实例化cos
+     * Khởi tạo (instance) cos
      * @return TyClient
      */
     protected function app()
@@ -159,16 +159,16 @@ class Tyoss extends BaseUpload
         $regionData = $this->getRegion();
         $regionData = array_column($regionData, 'value');
         if (!in_array($region, $regionData)) {
-            return $this->setError('COS:无效的区域!');
+            return $this->setError('COS: khu vực không hợp lệ!');
         }
         $this->storageRegion = $region;
         $app = $this->app();
-        //创建桶
+        //Tạo bucket
         try {
             $app->createBucket($name, $region, $acl);
             $data = [
                 'Statement' => [
-                    'Sid' => '公共读' . $name,
+                    'Sid' => 'PublicRead' . $name,
                     'Effect' => 'Allow',
                     'Principal' => [
                         'ID' => ['*']
@@ -190,131 +190,131 @@ class Tyoss extends BaseUpload
         return [
             [
                 'value' => 'cn-gz1',
-                'label' => '贵州'
+                'label' => 'Guizhou'
             ],
             [
                 'value' => 'cn-fz1',
-                'label' => '福州'
+                'label' => 'Fuzhou'
             ],
             [
                 'value' => 'cn-hz1',
-                'label' => '杭州'
+                'label' => 'Hangzhou'
             ],
             [
                 'value' => 'cn-sz1',
-                'label' => '深圳'
+                'label' => 'Shenzhen'
             ],
             [
                 'value' => 'cn-gdgz1',
-                'label' => '广州'
+                'label' => 'Guangzhou'
             ],
             [
                 'value' => 'cn-jssz1',
-                'label' => '苏州'
+                'label' => 'Suzhou'
             ],
             [
                 'value' => 'cn-sh1',
-                'label' => '上海'
+                'label' => 'Shanghai'
             ],
             [
                 'value' => 'cn-ahwh1',
-                'label' => '芜湖'
+                'label' => 'Wuhu'
             ],
             [
                 'value' => 'cn-bj1',
-                'label' => '北京'
+                'label' => 'Beijing'
             ],
             [
                 'value' => 'cn-sccd1',
-                'label' => '成都'
+                'label' => 'Chengdu'
             ],
             [
                 'value' => 'cn-hazz1',
-                'label' => '郑州'
+                'label' => 'Zhengzhou'
             ],
             [
                 'value' => 'cn-hncs1',
-                'label' => '长沙'
+                'label' => 'Changsha'
             ],
             [
                 'value' => 'cn-gxnn1',
-                'label' => '南宁'
+                'label' => 'Nanning'
             ],
             [
                 'value' => 'cn-jxnc1',
-                'label' => '南昌'
+                'label' => 'Nanchang'
             ],
             [
                 'value' => 'cn-sdqd1',
-                'label' => '青岛'
+                'label' => 'Qingdao'
             ],
             [
                 'value' => 'cn-snxy1',
-                'label' => '咸阳'
+                'label' => 'Xianyang'
             ],
             [
                 'value' => 'cn-xjcj1',
-                'label' => '新疆'
+                'label' => 'Xinjiang'
             ],
             [
                 'value' => 'cn-ynkm1',
-                'label' => '昆明'
+                'label' => 'Kunming'
             ],
             [
                 'value' => 'cn-hihk1',
-                'label' => '海口'
+                'label' => 'Haikou'
             ],
             [
                 'value' => 'cn-hbwh1',
-                'label' => '武汉'
+                'label' => 'Wuhan'
             ],
             [
                 'value' => 'cn-cq1',
-                'label' => '重庆'
+                'label' => 'Chongqing'
             ],
             [
                 'value' => 'cn-qhxn1',
-                'label' => '西宁'
+                'label' => 'Xining'
             ],
             [
                 'value' => 'cn-gslz1',
-                'label' => '兰州'
+                'label' => 'Lanzhou'
             ],
             [
                 'value' => 'cn-nxyc1',
-                'label' => '银川'
+                'label' => 'Yinchuan'
             ],
             [
                 'value' => 'cn-sxty1',
-                'label' => '太原'
+                'label' => 'Taiyuan'
             ],
             [
                 'value' => 'cn-hesjz1',
-                'label' => '石家庄'
+                'label' => 'Shijiazhuang'
             ],
             [
                 'value' => 'cn-tj1',
-                'label' => '天津'
+                'label' => 'Tianjin'
             ],
             [
                 'value' => 'cn-jlcc1',
-                'label' => '长春'
+                'label' => 'Changchun'
             ],
             [
                 'value' => 'cn-hlhrb1',
-                'label' => '哈尔滨'
+                'label' => 'Harbin'
             ],
             [
                 'value' => 'cn-nmhh1',
-                'label' => '内蒙古'
+                'label' => 'Inner Mongolia'
             ],
             [
                 'value' => 'cn-lnsy1',
-                'label' => '沈阳'
+                'label' => 'Shenyang'
             ],
             [
                 'value' => 'cn-north1',
-                'label' => '华北'
+                'label' => 'Bắc Trung Quốc'
             ]
         ];
     }
@@ -379,7 +379,7 @@ class Tyoss extends BaseUpload
      * @param string $dir
      * @return array
      * @throws \Exception
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/06/19
      */
@@ -416,7 +416,7 @@ class Tyoss extends BaseUpload
     }
 
     /**
-     * 获取ISO时间格式
+     * Lấy định dạng thời gian ISO
      * @param $time
      * @return string
      * @throws \Exception
@@ -432,7 +432,7 @@ class Tyoss extends BaseUpload
     }
 
     /**
-     * 缩略图
+     * Ảnh thu nhỏ
      * @param string $filePath
      * @param string $fileName
      * @param string $type
@@ -465,7 +465,7 @@ class Tyoss extends BaseUpload
     }
 
     /**
-     * 水印
+     * Watermark
      * @param string $filePath
      * @return mixed|string
      */
@@ -479,13 +479,13 @@ class Tyoss extends BaseUpload
                 $filePath .= '?x-oss-process=image';
             }
             switch ($waterConfig['watermark_type']) {
-                case 1://图片
+                case 1://Hình ảnh
                     if (!$waterConfig['watermark_image']) {
                         throw new AdminException(400722);
                     }
                     $waterPath = $filePath .= '/watermark,image_' . base64_encode($waterConfig['watermark_image']) . ',t_' . $waterConfig['watermark_opacity'] . ',g_' . ($this->position[$waterConfig['watermark_position']] ?? 'nw') . ',x_' . $waterConfig['watermark_x'] . ',y_' . $waterConfig['watermark_y'];
                     break;
-                case 2://文字
+                case 2://Văn bản
                     if (!$waterConfig['watermark_text']) {
                         throw new AdminException(400723);
                     }

@@ -36,7 +36,7 @@ class OutPushListener implements ListenerInterface
     }
 
     /**
-     * 获取推送token
+     * Lấy token đẩy thông báo
      * @param array $info
      * @return false|mixed
      */
@@ -48,7 +48,7 @@ class OutPushListener implements ListenerInterface
             $res = HttpService::postRequest($info['push_token_url'], $param, ['Content-Type:application/json', 'Content-Length:' . strlen($param)]);
             $res = $res ? json_decode($res, true) : [];
             if (!$res || !isset($res['code']) || $res['code'] != 0) {
-                Log::error(['msg' => $info['title'] . '，获取token失败']);
+                Log::error(['msg' => $info['title'] . ', lấy token thất bại']);
                 return false;
             }
             CacheService::set('pushToken' . $info['id'], $res['token'], $res['time']);

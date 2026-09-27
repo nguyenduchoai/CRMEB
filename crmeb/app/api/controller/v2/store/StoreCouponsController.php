@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,7 +24,7 @@ class StoreCouponsController
     }
 
     /**
-     * 可领取优惠券列表
+     * Danh sách phiếu giảm giá có thể nhận
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -41,7 +41,7 @@ class StoreCouponsController
     }
 
     /**
-     * 获取新人券
+     * Lấy phiếu giảm giá người mới
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -65,7 +65,7 @@ class StoreCouponsController
     }
 
     /**
-     * 赠送下单之后订单中 关联优惠劵
+     * Sau khi đặt hàng, liên kết phiếu giảm giá tặng vào đơn hàng
      * @param Request $request
      * @param $orderId
      * @return mixed
@@ -84,7 +84,7 @@ class StoreCouponsController
     }
 
     /**
-     * 获取每日新增的优惠券
+     * Lấy phiếu giảm giá mới thêm mỗi ngày
      * @return mixed
      */
     public function getTodayCoupon(Request $request)

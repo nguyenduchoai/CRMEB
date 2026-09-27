@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -37,7 +37,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 显示资源列表头部
+     * Hiển thị phần đầu danh sách resource
      * @return mixed
      */
     public function type_header()
@@ -57,7 +57,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 获取退出未保存的数据
+     * Lấy dữ liệu chưa lưu khi thoát
      * @param CacheServices $services
      * @return mixed
      */
@@ -67,7 +67,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 1分钟保存一次产品数据
+     * Cứ 1 phút lưu dữ liệu sản phẩm một lần
      * @param CacheServices $services
      * @return mixed
      */
@@ -78,12 +78,12 @@ class StoreProduct extends AuthController
             ['store_name', ''],
             ['store_info', ''],
             ['keyword', ''],
-            ['unit_name', '件'],
+            ['unit_name', 'cái'],
             ['image', []],
             ['recommend_image', ''],
             ['slider_image', []],
             ['postage', 0],
-            ['is_sub', []],//佣金是单独还是默认
+            ['is_sub', []],//Hoa hồng là riêng hay theo mặc định
             ['sort', 0],
             ['sales', 0],
             ['ficti', 100],
@@ -114,7 +114,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 删除数据缓存
+     * Xóa cache dữ liệu
      * @param CacheServices $services
      * @return mixed
      */
@@ -125,7 +125,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 显示资源列表
+     * Hiển thị danh sách resource
      * @return mixed
      */
     public function index()
@@ -151,7 +151,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param string $is_show
      * @param string $id
      * @return mixed
@@ -159,13 +159,13 @@ class StoreProduct extends AuthController
     public function set_show($is_show = '', $id = '')
     {
         $del = $this->service->value(['id' => $id], 'is_del');
-        if ($del == 1) return app('json')->fail('商品已删除，请先恢复商品');
+        if ($del == 1) return app('json')->fail('Sản phẩm đã bị xóa, vui lòng khôi phục sản phẩm trước');
         $this->service->setShow([$id], $is_show);
         return app('json')->success(100014);
     }
 
     /**
-     * 设置批量商品上架
+     * Đăng bán sản phẩm hàng loạt
      * @return mixed
      */
     public function product_show()
@@ -178,7 +178,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 设置批量商品下架
+     * Ngừng bán sản phẩm hàng loạt
      * @return mixed
      */
     public function product_unshow()
@@ -191,7 +191,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 获取规格模板
+     * Lấy mẫu quy cách
      * @return mixed
      */
     public function get_rule()
@@ -201,7 +201,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 获取商品详细信息
+     * Lấy thông tin chi tiết sản phẩm
      * @param int $id
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -213,7 +213,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 保存新建或编辑
+     * Lưu khi tạo mới hoặc sửa
      * @param $id
      * @return mixed
      * @throws \Exception
@@ -221,67 +221,67 @@ class StoreProduct extends AuthController
     public function save($id)
     {
         $data = $this->request->postMore([
-            ['virtual_type', 0],// 商品类型
-            ['cate_id', []],//分类id
-            ['store_name', ''],//商品名称
-            ['keyword', ''],//关键字
-            ['unit_name', '件'],//单位
-            ['store_info', ''],//商品简介
-            ['slider_image', []],//轮播图
-            ['video_open', 0],//是否开启视频
-            ['video_link', ''],//视频链接
-            ['spec_type', 0],//单多规格
-            ['items', []],//规格
-            ['attrs', []],//规格
-            ['description', ''],//商品详情
-            ['description_images', []],//商品详情
-            ['logistics', []],//物流方式
-            ['freight', 1],//运费设置
-            ['postage', 0],//邮费
-            ['temp_id', 0],//运费模版id
-            ['give_integral', 0],//赠送积分
-            ['presale', 0],//预售商品开关
-            ['presale_time', 0],//预售时间
-            ['presale_day', 0],//预售发货日
-            ['vip_product', 0],//是否付费会员商品
-            ['is_sub', []],//佣金是单独还是默认
-            ['recommend', []],//商品推荐
-            ['activity', []],//活动优先级
-            ['recommend_list', []],//优品推荐商品
-            ['coupon_ids', []],//优惠券
-            ['label_id', []],//用户标签
-            ['command_word', ''],//商品口令
-            ['is_show', 0],//是否上架
-            ['ficti', 0],//虚拟销量
-            ['sort', 0],//排序
-            ['recommend_image', ''],//商品推荐图
-            ['sales', 0],//销量
-            ['custom_form', []],//自定义表单
+            ['virtual_type', 0],// Loại sản phẩm
+            ['cate_id', []],//ID danh mục
+            ['store_name', ''],//Tên sản phẩm
+            ['keyword', ''],//Từ khóa
+            ['unit_name', 'cái'],//Đơn vị
+            ['store_info', ''],//Mô tả ngắn sản phẩm
+            ['slider_image', []],//Ảnh trình chiếu
+            ['video_open', 0],//Có mở video không
+            ['video_link', ''],//Liên kết video
+            ['spec_type', 0],//Đơn/đa quy cách
+            ['items', []],//Quy cách
+            ['attrs', []],//Quy cách
+            ['description', ''],//Chi tiết sản phẩm
+            ['description_images', []],//Chi tiết sản phẩm
+            ['logistics', []],//Hình thức vận chuyển
+            ['freight', 1],//Cài đặt phí vận chuyển
+            ['postage', 0],//Phí vận chuyển
+            ['temp_id', 0],//ID mẫu phí vận chuyển
+            ['give_integral', 0],//Tặng điểm thưởng
+            ['presale', 0],//Bật/tắt sản phẩm đặt trước
+            ['presale_time', 0],//Thời gian đặt trước
+            ['presale_day', 0],//Ngày giao hàng đặt trước
+            ['vip_product', 0],//Có phải sản phẩm dành cho thành viên trả phí không
+            ['is_sub', []],//Hoa hồng là riêng hay theo mặc định
+            ['recommend', []],//Đề xuất sản phẩm
+            ['activity', []],//Thứ tự ưu tiên hoạt động
+            ['recommend_list', []],//Sản phẩm đề xuất chất lượng
+            ['coupon_ids', []],//Phiếu giảm giá
+            ['label_id', []],//Nhãn người dùng
+            ['command_word', ''],//Mã chia sẻ sản phẩm
+            ['is_show', 0],//Đăng bán
+            ['ficti', 0],//Lượt bán ảo
+            ['sort', 0],//Thứ tự sắp xếp
+            ['recommend_image', ''],//Ảnh đề xuất sản phẩm
+            ['sales', 0],//Lượt bán
+            ['custom_form', []],//Form tùy chỉnh
             ['type', 0],
-            ['is_copy', 0],//是否是复制商品
-            ['is_limit', 0],//是否限购
-            ['limit_type', 0],//限购类型
-            ['limit_num', 0],//限购数量
-            ['min_qty', 1],//起购数量
-            ['params_list', []],//商品参数
-            ['label_list', []],//商品标签
-            ['protection_list', []],//商品保障
-            ['is_gift', 0],//是否礼品
-            ['gift_price', 0],//礼品附加费
+            ['is_copy', 0],//Có phải là sản phẩm sao chép không
+            ['is_limit', 0],//Có giới hạn mua không
+            ['limit_type', 0],//Loại giới hạn mua
+            ['limit_num', 0],//Số lượng giới hạn mua
+            ['min_qty', 1],//Số lượng mua tối thiểu
+            ['params_list', []],//Thông số sản phẩm
+            ['label_list', []],//Nhãn sản phẩm
+            ['protection_list', []],//Đảm bảo sản phẩm
+            ['is_gift', 0],//Có phải là quà tặng không
+            ['gift_price', 0],//Phụ phí quà tặng
         ]);
         $this->service->save((int)$id, $data);
         return app('json')->success(100000);
     }
 
     /**
-     * 删除指定资源
+     * Xóa resource được chỉ định
      *
      * @param int $id
      * @return \think\Response
      */
     public function delete($id)
     {
-        //删除商品检测是否有参与活动
+        //Khi xóa sản phẩm, kiểm tra có đang tham gia hoạt động không
         $this->service->checkActivity($id);
         $res = $this->service->del($id);
         /** @var StoreCartServices $cartService */
@@ -291,7 +291,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 批量移动到回收站
+     * Chuyển vào thùng rác theo lô
      * @return \think\Response
      */
     public function batchDelete()
@@ -303,7 +303,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 批量从回收站恢复
+     * Khôi phục hàng loạt từ thùng rác
      * @return \think\Response
      */
     public function batchRecover()
@@ -312,11 +312,11 @@ class StoreProduct extends AuthController
             ['ids', []],
         ], true);
         $this->service->batchRecover($ids);
-        return app('json')->success('恢复成功');
+        return app('json')->success('Khôi phục thành công');
     }
 
     /**
-     * 生成规格列表
+     * Tạo danh sách quy cách
      * @param int $id
      * @param int $type
      * @return mixed
@@ -335,7 +335,7 @@ class StoreProduct extends AuthController
 
 
     /**
-     * 获取选择的商品列表
+     * Lấy danh sách sản phẩm đã chọn
      * @return mixed
      */
     public function search_list()
@@ -367,7 +367,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 获取某个商品规格
+     * Lấy quy cách của một sản phẩm
      * @return mixed
      */
     public function get_attrs()
@@ -381,7 +381,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 获取运费模板列表
+     * Lấy danh sách mẫu phí vận chuyển
      * @return mixed
      */
     public function get_template()
@@ -390,7 +390,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 获取视频上传token
+     * Lấy token tải lên video
      * @return mixed
      * @throws \Exception
      */
@@ -403,7 +403,7 @@ class StoreProduct extends AuthController
         $contentType = $request->get('contentType', '');
         if ($type === 5) {
             if (!$key || !$contentType) {
-                return app('json')->fail('缺少参数');
+                return app('json')->fail('Thiếu tham số');
             }
             $re = $upload->getTempKeys($key, $path, $contentType);
         } else {
@@ -413,7 +413,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 检测商品是否开活动
+     * Kiểm tra sản phẩm có đang mở hoạt động không
      * @param $id
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -426,7 +426,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 导入卡密
+     * Nhập mã thẻ
      * @return mixed
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
@@ -437,10 +437,10 @@ class StoreProduct extends AuthController
         ]);
         if (!$data['file']) return app('json')->fail(400168);
         $file = public_path() . substr($data['file'], 1);
-        // 获取文件后缀
+        // Lấy phần mở rộng của file
         $suffix = strtolower(pathinfo($file, PATHINFO_EXTENSION));
         if (!in_array($suffix, ['xls', 'xlsx'])) {
-            return app('json')->fail('文件格式不正确，请上传xls或xlsx格式的文件！');
+            return app('json')->fail('Định dạng tệp không đúng, vui lòng tải lên tệp định dạng xls hoặc xlsx!');
         }
         /** @var FileService $readExcelService */
         $readExcelService = app()->make(FileService::class);
@@ -449,7 +449,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 商品批量设置
+     * Cài đặt sản phẩm hàng loạt
      * @return mixed
      */
     public function batchSetting()
@@ -475,7 +475,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 商品类型接口
+     * API loại sản phẩm
      * @return \think\Response
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -491,7 +491,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 商品迁移导出
+     * Xuất dữ liệu di chuyển sản phẩm
      * @return \think\Response
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -510,7 +510,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 商品迁移导入
+     * Nhập dữ liệu sản phẩm di chuyển
      * @return \think\Response
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      * @author wuhaotian
@@ -524,11 +524,11 @@ class StoreProduct extends AuthController
         ], true);
         if (!$file) return app('json')->fail(400168);
         $res = $this->service->productImport($file);
-        return app('json')->success('导入成功', $res);
+        return app('json')->success('Nhập thành công', $res);
     }
 
     /**
-     * 回收站商品彻底删除
+     * Xóa vĩnh viễn sản phẩm trong thùng rác
      * @param $id
      * @return \think\Response
      * @author wuhaotian
@@ -538,12 +538,12 @@ class StoreProduct extends AuthController
     public function fullDel($id)
     {
         app()->make(SystemClearData::class)->recycleProduct($id);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 
     public function otherInfo($id, $type)
     {
-        if (!$id) return app('json')->fail('参数错误');
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         return app('json')->success($this->service->otherInfo($id, $type));
     }
 
@@ -556,6 +556,6 @@ class StoreProduct extends AuthController
             ['attr_value', []],
         ]);
         $this->service->otherSave($id, $type, $data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 }

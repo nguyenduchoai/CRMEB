@@ -12,8 +12,8 @@
 
 namespace think;
 
-// 加载基础文件
+// Tải file cơ bản
 require __DIR__ . '/vendor/autoload.php';
 
-// 应用初始化
+// Khởi tạo ứng dụng
 (new App())->console->run();

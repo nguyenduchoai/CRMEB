@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog title="编辑热区" :visible.sync="dialogVisible" @opened="openModal" fullscreen>
+    <el-dialog title="Sửa vùng nóng" :visible.sync="dialogVisible" @opened="openModal" fullscreen>
       <div class="operationFloor">
         <div class="imgBox" @mouseup.left.stop="changeStop()">
           <div ref="container" id="img-box-container" class="container">
@@ -40,14 +40,14 @@
             />
           </div>
         </div>
-        <!-- 热区链接配置 -->
+        <!-- Cấu hình liên kết vùng nóng -->
         <div class="form">
-          <h2 class="mb20">图片热区</h2>
-          <el-alert type="warning" :closable="false" show-icon>框选热区范围，双击设置热区信息</el-alert>
+          <h2 class="mb20">Vùng nóng trên ảnh</h2>
+          <el-alert type="warning" :closable="false" show-icon>Kéo chọn phạm vi vùng nóng, nhấp đúp để thiết lập thông tin vùng nóng</el-alert>
 
           <div v-for="(item, index) in areaData" :key="index" class="form-row">
             <div class="form-item">
-              <span class="num">热区{{ item.number }}</span>
+              <span class="num">Vùng nóng {{ item.number }}</span>
             </div>
             <div class="form-item label">
               <div>
@@ -55,7 +55,7 @@
                   icon="ios-arrow-forward"
                   v-model="item.link"
                   :style="linkInputStyle"
-                  placeholder="选择跳转链接"
+                  placeholder="Chọn liên kết chuyển hướng"
                 >
                   <i class="el-icon-link" slot="suffix" @click="getLink(index)" />
                 </el-input>
@@ -66,7 +66,7 @@
         </div>
       </div>
       <div slot="footer">
-        <el-button class="mr20" type="primary" @click="saveAreaData"> 完成 </el-button>
+        <el-button class="mr20" type="primary" @click="saveAreaData"> Hoàn thành </el-button>
       </div>
     </el-dialog>
     <linkaddress ref="linkaddres" @linkUrl="linkUrl"></linkaddress>
@@ -85,37 +85,37 @@ export default {
   },
   props: {
     /**
-     * @description 图片数据对象
+     * @description Đối tượng dữ liệu ảnh
      * @type {ImgData}
      */
     imgs: {
-      type: String, // 图片类型
-      default: () => '', // 默认值为空字符串
+      type: String, // Loại ảnh
+      default: () => '', // Giá trị mặc định là chuỗi rỗng
     },
     /**
-     * @description 是否为热门汤品
+     * @description Có phải là món súp hot không
      * @type {boolean}
      */
     isHotPot: {
-      type: Boolean, // 布尔类型
-      default: () => false, // 默认值为false
+      type: Boolean, // Kiểu boolean
+      default: () => false, // Giá trị mặc định là false
     },
     /**
-     * @description 图片区域数据对象
+     * @description Đối tượng dữ liệu vùng ảnh
      * @type {AreaData[]}
      */
     imgAreaData: {
-      type: Array, // 数组类型
-      default: () => [], // 默认值为空数组
+      type: Array, // Kiểu mảng (array)
+      default: () => [], // Giá trị mặc định là mảng rỗng
     },
     /**
-     * @description 链接输入框样式对象
+     * @description Đối tượng style ô nhập liên kết
      * @type {LinkInputStyle}
      */
     linkInputStyle: {
-      type: Object, // 对象类型
+      type: Object, // Kiểu đối tượng
       default: () => ({
-        // 默认值为一个包含width属性的对象
+        // Giá trị mặc định là một object chứa thuộc tính width
         width: '300px',
       }),
     },
@@ -123,67 +123,67 @@ export default {
   data() {
     return {
       /**
-       * @description 对话框是否可见
+       * @description Dialog có hiển thị không
        * @type {boolean}
        */
       dialogVisible: false,
       /**
-       * @description 开始的x坐标
+       * @description Tọa độ x bắt đầu
        * @type {number}
        */
       starX: 0,
       /**
-       * @description 开始的y坐标
+       * @description Tọa độ y bắt đầu
        * @type {number}
        */
       starY: 0,
       /**
-       * @description 区域宽度
+       * @description Chiều rộng vùng
        * @type {number}
        */
       areaWidth: 0,
       /**
-       * @description 区域高度
+       * @description Chiều cao vùng
        * @type {number}
        */
       areaHeight: 0,
       /**
-       * @description 当前显示的图片索引
+       * @description Chỉ số ảnh đang hiển thị
        * @type {boolean}
        */
       caseShow: false,
       /**
-       * @description 当前图片的宽度
+       * @description Chiều rộng ảnh hiện tại
        * @type {null}
        */
       nowImgWidth: null,
       /**
-       * @description 区域数据
+       * @description Dữ liệu vùng
        * @type {Array}
        */
       areaData: [],
       /**
-       * @description 当前显示的图片编号
+       * @description Số thứ tự ảnh đang hiển thị
        * @type {number}
        */
       imgNum: 1,
       /**
-       * @description 父元素宽度
+       * @description Chiều rộng phần tử cha
        * @type {number}
        */
       parentWidth: 0,
       /**
-       * @description 父元素高度
+       * @description Chiều cao phần tử cha
        * @type {number}
        */
       parentHeight: 0,
       /**
-       * @description 默认宽度
+       * @description Chiều rộng mặc định
        * @type {number}
        */
       defaultWidth: 750,
       /**
-       * @description 当前显示的图片索引
+       * @description Chỉ số ảnh đang hiển thị
        * @type {number}
        */
       itemIndex: 0,
@@ -202,7 +202,7 @@ export default {
     openModal() {
       this.$nextTick(() => {
         const parentDiv = document.querySelector('#img-box-container');
-        //获取元素的宽高
+        //Lấy chiều rộng/cao của phần tử
         this.parentWidth = this.defaultWidth;
         // this.parentWidth = parentDiv.clientWidth;
         this.parentHeight = parentDiv.clientHeight;
@@ -210,9 +210,9 @@ export default {
       });
     },
     closeModal() {
-      this.$confirm('未保存内容，是否在离开前放弃保存？', '提示信息', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Nội dung chưa được lưu, bạn có muốn rời đi mà không lưu không?', 'Thông báo', {
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
         type: 'warning',
       })
         .then(() => {
@@ -221,18 +221,18 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消',
+            message: 'Đã hủy',
           });
         });
     },
-    // 绘画热区开始
+    // Bắt đầu vẽ vùng nóng
     mouseDown(e) {
       e.preventDefault();
       this.caseShow = true;
-      // 记录滑动的初始值
+      // Ghi lại giá trị ban đầu khi vuốt/kéo
       this.starX = e.layerX -5;
       this.starY = e.layerY -5;
-      // 鼠标滑动的过程
+      // Quá trình di chuyển chuột
       if (!document.onmousemove) {
         let maxWidth = this.defaultWidth - e.layerX;
         document.onmousemove = (ev) => {
@@ -245,7 +245,7 @@ export default {
         };
       }
     },
-    // 绘画热区结束
+    // Kết thúc vẽ vùng nóng
     changeStop() {
       document.onmousemove = null;
       this.imgNum = this.areaData.length + 1;
@@ -261,19 +261,19 @@ export default {
         };
         this.areaData.push(data);
       }
-      // 初始化绘图
+      // Khởi tạo vẽ
       this.caseShow = false;
       this.starX = 0;
       this.starY = 0;
       this.areaWidth = 0;
       this.areaHeight = 0;
     },
-    // 删除指定热区
+    // Xóa vùng nóng chỉ định
     delAreaBox(index) {
-      /* 删除某个热区 */
+      /* Xóa một vùng nóng */
       this.areaData.splice(index, 1);
       this.$emit('delAreaData', this.areaData);
-      /* 删除后 每个热区按顺序重新编号 */
+      /* Sau khi xóa, mỗi vùng nóng được đánh số lại theo thứ tự */
       if (this.areaData) {
         const arr = this.areaData.filter((i) => i.number > index);
         if (!arr) return;
@@ -285,7 +285,7 @@ export default {
         }
       }
     },
-    // 添加网址
+    // Thêm URL
     addURL(index, url) {
       let obj = {
         ...this.areaData[index],
@@ -293,20 +293,20 @@ export default {
       };
       this.$set(this.areaData, index, obj);
     },
-    // 保存热区信息
+    // Lưu thông tin vùng nóng
     saveAreaData() {
       if ((this.areaData && !this.areaData.length) || !this.checkData(this.areaData)) {
-        this.$message.error('热区是否配置链接、是否至少添加一个热区?');
+        this.$message.error('Vùng nóng đã được cấu hình liên kết chưa, đã thêm ít nhất một vùng nóng chưa?');
         return;
       }
       this.$emit('saveAreaData', this.areaData);
       this.dialogVisible = false;
-      this.$message.success('编辑成功!');
+      this.$message.success('Sửa thành công!');
     },
     /**
-     * 检查列表中每个元素是否都有 link 属性
-     * @param {Array} list - 待检查的列表
-     * @returns {Boolean} - 是否所有元素都有 link 属性
+     * Kiểm tra mỗi phần tử trong danh sách có thuộc tính link không
+     * @param {Array} list - Danh sách cần kiểm tra
+     * @returns {Boolean} - Tất cả phần tử có thuộc tính link không
      */
     checkData(list) {
       let isCheck = true;
@@ -318,21 +318,21 @@ export default {
       return isCheck;
     },
     /**
-     * @description 获取链接地址并打开添加链接的模态框
-     * @param {number} index - 当前项的索引值
+     * @description Lấy địa chỉ liên kết và mở modal thêm liên kết
+     * @param {number} index - Giá trị chỉ số của mục hiện tại
      */
     getLink(index) {
-      // 设置当前项的索引值
+      // Thiết lập giá trị chỉ số của mục hiện tại
       this.itemIndex = index;
-      // 打开添加链接的模态框
+      // Mở modal thêm liên kết
       this.$refs.linkaddres.modals = true;
     },
     /**
-     * @description 处理链接地址的输入事件
-     * @param {string} e - 链接地址
+     * @description Xử lý sự kiện nhập địa chỉ liên kết
+     * @param {string} e - Địa chỉ liên kết
      */
     linkUrl(e) {
-      // 将链接地址存储到对应的数据项中
+      // Lưu địa chỉ liên kết vào mục dữ liệu tương ứng
       this.areaData[this.itemIndex].link = e;
     },
   },

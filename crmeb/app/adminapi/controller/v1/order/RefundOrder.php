@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -19,7 +19,7 @@ use app\services\wechat\WechatUserServices;
 use think\facade\App;
 
 /**
- * 退款订单
+ * Đơn hoàn tiền
  * Class RefundOrder
  * @package app\adminapi\controller\v1\order
  */
@@ -39,7 +39,7 @@ class RefundOrder extends AuthController
     }
 
     /**
-     * 退款订单列表
+     * Danh sách đơn hoàn tiền
      * @return mixed
      */
     public function getRefundList()
@@ -55,13 +55,13 @@ class RefundOrder extends AuthController
     }
 
     /**
-     * 订单详情
+     * Chi tiết đơn hàng
      * @param $uni
      * @return \think\Response
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/03/02
      */
@@ -75,7 +75,7 @@ class RefundOrder extends AuthController
     }
 
     /**
-     * 商家同意退款
+     * Người bán đồng ý hoàn tiền
      * @return mixed
      */
     public function agreeExpress($id)
@@ -85,7 +85,7 @@ class RefundOrder extends AuthController
     }
 
     /**
-     * 修改备注
+     * Sửa ghi chú
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -101,7 +101,7 @@ class RefundOrder extends AuthController
     }
 
     /**
-     * 退款表单生成
+     * Tạo form hoàn tiền
      * @param $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -113,7 +113,7 @@ class RefundOrder extends AuthController
     }
 
     /**
-     * 订单退款(产品)
+     * Hoàn tiền đơn hàng (sản phẩm)
      * @param Request $request
      * @param StoreOrderServices $services
      * @param $id
@@ -153,12 +153,12 @@ class RefundOrder extends AuthController
         }
         $data['refunded_time'] = time();
         $type = $data['type'];
-        //拒绝退款
+        //Từ chối hoàn tiền
         if ($type == 2) {
             $this->services->refuseRefund((int)$id, $data, $orderRefund);
             return app('json')->success(400145);
         } else {
-            //0元退款
+            //Hoàn tiền 0đ
             if ($orderRefund['refund_price'] == 0 && in_array($orderRefund['refund_type'], [1, 5])) {
                 $refund_price = 0;
             } else {
@@ -190,7 +190,7 @@ class RefundOrder extends AuthController
             $refund_data['open_id'] = $wechatUserServices->uidToOpenid((int)$order['uid'], 'routine') ?? '';
             $refund_data['refund_no'] = $orderRefund['order_id'];
             $refund_data['order_id'] = $orderRefund['order_id'];
-            //修改订单退款状态
+            //Sửa trạng thái hoàn tiền đơn hàng
 //            $data['refund_price'] = $data['refunded_price'];
             unset($data['refund_price']);
             if ($this->services->agreeRefund($id, $refund_data)) {
@@ -204,7 +204,7 @@ class RefundOrder extends AuthController
     }
 
     /**
-     * 不退款表单结构
+     * Cấu trúc form không hoàn tiền
      * @param $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -216,7 +216,7 @@ class RefundOrder extends AuthController
     }
 
     /**
-     * 订单不退款
+     * Đơn hàng không hoàn tiền
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException

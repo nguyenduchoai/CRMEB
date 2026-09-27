@@ -9,7 +9,7 @@ import * as monaco from 'monaco-editor';
 export default {
   name: '',
   props: {
-    // 编辑器中呈现的内容
+    // Nội dung hiển thị trong trình soạn thảo
     codes: {
       type: String,
       default: function () {
@@ -22,20 +22,20 @@ export default {
         return false;
       },
     },
-    // 主要配置
+    // Cấu hình chính
     editorOptions: {
       type: Object,
       default: function () {
         return {
           selectOnLineNumbers: true,
           roundedSelection: false,
-          readOnly: this.readOnly, // 只读
-          cursorStyle: 'line', // 光标样式
-          automaticLayout: false, // 自动布局
-          glyphMargin: true, // 字形边缘
+          readOnly: this.readOnly, // Chỉ đọc
+          cursorStyle: 'line', // Kiểu con trỏ
+          automaticLayout: false, // Tự động bố cục
+          glyphMargin: true, // Viền chữ
           useTabStops: false,
-          fontSize: 28, // 字体大小
-          autoIndent: true, // 自动布局
+          fontSize: 28, // Cỡ chữ
+          autoIndent: true, // Tự động bố cục
         };
       },
     },
@@ -47,18 +47,18 @@ export default {
   created() {},
   mounted() {
     this.monacoEditor = monaco.editor.create(this.$refs.container, {
-      value: this.codes, // 见props
+      value: this.codes, // Xem props
       language: 'json',
-      theme: 'vs', // 编辑器主题：vs, hc-black, or vs-dark，更多选择详见官网
-      automaticLayout: true, //自动布局
-      //   foldingStrategy: 'indentation', // 代码可分小段折叠
+      theme: 'vs', // Chủ đề trình soạn thảo: vs, hc-black, or vs-dark, xem thêm các lựa chọn khác tại trang chủ
+      automaticLayout: true, //Tự động bố cục
+      //   foldingStrategy: 'indentation', // Code có thể gập theo từng đoạn nhỏ
       scrollbar: {
-        // 滚动条设置
-        verticalScrollbarSize: 4, // 竖滚动条
-        horizontalScrollbarSize: 10, // 横滚动条
+        // Thiết lập thanh cuộn
+        verticalScrollbarSize: 4, // Thanh cuộn dọc
+        horizontalScrollbarSize: 10, // Thanh cuộn ngang
       },
       lineNumbersMinChars: 5,
-      editorOptions: this.editorOptions, // 同codes
+      editorOptions: this.editorOptions, // Tương tự codes
     });
     setTimeout(() => {
       this.monacoEditor.trigger('anyString', 'editor.action.formatDocument');

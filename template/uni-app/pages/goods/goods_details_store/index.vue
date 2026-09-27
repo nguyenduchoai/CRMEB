@@ -21,8 +21,8 @@
 						<!-- #endif -->
 					</div>
 					<div class="store-distance" @click.stop="showMaoLocation(item)">
-						<span class="addressTxt" v-if="item.range">{{ item.range }}{{$t(`千米距离`)}}</span>
-						<span class="addressTxt" v-else>{{$t(`查看地图`)}}</span>
+						<span class="addressTxt" v-if="item.range">{{ item.range }}{{$t(`km`)}}</span>
+						<span class="addressTxt" v-else>{{$t(`Xem bản đồ`)}}</span>
 						<span class="iconfont icon-youjian"></span>
 					</div>
 				</div>
@@ -146,7 +146,7 @@
 				}
 				// #endif
 			},
-			// 选中门店
+			// Chọn cửa hàng
 			checked(e) {
 
 				uni.$emit("handClick", {
@@ -154,13 +154,13 @@
 				});
 				uni.navigateBack();
 			},
-			// 获取门店列表数据
+			// Lấy dữ liệu danh sách cửa hàng
 			getList: function() {
 				if (this.loading || this.loaded) return;
 				this.loading = true;
 				let data = {
-					latitude: this.user_latitude || "", //纬度
-					longitude: this.user_longitude || "", //经度
+					latitude: this.user_latitude || "", //Vĩ độ
+					longitude: this.user_longitude || "", //Kinh độ
 					page: this.page,
 					limit: this.limit
 				};

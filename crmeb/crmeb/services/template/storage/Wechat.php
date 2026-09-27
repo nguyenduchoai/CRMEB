@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,7 +20,7 @@ class Wechat extends BaseMessage
     protected $error;
 
     /**
-     * 初始化
+     * Khởi tạo
      * @param array $config
      * @return mixed|void
      */
@@ -39,7 +39,7 @@ class Wechat extends BaseMessage
     }
 
     /**
-     * 发送消息
+     * Gửi tin nhắn
      * @param string $tempid
      * @param array $data
      * @return bool|mixed
@@ -57,13 +57,13 @@ class Wechat extends BaseMessage
             $this->clear();
             return $res;
         } catch (\Exception $e) {
-            Log::error('发送给openid为:' . $this->openId . '微信模板消息失败,模板id为:' . $tempid . ';错误原因为:' . $e->getMessage());
+            Log::error('Gửi đến openid:' . $this->openId . 'tin nhắn mẫu WeChat thất bại, ID mẫu:' . $tempid . '; lý do lỗi:' . $e->getMessage());
             return $this->setError($e->getMessage());
         }
     }
 
     /**
-     * 获取所有模板
+     * Lấy tất cả mẫu
      * @return \EasyWeChat\Support\Collection|mixed
      */
     public function list()
@@ -72,7 +72,7 @@ class Wechat extends BaseMessage
     }
 
     /**
-     * 添加模板消息
+     * Thêm tin nhắn mẫu
      * @param string $shortId
      * @return \EasyWeChat\Support\Collection|mixed
      */
@@ -82,7 +82,7 @@ class Wechat extends BaseMessage
     }
 
     /**
-     * 删除模板消息
+     * Xóa tin nhắn mẫu
      * @param string $templateId
      * @return \EasyWeChat\Support\Collection|mixed
      */
@@ -92,7 +92,7 @@ class Wechat extends BaseMessage
     }
 
     /**
-     * 返回所有支持的行业列表
+     * Trả về danh sách tất cả ngành được hỗ trợ
      * @return \EasyWeChat\Support\Collection
      */
     public function getIndustry()
@@ -101,7 +101,7 @@ class Wechat extends BaseMessage
     }
 
     /**
-     * 设置模版消息行业
+     * Đặt ngành cho tin nhắn mẫu
      * @return \EasyWeChat\Support\Collection
      */
     public function setIndustry($one, $two)
@@ -110,18 +110,18 @@ class Wechat extends BaseMessage
     }
 
     /**
-     * 设置错误信息
+     * Đặt thông tin lỗi
      * @param string|null $error
      * @return bool
      */
     protected function setError(?string $error = null)
     {
-        $this->error = $error ?: '未知错误';
+        $this->error = $error ?: 'Lỗi không xác định';
         return false;
     }
 
     /**
-     * 获取错误信息
+     * Lấy thông tin lỗi
      * @return string
      */
     public function getError()

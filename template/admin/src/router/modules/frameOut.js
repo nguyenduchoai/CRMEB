@@ -1,9 +1,9 @@
 // +---------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +---------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +---------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +---------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +---------------------------------------------------------------------
@@ -13,12 +13,12 @@ let routePre = setting.routePre;
 const pre = 'kefu_';
 
 export default [
-  // 登录
+  // Đăng nhập
   {
     path: routePre + '/login',
     name: 'login',
     meta: {
-      title: '登录',
+      title: 'Đăng nhập',
       hideInMenu: true,
     },
     component: () => import('@/pages/account/login'),
@@ -28,18 +28,18 @@ export default [
     name: `${pre}index`,
     meta: {
       auth: true,
-      title: '客服管理',
+      title: 'Quản lý CSKH',
       kefu: true,
     },
     component: () => import('@/pages/kefu/index'),
   },
-  // 客服
+  // CSKH
   {
     path: routePre + '/kefu',
     name: `${pre}index`,
     meta: {
       auth: true,
-      title: '客服管理',
+      title: 'Quản lý CSKH',
       kefu: true,
     },
     redirect: {
@@ -52,7 +52,7 @@ export default [
     name: `${pre}mobile_list`,
     meta: {
       auth: true,
-      title: '消息列表',
+      title: 'Danh sách tin nhắn',
       kefu: true,
     },
     component: () => import('@/pages/kefu/mobile/chat_list'),
@@ -62,7 +62,7 @@ export default [
     name: `${pre}mobile_chat`,
     meta: {
       auth: true,
-      title: '对话详情',
+      title: 'Chi tiết cuộc trò chuyện',
       kefu: true,
     },
     component: () => import('@/pages/kefu/mobile/index'),
@@ -72,7 +72,7 @@ export default [
     name: `${pre}pc_list`,
     meta: {
       auth: true,
-      title: '客服',
+      title: 'CSKH',
       kefu: true,
     },
     component: () => import('@/pages/kefu/pc/index'),
@@ -82,7 +82,7 @@ export default [
     name: `${pre}order-list`,
     meta: {
       auth: true,
-      title: '订单列表',
+      title: 'Danh sách đơn hàng',
       kefu: true,
     },
     component: () => import('@/pages/kefu/mobile/orderList/index'),
@@ -92,7 +92,7 @@ export default [
     name: `${pre}order-detail`,
     meta: {
       auth: true,
-      title: '订单详情',
+      title: 'Chi tiết đơn hàng',
       kefu: true,
     },
     component: () => import('@/pages/kefu/mobile/orderList/orderDetail.vue'),
@@ -102,7 +102,7 @@ export default [
     name: `${pre}order-delivery`,
     meta: {
       auth: true,
-      title: '发货',
+      title: 'Giao hàng',
       kefu: true,
     },
     component: () => import('@/pages/kefu/mobile/orderList/orderDelivery.vue'),
@@ -112,7 +112,7 @@ export default [
     name: `${pre}user-index`,
     meta: {
       auth: true,
-      title: '客户信息',
+      title: 'Thông tin khách hàng',
       kefu: true,
     },
     component: () => import('@/pages/kefu/mobile/user/index'),
@@ -122,7 +122,7 @@ export default [
     name: `${pre}goods-list`,
     meta: {
       auth: true,
-      title: '商品列表',
+      title: 'Danh sách sản phẩm',
       kefu: true,
     },
     component: () => import('@/pages/kefu/mobile/goods/list.vue'),
@@ -132,7 +132,7 @@ export default [
     name: `${pre}goods-detail`,
     meta: {
       auth: true,
-      title: '商品列表',
+      title: 'Danh sách sản phẩm',
       kefu: true,
     },
     component: () => import('@/pages/kefu/mobile/goods/detail.vue'),
@@ -142,7 +142,7 @@ export default [
     name: `${pre}app-chat`,
     meta: {
       auth: true,
-      title: '客服',
+      title: 'CSKH',
       kefu: true,
     },
     component: () => import('@/pages/kefu/appChat/index'),
@@ -152,7 +152,7 @@ export default [
     name: `${pre}app-mobile_user_chat`,
     meta: {
       auth: true,
-      title: '用户客服',
+      title: 'CSKH người dùng',
       kefu: true,
     },
     component: () => import('@/pages/kefu/appChat/mobile/index'),
@@ -162,7 +162,7 @@ export default [
     name: `${pre}app-mobile_feedback`,
     meta: {
       auth: true,
-      title: '用户反馈',
+      title: 'Phản hồi người dùng',
       kefu: true,
     },
     component: () => import('@/pages/kefu/appChat/mobile/feedback'),
@@ -172,7 +172,7 @@ export default [
     name: `mobile_upload`,
     meta: {
       auth: true,
-      title: '手机端扫码上传',
+      title: 'Quét mã bằng điện thoại để tải lên',
       kefu: true,
     },
     component: () => import('@/pages/app/upload'),
@@ -181,7 +181,7 @@ export default [
     path: routePre + '/order/print',
     name: `order-print-print`,
     meta: {
-      title: '配货单打印',
+      title: 'In phiếu soạn hàng',
     },
     component: () => import('@/pages/order/print/index'),
   },

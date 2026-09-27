@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,7 +24,7 @@ export default {
   },
   actions: {
     /**
-     * @description 退出登录
+     * @description Đăng xuất
      * */
     logoutKefu({ commit, dispatch }, { confirm = false, vm } = {}) {
       async function logout() {
@@ -41,9 +41,9 @@ export default {
             removeCookies('kefu_expires_time');
             removeCookies('kefuInfo');
             removeCookies('kefu_uuid');
-            // 删除localStorage
-            // 清空 vuex 用户信息
-            // 跳转路由
+            // Xóa localStorage
+            // Xóa thông tin người dùng trong vuex
+            // Chuyển route
             router.push({
               path: '/kefu',
             });

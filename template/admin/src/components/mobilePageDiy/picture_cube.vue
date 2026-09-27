@@ -78,11 +78,11 @@
 import { mapState } from 'vuex';
 export default {
   name: 'picture_cube',
-  cname: '图片魔方',
+  cname: 'Lưới ảnh',
   configName: 'c_picture_cube',
   icon: 'iconshangpinfenlei1',
-  type: 0, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'pictureCube', // 外面匹配名称
+  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'pictureCube', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -118,42 +118,42 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'pictureCube',
         timestamp: this.num,
         tabConfig: {
-          title: '选择样式',
+          title: 'Chọn kiểu',
           tabVal: 0,
           type: 1,
           tabList: [
             {
-              name: '样式一',
+              name: 'Kiểu 1',
               icon: 'iconyangshi1',
               count: 1,
             },
             {
-              name: '样式二',
+              name: 'Kiểu 2',
               icon: 'iconyangshi2',
               count: 2,
             },
             {
-              name: '样式三',
+              name: 'Kiểu 3',
               icon: 'iconyangshi3',
               count: 3,
             },
             {
-              name: '样式四',
+              name: 'Kiểu 4',
               icon: 'iconyangshi9',
               count: 3,
             },
             {
-              name: '样式五',
+              name: 'Kiểu 5',
               icon: 'iconyangshi8',
               count: 4,
             },
             {
-              name: '样式六',
+              name: 'Kiểu 6',
               icon: 'iconyangshi4',
               count: 4,
             },
@@ -172,8 +172,8 @@ export default {
               img: '',
               info: [
                 {
-                  title: '链接',
-                  tips: '请输入链接',
+                  title: 'Liên kết',
+                  tips: 'Vui lòng nhập liên kết',
                   value: '',
                   max: 100,
                 },
@@ -182,7 +182,7 @@ export default {
           ],
         },
         bgColor: {
-          title: '背景颜色',
+          title: 'Màu nền',
           default: [
             {
               item: '#fff',
@@ -195,28 +195,28 @@ export default {
           ],
         },
         bgStyle: {
-          title: '背景样式',
+          title: 'Kiểu nền',
           name: 'bgStyle',
           type: 0,
           list: [
             {
-              val: '直角',
+              val: 'Góc vuông',
               icon: 'iconPic_square',
             },
             {
-              val: '圆角',
+              val: 'Bo góc',
               icon: 'iconPic_fillet',
             },
           ],
         },
         prConfig: {
-          title: '背景边距',
+          title: 'Lề nền',
           val: 0,
           min: 0,
         },
-        // 页面间距
+        // Lề trang
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },

@@ -21,7 +21,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    // 开启后，链接颜色为默认的蓝色，默认关闭为继承效果
+    // Sau khi bật, màu liên kết là màu xanh mặc định, mặc định tắt thì kế thừa hiệu ứng (inherit)
     linkColor: {
       type: Boolean,
       default: false,

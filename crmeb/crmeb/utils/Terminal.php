@@ -1,11 +1,11 @@
 <?php
 /**
  *  +----------------------------------------------------------------------
- *  | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+ *  | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
  *  +----------------------------------------------------------------------
  *  | Copyright (c) 2016~2022 https://www.crmeb.com All rights reserved.
  *  +----------------------------------------------------------------------
- *  | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+ *  | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
  *  +----------------------------------------------------------------------
  *  | Author: CRMEB Team <admin@crmeb.com>
  *  +----------------------------------------------------------------------
@@ -17,9 +17,9 @@ use think\Response;
 use think\console\Output;
 
 /**
- * 执行命令
+ * Thực thi lệnh (command)
  * Class Terminal
- * @author 等风来
+ * @author Deng Fenglai
  * @email 136327134@qq.com
  * @date 2023/4/13
  * @package crmeb\utils
@@ -27,7 +27,7 @@ use think\console\Output;
 class Terminal
 {
     /**
-     * 命令
+     * Lệnh (command)
      * @var \string[][]
      */
     protected $command = [
@@ -42,19 +42,19 @@ class Terminal
     ];
 
     /**
-     * 执行内容保存地址
+     * Địa chỉ lưu nội dung thực thi
      * @var string
      */
     protected $outputFile;
 
     /**
-     * 执行状态
+     * Trạng thái thực thi
      * @var integer
      */
     protected $procStatus;
 
     /**
-     * 响应内容
+     * Nội dung phản hồi
      * @var string
      */
     protected $outputContent;
@@ -82,7 +82,7 @@ class Terminal
 
     /**
      * @param Output $output
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/13
      */
@@ -93,7 +93,7 @@ class Terminal
 
     /**
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/13
      */
@@ -103,21 +103,21 @@ class Terminal
     }
 
     /**
-     * 执行
+     * Thực thi
      * @param string $name
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/13
      */
     public function run(string $name)
     {
         if (!function_exists('proc_open')) {
-            throw new \RuntimeException('缺少proc_open函数无法运行');
+            throw new \RuntimeException('Thiếu hàm proc_open, không thể chạy');
         }
 
         if (!isset($this->command[$name])) {
-            throw new \RuntimeException('运行的命令不存在');
+            throw new \RuntimeException('Lệnh cần chạy không tồn tại');
         }
 
         $command = $this->command[$name];
@@ -146,10 +146,10 @@ class Terminal
     }
 
     /**
-     * 判断状态
+     * Kiểm tra trạng thái
      * @param $process
      * @return bool
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/13
      */
@@ -174,9 +174,9 @@ class Terminal
     }
 
     /**
-     * 直接输入响应
+     * Nhập phản hồi trực tiếp
      * @param string $message
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/13
      */
@@ -191,10 +191,10 @@ class Terminal
     }
 
     /**
-     * 返回响应内容
+     * Trả về nội dung phản hồi
      * @param string $data
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/13
      */

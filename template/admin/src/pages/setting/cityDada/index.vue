@@ -5,8 +5,8 @@
         <el-row>
           <el-col v-bind="grid">
             <div class="button acea-row row-middle">
-              <el-button type="primary" v-db-click @click="add(0)">添加省份</el-button>
-              <el-button v-db-click @click="cleanCache">清除缓存</el-button>
+              <el-button type="primary" v-db-click @click="add(0)">Thêm tỉnh</el-button>
+              <el-button v-db-click @click="cleanCache">Xóa bộ nhớ đệm</el-button>
             </div>
           </el-col>
         </el-row>
@@ -18,28 +18,28 @@
         :data="cityLists"
         lazy
       >
-        <el-table-column label="编号" width="120">
+        <el-table-column label="Mã số" width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="地区名称" min-width="300">
+        <el-table-column label="Tên khu vực" min-width="300">
           <template slot-scope="scope">
             <span>{{ scope.row.label }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="上级名称" min-width="300">
+        <el-table-column label="Tên cấp trên" min-width="300">
           <template slot-scope="scope">
             <span>{{ scope.row.parent_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="170">
+        <el-table-column label="Thao tác" fixed="right" width="170">
           <template slot-scope="scope">
-            <a v-if="scope.row.hasOwnProperty('children')" v-db-click @click="add(scope.row.city_id)">添加</a>
+            <a v-if="scope.row.hasOwnProperty('children')" v-db-click @click="add(scope.row.city_id)">Thêm</a>
             <el-divider direction="vertical" v-if="scope.row.hasOwnProperty('children')" />
-            <a v-db-click @click="edit(scope.row.id)">编辑</a>
+            <a v-db-click @click="edit(scope.row.id)">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除城市', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa thành phố', scope.$index)">Xóa</a>
           </template>
         </el-table-column>
       </el-table>
@@ -64,30 +64,30 @@ export default {
       loading: false,
       columns1: [
         {
-          title: '编号',
+          title: 'Mã số',
           key: 'id',
           width: 80,
         },
         {
-          title: '地区名称',
+          title: 'Tên khu vực',
           key: 'label',
           minWidth: 300,
           tree: true,
         },
         {
-          title: '上级名称',
+          title: 'Tên cấp trên',
           key: 'parent_name',
           minWidth: 300,
         },
         {
-          title: '操作',
+          title: 'Thao tác',
           slot: 'action',
           fixed: 'right',
           minWidth: 120,
         },
       ],
       cityLists: [],
-      cityId: 0, // 城市id
+      cityId: 0, // Id thành phố
     };
   },
   computed: {
@@ -103,7 +103,7 @@ export default {
     this.getList(0);
   },
   methods: {
-    // 清除缓存；
+    // Xóa bộ nhớ đệm;
     cleanCache() {
       cityCleanCacheApi()
         .then((res) => {
@@ -113,16 +113,16 @@ export default {
           this.$message.success(res.msg);
         });
     },
-    // 添加
+    // Thêm
     add(cityId) {
       this.$modalForm(cityAddApi(cityId)).then(() => this.getList(0));
     },
-    // 添加下级；
+    // Thêm cấp dưới;
     lower(cityId) {
       this.cityId = cityId;
       this.getList(cityId);
     },
-    // 城市列表
+    // Danh sách thành phố
     getList(parentId) {
       let that = this;
       that.loading = true;
@@ -136,16 +136,16 @@ export default {
           that.$message.error(res.msg);
         });
     },
-    // 返回
+    // Quay lại
     goBack() {
       this.cityId = 0;
       this.getList(0);
     },
-    // 修改
+    // Sửa
     edit(id) {
       this.$modalForm(cityApi(id)).then(() => this.getList(this.cityId));
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,

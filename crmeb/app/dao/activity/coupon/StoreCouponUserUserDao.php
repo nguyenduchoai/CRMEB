@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -27,7 +27,7 @@ class StoreCouponUserUserDao extends BaseDao
     protected $join_alis = '';
 
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -36,7 +36,7 @@ class StoreCouponUserUserDao extends BaseDao
     }
 
     /**
-     * 连表模型
+     * Model bảng liên kết
      * @return string
      */
     public function joinModel(): string
@@ -45,7 +45,7 @@ class StoreCouponUserUserDao extends BaseDao
     }
 
     /**
-     * 关联模型
+     * Model liên kết
      * @param string $alias
      * @param string $join_alias
      * @return \crmeb\basic\BaseModel
@@ -61,7 +61,7 @@ class StoreCouponUserUserDao extends BaseDao
     }
 
     /**
-     * 列表
+     * Danh sách
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -76,7 +76,7 @@ class StoreCouponUserUserDao extends BaseDao
     }
 
     /**
-     * 总数
+     * Tổng số
      * @param array $where
      * @return int
      */
@@ -86,7 +86,7 @@ class StoreCouponUserUserDao extends BaseDao
     }
 
     /**
-     * 筛选条件
+     * Điều kiện lọc
      * @param array $where
      * @return \crmeb\basic\BaseModel
      */

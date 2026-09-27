@@ -1,47 +1,47 @@
 <template>
-	<!-- 首页 -->
+	<!-- Trang chủ -->
 	<view v-if="pageShow" class="page" :class="bgTabVal == 2 ? 'fullsize noRepeat' : bgTabVal == 1 ? 'repeat ysize' : 'noRepeat ysize'" :style="[pageStyle]">
 		<view v-if="!errorNetwork" :style="colorStyle">
 			<!-- #ifdef MP -->
 			<view class="fixed z-1000" :style="[appletStyle]" v-if="myApplet">
 				<view class="myApplet w-324 h-62 text-center rd-12rpx lh-62rpx fs-24 bg--w111-fff text-w111-303133">
-					点击添加到我的小程序
+					Nhấn để thêm vào Mini Program của tôi
 					<text class="iconfont icon-ic_close2 text--w111-ccc ml-16" @click="myApplet = false"></text>
 				</view>
 			</view>
 			<!-- #endif -->
-			<!-- 轮播搜索 -->
+			<!-- Tìm kiếm kèm ảnh trình chiếu -->
 			<homeComb v-if="showHomeComb" :dataConfig="homeCombData" :belongIndex="belongIndex" @bindSortId="bindSortId" :isScrolled="isScrolled" @storeTap="storeTap"></homeComb>
-			<!-- 顶部搜索框 -->
+			<!-- Ô tìm kiếm phía trên -->
 			<headerSerch v-if="isHeaderSerch" :dataConfig="headerSerchCombData" :belongIndex="belongIndex" @storeTap="storeTap"></headerSerch>
 			<tabNav v-if="showCateNav" :dataConfig="cateNavData" @bindHeight="bindHeighta" @bindSortId="bindSortId" :isFixed="isFixed && !cateNavData.stickyConfig.tabVal"></tabNav>
 			<view class="index">
-				<!-- 自定义样式 -->
+				<!-- Style tùy chỉnh -->
 				<block v-for="(item, index) in styleConfig" :key="index">
 					<userInfor v-if="item.name == 'userInfor'" :dataConfig="item" @changeLogin="changeLogin"></userInfor>
 					<newVip v-if="item.name == 'newVip'" :dataConfig="item"></newVip>
-					<!-- 文章列表 -->
+					<!-- Danh sách bài viết -->
 					<articleList v-if="item.name == 'articleList'" :dataConfig="item"></articleList>
 					<bargain v-if="item.name == 'bargain'" :dataConfig="item" @changeBarg="changeBarg"></bargain>
 					<blankPage v-if="item.name == 'blankPage'" :dataConfig="item"></blankPage>
 					<combination v-if="item.name == 'combination'" :dataConfig="item"></combination>
-					<!-- 优惠券 -->
+					<!-- Phiếu giảm giá -->
 					<coupon v-if="item.name == 'coupon'" :dataConfig="item" @changeLogin="changeLogin"></coupon>
-					<!-- 客户服务 -->
+					<!-- Chăm sóc khách hàng -->
 					<customerService v-if="item.name == 'customerService'" :dataConfig="item"></customerService>
-					<!-- 商品列表 -->
+					<!-- Danh sách sản phẩm -->
 					<goodList ref="goodLists" v-if="item.name == 'goodList'" :dataConfig="item"></goodList>
 					<guide v-if="item.name == 'guide'" :dataConfig="item"></guide>
-					<!-- 直播模块 -->
+					<!-- Module livestream -->
 					<!-- #ifdef  MP-WEIXIN -->
 					<liveBroadcast v-if="item.name == 'liveBroadcast'" :dataConfig="item"></liveBroadcast>
 					<!-- #endif -->
 					<menus v-if="item.name == 'menus'" :dataConfig="item"></menus>
-					<!-- 实时消息 -->
+					<!-- Tin nhắn thời gian thực -->
 					<news v-if="item.name == 'news'" :dataConfig="item"></news>
-					<!-- 图片库 -->
+					<!-- Thư viện ảnh -->
 					<pictureCube v-if="item.name == 'pictureCube'" :dataConfig="item"></pictureCube>
-					<!-- 促销列表 -->
+					<!-- Danh sách khuyến mãi -->
 					<promotionList
 						ref="promotionLists"
 						v-if="item.name == 'promotionList'"
@@ -50,12 +50,12 @@
 						:positionTop="positionTop"
 					></promotionList>
 					<seckill v-if="item.name == 'seckill'" :dataConfig="item"></seckill>
-					<!-- 轮播图-->
+					<!-- Ảnh trình chiếu-->
 					<swiperBg v-if="item.name == 'swiperBg'" :dataConfig="item"></swiperBg>
 					<swipers v-if="item.name == 'swipers'" :dataConfig="item"></swipers>
-					<!-- 顶部选项卡 -->
+					<!-- Tab phía trên -->
 
-					<!-- 标题 -->
+					<!-- Tiêu đề -->
 					<titles v-if="item.name == 'titles'" :dataConfig="item"></titles>
 					<ranking v-if="item.name == 'ranking'" :dataConfig="item"></ranking>
 					<presale v-if="item.name == 'presale'" :dataConfig="item"></presale>
@@ -68,12 +68,12 @@
 					<hotspot v-if="item.name == 'hotspot'" :dataConfig="item"></hotspot>
 					<follow v-if="item.name == 'follow'" :dataConfig="item"></follow>
 				</block>
-				<!-- 分类商品模块 -->
+				<!-- Module sản phẩm theo danh mục -->
 				<!-- #ifndef  APP-PLUS -->
 				<view class="sort-product px-20" v-if="!styleConfig.length">
 					<!-- #endif -->
 					<!-- #ifdef  APP-PLUS -->
-					<!-- 商品排序 -->
+					<!-- Sắp xếp sản phẩm -->
 					<view class="sort-product px-20" :style="{ marginTop: sortMpTop + 'px' }" v-if="!styleConfig.length">
 						<!-- #endif -->
 						<view class="rd-24rpx bg--w111-fff p-24 mb-24" v-if="sortList.children && sortList.children.length">
@@ -91,7 +91,7 @@
 						<waterfallsFlow ref="waterfallsFlow" :wfList="goodList" :goDetail="'goDetail'" @itemTap="goDetail"></waterfallsFlow>
 						<Loading :loaded="loaded" :loading="loading"></Loading>
 						<view v-if="goodList.length == 0 && loaded">
-							<emptyPage title="暂无商品，去看点别的吧～"></emptyPage>
+							<emptyPage title="Chưa có sản phẩm, hãy xem sản phẩm khác nhé~"></emptyPage>
 						</view>
 					</view>
 					<couponWindow :window="isCouponShow" @onColse="couponClose" :couponImage="couponObj.image" :couponList="couponObj.list"></couponWindow>
@@ -116,14 +116,14 @@
 		<view v-else>
 			<view class="error-network">
 				<image :src="imgHost + '/statics/images/error-network.gif'"></image>
-				<view class="title">{{ $t(`网络连接断开`) }}</view>
+				<view class="title">{{ $t(`Mất kết nối mạng`) }}</view>
 				<view class="con">
-					<view class="label">{{ $t(`请检查情况`) }}：</view>
-					<view class="item">· {{ $t(`在设置中是否已开启网络权限`) }}</view>
-					<view class="item">· {{ $t(`当前是否处于弱网环境`) }}</view>
-					<view class="item">· {{ $t(`版本是否过低，升级试试吧`) }}</view>
+					<view class="label">{{ $t(`Vui lòng kiểm tra`) }}：</view>
+					<view class="item">· {{ $t(`Đã bật quyền truy cập mạng trong phần cài đặt chưa`) }}</view>
+					<view class="item">· {{ $t(`Mạng hiện tại có đang yếu không`) }}</view>
+					<view class="item">· {{ $t(`Phiên bản có quá cũ không, hãy thử nâng cấp`) }}</view>
 				</view>
-				<view class="btn" @click="reconnect">{{ $t(`重新连接`) }}</view>
+				<view class="btn" @click="reconnect">{{ $t(`Kết nối lại`) }}</view>
 			</view>
 		</view>
 	</view>
@@ -258,7 +258,7 @@ export default {
 			styleConfig: [],
 			loading: false,
 			loadend: false,
-			loadTitle: '下拉加载更多', //提示语
+			loadTitle: 'Kéo xuống để tải thêm', //Câu thông báo
 			page: 1,
 			limit: this.$config.LIMIT,
 			numConfig: 0,
@@ -286,7 +286,7 @@ export default {
 			isFixed: false,
 			// #endif
 			site_config: '',
-			errorNetwork: false, // 是否断网
+			errorNetwork: false, // Có mất mạng hay không
 			isHeaderSerch: false,
 			showHomeComb: false,
 			showCateNav: false,
@@ -306,7 +306,7 @@ export default {
 			confirm_video_status: false,
 			positionTop: 0,
 			isFooter: false,
-			pdHeight: 0, //自定义底部导航上下边距和
+			pdHeight: 0, //Tổng margin trên dưới tùy chỉnh của thanh điều hướng dưới
 			entryData: {
 				store_id: '',
 				latitude: '',
@@ -315,8 +315,8 @@ export default {
 			},
 			goodsIndex: [],
 			promotionIndex: [],
-			belongIndex: 0, // 进店规则归属门店排序位置；
-			isBelongStore: false, //判断是否为归属门店；
+			belongIndex: 0, // Vị trí sắp xếp cửa hàng thuộc quy tắc vào cửa hàng;
+			isBelongStore: false, //Kiểm tra có phải cửa hàng trực thuộc hay không;
 			getHeight: this.$util.getWXStatusHeight(),
 			myApplet: true,
 			configData: Cache.get('BASIC_CONFIG')
@@ -358,10 +358,10 @@ export default {
 				return;
 			}
 			uni.showModal({
-				content: '当前使用移动网络，是否继续播放视频？',
+				content: 'Bạn đang dùng mạng di động, có tiếp tục phát video không?',
 				success: (res) => {
 					if (res.confirm) {
-						// 监听
+						// Theo dõi (listener)
 						this.SET_AUTOPLAY(true);
 						this.$eventHub.$emit('product_video_observe');
 					}
@@ -370,14 +370,14 @@ export default {
 		});
 	},
 	onUnload() {
-		// 清除监听
+		// Xóa listener
 		uni.$off('activeFn');
 	},
 	watch: {
 		isLogin: {
-			deep: true, //深度监听设置为 true
+			deep: true, //Đặt deep watch thành true
 			handler: function (newV, oldV) {
-				// 优惠券弹窗
+				// Popup phiếu giảm giá
 				var newDates = new Date().toLocaleDateString();
 				if (newV) {
 					try {
@@ -392,7 +392,7 @@ export default {
 	},
 	onShow() {
 		uni.removeStorageSync('form_type_cart');
-		// 优惠券弹窗
+		// Popup phiếu giảm giá
 		if (this.isLogin) {
 			this.getCoupon();
 			this.getCartNum();
@@ -483,13 +483,13 @@ export default {
 			// #ifdef MP
 			if (options.scene) {
 				let value = that.$util.getUrlParams(decodeURIComponent(options.scene));
-				//记录推广人uid
+				//Ghi lại uid người giới thiệu
 				if (value.spid) app.globalData.spid = value.spid;
 			}
 			// #endif
 			if (options.spid) app.globalData.spid = options.spid;
 		},
-		// 重新链接
+		// Kết nối lại
 		reconnect() {
 			this.diyData();
 			getShare().then((res) => {
@@ -515,7 +515,7 @@ export default {
 			uni.hideLoading();
 			this.domOffsetTop = data.top;
 		},
-		// 去商品详情
+		// Đến chi tiết sản phẩm
 		goGoodsDetail(item) {
 			goShopDetail(item, this.uid).then((res) => {
 				uni.navigateTo({
@@ -523,7 +523,7 @@ export default {
 				});
 			});
 		},
-		// 分类点击
+		// Click danh mục
 		changeSort(item, index) {
 			if (this.curSort == index) return;
 			this.curSort = index;
@@ -535,9 +535,9 @@ export default {
 		},
 		/**
 			 * @param data {
-				classPage: 0 分类id
-				microPage: 0 微页面id
-				type: 1   0 微页面 1 商品分类
+				classPage: 0 id danh mục
+				microPage: 0 id trang micro
+				type: 1   0 trang micro  1 danh mục sản phẩm
 			 }*/
 		bindSortId(data) {
 			this.styleConfig = [];
@@ -549,15 +549,15 @@ export default {
 			}
 		},
 		/**
-		 * 获取DIY
+		 * Lấy DIY
 		 * @param {number} id
-		 * @param {boolean} type 区分是否是微页面
+		 * @param {boolean} type Phân biệt có phải trang micro hay không
 		 */
 		getMicroPage(id, type) {
 			let that = this;
 			that.styleConfig = [];
 			uni.showLoading({
-				title: '加载中...'
+				title: 'Đang tải...'
 			});
 			getDiy(id)
 				.then((res) => {
@@ -613,7 +613,7 @@ export default {
 				});
 			}
 		},
-		// 商品列表
+		// Danh sách sản phẩm
 		getGoodsList() {
 			if (this.loading || this.loaded) return;
 			this.loading = true;
@@ -633,7 +633,7 @@ export default {
 				this.goodList = this.goodList.concat(res.data);
 			});
 		},
-		// 新用户优惠券
+		// Phiếu giảm giá người dùng mới
 		getNewCoupon() {
 			const oldUser = uni.getStorageSync('oldUser') || 0;
 			if (!oldUser) {
@@ -651,7 +651,7 @@ export default {
 				});
 			}
 		},
-		// 优惠券弹窗
+		// Popup phiếu giảm giá
 		getCoupon() {
 			const tagDate = uni.getStorageSync('tagDate') || '',
 				nowDate = new Date().toLocaleDateString();
@@ -670,7 +670,7 @@ export default {
 				});
 			}
 		},
-		// 优惠券弹窗关闭
+		// Đóng popup phiếu giảm giá
 		couponClose() {
 			this.isCouponShow = false;
 			if (!uni.getStorageSync('oldUser')) {
@@ -681,7 +681,7 @@ export default {
 			this.isShowAuth = false;
 		},
 		// #ifdef H5
-		// 获取url后面的参数
+		// Lấy tham số phía sau url
 		getQueryString(name) {
 			var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i');
 			var reg_rewrite = new RegExp('(^|/)' + name + '/([^/]*)(/|$)', 'i');
@@ -707,7 +707,7 @@ export default {
 			}
 		},
 		// #endif
-		// 对象转数组
+		// Chuyển object thành mảng
 		objToArr(data) {
 			let obj = Object.keys(data).sort();
 			let m = obj.map((key) => data[key]);
@@ -780,7 +780,7 @@ export default {
 						uni.hideLoading();
 						if (this.errorNetwork) {
 							uni.showToast({
-								title: '请开启网络连接',
+								title: 'Vui lòng bật kết nối mạng',
 								icon: 'none',
 								duration: 2000
 							});
@@ -834,7 +834,7 @@ export default {
 			this.pdHeight = num;
 		},
 		// #ifdef H5
-		// 微信分享；
+		// Chia sẻ WeChat;
 		setOpenShare: function () {
 			let that = this;
 			let uid = this.uid ? this.uid : 0;
@@ -903,7 +903,7 @@ export default {
 			};
 		}
 	},
-	//分享到朋友圈
+	//Chia sẻ lên Moments
 	onShareTimeline: function () {
 		return {
 			title: this.shareInfo.title,

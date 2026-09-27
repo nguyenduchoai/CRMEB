@@ -22,7 +22,7 @@
 		methods: {
 			memberCard() {
 				uni.showLoading({
-					title: this.$t(`正在加载中`)
+					title: this.$t(`Đang tải`)
 				});
 				memberCard().then(res => {
 					uni.hideLoading();

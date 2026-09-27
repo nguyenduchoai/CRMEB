@@ -1,19 +1,19 @@
 const lotteryFrom = {
-  name: [{ required: true, message: '请输入活动名称', trigger: 'blur' }],
-  factor: [{ required: true, type: 'number', message: '请选择活动类型', trigger: 'change' }],
-  attends_user: [{ required: true, type: 'number', message: '请选择参与用户', trigger: 'change' }],
-  factor_num: [{ required: true, type: 'number', message: '请输入抽奖次数', trigger: 'blur' }],
+  name: [{ required: true, message: 'Vui lòng nhập tên chương trình', trigger: 'blur' }],
+  factor: [{ required: true, type: 'number', message: 'Vui lòng chọn loại chương trình', trigger: 'change' }],
+  attends_user: [{ required: true, type: 'number', message: 'Vui lòng chọn người dùng tham gia', trigger: 'change' }],
+  factor_num: [{ required: true, type: 'number', message: 'Vui lòng nhập số lượt quay', trigger: 'blur' }],
   prize: [
     {
       required: true,
       type: 'array',
-      message: '请添加抽奖奖品(8条)',
+      message: 'Vui lòng thêm giải thưởng (8 giải)',
       trigger: 'change',
     },
     {
       type: 'array',
       min: 8,
-      message: '请添加抽奖奖品(8条)',
+      message: 'Vui lòng thêm giải thưởng (8 giải)',
       trigger: 'change',
     },
   ],
@@ -21,7 +21,7 @@ const lotteryFrom = {
     {
       required: true,
       type: 'number',
-      message: '请输入邀请新用户最多可获得抽奖多少次',
+      message: 'Vui lòng nhập số lượt quay tối đa nhận được khi mời người dùng mới',
       trigger: 'blur',
     },
   ],
@@ -29,37 +29,37 @@ const lotteryFrom = {
     {
       required: true,
       type: 'number',
-      message: '请输入关注额外抽多少次',
+      message: 'Vui lòng nhập số lượt quay thêm khi theo dõi',
       trigger: 'blur',
     },
   ],
   image: [
     {
       required: true,
-      message: '请上传活动背景图',
+      message: 'Vui lòng tải lên ảnh nền chương trình',
       trigger: 'change',
     },
   ],
   content: [
     {
       required: true,
-      message: '请填写活动规则',
+      message: 'Vui lòng điền thể lệ chương trình',
       trigger: 'blur',
     },
   ],
 };
 function validate(rule, value, callback) {
   if (Array.isArray(value)) {
-    //格式为：daterange、datetimerange检测
+    //Kiểm tra định dạng: daterange, datetimerange
     value.map(function (item) {
       if (item === '') {
-        return callback('日期不能为空');
+        return callback('Ngày không được để trống');
       }
     });
   } else {
-    //格式为：date、datetime、year、month 检测
+    //Định dạng là: date, datetime, year, month kiểm tra
     if (value === '') {
-      return callback('日期不能为空');
+      return callback('Ngày không được để trống');
     }
   }
   return callback();

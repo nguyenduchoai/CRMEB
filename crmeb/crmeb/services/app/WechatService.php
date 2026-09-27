@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -37,7 +37,7 @@ use crmeb\services\SystemConfigService;
 use think\facade\Env;
 
 /**
- * 微信公众号
+ * OA WeChat
  * Class WechatService
  * @package crmeb\services\app
  */
@@ -76,7 +76,7 @@ class WechatService
             'secret' => $appsecret,
             'token' => isset($wechat['wechat_token']) ? trim($wechat['wechat_token']) : '',
             'guzzle' => [
-                'timeout' => 10.0, // 超时时间（秒）
+                'timeout' => 10.0, // Thời gian timeout (giây)
                 'verify' => false
             ],
         ];
@@ -144,7 +144,7 @@ class WechatService
     }
 
     /**
-     * 监听行为(微信)
+     * Theo dõi hành vi (WeChat)
      * @param Guard $server
      * @throws \EasyWeChat\Core\Exceptions\InvalidArgumentException
      */
@@ -199,7 +199,7 @@ class WechatService
                 case 'link':
                     $response = $messageService->wechatMessageLink($message);
                     break;
-                // ... 其它消息
+                // ... tin nhắn khác
                 default:
                     $response = $messageService->wechatMessageOther($message);
                     break;
@@ -211,7 +211,7 @@ class WechatService
 
 
     /**
-     * 多客服消息转发
+     * Chuyển tiếp tin nhắn đa CSKH
      * @param string $account
      * @return \EasyWeChat\Message\Transfer
      */
@@ -223,7 +223,7 @@ class WechatService
 
 
     /**
-     * 上传永久素材接口
+     * API tải lên tư liệu vĩnh viễn
      * @return \EasyWeChat\Material\Material
      */
     public static function materialService()
@@ -232,7 +232,7 @@ class WechatService
     }
 
     /**
-     * 上传临时素材接口
+     * API tải lên tư liệu tạm thời
      * @return \EasyWeChat\Material\Temporary
      */
     public static function materialTemporaryService()
@@ -241,7 +241,7 @@ class WechatService
     }
 
     /**
-     * 用户接口
+     * API người dùng
      * @return \EasyWeChat\User\User
      */
     public static function userService()
@@ -251,7 +251,7 @@ class WechatService
 
 
     /**
-     * 客服消息接口
+     * API tin nhắn CSKH
      * @param null $to
      * @param null $message
      */
@@ -261,7 +261,7 @@ class WechatService
     }
 
     /**
-     * 微信公众号菜单接口
+     * API menu OA WeChat
      * @return \EasyWeChat\Menu\Menu
      */
     public static function menuService()
@@ -270,7 +270,7 @@ class WechatService
     }
 
     /**
-     * 微信二维码生成接口
+     * API tạo mã QR WeChat
      * @return \EasyWeChat\QRCode\QRCode
      */
     public static function qrcodeService()
@@ -279,7 +279,7 @@ class WechatService
     }
 
     /**
-     * 短链接生成接口
+     * API tạo short link
      * @return \EasyWeChat\Url\Url
      */
     public static function urlService()
@@ -288,7 +288,7 @@ class WechatService
     }
 
     /**
-     * 用户授权
+     * Ủy quyền người dùng
      * @return \Overtrue\Socialite\Providers\WeChatProvider
      */
     public static function oauthService()
@@ -297,7 +297,7 @@ class WechatService
     }
 
     /**
-     * 网页授权
+     * Ủy quyền trang web
      * @return easywechat\oauth2\wechat\WechatOauth2Provider
      */
     public static function oauth2Service()
@@ -308,14 +308,14 @@ class WechatService
     }
 
     /**
-     * 发送模版消息
+     * Gửi tin nhắn mẫu
      * @param $openid
      * @param $templateId
      * @param array $data
      * @param null $url
      * @param null $defaultColor
      * @return mixed
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/17
      */
@@ -335,7 +335,7 @@ class WechatService
 
 
     /**
-     * 支付
+     * Thanh toán
      * @return Payment
      */
     public static function paymentService()
@@ -355,11 +355,11 @@ class WechatService
 
 
     /**
-     * 企业付款到零钱
+     * Doanh nghiệp trả tiền vào số dư
      * @param string $openid openid
-     * @param string $orderId 订单号
-     * @param string $amount 金额
-     * @param string $desc 说明
+     * @param string $orderId Mã đơn hàng
+     * @param string $amount Số tiền
+     * @param string $desc Mô tả
      */
     public static function merchantPay(string $openid, string $orderId, string $amount, string $desc)
     {
@@ -371,12 +371,12 @@ class WechatService
             throw new ApiException(410088);
         }
         $merchantPayData = [
-            'partner_trade_no' => $orderId, //随机字符串作为订单号，跟红包和支付一个概念。
-            'openid' => $openid, //收款人的openid
-            'check_name' => 'NO_CHECK',  //文档中有三种校验实名的方法 NO_CHECK OPTION_CHECK FORCE_CHECK
-            'amount' => (int)bcmul($amount, '100', 0),  //单位为分
+            'partner_trade_no' => $orderId, //Chuỗi ngẫu nhiên dùng làm mã đơn hàng, cùng khái niệm như lì xì (hongbao) và thanh toán.
+            'openid' => $openid, //openid của người nhận tiền
+            'check_name' => 'NO_CHECK',  //Trong tài liệu có ba phương pháp xác thực tên thật: NO_CHECK OPTION_CHECK FORCE_CHECK
+            'amount' => (int)bcmul($amount, '100', 0),  //Đơn vị là xu
             'desc' => $desc,
-            'spbill_create_ip' => request()->ip(),  //发起交易的IP地址
+            'spbill_create_ip' => request()->ip(),  //Địa chỉ IP khởi tạo giao dịch
         ];
         $result = self::application()->merchant_pay->send($merchantPayData);
         if ($result->return_code == 'SUCCESS' && $result->result_code != 'FAIL') {
@@ -387,7 +387,7 @@ class WechatService
     }
 
     /**
-     * 生成支付订单对象
+     * Tạo đối tượng đơn hàng thanh toán
      * @param $openid
      * @param $out_trade_no
      * @param $total_fee
@@ -408,7 +408,7 @@ class WechatService
     }
 
     /**
-     * 获得下单ID
+     * Lấy ID đặt hàng
      * @param $openid
      * @param $out_trade_no
      * @param $total_fee
@@ -433,11 +433,11 @@ class WechatService
                 return $result;
             } else {
                 if ($result->return_code == 'FAIL') {
-                    exception('微信支付错误返回：' . $result->return_msg);
+                    exception('WeChat Pay trả về lỗi:' . $result->return_msg);
                 } else if (isset($result->err_code)) {
-                    exception('微信支付错误返回：' . $result->err_code_des);
+                    exception('WeChat Pay trả về lỗi:' . $result->err_code_des);
                 } else {
-                    exception('没有获取微信支付的预支付ID，请重新发起支付!');
+                    exception('Không lấy được prepay ID của WeChat Pay, vui lòng thực hiện thanh toán lại!');
                 }
                 exit;
             }
@@ -445,7 +445,7 @@ class WechatService
     }
 
     /**
-     * 获得下单ID 新小程序支付
+     * Lấy ID đặt hàng - thanh toán Mini Program mới
      * @param $openid
      * @param $out_trade_no
      * @param $total_fee
@@ -470,11 +470,11 @@ class WechatService
                 return $result;
             } else {
                 if ($result->return_code == 'FAIL') {
-                    exception('微信支付错误返回：' . $result->return_msg);
+                    exception('WeChat Pay trả về lỗi:' . $result->return_msg);
                 } else if (isset($result->err_code)) {
-                    exception('微信支付错误返回：' . $result->err_code_des);
+                    exception('WeChat Pay trả về lỗi:' . $result->err_code_des);
                 } else {
-                    exception('没有获取微信支付的预支付ID，请重新发起支付!');
+                    exception('Không lấy được prepay ID của WeChat Pay, vui lòng thực hiện thanh toán lại!');
                 }
                 exit;
             }
@@ -482,7 +482,7 @@ class WechatService
     }
 
     /**
-     * 获得jsSdk支付参数
+     * Lấy tham số thanh toán jsSdk
      * @param $openid
      * @param $out_trade_no
      * @param $total_fee
@@ -500,7 +500,7 @@ class WechatService
     }
 
     /**
-     * 获得jsSdk支付参数  新小程序支付
+     * Lấy tham số thanh toán jsSdk - thanh toán Mini Program mới
      * @param $openid
      * @param $out_trade_no
      * @param $total_fee
@@ -518,7 +518,7 @@ class WechatService
     }
 
     /**
-     * 获得APP付参数
+     * Lấy tham số thanh toán APP
      * @param $openid
      * @param $out_trade_no
      * @param $total_fee
@@ -536,7 +536,7 @@ class WechatService
     }
 
     /**
-     * 获得native支付参数
+     * Lấy tham số thanh toán native
      * @param $openid
      * @param $out_trade_no
      * @param $total_fee
@@ -560,7 +560,7 @@ class WechatService
 
 
     /**
-     * 使用商户订单号退款
+     * Hoàn tiền bằng mã đơn hàng của merchant
      * @param $orderNo
      * @param $refundNo
      * @param $totalFee
@@ -591,9 +591,9 @@ class WechatService
         $refundNo = $opt['refund_id'] ?? $orderNo;
         $opUserId = $opt['op_user_id'] ?? null;
         $type = $opt['type'] ?? 'out_trade_no';
-        /*仅针对老资金流商户使用
-        REFUND_SOURCE_UNSETTLED_FUNDS---未结算资金退款（默认使用未结算资金退款）
-        REFUND_SOURCE_RECHARGE_FUNDS---可用余额退款*/
+        /*Chỉ dùng cho merchant dòng tiền cũ
+        REFUND_SOURCE_UNSETTLED_FUNDS---hoàn tiền từ quỹ chưa thanh toán (mặc định dùng quỹ chưa thanh toán để hoàn tiền)
+        REFUND_SOURCE_RECHARGE_FUNDS---hoàn tiền từ số dư khả dụng*/
         $refundAccount = $opt['refund_account'] ?? 'REFUND_SOURCE_UNSETTLED_FUNDS';
         try {
             $res = (self::refund($orderNo, $refundNo, $totalFee, $refundFee, $opUserId, $refundReason, $type, $refundAccount));
@@ -606,7 +606,7 @@ class WechatService
     }
 
     /**
-     * 微信支付成功回调接口
+     * API callback khi thanh toán WeChat Pay thành công
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \EasyWeChat\Core\Exceptions\FaultException
      */
@@ -639,7 +639,7 @@ class WechatService
     }
 
     /**
-     * 获取js的SDK
+     * Lấy SDK của js
      * @param string $url
      * @return array|string
      */
@@ -658,8 +658,8 @@ class WechatService
 
 
     /**
-     * 回复文本消息
-     * @param string $content 文本内容
+     * Trả lời tin nhắn văn bản
+     * @param string $content Nội dung văn bản
      * @return Text
      */
     public static function textMessage($content)
@@ -668,8 +668,8 @@ class WechatService
     }
 
     /**
-     * 回复图片消息
-     * @param string $media_id 媒体资源 ID
+     * Trả lời tin nhắn hình ảnh
+     * @param string $media_id ID tài nguyên media
      * @return Image
      */
     public static function imageMessage($media_id)
@@ -678,11 +678,11 @@ class WechatService
     }
 
     /**
-     * 回复视频消息
-     * @param string $media_id 媒体资源 ID
-     * @param string $title 标题
-     * @param string $description 描述
-     * @param null $thumb_media_id 封面资源 ID
+     * Trả lời tin nhắn video
+     * @param string $media_id ID tài nguyên media
+     * @param string $title Tiêu đề
+     * @param string $description Mô tả
+     * @param null $thumb_media_id ID tài nguyên ảnh bìa
      * @return Video
      */
     public static function videoMessage($media_id, $title = '', $description = '...', $thumb_media_id = null)
@@ -691,8 +691,8 @@ class WechatService
     }
 
     /**
-     * 回复声音消息
-     * @param string $media_id 媒体资源 ID
+     * Trả lời tin nhắn âm thanh
+     * @param string $media_id ID tài nguyên media
      * @return Voice
      */
     public static function voiceMessage($media_id)
@@ -701,11 +701,11 @@ class WechatService
     }
 
     /**
-     * 回复图文消息
-     * @param string|array $title 标题
-     * @param string $description 描述
+     * Trả lời tin nhắn hình ảnh và văn bản
+     * @param string|array $title Tiêu đề
+     * @param string $description Mô tả
      * @param string $url URL
-     * @param string $image 图片链接
+     * @param string $image Liên kết ảnh
      */
     public static function newsMessage($title, $description = '...', $url = '', $image = '')
     {
@@ -726,16 +726,16 @@ class WechatService
     }
 
     /**
-     * 回复文章消息
-     * @param string|array $title 标题
-     * @param string $thumb_media_id 图文消息的封面图片素材id（必须是永久 media_ID）
-     * @param string $source_url 图文消息的原文地址，即点击“阅读原文”后的URL
-     * @param string $content 图文消息的具体内容，支持HTML标签，必须少于2万字符，小于1M，且此处会去除JS
-     * @param string $author 作者
-     * @param string $digest 图文消息的摘要，仅有单图文消息才有摘要，多图文此处为空
-     * @param int $show_cover_pic 是否显示封面，0为false，即不显示，1为true，即显示
-     * @param int $need_open_comment 是否打开评论，0不打开，1打开
-     * @param int $only_fans_can_comment 是否粉丝才可评论，0所有人可评论，1粉丝才可评论
+     * Trả lời tin nhắn bài viết
+     * @param string|array $title Tiêu đề
+     * @param string $thumb_media_id ID tư liệu ảnh bìa của tin nhắn hình ảnh-văn bản (phải là media_ID vĩnh viễn)
+     * @param string $source_url Địa chỉ bài viết gốc của tin nhắn hình ảnh-văn bản, chính là URL sau khi nhấn “Đọc bài gốc”
+     * @param string $content Nội dung cụ thể của tin nhắn hình ảnh-văn bản, hỗ trợ thẻ HTML, phải dưới 2 vạn ký tự, dưới 1M, và JS sẽ bị loại bỏ ở đây
+     * @param string $author Tác giả
+     * @param string $digest Tóm tắt của tin nhắn hình ảnh-văn bản, chỉ tin nhắn hình ảnh-văn bản đơn mới có tóm tắt, nhiều hình ảnh-văn bản thì để trống ở đây
+     * @param int $show_cover_pic Có hiển thị ảnh bìa không, 0 là false, tức không hiển thị, 1 là true, tức hiển thị
+     * @param int $need_open_comment Có mở bình luận không, 0 không mở, 1 mở
+     * @param int $only_fans_can_comment Có chỉ fan mới được bình luận không, 0 là ai cũng bình luận được, 1 là chỉ fan mới bình luận được
      * @return Article
      */
     public static function articleMessage($title, $thumb_media_id, $source_url, $content = '', $author = '', $digest = '', $show_cover_pic = 0, $need_open_comment = 0, $only_fans_can_comment = 1)
@@ -745,9 +745,9 @@ class WechatService
     }
 
     /**
-     * 回复素材消息
+     * Trả lời tin nhắn tư liệu
      * @param string $type [mpnews、 mpvideo、voice、image]
-     * @param string $media_id 素材 ID
+     * @param string $media_id ID tư liệu
      * @return Material
      */
     public static function materialMessage($type, $media_id)
@@ -756,7 +756,7 @@ class WechatService
     }
 
     /**
-     * 作为客服消息发送
+     * Gửi dưới dạng tin nhắn CSKH
      * @param $to
      * @param $message
      * @return bool
@@ -770,7 +770,7 @@ class WechatService
     }
 
     /**
-     * 获得用户信息
+     * Lấy thông tin người dùng
      * @param array|string $openid
      * @return \EasyWeChat\Support\Collection
      */
@@ -797,7 +797,7 @@ class WechatService
 
 
     /**
-     * 获取用户列表
+     * Lấy danh sách người dùng
      * @param null $next_openid
      * @return array
      */
@@ -817,7 +817,7 @@ class WechatService
     }
 
     /**
-     * 处理返回错误信息友好提示
+     * Xử lý thông báo lỗi trả về thành gợi ý thân thiện
      * @param string $message
      * @return array|mixed|string
      */
@@ -835,7 +835,7 @@ class WechatService
     }
 
     /**
-     * 设置模版消息行业
+     * Đặt ngành cho tin nhắn mẫu
      */
     public static function setIndustry($industryOne, $industryTwo)
     {
@@ -843,11 +843,11 @@ class WechatService
     }
 
     /**
-     * 获得添加模版ID
+     * Lấy ID mẫu đã thêm
      * @param $key
      * @param $name
      * @return mixed
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/16
      */
@@ -861,7 +861,7 @@ class WechatService
     }
 
     /**
-     * 获取模板列表
+     * Lấy danh sách mẫu
      * @return \EasyWeChat\Support\Collection
      */
     public static function getPrivateTemplates()
@@ -874,7 +874,7 @@ class WechatService
     }
 
     /*
-     * 根据模版ID删除模版
+     * Xóa mẫu theo ID mẫu
      */
     public static function deleleTemplate($template_id)
     {

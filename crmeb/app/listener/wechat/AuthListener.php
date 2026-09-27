@@ -7,7 +7,7 @@ namespace app\listener\wechat;
 use crmeb\interfaces\ListenerInterface;
 
 /**
- * 用户授权后置事件
+ * Sự kiện sau khi người dùng ủy quyền
  * Class AuthListener
  * @package app\listener\wechat
  */

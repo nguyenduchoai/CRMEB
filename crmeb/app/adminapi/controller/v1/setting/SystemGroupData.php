@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,14 +18,14 @@ use app\services\system\config\SystemGroupDataServices;
 use app\services\system\config\SystemGroupServices;
 
 /**
- * 数据管理
+ * Quản lý dữ liệu
  * Class SystemGroupData
  * @package app\adminapi\controller\v1\setting
  */
 class SystemGroupData extends AuthController
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * SystemGroupData constructor.
      * @param App $app
      * @param SystemGroupDataServices $services
@@ -37,7 +37,7 @@ class SystemGroupData extends AuthController
     }
 
     /**
-     * 获取数据列表头
+     * Lấy phần đầu danh sách dữ liệu
      * @return mixed
      */
     public function header(SystemGroupServices $services)
@@ -54,7 +54,7 @@ class SystemGroupData extends AuthController
     }
 
     /**
-     * 显示资源列表
+     * Hiển thị danh sách resource
      *
      * @return \think\Response
      */
@@ -74,7 +74,7 @@ class SystemGroupData extends AuthController
     }
 
     /**
-     * 显示创建资源表单页.
+     * Hiển thị trang form tạo resource.
      *
      * @return \think\Response
      */
@@ -91,7 +91,7 @@ class SystemGroupData extends AuthController
     }
 
     /**
-     * 保存新建的资源
+     * Lưu resource mới tạo
      *
      * @return \think\Response
      */
@@ -110,8 +110,8 @@ class SystemGroupData extends AuthController
             }
         }
         if ($group && $group['config_name'] == 'user_recharge_quota') {
-            if ($params['price'] <= 0) return app('json')->fail('售价必须大于0');
-            if ($params['give_money'] < 0) return app('json')->fail('赠送不能小于0');
+            if ($params['price'] <= 0) return app('json')->fail('Giá bán phải lớn hơn 0');
+            if ($params['give_money'] < 0) return app('json')->fail('Số tiền tặng không được nhỏ hơn 0');
         }
         $this->services->checkSeckillTime($services, $gid, $params);
         $this->checkSign($services, $gid, $params);
@@ -142,7 +142,7 @@ class SystemGroupData extends AuthController
     }
 
     /**
-     * 显示指定的资源
+     * Hiển thị resource được chỉ định
      *
      * @param int $id
      * @return \think\Response
@@ -153,7 +153,7 @@ class SystemGroupData extends AuthController
     }
 
     /**
-     * 显示编辑资源表单页.
+     * Hiển thị trang form sửa resource.
      *
      * @param int $id
      * @return \think\Response
@@ -168,7 +168,7 @@ class SystemGroupData extends AuthController
     }
 
     /**
-     * 保存更新的资源
+     * Lưu resource đã cập nhật
      *
      * @param \think\Request $request
      * @param int $id
@@ -181,8 +181,8 @@ class SystemGroupData extends AuthController
         $params = request()->post();
         $group = $services->getOne(['id' => $params['gid']], 'id,config_name,fields');
         if ($group && $group['config_name'] == 'user_recharge_quota') {
-            if ($params['price'] <= 0) return app('json')->fail('售价必须大于0');
-            if ($params['give_money'] < 0) return app('json')->fail('赠送不能小于0');
+            if ($params['price'] <= 0) return app('json')->fail('Giá bán phải lớn hơn 0');
+            if ($params['give_money'] < 0) return app('json')->fail('Số tiền tặng không được nhỏ hơn 0');
         }
         $this->services->checkSeckillTime($services, $groupData["gid"], $params, $id);
         $this->checkSign($services, $groupData["gid"], $params);
@@ -210,7 +210,7 @@ class SystemGroupData extends AuthController
     }
 
     /**
-     * 删除指定资源
+     * Xóa resource được chỉ định
      *
      * @param int $id
      * @return \think\Response
@@ -226,7 +226,7 @@ class SystemGroupData extends AuthController
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param $id
      * @param $status
      * @return mixed
@@ -241,7 +241,7 @@ class SystemGroupData extends AuthController
 
 
     /**
-     * 检查签到配置
+     * Kiểm tra cấu hình điểm danh
      * @param SystemGroupServices $services
      * @param $gid
      * @param $params
@@ -262,7 +262,7 @@ class SystemGroupData extends AuthController
     }
 
     /**
-     * 获取客服页面广告内容
+     * Lấy nội dung quảng cáo trang chăm sóc khách hàng
      * @return mixed
      */
     public function getKfAdv()
@@ -274,7 +274,7 @@ class SystemGroupData extends AuthController
     }
 
     /**
-     * 设置客服页面广告内容
+     * Thiết lập nội dung quảng cáo trang chăm sóc khách hàng
      * @return mixed
      */
     public function setKfAdv()
@@ -298,7 +298,7 @@ class SystemGroupData extends AuthController
 
 
     /**
-     * 获取用户协议内容
+     * Lấy nội dung thỏa thuận người dùng
      * @return mixed
      */
     public function getUserAgreement()
@@ -310,7 +310,7 @@ class SystemGroupData extends AuthController
     }
 
     /**
-     * 设置用户协议内容
+     * Thiết lập nội dung thỏa thuận người dùng
      * @return mixed
      */
     public function setUserAgreement()

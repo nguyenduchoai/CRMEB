@@ -29,7 +29,7 @@ abstract class BaseInvoice extends BaseStorage
     }
 
     /**
-     * 初始化
+     * Khởi tạo
      * @param array $config
      * @return mixed|void
      */

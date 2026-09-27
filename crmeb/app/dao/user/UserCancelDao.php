@@ -16,7 +16,7 @@ class UserCancelDao extends BaseDao
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @param $where
      * @param int $page
      * @param int $limit

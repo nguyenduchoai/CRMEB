@@ -1,5 +1,5 @@
 /*
-  将 html 解析为适用于小程序 rich-text 的 DOM 结构
+  Phân tích html thành cấu trúc DOM phù hợp với rich-text của Mini Program
   github：https://github.com/jin-yufeng/Parser
   docs：https://jin-yufeng.github.io/Parser
   author：JinYufeng
@@ -44,7 +44,7 @@ var entities = {
 	sect: '§'
 };
 // #endif
-var emoji; // emoji 补丁包 https://jin-yufeng.github.io/Parser/#/instructions?id=emoji
+var emoji; // Gói patch emoji https://jin-yufeng.github.io/Parser/#/instructions?id=emoji
 class MpHtmlParser {
 	constructor(data, options = {}) {
 		this.attrs = {};
@@ -67,7 +67,7 @@ class MpHtmlParser {
 		if (this.state == this.Text) this.setText();
 		while (this.STACK.length) this.popNode(this.STACK.pop());
 		// #ifdef MP-BAIDU || MP-TOUTIAO
-		// 将顶层标签的一些样式提取出来给 rich-text
+		// Trích một số style của tag cấp cao nhất ra cho rich-text
 		(function f(ns) {
 			for (var i = ns.length, n; n = ns[--i];) {
 				if (n.type == 'text') continue;
@@ -91,7 +91,7 @@ class MpHtmlParser {
 		}
 		return this.DOM;
 	}
-	// 设置属性
+	// Đặt thuộc tính
 	setAttr() {
 		var name = this.getName(this.attrName);
 		if (cfg.trustAttrs[name]) {
@@ -108,7 +108,7 @@ class MpHtmlParser {
 			this.state = this.AttrName;
 		}
 	}
-	// 设置文本节点
+	// Đặt node văn bản
 	setText() {
 		var back, text = this.section();
 		if (!text) return;
@@ -120,14 +120,14 @@ class MpHtmlParser {
 			return;
 		}
 		if (!this.pre) {
-			// 合并空白符
+			// Gộp khoảng trắng
 			var tmp = [];
 			for (let i = text.length, c; c = text[--i];)
 				if (!blankChar[c] || (!blankChar[tmp[0]] && (c = ' '))) tmp.unshift(c);
 			text = tmp.join('');
 			if (text == ' ') return;
 		}
-		// 处理实体
+		// Xử lý entity
 		var siblings = this.siblings(),
 			i = -1,
 			j, en;
@@ -140,7 +140,7 @@ class MpHtmlParser {
 			} else {
 				en = text.substring(i + 1, j);
 				// #ifdef MP-WEIXIN || MP-QQ || APP-PLUS
-				if (en == 'nbsp') text = text.substr(0, i) + '\xA0' + text.substr(j + 1); // 解决 &nbsp; 失效
+				if (en == 'nbsp') text = text.substr(0, i) + '\xA0' + text.substr(j + 1); // Xử lý &nbsp; không hoạt động
 				else if (en != 'lt' && en != 'gt' && en != 'amp' && en != 'ensp' && en != 'emsp' && en != 'quot' && en != 'apos') {
 					i && siblings.push({
 						type: 'text',
@@ -165,7 +165,7 @@ class MpHtmlParser {
 			text
 		})
 	}
-	// 设置元素节点
+	// Đặt node phần tử
 	setNode() {
 		var node = {
 				name: this.tagName.toLowerCase(),
@@ -209,7 +209,7 @@ class MpHtmlParser {
 		this.start = this.i + 1;
 		this.state = this.Text;
 	}
-	// 移除标签
+	// Xóa thẻ
 	remove(node) {
 		var name = node.name,
 			j = this.i;
@@ -222,7 +222,7 @@ class MpHtmlParser {
 			this.start = (this.i += 2);
 			while (!blankChar[this.data[this.i]] && !this.isClose()) this.i++;
 			if (this.getName(this.section()) == name) {
-				// 代码块高亮
+				// Tô sáng khối code
 				if (name == 'pre') {
 					this.data = this.data.substr(0, j + 1) + cfg.highlight(this.data.substring(j + 1, this.i - 5), node.attrs) +
 						this.data.substr(this.i - 5);
@@ -232,7 +232,7 @@ class MpHtmlParser {
 				else if (name == 'title')
 					this.title = this.data.substring(j + 1, this.i - 7);
 				if ((this.i = this.data.indexOf('>', this.i)) == -1) this.i = this.data.length;
-				// 处理 svg
+				// Xử lý svg
 				if (name == 'svg') {
 					var src = this.data.substring(j, this.i + 1);
 					if (!node.attrs.xmlns) src = ' xmlns="http://www.w3.org/2000/svg"' + src;
@@ -254,7 +254,7 @@ class MpHtmlParser {
 			}
 		}
 	}
-	// 处理属性
+	// Xử lý thuộc tính
 	matchAttr(node) {
 		var attrs = node.attrs,
 			style = this.CssHandler.match(node.name, attrs, node) + (attrs.style || ''),
@@ -319,7 +319,7 @@ class MpHtmlParser {
 				attrs.source = [];
 				if (attrs.src) attrs.source.push(attrs.src);
 				if (!attrs.controls && !attrs.autoplay)
-					console.warn(`存在没有 controls 属性的 ${node.name} 标签，可能导致无法播放`, node);
+					console.warn(`Có thẻ ${node.name} không có thuộc tính controls, có thể dẫn đến không phát được`, node);
 				this.bubble();
 				break;
 			case 'td':
@@ -335,7 +335,7 @@ class MpHtmlParser {
 			styleObj['text-align'] = attrs.align;
 			attrs.align = void 0;
 		}
-		// 压缩 style
+		// Nén style
 		var styles = style.replace(/&quot;/g, '"').replace(/&amp;/g, '&').split(';');
 		style = '';
 		for (var i = 0, len = styles.length; i < len; i++) {
@@ -355,7 +355,7 @@ class MpHtmlParser {
 		for (var key in styleObj) {
 			var value = styleObj[key];
 			if (key.includes('flex') || key == 'order' || key == 'self-align') node.c = 1;
-			// 填充链接
+			// Điền link
 			if (value.includes('url')) {
 				var j = value.indexOf('(');
 				if (j++ != -1) {
@@ -363,7 +363,7 @@ class MpHtmlParser {
 					value = value.substr(0, j) + this.getUrl(value.substr(j));
 				}
 			}
-			// 转换 rpx
+			// Chuyển đổi rpx
 			else if (value.includes('rpx'))
 				value = value.replace(/[0-9.]+\s*rpx/g, $ => parseFloat($) * screenWidth / 750 + 'px');
 			else if (key == 'white-space' && value.includes('pre'))
@@ -373,9 +373,9 @@ class MpHtmlParser {
 		style = style.substr(1);
 		if (style) attrs.style = style;
 	}
-	// 节点出栈处理
+	// Xử lý khi node ra khỏi ngăn xếp (stack)
 	popNode(node) {
-		// 空白符处理
+		// Xử lý khoảng trắng
 		if (node.pre) {
 			node.pre = this.pre = void 0;
 			for (let i = this.STACK.length; i--;)
@@ -385,7 +385,7 @@ class MpHtmlParser {
 		if (node.name == 'head' || (cfg.filter && cfg.filter(node, this) == false))
 			return this.siblings().pop();
 		var attrs = node.attrs;
-		// 替换一些标签名
+		// Thay thế một số tên thẻ
 		if (node.name == 'picture') {
 			node.name = 'img';
 			if (!attrs.src && (node.children[0] || '').name == 'img')
@@ -396,7 +396,7 @@ class MpHtmlParser {
 		}
 		if (cfg.blockTags[node.name]) node.name = 'div';
 		else if (!cfg.trustTags[node.name]) node.name = 'span';
-		// 处理列表
+		// Xử lý danh sách
 		if (node.c) {
 			if (node.name == 'ul') {
 				var floor = 1;
@@ -425,7 +425,7 @@ class MpHtmlParser {
 					}
 			}
 		}
-		// 处理表格的边框
+		// Xử lý viền của bảng
 		if (node.name == 'table') {
 			var padding = attrs.cellpadding,
 				spacing = attrs.cellspacing,
@@ -448,14 +448,14 @@ class MpHtmlParser {
 				})(node.children)
 		}
 		this.CssHandler.pop && this.CssHandler.pop(node);
-		// 自动压缩
+		// Tự động nén
 		if (node.name == 'div' && !Object.keys(attrs).length) {
 			var siblings = this.siblings();
 			if (node.children.length == 1 && node.children[0].name == 'div')
 				siblings[siblings.length - 1] = node.children[0];
 		}
 	}
-	// 工具函数
+	// Hàm tiện ích (utility)
 	bubble() {
 		for (var i = this.STACK.length, item; item = this.STACK[--i];) {
 			if (cfg.richOnlyTags[item.name]) {
@@ -478,7 +478,7 @@ class MpHtmlParser {
 	isClose = () => this.data[this.i] == '>' || (this.data[this.i] == '/' && this.data[this.i + 1] == '>');
 	section = () => this.data.substring(this.start, this.i);
 	siblings = () => this.STACK.length ? this.STACK[this.STACK.length - 1].children : this.DOM;
-	// 状态机
+	// Máy trạng thái (state machine)
 	Text(c) {
 		if (c == '<') {
 			var next = this.data[this.i + 1],

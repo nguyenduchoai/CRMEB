@@ -2,7 +2,7 @@
 	<view :style="colorStyle" class="main">
 		<view class='payment-status'>
 			<view class='iconfont icons icon-duihao2 bg-color'></view>
-			<view class='status'>{{$t(`代付成功`)}}</view>
+			<view class='status'>{{$t(`Thanh toán hộ thành công`)}}</view>
 			<view class='wrapper'>
 				<view class='itemCom'> <text class="rmb">{{$t(`￥`)}}</text> {{resData.pay_price || 0.00}}</view>
 			</view>
@@ -11,11 +11,11 @@
 					<image class="" :src="resData.avatar" mode=""></image>
 				</view>
 				<view class="order-status">
-					{{$t(`谢谢你为我付款，还可以再去看看其他商品哟~`)}}
+					{{$t(`Cảm ơn bạn đã thanh toán giúp mình, bạn có thể xem thêm các sản phẩm khác nhé~`)}}
 				</view>
 			</view>
 		</view>
-		<button @click="goIndex" class='returnBnt' formType="submit" hover-class='none'>{{$t(`返回首页`)}}</button>
+		<button @click="goIndex" class='returnBnt' formType="submit" hover-class='none'>{{$t(`Về trang chủ`)}}</button>
 	</view>
 </template>
 
@@ -38,8 +38,8 @@
 		data() {
 			return {
 				loading: false,
-				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false, //是否隐藏授权
+				isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+				isShowAuth: false, //Có ẩn ủy quyền hay không
 				resData: {}
 			};
 		},
@@ -57,7 +57,7 @@
 		onLoad(options) {
 			this.options = options
 			if (!options.order_id) return this.$util.Tips({
-				title: this.$t(`缺少参数无法查看订单支付状态`)
+				title: this.$t(`Thiếu tham số, không thể xem trạng thái thanh toán đơn hàng`)
 			}, {
 				tab: 3,
 				url: 1
@@ -76,7 +76,7 @@
 				friendDetail(this.orderId).then(res => {
 					if (this.resData.paid == 0) {
 						return this.$util.Tips({
-							title: this.$t(`该订单暂未支付`)
+							title: this.$t(`Đơn hàng này chưa được thanh toán`)
 						}, {
 							tab: 3,
 							url: 1
@@ -93,18 +93,18 @@
 				this.getDetail();
 			},
 			/**
-			 * 支付完成查询支付状态
+			 * Sau khi thanh toán xong thì kiểm tra trạng thái thanh toán
 			 */
 			getOrderPayInfo() {
 				let that = this;
 				uni.showLoading({
-					title: that.$t(`正在加载中`)
+					title: that.$t(`Đang tải`)
 				});
 				getOrderDetail(that.orderId).then(res => {
 					uni.hideLoading();
 					that.$set(that, 'order_pay_info', res.data);
 					uni.setNavigationBarTitle({
-						title: res.data.paid ? that.$t(`支付成功`) : that.$t(`未支付`)
+						title: res.data.paid ? that.$t(`Thanh toán thành công`) : that.$t(`Chưa thanh toán`)
 					});
 					this.loading = true
 				}).catch(err => {
@@ -113,7 +113,7 @@
 				});
 			},
 			/**
-			 * 去首页关闭当前所有页面
+			 * Về trang chủ và đóng tất cả trang hiện tại
 			 */
 			goIndex(e) {
 				uni.switchTab({

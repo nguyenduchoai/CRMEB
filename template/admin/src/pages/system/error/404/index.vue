@@ -1,5 +1,5 @@
 <template>
-  <error-content code="404" desc="抱歉，你访问的页面不存在" :src="src" />
+  <error-content code="404" desc="Xin lỗi, trang bạn truy cập không tồn tại" :src="src" />
 </template>
 
 <script>

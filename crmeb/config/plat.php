@@ -1,45 +1,45 @@
 <?php
 // +----------------------------------------------------------------------
-// | 短信配置
+// | Cấu hình SMS
 // +----------------------------------------------------------------------
 
 return [
-    //平台账号
+    //Tài khoản nền tảng
     'account' => '',
-    //平台秘钥
+    //Khóa bí mật nền tảng
     'secret' => '',
-    //驱动模式
+    //Chế độ driver
     'stores' => [
         'sms' => [
-            //单个手机每日发送上限
+            //Hạn mức gửi mỗi ngày cho một số điện thoại
             'maxPhoneCount' => 10,
-            //验证码每分钟发送上线
+            //Hạn mức gửi mã xác thực mỗi phút
             'maxMinuteCount' => 20,
-            //单个IP每日发送上限
+            //Hạn mức gửi mỗi ngày cho một IP
             'maxIpCount' => 50,
-            //短信模板id
+            //ID mẫu SMS
             'template_id' => [
-                //验证码自定义时效
+                //Thời hạn tùy chỉnh của mã xác thực
                 'VERIFICATION_CODE_TIME' => 538393,
-                //验证码
+                //Mã xác thực
                 'VERIFICATION_CODE' => 518076,
-                //支付成功
+                //Thanh toán thành công
                 'PAY_SUCCESS_CODE' => 520268,
-                //发货提醒
+                //Nhắc nhở giao hàng
                 'DELIVER_GOODS_CODE' => 520269,
-                //确认收货提醒
+                //Nhắc nhở xác nhận đã nhận hàng
                 'TAKE_DELIVERY_CODE' => 520271,
-                //管理员下单提醒
+                //Nhắc nhở quản trị viên khi có đơn hàng mới
                 'ADMIN_PLACE_ORDER_CODE' => 520272,
-                //管理员退货提醒
+                //Nhắc nhở quản trị viên khi trả hàng
                 'ADMIN_RETURN_GOODS_CODE' => 520274,
-                //管理员支付成功提醒
+                //Nhắc nhở quản trị viên khi thanh toán thành công
                 'ADMIN_PAY_SUCCESS_CODE' => 520273,
-                //管理员确认收货
+                //Quản trị viên xác nhận đã nhận hàng
                 'ADMIN_TAKE_DELIVERY_CODE' => 520422,
-                //改价提醒
+                //Nhắc nhở đổi giá
                 'PRICE_REVISION_CODE' => 528288,
-                //订单未支付
+                //Đơn hàng chưa thanh toán
                 'ORDER_PAY_FALSE' => 528116,
             ]
         ]

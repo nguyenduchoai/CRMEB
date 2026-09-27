@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,7 +24,7 @@ class QrcodeDao extends BaseDao
 {
 
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -33,7 +33,7 @@ class QrcodeDao extends BaseDao
     }
 
     /**
-     * 获取一条二维码
+     * Lấy một mã QR
      * @param $id
      * @param string $type
      * @return array|\think\Model|null
@@ -47,7 +47,7 @@ class QrcodeDao extends BaseDao
     }
 
     /**
-     * 修改二维码使用状态
+     * Cập nhật trạng thái sử dụng mã QR
      * @param $id
      * @param string $type
      * @return mixed

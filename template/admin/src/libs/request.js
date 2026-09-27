@@ -1,9 +1,9 @@
 // +---------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +---------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +---------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +---------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +---------------------------------------------------------------------
@@ -15,12 +15,12 @@ import Setting from '@/setting';
 import router from '@/router';
 const service = axios.create({
   baseURL: Setting.apiBaseURL,
-  timeout: 10000, // 请求超时时间
+  timeout: 10000, // Thời gian timeout của request
 });
 
-axios.defaults.withCredentials = true; // 携带cookie
+axios.defaults.withCredentials = true; // Kèm cookie
 
-// 请求拦截器
+// Interceptor cho request
 service.interceptors.request.use(
   (config) => {
     if (config.kefu) {
@@ -84,7 +84,7 @@ service.interceptors.response.use(
         router.replace({ name: 'system_opendir_login' });
         break;
       default:
-        return Promise.reject(obj || { msg: '未知错误' });
+        return Promise.reject(obj || { msg: 'Lỗi không xác định' });
     }
   },
   (error) => {

@@ -14,7 +14,7 @@ var inlineTags = {
 	strong: 1
 }
 module.exports = {
-	// 从顶层标签的样式中取出一些给 rich-text
+	// Lấy một số style từ thẻ cấp cao nhất để gán cho rich-text
 	getStyle: function(style) {
 		if (style) {
 			var i, j, res = '';
@@ -25,7 +25,7 @@ module.exports = {
 			return res;
 		}
 	},
-	// 处理懒加载
+	// Xử lý lazy load
 	getNode: function(item, imgLoad) {
 		if (!imgLoad && item.attrs.i != '0') {
 			var img = {
@@ -37,7 +37,7 @@ module.exports = {
 			return [img];
 		} else return [item];
 	},
-	// 是否通过 rich-text 显示
+	// Có hiển thị qua rich-text hay không
 	useRichText: function(item) {
 		return !item.c && !inlineTags[item.name] && (item.attrs.style || '').indexOf('display:inline') == -1;
 	}

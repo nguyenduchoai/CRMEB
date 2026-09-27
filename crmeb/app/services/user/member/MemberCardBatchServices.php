@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,7 +20,7 @@ use think\App;
 class MemberCardBatchServices extends BaseServices
 {
     /**
-     * 初始化，获得dao层句柄
+     * Khởi tạo, lấy handle tầng dao
      * MemberCardServices constructor.
      * @param MemberCardBatchDao $memberCardDao
      */
@@ -30,7 +30,7 @@ class MemberCardBatchServices extends BaseServices
     }
 
     /**
-     * 获取会员卡批次列表
+     * Lấy danh sách lô thẻ thành viên
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -65,7 +65,7 @@ class MemberCardBatchServices extends BaseServices
         if (!$data['use_day'] || !is_numeric($data['use_day'])) throw new AdminException(400618);
         if ($data['use_day'] < 0) throw new AdminException(400619);
         /**
-         * 具体时间段试用，业务需要打开即可
+         * Dùng thử trong khoảng thời gian cụ thể, khi cần cho nghiệp vụ thì mở lên
          */
 //        $use_start_time = strtotime($data['use_start_time']);
 //        $use_end_time = strtotime($data['use_end_time']);
@@ -79,8 +79,8 @@ class MemberCardBatchServices extends BaseServices
 //        } else {
 //            $use_end_time = strtotime($data['use_end_time']);
 //        }
-//        if ($use_end_time < time()) throw new AdminException("体验结束时间不能小于当天");
-//        if ($use_end_time < $use_start_time) throw new AdminException("体验结束时间不能小于体验开始时间");
+//        if ($use_end_time < time()) throw new AdminException("Thời gian kết thúc trải nghiệm không được nhỏ hơn hôm nay");
+//        if ($use_end_time < $use_start_time) throw new AdminException("Thời gian kết thúc trải nghiệm không được nhỏ hơn thời gian bắt đầu trải nghiệm");
 //        $data['use_start_time'] = $use_start_time;
 //        $data['use_end_time'] = $use_end_time;
         $data['use_day'] = abs(ceil($data['use_day']));
@@ -91,7 +91,7 @@ class MemberCardBatchServices extends BaseServices
                 unset($data['total_num']);
                 $data['update_time'] = time();
                 return $this->dao->update($id, $data);
-                //return ['status' => 1, "msg" => "编辑批次卡成功"];
+                //return ['status' => 1, "msg" => "Sửa lô thẻ thành công"];
             } else {
                 /** @var MemberCardServices $memberCardService */
                 $memberCardService = app()->make(MemberCardServices::class);
@@ -99,13 +99,13 @@ class MemberCardBatchServices extends BaseServices
                 $add_card['card_batch_id'] = $res->id;
                 $add_card['total_num'] = $data['total_num'];
                 return $memberCardService->addCard($add_card);
-                // return ['status' => 2, "msg" => "生成批次卡成功"];
+                // return ['status' => 2, "msg" => "Tạo lô thẻ thành công"];
             }
         });
     }
 
     /**
-     * 列表操作
+     * Thao tác danh sách
      * @param int $id
      * @param array $data
      */
@@ -119,7 +119,7 @@ class MemberCardBatchServices extends BaseServices
 
 
     /**
-     * 获取单条卡批次资源
+     * Lấy tài nguyên một lô thẻ
      * @param array $uid
      * @param string $field
      * @return array|\think\Model|null
@@ -134,7 +134,7 @@ class MemberCardBatchServices extends BaseServices
     }
 
     /**
-     * 批次卡数量统计
+     * Thống kê số lượng lô thẻ
      * @param int $id
      * @param string $field
      * @param int $inc

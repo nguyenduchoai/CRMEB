@@ -21,11 +21,11 @@
         v-else
       >
         <div class="item">
-          <p class="title" :style="{ color: index == tabCur ? activeColor : '' }">标题</p>
+          <p class="title" :style="{ color: index == tabCur ? activeColor : '' }">Tiêu đề</p>
           <span
             class="label"
             :style="{ background: index == tabCur ? activeColor : '', color: index == tabCur ? '#fff' : '' }"
-            >标题简介</span
+            >Mô tả tiêu đề</span
           >
         </div>
       </div>
@@ -40,13 +40,13 @@
               :style="{ background: labelColor }"
               v-if="item.activity && item.activity.type === '1'"
             >
-              秒杀
+              Flash sale
             </div>
             <div class="label" :style="{ background: labelColor }" v-if="item.activity && item.activity.type === '2'">
-              砍价
+              Săn giảm giá
             </div>
             <div class="label" :style="{ background: labelColor }" v-if="item.activity && item.activity.type === '3'">
-              拼团
+              Mua chung
             </div>
           </div>
           <div class="info">
@@ -60,7 +60,7 @@
                 :class="priceShow ? '' : 'on'"
                 v-if="couponShow"
               >
-                券
+                Coupon
               </div>
             </div>
           </div>
@@ -74,11 +74,11 @@
 import { mapState } from 'vuex';
 export default {
   name: 'home_product',
-  cname: '促销列表',
+  cname: 'Danh sách khuyến mãi',
   configName: 'c_home_product',
   icon: 'iconcuxiaoliebiao1',
-  type: 0, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'promotionList', // 外面匹配名称
+  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'promotionList', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -114,7 +114,7 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'promotionList',
         timestamp: this.num,
@@ -122,86 +122,86 @@ export default {
           tabVal: 0,
         },
         productList: {
-          title: '促销列表',
+          title: 'Danh sách khuyến mãi',
           list: [],
         },
         titleConfig: {
-          title: '标题位置',
+          title: 'Vị trí tiêu đề',
           type: 0,
           list: [
             {
-              val: '居左',
+              val: 'Căn trái',
               icon: 'icondoc_left',
             },
             {
-              val: '居中',
+              val: 'Căn giữa',
               icon: 'icondoc_center',
             },
             {
-              val: '居右',
+              val: 'Căn phải',
               icon: 'icondoc_right',
             },
           ],
         },
         titleShow: {
-          title: '是否显示商品名称',
+          title: 'Hiển thị tên sản phẩm',
           val: true,
         },
         opriceShow: {
-          title: '是否显示商品原价',
+          title: 'Hiển thị giá gốc sản phẩm',
           val: true,
         },
         priceShow: {
-          title: '是否显示商品价格',
+          title: 'Hiển thị giá sản phẩm',
           val: true,
         },
         couponShow: {
-          title: '是否显示优惠券',
+          title: 'Hiển thị phiếu giảm giá',
           val: true,
         },
         tabConfig: {
-          title: '最多可添加4个版块；鼠标拖拽左侧圆点可调整版块顺序',
+          title: 'Có thể thêm tối đa 4 khối; kéo thả chấm tròn bên trái để điều chỉnh thứ tự khối',
           max: 4,
           tabCur: 0,
           list: [
             {
               chiild: [
                 {
-                  title: '标题',
-                  val: '首发新品',
+                  title: 'Tiêu đề',
+                  val: 'Hàng mới ra mắt',
                   max: 4,
-                  pla: '选填，不超过四个字',
+                  pla: 'Không bắt buộc, tối đa 4 ký tự',
                 },
                 {
-                  title: '简介',
-                  val: '最新出炉',
+                  title: 'Mô tả ngắn',
+                  val: 'Mới ra lò',
                   max: 4,
-                  pla: '选填，不超过四个字',
+                  pla: 'Không bắt buộc, tối đa 4 ký tự',
                 },
               ],
               link: {
-                title: '链接',
+                title: 'Liên kết',
                 activeVal: 0,
                 optiops: [
                   {
                     type: 0,
                     value: 1,
-                    label: '精品推荐',
+                    label: 'Đề xuất nổi bật',
                   },
                   {
                     type: 1,
                     value: 2,
-                    label: '热门榜单',
+                    label: 'Top bán chạy',
                   },
                   {
                     type: 2,
                     value: 3,
-                    label: '首发新品',
+                    label: 'Hàng mới ra mắt',
                   },
                   {
                     type: 3,
                     value: 4,
-                    label: '促销单品',
+                    label: 'Sản phẩm khuyến mãi',
                   },
                 ],
               },
@@ -209,7 +209,7 @@ export default {
           ],
         },
         themeColor: {
-          title: '主题风格',
+          title: 'Chủ đề giao diện',
           name: 'themeColor',
           default: [
             {
@@ -223,7 +223,7 @@ export default {
           ],
         },
         fontColor: {
-          title: '价格颜色',
+          title: 'Màu giá',
           name: 'fontColor',
           default: [
             {
@@ -237,7 +237,7 @@ export default {
           ],
         },
         labelColor: {
-          title: '活动标签',
+          title: 'Nhãn chương trình',
           name: 'labelColor',
           default: [
             {
@@ -250,9 +250,9 @@ export default {
             },
           ],
         },
-        // 页面间距
+        // Lề trang
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },
@@ -306,7 +306,7 @@ export default {
           this.list = [
             {
               image: '',
-              store_name: '小米便携式蓝牙音响',
+              store_name: 'Loa Bluetooth di động Xiaomi',
               price: '59',
               ot_price: 135,
               checkCoupon: true,
@@ -314,7 +314,7 @@ export default {
             },
             {
               image: '',
-              store_name: '小米便携式蓝牙音响',
+              store_name: 'Loa Bluetooth di động Xiaomi',
               price: '59',
               ot_price: 135,
               checkCoupon: true,

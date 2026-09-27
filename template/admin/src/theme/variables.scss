@@ -1,5 +1,5 @@
 body {
-  /* Button 按钮
+  /* Nút Button
 ------------------------------- */
   .el-button--primary:hover,
   .el-button--primary:focus {
@@ -103,7 +103,7 @@ body {
     color: var(--prev-color-text-placeholder);
   }
 
-  /* Link 文字链接
+  /* Liên kết văn bản Link
 ------------------------------- */
   // default
   .el-link.el-link--default:hover {
@@ -126,7 +126,7 @@ body {
     border-color: var(--prev-color-primary);
   }
 
-  /* el-radio 单选框
+  /* Radio el-radio
 ------------------------------- */
   .el-checkbox__label {
     font-size: 12px;
@@ -181,7 +181,7 @@ body {
     color: var(--prev-color-text-regular);
   }
 
-  /* el-checkbox 多选框
+  /* Checkbox el-checkbox
 ------------------------------- */
   .el-checkbox__input.is-checked + .el-checkbox__label,
   .el-checkbox-button__inner:hover {
@@ -222,7 +222,7 @@ body {
     border-color: var(--prev-border-color-base);
   }
 
-  /* el-input 输入框、InputNumber 计数器
+  /* Ô nhập el-input, bộ đếm InputNumber
 ------------------------------- */
   .el-input-number--small .el-input-number__increase,
   .el-input-number--small .el-input-number__decrease {
@@ -311,7 +311,7 @@ body {
     max-height: 280px !important;
   }
 
-  // scss 循环
+  // Vòng lặp scss
   $positions: 'top', 'right', 'bottom', 'left';
 
   @each $i in $positions {
@@ -333,7 +333,7 @@ body {
     background-color: var(--prev-color-hover);
   }
 
-  /* el-select 选择器
+  /* Selector el-select
 ------------------------------- */
   .el-range-editor.is-active,
   .el-range-editor.is-active:hover {
@@ -389,7 +389,7 @@ body {
     background: var(--prev-border-color-light);
   }
 
-  /* Cascader 级联选择器
+  /* Selector phân cấp Cascader
 ------------------------------- */
   .el-cascader .el-input .el-input__inner:focus,
   .el-cascader .el-input.is-focus .el-input__inner {
@@ -417,7 +417,7 @@ body {
     background-color: var(--prev-color-hover);
   }
 
-  /* el-switch 开关
+  /* Switch el-switch
 ------------------------------- */
   .el-switch.is-checked .el-switch__core {
     border-color: var(--prev-color-primary) !important;
@@ -428,7 +428,7 @@ body {
     color: var(--prev-color-primary);
   }
 
-  /* el-slider 滑块
+  /* Thanh trượt el-slider
 ------------------------------- */
   .el-slider__bar {
     background-color: var(--prev-color-primary);
@@ -446,7 +446,7 @@ body {
     color: var(--prev-color-text-secondary);
   }
 
-  /* TimePicker 时间选择器
+  /* Time picker TimePicker
 ------------------------------- */
   .el-time-panel__btn.confirm,
   .el-time-spinner__arrow:hover,
@@ -488,7 +488,7 @@ body {
     color: var(--prev-color-text-primary);
   }
 
-  /* DatePicker 日期选择器
+  /* Date picker DatePicker
 ------------------------------- */
   .el-date-table td.today span,
   .el-date-table td.available:hover,
@@ -567,7 +567,7 @@ body {
     color: var(--prev-color-text-white);
   }
 
-  /* el-upload 上传
+  /* Upload el-upload
 ------------------------------- */
   .el-upload-list__item.is-success .el-upload-list__item-name:focus,
   .el-upload-list__item.is-success .el-upload-list__item-name:hover,
@@ -609,13 +609,13 @@ body {
     background-color: var(--prev-bg-color);
   }
 
-  /* el-color-picker 颜色选择器
+  /* Color picker el-color-picker
 ------------------------------- */
   .el-color-picker__trigger {
     border-color: var(--prev-border-color-light);
   }
 
-  /* Transfer 穿梭框
+  /* Transfer (hộp chuyển)
 ------------------------------- */
   .el-transfer-panel__item:hover {
     color: var(--prev-color-primary);
@@ -635,7 +635,7 @@ body {
     color: var(--prev-color-text-primary);
   }
 
-  /* el-form 表单
+  /* Form el-form
 ------------------------------- */
   .el-form {
     .el-form-item:last-of-type {
@@ -649,7 +649,7 @@ body {
     padding-right: 6px;
   }
 
-  /* Table 表格
+  /* Bảng Table
 ------------------------------- */
   .el-table {
     color: var(--prev-color-text-regular);
@@ -717,7 +717,7 @@ body {
     border-radius: 4px;
   }
 
-  /* Tag 标签
+  /* Tag (nhãn)
 ------------------------------- */
   // primary
   .el-tag {
@@ -755,7 +755,7 @@ body {
     border-color: var(--prev-color-primary-light-3);
   }
 
-  /* Progress 进度条
+  /* Thanh tiến trình Progress
 ------------------------------- */
   // primary
   .el-progress-bar__inner {
@@ -770,7 +770,7 @@ body {
     color: var(--prev-color-text-regular);
   }
 
-  /* Tree 树形控件
+  /* Control dạng cây Tree
 ------------------------------- */
   .el-tree {
     background-color: var(--prev-bg-white);
@@ -782,7 +782,7 @@ body {
     background-color: var(--prev-bg-color);
   }
 
-  /* Pagination 分页
+  /* Phân trang Pagination
 ------------------------------- */
   .el-pager li.active,
   .el-pager li:hover,
@@ -821,14 +821,14 @@ body {
     color: var(--prev-color-text-primary);
   }
 
-  /* Badge 标记
+  /* Nhãn đánh dấu Badge
 ------------------------------- */
   // primary
   .el-badge__content--primary {
     background-color: var(--prev-color-primary);
   }
 
-  /* Loading 加载
+  /* Loading
 ------------------------------- */
   .el-loading-spinner .path {
     stroke: var(--prev-color-primary);
@@ -839,7 +839,7 @@ body {
     color: var(--prev-color-primary);
   }
 
-  /* Message 消息提示
+  /* Thông báo Message
 ------------------------------- */
   // default/info
   .el-message {
@@ -847,7 +847,7 @@ body {
     padding: 15px !important;
   }
 
-  /* MessageBox 弹框
+  /* Popup MessageBox
 ------------------------------- */
   .el-message-box__headerbtn:focus .el-message-box__close,
   .el-message-box__headerbtn:hover .el-message-box__close {
@@ -867,7 +867,7 @@ body {
     color: var(--prev-color-text-regular);
   }
 
-  /* Notification 通知
+  /* Thông báo Notification
 ------------------------------- */
   .el-notification {
     background-color: var(--prev-bg-white);
@@ -886,7 +886,7 @@ body {
     }
   }
 
-  /* Tabs 标签页
+  /* Tabs
 ------------------------------- */
   .el-tabs__item.is-active,
   .el-tabs__item:hover,
@@ -933,7 +933,7 @@ body {
     border-color: var(--prev-border-color-base);
   }
 
-  /* Breadcrumb 面包屑
+  /* Breadcrumb
 ------------------------------- */
   .el-breadcrumb__item {
     display: flex;
@@ -967,7 +967,7 @@ body {
     color: var(--prev-border-color-hover);
   }
 
-  /* PageHeader 页头
+  /* Đầu trang PageHeader
 ------------------------------- */
   .el-page-header__left {
     color: var(--prev-color-text-black);
@@ -981,7 +981,7 @@ body {
     color: var(--prev-color-text-primary);
   }
 
-  /* Dropdown 下拉菜单
+  /* Menu dropdown Dropdown
 ------------------------------- */
   .el-dropdown-menu__item:focus,
   .el-dropdown-menu__item:not(.is-disabled):hover {
@@ -1006,7 +1006,7 @@ body {
     background-color: var(--prev-bg-white);
   }
 
-  /* Steps 步骤条
+  /* Thanh bước Steps
 ------------------------------- */
   // default
   .el-step__title.is-finish,
@@ -1019,7 +1019,7 @@ body {
     border-color: var(--prev-color-primary);
   }
 
-  /* Dialog 对话框
+  /* Hộp thoại Dialog
 ------------------------------- */
   .el-dialog__headerbtn:focus .el-dialog__close,
   .el-dialog__headerbtn:hover .el-dialog__close {
@@ -1038,7 +1038,7 @@ body {
     color: var(--prev-color-text-regular);
   }
 
-  /* Popover 弹出框
+  /* Popup Popover
 ------------------------------- */
   .el-tooltip {
     // background-color: var(--prev-bg-white);
@@ -1050,7 +1050,7 @@ body {
     color: var(--prev-color-text-primary);
   }
 
-  /* el-card 卡片
+  /* Card el-card
 ------------------------------- */
   .el-card {
     color: var(--prev-color-text-primary);
@@ -1064,7 +1064,7 @@ body {
     border-bottom-color: var(--prev-color-primary-light-9);
   }
 
-  /* Collapse 折叠面板
+  /* Panel thu gọn Collapse
 ------------------------------- */
   .el-collapse {
     border-color: var(--prev-border-color-lighter);
@@ -1085,7 +1085,7 @@ body {
     color: var(--prev-color-text-primary);
   }
 
-  /* Timeline 时间线
+  /* Dòng thời gian Timeline
 ------------------------------- */
   // primary
   .el-timeline-item__node--primary {
@@ -1096,13 +1096,13 @@ body {
     color: var(--prev-color-text-primary);
   }
 
-  /* Divider 分割线
+  /* Đường phân chia Divider
 ------------------------------- */
   .el-divider {
     background-color: var(--prev-color-primary-light-9);
   }
 
-  /* Calendar 日历
+  /* Lịch Calendar
 ------------------------------- */
   .el-calendar-table td {
     color: var(--prev-color-text-black);
@@ -1162,7 +1162,7 @@ body {
     }
   }
 
-  /* Backtop 回到顶部
+  /* Quay lại đầu trang Backtop
 ------------------------------- */
   .el-backtop {
     color: var(--prev-color-primary);
@@ -1177,14 +1177,14 @@ body {
   .el-scrollbar__wrap {
     overflow-x: hidden !important;
     max-height: 100%;
-    /*防止页面切换时，滚动条高度不变的问题（滚动条高度非滚动条滚动高度）*/
+    /*Ngăn vấn đề chiều cao scrollbar không đổi khi chuyển trang (chiều cao scrollbar không phải chiều cao cuộn của scrollbar)*/
   }
 
   .el-select-dropdown .el-scrollbar__wrap {
     overflow-x: scroll !important;
   }
 
-  /* Drawer 抽屉
+  /* Drawer
 ------------------------------- */
   .el-drawer,
   .el-divider__text {
@@ -1226,7 +1226,7 @@ body {
   line-height: 14px;
 }
 
-/* Alert 警告
+/* Cảnh báo Alert
 ------------------------------- */
 // .el-alert--info.is-light {
 //   color: #f7ba1e !important;

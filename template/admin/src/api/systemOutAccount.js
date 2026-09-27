@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -11,8 +11,8 @@
 import request from '@/libs/request';
 
 /**
- * @description 列表
- * @param {Object} param data {Object} 传值参数
+ * @description Danh sách
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function accountListApi(data) {
   return request({
@@ -23,8 +23,8 @@ export function accountListApi(data) {
 }
 
 /**
- * @description 对外账号 修改状态
- * @param {Object} param data {Object} 传值
+ * @description Tài khoản đối ngoại, đổi trạng thái
+ * @param {Object} param data {Object} Truyền giá trị
  */
 export function setShowApi(data) {
   return request({
@@ -34,8 +34,8 @@ export function setShowApi(data) {
 }
 
 /**
- * @description 添加对外账号
- * @param {Object} param data {Object} 传值
+ * @description Thêm tài khoản API bên ngoài
+ * @param {Object} param data {Object} Truyền giá trị
  */
 export function outSaveApi(data) {
   return request({
@@ -46,9 +46,9 @@ export function outSaveApi(data) {
 }
 
 /**
- * @description 修改对外账号
- * @param {Object} param id {Number} 账号ID
- * @param {Object} param data {Object} 传值
+ * @description Sửa tài khoản đối ngoại
+ * @param {Object} param id {Number} ID tài khoản
+ * @param {Object} param data {Object} Truyền giá trị
  */
 export function outSavesApi(data) {
   return request({
@@ -59,7 +59,7 @@ export function outSavesApi(data) {
 }
 
 /**
- * 对外账号设置推送
+ * Tài khoản đối ngoại thiết lập push
  * @param {*} id
  * @returns
  */
@@ -71,7 +71,7 @@ export function outSetUp(id) {
 }
 
 /**
- * 对外接口列表
+ * Danh sách API bên ngoài
  */
 export function interfaceList() {
   return request({
@@ -81,7 +81,7 @@ export function interfaceList() {
 }
 
 /**
- * 设置推送信息
+ * Thiết lập thông tin push
  * @param {*} data
  * @returns
  */
@@ -93,7 +93,7 @@ export function setUpPush(data) {
   });
 }
 /**
- * 添加/编辑接口
+ * Thêm/sửa API
  * @param {*} data
  * @returns
  */
@@ -106,7 +106,7 @@ export function interfaceSave(data) {
 }
 
 /**
- * 接口信息详情
+ * Chi tiết thông tin API
  * @param {*} data
  * @returns
  */
@@ -118,8 +118,8 @@ export function interfaceDet(id) {
 }
 
 /**
- * @description 修改名称
- * @param {Object} data data {Object} 传值
+ * @description Sửa tên
+ * @param {Object} data data {Object} Truyền giá trị
  */
 export function interfaceEditName(data) {
   return request({
@@ -130,7 +130,7 @@ export function interfaceEditName(data) {
 }
 
 /**
- * @description 删除
+ * @description Xóa
  */
 export function interfaceDel(id) {
   return request({
@@ -140,7 +140,7 @@ export function interfaceDel(id) {
 }
 
 /**
- * 接口信息详情
+ * Chi tiết thông tin API
  * @param {*} data
  * @returns
  */

@@ -20,7 +20,7 @@ import { mapMutations } from 'vuex';
 
 export default {
   name: 'pageFoot',
-  cname: '底部导航',
+  cname: 'Điều hướng dưới cùng',
   components: {
     ...toolCom,
     rightBtn,
@@ -28,13 +28,13 @@ export default {
   data() {
     return {
       hotIndex: 1,
-      configObj: {}, // 配置对象
+      configObj: {}, // Đối tượng cấu hình
       rCom: [
         {
           components: toolCom.c_set_up,
           configNme: 'setUp',
         },
-      ], // 当前页面组件
+      ], // Thành phần (component) của trang hiện tại
       oneStyle: [
         {
           components: toolCom.c_title,

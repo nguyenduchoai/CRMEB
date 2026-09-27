@@ -1,14 +1,14 @@
 <template>
   <div>
     <el-form ref="formValidate" :model="formValidate" :rules="ruleInline" inline>
-      <el-form-item label="选择类型：" class="form-item" label-position="right" label-width="100px">
+      <el-form-item label="Chọn loại:" class="form-item" label-position="right" label-width="100px">
         <el-radio-group v-model="formValidate.gender">
           <el-radio :label="item.key" v-for="(item, index) in radioList" :key="index">{{ item.title }}</el-radio>
         </el-radio-group>
       </el-form-item>
       <el-form-item
         v-if="formValidate.gender == 1"
-        label="发货类型："
+        label="Loại giao hàng:"
         class="form-item"
         label-position="right"
         label-width="100px"
@@ -18,10 +18,10 @@
           <el-radio :label="item.key" v-for="(item, index) in shipType" :key="index">{{ item.title }}</el-radio>
         </el-radio-group>
       </el-form-item>
-      <!--  发货手动填写  -->
+      <!--  Nhập tay khi giao hàng  -->
       <div v-if="formValidate.gender == 1 && formValidate.shipStatus == 1" :key="'test1'">
         <el-form-item
-          label="快递公司："
+          label="Đơn vị vận chuyển:"
           prop="logisticsCode"
           class="form-item"
           label-position="right"
@@ -30,7 +30,7 @@
           <el-select
             v-model="formValidate.logisticsCode"
             filterable
-            placeholder="请选择"
+            placeholder="Vui lòng chọn"
             @change="bindChange"
             :label-in-value="true"
             style="width: 100%"
@@ -43,18 +43,18 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="快递单号：" prop="number" class="form-item" label-position="right" label-width="100px">
-          <el-input v-model="formValidate.number" placeholder="请输入快递单号" style="width: 100%"></el-input>
+        <el-form-item label="Mã vận đơn:" prop="number" class="form-item" label-position="right" label-width="100px">
+          <el-input v-model="formValidate.number" placeholder="Vui lòng nhập mã vận đơn" style="width: 100%"></el-input>
         </el-form-item>
         <el-form-item label="" class="form-item" label-position="right" label-width="100px">
-          <div style="color: #c4c4c4">顺丰请输入单号：收件人或寄件人手机号后四位,</div>
-          <div style="color: #c4c4c4">例如：SF000000000000:3941</div>
+          <div style="color: #c4c4c4">Với SF Express, vui lòng nhập mã vận đơn: 4 số cuối số điện thoại người nhận hoặc người gửi,</div>
+          <div style="color: #c4c4c4">Ví dụ: SF000000000000:3941</div>
         </el-form-item>
       </div>
-      <!--  电子面单打印  -->
+      <!--  In vận đơn điện tử  -->
       <div v-if="formValidate.gender == 1 && formValidate.shipStatus == 2" :key="'test2'">
         <el-form-item
-          label="快递公司："
+          label="Đơn vị vận chuyển:"
           prop="logisticsCode"
           class="form-item"
           label-position="right"
@@ -62,7 +62,7 @@
         >
           <el-select
             v-model="formValidate.logisticsCode"
-            placeholder="请选择"
+            placeholder="Vui lòng chọn"
             style="width: 100%"
             @change="bindChange"
             filterable
@@ -77,13 +77,13 @@
           </el-select>
         </el-form-item>
         <el-form-item
-          label="电子面单："
+          label="Vận đơn điện tử:"
           class="form-item"
           label-position="right"
           label-width="100px"
           v-if="orderTempList.length > 0"
         >
-          <el-select v-model="formValidate.electronic" placeholder="请选择电子面单" style="width: 80%">
+          <el-select v-model="formValidate.electronic" placeholder="Vui lòng chọn vận đơn điện tử" style="width: 80%">
             <el-option
               :value="item.temp_id"
               v-for="(item, index) in orderTempList"
@@ -91,37 +91,37 @@
               :label="item.title"
             ></el-option>
           </el-select>
-          <el-button style="flex: 1; margin-left: 21px" v-db-click @click="lookImg">预览</el-button>
+          <el-button style="flex: 1; margin-left: 21px" v-db-click @click="lookImg">Xem trước</el-button>
           <viewer :images="orderTempList" class="viewer" ref="viewer" @inited="inited" style="display: none">
             <img v-for="src in orderTempList" :src="src.pic" :key="src.id" class="image" />
           </viewer>
         </el-form-item>
-        <el-form-item label="寄件人姓名：" prop="sendName" class="form-item" label-position="right" label-width="100px">
-          <el-input v-model="formValidate.sendName" placeholder="请输入寄件人姓名" style="width: 100%"></el-input>
+        <el-form-item label="Họ tên người gửi:" prop="sendName" class="form-item" label-position="right" label-width="100px">
+          <el-input v-model="formValidate.sendName" placeholder="Vui lòng nhập họ tên người gửi" style="width: 100%"></el-input>
         </el-form-item>
         <el-form-item
-          label="寄件人电话："
+          label="Số điện thoại người gửi:"
           prop="sendPhone"
           class="form-item"
           label-position="right"
           label-width="100px"
         >
-          <el-input v-model="formValidate.sendPhone" placeholder="请输入寄件人电话" style="width: 100%"></el-input>
+          <el-input v-model="formValidate.sendPhone" placeholder="Vui lòng nhập số điện thoại người gửi" style="width: 100%"></el-input>
         </el-form-item>
         <el-form-item
-          label="寄件人地址："
+          label="Địa chỉ người gửi:"
           prop="sendAddress"
           class="form-item"
           label-position="right"
           label-width="100px"
         >
-          <el-input v-model="formValidate.sendAddress" placeholder="请输入寄件人地址" style="width: 100%"></el-input>
+          <el-input v-model="formValidate.sendAddress" placeholder="Vui lòng nhập địa chỉ người gửi" style="width: 100%"></el-input>
         </el-form-item>
       </div>
-      <!--  送货  -->
+      <!--  Cửa hàng tự giao  -->
       <div v-if="formValidate.gender == 2" :key="'test3'">
-        <el-form-item label="选择送货人：" class="form-item" label-position="right" label-width="100px">
-          <el-select v-model="formValidate.postPeople" placeholder="选择送货人" style="width: 100%">
+        <el-form-item label="Chọn người giao hàng:" class="form-item" label-position="right" label-width="100px">
+          <el-select v-model="formValidate.postPeople" placeholder="Chọn người giao hàng" style="width: 100%">
             <el-option
               :value="item.id"
               v-for="(item, index) in deliveryList"
@@ -132,13 +132,13 @@
         </el-form-item>
       </div>
       <div v-if="formValidate.gender == 3">
-        <el-form-item label="备注：" props="msg" class="form-item" label-position="right" label-width="100px">
-          <el-input placeholder="备注" v-model="formValidate.msg" />
+        <el-form-item label="Ghi chú:" props="msg" class="form-item" label-position="right" label-width="100px">
+          <el-input placeholder="Ghi chú" v-model="formValidate.msg" />
         </el-form-item>
       </div>
       <div class="mask-footer">
-        <el-button type="primary" v-db-click @click="handleSubmit('formValidate')">提交</el-button>
-        <el-button v-db-click @click="close">取消</el-button>
+        <el-button type="primary" v-db-click @click="handleSubmit('formValidate')">Gửi</el-button>
+        <el-button v-db-click @click="close">Hủy</el-button>
       </div>
     </el-form>
   </div>
@@ -194,50 +194,50 @@ export default {
       shipType: [
         {
           key: 1,
-          title: '手动填写',
+          title: 'Điền thủ công',
         },
         {
           key: 2,
-          title: '电子面单打印',
+          title: 'In vận đơn điện tử',
         },
       ],
       radioList: [
         {
           key: 1,
-          title: '发货',
+          title: 'Giao hàng',
         },
         {
           key: 2,
-          title: '送货',
+          title: 'Cửa hàng tự giao',
         },
         {
           key: 3,
-          title: '虚拟',
+          title: 'Hàng ảo',
         },
       ],
       ruleInline: {
-        logisticsCode: [{ required: true, message: '请选择快递公司', trigger: 'change' }],
-        number: [{ required: true, message: '请填写快递单号', trigger: 'change' }],
-        sendName: [{ required: true, message: '请填写寄件人姓名', trigger: 'change' }],
+        logisticsCode: [{ required: true, message: 'Vui lòng chọn đơn vị vận chuyển', trigger: 'change' }],
+        number: [{ required: true, message: 'Vui lòng nhập mã vận đơn', trigger: 'change' }],
+        sendName: [{ required: true, message: 'Vui lòng điền họ tên người gửi', trigger: 'change' }],
         sendPhone: [
-          { required: true, message: '请填写寄件人手机', trigger: 'change' },
-          { pattern: /^1[3456789]\d{9}$/, message: '手机号码格式不正确', trigger: 'blur' },
+          { required: true, message: 'Vui lòng điền số điện thoại người gửi', trigger: 'change' },
+          { pattern: /^1[3456789]\d{9}$/, message: 'Số điện thoại không đúng định dạng', trigger: 'blur' },
         ],
-        sendAddress: [{ required: true, message: '请填写寄件人地址', trigger: 'change' }],
-        msg: [{ required: true, message: '请填写备注信息', trigger: 'change' }],
+        sendAddress: [{ required: true, message: 'Vui lòng điền địa chỉ người gửi', trigger: 'change' }],
+        msg: [{ required: true, message: 'Vui lòng điền thông tin ghi chú', trigger: 'change' }],
       },
       formValidate: {
         gender: 1,
         shipStatus: 1,
-        logisticsCode: '', // 快递公司编号
-        logisticsName: '', // 快递公司名称
-        number: '', // 快递单号
-        electronic: '', //电子面单
-        sendName: '', //寄件人姓名
-        sendPhone: '', // 寄件人电话
-        sendAddress: '', //寄件人地址
-        postPeople: '', // 配送员
-        msg: '', // 备注
+        logisticsCode: '', // Mã đơn vị vận chuyển
+        logisticsName: '', // Tên đơn vị vận chuyển
+        number: '', // Mã vận đơn
+        electronic: '', //Vận đơn điện tử
+        sendName: '', //Họ tên người gửi
+        sendPhone: '', // Số điện thoại người gửi
+        sendAddress: '', //Địa chỉ người gửi
+        postPeople: '', // Nhân viên giao hàng
+        msg: '', // Ghi chú
       },
       logisticsList: [],
       orderTempList: [],
@@ -249,17 +249,17 @@ export default {
     this.getDelivery();
   },
   methods: {
-    // 获取配送人
+    // Lấy người giao hàng
     getDelivery() {
       orderDeliveryAll().then((res) => {
         this.deliveryList = res.data;
       });
     },
-    //查看大图
+    //Xem ảnh lớn
     inited(viewer) {
       this.$viewer = viewer;
     },
-    //物流公司
+    //Đơn vị vận chuyển
     getOrderExport() {
       orderExport().then((res) => {
         this.logisticsList = res.data;
@@ -274,11 +274,11 @@ export default {
           paramsData.delivery_name = this.formValidate.logisticsName;
           paramsData.delivery_code = this.formValidate.logisticsCode;
           if (valid) {
-            // 手动
+            // Thủ công
             if (this.formValidate.gender == 1 && this.formValidate.shipStatus == 1) {
               paramsData.delivery_id = this.formValidate.number;
             }
-            // 电子
+            // Điện tử
             if (this.formValidate.gender == 1 && this.formValidate.shipStatus == 2) {
               paramsData.to_name = this.formValidate.sendName;
               paramsData.to_tel = this.formValidate.sendPhone;
@@ -335,7 +335,7 @@ export default {
     close() {
       this.$emit('close');
     },
-    // 物流选中
+    // Vận chuyển đã chọn
     bindChange(val) {
       let deliveryItem = this.logisticsList.find((item) => {
         return item.code == val;
@@ -357,7 +357,7 @@ export default {
           }
         });
       } else {
-        this.$message.error('请选择电子面单');
+        this.$message.error('Vui lòng chọn vận đơn điện tử');
       }
     },
   },

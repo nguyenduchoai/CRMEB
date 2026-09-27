@@ -99,7 +99,7 @@ class QRcode
      */
     public function logo($logo){
         if (!isset($logo)||$logo=='') {
-            $this->error = 'logo不存在';
+            $this->error = 'Logo không tồn tại';
             return false;
         }
         $QR = imagecreatefromstring(file_get_contents($this->outfile));
@@ -167,7 +167,7 @@ class QRcode
                 $color[3] = 0;
             }
         } elseif (!is_array($color)) {
-            throw new Exception('错误的颜色值');
+            throw new Exception('Giá trị màu không hợp lệ');
         }
 
         //如果字体不存在 用composer项目自己的字体
@@ -195,7 +195,7 @@ class QRcode
             $x += ($posx=='center')?(($dst_w - $w) / 2):$posx;
             $y += ($posy=='center')?(($dst_h - $h) / 2):$posy;
         } else {
-            throw new Exception('不支持的文字位置类型');
+            throw new Exception('Kiểu vị trí văn bản không được hỗ trợ');
         }
 
         //字体颜色

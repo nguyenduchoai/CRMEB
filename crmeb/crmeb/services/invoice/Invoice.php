@@ -10,13 +10,13 @@ use think\facade\Config;
 class Invoice extends BaseManager
 {
     /**
-     * 空间名
+     * Tên space
      * @var string
      */
     protected $namespace = '\\crmeb\\services\\invoice\\storage\\';
 
     /**
-     * 默认驱动
+     * Driver mặc định
      * @return mixed
      */
     protected function getDefaultDriver()
@@ -26,7 +26,7 @@ class Invoice extends BaseManager
     }
 
     /**
-     * 获取类的实例
+     * Lấy instance của class
      * @param $class
      * @return mixed|void
      */

@@ -1,16 +1,16 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 
 if (!function_exists('get_this_class_methods')) {
-    /**获取当前类方法
+    /**Lấy phương thức của lớp hiện tại
      * @param $class
      * @return array
      */
@@ -19,29 +19,29 @@ if (!function_exists('get_this_class_methods')) {
         $arrayall = get_class_methods($class);
         if ($parent_class = get_parent_class($class)) {
             $arrayparent = get_class_methods($parent_class);
-            $arraynow = array_diff($arrayall, $arrayparent);//去除父级的
+            $arraynow = array_diff($arrayall, $arrayparent);//Loại bỏ phần của lớp cha
         } else {
             $arraynow = $arrayall;
         }
-        return array_diff($arraynow, $unarray);//去除无用的
+        return array_diff($arraynow, $unarray);//Loại bỏ phần không dùng
     }
 }
 
 
 if (!function_exists('setconfig')) {
     /**
-     * 修改config的函数
-     * @param $arr1 or $string 配置前缀
-     * @param $arr2 or $string 数据变量
-     * @return bool 返回状态
+     * Hàm sửa config
+     * @param $arr1 or $string Tiền tố cấu hình
+     * @param $arr2 or $string Biến dữ liệu
+     * @return bool Trạng thái trả về
      */
     function setconfig($name, $pat, $rep)
     {
         /**
-         * 原理就是 打开config配置文件 然后使用正则查找替换 然后在保存文件. 不能修改值为数组的配置
-         * 传递的参数为2个数组 前面的为配置 后面的为数值.  正则的匹配为单引号  如果你的是分号 请自行修改为分号
-         * $pat[0] = 参数前缀;  例:   default_return_type
-         * $rep[0] = 要替换的内容;    例:  json
+         * Nguyên lý là mở file cấu hình config, dùng regex để tìm và thay thế, sau đó lưu file. Không thể sửa cấu hình có giá trị là mảng
+         * Tham số truyền vào là 2 mảng, mảng trước là cấu hình, mảng sau là giá trị. Regex khớp theo dấu nháy đơn. Nếu của bạn là dấu chấm phẩy thì tự sửa thành dấu chấm phẩy
+         * $pat[0] = tiền tố tham số; ví dụ: default_return_type
+         * $rep[0] = nội dung cần thay thế; ví dụ: json
          */
         $pats = $reps = [];
         if (is_array($pat) && is_array($rep)) {
@@ -50,9 +50,9 @@ if (!function_exists('setconfig')) {
                 $reps[$i] = "'" . $pat[$i] . "'" . "=>" . "'" . $rep[$i] . "',";
             }
             $fileurl = app()->getConfigPath() . $name . ".php";
-            $string = file_get_contents($fileurl); //加载配置文件
-            $string = preg_replace($pats, $reps, $string); // 正则查找然后替换
-            @file_put_contents($fileurl, $string); // 写入配置文件
+            $string = file_get_contents($fileurl); //Tải file cấu hình
+            $string = preg_replace($pats, $reps, $string); // Dùng regex tìm rồi thay thế
+            @file_put_contents($fileurl, $string); // Ghi file cấu hình
             return true;
         } else if (is_string($pat) && is_string($rep)) {
             $pats = '/\'' . $pat . '\'(.*?),/';
@@ -63,9 +63,9 @@ if (!function_exists('setconfig')) {
                 $reps = "'" . $pat . "'" . "=>" . "'" . $rep . "',";
             }
             $fileurl = app()->getConfigPath() . $name . ".php";
-            $string = file_get_contents($fileurl); //加载配置文件
-            $string = preg_replace($pats, $reps, $string); // 正则查找然后替换
-            @file_put_contents($fileurl, $string); // 写入配置文件
+            $string = file_get_contents($fileurl); //Tải file cấu hình
+            $string = preg_replace($pats, $reps, $string); // Dùng regex tìm rồi thay thế
+            @file_put_contents($fileurl, $string); // Ghi file cấu hình
             return true;
         } else {
             return false;
@@ -75,7 +75,7 @@ if (!function_exists('setconfig')) {
 }
 if (!function_exists('arrayToText')) {
     /**
-     * 修改config的函数
+     * Hàm sửa config
      * @param $array
      * @return string
      */
@@ -102,13 +102,13 @@ if (!function_exists('arrayToText')) {
         $config = rtrim($config, ",");
         $config = "<?php \n return " . $config . ';';
 //        $fileurl = app()->getConfigPath() ."templates.php";
-//        @file_put_contents($fileurl, $config); // 写入配置文件
+//        @file_put_contents($fileurl, $config); // Ghi file cấu hình
         return $config;
     }
 }
 if (!function_exists('attr_format')) {
     /**
-     * 格式化属性
+     * Định dạng thuộc tính
      * @param $arr
      * @return array
      */
@@ -151,7 +151,7 @@ if (!function_exists('attr_format')) {
 if (!function_exists('verify_domain')) {
 
     /**
-     * 验证域名是否合法
+     * Xác thực tên miền có hợp lệ không
      * @param string $domain
      * @return bool
      */

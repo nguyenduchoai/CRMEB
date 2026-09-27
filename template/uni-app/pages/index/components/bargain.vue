@@ -1,7 +1,7 @@
 <template>
 	<view :style="[boxStyle]" v-if="bargList.length">
 		<view>
-			<!-- 砍价头部 -->
+			<!-- Phần đầu săn giảm giá -->
 			<view class="w-full h-96 px-24 flex-between-center bg-cover" :style="[headerStyle]">
 				<view class="flex-y-center">
 					<text class="fs-32 lh-44rpx fw-500" :style="[titleStyle]" v-if="titleConfig">{{ titleTxtConfig }}</text>
@@ -14,8 +14,8 @@
 					<text class="iconfont icon-ic_rightarrow" :style="[headerBntColor]"></text>
 				</view>
 			</view>
-			<!-- 砍价列表 -->
-			<!-- 单列 -->
+			<!-- Danh sách săn giảm giá -->
+			<!-- Một cột -->
 			<view class="pt-32 pr-20 pb-32 pl-20" :style="[boxContentStyle]" v-if="goodStyleConfig == 0">
 				<view class="w-full flex justify-between item" v-for="(item, index) in bargList" :key="index" @tap="bargDetail(item)">
 					<easy-loadimage :image-src="item.image" width="280rpx" height="280rpx" :borderRadius="imgStyle"></easy-loadimage>
@@ -24,7 +24,7 @@
 							<view class="w-full fs-28 h-80 lh-40rpx line2" :style="[productStyle]" v-if="checkboxInfo.includes(0)">{{ item.title }}</view>
 							<view class="flex-y-center mt-26" :style="[joinColor]" v-if="checkboxInfo.includes(1)">
 								<text class="iconfont icon-ic_fire fs-20"></text>
-								<text class="fs-24 fw-500 pl-4" :style="[braginSuccess]">{{ item.people }}{{ $t(`人正在参与`) }}</text>
+								<text class="fs-24 fw-500 pl-4" :style="[braginSuccess]">{{ item.people }}{{ $t(`người đang tham gia`) }}</text>
 							</view>
 						</view>
 						<view class="flex justify-between items-end">
@@ -32,12 +32,12 @@
 								<baseMoney :money="item.min_price" symbolSize="24" integerSize="32" decimalSize="32" weight :color="priceColor" v-if="checkboxInfo.includes(2)"></baseMoney>
 								<text class="text-line fs-28 text--w111-999 pt-10 Regular line-price" v-if="checkboxInfo.includes(3)" :style="[otPriceColor]">¥{{ item.product_price }}</text>
 							</view>
-							<view class="w-144 h-56 rd-30rpx flex-center fs-24 text--w111-fff" v-if="!showBtn" :style="[btnBgColor]">{{ $t(`参与砍价`) }}</view>
+							<view class="w-144 h-56 rd-30rpx flex-center fs-24 text--w111-fff" v-if="!showBtn" :style="[btnBgColor]">{{ $t(`Tham gia săn giảm giá`) }}</view>
 						</view>
 					</view>
 				</view>
 			</view>
-			<!-- 两列 -->
+			<!-- Hai cột -->
 			<view class="grid-column-2 grid-gap-22rpx pt-32 pr-20 pb-32 pl-20" :style="[boxContentStyle]" v-if="goodStyleConfig == 1">
 				<view v-for="(item, index) in bargList" :key="index" @tap="bargDetail(item)">
 					<easy-loadimage :image-src="item.image" width="100%" height="324rpx" :borderRadius="imgStyle"></easy-loadimage>
@@ -47,11 +47,11 @@
 							<baseMoney :money="item.min_price" symbolSize="24" integerSize="36" decimalSize="36" weight :color="priceColor" v-if="checkboxInfo.includes(2)"></baseMoney>
 							<text class="text-line fs-28 text--w111-999 pt-14 Regular line-price" v-if="checkboxInfo.includes(3)" :style="[otPriceColor]">{{ $t(`¥`) }}{{ item.product_price }}</text>
 						</view>
-						<view class="w-144 h-56 rd-30rpx flex-center fs-24 bg--w111-E93323" v-if="!showBtn" :style="[btnBgColor]">{{ $t(`参与砍价`) }}</view>
+						<view class="w-144 h-56 rd-30rpx flex-center fs-24 bg--w111-E93323" v-if="!showBtn" :style="[btnBgColor]">{{ $t(`Tham gia săn giảm giá`) }}</view>
 					</view>
 				</view>
 			</view>
-			<!-- 三列 -->
+			<!-- Ba cột -->
 			<view class="grid-column-3 grid-gap-18rpx pt-32 pr-20 pb-32 pl-20" :style="[boxContentStyle]" v-if="goodStyleConfig == 2">
 				<view v-for="(item, index) in bargList" :key="index" @tap="bargDetail(item)">
 					<easy-loadimage :image-src="item.image" width="100%" height="212rpx" :borderRadius="imgStyle"></easy-loadimage>
@@ -64,7 +64,7 @@
 							decimalSize="36"
 							weight
 							:color="priceColor"
-							preFix="低至"
+							preFix="Chỉ từ"
 							preFixSize="22"
 							:textColor="priceColor"
 							v-if="checkboxInfo.includes(2)"
@@ -73,12 +73,12 @@
 					<view class="text-line fs-24 text--w111-999 Regular lh-32rpx" :style="[otPriceColor]" v-if="checkboxInfo.includes(3)">{{ $t(`¥`) }}{{ item.product_price }}</view>
 				</view>
 			</view>
-			<!-- 滑动 -->
+			<!-- Vuốt -->
 			<scroll-view scroll-x="true" show-scrollbar="false" class="white-nowrap vertical-middle w-full p-32" :style="[boxContentStyle]" v-if="goodStyleConfig == 3">
 				<view class="inline-block" :class="{ 'ml-20': index }" v-for="(item, index) in bargList" :key="index" @tap="bargDetail(item)">
 					<easy-loadimage :image-src="item.image" width="224rpx" height="224rpx" :borderRadius="imgStyle"></easy-loadimage>
 					<view class="w-222 line1 mt-16 fs-26 mb-10" :style="[productStyle]" v-if="checkboxInfo.includes(0)">{{ item.title }}</view>
-					<text class="badge fs-20 mb-14" v-if="checkboxInfo.includes(1)" :style="[braginSuccess]">{{ item.people }}{{ $t(`人正在参与`) }}</text>
+					<text class="badge fs-20 mb-14" v-if="checkboxInfo.includes(1)" :style="[braginSuccess]">{{ item.people }}{{ $t(`người đang tham gia`) }}</text>
 					<view>
 						<baseMoney :money="item.min_price" symbolSize="24" integerSize="36" decimalSize="36" weight :color="priceColor" v-if="checkboxInfo.includes(2)"></baseMoney>
 					</view>
@@ -127,7 +127,7 @@ export default {
 				background: `linear-gradient(90deg, ${this.dataConfig.moduleColor.color[0].item} 0%, ${this.dataConfig.moduleColor.color[1].item} 100%)`
 			};
 		},
-		/*商品模板*/
+		/*Template sản phẩm*/
 		goodStyleConfig() {
 			return this.dataConfig.goodStyleConfig.tabVal;
 		},
@@ -159,15 +159,15 @@ export default {
 				fontSize: this.dataConfig.titleNumber.val * 2 + 'rpx'
 			};
 		},
-		/*标题是文本还是图片*/
+		/*Tiêu đề là văn bản hay hình ảnh*/
 		titleConfig() {
 			return this.dataConfig.titleConfig.tabVal;
 		},
-		/*标题文本*/
+		/*Văn bản tiêu đề*/
 		titleTxtConfig() {
 			return this.dataConfig.titleTxtConfig.value;
 		},
-		/*标题图片*/
+		/*Ảnh tiêu đề*/
 		titleImg() {
 			return this.styleConfig ? this.titleUrl : this.titleColorUrl;
 		},
@@ -177,34 +177,34 @@ export default {
 		titleUrl() {
 			return this.dataConfig.imgConfig.url;
 		},
-		/*标题提示文字*/
+		/*Chữ gợi ý tiêu đề*/
 		tipsColor() {
 			return {
 				color: this.styleConfig ? this.dataConfig.tipsColor.color[0].item : this.dataConfig.tipsColor2.color[0].item
 			};
 		},
-		/*分割线颜色*/
+		/*Màu đường phân chia*/
 		dividerColor() {
 			return {
 				color: this.dataConfig.dividerColor.color[0].item
 			};
 		},
-		/*头部提示语文本*/
+		/*Văn bản gợi ý phần đầu*/
 		tipTxt() {
 			return this.dataConfig.tipTxtConfig.value;
 		},
-		/*头部按钮文本*/
+		/*Văn bản nút phần đầu*/
 		rightBntTxt() {
 			return this.dataConfig.rightBntConfig.value;
 		},
-		/*头部按钮样式*/
+		/*Style nút phần đầu*/
 		headerBntColor() {
 			return {
 				color: this.styleConfig ? this.dataConfig.headerBntColor.color[0].item : this.dataConfig.headerBntColor2.color[0].item,
 				fontSize: `${this.dataConfig.bntNumber.val * 2}rpx`
 			};
 		},
-		/*商品图片圆角样式*/
+		/*Style góc tròn ảnh sản phẩm*/
 		imgStyle() {
 			let borderRadius = `${this.dataConfig.filletImg.val * 2}rpx`;
 			if (this.dataConfig.filletImg.type) {
@@ -214,28 +214,28 @@ export default {
 			}
 			return borderRadius;
 		},
-		/*商品名称样式*/
+		/*Style tên sản phẩm*/
 		productStyle() {
 			return {
 				color: this.dataConfig.goodsNameColor.color[0].item,
 				fontWeight: this.dataConfig.goodsName.tabVal ? 'normal' : 'bold'
 			};
 		},
-		/* 展示信息 */
+		/* Thông tin hiển thị */
 		checkboxInfo() {
 			return this.dataConfig.checkboxInfo.type;
 		},
-		/* 参与人数颜色 */
+		/* Màu số người tham gia */
 		joinColor() {
 			return {
 				color: this.dataConfig.toneConfig.tabVal ? this.dataConfig.joinNumColor.color[0].item : 'var(--view-theme)'
 			};
 		},
-		/* 价格颜色 */
+		/* Màu giá */
 		priceColor() {
 			return this.dataConfig.toneConfig.tabVal ? this.dataConfig.bargainPriceColor.color[0].item : 'var(--view-theme)';
 		},
-		/* 划线价颜色 */
+		/* Màu giá gốc (gạch ngang) */
 		otPriceColor() {
 			return {
 				color: this.dataConfig.goodsPriceColor.color[0].item
@@ -244,7 +244,7 @@ export default {
 		showBtn() {
 			return this.dataConfig.bargainConfig.tabVal;
 		},
-		/* 按钮颜色 */
+		/* Màu nút */
 		btnBgColor() {
 			return {
 				background: this.dataConfig.toneConfig.tabVal
@@ -253,7 +253,7 @@ export default {
 				color: this.dataConfig.goodsBntTxtColor.color[0].item
 			};
 		},
-		/*砍价成功*/
+		/*Săn giảm giá thành công*/
 		braginSuccess() {
 			let styleObject = {};
 			if (this.dataConfig.toneConfig.tabVal) {
@@ -263,7 +263,7 @@ export default {
 			}
 			return styleObject;
 		},
-		/*商品数量*/
+		/*Số lượng sản phẩm*/
 		numberConfig() {
 			return this.dataConfig.numberConfig.val;
 		}
@@ -277,7 +277,7 @@ export default {
 				url
 			});
 		},
-		// 砍价列表
+		// Danh sách săn giảm giá
 		getBargainList() {
 			let limit = this.$config.LIMIT;
 			getBargainList({

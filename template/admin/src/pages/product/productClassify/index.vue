@@ -3,10 +3,10 @@
     <el-card :bordered="false" shadow="never" class="ivu-mt" :body-style="{ padding: 0 }">
       <div class="padding-add">
         <el-form ref="artFrom" :model="artFrom" inline label-width="80px" label-position="right" @submit.native.prevent>
-          <el-form-item label="商品分类：" prop="pid" label-for="pid">
+          <el-form-item label="Danh mục sản phẩm:" prop="pid" label-for="pid">
             <el-select
               v-model="artFrom.pid"
-              placeholder="请选择商品分类"
+              placeholder="Vui lòng chọn danh mục sản phẩm"
               @change="userSearchs"
               clearable
               class="form_content_width"
@@ -16,30 +16,30 @@
               }}</el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="分类状态：" label-for="is_show">
+          <el-form-item label="Trạng thái danh mục:" label-for="is_show">
             <el-select
               v-model="artFrom.is_show"
-              placeholder="请选择分类状态"
+              placeholder="Vui lòng chọn trạng thái danh mục"
               clearable
               @change="userSearchs"
               class="form_content_width"
             >
-              <el-option value="1" label="显示"></el-option>
-              <el-option value="0" label="隐藏"></el-option>
+              <el-option value="1" label="Hiện"></el-option>
+              <el-option value="0" label="Ẩn"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="分类名称：" label-for="status2">
-            <el-input clearable placeholder="请输入分类名称" v-model="artFrom.cate_name" class="form_content_width" />
+          <el-form-item label="Tên danh mục:" label-for="status2">
+            <el-input clearable placeholder="Vui lòng nhập tên danh mục" v-model="artFrom.cate_name" class="form_content_width" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="userSearchs">查询</el-button>
+            <el-button type="primary" v-db-click @click="userSearchs">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
     <el-card :bordered="false" shadow="never" class="ivu-mt mt16">
       <el-button v-auth="['product-save-cate']" type="primary" class="bnt" v-db-click @click="addClass"
-        >添加分类</el-button
+        >Thêm danh mục</el-button
       >
       <vxe-table
         class="mt14"
@@ -50,16 +50,16 @@
         :data="tableData"
       >
         <vxe-table-column field="id" title="ID" tooltip width="80"></vxe-table-column>
-        <vxe-table-column field="cate_name" tree-node title="分类名称" min-width="250"></vxe-table-column>
-        <vxe-table-column field="pic" title="分类图标" min-width="100">
+        <vxe-table-column field="cate_name" tree-node title="Tên danh mục" min-width="250"></vxe-table-column>
+        <vxe-table-column field="pic" title="Biểu tượng danh mục" min-width="100">
           <template v-slot="{ row }">
             <div class="tabBox_img" v-viewer v-if="row.pic">
               <img v-lazy="row.pic" />
             </div>
           </template>
         </vxe-table-column>
-        <vxe-table-column field="sort" title="排序" min-width="100" tooltip="true"></vxe-table-column>
-        <vxe-table-column field="is_show" title="状态" min-width="120">
+        <vxe-table-column field="sort" title="Thứ tự sắp xếp" min-width="100" tooltip="true"></vxe-table-column>
+        <vxe-table-column field="is_show" title="Trạng thái" min-width="120">
           <template v-slot="{ row }">
             <el-switch
               class="defineSwitch"
@@ -69,22 +69,22 @@
               :value="row.is_show"
               @change="onchangeIsShow(row)"
               size="large"
-              active-text="开启"
-              inactive-text="关闭"
+              active-text="Bật"
+              inactive-text="Tắt"
             >
             </el-switch>
           </template>
         </vxe-table-column>
-        <vxe-table-column field="date" title="操作" width="120" fixed="right">
+        <vxe-table-column field="date" title="Thao tác" width="120" fixed="right">
           <template v-slot="{ row, index }">
-            <a v-db-click @click="edit(row)">编辑</a>
+            <a v-db-click @click="edit(row)">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(row, '删除商品分类', index)">删除</a>
+            <a v-db-click @click="del(row, 'Xóa danh mục sản phẩm', index)">Xóa</a>
           </template>
         </vxe-table-column>
       </vxe-table>
     </el-card>
-    <!-- 添加 编辑表单-->
+    <!-- Thêm Sửa biểu mẫu-->
     <edit-from ref="edits" :FromData="FromData" @submitFail="userSearchs"></edit-from>
   </div>
 </template>
@@ -129,7 +129,7 @@ export default {
     this.getList();
   },
   methods: {
-    // 商品分类；
+    // Danh mục sản phẩm;
     goodsCategory() {
       treeListApi(0)
         .then((res) => {
@@ -139,7 +139,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       this.artFrom.is_show = this.artFrom.is_show || '';
@@ -160,15 +160,15 @@ export default {
       this.artFrom.page = index;
       this.getList();
     },
-    // 添加
+    // Thêm
     addClass() {
       this.$modalForm(productCreateApi()).then(() => this.getList());
     },
-    // 编辑
+    // Sửa
     edit(row) {
       this.$modalForm(productEditApi(row.id)).then(() => this.getList());
     },
-    // 修改状态
+    // Sửa trạng thái
     onchangeIsShow(row) {
       let data = {
         id: row.id,
@@ -182,7 +182,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 下拉树
+    // Cây thả xuống
     handleCheckChange(data) {
       let value = '';
       let title = '';
@@ -201,7 +201,7 @@ export default {
       this.artFrom.pid = value;
       this.getList();
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -219,7 +219,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.artFrom.page = 1;
       this.getList();

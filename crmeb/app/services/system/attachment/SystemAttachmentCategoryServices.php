@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -22,8 +22,8 @@ use think\facade\Route as Url;
  *
  * Class SystemAttachmentCategoryServices
  * @package app\services\attachment
- * @method get($id) 获取一条数据
- * @method count($where) 获取条件下数据总数
+ * @method get($id) Lấy một dòng dữ liệu
+ * @method count($where) Lấy tổng số dữ liệu theo điều kiện
  */
 class SystemAttachmentCategoryServices extends BaseServices
 {
@@ -38,7 +38,7 @@ class SystemAttachmentCategoryServices extends BaseServices
     }
 
     /**
-     * 获取分类列表
+     * Lấy danh sách danh mục
      * @param array $where
      * @return array
      * @throws \ReflectionException
@@ -64,7 +64,7 @@ class SystemAttachmentCategoryServices extends BaseServices
     }
 
     /**
-     * 格式化列表
+     * Định dạng danh sách
      * @param $menusList
      * @param int $pid
      * @param array $navList
@@ -89,17 +89,17 @@ class SystemAttachmentCategoryServices extends BaseServices
     }
 
     /**
-     * 创建新增表单
+     * Tạo form thêm mới
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
      */
     public function createForm($pid, $type)
     {
-        return create_form('添加分类', $this->form(['pid' => $pid, 'type' => $type]), Url::buildUrl('/file/category'), 'POST');
+        return create_form('Thêm danh mục', $this->form(['pid' => $pid, 'type' => $type]), Url::buildUrl('/file/category'), 'POST');
     }
 
     /**
-     * 创建编辑表单
+     * Tạo form sửa
      * @param $id
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -107,11 +107,11 @@ class SystemAttachmentCategoryServices extends BaseServices
     public function editForm(int $id)
     {
         $info = $this->dao->get($id);
-        return create_form('编辑分类', $this->form($info), Url::buildUrl('/file/category/' . $id), 'PUT');
+        return create_form('Sửa danh mục', $this->form($info), Url::buildUrl('/file/category/' . $id), 'PUT');
     }
 
     /**
-     * 生成表单参数
+     * Tạo tham số form
      * @param array $info
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -120,21 +120,21 @@ class SystemAttachmentCategoryServices extends BaseServices
     {
         [$pidList, $data] = $this->getPidList((int)($info['pid'] ?? 0));
         return [
-            Form::cascader('pid', '上级分类', $data)->options($pidList)->filterable(true)->props(['props' => ['multiple' => false, 'checkStrictly' => true, 'emitPath' => false]])->style(['width' => '100%']),
-            Form::input('name', '分类名称', $info['name'] ?? '')->maxlength(30),
+            Form::cascader('pid', 'Danh mục cha', $data)->options($pidList)->filterable(true)->props(['props' => ['multiple' => false, 'checkStrictly' => true, 'emitPath' => false]])->style(['width' => '100%']),
+            Form::input('name', 'Tên danh mục', $info['name'] ?? '')->maxlength(30),
             Form::hidden('type', $info['type'] ?? 0),
         ];
     }
 
     /**
-     * 获取分类
+     * Lấy danh mục
      * @param $value
      * @return array
      * @throws \ReflectionException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/9/12
      */
@@ -147,19 +147,19 @@ class SystemAttachmentCategoryServices extends BaseServices
             $data = [0];
         }
         $pidList = get_tree_children($pidList, 'children', 'value');
-        array_unshift($pidList, ['value' => 0, 'pid' => 0, 'label' => '顶级分类']);
+        array_unshift($pidList, ['value' => 0, 'pid' => 0, 'label' => 'Danh mục cấp cao nhất']);
         return [$pidList, array_reverse($data)];
     }
 
     /**
-     * 获取分类列表（添加修改）
+     * Lấy danh sách danh mục (thêm/sửa)
      * @param array $where
      * @return mixed
      */
     public function getCateList(array $where)
     {
         $list = $this->dao->getList($where);
-        $options = [['value' => 0, 'label' => '所有分类']];
+        $options = [['value' => 0, 'label' => 'Tất cả danh mục']];
         foreach ($list as $id => $cateName) {
             $options[] = ['label' => $cateName['name'], 'value' => $cateName['id']];
         }
@@ -167,7 +167,7 @@ class SystemAttachmentCategoryServices extends BaseServices
     }
 
     /**
-     * 保存新建的资源
+     * Lưu resource mới tạo
      * @param array $data
      */
     public function save(array $data)
@@ -181,7 +181,7 @@ class SystemAttachmentCategoryServices extends BaseServices
     }
 
     /**
-     * 保存修改的资源
+     * Lưu tài nguyên đã sửa
      * @param int $id
      * @param array $data
      */
@@ -196,7 +196,7 @@ class SystemAttachmentCategoryServices extends BaseServices
     }
 
     /**
-     * 删除分类
+     * Xóa danh mục
      * @param int $id
      */
     public function del(int $id)
@@ -212,7 +212,7 @@ class SystemAttachmentCategoryServices extends BaseServices
 
 
     /**
-     * 获取一条数据
+     * Lấy một dòng dữ liệu
      * @param $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException

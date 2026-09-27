@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,7 +17,7 @@ use crmeb\traits\ModelTrait;
 use think\Model;
 
 /**
- * 客服聊天记录
+ * Lịch sử trò chuyện CSKH
  * Class StoreServiceLog
  * @package app\model\service
  */
@@ -26,13 +26,13 @@ class StoreServiceLog extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'store_service_log';
@@ -43,7 +43,7 @@ class StoreServiceLog extends BaseModel
     }
 
     /**
-     * 一对一关联
+     * Liên kết một-một
      * @return mixed
      */
     public function service()
@@ -55,7 +55,7 @@ class StoreServiceLog extends BaseModel
     }
 
     /**
-     * 一对一关联
+     * Liên kết một-một
      * @return mixed
      */
     public function user()
@@ -67,7 +67,7 @@ class StoreServiceLog extends BaseModel
     }
 
     /**
-     * uid搜索器
+     * Bộ lọc uid
      * @param Model $query
      * @param $value
      */
@@ -77,7 +77,7 @@ class StoreServiceLog extends BaseModel
     }
 
     /**
-     * 聊天记录搜索器
+     * Bộ lọc lịch sử chat
      * @param Model $query
      * @param $value
      */

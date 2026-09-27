@@ -22,7 +22,7 @@ class DiyPro extends AuthController
 
     public function getInfo($id = 0)
     {
-        if ($id == 0) return app('json')->fail('参数错误');
+        if ($id == 0) return app('json')->fail('Tham số không hợp lệ');
         return app('json')->success($this->services->getInfo($id));
     }
 
@@ -53,7 +53,7 @@ class DiyPro extends AuthController
                 if (isset($item['goodsList']['list']) && is_array($item['goodsList']['list'])) {
                     $limitMax = config('database.page.limitMax', 50);
                     if (isset($item['numConfig']['val']) && isset($item['tabConfig']['tabVal']) && $item['tabConfig']['tabVal'] == 0 && $item['numConfig']['val'] > $limitMax) {
-                        return app('json')->fail('您设置得商品个数超出系统限制,最大限制' . $limitMax . '个商品');
+                        return app('json')->fail('Số lượng sản phẩm bạn thiết lập vượt quá giới hạn của hệ thống, giới hạn tối đa' . $limitMax . 'sản phẩm');
                     }
                     $item['goodsList']['ids'] = array_column($item['goodsList']['list'], 'id');
                     unset($item['goodsList']['list'], $item['productList']['list']);
@@ -69,7 +69,7 @@ class DiyPro extends AuthController
                         if (isset($tabValue['goodsList']['list']) && is_array($tabValue['goodsList']['list'])) {
                             $limitMax = config('database.page.limitMax', 50);
                             if (isset($tabValue['numConfig']['val']) && isset($tabValue['tabConfig']['tabVal']) && $tabValue['tabConfig']['tabVal'] == 0 && $tabValue['numConfig']['val'] > $limitMax) {
-                                return app('json')->fail('您设置得商品个数超出系统限制,最大限制' . $limitMax . '个商品');
+                                return app('json')->fail('Số lượng sản phẩm bạn thiết lập vượt quá giới hạn của hệ thống, giới hạn tối đa' . $limitMax . 'sản phẩm');
                             }
                             $tabValue['goodsList']['ids'] = array_column($tabValue['goodsList']['list'], 'id');
                         }
@@ -85,13 +85,13 @@ class DiyPro extends AuthController
         }
         $data['value'] = json_encode($value);
         $data['version'] = uniqid();
-        return app('json')->success($id ? '修改成功' : '保存成功', ['id' => $this->services->saveInfo($id, $data)]);
+        return app('json')->success($id ? 'Sửa thành công' : 'Lưu thành công', ['id' => $this->services->saveInfo($id, $data)]);
     }
 
     public function delInfo($id)
     {
         $this->services->delInfo($id);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 
     public function setInfoStatus($id)
@@ -102,11 +102,11 @@ class DiyPro extends AuthController
     public function getProduct()
     {
         $where = $this->request->getMore([
-            ['cate_id', []],//搜索分类
-            ['salesOrder', ''],//销量排序
-            ['priceOrder', ''],//价格排序
-            ['store_label_id', []],//标签ID
-            ['ids', []],//商品ID
+            ['cate_id', []],//Tìm kiếm danh mục
+            ['salesOrder', ''],//Sắp xếp theo lượt bán
+            ['priceOrder', ''],//Sắp xếp theo giá
+            ['store_label_id', []],//ID nhãn
+            ['ids', []],//ID sản phẩm
         ]);
         $where['is_show'] = 1;
         $where['is_del'] = 0;
@@ -120,32 +120,32 @@ class DiyPro extends AuthController
         [$name] = $this->request->postMore([
             ['name', '']
         ], true);
-        if (!$name) return app('json')->fail('请输入名称');
+        if (!$name) return app('json')->fail('Vui lòng nhập tên');
         $this->services->updateName($id, $name);
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
     public function exportDIYData($id)
     {
         $value = $this->services->exportDIYData($id);
-        $filename = 'DIY数据_' . date('YmdHis', time()) . '.txt';
-        return app('json')->success('导出成功', ['value' => $value, 'filename' => $filename]);
+        $filename = 'Dữ liệu DIY_' . date('YmdHis', time()) . '.txt';
+        return app('json')->success('Xuất thành công', ['value' => $value, 'filename' => $filename]);
     }
 
     public function importDIYData()
     {
-        // 获取文件
+        // Lấy file
         $file = $this->request->file('file');
-        if (!$file) return app('json')->fail('请上传文件');
+        if (!$file) return app('json')->fail('Vui lòng tải lên tệp');
 
-        // 获取文件的临时路径
+        // Lấy đường dẫn tạm của file
         $tempPath = $file->getRealPath();
 
-        // 使用文件流读取内容
+        // Dùng file stream để đọc nội dung
         $content = file_get_contents($tempPath);
 
-        // 保存内容
+        // Lưu nội dung
         $this->services->importDIYData($content);
-        return app('json')->success('导入成功');
+        return app('json')->success('Nhập thành công');
     }
 }

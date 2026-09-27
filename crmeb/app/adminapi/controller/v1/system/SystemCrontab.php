@@ -16,7 +16,7 @@ class SystemCrontab extends AuthController
     }
 
     /**
-     * 获取定时任务列表
+     * Lấy danh sách tác vụ định kỳ
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -32,7 +32,7 @@ class SystemCrontab extends AuthController
     }
 
     /**
-     * 获取定时任务详情
+     * Lấy chi tiết tác vụ định kỳ
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -45,7 +45,7 @@ class SystemCrontab extends AuthController
     }
 
     /**
-     * 获取定时任务类型
+     * Lấy loại tác vụ định kỳ
      * @return mixed
      */
     public function getMarkList()
@@ -54,7 +54,7 @@ class SystemCrontab extends AuthController
     }
 
     /**
-     * 保存定时任务
+     * Lưu tác vụ định kỳ
      * @return mixed
      */
     public function saveTimer()
@@ -76,20 +76,20 @@ class SystemCrontab extends AuthController
             ['password', ''],
         ]);
         if ($data['mark'] == 'customTimer') {
-            if (!Env::get('app_debug', false)) return app('json')->fail('生产环境下无法新增和修改自定义内容，如需修改请修改.env文件中app_debug项为true');
-            if ($data['password'] === '') return app('json')->fail('密码不能为空');
-            if (config('filesystem.password') !== $data['password']) return app('json')->fail('密码错误');
+            if (!Env::get('app_debug', false)) return app('json')->fail('Không thể thêm mới và sửa nội dung tùy chỉnh trong môi trường production, nếu cần sửa, vui lòng đặt mục app_debug trong tệp .env thành true');
+            if ($data['password'] === '') return app('json')->fail('Mật khẩu không được để trống');
+            if (config('filesystem.password') !== $data['password']) return app('json')->fail('Mật khẩu không đúng');
             $adminInfo = $this->request->adminInfo();
-            if (!$adminInfo) return app('json')->fail('非法操作');
-            if ($adminInfo['level'] != 0) return app('json')->fail('仅超级管理员可以操作定时任务');
-            if (!$this->isSafePhpCode($data['customCode'])) return app('json')->fail('自定义内容存在危险代码，请检查代码');
+            if (!$adminInfo) return app('json')->fail('Thao tác không hợp lệ');
+            if ($adminInfo['level'] != 0) return app('json')->fail('Chỉ quản trị viên cấp cao nhất mới được thao tác tác vụ định kỳ');
+            if (!$this->isSafePhpCode($data['customCode'])) return app('json')->fail('Nội dung tùy chỉnh chứa mã nguy hiểm, vui lòng kiểm tra lại mã');
         }
         $this->services->saveTimer($data);
         return app('json')->success(100000);
     }
 
     /**
-     * 删除定时任务
+     * Xóa tác vụ định kỳ
      * @param $id
      * @return mixed
      */
@@ -100,7 +100,7 @@ class SystemCrontab extends AuthController
     }
 
     /**
-     * 设置定时任务状态
+     * Thiết lập trạng thái tác vụ định kỳ
      * @param $id
      * @param $is_open
      * @return mixed
@@ -112,7 +112,7 @@ class SystemCrontab extends AuthController
     }
 
     /**
-     * 检查是否包含删除表，删除表数据，删除文件，修改文件内容以及后缀，执行命令等操作的关键词
+     * Kiểm tra có chứa từ khóa của các thao tác như xóa bảng, xóa dữ liệu bảng, xóa file, sửa nội dung và phần mở rộng file, thực thi lệnh... không
      * @param $code
      * @return bool
      * @author wuhaotian
@@ -121,7 +121,7 @@ class SystemCrontab extends AuthController
      */
     function isSafePhpCode($code)
     {
-        // 检查是否包含删除表，删除表数据，删除文件，修改文件内容以及后缀，执行命令等操作的关键词
+        // Kiểm tra có chứa từ khóa của các thao tác như xóa bảng, xóa dữ liệu bảng, xóa file, sửa nội dung và phần mở rộng file, thực thi lệnh... không
         $dangerous_keywords = array(
             'delete',
             'destroy',
@@ -139,7 +139,7 @@ class SystemCrontab extends AuthController
                 return false;
             }
         }
-        return true; // 如果通过所有安全检查，返回 true
+        return true; // Nếu vượt qua tất cả kiểm tra an toàn, trả về true
     }
 
 }

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -28,58 +28,58 @@ use think\facade\Route as Url;
 class AgentLevelTaskServices extends BaseServices
 {
     /**
-     * 任务类型
-     * type 记录在数据库中用来区分任务
-     * name 任务名 (任务名中的{$num}会自动替换成设置的数字 + 单位)
-     * max_number 最大设定数值 0为不限定
-     * min_number 最小设定数值
-     * unit 单位
+     * Loại nhiệm vụ
+     * type được lưu trong cơ sở dữ liệu để phân biệt nhiệm vụ
+     * name tên nhiệm vụ ({$num} trong tên nhiệm vụ sẽ tự động được thay bằng số đã đặt + đơn vị)
+     * max_number giá trị tối đa được đặt, 0 là không giới hạn
+     * min_number giá trị tối thiểu được đặt
+     * unit đơn vị
      * */
     protected $TaskType = [
         [
             'type' => 1,
             'method' => 'spread',
-            'name' => '邀请好友{$num}成为下线',
-            'real_name' => '邀请好友成为下线',
+            'name' => 'Mời {$num} bạn làm cấp dưới',
+            'real_name' => 'Mời bạn bè làm cấp dưới',
             'max_number' => 0,
             'min_number' => 1,
-            'unit' => '人'
+            'unit' => 'người'
         ],
         [
             'type' => 2,
             'method' => 'consumePrice',
-            'name' => '自身消费满{$num}',
-            'real_name' => '自身消费金额',
+            'name' => 'Chi tiêu cá nhân đạt {$num}',
+            'real_name' => 'Số tiền chi tiêu cá nhân',
             'max_number' => 0,
             'min_number' => 0,
-            'unit' => '元'
+            'unit' => 'đ'
         ],
         [
             'type' => 3,
             'method' => 'consumeCount',
-            'name' => '自身消费满{$num}',
-            'real_name' => '自身消费单数',
+            'name' => 'Chi tiêu cá nhân đạt {$num}',
+            'real_name' => 'Số đơn chi tiêu cá nhân',
             'max_number' => 0,
             'min_number' => 0,
-            'unit' => '单'
+            'unit' => 'đơn'
         ],
         [
             'type' => 4,
             'method' => 'spreadConsumePrice',
-            'name' => '下级消费满{$num}',
-            'real_name' => '下级消费金额',
+            'name' => 'Cấp dưới chi tiêu đạt {$num}',
+            'real_name' => 'Số tiền chi tiêu của cấp dưới',
             'max_number' => 0,
             'min_number' => 0,
-            'unit' => '元'
+            'unit' => 'đ'
         ],
         [
             'type' => 5,
             'method' => 'spreadConsumeCount',
-            'name' => '下级消费满{$num}',
-            'real_name' => '下级消费单数',
+            'name' => 'Cấp dưới chi tiêu đạt {$num}',
+            'real_name' => 'Số đơn chi tiêu của cấp dưới',
             'max_number' => 0,
             'min_number' => 0,
-            'unit' => '单'
+            'unit' => 'đơn'
         ],
     ];
 
@@ -93,7 +93,7 @@ class AgentLevelTaskServices extends BaseServices
     }
 
     /**
-     * 获取某一个任务信息
+     * Lấy thông tin một nhiệm vụ
      * @param int $id
      * @param string $field
      * @param array $with
@@ -108,7 +108,7 @@ class AgentLevelTaskServices extends BaseServices
     }
 
     /**
-     * 获取等级列表
+     * Lấy danh sách hạng
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -132,7 +132,7 @@ class AgentLevelTaskServices extends BaseServices
     }
 
     /**
-     * 获取某个等级某个类型任务
+     * Lấy nhiệm vụ theo loại của một hạng
      * @param int $level_id
      * @param int $type
      * @return array|\think\Model|null
@@ -146,7 +146,7 @@ class AgentLevelTaskServices extends BaseServices
     }
 
     /**
-     * 添加等级任务表单
+     * Form thêm nhiệm vụ theo hạng
      * @param int $id
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -167,17 +167,17 @@ class AgentLevelTaskServices extends BaseServices
             return $menus;
         };
         $field[] = Form::hidden('level_id', $level_id);
-        $field[] = Form::select('type', '任务类型')->setOptions(Form::setOptions($setOptionLabel))->filterable(true);
-        $field[] = Form::input('name', '任务名称')->col(24);
-        $field[] = Form::number('number', '限定数量', 0)->precision(0);
-        $field[] = Form::textarea('desc', '任务描述');
-        $field[] = Form::number('sort', '排序', 0)->precision(0);
-        $field[] = Form::radio('status', '是否显示', 1)->options([['value' => 1, 'label' => '显示'], ['value' => 0, 'label' => '隐藏']]);
-        return create_form('添加等级任务', $field, Url::buildUrl('/agent/level_task'), 'POST');
+        $field[] = Form::select('type', 'Loại nhiệm vụ')->setOptions(Form::setOptions($setOptionLabel))->filterable(true);
+        $field[] = Form::input('name', 'Tên nhiệm vụ')->col(24);
+        $field[] = Form::number('number', 'Số lượng quy định', 0)->precision(0);
+        $field[] = Form::textarea('desc', 'Mô tả nhiệm vụ');
+        $field[] = Form::number('sort', 'Thứ tự sắp xếp', 0)->precision(0);
+        $field[] = Form::radio('status', 'Hiển thị', 1)->options([['value' => 1, 'label' => 'Hiện'], ['value' => 0, 'label' => 'Ẩn']]);
+        return create_form('Thêm nhiệm vụ cấp bậc', $field, Url::buildUrl('/agent/level_task'), 'POST');
     }
 
     /**
-     * 获取修改任务数据
+     * Lấy dữ liệu sửa nhiệm vụ
      * @param int $id
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -197,18 +197,18 @@ class AgentLevelTaskServices extends BaseServices
             }
             return $menus;
         };
-        $field[] = Form::select('type', '任务类型', $levelTaskInfo['type'])->setOptions(Form::setOptions($setOptionLabel))->filterable(true);
-        $field[] = Form::input('name', '任务名称', $levelTaskInfo['name']);
-        $field[] = Form::number('number', '限定数量', $levelTaskInfo['number'])->min(0);
-        $field[] = Form::textarea('desc', '任务描述', $levelTaskInfo['desc']);
-        $field[] = Form::number('sort', '排序', $levelTaskInfo['sort'])->precision(0);
-        $field[] = Form::radio('status', '是否显示', $levelTaskInfo['status'])->options([['value' => 1, 'label' => '显示'], ['value' => 0, 'label' => '隐藏']]);
+        $field[] = Form::select('type', 'Loại nhiệm vụ', $levelTaskInfo['type'])->setOptions(Form::setOptions($setOptionLabel))->filterable(true);
+        $field[] = Form::input('name', 'Tên nhiệm vụ', $levelTaskInfo['name']);
+        $field[] = Form::number('number', 'Số lượng quy định', $levelTaskInfo['number'])->min(0);
+        $field[] = Form::textarea('desc', 'Mô tả nhiệm vụ', $levelTaskInfo['desc']);
+        $field[] = Form::number('sort', 'Thứ tự sắp xếp', $levelTaskInfo['sort'])->precision(0);
+        $field[] = Form::radio('status', 'Hiển thị', $levelTaskInfo['status'])->options([['value' => 1, 'label' => 'Hiện'], ['value' => 0, 'label' => 'Ẩn']]);
 
-        return create_form('编辑等级任务', $field, Url::buildUrl('/agent/level_task/' . $id), 'PUT');
+        return create_form('Sửa nhiệm vụ cấp bậc', $field, Url::buildUrl('/agent/level_task/' . $id), 'PUT');
     }
 
     /**
-     * 获取任务类型
+     * Lấy loại nhiệm vụ
      * @return array[]
      */
     public function getTaskTypeAll()
@@ -217,8 +217,8 @@ class AgentLevelTaskServices extends BaseServices
     }
 
     /**
-     * 获取某个任务
-     * @param string $type 任务类型
+     * Lấy một nhiệm vụ
+     * @param string $type Loại nhiệm vụ
      * @return array
      * */
     public static function getTaskType($type)
@@ -229,7 +229,7 @@ class AgentLevelTaskServices extends BaseServices
     }
 
     /**
-     * 获取用户某一个分销等级任务情况
+     * Lấy tình trạng nhiệm vụ của người dùng ở một hạng phân phối
      * @param int $uid
      * @param int $level_id
      * @return array
@@ -239,7 +239,7 @@ class AgentLevelTaskServices extends BaseServices
      */
     public function getUserLevelTaskList(int $uid, int $level_id)
     {
-        //商城分销是否开启
+        //Cửa hàng có mở tiếp thị liên kết hay không
         if (!sys_config('brokerage_func_status')) {
             return [];
         }
@@ -263,17 +263,17 @@ class AgentLevelTaskServices extends BaseServices
             $allTyep = array_combine(array_column($allTyep, 'type'), $allTyep);
             foreach ($taskList as &$task) {
                 $task['finish'] = 1;
-                $task['task_type_title'] = '已完成';
+                $task['task_type_title'] = 'Đã hoàn thành';
                 $task['speed'] = 100;
                 $task['new_number'] = $task['number'];
-                //当前等级之前的等级任务 全部为完成
+                //Nhiệm vụ của các hạng trước hạng hiện tại đều coi là đã hoàn thành
                 if (!$userLevel || $userLevel['grade'] < $levelInfo['grade']) {
                     [$title, $num, $isComplete] = $this->checkLevelTaskFinish($uid, (int)$task['id']);
                     if (!$isComplete) {
                         $scale = in_array($task['type'], [2, 4]) ? 2 : 0;
                         $task['finish'] = 0;
                         $numdata = bcsub($task['number'], $num, $scale);
-                        $task['task_type_title'] = '还需' . str_replace('{$num}', $numdata . $allTyep[$task['type']]['unit'] ?? '', $title);
+                        $task['task_type_title'] = 'Còn cần' . str_replace('{$num}', $numdata . $allTyep[$task['type']]['unit'] ?? '', $title);
                         $task['speed'] = bcmul((string)bcdiv((string)$num, (string)$task['number'], 2), '100', 0);
                         $task['new_number'] = $num;
                     }
@@ -285,7 +285,7 @@ class AgentLevelTaskServices extends BaseServices
 
 
     /**
-     * 检测某个任务完成情况
+     * Kiểm tra tình trạng hoàn thành của một nhiệm vụ
      * @param int $uid
      * @param int $task_id
      * @param array $levelTaskInfo
@@ -361,7 +361,7 @@ class AgentLevelTaskServices extends BaseServices
     }
 
     /**
-     * 检测等级任务
+     * Kiểm tra nhiệm vụ hạng
      * @param int $id
      * @param array $data
      * @return bool

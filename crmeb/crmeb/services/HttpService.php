@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,19 +18,19 @@ namespace crmeb\services;
 class HttpService
 {
     /**
-     * 错误信息
+     * Thông tin lỗi
      * @var string
      */
     private static $curlError;
 
     /**
-     * header头信息
+     * Thông tin header
      * @var string
      */
     private static $headerStr;
 
     /**
-     * 请求状态
+     * Trạng thái yêu cầu
      * @var int
      */
     private static $status;
@@ -52,7 +52,7 @@ class HttpService
     }
 
     /**
-     * 模拟GET发起请求
+     * Giả lập gửi yêu cầu GET
      * @param $url
      * @param array $data
      * @param bool $header
@@ -70,7 +70,7 @@ class HttpService
     }
 
     /**
-     * curl 请求
+     * Yêu cầu curl
      * @param $url
      * @param string $method
      * @param array $data
@@ -86,28 +86,28 @@ class HttpService
 
         $curl = curl_init($url);
         $method = strtoupper($method);
-        //请求方式
+        //Phương thức yêu cầu
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
-        //携带参数
+        //Tham số kèm theo
         if ($method == 'POST') {
             curl_setopt($curl, CURLOPT_POSTFIELDS, is_array($data) ? http_build_query($data) : $data);
         } elseif ($method == 'GET' && count($data)) {
             $url .= '?' . http_build_query($data);
             curl_setopt($curl, CURLOPT_URL, $url);
         }
-        //超时时间
+        //Thời gian timeout
         curl_setopt($curl, CURLOPT_TIMEOUT, $timeout);
-        //设置header头
+        //Đặt header
         if ($header !== false) curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
 
         curl_setopt($curl, CURLOPT_FAILONERROR, false);
-        //返回抓取数据
+        //Trả về dữ liệu thu thập
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        //输出header头信息
+        //Xuất thông tin header
         curl_setopt($curl, CURLOPT_HEADER, true);
-        //TRUE 时追踪句柄的请求字符串，从 PHP 5.1.3 开始可用。这个很关键，就是允许你查看请求header
+        //Khi TRUE thì theo dõi chuỗi yêu cầu của handle, khả dụng từ PHP 5.1.3. Cái này rất quan trọng, nó cho phép bạn xem header của yêu cầu
         curl_setopt($curl, CURLINFO_HEADER_OUT, true);
-        //https请求
+        //Yêu cầu https
         if (1 == strpos("$" . $url, "https://")) {
             curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
             curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
@@ -122,7 +122,7 @@ class HttpService
     }
 
     /**
-     * 模拟POST发起请求
+     * Giả lập gửi yêu cầu POST
      * @param $url
      * @param $data
      * @param bool $header
@@ -135,7 +135,7 @@ class HttpService
     }
 
     /**
-     * 获取header头字符串类型
+     * Lấy header dạng chuỗi
      * @return mixed
      */
     public static function getHeaderStr()
@@ -144,7 +144,7 @@ class HttpService
     }
 
     /**
-     * 获取header头数组类型
+     * Lấy header dạng mảng
      * @return array
      */
     public static function getHeader()

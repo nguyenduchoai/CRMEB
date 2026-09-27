@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -23,7 +23,7 @@ use app\model\order\StoreOrderInvoice;
 class StoreOrderInvoiceDao extends BaseDao
 {
     /**
-     * 限制精确查询字段
+     * Giới hạn trường tìm kiếm chính xác
      * @var string[]
      */
     protected $withField = ['uid', 'order_id', 'real_name', 'user_phone'];
@@ -34,12 +34,12 @@ class StoreOrderInvoiceDao extends BaseDao
     }
 
     /**
-     * 发票搜索
+     * Tìm kiếm hóa đơn
      * @param array $where
      * @param bool $search
      * @return \crmeb\basic\BaseModel
      * @throws \ReflectionException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/03/20
      */
@@ -52,16 +52,16 @@ class StoreOrderInvoiceDao extends BaseDao
         unset($where['type']);
         return parent::search($where, $search)->when($type, function ($query) use ($type) {
             switch ($type) {
-                case 1://待开
+                case 1://Chờ xuất
                     $query->where('is_invoice', 0)->where('is_refund', 0);
                     break;
-                case 2://已开
+                case 2://Đã xuất
                     $query->where('is_invoice', 1);
                     break;
-                case 3://退款
+                case 3://Hoàn tiền
                     $query->where('is_refund', 1);
                     break;
-                case 4://未开
+                case 4://Chưa xuất
                     $query->where('is_invoice', 0)->where('invoice_time', 0)->where('is_refund', 0);
                     break;
             }

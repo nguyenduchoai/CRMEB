@@ -9,23 +9,23 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 
-// [ 应用入口文件 ]
+// [ File khởi điểm ứng dụng ]
 namespace think;
 
 if ('7.1.0' > phpversion()) {
-    exit('您的php版本过低，不能安装本软件，兼容php版本7.1~7.4，谢谢！');
+    exit('Phiên bản php của bạn quá thấp, không thể cài đặt phần mềm này, phiên bản php tương thích là 7.1~7.4, xin cảm ơn!');
 }
 if (phpversion() >= '8.0.0') {
-    exit('您的php版本太高，不能安装本软件，兼容php版本7.1~7.4，谢谢！');
+    exit('Phiên bản php của bạn quá cao, không thể cài đặt phần mềm này, phiên bản php tương thích là 7.1~7.4, xin cảm ơn!');
 }
 
 define('DS', DIRECTORY_SEPARATOR);
 
-//检测是否已安装CRMEB系统
+//Kiểm tra đã cài đặt hệ thống CRMEB chưa
 if(file_exists("./install/") && !file_exists("./install.lock")){
     if($_SERVER['PHP_SELF'] != '/index.php'){
         header("Content-type: text/html; charset=utf-8");
-        exit("请在域名根目录下安装,如:<br/> www.xxx.com/index.php 正确 <br/>  www.xxx.com/www/index.php 错误,域名后面不能圈套目录, 但项目没有根目录存放限制,可以放在任意目录,apache虚拟主机配置一下即可");
+        exit("Vui lòng cài đặt tại thư mục gốc của tên miền, ví dụ:<br/> www.xxx.com/index.php là đúng <br/>  www.xxx.com/www/index.php là sai, sau tên miền không được lồng thêm thư mục, nhưng dự án không giới hạn vị trí thư mục gốc, có thể đặt ở bất kỳ thư mục nào, chỉ cần cấu hình virtual host của apache là được");
     }
     header('Location:/install/index.php');
     exit();
@@ -33,7 +33,7 @@ if(file_exists("./install/") && !file_exists("./install.lock")){
 
 require __DIR__ . '/../vendor/autoload.php';
 
-// 执行HTTP应用并响应
+// Thực thi ứng dụng HTTP và phản hồi
 $http = (new App())->http;
 
 $response = $http->run();

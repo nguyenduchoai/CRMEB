@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -43,7 +43,7 @@ use think\facade\Log;
 use think\Response;
 
 /**
- * 订单控制器
+ * Controller đơn hàng
  * Class StoreOrderController
  * @package app\api\controller\order
  */
@@ -76,7 +76,7 @@ class StoreOrderController
     }
 
     /**
-     * 获取确认订单页面是否展示快递配送和到店自提
+     * Lấy trạng thái hiển thị giao hàng và nhận tại cửa hàng trên trang xác nhận đơn hàng
      * @param Request $request
      * @return mixed
      * @throws InvalidArgumentException
@@ -88,7 +88,7 @@ class StoreOrderController
     }
 
     /**
-     * 订单确认
+     * Xác nhận đơn hàng
      * @param Request $request
      * @param ShippingTemplatesServices $services
      * @return mixed
@@ -117,7 +117,7 @@ class StoreOrderController
     }
 
     /**
-     * 计算订单金额
+     * Tính số tiền đơn hàng
      * @param Request $request
      * @param StoreOrderComputedServices $computedServices
      * @param $key
@@ -158,7 +158,7 @@ class StoreOrderController
     }
 
     /**
-     * 订单创建
+     * Tạo đơn hàng
      * @param Request $request
      * @param StoreOrderCreateServices $createServices
      * @param $key
@@ -203,7 +203,7 @@ class StoreOrderController
     }
 
     /**
-     * 订单 再次下单
+     * Đơn hàng - Đặt lại
      * @param Request $request
      * @param StoreCartServices $services
      * @return mixed
@@ -225,7 +225,7 @@ class StoreOrderController
      * @throws DataNotFoundException
      * @throws DbException
      * @throws ModelNotFoundException
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/2/13
      */
@@ -238,7 +238,7 @@ class StoreOrderController
     }
 
     /**
-     * 订单支付
+     * Thanh toán đơn hàng
      * @param Request $request
      * @param StorePinkServices $services
      * @param OrderPayServices $payServices
@@ -254,11 +254,11 @@ class StoreOrderController
             ['type', 0]
         ], true);
         $payLock = CacheService::get('PAY_LOCK_' . $uni);
-        if ($payLock) return app('json')->fail('订单支付中，请勿重复支付');
+        if ($payLock) return app('json')->fail('Đơn hàng đang được thanh toán, vui lòng không thanh toán lại');
         CacheService::set('PAY_LOCK_' . $uni, 'PAY_LOCK', 2);
         if (!$uni) return app('json')->fail(100100);
         $orderInfo = $this->services->get(['order_id' => $uni]);
-        if ($orderInfo->is_del == 1 || $orderInfo->is_system_del == 1) return app('json')->fail('订单已经超过系统支付时间，无法支付，请重新下单');
+        if ($orderInfo->is_del == 1 || $orderInfo->is_system_del == 1) return app('json')->fail('Đơn hàng đã quá thời hạn thanh toán của hệ thống, không thể thanh toán, vui lòng đặt hàng lại');
         $uid = $type == 1 ? (int)$request->uid() : $orderInfo->uid;
         $orderInfo->is_channel = $this->getChennel[$request->getFromType()] ?? ($request->isApp() ? 0 : 1);
         $orderInfo->order_id = $uid != $orderInfo->pay_uid ? app()->make(StoreOrderCreateServices::class)->getNewOrderId('cp') : $uni;
@@ -274,14 +274,14 @@ class StoreOrderController
             return app('json')->fail(410215);
         }
 
-        //0元支付
+        //Thanh toán 0đ
         if (bcsub((string)$orderInfo['pay_price'], '0', 2) <= 0) {
-            //创建订单jspay支付
+            //Tạo đơn hàng thanh toán jspay
             /** @var StoreOrderSuccessServices $success */
             $success = app()->make(StoreOrderSuccessServices::class);
             $payPriceStatus = $success->zeroYuanPayment($orderInfo, $uid);
-            if ($payPriceStatus)//0元支付成功
-                return app('json')->status('success', '支付成功', ['order_id' => $orderInfo['order_id'], 'key' => $orderInfo['unique']]);
+            if ($payPriceStatus)//Thanh toán 0đ thành công
+                return app('json')->status('success', 'Thanh toán thành công', ['order_id' => $orderInfo['order_id'], 'key' => $orderInfo['unique']]);
             else
                 return app('json')->status('pay_error', 410216);
         }
@@ -311,7 +311,7 @@ class StoreOrderController
     }
 
     /**
-     * 订单列表
+     * Danh sách đơn hàng
      * @param Request $request
      * @return mixed
      * @throws DataNotFoundException
@@ -338,7 +338,7 @@ class StoreOrderController
     }
 
     /**
-     * 订单详情
+     * Chi tiết đơn hàng
      * @param Request $request
      * @param StoreOrderEconomizeServices $services
      * @param $uni
@@ -355,7 +355,7 @@ class StoreOrderController
     }
 
     /**
-     * 代付订单详情
+     * Chi tiết đơn hàng thanh toán hộ
      * @param Request $request
      * @return mixed
      * @throws DataNotFoundException
@@ -372,8 +372,8 @@ class StoreOrderController
     }
 
     /**
-     * TODO 弃用
-     * 退款订单详情
+     * TODO Ngừng dùng
+     * Chi tiết đơn hoàn tiền
      * @param Request $request
      * @param $uni
      * @param string $cartId
@@ -420,7 +420,7 @@ class StoreOrderController
 
 
     /**
-     * 订单删除
+     * Xóa đơn hàng
      * @param Request $request
      * @return mixed
      * @throws InvalidArgumentException
@@ -440,7 +440,7 @@ class StoreOrderController
     }
 
     /**
-     * 订单收货
+     * Xác nhận đã nhận hàng
      * @param Request $request
      * @param StoreOrderTakeServices $services
      * @param StoreCouponIssueServices $issueServices
@@ -461,7 +461,7 @@ class StoreOrderController
 
 
     /**
-     * 订单 查看物流
+     * Đơn hàng - Xem vận chuyển
      * @param Request $request
      * @param StoreOrderCartInfoServices $services
      * @param ExpressServices $expressServices
@@ -518,7 +518,7 @@ class StoreOrderController
                 unset($cart);
             }
             $orderInfo['delivery_id'] = $express;
-            $orderInfo['delivery_name'] = $type == 'refund' ? '用户退回' : $order['delivery_name'];;
+            $orderInfo['delivery_name'] = $type == 'refund' ? 'Người dùng gửi trả' : $order['delivery_name'];;
             $orderInfo['delivery_code'] = $type == 'refund' ? '' : $order['delivery_code'];
             $orderInfo['delivery_type'] = $order['delivery_type'];
             $orderInfo['user_address'] = $order['user_address'];
@@ -535,7 +535,7 @@ class StoreOrderController
     }
 
     /**
-     * 订单评价
+     * Đánh giá đơn hàng
      * @param Request $request
      * @param StoreOrderCartInfoServices $cartInfoServices
      * @param StoreProductReplyServices $replyServices
@@ -556,10 +556,10 @@ class StoreOrderController
         $user_info = $request->user();
         $group['nickname'] = $user_info['nickname'];
         $group['avatar'] = $user_info['avatar'];
-        if (!$cartInfo) return app('json')->fail('商品不存在');
+        if (!$cartInfo) return app('json')->fail('Sản phẩm không tồn tại');
         $orderInfo = $this->services->get($cartInfo['oid']);
-        if (!$orderInfo) return app('json')->fail('订单不存在');
-        if ($uid != $orderInfo['uid'] && $uid != $orderInfo['gift_uid']) return app('json')->fail('不是您自己的订单，无法评价');
+        if (!$orderInfo) return app('json')->fail('Đơn hàng không tồn tại');
+        if ($uid != $orderInfo['uid'] && $uid != $orderInfo['gift_uid']) return app('json')->fail('Đây không phải đơn hàng của bạn, không thể đánh giá');
         if ($replyServices->be(['oid' => $cartInfo['oid'], 'unique' => $unique]))
             return app('json')->fail(410219);
         $group['comment'] = htmlspecialchars(trim($group['comment']));
@@ -579,7 +579,7 @@ class StoreOrderController
             'reply_type' => 'product',
             'suk' => $cartInfo['cart_info']['productInfo']['attrInfo']['suk']
         ]);
-        //评价是否需要审核
+        //Đánh giá có cần duyệt không
         $group['status'] = sys_config('product_reply_examine') == 1 ? 0 : 1;
 
         $res = $replyServices->save($group);
@@ -587,7 +587,7 @@ class StoreOrderController
             return app('json')->fail(410222);
         }
 
-        //自定义事件-订单评价
+        //Event tùy chỉnh - Đánh giá đơn hàng
         event('CustomEventListener', ['order_comment', [
             'uid' => $uid,
             'oid' => $cartInfo['oid'],
@@ -602,7 +602,7 @@ class StoreOrderController
         } catch (\Exception $e) {
             return app('json')->fail(410222);
         }
-        //缓存抽奖次数
+        //Cache số lần quay thưởng
         /** @var LuckLotteryServices $luckLotteryServices */
         $luckLotteryServices = app()->make(LuckLotteryServices::class);
         $luckLotteryServices->setCacheLotteryNum((int)$uid == $orderInfo['uid'] ? $orderInfo['uid'] : $orderInfo['gift_uid'], 'comment');
@@ -626,7 +626,7 @@ class StoreOrderController
     }
 
     /**
-     * 订单统计数据
+     * Dữ liệu thống kê đơn hàng
      * @param Request $request
      * @return mixed
      * @throws \ReflectionException
@@ -637,19 +637,19 @@ class StoreOrderController
     }
 
     /**
-     * 订单退款理由
+     * Lý do hoàn tiền đơn hàng
      * @return mixed
      */
     public function refund_reason()
     {
-        $reason = sys_config('stor_reason') ?: [];//退款理由
-        $reason = str_replace("\r\n", "\n", $reason);//防止不兼容
+        $reason = sys_config('stor_reason') ?: [];//Lý do hoàn tiền
+        $reason = str_replace("\r\n", "\n", $reason);//Ngăn không tương thích
         $reason = explode("\n", $reason);
         return app('json')->success($reason);
     }
 
     /**
-     * 获取可以退货的订单商品列表
+     * Lấy danh sách sản phẩm trong đơn hàng có thể trả hàng
      * @param Request $request
      * @param StoreOrderCartInfoServices $services
      * @param $id
@@ -679,7 +679,7 @@ class StoreOrderController
     }
 
     /**
-     * 获取退货商品列表
+     * Lấy danh sách sản phẩm trả hàng
      * @param Request $request
      * @return mixed
      * @throws DataNotFoundException
@@ -699,7 +699,7 @@ class StoreOrderController
     }
 
     /**
-     * 用户申请退款
+     * Người dùng yêu cầu hoàn tiền
      * @param Request $request
      * @param StoreOrderRefundServices $services
      * @param StoreOrderServices $storeOrderServices
@@ -737,7 +737,7 @@ class StoreOrderController
         if (!$order || $uid != $order['uid']) {
             return app('json')->fail(410173);
         }
-        if ($order['pid'] == -1) return app('json')->fail('主订单已拆单，请刷新页面');
+        if ($order['pid'] == -1) return app('json')->fail('Đơn hàng chính đã được tách, vui lòng tải lại trang');
         $refundData = [
             'refund_reason' => $data['text'],
             'refund_explain' => $data['refund_reason_wap_explain'],
@@ -751,7 +751,7 @@ class StoreOrderController
     }
 
     /**
-     * 用户退货提交快递单号
+     * Người dùng gửi mã vận đơn khi trả hàng
      * @param Request $request
      * @param StoreOrderRefundServices $services
      * @return mixed
@@ -771,7 +771,7 @@ class StoreOrderController
     }
 
     /**
-     * 订单取消   未支付的订单回退积分,回退优惠券,回退库存
+     * Hủy đơn hàng   Đơn hàng chưa thanh toán được hoàn lại điểm thưởng, hoàn lại phiếu giảm giá, hoàn lại tồn kho
      * @param Request $request
      * @return mixed
      * @throws DataNotFoundException
@@ -788,7 +788,7 @@ class StoreOrderController
     }
 
     /**
-     * 订单商品信息
+     * Thông tin sản phẩm của đơn hàng
      * @param Request $request
      * @param StoreOrderCartInfoServices $services
      * @return mixed
@@ -818,10 +818,10 @@ class StoreOrderController
     }
 
     /**
-     * 商家寄件回调
+     * Callback gửi hàng của cửa hàng
      * @param Request $request
      * @return Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/6/12
      */
@@ -833,14 +833,14 @@ class StoreOrderController
         ]);
         $data['data'] = $this->decrypt($data['data'], sys_config('sms_token'));
         switch ($data['type']) {
-            case 'detection'://检测回调地址
+            case 'detection'://Kiểm tra địa chỉ callback
                 return \json($data['data']);
                 break;
-            case 'order_success'://下单成功
+            case 'order_success'://Đặt hàng thành công
                 $update = [
                     'label' => $data['data']['label'] ?? '',
                 ];
-                //韵达会异步推送单号
+                //Yunda sẽ đẩy mã vận đơn theo cách bất đồng bộ
                 if (isset($data['kuaidinum'])) {
                     $update['delivery_id'] = $data['kuaidinum'];
                 }
@@ -848,11 +848,11 @@ class StoreOrderController
                     $this->services->update(['kuaidi_task_id' => $data['task_id']], $update);
                 }
                 break;
-            case 'order_take'://取件
+            case 'order_take'://Lấy hàng
                 if (isset($data['data']['task_id'])) {
                     $orderInfo = $this->services->get(['kuaidi_task_id' => $data['data']['task_id']]);
                     if (!$orderInfo) {
-                        return app('json')->fail('订单不存在');
+                        return app('json')->fail('Đơn hàng không tồn tại');
                     }
                     $this->services->transaction(function () use ($data, $orderInfo) {
                         $this->services->update(['kuaidi_task_id' => $data['data']['task_id']], [
@@ -865,23 +865,23 @@ class StoreOrderController
                             'oid' => $orderInfo->id,
                             'change_time' => time(),
                             'change_type' => 'delivery_goods',
-                            'change_message' => '已发货 快递公司：' . $orderInfo->delivery_name . ' 快递单号：' . $orderInfo->delivery_id
+                            'change_message' => 'Đã giao hàng. Đơn vị vận chuyển:' . $orderInfo->delivery_name . ' Mã vận đơn:' . $orderInfo->delivery_id
                         ]);
                     });
                 }
                 break;
-            case 'order_cancel'://取消寄件
+            case 'order_cancel'://Hủy gửi hàng
                 if (isset($data['data']['task_id'])) {
                     $orderInfo = $this->services->get(['kuaidi_task_id' => $data['data']['task_id']]);
                     if (!$orderInfo) {
-                        return app('json')->fail('订单不存在');
+                        return app('json')->fail('Đơn hàng không tồn tại');
                     }
                     if ($orderInfo->is_stock_up && $orderInfo->status == 0) {
                         app()->make(StoreOrderStatusServices::class)->save([
                             'oid' => $orderInfo->id,
                             'change_time' => time(),
                             'change_type' => 'delivery_goods_cancel',
-                            'change_message' => '已取消发货，取消原因：用户手动取消'
+                            'change_message' => 'Đã hủy giao hàng, lý do hủy: người dùng hủy thủ công'
                         ]);
 
                         $orderInfo->status = 0;
@@ -896,13 +896,13 @@ class StoreOrderController
                         $orderInfo->delivery_type = '';
                         $orderInfo->save();
                     } else {
-                        Log::error('商家寄件自动回调，订单状态不正确：', [
+                        Log::error('Callback tự động gửi hàng của cửa hàng, trạng thái đơn hàng không đúng:', [
                             'kuaidi_task_id' => $data['data']['task_id']
                         ]);
                     }
                 }
                 break;
-            case 'success'://电子发票回调
+            case 'success'://Callback hóa đơn điện tử
                 $oid = $this->services->value(['order_id' => $data['data']['unique']], 'id');
                 if ($oid) {
                     $invoiceServices = app()->make(StoreOrderInvoiceServices::class);
@@ -925,11 +925,11 @@ class StoreOrderController
     }
 
     /**
-     * 解密商家寄件回调
+     * Giải mã callback gửi hàng của shop
      * @param string $encryptedData
      * @param string $key
      * @return false|string
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/31
      */
@@ -946,7 +946,7 @@ class StoreOrderController
     public function giftDetail($oid)
     {
         if (!$oid) {
-            return app('json')->fail('缺少参数');
+            return app('json')->fail('Thiếu tham số');
         }
         return app('json')->success($this->services->giftDetail($oid));
     }
@@ -962,17 +962,17 @@ class StoreOrderController
             ['store_id', 0],
         ], true);
         if (!$oid) {
-            return app('json')->fail('缺少参数');
+            return app('json')->fail('Thiếu tham số');
         }
         if ($shipping_type == 1 && $address_id == 0) {
-            return app('json')->fail('请选择收货地址');
+            return app('json')->fail('Vui lòng chọn địa chỉ nhận hàng');
         }
         $uid = $request->uid();
         $res = $this->services->receiveGift($uid, $oid, $gift_key, $shipping_type, $name, $phone, $address_id, $store_id);
         if ($res) {
-            return app('json')->success('领取成功', ['status' => 1]);
+            return app('json')->success('Nhận thành công', ['status' => 1]);
         } else {
-            return app('json')->success('该礼品已经被别人领取', ['status' => 0]);
+            return app('json')->success('Quà tặng này đã được người khác nhận', ['status' => 0]);
         }
 
     }

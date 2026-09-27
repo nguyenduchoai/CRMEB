@@ -6,7 +6,7 @@ use app\dao\BaseDao;
 use app\model\product\product\StoreProductParam;
 
 /**
- * 商品参数
+ * Thông số sản phẩm
  * @author wuhaotian
  * @email 442384644@qq.com
  * @date 2024/12/17
@@ -14,7 +14,7 @@ use app\model\product\product\StoreProductParam;
 class StoreProductParamDao extends BaseDao
 {
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -26,7 +26,7 @@ class StoreProductParamDao extends BaseDao
     }
 
     /**
-     * 条件搜索
+     * Tìm kiếm theo điều kiện
      * @param $where
      * @return \crmeb\basic\BaseModel
      * @author wuhaotian
@@ -46,7 +46,7 @@ class StoreProductParamDao extends BaseDao
     }
 
     /**
-     * 获取参数列表
+     * Lấy danh sách tham số
      * @param array $where
      * @param string $field
      * @param int $page
@@ -65,7 +65,7 @@ class StoreProductParamDao extends BaseDao
     }
 
     /**
-     * 获取参数列表数量
+     * Lấy số lượng danh sách tham số
      * @param array $where
      * @return int
      * @author wuhaotian

@@ -1,7 +1,7 @@
 <template>
   <div class="goodClass">
     <el-card class="h100" :bordered="false" shadow="never">
-      <!-- <div class="title">页面设置</div> -->
+      <!-- <div class="title">Thiết lập trang</div> -->
       <div class="list acea-row row-top">
         <div
           class="item"
@@ -27,9 +27,9 @@ export default {
   data() {
     return {
       classList: [
-        { image: require('@/assets/images/sort01.jpg'), name: '样式1' },
-        { image: require('@/assets/images/sort02.jpg'), name: '样式2' },
-        { image: require('@/assets/images/sort03.png'), name: '样式3' },
+        { image: require('@/assets/images/sort01.jpg'), name: 'Kiểu 1' },
+        { image: require('@/assets/images/sort02.jpg'), name: 'Kiểu 2' },
+        { image: require('@/assets/images/sort03.png'), name: 'Kiểu 3' },
       ],
       activeStyle: '-1',
     };

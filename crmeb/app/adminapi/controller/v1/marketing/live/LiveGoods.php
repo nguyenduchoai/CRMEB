@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\activity\live\LiveGoodsServices;
 use think\facade\App;
 
 /**
- * 直播间商品
+ * Sản phẩm trong phòng livestream
  * Class LiveGoods
  * @package app\controller\admin\store
  */
@@ -33,7 +33,7 @@ class LiveGoods extends AuthController
     }
 
     /**
-     * 直播间商品列表
+     * Danh sách sản phẩm trong phòng livestream
      * @return mixed
      */
     public function list()
@@ -48,7 +48,7 @@ class LiveGoods extends AuthController
     }
 
     /**
-     * 生成直播商品
+     * Tạo sản phẩm livestream
      * @return mixed
      */
     public function create()
@@ -60,7 +60,7 @@ class LiveGoods extends AuthController
     }
 
     /**
-     * 上传直播商品
+     * Tải lên sản phẩm livestream
      * @return mixed
      * @throws \EasyWeChat\Core\Exceptions\InvalidArgumentException
      * @throws \think\db\exception\DataNotFoundException
@@ -85,7 +85,7 @@ class LiveGoods extends AuthController
     }
 
     /**
-     * 商品详情
+     * Chi tiết sản phẩm
      * @param $id
      * @return mixed
      */
@@ -97,7 +97,7 @@ class LiveGoods extends AuthController
     }
 
     /**
-     * 同步直播商品
+     * Đồng bộ sản phẩm livestream
      * @return mixed
      */
     public function syncGoods()
@@ -107,7 +107,7 @@ class LiveGoods extends AuthController
     }
 
     /**
-     * 重新提交审核
+     * Gửi lại để duyệt
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -122,7 +122,7 @@ class LiveGoods extends AuthController
     }
 
     /**
-     * 撤回审核
+     * Rút lại yêu cầu duyệt
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -137,7 +137,7 @@ class LiveGoods extends AuthController
     }
 
     /**
-     * 设置状态
+     * Thiết lập trạng thái
      * @param int $id
      * @param $is_show
      * @return mixed
@@ -149,7 +149,7 @@ class LiveGoods extends AuthController
     }
 
     /**
-     * 删除商品
+     * Xóa sản phẩm
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException

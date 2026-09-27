@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,7 +24,7 @@ class SystemUserLevelDao extends BaseDao
 {
 
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -33,7 +33,7 @@ class SystemUserLevelDao extends BaseDao
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @param array $where
      * @param string $field
      * @return array
@@ -49,7 +49,7 @@ class SystemUserLevelDao extends BaseDao
     }
 
     /**
-     * 复杂条件获取总数
+     * Lấy tổng số theo điều kiện phức tạp
      * @param array $where
      * @return int
      */
@@ -59,7 +59,7 @@ class SystemUserLevelDao extends BaseDao
     }
 
     /**
-     * 获取上一个用户等级
+     * Lấy hạng người dùng trước đó
      * @param $grade
      * @param string $field
      * @return array|\think\Model|null
@@ -73,7 +73,7 @@ class SystemUserLevelDao extends BaseDao
     }
 
     /**
-     * 获取下一个用户等级
+     * Lấy hạng người dùng kế tiếp
      * @param $grade
      * @param string $field
      * @return array|\think\Model|null

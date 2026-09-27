@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -12,8 +12,8 @@ import request from '@/libs/request';
 import { getCookies } from '@/libs/util';
 
 /**
- * @description 设置 系统设置 应用设置头部
- * @param {Object} param data {Object} 传值参数 type类型
+ * @description Cài đặt, Cài đặt hệ thống, Phần đầu cài đặt ứng dụng
+ * @param {Object} param data {Object} Tham số truyền giá trị, loại type
  */
 export function headerListApi(data) {
   return request({
@@ -24,8 +24,8 @@ export function headerListApi(data) {
 }
 
 /**
- * @description 设置 系统设置 应用设置 编辑表单
- * @param {Object} param data {Object} 传值参数 type类型
+ * @description Cài đặt, Cài đặt hệ thống, Cài đặt ứng dụng, Form sửa
+ * @param {Object} param data {Object} Tham số truyền giá trị, loại type
  */
 export function dataFromApi(data, url) {
   return request({
@@ -36,8 +36,8 @@ export function dataFromApi(data, url) {
 }
 
 /**
- * @description 设置 短信设置 列表
- * @param {Object} param params {Object} 传值参数
+ * @description Cài đặt, Cài đặt SMS, Danh sách
+ * @param {Object} param params {Object} Tham số truyền giá trị
  */
 export function tempListApi(params) {
   return request({
@@ -48,8 +48,8 @@ export function tempListApi(params) {
 }
 
 /**
- * @description 设置 短信设置 申请模板表单
- * @param {Object} param data {Object} 传值参数 type类型
+ * @description Cài đặt, Cài đặt SMS, Form đăng ký mẫu
+ * @param {Object} param data {Object} Tham số truyền giá trị, loại type
  */
 export function tempCreateApi() {
   return request({
@@ -59,8 +59,8 @@ export function tempCreateApi() {
 }
 
 /**
- * @description 设置 短信设置 登录
- * @param {Object} param data {Object} 传值参数
+ * @description Cài đặt, Cài đặt SMS, Đăng nhập
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function configApi(data) {
   return request({
@@ -71,7 +71,7 @@ export function configApi(data) {
 }
 
 /**
- * @description 设置 短信 修改密码
+ * @description Cài đặt, SMS, Đổi mật khẩu
  */
 export function serveModifyApi(data) {
   return request({
@@ -82,7 +82,7 @@ export function serveModifyApi(data) {
 }
 
 /**
- * @description 设置 短信 修改手机号
+ * @description Cài đặt, SMS, Đổi số điện thoại
  */
 export function updateHoneApi(data) {
   return request({
@@ -93,8 +93,8 @@ export function updateHoneApi(data) {
 }
 
 /**
- * @description 设置 短信设置 修改账户密码
- * @param {Object} param data {Object} 传值参数
+ * @description Cài đặt, Cài đặt SMS, Đổi mật khẩu tài khoản
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 // export function configApi (data) {
 //     return request({
@@ -105,8 +105,8 @@ export function updateHoneApi(data) {
 // }
 
 /**
- * @description 设置 短信设置 发送验证码
- * @param {Object} param data {Object} 传值参数
+ * @description Cài đặt, Cài đặt SMS, Gửi mã xác thực
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function captchaApi(data) {
   return request({
@@ -116,8 +116,8 @@ export function captchaApi(data) {
   });
 }
 /**
- * @description 验证验证码
- * @param {Object} param data {Object} 传值参数
+ * @description Xác thực mã xác thực
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function checkCaptchaApi(data) {
   return request({
@@ -128,8 +128,8 @@ export function checkCaptchaApi(data) {
 }
 
 /**
- * @description 设置 短信设置 注册
- * @param {Object} param data {Object} 传值参数
+ * @description Cài đặt, Cài đặt SMS, Đăng ký
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function registerApi(data) {
   return request({
@@ -140,7 +140,7 @@ export function registerApi(data) {
 }
 
 /**
- * @description 设置 短信设置 短信剩余条数
+ * @description Cài đặt, Cài đặt SMS, Số lượng SMS còn lại
  */
 export function smsNumberApi() {
   return request({
@@ -150,7 +150,7 @@ export function smsNumberApi() {
 }
 
 /**
- * @description 设置 短信设置 平台用户信息
+ * @description Cài đặt, Cài đặt SMS, Thông tin người dùng nền tảng
  */
 export function serveInfoApi() {
   return request({
@@ -160,7 +160,7 @@ export function serveInfoApi() {
 }
 
 /**
- * @description 修改短信签名
+ * @description Sửa chữ ký SMS
  */
 export function serveSign(data) {
   return request({
@@ -171,7 +171,7 @@ export function serveSign(data) {
 }
 
 /**
- * 客服登录
+ * Đăng nhập CSKH
  */
 export function kefuLogin(id) {
   return request({
@@ -181,7 +181,7 @@ export function kefuLogin(id) {
 }
 
 /**
- * 客服话术列表
+ * Danh sách mẫu câu CSKH
  */
 export function wechatSpeechcraft(data) {
   return request({
@@ -192,7 +192,7 @@ export function wechatSpeechcraft(data) {
 }
 
 /**
- * 客服话术编辑
+ * Sửa mẫu câu CSKH
  */
 export function speechcraftEdit(id) {
   return request({
@@ -202,7 +202,7 @@ export function speechcraftEdit(id) {
 }
 
 /**
- * 客服话术添加
+ * Thêm mẫu câu CSKH
  */
 export function speechcraftCreate() {
   return request({
@@ -212,7 +212,7 @@ export function speechcraftCreate() {
 }
 
 /**
- * 客服反馈
+ * Phản hồi CSKH
  */
 export function kefuFeedBack(params) {
   return request({
@@ -223,7 +223,7 @@ export function kefuFeedBack(params) {
 }
 
 /**
- * 客服反馈
+ * Phản hồi CSKH
  */
 export function kefuFeedBackEdit(id) {
   return request({
@@ -233,7 +233,7 @@ export function kefuFeedBackEdit(id) {
 }
 
 /**
- * @description 设置 短信 物流公司
+ * @description Cài đặt, SMS, Đơn vị vận chuyển
  */
 export function exportAllApi() {
   return request({
@@ -243,7 +243,7 @@ export function exportAllApi() {
 }
 
 /**
- * 是否开通电子面单
+ * Có mở vận đơn điện tử không
  */
 // export function serveDumpOpen () {
 //     return request({
@@ -253,7 +253,7 @@ export function exportAllApi() {
 // }
 
 /**
- * 物流开通
+ * Mở dịch vụ vận chuyển
  */
 export function serveOpen() {
   return request({
@@ -263,7 +263,7 @@ export function serveOpen() {
 }
 
 /**
- * @description 设置 短信 物流公司面板
+ * @description Cài đặt, SMS, Bảng đơn vị vận chuyển
  */
 export function exportTempApi(params) {
   return request({
@@ -274,7 +274,7 @@ export function exportTempApi(params) {
 }
 
 /**
- * @description 设置 短信 2= 电子面单，3 = 物流查询 列表
+ * @description Cài đặt, SMS, 2 = vận đơn điện tử, 3 = tra cứu vận chuyển, danh sách
  */
 export function serveRecordListApi(params) {
   return request({
@@ -285,7 +285,7 @@ export function serveRecordListApi(params) {
 }
 
 /**
- * @description 设置 短信 开通其他服务
+ * @description Cài đặt, SMS, Mở dịch vụ khác
  */
 export function serveOpnOtherApi(params) {
   return request({
@@ -296,7 +296,7 @@ export function serveOpnOtherApi(params) {
 }
 
 /**
- * @description 设置 短信 开通电子面单
+ * @description Cài đặt, SMS, Mở vận đơn điện tử
  */
 export function serveOpnExpressApi(data) {
   return request({
@@ -307,7 +307,7 @@ export function serveOpnExpressApi(data) {
 }
 
 /**
- * @description 设置 短信 开通短信服务
+ * @description Cài đặt, SMS, Mở dịch vụ SMS
  */
 export function serveSmsOpenApi(params) {
   return request({
@@ -318,7 +318,7 @@ export function serveSmsOpenApi(params) {
 }
 
 /**
- * @description 设置 短信设置 支付套餐
+ * @description Cài đặt, Cài đặt SMS, Thanh toán gói
  */
 export function smsPriceApi(params) {
   return request({
@@ -329,8 +329,8 @@ export function smsPriceApi(params) {
 }
 
 /**
- * @description 设置 短信设置 支付码
- * @param {Object} param data {Object} 传值参数
+ * @description Cài đặt, Cài đặt SMS, Mã thanh toán
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function payCodeApi(data) {
   return request({
@@ -341,7 +341,7 @@ export function payCodeApi(data) {
 }
 
 /**
- * @description 设置 短信设置 发送记录
+ * @description Cài đặt, Cài đặt SMS, Lịch sử gửi
  */
 export function smsRecordApi(params) {
   return request({
@@ -352,7 +352,7 @@ export function smsRecordApi(params) {
 }
 
 /**
- * @description 门店设置 详情
+ * @description Cài đặt cửa hàng, Chi tiết
  */
 export function storeApi() {
   return request({
@@ -362,7 +362,7 @@ export function storeApi() {
 }
 
 /**
- * @description 门店设置 获取地图key
+ * @description Cài đặt cửa hàng, Lấy key bản đồ
  */
 export function keyApi() {
   return request({
@@ -372,8 +372,8 @@ export function keyApi() {
 }
 
 /**
- * @description 门店设置 提交数据,
- * @param {Object} param data {Object} 传值参数
+ * @description Cài đặt cửa hàng, Submit dữ liệu,
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function storeAddApi(data) {
   return request({
@@ -384,8 +384,8 @@ export function storeAddApi(data) {
 }
 
 /**
- * @description 设置 物流公司 列表
- * @param {Object} param data {Object} 传值参数
+ * @description Cài đặt, Đơn vị vận chuyển, Danh sách
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function freightListApi(params) {
   return request({
@@ -396,7 +396,7 @@ export function freightListApi(params) {
 }
 
 /**
- * @description 设置 物流公司 新增表单
+ * @description Cài đặt, Đơn vị vận chuyển, Form thêm mới
  */
 export function freightCreateApi() {
   return request({
@@ -406,8 +406,8 @@ export function freightCreateApi() {
 }
 
 /**
- * @description 设置 物流公司 编辑表单
- * @param {Number} param id {Number} 物流公司id
+ * @description Cài đặt, Đơn vị vận chuyển, Form sửa
+ * @param {Number} param id {Number} ID đơn vị vận chuyển
  */
 export function freightEditApi(id) {
   return request({
@@ -417,8 +417,8 @@ export function freightEditApi(id) {
 }
 
 /**
- * @description 设置 物流公司 修改状态
- * @param {Number} param id {Number} 物流公司id
+ * @description Cài đặt, Đơn vị vận chuyển, Đổi trạng thái
+ * @param {Number} param id {Number} ID đơn vị vận chuyển
  */
 export function freightStatusApi(data) {
   return request({
@@ -428,7 +428,7 @@ export function freightStatusApi(data) {
 }
 
 /**
- * @description 同步物流快递公司
+ * @description Đồng bộ đơn vị vận chuyển
  */
 export function freightSyncExpressApi() {
   return request({
@@ -438,7 +438,7 @@ export function freightSyncExpressApi() {
 }
 
 /**
- * @description 话术分类
+ * @description Danh mục câu trả lời mẫu
  */
 export function speechcraftcate() {
   return request({
@@ -447,7 +447,7 @@ export function speechcraftcate() {
   });
 }
 /**
- * @description 渠道码分类
+ * @description Danh mục mã kênh
  */
 export function wechatQrcodeTree() {
   return request({
@@ -457,7 +457,7 @@ export function wechatQrcodeTree() {
 }
 
 /**
- * @description 获取创建分类表单
+ * @description Lấy form tạo danh mục
  */
 export function speechcraftcateCreate() {
   return request({
@@ -466,7 +466,7 @@ export function speechcraftcateCreate() {
   });
 }
 /**
- * @description 获取渠道码创建、编辑分类表单
+ * @description Lấy form tạo, sửa danh mục mã kênh
  */
 export function wechatQrcodeCreate(id) {
   return request({
@@ -476,7 +476,7 @@ export function wechatQrcodeCreate(id) {
 }
 
 /**
- * @description 修改话术分类(获取表单)
+ * @description Sửa danh mục mẫu câu (lấy form)
  */
 export function speechcraftcateEdit(id) {
   return request({
@@ -486,8 +486,8 @@ export function speechcraftcateEdit(id) {
 }
 
 /**
- * @description 设置 身份管理 列表
- * @param {Number} param id {Number} 物流公司id
+ * @description Cài đặt, Quản lý vai trò, Danh sách
+ * @param {Number} param id {Number} ID đơn vị vận chuyển
  */
 export function roleListApi(params) {
   return request({
@@ -497,8 +497,8 @@ export function roleListApi(params) {
   });
 }
 /**
- * @description 获取渠道码列表
- * @param {Number} param id {Number} 物流公司id
+ * @description Lấy danh sách mã kênh
+ * @param {Number} param id {Number} ID đơn vị vận chuyển
  */
 export function wechatQrcodeList(params) {
   return request({
@@ -509,8 +509,8 @@ export function wechatQrcodeList(params) {
 }
 
 /**
- * @description 设置 身份管理 修改状态
- * @param {Object} param data {Object} 传值参数
+ * @description Cài đặt, Quản lý vai trò, Đổi trạng thái
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function roleSetStatusApi(data) {
   return request({
@@ -520,8 +520,8 @@ export function roleSetStatusApi(data) {
 }
 
 /**
- * @description 设置 身份管理 ==新增 编辑
- * @param {Object} param data {Object} 传值参数
+ * @description Cài đặt, Quản lý vai trò, Thêm mới/sửa
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function roleCreateApi(data) {
   return request({
@@ -532,8 +532,8 @@ export function roleCreateApi(data) {
 }
 
 /**
- * @description 设置 身份管理 ==详情
- * @param {Number} param id {Number} 身份管理id
+ * @description Cài đặt, Quản lý vai trò, Chi tiết
+ * @param {Number} param id {Number} ID quản lý vai trò
  */
 export function roleInfoApi(id) {
   return request({
@@ -543,7 +543,7 @@ export function roleInfoApi(id) {
 }
 
 /**
- * @description 设置 身份管理 ==权限列表
+ * @description Cài đặt, Quản lý vai trò, Danh sách quyền
  */
 export function menusListApi() {
   return request({
@@ -553,8 +553,8 @@ export function menusListApi() {
 }
 
 /**
- * @description 设置 客服管理 -- 列表
- * @param {Object} param params {Object} 传值参数
+ * @description Cài đặt, Quản lý CSKH -- Danh sách
+ * @param {Object} param params {Object} Tham số truyền giá trị
  */
 export function kefuListApi(params) {
   return request({
@@ -565,8 +565,8 @@ export function kefuListApi(params) {
 }
 
 /**
- * @description 设置 客服管理 -- 选择用户
- *  @param {Object} param params {Object} 传值参数
+ * @description Cài đặt, Quản lý CSKH -- Chọn người dùng
+ *  @param {Object} param params {Object} Tham số truyền giá trị
  */
 export function kefucreateApi(params) {
   return request({
@@ -577,8 +577,8 @@ export function kefucreateApi(params) {
 }
 
 /**
- * @description 设置 客服管理 -- 添加客服
- *  @param {Object} param params {Object} 传值参数
+ * @description Cài đặt, Quản lý CSKH -- Thêm CSKH
+ *  @param {Object} param params {Object} Tham số truyền giá trị
  */
 export function kefuaddApi() {
   return request({
@@ -588,8 +588,8 @@ export function kefuaddApi() {
 }
 
 /**
- * @description 设置 客服管理 -- 添加客服保存
- *  @param {Object} param params {Object} 传值参数
+ * @description Cài đặt, Quản lý CSKH -- Lưu thêm CSKH
+ *  @param {Object} param params {Object} Tham số truyền giá trị
  */
 export function kefuAddApi(data) {
   return request({
@@ -600,8 +600,8 @@ export function kefuAddApi(data) {
 }
 
 /**
- * @description 设置 客服管理 -- 修改状态
- *  @param {Object} param data {Object} 传值参数
+ * @description Cài đặt, Quản lý CSKH -- Đổi trạng thái
+ *  @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function kefusetStatusApi(data) {
   return request({
@@ -611,8 +611,8 @@ export function kefusetStatusApi(data) {
 }
 
 /**
- * @description 设置 渠道码 -- 修改状态
- *  @param {Object} param data {Object} 传值参数
+ * @description Cài đặt, Mã kênh -- Đổi trạng thái
+ *  @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function wechatQrcodeStatusApi(data) {
   return request({
@@ -621,8 +621,8 @@ export function wechatQrcodeStatusApi(data) {
   });
 }
 /**
- * @description 获取渠道码用户列表
- *  @param {Object} param data {Object} 传值参数
+ * @description Lấy danh sách người dùng theo mã kênh
+ *  @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function getUserList(params) {
   return request({
@@ -632,8 +632,8 @@ export function getUserList(params) {
   });
 }
 /**
- * @description 设置 渠道码编辑详情获取
- *  @param {Object} param data {Object} 传值参数
+ * @description Cài đặt, Lấy chi tiết sửa mã kênh
+ *  @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function wechatQrcodeDetail(id) {
   return request({
@@ -642,7 +642,7 @@ export function wechatQrcodeDetail(id) {
   });
 }
 /**
- * @description  渠道码制作--保存
+ * @description  Tạo mã kênh -- Lưu
  */
 export function wechatQrcodeSaveApi(id, data) {
   return request({
@@ -652,8 +652,8 @@ export function wechatQrcodeSaveApi(id, data) {
   });
 }
 /**
- * @description 设置 客服管理 -- 编辑表单
- *  @param {Number} param id {Number} 客服id
+ * @description Cài đặt, Quản lý CSKH -- Form sửa
+ *  @param {Number} param id {Number} ID nhân viên CSKH
  */
 export function kefuEditApi(id) {
   return request({
@@ -663,9 +663,9 @@ export function kefuEditApi(id) {
 }
 
 /**
- * @description 设置 客服管理 -- 聊天记录列表
- *  @param {Number} param id {Number} 客服id
- *  @param {Object} param params {Object} 传参数
+ * @description Cài đặt, Quản lý CSKH -- Danh sách lịch sử chat
+ *  @param {Number} param id {Number} ID nhân viên CSKH
+ *  @param {Object} param params {Object} Truyền tham số
  */
 export function kefuRecordApi(params, id) {
   return request({
@@ -676,8 +676,8 @@ export function kefuRecordApi(params, id) {
 }
 
 /**
- * @description 设置 客服管理 -- 查看对话列表
- *  @param {Object} param params {Object} 传参数
+ * @description Cài đặt, Quản lý CSKH -- Xem danh sách hội thoại
+ *  @param {Object} param params {Object} Truyền tham số
  */
 export function kefuChatlistApi(params) {
   return request({
@@ -688,7 +688,7 @@ export function kefuChatlistApi(params) {
 }
 
 /**
- * @description 短信设置 -- 查看是否登录
+ * @description Cài đặt SMS -- Xem có đang đăng nhập không
  */
 export function isLoginApi() {
   return request({
@@ -698,7 +698,7 @@ export function isLoginApi() {
 }
 
 /**
- * @description 短信设置 -- 退出登录
+ * @description Cài đặt SMS -- Đăng xuất
  */
 export function logoutApi() {
   return request({
@@ -708,8 +708,8 @@ export function logoutApi() {
 }
 
 /**
- * @description 设置 城市数据 -- 列表
- *  @param {Object} param data {Object} 传值参数
+ * @description Cài đặt, Dữ liệu thành phố -- Danh sách
+ *  @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function cityListApi(id) {
   return request({
@@ -719,8 +719,8 @@ export function cityListApi(id) {
 }
 
 /**
- * @description 设置 城市添加 -- 表单
- *  @param {Object} param data {Object} 传值参数
+ * @description Cài đặt, Thêm thành phố -- Form
+ *  @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function cityAddApi(id) {
   return request({
@@ -730,8 +730,8 @@ export function cityAddApi(id) {
 }
 
 /**
- * @description 设置 城市修改 -- 表单
- *  @param {Object} param data {Object} 传值参数
+ * @description Cài đặt, Sửa thành phố -- Form
+ *  @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function cityApi(id) {
   return request({
@@ -741,8 +741,8 @@ export function cityApi(id) {
 }
 
 /**
- * @description 设置 运费模板 -- 列表
- *  @param {Object} param data {Object} 传值参数
+ * @description Cài đặt, Mẫu phí vận chuyển -- Danh sách
+ *  @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function templatesApi(data) {
   return request({
@@ -753,7 +753,7 @@ export function templatesApi(data) {
 }
 
 /**
- * @description 设置 运费模板 -- 城市数据
+ * @description Cài đặt, Mẫu phí vận chuyển -- Dữ liệu thành phố
  */
 export function templatesCityListApi(data) {
   return request({
@@ -763,7 +763,7 @@ export function templatesCityListApi(data) {
 }
 
 /**
- * @description 设置 运费模板 -- 提交修改表单；
+ * @description Cài đặt, Mẫu phí vận chuyển -- Submit form sửa;
  */
 export function templatesSaveApi(id, data) {
   return request({
@@ -774,7 +774,7 @@ export function templatesSaveApi(id, data) {
 }
 
 /**
- * @description 设置 运费模板 -- 提交修改表单；
+ * @description Cài đặt, Mẫu phí vận chuyển -- Submit form sửa;
  */
 export function shipTemplatesApi(id) {
   return request({
@@ -784,7 +784,7 @@ export function shipTemplatesApi(id) {
 }
 
 /**
- * @description 门店设置 -- 门店列表分类数量；
+ * @description Cài đặt cửa hàng -- Số lượng danh mục danh sách cửa hàng;
  */
 export function storeGetHeaderApi() {
   return request({
@@ -794,7 +794,7 @@ export function storeGetHeaderApi() {
 }
 
 /**
- * @description 门店设置 -- 门店列表；
+ * @description Cài đặt cửa hàng -- Danh sách cửa hàng;
  */
 export function merchantStoreApi(data) {
   return request({
@@ -805,7 +805,7 @@ export function merchantStoreApi(data) {
 }
 
 /**
- * @description 门店设置 -- 门店设置；
+ * @description Cài đặt cửa hàng -- Cài đặt cửa hàng;
  */
 export function storeSetShowApi(id, is_show) {
   return request({
@@ -815,7 +815,7 @@ export function storeSetShowApi(id, is_show) {
 }
 
 /**
- * @description 门店设置 -- 门店修改信息；
+ * @description Cài đặt cửa hàng -- Sửa thông tin cửa hàng;
  */
 export function storeGetInfoApi(id) {
   return request({
@@ -825,7 +825,7 @@ export function storeGetInfoApi(id) {
 }
 
 /**
- * @description 门店设置 -- 店员列表；
+ * @description Cài đặt cửa hàng -- Danh sách nhân viên;
  */
 export function storeStaffApi(data) {
   return request({
@@ -836,7 +836,7 @@ export function storeStaffApi(data) {
 }
 
 /**
- * @description 门店设置 -- 新增店员；
+ * @description Cài đặt cửa hàng -- Thêm nhân viên;
  */
 export function storeStaffCreateApi() {
   return request({
@@ -846,7 +846,7 @@ export function storeStaffCreateApi() {
 }
 
 /**
- * @description 门店设置 -- 新增店员；
+ * @description Cài đặt cửa hàng -- Thêm nhân viên;
  */
 export function storeStaffEditApi(id) {
   return request({
@@ -856,7 +856,7 @@ export function storeStaffEditApi(id) {
 }
 
 /**
- * @description 店员设置 -- 店员设置显示隐藏；
+ * @description Cài đặt nhân viên -- Cài đặt hiện/ẩn nhân viên;
  */
 export function storeStaffSetShowApi(id, is_show) {
   return request({
@@ -866,7 +866,7 @@ export function storeStaffSetShowApi(id, is_show) {
 }
 
 /**
- * @description 订单设置 -- 核销订单列表；
+ * @description Cài đặt đơn hàng -- Danh sách đơn hàng xác nhận sử dụng;
  */
 export function verifyOrderApi(data) {
   return request({
@@ -877,7 +877,7 @@ export function verifyOrderApi(data) {
 }
 
 /**
- * @description 订单设置 -- 核销订单头部；
+ * @description Cài đặt đơn hàng -- Phần đầu đơn hàng xác nhận sử dụng;
  */
 export function verifySpreadInfoApi(uid) {
   return request({
@@ -887,7 +887,7 @@ export function verifySpreadInfoApi(uid) {
 }
 
 /**
- * 获取店员搜索门店列表
+ * Lấy danh sách cửa hàng để nhân viên tìm kiếm
  */
 export function merchantStoreListApi() {
   return request({
@@ -897,7 +897,7 @@ export function merchantStoreListApi() {
 }
 
 /**
- * 清除城市数据缓存
+ * Xóa bộ nhớ đệm dữ liệu thành phố
  */
 export function cityCleanCacheApi() {
   return request({
@@ -906,7 +906,7 @@ export function cityCleanCacheApi() {
   });
 }
 /**
- *储存配置-获取云储存配置头
+ *Cấu hình lưu trữ - Lấy phần đầu cấu hình cloud storage
  */
 export function storageConfigApi() {
   return request({
@@ -915,7 +915,7 @@ export function storageConfigApi() {
   });
 }
 /**
- *储存配置-获取云储存配置头
+ *Cấu hình lưu trữ - Lấy phần đầu cấu hình cloud storage
  */
 export function storageSwitchApi(data) {
   return request({
@@ -926,7 +926,7 @@ export function storageSwitchApi(data) {
 }
 
 /**
- * @description 储存配置-获取云储存配置表单
+ * @description Cấu hình lưu trữ - Lấy form cấu hình cloud storage
  */
 export function addConfigApi(type) {
   return request({
@@ -936,7 +936,7 @@ export function addConfigApi(type) {
 }
 
 /**
- * @description 储存配置-获取云存储创建表单
+ * @description Cấu hình lưu trữ - Lấy form tạo cloud storage
  */
 export function addStorageApi(type) {
   return request({
@@ -946,7 +946,7 @@ export function addStorageApi(type) {
 }
 
 /**
- * @description 储存配置-获取云存储列表
+ * @description Cấu hình lưu trữ - Lấy danh sách cloud storage
  */
 export function storageListApi(data) {
   return request({
@@ -957,7 +957,7 @@ export function storageListApi(data) {
 }
 
 /**
- * @description 储存配置-同步空间
+ * @description Cấu hình lưu trữ - Đồng bộ không gian lưu trữ
  */
 export function storageSynchApi(type) {
   return request({
@@ -966,7 +966,7 @@ export function storageSynchApi(type) {
   });
 }
 /**
- * @description 储存配置-修改状态
+ * @description Cấu hình lưu trữ - Đổi trạng thái
  */
 export function storageStatusApi(id) {
   return request({
@@ -976,7 +976,7 @@ export function storageStatusApi(id) {
 }
 
 /**
- * @description 储存配置-修改空间域名
+ * @description Cấu hình lưu trữ - Sửa domain không gian lưu trữ
  */
 export function editStorageApi(id) {
   return request({
@@ -985,7 +985,7 @@ export function editStorageApi(id) {
   });
 }
 /**
- * @description 储存配置-获取缩略图
+ * @description Cấu hình lưu trữ - Lấy ảnh thu nhỏ
  */
 export function positionInfoApi() {
   return request({
@@ -994,7 +994,7 @@ export function positionInfoApi() {
   });
 }
 /**
- * @description 储存配置-保存缩略图
+ * @description Cấu hình lưu trữ - Lưu ảnh thu nhỏ
  */
 export function positionPostApi(data) {
   return request({
@@ -1005,7 +1005,7 @@ export function positionPostApi(data) {
 }
 
 /**
- * @description 储存配置切换
+ * @description Chuyển đổi cấu hình lưu trữ
  */
 export function saveType(type) {
   return request({
@@ -1015,7 +1015,7 @@ export function saveType(type) {
 }
 
 /**
- * @description 多语言-语言类型列表
+ * @description Đa ngôn ngữ - Danh sách loại ngôn ngữ
  */
 export function langTypeList(data) {
   return request({
@@ -1026,7 +1026,7 @@ export function langTypeList(data) {
 }
 
 /**
- * @description 多语言-语言类型新增编辑
+ * @description Đa ngôn ngữ - Thêm/sửa loại ngôn ngữ
  * @param {Number} param id {Number}
  */
 export function langTypeForm(id) {
@@ -1037,7 +1037,7 @@ export function langTypeForm(id) {
 }
 
 /**
- * @description 多语言-语言详情列表
+ * @description Đa ngôn ngữ - Danh sách chi tiết ngôn ngữ
  */
 export function langCodeList(data) {
   return request({
@@ -1048,7 +1048,7 @@ export function langCodeList(data) {
 }
 
 /**
- * @description 获取语言信息
+ * @description Lấy thông tin ngôn ngữ
  */
 export function langCodeInfo(data) {
   return request({
@@ -1059,7 +1059,7 @@ export function langCodeInfo(data) {
 }
 
 /**
- * @description 修改语言详情
+ * @description Sửa chi tiết ngôn ngữ
  */
 export function langCodeSettingSave(data) {
   return request({
@@ -1070,7 +1070,7 @@ export function langCodeSettingSave(data) {
 }
 
 /**
- * @description 国家列表
+ * @description Danh sách quốc gia
  */
 export function langCountryList(data) {
   return request({
@@ -1080,7 +1080,7 @@ export function langCountryList(data) {
   });
 }
 /**
- * 添加语言地区表单
+ * Biểu mẫu thêm khu vực ngôn ngữ
  * @param {*} id
  * @returns
  */
@@ -1091,7 +1091,7 @@ export function langCountryForm(id) {
   });
 }
 /**
- * 添加语言地区表单
+ * Biểu mẫu thêm khu vực ngôn ngữ
  * @param {*} id
  * @returns
  */
@@ -1103,7 +1103,7 @@ export function langTypeStatus(id, status) {
 }
 
 /**
- * @description 一键翻译
+ * @description Dịch tự động 1 chạm
  */
 export function langCodeTranslate(data) {
   return request({
@@ -1114,7 +1114,7 @@ export function langCodeTranslate(data) {
 }
 
 /**
- * @description 代码生成
+ * @description Tạo mã nguồn
  */
 export function codeCrud(data) {
   return request({
@@ -1124,7 +1124,7 @@ export function codeCrud(data) {
   });
 }
 /**
- * @description 扫码上传链接获取
+ * @description Lấy liên kết tải lên bằng quét mã
  */
 export function scanUploadQrcode(pid) {
   return request({
@@ -1133,7 +1133,7 @@ export function scanUploadQrcode(pid) {
   });
 }
 /**
- * @description 扫码上传图片获取
+ * @description Lấy ảnh tải lên bằng quét mã
  */
 export function scanUploadGet(scan_token) {
   return request({
@@ -1142,7 +1142,7 @@ export function scanUploadGet(scan_token) {
   });
 }
 /**
- * @description 图片上传
+ * @description Tải lên ảnh
  */
 export function fileUpload(data) {
   return request({
@@ -1156,7 +1156,7 @@ export function fileUpload(data) {
   });
 }
 /**
- * @description 扫码图片上传
+ * @description Tải ảnh lên bằng quét mã
  */
 export function scanUpload(data) {
   return request({
@@ -1169,7 +1169,7 @@ export function scanUpload(data) {
   });
 }
 /**
- * 菜单搜索
+ * Tìm kiếm menu
  */
 export function menusSearch(data) {
   return request({
@@ -1180,7 +1180,7 @@ export function menusSearch(data) {
 }
 
 /**
- * PC端菜单配置
+ * Cấu hình menu PC
  * @param {*} data
  * @returns
  */
@@ -1193,7 +1193,7 @@ export function pcHomeMenusSave(data) {
 }
 
 /**
- * 获取PC端菜单配置
+ * Lấy cấu hình menu PC
  * @param {*} data
  * @returns
  */
@@ -1205,7 +1205,7 @@ export function pcHomeMenus(name) {
 }
 
 /**
- * 打印机列表
+ * Danh sách máy in
  * @param {*} type
  * @returns
  */
@@ -1218,7 +1218,7 @@ export function printList(data) {
 }
 
 /**
- * 打印机创建
+ * Tạo máy in
  * @param {*} type
  * @returns
  */
@@ -1229,7 +1229,7 @@ export function printForm(id) {
   });
 }
 /**
- * 打印机状态切换
+ * Chuyển trạng thái máy in
  * @param {*} type
  * @returns
  */
@@ -1241,7 +1241,7 @@ export function printSetStatus(data) {
 }
 
 /**
- * 发票配置保存
+ * Lưu cấu hình hóa đơn
  * @returns
  */
 export function printSaveContent(id, data) {
@@ -1252,7 +1252,7 @@ export function printSaveContent(id, data) {
   });
 }
 /**
- * 获取发票配置
+ * Lấy cấu hình hóa đơn
  */
 export function printContent(id) {
   return request({
@@ -1262,7 +1262,7 @@ export function printContent(id) {
 }
 
 /**
- * 链接列表分类
+ * Danh mục danh sách liên kết
  * @param {*} type
  * @returns
  */
@@ -1273,7 +1273,7 @@ export function diyLinkCategoryListApi() {
   });
 }
 /**
- * @description 添加/编辑分类
+ * @description Thêm/sửa danh mục
  */
 export function linkCategoryFormApi(cate_id, pid) {
   return request({
@@ -1282,7 +1282,7 @@ export function linkCategoryFormApi(cate_id, pid) {
   });
 }
 /**
- * @description 列表
+ * @description Danh sách
  */
 export function linkListApi(data) {
   return request({
@@ -1292,7 +1292,7 @@ export function linkListApi(data) {
   });
 }
 /**
- * @description 创建/编辑链接
+ * @description Tạo/sửa liên kết
  */
 export function linkCreateApi(data) {
   return request({

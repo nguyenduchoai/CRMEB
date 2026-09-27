@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,19 +21,19 @@ class PageCategory extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'page_categroy';
 
     /**
-     * 父类搜索器
+     * Bộ lọc lớp cha
      * @param Model $query
      * @param $value
      */
@@ -50,7 +50,7 @@ class PageCategory extends BaseModel
 
 
     /**
-     * 是否使用搜索器
+     * Bộ lọc đang sử dụng hay không
      * @param Model $query
      * @param $value
      */
@@ -60,18 +60,18 @@ class PageCategory extends BaseModel
     }
 
     /**
-     * 模块检测
+     * Kiểm tra module
      * @param Model $query
      * @param $value
      */
     public function searchNoModelAttr($query, $value)
     {
         $query->when(!in_array('seckill', $value), function ($q1) {
-            $q1->whereNotLike('name', '%秒杀%');
+            $q1->whereNotLike('name', '%flash sale%');
         })->when(!in_array('bargain', $value), function ($q2) {
-            $q2->whereNotLike('name', '%砍价%');
+            $q2->whereNotLike('name', '%săn giảm giá%');
         })->when(!in_array('combination', $value), function ($q3) {
-            $q3->whereNotLike('name', '%拼团%');
+            $q3->whereNotLike('name', '%mua chung%');
         });
     }
 }

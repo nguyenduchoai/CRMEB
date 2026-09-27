@@ -2,57 +2,57 @@
   <div>
     <pages-header
       ref="pageHeader"
-      :title="$route.params.id ? '编辑优惠券' : '添加优惠券'"
+      :title="$route.params.id ? 'Sửa phiếu giảm giá' : 'Thêm phiếu giảm giá'"
       :backUrl="$routeProStr + '/marketing/store_coupon_issue/index'"
     ></pages-header>
     <el-card :bordered="false" shadow="never" class="mt16">
       <el-form :model="formData" label-width="160px">
-        <el-form-item label="优惠券名称：">
+        <el-form-item label="Tên phiếu giảm giá:">
           <el-input
             v-model="formData.coupon_title"
             maxlength="18"
             show-word-limit
-            placeholder="请输入优惠券名称"
+            placeholder="Vui lòng nhập tên phiếu giảm giá"
             class="content_width"
           ></el-input>
         </el-form-item>
-        <el-form-item label="优惠券面值：">
+        <el-form-item label="Mệnh giá phiếu giảm giá:">
           <el-input-number
             :controls="false"
             :min="1"
             :max="9999999999"
             v-model="formData.coupon_price"
             class="content_width input-number-unit-class"
-            class-unit="元"
+            class-unit="đ"
             :disabled="isEdit"
           ></el-input-number>
         </el-form-item>
-        <el-form-item label="用户类型：">
+        <el-form-item label="Loại người dùng:">
           <el-radio-group v-model="formData.user_type" :disabled="isEdit" @input="changeUserType">
-            <el-radio :label="1">普通用户</el-radio>
-            <el-radio :label="2">付费会员用户</el-radio>
+            <el-radio :label="1">Người dùng thường</el-radio>
+            <el-radio :label="2">Thành viên trả phí</el-radio>
           </el-radio-group>
           <div class="tip">
-            普通用户：所有用户都能获取到的优惠券；<br />
-            付费会员用户：仅付费会员才能领取的优惠券；
+            Người dùng thường: phiếu giảm giá mà tất cả người dùng đều có thể nhận;<br />
+            Thành viên trả phí: phiếu giảm giá chỉ thành viên trả phí mới được nhận;
           </div>
         </el-form-item>
-        <el-form-item label="发送方式：" v-show="formData.user_type == 1">
+        <el-form-item label="Hình thức phát:" v-show="formData.user_type == 1">
           <el-radio-group v-model="formData.receive_type" :disabled="isEdit">
-            <el-radio :label="1">用户领取</el-radio>
-            <el-radio :label="3">系统赠送</el-radio>
+            <el-radio :label="1">Người dùng tự nhận</el-radio>
+            <el-radio :label="3">Hệ thống tặng</el-radio>
           </el-radio-group>
           <div class="tip">
-            用户领取：用户需要手动领取优惠券；<br />
-            系统赠送：1.后台发放指定用户。2.添加到商品里面用户购买该商品获得。3.设置新人礼页面新用户注册赠送优惠券；
+            Người dùng tự nhận: người dùng cần nhận phiếu giảm giá thủ công;<br />
+            Hệ thống tặng: 1. Phát cho người dùng chỉ định từ trang quản trị. 2. Gắn vào sản phẩm, người dùng mua sản phẩm đó sẽ nhận được. 3. Thiết lập tại trang quà tặng người mới, tặng phiếu giảm giá khi người dùng mới đăng ký;
           </div>
         </el-form-item>
-        <el-form-item label="优惠劵类型：">
+        <el-form-item label="Loại phiếu giảm giá:">
           <el-radio-group v-model="formData.type" :disabled="isEdit">
-            <el-radio :label="0">通用券</el-radio>
-            <el-radio :label="1">品类券</el-radio>
-            <el-radio :label="2">商品券</el-radio>
-            <!--                        <el-radio :label="3">会员券</el-radio>-->
+            <el-radio :label="0">Phiếu toàn cửa hàng</el-radio>
+            <el-radio :label="1">Phiếu theo danh mục</el-radio>
+            <el-radio :label="2">Phiếu theo sản phẩm</el-radio>
+            <!--                        <el-radio :label="3">Phiếu giảm giá thành viên</el-radio>-->
           </el-radio-group>
         </el-form-item>
         <el-form-item v-show="formData.type === 2">
@@ -78,12 +78,12 @@
             style="width: 320px"
             :disabled="isEdit"
           ></el-cascader>
-          <div class="info">选择商品的品类</div>
+          <div class="info">Chọn danh mục của sản phẩm</div>
         </el-form-item>
-        <el-form-item label="使用门槛：">
+        <el-form-item label="Điều kiện sử dụng:">
           <el-radio-group v-model="isMinPrice" :disabled="isEdit">
-            <el-radio :label="0">无门槛</el-radio>
-            <el-radio :label="1">有门槛</el-radio>
+            <el-radio :label="0">Không điều kiện</el-radio>
+            <el-radio :label="1">Có điều kiện</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item v-if="isMinPrice">
@@ -94,14 +94,14 @@
             v-model="formData.use_min_price"
             class="content_width input-number-unit-class"
             :disabled="isEdit"
-            class-unit="元"
+            class-unit="đ"
           ></el-input-number>
-          <div class="info">填写优惠券的最低消费金额</div>
+          <div class="info">Điền giá trị đơn hàng tối thiểu để dùng phiếu giảm giá</div>
         </el-form-item>
-        <el-form-item label="有效期：">
+        <el-form-item label="Thời hạn hiệu lực:">
           <el-radio-group v-model="isCouponTime" :disabled="isEdit">
-            <el-radio :label="1">天数</el-radio>
-            <el-radio :label="0">时间段</el-radio>
+            <el-radio :label="1">Số ngày</el-radio>
+            <el-radio :label="0">Khoảng thời gian</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item v-show="isCouponTime" label="">
@@ -112,9 +112,9 @@
             :precision="0"
             class="content_width input-number-unit-class"
             :disabled="isEdit"
-            class-unit="天"
+            class-unit="ngày"
           ></el-input-number>
-          <div class="info">领取后多少天内有效</div>
+          <div class="info">Số ngày có hiệu lực kể từ khi nhận</div>
         </el-form-item>
         <el-form-item v-show="!isCouponTime" label="">
           <el-date-picker
@@ -126,16 +126,16 @@
             value-format="yyyy-MM-dd HH:mm:ss"
             style="width: 380px"
             range-separator="-"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            start-placeholder="Ngày bắt đầu"
+            end-placeholder="Ngày kết thúc"
             @change="dateChange"
           ></el-date-picker>
         </el-form-item>
 
-        <el-form-item label="领取时间：" v-if="formData.receive_type != 2 && formData.receive_type != 3">
+        <el-form-item label="Thời gian nhận:" v-if="formData.receive_type != 2 && formData.receive_type != 3">
           <el-radio-group v-model="isReceiveTime" :disabled="isEdit">
-            <el-radio :label="1">限时</el-radio>
-            <el-radio :label="0">不限时</el-radio>
+            <el-radio :label="1">Giới hạn thời gian</el-radio>
+            <el-radio :label="0">Không giới hạn thời gian</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item v-show="isReceiveTime" label="">
@@ -146,16 +146,16 @@
             value-format="yyyy/MM/dd HH:mm:ss"
             style="width: 380px"
             range-separator="-"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            start-placeholder="Ngày bắt đầu"
+            end-placeholder="Ngày kết thúc"
             @change="timeChange"
             :disabled="isEdit"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="优惠券发布数量：" v-show="formData.receive_type == 1">
+        <el-form-item label="Số lượng phiếu giảm giá phát hành:" v-show="formData.receive_type == 1">
           <el-radio-group v-model="formData.is_permanent" :disabled="isEdit">
-            <el-radio :label="0">限量</el-radio>
-            <el-radio :label="1">不限量</el-radio>
+            <el-radio :label="0">Giới hạn số lượng</el-radio>
+            <el-radio :label="1">Không giới hạn</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item v-show="!formData.is_permanent" label="">
@@ -166,11 +166,11 @@
             v-model="formData.total_count"
             :precision="0"
             class="content_width input-number-unit-class"
-            class-unit="张"
+            class-unit="phiếu"
           ></el-input-number>
-          <div class="info">填写优惠券的发布数量</div>
+          <div class="info">Điền số lượng phiếu giảm giá phát hành</div>
         </el-form-item>
-        <el-form-item label="用户领取数量：" v-if="formData.receive_type != 2 && formData.receive_type != 3">
+        <el-form-item label="Số lượng mỗi người được nhận:" v-if="formData.receive_type != 2 && formData.receive_type != 3">
           <el-input-number
             :controls="false"
             :min="isEdit ? formData.receive_limit : 1"
@@ -178,24 +178,24 @@
             v-model="formData.receive_limit"
             :precision="0"
             class="content_width input-number-unit-class"
-            class-unit="张"
+            class-unit="phiếu"
           ></el-input-number>
-          <div class="info">填写每个用户可以领取多少张</div>
+          <div class="info">Điền số phiếu mỗi người dùng có thể nhận</div>
         </el-form-item>
-        <el-form-item label="状态：">
+        <el-form-item label="Trạng thái:">
           <el-radio-group v-model="formData.status">
-            <el-radio :label="1">开启</el-radio>
-            <el-radio :label="0">关闭</el-radio>
+            <el-radio :label="1">Bật</el-radio>
+            <el-radio :label="0">Tắt</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" v-db-click @click="save" :disabled="disabled">{{
-            isEdit ? '立即保存' : '立即创建'
+            isEdit ? 'Lưu ngay' : 'Tạo ngay'
           }}</el-button>
         </el-form-item>
       </el-form>
     </el-card>
-    <el-dialog :visible.sync="modals" title="商品列表" class="paymentFooter" width="1000px">
+    <el-dialog :visible.sync="modals" title="Danh sách sản phẩm" class="paymentFooter" width="1000px">
       <goods-list ref="goodslist" v-if="modals" :ischeckbox="true" @getProductId="getProductId"></goods-list>
     </el-dialog>
   </div>
@@ -263,13 +263,13 @@ export default {
         this.formData.receive_type = 1;
       }
     },
-    // 品类
+    // Danh mục
     getCategoryList() {
       cascaderListApi(1).then(async (res) => {
         this.categoryList = res.data;
       });
     },
-    // 优惠券
+    // Phiếu giảm giá
     getCouponDetail() {
       couponDetailApi(this.$route.params.id)
         .then((res) => {
@@ -323,46 +323,46 @@ export default {
       let ss = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
       return YY + MM + DD + ' ' + hh + mm + ss;
     },
-    // 创建
+    // Tạo
     save() {
       if (!this.formData.coupon_title) {
-        return this.$message.error('请输入优惠券名称');
+        return this.$message.error('Vui lòng nhập tên phiếu giảm giá');
       }
       if (this.formData.type === 2) {
         if (!this.formData.product_id) {
-          return this.$message.error('请选择商品');
+          return this.$message.error('Vui lòng chọn sản phẩm');
         }
       }
       if (this.formData.type === 1) {
         if (!this.formData.category_id) {
-          return this.$message.error('请选择品类');
+          return this.$message.error('Vui lòng chọn danh mục');
         }
       }
       if (this.formData.coupon_price <= 0) {
-        return this.$message.error('优惠券面值不能小于0');
+        return this.$message.error('Mệnh giá phiếu giảm giá không được nhỏ hơn 0');
       }
       if (!this.isMinPrice) {
         this.formData.use_min_price = 0;
       } else {
         if (this.formData.use_min_price < 1) {
-          return this.$message.error('优惠券最低消费不能小于0');
+          return this.$message.error('Giá trị đơn tối thiểu của phiếu giảm giá không được nhỏ hơn 0');
         }
       }
       if (this.isCouponTime) {
         this.formData.start_use_time = 0;
         this.formData.end_use_time = 0;
         if (this.formData.coupon_time < 1) {
-          return this.$message.error('使用有效期限不能小于1天');
+          return this.$message.error('Thời hạn sử dụng không được ít hơn 1 ngày');
         }
       } else {
         this.formData.coupon_time = 0;
         if (!this.formData.start_use_time) {
-          return this.$message.error('请选择使用有效期限');
+          return this.$message.error('Vui lòng chọn thời hạn sử dụng');
         }
       }
       if (this.isReceiveTime) {
         if (!this.formData.start_time) {
-          return this.$message.error('请选择领取时间');
+          return this.$message.error('Vui lòng chọn thời gian nhận');
         }
       } else {
         this.formData.start_time = 0;
@@ -375,11 +375,11 @@ export default {
         this.formData.total_count = 0;
       } else {
         if (this.formData.total_count < 1) {
-          return this.$message.error('发布数量不能小于1');
+          return this.$message.error('Số lượng phát hành không được nhỏ hơn 1');
         }
       }
       if (this.formData.receive_limit < 1) {
-        return this.$message.error('每个用户可以领取数量不能小于1');
+        return this.$message.error('Số lượng mỗi người dùng được nhận không được nhỏ hơn 1');
       }
       if (this.formData.type == 0) {
         this.formData.product_id = '';
@@ -408,22 +408,22 @@ export default {
           this.$message.error(err.msg);
         });
     },
-    // 使用有效期--时间段
+    // Thời hạn sử dụng--khoảng thời gian
     dateChange(time) {
       this.formData.start_use_time = time[0];
       this.formData.end_use_time = time[1];
     },
-    // 限时
+    // Giới hạn thời gian
     timeChange(time) {
       this.formData.start_time = time[0];
       this.formData.end_time = time[1];
     },
-    //对象数组去重；
+    //Loại bỏ trùng lặp trong mảng object;
     unique(arr) {
       const res = new Map();
       return arr.filter((arr) => !res.has(arr.product_id) && res.set(arr.product_id, 1));
     },
-    // 选择的商品
+    // Sản phẩm đã chọn
     getProductId(productList) {
       this.modals = false;
       this.productList = this.unique(this.productList.concat(productList));
@@ -439,7 +439,7 @@ export default {
     cancel() {
       this.modals = false;
     },
-    // 删除商品
+    // Xóa sản phẩm
     remove(productId) {
       for (let index = 0; index < this.productList.length; index++) {
         if (this.productList[index].product_id == productId) {

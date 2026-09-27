@@ -6,7 +6,7 @@
           <div class="icon">
             <span class="iconfont-diy iconxingzhuangjiehe"></span>
           </div>
-          <el-input v-model="item.val" maxlength="10" placeholder="选填，不超过十个字"  />
+          <el-input v-model="item.val" maxlength="10" placeholder="Không bắt buộc, tối đa 10 ký tự"  />
           <!-- <el-select v-model="item.val">
             <el-option v-for="(val, index) in wordList" :value="val.name" :key="index">{{ val.name }}</el-option>
           </el-select> -->
@@ -16,7 +16,7 @@
         </div>
       </draggable>
       <div class="add-btn" @click="addHotTxt" v-if="configData.list.length < 20">
-        <el-button class="btn" type="primary" ghost> <span class="iconfont iconjiahao"></span>添加 </el-button>
+        <el-button class="btn" type="primary" ghost> <span class="iconfont iconjiahao"></span>Thêm </el-button>
       </div>
     </div>
   </div>
@@ -86,7 +86,7 @@ export default {
       this.configData.list.push(obj);
       // this.$emit('input', this.hotWordList);
     },
-    // 删除数组
+    // Xóa mảng
     bindDelete(index) {
       this.configData.list.splice(index, 1);
     },

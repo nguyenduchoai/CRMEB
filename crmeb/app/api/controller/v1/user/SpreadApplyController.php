@@ -33,10 +33,10 @@ class SpreadApplyController
         $data['uid'] = $request->uid();
         $userInfo = $request->user();
         $verifyCode = CacheService::get('code_' . $data['phone']);
-        if (!$verifyCode) return app('json')->fail('请先获取验证码');
-        if ($verifyCode != $data['code']) return app('json')->fail('验证码错误');
+        if (!$verifyCode) return app('json')->fail('Vui lòng lấy mã xác thực trước');
+        if ($verifyCode != $data['code']) return app('json')->fail('Mã xác thực không đúng');
         unset($data['code']);
         $id = $this->services->applyPromoter($data, $id, $userInfo);
-        return app('json')->success('申请成功', ['id' => $id]);
+        return app('json')->success('Gửi yêu cầu thành công', ['id' => $id]);
     }
 }

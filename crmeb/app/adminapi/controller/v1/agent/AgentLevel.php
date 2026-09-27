@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use app\services\agent\AgentLevelTaskServices;
 use think\facade\App;
 
 /**
- * 分销等级控制器
+ * Controller cấp độ CTV
  * Class AgentLevel
  * @package app\controller\admin\v1\agent
  */
@@ -34,7 +34,7 @@ class AgentLevel extends AuthController
     }
 
     /**
-     * 后台分销等级列表
+     * Danh sách hạng CTV ở quản trị
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -50,7 +50,7 @@ class AgentLevel extends AuthController
     }
 
     /**
-     * 添加分销等级表单
+     * Form thêm hạng CTV
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
@@ -60,7 +60,7 @@ class AgentLevel extends AuthController
     }
 
     /**
-     * 保存分销等级
+     * Lưu hạng CTV
      * @return mixed
      */
     public function save()
@@ -88,7 +88,7 @@ class AgentLevel extends AuthController
     }
 
     /**
-     * 显示指定的资源
+     * Hiển thị resource được chỉ định
      * @param $id
      */
     public function read($id)
@@ -97,7 +97,7 @@ class AgentLevel extends AuthController
     }
 
     /**
-     * 编辑分销等级表单
+     * Form sửa hạng CTV
      * @param $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -108,7 +108,7 @@ class AgentLevel extends AuthController
     }
 
     /**
-     * 修改分销等级
+     * Sửa cấp độ CTV
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -147,7 +147,7 @@ class AgentLevel extends AuthController
     }
 
     /**
-     * 删除分销等级
+     * Xóa cấp độ CTV
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -157,14 +157,14 @@ class AgentLevel extends AuthController
     public function delete($id)
     {
         if (!$id) return app('json')->fail(100100);
-        //检查分销等级数据是否存在
+        //Kiểm tra dữ liệu hạng CTV có tồn tại không
         $levelInfo = $this->services->getLevelInfo((int)$id);
         if ($levelInfo) {
-            //更新数据为已删除
+            //Cập nhật dữ liệu thành đã xóa
             $res = $this->services->update($id, ['is_del' => 1]);
             if (!$res)
                 return app('json')->fail(100008);
-            //删除该等级的任务为已删除
+            //Xóa (đánh dấu đã xóa) các nhiệm vụ của hạng này
             /** @var AgentLevelTaskServices $agentLevelTaskServices */
             $agentLevelTaskServices = app()->make(AgentLevelTaskServices::class);
             $agentLevelTaskServices->update(['level_id' => $id], ['is_del' => 1]);
@@ -173,7 +173,7 @@ class AgentLevel extends AuthController
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param int $id
      * @param string $status
      * @return mixed
@@ -186,32 +186,32 @@ class AgentLevel extends AuthController
     }
 
     /**
-     * 获取任务表单数量
-     * @param int $id 任务ID
+     * Lấy số lượng form nhiệm vụ
+     * @param int $id ID nhiệm vụ
      * @return \think\response\Json
      */
     public function getTaskNumForm($id)
     {
-        // 判断任务ID是否为0，若为0则返回错误信息
+        // Kiểm tra ID nhiệm vụ có bằng 0 không, nếu bằng 0 thì trả về thông báo lỗi
         if ($id == 0) return app('json')->fail(100100);
-        // 调用服务层获取任务表单数量
+        // Gọi tầng service để lấy số lượng form nhiệm vụ
         $result = $this->services->getTaskNumForm($id);
-        // 返回成功信息和任务表单数量
+        // Trả về thông báo thành công và số lượng form nhiệm vụ
         return app('json')->success($result);
     }
 
     /**
-     * 设置任务数量
-     * @param int $id 任务ID
+     * Thiết lập số lượng nhiệm vụ
+     * @param int $id ID nhiệm vụ
      * @return \think\response\Json
      */
     public function setTaskNum($id)
     {
-        // 从请求中获取任务数量
+        // Lấy số lượng nhiệm vụ từ request
         $data = $this->request->postMore([
             ['task_num', 0]
         ]);
-        // 调用服务层设置任务数量
+        // Gọi tầng service để thiết lập số lượng nhiệm vụ
         $res = $this->services->setTaskNum($id, $data);
         return app('json')->success(100014);
     }

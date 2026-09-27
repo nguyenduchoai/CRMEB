@@ -2,13 +2,13 @@
   <div class="pos-order-list" ref="container">
     <div class="head-box">
       <div class="nav acea-row row-around row-middle">
-        <div class="item" :class="where.type === '' ? 'on' : ''" v-db-click @click="changeStatus('')">全部</div>
-        <div class="item" :class="where.type === 0 ? 'on' : ''" v-db-click @click="changeStatus(0)">未支付</div>
-        <div class="item" :class="where.type === 1 ? 'on' : ''" v-db-click @click="changeStatus(1)">未发货</div>
-        <div class="item" :class="where.type === -1 ? 'on' : ''" v-db-click @click="changeStatus(-1)">退款中</div>
+        <div class="item" :class="where.type === '' ? 'on' : ''" v-db-click @click="changeStatus('')">Tất cả</div>
+        <div class="item" :class="where.type === 0 ? 'on' : ''" v-db-click @click="changeStatus(0)">Chưa thanh toán</div>
+        <div class="item" :class="where.type === 1 ? 'on' : ''" v-db-click @click="changeStatus(1)">Chưa giao hàng</div>
+        <div class="item" :class="where.type === -1 ? 'on' : ''" v-db-click @click="changeStatus(-1)">Đang hoàn tiền</div>
       </div>
       <div class="input-box">
-        <el-input placeholder="搜索订单编号" v-model="where.search" @on-enter="bindSearch" />
+        <el-input placeholder="Tìm kiếm mã đơn hàng" v-model="where.search" @on-enter="bindSearch" />
       </div>
     </div>
 
@@ -16,12 +16,12 @@
       <vue-scroll :ops="ops" @load-before-deactivate="handleWordsScroll" ref="scrollBox" style="height: 100%">
         <div class="slot-load" slot="load-deactive"></div>
         <div class="slot-load" slot="load-beforeDeactive"></div>
-        <div class="slot-load" slot="load-active">下滑加载更多</div>
+        <div class="slot-load" slot="load-active">Kéo xuống để tải thêm</div>
         <template v-if="list.length > 0">
           <div class="item" v-for="(item, index) in list" :key="index">
             <div class="order-num acea-row row-middle" v-db-click @click="toDetail(item)">
-              订单号：{{ item.order_id }}
-              <span class="time">下单时间：{{ item._add_time }}</span>
+              Mã đơn hàng: {{ item.order_id }}
+              <span class="time">Thời gian đặt hàng: {{ item._add_time }}</span>
             </div>
             <template if="item.productList && item.productList.length">
               <div class="pos-order-goods" v-for="(val, key) in item.cartInfo" :key="key">
@@ -50,31 +50,30 @@
               </div>
             </template>
             <div class="public-total">
-              共{{ item.total_num }}件商品，应支付 <span class="money">￥{{ item.pay_price }}</span> ( 邮费 ¥{{
+              Tổng {{ item.total_num }} sản phẩm, cần thanh toán <span class="money">￥{{ item.pay_price }}</span> (phí vận chuyển ₫{{
                 item.pay_postage
-              }}
-              )
+              }})
             </div>
             <div class="operation acea-row row-between-wrapper">
               <div class="more">
                 <!--            <div class="iconfontYI icon-gengduo" v-db-click @click="more(index)"></div>-->
                 <!--            <div class="order" v-show="current === index">-->
                 <!--              <div class="items">-->
-                <!--                {{ where.status > 0 ? "删除" : "取消" }}订单-->
+                <!--                {{ where.status > 0 ? "Xóa" : "Hủy" }} đơn hàng-->
                 <!--              </div>-->
                 <!--              <div class="arrow"></div>-->
                 <!--            </div>-->
               </div>
               <div class="acea-row row-middle">
-                <div class="bnt" v-db-click @click="modify(item, 0)" v-if="item.paid === 0">一键改价</div>
-                <div class="bnt" v-db-click @click="modify(item, 1)">订单备注</div>
+                <div class="bnt" v-db-click @click="modify(item, 0)" v-if="item.paid === 0">Sửa giá nhanh</div>
+                <div class="bnt" v-db-click @click="modify(item, 1)">Ghi chú đơn hàng</div>
                 <div
                   class="bnt"
                   v-db-click
                   @click="modify(item, 0)"
                   v-if="item._status._type === -1 && item.refund_status === 1"
                 >
-                  立即退款
+                  Hoàn tiền ngay
                 </div>
                 <div
                   class="bnt cancel"
@@ -82,13 +81,13 @@
                   v-db-click
                   @click="offlinePay(item)"
                 >
-                  确认付款
+                  Xác nhận thanh toán
                 </div>
                 <router-link
                   class="bnt"
                   v-if="item._status._type === 1 && item.shipping_type !== 2"
                   :to="'/kefu/orderDelivery/' + item.id + '/' + item.order_id"
-                  >去发货
+                  >Giao hàng
                 </router-link>
                 <div
                   class="bnt cancel"
@@ -96,7 +95,7 @@
                   v-db-click
                   @click="storeCancellation(item)"
                 >
-                  去核销
+                  Xác nhận sử dụng
                 </div>
               </div>
             </div>
@@ -105,25 +104,25 @@
         <template v-if="!loading && list.length === 0 && where.type === ''">
           <div style="text-align: center">
             <img src="@/assets/images/no_all.png" alt="" style="width: 3.9rem" />
-            <p style="color: #9f9f9f">亲，该客户暂无订单～</p>
+            <p style="color: #9f9f9f">Khách hàng này hiện chưa có đơn hàng nào~</p>
           </div>
         </template>
         <template v-if="!loading && list.length === 0 && where.type === 0">
           <div style="text-align: center">
             <img src="@/assets/images/no_zf.png" alt="" style="width: 3.9rem" />
-            <p style="color: #9f9f9f">暂无未支付订单～</p>
+            <p style="color: #9f9f9f">Không có đơn hàng chưa thanh toán~</p>
           </div>
         </template>
         <template v-if="!loading && list.length === 0 && where.type === 2">
           <div style="text-align: center">
             <img src="@/assets/images/no_fh.png" alt="" style="width: 3.9rem" />
-            <p style="color: #9f9f9f">暂无未收货订单～</p>
+            <p style="color: #9f9f9f">Không có đơn hàng chưa nhận~</p>
           </div>
         </template>
         <template v-if="!loading && list.length === 0 && where.type === -1">
           <div style="text-align: center">
             <img src="@/assets/images/no_tk.png" alt="" style="width: 3.9rem" />
-            <p style="color: #9f9f9f">暂无退款订单～</p>
+            <p style="color: #9f9f9f">Chưa có đơn hoàn tiền~</p>
           </div>
         </template>
       </vue-scroll>
@@ -225,7 +224,7 @@ export default {
   created() {
     // import('@/assets/js/media_750')
     serviceInfo().then((res) => {
-      window.document.title = `${res.data.site_name} - 订单列表`;
+      window.document.title = `${res.data.site_name} - Danh sách đơn hàng`;
     });
   },
   mounted() {
@@ -236,11 +235,11 @@ export default {
     });
   },
   methods: {
-    // 搜索回车
+    // Nhấn enter để tìm kiếm
     bindSearch() {
       this.init();
     },
-    // 去核销
+    // Xác nhận sử dụng
     storeCancellation(item) {
       this.orderInfo = item;
       this.iShidden = true;
@@ -275,12 +274,12 @@ export default {
       this.change = msg;
       this.init();
     },
-    // 拒绝退款
+    // Từ chối hoàn tiền
     getRefuse(id) {
       orderRefuseApi(data)
         .then(() => {
           that.change = false;
-          that.$dialog.success('已拒绝退款');
+          that.$dialog.success('Đã từ chối hoàn tiền');
           that.init();
         })
         .catch((error) => {
@@ -297,7 +296,7 @@ export default {
       if (that.status == 0 && refundStatus === 0) {
         try {
           await this.$validator({
-            price: [required(required.message('金额'))],
+            price: [required(required.message('Số tiền'))],
           }).validate({ price });
         } catch (e) {
           return validatorDefaultCatch(e);
@@ -307,7 +306,7 @@ export default {
         editPriceApi(data)
           .then(() => {
             that.change = false;
-            that.$dialog.success('改价成功');
+            that.$dialog.success('Đổi giá thành công');
             that.init();
           })
           .catch((error) => {
@@ -316,7 +315,7 @@ export default {
       } else if (that.status == 0 && refundStatus === 1) {
         try {
           await this.$validator({
-            refundPrice: [required(required.message('金额')), num(num.message('金额'))],
+            refundPrice: [required(required.message('Số tiền')), num(num.message('Số tiền'))],
           }).validate({ refundPrice });
         } catch (e) {
           return validatorDefaultCatch(e);
@@ -327,7 +326,7 @@ export default {
         orderRefundApi(data).then(
           (res) => {
             that.change = false;
-            that.$dialog.success('退款成功');
+            that.$dialog.success('Hoàn tiền thành công');
             that.init();
           },
           (err) => {
@@ -338,7 +337,7 @@ export default {
       } else {
         try {
           await this.$validator({
-            remark: [required(required.message('备注'))],
+            remark: [required(required.message('Ghi chú'))],
           }).validate({ remark });
         } catch (e) {
           return validatorDefaultCatch(e);
@@ -348,7 +347,7 @@ export default {
         orderMarkApi(data).then(
           (res) => {
             that.change = false;
-            that.$dialog.success('提交成功');
+            that.$dialog.success('Gửi thành công');
             that.init();
           },
           (err) => {
@@ -404,7 +403,7 @@ export default {
       //   }
       // );
     },
-    // 话术滚动到底部
+    // Mẫu câu cuộn xuống cuối
     handleWordsScroll(vm, refreshDom, done) {
       this.getIndex();
       done();

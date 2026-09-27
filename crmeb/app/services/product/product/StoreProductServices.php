@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -46,21 +46,21 @@ use think\facade\Config;
 /**
  * Class StoreProductService
  * @package app\services\product\product
- * @method getOne(array $where) 获取一条数据
- * @method update(int $id, array $data) 获取一条数据
- * @method delete($id, ?string $key = null) 删除数据
- * @method value($where, ?string $field = null) 获取字段
- * @method incStockDecSales(array $where, int $num, string $stock = 'stock', string $sales = 'sales') 加库存减销量
- * @method count(array $where) 获取指定条件下的数量
- * @method getColumn(array $where, string $field, string $key = '') 获取某个字段数组
- * @method getSearchList(array $where, int $page = 0, int $limit = 0, ?array $field = ['*']) 获取列表
- * @method get(int $id, array $field) 获取一条数据
- * @method getCid(int $page, int $limit) 获取一级分类ID
- * @method downAdvance() 预售商品自动到期下架
+ * @method getOne(array $where) Lấy một dòng dữ liệu
+ * @method update(int $id, array $data) Lấy một dòng dữ liệu
+ * @method delete($id, ?string $key = null) Xóa dữ liệu
+ * @method value($where, ?string $field = null) Lấy trường
+ * @method incStockDecSales(array $where, int $num, string $stock = 'stock', string $sales = 'sales') Tăng tồn kho, giảm lượt bán
+ * @method count(array $where) Lấy số lượng theo điều kiện chỉ định
+ * @method getColumn(array $where, string $field, string $key = '') Lấy mảng của một trường
+ * @method getSearchList(array $where, int $page = 0, int $limit = 0, ?array $field = ['*']) Lấy danh sách
+ * @method get(int $id, array $field) Lấy một dòng dữ liệu
+ * @method getCid(int $page, int $limit) Lấy ID danh mục cấp 1
+ * @method downAdvance() Sản phẩm đặt trước tự động gỡ bán khi hết hạn
  */
 class StoreProductServices extends BaseServices
 {
-    protected $productType = ['普通商品', '卡密商品', '优惠券商品', '虚拟商品'];
+    protected $productType = ['Sản phẩm thường', 'Sản phẩm mã thẻ', 'Sản phẩm phiếu giảm giá', 'Sản phẩm ảo'];
 
 
     public function __construct(StoreProductDao $dao)
@@ -69,43 +69,43 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 获取顶部标签
+     * Lấy nhãn phần đầu
      * @param array $where
      * @return array[]
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/31
      */
     public function getHeader($where = [])
     {
         $where['cate_id'] = $where['cate_id'] != '' ? app()->make(StoreCategoryServices::class)->getColumn(['pid' => $where['cate_id']], 'id') : [];
-        //出售中的商品
+        //Sản phẩm đang bán
         $onsale = $this->dao->getCount($where + ['type' => 1]);
-        //仓库中的商品
+        //Sản phẩm trong kho
         $forsale = $this->dao->getCount($where + ['type' => 2]);
-        //已经售罄商品
+        //Sản phẩm đã hết hàng
         $outofstock = $this->dao->getCount($where + ['type' => 4]);
-        //警戒库存商品
+        //Sản phẩm cảnh báo tồn kho
         $policeforce = $this->dao->getCount($where + ['type' => 5, 'store_stock' => sys_config('store_stock') > 0 ? sys_config('store_stock') : 2]);
-        //回收站的商品
+        //Sản phẩm trong thùng rác
         $recycle = $this->dao->getCount($where + ['type' => 6]);
         return [
-            ['type' => 1, 'name' => '出售中的商品', 'count' => $onsale],
-            ['type' => 2, 'name' => '仓库中的商品', 'count' => $forsale],
-            ['type' => 4, 'name' => '已经售罄商品', 'count' => $outofstock],
-            ['type' => 5, 'name' => '警戒库存商品', 'count' => $policeforce],
-            ['type' => 6, 'name' => '回收站的商品', 'count' => $recycle]
+            ['type' => 1, 'name' => 'Sản phẩm đang bán', 'count' => $onsale],
+            ['type' => 2, 'name' => 'Sản phẩm trong kho', 'count' => $forsale],
+            ['type' => 4, 'name' => 'Sản phẩm đã hết hàng', 'count' => $outofstock],
+            ['type' => 5, 'name' => 'Sản phẩm cảnh báo tồn kho', 'count' => $policeforce],
+            ['type' => 6, 'name' => 'Sản phẩm trong thùng rác', 'count' => $recycle]
         ];
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/02/17
      */
@@ -153,7 +153,7 @@ class StoreProductServices extends BaseServices
                 if (in_array($cate_value, $oneCateList)) $item['cate_name'][] = $parentCateList[$cate_value];
             }
             $item['cate_name'] = is_array($item['cate_name']) ? implode(',', $item['cate_name']) : '';
-            $item['stock_attr'] = $item['stock'] > 0;//库存
+            $item['stock_attr'] = $item['stock'] > 0;//Tồn kho
             $item['product_type'] = $this->productType[$item['virtual_type']];
             $item['image'] = set_file_url($item['image']);
             $item['slider_image'] = set_file_url($item['slider_image']);
@@ -194,7 +194,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 设置商品上下架
+     * Đặt hiển thị/gỡ sản phẩm
      * @param $ids
      * @param $is_show
      */
@@ -202,7 +202,7 @@ class StoreProductServices extends BaseServices
     {
         if (empty($ids)) throw new AdminException(100100);
 //        if ($is_show == 0) {
-//            //下架检测是否有参与活动商品
+//            //Khi gỡ sản phẩm, kiểm tra có sản phẩm tham gia chương trình không
 //            $this->checkActivity($ids);
 //        }
         /** @var StoreCartServices $cartService */
@@ -218,7 +218,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 获取规格模板
+     * Lấy mẫu quy cách
      * @return array
      */
     public function getRule()
@@ -241,7 +241,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 获取商品详情
+     * Lấy chi tiết sản phẩm
      * @param int $id
      * @return array|\think\Model|null
      */
@@ -316,20 +316,20 @@ class StoreProductServices extends BaseServices
         $productInfo['protection_list'] = $productInfo['protection_list'] != '' ? array_map('intval', explode(',', $productInfo['protection_list'])) : [];
         /** @var StoreProductAttrServices $storeProductAttrServices */
         $storeProductAttrServices = app()->make(StoreProductAttrServices::class);
-        //无属性添加默认属性
+        //Không có thuộc tính thì thêm thuộc tính mặc định
         if (!$storeProductAttrResultServices->getResult(['product_id' => $id, 'type' => 0])) {
             $attr = [
                 [
-                    'value' => '规格',
+                    'value' => 'Quy cách',
                     'detailValue' => '',
                     'attrHidden' => '',
-                    'detail' => ['默认']
+                    'detail' => ['Mặc định']
                 ]
             ];
             $detail[0] = [
-                'attr_arr' => ['默认'],
-                'value1' => '默认',
-                'detail' => ['规格' => '默认'],
+                'attr_arr' => ['Mặc định'],
+                'value1' => 'Mặc định',
+                'detail' => ['Quy cách' => 'Mặc định'],
                 'pic' => $productInfo['image'],
                 'price' => $productInfo['price'],
                 'cost' => $productInfo['cost'],
@@ -412,25 +412,25 @@ class StoreProductServices extends BaseServices
             $activity = explode(',', $productInfo['activity']);
             foreach ($activity as $k => $v) {
                 if ($v == 1) {
-                    $activity[$k] = '秒杀';
+                    $activity[$k] = 'Flash sale';
                 } elseif ($v == 2) {
-                    $activity[$k] = '砍价';
+                    $activity[$k] = 'Săn giảm giá';
                 } elseif ($v == 3) {
-                    $activity[$k] = '拼团';
+                    $activity[$k] = 'Mua chung';
                 } elseif ($v == 0) {
-                    $activity[$k] = '默认';
+                    $activity[$k] = 'Mặc định';
                 }
             }
             $productInfo['activity'] = $activity;
         } else {
-            $productInfo['activity'] = ['默认', '秒杀', '砍价', '拼团'];
+            $productInfo['activity'] = ['Mặc định', 'Flash sale', 'Săn giảm giá', 'Mua chung'];
         }
         $data['productInfo'] = $productInfo;
         return $data;
     }
 
     /**
-     * 获取运费模板列表
+     * Lấy danh sách mẫu phí vận chuyển
      * @return array
      */
     public function getTemp()
@@ -441,7 +441,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 获取商品规格
+     * Lấy quy cách sản phẩm
      * @param array $data
      * @param int $id
      * @param int $type
@@ -456,8 +456,8 @@ class StoreProductServices extends BaseServices
         /** @var StoreCouponIssueServices $storeCouponIssueServices */
         $storeCouponIssueServices = app()->make(StoreCouponIssueServices::class);
         $attr = $data['attrs'];
-        $is_virtual = $data['is_virtual']; //是否虚拟商品
-        $virtual_type = $data['virtual_type']; //虚拟商品类型
+        $is_virtual = $data['is_virtual']; //Có phải sản phẩm ảo không
+        $virtual_type = $data['virtual_type']; //Loại sản phẩm ảo
         $attr = array_merge($attr);
         list($value, $head) = attr_format($attr);
         $valueNew = [];
@@ -470,7 +470,7 @@ class StoreProductServices extends BaseServices
             if ($id) {
                 $sukValue = $storeProductAttrValueServices->getColumn(['product_id' => $id, 'type' => 0, 'suk' => $suk], 'bar_code,bar_code_number,cost,price,ot_price,stock,image as pic,weight,volume,brokerage,brokerage_two,vip_price,is_virtual,coupon_id,unique,disk_info', 'suk');
                 if (!$sukValue) {
-                    if ($type == 0) $types = 0; //编辑商品时，将没有规格的数据不生成默认值
+                    if ($type == 0) $types = 0; //Khi sửa sản phẩm, không tạo giá trị mặc định cho dữ liệu không có phân loại
                     $sukValue[$suk]['pic'] = '';
                     $sukValue[$suk]['price'] = 0;
                     $sukValue[$suk]['cost'] = 0;
@@ -510,7 +510,7 @@ class StoreProductServices extends BaseServices
                 $sukValue[$suk]['brokerage'] = 0;
                 $sukValue[$suk]['brokerage_two'] = 0;
             }
-            if ($types) { //编辑商品时，将没有规格的数据不生成默认值
+            if ($types) { //Khi sửa sản phẩm, không tạo giá trị mặc định cho dữ liệu không có phân loại
                 foreach ($head as $k => $title) {
                     $header[$k]['title'] = $title;
                     $header[$k]['align'] = 'center';
@@ -547,24 +547,24 @@ class StoreProductServices extends BaseServices
                 $count++;
             }
         }
-        $header[] = ['title' => '图片', 'slot' => 'pic', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '售价', 'slot' => 'price', 'align' => 'center', 'minWidth' => 120];
-        $header[] = ['title' => '成本价', 'slot' => 'cost', 'align' => 'center', 'minWidth' => 140];
-        $header[] = ['title' => '划线价', 'slot' => 'ot_price', 'align' => 'center', 'minWidth' => 140];
-        $header[] = ['title' => '库存', 'slot' => 'stock', 'align' => 'center', 'minWidth' => 140];
-        $header[] = ['title' => '商品编码', 'slot' => 'bar_code', 'align' => 'center', 'minWidth' => 140];
-        $header[] = ['title' => '条形码', 'slot' => 'bar_code_number', 'align' => 'center', 'minWidth' => 140];
+        $header[] = ['title' => 'Hình ảnh', 'slot' => 'pic', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Giá bán', 'slot' => 'price', 'align' => 'center', 'minWidth' => 120];
+        $header[] = ['title' => 'Giá vốn', 'slot' => 'cost', 'align' => 'center', 'minWidth' => 140];
+        $header[] = ['title' => 'Giá gốc', 'slot' => 'ot_price', 'align' => 'center', 'minWidth' => 140];
+        $header[] = ['title' => 'Tồn kho', 'slot' => 'stock', 'align' => 'center', 'minWidth' => 140];
+        $header[] = ['title' => 'Mã sản phẩm', 'slot' => 'bar_code', 'align' => 'center', 'minWidth' => 140];
+        $header[] = ['title' => 'Mã vạch', 'slot' => 'bar_code_number', 'align' => 'center', 'minWidth' => 140];
         if ($is_virtual) {
             if ($virtual_type == 1) {
-                $header[] = ['title' => '虚拟商品', 'slot' => 'fictitious', 'align' => 'center', 'minWidth' => 140];
+                $header[] = ['title' => 'Sản phẩm ảo', 'slot' => 'fictitious', 'align' => 'center', 'minWidth' => 140];
             } elseif ($virtual_type == 2) {
-                $header[] = ['title' => '虚拟商品', 'slot' => 'fictitious', 'align' => 'center', 'minWidth' => 140];
+                $header[] = ['title' => 'Sản phẩm ảo', 'slot' => 'fictitious', 'align' => 'center', 'minWidth' => 140];
             }
         } else {
-            $header[] = ['title' => '重量(KG)', 'slot' => 'weight', 'align' => 'center', 'minWidth' => 140];
-            $header[] = ['title' => '体积(m³)', 'slot' => 'volume', 'align' => 'center', 'minWidth' => 140];
+            $header[] = ['title' => 'Trọng lượng (KG)', 'slot' => 'weight', 'align' => 'center', 'minWidth' => 140];
+            $header[] = ['title' => 'Thể tích (m³)', 'slot' => 'volume', 'align' => 'center', 'minWidth' => 140];
         }
-        $header[] = ['title' => '操作', 'slot' => 'action', 'align' => 'center', 'minWidth' => 70];
+        $header[] = ['title' => 'Thao tác', 'slot' => 'action', 'align' => 'center', 'minWidth' => 70];
         return ['attr' => $attr, 'value' => $valueNew, 'header' => $header];
     }
 
@@ -578,7 +578,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 新增编辑商品
+     * Thêm sửa sản phẩm
      * @param int $id
      * @param array $data
      */
@@ -587,7 +587,7 @@ class StoreProductServices extends BaseServices
         if (count($data['cate_id']) < 1) throw new AdminException(400373);
         if (!$data['store_name']) throw new AdminException(400338);
         if (count($data['slider_image']) < 1) throw new AdminException(400349);
-        if ($data['is_limit'] == 1 && $data['min_qty'] > $data['limit_num']) throw new AdminException('起购数量不能大于限购数量');
+        if ($data['is_limit'] == 1 && $data['min_qty'] > $data['limit_num']) throw new AdminException('Số lượng mua tối thiểu không được lớn hơn số lượng giới hạn mua');
 
         $detail = $data['attrs'];
         $attr = $data['items'];
@@ -636,17 +636,17 @@ class StoreProductServices extends BaseServices
             if (isset($item['detail'])) {
                 foreach ($item['detail'] as $detail_k => $detail_v) {
                     if (preg_match('/[=;]/', $detail_k) === 1 || preg_match('/[=;]/', $detail_v) === 1) {
-                        throw new AdminException('规格以及规格值中不能包含=或;符号');
+                        throw new AdminException('Quy cách và giá trị quy cách không được chứa ký hiệu “=” hoặc “;”');
                     }
                 }
             }
         }
         foreach ($data['activity'] as $k => $v) {
-            if ($v == '秒杀') {
+            if ($v == 'Flash sale') {
                 $data['activity'][$k] = 1;
-            } elseif ($v == '砍价') {
+            } elseif ($v == 'Săn giảm giá') {
                 $data['activity'][$k] = 2;
-            } elseif ($v == '拼团') {
+            } elseif ($v == 'Mua chung') {
                 $data['activity'][$k] = 3;
             } else {
                 $data['activity'][$k] = 0;
@@ -687,14 +687,14 @@ class StoreProductServices extends BaseServices
             if ($data['spec_type'] == 0) {
                 $attr = [
                     [
-                        'value' => '规格',
+                        'value' => 'Quy cách',
                         'detailValue' => '',
                         'attrHidden' => '',
-                        'detail' => ['默认']
+                        'detail' => ['Mặc định']
                     ]
                 ];
-                $detail[0]['value1'] = '规格';
-                $detail[0]['detail'] = ['规格' => '默认'];
+                $detail[0]['value1'] = 'Quy cách';
+                $detail[0]['detail'] = ['Quy cách' => 'Mặc định'];
                 $data['default_sku'] = '';
             }
             foreach ($detail as &$item) {
@@ -750,20 +750,20 @@ class StoreProductServices extends BaseServices
                 if (!empty($coupon_ids)) $storeProductCouponServices->setCoupon($res->id, $coupon_ids);
                 if (!$attrRes) throw new AdminException(100022);
 
-                //采集商品下载图片
+                //Thu thập sản phẩm, tải ảnh xuống
                 if ($type == -1) {
                     $s_image_down = [];
-                    //下载商品轮播图
+                    //Tải ảnh trình chiếu sản phẩm
                     foreach ($slider_image as $s_image) {
                         if (sys_config('queue_open', 0) == 1) {
                             ProductCopyJob::dispatch('copySliderImage', [$res->id, $s_image, count($slider_image)]);
                         } else {
-                            //下载图片
+                            //Tải hình ảnh
                             $s_image_down[] = app()->make(CopyTaobaoServices::class)->downloadCopyImage(!is_int(strpos($s_image, 'http')) ? 'http://' . ltrim($s_image, '\//') : $s_image);
                         }
                     }
 
-                    //下载商品详情图
+                    //Tải ảnh chi tiết sản phẩm
                     preg_match_all('#<img.*?src="([^"]*)"[^>]*>#i', $description, $match);
                     foreach ($match[1] as $d_image) {
                         if (sys_config('queue_open', 0) == 1) {
@@ -774,7 +774,7 @@ class StoreProductServices extends BaseServices
                         }
                     }
 
-                    //下载商品规格图
+                    //Tải ảnh phân loại sản phẩm
                     $productAttrValue = app()->make(StoreProductAttrValueServices::class);
                     $attrValueList = $productAttrValue->getColumn(['product_id' => $res->id, 'type' => 0], 'image', 'id');
                     foreach ($attrValueList as $value_id => $value_image) {
@@ -796,7 +796,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 添加商品属性数据判断
+     * Kiểm tra khi thêm dữ liệu thuộc tính sản phẩm
      * @param array $attrList
      * @param array $valueList
      * @param int $productId
@@ -855,10 +855,10 @@ class StoreProductServices extends BaseServices
                 throw new AdminException(400580);
             }
             if ($validate && (!isset($value['pic']) || empty($value['pic']))) {
-                throw new AdminException('请设置规格图片');
+                throw new AdminException('Vui lòng thiết lập hình ảnh quy cách');
             }
             foreach ($value['detail'] as $attrName => $attrValue) {
-                //如果attrName 存在空格 则这个规格key 会出现两次
+                //Nếu attrName có khoảng trắng thì key phân loại này sẽ xuất hiện hai lần
                 unset($valueList[$index]['detail'][$attrName]);
                 $attrName = trim($attrName);
                 $attrValue = trim($attrValue);
@@ -931,7 +931,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 放入回收站
+     * Đưa vào thùng rác
      * @param int $id
      * @return string
      */
@@ -959,7 +959,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 获取选择的商品列表
+     * Lấy danh sách sản phẩm đã chọn
      * @param array $where
      * @return array
      */
@@ -1001,7 +1001,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 后台获取商品列表展示
+     * Lấy danh sách sản phẩm hiển thị ở trang quản trị
      * @param array $where
      * @return array
      */
@@ -1035,7 +1035,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 获取商品规格
+     * Lấy quy cách sản phẩm
      * @param int $id
      * @param int $type
      * @return array
@@ -1090,41 +1090,41 @@ class StoreProductServices extends BaseServices
             $valueNew[$count]['vip_price'] = $sukValue[$suk]['vip_price'] ? floatval($sukValue[$suk]['vip_price']) : 0;
             $count++;
         }
-        $header[] = ['title' => '图片', 'slot' => 'pic', 'align' => 'center', 'minWidth' => 120];
+        $header[] = ['title' => 'Hình ảnh', 'slot' => 'pic', 'align' => 'center', 'minWidth' => 120];
         if ($type == 1) {
-            $header[] = ['title' => '秒杀价', 'slot' => 'price', 'align' => 'center', 'minWidth' => 80];
-            $header[] = ['title' => '成本价', 'key' => 'cost', 'align' => 'center', 'minWidth' => 80];
-            $header[] = ['title' => '日常售价', 'key' => 'r_price', 'align' => 'center', 'minWidth' => 80];
+            $header[] = ['title' => 'Giá flash sale', 'slot' => 'price', 'align' => 'center', 'minWidth' => 80];
+            $header[] = ['title' => 'Giá vốn', 'key' => 'cost', 'align' => 'center', 'minWidth' => 80];
+            $header[] = ['title' => 'Giá bán thường ngày', 'key' => 'r_price', 'align' => 'center', 'minWidth' => 80];
         } elseif ($type == 2) {
-            $header[] = ['title' => '砍价起始金额', 'slot' => 'price', 'align' => 'center', 'minWidth' => 80];
-            $header[] = ['title' => '砍价最低价', 'slot' => 'min_price', 'align' => 'center', 'minWidth' => 80];
-            $header[] = ['title' => '成本价', 'key' => 'cost', 'align' => 'center', 'minWidth' => 80];
-            $header[] = ['title' => '日常售价', 'key' => 'r_price', 'align' => 'center', 'minWidth' => 80];
+            $header[] = ['title' => 'Giá khởi điểm săn giảm giá', 'slot' => 'price', 'align' => 'center', 'minWidth' => 80];
+            $header[] = ['title' => 'Giá thấp nhất săn giảm giá', 'slot' => 'min_price', 'align' => 'center', 'minWidth' => 80];
+            $header[] = ['title' => 'Giá vốn', 'key' => 'cost', 'align' => 'center', 'minWidth' => 80];
+            $header[] = ['title' => 'Giá bán thường ngày', 'key' => 'r_price', 'align' => 'center', 'minWidth' => 80];
         } elseif ($type == 3) {
-            $header[] = ['title' => '拼团价', 'slot' => 'price', 'align' => 'center', 'minWidth' => 80];
-            $header[] = ['title' => '成本价', 'key' => 'cost', 'align' => 'center', 'minWidth' => 80];
-            $header[] = ['title' => '日常售价', 'key' => 'r_price', 'align' => 'center', 'minWidth' => 80];
+            $header[] = ['title' => 'Giá mua chung', 'slot' => 'price', 'align' => 'center', 'minWidth' => 80];
+            $header[] = ['title' => 'Giá vốn', 'key' => 'cost', 'align' => 'center', 'minWidth' => 80];
+            $header[] = ['title' => 'Giá bán thường ngày', 'key' => 'r_price', 'align' => 'center', 'minWidth' => 80];
         } elseif ($type == 4) {
-            $header[] = ['title' => '兑换积分', 'slot' => 'price', 'type' => 1, 'align' => 'center', 'minWidth' => 80];
+            $header[] = ['title' => 'Điểm quy đổi', 'slot' => 'price', 'type' => 1, 'align' => 'center', 'minWidth' => 80];
         } elseif ($type == 6) {
-            $header[] = ['title' => '预售价', 'key' => 'price', 'type' => 1, 'align' => 'center', 'minWidth' => 80];
-            $header[] = ['title' => '成本价', 'key' => 'cost', 'align' => 'center', 'minWidth' => 80];
-            $header[] = ['title' => '划线价', 'key' => 'ot_price', 'align' => 'center', 'minWidth' => 80];
+            $header[] = ['title' => 'Giá đặt trước', 'key' => 'price', 'type' => 1, 'align' => 'center', 'minWidth' => 80];
+            $header[] = ['title' => 'Giá vốn', 'key' => 'cost', 'align' => 'center', 'minWidth' => 80];
+            $header[] = ['title' => 'Giá gốc', 'key' => 'ot_price', 'align' => 'center', 'minWidth' => 80];
         } else {
-            $header[] = ['title' => '成本价', 'key' => 'cost', 'align' => 'center', 'minWidth' => 80];
-            $header[] = ['title' => '划线价', 'key' => 'ot_price', 'align' => 'center', 'minWidth' => 80];
+            $header[] = ['title' => 'Giá vốn', 'key' => 'cost', 'align' => 'center', 'minWidth' => 80];
+            $header[] = ['title' => 'Giá gốc', 'key' => 'ot_price', 'align' => 'center', 'minWidth' => 80];
         }
-        $header[] = ['title' => '库存', 'key' => 'stock', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '限量', 'slot' => 'quota', 'type' => 1, 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '重量(KG)', 'key' => 'weight', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '体积(m³)', 'key' => 'volume', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '商品编码', 'key' => 'bar_code', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '条形码', 'key' => 'bar_code_number', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Tồn kho', 'key' => 'stock', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Giới hạn số lượng', 'slot' => 'quota', 'type' => 1, 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Trọng lượng (KG)', 'key' => 'weight', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Thể tích (m³)', 'key' => 'volume', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Mã sản phẩm', 'key' => 'bar_code', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Mã vạch', 'key' => 'bar_code_number', 'align' => 'center', 'minWidth' => 80];
         return ['items' => $attr, 'attrs' => $valueNew, 'header' => $header];
     }
 
     /**
-     * 检查商品是否有活动
+     * Kiểm tra sản phẩm có chương trình không
      * @param  $id
      * @return bool
      */
@@ -1166,7 +1166,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 保存
+     * Lưu
      * @param array $data
      * @return mixed
      */
@@ -1176,7 +1176,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 前台获取商品列表
+     * Lấy danh sách sản phẩm ở phía người dùng
      * @param array $where
      * @param int $uid
      * @return array|array[]
@@ -1200,16 +1200,16 @@ class StoreProductServices extends BaseServices
         $memberCardService = app()->make(MemberCardServices::class);
         $vipStatus = $memberCardService->isOpenMemberCard('vip_price');
 
-        // 提取所有 label_list 并过滤空值
+        // Lấy tất cả label_list và lọc giá trị trống
         $labelLists = array_map(function ($item) {
             return $item['label_list'];
         }, $list);
 
-        // 将 label_list 转换为数组，过滤空值，并去重
+        // Chuyển label_list thành mảng, lọc giá trị trống, và loại bỏ trùng lặp
         $uniqueLabels = array_unique(array_reduce($labelLists, function ($carry, $labels) {
-            // 将 label_list 按逗号分割成数组
+            // Chia label_list thành mảng theo dấu phẩy
             $labelsArray = explode(',', $labels);
-            // 过滤掉空值
+            // Lọc bỏ giá trị trống
             $labelsArray = array_filter($labelsArray, function ($label) {
                 return !empty(trim($label));
             });
@@ -1217,7 +1217,7 @@ class StoreProductServices extends BaseServices
         }, []));
 
         $labelList = app()->make(StoreProductLabelServices::class)->labelListByIds($uniqueLabels);
-        // 使用 id 作为键
+        // Dùng id làm khóa
         $labelList = array_column($labelList, null, 'id');
 
         foreach ($list as &$item) {
@@ -1240,7 +1240,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 获取某些模板所需得购物车数量
+     * Lấy số lượng giỏ hàng cần cho một số mẫu
      * @param array $list
      * @param int $uid
      * @return array
@@ -1287,7 +1287,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 获取商品活动标签
+     * Lấy nhãn chương trình sản phẩm
      * @param array $list
      * @param array $productIds
      * @return array
@@ -1337,7 +1337,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 获取商品在此时段活动优先类型
+     * Lấy loại chương trình ưu tiên của sản phẩm trong khoảng thời gian này
      * @param string $activity
      * @param int $id
      * @param int $combinationId
@@ -1349,7 +1349,7 @@ class StoreProductServices extends BaseServices
     public function activity(string $activity, int $id, int $combinationId, array $seckillId, int $bargainId, bool $status = true)
     {
         if (!$activity) {
-            $activity = '0,1,2,3';//如果老商品没有活动顺序，默认活动顺序，秒杀-砍价-拼团
+            $activity = '0,1,2,3';//Nếu sản phẩm cũ không có thứ tự chương trình, dùng thứ tự mặc định: flash sale - săn giảm giá - mua chung
         }
         $activity = explode(',', $activity);
         if ($activity[0] == 0 && $status) return [];
@@ -1392,7 +1392,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 获取热门商品
+     * Lấy sản phẩm phổ biến
      * @param array $where
      * @param int $num
      * @return array|array[]
@@ -1413,7 +1413,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 获取商品详情
+     * Lấy chi tiết sản phẩm
      * @param Request $request
      * @param int $id
      * @param int $type
@@ -1467,7 +1467,7 @@ class StoreProductServices extends BaseServices
         $storeInfo['small_image'] = $storeInfo['image'];
         $storeInfo = get_thumb_water($storeInfo, 'small', ['small_image']);
 
-        //预售相关
+        //Liên quan đến đặt trước
         if ($storeInfo['presale']) {
             if ($storeInfo['presale_start_time'] > time()) {
                 $storeInfo['presale_pay_status'] = 1;
@@ -1484,7 +1484,7 @@ class StoreProductServices extends BaseServices
         $storeInfo['presale_start_time'] = date('Y-m-d H:i', $storeInfo['presale_start_time']);
         $storeInfo['presale_end_time'] = date('Y-m-d H:i', $storeInfo['presale_end_time']);
 
-        //有自定义表单或预售或虚拟不展示加入购物车按钮
+        //Có form tùy chỉnh, hoặc đặt trước, hoặc sản phẩm ảo thì không hiện nút thêm vào giỏ hàng
         $storeInfo['cart_button'] = $storeInfo['custom_form'] || $storeInfo['presale'] || $storeInfo['is_virtual'] || $storeInfo['virtual_type'] == 3 ? 0 : 1;
 
         /** @var StoreProductAttrServices $storeProductAttrServices */
@@ -1499,19 +1499,19 @@ class StoreProductServices extends BaseServices
             }
         }
         $storeInfo['attrPics'] = $attrPics;
-        //无属性添加默认属性
+        //Không có thuộc tính thì thêm thuộc tính mặc định
         if (empty($productValue)) {
             $attr = [
                 [
-                    'value' => '规格',
+                    'value' => 'Quy cách',
                     'detailValue' => '',
                     'attrHidden' => '',
-                    'detail' => ['默认']
+                    'detail' => ['Mặc định']
                 ]
             ];
             $detail[0] = [
-                'value1' => '默认',
-                'detail' => ['规格' => '默认'],
+                'value1' => 'Mặc định',
+                'detail' => ['Quy cách' => 'Mặc định'],
                 'pic' => $storeInfo['image'],
                 'price' => $storeInfo['price'],
                 'cost' => $storeInfo['cost'],
@@ -1531,7 +1531,7 @@ class StoreProductServices extends BaseServices
         if (!$storeInfo['spec_type']) {
             $productAttr = [];
             $productValue = [];
-            $data['spec_unique'] = $attrValue['默认']['unique'];
+            $data['spec_unique'] = $attrValue['Mặc định']['unique'];
         } else {
             foreach ($productValue as &$sku) {
                 if ($sku['is_show'] == 0) {
@@ -1569,7 +1569,7 @@ class StoreProductServices extends BaseServices
                 }
             }
             $data['priceName'] = $this->getPacketPrice($storeInfo, $attrValue, $uid);
-            //用户访问事件
+            //Sự kiện người dùng truy cập
             event('UserVisitListener', [$uid, $id, 'product', $storeInfo['cate_id'], 'view']);
         }
 
@@ -1590,16 +1590,16 @@ class StoreProductServices extends BaseServices
             $data['good_list'] = $this->getProducts(['is_good' => 1, 'is_del' => 0, 'is_show' => 1, 'vip_user' => $vip_user], 12);
         }
         $data['mapKey'] = sys_config('tengxun_map_key');
-        $data['store_self_mention'] = (int)sys_config('store_self_mention') ?? 0;//门店自提是否开启
+        $data['store_self_mention'] = (int)sys_config('store_self_mention') ?? 0;//Nhận tại cửa hàng có mở không
         $data['activity'] = $this->getActivityList($data['storeInfo'], false);
         /** @var StoreCouponIssueServices $couponService */
         $couponService = app()->make(StoreCouponIssueServices::class);
         $data['coupons'] = $couponService->getIssueCouponList($uid, ['product_id' => $id, 'type' => -1])['list'];
         $data['routine_contact_type'] = sys_config('routine_contact_type', 0);
-        //浏览记录
+        //Lịch sử xem
         ProductLogJob::dispatch(['visit', ['uid' => $uid, 'product_id' => $id]]);
 
-        //自定义事件-用户商品访问
+        //Sự kiện tùy chỉnh - người dùng truy cập sản phẩm
         event('CustomEventListener', ['user_product_visit', [
             'product_id' => $id,
             'uid' => $uid,
@@ -1610,7 +1610,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 是否开启vip
+     * Có mở VIP không
      * @param bool $vip
      * @return bool
      */
@@ -1625,7 +1625,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 获取商品分销佣金最低和最高
+     * Lấy hoa hồng phân phối thấp nhất và cao nhất của sản phẩm
      * @param $storeInfo
      * @param $productValue
      * @param int $uid
@@ -1669,7 +1669,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 设置会员价格
+     * Đặt giá thành viên
      * @param $list
      * @param int $uid
      * @param $userInfo
@@ -1694,18 +1694,18 @@ class StoreProductServices extends BaseServices
                 $discount = $systemLevel->value(['id' => $userInfo['level'], 'is_del' => 0, 'is_show' => 1], 'discount');
             }
         } else {
-            //没登录
+            //Chưa đăng nhập
             $discount = 100;
             $userInfo = [];
         }
         $discount = bcdiv((string)$discount, '100', 2);
         if (!$vipStatus) $is_vip = 0;
-        //is_vip == 0表示会员价格不启用，展示为零
+        //is_vip == 0 nghĩa là giá thành viên không được áp dụng, hiển thị bằng 0
         if ($is_vip == 0) $vipPrice = 0;
 
         $noPayVipPrice = ($discount && sys_config('member_func_status')) ? bcmul((string)$discount, (string)$price, 2) : $price;
         $vipPrice = ($vipPrice < $noPayVipPrice && $vipPrice > 0) ? $vipPrice : $noPayVipPrice;
-        //如果$isSingle==true 返回优惠后的总金额，否则返回优惠的金额
+        //Nếu $isSingle == true thì trả về tổng số tiền sau ưu đãi, ngược lại trả về số tiền ưu đãi
         if ($vipStatus && $is_vip == 1 && (!$is_show || ($is_show && $userInfo && isset($userInfo['is_money_level']) && $userInfo['is_money_level'] > 0))) {
             return [(float)$vipPrice, (float)bcsub((string)$price, (string)$vipPrice, 2)];
         } else {
@@ -1714,7 +1714,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 设置会员价格
+     * Đặt giá thành viên
      * @param $list
      * @param int $uid
      * @param $userInfo
@@ -1730,7 +1730,7 @@ class StoreProductServices extends BaseServices
     {
         if (!(float)$price) return [0, 0, 'level'];
         if (!$vipStatus) $is_vip = 0;
-        //已登录
+        //Đã đăng nhập
         if ($uid) {
             if (!$userInfo) {
                 /** @var UserServices $user */
@@ -1746,21 +1746,21 @@ class StoreProductServices extends BaseServices
                 }
             }
         } else {
-            //没登录
+            //Chưa đăng nhập
             $discount = 100;
         }
         $discount = bcdiv((string)$discount, '100', 2);
-        //执行减去会员优惠金额
+        //Thực hiện trừ số tiền ưu đãi thành viên
         [$truePrice, $vip_truePrice, $type] = $this->isPayLevelPrice($uid, $userInfo, $vipStatus, $price, $discount, $vipPrice, $is_vip, $is_show);
-        //返回优惠后的总金额
+        //Trả về tổng số tiền sau ưu đãi
         $truePrice = $truePrice < 0.01 ? 0.01 : $truePrice;
-        //优惠的金额
+        //Số tiền ưu đãi
         $vip_truePrice = $vip_truePrice == $price ? bcsub((string)$vip_truePrice, '0.01', 2) : $vip_truePrice;
         return [(float)$truePrice, (float)$vip_truePrice, $type];
     }
 
 
-    /**商品列表
+    /**Danh sách sản phẩm
      * @param array $where
      * @param $limit
      * @param $field
@@ -1774,7 +1774,7 @@ class StoreProductServices extends BaseServices
         return $this->dao->getProductLimit($where, $limit, $field);
     }
 
-    /**通过条件获取商品列表
+    /**Lấy danh sách sản phẩm theo điều kiện
      * @param $where
      * @param $field
      * @return array
@@ -1788,7 +1788,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 根据指定id获取商品列表
+     * Lấy danh sách sản phẩm theo id chỉ định
      * @param array $ids
      * @param string $field
      * @return array
@@ -1809,14 +1809,14 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 商品是否存在
+     * Sản phẩm có tồn tại không
      * @param int $productId
      * @param string $field
      * @return array|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/02/15
      */
@@ -1826,7 +1826,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 获取商品库存
+     * Lấy tồn kho sản phẩm
      * @param int $productId
      * @param string $uniqueId
      * @return int|mixed
@@ -1841,7 +1841,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 减库存,加销量
+     * Giảm tồn kho, tăng lượt bán
      * @param $num
      * @param $productId
      * @param string $unique
@@ -1859,7 +1859,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 加销量减库存
+     * Tăng lượt bán, giảm tồn kho
      * @param int $num
      * @param int $productId
      * @param string $unique
@@ -1878,13 +1878,13 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 库存预警发送消息
+     * Gửi tin nhắn cảnh báo tồn kho
      * @param int $productId
      */
     public function workSendStock(int $productId)
     {
         $stock = $this->dao->value(['id' => $productId], 'stock');
-        $replenishment_num = sys_config('store_stock') ?? 0;//库存预警界限
+        $replenishment_num = sys_config('store_stock') ?? 0;//Ngưỡng cảnh báo tồn kho
         if ($replenishment_num >= $stock) {
             try {
                 \crmeb\services\workerman\ChannelService::instance()->send('STORE_STOCK', ['id' => $productId]);
@@ -1894,7 +1894,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 获取首页推荐商品（多个）
+     * Lấy sản phẩm đề xuất ở trang chủ (nhiều sản phẩm)
      * @param int $uid
      * @param array $fields
      * @param bool $is_num
@@ -1926,39 +1926,39 @@ class StoreProductServices extends BaseServices
             foreach ($fields as $field) {
                 $list = [];
                 switch ($field) {
-                    case 'is_best'://精品推荐
+                    case 'is_best'://Đề xuất nổi bật
                         $k = 0;
                         if ($is_num) {
-                            $bastNumber = (int)sys_config('bast_number', 0);//TODO 精品推荐个数
+                            $bastNumber = (int)sys_config('bast_number', 0);//TODO Số lượng đề xuất sản phẩm chất lượng
                             $list = $bastNumber ? $list = $this->dao->getRecommendProduct($where, $field, $bastNumber, $page, $limit) : [];
                         } else {
                             $list = $this->dao->getRecommendProduct($where, $field, 0, $page, $limit);
                         }
                         break;
-                    case 'is_new'://首发新品
+                    case 'is_new'://Hàng mới ra mắt
                         $k = 1;
                         if ($is_num) {
-                            $firstNumber = (int)sys_config('first_number', 0);//TODO 首发新品个数
+                            $firstNumber = (int)sys_config('first_number', 0);//TODO Số lượng sản phẩm mới ra mắt
                             $list = $firstNumber ? $list = $this->dao->getRecommendProduct($where, $field, $firstNumber, $page, $limit) : [];
                         } else {
                             $list = $this->dao->getRecommendProduct($where, $field, 0, $page, $limit);
                         }
                         break;
-                    case 'is_benefit'://首页促销单品
+                    case 'is_benefit'://Sản phẩm khuyến mãi đơn ở trang chủ
                         $k = 2;
                         if ($is_num) {
-                            $promotionNumber = (int)sys_config('promotion_number', 0);//TODO 首发新品个数
+                            $promotionNumber = (int)sys_config('promotion_number', 0);//TODO Số lượng sản phẩm mới ra mắt
                             $list = $promotionNumber ? $list = $this->dao->getRecommendProduct($where, $field, $promotionNumber, $page, $limit) : [];
                         } else {
                             $list = $this->dao->getRecommendProduct($where, $field, 0, $page, $limit);
                         }
                         break;
-                    case 'is_hot'://热门榜单
+                    case 'is_hot'://Top bán chạy
                         $k = 3;
                         $hotNumber = $is_num ? 3 : 0;
                         $list = $this->dao->getRecommendProduct($where, $field, $hotNumber, $page, $limit);
                         break;
-                    case 'is_vip'://会员
+                    case 'is_vip'://Thành viên
                         $k = 4;
                         $list = $this->dao->getRecommendProduct($where, $field, 0, $page, $limit);
                         break;
@@ -1979,7 +1979,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 单个获取首页推荐商品
+     * Lấy một sản phẩm đề xuất ở trang chủ
      * @param int $uid
      * @param $field
      * @param int $num
@@ -2010,7 +2010,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 商品名称 图片
+     * Tên sản phẩm, hình ảnh
      * @param array $productIds
      * @return array
      */
@@ -2020,7 +2020,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 获取商品详情
+     * Lấy chi tiết sản phẩm
      * @param int $productId
      * @param string $field
      * @param array $with
@@ -2034,7 +2034,7 @@ class StoreProductServices extends BaseServices
         return $this->dao->getOne(['is_del' => 0, 'is_show' => 1, 'id' => $productId], $field, $with);
     }
 
-    /** 生成商品复制口令关键字
+    /** Tạo từ khóa mã sao chép sản phẩm
      * @param int $productId
      * @return string
      * @throws \think\db\exception\DataNotFoundException
@@ -2046,8 +2046,8 @@ class StoreProductServices extends BaseServices
         $productInfo = $this->dao->getOne(['is_del' => 0, 'is_show' => 1, 'id' => $productId]);
         $keyWords = "";
         if ($productInfo) {
-            $oneKey = "crmeb-fu致文本 Http:/ZБ";
-            $twoKey = "Б轉移至☞" . sys_config('site_name') . "☜";
+            $oneKey = "crmeb-sao chép văn bản Http:/ZБ";
+            $twoKey = "Бchuyển đến☞" . sys_config('site_name') . "☜";
             $threeKey = "【" . $productInfo['store_name'] . "】";
             $mainKey = base64_encode($productId);
             $keyWords = $oneKey . $mainKey . $twoKey . $threeKey;
@@ -2056,7 +2056,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 获取会员价格（付费会员价格和购买商品会员价格）
+     * Lấy giá thành viên (giá thành viên trả phí và giá thành viên khi mua sản phẩm)
      * @param int $uid
      * @param $userInfo
      * @param $vipStatus
@@ -2070,10 +2070,10 @@ class StoreProductServices extends BaseServices
      */
     public function isPayLevelPrice(int $uid, $userInfo, $vipStatus, $price, string $discount, $payVipPrice = 0.00, $is_vip = 0, $is_show = false)
     {
-        //is_vip == 0表示会员价格不启用，展示为零
+        //is_vip == 0 nghĩa là giá thành viên không được áp dụng, hiển thị bằng 0
         if ($is_vip == 0) $payVipPrice = 0;
         if (!$userInfo && $uid) {
-            //检测用户是否是付费会员
+            //Kiểm tra người dùng có phải thành viên trả phí không
             /** @var  UserServices $userService */
             $userService = app()->make(UserServices::class);
             $userInfo = $userService->getUserInfo($uid);
@@ -2087,9 +2087,9 @@ class StoreProductServices extends BaseServices
             $type = 'level';
         }
 
-        //如果$isSingle==true 返回优惠后的总金额，否则返回优惠的金额
+        //Nếu $isSingle == true thì trả về tổng số tiền sau ưu đãi, ngược lại trả về số tiền ưu đãi
         if ($vipStatus && $is_vip == 1) {
-            //$is_show == false 是计算支付价格，true是展示
+            //$is_show == false là tính giá thanh toán, true là hiển thị
             if (!$is_show) {
                 return [$vipPrice, bcsub((string)$price, (string)$vipPrice, 2), $type];
             } else {
@@ -2105,7 +2105,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 通过商品id获取商品分类
+     * Lấy danh mục sản phẩm theo id sản phẩm
      * @param array $productId
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -2125,7 +2125,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 获取预售列表
+     * Lấy danh sách đặt trước
      * @param $where
      * @return mixed
      */
@@ -2140,7 +2140,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 商品分享二维码 推广员
+     * Mã QR chia sẻ sản phẩm - Cộng tác viên
      * @param int $id
      * @param string $userType
      * @param $user
@@ -2158,7 +2158,7 @@ class StoreProductServices extends BaseServices
             if (!$url) {
                 throw new ApiException(410167);
             } else {
-                if ($url == 'unpublished') throw new ApiException('小程序尚未发布,无法生成商品海报');
+                if ($url == 'unpublished') throw new ApiException('Mini Program chưa được phát hành, không thể tạo poster sản phẩm');
                 return $url;
             }
         }
@@ -2166,7 +2166,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 商品批量设置
+     * Cài đặt sản phẩm hàng loạt
      * @param $data
      * @return bool
      * @throws \Exception
@@ -2177,7 +2177,7 @@ class StoreProductServices extends BaseServices
         $batchData = [];
         if (!count($ids)) throw new AdminException(400337);
         switch ($data['type']) {
-            case 1: // 修改分类
+            case 1: // Sửa danh mục
                 $cate_id = $data['cate_id'];
                 if (!count($cate_id)) throw new AdminException(410107);
                 /** @var StoreCategoryServices $storeCategoryServices */
@@ -2285,7 +2285,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 商品迁移导出
+     * Xuất dữ liệu di chuyển sản phẩm
      * @param $where
      * @return array
      * @throws \ReflectionException
@@ -2311,16 +2311,16 @@ class StoreProductServices extends BaseServices
         }
         $productList = $this->dao->getList($where, $page, $limit);
         $header = [
-            '商品编号',
-            '商品名称', '商品类型', '商品分类(一级)', '商品分类(二级)', '商品单位',
-            '商品图片', '商品视频', '商品详情',
-            '已售数量', '起购数量',
-            '规格类型', '规格类型值', '规格名称', '规格值组合', '规格图片', '售价', '划线价', '成本价', '库存', '重量', '体积', '商品编码', '条形码',
-            '商品简介', '商品关键字', '商品口令',
-            '购买送积分'
+            'ID sản phẩm',
+            'Tên sản phẩm', 'Loại sản phẩm', 'Danh mục sản phẩm (cấp 1)', 'Danh mục sản phẩm (cấp 2)', 'Đơn vị tính',
+            'Hình ảnh sản phẩm', 'Video sản phẩm', 'Chi tiết sản phẩm',
+            'Số lượng đã bán', 'Số lượng mua tối thiểu',
+            'Loại quy cách', 'Giá trị loại quy cách', 'Tên quy cách', 'Tổ hợp giá trị quy cách', 'Hình ảnh quy cách', 'Giá bán', 'Giá gốc', 'Giá vốn', 'Tồn kho', 'Trọng lượng', 'Thể tích', 'Mã sản phẩm', 'Mã vạch',
+            'Mô tả ngắn sản phẩm', 'Từ khóa sản phẩm', 'Mã chia sẻ sản phẩm',
+            'Mua hàng tặng điểm thưởng'
         ];
-        $filename = '商品迁移数据_' . date('YmdHis', time());
-        $virtualType = ['普通商品', '卡密/网盘', '优惠券', '虚拟商品'];
+        $filename = 'Dữ liệu di chuyển sản phẩm_' . date('YmdHis', time());
+        $virtualType = ['Sản phẩm thường', 'Mã thẻ/Lưu trữ đám mây', 'Phiếu giảm giá', 'Sản phẩm ảo'];
         $export = $fileKey = [];
         if (!empty($productList)) {
             $productList = array_column($productList, null, 'id');
@@ -2344,11 +2344,11 @@ class StoreProductServices extends BaseServices
                     $skuArr = array_combine(array_column($attrResult['attr'], 'value'), $value['detail']);
                     $attrArr = [];
                     foreach ($attrResult['attr'] as $attrArray) {
-                        // 将每个子数组的 'value' 和 'detail' 组合成字符串
+                        // Ghép 'value' và 'detail' của mỗi mảng con thành chuỗi
                         if (isset($attrArray['detail'][0]['value'])) {
                             $attrArray['detail'] = array_column($attrArray['detail'], 'value');
                         }
-                        $detailString = implode(',', $attrArray['detail']); // 将 detail 数组转换为逗号分隔的字符串
+                        $detailString = implode(',', $attrArray['detail']); // Chuyển mảng detail thành chuỗi phân tách bằng dấu phẩy
                         $attrArr[] = $attrArray['value'] . '=' . $detailString;
                     }
                     $attrString = implode(';', $attrArr);
@@ -2364,7 +2364,7 @@ class StoreProductServices extends BaseServices
                         'description' => htmlspecialchars_decode($descriptionArr[$productInfo['id']]),
                         'ficti' => intval($productInfo['ficti']),
                         'min_qty' => intval($productInfo['min_qty']),
-                        'spec_type' => intval($productInfo['spec_type']) == 1 ? '多规格' : '单规格',
+                        'spec_type' => intval($productInfo['spec_type']) == 1 ? 'Nhiều quy cách' : 'Một quy cách',
                         'sku_type_value' => $attrString,
                         'sku_name' => implode(',', $value['detail']),
                         'sku_value' => implode(';', array_map(function ($key, $value) {
@@ -2399,18 +2399,18 @@ class StoreProductServices extends BaseServices
     {
         $all = $success = $fail = 0;
         $file = public_path() . substr($file, 1);
-        // 获取文件后缀
+        // Lấy phần mở rộng của file
         $suffix = strtolower(pathinfo($file, PATHINFO_EXTENSION));
         if (!in_array($suffix, ['xls', 'xlsx'])) {
-            return app('json')->fail('文件格式不正确，请上传xls或xlsx格式的文件！');
+            return app('json')->fail('Định dạng tệp không đúng, vui lòng tải lên tệp định dạng xls hoặc xlsx!');
         }
         $importData = app()->make(FileService::class)->readExcel($file, 'product', 1, ucfirst($suffix));
         if (!$importData) {
-            throw new AdminException('导入数据为空');
+            throw new AdminException('Dữ liệu nhập vào trống');
         }
         $productCateServices = app()->make(StoreCategoryServices::class);
         $productData = $issetProductArr = [];
-        $virtualType = ['普通商品' => 0, '卡密/网盘' => 1, '优惠券' => 2, '虚拟商品' => 3];
+        $virtualType = ['Sản phẩm thường' => 0, 'Mã thẻ/Lưu trữ đám mây' => 1, 'Phiếu giảm giá' => 2, 'Sản phẩm ảo' => 3];
         $productAttrValueServices = app()->make(StoreProductAttrValueServices::class);
         $barCodeArr = array_unique($productAttrValueServices->getColumn(['type' => 0], 'bar_code', 'id'));
         $barCodeNumberArr = array_unique($productAttrValueServices->getColumn(['type' => 0], 'bar_code_number', 'id'));
@@ -2451,11 +2451,11 @@ class StoreProductServices extends BaseServices
                 $productData[$sku['id']]['is_sub'] = [];
                 $productData[$sku['id']]['recommend_list'] = [];
                 $productData[$sku['id']]['virtual_type'] = $virtualType[$sku['virtual_type']];
-                $productData[$sku['id']]['spec_type'] = $sku['spec_type'] == '多规格' ? 1 : 0;
+                $productData[$sku['id']]['spec_type'] = $sku['spec_type'] == 'Nhiều quy cách' ? 1 : 0;
                 $productData[$sku['id']]['is_virtual'] = 0;
                 $productData[$sku['id']]['video_link'] = is_null($sku['video_link']) ? '' : $sku['video_link'];
                 $productData[$sku['id']]['temp_id'] = '';
-                $productData[$sku['id']]['activity'] = ['默认', '秒杀', '砍价', '拼团'];
+                $productData[$sku['id']]['activity'] = ['Mặc định', 'Flash sale', 'Săn giảm giá', 'Mua chung'];
                 $productData[$sku['id']]['couponName'] = [];
                 $productData[$sku['id']]['coupon_ids'] = [];
                 $productData[$sku['id']]['command_word'] = $sku['command_word'] ?? '';
@@ -2502,9 +2502,9 @@ class StoreProductServices extends BaseServices
             $items = [];
             $pairs = explode(';', $sku['sku_type_value']);
             foreach ($pairs as $pair) {
-                // 将每个部分按等号分割成 key 和 value
+                // Chia mỗi phần theo dấu bằng thành key và value
                 list($key, $values) = explode('=', $pair);
-                // 将 value 部分按逗号分割为数组
+                // Chia phần value thành mảng theo dấu phẩy
                 $detailArray = explode(',', $values);
                 $detail = [];
                 foreach ($detailArray as &$det) {
@@ -2513,7 +2513,7 @@ class StoreProductServices extends BaseServices
                         'pic' => '',
                     ];
                 }
-                // 重新构建原始数组的结构
+                // Xây dựng lại cấu trúc mảng gốc
                 $items[] = [
                     'value' => $key,
                     'detail' => $detail
@@ -2539,7 +2539,7 @@ class StoreProductServices extends BaseServices
     public function otherInfo($id, $type)
     {
         $storeInfo = $this->dao->get($id, ['id', 'is_sub', 'is_vip', 'vip_product']);
-        if (!$storeInfo) throw new AdminException('商品不存在');
+        if (!$storeInfo) throw new AdminException('Sản phẩm không tồn tại');
         $storeInfo = $storeInfo->toArray();
         $storeInfo['store_brokerage_ratio'] = sys_config('store_brokerage_ratio');
         $storeInfo['store_brokerage_two'] = sys_config('store_brokerage_two');
@@ -2601,7 +2601,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 真实价格
+     * Giá thực tế
      * @param $uid
      * @param $id
      * @param $unique
@@ -2653,22 +2653,22 @@ class StoreProductServices extends BaseServices
         });
         $time = time();
         foreach ($list as $item) {
-            // 优惠券不在使用时间范围内
+            // Phiếu giảm giá không trong khoảng thời gian sử dụng
             if ($item['start_use_time'] != 0 && ($item['start_use_time'] > $time || $item['end_use_time'] < $time)) {
                 continue;
             }
-            // 用户未登录或者不是付费会员跳过付费会员券
+            // Người dùng chưa đăng nhập hoặc không phải thành viên trả phí thì bỏ qua phiếu giảm giá thành viên trả phí
             if ($item['receive_type'] == 4 && !$isMember) {
                 continue;
             }
-            // 判断用户是否还能领取或者已经领取未使用
+            // Kiểm tra người dùng còn có thể nhận hay đã nhận nhưng chưa sử dụng
             if ($uid) {
                 $canUserCoupon = app()->make(StoreCouponUserServices::class)->getUserCouponCanUse($uid, $item['id'], $item['receive_limit']);
                 if (!$canUserCoupon) {
                     continue;
                 }
             }
-            // 满足优惠券使用门槛
+            // Đạt điều kiện sử dụng phiếu giảm giá
             if ($realPrice >= $item['use_min_price']) {
                 $realPrice = bcsub($realPrice, $item['coupon_price'], 2);
                 if ($realPrice < 0) $realPrice = 0;
@@ -2679,7 +2679,7 @@ class StoreProductServices extends BaseServices
     }
 
     /**
-     * 批量移动回收站
+     * Chuyển vào thùng rác theo lô
      * @param $ids
      * @return bool
      * @author wuhaotian
@@ -2690,7 +2690,7 @@ class StoreProductServices extends BaseServices
     {
         $passNum = 0;
         foreach ($ids as $id) {
-            //删除商品检测是否有参与活动
+            //Khi xóa sản phẩm, kiểm tra có đang tham gia hoạt động không
             $res = $this->checkActivity($id, true);
             if ($res) {
                 $data['is_del'] = 1;
@@ -2702,7 +2702,7 @@ class StoreProductServices extends BaseServices
                 $passNum++;
             }
         }
-        return $passNum ? $passNum . '件商品参与活动无法移到回收站，其他商品移动回收站成功' : '移动回收站成功';
+        return $passNum ? $passNum . 'sản phẩm đang tham gia chương trình nên không thể chuyển vào thùng rác, các sản phẩm khác đã được chuyển vào thùng rác thành công' : 'Chuyển vào thùng rác thành công';
     }
 
     public function batchRecover($ids)

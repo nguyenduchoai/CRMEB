@@ -1,6 +1,6 @@
 @use './index.scss' as *;
 
-/* 页面宽度小于576px
+/* Chiều rộng trang nhỏ hơn 576px
 ------------------------------- */
 @media screen and (max-width: $xs) {
   .el-form-item__label {

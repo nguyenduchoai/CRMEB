@@ -65,12 +65,12 @@
 <script>
 import { mapState } from 'vuex';
 export default {
-  name: 'banner', // 组件名称
-  cname: '轮播图', // 标题名称
+  name: 'banner', // Tên thành phần
+  cname: 'Ảnh trình chiếu', // Tên tiêu đề
   icon: 'icontupianguanggao1',
-  defaultName: 'swiperBg', // 外面匹配名称
-  configName: 'c_banner', // 右侧配置名称
-  type: 0, // 0 基础组件 1 营销组件 2工具组件
+  defaultName: 'swiperBg', // Tên khớp bên ngoài
+  configName: 'c_banner', // Tên cấu hình bên phải
+  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
   props: {
     index: {
       type: null,
@@ -106,50 +106,50 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'swiperBg',
         timestamp: this.num,
         setUp: {
           tabVal: 0,
         },
-        // 模板选择
+        // Chọn mẫu
         // tabConfig: {
         //   tabVal: 0,
         //   type: 1,
         //   tabList: [
         //     {
-        //       name: "单图模板",
+        //       name: "Mẫu ảnh đơn",
         //       icon: "iconbanner_1",
         //     },
         //     {
-        //       name: "多图模板1",
+        //       name: "Mẫu nhiều ảnh 1",
         //       icon: "iconbanner_2",
         //     },
         //     {
-        //       name: "多图模板2",
+        //       name: "Mẫu nhiều ảnh 2",
         //       icon: "iconbanner_3",
         //     },
         //   ],
         // },
-        // 图片列表
+        // Danh sách ảnh
         swiperConfig: {
-          title: '最多可添加10张图片，建议宽度750px；鼠标拖拽左侧圆点可调整图片 顺序',
+          title: 'Có thể thêm tối đa 10 ảnh, chiều rộng đề xuất 750px; kéo thả chấm tròn bên trái để điều chỉnh thứ tự ảnh',
           maxList: 10,
           list: [
             {
               img: '',
               info: [
                 {
-                  title: '标题',
-                  value: '今日推荐',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Gợi ý hôm nay',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -157,12 +157,12 @@ export default {
           ],
         },
         isShow: {
-          title: '是否显示背景色',
+          title: 'Hiển thị màu nền',
           val: true,
         },
-        // 背景颜色
+        // Màu nền
         bgColor: {
-          title: '背景颜色(渐变)',
+          title: 'Màu nền (chuyển màu)',
           default: [
             {
               item: '#F62C2C',
@@ -181,7 +181,7 @@ export default {
           ],
         },
         dotColor: {
-          title: '指示器颜色',
+          title: 'Màu chỉ báo',
           default: [
             {
               item: '#fff',
@@ -193,72 +193,72 @@ export default {
             },
           ],
         },
-        // 左右间距
+        // Khoảng cách trái phải
         lrConfig: {
-          title: '左右边距',
+          title: 'Lề trái phải',
           val: 10,
           min: 0,
         },
-        // 页面间距
+        // Lề trang
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },
-        // 轮播图点样式
+        // Kiểu điểm chấm của banner
         docConfig: {
           cname: 'swiper',
-          title: '指示器样式',
+          title: 'Kiểu chỉ báo',
           type: 0,
           list: [
             {
-              val: '圆形',
+              val: 'Hình tròn',
               icon: 'iconDot',
             },
             {
-              val: '直线',
+              val: 'Đường thẳng',
               icon: 'iconSquarepoint',
             },
             {
-              val: '数字',
+              val: 'Số',
               icon: 'iconshuzi',
             },
             {
-              val: '无指示器',
+              val: 'Không có chỉ báo',
               icon: 'iconjinyong',
             },
           ],
         },
         txtStyle: {
-          title: '指示器位置',
+          title: 'Vị trí chỉ báo',
           type: 0,
           list: [
             {
-              val: '居左',
+              val: 'Căn trái',
               icon: 'icondoc_left',
             },
             {
-              val: '居中',
+              val: 'Căn giữa',
               icon: 'icondoc_center',
             },
             {
-              val: '居右',
+              val: 'Căn phải',
               icon: 'icondoc_right',
             },
           ],
         },
-        // 图片样式
+        // Kiểu ảnh
         imgConfig: {
           cname: 'docStyle',
-          title: '轮播图样式',
+          title: 'Kiểu ảnh trình chiếu',
           type: 0,
           list: [
             {
-              val: '圆角',
+              val: 'Bo góc',
               icon: 'iconPic_fillet',
             },
             {
-              val: '直角',
+              val: 'Góc vuông',
               icon: 'iconPic_square',
             },
           ],

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -34,7 +34,7 @@ class StoreProductAttrServices extends BaseServices
     }
 
     /**
-     * 保存商品规格
+     * Lưu phân loại sản phẩm
      * @param array $data
      * @param int $id
      * @param int $type
@@ -107,7 +107,7 @@ class StoreProductAttrServices extends BaseServices
     }
 
     /**
-     * 获取商品规格
+     * Lấy quy cách sản phẩm
      * @param array $where
      * @return array
      */
@@ -117,7 +117,7 @@ class StoreProductAttrServices extends BaseServices
     }
 
     /**
-     * 获取商品规格详情
+     * Lấy chi tiết phân loại sản phẩm
      * @param int $id
      * @param int $uid
      * @param int $type
@@ -180,7 +180,7 @@ class StoreProductAttrServices extends BaseServices
         }
         foreach ($attrDetail as $k => $v) {
             $attr = $v['attr_values'];
-            //活动商品只展示参与活动sku
+            //Sản phẩm chương trình chỉ hiển thị SKU tham gia chương trình
             if ($typeId && $activityAttr && $a = array_merge(array_intersect($v['attr_values'], $activityAttr[$k]))) {
                 $attrDetail[$k]['attr_values'] = $a;
                 $attr = $a;

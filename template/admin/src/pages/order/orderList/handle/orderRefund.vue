@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     :visible.sync="modals"
-    title="订单退款"
+    title="Hoàn tiền đơn hàng"
     class="order_box"
     :show-close="true"
     width="1000px"
@@ -15,18 +15,18 @@
       label-width="100px"
       @submit.native.prevent
     >
-      <el-form-item label="订单号：">
-        <el-input v-model="order_id" disabled placeholder="请输入订单号" style="width: 60%"></el-input>
+      <el-form-item label="Mã đơn hàng:">
+        <el-input v-model="order_id" disabled placeholder="Vui lòng nhập mã đơn hàng" style="width: 60%"></el-input>
       </el-form-item>
-      <el-form-item label="退款金额：">
+      <el-form-item label="Số tiền hoàn:">
         <el-input-number
           v-model="formItem.refund_price"
-          placeholder="请输入退款金额"
+          placeholder="Vui lòng nhập số tiền hoàn"
           style="width: 60%"
         ></el-input-number>
       </el-form-item>
       <div v-if="total_num > 1">
-        <el-form-item label="分单退款：">
+        <el-form-item label="Hoàn tiền tách đơn:">
           <el-switch
             :active-value="1"
             :inactive-value="0"
@@ -35,11 +35,11 @@
             :disabled="orderStatus === 8 || orderStatus === 11"
             @change="changeSplitStatus"
           >
-            <span slot="open">开启</span>
-            <span slot="close">关闭</span>
+            <span slot="open">Bật</span>
+            <span slot="close">Tắt</span>
           </el-switch>
           <div class="trips">
-            <p>可选择表格中的商品单独退款，请谨慎操作！</p>
+            <p>Có thể chọn sản phẩm trong bảng để hoàn tiền riêng, vui lòng thao tác cẩn thận!</p>
           </div>
           <el-table
             v-if="splitSwitch && manyFormValidate.length"
@@ -48,7 +48,7 @@
             @selection-change="selectOne"
           >
             <el-table-column type="selection" width="55"> </el-table-column>
-            <el-table-column label="商品信息" width="200">
+            <el-table-column label="Thông tin sản phẩm" width="200">
               <template slot-scope="scope">
                 <div class="product-data">
                   <img class="image" :src="scope.row.cart_info.productInfo.image" />
@@ -58,24 +58,24 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="规格" min-width="120">
+            <el-table-column label="Quy cách" min-width="120">
               <template slot-scope="scope">
                 <div>{{ scope.row.cart_info.productInfo.attrInfo.suk }}</div>
               </template>
             </el-table-column>
-            <el-table-column label="价格" min-width="120">
+            <el-table-column label="Giá" min-width="120">
               <template slot-scope="scope">
                 <div class="product-data">
                   <div>{{ scope.row.cart_info.truePrice }}</div>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="总数" min-width="120">
+            <el-table-column label="Tổng số" min-width="120">
               <template slot-scope="scope">
                 <div>{{ scope.row.cart_num }}</div>
               </template>
             </el-table-column>
-            <el-table-column label="退款数量" width="180">
+            <el-table-column label="Số lượng hoàn" width="180">
               <template slot-scope="scope">
                 <el-input-number
                   v-model="scope.row.num"
@@ -95,8 +95,8 @@
       </div>
     </el-form>
     <div slot="footer">
-      <el-button v-db-click @click="cancel">取消</el-button>
-      <el-button type="primary" v-db-click @click="putSend">提交</el-button>
+      <el-button v-db-click @click="cancel">Hủy</el-button>
+      <el-button type="primary" v-db-click @click="putSend">Gửi</el-button>
     </div>
     <!-- <viewer @inited="inited">
             <img :src="temp.pic" style="display:none" />
@@ -152,7 +152,7 @@ export default {
       manyFormValidate: [],
       selectData: [],
       sendPrice: 0,
-      ruleValidate: { sh_delivery: [{ required: true, message: '请输入送货人', trigger: 'change' }] },
+      ruleValidate: { sh_delivery: [{ required: true, message: 'Vui lòng nhập người giao hàng', trigger: 'change' }] },
       deliveryErrorMsg: '',
       isLoading: true,
       userSendmsg: {},
@@ -202,7 +202,7 @@ export default {
         cart_ids: [],
       };
     },
-    // 提交
+    // Gửi
     putSend(name) {
       this.formItem.cart_ids = [];
       let splitNumStatus = true;
@@ -218,7 +218,7 @@ export default {
         });
       }
       if (!splitNumStatus) {
-        return this.$message.error('请选择退款数量');
+        return this.$message.error('Vui lòng chọn số lượng hoàn');
       }
       refundPrice(this.orderId, this.formItem)
         .then((res) => {

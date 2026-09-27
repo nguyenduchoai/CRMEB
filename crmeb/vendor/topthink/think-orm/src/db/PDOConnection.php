@@ -1621,7 +1621,7 @@ abstract class PDOConnection extends Connection
         }
 
         if ('' != $this->queryStr) {
-            $error .= "\n [ SQL语句 ] : " . $this->getLastsql();
+            $error .= "\n [ Câu lệnh SQL ] : " . $this->getLastsql();
         }
 
         return $error;

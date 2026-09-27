@@ -1,6 +1,6 @@
 @use './index.scss' as *;
 
-/* 页面宽度小于800px
+/* Chiều rộng trang nhỏ hơn 800px
 ------------------------------- */
 @media screen and (max-width: 800px) {
   .el-dialog {

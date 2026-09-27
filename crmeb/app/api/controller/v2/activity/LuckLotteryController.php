@@ -21,7 +21,7 @@ class LuckLotteryController
     }
 
     /**
-     * 抽奖活动信息
+     * Thông tin hoạt động quay thưởng
      * @param Request $request
      * @param $factor
      * @return mixed
@@ -63,7 +63,7 @@ class LuckLotteryController
     }
 
     /**
-     * 参与抽奖
+     * Tham gia quay thưởng
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -81,7 +81,7 @@ class LuckLotteryController
         $channel_type = $request->getFromType();
         $key = 'lucklotter_limit_' . $uid;
         if (CacheService::get($key)) {
-            return app('json')->fail('您求的频率太过频繁,请稍后请求!');
+            return app('json')->fail('Bạn gửi yêu cầu quá thường xuyên, vui lòng thử lại sau!');
         }
         CacheService::set('lucklotter_limit_' . $uid, $uid, 1);
 
@@ -105,7 +105,7 @@ class LuckLotteryController
     }
 
     /**
-     * 领取奖品
+     * Nhận phần thưởng
      * @param Request $request
      * @param LuckLotteryRecordServices $lotteryRecordServices
      * @return mixed
@@ -131,7 +131,7 @@ class LuckLotteryController
     }
 
     /**
-     * 获取中奖记录
+     * Lấy lịch sử trúng thưởng
      * @param Request $request
      * @param LuckLotteryRecordServices $lotteryRecordServices
      * @return mixed

@@ -10,19 +10,19 @@ class LangCountry extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'lang_country';
 
     /**
-     * type_id搜索器
+     * Bộ lọc type_id
      * @param $query
      * @param $value
      */
@@ -32,7 +32,7 @@ class LangCountry extends BaseModel
     }
 
     /**
-     * code/name搜索器
+     * Bộ lọc code/name
      * @param $query
      * @param $value
      */

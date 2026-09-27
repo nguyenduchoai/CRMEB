@@ -5,20 +5,20 @@
 				<view class="update-wrap">
 					<image src="./images/img.png" class="top-img"></image>
 					<view class="content">
-						<text class="title">{{$t(`发现新版本`)}}{{ update_info.version }}</text>
-						<!-- 升级描述 -->
+						<text class="title">{{$t(`Có phiên bản mới`)}}{{ update_info.version }}</text>
+						<!-- Mô tả cập nhật -->
 						<view class="title-sub" v-html="update_info.info"></view>
-						<!-- 升级按钮 -->
+						<!-- Nút cập nhật -->
 						<button class="btn" v-if="downstatus < 1" @click="nowUpdate()">
-							{{$t(`立即升级`)}}
+							{{$t(`Nâng cấp ngay`)}}
 						</button>
-						<!-- 下载进度 -->
+						<!-- Tiến độ tải xuống -->
 						<view class="sche-wrap" v-else>
-							<!-- 更新包下载中 -->
+							<!-- Đang tải gói cập nhật -->
 							<view class="sche-bg">
 								<view class="sche-bg-jindu" :style="lengthWidth"></view>
 							</view>
-							<text class="down-text">{{$t(`下载进度`)}}:{{ (downSize / 1024 / 1024).toFixed(2) }}M/{{
+							<text class="down-text">{{$t(`Tiến độ tải xuống`)}}:{{ (downSize / 1024 / 1024).toFixed(2) }}M/{{
                   (fileSize / 1024 / 1024).toFixed(2)
                 }}M</text>
 						</view>
@@ -38,33 +38,33 @@
 
 	export default {
 		name: "appUpdate",
-		//@是否强制更新
+		//@Có bắt buộc cập nhật hay không
 		props: {
 			tabbar: {
 				type: Boolean,
-				default: false, //是否有原生tabbar组件
+				default: false, //Có component tabbar gốc (native) hay không
 			},
 			getVer: {
 				type: Boolean,
-				default: false, //是否有原生tabbar组件
+				default: false, //Có component tabbar gốc (native) hay không
 			},
 		},
 		data() {
 			return {
-				popup_show: false, //弹窗是否显示
+				popup_show: false, //Popup có hiển thị hay không
 				platform: "", //ios or android
-				version: "1.0.0", //当前软件版本
-				need_update: false, // 是否更新
-				downing: false, //是否下载中
-				downstatus: 0, //0未下载  1已开始 2已连接到资源  3已接收到数据  4下载完成
+				version: "1.0.0", //Phiên bản phần mềm hiện tại
+				need_update: false, // Có cập nhật hay không
+				downing: false, //Có đang tải hay không
+				downstatus: 0, //0 chưa tải  1 đã bắt đầu  2 đã kết nối tới tài nguyên  3 đã nhận dữ liệu  4 tải xong
 				update_info: {
-					os: "", //设备系统
-					version: "", //最新版本
-					info: "", //升级说明
+					os: "", //Hệ điều hành thiết bị
+					version: "", //Phiên bản mới nhất
+					info: "", //Mô tả cập nhật
 				},
-				fileSize: 0, //文件大小
-				downSize: 0, //已下载大小
-				viewObj: null, //原生遮罩view
+				fileSize: 0, //Kích thước file
+				downSize: 0, //Kích thước đã tải
+				viewObj: null, //View lớp phủ (mask) gốc
 			};
 		},
 		created() {
@@ -72,7 +72,7 @@
 			if (!this.getVer) this.update()
 		},
 		computed: {
-			// 下载进度计算
+			// Tính toán tiến độ tải
 			lengthWidth: function() {
 				let w = (this.downSize / this.fileSize) * 100;
 				if (!w) {
@@ -81,7 +81,7 @@
 					w = w.toFixed(2);
 				}
 				return {
-					width: w + "%", //return 宽度半分比
+					width: w + "%", //return phần trăm chiều rộng
 				};
 			},
 			getHeight() {
@@ -96,29 +96,29 @@
 			},
 		},
 		methods: {
-			// 检查更新
+			// Kiểm tra cập nhật
 			update() {
 				// #ifdef APP-PLUS
-				// 获取手机系统信息
+				// Lấy thông tin hệ điều hành điện thoại
 				uni.getSystemInfo({
 					success: function(res) {
 						vm.platform = res.platform; //ios  or android
-						console.log("手机系统信息", vm.platform);
+						console.log("Thông tin hệ thống điện thoại", vm.platform);
 					},
 				});
 
-				// 获取版本号
+				// Lấy số phiên bản
 				plus.runtime.getProperty(plus.runtime.appid, function(inf) {
 					vm.version = inf.version;
 				});
-				console.log("当前版本", vm.version);
-				this.getUpdateInfo(); //获取更新信息
+				console.log("Phiên bản hiện tại", vm.version);
+				this.getUpdateInfo(); //Lấy thông tin cập nhật
 				// #endif
 			},
 
-			// 获取线上版本信息
+			// Lấy thông tin phiên bản trên server
 			getUpdateInfo() {
-				//向后台发起请求，获取最新版本号
+				//Gửi request tới backend để lấy số phiên bản mới nhất
 				getUpdateInfo(this.platform === "ios" ? 2 : 1)
 					.then((res) => {
 						if(Array.isArray(res.data)){
@@ -133,28 +133,28 @@
 						} else if (tagDate == nowDate && !this.getVer && !res.data.is_force) {
 							return
 						}
-						// 这里的返回的数据跟后台约定
+						// Dữ liệu trả về ở đây theo quy ước với backend
 						let data = res.data;
-						// 循环获取当前设备对应的更新数据
+						// Lặp để lấy dữ liệu cập nhật tương ứng với thiết bị hiện tại
 						vm.update_info = data;
 						if (!vm.update_info.platform) {
-							// 后台未配置当前系统的升级数据
+							// Backend chưa cấu hình dữ liệu cập nhật cho hệ điều hành hiện tại
 						} else {
-							vm.checkUpdate(); ///检查是否更新
+							vm.checkUpdate(); ///kiểm tra có cập nhật hay không
 						}
 					})
 					.catch((err) => {
 						vm.popup_show = false
 					});
 			},
-			// 检查是否更新
+			// Kiểm tra có cập nhật hay không
 			checkUpdate() {
-				vm.need_update = vm.compareVersion(vm.version, vm.update_info.version); // 检查是否需要升级
+				vm.need_update = vm.compareVersion(vm.version, vm.update_info.version); // Kiểm tra có cần cập nhật hay không
 				if (vm.need_update) {
-					vm.popup_show = true; //线上版本号大于当前安装的版本号  显示升级框
+					vm.popup_show = true; //Số phiên bản trên server lớn hơn số phiên bản đang cài, hiển thị khung cập nhật
 					if (vm.tabbar) {
-						//页面是否有原生tabbar组件
-						// 创建原生view用来遮罩tabbar的点击事件 (如果是没有用原生的tabbar这一步可以取消)
+						//Trang có component tabbar gốc hay không
+						// Tạo view gốc để che sự kiện click của tabbar (nếu không dùng tabbar gốc thì có thể bỏ qua bước này)
 						vm.viewObj = new plus.nativeObj.View("viewObj", {
 							bottom: "0px",
 							left: "0px",
@@ -162,17 +162,17 @@
 							width: "100%",
 							backgroundColor: "rgba(0,0,0,.6)",
 						});
-						vm.viewObj.show(); //显示原生遮罩
+						vm.viewObj.show(); //Hiển thị lớp phủ gốc
 					}
 				} else {
 					this.$emit('isNew')
 				}
 			},
 
-			// 取消更新
+			// Hủy cập nhật
 			closeUpdate() {
 				if (vm.update_info.is_force) {
-					// 强制更新，取消退出app
+					// Bắt buộc cập nhật, hủy thoát app
 					this.platform == "android" ?
 						plus.runtime.quit() :
 						plus.ios
@@ -180,31 +180,31 @@
 						.sharedApplication()
 						.performSelector("exit");
 				} else {
-					vm.popup_show = false; //关闭升级弹窗
-					if (vm.viewObj) vm.viewObj.hide(); //隐藏原生遮罩
+					vm.popup_show = false; //Đóng popup cập nhật
+					if (vm.viewObj) vm.viewObj.hide(); //Ẩn lớp phủ gốc
 				}
 			},
-			// 立即更新
+			// Cập nhật ngay
 			nowUpdate() {
-				if (vm.downing) return false; //如果正在下载就停止操作
-				vm.downing = true; //状态改变 正在下载中
+				if (vm.downing) return false; //Nếu đang tải thì dừng thao tác
+				vm.downing = true; //Trạng thái thay đổi: đang tải
 
 				if (/\.apk$/.test(vm.update_info.url)) {
-					// 如果是apk地址
-					vm.download_wgt(); // 安装包/升级包更新
+					// Nếu là địa chỉ apk
+					vm.download_wgt(); // Cập nhật gói cài đặt/gói nâng cấp
 				} else if (/\.wgt$/.test(vm.update_info.url)) {
-					// 如果是更新包
-					vm.download_wgt(); // 安装包/升级包更新
+					// Nếu là gói cập nhật
+					vm.download_wgt(); // Cập nhật gói cài đặt/gói nâng cấp
 				} else {
 					plus.runtime.openURL(vm.update_info.url, function() {
-						//调用外部浏览器打开更新地址
-						plus.nativeUI.toast("打开错误");
+						//Gọi trình duyệt bên ngoài để mở địa chỉ cập nhật
+						plus.nativeUI.toast("Lỗi khi mở");
 					});
 				}
 			},
-			// 下载升级资源包
+			// Tải gói tài nguyên cập nhật
 			download_wgt() {
-				plus.nativeUI.showWaiting("下载更新文件..."); //下载更新文件...
+				plus.nativeUI.showWaiting("Đang tải tệp cập nhật..."); //Đang tải tệp cập nhật...
 				let options = {
 					method: "get",
 				};
@@ -216,22 +216,22 @@
 
 				dtask.addEventListener("statechanged", function(task, status) {
 					if (status === null) {} else if (status == 200) {
-						//在这里打印会不停的执行，请注意，正式上线切记不要在这里打印东西///////////////////////////////////////////////////
+						//In log ở đây sẽ chạy liên tục, chú ý, khi lên chính thức nhớ không in gì ở đây///////////////////////////////////////////////////
 						vm.downstatus = task.state;
 						switch (task.state) {
-							case 3: // 已接收到数据
+							case 3: // Đã nhận dữ liệu
 								vm.downSize = task.downloadedSize;
 								if (task.totalSize) {
-									vm.fileSize = task.totalSize; //服务器须返回正确的content-length才会有长度
+									vm.fileSize = task.totalSize; //Server phải trả về content-length đúng thì mới có length
 								}
 								break;
 							case 4:
-								vm.installWgt(task.filename); // 安装wgt包
+								vm.installWgt(task.filename); // Cài đặt gói wgt
 								break;
 						}
 					} else {
 						plus.nativeUI.closeWaiting();
-						plus.nativeUI.toast("下载出错");
+						plus.nativeUI.toast("Lỗi tải xuống");
 						vm.downing = false;
 						vm.downstatus = 0;
 					}
@@ -239,27 +239,27 @@
 				dtask.start();
 			},
 
-			// 安装文件
+			// Cài đặt file
 			installWgt(path) {
-				plus.nativeUI.showWaiting("安装更新文件..."); //安装更新文件...
+				plus.nativeUI.showWaiting("Đang cài đặt tệp cập nhật..."); //Đang cài đặt tệp cập nhật...
 				plus.runtime.install(
 					path, {},
 					function() {
 						plus.nativeUI.closeWaiting();
-						// 应用资源下载完成！
-						plus.nativeUI.alert("应用资源下载完成！", function() {
+						// Đã tải xong tài nguyên ứng dụng!
+						plus.nativeUI.alert("Đã tải xong tài nguyên ứng dụng!", function() {
 							plus.runtime.restart();
 						});
 					},
 
 					function(e) {
 						plus.nativeUI.closeWaiting();
-						// 安装更新文件失败
-						plus.nativeUI.alert("安装更新文件失败[" + e.code + "]：" + e.message);
+						// Cài đặt file cập nhật thất bại
+						plus.nativeUI.alert("Cài đặt tệp cập nhật thất bại [" + e.code + "]：" + e.message);
 					}
 				);
 			},
-			// 对比版本号
+			// So sánh số phiên bản
 			compareVersion(ov, nv) {
 				if (!ov || !nv || ov == "" || nv == "") {
 					return false;
@@ -318,7 +318,7 @@
 	@keyframes mymove {
 		0% {
 			transform: scale(0);
-			/*开始为原始大小*/
+			/*Bắt đầu bằng kích thước gốc*/
 		}
 
 		100% {

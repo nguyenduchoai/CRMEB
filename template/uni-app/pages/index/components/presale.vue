@@ -1,7 +1,7 @@
 <template>
 	<view :style="[boxStyle]" v-if="productList.length">
 		<view>
-			<!-- 预售头部 -->
+			<!-- Phần đầu đặt trước -->
 			<view class="w-full h-96 px-24 flex-between-center bg-cover" :style="[headerStyle]">
 				<view class="flex-y-center">
 					<text class="fs-32 lh-44rpx fw-500" :style="[titleStyle]" v-if="titleConfig">{{titleTxtConfig}}</text>
@@ -15,8 +15,8 @@
 					<text class="iconfont icon-ic_rightarrow fs-24" :style="[headerBntColor]"></text>
 				</view>
 			</view>
-			<!-- 预售列表 -->
-			<!-- 单列 -->
+			<!-- Danh sách đặt trước -->
+			<!-- Một cột -->
 			<view class="pt-32 pr-20 pb-32 pl-20 bg--w111-fff" :style="[boxContentStyle]" v-if="goodStyleConfig == 0">
 				<view class="w-full flex justify-between item"
 					v-for="(item,index) in productList" :key="index"
@@ -40,7 +40,7 @@
 									integerSize="40"
 									decimalSize="26"
 									weight
-									preFix="预售:"
+									preFix="Đặt trước:"
 									preFixSize="22"
 									:textColor="priceColor"
 									:color="priceColor"></baseMoney>
@@ -51,7 +51,7 @@
 					</view>
 				</view>
 			</view>
-			<!-- 两列 -->
+			<!-- Hai cột -->
 			<view class="grid-column-2 grid-gap-22rpx pt-32 pr-20 pb-32 pl-20"
 				:style="[boxContentStyle]" v-if="goodStyleConfig == 1">
 				<view v-for="(item,index) in productList" :key="index"
@@ -77,11 +77,11 @@
 							 :style="[otPriceColor]">{{ $t(`¥`) }}{{item.ot_price}}</text>
 						</view>
 						<view class='w-144 h-56 rd-30rpx flex-center fs-24 text--w111-fff bg--w111-E93323'
-							v-if="!showBtn" :style="[btnBgColor]">去预定</view>
+							v-if="!showBtn" :style="[btnBgColor]">Đặt trước ngay</view>
 					</view>
 				</view>
 			</view>
-			<!-- 三列 -->
+			<!-- Ba cột -->
 			<view class="grid-column-3 grid-gap-18rpx pt-32 pr-20 pb-32 pl-20"
 				:style="[boxContentStyle]" v-if="goodStyleConfig == 2">
 				<view v-for="(item,index) in productList" :key="index"
@@ -100,7 +100,7 @@
 						decimalSize="36"
 						weight
 						:color="priceColor"
-						preFix="预售价"
+						preFix="Giá đặt trước"
 						preFixSize="22"
 						:textColor="priceColor"
 						v-if="checkboxInfo.includes(2)"></baseMoney>
@@ -109,7 +109,7 @@
 						:style="[otPriceColor]" v-if="checkboxInfo.includes(3)">{{ $t(`¥`) }}{{item.ot_price}}</view>
 				</view>
 			</view>
-			<!-- 滑动 -->
+			<!-- Vuốt -->
 			<scroll-view scroll-x="true" show-scrollbar="false"
 				class="white-nowrap vertical-middle w-full pt-32 pb-32"
 				:style="[boxContentStyle]" v-if="goodStyleConfig == 3">
@@ -129,7 +129,7 @@
 						decimalSize="36"
 						weight
 						:color="priceColor"
-						preFix="预售价"
+						preFix="Giá đặt trước"
 						preFixSize="22"
 						:textColor="priceColor"
 						v-if="checkboxInfo.includes(2)"></baseMoney>
@@ -159,9 +159,9 @@
 		filters:{
 			filterType(val){
 				let obj = {
-					1: '未开始',
-					2: '进行中',
-					3: '已结束'
+					1: 'Chưa bắt đầu',
+					2: 'Đang diễn ra',
+					3: 'Đã kết thúc'
 				};
 				return obj[val]
 			}
@@ -200,7 +200,7 @@
 					background: `linear-gradient(90deg, ${this.dataConfig.moduleColor.color[0].item} 0%, ${this.dataConfig.moduleColor.color[1].item} 100%)`,
 				};
 			},
-			/*商品模板*/
+			/*Template sản phẩm*/
 			goodStyleConfig(){
 				return this.dataConfig.goodStyleConfig.tabVal
 			},
@@ -222,15 +222,15 @@
 
 				}
 			},
-			/*标题是文本还是图片*/
+			/*Tiêu đề là văn bản hay hình ảnh*/
 			titleConfig(){
 				return this.dataConfig.titleConfig.tabVal
 			},
-			/*标题文本*/
+			/*Văn bản tiêu đề*/
 			titleTxtConfig(){
 				return this.dataConfig.titleTxtConfig.value
 			},
-			/*标题图片*/
+			/*Ảnh tiêu đề*/
 			titleImg(){
 				return this.styleConfig ? this.titleUrl : this.titleColorUrl
 			},
@@ -240,34 +240,34 @@
 			titleUrl(){
 				return this.dataConfig.imgConfig.url
 			},
-			/*标题提示文字*/
+			/*Chữ gợi ý tiêu đề*/
 			tipsColor(){
 				return {
 					color: this.styleConfig ? this.dataConfig.tipsColor.color[0].item : this.dataConfig.tipsColor2.color[0].item
 				}
 			},
-			/*分割线颜色*/
+			/*Màu đường phân chia*/
 			dividerColor(){
 				return {
 					color: this.dataConfig.dividerColor.color[0].item
 				}
 			},
-			/*头部提示语文本*/
+			/*Văn bản gợi ý phần đầu*/
 			tipTxt(){
 				return this.dataConfig.tipTxtConfig.value
 			},
-			/*头部按钮文本*/
+			/*Văn bản nút phần đầu*/
 			rightBntTxt(){
 				return this.dataConfig.rightBntConfig.value
 			},
-			/*头部按钮样式*/
+			/*Style nút phần đầu*/
 			headerBntColor(){
 				return {
 					color: this.styleConfig ? this.dataConfig.headerBntColor.color[0].item : this.dataConfig.headerBntColor2.color[0].item,
 					fontSize: `${this.dataConfig.bntNumber.val * 2}rpx`
 				}
 			},
-			/*商品图片圆角样式*/
+			/*Style góc tròn ảnh sản phẩm*/
 			imgStyle(){
 				let borderRadius = `${this.dataConfig.filletImg.val * 2}rpx`;
 				if (this.dataConfig.filletImg.type) {
@@ -276,35 +276,35 @@
 				}
 				return borderRadius
 			},
-			/*商品名称样式*/
+			/*Style tên sản phẩm*/
 			productStyle(){
 				return {
 					color: this.dataConfig.goodsNameColor.color[0].item,
 					fontWeight: this.dataConfig.goodsName.tabVal ? 'normal' : 'bold'
 				}
 			},
-			/* 展示信息 */
+			/* Thông tin hiển thị */
 			checkboxInfo(){
 				return this.dataConfig.checkboxInfo.type
 			},
-			/* 价格颜色 */
+			/* Màu giá */
 			priceColor(){
 				return this.dataConfig.toneConfig.tabVal ? this.dataConfig.presalePriceColor.color[0].item : 'var(--view-theme)'
 			},
-			/* 划线价颜色 */
+			/* Màu giá gốc (gạch ngang) */
 			otPriceColor(){
 				return this.dataConfig.goodsPriceColor.color[0].item
 			},
 			showBtn(){
 				return this.dataConfig.presaleConfig.tabVal
 			},
-			/* 按钮颜色 */
+			/* Màu nút */
 			btnBgColor(){
 				return {
 					background: this.dataConfig.toneConfig.tabVal ? `linear-gradient(90deg,${this.dataConfig.goodsBntColor.color[0].item} 0%,${this.dataConfig.goodsBntColor.color[1].item} 100%)`: 'linear-gradient(90deg, var(--view-theme) 0%, var(--view-gradient) 100%)'
 				}
 			},
-			/*商品数量*/
+			/*Số lượng sản phẩm*/
 			numberConfig(){
 				return this.dataConfig.numberConfig.val
 			}

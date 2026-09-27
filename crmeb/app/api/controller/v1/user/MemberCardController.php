@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,7 +20,7 @@ use think\db\exception\DataNotFoundException;
 use think\db\exception\DbException;
 use think\db\exception\ModelNotFoundException;
 
-/** 会员卡
+/** Thẻ thành viên
  * Class MemberCardController
  * @package app\api\controller\v1\user
  */
@@ -30,7 +30,7 @@ class MemberCardController
 
     protected $channelType = ['weixin' => 'wechat', 'weixinh5' => 'weixinh5', 'routine' => 'routine', 'h5' => 'h5'];
 
-    /** 初始化service层句柄
+    /** Khởi tạo handle tầng service
      * MemberCardController constructor.
      * @param MemberCardServices $memberCardServices
      */
@@ -40,7 +40,7 @@ class MemberCardController
     }
 
     /**
-     * 会员卡主页数据接口
+     * API dữ liệu trang chủ thẻ thành viên
      * @param Request $request
      * @return mixed
      * @throws DataNotFoundException
@@ -71,7 +71,7 @@ class MemberCardController
     }
 
     /**
-     * 卡密领取会员卡
+     * Nhận thẻ thành viên bằng mã thẻ
      * @param Request $request
      * @return mixed
      */
@@ -91,7 +91,7 @@ class MemberCardController
     }
 
     /**
-     * 会员券接口
+     * API phiếu giảm giá thành viên
      * @param Request $request
      * @return mixed
      * @throws DataNotFoundException
@@ -107,7 +107,7 @@ class MemberCardController
     }
 
     /**
-     * 计算会员天数
+     * Tính số ngày thành viên
      * @param Request $request
      * @return mixed
      */
@@ -135,7 +135,7 @@ class MemberCardController
             $is_ever_level = 0;
         }
         if ($is_ever_level == 1 || $user_info['is_ever_level']) {
-            $res = "永久会员";
+            $res = "Thành viên vĩnh viễn";
         } else {
             $res = date('Y-m-d', $overdue_time);
         }

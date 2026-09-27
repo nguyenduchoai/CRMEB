@@ -2,10 +2,10 @@
   <div>
     <div class="tabs">
       <el-tabs v-model="apiType">
-        <el-tab-pane label="管理端接口" name="adminapi"></el-tab-pane>
-        <el-tab-pane label="用户端接口" name="api"></el-tab-pane>
-        <el-tab-pane label="客服端接口" name="kefuapi"></el-tab-pane>
-        <el-tab-pane label="对外接口" name="outapi"></el-tab-pane>
+        <el-tab-pane label="API trang quản trị" name="adminapi"></el-tab-pane>
+        <el-tab-pane label="API phía người dùng" name="api"></el-tab-pane>
+        <el-tab-pane label="API phía CSKH" name="kefuapi"></el-tab-pane>
+        <el-tab-pane label="API bên ngoài" name="outapi"></el-tab-pane>
       </el-tabs>
     </div>
     <div class="main" v-loading="winLoading">
@@ -13,9 +13,9 @@
         <div class="tree">
           <div class="main-btn">
             <el-button class="mb5" style="flex: 1" type="primary" v-db-click @click="clickMenu(4)" long
-              >新增分类</el-button
+              >Thêm danh mục</el-button
             >
-            <el-button class="mb5 mr10" type="success" v-db-click @click="syncRoute()">同步</el-button>
+            <el-button class="mb5 mr10" type="success" v-db-click @click="syncRoute()">Đồng bộ</el-button>
           </div>
 
           <vue-tree-list
@@ -24,8 +24,8 @@
             @change-name="onChangeName"
             @delete-node="onDel"
             :model="treeData"
-            default-tree-node-name="默认文件夹"
-            default-leaf-node-name="默认接口名"
+            default-tree-node-name="Thư mục mặc định"
+            default-leaf-node-name="Tên API mặc định"
             v-bind:default-expanded="false"
             :expand-only-one="true"
           >
@@ -61,15 +61,15 @@
                   </span>
                   <template slot="dropdown">
                     <el-dropdown-menu>
-                      <el-dropdown-item command="1" v-if="!slotProps.model.method">新增接口</el-dropdown-item>
-                      <el-dropdown-item command="2" v-if="!slotProps.model.method">编辑分类名</el-dropdown-item>
-                      <el-dropdown-item command="3">删除</el-dropdown-item>
+                      <el-dropdown-item command="1" v-if="!slotProps.model.method">Thêm API</el-dropdown-item>
+                      <el-dropdown-item command="2" v-if="!slotProps.model.method">Sửa tên danh mục</el-dropdown-item>
+                      <el-dropdown-item command="3">Xóa</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
               </div>
             </template>
-            <!-- 新建文件夹 -->
+            <!-- Tạo thư mục mới -->
 
             <span class="icon" slot="addTreeNodeIcon"></span>
             <span class="icon" slot="addLeafNodeIcon"></span>
@@ -98,14 +98,14 @@
               {{ formValidate.name }}
             </div>
             <div>
-              <el-button class="submission" v-db-click @click="debugging()">调试</el-button>
+              <el-button class="submission" v-db-click @click="debugging()">Gỡ lỗi</el-button>
               <el-button
                 v-if="formValidate.id"
                 type="primary"
                 class="submission"
                 v-db-click
                 @click="isEdit = !isEdit"
-                >{{ isEdit ? '取消' : '编辑' }}</el-button
+                >{{ isEdit ? 'Hủy' : 'Sửa' }}</el-button
               >
               <el-button
                 v-if="isEdit"
@@ -113,7 +113,7 @@
                 class="submission"
                 v-db-click
                 @click="handleSubmit('formValidate')"
-                >保存</el-button
+                >Lưu</el-button
               >
             </div>
           </div>
@@ -128,19 +128,19 @@
           >
             <el-row :gutter="24">
               <el-col :span="24">
-                <div class="title">接口信息</div>
-                <el-form-item label="接口名称：" prop="name">
+                <div class="title">Thông tin API</div>
+                <el-form-item label="Tên API:" prop="name">
                   <el-input
                     v-if="isEdit"
                     class="perW20"
                     type="text"
                     :rows="4"
                     v-model.trim="formValidate.name"
-                    placeholder="请输入"
+                    placeholder="Vui lòng nhập"
                   />
                   <span v-else>{{ formValidate.name || '' }}</span>
                 </el-form-item>
-                <el-form-item label="请求类型：" prop="name">
+                <el-form-item label="Loại yêu cầu:" prop="name">
                   <el-select v-if="isEdit" v-model="formValidate.method" style="width: 120px">
                     <el-option
                       v-for="(item, index) in requestTypeList"
@@ -153,18 +153,18 @@
                     formValidate.method || ''
                   }}</span>
                 </el-form-item>
-                <el-form-item label="功能描述：" prop="name">
+                <el-form-item label="Mô tả chức năng:" prop="name">
                   <el-input
                     v-if="isEdit"
                     class="perW20"
                     type="textarea"
                     :rows="4"
                     v-model.trim="formValidate.describe"
-                    placeholder="请输入"
+                    placeholder="Vui lòng nhập"
                   />
                   <span v-else class="text-area">{{ formValidate.describe || '--' }}</span>
                 </el-form-item>
-                <el-form-item label="所属分类：" prop="name" v-if="isEdit">
+                <el-form-item label="Thuộc danh mục:" prop="name" v-if="isEdit">
                   <el-cascader
                     v-model="formValidate.cate_id"
                     size="small"
@@ -173,26 +173,26 @@
                     clearable
                   ></el-cascader>
                 </el-form-item>
-                <el-form-item label="是否公共：" prop="name">
+                <el-form-item label="Dùng chung:" prop="name">
                   <el-switch v-if="isEdit" v-model="formValidate.type" :active-value="1" :inactive-value="0">
                   </el-switch>
-                  <span v-else class="text-area">{{ formValidate.type ? '是' : '否' }}</span>
+                  <span v-else class="text-area">{{ formValidate.type ? 'Có' : 'Không' }}</span>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row :gutter="24">
               <el-col :span="24">
-                <div class="title">调用方式</div>
-                <el-form-item label="路由地址：" prop="path">
+                <div class="title">Cách gọi</div>
+                <el-form-item label="Địa chỉ route:" prop="path">
                   <span>{{ formValidate.path || '' }}</span>
                 </el-form-item>
-                <el-form-item label="文件地址：" prop="path">
+                <el-form-item label="Đường dẫn tệp:" prop="path">
                   <span>{{ formValidate.file_path || '' }}</span>
                 </el-form-item>
-                <el-form-item label="方法名：" prop="path">
+                <el-form-item label="Tên phương thức:" prop="path">
                   <span>{{ formValidate.action || '' }}</span>
                 </el-form-item>
-                <el-form-item label="header参数：">
+                <el-form-item label="Tham số header:">
                   <vxe-table
                     resizable
                     show-overflow
@@ -206,13 +206,13 @@
                     :data="formValidate.header"
                   >
                     <!-- <vxe-column type="checkbox" width="60"></vxe-column> -->
-                    <vxe-column field="attribute" width="300" title="属性" tree-node :edit-render="{}">
+                    <vxe-column field="attribute" width="300" title="Thuộc tính" tree-node :edit-render="{}">
                       <template #default="{ row }">
                         <vxe-input v-if="isEdit" v-model="row.attribute" type="text"></vxe-input>
                         <span v-else>{{ row.attribute || '' }}</span>
                       </template>
                     </vxe-column>
-                    <vxe-column field="type" title="类型" width="200" :edit-render="{}">
+                    <vxe-column field="type" title="Loại" width="200" :edit-render="{}">
                       <template #default="{ row }">
                         <!-- <vxe-select v-if="isEdit" v-model="row.type" type="text" :optionGroups="typeList"></vxe-select> -->
                         <vxe-select v-if="isEdit" v-model="row.type" transfer>
@@ -230,7 +230,7 @@
 									  </vxe-select> -->
                       </template>
                     </vxe-column>
-                    <vxe-column field="must" title="必填" width="100" :edit-render="{}">
+                    <vxe-column field="must" title="Bắt buộc" width="100" :edit-render="{}">
                       <template #default="{ row }">
                         <vxe-checkbox
                           v-if="isEdit"
@@ -238,16 +238,16 @@
                           :unchecked-value="'0'"
                           :checked-value="'1'"
                         ></vxe-checkbox>
-                        <span v-else>{{ row.must == '1' ? '是' : '否' }}</span>
+                        <span v-else>{{ row.must == '1' ? 'Có' : 'Không' }}</span>
                       </template>
                     </vxe-column>
-                    <vxe-column field="trip" title="说明" :edit-render="{}">
+                    <vxe-column field="trip" title="Mô tả" :edit-render="{}">
                       <template #default="{ row }">
                         <vxe-input v-if="isEdit" v-model="row.trip" type="text"></vxe-input>
                         <span v-else>{{ row.trip || '' }}</span>
                       </template>
                     </vxe-column>
-                    <vxe-column title="操作" width="200" v-if="isEdit">
+                    <vxe-column title="Thao tác" width="200" v-if="isEdit">
                       <template #default="{ row }">
                         <vxe-button
                           type="text"
@@ -255,20 +255,20 @@
                           status="primary"
                           v-db-click
                           @click="insertRow(row, 'headTable')"
-                          >插入</vxe-button
+                          >Chèn</vxe-button
                         >
                         <vxe-button type="text" status="primary" v-db-click @click="removeRow(row, 'headTable')"
-                          >删除</vxe-button
+                          >Xóa</vxe-button
                         >
                       </template>
                     </vxe-column>
                   </vxe-table>
 
                   <el-button class="mt10" v-if="isEdit" type="primary" v-db-click @click="insertEvent('headTable')"
-                    >添加参数</el-button
+                    >Thêm thông số</el-button
                   >
                 </el-form-item>
-                <el-form-item label="query参数：">
+                <el-form-item label="Tham số query:">
                   <vxe-table
                     resizable
                     show-overflow
@@ -281,13 +281,13 @@
                     :tree-config="{ transform: true, rowField: 'id', parentField: 'parentId' }"
                     :data="formValidate.query"
                   >
-                    <vxe-column field="attribute" width="300" title="属性" tree-node :edit-render="{}">
+                    <vxe-column field="attribute" width="300" title="Thuộc tính" tree-node :edit-render="{}">
                       <template #default="{ row }">
                         <vxe-input v-if="isEdit" v-model="row.attribute" type="text"></vxe-input>
                         <span v-else>{{ row.attribute || '' }}</span>
                       </template>
                     </vxe-column>
-                    <vxe-column field="type" title="类型" width="200" :edit-render="{}">
+                    <vxe-column field="type" title="Loại" width="200" :edit-render="{}">
                       <template #default="{ row }">
                         <vxe-select v-if="isEdit" v-model="row.type" transfer>
                           <vxe-option
@@ -300,7 +300,7 @@
                         <span v-else>{{ row.type || '' }}</span>
                       </template>
                     </vxe-column>
-                    <vxe-column field="must" title="必填" width="100" :edit-render="{}">
+                    <vxe-column field="must" title="Bắt buộc" width="100" :edit-render="{}">
                       <template #default="{ row }">
                         <vxe-checkbox
                           v-if="isEdit"
@@ -308,16 +308,16 @@
                           :unchecked-value="'0'"
                           :checked-value="'1'"
                         ></vxe-checkbox>
-                        <span v-else>{{ row.must == '1' ? '是' : '否' }}</span>
+                        <span v-else>{{ row.must == '1' ? 'Có' : 'Không' }}</span>
                       </template>
                     </vxe-column>
-                    <vxe-column field="trip" title="说明" :edit-render="{}">
+                    <vxe-column field="trip" title="Mô tả" :edit-render="{}">
                       <template #default="{ row }">
                         <vxe-input v-if="isEdit" v-model="row.trip" type="text"></vxe-input>
                         <span v-else>{{ row.trip || '' }}</span>
                       </template>
                     </vxe-column>
-                    <vxe-column title="操作" width="200" v-if="isEdit">
+                    <vxe-column title="Thao tác" width="200" v-if="isEdit">
                       <template #default="{ row }">
                         <vxe-button
                           type="text"
@@ -325,19 +325,19 @@
                           status="primary"
                           v-db-click
                           @click="insertRow(row, 'xTable')"
-                          >插入</vxe-button
+                          >Chèn</vxe-button
                         >
                         <vxe-button type="text" status="primary" v-db-click @click="removeRow(row, 'xTable')"
-                          >删除</vxe-button
+                          >Xóa</vxe-button
                         >
                       </template>
                     </vxe-column>
                   </vxe-table>
                   <el-button class="mt10" v-if="isEdit" type="primary" v-db-click @click="insertEvent('xTable')"
-                    >添加参数</el-button
+                    >Thêm thông số</el-button
                   >
                 </el-form-item>
-                <el-form-item label="body参数：">
+                <el-form-item label="Tham số body:">
                   <vxe-table
                     resizable
                     show-overflow
@@ -351,13 +351,13 @@
                     :data="formValidate.request"
                   >
                     <!-- <vxe-column type="checkbox" width="60"></vxe-column> -->
-                    <vxe-column field="attribute" width="300" title="属性" tree-node :edit-render="{}">
+                    <vxe-column field="attribute" width="300" title="Thuộc tính" tree-node :edit-render="{}">
                       <template #default="{ row }">
                         <vxe-input v-if="isEdit" v-model="row.attribute" type="text"></vxe-input>
                         <span v-else>{{ row.attribute || '' }}</span>
                       </template>
                     </vxe-column>
-                    <vxe-column field="type" title="类型" width="200" :edit-render="{}">
+                    <vxe-column field="type" title="Loại" width="200" :edit-render="{}">
                       <template #default="{ row }">
                         <!-- <vxe-select v-if="isEdit" v-model="row.type" type="text" :optionGroups="typeList"></vxe-select> -->
                         <vxe-select v-if="isEdit" v-model="row.type" transfer>
@@ -375,7 +375,7 @@
                     </vxe-select> -->
                       </template>
                     </vxe-column>
-                    <vxe-column field="must" title="必填" width="100" :edit-render="{}">
+                    <vxe-column field="must" title="Bắt buộc" width="100" :edit-render="{}">
                       <template #default="{ row }">
                         <vxe-checkbox
                           v-if="isEdit"
@@ -383,16 +383,16 @@
                           :unchecked-value="'0'"
                           :checked-value="'1'"
                         ></vxe-checkbox>
-                        <span v-else>{{ row.must == '1' ? '是' : '否' }}</span>
+                        <span v-else>{{ row.must == '1' ? 'Có' : 'Không' }}</span>
                       </template>
                     </vxe-column>
-                    <vxe-column field="trip" title="说明" :edit-render="{}">
+                    <vxe-column field="trip" title="Mô tả" :edit-render="{}">
                       <template #default="{ row }">
                         <vxe-input v-if="isEdit" v-model="row.trip" type="text"></vxe-input>
                         <span v-else>{{ row.trip || '' }}</span>
                       </template>
                     </vxe-column>
-                    <vxe-column title="操作" width="200" v-if="isEdit">
+                    <vxe-column title="Thao tác" width="200" v-if="isEdit">
                       <template #default="{ row }">
                         <vxe-button
                           type="text"
@@ -400,20 +400,20 @@
                           status="primary"
                           v-db-click
                           @click="insertRow(row, 'bodyTable')"
-                          >插入</vxe-button
+                          >Chèn</vxe-button
                         >
                         <vxe-button type="text" status="primary" v-db-click @click="removeRow(row, 'bodyTable')"
-                          >删除</vxe-button
+                          >Xóa</vxe-button
                         >
                       </template>
                     </vxe-column>
                   </vxe-table>
 
                   <el-button class="mt10" v-if="isEdit" type="primary" v-db-click @click="insertEvent('bodyTable')"
-                    >添加参数</el-button
+                    >Thêm thông số</el-button
                   >
                 </el-form-item>
-                <el-form-item label="返回参数：">
+                <el-form-item label="Tham số trả về:">
                   <vxe-table
                     resizable
                     show-overflow
@@ -427,13 +427,13 @@
                     :data="formValidate.response"
                   >
                     <!-- <vxe-column type="checkbox" width="60"></vxe-column> -->
-                    <vxe-column field="attribute" title="属性" width="300" tree-node :edit-render="{}">
+                    <vxe-column field="attribute" title="Thuộc tính" width="300" tree-node :edit-render="{}">
                       <template #default="{ row }">
                         <vxe-input v-if="isEdit" v-model="row.attribute" type="text"></vxe-input>
                         <span v-else>{{ row.attribute || '' }}</span>
                       </template>
                     </vxe-column>
-                    <vxe-column field="type" title="类型" width="200" :edit-render="{}">
+                    <vxe-column field="type" title="Loại" width="200" :edit-render="{}">
                       <template #default="{ row }">
                         <vxe-select v-if="isEdit" v-model="row.type" transfer>
                           <vxe-option
@@ -446,19 +446,19 @@
                         <span v-else>{{ row.type || '' }}</span>
                       </template>
                     </vxe-column>
-                    <!-- <vxe-column field="type" title="必填" :edit-render="{}">
+                    <!-- <vxe-column field="type" title="Bắt buộc" :edit-render="{}">
                   <template #default="{ row }">
                     <vxe-checkbox v-model="row.must" :unchecked-value="0" :checked-value="1"></vxe-checkbox
                     >{{ row.must }}
                   </template>
                 </vxe-column> -->
-                    <vxe-column field="trip" title="说明" :edit-render="{}">
+                    <vxe-column field="trip" title="Mô tả" :edit-render="{}">
                       <template #default="{ row }">
                         <vxe-input v-if="isEdit" v-model="row.trip" type="text"></vxe-input>
                         <span v-else>{{ row.trip || '' }}</span>
                       </template>
                     </vxe-column>
-                    <vxe-column title="操作" width="200" v-if="isEdit">
+                    <vxe-column title="Thao tác" width="200" v-if="isEdit">
                       <template #default="{ row }">
                         <vxe-button
                           type="text"
@@ -466,35 +466,35 @@
                           status="primary"
                           v-db-click
                           @click="insertRow(row, 'resTable')"
-                          >插入</vxe-button
+                          >Chèn</vxe-button
                         >
                         <vxe-button type="text" status="primary" v-db-click @click="removeRow(row, 'resTable')"
-                          >删除</vxe-button
+                          >Xóa</vxe-button
                         >
                       </template>
                     </vxe-column>
                   </vxe-table>
                   <el-button class="mt10" v-if="isEdit" type="primary" v-db-click @click="insertEvent('resTable')"
-                    >添加参数</el-button
+                    >Thêm thông số</el-button
                   >
                 </el-form-item>
               </el-col>
             </el-row>
             <el-row :gutter="24">
               <el-col :span="24">
-                <div class="title">调用示例</div>
-                <!-- <el-form-item label="请求数据示例：" prop="request_example">
+                <div class="title">Ví dụ gọi API</div>
+                <!-- <el-form-item label="Ví dụ dữ liệu yêu cầu:" prop="request_example">
                     <el-input
                       v-if="isEdit"
                       class="perW20"
                       type="textarea"
                       :rows="4"
                       v-model.trim="formValidate.request_example"
-                      placeholder="请输入"
+                      placeholder="Vui lòng nhập"
                     />
                     <span v-else class="text-area">{{ formValidate.request_example || '' }}</span>
                   </el-form-item> -->
-                <el-form-item v-if="formValidate.response_example" label="返回数据示例：" prop="response_example">
+                <el-form-item v-if="formValidate.response_example" label="Ví dụ dữ liệu trả về:" prop="response_example">
                   <el-collapse v-for="(item, index) in formValidate.response_example" accordion :key="index">
                     <el-collapse-item>
                       <template slot="title">
@@ -506,13 +506,13 @@
                         type="textarea"
                         :rows="4"
                         v-model.trim="item.data"
-                        placeholder="请输入"
+                        placeholder="Vui lòng nhập"
                       />
                       <span v-else class="text-area">{{ item.data || '' }}</span>
                     </el-collapse-item>
                   </el-collapse>
                 </el-form-item>
-                <el-form-item label="错误码：">
+                <el-form-item label="Mã lỗi:">
                   <vxe-table
                     resizable
                     show-overflow
@@ -527,34 +527,34 @@
                     :data="formValidate.error_code"
                   >
                     <!-- <vxe-column type="checkbox" width="60"></vxe-column> -->
-                    <vxe-column field="code" title="错误码" tree-node :edit-render="{}">
+                    <vxe-column field="code" title="Mã lỗi" tree-node :edit-render="{}">
                       <template #default="{ row }">
                         <vxe-input v-if="isEdit" v-model="row.code" type="text"></vxe-input>
                         <span v-else>{{ row.code || '' }}</span>
                       </template>
                     </vxe-column>
-                    <vxe-column field="value" title="错误码取值" :edit-render="{}">
+                    <vxe-column field="value" title="Giá trị mã lỗi" :edit-render="{}">
                       <template #default="{ row }">
                         <vxe-input v-if="isEdit" v-model="row.value" type="text"></vxe-input>
                         <span v-else>{{ row.value || '' }}</span>
                       </template>
                     </vxe-column>
-                    <vxe-column field="solution" title="解决方案" :edit-render="{}">
+                    <vxe-column field="solution" title="Cách khắc phục" :edit-render="{}">
                       <template #default="{ row }">
                         <vxe-input v-if="isEdit" v-model="row.solution" type="text"></vxe-input>
                         <span v-else>{{ row.solution || '' }}</span>
                       </template>
                     </vxe-column>
-                    <vxe-column title="操作" v-if="isEdit">
+                    <vxe-column title="Thao tác" v-if="isEdit">
                       <template #default="{ row }">
                         <vxe-button type="text" status="primary" v-db-click @click="removeRow(row, 'codeTable')"
-                          >删除</vxe-button
+                          >Xóa</vxe-button
                         >
                       </template>
                     </vxe-column>
                   </vxe-table>
                   <el-button class="mt10" v-if="isEdit" type="primary" v-db-click @click="insertEvent('codeTable')"
-                    >添加参数</el-button
+                    >Thêm thông số</el-button
                   >
                 </el-form-item>
               </el-col>
@@ -562,7 +562,7 @@
             <!-- <el-row :gutter="24" >
               <el-col :span="24">
                 <el-form-item>
-                  <el-button type="primary" class="submission" v-db-click @click="handleSubmit('formValidate')">保存</el-button>
+                  <el-button type="primary" class="submission" v-db-click @click="handleSubmit('formValidate')">Lưu</el-button>
                 </el-form-item>
               </el-col>
             </el-row> -->
@@ -573,23 +573,23 @@
             <div class="icon">
               <Icon type="ios-folder" />
             </div>
-            <div class="text">新建文件</div>
+            <div class="text">Tạo file mới</div>
           </div>
           <div class="box" v-db-click @click="clickMenu(1)">
             <div class="icon">
               <Icon type="logo-linkedin" />
             </div>
-            <div class="text">新建接口</div>
+            <div class="text">Tạo API mới</div>
           </div>
         </div> -->
       </el-card>
     </div>
-    <el-dialog :visible.sync="nameModal" width="470px" title="分组名称">
-      <label>分组名称：</label>
-      <el-input v-model="value" placeholder="请输入分组名称" style="width: 85%" />
+    <el-dialog :visible.sync="nameModal" width="470px" title="Tên nhóm">
+      <label>Tên nhóm:</label>
+      <el-input v-model="value" placeholder="Vui lòng nhập tên nhóm" style="width: 85%" />
       <span slot="footer" class="dialog-footer">
-        <el-button v-db-click @click="nameModal = false">取 消</el-button>
-        <el-button type="primary" v-db-click @click="asyncOK">确 定</el-button>
+        <el-button v-db-click @click="nameModal = false">Hủy</el-button>
+        <el-button type="primary" v-db-click @click="asyncOK">Xác nhận</el-button>
       </span>
     </el-dialog>
     <el-drawer
@@ -647,7 +647,7 @@ export default {
         xs: 24,
       },
       ruleValidate: {
-        title: [{ message: '请输入正确的描述 (不能多于200位数)', trigger: 'blur', max: 200 }],
+        title: [{ message: 'Vui lòng nhập mô tả hợp lệ (không quá 200 ký tự)', trigger: 'blur', max: 200 }],
       },
       loading: false,
       intTypeList: [
@@ -728,7 +728,7 @@ export default {
           label: 'PUT',
         },
       ],
-      contextData: null, //左侧导航右键点击是产生的数据对象
+      contextData: null, //Đối tượng dữ liệu được tạo ra khi nhấp chuột phải vào điều hướng bên trái
       treeData: undefined,
       buttonProps: {
         type: 'default',
@@ -791,11 +791,11 @@ export default {
   methods: {
     syncRoute() {
       this.$msgbox({
-        title: '立即同步',
-        message: '同步之后，路由文件中新增的接口添加到接口列表中，路由文件中删除的路由会同步的在接口列表中删除',
+        title: 'Đồng bộ ngay',
+        message: 'Sau khi đồng bộ, các API mới thêm trong tệp route sẽ được thêm vào danh sách API, các route đã xóa trong tệp route cũng sẽ được xóa khỏi danh sách API',
         showCancelButton: true,
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+        cancelButtonText: 'Hủy',
+        confirmButtonText: 'Xác nhận',
         iconClass: 'el-icon-warning',
         confirmButtonClass: 'btn-custom-cancel',
       })
@@ -890,11 +890,11 @@ export default {
     },
     async handleSubmit() {
       if (!this.formValidate.name) {
-        return this.$message.warning('请输入接口名称');
+        return this.$message.warning('Vui lòng nhập tên API');
       } else if (!this.formValidate.method) {
-        return this.$message.warning('请选择请求类型');
+        return this.$message.warning('Vui lòng chọn loại yêu cầu');
       } else if (!this.formValidate.path) {
-        return this.$message.warning('请输入路由地址');
+        return this.$message.warning('Vui lòng nhập địa chỉ route');
       }
       this.formValidate.request = await this.$refs.bodyTable.getTableData().tableData;
       this.formValidate.response = await this.$refs.resTable.getTableData().tableData;
@@ -944,9 +944,9 @@ export default {
     },
     async insertRow(currRow, type) {
       const $table = this.$refs[type];
-      // 如果 null 则插入到目标节点顶部
-      // 如果 -1 则插入到目标节点底部
-      // 如果 row 则有插入到效的目标节点该行的位置
+      // Nếu là null thì chèn vào đỉnh của nút đích
+      // Nếu là -1 thì chèn vào đáy của nút đích
+      // Nếu là row thì chèn vào vị trí dòng đó của nút đích
       let record;
       if (type == 'xTable') {
         record = {
@@ -955,7 +955,7 @@ export default {
           must: 0,
           trip: '',
           id: Date.now(),
-          parentId: currRow.id, // 需要指定父节点，自动插入该节点中
+          parentId: currRow.id, // Cần chỉ định nút cha, tự động chèn vào nút đó
         };
       } else if (type == 'resTable') {
         record = {
@@ -963,7 +963,7 @@ export default {
           type: '',
           trip: '',
           id: Date.now(),
-          parentId: currRow.id, // 需要指定父节点，自动插入该节点中
+          parentId: currRow.id, // Cần chỉ định nút cha, tự động chèn vào nút đó
         };
       } else {
         record = {
@@ -971,24 +971,24 @@ export default {
           value: '',
           solution: '',
           id: Date.now(),
-          parentId: currRow.id, // 需要指定父节点，自动插入该节点中
+          parentId: currRow.id, // Cần chỉ định nút cha, tự động chèn vào nút đó
         };
       }
       const { row: newRow } = await $table.insertAt(record, -1);
-      await $table.setTreeExpand(currRow, true); // 将父节点展开
-      await $table.setActiveRow(newRow); // 插入子节点
+      await $table.setTreeExpand(currRow, true); // Mở rộng nút cha
+      await $table.setActiveRow(newRow); // Chèn nút con
     },
     async removeRow(row, type) {
       const $table = this.$refs[type];
       await $table.remove(row);
     },
-    // 修改名字
+    // Sửa tên
     add() {
       this.value = '';
       this.formValidate.id = 0;
       this.nameModal = true;
     },
-    // 点击菜单
+    // Bấm vào menu
     clickMenu(name, params) {
       if (name == 1) {
         this.formValidate = {};
@@ -1030,14 +1030,14 @@ export default {
           this.$message.error(err.msg);
         });
     },
-    //侧边栏右键点击事件
+    //Sự kiện nhấp chuột phải sidebar
     handleContextMenu(data, event, position) {
       position.left = Number(position.left.slice(0, -2)) + 75 + 'px';
       this.contextData = data;
     },
     handleContextCreateFolder() {},
     handleContextCreateFile() {},
-    // 自定义显示
+    // Hiển thị tùy chỉnh
     renderContent(h, { root, node, data }) {
       let that = this;
       return h(
@@ -1091,7 +1091,7 @@ export default {
       );
     },
     /**
-     * 侧边栏点击事件
+     * Sự kiện nhấp sidebar
      * @param {Object} data
      */
     clickDir(data, root, node) {
@@ -1120,11 +1120,11 @@ export default {
     onDel(node) {
       let method = node.cate_id ? routeDel : routeCateDel;
       this.$msgbox({
-        title: '提示',
-        message: '删除后无法恢复，请确认后删除！',
+        title: 'Thông báo',
+        message: 'Sau khi xóa sẽ không thể khôi phục, vui lòng xác nhận trước khi xóa!',
         showCancelButton: true,
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+        cancelButtonText: 'Hủy',
+        confirmButtonText: 'Xác nhận',
         iconClass: 'el-icon-warning',
         confirmButtonClass: 'btn-custom-cancel',
       })
@@ -1209,10 +1209,10 @@ export default {
   background: #fff;
   height: 72px;
   box-sizing: border-box;
-  overflow-x: scroll; /* 设置溢出滚动 */
+  overflow-x: scroll; /* Đặt overflow scroll */
   white-space: nowrap;
   overflow-y: hidden;
-  /* 隐藏滚动条 */
+  /* Ẩn thanh cuộn */
   border-radius: 4px;
   scrollbar-width: none; /* firefox */
   -ms-overflow-style: none; /* IE 10+ */

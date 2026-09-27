@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,7 +17,7 @@ use crmeb\basic\BaseJobs;
 use crmeb\traits\QueueTrait;
 
 /**
- * 未支付10分钟后发送短信
+ * Gửi SMS sau 10 phút chưa thanh toán
  * Class UnpaidOrderSend
  * @package crmeb\jobs
  */
@@ -39,7 +39,7 @@ class UnpaidOrderSend extends BaseJobs
         if ($orderInfo->is_del) {
             return true;
         }
-        //收货给用户发送消息
+        //Gửi tin nhắn cho người dùng khi nhận hàng
         event('NoticeListener', [['order' => $orderInfo], 'order_pay_false']);
         return true;
     }

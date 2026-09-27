@@ -2,33 +2,33 @@
   <div class="box">
     <!-- <div class="c_row-item" v-if="this.$route.query.type !==2">
             <el-col class="label" :span="4">
-                模板名称
+                Tên mẫu
             </el-col>
             <el-col span="19" class="slider-box">
-                <el-input v-model="name" placeholder="选填不超过15个字" maxlength="15" @change="changName" />
+                <el-input v-model="name" placeholder="Không bắt buộc, tối đa 15 ký tự" maxlength="15" @change="changName" />
             </el-col>
         </div> -->
     <div class="c_row-item">
-      <el-col class="label" :span="4"> 页面标题 </el-col>
+      <el-col class="label" :span="4"> Tiêu đề trang </el-col>
       <el-col :span="19" class="slider-box">
-        <el-input v-model="value" placeholder="选填不超过30个字" maxlength="30" @change="changVal" />
+        <el-input v-model="value" placeholder="Không bắt buộc, tối đa 30 ký tự" maxlength="30" @change="changVal" />
       </el-col>
     </div>
     <div class="c_row-item">
-      <el-col class="label" :span="4"> 页面状态 </el-col>
+      <el-col class="label" :span="4"> Trạng thái trang </el-col>
       <el-col :span="19" class="slider-box">
         <el-switch v-model="isShow" @change="changeState"></el-switch>
       </el-col>
     </div>
     <div class="c_row-item acea-row row-top">
-      <el-col class="label" :span="4"> 背景设置 </el-col>
+      <el-col class="label" :span="4"> Cài đặt nền </el-col>
       <el-col :span="19" class="slider-box">
         <div class="acea-row row-between row-top color">
-          <el-checkbox v-model="bgColor" @change="bgColorTap">背景色</el-checkbox>
+          <el-checkbox v-model="bgColor" @change="bgColorTap">Màu nền</el-checkbox>
           <el-color-picker v-model="colorPicker" @change="colorPickerTap" show-alpha />
         </div>
         <div class="acea-row row-between row-top color">
-          <el-checkbox v-model="bgPic" @change="bgPicTap">背景图</el-checkbox>
+          <el-checkbox v-model="bgPic" @change="bgPicTap">Ảnh nền</el-checkbox>
           <el-radio-group v-model="tabVal" size="mini" @input="radioTap">
             <el-radio-button :label="index" v-for="(item, index) in picList" :key="index">
               <span class="iconfont-diy" :class="item"></span>
@@ -36,11 +36,11 @@
           </el-radio-group>
         </div>
         <div v-if="bgPic">
-          <div class="title">建议尺寸：690 * 240px</div>
-          <div class="boxs" @click="modalPicTap('单选')">
+          <div class="title">Kích thước đề xuất: 690 * 240px</div>
+          <div class="boxs" @click="modalPicTap('Chọn một')">
             <img :src="bgPicUrl" alt="" v-if="bgPicUrl" />
             <div class="upload-box" v-else><i class="el-icon-camera" /></div>
-            <div class="replace" v-if="bgPicUrl">更换图片</div>
+            <div class="replace" v-if="bgPicUrl">Đổi ảnh</div>
             <!--<span class="iconfont-diy icondel_1" @click.stop="bindDelete" v-if="bgPicUrl"></span>-->
           </div>
         </div>
@@ -50,7 +50,7 @@
       <el-dialog
         :visible.sync="modalPic"
         width="960px"
-        title="上传背景图"
+        title="Tải lên ảnh nền"
       >
         <uploadPictures
           :isChoice="isChoice"
@@ -83,7 +83,7 @@ export default {
       tabVal: 0,
       colorPicker: '#f5f5f5',
       modalPic: false,
-      isChoice: '单选',
+      isChoice: 'Chọn một',
       gridBtn: {
         xl: 4,
         lg: 8,
@@ -113,7 +113,7 @@ export default {
     this.bgPicUrl = state.pagePicUrl;
   },
   methods: {
-    // 点击图文封面
+    // Click vào ảnh bìa bài viết ảnh-văn
     modalPicTap(title) {
       this.modalPic = true;
     },

@@ -5,32 +5,32 @@
         <div class="iframe-boxs">
           <div class="moneyBox">
             <div class="box1">
-              <div class="font1">我的余额</div>
+              <div class="font1">Số dư của tôi</div>
               <div>￥ <i class="font2">0.00</i></div>
             </div>
             <div class="moneyBox_content">
               <div class="box2">
-                <div>账户充值</div>
-                <div>佣金导入</div>
+                <div>Nạp tiền vào tài khoản</div>
+                <div>Chuyển hoa hồng vào số dư</div>
               </div>
               <div class="box3">
                 <div v-show="item.status != 0" class="box3_box" v-for="(item, index) in sginList.list" :key="index">
-                  <div>{{ item.price }}<i class="font">元</i></div>
-                  <div class="font">赠送:{{ item.give_money }}元</div>
+                  <div>{{ item.price }}<i class="font">đ</i></div>
+                  <div class="font">Tặng: {{ item.give_money }}đ</div>
                 </div>
                 <div class="box3_box">
-                  <div class="other">其他</div>
+                  <div class="other">Khác</div>
                 </div>
               </div>
               <div class="box4">
-                <div class="tips">注意事项：</div>
+                <div class="tips">Lưu ý:</div>
                 <div class="tips-samll">
-                  <p>充值后帐户的金额不能提现，可用于商城消费使用。</p>
-                  <p>佣金导入账户之后不能再次导出、不可提现。</p>
-                  <p>账户充值出现问题可联系商城客服，也可拨打商城客服热线：40088888889。</p>
+                  <p>Số tiền đã nạp vào tài khoản không thể rút, có thể dùng để mua sắm tại cửa hàng.</p>
+                  <p>Hoa hồng sau khi chuyển vào tài khoản không thể chuyển ra lại, không thể rút tiền.</p>
+                  <p>Nếu gặp sự cố khi nạp tiền, vui lòng liên hệ CSKH của cửa hàng hoặc gọi đường dây nóng CSKH: 40088888889.</p>
                 </div>
               </div>
-              <div class="box5">立即充值</div>
+              <div class="box5">Nạp tiền ngay</div>
             </div>
           </div>
         </div>
@@ -40,14 +40,14 @@
         <div class="table_box">
           <div>
             <div v-bind="grid">
-              <div class="title">充值金额设置</div>
+              <div class="title">Cài đặt mệnh giá nạp tiền</div>
               <el-button
                 type="primary"
                 icon="md-add"
                 v-db-click
-                @click="groupAdd('添加数据')"
+                @click="groupAdd('Thêm dữ liệu')"
                 style="margin-left: 14px; margin-top: 14px"
-                >添加数据</el-button
+                >Thêm dữ liệu</el-button
               >
             </div>
           </div>
@@ -58,8 +58,8 @@
               class="mt14"
               v-loading="loading"
               highlight-current-row
-              no-userFrom-text="暂无数据"
-              no-filtered-userFrom-text="暂无筛选结果"
+              no-userFrom-text="Chưa có dữ liệu"
+              no-filtered-userFrom-text="Không có kết quả phù hợp"
             >
               <el-table-column :label="item.title" min-width="130" v-for="(item, index) in columns1" :key="index">
                 <template slot-scope="scope">
@@ -80,9 +80,9 @@
                     </el-switch>
                   </template>
                   <template v-else-if="item.slot === 'action'">
-                    <a v-db-click @click="edit(scope.row, '编辑')">编辑</a>
+                    <a v-db-click @click="edit(scope.row, 'Sửa')">Sửa</a>
                     <el-divider direction="vertical"></el-divider>
-                    <a v-db-click @click="del(scope.row, '删除这条信息', scope.$index)">删除</a>
+                    <a v-db-click @click="del(scope.row, 'xóa thông tin này', scope.$index)">Xóa</a>
                   </template>
                 </template>
               </el-table-column>
@@ -143,13 +143,13 @@ export default {
       },
       ruleValidate: {},
       myConfig: {
-        autoHeightEnabled: false, // 编辑器不自动被内容撑高
-        initialFrameHeight: 500, // 初始容器高度
-        initialFrameWidth: '100%', // 初始容器宽度
+        autoHeightEnabled: false, // Trình soạn thảo không tự động giãn cao theo nội dung
+        initialFrameHeight: 500, // Chiều cao container ban đầu
+        initialFrameWidth: '100%', // Chiều rộng container ban đầu
         UEDITOR_HOME_URL: '/UEditor/',
         serverUrl: '',
       },
-      a: 0, //判断的隐私协议
+      a: 0, //Kiểm tra thỏa thuận bảo mật
       guide: 0,
       bgimg: 0,
       columns1: [],
@@ -164,24 +164,24 @@ export default {
       },
       loading: false,
       sginList: [],
-      progress: 0, // 进度条默认0
+      progress: 0, // Thanh tiến trình mặc định 0
       swiperOption: {
-        //显示分页
+        //Hiển thị phân trang
         pagination: {
           el: '.swiper-pagination',
         },
-        //设置点击箭头
+        //Đặt bấm mũi tên
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
         },
-        //自动轮播
+        //Tự động trình chiếu
         autoplay: {
           delay: 2000,
-          //当用户滑动图片后继续自动轮播
+          //Sau khi người dùng vuốt ảnh thì tiếp tục tự động trình chiếu
           disableOnInteraction: false,
         },
-        //开启循环模式
+        //Bật chế độ lặp
         loop: false,
       },
       url: '',
@@ -189,8 +189,8 @@ export default {
       pageId: 62,
       theme3: 'light',
       tabList: [],
-      upload_type: '', //视频上传类型 1 本地上传 2 3 4 OSS上传
-      uploadData: {}, // 上传参数
+      upload_type: '', //Loại tải video lên 1 tải lên local 2 3 4 tải lên OSS
+      uploadData: {}, // Tham số tải lên
       lastObj: {
         add_time: '',
         comment: '',
@@ -201,7 +201,7 @@ export default {
         sort: '',
         status: 1,
       },
-      isChoice: '单选',
+      isChoice: 'Chọn một',
       modalPic: false,
       gridPic: {
         xl: 6,
@@ -235,7 +235,7 @@ export default {
       header: {},
       type: 0,
       upload: {
-        videoIng: false, // 是否显示进度条；
+        videoIng: false, // Có hiển thị thanh tiến trình không;
       },
     };
   },
@@ -256,18 +256,18 @@ export default {
     getEditorContent(data) {
       this.formValidate.content = data;
     },
-    // 删除视频；
+    // Xóa video;
     delVideo() {
       let that = this;
       that.$set(that.formItem, 'video_link', '');
     },
-    //获取视频上传类型
+    //Lấy loại tải lên video
     uploadType() {
       uploadType().then((res) => {
         this.upload_type = res.data.upload_type;
       });
     },
-    // 上传成功
+    // Tải lên thành công
     handleSuccess(res, file, fileList) {
       if (res.status === 200) {
         this.$set(this.formItem, 'video_link', res.data.src);
@@ -287,7 +287,7 @@ export default {
       let that = this;
       let suffix = evfile.target.files[0].name.substr(evfile.target.files[0].name.indexOf('.'));
       if (suffix.indexOf('.mp4') === -1) {
-        return that.$message.error('只能上传MP4文件');
+        return that.$message.error('Chỉ có thể tải lên tệp MP4');
       }
       let types = {
         key: evfile.target.files[0].name,
@@ -306,7 +306,7 @@ export default {
             })
             .then((res) => {
               that.formValidate.video_link = res.url;
-              that.$message.success('视频上传成功');
+              that.$message.success('Tải lên video thành công');
             })
             .catch((res) => {
               that.$message.error(res.msg);
@@ -316,7 +316,7 @@ export default {
           that.$message.error(res.msg);
         });
     },
-    // 上传头部token
+    // Token trong header khi tải lên
     getToken() {
       this.header['Authori-zation'] = 'Bearer ' + getCookies('token');
     },
@@ -355,7 +355,7 @@ export default {
         }
       });
     },
-    // 添加表单
+    // Biểu mẫu thêm
     groupAdd() {
       this.$modalForm(groupDataAddApi({ gid: this.pageId, config_name: this.name }, 'setting/group_data/create')).then(
         () => {
@@ -411,7 +411,7 @@ export default {
         this.a = 0;
         switch (row.config_name) {
           case 'routine_home_bast_banner':
-            this.url = this.BaseURL + 'pages/columnGoods/HotNewGoods/index?type=1&name=精品推荐';
+            this.url = this.BaseURL + 'pages/columnGoods/HotNewGoods/index?type=1&name=Sản phẩm tuyển chọn';
             break;
           case 'sign_day_num':
             this.url = '';
@@ -421,13 +421,13 @@ export default {
             this.url = this.BaseURL + 'pages/activity/goods_combination/index';
             break;
           case 'routine_home_hot_banner':
-            this.url = this.BaseURL + 'pages/columnGoods/HotNewGoods/index?type=2&name=热门榜单';
+            this.url = this.BaseURL + 'pages/columnGoods/HotNewGoods/index?type=2&name=Bảng xếp hạng hot';
             break;
           case 'routine_home_new_banner':
-            this.url = this.BaseURL + 'pages/columnGoods/HotNewGoods/index?type=3&name=首发新品';
+            this.url = this.BaseURL + 'pages/columnGoods/HotNewGoods/index?type=3&name=Hàng mới ra mắt';
             break;
           case 'routine_home_benefit_banner':
-            this.url = this.BaseURL + 'pages/columnGoods/HotNewGoods/index?type=4&name=促销单品';
+            this.url = this.BaseURL + 'pages/columnGoods/HotNewGoods/index?type=4&name=Sản phẩm khuyến mãi';
             break;
           case 'user_recharge_quota':
             break;
@@ -455,23 +455,23 @@ export default {
         };
       } else {
         if (this.tabList.list.length == 5) {
-          this.$message.warning('最多添加五张呦');
+          this.$message.warning('Chỉ được thêm tối đa 5 ảnh nhé');
         } else {
           let obj = JSON.parse(JSON.stringify(this.lastObj));
           this.tabList.list.push(obj);
         }
       }
     },
-    // 删除
+    // Xóa
     bindDelete(item, index) {
       this.tabList.list.splice(index, 1);
     },
-    // 点击图文封面
+    // Click vào ảnh bìa bài viết ảnh-văn
     modalPicTap(title, index) {
       this.activeIndex = index;
       this.modalPic = true;
     },
-    // 获取图片信息
+    // Lấy thông tin ảnh
     getPic(pc) {
       this.$nextTick(() => {
         if (this.name == 'admin_login_slide') {
@@ -522,7 +522,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 编辑
+    // Sửa
     edit(row) {
       this.$modalForm(
         groupDataEditApi({ gid: this.pageId, config_name: this.name }, 'setting/group_data/' + row.id + '/edit'),
@@ -531,7 +531,7 @@ export default {
         this.url = this.BaseURL + 'pages/users/user_sgin/index';
       });
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -549,7 +549,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 修改是否显示
+    // Sửa có hiển thị hay không
     onchangeIsShow(row) {
       groupDataSetApi('setting/group_data/set_status/' + row.id + '/' + row.status)
         .then(async (res) => {
@@ -576,7 +576,7 @@ export default {
     getContent(val) {
       this.formValidate.content = val;
     },
-    // 提交数据
+    // Gửi dữ liệu
     onsubmit(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
@@ -592,7 +592,7 @@ export default {
         }
       });
     },
-    //详情
+    //Chi tiết
     getAgreement() {
       getAgreement()
         .then(async (res) => {

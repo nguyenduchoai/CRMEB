@@ -6,10 +6,10 @@
   >
     <div class="c_row-item">
       <el-col class="label" :span="4">
-        <span>{{ configData.title || '商品数量' }}</span>
+        <span>{{ configData.title || 'Số lượng sản phẩm' }}</span>
       </el-col>
       <el-col :span="configData.type == 'form' ? 19 : 18" class="slider-box">
-        <!--<el-input v-model="configData.val" type="number" placeholder="请输入数量" @change="bindChange" style="text-align: right;"/>-->
+        <!--<el-input v-model="configData.val" type="number" placeholder="Vui lòng nhập số lượng" @change="bindChange" style="text-align: right;"/>-->
         <div class="acea-row row-middle">
           <el-input-number
             v-model="configData.val"

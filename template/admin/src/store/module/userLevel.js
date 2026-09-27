@@ -1,15 +1,15 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 
 /**
- * 布局配置
+ * Cấu hình bố cục
  * */
 import screenfull from 'screenfull';
 // import router from '@/router';
@@ -20,31 +20,31 @@ export default {
   state: {
     taskId: 0,
     levelId: 0,
-    categoryId: 0, // 文章分类id
+    categoryId: 0, // ID danh mục bài viết
   },
   mutations: {
     /**
-     * @description 设置设备类型
+     * @description Đặt loại thiết bị
      * @param {Object} state vuex state
-     * @param {String} type 设备类型，可选值为 Mobile、Tablet、Desktop
+     * @param {String} type Loại thiết bị, giá trị có thể chọn là Mobile, Tablet, Desktop
      */
 
     /**
-     * @description 会员任务id
+     * @description Id nhiệm vụ thành viên
      */
     getTaskId(state, taskId) {
       state.taskId = taskId;
     },
 
     /**
-     * @description 会员等级id
+     * @description ID hạng thành viên
      */
     getlevelId(state, levelId) {
       state.levelId = levelId;
     },
 
     /**
-     * @description 文章分类id
+     * @description ID danh mục bài viết
      */
     getCategoryId(state, categoryId) {
       state.categoryId = categoryId;
@@ -52,7 +52,7 @@ export default {
   },
   actions: {
     /**
-     * @description 初始化监听全屏状态
+     * @description Khởi tạo lắng nghe trạng thái toàn màn hình
      */
     listenFullscreen({ commit }) {
       return new Promise((resolve) => {
@@ -68,7 +68,7 @@ export default {
       });
     },
     /**
-     * @description 切换全屏
+     * @description Chuyển đổi toàn màn hình
      */
     toggleFullscreen({ commit }) {
       return new Promise((resolve) => {

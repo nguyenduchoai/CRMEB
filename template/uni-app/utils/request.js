@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2024 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -22,7 +22,7 @@ import store from '../store';
 import i18n from './lang.js';
 
 /**
- * 发送请求
+ * Gửi yêu cầu
  */
 function baseRequest(url, method, data, {
 	noAuth = false,
@@ -32,11 +32,11 @@ function baseRequest(url, method, data, {
 		header = HEADER;
 
 	if (!noAuth) {
-		//登录过期自动登录
+		//Tự động đăng nhập lại khi đăng nhập hết hạn
 		if (!store.state.app.token && !checkLogin()) {
 			toLogin();
 			return Promise.reject({
-				msg: i18n.t(`未登录`)
+				msg: i18n.t(`Chưa đăng nhập`)
 			});
 		}
 	}
@@ -62,24 +62,24 @@ function baseRequest(url, method, data, {
 					reject(res.data);
 				} else if (res.data.status == 100103) {
 					uni.showModal({
-						title: i18n.t(`提示`),
+						title: i18n.t(`Thông báo`),
 						content: res.data.msg,
 						showCancel: false,
-						confirmText: i18n.t(`我知道了`)
+						confirmText: i18n.t(`Tôi đã hiểu`)
 					});
 				} else
-					reject(res.data.msg || i18n.t(`系统错误`));
+					reject(res.data.msg || i18n.t(`Lỗi hệ thống`));
 			},
 			fail: (msg) => {
 				let data = {
-					mag: i18n.t(`请求失败`),
-					status: 1 //1没网
+					mag: i18n.t(`Yêu cầu thất bại`),
+					status: 1 //1 không có mạng
 				}
 				// #ifdef APP-PLUS
 				reject(data);
 				// #endif
 				// #ifndef APP-PLUS
-				reject(i18n.t(`请求失败`));
+				reject(i18n.t(`Yêu cầu thất bại`));
 				// #endif
 			}
 		})

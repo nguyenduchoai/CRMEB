@@ -29,7 +29,7 @@ class StoreActivityServices extends BaseServices
             $id = $timesData['id'];
             $time = intval($timesData['time']);
             $continued = intval($timesData['continued']);
-            // 格式化时间，加上 ":00"
+            // Định dạng thời gian, thêm ":00"
             $startTime = sprintf("%02d:00", $time);
             $endTime = sprintf("%02d:00", $time + $continued);
             $resultArray[$id] = $startTime . '-' . $endTime;
@@ -50,7 +50,7 @@ class StoreActivityServices extends BaseServices
     public function activityInfo($id)
     {
         $info = $this->dao->get(['id' => $id]);
-        if (!$info) throw new AdminException('数据不存在');
+        if (!$info) throw new AdminException('Dữ liệu không tồn tại');
         $info = $info->toArray();
         /** @var StoreSeckillServices $seckillServices */
         $seckillServices = app()->make(StoreSeckillServices::class);
@@ -64,7 +64,7 @@ class StoreActivityServices extends BaseServices
             $productList = $productServices->searchList(['id' => array_column($seckill, 'product_id'), 'is_del' => 0]);
             $productList = $productList['list'] ?? [];
             $seckill = array_combine(array_column($seckill, 'product_id'), $seckill);
-            //放入秒杀商品价格
+            //Đưa vào giá sản phẩm flash sale
             foreach ($productList as &$product) {
                 $product['product_price'] = $product['price'];
                 $seckillInfo = $seckill[$product['id']] ?? [];
@@ -99,7 +99,7 @@ class StoreActivityServices extends BaseServices
 
     public function activityDel($id, $type)
     {
-        if (!$id) throw new AdminException('缺少参数');
+        if (!$id) throw new AdminException('Thiếu tham số');
         $this->dao->update($id, ['is_del' => 1]);
 
         if ($type == 1) {
@@ -122,7 +122,7 @@ class StoreActivityServices extends BaseServices
 
     public function activityStatus($id, $status, $type)
     {
-        if (!$id) throw new AdminException('缺少参数');
+        if (!$id) throw new AdminException('Thiếu tham số');
         $this->dao->update($id, ['status' => $status]);
         if ($type == 1) {
             /** @var StoreSeckillServices $storeSeckillServices */

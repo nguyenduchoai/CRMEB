@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -43,7 +43,7 @@ class WechatServices extends BaseServices
     }
 
     /**
-     * 微信公众号服务
+     * Dịch vụ OA WeChat
      * @return \think\Response
      * @throws \EasyWeChat\Server\BadRequestException
      */
@@ -54,7 +54,7 @@ class WechatServices extends BaseServices
     }
 
     /**
-     * 微信公众号服务
+     * Dịch vụ OA WeChat
      * @return \think\Response
      * @throws \EasyWeChat\Server\BadRequestException
      */
@@ -65,7 +65,7 @@ class WechatServices extends BaseServices
     }
 
     /**
-     * 支付异步回调
+     * Callback thanh toán bất đồng bộ
      * @return string
      * @throws \EasyWeChat\Core\Exceptions\FaultException
      */
@@ -76,10 +76,10 @@ class WechatServices extends BaseServices
     }
 
     /**
-     * v3支付回调
+     * Callback thanh toán v3
      * @return string
      * @throws \EasyWeChat\Core\Exceptions\FaultException
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2022/9/22
      */
@@ -91,7 +91,7 @@ class WechatServices extends BaseServices
     }
 
     /**
-     * 公众号权限配置信息获取
+     * Lấy thông tin cấu hình quyền OA WeChat
      * @param $url
      * @return mixed
      */
@@ -101,14 +101,14 @@ class WechatServices extends BaseServices
     }
 
     /**
-     * 公众号授权登录，返回token
+     * Đăng nhập ủy quyền OA WeChat, trả về token
      * @param $spread
      * @return array
      * @throws \Psr\SimpleCache\InvalidArgumentException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/12
      */
@@ -155,7 +155,7 @@ class WechatServices extends BaseServices
     }
 
     /**
-     * 公众号强制绑定手机号
+     * OA WeChat bắt buộc liên kết số điện thoại
      * @param $key
      * @param $phone
      * @return array
@@ -163,7 +163,7 @@ class WechatServices extends BaseServices
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/12
      */
@@ -171,7 +171,7 @@ class WechatServices extends BaseServices
     {
         [$openid, $wechatInfo, $spreadId, $agent_id, $login_type, $userType] = CacheService::get($key);
         $wechatInfo['phone'] = $phone;
-        //写入用户信息
+        //Ghi thông tin người dùng
         $user = app()->make(WechatUserServices::class)->wechatOauthAfter([$openid, $wechatInfo, $spreadId, $agent_id, $login_type, $userType]);
         $token = $this->createToken((int)$user['uid'], 'api');
         if ($token) {
@@ -187,7 +187,7 @@ class WechatServices extends BaseServices
     }
 
     /**
-     * 获取关注二维码
+     * Lấy mã QR theo dõi
      * @return string[]
      * @throws \Exception
      */
@@ -212,7 +212,7 @@ class WechatServices extends BaseServices
     }
 
     /**
-     * 是否关注
+     * Có theo dõi không
      * @param int $uid
      * @return bool
      */
@@ -227,7 +227,7 @@ class WechatServices extends BaseServices
     }
 
     /**
-     * app登录
+     * Đăng nhập app
      * @param array $userData
      * @param string $phone
      * @param string $userType
@@ -251,7 +251,7 @@ class WechatServices extends BaseServices
         $login_type = $userType;
         $spreadId = $userInfo['spreadId'] ?? "";
         if (!$phone) {
-            //获取是否强制绑定手机号
+            //Lấy biết có bắt buộc liên kết số điện thoại không
             $storeUserMobile = sys_config('store_user_mobile');
             if ($userInfo['unionid'] && $storeUserMobile) {
                 /** @var UserServices $userServices */
@@ -273,7 +273,7 @@ class WechatServices extends BaseServices
         }
         /** @var WechatUserServices $wechatUser */
         $wechatUser = app()->make(WechatUserServices::class);
-        //更新用户信息
+        //Cập nhật thông tin người dùng
         $user = $wechatUser->wechatOauthAfter([$openid, $userInfo, $spreadId, 0, $login_type, $userType]);
         $token = $this->createToken((int)$user['uid'], 'api');
         if ($token) {

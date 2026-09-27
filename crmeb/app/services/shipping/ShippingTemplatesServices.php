@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,18 +17,18 @@ use app\dao\shipping\ShippingTemplatesDao;
 use crmeb\exceptions\AdminException;
 
 /**
- * 运费模板
+ * Mẫu phí vận chuyển
  * Class ShippingTemplatesServices
  * @package app\services\shipping
- * @method getSelectList() 获取下拉选择列表
- * @method get($id) 获取一条数据
- * @method getShippingColumn(array $where, string $field, string $key) 获取运费模板指定条件下的数据
+ * @method getSelectList() Lấy danh sách dropdown
+ * @method get($id) Lấy một dòng dữ liệu
+ * @method getShippingColumn(array $where, string $field, string $key) Lấy dữ liệu mẫu phí vận chuyển theo điều kiện chỉ định
  */
 class ShippingTemplatesServices extends BaseServices
 {
 
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * ShippingTemplatesServices constructor.
      * @param ShippingTemplatesDao $dao
      */
@@ -38,7 +38,7 @@ class ShippingTemplatesServices extends BaseServices
     }
 
     /**
-     * 获取运费模板列表
+     * Lấy danh sách mẫu phí vận chuyển
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -54,7 +54,7 @@ class ShippingTemplatesServices extends BaseServices
     }
 
     /**
-     * 获取需要修改的运费模板
+     * Lấy mẫu phí vận chuyển cần sửa
      * @param int $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -77,7 +77,7 @@ class ShippingTemplatesServices extends BaseServices
         $data['templateList'] = $regionServices->getRegionList($id);
         $data['noDeliveryList'] = $noDeliveryServices->getNoDeliveryList($id);
         if (!isset($data['templateList'][0]['region'])) {
-            $data['templateList'][0]['region'] = ['city_id' => 0, 'name' => '默认全国'];
+            $data['templateList'][0]['region'] = ['city_id' => 0, 'name' => 'Mặc định toàn quốc'];
         }
         $data['formData'] = [
             'name' => $templates->name,
@@ -90,7 +90,7 @@ class ShippingTemplatesServices extends BaseServices
     }
 
     /**
-     * 保存或者修改运费模板
+     * Lưu hoặc sửa mẫu phí vận chuyển
      * @param int $id
      * @param array $temp
      * @param array $data
@@ -110,19 +110,19 @@ class ShippingTemplatesServices extends BaseServices
 
 
         return $this->transaction(function () use ($regionServices, $data, $id, $res) {
-            //设置区域配送
+            //Đặt khu vực giao hàng
             $res = $res && $regionServices->saveRegion($data['region_info'], (int)$data['type'], (int)$id);
             if (!$res) {
                 throw new AdminException(400593);
             }
-            //设置指定包邮
+            //Đặt miễn phí vận chuyển chỉ định
             if ($data['appoint']) {
                 /** @var ShippingTemplatesFreeServices $freeServices */
                 $freeServices = app()->make(ShippingTemplatesFreeServices::class);
                 $res = $res && $freeServices->saveFree($data['appoint_info'], (int)$data['type'], (int)$id);
             }
 
-            //设置不送达
+            //Đặt không giao tới
             if ($data['no_delivery']) {
                 /** @var ShippingTemplatesNoDeliveryServices $noDeliveryServices */
                 $noDeliveryServices = app()->make(ShippingTemplatesNoDeliveryServices::class);
@@ -138,7 +138,7 @@ class ShippingTemplatesServices extends BaseServices
     }
 
     /**
-     * 删除运费模板
+     * Xóa mẫu phí vận chuyển
      * @param int $id
      */
     public function detete(int $id)

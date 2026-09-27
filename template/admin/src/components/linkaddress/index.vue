@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-dialog :visible.sync="modals" title="选择链接" :close-on-click-modal="false" append-to-body width="1000px">
+    <el-dialog :visible.sync="modals" title="Chọn liên kết" :close-on-click-modal="false" append-to-body width="1000px">
       <div class="table_box">
         <div class="left_box" v-if="fromType !== 'diyPage'">
           <el-tree
@@ -15,7 +15,7 @@
         </div>
         <div class="right_box" v-if="currenType == 'link'">
           <div v-if="tableList.length">
-            <div class="cont">请选择链接</div>
+            <div class="cont">Vui lòng chọn liên kết</div>
             <div class="Box">
               <div
                 class="cont_box"
@@ -32,7 +32,7 @@
         </div>
         <div class="right_box" v-if="currenType == 'marketing_link' && coupon.length">
           <div>
-            <div class="cont">优惠券</div>
+            <div class="cont">Phiếu giảm giá</div>
             <div class="Box">
               <div
                 class="cont_box"
@@ -48,7 +48,7 @@
           </div>
           <div>
             <div v-permission="'seckill'" v-if="basicsList.length">
-              <div class="cont">秒杀</div>
+              <div class="cont">Flash sale</div>
               <div class="Box">
                 <div
                   class="cont_box"
@@ -65,7 +65,7 @@
           </div>
           <div>
             <div v-permission="'bargain'" v-if="distributionList.length">
-              <div class="cont">砍价</div>
+              <div class="cont">Săn giảm giá</div>
               <div class="Box">
                 <div
                   class="cont_box"
@@ -82,7 +82,7 @@
           </div>
           <div>
             <div v-permission="'combination'" v-if="userList.length">
-              <div class="cont">拼团</div>
+              <div class="cont">Mua chung</div>
               <div class="Box">
                 <div
                   class="cont_box"
@@ -98,7 +98,7 @@
             </div>
           </div>
           <div v-if="integral.length">
-            <div class="cont">积分</div>
+            <div class="cont">Điểm thưởng</div>
             <div class="Box">
               <div
                 class="cont_box"
@@ -113,7 +113,7 @@
             </div>
           </div>
           <div v-if="luckDraw.length">
-            <div class="cont">抽奖</div>
+            <div class="cont">Quay thưởng</div>
             <div class="Box">
               <div
                 class="cont_box"
@@ -174,7 +174,7 @@
                   <el-input
                     search
                     enter-button
-                    placeholder="请输入商品名称,关键字,编号"
+                    placeholder="Vui lòng nhập tên sản phẩm, từ khóa, mã số"
                     v-model="formValidate.store_name"
                     style="width: 200px"
                     @change="userSearchs"
@@ -186,7 +186,7 @@
           <el-table
             row-key="id"
             ref="table"
-            empty-text="暂无数据"
+            empty-text="Chưa có dữ liệu"
             :data="tableList"
             v-loading="loading"
             :max-height="
@@ -303,36 +303,36 @@
         </div>
         <div class="right_box" v-if="currenType == 'custom'">
           <!--<div v-if="!tableList.length || customNum==2">-->
-          <!--<el-button type="primary" v-db-click @click="customList" v-if="tableList.length">自定义列表</el-button>-->
+          <!--<el-button type="primary" v-db-click @click="customList" v-if="tableList.length">Danh sách tùy chỉnh</el-button>-->
           <div style="width: 340px; margin: 150px 100px 0 120px">
             <el-form ref="customdate" :model="customdate" :rules="ruleValidate" :label-width="100">
-              <!--<el-form-item label="链接名称：" prop="name">-->
-              <!--<el-input v-model="customdate.name" placeholder="会员中心"></el-input>-->
+              <!--<el-form-item label="Tên liên kết:" prop="name">-->
+              <!--<el-input v-model="customdate.name" placeholder="Trang thành viên"></el-input>-->
               <!--</el-form-item>-->
-              <!-- <el-form-item label="跳转路径：" prop="url">
-                <el-input v-model="customdate.url" placeholder="请输入跳转路径"></el-input>
+              <!-- <el-form-item label="Đường dẫn chuyển tới:" prop="url">
+                <el-input v-model="customdate.url" placeholder="Vui lòng nhập đường dẫn chuyển tới"></el-input>
               </el-form-item> -->
               <div class="mb30 radioGroup">
                 <el-radio-group v-model="customdate.status" @input="radioTap('customdate')">
                   <el-radio :label="2">
-                    <span>跳转其他小程序</span>
+                    <span>Chuyển đến Mini Program khác</span>
                   </el-radio>
                   <el-radio :label="1">
-                    <span>普通链接</span>
+                    <span>Liên kết thông thường</span>
                   </el-radio>
                 </el-radio-group>
               </div>
               <div v-if="customdate.status == 1">
-                <el-form-item label="跳转路径：" prop="url" key="url">
-                  <el-input v-model="customdate.url" placeholder="请输入正确跳转路径"></el-input>
+                <el-form-item label="Đường dẫn chuyển hướng:" prop="url" key="url">
+                  <el-input v-model="customdate.url" placeholder="Vui lòng nhập đúng đường dẫn chuyển hướng"></el-input>
                 </el-form-item>
               </div>
               <div v-if="customdate.status == 2">
                 <el-form-item label="APPID：" prop="appid" key="appid">
-                  <el-input v-model="customdate.appid" placeholder="请输入正确APPID"></el-input>
+                  <el-input v-model="customdate.appid" placeholder="Vui lòng nhập đúng APPID"></el-input>
                 </el-form-item>
-                <el-form-item label="小程序路径：" prop="mpUrl" key="mpUrl">
-                  <el-input v-model="customdate.mpUrl" placeholder="请输入正确小程序路径"></el-input>
+                <el-form-item label="Đường dẫn Mini Program:" prop="mpUrl" key="mpUrl">
+                  <el-input v-model="customdate.mpUrl" placeholder="Vui lòng nhập đúng đường dẫn Mini Program"></el-input>
                 </el-form-item>
               </div>
             </el-form>
@@ -340,11 +340,11 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button v-db-click @click="cancel">取 消</el-button>
+        <el-button v-db-click @click="cancel">Hủy</el-button>
         <el-button type="primary" v-db-click @click="handleSubmit('customdate')" v-if="currenType == 'custom'"
-          >确 定</el-button
+          >Xác nhận</el-button
         >
-        <el-button type="primary" v-db-click @click="ok" v-else>确 定</el-button>
+        <el-button type="primary" v-db-click @click="ok" v-else>Xác nhận</el-button>
       </span>
     </el-dialog>
   </div>
@@ -388,12 +388,12 @@ export default {
           width: 60,
         },
         {
-          title: '页面名称',
+          title: 'Tên trang',
           key: 'name',
           width: 150,
         },
         {
-          title: '页面链接',
+          title: 'Liên kết trang',
           key: 'url',
         },
       ],
@@ -404,12 +404,12 @@ export default {
           width: 60,
         },
         {
-          title: '分类名称',
+          title: 'Tên danh mục',
           key: 'cate_name',
           tree: true,
         },
         {
-          title: '分类图标',
+          title: 'Biểu tượng danh mục',
           slot: 'pic',
         },
       ],
@@ -420,12 +420,12 @@ export default {
           width: 60,
         },
         {
-          title: '商品图片',
+          title: 'Hình ảnh sản phẩm',
           slot: 'image',
           width: 90,
         },
         {
-          title: '商品名称',
+          title: 'Tên sản phẩm',
           key: 'store_name',
         },
       ],
@@ -436,12 +436,12 @@ export default {
           width: 60,
         },
         {
-          title: '商品图片',
+          title: 'Hình ảnh sản phẩm',
           slot: 'image',
           width: 90,
         },
         {
-          title: '商品名称',
+          title: 'Tên sản phẩm',
           key: 'title',
         },
       ],
@@ -452,12 +452,12 @@ export default {
           width: 60,
         },
         {
-          title: '文章图片',
+          title: 'Hình ảnh bài viết',
           slot: 'image_input',
           width: 90,
         },
         {
-          title: '文章名称',
+          title: 'Tên bài viết',
           key: 'title',
         },
       ],
@@ -468,7 +468,7 @@ export default {
           width: 60,
         },
         {
-          title: '名称',
+          title: 'Tên',
           key: 'name',
         },
       ],
@@ -490,7 +490,7 @@ export default {
       loading: false,
       tableList: [],
       presentId: 0,
-      categoryId: '', //左侧分类id
+      categoryId: '', //ID danh mục bên trái
       treeSelect: [],
       customdate: {
         url: '',
@@ -500,9 +500,9 @@ export default {
       },
       customNum: 1,
       ruleValidate: {
-        name: [{ required: true, message: '请输入链接名称', trigger: 'blur' }],
-        url: [{ required: true, message: '请输入跳转路径', trigger: 'blur' }],
-        appid: [{ required: true, message: '请输入APPID', trigger: 'blur' }],
+        name: [{ required: true, message: 'Vui lòng nhập tên liên kết', trigger: 'blur' }],
+        url: [{ required: true, message: 'Vui lòng nhập đường dẫn chuyển hướng', trigger: 'blur' }],
+        appid: [{ required: true, message: 'Vui lòng nhập APPID', trigger: 'blur' }],
       },
       treeId: 0,
     };
@@ -517,7 +517,7 @@ export default {
       this.presentId = row.id;
       this.currenUrl = row.url;
     },
-    // 删除
+    // Xóa
     delLink(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -579,14 +579,14 @@ export default {
           // 	this.$message.error(err.msg);
           // })
         } else {
-          this.$message.error('请填写信息');
+          this.$message.error('Vui lòng điền thông tin');
         }
       });
     },
     handleReset(name) {
       this.$refs[name].resetFields();
     },
-    // 商品分类；
+    // Danh mục sản phẩm;
     goodsCategory() {
       cascaderListApi(1)
         .then((res) => {
@@ -596,7 +596,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.formValidate.page = 1;
       this.getList();
@@ -862,7 +862,7 @@ export default {
     },
     ok() {
       if (this.currenUrl == '') {
-        return this.$message.warning('请选择链接');
+        return this.$message.warning('Vui lòng chọn liên kết');
       } else {
         this.$emit('linkUrl', this.currenUrl);
         this.modals = false;
@@ -920,12 +920,12 @@ export default {
   }
 }
 
-/* 定义滑块 内阴影+圆角 */
+/* Định nghĩa thanh trượt: đổ bóng trong + góc tròn */
 ::-webkit-scrollbar-thumb {
   -webkit-box-shadow: inset 0 0 6px #ddd;
 }
 ::-webkit-scrollbar {
-  width: 4px !important; /* 对垂直流动条有效 */
+  width: 4px !important; /* Áp dụng cho thanh cuộn dọc */
 }
 .on {
   background-color: var(--prev-color-primary) !important;

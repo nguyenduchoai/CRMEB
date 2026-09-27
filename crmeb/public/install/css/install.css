@@ -1,6 +1,6 @@
 /*
 ===================
-初始化【请勿修改】
+Khởi tạo [Vui lòng không chỉnh sửa]
 ===================
 */
 html,body,
@@ -53,7 +53,7 @@ html {
 }
 /*
 ===================
-html5标签
+Thẻ html5
 ===================
 */
 article,
@@ -71,9 +71,9 @@ section {
 
 /*
 ===================
-清除浮动【请勿修改】
->>	cc	作用于父模型
->>	c		作用于浮动模型后，父模型区域里
+Xóa float [Vui lòng không chỉnh sửa]
+>>	cc	tác dụng lên model cha
+>>	c		tác dụng sau model float, trong vùng model cha
 ===================
 */
 .cc{
@@ -96,19 +96,19 @@ section {
 
 /*
 ===================
-基础样式
->>	b			加粗
->>	u			下划线
->>	i			斜体
->>	w			文本不换行
->>	tal		文本靠左显示
->>	tac		文本居中显示
->>	tar		文本靠右显示
->>	fl		左浮动
->>	fr		右浮动
->>	pr		相对定位
->>	cp		鼠标点击手势
->>	vt		表格内容靠上显示
+Style cơ bản
+>>	b			đậm (bold)
+>>	u			gạch chân
+>>	i			nghiêng (italic)
+>>	w			văn bản không xuống dòng
+>>	tal		văn bản hiển thị lề trái
+>>	tac		văn bản hiển thị giữa
+>>	tar		văn bản hiển thị lề phải
+>>	fl		float trái
+>>	fr		float phải
+>>	pr		định vị tương đối (relative)
+>>	cp		con trỏ dạng bàn tay khi click
+>>	vt		nội dung bảng hiển thị lề trên
 ===================
 */
 .b{
@@ -153,13 +153,13 @@ section {
 
 /*
 ===================
-字体
->>	f10		小字体
->>	f12		正常字
->>	f14		大字
->>	f16		更大
->>	f24		标题类
->>	fn		文本去粗
+Font chữ
+>>	f10		font nhỏ
+>>	f12		font thường
+>>	f14		font lớn
+>>	f16		lớn hơn
+>>	f24		dạng tiêu đề
+>>	fn		văn bản bỏ đậm
 ===================
 */
 .f10{
@@ -187,7 +187,7 @@ section {
 
 /*
 ===================
-全局
+Toàn cục
 ===================
 */
 body{
@@ -225,7 +225,7 @@ a:hover{
 
 /*
 ===================
-包裹
+Bao bọc (wrapper)
 ===================
 */
 .wrap{
@@ -240,7 +240,7 @@ a:hover{
 }
 /*
 ===================
-头部
+Phần đầu
 ===================
 */
 .header{
@@ -258,7 +258,7 @@ a:hover{
 }
 /*
 ===================
-主体
+Phần chính
 ===================
 */
 .main{
@@ -271,7 +271,7 @@ a:hover{
 
 /*
 ===================
-底部
+Dưới cùng
 ===================
 */
 .footer{
@@ -313,7 +313,7 @@ input[type=checkbox]:checked:after {
 
 /*
 ===================
-协议
+Thỏa thuận
 ===================
 */
 .pact::-webkit-scrollbar { width: 0 !important }
@@ -380,7 +380,7 @@ pre{
 
 /*
 ===================
-版本号
+Số phiên bản
 ===================
 */
 .version{
@@ -421,7 +421,7 @@ LOGO
 }
 /*
 ===================
-安装类型文案
+Văn bản loại cài đặt
 ===================
 */
 .icon_install,
@@ -442,13 +442,13 @@ LOGO
 
 /*
 ===================
-按钮
+Nút
 ===================
 */
 
 /*
 ===================
-步骤
+Bước
 ===================
 */
 .step,
@@ -502,7 +502,7 @@ LOGO
 
 /*
 ===================
-数据表写入
+Ghi vào bảng dữ liệu
 ===================
 */
 /*.install{*/
@@ -525,7 +525,7 @@ LOGO
 
 /*
 ===================
-成功提示
+Thông báo thành công
 ===================
 */
 .success_tip{
@@ -552,16 +552,16 @@ LOGO
 
 /*
 ===================
-操作提示
->>	tips					普通
->>	tips_error		错误
->>	tips_success	正确
->>	tips_loading	加载中
-使用方法
-	可独立样式使用，亦可与tips组装，例：
-	<div class="tips"><span class="tips_error">错误内容</span></div>
+Thông báo thao tác
+>>	tips					bình thường
+>>	tips_error		lỗi
+>>	tips_success	đúng
+>>	tips_loading	đang tải
+Cách dùng
+	Có thể dùng độc lập theo style, cũng có thể kết hợp với tips, ví dụ:
+	<div class="tips"><span class="tips_error">Nội dung lỗi</span></div>
 
-	可在外出包裹 tips_block 对错误提示进行块级效果展示
+	Có thể bao ngoài bằng tips_block để hiển thị thông báo lỗi theo dạng block
 ===================
 */
 .tips,
@@ -627,7 +627,7 @@ loading
 
 /*
 ===================
-升级类型选择
+Chọn loại nâng cấp
 ===================
 */
 .updata_type{
@@ -636,7 +636,7 @@ loading
 .updata_type .hd{
 	font-size:16px;
 }
-/*切换选择*/
+/*Chuyển đổi lựa chọn*/
 .updata_type .tab{
 	padding-top:10px;
 }
@@ -713,7 +713,7 @@ loading
 	list-style:none;
 	color:#666;
 }
-/*立即升级*/
+/*Nâng cấp ngay*/
 .once_updata{
 	text-align:center;
 	padding:100px 0;

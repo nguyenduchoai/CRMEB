@@ -1,5 +1,5 @@
 <template>
-	<!-- 底部导航 -->
+	<!-- Điều hướng dưới cùng -->
 	<view v-if="showTabBar">
 		<view class="fixed-lb w-full pb-safe z-999" :style="[bgColor]">
 			<view class="page-footer-wrapper">
@@ -114,8 +114,8 @@ export default {
 		}
 	},
 	created() {
-		let routes = getCurrentPages(); //获取当前打开过的页面路由数组
-		let curRoute = routes[routes.length - 1].route; //获取当前页面路由
+		let routes = getCurrentPages(); //Lấy mảng route các trang đã từng mở
+		let curRoute = routes[routes.length - 1].route; //Lấy route trang hiện tại
 		this.activeRouter = '/' + curRoute;
 	},
 	mounted() {

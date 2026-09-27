@@ -1,36 +1,36 @@
 <template>
   <div>
     <el-card :bordered="false" shadow="never" class="save_from ivu-mt">
-      <el-button type="primary" v-db-click @click="add">{{ '添加' + $route.meta.title }}</el-button>
+      <el-button type="primary" v-db-click @click="add">{{ 'Thêm' + $route.meta.title }}</el-button>
       <el-table
         :data="tabList"
         ref="table"
         class="mt14"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column label="ID" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="标签名" min-width="130">
+        <el-table-column label="Tên nhãn" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="人数" min-width="130">
+        <el-table-column label="Số người" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.count }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="170">
+        <el-table-column label="Thao tác" fixed="right" width="170">
           <template slot-scope="scope">
-            <a v-db-click @click="edit(scope.row)">编辑</a>
+            <a v-db-click @click="edit(scope.row)">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除标签', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa nhãn', scope.$index)">Xóa</a>
           </template>
         </el-table-column>
       </el-table>
@@ -65,7 +65,7 @@ export default {
     this.getList();
   },
   methods: {
-    // 添加
+    // Thêm
     add() {
       if (this.$route.path === this.$routeProStr + '/app/wechat/wechat_user/user/tag') {
         this.$modalForm(wechatTagCreateApi()).then(() => this.getList());
@@ -73,7 +73,7 @@ export default {
         this.$modalForm(wechatGroupCreateApi()).then(() => this.getList());
       }
     },
-    // 编辑
+    // Sửa
     edit(row) {
       if (this.$route.path === this.$routeProStr + '/app/wechat/wechat_user/user/tag') {
         this.$modalForm(wechatTagEditApi(row.id)).then(() => this.getList());
@@ -81,7 +81,7 @@ export default {
         this.$modalForm(wechatGroupEditApi(row.id)).then(() => this.getList());
       }
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = null;
       if (this.$route.path === this.$routeProStr + '/app/wechat/wechat_user/user/tag') {
@@ -110,7 +110,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       let fountion;

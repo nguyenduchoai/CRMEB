@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -27,7 +27,7 @@ class ProductController
     }
 
     /**
-     * 获取商品列表
+     * Lấy danh sách sản phẩm
      * @param Request $request
      * @param StoreCategoryServices $services
      * @return mixed
@@ -62,7 +62,7 @@ class ProductController
     }
 
     /**
-     * PC端商品详情小程序码
+     * Mã Mini Program cho trang chi tiết sản phẩm bản PC
      * @param Request $request
      * @return mixed
      */
@@ -77,7 +77,7 @@ class ProductController
     }
 
     /**
-     * 推荐商品
+     * Sản phẩm đề xuất
      * @param Request $request
      * @param $type
      * @return mixed
@@ -90,17 +90,17 @@ class ProductController
         $data['list'] = [];
         $where['is_show'] = 1;
         $where['is_del'] = 0;
-        if ($type == 1) {//TODO 精品推荐
-            $data['list'] = $product->getRecommendProduct($request->uid(), 'is_best', 0, 'mid');//TODO 精品推荐个数
+        if ($type == 1) {//TODO Đề xuất sản phẩm chất lượng
+            $data['list'] = $product->getRecommendProduct($request->uid(), 'is_best', 0, 'mid');//TODO Số lượng đề xuất sản phẩm chất lượng
             $where['is_best'] = 1;
-        } else if ($type == 2) {//TODO  热门榜单
-            $data['list'] = $product->getRecommendProduct($request->uid(), 'is_hot', 0, 'mid');//TODO 热门榜单 猜你喜欢
+        } else if ($type == 2) {//TODO Bảng xếp hạng phổ biến
+            $data['list'] = $product->getRecommendProduct($request->uid(), 'is_hot', 0, 'mid');//TODO Bảng xếp hạng phổ biến - Có thể bạn thích
             $where['is_hot'] = 1;
-        } else if ($type == 3) {//TODO 首发新品
-            $data['list'] = $product->getRecommendProduct($request->uid(), 'is_new', 0, 'mid');//TODO 首发新品
+        } else if ($type == 3) {//TODO Sản phẩm mới ra mắt
+            $data['list'] = $product->getRecommendProduct($request->uid(), 'is_new', 0, 'mid');//TODO Sản phẩm mới ra mắt
             $where['is_new'] = 1;
-        } else if ($type == 4) {//TODO 促销单品
-            $data['list'] = $product->getRecommendProduct($request->uid(), 'is_benefit', 0, 'mid');//TODO 促销单品
+        } else if ($type == 4) {//TODO Sản phẩm khuyến mãi
+            $data['list'] = $product->getRecommendProduct($request->uid(), 'is_benefit', 0, 'mid');//TODO Sản phẩm khuyến mãi
             $where['is_benefit'] = 1;
         }
         foreach ($data['list'] as &$item) {
@@ -115,7 +115,7 @@ class ProductController
     }
 
     /**
-     * 获取优品推荐
+     * Lấy sản phẩm tốt được đề xuất
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException

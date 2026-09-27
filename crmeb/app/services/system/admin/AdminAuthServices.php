@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,14 +21,14 @@ use crmeb\utils\JwtAuth;
 use Firebase\JWT\ExpiredException;
 
 /**
- * admin授权service
+ * Service ủy quyền admin
  * Class AdminAuthServices
  * @package app\services\system\admin
  */
 class AdminAuthServices extends BaseServices
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * AdminAuthServices constructor.
      * @param AdminAuthDao $dao
      */
@@ -38,7 +38,7 @@ class AdminAuthServices extends BaseServices
     }
 
     /**
-     * 获取Admin授权信息
+     * Lấy thông tin ủy quyền Admin
      * @param string $token
      * @param int $code
      * @return array
@@ -56,17 +56,17 @@ class AdminAuthServices extends BaseServices
         }
         /** @var JwtAuth $jwtAuth */
         $jwtAuth = app()->make(JwtAuth::class);
-        //设置解析token
+        //Đặt phân tích token
         [$id, $type, $pwd] = $jwtAuth->parseToken($token);
 
-        //检测token是否过期
+        //Kiểm tra token có hết hạn không
         $md5Token = md5($token);
         if (!$cacheService->has($md5Token) || !$cacheService->get($md5Token, '', NULL, 'admin')) {
             $this->authFailAfter($id, $type);
             throw new AuthException($code);
         }
 
-        //验证token
+        //Xác thực token
         try {
             $jwtAuth->verifyToken();
         } catch (\Throwable $e) {
@@ -77,7 +77,7 @@ class AdminAuthServices extends BaseServices
             throw new AuthException($code);
         }
 
-        //获取管理员信息
+        //Lấy thông tin quản trị viên
         $adminInfo = $this->dao->get($id);
         if (!$adminInfo || !$adminInfo->id) {
             if (!request()->isCli()) {
@@ -95,7 +95,7 @@ class AdminAuthServices extends BaseServices
     }
 
     /**
-     * token验证失败后事件
+     * Sự kiện sau khi xác thực token thất bại
      */
     protected function authFailAfter($id, $type)
     {
@@ -103,7 +103,7 @@ class AdminAuthServices extends BaseServices
             $postData = request()->post();
             $rule = trim(strtolower(request()->rule()->getRule()));
             $method = trim(strtolower(request()->method()));
-            //添加商品退出后事件
+            //Sự kiện sau khi thoát thêm sản phẩm
             if ($rule === 'product/product/<id>' && $method === 'post') {
                 $this->saveProduct($id, $postData);
             }
@@ -112,7 +112,7 @@ class AdminAuthServices extends BaseServices
     }
 
     /**
-     * 保存提交数据
+     * Lưu dữ liệu gửi lên
      * @param $adminId
      * @param $postData
      */

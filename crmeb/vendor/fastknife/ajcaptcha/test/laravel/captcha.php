@@ -19,7 +19,7 @@ return [
     'watermark' => [
         'fontsize' => 12,
         'color' => '#ffffff',
-        'text' => '我的水印'
+        'text' => 'Watermark của tôi'
     ],
     'cache' => [
         'constructor' => [\Illuminate\Support\Facades\Cache::class, 'store'],

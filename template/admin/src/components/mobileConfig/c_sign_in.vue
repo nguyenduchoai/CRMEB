@@ -14,7 +14,7 @@
     export default {
         name: 'c_sign_in',
         componentsName: 'sign_in',
-        cname: '签到',
+        cname: 'Điểm danh',
         props: {
             activeIndex: {
                 type: null
@@ -32,17 +32,17 @@
         },
         data () {
             return {
-                // 组件参数配置
+                // Cấu hình tham số thành phần
                 option: {
                     submitBtn: false
                 },
-                configObj: {}, // 配置对象
+                configObj: {}, // Đối tượng cấu hình
                 rCom: [
                     {
                         components: toolCom.c_set_up,
                         configNme: 'setUp'
                     }
-                ], // 当前页面组件
+                ], // Thành phần (component) của trang hiện tại
 				oneStyle:[
 					{
 						components: toolCom.c_title,

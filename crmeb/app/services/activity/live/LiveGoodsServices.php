@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -63,7 +63,7 @@ class LiveGoodsServices extends BaseServices
     }
 
     /**
-     * 添加直播商品
+     * Thêm sản phẩm livestream
      * @param array $goods_info
      * @return bool
      * @throws \Exception
@@ -95,7 +95,7 @@ class LiveGoodsServices extends BaseServices
                 $coverImgUrl = $miniUpload->uploadImage($path)->media_id;
                 @unlink($path);
             } catch (\Throwable $e) {
-                Log::error('添加直播商品图片错误，原因：' . $e->getMessage());
+                Log::error('Lỗi khi thêm ảnh sản phẩm livestream, nguyên nhân:' . $e->getMessage());
                 @unlink($path);
                 $coverImgUrl = $data['cover_img'];
             }
@@ -112,7 +112,7 @@ class LiveGoodsServices extends BaseServices
     }
 
     /**
-     * 同步商品
+     * Đồng bộ sản phẩm
      * @return bool
      * @throws \EasyWeChat\Core\Exceptions\InvalidArgumentException
      */
@@ -165,7 +165,7 @@ class LiveGoodsServices extends BaseServices
     }
 
     /**
-     * 重新提交审核
+     * Gửi lại để duyệt
      * @param int $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -188,7 +188,7 @@ class LiveGoodsServices extends BaseServices
     }
 
     /**
-     * 撤回审核
+     * Rút lại yêu cầu duyệt
      * @param int $id
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
@@ -214,7 +214,7 @@ class LiveGoodsServices extends BaseServices
     }
 
     /**
-     * 删除商品
+     * Xóa sản phẩm
      * @param int $id
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
@@ -241,7 +241,7 @@ class LiveGoodsServices extends BaseServices
     }
 
     /**
-     * 同步直播商品审核状态
+     * Đồng bộ trạng thái duyệt sản phẩm livestream
      * @return bool
      */
     public function syncGoodStatus()
@@ -252,7 +252,7 @@ class LiveGoodsServices extends BaseServices
         foreach ($res as $item) {
             if (isset($goodsIds[$item['goods_id']]) && $item['audit_status'] != $goodsIds[$item['goods_id']]) {
                 $data = ['audit_status' => $item['audit_status']];
-                //TODO 同步商品审核状态
+                //TODO đồng bộ trạng thái duyệt sản phẩm
                 $this->dao->update((int)$goodsIds[$item['goods_id']]['id'], $data);
             }
         }

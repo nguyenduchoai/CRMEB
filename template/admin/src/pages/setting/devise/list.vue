@@ -4,8 +4,8 @@
       <span class="ivu-page-header-title mr20">{{ $route.meta.title }}</span>
       <div>
         <div style="float: right" v-if="cardShow == 1 || cardShow == 2">
-          <el-button class="bnt" type="primary" v-db-click @click="submit" :loading="loadingExist">保存</el-button>
-          <el-button v-if="cardShow == 1" class="bnt ml20" v-db-click @click="reast">重置</el-button>
+          <el-button class="bnt" type="primary" v-db-click @click="submit" :loading="loadingExist">Lưu</el-button>
+          <el-button v-if="cardShow == 1" class="bnt ml20" v-db-click @click="reast">Đặt lại</el-button>
         </div>
       </div>
     </div>
@@ -18,7 +18,7 @@
         <div class="table-box">
           <div class="acea-row row-between-wrapper">
             <div class="button acea-row row-middle">
-              <el-button class="m-r-10" type="primary" @click="createdPage">添加页面</el-button>
+              <el-button class="m-r-10" type="primary" @click="createdPage">Thêm trang</el-button>
               <el-upload
                 :action="UploadPath"
                 :before-upload="beforeUpload"
@@ -29,7 +29,7 @@
                 accept=".txt"
                 :headers="header"
               >
-                <el-button type="primary">导入模板</el-button>
+                <el-button type="primary">Nhập mẫu</el-button>
               </el-upload>
             </div>
           </div>
@@ -39,36 +39,36 @@
             class="mt14"
             v-loading="loading"
             highlight-current-row
-            no-userFrom-text="暂无数据"
-            no-filtered-userFrom-text="暂无筛选结果"
+            no-userFrom-text="Chưa có dữ liệu"
+            no-filtered-userFrom-text="Không có kết quả phù hợp"
           >
-            <el-table-column label="页面ID" width="80">
+            <el-table-column label="ID trang" width="80">
               <template slot-scope="scope">
                 <span>{{ scope.row.id }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="模板名称" min-width="130">
+            <el-table-column label="Tên mẫu" min-width="130">
               <template slot-scope="scope">
                 <span>{{ scope.row.name }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="模板类型" min-width="130">
+            <el-table-column label="Loại mẫu" min-width="130">
               <template slot-scope="scope">
-                <el-tag type="success" size="medium" v-if="scope.row.status == 1">首页</el-tag>
-                <el-tag type="info" size="medium" v-else class="mr10">专题页</el-tag>
+                <el-tag type="success" size="medium" v-if="scope.row.status == 1">Trang chủ</el-tag>
+                <el-tag type="info" size="medium" v-else class="mr10">Trang chủ đề</el-tag>
               </template>
             </el-table-column>
-            <el-table-column label="添加时间" min-width="130">
+            <el-table-column label="Thời gian thêm" min-width="130">
               <template slot-scope="scope">
                 <span>{{ scope.row.add_time }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="更新时间" min-width="130">
+            <el-table-column label="Thời gian cập nhật" min-width="130">
               <template slot-scope="scope">
                 <span>{{ scope.row.update_time }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="操作" fixed="right" width="210">
+            <el-table-column label="Thao tác" fixed="right" width="210">
               <template slot-scope="scope">
                 <div
                   style="display: inline-block"
@@ -84,9 +84,9 @@
                       scope.row.template_name || 'moren'
                     }`"
                   >
-                    编辑</a
+                    Sửa</a
                   >
-                  <a v-else class="target">编辑</a>
+                  <a v-else class="target">Sửa</a>
                 </div>
                 <el-divider
                   direction="vertical"
@@ -94,22 +94,22 @@
                 />
 
                 <div style="display: inline-block" v-if="scope.row.id != 1 && scope.row.status != 1">
-                  <a v-db-click @click="del(scope.row, '删除此模板', scope.$index)">删除</a>
+                  <a v-db-click @click="del(scope.row, 'Xóa mẫu này', scope.$index)">Xóa</a>
                 </div>
                 <el-divider
                   direction="vertical"
                   v-if="(scope.row.id != 1 && scope.row.status != 1) || scope.row.is_diy"
                 />
                 <div style="display: inline-block" v-if="scope.row.is_diy">
-                  <a v-db-click @click="preview(scope.row, scope.$index)">预览</a>
+                  <a v-db-click @click="preview(scope.row, scope.$index)">Xem trước</a>
                 </div>
                 <el-divider direction="vertical" v-if="scope.row.is_diy && scope.row.status != 1" />
                 <div style="display: inline-block" v-if="scope.row.status != 1">
-                  <a v-db-click @click="setStatus(scope.row, scope.$index)">设为首页</a>
+                  <a v-db-click @click="setStatus(scope.row, scope.$index)">Đặt làm trang chủ</a>
                 </div>
                 <el-divider direction="vertical" />
                 <div style="display: inline-block">
-                  <a v-db-click @click="exportView(scope.row.id)">导出模版</a>
+                  <a v-db-click @click="exportView(scope.row.id)">Xuất mẫu</a>
                 </div>
               </template>
             </el-table-column>
@@ -128,7 +128,7 @@
     </el-card>
     <goodClass v-else-if="cardShow == 1" ref="category" @parentFun="getChildData"></goodClass>
     <users v-else ref="users" @parentFun="getChildData"></users>
-    <el-dialog :visible.sync="isTemplate" title="开发移动端链接" :z-index="1" width="540px" @closed="cancel">
+    <el-dialog :visible.sync="isTemplate" title="Liên kết di động phát triển" :z-index="1" width="540px" @closed="cancel">
       <div class="article-manager">
         <el-card :bordered="false" shadow="never" class="ivu-mt">
           <el-form
@@ -142,7 +142,7 @@
             <el-row :gutter="24">
               <el-col :span="24">
                 <el-col>
-                  <el-form-item label="开发移动端链接：" prop="link" label-for="link">
+                  <el-form-item label="Liên kết di động phát triển:" prop="link" label-for="link">
                     <el-input v-model="formItem.link" placeholder="http://localhost:8080" />
                   </el-form-item>
                 </el-col>
@@ -152,21 +152,21 @@
         </el-card>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" v-db-click @click="handleSubmit('formItem')">提交</el-button>
+        <el-button type="primary" v-db-click @click="handleSubmit('formItem')">Gửi</el-button>
       </span>
     </el-dialog>
-    <el-dialog :visible.sync="modal" width="540px" title="预览">
+    <el-dialog :visible.sync="modal" width="540px" title="Xem trước">
       <div>
         <div v-viewer class="acea-row row-around code">
           <div class="acea-row row-column-around row-between-wrapper">
             <div class="QRpic" ref="qrCodeUrl"></div>
-            <span class="mt10">公众号二维码</span>
+            <span class="mt10">Mã QR OA WeChat</span>
           </div>
           <div class="acea-row row-column-around row-between-wrapper">
             <div class="QRpic">
               <img v-lazy="qrcodeImg" />
             </div>
-            <span class="mt10">小程序二维码</span>
+            <span class="mt10">Mã QR Mini Program</span>
           </div>
         </div>
       </div>
@@ -199,15 +199,15 @@ export default {
       theme3: 'light',
       menuList: [
         {
-          name: '商城首页',
+          name: 'Trang chủ cửa hàng',
           id: 1,
         },
         {
-          name: '商品分类',
+          name: 'Danh mục sản phẩm',
           id: 2,
         },
         {
-          name: '个人中心',
+          name: 'Trang cá nhân',
           id: 3,
         },
       ],
@@ -232,7 +232,7 @@ export default {
       },
       isTemplate: false,
       ruleValidate: {
-        link: [{ required: true, message: '请输入移动端链接', trigger: 'blur' }],
+        link: [{ required: true, message: 'Vui lòng nhập liên kết di động', trigger: 'blur' }],
       },
       url: window.location.origin,
       header: {},
@@ -259,7 +259,7 @@ export default {
     beforeUpload(file) {
       const isTXT = file.type === 'text/plain';
       if (!isTXT) {
-        this.$message.error('只能上传TXT文件');
+        this.$message.error('Chỉ được tải lên tệp TXT');
       }
       return isTXT;
     },
@@ -272,7 +272,7 @@ export default {
       }
     },
     handleError(err, file) {
-      this.$message.error('文件上传失败');
+      this.$message.error('Tải tệp lên thất bại');
     },
     exportView(id) {
       exportDiyDataApi(id)
@@ -282,10 +282,10 @@ export default {
           const url = URL.createObjectURL(blob);
           const a = document.createElement('a');
           a.href = url;
-          a.download = res.data.filename; // 设置下载文件的名称
+          a.download = res.data.filename; // Thiết lập tên file tải xuống
           document.body.appendChild(a);
-          a.click(); // 模拟点击触发下载
-          document.body.removeChild(a); // 清理DOM
+          a.click(); // Giả lập click để kích hoạt tải xuống
+          document.body.removeChild(a); // Dọn dẹp DOM
           this.$message.success(res.msg);
         })
         .catch((err) => {
@@ -295,10 +295,10 @@ export default {
     createdPage() {
       this.$router.push({
         path: this.$routeProStr + '/setting/pages/diy_index',
-        query: { id: 0, name: '首页', type: 1 },
+        query: { id: 0, name: 'Trang chủ', type: 1 },
       });
       // this.$nextTick(() => {
-      //   window.open(`${this.url}${this.$routeProStr}/setting/pages/diy_index?id=0&name=首页&type=0`);
+      //   window.open(`${this.url}${this.$routeProStr}/setting/pages/diy_index?id=0&name=Trang chủ&type=0`);
       // });
     },
     cancel() {
@@ -331,17 +331,17 @@ export default {
       this.cardShow = index;
     },
     onCopy() {
-      this.$message.success('复制预览链接成功');
+      this.$message.success('Sao chép liên kết xem trước thành công');
     },
     onError() {
-      this.$message.error('复制预览链接失败');
+      this.$message.error('Sao chép liên kết xem trước thất bại');
     },
-    //生成二维码
+    //Tạo mã QR
     creatQrCode(id) {
       this.$refs.qrCodeUrl.innerHTML = '';
       let url = `${this.BaseURL}pages/annex/special/index?id=${id}`;
       var qrcode = new QRCode(this.$refs.qrCodeUrl, {
-        text: url, // 需要转换为二维码的内容
+        text: url, // Nội dung cần chuyển đổi thành mã QR
         width: 160,
         height: 160,
         colorDark: '#000000',
@@ -349,7 +349,7 @@ export default {
         correctLevel: QRCode.CorrectLevel.H,
       });
     },
-    //小程序二维码
+    //Mã QR Mini Program
     routineCode(id) {
       getRoutineCode(id)
         .then((res) => {
@@ -388,12 +388,12 @@ export default {
           this.recovery(row);
           break;
         case '3':
-          this.del(row, '删除此模板', index);
+          this.del(row, 'Xóa mẫu này', index);
           break;
         default:
       }
     },
-    //设置默认数据
+    //Đặt dữ liệu mặc định
     setDefault(row) {
       setDefault(row.id)
         .then((res) => {
@@ -404,7 +404,7 @@ export default {
           this.$message.error(err.msg);
         });
     },
-    // 获取列表
+    // Lấy danh sách
     diyProList() {
       // let storage = window.localStorage;
       // this.iframeUrl = storage.getItem("iframeUrl");
@@ -417,12 +417,12 @@ export default {
         this.total = data.count;
       });
     },
-    // 编辑
+    // Sửa
     edit(row) {
       this.formItem.id = row.id;
       if (!row.is_diy) {
         if (!row.status) {
-          this.$message.error('请先设为首页在进行编辑');
+          this.$message.error('Vui lòng đặt làm trang chủ trước rồi mới chỉnh sửa');
         } else {
           this.$router.push({
             path: this.$routeProStr + '/setting/pages/diy',
@@ -431,21 +431,21 @@ export default {
         }
       }
     },
-    // 添加
+    // Thêm
     // add() {
     //   this.$modalForm(getDiyCreate()).then(() => this.diyProList());
     // },
-    // 添加
+    // Thêm
     add() {
       // this.$router.push({
       //   path: this.$routeProStr + '/setting/pages/diy_index',
-      //   query: { id: 0, name: '首页', type: 1 },
+      //   query: { id: 0, name: 'Trang chủ', type: 1 },
       // });
     },
-    // 删除
+    // Xóa
     del(row) {
       let delfromData = {
-        title: '删除',
+        title: 'Xóa',
         num: 2000,
         url: 'diy/del/' + row.id,
         method: 'DELETE',
@@ -461,14 +461,14 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 使用模板
+    // Dùng mẫu
     async setStatus(row) {
       this.$msgbox({
-        title: '提示',
-        message: '是否把该模板设为首页',
+        title: 'Thông báo',
+        message: 'Bạn có muốn đặt mẫu này làm trang chủ không',
         showCancelButton: true,
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+        cancelButtonText: 'Hủy',
+        confirmButtonText: 'Xác nhận',
         iconClass: 'el-icon-warning',
         confirmButtonClass: 'btn-custom-cancel',
       })

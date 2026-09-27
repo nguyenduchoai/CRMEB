@@ -15,8 +15,8 @@
       </div>
     </div>
     <!-- <div class="footer">
-            <el-button type="primary" class="btns" v-db-click @click="subBtn">确定</el-button>
-            <el-button type="primary" class="btns" ghost v-db-click @click="cancel">取消</el-button>
+            <el-button type="primary" class="btns" v-db-click @click="subBtn">Xác nhận</el-button>
+            <el-button type="primary" class="btns" ghost v-db-click @click="cancel">Hủy</el-button>
         </div> -->
   </div>
 </template>

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,14 +17,14 @@ use app\services\out\OutInterfaceServices;
 use think\facade\App;
 
 /**
- * 对外接口账户
+ * Tài khoản API bên ngoài
  * Class SystemOutAccount
  * @package app\adminapi\controller\v1\setting
  */
 class SystemOutAccount extends AuthController
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * SystemOut constructor.
      * @param App $app
      * @param OutAccountServices $services
@@ -36,7 +36,7 @@ class SystemOutAccount extends AuthController
     }
 
     /**
-     * 账号信息
+     * Thông tin tài khoản
      * @return string
      * @throws \Exception
      */
@@ -50,7 +50,7 @@ class SystemOutAccount extends AuthController
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param string $status
      * @param string $id
      * @return mixed
@@ -63,7 +63,7 @@ class SystemOutAccount extends AuthController
     }
 
     /**
-     * 删除
+     * Xóa
      * @param $id
      * @return mixed
      */
@@ -75,7 +75,7 @@ class SystemOutAccount extends AuthController
     }
 
     /**
-     * 保存
+     * Lưu
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -90,7 +90,7 @@ class SystemOutAccount extends AuthController
             ['rules', []],
         ]);
         $this->validate($data, StoreOutAccountValidate::class, 'save');
-        if ($this->services->getOne(['appid' => $data['appid']])) return app('json')->fail('账号重复');
+        if ($this->services->getOne(['appid' => $data['appid']])) return app('json')->fail('Tài khoản bị trùng');
         $data['apppwd'] = $data['appsecret'];
         $data['appsecret'] = password_hash($data['appsecret'], PASSWORD_DEFAULT);
         $data['add_time'] = time();
@@ -103,7 +103,7 @@ class SystemOutAccount extends AuthController
     }
 
     /**
-     * 修改
+     * Sửa
      * @param string $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -119,7 +119,7 @@ class SystemOutAccount extends AuthController
         ]);
 
         $this->validate($data, StoreOutAccountValidate::class, 'update');
-        if (!$this->services->getOne(['id' => $id])) return app('json')->fail('没有此账号');
+        if (!$this->services->getOne(['id' => $id])) return app('json')->fail('Không tồn tại tài khoản này');
         $data['apppwd'] = $data['appsecret'];
         $data['appsecret'] = password_hash($data['appsecret'], PASSWORD_DEFAULT);
         $data['rules'] = implode(',', $data['rules']);
@@ -132,7 +132,7 @@ class SystemOutAccount extends AuthController
     }
 
     /**
-     * 设置账号推送接口
+     * Cài đặt API đẩy dữ liệu cho tài khoản
      * @param $id
      * @return mixed
      */
@@ -154,7 +154,7 @@ class SystemOutAccount extends AuthController
     }
 
     /**
-     * 对外接口列表
+     * Danh sách API bên ngoài
      * @param OutInterfaceServices $service
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -167,7 +167,7 @@ class SystemOutAccount extends AuthController
     }
 
     /**
-     * 保存接口文档
+     * Lưu tài liệu API
      * @param $id
      * @param OutInterfaceServices $service
      * @return mixed
@@ -175,24 +175,24 @@ class SystemOutAccount extends AuthController
     public function saveInterface($id, OutInterfaceServices $service)
     {
         $data = $this->request->postMore([
-            ['pid', 0], //上级id
-            ['type', 0], //类型 0菜单 1接口
-            ['name', ''], //名称
-            ['describe', ''], //说明
-            ['method', ''], //方法
-            ['url', ''], //链接地址
-            ['request_params', []], //请求参数
-            ['return_params', []], //返回参数
-            ['request_example', ''], //请求示例
-            ['return_example', ''], //返回示例
-            ['error_code', []] //错误码
+            ['pid', 0], //ID cha
+            ['type', 0], //Loại: 0 là menu, 1 là API
+            ['name', ''], //Tên
+            ['describe', ''], //Mô tả
+            ['method', ''], //Phương thức
+            ['url', ''], //Địa chỉ liên kết
+            ['request_params', []], //Tham số request
+            ['return_params', []], //Tham số trả về
+            ['request_example', ''], //Ví dụ request
+            ['return_example', ''], //Ví dụ dữ liệu trả về
+            ['error_code', []] //Mã lỗi
         ]);
         $service->saveInterface((int)$id, $data);
         return app('json')->success(100000);
     }
 
     /**
-     * 对外接口文档
+     * Tài liệu API công khai
      * @param $id
      * @param OutInterfaceServices $service
      * @return mixed
@@ -206,15 +206,15 @@ class SystemOutAccount extends AuthController
     }
 
     /**
-     * 修改接口名称
+     * Sửa tên API
      * @param OutInterfaceServices $service
      * @return mixed
      */
     public function editInterfaceName(OutInterfaceServices $service)
     {
         $data = $this->request->postMore([
-            ['id', 0], //上级id
-            ['name', ''], //名称
+            ['id', 0], //ID cha
+            ['name', ''], //Tên
         ]);
         if (!$data['id'] || !$data['name']) {
             return app('json')->success(100100);
@@ -224,7 +224,7 @@ class SystemOutAccount extends AuthController
     }
 
     /**
-     * 删除接口
+     * Xóa API
      * @param $id
      * @param OutInterfaceServices $service
      * @return mixed
@@ -237,7 +237,7 @@ class SystemOutAccount extends AuthController
     }
 
     /**
-     * 测试获取token接口
+     * Kiểm thử API lấy token
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException

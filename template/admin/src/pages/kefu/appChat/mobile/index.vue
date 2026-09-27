@@ -2,9 +2,9 @@
   <div class="chat-box">
     <div class="head-box">
       <div class="back" v-db-click @click="goBack"><span class="iconfont iconfanhui"></span></div>
-      <div class="title">{{ nickname ? nickname + '-' : '' }}对话详情</div>
+      <div class="title">{{ nickname ? nickname + '-' : '' }}Chi tiết cuộc trò chuyện</div>
     </div>
-    <!-- 商品信息 -->
+    <!-- Thông tin sản phẩm -->
     <div class="broadcast-details_box" v-if="productId && productInfo.id">
       <div class="broadcast_details_img">
         <img :src="productInfo.image" />
@@ -15,20 +15,20 @@
           <div class="broadcast_details_pic">
             ￥{{ productInfo.price }}<span class="broadcast_details_pic_num">￥{{ productInfo.ot_price }}</span>
           </div>
-          <div class="broadcast_details_btn" v-db-click @click="sendProduct">发送客服</div>
+          <div class="broadcast_details_btn" v-db-click @click="sendProduct">Gửi cho CSKH</div>
         </div>
       </div>
     </div>
-    <!-- 订单发送 -->
+    <!-- Gửi đơn hàng -->
     <div class="broadcast_box" v-if="orderId && orderInfo.id">
       <div class="broadcast-details_num broadcast_num">
-        <span>订单号：{{ orderInfo.order_id }}</span>
+        <span>Mã đơn hàng: {{ orderInfo.order_id }}</span>
         <span>{{ orderInfo.add_time_y }} {{ orderInfo.add_time_h }}</span>
       </div>
       <div class="broadcast-details_box">
         <div class="broadcast_details_img">
           <img :src="cartInfo.productInfo.image" />
-          <div class="broadcast_details_model">{{ orderInfo.cartInfo ? orderInfo.cartInfo.length : 0 }}件商品</div>
+          <div class="broadcast_details_model">{{ orderInfo.cartInfo ? orderInfo.cartInfo.length : 0 }} sản phẩm</div>
         </div>
         <div class="broadcast_details_picBox">
           <div class="broadcast_details_tit">
@@ -39,7 +39,7 @@
               ￥{{ cartInfo.productInfo.price
               }}<text class="broadcast_details_pic_num">￥{{ cartInfo.productInfo.ot_price }}</text>
             </div>
-            <div class="broadcast_details_btn" v-db-click @click="sendOrder">发送客服</div>
+            <div class="broadcast_details_btn" v-db-click @click="sendOrder">Gửi cho CSKH</div>
           </div>
         </div>
       </div>
@@ -60,11 +60,11 @@
             <div class="day-box" v-if="item.show">{{ item.time }}</div>
             <div class="chat-item" :class="{ 'right-box': item.to_uid == toUid }">
               <img class="avatar" :src="item.avatar" mode="" />
-              <!-- 消息 -->
+              <!-- Tin nhắn -->
               <div class="msg-box" v-if="item.msn_type == 1" v-html="item.msn"></div>
-              <!-- 图片 -->
+              <!-- Hình ảnh -->
               <div class="img-box" v-if="item.msn_type == 3" v-viewer><img v-lazy="item.msn" mode="widthFix" /></div>
-              <!-- 商品 -->
+              <!-- Sản phẩm -->
               <div class="product-box" v-if="item.msn_type == 5" v-db-click @click="goProduct(item)">
                 <img :src="item.productInfo.image" />
                 <div class="info">
@@ -72,9 +72,9 @@
                   <div class="name line2">{{ item.productInfo.store_name }}</div>
                 </div>
               </div>
-              <!-- 订单 -->
+              <!-- Đơn hàng -->
               <div class="order-box" v-if="item.msn_type == 6" v-db-click @click="goOrderDetail(item)">
-                <div class="title">订单ID: {{ item.orderInfo.order_id }}</div>
+                <div class="title">ID đơn hàng: {{ item.orderInfo.order_id }}</div>
                 <div class="info">
                   <img :src="item.orderInfo.cartInfo[0].productInfo.image" />
                   <div class="product-info">
@@ -106,12 +106,12 @@
         </el-upload>
       </div>
       <div class="input-box">
-        <el-input v-model="con" placeholder="请输入内容" />
+        <el-input v-model="con" placeholder="Vui lòng nhập nội dung" />
         <span class="iconfont iconfasong" v-db-click @click="sendText" :class="{ isSend: isSend }"></span>
       </div>
       <div class="emoji" v-db-click @click="openBox(1)"><span class="iconfont iconbiaoqing2"></span></div>
     </div>
-    <!-- 表情 -->
+    <!-- Biểu tượng cảm xúc -->
     <div class="banner slider-banner" v-show="isSwiper">
       <swiper class="swiper-wrapper" ref="mySwiper" :options="swiperOptions">
         <swiper-slide v-for="(emojiList, index) in emojiGroup" :key="index">
@@ -159,7 +159,7 @@ export default {
             autoLoadDistance: 0,
             tips: {
               deactive: '',
-              active: '上拉加载更多',
+              active: 'Kéo lên để tải thêm',
               start: 'Loading...',
               beforeDeactive: ' ',
             },
@@ -196,13 +196,13 @@ export default {
       isScroll: true,
       oldHeight: 0,
       selector: '',
-      transferList: [], //转接列表
+      transferList: [], //Danh sách chuyển tiếp
       isTransfer: false,
-      uploadData: {}, // 上传参数
+      uploadData: {}, // Tham số tải lên
       header: {},
       fileUrl: '',
       userToken: '',
-      tourist_uid: '', //游客的uid
+      tourist_uid: '', //uid của khách
       orderId: '',
       orderInfo: '',
       cartInfo: '',
@@ -252,7 +252,7 @@ export default {
       this.getOrderInfo();
       this.getGoodsInfo();
     }
-    // 上传头部token
+    // Token trong header khi tải lên
     this.header['Authori-zation'] = 'Bearer ' + getCookies('kefu_token');
     Socket.then((ws) => {
       if (this.userToken) {
@@ -261,7 +261,7 @@ export default {
           data: this.userToken,
         });
       }
-      // 消息接收
+      // Nhận tin nhắn
       ws.$on(['reply', 'chat'], (data) => {
         if (data.msn_type == 1 || data.msn_type == 2) {
           data.msn = this.replace_em(data.msn);
@@ -276,10 +276,10 @@ export default {
         }, 300);
       });
       ws.$on('socket_error', () => {
-        this.$message.error('连接失败');
+        this.$message.error('Kết nối thất bại');
       });
       ws.$on('error', () => {
-        this.$message.error('连接失败');
+        this.$message.error('Kết nối thất bại');
       });
       ws.$on('to_transfer', (data) => {
         ws.send({
@@ -292,10 +292,10 @@ export default {
       ws.$on('online', (data) => {
         if (data.online == 0 && data.uid == that.toUid) {
           that.$Modal.confirm({
-            title: '提示',
-            content: '客服已离线，是否需要反馈？',
-            okText: '确定',
-            cancelText: '取消',
+            title: 'Thông báo',
+            content: 'CSKH hiện không trực tuyến, bạn có muốn gửi phản hồi không?',
+            okText: 'Xác nhận',
+            cancelText: 'Hủy',
             onOk: () => {
               that.$router.replace({
                 path: '/kefu/mobile_feedback',
@@ -312,9 +312,9 @@ export default {
       this.$router.go(-1);
     },
     handleFormatError(file) {
-      this.$message.error('上传图片只能是 jpg、jpg、jpeg、gif 格式!');
+      this.$message.error('Ảnh tải lên chỉ được có định dạng jpg, jpg, jpeg, gif!');
     },
-    // 获取商品信息
+    // Lấy thông tin sản phẩm
     getGoodsInfo() {
       if (!this.productId) return;
       productApi(this.productId)
@@ -325,7 +325,7 @@ export default {
           this.$message.error(err.msg);
         });
     },
-    // 获取订单信息
+    // Lấy thông tin đơn hàng
     getOrderInfo() {
       if (!this.orderId) return;
       getOrderApi(this.orderId, {
@@ -343,7 +343,7 @@ export default {
         }
       });
     },
-    // 获取随机客服
+    // Lấy CSKH ngẫu nhiên
     getServiceList() {
       serviceListApi({
         token: this.userToken,
@@ -376,11 +376,11 @@ export default {
           }, 2000);
         });
     },
-    // 上传之前
+    // Trước khi tải lên
     beforeUpload(file) {
       const isImage = file.type === 'image/jpeg' || file.type === 'image/png';
       if (!isImage) {
-        this.$message.error('上传图片只能是 JPG、PNG 格式!');
+        this.$message.error('Ảnh tải lên chỉ được có định dạng JPG, PNG!');
       }
       this.uploadData = {
         filename: file,
@@ -393,7 +393,7 @@ export default {
       });
       return promise;
     },
-    // 上传成功
+    // Tải lên thành công
     handleSuccess(res, file, fileList) {
       if (res.status === 200) {
         this.$message.success(res.msg);
@@ -402,7 +402,7 @@ export default {
         this.$message.error(res.msg);
       }
     },
-    // 滚动到底部
+    // Cuộn xuống cuối
     scrollBom() {
       setTimeout((res) => {
         let num = parseFloat(document.getElementById('chatBox').offsetHeight);
@@ -416,13 +416,13 @@ export default {
         }
       }, 300);
     },
-    // 订单详情
+    // Chi tiết đơn hàng
     goOrderDetail(item) {
       this.$router.push({
         path: `/kefu/orderDetail/${item.orderInfo.id}`,
       });
     },
-    // 底部功能区打开
+    // Mở khu vực chức năng phía dưới
     openBox(key) {
       if (key == 1) {
         this.isTool = false;
@@ -440,34 +440,34 @@ export default {
       this.isWords = true;
     },
 
-    // 转接
+    // Chuyển tiếp
     goTransfer() {
       this.isTransfer = true;
     },
-    // 转接关闭
+    // Đóng chuyển tiếp
     closeTransfer() {
       this.transferList.forEach((el, index) => {
         el.isCheck = false;
       });
       this.isTransfer = false;
     },
-    // 商品信息
+    // Thông tin sản phẩm
     goodsInfo() {
       this.$router.push({
         path: '/kefu/goods/list?toUid=' + this.toUid,
       });
     },
-    // 表情点击
+    // Bấm biểu tượng cảm xúc
     addEmoji(item) {
       let val = `[${item}]`;
       this.con += val;
     },
-    // 聊天表情转换
+    // Chuyển đổi biểu tượng cảm xúc trong chat
     replace_em(str) {
       str = str.replace(/\[em-([\s\S]*)\]/g, "<span class='em em-$1'/></span>");
       return str;
     },
-    // 获取聊天列表
+    // Lấy danh sách chat
     getChatList() {
       let self = this;
       chatListApi({
@@ -505,27 +505,27 @@ export default {
         });
       });
     },
-    // 发送订单
+    // Gửi đơn hàng
     sendOrder() {
       this.sendMsg(this.orderId, 6);
       this.orderId = 0;
       this.orderInfo = {};
     },
-    // 发送商品
+    // Gửi sản phẩm
     sendProduct() {
       this.sendMsg(this.productId, 5);
       this.productId = 0;
       this.productInfo = {};
     },
-    // 发送消息
+    // Gửi tin nhắn
     sendText() {
       if (!this.isSend) {
-        this.$message.error('请输入内容');
+        this.$message.error('Vui lòng nhập nội dung');
       }
       this.sendMsg(this.con, 1);
       this.con = '';
     },
-    // ws发送
+    // Gửi qua ws (websocket)
     sendMsg(msn, type) {
       let obj = {
         type: 'chat',
@@ -543,7 +543,7 @@ export default {
         ws.send(obj);
       });
     },
-    // 图片上传
+    // Tải lên ảnh
     uploadImg() {
       let self = this;
       self.$util.uploadImageOne('upload/image', function (res) {
@@ -552,12 +552,12 @@ export default {
         }
       });
     },
-    //  商品详情页
+    //  Trang chi tiết sản phẩm
     goProduct(item) {
       let url = window.location.protocol + '//' + window.location.host + '/pages/goods_details/index?id=' + item.msn;
       window.open(url, '_blank');
     },
-    // 用户订单
+    // Đơn hàng người dùng
     goAdminOrder() {
       // this.$router.push({
       //     path:'/kefu/orderList/0/'+this.toUid
@@ -570,7 +570,7 @@ export default {
         item.msn;
       window.open(url, '_blank');
     },
-    // 滚动到底部
+    // Cuộn xuống cuối
     height() {
       let self = this;
       var scrollTop = 0;
@@ -578,7 +578,7 @@ export default {
       setTimeout((res) => {
         info
           .boundingClientRect(function (data) {
-            //data - 各种参数
+            //data - các loại tham số
             scrollTop = data.height;
             if (self.active) {
               self.scrollTop = parseInt(scrollTop) + 500;

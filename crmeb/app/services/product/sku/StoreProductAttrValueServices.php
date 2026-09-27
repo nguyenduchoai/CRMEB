@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,9 +24,9 @@ use crmeb\services\workerman\ChannelService;
  * Class StoreProductAttrValueService
  * @package app\services\product\sku
  * @method getProductAttrValue(array $where)
- * @method value(array $where, string $field = '') 获取单个键值的数据
- * @method decStockIncSales(array $where, int $num, string $stock = 'stock', string $sales = 'sales') 减库存加销量
- * @method count(array $where) 获取指定条件下的数量
+ * @method value(array $where, string $field = '') Lấy dữ liệu theo một khóa
+ * @method decStockIncSales(array $where, int $num, string $stock = 'stock', string $sales = 'sales') Giảm tồn kho, tăng lượt bán
+ * @method count(array $where) Lấy số lượng theo điều kiện chỉ định
  */
 class StoreProductAttrValueServices extends BaseServices
 {
@@ -40,7 +40,7 @@ class StoreProductAttrValueServices extends BaseServices
     }
 
     /**
-     * 获取单规格规格
+     * Lấy phân loại đơn
      * @param array $where
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -52,7 +52,7 @@ class StoreProductAttrValueServices extends BaseServices
     }
 
     /**
-     * 获取指定条件下的数据以数组返回
+     * Lấy dữ liệu theo điều kiện chỉ định, trả về dạng mảng
      * @param array $where
      * @param string $field
      * @param string $key
@@ -64,7 +64,7 @@ class StoreProductAttrValueServices extends BaseServices
     }
 
     /**
-     * 删除一条数据
+     * Xóa một dòng dữ liệu
      * @param int $id
      * @param int $type
      */
@@ -74,7 +74,7 @@ class StoreProductAttrValueServices extends BaseServices
     }
 
     /**
-     * 批量保存
+     * Lưu theo lô
      * @param array $data
      */
     public function saveAll(array $data)
@@ -85,7 +85,7 @@ class StoreProductAttrValueServices extends BaseServices
     }
 
     /**
-     * 获取sku
+     * Lấy SKU
      * @param array $where
      * @return array
      */
@@ -95,7 +95,7 @@ class StoreProductAttrValueServices extends BaseServices
     }
 
     /**
-     * 交易排行榜
+     * Bảng xếp hạng giao dịch
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -114,7 +114,7 @@ class StoreProductAttrValueServices extends BaseServices
         return $list;
     }
 
-    /**获取商品的属性数量
+    /**Lấy số lượng thuộc tính của sản phẩm
      * @param $product_id
      * @param $unique
      * @param $type
@@ -126,7 +126,7 @@ class StoreProductAttrValueServices extends BaseServices
     }
 
     /**
-     * 获取唯一值下的库存
+     * Lấy tồn kho theo giá trị duy nhất
      * @param string $unique
      * @return int
      */
@@ -137,7 +137,7 @@ class StoreProductAttrValueServices extends BaseServices
     }
 
     /**
-     * 减销量,加库存
+     * Giảm lượt bán, tăng tồn kho
      * @param $productId
      * @param $unique
      * @param $num
@@ -158,7 +158,7 @@ class StoreProductAttrValueServices extends BaseServices
     }
 
     /**
-     * 减少销量增加库存
+     * Giảm lượt bán, tăng tồn kho
      * @param $productId
      * @param $unique
      * @param $num
@@ -170,7 +170,7 @@ class StoreProductAttrValueServices extends BaseServices
     }
 
     /**
-     * 库存预警消息提醒
+     * Nhắc nhở tin nhắn cảnh báo tồn kho
      * @param int $productId
      * @param string $unique
      * @param int $type
@@ -182,7 +182,7 @@ class StoreProductAttrValueServices extends BaseServices
             'unique' => $unique,
             'type' => $type
         ], 'stock');
-        $replenishment_num = sys_config('store_stock') ?? 0;//库存预警界限
+        $replenishment_num = sys_config('store_stock') ?? 0;//Ngưỡng cảnh báo tồn kho
         if ($replenishment_num >= $stock) {
             try {
                 ChannelService::instance()->send('STORE_STOCK', ['id' => $productId]);
@@ -192,7 +192,7 @@ class StoreProductAttrValueServices extends BaseServices
     }
 
     /**
-     * 获取秒杀库存
+     * Lấy tồn kho flash sale
      * @param int $productId
      * @param string $unique
      * @param bool $isNew

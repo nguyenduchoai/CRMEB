@@ -1,9 +1,9 @@
 // +---------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +---------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +---------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +---------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +---------------------------------------------------------------------
@@ -28,7 +28,7 @@ export default {
       name: `${pre}combinalist`,
       meta: {
         auth: ['marketing-store_combination'],
-        title: '拼团商品',
+        title: 'Sản phẩm mua chung',
         keepAlive: true,
       },
       component: () => import('@/pages/marketing/storeCombination/index'),
@@ -38,7 +38,7 @@ export default {
       name: `${pre}combinaList`,
       meta: {
         auth: ['marketing-store_combination-combina_list'],
-        title: '拼团列表',
+        title: 'Danh sách mua chung',
       },
       component: () => import('@/pages/marketing/storeCombination/combinaList'),
     },
@@ -47,7 +47,7 @@ export default {
       name: `${pre}storeCombinationCreate`,
       meta: {
         auth: ['marketing-store_combination-create'],
-        title: '添加拼团',
+        title: 'Thêm mua chung',
         activeMenu: routePre + '/marketing/store_combination/index',
       },
       component: () => import('@/pages/marketing/storeCombination/create'),
@@ -56,7 +56,7 @@ export default {
       path: 'store_combination/statistics/:id?',
       name: `${pre}storeCombinationStatistics`,
       meta: {
-        title: '拼团统计',
+        title: 'Thống kê mua chung',
         activeMenu: routePre + '/marketing/store_combination/index',
       },
       component: () => import('@/pages/marketing/storeCombination/statistics'),
@@ -66,7 +66,7 @@ export default {
       name: `${pre}storeCoupon`,
       meta: {
         auth: ['marketing-store_coupon'],
-        title: '优惠券模板',
+        title: 'Mẫu phiếu giảm giá',
       },
       component: () => import('@/pages/marketing/storeCoupon/index'),
     },
@@ -75,7 +75,7 @@ export default {
       name: `${pre}storeCouponIssue`,
       meta: {
         auth: ['marketing-store_coupon_issue'],
-        title: '优惠券列表',
+        title: 'Danh sách phiếu giảm giá',
         keepAlive: true,
       },
       component: () => import('@/pages/marketing/storeCouponIssue/index'),
@@ -85,7 +85,7 @@ export default {
       name: `${pre}storeCouponCreate`,
       meta: {
         auth: ['marketing-store_coupon_issue-create'],
-        title: '添加优惠券',
+        title: 'Thêm phiếu giảm giá',
         activeMenu: routePre + '/marketing/store_coupon_issue/index',
       },
       component: () => import('@/pages/marketing/storeCouponIssue/create'),
@@ -95,7 +95,7 @@ export default {
       name: `${pre}storeCouponUser`,
       meta: {
         auth: ['marketing-store_coupon_user'],
-        title: '用户领取记录',
+        title: 'Lịch sử nhận của người dùng',
       },
       component: () => import('@/pages/marketing/storeCouponUser/index'),
     },
@@ -104,7 +104,7 @@ export default {
       name: `${pre}coupon`,
       meta: {
         auth: ['admin-order-storeOrder-index'],
-        title: '优惠券配置',
+        title: 'Cấu hình phiếu giảm giá',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -113,7 +113,7 @@ export default {
       name: `${pre}storeBargain`,
       meta: {
         auth: ['marketing-store_bargain'],
-        title: '砍价商品',
+        title: 'Sản phẩm săn giảm giá',
         keepAlive: true,
       },
       component: () => import('@/pages/marketing/storeBargain/index'),
@@ -123,7 +123,7 @@ export default {
       name: `${pre}bargainList`,
       meta: {
         auth: ['marketing-store_bargain-bargain_list'],
-        title: '砍价列表',
+        title: 'Danh sách săn giảm giá',
       },
       component: () => import('@/pages/marketing/storeBargain/bargainList'),
     },
@@ -132,7 +132,7 @@ export default {
       name: `${pre}bargainCreate`,
       meta: {
         auth: ['marketing-store_bargain-create'],
-        title: '添加砍价',
+        title: 'Thêm săn giảm giá',
         activeMenu: routePre + '/marketing/store_bargain/index',
       },
       component: () => import('@/pages/marketing/storeBargain/create'),
@@ -141,7 +141,7 @@ export default {
       path: 'store_bargain/statistics/:id?',
       name: `${pre}storeBargainStatistics`,
       meta: {
-        title: '砍价统计',
+        title: 'Thống kê săn giảm giá',
         activeMenu: routePre + '/marketing/store_bargain/index',
       },
       component: () => import('@/pages/marketing/storeBargain/statistics'),
@@ -151,7 +151,7 @@ export default {
       name: `${pre}storeSeckill`,
       meta: {
         auth: ['marketing-store_seckill'],
-        title: '秒杀商品',
+        title: 'Sản phẩm flash sale',
         keepAlive: true,
       },
       component: () => import('@/pages/marketing/storeSeckill/index'),
@@ -161,7 +161,7 @@ export default {
       name: `${pre}storeSeckillData`,
       meta: {
         auth: ['marketing-store_seckill-data'],
-        title: '秒杀配置',
+        title: 'Cấu hình flash sale',
       },
       component: () => import('@/pages/system/group/list'),
     },
@@ -170,7 +170,7 @@ export default {
       name: `${pre}storeSeckillCreate`,
       meta: {
         auth: ['marketing-store_seckill-create'],
-        title: '添加秒杀',
+        title: 'Thêm flash sale',
         activeMenu: routePre + '/marketing/store_seckill/list',
       },
       component: () => import('@/pages/marketing/storeSeckill/create'),
@@ -180,7 +180,7 @@ export default {
       name: `${pre}storeSeckillCreate`,
       meta: {
         auth: ['marketing-store_seckill-create-more'],
-        title: '添加秒杀',
+        title: 'Thêm flash sale',
         activeMenu: routePre + '/marketing/store_seckill/list',
       },
       component: () => import('@/pages/marketing/storeSeckill/createMore'),
@@ -189,7 +189,7 @@ export default {
       path: 'store_seckill/list',
       name: `${pre}marketing-store_seckill-list`,
       meta: {
-        title: '秒杀列表',
+        title: 'Danh sách flash sale',
       },
       component: () => import('@/pages/marketing/storeSeckill/list'),
     },
@@ -197,7 +197,7 @@ export default {
       path: 'store_seckill/statistics/:id?',
       name: `${pre}storeSeckillStatistics`,
       meta: {
-        title: '秒杀统计',
+        title: 'Thống kê flash sale',
         activeMenu: routePre + '/marketing/store_seckill/index',
       },
       component: () => import('@/pages/marketing/storeSeckill/statistics'),
@@ -207,7 +207,7 @@ export default {
       name: `${pre}integral`,
       meta: {
         auth: ['marketing-integral-system_config'],
-        title: '积分配置',
+        title: 'Cấu hình điểm thưởng',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -216,7 +216,7 @@ export default {
       name: `${pre}model`,
       meta: {
         auth: ['system-model-system_config'],
-        title: '模块配置',
+        title: 'Cấu hình mô-đun',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -225,7 +225,7 @@ export default {
       name: `${pre}storeIntegral`,
       meta: {
         auth: ['marketing-store_integral'],
-        title: '积分商品',
+        title: 'Sản phẩm đổi điểm',
         keepAlive: true,
       },
       component: () => import('@/pages/marketing/storeIntegral/index'),
@@ -235,7 +235,7 @@ export default {
       name: `${pre}storeIntegralCreate`,
       meta: {
         auth: ['marketing-store_integral-create'],
-        title: '添加积分商品',
+        title: 'Thêm sản phẩm đổi điểm',
         activeMenu: routePre + '/marketing/store_integral/index',
       },
       component: () => import('@/pages/marketing/storeIntegral/create'),
@@ -245,7 +245,7 @@ export default {
       name: `${pre}storeIntegralOrder`,
       meta: {
         auth: ['marketing-store_integral-order'],
-        title: '兑换订单',
+        title: 'Đơn đổi điểm',
       },
       component: () => import('@/pages/marketing/storeIntegralOrder/index'),
     },
@@ -254,7 +254,7 @@ export default {
       name: `${pre}userPoint`,
       meta: {
         auth: ['marketing-user_point'],
-        title: '积分日志',
+        title: 'Nhật ký điểm thưởng',
       },
       component: () => import('@/pages/marketing/userPoint/index'),
     },
@@ -263,7 +263,7 @@ export default {
       name: `${pre}live_room`,
       meta: {
         auth: true,
-        title: '直播间管理',
+        title: 'Quản lý phòng livestream',
       },
       component: () => import('@/pages/marketing/live/index'),
     },
@@ -272,7 +272,7 @@ export default {
       name: `${pre}add_live_room`,
       meta: {
         auth: true,
-        title: '直播间管理',
+        title: 'Quản lý phòng livestream',
         activeMenu: routePre + '/marketing/live/live_room',
       },
       component: () => import('@/pages/marketing/live/creat_live'),
@@ -282,7 +282,7 @@ export default {
       name: `${pre}live_goods`,
       meta: {
         auth: true,
-        title: '直播间商品管理',
+        title: 'Quản lý sản phẩm phòng livestream',
       },
       component: () => import('@/pages/marketing/live/live_goods'),
     },
@@ -291,7 +291,7 @@ export default {
       name: `${pre}add_live_goods`,
       meta: {
         auth: true,
-        title: '直播间商品管理',
+        title: 'Quản lý sản phẩm phòng livestream',
         activeMenu: routePre + '/marketing/live/live_goods',
       },
       component: () => import('@/pages/marketing/live/add_goods'),
@@ -301,7 +301,7 @@ export default {
       name: `${pre}anchor`,
       meta: {
         auth: true,
-        title: '主播管理',
+        title: 'Quản lý streamer',
       },
       component: () => import('@/pages/marketing/live/anchor'),
     },
@@ -310,7 +310,7 @@ export default {
       name: `${pre}storePresell`,
       meta: {
         auth: ['marketing-presell'],
-        title: '预售商品',
+        title: 'Sản phẩm đặt trước',
       },
       component: () => import('@/pages/marketing/storePresell/index'),
     },
@@ -319,7 +319,7 @@ export default {
       name: `${pre}presellList`,
       meta: {
         auth: ['marketing-presell-presell_list'],
-        title: '预售列表',
+        title: 'Danh sách đặt trước',
       },
       component: () => import('@/pages/marketing/storePresell/presellList'),
     },
@@ -328,7 +328,7 @@ export default {
       name: `${pre}storePresellCreate`,
       meta: {
         auth: ['marketing-presell-create'],
-        title: '添加预售',
+        title: 'Thêm sản phẩm đặt trước',
       },
       component: () => import('@/pages/marketing/storePresell/create'),
     },
@@ -337,7 +337,7 @@ export default {
       name: `${pre}lottery`,
       meta: {
         auth: true,
-        title: '抽奖列表',
+        title: 'Danh sách quay thưởng',
       },
       component: () => import('@/pages/marketing/lottery/index'),
     },
@@ -346,7 +346,7 @@ export default {
       name: `${pre}create`,
       meta: {
         auth: true,
-        title: '创建抽奖',
+        title: 'Tạo chương trình quay thưởng',
         activeMenu: routePre + '/marketing/lottery/list',
       },
       component: () => import('@/pages/marketing/lottery/create'),
@@ -356,7 +356,7 @@ export default {
       name: `${pre}recording_list`,
       meta: {
         auth: true,
-        title: '抽奖记录',
+        title: 'Lịch sử quay thưởng',
         activeMenu: routePre + '/marketing/lottery/list',
       },
       component: () => import('@/pages/marketing/lottery/recordingList'),
@@ -366,7 +366,7 @@ export default {
       name: `${pre}lottery_config`,
       meta: {
         auth: ['admin-marketing-lottery-config'],
-        title: '抽奖配置',
+        title: 'Cấu hình quay thưởng',
       },
       component: () => import('@/pages/marketing/lottery/config'),
     },
@@ -375,7 +375,7 @@ export default {
       name: `${pre}list`,
       meta: {
         auth: true,
-        title: '抽奖列表',
+        title: 'Danh sách quay thưởng',
       },
       component: () => import('@/pages/marketing/lottery/lotteryList'),
     },
@@ -384,7 +384,7 @@ export default {
       name: `${pre}channel_code`,
       meta: {
         auth: true,
-        title: '公众号渠道码',
+        title: 'Mã kênh OA WeChat',
         keepAlive: true,
       },
       component: () => import('@/pages/marketing/channelCode/channelCodeIndex'),
@@ -394,7 +394,7 @@ export default {
       name: `${pre}create_code`,
       meta: {
         auth: ['marketing-channel_code-create'],
-        title: '渠道码',
+        title: 'Mã kênh',
         activeMenu: routePre + '/marketing/channel_code/channelCodeIndex',
       },
       component: () => import('@/pages/marketing/channelCode/createCode'),
@@ -404,7 +404,7 @@ export default {
       name: `${pre}code_statistic`,
       meta: {
         auth: ['marketing-channel_code-statistic'],
-        title: '二维码统计',
+        title: 'Thống kê mã QR',
         activeMenu: routePre + '/marketing/channel_code/channelCodeIndex',
       },
       component: () => import('@/pages/marketing/channelCode/codeStatistic'),
@@ -414,7 +414,7 @@ export default {
       name: `${pre}point_record`,
       meta: {
         auth: ['marketing-point_record-index'],
-        title: '积分记录',
+        title: 'Lịch sử điểm thưởng',
       },
       component: () => import('@/pages/marketing/point_record/index'),
     },
@@ -423,7 +423,7 @@ export default {
       name: `${pre}point_statistic`,
       meta: {
         auth: ['marketing-point_statistic-index'],
-        title: '积分统计',
+        title: 'Thống kê điểm thưởng',
       },
       component: () => import('@/pages/marketing/point_statistic/index'),
     },
@@ -431,7 +431,7 @@ export default {
       path: 'recharge',
       name: `${pre}recharge`,
       meta: {
-        title: '充值配置',
+        title: 'Cấu hình nạp tiền',
       },
       component: () => import('@/pages/marketing/recharge/index'),
     },
@@ -439,7 +439,7 @@ export default {
       path: 'sign',
       name: `${pre}sign`,
       meta: {
-        title: '签到配置',
+        title: 'Cấu hình điểm danh',
       },
       component: () => import('@/pages/marketing/sign/index'),
     },
@@ -447,7 +447,7 @@ export default {
       path: 'sign_rewards',
       name: `${pre}sign_rewards`,
       meta: {
-        title: '签到奖励',
+        title: 'Phần thưởng điểm danh',
       },
       component: () => import('@/pages/marketing/sign/rewards'),
     },
@@ -455,7 +455,7 @@ export default {
       path: `member_config/:type?/:tab_id?`,
       name: `${pre}member_config`,
       meta: {
-        title: '会员配置',
+        title: 'Cấu hình thành viên',
       },
       component: () => import('@/pages/setting/setSystem/index'),
     },
@@ -463,7 +463,7 @@ export default {
       path: `newuser/gift`,
       name: `${pre}gift`,
       meta: {
-        title: '新人礼',
+        title: 'Quà tặng người mới',
         auth: ['admin-marketing-new-user-gift'],
       },
       component: () => import('@/pages/marketing/newuser/gift'),

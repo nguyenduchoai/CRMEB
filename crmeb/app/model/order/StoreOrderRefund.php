@@ -12,19 +12,19 @@ class StoreOrderRefund extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'store_order_refund';
 
     /**
-     * 购物车信息获取器
+     * Getter thông tin giỏ hàng
      * @param $value
      * @return array|mixed
      */
@@ -34,7 +34,7 @@ class StoreOrderRefund extends BaseModel
     }
 
     /**
-     * 图片获取器
+     * Getter hình ảnh
      * @param $value
      * @return array|mixed
      */
@@ -44,7 +44,7 @@ class StoreOrderRefund extends BaseModel
     }
 
     /**
-     * 一对一关联订单表
+     * Liên kết một-một với bảng đơn hàng
      * @return StoreOrderRefund|\think\model\relation\HasOne
      */
     public function order()
@@ -53,7 +53,7 @@ class StoreOrderRefund extends BaseModel
     }
 
     /**
-     * 一对一关联用户表
+     * Liên kết một-một với bảng người dùng
      * @return \think\model\relation\HasOne
      */
     public function user()
@@ -66,7 +66,7 @@ class StoreOrderRefund extends BaseModel
     }
 
     /**
-     * 订单ID搜索器
+     * Bộ lọc ID đơn hàng
      * @param $query
      * @param $value
      */
@@ -107,7 +107,7 @@ class StoreOrderRefund extends BaseModel
     }
 
     /**
-     * is_del搜索器
+     * Bộ lọc is_del
      * @param Model $query
      * @param $value
      */
@@ -117,7 +117,7 @@ class StoreOrderRefund extends BaseModel
     }
 
     /**
-     * is_system_del搜索器
+     * Bộ lọc is_system_del
      * @param Model $query
      * @param $value
      */
@@ -154,7 +154,7 @@ class StoreOrderRefund extends BaseModel
     }
 
     /**
-     * 一对一关联订单表
+     * Liên kết một-một với bảng đơn hàng
      * @return StoreOrderRefund|\think\model\relation\HasOne
      */
     public function orderData()

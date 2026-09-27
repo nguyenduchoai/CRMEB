@@ -12,7 +12,7 @@
           <div class="move-icon">
             <span class="iconfont-diy iconxingzhuangjiehe"></span>
           </div>
-          <div class="img-box" @click="modalPicTap('单选', index)">
+          <div class="img-box" @click="modalPicTap('Chọn một', index)">
             <img :src="item.img" alt="" v-if="item.img" />
             <div class="upload-box" v-else>
               <!-- <i class="el-icon-plus"></i> -->
@@ -24,19 +24,19 @@
               <span class="span">{{ infos.title }}</span>
               <div class="input-box">
                 <el-input v-model="infos.value" :placeholder="infos.tips" :maxlength="infos.max">
-                  <i v-if="infos.title == '链接'"  class="el-icon-link" slot="suffix" @blur="onBlur" @click="getLink(index, key, item.info)" />
+                  <i v-if="infos.title == 'Liên kết'"  class="el-icon-link" slot="suffix" @blur="onBlur" @click="getLink(index, key, item.info)" />
                 </el-input>
               </div>
             </div>
             <div class="info-item" v-if="configData.type">
-              <span class="span">状态</span>
+              <span class="span">Trạng thái</span>
               <el-switch v-model="item.show" />
             </div>
           </div>
         </div>
       </draggable>
       <div>
-        <el-dialog :visible.sync="modalPic" width="960px" title="上传图片">
+        <el-dialog :visible.sync="modalPic" width="960px" title="Tải lên ảnh">
           <uploadPictures
             :isChoice="isChoice"
             @getPic="getPic"
@@ -92,7 +92,7 @@ export default {
         },
       ],
       modalPic: false,
-      isChoice: '单选',
+      isChoice: 'Chọn một',
       gridBtn: {
         xl: 4,
         lg: 8,
@@ -156,12 +156,12 @@ export default {
         this.configData.list.push(obj);
       }
     },
-    // 点击图文封面
+    // Click vào ảnh bìa bài viết ảnh-văn
     modalPicTap(title, index) {
       this.activeIndex = index;
       this.modalPic = true;
     },
-    // 添加自定义弹窗
+    // Thêm popup tùy chỉnh
     addCustomDialog(editorId) {
       window.UE.registerUI(
         'test-dialog',
@@ -170,17 +170,17 @@ export default {
             iframeUrl: '/admin/widget.images/index.html?fodder=dialog',
             editor: editor,
             name: uiName,
-            title: '上传图片',
+            title: 'Tải lên ảnh',
             cssRules: 'width:1200px;height:500px;padding:20px;',
           });
           this.dialog = dialog;
-          // 参考上面的自定义按钮
+          // Tham khảo nút tùy chỉnh ở trên
           var btn = new window.UE.ui.Button({
             name: 'dialog-button',
-            title: '上传图片',
+            title: 'Tải lên ảnh',
             cssRules: `background-image: url(../../../assets/images/icons.png);background-position: -726px -77px;`,
             onclick: function () {
-              // 渲染dialog
+              // Render dialog
               dialog.render();
               dialog.open();
             },
@@ -191,7 +191,7 @@ export default {
         37,
       );
     },
-    // 获取图片信息
+    // Lấy thông tin ảnh
     getPic(pc) {
       this.$nextTick(() => {
         this.configData.list[this.activeIndex].img = pc.att_dir;
@@ -209,7 +209,7 @@ export default {
       let data = this.defaults.menuConfig;
       this.defaults.picStyle.picList[this.defaults.picStyle.tabVal].link = data.list[0].info[0].value;
     },
-    // 删除
+    // Xóa
     bindDelete(item, index) {
       if (this.configData.list.length == 1) {
         this.lastObj = this.configData.list[0];

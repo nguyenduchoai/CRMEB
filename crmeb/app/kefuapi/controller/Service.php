@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -36,7 +36,7 @@ class Service extends AuthController
     }
 
     /**
-     * 转接客服列表
+     * Danh sách chuyển tiếp CSKH
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -52,7 +52,7 @@ class Service extends AuthController
     }
 
     /**
-     * 话术列表
+     * Danh sách mẫu câu
      * @param Request $request
      * @param StoreServiceSpeechcraftServices $services
      * @return mixed
@@ -77,7 +77,7 @@ class Service extends AuthController
     }
 
     /**
-     * 添加分类
+     * Thêm danh mục
      * @param Request $request
      * @param CategoryServices $services
      * @return mixed
@@ -101,7 +101,7 @@ class Service extends AuthController
     }
 
     /**
-     * 修改分类
+     * Sửa danh mục
      * @param Request $request
      * @param CategoryServices $services
      * @param $id
@@ -133,7 +133,7 @@ class Service extends AuthController
     }
 
     /**
-     * 删除分类
+     * Xóa danh mục
      * @param CategoryServices $services
      * @param $id
      * @return mixed
@@ -153,7 +153,7 @@ class Service extends AuthController
     }
 
     /**
-     * 获取当前客服分类
+     * Lấy danh mục CSKH hiện tại
      * @param CategoryServices $services
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -166,7 +166,7 @@ class Service extends AuthController
     }
 
     /**
-     * 添加话术
+     * Thêm câu trả lời mẫu
      * @param Request $request
      * @param StoreServiceSpeechcraftServices $services
      * @return mixed
@@ -200,7 +200,7 @@ class Service extends AuthController
     }
 
     /**
-     * 修改话术
+     * Sửa câu trả lời mẫu
      * @param Request $request
      * @param StoreServiceSpeechcraftServices $services
      * @param $id
@@ -241,7 +241,7 @@ class Service extends AuthController
     }
 
     /**
-     * 删除话术
+     * Xóa câu trả lời mẫu
      * @param StoreServiceSpeechcraftServices $services
      * @param $id
      * @return mixed
@@ -260,7 +260,7 @@ class Service extends AuthController
     }
 
     /**
-     * 聊天记录
+     * Lịch sử trò chuyện
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -281,7 +281,7 @@ class Service extends AuthController
     }
 
     /**
-     * 当前客服详细信息
+     * Thông tin chi tiết CSKH hiện tại
      * @return mixed
      */
     public function getServiceInfo()
@@ -291,7 +291,7 @@ class Service extends AuthController
     }
 
     /**
-     * 客服转接
+     * Chuyển tiếp CSKH
      * @return mixed
      */
     public function transfer()

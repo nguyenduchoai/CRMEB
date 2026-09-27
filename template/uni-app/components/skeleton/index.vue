@@ -38,7 +38,7 @@
 			isNodes: {
 				type: Number,
 				value: false
-			} //控制什么时候开始抓取元素节点,只要数值改变就重新抓取
+			} //Kiểm soát thời điểm bắt đầu lấy node phần tử, chỉ cần giá trị thay đổi là lấy lại
 		},
 		data() {
 			return {
@@ -58,7 +58,7 @@
 		},
 		methods: {
 			attachedAction: function() {
-				//默认的首屏宽高，防止内容闪现
+				//Chiều rộng/cao màn hình đầu mặc định, tránh nội dung bị nhấp nháy
 				const systemInfo = uni.getSystemInfoSync();
 				this.systemInfo = {
 					width: systemInfo.windowWidth,
@@ -68,22 +68,22 @@
 			},
 			readyAction: function() {
 				const that = this;
-				//绘制背景
+				//Vẽ nền
 				uni.createSelectorQuery().selectAll(`.${this.selector}`).boundingClientRect(function(res) {
 					if (res[0] && res[0].length > 0)
 						that.systemInfo.height = res[0][0].height + res[0][0].top;
 				}).exec()
 
-				//绘制矩形
+				//Vẽ hình chữ nhật
 				this.rectHandle();
 
-				//绘制圆形
+				//Vẽ hình tròn
 				this.radiusHandle();
 			},
 			rectHandle: function() {
 				const that = this;
 
-				//绘制不带样式的节点
+				//Vẽ node không có style
 				uni.createSelectorQuery().selectAll(`.${this.selector}-rect`).boundingClientRect().exec(function(res) {
 					that.skeletonRectLists = res[0];
 				});

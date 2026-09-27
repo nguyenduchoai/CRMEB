@@ -10,17 +10,17 @@
 // +----------------------------------------------------------------------
 
 /**
- * php think build 自动生成应用的目录结构的定义示例
+ * Ví dụ định nghĩa cấu trúc thư mục ứng dụng do php think build tự động tạo
  */
 return [
-    // 需要自动创建的文件
+    // File cần tự động tạo
     '__file__'   => [],
-    // 需要自动创建的目录
+    // Thư mục cần tự động tạo
     '__dir__'    => ['controller', 'model', 'view'],
-    // 需要自动创建的控制器
+    // Controller cần tự động tạo
     'controller' => ['Index'],
-    // 需要自动创建的模型
+    // Model cần tự động tạo
     'model'      => ['User'],
-    // 需要自动创建的模板
+    // Mẫu cần tự động tạo
     'view'       => ['index/index'],
 ];

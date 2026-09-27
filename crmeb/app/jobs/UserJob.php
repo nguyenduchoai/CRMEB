@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -23,7 +23,7 @@ class UserJob extends BaseJobs
     use QueueTrait;
 
     /**
-     * 执行同步数据后
+     * Sau khi thực hiện đồng bộ dữ liệu
      * @param $openids
      * @return bool
      */
@@ -38,7 +38,7 @@ class UserJob extends BaseJobs
             $wechatUser  = app()->make(WechatUserServices::class);
             $noBeOpenids = $wechatUser->syncWechatUser($openids);
         } catch (\Throwable $e) {
-            Log::error('更新wechatUser用户信息失败,失败原因:' . $e->getMessage());
+            Log::error('Cập nhật thông tin người dùng wechatUser thất bại, nguyên nhân:' . $e->getMessage());
         }
         if (!$noBeOpenids) {
             return true;
@@ -48,7 +48,7 @@ class UserJob extends BaseJobs
             $user = app()->make(UserServices::class);
             $user->importUser($noBeOpenids);
         } catch (\Throwable $e) {
-            Log::error('新增用户失败,失败原因:' . $e->getMessage());
+            Log::error('Thêm người dùng thất bại, nguyên nhân:' . $e->getMessage());
         }
         return true;
     }

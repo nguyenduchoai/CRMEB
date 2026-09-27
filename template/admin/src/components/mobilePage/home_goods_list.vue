@@ -12,7 +12,7 @@
       }"
     >
       <div class="home_product">
-        <!-- 单列 -->
+        <!-- Một cột -->
         <template v-if="styleConfig == 0">
           <div class="list-wrapper itemA">
             <div
@@ -53,7 +53,7 @@
                       color: toneConfig ? goodsNameColor : '#333',
                     }"
                   >
-                    {{ item.store_name || '华为荣耀畅享平板换屏服务 屏幕换外屏主板维修' }}
+                    {{ item.store_name || 'Dịch vụ thay màn hình máy tính bảng Huawei Honor Enjoy, thay kính ngoài, sửa bo mạch chủ' }}
                   </div>
                   <img v-if="checkboxInfo.indexOf(1) != -1" src="../../assets/images/goods01.png" />
                 </div>
@@ -80,14 +80,14 @@
                     :style="{
                       color: toneConfig ? soldNumColor : '#999999',
                     }"
-                    >已售{{ item.sales || 0 }}件</span
+                    >Đã bán {{ item.sales || 0 }}</span
                   >
                   <span
                     v-if="checkboxInfo.indexOf(4) != -1"
                     :style="{
                       color: toneConfig ? scoreColor : '#999999',
                     }"
-                    >评分 {{ item.star || 0 }}</span
+                    >Điểm đánh giá {{ item.star || 0 }}</span
                   >
                 </div>
               </div>
@@ -99,7 +99,7 @@
                     background: toneCartConfig ? bntBgColor : themeColor,
                   }"
                 >
-                  购买
+                  Mua
                 </div>
                 <div
                   class="jia"
@@ -117,7 +117,7 @@
             </div>
           </div>
         </template>
-        <!-- 二列 -->
+        <!-- Hai cột -->
         <template v-else-if="styleConfig == 1">
           <div class="list-wrapper itemC">
             <div class="item" v-for="(item, index) in list" :index="index">
@@ -164,7 +164,7 @@
                       color: toneConfig ? goodsNameColor : '#333',
                     }"
                   >
-                    {{ item.store_name || '这里是商品名称展示区域,商品名称展示区域,商品名称展示区域' }}
+                    {{ item.store_name || 'Đây là khu vực hiển thị tên sản phẩm, khu vực hiển thị tên sản phẩm, khu vực hiển thị tên sản phẩm' }}
                   </div>
                   <img v-if="checkboxInfo.indexOf(1) != -1" src="../../assets/images/goods01.png" />
                 </div>
@@ -188,7 +188,7 @@
                     color: toneConfig ? soldNumColor : '#999999',
                   }"
                 >
-                  <span>已售{{ item.sales || 0 }}件</span>
+                  <span>Đã bán {{ item.sales || 0 }}</span>
                 </div>
               </div>
               <div
@@ -206,7 +206,7 @@
             </div>
           </div>
         </template>
-        <!-- 大图 -->
+        <!-- Ảnh lớn -->
         <template v-else-if="styleConfig == 4">
           <div class="listBig">
             <div
@@ -259,7 +259,7 @@
                     color: toneConfig ? goodsNameColor : '#333',
                   }"
                 >
-                  {{ item.store_name || '商品名称商品商名称商品商…' }}
+                  {{ item.store_name || 'Tên sản phẩm tên sản phẩm tên sản...' }}
                 </div>
                 <img v-if="checkboxInfo.indexOf(1) != -1" src="../../assets/images/goods01.png" />
                 <div class="price acea-row row-middle">
@@ -282,7 +282,7 @@
                     color: toneConfig ? soldNumColor : '#999999',
                   }"
                 >
-                  <span>已售{{ item.sales || 0 }}件</span>
+                  <span>Đã bán {{ item.sales || 0 }}</span>
                 </div>
               </div>
               <div v-if="!cartConfig">
@@ -293,7 +293,7 @@
                     background: toneCartConfig ? bntBgColor : themeColor,
                   }"
                 >
-                  购买
+                  Mua
                 </div>
                 <div
                   class="jia"
@@ -346,7 +346,7 @@
                     color: toneConfig ? goodsNameColor : '#333',
                   }"
                 >
-                  <div class="line2">{{ item.store_name || '这里是标题这里是标题这...' }}</div>
+                  <div class="line2">{{ item.store_name || 'Đây là tiêu đề đây là tiêu đề đây...' }}</div>
                 </div>
                 <div
                   class="price"
@@ -362,7 +362,7 @@
             </div>
           </div>
         </template>
-        <!-- 三列 -->
+        <!-- Ba cột -->
         <template v-else>
           <div
             class="list-wrapper itemB"
@@ -412,7 +412,7 @@
                         color: toneConfig ? goodsNameColor : '#333',
                       }"
                     >
-                      {{ item.store_name || '商品名称商品商名称商品商…' }}
+                      {{ item.store_name || 'Tên sản phẩm tên sản phẩm tên sản...' }}
                     </div>
                   </div>
                   <div class="price" v-if="checkboxInfo.indexOf(2) != -1">
@@ -453,11 +453,11 @@ import { mapState } from 'vuex';
 // import theme from "@/mixins/theme";
 export default {
   name: 'home_goods_list',
-  cname: '商品列表',
+  cname: 'Danh sách sản phẩm',
   configName: 'c_home_goods_list',
   icon: '#iconzujian-shangpinliebiao',
-  type: 0, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'goodList', // 外面匹配名称
+  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'goodList', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -497,61 +497,61 @@ export default {
   // mixins: [theme],
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
-        cname: '商品列表',
+        cname: 'Danh sách sản phẩm',
         name: 'goodList',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
         },
-        titleLeft: '列表设置',
-        titleGoods: '商品设置',
-        titleContents: '显示内容',
-        titleCart: '购物车按钮',
-        titleRight: '商品样式',
-        titleCart: '购物车按钮',
-        titleCurrency: '通用样式',
+        titleLeft: 'Cài đặt danh sách',
+        titleGoods: 'Cài đặt sản phẩm',
+        titleContents: 'Nội dung hiển thị',
+        titleCart: 'Nút giỏ hàng',
+        titleRight: 'Kiểu sản phẩm',
+        titleCart: 'Nút giỏ hàng',
+        titleCurrency: 'Kiểu chung',
         styleConfig: {
-          title: '选择风格',
+          title: 'Chọn phong cách',
           tabVal: 1,
           tabList: [
             {
-              name: '单列展示',
+              name: 'Hiển thị một cột',
             },
             {
-              name: '两列展示(纵向)',
+              name: 'Hiển thị hai cột (dọc)',
             },
             {
-              name: '三列展示',
+              name: 'Hiển thị ba cột',
             },
             {
-              name: '两列展示(横向)',
+              name: 'Hiển thị hai cột (ngang)',
             },
             {
-              name: '大图展示',
+              name: 'Hiển thị ảnh lớn',
             },
             {
-              name: '左右滑动展示',
+              name: 'Hiển thị vuốt ngang',
             },
           ],
         },
         typeConfig: {
-          title: '选择方式',
+          title: 'Cách chọn',
           activeValue: 1,
           list: [
             {
               activeValue: 1,
-              title: '指定商品',
+              title: 'Sản phẩm chỉ định',
             },
             {
               activeValue: 3,
-              title: '指定分类',
+              title: 'Danh mục chỉ định',
             },
             {
               activeValue: 4,
-              title: '商品标签',
+              title: 'Nhãn sản phẩm',
             },
           ],
         },
@@ -560,134 +560,134 @@ export default {
           list: [],
         },
         goodsSort: {
-          title: '商品排序',
+          title: 'Sắp xếp sản phẩm',
           tabVal: 1,
           tabList: [
             {
-              name: '综合',
+              name: 'Tổng hợp',
             },
             {
-              name: '销量',
+              name: 'Lượt bán',
             },
             {
-              name: '价格',
+              name: 'Giá',
             },
           ],
         },
         numberConfig: {
-          title: '商品数量',
+          title: 'Số lượng sản phẩm',
           val: 3,
           min: 1,
         },
         classList: {
-          title: '商品分类',
+          title: 'Danh mục sản phẩm',
           classVal: [],
         },
         checkboxInfo: {
-          title: '展示信息',
+          title: 'Thông tin hiển thị',
           name: 'checkboxInfo',
           type: [0, 1, 2, 3, 4, 5],
           list: [
             {
               id: 0,
-              name: '商品名称',
+              name: 'Tên sản phẩm',
             },
             {
               id: 1,
-              name: '商品标签',
+              name: 'Nhãn sản phẩm',
             },
             {
               id: 2,
-              name: '商品价格',
+              name: 'Giá sản phẩm',
             },
             {
               id: 3,
-              name: '商品销量',
+              name: 'Lượt bán sản phẩm',
             },
             {
               id: 4,
-              name: '商品评分',
+              name: 'Điểm đánh giá sản phẩm',
             },
             {
               id: 5,
-              name: '会员价格',
+              name: 'Giá thành viên',
             },
           ],
         },
         cartConfig: {
-          title: '是否显示',
+          title: 'Hiển thị',
           tabVal: 0,
           tabList: [
             {
-              name: '显示',
+              name: 'Hiện',
             },
             {
-              name: '隐藏',
+              name: 'Ẩn',
             },
           ],
         },
         bntConfig: {
-          title: '按钮效果',
+          title: 'Chức năng nút',
           tabVal: 1,
           tabList: [
             {
-              name: '进入商品详情页',
+              name: 'Vào trang chi tiết sản phẩm',
             },
             {
-              name: '商品加购',
+              name: 'Thêm vào giỏ hàng',
             },
           ],
         },
         bntStyleConfig: {
-          title: '按钮样式',
+          title: 'Kiểu nút',
           tabVal: 0,
         },
         filletImg: {
-          title: '图片圆角',
+          title: 'Bo góc ảnh',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 0,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         goodsName: {
-          title: '商品名称',
+          title: 'Tên sản phẩm',
           tabVal: 1,
           tabList: [
             {
-              name: '加粗',
+              name: 'In đậm',
               style: 'bold',
             },
             {
-              name: '正常',
+              name: 'Bình thường',
               style: 'normal',
             },
           ],
         },
         toneConfig: {
-          title: '色调',
+          title: 'Tông màu',
           tabVal: 0,
           tabList: [
             {
-              name: '跟随主题风格',
+              name: 'Theo phong cách chủ đề',
             },
             {
-              name: '自定义',
+              name: 'Tùy chỉnh',
             },
           ],
         },
         goodsNameColor: {
-          title: '商品名称',
+          title: 'Tên sản phẩm',
           name: 'goodsNameColor',
           default: [
             {
@@ -701,7 +701,7 @@ export default {
           ],
         },
         goodsPriceColor: {
-          title: '商品价格',
+          title: 'Giá sản phẩm',
           name: 'goodsPriceColor',
           default: [
             {
@@ -715,7 +715,7 @@ export default {
           ],
         },
         soldNumColor: {
-          title: '已售数量',
+          title: 'Số lượng đã bán',
           name: 'soldNumColor',
           default: [
             {
@@ -729,7 +729,7 @@ export default {
           ],
         },
         scoreColor: {
-          title: '评分颜色',
+          title: 'Màu điểm đánh giá',
           name: 'scoreColor',
           default: [
             {
@@ -743,19 +743,19 @@ export default {
           ],
         },
         toneCartConfig: {
-          title: '色调',
+          title: 'Tông màu',
           tabVal: 0,
           tabList: [
             {
-              name: '跟随主题风格',
+              name: 'Theo phong cách chủ đề',
             },
             {
-              name: '自定义',
+              name: 'Tùy chỉnh',
             },
           ],
         },
         bntBgColor: {
-          title: '按钮颜色',
+          title: 'Màu nút',
           name: 'bntBgColor',
           default: [
             {
@@ -775,7 +775,7 @@ export default {
           ],
         },
         moduleColor: {
-          title: '组件背景',
+          title: 'Nền thành phần',
           default: [
             {
               item: '#fff',
@@ -794,7 +794,7 @@ export default {
           ],
         },
         bottomBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           default: [
             {
               item: '#f5f5f5',
@@ -807,50 +807,50 @@ export default {
           ],
         },
         topConfig: {
-          title: '上边距',
+          title: 'Lề trên',
           val: 0,
           min: 0,
         },
         bottomConfig: {
-          title: '下边距',
+          title: 'Lề dưới',
           val: 0,
           min: 0,
         },
         prConfig: {
-          title: '左右边距',
+          title: 'Lề trái phải',
           val: 10,
           min: 0,
         },
         mbConfig: {
-          title: '页面上间距',
+          title: 'Lề trên trang',
           val: 0,
           min: 0,
         },
         fillet: {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 8,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         goodsLabel: {
-          title: '商品标签',
+          title: 'Nhãn sản phẩm',
           activeValue: [],
           list: [],
         },
         productList: {
-          title: '商品列表',
+          title: 'Danh sách sản phẩm',
           list: [],
         },
       },

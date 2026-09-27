@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -30,7 +30,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 显示资源列表
+     * Hiển thị danh sách resource
      * @return mixed
      */
     public function index()
@@ -61,7 +61,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param string $id
      * @param string $is_show
      */
@@ -73,7 +73,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 获取商品信息
+     * Lấy thông tin sản phẩm
      * @param $id
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -85,109 +85,109 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 保存
+     * Lưu
      * @return mixed
      * @throws \Exception
      */
     public function save()
     {
         $data = $this->request->postMore([
-            ['cate_id', []],//分类id
-            ['store_name', ''],//商品名称
-            ['keyword', ''],//关键字
-            ['unit_name', '件'],//单位
-            ['store_info', ''],//商品简介
-            ['slider_image', []],//轮播图
-            ['video_open', 0],//是否开启视频
-            ['video_link', ''],//视频链接
-            ['spec_type', 0],//单多规格
-            ['items', []],//规格
-            ['attrs', []],//规格
-            ['description', ''],//商品详情
-            ['description_images', []],//商品详情
-            ['logistics', []],//物流方式
-            ['freight', 1],//运费设置
-            ['postage', 0],//邮费
-            ['is_sub', 0],//佣金是单独还是默认
-            ['is_vip', 0],//付费会员价
-            ['recommend', []],//商品推荐
-            ['temp_id', 0],//运费模版id
-            ['give_integral', 0],//赠送积分
-            ['presale', 0],//预售商品开关
-            ['presale_time', 0],//预售时间
-            ['presale_day', 0],//预售发货日
-            ['vip_product', 0],//是否付费会员商品
-            ['activity', []],//活动优先级
-            ['command_word', ''],//商品口令
-            ['is_show', 0],//是否上架
-            ['ficti', 0],//虚拟销量
-            ['sort', 0],//排序
-            ['recommend_image', ''],//商品推荐图
-            ['custom_form', []],//自定义表单
-            ['is_limit', 0],//是否限购
-            ['limit_type', 0],//限购类型
-            ['limit_num', 0]//限购数量
+            ['cate_id', []],//ID danh mục
+            ['store_name', ''],//Tên sản phẩm
+            ['keyword', ''],//Từ khóa
+            ['unit_name', 'cái'],//Đơn vị
+            ['store_info', ''],//Mô tả ngắn sản phẩm
+            ['slider_image', []],//Ảnh trình chiếu
+            ['video_open', 0],//Có mở video không
+            ['video_link', ''],//Liên kết video
+            ['spec_type', 0],//Đơn/đa quy cách
+            ['items', []],//Quy cách
+            ['attrs', []],//Quy cách
+            ['description', ''],//Chi tiết sản phẩm
+            ['description_images', []],//Chi tiết sản phẩm
+            ['logistics', []],//Hình thức vận chuyển
+            ['freight', 1],//Cài đặt phí vận chuyển
+            ['postage', 0],//Phí vận chuyển
+            ['is_sub', 0],//Hoa hồng là riêng hay theo mặc định
+            ['is_vip', 0],//Giá thành viên trả phí
+            ['recommend', []],//Đề xuất sản phẩm
+            ['temp_id', 0],//ID mẫu phí vận chuyển
+            ['give_integral', 0],//Tặng điểm thưởng
+            ['presale', 0],//Bật/tắt sản phẩm đặt trước
+            ['presale_time', 0],//Thời gian đặt trước
+            ['presale_day', 0],//Ngày giao hàng đặt trước
+            ['vip_product', 0],//Có phải sản phẩm dành cho thành viên trả phí không
+            ['activity', []],//Thứ tự ưu tiên hoạt động
+            ['command_word', ''],//Mã chia sẻ sản phẩm
+            ['is_show', 0],//Đăng bán
+            ['ficti', 0],//Lượt bán ảo
+            ['sort', 0],//Thứ tự sắp xếp
+            ['recommend_image', ''],//Ảnh đề xuất sản phẩm
+            ['custom_form', []],//Form tùy chỉnh
+            ['is_limit', 0],//Có giới hạn mua không
+            ['limit_type', 0],//Loại giới hạn mua
+            ['limit_num', 0]//Số lượng giới hạn mua
         ]);
         $id = $this->services->save(0, $data);
         return app('json')->success(100000, ['id' => $id]);
     }
 
     /**
-     * 更新
+     * Cập nhật
      * @param $id
      * @return mixed
      */
     public function update($id)
     {
         $data = $this->request->postMore([
-            ['cate_id', []],//分类id
-            ['store_name', ''],//商品名称
-            ['keyword', ''],//关键字
-            ['unit_name', '件'],//单位
-            ['store_info', ''],//商品简介
-            ['slider_image', []],//轮播图
-            ['video_open', 0],//是否开启视频
-            ['video_link', ''],//视频链接
-            ['spec_type', 0],//单多规格
-            ['items', []],//规格
-            ['attrs', []],//规格
-            ['description', ''],//商品详情
-            ['description_images', []],//商品详情
-            ['logistics', []],//物流方式
-            ['freight', 1],//运费设置
-            ['postage', 0],//邮费
-            ['is_sub', 0],//佣金是单独还是默认
-            ['is_vip', 0],//付费会员价
-            ['recommend', []],//商品推荐
-            ['temp_id', 0],//运费模版id
-            ['give_integral', 0],//赠送积分
-            ['presale', 0],//预售商品开关
-            ['presale_time', 0],//预售时间
-            ['presale_day', 0],//预售发货日
-            ['vip_product', 0],//是否付费会员商品
-            ['activity', []],//活动优先级
-            ['command_word', ''],//商品口令
-            ['is_show', 0],//是否上架
-            ['ficti', 0],//虚拟销量
-            ['sort', 0],//排序
-            ['recommend_image', ''],//商品推荐图
-            ['custom_form', []],//自定义表单
-            ['is_limit', 0],//是否限购
-            ['limit_type', 0],//限购类型
-            ['limit_num', 0]//限购数量
+            ['cate_id', []],//ID danh mục
+            ['store_name', ''],//Tên sản phẩm
+            ['keyword', ''],//Từ khóa
+            ['unit_name', 'cái'],//Đơn vị
+            ['store_info', ''],//Mô tả ngắn sản phẩm
+            ['slider_image', []],//Ảnh trình chiếu
+            ['video_open', 0],//Có mở video không
+            ['video_link', ''],//Liên kết video
+            ['spec_type', 0],//Đơn/đa quy cách
+            ['items', []],//Quy cách
+            ['attrs', []],//Quy cách
+            ['description', ''],//Chi tiết sản phẩm
+            ['description_images', []],//Chi tiết sản phẩm
+            ['logistics', []],//Hình thức vận chuyển
+            ['freight', 1],//Cài đặt phí vận chuyển
+            ['postage', 0],//Phí vận chuyển
+            ['is_sub', 0],//Hoa hồng là riêng hay theo mặc định
+            ['is_vip', 0],//Giá thành viên trả phí
+            ['recommend', []],//Đề xuất sản phẩm
+            ['temp_id', 0],//ID mẫu phí vận chuyển
+            ['give_integral', 0],//Tặng điểm thưởng
+            ['presale', 0],//Bật/tắt sản phẩm đặt trước
+            ['presale_time', 0],//Thời gian đặt trước
+            ['presale_day', 0],//Ngày giao hàng đặt trước
+            ['vip_product', 0],//Có phải sản phẩm dành cho thành viên trả phí không
+            ['activity', []],//Thứ tự ưu tiên hoạt động
+            ['command_word', ''],//Mã chia sẻ sản phẩm
+            ['is_show', 0],//Đăng bán
+            ['ficti', 0],//Lượt bán ảo
+            ['sort', 0],//Thứ tự sắp xếp
+            ['recommend_image', ''],//Ảnh đề xuất sản phẩm
+            ['custom_form', []],//Form tùy chỉnh
+            ['is_limit', 0],//Có giới hạn mua không
+            ['limit_type', 0],//Loại giới hạn mua
+            ['limit_num', 0]//Số lượng giới hạn mua
         ]);
         $this->services->save((int)$id, $data);
         return app('json')->success(100001);
     }
 
     /**
-     * 删除
+     * Xóa
      * @param int $id
      * @return \think\Response
      */
     public function delete($id)
     {
-        //删除商品检测是否有参与活动
+        //Khi xóa sản phẩm, kiểm tra có đang tham gia hoạt động không
         $this->services->checkActivity($id);
         $res = $this->services->del($id);
         /** @var StoreCartServices $cartService */
@@ -197,7 +197,7 @@ class StoreProduct extends AuthController
     }
 
     /**
-     * 同步库存
+     * Đồng bộ tồn kho
      * @return void
      */
     public function uploadStock()

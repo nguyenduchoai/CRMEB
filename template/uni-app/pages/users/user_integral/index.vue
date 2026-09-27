@@ -2,27 +2,27 @@
 	<view>
 		<view class='integral-details' :style="colorStyle">
 			<view class='header'>
-				<view class='currentScore'>{{$t(`当前积分`)}}</view>
+				<view class='currentScore'>{{$t(`Điểm thưởng hiện tại`)}}</view>
 				<view class="scoreNum">{{userInfo.integral}}</view>
 				<view class='line'></view>
 				<view class='nav acea-row'>
 					<view class='item'>
 						<view class='num'>{{userInfo.sum_integral}}</view>
-						<view>{{$t(`累计积分`)}}</view>
+						<view>{{$t(`Tổng điểm thưởng tích lũy`)}}</view>
 					</view>
 					<view class='item'>
 						<view class='num'>{{userInfo.deduction_integral}}</view>
-						<view>{{$t(`累计消费`)}}</view>
+						<view>{{$t(`Chi tiêu tích lũy`)}}</view>
 					</view>
 					<view class='item'>
 						<view class='num'>{{userInfo.frozen_integral}}</view>
-						<view>{{$t(`冻结积分`)}}</view>
+						<view>{{$t(`Điểm thưởng đóng băng`)}}</view>
 					</view>
 				</view>
 				<view class="apply">
 					<view>
 						<navigator url='/pages/users/privacy/index?type=6' hover-class="none">
-							<view>{{$t(`积分规则`)}}</view>
+							<view>{{$t(`Quy tắc điểm thưởng`)}}</view>
 						</navigator>
 					</view>
 				</view>
@@ -35,9 +35,9 @@
 				</view>
 				<view class='list' :class="{'bag-white': integralList.length}" :hidden='current!=0'>
 					<view class='tip acea-row row-middle' v-if="!isTime"><text
-							class='iconfont icon-shuoming'></text>{{$t(`提示：积分数值的高低会直接影响您的会员等级`)}}</view>
+							class='iconfont icon-shuoming'></text>{{$t(`Lưu ý: số điểm thưởng nhiều hay ít sẽ ảnh hưởng trực tiếp đến hạng thành viên của bạn`)}}</view>
 					<view class='tip acea-row row-middle' v-else><text
-							class='iconfont icon-shuoming'></text>{{$t(`提示：你有`)}}{{userInfo.clear_integral}}{{$t(`积分在`)}}{{ userInfo.clear_time | dateFormat }}{{$t(`过期，请尽快使用`)}}
+							class='iconfont icon-shuoming'></text>{{$t(`Lưu ý: bạn có`)}}{{userInfo.clear_integral}}{{$t(`điểm thưởng, đến`)}}{{ userInfo.clear_time | dateFormat }}{{$t(`sẽ hết hạn, vui lòng sử dụng sớm`)}}
 					</view>
 					<view class='item acea-row row-between-wrapper' v-for="(item,index) in integralList" :key="index">
 						<view>
@@ -51,7 +51,7 @@
 						<text class='loading iconfont icon-jiazai' :hidden='loading==false'></text>{{loadTitle}}
 					</view>
 					<view class="no-thing" v-if="integralList.length == 0">
-						<emptyPage :title="$t(`暂无积分记录哦～`)"></emptyPage>
+						<emptyPage :title="$t(`Chưa có lịch sử điểm thưởng~`)"></emptyPage>
 					</view>
 				</view>
 				<view class='list2' :hidden='current!=1'>
@@ -60,16 +60,16 @@
 						<view class='pictrue'>
 							<image src='../static/score.png'></image>
 						</view>
-						<view class='name'>{{$t(`购买商品可获得积分奖励`)}}</view>
-						<view class='earn'>{{$t(`赚积分`)}}</view>
+						<view class='name'>{{$t(`Mua sản phẩm để nhận điểm thưởng`)}}</view>
+						<view class='earn'>{{$t(`Kiếm điểm thưởng`)}}</view>
 					</navigator>
 					<navigator class='item acea-row row-between-wrapper' hover-class='none'
 						url='/pages/users/user_sgin/index'>
 						<view class='pictrue'>
 							<image src='../static/score.png'></image>
 						</view>
-						<view class='name'>{{$t(`每日签到可获得积分奖励`)}}</view>
-						<view class='earn'>{{$t(`赚积分`)}}</view>
+						<view class='name'>{{$t(`Điểm danh hằng ngày để nhận điểm thưởng`)}}</view>
+						<view class='earn'>{{$t(`Kiếm điểm thưởng`)}}</view>
 					</navigator>
 				</view>
 			</view>
@@ -113,11 +113,11 @@
 		data() {
 			return {
 				navList: [{
-						'name': this.$t(`分值明细`),
+						'name': this.$t(`Chi tiết điểm thưởng`),
 						'icon': 'icon-mingxi'
 					},
 					{
-						'name': this.$t(`分值提升`),
+						'name': this.$t(`Tăng điểm thưởng`),
 						'icon': 'icon-tishengfenzhi'
 					}
 				],
@@ -128,9 +128,9 @@
 				userInfo: {},
 				loadend: false,
 				loading: false,
-				loadTitle: this.$t(`加载更多`),
-				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false, //是否隐藏授权
+				loadTitle: this.$t(`Tải thêm`),
+				isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+				isShowAuth: false, //Có ẩn ủy quyền hay không
 				isTime: 0
 			};
 		},
@@ -155,20 +155,20 @@
 			}
 		},
 		/**
-		 * 页面上拉触底事件的处理函数
+		 * Hàm xử lý sự kiện kéo lên đến đáy trang
 		 */
 		onReachBottom: function() {
 			this.getIntegralList();
 		},
 		methods: {
 			/**
-			 * 授权回调
+			 * Callback ủy quyền
 			 */
 			onLoadFun: function() {
 				this.getUserInfo();
 				this.getIntegralList();
 			},
-			// 授权关闭
+			// Đóng ủy quyền
 			authColse: function(e) {
 				this.isShowAuth = e
 			},
@@ -192,7 +192,7 @@
 			},
 
 			/**
-			 * 获取积分明细
+			 * Lấy chi tiết điểm thưởng
 			 */
 			getIntegralList: function() {
 				let that = this;
@@ -211,10 +211,10 @@
 					that.page = that.page + 1;
 					that.loading = false;
 					that.loadend = loadend;
-					that.loadTitle = loadend ? that.$t(`我也是有底线的`) : that.$t(`加载更多`);
+					that.loadTitle = loadend ? that.$t(`Đã đến cuối danh sách`) : that.$t(`Tải thêm`);
 				}, function(res) {
 					this.loading = false;
-					that.loadTitle = that.$t(`加载更多`);
+					that.loadTitle = that.$t(`Tải thêm`);
 				});
 			},
 			nav: function(current) {

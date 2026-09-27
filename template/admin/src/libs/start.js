@@ -2,11 +2,11 @@
 
 const chalk = require('chalk');
 
-// 打印欢迎信息
-console.log(chalk.hex('#DEADED').underline('😄 Hello ~ 欢迎使用CRMEB标准版，我们将竭诚为您服务！'));
-console.log(chalk.yellow('info - [提示] 点击这里查看更多商品~ ') + chalk.blue.underline('https://doc.crmeb.com'));
-console.log(chalk.yellow('info - [提示] 点击这里可以查看开发文档喔~ ') + chalk.blue.underline('https://www.crmeb.com'));
+// In thông tin chào mừng
+console.log(chalk.hex('#DEADED').underline('😄 Hello ~ Chào mừng bạn đến với CRMEB bản tiêu chuẩn, chúng tôi sẽ tận tâm phục vụ bạn!'));
+console.log(chalk.yellow('info - [Gợi ý] Nhấn vào đây để xem thêm sản phẩm~ ') + chalk.blue.underline('https://doc.crmeb.com'));
+console.log(chalk.yellow('info - [Gợi ý] Nhấn vào đây để xem tài liệu phát triển nhé~ ') + chalk.blue.underline('https://www.crmeb.com'));
 console.log(
-  chalk.yellow('info - [提示] 点击这里可以查看我们的论坛社区~ ') + chalk.blue.underline('https://www.crmeb.com/ask'),
+  chalk.yellow('info - [Gợi ý] Nhấn vào đây để xem diễn đàn cộng đồng của chúng tôi~ ') + chalk.blue.underline('https://www.crmeb.com/ask'),
 );
-console.log(chalk.blue('info - [你知道吗？] 按 Ctrl+C 可以停止服务呢~'));
+console.log(chalk.blue('info - [Bạn có biết?] Nhấn Ctrl+C để dừng dịch vụ nhé~'));

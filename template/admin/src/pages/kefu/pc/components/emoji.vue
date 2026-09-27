@@ -25,7 +25,7 @@ export default {
   data() {
     return {
       emojiData: data,
-      pannels: ['表情', '自然', '物品', '地点', '符号'],
+      pannels: ['Biểu tượng cảm xúc', 'Thiên nhiên', 'Đồ vật', 'Địa điểm', 'Ký hiệu'],
       activeIndex: 0,
     };
   },

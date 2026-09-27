@@ -13,7 +13,7 @@ use think\facade\Route as Url;
 /**
  * Class WechatQrcodeCateServices
  * @package app\services\wechat
- * @method getCateList() 分类列表
+ * @method getCateList() Danh sách danh mục
  */
 class WechatQrcodeCateServices extends BaseServices
 {
@@ -27,7 +27,7 @@ class WechatQrcodeCateServices extends BaseServices
     }
 
     /**
-     * 添加编辑分类表单
+     * Biểu mẫu thêm/sửa danh mục
      * @param int $id
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -39,12 +39,12 @@ class WechatQrcodeCateServices extends BaseServices
     {
         $info = $this->dao->get($id);
         $f[] = Form::hidden('id', $id);
-        $f[] = Form::input('cate_name', '分组名称', $info['cate_name'] ?? '')->maxlength(10)->required();
-        return create_form($id ? '修改分组' : '添加分组', $f, Url::buildUrl('/app/wechat_qrcode/cate/save'), 'POST');
+        $f[] = Form::input('cate_name', 'Tên nhóm', $info['cate_name'] ?? '')->maxlength(10)->required();
+        return create_form($id ? 'Sửa nhóm' : 'Thêm nhóm', $f, Url::buildUrl('/app/wechat_qrcode/cate/save'), 'POST');
     }
 
     /**
-     * 保存数据
+     * Lưu dữ liệu
      * @param $data
      * @return bool
      */
@@ -63,7 +63,7 @@ class WechatQrcodeCateServices extends BaseServices
     }
 
     /**
-     * 删除分类
+     * Xóa danh mục
      * @param int $id
      * @return bool
      */

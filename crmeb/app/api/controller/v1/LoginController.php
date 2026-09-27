@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,7 +21,7 @@ use think\exception\ValidateException;
 use app\api\validate\user\RegisterValidates;
 
 /**
- * 微信小程序授权类
+ * Lớp ủy quyền Mini Program WeChat
  * Class AuthController
  * @package app\api\controller
  */
@@ -39,7 +39,7 @@ class LoginController
     }
 
     /**
-     * H5账号登陆
+     * Đăng nhập tài khoản H5
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -61,7 +61,7 @@ class LoginController
     }
 
     /**
-     * 退出登录
+     * Đăng xuất
      * @param Request $request
      * @return mixed
      */
@@ -73,7 +73,7 @@ class LoginController
     }
 
     /**
-     * 获取发送验证码key
+     * Lấy key gửi mã xác thực
      * @return mixed
      */
     public function verifyCode()
@@ -85,7 +85,7 @@ class LoginController
     }
 
     /**
-     * 获取图片验证码
+     * Lấy mã xác thực bằng hình ảnh
      * @param Request $request
      * @return \think\Response
      */
@@ -102,7 +102,7 @@ class LoginController
     }
 
     /**
-     * 验证验证码是否正确
+     * Xác thực mã xác thực có đúng không
      * @param $uni
      * @param string $code
      * @return bool
@@ -124,7 +124,7 @@ class LoginController
     }
 
     /**
-     * 验证码发送
+     * Gửi mã xác thực
      * @param Request $request
      * @param SmsService $services
      * @return mixed
@@ -142,38 +142,38 @@ class LoginController
         $keyName = 'sms.key.' . $key;
         if (!CacheService::has($keyName)) return app('json')->fail(410003);
 
-        // 验证限制
-        // 验证码每分钟发送上限
+        // Giới hạn xác thực
+        // Giới hạn số lần gửi mã xác thực mỗi phút
         $maxMinuteCountKey = 'sms.minute.' . $phone . date('YmdHi');
         $minuteCount = 0;
         if (CacheService::has($maxMinuteCountKey)) {
             $minuteCount = CacheService::get($maxMinuteCountKey) ?? 0;
             $maxMinuteCount = Config::get('sms.maxMinuteCount', 5);
-            if ($minuteCount > $maxMinuteCount) return app('json')->fail('同一手机号每分钟最多发送' . $maxMinuteCount . '条');
+            if ($minuteCount > $maxMinuteCount) return app('json')->fail('Mỗi phút, một số điện thoại chỉ được gửi tối đa' . $maxMinuteCount . 'tin nhắn');
 
         }
 
-        // 验证码单个手机每日发送上限
+        // Giới hạn số lần gửi mã xác thực mỗi ngày cho một số điện thoại
         $maxPhoneCountKey = 'sms.phone.' . $phone . '.' . date('Ymd');
         $phoneCount = 0;
         if (CacheService::has($maxPhoneCountKey)) {
             $phoneCount = CacheService::get($maxPhoneCountKey) ?? 0;
             $maxPhoneCount = Config::get('sms.maxPhoneCount', 20);
-            if ($phoneCount > $maxPhoneCount) return app('json')->fail('同一手机号每天最多发送' . $maxPhoneCount . '条');
+            if ($phoneCount > $maxPhoneCount) return app('json')->fail('Mỗi ngày, một số điện thoại chỉ được gửi tối đa' . $maxPhoneCount . 'tin nhắn');
 
         }
 
-        // 验证码单个手机每日发送上限
+        // Giới hạn số lần gửi mã xác thực mỗi ngày cho một số điện thoại
         $maxIpCountKey = 'sms.ip.' . app()->request->ip() . '.' . date('Ymd');
         $ipCount = 0;
         if (CacheService::has($maxIpCountKey)) {
             $ipCount = CacheService::get($maxPhoneCountKey) ?? 0;
             $maxIpCount = Config::get('sms.maxIpCount', 50);
-            if ($ipCount > $maxIpCount) return app('json')->fail('同一IP每天最多发送' . $maxIpCount . '条');
+            if ($ipCount > $maxIpCount) return app('json')->fail('Mỗi ngày, một IP chỉ được gửi tối đa' . $maxIpCount . 'tin nhắn');
 
         }
 
-        //二次验证
+        //Xác thực lần 2
         try {
             aj_captcha_check_two($captchaType, $captchaVerification);
         } catch (\Throwable $e) {
@@ -200,7 +200,7 @@ class LoginController
     }
 
     /**
-     * H5注册新用户
+     * Đăng ký người dùng mới qua H5
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -234,7 +234,7 @@ class LoginController
     }
 
     /**
-     * 密码修改
+     * Sửa mật khẩu
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -266,7 +266,7 @@ class LoginController
     }
 
     /**
-     * 手机号登录
+     * Đăng nhập bằng số điện thoại
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -277,14 +277,14 @@ class LoginController
     {
         [$phone, $captcha, $spread, $agent_id] = $request->postMore([['phone', ''], ['captcha', ''], ['spread', 0], ['agent_id', 0]], true);
 
-        //验证手机号
+        //Xác thực số điện thoại
         try {
             validate(RegisterValidates::class)->scene('code')->check(['phone' => $phone]);
         } catch (ValidateException $e) {
             return app('json')->fail($e->getError());
         }
 
-        //验证验证码
+        //Xác thực mã xác thực
         $verifyCode = CacheService::get('code_' . $phone);
         if (!$verifyCode)
             return app('json')->fail(410009);
@@ -303,7 +303,7 @@ class LoginController
     }
 
     /**
-     * H5切换登陆
+     * Chuyển đổi đăng nhập trên H5
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -323,7 +323,7 @@ class LoginController
     }
 
     /**
-     * 绑定手机号
+     * Liên kết số điện thoại
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -337,7 +337,7 @@ class LoginController
             ['captcha', ''],
             ['key', '']
         ], true);
-        //验证手机号
+        //Xác thực số điện thoại
         try {
             validate(RegisterValidates::class)->scene('code')->check(['phone' => $phone]);
         } catch (ValidateException $e) {
@@ -349,7 +349,7 @@ class LoginController
         if (!$phone) {
             return app('json')->fail(410015);
         }
-        //验证验证码
+        //Xác thực mã xác thực
         $verifyCode = CacheService::get('code_' . $phone);
         if (!$verifyCode)
             return app('json')->fail(410009);
@@ -366,7 +366,7 @@ class LoginController
     }
 
     /**
-     * 绑定手机号
+     * Liên kết số điện thoại
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -381,14 +381,14 @@ class LoginController
             ['step', 0]
         ], true);
 
-        //验证手机号
+        //Xác thực số điện thoại
         try {
             validate(RegisterValidates::class)->scene('code')->check(['phone' => $phone]);
         } catch (ValidateException $e) {
             return app('json')->fail($e->getError());
         }
         if (!$step) {
-            //验证验证码
+            //Xác thực mã xác thực
             $verifyCode = CacheService::get('code_' . $phone);
             if (!$verifyCode)
                 return app('json')->fail(410009);
@@ -412,13 +412,13 @@ class LoginController
             ['captcha', ''],
         ], true);
 
-        //验证手机号
+        //Xác thực số điện thoại
         try {
             validate(RegisterValidates::class)->scene('code')->check(['phone' => $phone]);
         } catch (ValidateException $e) {
             return app('json')->fail($e->getError());
         }
-        //验证验证码
+        //Xác thực mã xác thực
         $verifyCode = CacheService::get('code_' . $phone);
         if (!$verifyCode)
             return app('json')->fail(410009);
@@ -435,7 +435,7 @@ class LoginController
     }
 
     /**
-     * 设置扫描二维码状态
+     * Thiết lập trạng thái quét mã QR
      * @param string $code
      * @return mixed
      */
@@ -453,7 +453,7 @@ class LoginController
     }
 
     /**
-     * apple快捷登陆
+     * Đăng nhập nhanh bằng Apple
      * @param Request $request
      * @param WechatServices $services
      * @return mixed
@@ -473,7 +473,7 @@ class LoginController
             if (!$captcha) {
                 return app('json')->fail(410004);
             }
-            //验证验证码
+            //Xác thực mã xác thực
             $verifyCode = CacheService::get('code_' . $phone);
             if (!$verifyCode)
                 return app('json')->fail(410009);
@@ -502,7 +502,7 @@ class LoginController
     }
 
     /**
-     * 滑块验证
+     * Xác thực trượt (slider captcha)
      * @return mixed
      */
     public function ajcaptcha(Request $request)
@@ -512,7 +512,7 @@ class LoginController
     }
 
     /**
-     * 一次验证
+     * Xác minh lần đầu
      * @return mixed
      */
     public function ajcheck(Request $request)
@@ -531,7 +531,7 @@ class LoginController
     }
 
     /**
-     * 远程登录接口
+     * API đăng nhập từ xa
      * @param Request $request
      * @return \think\Response
      * @throws \Psr\SimpleCache\InvalidArgumentException
@@ -547,7 +547,7 @@ class LoginController
         [$remote_token] = $request->getMore([
             ['remote_token', ''],
         ], true);
-        if ($remote_token == '') return app('json')->success('登录失败', ['get_remote_login_url' => sys_config('get_remote_login_url')]);
-        return app('json')->success('登录成功', $this->services->remoteRegister($remote_token));
+        if ($remote_token == '') return app('json')->success('Đăng nhập thất bại', ['get_remote_login_url' => sys_config('get_remote_login_url')]);
+        return app('json')->success('Đăng nhập thành công', $this->services->remoteRegister($remote_token));
     }
 }

@@ -10,22 +10,22 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | Cookie设置
+// | Cài đặt Cookie
 // +----------------------------------------------------------------------
 return [
-    // cookie 保存时间
+    // Thời gian lưu cookie
     'expire'    => 0,
-    // cookie 保存路径
+    // Đường dẫn lưu cookie
     'path'      => '/',
-    // cookie 有效域名
+    // Domain hợp lệ của cookie
     'domain'    => '',
-    // cookie 启用安全传输
+    // Cookie bật truyền tải an toàn
     'secure'    => false,
-    // httponly设置
+    // Cài đặt httponly
     'httponly'  => false,
-    // 是否使用 setcookie
+    // Có dùng setcookie không
     'setcookie' => true,
-    // 跨域header
+    // Header cross-domain (CORS)
     'header'    => [
         'Access-Control-Allow-Origin'       => '*',
         'Access-Control-Allow-Headers'      => 'Authori-zation,Authorization, Content-Type, If-Match, If-Modified-Since, If-None-Match, If-Unmodified-Since, X-Requested-With, Form-type, Cb-lang, Invalid-zation',
@@ -33,6 +33,6 @@ return [
         'Access-Control-Max-Age'            =>  '1728000',
         'Access-Control-Allow-Credentials'  => 'true'
     ],
-    // token名称
+    // Tên token
     'token_name' => 'Authori-zation',
 ];

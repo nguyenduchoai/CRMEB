@@ -1,9 +1,9 @@
 // +---------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +---------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +---------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +---------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +---------------------------------------------------------------------
@@ -18,7 +18,7 @@ export default {
   name: 'finance',
   header: 'finance',
   meta: {
-    // 授权标识
+    // Mã định danh ủy quyền
     auth: ['admin-finance'],
   },
   redirect: {
@@ -31,7 +31,7 @@ export default {
       name: `${pre}billingRecords`,
       meta: {
         auth: ['finance-billing_records-index'],
-        title: '账单记录',
+        title: 'Lịch sử sao kê',
       },
       component: () => import('@/pages/finance/billingRecords/index'),
     },
@@ -40,7 +40,7 @@ export default {
       name: `${pre}capitalFlow`,
       meta: {
         auth: ['finance-capital_flow-index'],
-        title: '资金流水',
+        title: 'Dòng tiền',
       },
       component: () => import('@/pages/finance/capitalFlow/index'),
     },
@@ -49,7 +49,7 @@ export default {
       name: `${pre}cashApply`,
       meta: {
         auth: ['finance-user_extract'],
-        title: '提现申请',
+        title: 'Yêu cầu rút tiền',
       },
       component: () => import('@/pages/finance/userExtract/index'),
     },
@@ -58,7 +58,7 @@ export default {
       name: `${pre}recharge`,
       meta: {
         auth: ['finance-user-recharge'],
-        title: '充值记录',
+        title: 'Lịch sử nạp tiền',
       },
       component: () => import('@/pages/finance/financialRecords/recharge'),
     },
@@ -67,7 +67,7 @@ export default {
       name: `${pre}bill`,
       meta: {
         auth: ['finance-finance-bill'],
-        title: '资金记录',
+        title: 'Lịch sử dòng tiền',
       },
       component: () => import('@/pages/finance/financialRecords/bill'),
     },
@@ -76,7 +76,7 @@ export default {
       name: `${pre}commissionRecord`,
       meta: {
         auth: ['finance-finance-commission'],
-        title: '佣金记录',
+        title: 'Lịch sử hoa hồng',
       },
       component: () => import('@/pages/finance/commission/index'),
     },
@@ -85,7 +85,7 @@ export default {
       name: `${pre}balance`,
       meta: {
         auth: ['finance-user-balance'],
-        title: '余额记录',
+        title: 'Lịch sử số dư',
       },
       component: () => import('@/pages/finance/balance/index'),
     },

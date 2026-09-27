@@ -1,5 +1,5 @@
 <template>
-	<!-- 轮播图 -->
+	<!-- Ảnh trình chiếu -->
 	<view v-show="!isSortType">
 		<view class="swipers" :class="[docConfig?'square':'circular',imgConfig?'':'fillet']" v-if="imgUrls.length && tabConfig" :style="'padding:0 '+lrConfig+'rpx;margin-top:' + mbConfig +'rpx;'">
 			<swiper :style="'height:'+(imageH+10)+'rpx;'" indicator-dots="true" :autoplay="true" :circular="circular" :interval="interval" :duration="duration"
@@ -75,10 +75,10 @@
 			swiperChange(e) {
 				this.swiperCur = e.detail.current
 			},
-			//替换安全域名
+			//Thay domain an toàn
 			setDomain: function(url) {
 				url = url ? url.toString() : '';
-				//本地调试打开,生产请注销
+				//Mở khi debug local, khi lên production hãy comment lại
 				if (url.indexOf("https://") > -1) return url;
 				else return url.replace('http://', 'https://');
 			},
@@ -100,7 +100,7 @@
 		width: 100%;
 		margin: 0 auto;
 		border-radius: 10rpx;
-		/* 设置圆角 */
+		/* Đặt góc tròn */
 		&.fillet {
 			border-radius: 10rpx;
 		
@@ -123,7 +123,7 @@
 				transform: scale(1);
 			}
 		}
-		// 圆形指示点
+		// Chấm chỉ báo hình tròn
 		&.circular{
 			/deep/.uni-swiper-dot{
 				width: 10rpx!important;
@@ -134,7 +134,7 @@
 				background: #fff!important
 			}
 		}
-		// 方形指示点
+		// Chấm chỉ báo hình vuông
 		&.square{
 			/deep/.uni-swiper-dot{
 				width: 20rpx!important;

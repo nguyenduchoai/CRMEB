@@ -1,11 +1,11 @@
 <?php
 /**
  *  +----------------------------------------------------------------------
- *  | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+ *  | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
  *  +----------------------------------------------------------------------
  *  | Copyright (c) 2016~2022 https://www.crmeb.com All rights reserved.
  *  +----------------------------------------------------------------------
- *  | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+ *  | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
  *  +----------------------------------------------------------------------
  *  | Author: CRMEB Team <admin@crmeb.com>
  *  +----------------------------------------------------------------------
@@ -18,9 +18,9 @@ use crmeb\services\crud\enum\FormTypeEnum;
 use think\helper\Str;
 
 /**
- * 创建Controller
+ * Tạo Controller
  * Class Controller
- * @author 等风来
+ * @author Deng Fenglai
  * @email 136327134@qq.com
  * @date 2023/3/13
  * @package crmeb\servives\crud
@@ -35,7 +35,7 @@ class Controller extends Make
 
     /**
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/4
      */
@@ -46,7 +46,7 @@ class Controller extends Make
 
     /**
      * @return Controller
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/13
      */
@@ -72,11 +72,11 @@ class Controller extends Make
     }
 
     /**
-     * 设置控制器内容
+     * Đặt nội dung controller
      * @param string $name
      * @param string $path
      * @return $this
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
@@ -97,9 +97,9 @@ class Controller extends Make
     }
 
     /**
-     * 设置use内容
+     * Đặt nội dung use
      * @return $this
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
@@ -111,14 +111,14 @@ class Controller extends Make
     }
 
     /**
-     * 设置控制器内容
+     * Đặt nội dung controller
      * @param array $field
      * @param array $searchField
      * @param string $name
      * @param array $columnField
      * @param array $hasOneFields
      * @return $this
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
@@ -152,10 +152,10 @@ class Controller extends Make
     }
 
     /**
-     * 获取搜索字段内容
+     * Lấy nội dung trường tìm kiếm
      * @param array $field
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
@@ -170,10 +170,10 @@ class Controller extends Make
     }
 
     /**
-     * 提取控制器模板内容
+     * Trích xuất nội dung mẫu controller
      * @param string $name
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
@@ -189,10 +189,10 @@ class Controller extends Make
     }
 
     /**
-     * 设置搜索字段展示
+     * Đặt hiển thị trường tìm kiếm
      * @param array $columnField
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
@@ -200,7 +200,7 @@ class Controller extends Make
     {
         $select = [];
         foreach ($columnField as $item) {
-            //处理查询字段
+            //Xử lý trường truy vấn
             if (in_array($item['type'], [
                 FormTypeEnum::DATE_TIME_RANGE,
                 FormTypeEnum::FRAME_IMAGES,
@@ -216,10 +216,10 @@ class Controller extends Make
     }
 
     /**
-     * 设置搜索关联内容
+     * Đặt nội dung liên kết tìm kiếm
      * @param array $hasOneFields
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
@@ -242,10 +242,10 @@ class Controller extends Make
     }
 
     /**
-     * 获取可以修改的字段内容
+     * Lấy nội dung trường có thể sửa
      * @param array $columnField
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/9/6
      */
@@ -261,10 +261,10 @@ class Controller extends Make
     }
 
     /**
-     * 设置搜索其他内容
+     * Đặt nội dung tìm kiếm khác
      * @param array $columnField
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
@@ -273,7 +273,7 @@ class Controller extends Make
         $otherContent = '';
 
         foreach ($columnField as $item) {
-            //处理查询字段
+            //Xử lý trường truy vấn
             if (in_array($item['type'], [FormTypeEnum::FRAME_IMAGES, FormTypeEnum::CHECKBOX, FormTypeEnum::DATE_TIME_RANGE])) {
                 if (!$otherContent) {
                     $otherContent .= "\n";
@@ -286,10 +286,10 @@ class Controller extends Make
     }
 
     /**
-     * 获取控制器中搜索内容
+     * Lấy nội dung tìm kiếm trong controller
      * @param array $fields
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/3
      */
@@ -306,10 +306,10 @@ class Controller extends Make
     }
 
     /**
-     * 返回模板路径
+     * Trả về đường dẫn mẫu
      * @param string $type
      * @return string|string[]
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/13
      */
@@ -336,7 +336,7 @@ class Controller extends Make
      * @param string $path
      * @param string $name
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/13
      */

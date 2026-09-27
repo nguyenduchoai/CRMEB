@@ -8,7 +8,7 @@
 			</view>
 			<navigator url="/pages/goods/goods_search/index" class="search acea-row row-center-wrapper" hover-class="none">
 				<text class="iconfont icon-xiazai5"></text>
-				{{ $t(`搜索商品名称`) }}
+				{{ $t(`Tìm kiếm tên sản phẩm`) }}
 			</navigator>
 		</view>
 		<view class="conter">
@@ -91,7 +91,7 @@
 					{{ $t(`￥`) }}
 					<text class="num">{{ totalPrice }}</text>
 				</view>
-				<view class="bnt" @click="subOrder">{{ $t(`去付款`) }}</view>
+				<view class="bnt" @click="subOrder">{{ $t(`Thanh toán`) }}</view>
 			</view>
 		</view>
 		<cartList :cartData="cartData" @closeList="closeList" @ChangeCartNumDan="ChangeCartList" @ChangeSubDel="ChangeSubDel" @ChangeOneDel="ChangeOneDel"></cartList>
@@ -142,27 +142,27 @@ export default {
 			old: {
 				scrollTop: 0
 			},
-			isWidth: 0, //每个导航栏占位
-			tabClick: 0, //导航栏被点击
+			isWidth: 0, //Vị trí chiếm chỗ của mỗi tab điều hướng
+			tabClick: 0, //Thanh điều hướng bị click
 			iSlong: true,
 			tempArr: [],
 			loading: false,
 			loadend: false,
-			loadTitle: this.$t(`加载更多`),
+			loadTitle: this.$t(`Tải thêm`),
 			page: 1,
 			limit: 10,
-			cid: 0, //一级分类
-			sid: 0, //二级分类
-			isAuto: false, //没有授权的不会自动授权
-			isShowAuth: false, //是否隐藏授权
+			cid: 0, //Danh mục cấp 1
+			sid: 0, //Danh mục cấp 2
+			isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+			isShowAuth: false, //Có ẩn ủy quyền hay không
 			attr: {
 				cartAttr: false,
 				productAttr: [],
 				productSelect: {}
 			},
 			productValue: [],
-			attrValue: '', //已选属性
-			storeName: '', //多属性产品名称
+			attrValue: '', //Thuộc tính đã chọn
+			storeName: '', //Tên sản phẩm nhiều thuộc tính
 			id: 0,
 			cartData: {
 				cartList: [],
@@ -170,14 +170,14 @@ export default {
 			},
 			cartCount: 0,
 			totalPrice: 0.0,
-			is_vip: 0, //是否是会员
+			is_vip: 0, //Có phải thành viên hay không
 			cart_num: 0,
 			storeInfo: {}
 		};
 	},
 	mounted() {
 		let that = this;
-		// 获取设备宽度
+		// Lấy chiều rộng thiết bị
 		uni.getSystemInfo({
 			success(e) {
 				that.isWidth = e.windowWidth / 5;
@@ -197,7 +197,7 @@ export default {
 		jumpIndex() {
 			this.$emit('jumpIndex');
 		},
-		// 生成订单；
+		// Tạo đơn hàng;
 		subOrder: function () {
 			let that = this,
 				list = that.cartData.cartList,
@@ -212,11 +212,11 @@ export default {
 				that.cartData.iScart = false;
 			} else {
 				return that.$util.Tips({
-					title: this.$t(`请选择产品`)
+					title: this.$t(`Vui lòng chọn sản phẩm`)
 				});
 			}
 		},
-		// 计算总价；
+		// Tính tổng giá;
 		getTotalPrice: function () {
 			let that = this,
 				list = that.cartData.cartList,
@@ -292,7 +292,7 @@ export default {
 			this.$set(this.attr, 'cartAttr', false);
 		},
 		/**
-		 * 默认选中属性
+		 * Thuộc tính được chọn mặc định
 		 *
 		 */
 		DefaultSelect: function () {
@@ -307,7 +307,7 @@ export default {
 			for (let i = 0; i < productAttr.length; i++) {
 				this.$set(productAttr[i], 'index', value[i]);
 			}
-			//sort();排序函数:数字-英文-汉字；
+			//sort(); hàm sắp xếp: số - chữ Anh - chữ Hán;
 			let productSelect = this.productValue[value.join(',')];
 			if (productSelect && productAttr.length) {
 				this.$set(this.attr.productSelect, 'store_name', this.storeName);
@@ -339,7 +339,7 @@ export default {
 			}
 		},
 		/**
-		 * 属性变动赋值
+		 * Gán giá trị khi thuộc tính thay đổi
 		 *
 		 */
 		ChangeAttr: function (res) {
@@ -374,7 +374,7 @@ export default {
 			this.$set(this.attr.productAttr[val.indexw], 'index', this.attr.productAttr[val.indexw].attr_values[val.indexn]);
 		},
 		/**
-		 * 购物车手动填写
+		 * Điền thủ công vào giỏ hàng
 		 *
 		 */
 		iptCartNum: function (e) {
@@ -390,7 +390,7 @@ export default {
 			}
 		},
 		onLoadFun() {},
-		// 产品列表
+		// Danh sách sản phẩm
 		productslist: function () {
 			let that = this;
 			if (that.loadend) return;
@@ -411,43 +411,43 @@ export default {
 					that.$set(that, 'tempArr', that.tempArr);
 					that.loading = false;
 					that.loadend = loadend;
-					that.loadTitle = loadend ? that.$t(`没有更多内容啦~`) : that.$t(`加载更多`);
+					that.loadTitle = loadend ? that.$t(`Không còn nội dung nào nữa~`) : that.$t(`Tải thêm`);
 					that.page == 1 && this.goTop();
 					that.page = that.page + 1;
 				})
 				.catch((err) => {
-					(that.loading = false), (that.loadTitle = that.$t(`加载更多`));
+					(that.loading = false), (that.loadTitle = that.$t(`Tải thêm`));
 				});
 		},
 		scroll(e) {
 			this.old.scrollTop = e.detail.scrollTop;
 		},
 		goTop(e) {
-			// 解决view层不同步的问题
+			// Giải quyết vấn đề lớp view không đồng bộ
 			this.scrollTop = this.old.scrollTop;
 			this.$nextTick(() => {
 				this.scrollTop = 0;
 			});
 		},
-		// 改变单属性购物车
+		// Thay đổi giỏ hàng một thuộc tính
 		ChangeCartNumDan(changeValue, index, item) {
 			let num = this.tempArr[index];
 			let stock = this.tempArr[index].stock;
 			this.ChangeCartNum(changeValue, num, stock, 0, item.id);
 		},
-		// 改变多属性购物车
+		// Thay đổi giỏ hàng nhiều thuộc tính
 		ChangeCartNumDuo(changeValue) {
-			//获取当前变动属性
+			//Lấy thuộc tính vừa thay đổi hiện tại
 			let productSelect = this.productValue[this.attrValue];
-			//如果没有属性,赋值给商品默认库存
+			//Nếu không có thuộc tính, gán bằng tồn kho mặc định của sản phẩm
 			if (productSelect === undefined && !this.attr.productAttr.length) productSelect = this.attr.productSelect;
-			//无属性值即库存为0；不存在加减；
+			//Không có giá trị thuộc tính thì tồn kho là 0; không có tăng giảm;
 			if (productSelect === undefined) return;
 			let stock = productSelect.stock || 0;
 			let num = this.attr.productSelect;
 			this.ChangeCartNum(changeValue, num, stock, 1, this.id);
 		},
-		// 已经加入购物车时的购物加减；
+		// Tăng giảm số lượng khi đã có trong giỏ hàng;
 		ChangeCartList(changeValue, index) {
 			let list = this.cartData.cartList;
 			let num = list[index];
@@ -461,7 +461,7 @@ export default {
 				this.productslist();
 			}
 		},
-		// 购物车加减计算函数
+		// Hàm tính tăng giảm giỏ hàng
 		ChangeCartNum(changeValue, num, stock, isDuo, id, index, cart) {
 			this.$refs.d_goodClass.addIng = false;
 			if (changeValue) {
@@ -476,7 +476,7 @@ export default {
 						this.$set(this.cartData, 'cartList', this.cartData.cartList);
 					}
 					return this.$util.Tips({
-						title: this.$t(`该产品没有更多库存了`)
+						title: this.$t(`Sản phẩm này không còn đủ tồn kho`)
 					});
 				} else {
 					if (!isDuo) {
@@ -517,26 +517,26 @@ export default {
 				}
 			}
 		},
-		// 多规格加入购物车；
+		// Thêm vào giỏ hàng nhiều phân loại (SKU);
 		goCatNum() {
 			this.goCat(1, this.id, 1);
 		},
 		/*
-		 * 加入购物车
+		 * Thêm vào giỏ hàng
 		 */
 		goCat: function (duo, id, type, cart, unique, data) {
 			let that = this;
 			if (duo) {
 				let productSelect = that.productValue[this.attrValue];
-				//如果有属性,没有选择,提示用户选择
+				//Nếu có thuộc tính mà chưa chọn, nhắc người dùng chọn
 				if (that.attr.productAttr.length && productSelect === undefined) {
 					return that.$util.Tips({
-						title: that.$t(`该产品没有更多库存了`)
+						title: that.$t(`Sản phẩm này không còn đủ tồn kho`)
 					});
 				}
 				if (that.attr.productSelect.cart_num <= 0) {
 					return that.$util.Tips({
-						title: that.$t(`最少添加 1 件商品`)
+						title: that.$t(`Thêm ít nhất 1 sản phẩm`)
 					});
 				}
 			}
@@ -552,7 +552,7 @@ export default {
 					if (duo) {
 						that.attr.cartAttr = false;
 						that.$util.Tips({
-							title: that.$t(`添加成功`)
+							title: that.$t(`Thêm thành công`)
 						});
 						// that.page = 1;
 						// that.loadend = false;
@@ -576,7 +576,7 @@ export default {
 					});
 				});
 		},
-		// 点击默认单属性购物车
+		// Click giỏ hàng một thuộc tính mặc định
 		goCartDan(item, index) {
 			if (!this.isLogin) {
 				this.getIsLogin();
@@ -607,7 +607,7 @@ export default {
 					return;
 				}
 				uni.showLoading({
-					title: this.$t(`正在加载中`)
+					title: this.$t(`Đang tải`)
 				});
 				this.storeName = item.store_name;
 				this.getAttrs(item.id);
@@ -618,7 +618,7 @@ export default {
 		getIsLogin() {
 			toLogin();
 		},
-		// 商品详情接口；
+		// API chi tiết sản phẩm;
 		getAttrs(id) {
 			let that = this;
 			getAttr(id, 0).then((res) => {
@@ -630,7 +630,7 @@ export default {
 				that.DefaultSelect();
 			});
 		},
-		// 去详情页
+		// Đến trang chi tiết
 		goDetail(item) {
 			goShopDetail(item, this.uid).then((res) => {
 				uni.navigateTo({
@@ -654,7 +654,7 @@ export default {
 					data.forEach((item) => {
 						item.children.unshift({
 							id: 0,
-							cate_name: that.$t(`全部`)
+							cate_name: that.$t(`Tất cả`)
 						});
 					});
 					that.categoryTitle = data[0].cate_name;
@@ -674,7 +674,7 @@ export default {
 				data.forEach((item) => {
 					item.children.unshift({
 						id: 0,
-						cate_name: that.$t(`全部`)
+						cate_name: that.$t(`Tất cả`)
 					});
 				});
 				if (!that.cid) {
@@ -706,12 +706,12 @@ export default {
 			this.tempArr = [];
 			this.productslist();
 		},
-		// 导航栏点击
+		// Click thanh điều hướng
 		longClick(index) {
 			if (this.categoryErList.length > 3) {
-				this.tabLeft = (index - 1) * (this.isWidth + 6); //设置下划线位置
+				this.tabLeft = (index - 1) * (this.isWidth + 6); //Đặt vị trí gạch chân
 			}
-			this.tabClick = index; //设置导航点击了哪一个
+			this.tabClick = index; //Đặt tab điều hướng nào đã được click
 			this.iSlong = true;
 			this.sid = this.categoryErList[index].id;
 			this.page = 1;
@@ -1025,8 +1025,8 @@ page {
 		z-index: 101;
 		padding: 12rpx 30rpx;
 		box-sizing: border-box;
-		padding-bottom: calc(12rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-		padding-bottom: calc(12rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+		padding-bottom: calc(12rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+		padding-bottom: calc(12rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 
 		.cartIcon {
 			width: 96rpx;

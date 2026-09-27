@@ -33,7 +33,7 @@
 					'uni-calendar-item--multiple': weeks.multiple
 				}"
 			>
-				{{ $t(`今天`) }}
+				{{ $t(`Hôm nay`) }}
 			</text>
 			<text
 				v-if="lunar && !weeks.extraInfo"
@@ -46,7 +46,7 @@
 					'uni-calendar-item--disable': weeks.disable
 				}"
 			>
-				{{ weeks.isDay ? $t(`今天`) : weeks.lunar.IDayCn === $t(`first`) ? weeks.lunar.IMonthCn : weeks.lunar.IDayCn }}
+				{{ weeks.isDay ? $t(`Hôm nay`) : weeks.lunar.IDayCn === $t(`first`) ? weeks.lunar.IMonthCn : weeks.lunar.IDayCn }}
 			</text>
 			<text
 				v-if="weeks.extraInfo && weeks.extraInfo.info"

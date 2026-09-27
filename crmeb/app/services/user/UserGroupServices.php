@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -36,7 +36,7 @@ class UserGroupServices extends BaseServices
     }
 
     /**
-     * 获取某一个分组
+     * Lấy một nhóm
      * @param int $id
      * @return array|\think\Model|null
      */
@@ -46,7 +46,7 @@ class UserGroupServices extends BaseServices
     }
 
     /**
-     * 获取分组列表
+     * Lấy danh sách nhóm
      * @param string $field
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -66,7 +66,7 @@ class UserGroupServices extends BaseServices
     }
 
     /**
-     * 获取一些用户的分组名称
+     * Lấy tên nhóm của một số người dùng
      * @param array $ids
      * @return array
      */
@@ -76,7 +76,7 @@ class UserGroupServices extends BaseServices
     }
 
     /**
-     * 添加/修改分组页面
+     * Trang thêm/sửa nhóm
      * @param int $id
      * @return string
      */
@@ -85,18 +85,18 @@ class UserGroupServices extends BaseServices
         $group = $this->getGroup($id);
         $field = array();
         if (!$group) {
-            $title = '添加分组';
-            $field[] = Form::input('group_name', '分组名称', '')->required();
+            $title = 'Thêm nhóm';
+            $field[] = Form::input('group_name', 'Tên nhóm', '')->required();
         } else {
-            $title = '修改分组';
+            $title = 'Sửa nhóm';
             $field[] = Form::hidden('id', $id);
-            $field[] = Form::input('group_name', '分组名称', $group->getData('group_name'))->required();
+            $field[] = Form::input('group_name', 'Tên nhóm', $group->getData('group_name'))->required();
         }
         return create_form($title, $field, Url::buildUrl('/user/user_group/save'), 'POST');
     }
 
     /**
-     * 添加|修改
+     * Thêm|Sửa
      * @param int $id
      * @param array $data
      * @return mixed
@@ -130,7 +130,7 @@ class UserGroupServices extends BaseServices
     }
 
     /**
-     * 删除
+     * Xóa
      * @param int $id
      * @return string
      */
@@ -141,6 +141,6 @@ class UserGroupServices extends BaseServices
                 throw new AdminException(100008);
             }
         }
-        return '删除成功!';
+        return 'Xóa thành công!';
     }
 }

@@ -11,8 +11,8 @@ use crmeb\exceptions\AdminException;
 class PayTransferNotifyServices
 {
     /**
-     * 提现
-     * @param string|null $order_id 订单id
+     * Rút tiền
+     * @param string|null $order_id ID đơn hàng
      * @return bool
      */
     public function wechatTx(string $order_id = null, string $trade_no = null, string $state = null, string $fail_reason = null)
@@ -46,14 +46,14 @@ class PayTransferNotifyServices
 
                 event('NoticeListener', [['uid' => $userExtractInfo['uid'], 'userType' => strtolower($user['user_type']), 'extractNumber' => $extractNumber, 'nickname' => $user['nickname']], 'user_extract']);
 
-                //自定义通知-用户提现成功
+                //Thông báo tùy chỉnh - rút tiền người dùng thành công
                 $userExtract['nickname'] = $user['nickname'];
                 $userExtract['phone'] = $user['phone'];
                 $userExtract['time'] = date('Y-m-d H:i:s');
                 $userExtract['price'] = $extractNumber;
                 event('CustomNoticeListener', [$userExtract['uid'], $userExtract, 'extract_success']);
 
-                //自定义事件-用户提现成功
+                //Sự kiện tùy chỉnh - rút tiền người dùng thành công
                 event('CustomEventListener', ['admin_extract_success', [
                     'uid' => $userExtract['uid'],
                     'price' => $extractNumber,
@@ -63,7 +63,7 @@ class PayTransferNotifyServices
                     'success_time' => date('Y-m-d H:i:s')
                 ]]);
             } else {
-                $userExtractServices->changeFail($userExtractInfo['id'], $userExtractInfo, '提现失败，原因：超时未领取');
+                $userExtractServices->changeFail($userExtractInfo['id'], $userExtractInfo, 'Rút tiền thất bại, lý do: quá thời hạn nhận tiền');
             }
         } catch (\Exception $e) {
             return false;
@@ -72,8 +72,8 @@ class PayTransferNotifyServices
     }
 
     /**
-     * 红包
-     * @param string|null $order_id 订单id
+     * Lì xì
+     * @param string|null $order_id ID đơn hàng
      * @return bool
      */
     public function wechatHb(string $order_id = null, string $trade_no = null, string $state = null, string $fail_reason = null)

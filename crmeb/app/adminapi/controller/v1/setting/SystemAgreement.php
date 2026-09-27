@@ -9,7 +9,7 @@ use think\facade\App;
 class SystemAgreement extends AuthController
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * SystemCity constructor.
      * @param App $app
      * @param AgreementServices $services
@@ -21,7 +21,7 @@ class SystemAgreement extends AuthController
     }
 
     /**
-     * 获取协议内容
+     * Lấy nội dung thỏa thuận
      * @param $type
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -36,7 +36,7 @@ class SystemAgreement extends AuthController
     }
 
     /**
-     * 保存协议内容
+     * Lưu nội dung thỏa thuận
      * @return mixed
      */
     public function saveAgreement()

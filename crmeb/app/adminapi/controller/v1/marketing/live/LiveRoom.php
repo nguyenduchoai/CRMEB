@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\activity\live\LiveRoomServices;
 use think\facade\App;
 
 /**
- * 直播间
+ * Phòng livestream
  * Class LiveRoom
  * @package app\adminapi\controller\v1\marketing\live
  */
@@ -33,7 +33,7 @@ class LiveRoom extends AuthController
     }
 
     /**
-     * 直播间列表
+     * Danh sách phòng livestream
      * @return mixed
      */
     public function list()
@@ -46,7 +46,7 @@ class LiveRoom extends AuthController
     }
 
     /**
-     * 直播间详情
+     * Chi tiết phòng livestream
      * @param $id
      * @return mixed
      */
@@ -57,7 +57,7 @@ class LiveRoom extends AuthController
     }
 
     /**
-     * 添加直播间
+     * Thêm phòng livestream
      * @return mixed
      */
     public function add()
@@ -87,7 +87,7 @@ class LiveRoom extends AuthController
     }
 
     /**
-     * 添加直播间商品
+     * Thêm sản phẩm vào phòng livestream
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -104,7 +104,7 @@ class LiveRoom extends AuthController
     }
 
     /**
-     * 提交审核
+     * Gửi duyệt
      * @param $id
      * @return mixed
      */
@@ -119,7 +119,7 @@ class LiveRoom extends AuthController
     }
 
     /**
-     * 设置状态
+     * Thiết lập trạng thái
      * @param $id
      * @param $is_show
      * @return mixed
@@ -131,7 +131,7 @@ class LiveRoom extends AuthController
     }
 
     /**
-     * 删除直播间
+     * Xóa phòng livestream
      * @param $id
      * @return mixed
      */
@@ -142,7 +142,7 @@ class LiveRoom extends AuthController
     }
 
     /**
-     * 同步直播间
+     * Đồng bộ phòng livestream
      * @return mixed
      */
     public function syncRoom()

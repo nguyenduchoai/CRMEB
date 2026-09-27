@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,20 +18,20 @@ use crmeb\basic\BaseModel;
 use think\Model;
 
 /**
- * TODO 拼团商品Model
+ * TODO Model sản phẩm mua chung
  * Class StoreCombination
  * @package app\model\activity
  */
 class StoreCombination extends BaseModel
 {
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'store_combination';
@@ -39,7 +39,7 @@ class StoreCombination extends BaseModel
     use ModelTrait;
 
     /**
-     * 一对一获取原价
+     * Lấy giá gốc (liên kết một-một)
      * @return \think\model\relation\HasOne
      */
     public function getPrice()
@@ -47,7 +47,7 @@ class StoreCombination extends BaseModel
         return $this->hasOne(StoreProduct::class, 'id', 'product_id')->bind(['ot_price', 'product_price' => 'price']);
     }
     /**
-     * 一对一获取商品分类
+     * Lấy danh mục sản phẩm (liên kết một-một)
      * @return \think\model\relation\HasOne
      */
     public function getCategory()
@@ -55,8 +55,8 @@ class StoreCombination extends BaseModel
         return $this->hasOne(StoreProduct::class, 'id', 'product_id')->bind(['cate_id']);
     }
     /**
-     * 一对一关联
-     * 商品关联商品商品详情
+     * Liên kết một-một
+     * Sản phẩm liên kết chi tiết sản phẩm
      * @return \think\model\relation\HasOne
      */
     public function total()
@@ -67,8 +67,8 @@ class StoreCombination extends BaseModel
     }
 
     /**
-     * 一对一关联
-     * 商品关联商品商品详情
+     * Liên kết một-một
+     * Sản phẩm liên kết chi tiết sản phẩm
      * @return \think\model\relation\HasOne
      */
     public function description()
@@ -77,7 +77,7 @@ class StoreCombination extends BaseModel
     }
 
     /**
-     * 添加时间获取器
+     * Getter thời gian thêm
      * @param $value
      * @return false|string
      */
@@ -88,7 +88,7 @@ class StoreCombination extends BaseModel
     }
 
     /**
-     * 轮播图获取器
+     * Getter ảnh trình chiếu
      * @param $value
      * @return mixed
      */
@@ -98,7 +98,7 @@ class StoreCombination extends BaseModel
     }
 
     /**
-     * 拼团商品名称搜索器
+     * Bộ lọc tên sản phẩm mua chung
      * @param Model $query
      * @param $value
      * @param $data
@@ -109,7 +109,7 @@ class StoreCombination extends BaseModel
     }
 
     /**
-     * 是否推荐搜索器
+     * Bộ lọc có đề xuất hay không
      * @param Model $query
      * @param $value
      * @param $data
@@ -120,7 +120,7 @@ class StoreCombination extends BaseModel
     }
 
     /**
-     * 状态搜索器
+     * Bộ lọc trạng thái
      * @param Model $query
      * @param $value
      * @param $data
@@ -131,7 +131,7 @@ class StoreCombination extends BaseModel
     }
 
     /**
-     * 是否删除搜索器
+     * Bộ lọc đã xóa hay chưa
      * @param Model $query
      * @param $value
      * @param $data
@@ -142,7 +142,7 @@ class StoreCombination extends BaseModel
     }
 
     /**
-     * 商品ID搜索器
+     * Bộ lọc ID sản phẩm
      * @param Model $query
      * @param $value
      * @param $data

@@ -1,9 +1,9 @@
 // +---------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +---------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +---------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +---------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +---------------------------------------------------------------------
@@ -28,7 +28,7 @@ export default {
       name: `${pre}article`,
       meta: {
         auth: ['cms-article-index'],
-        title: '文章管理',
+        title: 'Quản lý bài viết',
         keepAlive: true,
       },
       component: () => import('@/pages/cms/article/index'),
@@ -38,7 +38,7 @@ export default {
       name: `${pre}articleCategory`,
       meta: {
         auth: ['cms-article-category'],
-        title: '文章分类',
+        title: 'Danh mục bài viết',
       },
       component: () => import('@/pages/cms/articleCategory/index'),
     },
@@ -47,7 +47,7 @@ export default {
       name: `${pre}addArticle`,
       meta: {
         auth: ['cms-article-creat'],
-        title: '文章添加',
+        title: 'Thêm bài viết',
         activeMenu: routePre + '/cms/article/index',
       },
       component: () => import('@/pages/cms/addArticle/index'),

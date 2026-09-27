@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展
+// | CRMEB [ CRMEB trao quyền cho nhà phát triển, hỗ trợ doanh nghiệp phát triển
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -68,14 +68,14 @@ return [
     100103 => 'Site upgrade in progress, please visit later',
     100104 => 'Missing Code',
 
-    // 处理特殊状态码
+    // Xử lý mã trạng thái đặc biệt
     110000 => 'You do not have access right for the time being',
     110001 => 'The interface is not authorized and you cannot access it',
-    //用户登录特殊
+    //Đặc biệt khi người dùng đăng nhập
     110002 => 'Please login',
     110003 => 'Login has expired, please login again',
     110004 => 'Login status error, please login again',
-    //客服登录特殊
+    //Đặc biệt khi CSKH đăng nhập
     110005 => 'Please login',
     110006 => 'Login has expired, please login again',
     110007 => 'Login status error, please login again',
@@ -1172,7 +1172,7 @@ return [
     410324 => 'Please check the express company code',
     410325 => 'Please select invoice',
 
-    //微信相关错误
+    //Lỗi liên quan đến WeChat
     -1 => 'The system is busy, please try again later',
     43104 => 'appid does not match openid',
     45009 => 'Reached the upper limit of WeChat api daily limit',

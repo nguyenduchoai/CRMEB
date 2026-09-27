@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible.sync="modals" title="选择商品" :close-on-click-modal="false" width="1000px" @closed="handleReset">
+  <el-dialog :visible.sync="modals" title="Chọn sản phẩm" :close-on-click-modal="false" width="1000px" @closed="handleReset">
     <el-form
       ref="levelFrom"
       :model="levelFrom"
@@ -9,12 +9,12 @@
     >
       <el-row :gutter="24">
         <el-col v-bind="grid">
-          <el-form-item label="商品名称：" prop="status2" label-for="status2">
+          <el-form-item label="Tên sản phẩm:" prop="status2" label-for="status2">
             <el-input
               search
               enter-button
               v-model="levelFrom.name"
-              placeholder="请输入商品名称"
+              placeholder="Vui lòng nhập tên sản phẩm"
               @on-search="userSearchs"
               style="width: 100%"
             />
@@ -27,8 +27,8 @@
       :data="levelLists"
       ref="table"
       v-loading="loading"
-      no-userFrom-text="暂无数据"
-      no-filtered-userFrom-text="暂无筛选结果"
+      no-userFrom-text="Chưa có dữ liệu"
+      no-filtered-userFrom-text="Không có kết quả phù hợp"
     >
       <template slot-scope="{ row, index }" slot="is_shows">
         <el-switch
@@ -49,14 +49,14 @@
           :value="row.is_must"
           size="large"
           @change="onchangeIsMust(row)"
-          active-text="全部完成"
-          inactive-text="达成其一"
+          active-text="Hoàn thành tất cả"
+          inactive-text="Đạt một trong số đó"
         >
         </el-switch>
       </template>
       <template slot-scope="{ row, index }" slot="action">
-        <a v-db-click @click="edit(row)">编辑 | </a>
-        <a v-db-click @click="del(row, '删除任务')"> 删除</a>
+        <a v-db-click @click="edit(row)">Sửa | </a>
+        <a v-db-click @click="del(row, 'Xóa nhiệm vụ')"> Xóa</a>
       </template>
     </el-table>
     <div class="acea-row row-right page">
@@ -68,7 +68,7 @@
         @pagination="getList"
       />
     </div>
-    <!-- 新建 编辑表单-->
+    <!-- Form tạo mới / sửa-->
     <edit-from ref="edits" :FromData="FromData" @submitFail="submitFail" :titleType="titleType"></edit-from>
   </el-dialog>
 </template>
@@ -89,15 +89,15 @@ export default {
     };
   },
   methods: {
-    // 关闭模态框
+    // Đóng modal
     handleReset() {
       this.modals = false;
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.getList();
     },
-    // 任务列表
+    // Danh sách tác vụ
     getList() {
       this.loading = true;
       taskListApi(this.levelId, this.levelFrom)

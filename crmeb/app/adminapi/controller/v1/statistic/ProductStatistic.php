@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -34,7 +34,7 @@ class ProductStatistic extends AuthController
     }
 
     /**
-     * 商品基础
+     * Thông tin cơ bản sản phẩm
      * @return mixed
      */
     public function getBasic()
@@ -46,7 +46,7 @@ class ProductStatistic extends AuthController
     }
 
     /**
-     * 商品趋势
+     * Xu hướng sản phẩm
      * @return mixed
      */
     public function getTrend()
@@ -59,7 +59,7 @@ class ProductStatistic extends AuthController
     }
 
     /**
-     * 商品排行
+     * Xếp hạng sản phẩm
      * @return mixed
      */
     public function getProductRanking()
@@ -73,7 +73,7 @@ class ProductStatistic extends AuthController
     }
 
     /**
-     * 导出
+     * Xuất
      * @return mixed
      */
     public function getExcel()
@@ -86,7 +86,7 @@ class ProductStatistic extends AuthController
     }
 
     /**
-     * 格式化时间
+     * Định dạng thời gian
      * @param $time
      * @return string
      */

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,7 +24,7 @@ class StoreSeckillDao extends BaseDao
 {
 
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -33,7 +33,7 @@ class StoreSeckillDao extends BaseDao
     }
 
     /**
-     * 搜索
+     * Tìm kiếm
      * @param array $where
      * @param bool $search
      * @return \crmeb\basic\BaseModel|mixed|\think\Model
@@ -62,7 +62,7 @@ class StoreSeckillDao extends BaseDao
     }
 
     /**
-     * 条件获取数量
+     * Lấy số lượng theo điều kiện
      * @param array $where
      * @return int
      * @throws \ReflectionException
@@ -72,7 +72,7 @@ class StoreSeckillDao extends BaseDao
         return $this->search($where)->count();
     }
 
-    /**获取秒杀列表
+    /**Lấy danh sách flash sale
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -114,7 +114,7 @@ class StoreSeckillDao extends BaseDao
             })->with(['product', 'attrs'])->order('sort desc,id desc')->select()->toArray();
     }
 
-    /**获取秒杀列表
+    /**Lấy danh sách flash sale
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -160,8 +160,8 @@ class StoreSeckillDao extends BaseDao
     }
 
     /**
-     * 根据商品id获取当前正在开启秒杀产品的列表以数组返回
-     * @param array $ids 为空查询所有
+     * Lấy danh sách sản phẩm flash sale đang mở theo id sản phẩm, trả về dạng mảng
+     * @param array $ids Rỗng thì lấy tất cả
      * @param array $field
      * @return array
      */
@@ -176,7 +176,7 @@ class StoreSeckillDao extends BaseDao
     }
 
     /**
-     * 获取某个时间段的秒杀列表
+     * Lấy danh sách flash sale trong một khoảng thời gian
      * @param int $time
      * @param int $page
      * @param int $limit
@@ -199,7 +199,7 @@ class StoreSeckillDao extends BaseDao
     }
 
     /**
-     * 根据id获取秒杀数据
+     * Lấy dữ liệu flash sale theo id
      * @param array $ids
      * @param string $field
      * @return array
@@ -212,7 +212,7 @@ class StoreSeckillDao extends BaseDao
         return $this->getModel()->whereIn('id', $ids)->field($field)->select()->toArray();
     }
 
-    /**获取一条秒杀商品
+    /**Lấy một sản phẩm flash sale
      * @param $id
      * @param $field
      * @return array|\think\Model|null

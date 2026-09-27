@@ -1,26 +1,26 @@
-## 安装
-> 运行环境要求 PHP 7.1～7.4，数据库版本为 Mysql 5.7。
-## 一键安装
-创建站点，运行目录选择项目根目录下的/public，设置伪静态为thinkphp的伪静态
-在浏览器中输入你的域名或IP（例如：www.yourdomain.com）,
-安装程序会自动执行安装。期间系统会提醒你输入数据库信息以完成安装，安装完成后建议删除install目录下index.php文件或将其改名。
+## Cài đặt
+> Môi trường vận hành yêu cầu PHP 7.1~7.4, phiên bản cơ sở dữ liệu là Mysql 5.7.
+## Cài đặt một cú nhấp
+Tạo trang web, chọn thư mục chạy là /public trong thư mục gốc của dự án, thiết lập quy tắc rewrite URL (giả tĩnh) theo mẫu thinkphp
+Nhập tên miền hoặc IP của bạn vào trình duyệt (ví dụ: www.yourdomain.com),
+Trình cài đặt sẽ tự động thực hiện cài đặt. Trong quá trình này, hệ thống sẽ nhắc bạn nhập thông tin cơ sở dữ liệu để hoàn tất cài đặt, sau khi cài đặt xong, bạn nên xóa tệp index.php trong thư mục install hoặc đổi tên tệp này.
 
-后台访问地址： 域名/admin 
+Địa chỉ truy cập trang quản trị: tên miền/admin 
 
-公众号和H5首页访问地址： 域名/
+Địa chỉ truy cập trang chủ OA WeChat và H5: tên miền/
 
-提示：访问不了请检测 [URL重写](https://doc.crmeb.com/web/single/crmeb_v4/1139) 是否配置好
-安装过程中请牢记您的账号密码！
+Lưu ý: Nếu không truy cập được, vui lòng kiểm tra xem [Rewrite URL](https://doc.crmeb.com/web/single/crmeb_v4/1139) đã được cấu hình đúng chưa
+Vui lòng ghi nhớ tài khoản và mật khẩu của bạn trong quá trình cài đặt!
 
-## 重新安装
-1. 清除数据库
-2. 删除 /public/install.lock 文件
+## Cài đặt lại
+1. Xóa cơ sở dữ liệu
+2. Xóa tệp /public/install.lock
 
-## 手动安装
-1.创建数据库，导入数据库文件
-数据库文件目录/public/install/crmeb.sql
-2.修改数据库连接文件
-配置文件路径/.env
+## Cài đặt thủ công
+1.Tạo cơ sở dữ liệu, nhập tệp cơ sở dữ liệu
+Tệp cơ sở dữ liệu nằm tại /public/install/crmeb.sql
+2.Sửa tệp kết nối cơ sở dữ liệu
+Tệp cấu hình nằm tại /.env
 ~~~
 APP_DEBUG = true
 
@@ -50,41 +50,41 @@ SELECT = 0
 [QUEUE]
 QUEUE_NAME = crmeb
 ~~~
-3.修改目录权限（linux系统）777
+3.Sửa quyền thư mục (hệ thống linux) thành 777
 
 /public 
 
 /runtime
 
-4.后台登录：
-http://域名/admin
+4.Đăng nhập trang quản trị:
+http://ten-mien-cua-ban/admin
 
-默认账号：admin 密码：crmeb.com
+Tài khoản mặc định: admin Mật khẩu: crmeb.com
 
-## 消息队列
-linux系统安装Supervisor管理器，添加守护进程
+## Hàng đợi tin nhắn
+Trên hệ thống linux, cài đặt trình quản lý Supervisor, thêm tiến trình nền (daemon)
 
-用户选择 www
+Chọn người dùng là www
 
-运行目录选择项目根目录
+Chọn thư mục chạy là thư mục gốc của dự án
 
-启动命令：php think queue:listen --queue
+Lệnh khởi động: php think queue:listen --queue
 
-## 定时任务
-在自动收货,库存预警等功能使用到
+## Tác vụ định kỳ
+Được sử dụng trong các chức năng như tự động xác nhận đã nhận hàng, cảnh báo tồn kho, v.v.
 ```sh
 php think timer [ status ] [ --d ]
 ```
-参数
-- status: 状态
-    - start: 启动
-    - stop: 关闭
-    - restart: 重启
-- --d : 后台执行
-## 长连接服务
-在h5聊天,后台管理员消息通知等功能使用到 
+Tham số
+- status: trạng thái
+    - start: khởi động
+    - stop: dừng
+    - restart: khởi động lại
+- --d : chạy nền
+## Dịch vụ kết nối liên tục
+Được sử dụng trong các chức năng như chat trên h5, thông báo tin nhắn cho quản trị viên ở trang quản trị, v.v. 
 
-先修改网站nginx配置
+Trước tiên, sửa cấu hình nginx của trang web
 ~~~
 location /notice {
     proxy_pass http://127.0.0.1:20002/;  
@@ -103,31 +103,31 @@ location /msg {
     proxy_set_header X-Forwarded-For $remote_addr;
 }
 ~~~
-对应的端口要和 /config/workerman.php 里面保持一致
+Các cổng tương ứng phải thống nhất với cấu hình trong /config/workerman.php
 
-linux系统直接运行
+Trên hệ thống linux, chạy trực tiếp
 ```sh
 php think workerman [ status ] [ server ] [ --d ]
 ```
-windows环境下需要分三步执行
+Trong môi trường windows cần thực hiện theo ba bước
 ```sh
-# 内部通讯服务
+# Dịch vụ giao tiếp nội bộ
 php think workerman start channel
-# h5端聊天服务
+# Dịch vụ chat phía h5
 php think workerman start chat
-# 后台管理员通知
+# Thông báo cho quản trị viên
 php think workerman start admin
 ```
-或者直接双击运行 /workerman.bat
+Hoặc nhấp đúp để chạy trực tiếp /workerman.bat
 
-参数
-- status: 状态
-    - start: 启动
-    - stop: 关闭
-    - restart: 重启
-- server: 服务 (windows)
-    - channel: 内部通讯
+Tham số
+- status: trạng thái
+    - start: khởi động
+    - stop: dừng
+    - restart: khởi động lại
+- server: dịch vụ (windows)
+    - channel: giao tiếp nội bộ
     - chat: h5
-    - admin: 后台
+    - admin: trang quản trị
 
-- --d : 后台执行
+- --d : chạy nền

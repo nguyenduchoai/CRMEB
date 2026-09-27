@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -26,20 +26,20 @@ use app\services\shipping\ShippingTemplatesRegionServices;
 use app\services\shipping\ShippingTemplatesServices;
 
 /**
- * 订单计算金额
+ * Tính số tiền đơn hàng
  * Class StoreOrderComputedServices
  * @package app\services\order
  */
 class StoreOrderComputedServices extends BaseServices
 {
     /**
-     * 支付类型
+     * Loại thanh toán
      * @var string[]
      */
-    public $payType = ['weixin' => '微信支付', 'yue' => '余额支付', 'offline' => '线下支付', 'pc' => 'pc'];
+    public $payType = ['weixin' => 'WeChat Pay', 'yue' => 'Thanh toán bằng số dư', 'offline' => 'Thanh toán ngoại tuyến', 'pc' => 'pc'];
 
     /**
-     * 额外参数
+     * Tham số bổ sung
      * @var array
      */
     protected $paramData = [];
@@ -54,7 +54,7 @@ class StoreOrderComputedServices extends BaseServices
     }
 
     /**
-     * 设置额外参数
+     * Đặt tham số bổ sung
      * @param array $paramData
      * @return $this
      */
@@ -65,7 +65,7 @@ class StoreOrderComputedServices extends BaseServices
     }
 
     /**
-     * 计算订单金额
+     * Tính số tiền đơn hàng
      * @param int $uid
      * @param string $key
      * @param array $cartGroup
@@ -103,7 +103,7 @@ class StoreOrderComputedServices extends BaseServices
             if ($addr) {
                 $addr = $addr->toArray();
             }
-            //改变地址重新计算邮费
+            //Đổi địa chỉ thì tính lại phí vận chuyển
             $postage = [];
         }
         $combinationId = $this->paramData['combinationId'] ?? 0;
@@ -111,16 +111,16 @@ class StoreOrderComputedServices extends BaseServices
         $bargainId = $this->paramData['bargainId'] ?? 0;
         $isActivity = $combinationId || $seckillId || $bargainId;
         if (!$isActivity) {
-            //使用优惠劵
+            //Dùng phiếu giảm giá
             [$payPrice, $couponPrice] = $this->useCouponId($couponId, $uid, $cartInfo, $payPrice, $isCreate);
-            //使用积分
+            //Điểm thưởng đã dùng
             [$payPrice, $deductionPrice, $usedIntegral, $SurplusIntegral] = $this->useIntegral($useIntegral, $userInfo, $payPrice, $other);
         }
 
-        //计算邮费
+        //Tính phí vận chuyển
         [$payPrice, $payPostage, $storePostageDiscount, $storeFreePostage, $isStoreFreePostage] = $this->computedPayPostage($shippingType, $payType, $cartInfo, $addr, $payPrice, $postage, $other, $userInfo, $is_gift);
 
-        //赠送商品计算
+        //Tính sản phẩm tặng kèm
         $payPrice = bcadd($payPrice, $priceGroup['giftPrice'], 2);
 
         $result = [
@@ -141,7 +141,7 @@ class StoreOrderComputedServices extends BaseServices
     }
 
     /**
-     * 使用优惠卷
+     * Dùng phiếu giảm giá
      * @param int $couponId
      * @param int $uid
      * @param $cartInfo
@@ -150,7 +150,7 @@ class StoreOrderComputedServices extends BaseServices
      */
     public function useCouponId(int $couponId, int $uid, $cartInfo, $payPrice, bool $isCreate)
     {
-        //使用优惠劵
+        //Dùng phiếu giảm giá
         $res1 = true;
         if ($couponId) {
             /** @var StoreCouponUserServices $couponServices */
@@ -171,7 +171,7 @@ class StoreOrderComputedServices extends BaseServices
                         $count++;
                     }
                     break;
-                case 1://品类券
+                case 1://Phiếu theo danh mục
                     /** @var StoreCategoryServices $storeCategoryServices */
                     $storeCategoryServices = app()->make(StoreCategoryServices::class);
                     $coupon_category = explode(',', (string)$couponInfo['category_id']);
@@ -216,7 +216,7 @@ class StoreOrderComputedServices extends BaseServices
     }
 
     /**
-     * 使用积分
+     * Điểm thưởng đã dùng
      * @param $useIntegral
      * @param $userInfo
      * @param $payPrice
@@ -227,12 +227,12 @@ class StoreOrderComputedServices extends BaseServices
     {
         /** @var UserBillServices $userBillServices */
         $userBillServices = app()->make(UserBillServices::class);
-        // 可用积分
+        // Điểm thưởng khả dụng
         $usable = bcsub((string)$userInfo['integral'], (string)$userBillServices->getBillSum(['uid' => $userInfo['uid'], 'is_frozen' => 1]), 0);
 
         $SurplusIntegral = $usable;
         if ($useIntegral && $userInfo['integral'] > 0 && $other['integralRatio'] > 0) {
-            //积分抵扣上限
+            //Giới hạn khấu trừ bằng điểm thưởng
             $integralMaxNum = sys_config('integral_max_num', 200);
             if ($integralMaxNum > 0 && $usable > $integralMaxNum) {
                 $integral = $integralMaxNum;
@@ -260,7 +260,7 @@ class StoreOrderComputedServices extends BaseServices
     }
 
     /**
-     * 计算邮费
+     * Tính phí vận chuyển
      * @param int $shipping_type
      * @param string $payType
      * @param array $cartInfo
@@ -279,17 +279,17 @@ class StoreOrderComputedServices extends BaseServices
             $addr = [];
         }
         if (!$storeFreePostage) {
-            $storeFreePostage = floatval(sys_config('store_free_postage')) ?: 0;//满额包邮金额
+            $storeFreePostage = floatval(sys_config('store_free_postage')) ?: 0;//Số tiền đơn tối thiểu để miễn phí vận chuyển
         }
         if (!$addr && !isset($addr['id']) || !$cartInfo) {
             $payPostage = 0;
         } else {
-            //$shipping_type = 1 快递发货 $shipping_type = 2 门店自提
+            //$shipping_type = 1 giao hàng qua vận chuyển, $shipping_type = 2 nhận tại cửa hàng
             if ($shipping_type == 2) {
                 $store_self_mention = sys_config('store_self_mention') ?? 0;
                 if (!$store_self_mention) $shipping_type = 1;
             }
-            //门店自提 || （线下支付 && 线下支付包邮） 没有邮费支付
+            //Nhận tại cửa hàng || (thanh toán ngoại tuyến && thanh toán ngoại tuyến miễn phí vận chuyển) thì không cần trả phí vận chuyển
             if ($shipping_type === 2 || ($payType == 'offline' && ((isset($other['offlinePostage']) && $other['offlinePostage']) || sys_config('offline_postage')) == 1)) {
                 $payPostage = 0;
             } else {
@@ -307,7 +307,7 @@ class StoreOrderComputedServices extends BaseServices
     }
 
     /**
-     * 运费计算,总金额计算
+     * Tính phí vận chuyển, tính tổng số tiền
      * @param $cartInfo
      * @param $addr
      * @param array $userInfo
@@ -318,15 +318,15 @@ class StoreOrderComputedServices extends BaseServices
         $storePostage = 0;
         $storePostageDiscount = 0;
         $giftPrice = 0;
-        $isStoreFreePostage = false;//是否满额包邮
-        $sumPrice = $this->getOrderSumPrice($cartInfo, 'sum_price');//获取订单原总金额
-        $totalPrice = $this->getOrderSumPrice($cartInfo, 'truePrice');//获取订单svip、用户等级优惠之后总金额
-        $costPrice = $this->getOrderSumPrice($cartInfo, 'costPrice');//获取订单成本价
-        $vipPrice = $this->getOrderSumPrice($cartInfo, 'vip_truePrice');//获取订单等级和付费会员总优惠金额
-        $levelPrice = $this->getOrderSumPrice($cartInfo, 'level');//获取会员等级优惠
-        $memberPrice = $this->getOrderSumPrice($cartInfo, 'member');//获取付费会员优惠
+        $isStoreFreePostage = false;//Có đạt mức miễn phí vận chuyển không
+        $sumPrice = $this->getOrderSumPrice($cartInfo, 'sum_price');//Lấy tổng số tiền gốc của đơn hàng
+        $totalPrice = $this->getOrderSumPrice($cartInfo, 'truePrice');//Lấy tổng số tiền đơn hàng sau khi giảm giá SVIP, hạng người dùng
+        $costPrice = $this->getOrderSumPrice($cartInfo, 'costPrice');//Lấy giá vốn đơn hàng
+        $vipPrice = $this->getOrderSumPrice($cartInfo, 'vip_truePrice');//Lấy tổng số tiền giảm giá theo hạng và thành viên trả phí của đơn hàng
+        $levelPrice = $this->getOrderSumPrice($cartInfo, 'level');//Lấy giảm giá theo hạng thành viên
+        $memberPrice = $this->getOrderSumPrice($cartInfo, 'member');//Lấy giảm giá thành viên trả phí
 
-        // 判断商品包邮和固定运费
+        // Kiểm tra sản phẩm miễn phí vận chuyển và phí vận chuyển cố định
         foreach ($cartInfo as $key => &$item) {
             $item['postage_price'] = 0;
             if ($shipping_type == 1) {
@@ -351,11 +351,11 @@ class StoreOrderComputedServices extends BaseServices
         if (isset($cartInfo[0]['productInfo']['is_virtual']) && $cartInfo[0]['productInfo']['is_virtual'] == 1) {
             $storePostage = 0;
         } elseif ($storeFreePostage && $cartInfo && $addr) {
-            if ($sumPrice >= $storeFreePostage) {//如果总价大于等于满额包邮 邮费等于0
+            if ($sumPrice >= $storeFreePostage) {//Nếu tổng giá lớn hơn hoặc bằng mức miễn phí vận chuyển thì phí vận chuyển bằng 0
                 $isStoreFreePostage = true;
                 $storePostage = 0;
             } else {
-                //按照运费模板计算每个运费模板下商品的件数/重量/体积以及总金额 按照首重倒序排列
+                //Theo mẫu phí vận chuyển, tính số lượng/khối lượng/thể tích và tổng số tiền sản phẩm trong từng mẫu, sắp xếp giảm dần theo khối lượng đầu tiên
                 $cityId = $addr['city_id'] ?? 0;
                 $tempIds[] = 1;
                 foreach ($cartInfo as $key_c => $item_c) {
@@ -416,20 +416,20 @@ class StoreOrderComputedServices extends BaseServices
                         }
                     }
                 }
-                //首件运费最大值
+                //Giá trị lớn nhất của phí vận chuyển sản phẩm đầu tiên
                 $maxFirstPrice = $temp_num ? max(array_column($temp_num, 'first_price')) : 0;
-                //初始运费为0
+                //Phí vận chuyển ban đầu là 0
                 $storePostage_arr = [];
 
                 $i = 0;
-                //循环运费数组
+                //Lặp qua mảng phí vận chuyển
                 foreach ($temp_num as $fk => $fv) {
-                    //找到首件运费等于最大值
+                    //Tìm phí vận chuyển sản phẩm đầu tiên bằng giá trị lớn nhất
                     if ($fv['first_price'] == $maxFirstPrice) {
-                        //每次循环设置初始值
+                        //Mỗi lần lặp thì đặt giá trị ban đầu
                         $tempArr = $temp_num;
                         $Postage = 0;
-                        //计算首件运费
+                        //Tính phí vận chuyển sản phẩm đầu tiên
                         if ($fv['number'] <= $fv['first']) {
                             $Postage = bcadd($Postage, $fv['first_price'], 2);
                         } else {
@@ -441,9 +441,9 @@ class StoreOrderComputedServices extends BaseServices
                         }
                         $postageArr[$i]['data'][$fk] = $Postage;
 
-                        //删除计算过的首件数据
+                        //Xóa dữ liệu sản phẩm đầu tiên đã tính
                         unset($tempArr[$fk]);
-                        //循环计算剩余运费
+                        //Lặp tính phí vận chuyển còn lại
                         foreach ($tempArr as $ck => $cv) {
                             if ($cv['continue'] <= 0) {
                                 $Postage = $Postage;
@@ -459,12 +459,12 @@ class StoreOrderComputedServices extends BaseServices
                 }
                 if (count($storePostage_arr)) {
                     $maxStorePostage = max($storePostage_arr);
-                    //获取运费计算中的最大值
+                    //Lấy giá trị lớn nhất trong tính toán phí vận chuyển
                     $storePostage = bcadd((string)$storePostage, (string)$maxStorePostage, 2);
                 }
             }
         }
-        //会员邮费享受折扣
+        //Thành viên được chiết khấu phí vận chuyển
         if ($storePostage) {
             $express_rule_number = 100;
             if (!$userInfo) {
@@ -473,7 +473,7 @@ class StoreOrderComputedServices extends BaseServices
                 $userInfo = $userService->getUserInfo($addr['uid']);
             }
             if ($userInfo && isset($userInfo['is_money_level']) && $userInfo['is_money_level'] > 0) {
-                //看是否开启会员折扣奖励
+                //Xem có mở ưu đãi chiết khấu thành viên không
                 /** @var MemberCardServices $memberCardService */
                 $memberCardService = app()->make(MemberCardServices::class);
                 $express_rule_number = $memberCardService->isOpenMemberCard('express');
@@ -535,7 +535,7 @@ class StoreOrderComputedServices extends BaseServices
     }
 
     /**
-     * 获取某个字段总金额
+     * Lấy tổng số tiền của một trường
      * @param $cartInfo
      * @param string $key
      * @param bool $is_unit

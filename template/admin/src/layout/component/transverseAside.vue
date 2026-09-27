@@ -57,11 +57,11 @@ export default {
     };
   },
   computed: {
-    // 设置分栏高亮风格
+    // Đặt kiểu highlight cho bố cục dạng cột
     setColumnsAsideStyle() {
       return this.$store.state.themeConfig.themeConfig.columnsAsideStyle;
     },
-    // 设置分栏布局风格
+    // Đặt kiểu cho bố cục dạng cột
     setColumnsAsidelayout() {
       return this.$store.state.themeConfig.themeConfig.columnsAsideLayout;
     },
@@ -85,13 +85,13 @@ export default {
     });
   },
   methods: {
-    // 设置横向滚动条可以鼠标滚轮滚动
+    // Đặt thanh cuộn ngang có thể cuộn bằng bánh xe chuột
     onElMenuHorizontalScroll(e) {
       const eventDelta = e.wheelDelta || -e.deltaY * 40;
       this.$refs.elMenuHorizontalScrollRef.$refs.wrap.scrollLeft =
         this.$refs.elMenuHorizontalScrollRef.$refs.wrap.scrollLeft + eventDelta / 4;
     },
-    // 初始化数据，页面刷新时，滚动条滚动到对应位置
+    // Khởi tạo dữ liệu, khi refresh trang, thanh cuộn sẽ cuộn tới vị trí tương ứng
     initElMenuOffsetLeft() {
       this.$nextTick(() => {
         let els = document.querySelector('.layout-columns.layout-columns-active');
@@ -99,14 +99,14 @@ export default {
         this.$refs.elMenuHorizontalScrollRef.$refs.wrap.scrollLeft = els.offsetLeft;
       });
     },
-    // 设置菜单高亮位置移动
+    // Đặt di chuyển vị trí highlight của menu
     setColumnsAsideMove(k) {
       if (k === undefined) return false;
       const els = this.$refs.columnsAsideOffsetLeftRefs;
       this.liIndex = k;
       this.$refs.columnsAsideActiveRef.style.left = `${els[k].offsetLeft + this.difference}px`;
     },
-    // 菜单高亮点击事件
+    // Sự kiện bấm highlight menu
     onColumnsAsideMenuClick(v) {
       let { path, redirect } = v;
       if (v.children) {
@@ -114,18 +114,18 @@ export default {
       } else {
         this.$router.push(path);
       }
-      // 一个路由设置自动收起菜单
+      // Một route được đặt tự động thu gọn menu
       if (!v.children || v.children.length <= 1) this.$store.state.themeConfig.themeConfig.isCollapse = true;
       else if (v.children.length > 1) this.$store.state.themeConfig.themeConfig.isCollapse = false;
       // this.bus.$emit('setSendColumnsChildren', getMenuSider(this.columnsAsideList, path));
     },
-    // 设置高亮动态位置
+    // Đặt vị trí highlight động
     onColumnsAsideDown(k) {
       this.$nextTick(() => {
         this.setColumnsAsideMove(k);
       });
     },
-    // 设置/过滤路由（非静态路由/是否显示在菜单中）
+    // Đặt/lọc route (route không tĩnh / có hiển thị trong menu hay không)
     setFilterRoutes() {
       if (this.$store.state.routesList.routesList.length <= 0) return false;
       this.columnsAsideList = this.filterRoutesFun(this.$store.state.routesList.routesList);
@@ -140,14 +140,14 @@ export default {
       }
       this.bus.$emit('oneCatName', resData.item[0].title);
       this.onColumnsAsideDown(resData.item[0].k);
-      // 刷新时，初始化一个路由设置自动收起菜单
+      // Khi refresh, khởi tạo một route đặt tự động thu gọn menu
       resData.children.length > 0
         ? (this.$store.state.themeConfig.themeConfig.isCollapse = false)
         : (this.$store.state.themeConfig.themeConfig.isCollapse = true);
       this.bus.$emit('setSendColumnsChildren', resData?.children || []);
       this.$store.commit('menus/childMenuList', resData?.children || []);
     },
-    // 传送当前子级数据到菜单中
+    // Truyền dữ liệu cấp con hiện tại vào menu
     setSendChildren(path) {
       // const currentPathSplit = path.split('/');
       let currentData = {};
@@ -161,7 +161,7 @@ export default {
       });
       return currentData;
     },
-    // 路由过滤递归函数
+    // Hàm đệ quy lọc route
     filterRoutesFun(arr) {
       return arr
         .filter((item) => item.path)
@@ -171,7 +171,7 @@ export default {
           return item;
         });
     },
-    // tagsView 点击时，根据路由查找下标 columnsAsideList，实现左侧菜单高亮
+    // Khi bấm tagsView, dựa theo route để tìm chỉ số trong columnsAsideList, thực hiện highlight menu bên trái
     setColumnsMenuHighlight(path) {
       // this.routeSplit = path.split('/');
       // this.routeSplit.shift();
@@ -181,14 +181,14 @@ export default {
         this.onColumnsAsideDown(0);
         return false;
       }
-      // 延迟拿值，防止取不到
+      // Lấy giá trị có trễ (delay), tránh trường hợp không lấy được
       setTimeout(() => {
         this.onColumnsAsideDown(currentSplitRoute.k);
       }, 0);
     },
   },
   watch: {
-    // 监听 vuex 数据变化
+    // Theo dõi thay đổi dữ liệu vuex
     '$store.state': {
       handler(val) {
         val.themeConfig.themeConfig.columnsAsideStyle === 'columnsRound'
@@ -198,7 +198,7 @@ export default {
       },
       deep: true,
     },
-    // 监听路由的变化
+    // Theo dõi thay đổi route
     $route: {
       handler(to) {
         this.setColumnsMenuHighlight(to.path);

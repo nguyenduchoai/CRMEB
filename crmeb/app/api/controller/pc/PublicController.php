@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -28,7 +28,7 @@ class PublicController
     }
 
     /**
-     * 获取城市数据
+     * Lấy dữ liệu thành phố
      * @param Request $request
      * @return mixed
      */
@@ -41,7 +41,7 @@ class PublicController
     }
 
     /**
-     * 获取公司信息
+     * Lấy thông tin công ty
      * @return mixed
      */
     public function getCompanyInfo()
@@ -68,7 +68,7 @@ class PublicController
     }
 
     /**
-     * 获取关注微信二维码
+     * Lấy mã QR theo dõi WeChat
      * @return mixed
      */
     public function getWechatQrcode()
@@ -78,7 +78,7 @@ class PublicController
     }
 
     /**
-     * 文章分类
+     * Danh mục bài viết
      * @param ArticleCategoryServices $services
      * @return \think\Response
      * @author wuhaotian
@@ -94,7 +94,7 @@ class PublicController
     }
 
     /**
-     * pc文章列表
+     * Danh sách bài viết bản pc
      * @param Request $request
      * @param ArticleServices $services
      * @return \think\Response
@@ -126,7 +126,7 @@ class PublicController
     }
 
     /**
-     * 文章详情
+     * Chi tiết bài viết
      * @param ArticleServices $services
      * @param $id
      * @return \think\Response

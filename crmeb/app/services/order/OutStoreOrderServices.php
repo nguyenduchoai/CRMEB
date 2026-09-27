@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,25 +21,25 @@ use crmeb\exceptions\ApiException;
 /**
  * Class OutStoreOrderServices
  * @package app\services\order
- * @method getOrderIdsCount(array $ids) 获取订单id下没有删除的订单数量
- * @method StoreOrderDao getUserOrderDetail(string $key, int $uid, array $with) 获取订单详情
- * @method chartTimePrice($start, $stop) 获取当前时间到指定时间的支付金额 管理员
- * @method chartTimeNumber($start, $stop) 获取当前时间到指定时间的支付订单数 管理员
- * @method together(array $where, string $field, string $together = 'sum') 聚合查询
- * @method getBuyCount($uid, $type, $typeId) 获取用户已购买此活动商品的个数
+ * @method getOrderIdsCount(array $ids) Lấy số lượng đơn hàng chưa xóa theo id đơn hàng
+ * @method StoreOrderDao getUserOrderDetail(string $key, int $uid, array $with) Lấy chi tiết đơn hàng
+ * @method chartTimePrice($start, $stop) Lấy số tiền thanh toán từ thời điểm hiện tại đến thời điểm chỉ định (quản trị viên)
+ * @method chartTimeNumber($start, $stop) Lấy số đơn hàng đã thanh toán từ thời điểm hiện tại đến thời điểm chỉ định (quản trị viên)
+ * @method together(array $where, string $field, string $together = 'sum') Truy vấn tổng hợp
+ * @method getBuyCount($uid, $type, $typeId) Lấy số lượng sản phẩm của hoạt động này mà người dùng đã mua
  * @method getDistinctCount(array $where, $field, ?bool $search = true)
- * @method getTrendData($time, $type, $timeType, $str) 用户趋势
- * @method getRegion($time, $channelType) 地域统计
- * @method getProductTrend($time, $timeType, $field, $str) 商品趋势
+ * @method getTrendData($time, $type, $timeType, $str) Xu hướng người dùng
+ * @method getRegion($time, $channelType) Thống kê theo khu vực
+ * @method getProductTrend($time, $timeType, $field, $str) Xu hướng sản phẩm
  */
 class OutStoreOrderServices extends BaseServices
 {
 
     /**
-     * 发货类型
+     * Hình thức giao hàng
      * @var string[]
      */
-    public $deliveryType = ['send' => '商家配送', 'express' => '快递配送', 'fictitious' => '虚拟发货', 'delivery_part_split' => '拆分部分发货', 'delivery_split' => '拆分发货完成'];
+    public $deliveryType = ['send' => 'Cửa hàng tự giao', 'express' => 'Giao qua đơn vị vận chuyển', 'fictitious' => 'Giao hàng ảo', 'delivery_part_split' => 'Tách đơn, đã giao một phần', 'delivery_split' => 'Tách đơn, đã giao xong'];
 
     /**
      * StoreOrderProductServices constructor.
@@ -51,7 +51,7 @@ class OutStoreOrderServices extends BaseServices
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -76,7 +76,7 @@ class OutStoreOrderServices extends BaseServices
     }
 
     /**
-     * 数据转换
+     * Chuyển đổi dữ liệu
      * @param array $data
      * @return array
      */
@@ -90,7 +90,7 @@ class OutStoreOrderServices extends BaseServices
             foreach ($carts as $key => $cart) {
                 $list = $this->tidyCartList($cart['cart_info'], $list, $key);
             }
-            $item['pay_type_name'] = PayServices::PAY_TYPE[$item['pay_type']] ?? '其他方式';
+            $item['pay_type_name'] = PayServices::PAY_TYPE[$item['pay_type']] ?? 'Phương thức khác';
             $item['items'] = $list;
             unset($item['refund_status'], $item['shipping_type']);
         }
@@ -98,9 +98,9 @@ class OutStoreOrderServices extends BaseServices
     }
 
     /**
-     * 订单详情
-     * @param string $orderId 订单号
-     * @param int $id 订单ID
+     * Chi tiết đơn hàng
+     * @param string $orderId Mã đơn hàng
+     * @param int $id ID đơn hàng
      * @return mixed
      */
     public function getInfo(string $orderId = '', int $id = 0)
@@ -126,7 +126,7 @@ class OutStoreOrderServices extends BaseServices
         }
 
         $orderInfo = $this->tidyOrder($orderInfo->toArray(), true);
-        //核算优惠金额
+        //Tính toán số tiền ưu đãi
         $vipTruePrice = array_column($orderInfo['items'], 'vip_sum_truePrice');
         $vipTruePrice = round(array_sum($vipTruePrice), 2);
         $orderInfo['vip_true_price'] = sprintf("%.2f", $vipTruePrice ?: '0.00');
@@ -135,9 +135,9 @@ class OutStoreOrderServices extends BaseServices
     }
 
     /**
-     * 订单详情数据格式化
+     * Định dạng dữ liệu chi tiết đơn hàng
      * @param $order
-     * @param bool $detail 是否需要订单商品详情
+     * @param bool $detail Có cần chi tiết sản phẩm trong đơn hàng không
      * @return mixed
      */
     public function tidyOrder($order, bool $detail = false)
@@ -154,116 +154,116 @@ class OutStoreOrderServices extends BaseServices
             $order['items'] = $list;
         }
 
-        $order['pay_type_name'] = PayServices::PAY_TYPE[$order['pay_type']] ?? '其他方式';
+        $order['pay_type_name'] = PayServices::PAY_TYPE[$order['pay_type']] ?? 'Phương thức khác';
 
 //        if (!$order['paid'] && $order['pay_type'] == 'offline' && !$order['status'] >= 2) {
-//            $order['status_name'] = '线下付款,未支付';
+//            $order['status_name'] = 'Thanh toán ngoại tuyến, chưa thanh toán';
 //        } else if (!$order['paid']) {
-//            $order['status_name'] = '未支付';
+//            $order['status_name'] = 'Chưa thanh toán';
 //        } else if ($order['status'] == 4) {
 //            if ($order['delivery_type'] == 'send') {
-//                $order['status_name'] = '待收货';
+//                $order['status_name'] = 'Chờ nhận hàng';
 //            } elseif ($order['delivery_type'] == 'express') {
-//                $order['status_name'] = '待收货';
-//            } elseif ($order['delivery_type'] == 'split') {//拆分发货
-//                $order['status_name'] = '待收货';
+//                $order['status_name'] = 'Chờ nhận hàng';
+//            } elseif ($order['delivery_type'] == 'split') {//giao hàng theo phần tách đơn
+//                $order['status_name'] = 'Chờ nhận hàng';
 //            } else {
-//                $order['status_name'] = '待收货';
+//                $order['status_name'] = 'Chờ nhận hàng';
 //            }
 //        } else if ($order['refund_status'] == 1) {
 //            if (in_array($order['refund_type'], [0, 1, 2])) {
-//                $order['status_name'] = '申请退款中';
+//                $order['status_name'] = 'Đang yêu cầu hoàn tiền';
 //            } elseif ($order['refund_type'] == 4) {
-//                $order['status_name'] = '申请退款中';
+//                $order['status_name'] = 'Đang yêu cầu hoàn tiền';
 //            } elseif ($order['refund_type'] == 5) {
-//                $order['status_name'] = '申请退款中';
+//                $order['status_name'] = 'Đang yêu cầu hoàn tiền';
 //            }
 //        } else if ($order['refund_status'] == 2 || $order['refund_type'] == 6) {
-//            $order['status_name'] = '已退款';
+//            $order['status_name'] = 'Đã hoàn tiền';
 //        } else if ($order['refund_status'] == 3) {
-//            $order['status_name'] = '部分退款（子订单）';
+//            $order['status_name'] = 'Hoàn tiền một phần (đơn hàng con)';
 //        } else if ($order['refund_status'] == 4) {
-//            $order['status_name'] = '子订单已全部申请退款中';
+//            $order['status_name'] = 'Tất cả đơn hàng con đang yêu cầu hoàn tiền';
 //        } else if (!$order['status']) {
 //            if ($order['pink_id']) {
 //                /** @var StorePinkServices $pinkServices */
 //                $pinkServices = app()->make(StorePinkServices::class);
 //                if ($pinkServices->getCount(['id' => $order['pink_id'], 'status' => 1])) {
-//                    $order['status_name'] = '拼团中';
+//                    $order['status_name'] = 'Đang mua chung';
 //                } else {
-//                    $order['status_name'] = '未发货';
+//                    $order['status_name'] = 'Chưa giao hàng';
 //                }
 //            } else {
 //                if ($order['shipping_type'] === 1) {
-//                    $order['status_name'] = '未发货';
+//                    $order['status_name'] = 'Chưa giao hàng';
 //                } else {
-//                    $order['status_name'] = '待核销';
+//                    $order['status_name'] = 'Chờ xác nhận sử dụng';
 //                }
 //            }
 //        } else if ($order['status'] == 1) {
-//            if ($order['delivery_type'] == 'send') {//TODO 送货
-//                $order['status_name'] = '待收货';
-//            } elseif ($order['delivery_type'] == 'express') {//TODO  发货
-//                $order['status_name'] = '待收货';
-//            } elseif ($order['delivery_type'] == 'split') {//拆分发货
-//                $order['status_name'] = '待收货';
+//            if ($order['delivery_type'] == 'send') {//TODO giao hàng
+//                $order['status_name'] = 'Chờ nhận hàng';
+//            } elseif ($order['delivery_type'] == 'express') {//TODO giao hàng
+//                $order['status_name'] = 'Chờ nhận hàng';
+//            } elseif ($order['delivery_type'] == 'split') {//giao hàng theo phần tách đơn
+//                $order['status_name'] = 'Chờ nhận hàng';
 //            } else {
-//                $order['status_name'] = '待收货';
+//                $order['status_name'] = 'Chờ nhận hàng';
 //            }
 //        } else if ($order['status'] == 2) {
-//            $order['status_name'] = '待评价';
+//            $order['status_name'] = 'Chờ đánh giá';
 //        } else if ($order['status'] == 3) {
-//            $order['status_name'] = '交易完成';
+//            $order['status_name'] = 'Giao dịch hoàn tất';
 //        }
-        // 处理未支付状态
+        // Xử lý trạng thái chưa thanh toán
         if (!$order['paid']) {
             if ($order['pay_type'] == 'offline') {
-                $order['status_name'] = '线下付款,未支付';
+                $order['status_name'] = 'Thanh toán ngoại tuyến, chưa thanh toán';
             } else {
-                $order['status_name'] = '未支付';
+                $order['status_name'] = 'Chưa thanh toán';
             }
-        } elseif ($order['status'] == 4 || $order['status'] == 1) { // 合并待收货逻辑
-            $order['status_name'] = '待收货';
+        } elseif ($order['status'] == 4 || $order['status'] == 1) { // Gộp logic chờ nhận hàng
+            $order['status_name'] = 'Chờ nhận hàng';
         } elseif ($order['refund_status'] == 1) {
             if (in_array($order['refund_type'], [0, 1, 2, 4, 5])) {
-                $order['status_name'] = '申请退款中';
+                $order['status_name'] = 'Đang yêu cầu hoàn tiền';
             }
         } elseif ($order['refund_status'] == 2 || $order['refund_type'] == 6) {
-            $order['status_name'] = '已退款';
+            $order['status_name'] = 'Đã hoàn tiền';
         } elseif ($order['refund_status'] == 3) {
-            $order['status_name'] = '部分退款（子订单）';
+            $order['status_name'] = 'Hoàn tiền một phần (đơn con)';
         } elseif ($order['refund_status'] == 4) {
-            $order['status_name'] = '子订单全部申请退款中';
+            $order['status_name'] = 'Tất cả đơn con đang yêu cầu hoàn tiền';
         } elseif (!$order['status']) {
             if ($order['pink_id']) {
                 /** @var StorePinkServices $pinkServices */
                 $pinkServices = app()->make(StorePinkServices::class);
                 if ($pinkServices->getCount(['id' => $order['pink_id'], 'status' => 1])) {
-                    $order['status_name'] = '拼团中';
+                    $order['status_name'] = 'Đang mua chung';
                 } else {
-                    $order['status_name'] = '未发货';
+                    $order['status_name'] = 'Chưa giao hàng';
                 }
             } else {
                 if ($order['shipping_type'] === 1) {
-                    $order['status_name'] = '未发货';
+                    $order['status_name'] = 'Chưa giao hàng';
                 } else {
-                    $order['status_name'] = '待核销';
+                    $order['status_name'] = 'Chờ xác nhận sử dụng';
                 }
             }
         } elseif ($order['status'] == 2) {
-            $order['status_name'] = '待评价';
+            $order['status_name'] = 'Chờ đánh giá';
         } elseif ($order['status'] == 3) {
-            $order['status_name'] = '交易完成';
+            $order['status_name'] = 'Giao dịch hoàn tất';
         } else {
-            // 处理未知状态
-            $order['status_name'] = '未知状态';
+            // Xử lý trạng thái không xác định
+            $order['status_name'] = 'Trạng thái không xác định';
         }
         unset($order['pink_id'], $order['refund_type']);
         return $order;
     }
 
     /**
-     * 格式化订单商品
+     * Định dạng sản phẩm trong đơn hàng
      * @param array $cartInfo
      * @param array $list
      * @return array
@@ -284,8 +284,8 @@ class OutStoreOrderServices extends BaseServices
     }
 
     /**
-     * 获取订单可以拆分商品信息
-     * @param string $orderId 订单号
+     * Lấy thông tin sản phẩm có thể tách khỏi đơn hàng
+     * @param string $orderId Mã đơn hàng
      * @return array
      */
     public function getCartList(string $orderId): array
@@ -306,8 +306,8 @@ class OutStoreOrderServices extends BaseServices
     }
 
     /**
-     * 订单收货
-     * @param string $orderId 订单号
+     * Xác nhận đã nhận hàng
+     * @param string $orderId Mã đơn hàng
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -343,8 +343,8 @@ class OutStoreOrderServices extends BaseServices
     }
 
     /**
-     * 发货
-     * @param string $orderId 订单号
+     * Giao hàng
+     * @param string $orderId Mã đơn hàng
      * @param array $data
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -364,8 +364,8 @@ class OutStoreOrderServices extends BaseServices
     }
 
     /**
-     * 订单拆单发送货
-     * @param string $orderId 订单号
+     * Tách đơn để giao hàng
+     * @param string $orderId Mã đơn hàng
      * @param array $data
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
@@ -385,8 +385,8 @@ class OutStoreOrderServices extends BaseServices
     }
 
     /**
-     * 设置发票
-     * @param string $orderId 订单号
+     * Đặt hóa đơn
+     * @param string $orderId Mã đơn hàng
      * @param array $data
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
@@ -410,8 +410,8 @@ class OutStoreOrderServices extends BaseServices
     }
 
     /**
-     * 修改配送信息
-     * @param string $orderId 订单号
+     * Sửa thông tin giao hàng
+     * @param string $orderId Mã đơn hàng
      * @param array $data
      * @return mixed
      */
@@ -428,7 +428,7 @@ class OutStoreOrderServices extends BaseServices
     }
 
     /**
-     * 订单推送
+     * Đẩy thông báo đơn hàng
      * @param int $id
      * @param string $pushUrl
      * @return bool
@@ -436,11 +436,11 @@ class OutStoreOrderServices extends BaseServices
     public function orderCreatePush(int $id, string $pushUrl): bool
     {
         $orderInfo = $this->getInfo('', $id);
-        return out_push($pushUrl, $orderInfo, '订单');
+        return out_push($pushUrl, $orderInfo, 'Đơn hàng');
     }
 
     /**
-     * 支付推送
+     * Đẩy thông báo thanh toán
      * @param int $id
      * @param string $pushUrl
      * @return bool
@@ -448,6 +448,6 @@ class OutStoreOrderServices extends BaseServices
     public function paySuccessPush(int $id, string $pushUrl): bool
     {
         $orderInfo = $this->getInfo('', $id);
-        return out_push($pushUrl, $orderInfo, '订单支付');
+        return out_push($pushUrl, $orderInfo, 'Thanh toán đơn hàng');
     }
 }

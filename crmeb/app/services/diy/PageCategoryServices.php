@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -39,7 +39,7 @@ class PageCategoryServices extends BaseServices
     }
 
     /**
-     * 获取分类列表
+     * Lấy danh sách danh mục
      * @return bool|mixed|null
      */
     public function getCategroyList()
@@ -50,7 +50,7 @@ class PageCategoryServices extends BaseServices
     }
 
     /**
-     * tree分类列表
+     * Danh sách danh mục dạng cây (tree)
      * @param int $pid
      * @param string $parent_name
      * @return array
@@ -77,18 +77,18 @@ class PageCategoryServices extends BaseServices
     {
         $info = $this->dao->get($cate_id);
         $list = $this->dao->getList(['pid' => 1]);
-        $data = [['value' => 1, 'label' => '顶级分类']];
+        $data = [['value' => 1, 'label' => 'Danh mục cấp cao nhất']];
         foreach ($list as $menu) {
             $data[] = ['value' => $menu['id'], 'label' => $menu['name']];
         }
         $pid = isset($info['pid']) ? $info['pid'] : $pid;
         $f[] = Form::hidden('id', $cate_id);
-        $f[] = Form::select('pid', '上级分类', (int)$pid)->setOptions($data)->filterable(true);
-        $f[] = Form::input('name', '分类名称', $info['name'] ?? '')->required();
-        $f[] = Form::input('type', '分类类型', $info['type'] ?? '')->required();
-        $f[] = Form::number('sort', '排序', (int)($info['sort'] ?? 0))->min(0)->precision(0);
-        $f[] = Form::radio('status', '状态', $info['status'] ?? 1)->options([['label' => '显示', 'value' => 1], ['label' => '隐藏', 'value' => 0]]);
-        return create_form($cate_id ? '修改分类' : '添加分类', $f, Url::buildUrl('/diy/link/category/save/' . $cate_id), 'POST');
+        $f[] = Form::select('pid', 'Danh mục cha', (int)$pid)->setOptions($data)->filterable(true);
+        $f[] = Form::input('name', 'Tên danh mục', $info['name'] ?? '')->required();
+        $f[] = Form::input('type', 'Loại danh mục', $info['type'] ?? '')->required();
+        $f[] = Form::number('sort', 'Thứ tự sắp xếp', (int)($info['sort'] ?? 0))->min(0)->precision(0);
+        $f[] = Form::radio('status', 'Trạng thái', $info['status'] ?? 1)->options([['label' => 'Hiện', 'value' => 1], ['label' => 'Ẩn', 'value' => 0]]);
+        return create_form($cate_id ? 'Sửa danh mục' : 'Thêm danh mục', $f, Url::buildUrl('/diy/link/category/save/' . $cate_id), 'POST');
     }
 
     public function getLinkCategorySave($cate_id, $data)
@@ -100,7 +100,7 @@ class PageCategoryServices extends BaseServices
             $res = $this->dao->save($data);
         }
         if (!$res) {
-            throw new AdminException('保存失败');
+            throw new AdminException('Lưu thất bại');
         } else {
             return true;
         }
@@ -110,7 +110,7 @@ class PageCategoryServices extends BaseServices
     {
         $res = $this->dao->delete($cate_id);
         if (!$res) {
-            throw new AdminException('删除失败');
+            throw new AdminException('Xóa thất bại');
         } else {
             return true;
         }

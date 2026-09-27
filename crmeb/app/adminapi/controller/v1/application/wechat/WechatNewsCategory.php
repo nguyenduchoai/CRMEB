@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,7 +18,7 @@ use app\services\article\ArticleServices;
 use think\facade\Log;
 
 /**
- * 图文信息
+ * Thông tin tin bài
  * Class WechatNewsCategory
  * @package app\admin\controller\wechat
  *
@@ -26,7 +26,7 @@ use think\facade\Log;
 class WechatNewsCategory extends AuthController
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * Menus constructor.
      * @param App $app
      * @param WechatNewsCategoryServices $services
@@ -38,7 +38,7 @@ class WechatNewsCategory extends AuthController
     }
 
     /**
-     * 图文消息列表
+     * Danh sách tin nhắn hình ảnh - văn bản
      * @return mixed
      */
     public function index()
@@ -53,7 +53,7 @@ class WechatNewsCategory extends AuthController
     }
 
     /**
-     * 图文详情
+     * Chi tiết tin bài
      * @param $id
      * @return mixed
      */
@@ -69,7 +69,7 @@ class WechatNewsCategory extends AuthController
     }
 
     /**
-     * 删除图文
+     * Xóa tin bài
      * @param $id
      * @return mixed
      */
@@ -82,7 +82,7 @@ class WechatNewsCategory extends AuthController
     }
 
     /**
-     * 新增或编辑保存
+     * Lưu khi thêm mới hoặc sửa
      * @return mixed
      */
     public function save()
@@ -141,7 +141,7 @@ class WechatNewsCategory extends AuthController
     }
 
     /**
-     * 发送消息
+     * Gửi tin nhắn
      */
     public function push()
     {
@@ -156,15 +156,15 @@ class WechatNewsCategory extends AuthController
             if (is_array($list['new']) && count($list['new'])) {
                 $wechatNews['title'] = $list['new'][0]['title'];
                 $wechatNews['image_input'] = $list['new'][0]['image_input'];
-                $wechatNews['date'] = date('m月d日', time());
+                $wechatNews['date'] = date('d/m', time());
                 $wechatNews['description'] = $list['new'][0]['synopsis'];
                 $wechatNews['id'] = $list['new'][0]['id'];
             }
         }
-        if ($data['user_ids'] != '') {//客服消息
+        if ($data['user_ids'] != '') {//Tin nhắn CSKH
             $wechatNews = $this->services->wechatPush($wechatNews);
             $message = WechatService::newsMessage($wechatNews);
-            $errorLog = [];//发送失败的用户
+            $errorLog = [];//Người dùng gửi thất bại
             $user = $this->services->getWechatUser($data['user_ids'], 'nickname,subscribe,openid', 'uid');
             if ($user) {
                 foreach ($user as $v) {
@@ -172,11 +172,11 @@ class WechatNewsCategory extends AuthController
                         try {
                             WechatService::staffService()->message($message)->to($v['openid'])->send();
                         } catch (\Exception $e) {
-                            Log::error($v['nickname'] . '发送失败，原因' . $e->getMessage());
-                            $errorLog[] = $v['nickname'] . '发送失败';
+                            Log::error($v['nickname'] . 'gửi thất bại, nguyên nhân' . $e->getMessage());
+                            $errorLog[] = $v['nickname'] . 'Gửi thất bại';
                         }
                     } else {
-                        $errorLog[] = $v['nickname'] . '没有关注发送失败(不是微信公众号用户)';
+                        $errorLog[] = $v['nickname'] . 'gửi thất bại do chưa theo dõi (không phải người dùng OA WeChat)';
                     }
                 }
                 if (!count($errorLog)) {
@@ -193,7 +193,7 @@ class WechatNewsCategory extends AuthController
     }
 
     /**
-     * 发送消息图文列表
+     * Danh sách hình ảnh - văn bản khi gửi thông báo
      * @return mixed
      */
     public function send_news()

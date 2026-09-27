@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -11,8 +11,8 @@
 import request from '@/libs/request';
 
 /**
- * @description 上传
- * @param {Object} param data {Object} 传值参数
+ * @description Tải lên
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function upload(data, config) {
   return request({
@@ -23,8 +23,8 @@ export function upload(data, config) {
   });
 }
 /**
- * @description 云存储 url 上传
- * @param {Object} param data {Object} 传值参数
+ * @description Tải lên bằng url cloud storage
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function ossUpload(url, data) {
   return request({

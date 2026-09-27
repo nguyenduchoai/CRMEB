@@ -1,7 +1,7 @@
 FROM phpdockerio/php:7.4-fpm AS crmeb_php
 WORKDIR "/var/www"
 
-# 扩展依赖
+# Phụ thuộc mở rộng
 RUN apt-get update; \
     apt-get -y --no-install-recommends install \
         php7.4-bcmath \
@@ -13,7 +13,7 @@ RUN apt-get autoremove
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 RUN echo "open_basedir = /tmp:/var" > /etc/php/7.4/fpm/conf.d/open_basedir.ini
 
-# 启动命令
+# Lệnh khởi động
 CMD ["sh", "-c", "php think timer start --d"]
 CMD ["sh", "-c", "php think workerman start --d"]
 CMD ["sh", "-c", "php think queue:listen --queue"]

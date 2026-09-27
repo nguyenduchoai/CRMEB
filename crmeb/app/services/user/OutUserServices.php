@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -38,7 +38,7 @@ class OutUserServices extends BaseServices
     }
 
     /**
-     * 用户列表
+     * Danh sách người dùng
      * @param array $where
      * @return array
      */
@@ -57,20 +57,20 @@ class OutUserServices extends BaseServices
             $spreadNames = $this->dao->getColumn([['uid', 'in', array_unique(array_column($list, 'spread_uid'))]], 'nickname', 'uid');
             foreach ($list as &$item) {
                 $item['spread_uid_nickname'] = $item['spread_uid'] ? ($spreadNames[$item['spread_uid']] ?? '') . '/' . $item['spread_uid'] : '';
-                //用户类型
+                //Loại người dùng
                 if ($item['user_type'] == 'routine') {
-                    $item['user_type'] = '小程序';
+                    $item['user_type'] = 'Mini Program';
                 } else if ($item['user_type'] == 'wechat') {
-                    $item['user_type'] = '公众号';
+                    $item['user_type'] = 'OA WeChat';
                 } else if ($item['user_type'] == 'h5') {
                     $item['user_type'] = 'H5';
                 } else if ($item['user_type'] == 'pc') {
                     $item['user_type'] = 'PC';
                 } else if ($item['user_type'] == 'app' || $item['user_type'] == 'apple') {
                     $item['user_type'] = 'APP';
-                } else $item['user_type'] = '其他';
+                } else $item['user_type'] = 'Khác';
 
-                //用户等级
+                //Hạng người dùng
                 $item['level_name'] = "";
                 $levelInfo = $userLevel[$item['uid']] ?? null;
                 if ($levelInfo) {
@@ -84,32 +84,32 @@ class OutUserServices extends BaseServices
     }
 
     /**
-     * 获取用户详情
+     * Lấy chi tiết người dùng
      * @param $uid
      * @return mixed
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/06/20
      */
     public function userInfo($uid)
     {
-        $userType = ['h5' => 'H5', 'wechat' => '公众号', 'routine' => '小程序', 'app' => 'APP', 'pc' => 'PC'];
+        $userType = ['h5' => 'H5', 'wechat' => 'OA WeChat', 'routine' => 'Mini Program', 'app' => 'APP', 'pc' => 'PC'];
         $fields = ['uid', 'real_name', 'mark', 'nickname', 'avatar', 'phone', 'now_money', 'brokerage_price', 'integral', 'exp', 'sign_num', 'user_type', 'status', 'level',
             'agent_level', 'spread_open', 'spread_uid', 'spread_time', 'user_type', 'is_promoter', 'pay_count', 'is_ever_level', 'is_money_level', 'overdue_time', 'add_time'];
         $data = app()->make(UserServices::class)->get($uid, $fields);
         $data['user_type'] = $userType[$data['user_type']];
-        $data['status'] = $data['status'] ? '正常' : '禁用';
-        $data['level'] = app()->make(SystemUserLevelServices::class)->value($data['level'], 'name') ?? '无';
-        $data['agent_level'] = app()->make(AgentLevelServices::class)->value($data['agent_level'], 'name') ?? '无';
-        $data['spread_open'] = $data['spread_open'] ? '分销开启' : '分销关闭';
-        $data['spread_name'] = app()->make(UserServices::class)->value($data['spread_uid'], 'nickname') ?? '无';
+        $data['status'] = $data['status'] ? 'Bình thường' : 'Vô hiệu hóa';
+        $data['level'] = app()->make(SystemUserLevelServices::class)->value($data['level'], 'name') ?? 'Không có';
+        $data['agent_level'] = app()->make(AgentLevelServices::class)->value($data['agent_level'], 'name') ?? 'Không có';
+        $data['spread_open'] = $data['spread_open'] ? 'Bật tiếp thị liên kết' : 'Tắt tiếp thị liên kết';
+        $data['spread_name'] = app()->make(UserServices::class)->value($data['spread_uid'], 'nickname') ?? 'Không có';
         $data['spread_time'] = date('Y-m-d H:i:s', $data['spread_time']);
         $data['add_time'] = date('Y-m-d H:i:s', $data['add_time']);
         return $data;
     }
 
     /**
-     * 添加/修改用户
+     * Thêm/sửa người dùng
      * @param int $uid
      * @param array $data
      * @return int
@@ -176,7 +176,7 @@ class OutUserServices extends BaseServices
     }
 
     /**
-     * 赠送(积分/余额/付费会员)
+     * Tặng (điểm thưởng/số dư/thành viên trả phí)
      * @param int $id
      * @param array $data
      * @return bool
@@ -219,7 +219,7 @@ class OutUserServices extends BaseServices
     }
 
     /**
-     * 修改用户数据
+     * Sửa dữ liệu người dùng
      * @param $uid
      * @param $value
      * @param $type
@@ -233,7 +233,7 @@ class OutUserServices extends BaseServices
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
         $res = $userServices->update($uid, [$type => $value]);
-        if ($res) throw new ApiException('修改失败');
+        if ($res) throw new ApiException('Sửa thất bại');
         return true;
     }
 }

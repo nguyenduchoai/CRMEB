@@ -35,7 +35,7 @@ export default {
       // this.monacoInstance.setValue(val)
     },
     seteditor() {
-      // 初始化编辑器实例
+      // Khởi tạo instance trình soạn thảo
 
       this.monacoInstance = monaco.editor.create(this.$refs.code_box, {
         value: this.value,
@@ -43,9 +43,9 @@ export default {
 
         language: 'html', // shell、sql、python
 
-        readOnly: false, // 不能编辑
+        readOnly: false, // Không thể sửa
       });
-      // 编辑器内容发生改变时触发
+      // Kích hoạt khi nội dung trình soạn thảo thay đổi
       this.monacoInstance.onDidChangeModelContent(() => {
         this.$emit('change', this.monacoInstance.getValue());
       });

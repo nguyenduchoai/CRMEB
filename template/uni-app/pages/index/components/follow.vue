@@ -1,5 +1,5 @@
 <template>
-  <!-- 关注公众号 -->
+  <!-- Theo dõi OA WeChat -->
   <view>
     <view :style="[followWrapStyle]">
       <view :style="[followStyle]" class="follow acea-row row-between-wrapper">
@@ -12,24 +12,24 @@
           </view>
         </view>
         <view :style="[buttonStyle]" class="notes acea-row row-center-wrapper" @click="followTap">
-          {{ $t(`关注`) }}
+          {{ $t(`Đã theo dõi`) }}
         </view>
         <view class="iconfont icon-ic_close"></view>
       </view>
     </view>
     <view class="followCode" v-if="followCode">
       <view class="pictrue">
-        <view class="title">{{ $t(`关注公众号`) }}</view>
-        <view class="tips">{{ $t(`活动福利，第一时间了解`) }}</view>
+        <view class="title">{{ $t(`Theo dõi OA WeChat`) }}</view>
+        <view class="tips">{{ $t(`Cập nhật ưu đãi, khuyến mãi sớm nhất`) }}</view>
         <view class="code-bg">
           <image class="imgs" :src="dataConfig.codeConfig.url" mode=""></image>
         </view>
         <!-- #ifdef MP || APP-PLUS -->
-        <view class="btn" @tap="savePic">{{ $t(`保存图片`) }}</view>
+        <view class="btn" @tap="savePic">{{ $t(`Lưu ảnh`) }}</view>
         <!-- #endif -->
         <!-- #ifdef H5 -->
-        <view class="btn" v-show="isWeixin" @tap="savePic">{{ $t(`长按保存图片`) }}</view>
-        <view class="btn" v-show="!isWeixin" @tap="savePic">{{ $t(`保存图片`) }}</view>
+        <view class="btn" v-show="isWeixin" @tap="savePic">{{ $t(`Nhấn giữ để lưu ảnh`) }}</view>
+        <view class="btn" v-show="!isWeixin" @tap="savePic">{{ $t(`Lưu ảnh`) }}</view>
         <!-- #endif -->
         <view class="close acea-row row-center-wrapper" @click="closeFollowCode">
           <text class="iconfont icon-ic_close1"></text>
@@ -107,18 +107,18 @@ export default {
   methods: {
     savePic(){
       // #ifdef H5
-      var a = document.createElement('a'); // 生成一个a元素
-      a.download = 'wechat'; // 设置图片名称
+      var a = document.createElement('a'); // Tạo một phần tử a
+      a.download = 'wechat'; // Đặt tên ảnh
       a.style.display = "none";
-      a.href = this.dataConfig.codeConfig.url; // 将生成的URL设置为a.href属性
-      document.body.appendChild(a); // 将a标签追加到文档对象中
-      a.click(); // 触发a的单击事件
-      a.remove(); // 一次性的，用完就删除a标签
+      a.href = this.dataConfig.codeConfig.url; // Đặt URL đã tạo vào thuộc tính a.href
+      document.body.appendChild(a); // Thêm thẻ a vào document object
+      a.click(); // Kích hoạt sự kiện click của a
+      a.remove(); // Dùng một lần, dùng xong thì xóa thẻ a
       // #endif
       // #ifdef MP
       let that = this;
       uni.downloadFile({
-        url: that.dataConfig.codeConfig.url, //图片地址
+        url: that.dataConfig.codeConfig.url, //Đường dẫn hình ảnh
         success: function(response){
           uni.getSetting({
             success(res) {
@@ -131,13 +131,13 @@ export default {
                       success: function(res) {
                         that.closeFollowCode();
                         that.$util.Tips({
-                          title: '保存成功',
+                          title: 'Lưu thành công',
                           icon: 'success'
                         });
                       },
                       fail: function(res) {
                         that.$util.Tips({
-                          title: '保存失败'
+                          title: 'Lưu thất bại'
                         });
                       }
                     });
@@ -149,13 +149,13 @@ export default {
                   success: function(res) {
                     that.closeFollowCode();
                     that.$util.Tips({
-                      title: '保存成功',
+                      title: 'Lưu thành công',
                       icon: 'success'
                     });
                   },
                   fail: function(res) {
                     that.$util.Tips({
-                      title: '保存失败'
+                      title: 'Lưu thất bại'
                     });
                   }
                 });
@@ -168,20 +168,20 @@ export default {
       //#ifdef APP-PLUS
       let that = this
       uni.downloadFile({
-        url: that.dataConfig.codeConfig.url, //图片地址
+        url: that.dataConfig.codeConfig.url, //Đường dẫn hình ảnh
         success: function(response){
           uni.saveImageToPhotosAlbum({
             filePath: response.tempFilePath,
             success: function(res) {
               that.posterImageClose();
               that.$util.Tips({
-                title: '保存成功',
+                title: 'Lưu thành công',
                 icon: 'success'
               });
             },
             fail: function(res) {
               that.$util.Tips({
-                title: '保存失败'
+                title: 'Lưu thất bại'
               });
             }
           });

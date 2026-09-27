@@ -18,7 +18,7 @@ class WechatQrcodeCateDao extends BaseDao
     }
 
     /**
-     * 渠道码分类列表
+     * Danh sách danh mục mã kênh
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException

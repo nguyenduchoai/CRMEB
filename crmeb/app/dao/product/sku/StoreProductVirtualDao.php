@@ -10,7 +10,7 @@ use app\model\product\sku\StoreProductVirtual;
 class StoreProductVirtualDao extends BaseDao
 {
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string

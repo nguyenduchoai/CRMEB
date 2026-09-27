@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,8 +20,8 @@ use crmeb\exceptions\AdminException;
  *
  * Class UserLabelRelationServices
  * @package app\services\user
- * @method getColumn(array $where, string $field, string $key = '') 获取某个字段数组
- * @method saveAll(array $data) 批量保存数据
+ * @method getColumn(array $where, string $field, string $key = '') Lấy mảng của một trường
+ * @method saveAll(array $data) Lưu dữ liệu theo lô
  */
 class UserLabelRelationServices extends BaseServices
 {
@@ -36,7 +36,7 @@ class UserLabelRelationServices extends BaseServices
     }
 
     /**
-     * 获取某个用户标签ids
+     * Lấy các ID nhãn của một người dùng
      * @param int $uid
      * @return array
      */
@@ -46,7 +46,7 @@ class UserLabelRelationServices extends BaseServices
     }
 
     /**
-     * 用户设置标签
+     * Người dùng đặt nhãn
      * @param $uids
      * @param array $labels
      * @return bool
@@ -77,7 +77,7 @@ class UserLabelRelationServices extends BaseServices
     }
 
     /**
-     * 取消用户标签
+     * Bỏ nhãn người dùng
      * @param int $uid
      * @param array $labels
      * @return mixed
@@ -95,7 +95,7 @@ class UserLabelRelationServices extends BaseServices
     }
 
     /**
-     * 获取用户标签
+     * Lấy nhãn người dùng
      * @param array $uids
      * @return array
      * @throws \think\db\exception\DataNotFoundException

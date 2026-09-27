@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,7 +24,7 @@ use crmeb\exceptions\AdminException;
 use app\dao\system\upgrade\UpgradeLogDao;
 
 /**
- * 在线升级
+ * Nâng cấp trực tuyến
  * Class UpgradeServices
  * @package app\services\system
  */
@@ -57,7 +57,7 @@ class UpgradeServices extends BaseServices
 //        $versionData = $this->getVersion();
 //        if ($versionData['version_code'] < 450) return true;
 //        if (empty($versionData)) {
-//            throw new AdminException('授权信息丢失');
+//            throw new AdminException('Mất thông tin ủy quyền');
 //        }
 //
 //        $this->timeStamp = time();
@@ -79,11 +79,11 @@ class UpgradeServices extends BaseServices
     }
 
     /**
-     * 获取版本信息
+     * Lấy thông tin phiên bản
      * @return void
      */
     /**
-     * 获取文件配置信息
+     * Lấy thông tin cấu hình file
      * @param string $name
      * @param string $path
      * @return array|string
@@ -102,7 +102,7 @@ class UpgradeServices extends BaseServices
     }
 
     /**
-     * 获取版本号
+     * Lấy số phiên bản
      * @param $input
      * @return array
      */
@@ -118,7 +118,7 @@ class UpgradeServices extends BaseServices
     }
 
     /**
-     * 获取Token
+     * Lấy Token
      * @return void
      */
     public function getAuth()
@@ -126,19 +126,19 @@ class UpgradeServices extends BaseServices
         $this->getSign($this->timeStamp);
         $result = HttpService::postRequest(self::LOGIN_URL, $this->requestData);
         if (!$result) {
-            throw new AdminException('授权失败');
+            throw new AdminException('Ủy quyền thất bại');
         }
 
         $authData = json_decode($result, true);
         if (!isset($authData['status']) || $authData['status'] != 200) {
             Log::error(['msg' => $authData['msg'] ?? '', 'error' => $authData['data'] ?? []]);
-            throw new AdminException($authData['msg'] ?? '授权失败');
+            throw new AdminException($authData['msg'] ?? 'Ủy quyền thất bại');
         }
         CacheService::set('upgrade_auth_token', $authData['data']['access_token'], 7200);
     }
 
     /**
-     * 获取签名
+     * Lấy chữ ký (signature)
      * @param int $timeStamp
      * @return void
      */
@@ -150,7 +150,7 @@ class UpgradeServices extends BaseServices
             (!isset($data['app_id']) || !$data['app_id']) ||
             (!isset($data['version']) || !$data['version']) ||
             (!isset($data['app_key']) || !$data['app_key'])) {
-            throw new AdminException('验证失效，请重新请求');
+            throw new AdminException('Xác thực đã hết hiệu lực, vui lòng gửi lại yêu cầu');
         }
 
         $host = $data['host'];
@@ -177,7 +177,7 @@ class UpgradeServices extends BaseServices
     }
 
     /**
-     * 升级列表
+     * Danh sách nâng cấp
      * @return mixed
      */
     public function getUpgradeList()
@@ -188,18 +188,18 @@ class UpgradeServices extends BaseServices
         $this->getSign($this->timeStamp);
         $result = HttpService::getRequest(self::UPGRADE_URL, $this->requestData);
         if (!$result) {
-            throw new AdminException('升级列表获取失败');
+            throw new AdminException('Lấy danh sách nâng cấp thất bại');
         }
 
         $data = json_decode($result, true);
         if (!$this->checkAuth($data)) {
-            throw new AdminException($data['msg'] ?? '升级列表获取失败');
+            throw new AdminException($data['msg'] ?? 'Lấy danh sách nâng cấp thất bại');
         }
         return $data['data'] ?? [];
     }
 
     /**
-     * 可升级列表
+     * Danh sách có thể nâng cấp
      * @return mixed
      */
     public function getUpgradeableList()
@@ -207,18 +207,18 @@ class UpgradeServices extends BaseServices
         $this->getSign($this->timeStamp);
         $result = HttpService::getRequest(self::UPGRADE_CURRENT_URL, $this->requestData, ['Access-Token: Bearer ' . CacheService::get('upgrade_auth_token')]);
         if (!$result) {
-            throw new AdminException('可升级列表获取失败');
+            throw new AdminException('Lấy danh sách có thể nâng cấp thất bại');
         }
 
         $data = json_decode($result, true);
         if (!$this->checkAuth($data)) {
-            throw new AdminException($data['msg'] ?? '升级列表获取失败');
+            throw new AdminException($data['msg'] ?? 'Lấy danh sách nâng cấp thất bại');
         }
         return $data['data'] ?? [];
     }
 
     /**
-     * 升级协议
+     * Thỏa thuận nâng cấp
      * @return mixed
      */
     public function getAgreement()
@@ -226,18 +226,18 @@ class UpgradeServices extends BaseServices
         $this->getSign($this->timeStamp);
         $result = HttpService::getRequest(self::AGREEMENT_URL, $this->requestData, ['Access-Token: Bearer ' . CacheService::get('upgrade_auth_token')]);
         if (!$result) {
-            throw new AdminException('升级协议获取失败');
+            throw new AdminException('Lấy thỏa thuận nâng cấp thất bại');
         }
 
         $data = json_decode($result, true);
         if (!$this->checkAuth($data)) {
-            throw new AdminException($data['msg'] ?? '升级协议获取失败');
+            throw new AdminException($data['msg'] ?? 'Lấy thỏa thuận nâng cấp thất bại');
         }
         return $data['data'] ?? [];
     }
 
     /**
-     * 下载
+     * Tải xuống
      * @param string $packageKey
      * @return bool
      */
@@ -245,22 +245,22 @@ class UpgradeServices extends BaseServices
     {
         $token = md5(time());
 
-        //检查数据库大小
+        //Kiểm tra dung lượng cơ sở dữ liệu
         $this->checkDatabaseSize();
 
 
-        //核对项目签名
+        //Kiểm tra chữ ký dự án
         $this->checkSignature();
 
         $this->requestData['package_key'] = $packageKey;
         $this->getSign($this->timeStamp);
         $result = HttpService::getRequest(self::PACKAGE_DOWNLOAD_URL, $this->requestData, ['Access-Token: Bearer ' . CacheService::get('upgrade_auth_token')]);
         if (!$result) {
-            throw new AdminException('升级包获取失败');
+            throw new AdminException('Lấy gói nâng cấp thất bại');
         }
         $data = json_decode($result, true);
         if (!$this->checkAuth($data)) {
-            throw new AdminException($data['msg'] ?? '授权失败');
+            throw new AdminException($data['msg'] ?? 'Ủy quyền thất bại');
         }
 
         if (empty($data['data']['server_package_link']) && empty($data['data']['client_package_link']) && empty($data['data']['pc_package_link'])) {
@@ -298,7 +298,7 @@ class UpgradeServices extends BaseServices
     }
 
     /**
-     * 执行下载
+     * Thực hiện tải xuống
      * @param string $seq
      * @param string $url
      * @param string $downloadPath
@@ -321,14 +321,14 @@ class UpgradeServices extends BaseServices
         curl_close($ch);
 
         if (strpos($fileName, 'zip') === false) {
-            throw new AdminException('安装包格式错误');
+            throw new AdminException('Định dạng gói cài đặt không hợp lệ');
         }
 
         /** @var FileService $fileService */
         $fileService = app()->make(FileService::class);
         $downloadFilePath = $downloadPath . DS . substr($fileName, 0, strpos($fileName, 'zip') - 1);
         if (!$fileService->extractFile($downloadPath . DS . $fileName, $downloadFilePath)) {
-            throw new AdminException('升级包解压失败');
+            throw new AdminException('Giải nén gói nâng cấp thất bại');
         }
 
         CacheService::set($seq . '_path', $downloadFilePath, 86400);
@@ -337,7 +337,7 @@ class UpgradeServices extends BaseServices
     }
 
     /**
-     * 开始下载
+     * Bắt đầu tải xuống
      * @param string $packageLink
      * @param string $seq
      * @return void
@@ -352,63 +352,63 @@ class UpgradeServices extends BaseServices
     }
 
     /**
-     * 升级进度
+     * Tiến trình nâng cấp
      * @return array
      */
     public function getProgress(): array
     {
         $token = CacheService::get('upgrade_token');
         if (empty($token)) {
-            throw new AdminException('请重新升级');
+            throw new AdminException('Vui lòng nâng cấp lại');
         }
 
-        $serverProgress = CacheService::get($token . '_server_package'); // 服务端包下载进度
-        $clientProgress = CacheService::get($token . '_client_package'); // 客户端包下载进度
-        $pcProgress = CacheService::get($token . '_pc_package'); // PC端包下载进度
-        $databaseBackupProgress = CacheService::get($token . '_database_backup'); // 数据库备份进度
-        $projectBackupProgress = CacheService::get($token . '_project_backup'); // 项目备份备份进度
+        $serverProgress = CacheService::get($token . '_server_package'); // Tiến độ tải gói phía server
+        $clientProgress = CacheService::get($token . '_client_package'); // Tiến độ tải gói phía client
+        $pcProgress = CacheService::get($token . '_pc_package'); // Tiến độ tải gói phía PC
+        $databaseBackupProgress = CacheService::get($token . '_database_backup'); // Tiến độ backup cơ sở dữ liệu
+        $projectBackupProgress = CacheService::get($token . '_project_backup'); // Tiến độ backup dự án
 
-        $databaseUpgradeProgress = CacheService::get($token . '_database_upgrade'); // 数据库升级进度
-        $coverageProjectProgress = CacheService::get($token . '_coverage_project'); // 项目覆盖进度
+        $databaseUpgradeProgress = CacheService::get($token . '_database_upgrade'); // Tiến độ nâng cấp cơ sở dữ liệu
+        $coverageProjectProgress = CacheService::get($token . '_coverage_project'); // Tiến độ ghi đè dự án
 
         $stepNum = 1;
-        $tip = '开始升级';
+        $tip = 'Bắt đầu nâng cấp';
         if ($serverProgress == $clientProgress && $clientProgress == $pcProgress) {
-            $tip = $serverProgress == 1 ? '开始下载安装包' : '安装包下载完成';
+            $tip = $serverProgress == 1 ? 'Bắt đầu tải xuống gói cài đặt' : 'Tải xuống gói cài đặt hoàn tất';
             if ($serverProgress == 2) {
                 $stepNum += 1;
             }
         } else {
-            $tip = '正在下载安装包';
+            $tip = 'Đang tải xuống gói cài đặt';
         }
 
         if ($databaseBackupProgress == 2) {
-            $tip = '数据库备份完成';
+            $tip = 'Sao lưu cơ sở dữ liệu hoàn tất';
             $stepNum += 1;
         }
 
         if ($projectBackupProgress == 2) {
-            $tip = '项目备份完成';
+            $tip = 'Sao lưu dự án hoàn tất';
             $stepNum += 1;
         }
 
         if ((int)$databaseUpgradeProgress == 2) {
-            $tip = '数据库升级完成';
+            $tip = 'Nâng cấp cơ sở dữ liệu hoàn tất';
             $stepNum += 1;
         }
 
         if ((int)$coverageProjectProgress == 2) {
-            $tip = '项目升级完成';
+            $tip = 'Nâng cấp dự án hoàn tất';
             $stepNum += 1;
         }
 
         $upgradeStatus = (int)CacheService::get($token . 'upgrade_status');
         if ($upgradeStatus == 2) {
             $stepNum = 6;
-            $tip = '升级完成';
+            $tip = 'Nâng cấp hoàn tất';
         } elseif ($upgradeStatus < 0) {
             $this->saveLog($token);
-            throw new AdminException(CacheService::get($token . 'upgrade_status_tip', '升级失败'));
+            throw new AdminException(CacheService::get($token . 'upgrade_status_tip', 'Nâng cấp thất bại'));
         } elseif ($serverProgress == 2 && $clientProgress == 2 && $pcProgress == 2 && $databaseBackupProgress == 2 && $projectBackupProgress == 2) {
             try {
                 $this->overwriteProject();
@@ -422,7 +422,7 @@ class UpgradeServices extends BaseServices
     }
 
     /**
-     * 数据库备份
+     * Sao lưu cơ sở dữ liệu
      * @param $token
      * @return bool
      * @throws \think\db\exception\BindParamException
@@ -430,12 +430,12 @@ class UpgradeServices extends BaseServices
     public function databaseBackup($token): bool
     {
         try {
-            //备份表数据
+            //Backup dữ liệu bảng
             /** @var SystemDatabackupServices $backServices */
             $backServices = app()->make(SystemDatabackupServices::class);
             $tables = $backServices->getDataList();
             if (count($tables['list']) < 1) {
-                throw new AdminException('数据表获取失败');
+                throw new AdminException('Lấy bảng dữ liệu thất bại');
             }
 
             $version = str_replace('.', '', $this->requestData['version']);
@@ -443,27 +443,27 @@ class UpgradeServices extends BaseServices
             $tables = implode(',', array_column($tables['list'], 'name'));
             $result = $backServices->backup($tables);
             if (!empty($result)) {
-                throw new AdminException('数据库备份失败 ' . $result);
+                throw new AdminException('Sao lưu cơ sở dữ liệu thất bại ' . $result);
             }
 
             $fileData = $backServices->getDbBackup()->getFile();
             $fileName = $fileData['filename'] . '.gz';
             if (!is_file($fileData['filepath'] . $fileName)) {
-                throw new AdminException('数据库备份失败');
+                throw new AdminException('Sao lưu cơ sở dữ liệu thất bại');
             }
             CacheService::set($token . '_database_backup', 2, 86400);
             CacheService::set($token . '_database_backup_name', $fileName, 86400);
             return true;
         } catch (\Exception $e) {
-            Log::error('升级失败,失败原因:' . $e->getMessage());
+            Log::error('Nâng cấp thất bại, lý do:' . $e->getMessage());
             CacheService::set($token . 'upgrade_status', -1, 86400);
-            CacheService::set($token . 'upgrade_status_tip', '升级失败,失败原因:' . $e->getMessage(), 86400);
+            CacheService::set($token . 'upgrade_status_tip', 'Nâng cấp thất bại, lý do:' . $e->getMessage(), 86400);
         }
         return false;
     }
 
     /**
-     * 项目备份
+     * Sao lưu dự án
      * @param string $token
      * @return bool
      */
@@ -480,7 +480,7 @@ class UpgradeServices extends BaseServices
 
             $projectPath = $this->getProjectDir($appPath);
             if (empty($projectPath)) {
-                throw new AdminException('项目目录获取异常');
+                throw new AdminException('Lỗi khi lấy thư mục dự án');
             }
 
             foreach ($projectPath as $key => $path) {
@@ -501,28 +501,28 @@ class UpgradeServices extends BaseServices
             $fileService = app()->make(FileService::class);
             $result = $fileService->addZip($backupDir, $filePath, $backupDir);
             if (!$result) {
-                throw new AdminException('项目备份失败');
+                throw new AdminException('Sao lưu dự án thất bại');
             }
 
             CacheService::set($token . '_project_backup', 2, 86400);
             CacheService::set($token . '_project_backup_name', $fileName, 86400);
 
-            //检测项目备份
+            //Kiểm tra backup dự án
             if (!is_file($filePath)) {
-                throw new AdminException('项目备份检测失败');
+                throw new AdminException('Kiểm tra bản sao lưu dự án thất bại');
             }
 
             return true;
         } catch (\Exception $e) {
-            Log::error('升级失败,失败原因:' . $e->getMessage());
+            Log::error('Nâng cấp thất bại, lý do:' . $e->getMessage());
             CacheService::set($token . 'upgrade_status', -1, 86400);
-            CacheService::set($token . 'upgrade_status_tip', '升级失败,失败原因:' . $e->getMessage(), 86400);
+            CacheService::set($token . 'upgrade_status_tip', 'Nâng cấp thất bại, lý do:' . $e->getMessage(), 86400);
         }
         return false;
     }
 
     /**
-     * 获取项目目录
+     * Lấy thư mục dự án
      * @param $path
      * @return array
      */
@@ -549,7 +549,7 @@ class UpgradeServices extends BaseServices
     }
 
     /**
-     * 升级
+     * Nâng cấp
      * @return bool
      * @throws \Exception
      */
@@ -557,7 +557,7 @@ class UpgradeServices extends BaseServices
     {
         try {
             if (!$token = CacheService::get('upgrade_token')) {
-                throw new AdminException('请重新下载升级包');
+                throw new AdminException('Vui lòng tải lại gói nâng cấp');
             }
 
             if (CacheService::get($token . 'is_execute') == 2) {
@@ -567,37 +567,37 @@ class UpgradeServices extends BaseServices
 
             $dataBackupName = CacheService::get($token . '_database_backup_name');
             if (!$dataBackupName || !is_file(app()->getRootPath() . 'backup' . DS . $dataBackupName)) {
-                throw new AdminException('数据库备份失败');
+                throw new AdminException('Sao lưu cơ sở dữ liệu thất bại');
             }
 
             $serverPackageFilePath = CacheService::get($token . '_server_package_path');
             if (!is_dir($serverPackageFilePath)) {
-                throw new AdminException('项目文件获取异常');
+                throw new AdminException('Lỗi khi lấy tệp dự án');
             }
 
-            // 执行sql文件
+            // Thực thi file sql
             if (!$this->databaseUpgrade($token, $serverPackageFilePath)) {
-                throw new AdminException('数据库升级失败');
+                throw new AdminException('Nâng cấp cơ sở dữ liệu thất bại');
             }
 
-            // 替换文件目录
+            // Thay thế thư mục file
             $this->coverageProject($token);
 
-            // 发送升级日志
+            // Gửi log nâng cấp
             $this->sendUpgradeLog($token);
             $this->saveLog($token);
             CacheService::set($token . 'upgrade_status', 2, 86400);
             return true;
         } catch (\Exception $e) {
-            Log::error('升级失败,失败原因:' . $e->getMessage());
+            Log::error('Nâng cấp thất bại, lý do:' . $e->getMessage());
             CacheService::set($token . 'upgrade_status', -1, 86400);
-            CacheService::set($token . 'upgrade_status_tip', '升级失败,失败原因:' . $e->getMessage(), 86400);
+            CacheService::set($token . 'upgrade_status_tip', 'Nâng cấp thất bại, lý do:' . $e->getMessage(), 86400);
         }
         return false;
     }
 
     /**
-     * 写入日志
+     * Ghi log
      * @param $token
      * @return void
      */
@@ -625,7 +625,7 @@ class UpgradeServices extends BaseServices
     }
 
     /**
-     * 发送日志
+     * Gửi log
      * @param string $token
      * @return bool
      */
@@ -635,7 +635,7 @@ class UpgradeServices extends BaseServices
             $versionBefore = CacheService::get('version_before', '');
             $versionData = $this->getVersion();
             if (empty($versionData)) {
-                throw new AdminException('授权信息丢失');
+                throw new AdminException('Mất thông tin cấp phép');
             }
             $versionAfter = $this->recombinationVersion($versionData['version'] ?? '');
 
@@ -646,19 +646,19 @@ class UpgradeServices extends BaseServices
             $this->getSign($this->timeStamp);
             $result = HttpService::postRequest(self::UPGRADE_LOG_URL, $this->requestData, ['Access-Token: Bearer ' . CacheService::get('upgrade_auth_token')]);
             if (!$result) {
-                throw new AdminException('升级日志推送失败');
+                throw new AdminException('Đẩy nhật ký nâng cấp thất bại');
             }
 
             $data = json_decode($result, true);
             $this->checkAuth($data);
         } catch (\Exception $e) {
-            Log::error(['msg' => '升级日志发送失败:,失败原因' . ($data['msg'] ?? '') . $e->getMessage(), 'data' => $data]);
+            Log::error(['msg' => 'Gửi nhật ký nâng cấp thất bại, lý do' . ($data['msg'] ?? '') . $e->getMessage(), 'data' => $data]);
         }
         return true;
     }
 
     /**
-     * 核对签名
+     * Kiểm tra chữ ký
      * @return void
      * @throws \Exception
      */
@@ -666,19 +666,19 @@ class UpgradeServices extends BaseServices
     {
         $projectSignature = rtrim($this->getVersion('project_signature'));
         if (!$projectSignature) {
-            throw new AdminException('项目签名获取异常');
+            throw new AdminException('Lỗi khi lấy chữ ký dự án');
         }
 
         /** @var fileVerification $verification */
         $verification = app()->make(fileVerification::class);
         $newSignature = $verification->getSignature(app()->getRootPath());
         if ($projectSignature != $newSignature) {
-            throw new AdminException('项目签名核对异常');
+            throw new AdminException('Lỗi khi đối chiếu chữ ký dự án');
         }
     }
 
     /**
-     * 生成签名
+     * Tạo chữ ký
      * @return void
      * @throws \Exception
      */
@@ -686,7 +686,7 @@ class UpgradeServices extends BaseServices
     {
         $file = app()->getRootPath() . '.version';
         if (!$data = @file($file)) {
-            throw new AdminException('.version读取失败');
+            throw new AdminException('Đọc tệp .version thất bại');
         }
         $list = [];
         if (!empty($data)) {
@@ -713,7 +713,7 @@ class UpgradeServices extends BaseServices
     }
 
     /**
-     * 数据库升级
+     * Nâng cấp cơ sở dữ liệu
      * @param string $token
      * @param string $serverPackageFilePath
      * @return bool
@@ -751,22 +751,22 @@ class UpgradeServices extends BaseServices
         try {
             foreach ($upgradeSql as $item) {
                 $tip = [
-                    '1' => '表已存在',
-                    '2' => '表不存在',
-                    '3' => '表中' . ($item['field'] ?? '') . '字段已存在',
-                    '4' => '表中' . ($item['field'] ?? '') . '字段不存在',
-                    '5' => '表中删除字段' . ($item['field'] ?? '') . '不存在',
-                    '6' => '表中数据已存在',
-                    '6_2' => '表中查询父类ID不存在',
-                    '7' => '表中数据已存在',
-                    '8' => '表中数据不存在',
+                    '1' => 'bảng đã tồn tại',
+                    '2' => 'bảng không tồn tại',
+                    '3' => 'bảng, trường' . ($item['field'] ?? '') . 'đã tồn tại',
+                    '4' => 'bảng, trường' . ($item['field'] ?? '') . 'không tồn tại',
+                    '5' => 'bảng, trường cần xóa' . ($item['field'] ?? '') . 'không tồn tại',
+                    '6' => 'bảng, dữ liệu đã tồn tại',
+                    '6_2' => 'bảng, ID cha cần tra cứu không tồn tại',
+                    '7' => 'bảng, dữ liệu đã tồn tại',
+                    '8' => 'bảng, dữ liệu không tồn tại',
                 ];
                 if (!isset($item['table']) || !$item['table']) {
-                    throw new AdminException('请核对升级数据结构:table');
+                    throw new AdminException('Vui lòng kiểm tra cấu trúc dữ liệu nâng cấp:table');
                 }
 
                 if (!isset($item['sql']) || !$item['sql']) {
-                    throw new AdminException('请核对升级数据结构:sql');
+                    throw new AdminException('Vui lòng kiểm tra cấu trúc dữ liệu nâng cấp:sql');
                 }
 
                 $whereTable = '';
@@ -778,13 +778,13 @@ class UpgradeServices extends BaseServices
                 if (isset($item['findSql']) && $item['findSql']) {
                     $findSql = str_replace('@table', $table, $item['findSql']);
                     if (!empty(Db::query($findSql))) {
-                        // 1建表 2删表 3添加字段 4修改字段 5删除字段 6添加数据 7修改数据 8删数据 -1直接执行
+                        // 1 tạo bảng 2 xóa bảng 3 thêm cột 4 sửa cột 5 xóa cột 6 thêm dữ liệu 7 sửa dữ liệu 8 xóa dữ liệu -1 thực thi trực tiếp
                         if (in_array($item['type'], [1, 3, 6])) {
-                            throw new AdminException($table . $tip[$item['type']] ?? '未知异常');
+                            throw new AdminException($table . $tip[$item['type']] ?? 'Lỗi không xác định');
                         }
                     } else {
                         if (in_array($item['type'], [4, 5, 7])) {
-                            throw new AdminException($table . $tip[$item['type']] ?? '未知异常');
+                            throw new AdminException($table . $tip[$item['type']] ?? 'Lỗi không xác định');
                         }
 
                         if ($item['type'] == 8) {
@@ -795,7 +795,7 @@ class UpgradeServices extends BaseServices
 
                 if ($item['type'] == 4) {
                     if (!isset($item['rollback_sql']) || !$item['rollback_sql']) {
-                        throw new AdminException('请核对升级数据结构:rollback_sql');
+                        throw new AdminException('Vui lòng kiểm tra cấu trúc dữ liệu nâng cấp:rollback_sql');
                     }
                     $updateSql[] = $item;
                 }
@@ -806,7 +806,7 @@ class UpgradeServices extends BaseServices
                         $whereSql = str_replace('@whereTable', $whereTable, $item['whereSql']);
                         $tabId = Db::query($whereSql)[0]['tabId'] ?? 0;
                         if (!$tabId) {
-                            throw new AdminException($table . $tip[$item['type']] ?? '未知异常');
+                            throw new AdminException($table . $tip[$item['type']] ?? 'Lỗi không xác định');
                         }
                         $upSql = str_replace('@tabId', $tabId, $upSql);
                     }
@@ -829,9 +829,9 @@ class UpgradeServices extends BaseServices
             CacheService::set($token . '_database_upgrade', 2, 86400);
         } catch (\Throwable $e) {
             Db::rollback();
-            Log::error(['msg' => '数据库升级失败,失败原因:' . $e->getMessage(), 'data' => json_encode($upgradeSql)]);
+            Log::error(['msg' => 'Nâng cấp cơ sở dữ liệu thất bại, lý do:' . $e->getMessage(), 'data' => json_encode($upgradeSql)]);
             CacheService::set($token . 'upgrade_status', -1, 86400);
-            CacheService::set($token . 'upgrade_status_tip', '数据库升级失败,失败原因:' . $e->getMessage(), 86400);
+            CacheService::set($token . 'upgrade_status_tip', 'Nâng cấp cơ sở dữ liệu thất bại, lý do:' . $e->getMessage(), 86400);
             if (!empty($updateSql)) {
                 $this->rollbackStructure($prefix, $updateSql);
             }
@@ -841,7 +841,7 @@ class UpgradeServices extends BaseServices
     }
 
     /**
-     * 覆盖项目
+     * Ghi đè dự án
      * @param string $token
      * @return bool
      */
@@ -849,39 +849,39 @@ class UpgradeServices extends BaseServices
     {
         $versionData = $this->getVersion();
         if (empty($versionData)) {
-            throw new AdminException('授权信息异常');
+            throw new AdminException('Thông tin cấp phép bất thường');
         }
         CacheService::set('version_before', $this->recombinationVersion($versionData['version'] ?? ''), 86400);
 
         /** @var FileService $fileService */
         $fileService = app()->make(FileService::class);
 
-        // 服务端项目
+        // Dự án phía server
         $serverPackageName = CacheService::get($token . '_server_package_name');
 
-        // 客户端项目
+        // Dự án phía client
         $clientPackageName = CacheService::get($token . '_client_package_name');
 
-        // PC端项目
+        // Dự án phía PC
         $pcPackageName = CacheService::get($token . '_pc_package_name');
 
         if (!is_file($serverPackageName) && !is_file($clientPackageName) && !is_file($pcPackageName)) {
-            throw new AdminException('升级文件异常,请重新下载');
+            throw new AdminException('Tệp nâng cấp bị lỗi, vui lòng tải lại');
         }
 
         if (is_file($serverPackageName) && !$fileService->extractFile($serverPackageName, app()->getRootPath())) {
-            throw new AdminException('服务端解压失败');
+            throw new AdminException('Giải nén phía máy chủ thất bại');
         }
 
         if (is_file($clientPackageName) && !$fileService->extractFile($clientPackageName, app()->getRootPath())) {
-            throw new AdminException('客户端解压失败');
+            throw new AdminException('Giải nén phía máy khách thất bại');
         }
 
         if (is_file($pcPackageName) && !$fileService->extractFile($pcPackageName, app()->getRootPath())) {
-            throw new AdminException('PC端解压失败');
+            throw new AdminException('Giải nén phía PC thất bại');
         }
 
-        //生成项目签名
+        //Tạo chữ ký dự án
         $this->generateSignature();
 
         CacheService::set($token . '_coverage_project', 2, 86400);
@@ -889,7 +889,7 @@ class UpgradeServices extends BaseServices
     }
 
     /**
-     * 回滚表结构
+     * Rollback cấu trúc bảng
      * @param string $prefix
      * @param array $updateSql
      * @return void
@@ -901,12 +901,12 @@ class UpgradeServices extends BaseServices
                 Db::execute(str_replace('@table', $prefix . $item['table'], $item['rollback_sql']));
             }
         } catch (\Exception $e) {
-            Log::error(['msg' => '数据库结构回滚失败', 'error' => $e->getFile() . '__' . $e->getLine() . '__' . $e->getMessage(), 'data' => $updateSql]);
+            Log::error(['msg' => 'Hoàn tác cấu trúc cơ sở dữ liệu thất bại', 'error' => $e->getFile() . '__' . $e->getLine() . '__' . $e->getMessage(), 'data' => $updateSql]);
         }
     }
 
     /**
-     * 检查访问权限
+     * Kiểm tra quyền truy cập
      * @param array $data
      * @return bool
      */
@@ -923,7 +923,7 @@ class UpgradeServices extends BaseServices
     }
 
     /**
-     * 升级状态
+     * Trạng thái nâng cấp
      * @return array
      */
     public function getUpgradeStatus(): array
@@ -931,7 +931,7 @@ class UpgradeServices extends BaseServices
         $this->getSign($this->timeStamp);
         $result = HttpService::getRequest(self::UPGRADE_STATUS_URL, $this->requestData, ['Access-Token: Bearer ' . CacheService::get('upgrade_auth_token')]);
         if (!$result) {
-            throw new AdminException('升级状态获取失败');
+            throw new AdminException('Lấy trạng thái nâng cấp thất bại');
         }
 
         $data = json_decode($result, true);
@@ -939,12 +939,12 @@ class UpgradeServices extends BaseServices
 
         $upgradeData['status'] = $data['data']['status'] ?? 0;
         $upgradeData['force_reminder'] = $data['data']['force_reminder'] ?? 0;
-        $upgradeData['title'] = $upgradeData['status'] < 1 ? "您已升级至最新版本，无需更新" : "系统有新版本可更新";
+        $upgradeData['title'] = $upgradeData['status'] < 1 ? "Bạn đã nâng cấp lên phiên bản mới nhất, không cần cập nhật" : "Hệ thống có phiên bản mới để cập nhật";
         return $upgradeData;
     }
 
     /**
-     * 升级日志
+     * Log nâng cấp
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -974,7 +974,7 @@ class UpgradeServices extends BaseServices
     }
 
     /**
-     * 导出
+     * Xuất
      * @param int $id
      * @param string $type
      * @return void
@@ -986,16 +986,16 @@ class UpgradeServices extends BaseServices
     {
         $data = $this->dao->getOne(['id' => $id], 'package_link, data_link');
         if (!$data || !$data['package_link']) {
-            throw new AdminException('备份文件不存在');
+            throw new AdminException('Tệp sao lưu không tồn tại');
         }
 
         $fileName = $type == 'file' ? $data['package_link'] : $data['data_link'];
         $filePath = app()->getRootPath() . 'backup' . DS . $fileName;
         if (!is_file($filePath)) {
-            throw new AdminException('备份文件不存在');
+            throw new AdminException('Tệp sao lưu không tồn tại');
         }
 
-        //下载文件
+        //Tải xuống tệp
         header('Content-Description: File Transfer');
         header('Content-Type: application/octet-stream');
         header('Content-Disposition: attachment; filename=' . $fileName);
@@ -1006,22 +1006,22 @@ class UpgradeServices extends BaseServices
         header('Content-Length: ' . filesize($filePath));
         ob_clean();
         flush();
-        readfile($filePath); //输出文件
+        readfile($filePath); //Xuất file
     }
 
     /**
-     * 检查数据库大小
+     * Kiểm tra dung lượng cơ sở dữ liệu
      * @return bool
      */
     public function checkDatabaseSize(): bool
     {
         if (!$database = Config::get('database.connections.' . Config::get('database.default') . '.database')) {
-            throw new AdminException('数据库信息获取失败');
+            throw new AdminException('Lấy thông tin cơ sở dữ liệu thất bại');
         }
 
         $result = Db::query("select concat(round(sum(data_length/1024/1024))) as size from information_schema.tables where table_schema='{$database}';");
         if ((int)($result[0]['size'] ?? '') > 500) {
-            throw new AdminException('数据库文件过大, 不能升级');
+            throw new AdminException('Tệp cơ sở dữ liệu quá lớn, không thể nâng cấp');
         }
         return true;
     }

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -32,12 +32,12 @@ class Timer extends Command
 
     protected function configure()
     {
-        // 指令配置
+        // Cấu hình lệnh (command)
         $this->setName('timer')
             ->addArgument('status', Argument::REQUIRED, 'start/stop/reload/status/connections')
-            ->addOption('d', null, Option::VALUE_NONE, 'daemon（守护进程）方式启动')
-            ->addOption('i', null, Option::VALUE_OPTIONAL, '多长时间执行一次,可以精确到0.001')
-            ->setDescription('start/stop/restart 定时任务');
+            ->addOption('d', null, Option::VALUE_NONE, 'Khởi động ở chế độ daemon (tiến trình nền)')
+            ->addOption('i', null, Option::VALUE_OPTIONAL, 'Khoảng thời gian giữa các lần thực thi, có thể chính xác đến 0.001')
+            ->setDescription('start/stop/restart tác vụ định kỳ');
     }
 
     protected function init(Input $input, Output $output)

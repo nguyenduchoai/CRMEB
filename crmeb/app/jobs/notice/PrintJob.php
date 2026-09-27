@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,7 +17,7 @@ use crmeb\traits\QueueTrait;
 use think\facade\Log;
 
 /**
- * 小票打印
+ * In biên lai
  * Class PrintJob
  * @package app\jobs\notice
  */
@@ -26,7 +26,7 @@ class PrintJob extends BaseJobs
     use QueueTrait;
 
     /**
-     * 小票打印
+     * In biên lai
      * @param $id
      * @return bool|void
      */
@@ -38,7 +38,7 @@ class PrintJob extends BaseJobs
             $orderServices->orderPrintTicket((int)$id, $print_type);
             return true;
         } catch (\Throwable $e) {
-            Log::error('小票打印失败失败,失败原因:' . $e->getMessage());
+            Log::error('In biên lai thất bại, nguyên nhân:' . $e->getMessage());
         }
     }
 }

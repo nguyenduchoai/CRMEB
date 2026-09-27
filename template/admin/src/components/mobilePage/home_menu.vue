@@ -67,7 +67,7 @@
           </div>
         </div>
       </div>
-      <!--单行展示-->
+      <!--Hiển thị một dòng-->
       <!-- <div class="mobile-page" v-else>
 		        <div class="home_menu">
 		            <div class="menu-item" v-for="(item,index) in vuexMenu" :key="index">
@@ -92,11 +92,11 @@ import { mapState } from 'vuex';
 // import theme from "@/mixins/theme";
 export default {
   name: 'home_menu',
-  cname: '导航组',
+  cname: 'Nhóm điều hướng',
   icon: '#iconzujian-daohangzu',
   configName: 'c_home_menu',
-  type: 0, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'menus', // 外面匹配名称
+  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'menus', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -136,112 +136,112 @@ export default {
   // mixins: [theme],
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
-        cname: '导航组',
+        cname: 'Nhóm điều hướng',
         name: 'menus',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
         },
-        titleLeft: '展示设置',
-        titleContent: '内容设置',
-        titleRight: '图片样式',
-        titlePointer: '指示器设置',
-        titleCurrency: '通用样式',
+        titleLeft: 'Cài đặt hiển thị',
+        titleContent: 'Cài đặt nội dung',
+        titleRight: 'Kiểu ảnh',
+        titlePointer: 'Cài đặt chỉ báo',
+        titleCurrency: 'Kiểu chung',
         menuStyleConfig: {
-          title: '导航样式',
+          title: 'Kiểu điều hướng',
           tabVal: 0,
           tabList: [
             {
-              name: '图片加文字',
+              name: 'Ảnh kèm chữ',
             },
             {
-              name: '图片',
+              name: 'Hình ảnh',
             },
             {
-              name: '文字',
+              name: 'Văn bản',
             },
           ],
         },
         number: {
-          title: '单行显示',
+          title: 'Hiển thị một dòng',
           tabVal: 1,
           tabList: [
             {
-              name: '3个',
+              name: '3 mục',
             },
             {
-              name: '4个',
+              name: '4 mục',
             },
             {
-              name: '5个',
+              name: '5 mục',
             },
           ],
         },
         showConfig: {
-          title: '展示样式',
+          title: 'Kiểu hiển thị',
           tabVal: 0,
           tabList: [
             {
-              name: '固定显示',
+              name: 'Hiển thị cố định',
             },
             {
-              name: '分页滑动',
+              name: 'Vuốt theo trang',
             },
           ],
         },
         rowsNum: {
-          title: '显示行数',
+          title: 'Số dòng hiển thị',
           tabVal: 0,
           tabList: [
             {
-              name: '1行',
+              name: '1 dòng',
             },
             {
-              name: '2行',
+              name: '2 dòng',
             },
             {
-              name: '3行',
+              name: '3 dòng',
             },
             {
-              name: '4行',
+              name: '4 dòng',
             },
           ],
         },
         filletImg: {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 0,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         toneConfig: {
-          title: '色调',
+          title: 'Tông màu',
           tabVal: 0,
           tabList: [
             {
-              name: '跟随主题风格',
+              name: 'Theo phong cách chủ đề',
             },
             {
-              name: '自定义',
+              name: 'Tùy chỉnh',
             },
           ],
         },
         pointerBgColor: {
-          title: '常规样式',
+          title: 'Kiểu thường',
           default: [
             {
               item: '#DDDDDD',
@@ -254,7 +254,7 @@ export default {
           ],
         },
         pointerColor: {
-          title: '选中样式',
+          title: 'Kiểu khi được chọn',
           default: [
             {
               item: '#E93323',
@@ -267,7 +267,7 @@ export default {
           ],
         },
         bgColor: {
-          title: '组件背景',
+          title: 'Nền thành phần',
           default: [
             {
               item: '#fff',
@@ -286,7 +286,7 @@ export default {
           ],
         },
         textColor: {
-          title: '文字颜色',
+          title: 'Màu chữ',
           default: [
             {
               item: '#333',
@@ -299,7 +299,7 @@ export default {
           ],
         },
         bottomBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           default: [
             {
               item: '#fff',
@@ -312,29 +312,29 @@ export default {
           ],
         },
         topConfig: {
-          title: '上边距',
+          title: 'Lề trên',
           val: 0,
           min: 0,
         },
         bottomConfig: {
-          title: '下边距',
+          title: 'Lề dưới',
           val: 0,
           min: 0,
         },
         prConfig: {
-          title: '左右边距',
+          title: 'Lề trái phải',
           val: 0,
           min: 0,
         },
-        // 页面间距
+        // Lề trang
         mbConfig: {
-          title: '页面上间距',
+          title: 'Lề trên trang',
           val: 0,
           min: 0,
         },
         menuConfig: {
-          title: '最多可添加1张图片，建议宽度90 * 90px',
-          bnt: '添加',
+          title: 'Có thể thêm tối đa 1 ảnh, kích thước đề xuất 90 * 90px',
+          bnt: 'Thêm',
           type: 1,
           maxList: 100,
           list: [
@@ -343,15 +343,15 @@ export default {
               show: true,
               info: [
                 {
-                  title: '标题',
-                  value: '标题',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Tiêu đề',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -361,15 +361,15 @@ export default {
               show: true,
               info: [
                 {
-                  title: '标题',
-                  value: '标题',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Tiêu đề',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -379,15 +379,15 @@ export default {
               show: true,
               info: [
                 {
-                  title: '标题',
-                  value: '标题',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Tiêu đề',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -397,15 +397,15 @@ export default {
               show: true,
               info: [
                 {
-                  title: '标题',
-                  value: '标题',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Tiêu đề',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -413,19 +413,19 @@ export default {
           ],
         },
         fillet: {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 0,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
@@ -464,7 +464,7 @@ export default {
     });
   },
   methods: {
-    // 对象转数组
+    // Chuyển object thành mảng
     objToArr(data) {
       let obj = Object.keys(data);
       let m = obj.map((key) => data[key]);

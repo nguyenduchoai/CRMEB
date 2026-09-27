@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -42,12 +42,12 @@ class RoutineServices extends BaseServices
     }
 
     /**
-     * 返回用户信息的缓存key，返回是否强制绑定手机号
+     * Trả về key cache thông tin người dùng, trả về có bắt buộc liên kết số điện thoại không
      * @param $code
      * @param $spread
      * @param $spid
      * @return array
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/12
      */
@@ -83,21 +83,21 @@ class RoutineServices extends BaseServices
     }
 
     /**
-     * 根据缓存获取token
+     * Lấy token theo cache
      * @param $key
      * @return array
      * @throws \Psr\SimpleCache\InvalidArgumentException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/12
      */
     public function authLogin($key)
     {
         $createData = CacheService::get($key);
-        //写入用户信息
+        //Ghi thông tin người dùng
         $user = app()->make(WechatUserServices::class)->wechatOauthAfter($createData);
         $token = $this->createToken((int)$user['uid'], 'api');
         if ($token) {
@@ -113,7 +113,7 @@ class RoutineServices extends BaseServices
     }
 
     /**
-     * 自动获取手机号绑定
+     * Tự động lấy số điện thoại để liên kết
      * @param $code
      * @param $iv
      * @param $encryptedData
@@ -160,7 +160,7 @@ class RoutineServices extends BaseServices
         $wechatInfo['phone'] = $userInfo['purePhoneNumber'];
         /** @var WechatUserServices $wechatUserServices */
         $wechatUserServices = app()->make(WechatUserServices::class);
-        //写入用户信息
+        //Ghi thông tin người dùng
         $user = $wechatUserServices->wechatOauthAfter([$openid, $wechatInfo, $spreadId, $agent_id, $login_type, $userType]);
         $token = $this->createToken((int)$user['uid'], 'api');
         if ($token) {
@@ -176,7 +176,7 @@ class RoutineServices extends BaseServices
     }
 
     /**
-     * 小程序手机号登录
+     * Đăng nhập bằng số điện thoại trên Mini Program
      * @param $key
      * @param $phone
      * @param string $spread_code
@@ -187,7 +187,7 @@ class RoutineServices extends BaseServices
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/12
      */
@@ -216,7 +216,7 @@ class RoutineServices extends BaseServices
             $routineInfo['phone'] = $phone;
             $createData = [$openid, $routineInfo, $spid, $agent_id, 'routine', 'routine'];
         }
-        //写入用户信息
+        //Ghi thông tin người dùng
         $user = app()->make(WechatUserServices::class)->wechatOauthAfter($createData);
         $token = $this->createToken((int)$user['uid'], 'api');
         if ($token) {
@@ -232,12 +232,12 @@ class RoutineServices extends BaseServices
     }
 
     /**
-     * 小程序绑定手机号
+     * Liên kết số điện thoại trên Mini Program
      * @param $code
      * @param $iv
      * @param $encryptedData
      * @return bool
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/02/24
      */
@@ -261,26 +261,26 @@ class RoutineServices extends BaseServices
     }
 
     /**
-     * 小程序创建用户后返回uid
+     * Sau khi Mini Program tạo người dùng thì trả về uid
      * @param $routine
      * @return array
      */
     public function routineOauth($routine)
     {
-        $routineInfo['nickname'] = filter_emoji($routine['nickName']);//姓名
-        $routineInfo['sex'] = $routine['gender'];//性别
-        $routineInfo['language'] = $routine['language'];//语言
-        $routineInfo['city'] = $routine['city'];//城市
-        $routineInfo['province'] = $routine['province'];//省份
-        $routineInfo['country'] = $routine['country'];//国家
-        $routineInfo['headimgurl'] = $routine['avatarUrl'];//头像
+        $routineInfo['nickname'] = filter_emoji($routine['nickName']);//Họ tên
+        $routineInfo['sex'] = $routine['gender'];//Giới tính
+        $routineInfo['language'] = $routine['language'];//Ngôn ngữ
+        $routineInfo['city'] = $routine['city'];//Thành phố
+        $routineInfo['province'] = $routine['province'];//Tỉnh
+        $routineInfo['country'] = $routine['country'];//Quốc gia
+        $routineInfo['headimgurl'] = $routine['avatarUrl'];//Ảnh đại diện
         $routineInfo['openid'] = $routine['openId'];
-        $routineInfo['session_key'] = $routine['session_key'];//会话密匙
-        $routineInfo['unionid'] = $routine['unionId'];//用户在开放平台的唯一标识符
-        $routineInfo['user_type'] = 'routine';//用户类型
+        $routineInfo['session_key'] = $routine['session_key'];//Khóa phiên (session key)
+        $routineInfo['unionid'] = $routine['unionId'];//Định danh duy nhất của người dùng trên nền tảng mở (open platform)
+        $routineInfo['user_type'] = 'routine';//Loại người dùng
         $routineInfo['phone'] = $routine['phone'] ?? $routine['purePhoneNumber'] ?? '';
-        $spid = $routine['spid'] ?? 0;//绑定关系uid
-        //获取是否有扫码进小程序
+        $spid = $routine['spid'] ?? 0;//uid quan hệ liên kết
+        //Lấy biết có quét mã vào Mini Program không
         /** @var QrcodeServices $qrcode */
         $qrcode = app()->make(QrcodeServices::class);
         if (isset($routine['code']) && $routine['code'] && ($info = $qrcode->get($routine['code']))) {
@@ -290,7 +290,7 @@ class RoutineServices extends BaseServices
     }
 
     /**
-     * 小程序支付回调
+     * Callback thanh toán Mini Program
      * @return \Symfony\Component\HttpFoundation\Response
      * @throws \EasyWeChat\Core\Exceptions\FaultException
      */
@@ -300,7 +300,7 @@ class RoutineServices extends BaseServices
     }
 
     /**
-     * 获取小程序订阅消息id
+     * Lấy id tin nhắn đăng ký Mini Program
      * @return bool|mixed|null
      */
     public function tempIds()
@@ -313,7 +313,7 @@ class RoutineServices extends BaseServices
     }
 
     /**
-     * 获取小程序直播列表
+     * Lấy danh sách livestream Mini Program
      * @param $page
      * @param $limit
      * @return array|bool|mixed
@@ -331,7 +331,7 @@ class RoutineServices extends BaseServices
     }
 
     /**
-     * 更新用户信息
+     * Cập nhật thông tin người dùng
      * @param $uid
      * @param array $data
      * @return bool
@@ -348,18 +348,18 @@ class RoutineServices extends BaseServices
             throw new ApiException(100026);
         }
         $userInfo = [];
-        $userInfo['nickname'] = filter_emoji($data['nickName'] ?? '');//姓名
-        $userInfo['sex'] = $data['gender'] ?? '';//性别
-        $userInfo['language'] = $data['language'] ?? '';//语言
-        $userInfo['city'] = $data['city'] ?? '';//城市
-        $userInfo['province'] = $data['province'] ?? '';//省份
-        $userInfo['country'] = $data['country'] ?? '';//国家
-        $userInfo['headimgurl'] = $data['avatarUrl'] ?? '';//头像
+        $userInfo['nickname'] = filter_emoji($data['nickName'] ?? '');//Họ tên
+        $userInfo['sex'] = $data['gender'] ?? '';//Giới tính
+        $userInfo['language'] = $data['language'] ?? '';//Ngôn ngữ
+        $userInfo['city'] = $data['city'] ?? '';//Thành phố
+        $userInfo['province'] = $data['province'] ?? '';//Tỉnh
+        $userInfo['country'] = $data['country'] ?? '';//Quốc gia
+        $userInfo['headimgurl'] = $data['avatarUrl'] ?? '';//Ảnh đại diện
         $userInfo['is_complete'] = 1;
         /** @var LoginServices $loginService */
         $loginService = app()->make(LoginServices::class);
         $loginService->updateUserInfo($userInfo, $user);
-        //更新用户信息
+        //Cập nhật thông tin người dùng
         if (!$this->dao->update(['uid' => $user['uid'], 'user_type' => 'routine'], $userInfo)) {
             throw new ApiException(100013);
         }

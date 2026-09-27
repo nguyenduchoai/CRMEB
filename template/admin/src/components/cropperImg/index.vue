@@ -30,7 +30,7 @@
         >
         </vue-cropper>
       </div>
-      <!--底部操作工具按钮-->
+      <!--Nút công cụ thao tác ở dưới-->
       <div class="footer-btn">
         <div class="scope-btn">
           <input
@@ -41,24 +41,24 @@
             @change="selectImg($event)"
           />
           <el-button size="mini" type="danger" plain icon="el-icon-zoom-in" v-db-click @click="changeScale(1)"
-            >放大</el-button
+            >Phóng to</el-button
           >
           <el-button size="mini" type="danger" plain icon="el-icon-zoom-out" v-db-click @click="changeScale(-1)"
-            >缩小</el-button
+            >Thu nhỏ</el-button
           >
-          <el-button size="mini" type="danger" plain v-db-click @click="rotateLeft">↺ 左旋转</el-button>
-          <el-button size="mini" type="danger" plain v-db-click @click="rotateRight">↻ 右旋转</el-button>
+          <el-button size="mini" type="danger" plain v-db-click @click="rotateLeft">↺ Xoay trái</el-button>
+          <el-button size="mini" type="danger" plain v-db-click @click="rotateRight">↻ Xoay phải</el-button>
         </div>
       </div>
     </div>
-    <!--预览效果图-->
+    <!--Ảnh xem trước hiệu ứng-->
     <div class="show-preview">
       <div class="preview">
         <img :src="previews.url" :style="previews.img" />
       </div>
       <div class="upload-btn">
-        <label class="btn" for="uploads">选择图片</label>
-        <el-button size="mini" type="success" v-db-click @click="uploadImg()">确认上传</el-button>
+        <label class="btn" for="uploads">Chọn ảnh</label>
+        <el-button size="mini" type="success" v-db-click @click="uploadImg()">Xác nhận tải lên</el-button>
       </div>
     </div>
   </div>
@@ -66,7 +66,7 @@
 
 <script>
 import { VueCropper } from 'vue-cropper';
-// import { updateAvatar } from ''; //这里为文件上传的接口换成自己的文件
+// import { updateAvatar } from ''; // Ở đây là API tải file lên, đổi thành file của bạn
 import { fileUpload } from '@/api/setting';
 export default {
   name: 'CropperImage',
@@ -79,49 +79,49 @@ export default {
       resImg: '',
       previews: {},
       option: {
-        img: '', //裁剪图片的地址
-        outputSize: 1, //裁剪生成图片的质量(可选0.1 - 1)
-        outputType: 'png', //裁剪生成图片的格式（jpeg || png || webp）
-        info: true, //图片大小信息
-        canScale: true, //图片是否允许滚轮缩放
-        autoCrop: true, //是否默认生成截图框
-        autoCropWidth: 200, //默认生成截图框宽度
-        autoCropHeight: 200, //默认生成截图框高度
-        fixed: true, //是否开启截图框宽高固定比例
-        fixedNumber: [1, 1], //截图框的宽高比例
-        full: false, //false按原比例裁切图片，不失真
-        fixedBox: false, //固定截图框大小，不允许改变
-        canMove: true, //上传图片是否可以移动
-        canMoveBox: true, //截图框能否拖动
-        original: false, //上传图片按照原始比例渲染
-        centerBox: true, //截图框是否被限制在图片里面
-        height: false, //是否按照设备的dpr 输出等比例图片
-        infoTrue: false, //true为展示真实输出图片宽高，false展示看到的截图框宽高
-        maxImgSize: 3000, //限制图片最大宽度和高度
-        enlarge: 1, //图片根据截图框输出比例倍数
-        mode: '300px 300px', //图片默认渲染方式
+        img: '', //Địa chỉ ảnh cần cắt (crop)
+        outputSize: 1, //Chất lượng ảnh sau khi cắt (tùy chọn 0.1 - 1)
+        outputType: 'png', //Định dạng ảnh sau khi cắt (jpeg || png || webp)
+        info: true, //Thông tin kích thước ảnh
+        canScale: true, //Ảnh có cho phép zoom bằng lăn chuột không
+        autoCrop: true, //Có mặc định tạo khung crop không
+        autoCropWidth: 200, //Chiều rộng khung crop mặc định
+        autoCropHeight: 200, //Chiều cao khung crop mặc định
+        fixed: true, //Có bật tỉ lệ cố định chiều rộng/cao khung crop không
+        fixedNumber: [1, 1], //Tỉ lệ chiều rộng/cao khung crop
+        full: false, //false: cắt ảnh theo tỉ lệ gốc, không bị biến dạng
+        fixedBox: false, //Cố định kích thước khung crop, không cho thay đổi
+        canMove: true, //Ảnh tải lên có thể di chuyển không
+        canMoveBox: true, //Khung crop có kéo được không
+        original: false, //Ảnh tải lên render theo tỉ lệ gốc
+        centerBox: true, //Khung crop có bị giới hạn trong ảnh không
+        height: false, //Có xuất ảnh theo tỉ lệ dpr của thiết bị không
+        infoTrue: false, //true: hiển thị chiều rộng/cao thực của ảnh xuất ra, false: hiển thị chiều rộng/cao khung crop nhìn thấy
+        maxImgSize: 3000, //Giới hạn chiều rộng và chiều cao tối đa của ảnh
+        enlarge: 1, //Ảnh xuất theo hệ số tỉ lệ của khung crop
+        mode: '300px 300px', //Cách render ảnh mặc định
       },
     };
   },
   methods: {
-    //初始化函数
+    //Hàm khởi tạo
     imgLoad(msg) {
-      console.log('工具初始化函数=====' + msg);
+      console.log('Hàm khởi tạo công cụ=====' + msg);
     },
-    //图片缩放
+    //Zoom ảnh
     changeScale(num) {
       num = num || 1;
       this.$refs.cropper.changeScale(num);
     },
-    //向左旋转
+    //Xoay trái
     rotateLeft() {
       this.$refs.cropper.rotateLeft();
     },
-    //向右旋转
+    //Xoay phải
     rotateRight() {
       this.$refs.cropper.rotateRight();
     },
-    // //实时预览函数
+    // // Hàm xem trước theo thời gian thực
     realTime(data) {
       let that = this;
       that.previews = data;
@@ -138,17 +138,17 @@ export default {
         callback(e.target.result);
       };
     },
-    //选择图片
+    //Chọn ảnh
     selectImg(e) {
       let file = e.target.files[0];
       if (!/\.(jpg|jpeg|png|JPG|PNG)$/.test(e.target.value)) {
         this.$message({
-          message: '图片类型要求：jpeg、jpg、png',
+          message: 'Định dạng ảnh yêu cầu: jpeg, jpg, png',
           type: 'error',
         });
         return false;
       }
-      //转化为blob
+      //Chuyển thành blob
       let reader = new FileReader();
       reader.onload = (e) => {
         let data;
@@ -159,19 +159,19 @@ export default {
         }
         this.option.img = data;
       };
-      //转化为base64
+      //Chuyển thành base64
       reader.readAsDataURL(file);
     },
 
     base64ImgtoFile(dataurl, filename = 'file') {
-      //将base64格式分割：['data:image/png;base64','XXXX']
+      //Tách chuỗi base64: ['data:image/png;base64','XXXX']
       const arr = dataurl.split(',');
-      // .*？ 表示匹配任意字符到下一个符合条件的字符 刚好匹配到：
+      // .*? nghĩa là khớp với ký tự bất kỳ cho tới ký tự tiếp theo thỏa điều kiện, khớp đúng đến:
       // image/png
       const mime = arr[0].match(/:(.*?);/)[1]; //image/png
-      //[image,png] 获取图片类型后缀
+      //[image,png] lấy đuôi loại ảnh
       const suffix = mime.split('/')[1]; //png
-      const bstr = atob(arr[1]); //atob() 方法用于解码使用 base-64 编码的字符串
+      const bstr = atob(arr[1]); //Phương thức atob() dùng để decode chuỗi được encode bằng base-64
       let n = bstr.length;
       const u8arr = new Uint8Array(n);
       while (n--) {
@@ -190,14 +190,14 @@ export default {
           this.$emit('uploadImgSuccess', res.data);
         } else {
           this.$message({
-            message: '上传失败',
+            message: 'Tải lên thất bại',
             type: 'error',
             duration: 1000,
           });
         }
       });
     },
-    //上传图片
+    //Tải lên ảnh
     uploadImg() {
       this.$refs.cropper.getCropData((data) => {
         this.resImg = this.base64ImgtoFile(data);

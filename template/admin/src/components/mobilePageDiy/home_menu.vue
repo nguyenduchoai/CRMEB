@@ -8,7 +8,7 @@
     }"
     :class="bgStyle ? 'pageOn' : ''"
   >
-    <!--多行展示-->
+    <!--Hiển thị nhiều dòng-->
     <div class="mobile-page" v-if="isOne">
       <div class="list_menu">
         <div
@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <!--单行展示-->
+    <!--Hiển thị một dòng-->
     <div class="mobile-page" v-else>
       <div class="home_menu">
         <div class="menu-item" v-for="(item, index) in vuexMenu" :key="index">
@@ -53,11 +53,11 @@
 import { mapState } from 'vuex';
 export default {
   name: 'home_menu',
-  cname: '导航组',
+  cname: 'Nhóm điều hướng',
   icon: 'icondaohangzu1',
   configName: 'c_home_menu',
-  type: 0, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'menus', // 外面匹配名称
+  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'menus', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -93,7 +93,7 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'menus',
         timestamp: this.num,
@@ -101,129 +101,129 @@ export default {
           tabVal: 0,
         },
         tabConfig: {
-          title: '展示样式',
+          title: 'Kiểu hiển thị',
           tabVal: 0,
           type: 1,
           tabList: [
             {
-              name: '单行展示',
+              name: 'Hiển thị một dòng',
               icon: 'icondanhang',
             },
             {
-              name: '多行展示',
+              name: 'Hiển thị nhiều dòng',
               icon: 'iconduohang',
             },
           ],
         },
         rowsNum: {
-          title: '显示行数',
+          title: 'Số dòng hiển thị',
           name: 'rowsNum',
           type: 0,
           list: [
             {
-              val: '2行',
+              val: '2 dòng',
               icon: 'icon2hang',
             },
             {
-              val: '3行',
+              val: '3 dòng',
               icon: 'icon3hang',
             },
             {
-              val: '4行',
+              val: '4 dòng',
               icon: 'icon4hang',
             },
           ],
         },
         menuStyle: {
-          title: '图标样式',
+          title: 'Kiểu biểu tượng',
           name: 'menuStyle',
           type: 0,
           list: [
             {
-              val: '方形',
+              val: 'Hình vuông',
               icon: 'iconPic_square',
             },
             {
-              val: '圆形',
+              val: 'Hình tròn',
               icon: 'icondayuanjiao',
             },
           ],
         },
         number: {
-          title: '显示个数',
+          title: 'Số mục hiển thị',
           name: 'number',
           type: 0,
           list: [
             {
-              val: '3个',
+              val: '3 mục',
               icon: 'icon3ge',
             },
             {
-              val: '4个',
+              val: '4 mục',
               icon: 'icon4ge1',
             },
             {
-              val: '5个',
+              val: '5 mục',
               icon: 'icon5ge1',
             },
           ],
         },
         pointerStyle: {
-          title: '指示器样式',
+          title: 'Kiểu chỉ báo',
           name: 'pointerStyle',
           type: 0,
           list: [
             {
-              val: '长条',
+              val: 'Thanh dài',
               icon: 'iconSquarepoint',
             },
             {
-              val: '圆形',
+              val: 'Hình tròn',
               icon: 'iconDot',
             },
             {
-              val: '无指示器',
+              val: 'Không có chỉ báo',
               icon: 'iconjinyong',
             },
           ],
         },
         bgStyle: {
-          title: '背景样式',
+          title: 'Kiểu nền',
           name: 'bgStyle',
           type: 0,
           list: [
             {
-              val: '直角',
+              val: 'Góc vuông',
               icon: 'iconPic_square',
             },
             {
-              val: '圆角',
+              val: 'Bo góc',
               icon: 'iconPic_fillet',
             },
           ],
         },
         prConfig: {
-          title: '背景边距',
+          title: 'Lề nền',
           val: 0,
           min: 0,
         },
         menuConfig: {
-          title: '最多可添加1张图片，建议宽度90 * 90px',
+          title: 'Có thể thêm tối đa 1 ảnh, kích thước đề xuất 90 * 90px',
           maxList: 100,
           list: [
             {
               img: '',
               info: [
                 {
-                  title: '标题',
-                  value: '今日推荐',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Gợi ý hôm nay',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -232,15 +232,15 @@ export default {
               img: '',
               info: [
                 {
-                  title: '标题',
-                  value: '热门榜单',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Top bán chạy',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -249,15 +249,15 @@ export default {
               img: '',
               info: [
                 {
-                  title: '标题',
-                  value: '首发新品',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Hàng mới ra mắt',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -266,15 +266,15 @@ export default {
               img: '',
               info: [
                 {
-                  title: '标题',
-                  value: '促销单品',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Sản phẩm khuyến mãi',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -282,7 +282,7 @@ export default {
           ],
         },
         pointerColor: {
-          title: '指示器颜色',
+          title: 'Màu chỉ báo',
           name: 'pointerColor',
           default: [
             {
@@ -296,7 +296,7 @@ export default {
           ],
         },
         bgColor: {
-          title: '背景颜色',
+          title: 'Màu nền',
           name: 'bgColor',
           default: [
             {
@@ -310,7 +310,7 @@ export default {
           ],
         },
         titleColor: {
-          title: '文字颜色',
+          title: 'Màu chữ',
           name: 'themeColor',
           default: [
             {
@@ -323,9 +323,9 @@ export default {
             },
           ],
         },
-        // 页面间距
+        // Lề trang
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },
@@ -353,7 +353,7 @@ export default {
     });
   },
   methods: {
-    // 对象转数组
+    // Chuyển object thành mảng
     objToArr(data) {
       let obj = Object.keys(data);
       let m = obj.map((key) => data[key]);

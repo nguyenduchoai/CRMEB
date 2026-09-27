@@ -10,7 +10,7 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="时间选择：">
+          <el-form-item label="Chọn thời gian:">
             <el-date-picker
               clearable
               v-model="timeVal"
@@ -19,24 +19,24 @@
               @change="onchangeTime"
               format="yyyy/MM/dd"
               value-format="yyyy/MM/dd"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              start-placeholder="Ngày bắt đầu"
+              end-placeholder="Ngày kết thúc"
               :picker-options="pickerOptions"
               style="width: 250px"
               class="mr20"
             ></el-date-picker>
           </el-form-item>
-          <el-form-item label="砍价状态：">
+          <el-form-item label="Trạng thái săn giảm giá:">
             <el-select
               v-model="formValidate.status"
-              placeholder="请选择"
+              placeholder="Vui lòng chọn"
               clearable
               @change="userSearchs"
               class="form_content_width"
             >
-              <el-option :value="1" label="进行中"></el-option>
-              <el-option :value="2" label="已失败"></el-option>
-              <el-option :value="3" label="已成功"></el-option>
+              <el-option :value="1" label="Đang diễn ra"></el-option>
+              <el-option :value="2" label="Đã thất bại"></el-option>
+              <el-option :value="3" label="Đã thành công"></el-option>
             </el-select>
           </el-form-item>
         </el-form>
@@ -47,66 +47,66 @@
         :data="tableList"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
-        <el-table-column label="头像" width="80">
+        <el-table-column label="Ảnh đại diện" width="80">
           <template slot-scope="scope">
             <div class="tabBox_img" v-viewer>
               <img v-lazy="scope.row.avatar" />
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="发起用户" min-width="100">
+        <el-table-column label="Người khởi tạo" min-width="100">
           <template slot-scope="scope">
             <span> {{ scope.row.nickname + ' / ' + scope.row.uid }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="开启时间" min-width="110">
+        <el-table-column label="Thời gian bắt đầu" min-width="110">
           <template slot-scope="scope">
             <span> {{ scope.row.add_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="砍价商品" min-width="300">
+        <el-table-column label="Sản phẩm săn giảm giá" min-width="300">
           <template slot-scope="scope">
             <span> {{ scope.row.title }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="最低价" min-width="60">
+        <el-table-column label="Giá thấp nhất" min-width="60">
           <template slot-scope="scope">
             <span> {{ scope.row.bargain_price_min }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="当前价" min-width="60">
+        <el-table-column label="Giá hiện tại" min-width="60">
           <template slot-scope="scope">
             <span> {{ scope.row.now_price }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="总砍价次数" min-width="70">
+        <el-table-column label="Tổng số lượt săn giảm giá" min-width="70">
           <template slot-scope="scope">
             <span> {{ scope.row.people_num }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="剩余砍价次数" min-width="100">
+        <el-table-column label="Số lượt săn giảm giá còn lại" min-width="100">
           <template slot-scope="scope">
             <span> {{ scope.row.num }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="结束时间" min-width="150">
+        <el-table-column label="Thời gian kết thúc" min-width="150">
           <template slot-scope="scope">
             <span> {{ scope.row.datatime }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="状态" min-width="100">
+        <el-table-column label="Trạng thái" min-width="100">
           <template slot-scope="scope">
-            <el-tag size="medium" type="info" v-show="scope.row.status === 1">进行中</el-tag>
-            <el-tag size="medium" type="danger" v-show="scope.row.status === 2">已失败</el-tag>
-            <el-tag size="medium" v-show="scope.row.status === 3">已成功</el-tag>
+            <el-tag size="medium" type="info" v-show="scope.row.status === 1">Đang diễn ra</el-tag>
+            <el-tag size="medium" type="danger" v-show="scope.row.status === 2">Đã thất bại</el-tag>
+            <el-tag size="medium" v-show="scope.row.status === 3">Đã thành công</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="100">
+        <el-table-column label="Thao tác" fixed="right" width="100">
           <template slot-scope="scope">
-            <a v-db-click @click="Info(scope.row)">查看详情</a>
+            <a v-db-click @click="Info(scope.row)">Xem chi tiết</a>
           </template>
         </el-table-column>
       </el-table>
@@ -121,40 +121,40 @@
       </div>
     </el-card>
 
-    <!-- 详情模态框-->
-    <el-dialog :visible.sync="modals" class="tableBox" title="查看详情" :close-on-click-modal="false" width="720px">
+    <!-- Modal chi tiết-->
+    <el-dialog :visible.sync="modals" class="tableBox" title="Xem chi tiết" :close-on-click-modal="false" width="720px">
       <el-table
         ref="selection"
         :data="tabList3"
         v-loading="loading2"
-        empty-text="暂无数据"
+        empty-text="Chưa có dữ liệu"
         highlight-current-row
         max-height="600"
         size="small"
       >
-        <el-table-column label="用户ID" width="80">
+        <el-table-column label="ID người dùng" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.uid }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="用户头像" min-width="100">
+        <el-table-column label="Ảnh đại diện người dùng" min-width="100">
           <template slot-scope="scope">
             <div class="tabBox_img" v-viewer>
               <img v-lazy="scope.row.avatar" />
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="用户名称" min-width="100">
+        <el-table-column label="Tên người dùng" min-width="100">
           <template slot-scope="scope">
             <span> {{ scope.row.nickname }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="砍价金额" min-width="100">
+        <el-table-column label="Số tiền săn giảm giá" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.price }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="砍价时间" min-width="130">
+        <el-table-column label="Thời gian săn giảm giá" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.add_time }}</span>
           </template>
@@ -212,7 +212,7 @@ export default {
     this.getList();
   },
   methods: {
-    // 查看详情
+    // Xem chi tiết
     Info(row) {
       this.modals = true;
       this.rows = row;
@@ -227,21 +227,21 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e || [];
       this.formValidate.data = this.timeVal[0] ? (this.timeVal ? this.timeVal.join('-') : '') : '';
       this.formValidate.page = 1;
       this.getList();
     },
-    // 选择时间
+    // Chọn giờ
     selectChange(tab) {
       this.formValidate.page = 1;
       this.formValidate.data = tab;
       this.timeVal = [];
       this.getList();
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       this.formValidate.status = this.formValidate.status || '';
@@ -257,7 +257,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.formValidate.page = 1;
       this.getList();

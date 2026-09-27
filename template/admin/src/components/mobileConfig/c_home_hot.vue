@@ -23,7 +23,7 @@ import { mapState, mapMutations, mapActions } from 'vuex';
 export default {
   name: 'c_home_hot',
   componentsName: 'home_hot',
-  cname: '超值爆款',
+  cname: 'Hàng hot giá tốt',
   props: {
     activeIndex: {
       type: null,

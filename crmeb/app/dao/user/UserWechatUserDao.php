@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -35,13 +35,13 @@ class UserWechatUserDao extends BaseDao
     protected $join_alis = '';
 
     /**
-     * 精确搜索白名单
+     * Danh sách trắng tìm kiếm chính xác
      * @var string[]
      */
     protected $withField = ['uid', 'nickname', 'user_type', 'phone'];
 
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -55,7 +55,7 @@ class UserWechatUserDao extends BaseDao
     }
 
     /**
-     * 关联模型
+     * Model liên kết
      * @param string $alias
      * @param string $join_alias
      * @return \crmeb\basic\BaseModel
@@ -76,7 +76,7 @@ class UserWechatUserDao extends BaseDao
     }
 
     /**
-     * 获取总数
+     * Lấy tổng số
      * @param array $where
      * @return int
      */
@@ -86,7 +86,7 @@ class UserWechatUserDao extends BaseDao
     }
 
     /**
-     * 组合条件模型条数
+     * Số lượng bản ghi model theo điều kiện tổ hợp
      * @param Model $model
      * @return int
      */
@@ -96,7 +96,7 @@ class UserWechatUserDao extends BaseDao
     }
 
     /**
-     * 组合条件模型查询列表
+     * Truy vấn danh sách model theo điều kiện tổ hợp
      * @param Model $model
      * @return array
      */
@@ -117,9 +117,9 @@ class UserWechatUserDao extends BaseDao
         $model = $this->getModel();
         $userAlias = $this->alias . '.';
         $wechatUserAlias = $this->join_alis . '.';
-        // 用户访问时间
+        // Thời gian truy cập của người dùng
         if (isset($where['user_time_type']) && isset($where['user_time'])) {
-            //最后一次访问时间
+            //Thời gian truy cập lần cuối
             if ($where['user_time_type'] == 'visitno' && $where['user_time'] != '') {
                 list($startTime, $endTime) = explode('-', $where['user_time']);
                 if ($startTime && $endTime) {
@@ -127,7 +127,7 @@ class UserWechatUserDao extends BaseDao
                     $model = $model->where($userAlias . "last_time < " . strtotime($startTime) . " OR " . $userAlias . "last_time > " . $endTime);
                 }
             }
-            //访问时间
+            //Thời gian truy cập
             if ($where['user_time_type'] == 'visit' && $where['user_time'] != '') {
                 list($startTime, $endTime) = explode('-', $where['user_time']);
                 if ($startTime && $endTime) {
@@ -135,7 +135,7 @@ class UserWechatUserDao extends BaseDao
                     $model = $model->where($userAlias . 'last_time', '<', strtotime($endTime) + 24 * 3600);
                 }
             }
-            //添加时间
+            //Thời gian thêm
             if ($where['user_time_type'] == 'add_time' && $where['user_time'] != '') {
                 list($startTime, $endTime) = explode('-', $where['user_time']);
                 if ($startTime && $endTime) {
@@ -144,7 +144,7 @@ class UserWechatUserDao extends BaseDao
                 }
             }
         }
-        //购买次数
+        //Số lần mua
         if (isset($where['pay_count']) && $where['pay_count'] != '') {
             if ($where['pay_count'] == '-1') {
                 $model = $model->where($userAlias . 'pay_count', 0);
@@ -162,7 +162,7 @@ class UserWechatUserDao extends BaseDao
             }
         }
 
-        //储值余额
+        //Số dư nạp trước
         if (isset($where['balance']) && count($where['balance']) == 2) {
             if ($where['balance'][0] != '' && $where['balance'][1] != '') {
                 $model = $model->whereBetween($userAlias . 'now_money', $where['balance']);
@@ -173,7 +173,7 @@ class UserWechatUserDao extends BaseDao
             }
         }
 
-        //积分剩余
+        //Điểm thưởng còn lại
         if (isset($where['integral']) && count($where['integral']) == 2) {
             if ($where['integral'][0] != '' && $where['integral'][1] != '') {
                 $model = $model->whereBetween($userAlias . 'integral', $where['integral']);
@@ -184,23 +184,23 @@ class UserWechatUserDao extends BaseDao
             }
         }
 
-        //用户等级
+        //Hạng người dùng
         if (isset($where['level']) && $where['level']) {
             $model = $model->where($userAlias . 'level', $where['level']);
         }
-        //用户分组
+        //Nhóm người dùng
         if (isset($where['group_id']) && $where['group_id']) {
             $model = $model->where($userAlias . 'group_id', $where['group_id']);
         }
-        //用户状态
+        //Trạng thái người dùng
         if (isset($where['status']) && $where['status'] != '') {
             $model = $model->where($userAlias . 'status', $where['status']);
         }
-        //用户是否为推广员
+        //Người dùng có phải là cộng tác viên hay không
         if (isset($where['is_promoter']) && $where['is_promoter'] != '') {
             $model = $model->where($userAlias . 'is_promoter', $where['is_promoter']);
         }
-        //用户标签
+        //Nhãn người dùng
         if (isset($where['label_id']) && $where['label_id']) {
             $model = $model->whereIn($userAlias . 'uid', function ($query) use ($where) {
                 if (is_array($where['label_id'])) {
@@ -214,7 +214,7 @@ class UserWechatUserDao extends BaseDao
                 }
             });
         }
-        //是否付费会员
+        //Là thành viên trả phí
         if (isset($where['isMember']) && $where['isMember'] != '') {
             if ($where['isMember'] == 0) {
                 $model = $model->where($userAlias . 'is_money_level', 0);
@@ -223,7 +223,7 @@ class UserWechatUserDao extends BaseDao
             }
 
         }
-        //用户昵称,uid,手机号搜索
+        //Tìm kiếm theo biệt danh, uid, số điện thoại người dùng
         $fieldKey = $where['field_key'] ?? '';
         $nickname = $where['nickname'] ?? '';
         if ($fieldKey && $nickname && in_array($fieldKey, $this->withField)) {
@@ -239,15 +239,15 @@ class UserWechatUserDao extends BaseDao
         } else if (!$fieldKey && $nickname) {
             $model = $model->where($userAlias . 'nickname|' . $userAlias . 'uid|' . $userAlias . 'phone', 'LIKE', "%$where[nickname]%");
         }
-        //所在城市
+        //Thành phố hiện tại
         if (isset($where['country']) && $where['country']) {
             if ($where['country'] == 'domestic') {
-                $model = $model->where($wechatUserAlias . 'country', 'in', ['中国', 'China']);
+                $model = $model->where($wechatUserAlias . 'country', 'in', ['Trung Quốc', 'China']);
             } else if ($where['country'] == 'abroad') {
-                $model = $model->where($wechatUserAlias . 'country', 'not in', ['中国', '']);
+                $model = $model->where($wechatUserAlias . 'country', 'not in', ['Trung Quốc', '']);
             }
         }
-        //用户类型
+        //Loại người dùng
         if (isset($where['user_type']) && $where['user_type']) {
             if ($where['user_type'] == 'app') {
                 $model = $model->whereIn($userAlias . 'user_type', ['app', 'apple']);
@@ -255,15 +255,15 @@ class UserWechatUserDao extends BaseDao
                 $model = $model->where($userAlias . 'user_type', $where['user_type']);
             }
         }
-        //用户性别
+        //Giới tính người dùng
         if (isset($where['sex']) && $where['sex'] !== '' && in_array($where['sex'], [0, 1, 2])) {
             $model = $model->where($wechatUserAlias . 'sex', $where['sex']);
         }
-        //所在省份
+        //Tỉnh hiện tại
         if (isset($where['province']) && $where['province']) {
             $model = $model->where($wechatUserAlias . 'province', $where['province']);
         }
-        //所在城市
+        //Thành phố hiện tại
         if (isset($where['city']) && $where['city']) {
             $model = $model->where($wechatUserAlias . 'city', $where['city']);
         }
@@ -288,7 +288,7 @@ class UserWechatUserDao extends BaseDao
     }
 
     /**
-     * 获取用户性别
+     * Lấy giới tính người dùng
      * @param $time
      * @param $userType
      * @return mixed

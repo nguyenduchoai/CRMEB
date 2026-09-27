@@ -1,9 +1,9 @@
 // +---------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +---------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +---------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +---------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +---------------------------------------------------------------------
@@ -28,7 +28,7 @@ export default {
       name: `${pre}list`,
       meta: {
         auth: ['admin-order-storeOrder-index'],
-        title: '订单管理',
+        title: 'Quản lý đơn hàng',
       },
       component: () => import('@/pages/order/orderList/index'),
     },
@@ -37,7 +37,7 @@ export default {
       name: `${pre}offline`,
       meta: {
         auth: ['admin-order-offline'],
-        title: '收银订单',
+        title: 'Đơn thu ngân',
       },
       component: () => import('@/pages/order/offline/index'),
     },
@@ -46,7 +46,7 @@ export default {
       name: `${pre}refund`,
       meta: {
         auth: ['admin-order-refund'],
-        title: '售后订单',
+        title: 'Đơn đổi trả',
       },
       component: () => import('@/pages/order/refund/index'),
     },
@@ -55,7 +55,7 @@ export default {
       name: `${pre}invoice`,
       meta: {
         auth: ['admin-order-startOrderInvoice-index'],
-        title: '发票管理',
+        title: 'Quản lý hóa đơn',
       },
       component: () => import('@/pages/order/invoice/index'),
     },

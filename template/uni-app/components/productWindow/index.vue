@@ -12,7 +12,7 @@
 					</view>
 					<view class="money font-color">
 						<view class="acea-row row-middle">
-							{{ $t(`到手价`) }}
+							{{ $t(`Giá cuối cùng`) }}
 							<baseMoney class="mr-12" :money="attr.productSelect.price" symbolSize="24" integerSize="40" decimalSize="24" weight color="var(--view-theme)"></baseMoney>
 							<!-- <text class='vip-money'
 								v-if="is_vip == 0 && attr.productSelect.vip_price">{{$t(`￥`)}}{{attr.productSelect.vip_price}}</text>
@@ -22,9 +22,9 @@
 						</view>
 						
 						<text class="stock"
-							v-if='isShow && !type'>{{$t(`库存`)}} {{ attr.productSelect.stock + unitName }}</text>
-						<text class='stock' v-if="limitNum && type">{{$t(`库存`) }} {{attr.productSelect.quota + unitName}}</text>
-						<text class="stock" v-if='minQty > 1 && is_virtual'>{{$t(`起购`)}} {{ minQty + unitName }}</text>
+							v-if='isShow && !type'>{{$t(`Tồn kho`)}} {{ attr.productSelect.stock + unitName }}</text>
+						<text class='stock' v-if="limitNum && type">{{$t(`Tồn kho`) }} {{attr.productSelect.quota + unitName}}</text>
+						<text class="stock" v-if='minQty > 1 && is_virtual'>{{$t(`Mua tối thiểu`)}} {{ minQty + unitName }}</text>
 					</view>
 				</view>
 				<view class="iconfont icon-guanbi" @click="closeAttr"></view>
@@ -44,11 +44,11 @@
 					</view>
 				</view>
 				<view class="cart acea-row row-between-wrapper" v-if="!is_virtual">
-					<view class="title">{{$t(`数量`)}}</view>
+					<view class="title">{{$t(`Số lượng`)}}</view>
 					<view class="carnum acea-row row-left">
-						<text class='stock' v-if="limitNum && !type">{{$t(`限购`)}}{{limitNum + unitName}}</text>
+						<text class='stock' v-if="limitNum && !type">{{$t(`Giới hạn mua`)}}{{limitNum + unitName}}</text>
 						<text class='stock line' v-if='limitNum && !type && minQty > 1'> | </text>
-						<text class="stock" v-if='minQty > 1'>{{$t(`起购`)}}{{ minQty + unitName }}</text>
+						<text class="stock" v-if='minQty > 1'>{{$t(`Mua tối thiểu`)}}{{ minQty + unitName }}</text>
 						<view class="item reduce acea-row row-center-wrapper"
 							:class="attr.productSelect.cart_num <= minQty ? 'on' : ''"
 							v-if="attr.productSelect.cart_num <= minQty">
@@ -81,14 +81,14 @@
 			</view>
 			<view class="joinBnt bg-color"
 				v-if="iSbnt && attr.productSelect.product_stock>0 &&attr.productSelect.quota>0" @click="goCat">
-				{{$t(`我要参团`)}}
+				{{$t(`Tham gia nhóm`)}}
 			</view>
 			<view class="joinBnt on"
 				v-else-if="(iSbnt && attr.productSelect.quota<=0)||(iSbnt &&attr.productSelect.product_stock<=0)">
-				{{$t(`已售罄`)}}
+				{{$t(`Đã bán hết`)}}
 			</view>
-			<view class="joinBnt bg-color" v-if="iScart && attr.productSelect.stock" @click="goCat">{{$t(`确定`)}}</view>
-			<view class="joinBnt on" v-else-if="iScart && !attr.productSelect.stock">{{$t(`已售罄`)}}</view>
+			<view class="joinBnt bg-color" v-if="iScart && attr.productSelect.stock" @click="goCat">{{$t(`Xác nhận`)}}</view>
+			<view class="joinBnt on" v-else-if="iScart && !attr.productSelect.stock">{{$t(`Đã bán hết`)}}</view>
 		</view>
 		<view class="mask" @touchmove.stop.prevent="moveHandle" :hidden="attr.cartAttr === false" @click="closeAttr">
 		</view>
@@ -171,7 +171,7 @@
 				this.$emit('goCat');
 			},
 			/**
-			 * 购物车手动输入数量
+			 * Nhập số lượng thủ công trong giỏ hàng
 			 * 
 			 */
 			bindCode: function(e) {
@@ -207,7 +207,7 @@
 				}
 
 			},
-			//获取被选中属性；
+			//Lấy thuộc tính đã chọn;
 			getCheckedValue: function() {
 				let productAttr = this.attr.productAttr;
 				let value = [];
@@ -256,8 +256,8 @@
 		transform: translate3d(0, 100%, 0);
 		transition: all .3s cubic-bezier(.25, .5, .5, .9);
 		padding-bottom: 140rpx;
-		padding-bottom: calc(140rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-		padding-bottom: calc(140rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+		padding-bottom: calc(140rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+		padding-bottom: calc(140rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 	}
 
 	.product-window.on {

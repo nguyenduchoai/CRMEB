@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -23,14 +23,14 @@ use crmeb\utils\Str;
 use think\exception\ValidateException;
 
 /**
- * 订单发起支付
+ * Đơn hàng khởi tạo thanh toán
  * Class OrderPayServices
  * @package app\services\pay
  */
 class OrderPayServices
 {
     /**
-     * 支付
+     * Thanh toán
      * @var PayServices
      */
     protected $payServices;
@@ -41,21 +41,21 @@ class OrderPayServices
     }
 
     /**
-     * 获取支付方式
+     * Lấy phương thức thanh toán
      * @param string $payType
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/2/15
      */
     public function getPayType(string $payType)
     {
-        //微信支付没有开启，通联支付开启，用户访问端在小程序或者公众号的时候，使用通联微信H5支付
+        //WeChat Pay chưa mở, Allinpay đã mở, khi người dùng truy cập ở Mini Program hoặc OA WeChat thì dùng WeChat H5 Pay của Allinpay
         if ($payType == PayServices::WEIXIN_PAY && !request()->isH5() && !request()->isApp()) {
             $payType = sys_config('pay_weixin_open', 0);
         }
 
-        //支付宝没有开启，通联支付开了，用户使用支付宝支付，并且在app端访问的时候，使用通联app支付宝支付
+        //Alipay chưa mở, Allinpay đã mở, khi người dùng thanh toán bằng Alipay và truy cập ở app thì dùng Alipay app của Allinpay
         if ($payType == PayServices::ALIAPY_PAY && request()->isApp()) {
             $payType = sys_config('ali_pay_status', 0);
         }
@@ -64,10 +64,10 @@ class OrderPayServices
     }
 
     /**
-     * 获取返回类型
+     * Lấy loại trả về
      * @param string $payType
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/2/15
      */
@@ -86,13 +86,13 @@ class OrderPayServices
         } else if ($payType == PayServices::ALLIN_PAY) {
             $payStstus = 'allinpay_pay';
         } else {
-            throw new ValidateException('获取支付返回类型失败');
+            throw new ValidateException('Lấy loại dữ liệu trả về của thanh toán thất bại');
         }
         return $payStstus;
     }
 
     /**
-     * 发起支付前
+     * Trước khi khởi tạo thanh toán
      * @param array $orderInfo
      * @param string $payType
      * @param array $options
@@ -100,7 +100,7 @@ class OrderPayServices
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/2/15
      */
@@ -170,10 +170,10 @@ class OrderPayServices
             throw new ApiException(410276);
         }
 
-        //发起支付
+        //Khởi tạo thanh toán
         $jsConfig = $this->payServices->pay($payType, $orderInfo['order_id'], $orderInfo['pay_price'], $successAction, $body, $options);
 
-        //发起支付后处理返回参数
+        //Xử lý tham số trả về sau khi khởi tạo thanh toán
         $payInfo = $this->afterPay($orderInfo, $jsConfig, $payType);
         $statusType = $this->payStatus($payType);
 
@@ -184,12 +184,12 @@ class OrderPayServices
     }
 
     /**
-     * 支付发起后处理返回参数
+     * Xử lý tham số trả về sau khi thanh toán được khởi tạo
      * @param $order
      * @param $jsConfig
      * @param string $payType
      * @return array
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/2/15
      */

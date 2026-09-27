@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -23,80 +23,80 @@ class ProgramOpen3rd
     protected $accessToken;
 
     /**
-     * 预授权码
+     * Mã ủy quyền trước (pre-auth code)
      */
     const PRE_AUTH_CODE = 'https://api.weixin.qq.com/cgi-bin/component/api_create_preauthcode';
 
     /**
-     * 获取授权方的帐号基本信息
+     * Lấy thông tin cơ bản tài khoản của bên ủy quyền
      */
     const GET_AUTHORIZER_INFO = 'https://api.weixin.qq.com/cgi-bin/component/api_get_authorizer_info';
     /**
-     * 获取体验真列表
+     * Lấy danh sách người trải nghiệm
      */
     const MEMBER_AUTH_LIST = 'https://api.weixin.qq.com/wxa/memberauth';
     /**
-     * 绑定体验者
+     * Gắn người trải nghiệm (tester)
      */
     const BIND_MEMBER_AUTH = 'https://api.weixin.qq.com/wxa/bind_tester';
     /**
-     * 解除绑定体验者
+     * Bỏ gắn người trải nghiệm (tester)
      */
     const UNBIND_MEMBER_AUTH = 'https://api.weixin.qq.com/wxa/unbind_tester';
     /**
-     * 获取代码草稿列表
+     * Lấy danh sách bản nháp code
      */
     const DRAFT_LIST = 'https://api.weixin.qq.com/wxa/gettemplatedraftlist';
     /**
-     * 将草稿添加到代码模板库
+     * Thêm bản nháp vào thư viện mẫu code
      */
     const ADD_TO_TEMPLATE = 'https://api.weixin.qq.com/wxa/addtotemplate';
     /**
-     * 获取代码模版列表
+     * Lấy danh sách mẫu code
      */
     const TEMPLATE_LIST = 'https://api.weixin.qq.com/wxa/gettemplatelist';
     /**
-     * 删除指定代码模版
+     * Xóa mẫu code chỉ định
      */
     const DEL_TEMPLATE = 'https://api.weixin.qq.com/wxa/deletetemplate';
     /**
-     * 上传代码
+     * Tải lên code
      */
     const COMMIT = 'https://api.weixin.qq.com/wxa/commit';
     /**
-     * 获取已上传的代码页面列表
+     * Lấy danh sách trang code đã tải lên
      */
     const GET_PAGE = 'https://api.weixin.qq.com/wxa/get_page';
     /**
-     * 获取体验二维码
+     * Lấy mã QR trải nghiệm
      */
     const GET_QRCODE = 'https://api.weixin.qq.com/wxa/get_qrcode';
     /**
-     * 代码提交审核
+     * Gửi code để duyệt
      */
     const SUBMIT_AUDIT = 'https://api.weixin.qq.com/wxa/submit_audit';
     /**
-     * 查询指定版本审核状态
+     * Truy vấn trạng thái duyệt của phiên bản chỉ định
      */
     const GET_AUDIT_STATUS = 'https://api.weixin.qq.com/wxa/get_auditstatus';
     /**
-     * 查询最近一次提交审核状态
+     * Truy vấn trạng thái duyệt của lần gửi gần nhất
      */
     const GET_LATEST_AUDIT_STATUS = 'https://api.weixin.qq.com/wxa/get_latest_auditstatus';
     /**
-     * 撤回审核
+     * Rút lại yêu cầu duyệt
      */
     const UNDO_CODE_AUDIT = 'https://api.weixin.qq.com/wxa/undocodeaudit';
     /**
-     * 发布已经通过审核的小程序
+     * Phát hành Mini Program đã được duyệt
      */
     const RELEASE = 'https://api.weixin.qq.com/wxa/release';
     /**
-     * 分阶段发布
+     * Phát hành theo giai đoạn
      */
     const GRAY_RELEASE = 'https://api.weixin.qq.com/wxa/grayrelease';
     /**
-     * 版本回退
+     * Quay lại phiên bản cũ (rollback)
      */
     const REVERT_CODE_RELEASE = 'https://api.weixin.qq.com/wxa/revertcoderelease';
 
@@ -112,7 +112,7 @@ class ProgramOpen3rd
 
 
     /**
-     * 获取预授权码
+     * Lấy mã ủy quyền trước (pre-auth code)
      * @return array|bool|mixed
      */
     public function getPreAuthCode()
@@ -121,7 +121,7 @@ class ProgramOpen3rd
     }
 
     /**
-     * 获取授权
+     * Yêu cầu ủy quyền
      * @param $authorization_code
      * @return authorizer_appid
      */
@@ -131,7 +131,7 @@ class ProgramOpen3rd
     }
 
     /**
-     * 获取授权方帐号基本信息
+     * Lấy thông tin cơ bản tài khoản của bên ủy quyền
      * @param $authorizer_appid
      * @return array|bool|mixed
      */
@@ -141,7 +141,7 @@ class ProgramOpen3rd
     }
 
     /**
-     * 获取授权体验者列表
+     * Lấy danh sách người trải nghiệm được ủy quyền
      * @return array|bool|mixed
      */
     public function getMemberAuthList()
@@ -150,7 +150,7 @@ class ProgramOpen3rd
     }
 
     /**
-     * 绑定体验者
+     * Gắn người trải nghiệm (tester)
      * @param string $wechatid
      * @return array|bool|mixed
      */
@@ -160,7 +160,7 @@ class ProgramOpen3rd
     }
 
     /**
-     * 解除绑定体验者
+     * Bỏ gắn người trải nghiệm (tester)
      * @param string $wechatid
      * @param string $userstr
      * @return array|bool|mixed
@@ -173,7 +173,7 @@ class ProgramOpen3rd
     }
 
     /**
-     * 获取草稿列表
+     * Lấy danh sách bản nháp
      * @return array|bool|mixed
      */
     public function getDraftList()
@@ -182,7 +182,7 @@ class ProgramOpen3rd
     }
 
     /**
-     * 将草稿添加到代码模版
+     * Thêm bản nháp vào mẫu code
      * @param $draft_id
      * @return array|bool|mixed
      */
@@ -192,7 +192,7 @@ class ProgramOpen3rd
     }
 
     /**
-     * 获取代码模版列表
+     * Lấy danh sách mẫu code
      * @return array|bool|mixed
      */
     public function getTemplateList()
@@ -201,7 +201,7 @@ class ProgramOpen3rd
     }
 
     /**
-     * 删除指定模版
+     * Xóa mẫu chỉ định
      * @param $template_id
      * @return array|bool|mixed
      */
@@ -211,7 +211,7 @@ class ProgramOpen3rd
     }
 
     /**
-     * 代码上传
+     * Tải lên code
      * @param $template_id
      * @param string $ext_json
      * @param string $user_version
@@ -224,7 +224,7 @@ class ProgramOpen3rd
     }
 
     /**
-     * 获取已上传代码列表
+     * Lấy danh sách code đã tải lên
      * @return array|bool|mixed
      */
     public function getPage()
@@ -233,7 +233,7 @@ class ProgramOpen3rd
     }
 
     /**
-     * 获取体验二维码
+     * Lấy mã QR trải nghiệm
      * @return array|bool|mixed
      */
     public function getQrcode($path = '')
@@ -242,15 +242,15 @@ class ProgramOpen3rd
     }
 
     /**
-     * 提交审核
+     * Gửi duyệt
      * @param array $data
      * @param data = [
-     * 'item_list' => [],//审核项列表（选填，至多填写 5 项）
-     * 'preview_info' => (object)[],//预览信息（小程序页面截图和操作录屏）
-     * 'version_desc' => '',//小程序版本说明和功能解释
-     * 'feedback_info' => '',//反馈内容，至多 200 字
-     * 'feedback_stuff' => '',//用 | 分割的 media_id 列表，至多 5 张图片, 可以通过新增临时素材接口上传而得到
-     * 'ugc_declare' => (object)[],//用户生成内容场景（UGC）信息安全声明
+     * 'item_list' => [],//danh sách mục duyệt (không bắt buộc, điền tối đa 5 mục)
+     * 'preview_info' => (object)[],//thông tin xem trước (ảnh chụp trang Mini Program và video quay lại thao tác)
+     * 'version_desc' => '',//mô tả phiên bản và giải thích tính năng Mini Program
+     * 'feedback_info' => '',//nội dung phản hồi, tối đa 200 ký tự
+     * 'feedback_stuff' => '',//danh sách media_id phân tách bằng |, tối đa 5 ảnh, có thể tải lên qua API thêm tư liệu tạm thời để lấy được
+     * 'ugc_declare' => (object)[],//tuyên bố an toàn thông tin cho tình huống nội dung do người dùng tạo (UGC)
      * ];
      * @return array|bool|mixed
      */
@@ -269,7 +269,7 @@ class ProgramOpen3rd
     }
 
     /**
-     * 查询指定版本的审核状态
+     * Truy vấn trạng thái duyệt của phiên bản chỉ định
      * @param string $auditid
      * @return array|bool|mixed
      */
@@ -279,7 +279,7 @@ class ProgramOpen3rd
     }
 
     /**
-     * 获取最后一次提交审核状态
+     * Lấy trạng thái duyệt của lần gửi cuối cùng
      * @return array|bool|mixed
      */
     public function getLatestAuditStatus()
@@ -288,7 +288,7 @@ class ProgramOpen3rd
     }
 
     /**
-     * 审核撤回
+     * Rút lại yêu cầu duyệt
      * @return array|bool|mixed
      */
     public function undoAudit()
@@ -297,7 +297,7 @@ class ProgramOpen3rd
     }
 
     /**
-     * 发布已通过审核小程序
+     * Phát hành Mini Program đã được duyệt
      * @return array|bool|mixed
      */
     public function release()
@@ -306,8 +306,8 @@ class ProgramOpen3rd
     }
 
     /**
-     * 分阶段发布
-     * @param int $gray_percentage 1-100整数
+     * Phát hành theo giai đoạn
+     * @param int $gray_percentage Số nguyên từ 1-100
      * @return mixed
      */
     public function grayRelease(int $gray_percentage)
@@ -316,7 +316,7 @@ class ProgramOpen3rd
     }
 
     /**
-     * 版本回退
+     * Quay lại phiên bản cũ (rollback)
      * @return array|bool|mixed
      */
     public function revertCodeRelease()

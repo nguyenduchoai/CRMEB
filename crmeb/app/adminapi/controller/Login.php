@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use crmeb\utils\Captcha;
 use app\services\system\admin\SystemAdminServices;
 
 /**
- * 后台登陆
+ * Đăng nhập quản trị
  * Class Login
  * @package app\adminapi\controller
  */
@@ -40,7 +40,7 @@ class Login extends AuthController
     }
 
     /**
-     * 验证码
+     * Mã xác thực
      * @return $this|\think\Response
      */
     public function captcha()
@@ -58,7 +58,7 @@ class Login extends AuthController
     }
 
     /**
-     * 一次验证
+     * Xác minh lần đầu
      * @return mixed
      */
     public function ajcheck()
@@ -77,7 +77,7 @@ class Login extends AuthController
     }
 
     /**
-     * 登陆
+     * Đăng nhập
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -120,7 +120,7 @@ class Login extends AuthController
     }
 
     /**
-     * 获取后台登录页轮播图以及LOGO
+     * Lấy ảnh trình chiếu (banner) và LOGO trang đăng nhập quản trị
      * @return mixed
      */
     public function info()

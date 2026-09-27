@@ -9,7 +9,7 @@
       }"
       v-if="bgColor.length > 0"
     >
-      <div class="title-bar" :style="{ color: titleColor }">砍价专区·BARGAINING</div>
+      <div class="title-bar" :style="{ color: titleColor }">Khu săn giảm giá·BARGAINING</div>
       <div class="list-wrapper">
         <div class="item" v-for="(item, index) in list" :key="index" :style="{ marginRight: listRight + 'px' }">
           <div class="img-box">
@@ -23,7 +23,7 @@
               <span :style="{ color: txtColor }">￥</span>
               <p :style="{ color: txtColor }">{{ item.price }}</p>
             </div>
-            <div v-if="bntShow" class="btn" :style="{ background: txtColor }">立即砍价</div>
+            <div v-if="bntShow" class="btn" :style="{ background: txtColor }">Săn giảm giá ngay</div>
           </div>
         </div>
       </div>
@@ -40,11 +40,11 @@
 import { mapState } from 'vuex';
 export default {
   name: 'home_bargain',
-  cname: '砍价',
+  cname: 'Săn giảm giá',
   icon: 'iconkanjia1',
   configName: 'c_home_bargain',
-  type: 1, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'bargain', // 外面匹配名称
+  type: 1, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'bargain', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -80,7 +80,7 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'bargain',
         timestamp: this.num,
@@ -91,15 +91,15 @@ export default {
           val: 3,
         },
         priceShow: {
-          title: '是否显示价格',
+          title: 'Hiển thị giá',
           val: true,
         },
         bntShow: {
-          title: '是否显示按钮',
+          title: 'Hiển thị nút',
           val: true,
         },
         themeColor: {
-          title: '主题风格',
+          title: 'Chủ đề giao diện',
           name: 'themeColor',
           default: [
             {
@@ -113,7 +113,7 @@ export default {
           ],
         },
         titleColor: {
-          title: '标题颜色',
+          title: 'Màu tiêu đề',
           name: 'txtColor',
           default: [
             {
@@ -127,7 +127,7 @@ export default {
           ],
         },
         bgColor: {
-          title: '背景颜色',
+          title: 'Màu nền',
           name: 'bgColor',
           default: [
             {
@@ -147,32 +147,32 @@ export default {
           ],
         },
         bgStyle: {
-          title: '背景样式',
+          title: 'Kiểu nền',
           name: 'bgStyle',
           type: 1,
           list: [
             {
-              val: '直角',
+              val: 'Góc vuông',
               icon: 'iconPic_square',
             },
             {
-              val: '圆角',
+              val: 'Bo góc',
               icon: 'iconPic_fillet',
             },
           ],
         },
         prConfig: {
-          title: '背景边距',
+          title: 'Lề nền',
           val: 10,
           min: 0,
         },
         productGap: {
-          title: '商品间距',
+          title: 'Khoảng cách sản phẩm',
           val: 10,
           min: 0,
         },
         mbCongfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },

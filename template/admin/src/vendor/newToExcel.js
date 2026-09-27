@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -48,7 +48,7 @@ export default function createWorkBook(header, title, data, foot, filename, shee
   let long = header.length;
 
   /**
-   *  创建工作薄
+   *  Tạo workbook
    * @param {*} sheets
    */
   function createSheets(sheets) {
@@ -58,7 +58,7 @@ export default function createWorkBook(header, title, data, foot, filename, shee
   }
 
   /**
-   *  设置表名介绍等
+   *  Thiết lập tên bảng, phần giới thiệu, v.v.
    * @param {*} title
    * @param {*} long
    */
@@ -78,7 +78,7 @@ export default function createWorkBook(header, title, data, foot, filename, shee
     }
   }
   /**
-   *  设置表头行
+   *  Thiết lập hàng tiêu đề bảng
    * @param {*} header
    */
   function setHeader(header) {
@@ -97,7 +97,7 @@ export default function createWorkBook(header, title, data, foot, filename, shee
   }
 
   /**
-   * 导出内容
+   * Nội dung xuất
    * @param {*} data
    */
   function setContent(data) {
@@ -108,19 +108,19 @@ export default function createWorkBook(header, title, data, foot, filename, shee
       let hasMerge = false;
       let starKey = 0;
       let endKey = 0;
-      /** 循环列 */
-      //需要操作第几列
+      /** Lặp qua các cột */
+      //Cột cần thao tác
       let sk = 0;
       for (let l = 0; l < data[h].length; l++) {
         if (Array.isArray(data[h][l])) {
-          //数组长度
+          //Độ dài mảng
           starKey = sk;
           hasMerge = true;
           setArrayContent(data[h][l], sk);
           sk = sk + data[h][l][0].length;
           endKey = sk;
         } else {
-          //不是数组
+          //Không phải mảng
           lcomunNow.getCell(getLetter(sk)).value = data[h][l];
           lcomunNow.getCell(getLetter(sk)).border = {
             top: { style: 'thin' },
@@ -139,13 +139,13 @@ export default function createWorkBook(header, title, data, foot, filename, shee
     }
   }
   /**
-   * 占多行的数组
+   * Mảng chiếm nhiều hàng
    * @param {*} arr
    * @param {*} sk
    */
   function setArrayContent(arr, sk) {
     /**
-     *  循环二维数组,在循环行
+     *  Lặp mảng hai chiều, rồi lặp theo từng hàng
      */
     let al = arr.length;
     let sl = al - 1;
@@ -167,7 +167,7 @@ export default function createWorkBook(header, title, data, foot, filename, shee
     }
   }
   /**
-   *  合并操作
+   *  Thao tác gộp ô
    * @param {*} satarLcomun
    * @param {*} endLcomun
    * @param {*} starKey
@@ -182,7 +182,7 @@ export default function createWorkBook(header, title, data, foot, filename, shee
   }
 
   /**
-   * 设置表末尾统计备注等
+   * Thiết lập phần thống kê, ghi chú ở cuối bảng, v.v.
    * @param {*} footData
    */
   function setFoot(footData) {
@@ -216,9 +216,9 @@ export default function createWorkBook(header, title, data, foot, filename, shee
   }
 
   /**
-   * 处理超过26个字母的列
-   * @param {number} number - 列索引数字
-   * @returns {string} Excel列标识(A, B, C, ..., Z, AA, AB, ...)
+   * Xử lý cột vượt quá 26 chữ cái
+   * @param {number} number - Chỉ số cột (số)
+   * @returns {string} Ký hiệu cột Excel (A, B, C, ..., Z, AA, AB, ...)
    */
   function getLetter(number) {
     let char = new Array(
@@ -267,7 +267,7 @@ export default function createWorkBook(header, title, data, foot, filename, shee
   }
 
   /**
-   *  导出下载
+   *  Xuất và tải xuống
    * @param {*} filename
    */
   function saveAndDowloade(filename) {

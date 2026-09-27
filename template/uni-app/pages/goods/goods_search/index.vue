@@ -6,13 +6,13 @@
 					<view class='input acea-row row-between-wrapper'>
 						<text class='iconfont icon-sousuo'></text>
 						<input type='text' v-model='searchValue' @confirm="inputConfirm" focus
-							:placeholder='$t(`搜索商品名称`)' placeholder-class='placeholder' @input="setValue"></input>
+							:placeholder='$t(`Tìm kiếm tên sản phẩm`)' placeholder-class='placeholder' @input="setValue"></input>
 					</view>
-					<view class='bnt' @tap='searchBut'>{{$t(`搜索`)}}</view>
+					<view class='bnt' @tap='searchBut'>{{$t(`Tìm kiếm`)}}</view>
 				</view>
 				<template v-if="history.length">
 					<view class='title acea-row row-between-wrapper'>
-						<view>{{$t(`搜索历史`)}}</view>
+						<view>{{$t(`Lịch sử tìm kiếm`)}}</view>
 						<view class="iconfont icon-shanchu" @click="clear"></view>
 					</view>
 					<view class='list acea-row'>
@@ -22,7 +22,7 @@
 						</block>
 					</view>
 				</template>
-				<view class='title'>{{$t(`热门搜索`)}}</view>
+				<view class='title'>{{$t(`Tìm kiếm phổ biến`)}}</view>
 				<view class='list acea-row'>
 					<block v-for="(item,index) in hotSearchList" :key="index">
 						<view class='item line1' @tap='setHotSearchValue(item.val)' v-if="item.val">{{item.val}}</view>
@@ -85,7 +85,7 @@
 				page: 1,
 				loading: false,
 				loadend: false,
-				loadTitle: this.$t(`加载更多`),
+				loadTitle: this.$t(`Tải thêm`),
 				hotPage: 1,
 				isScroll: true,
 				history: [],
@@ -104,9 +104,9 @@
 				this.hotSearchList = uni.getStorageSync('hotList');
 			} catch (err) {}
 		},
-		// 滚动监听
+		// Theo dõi cuộn (scroll listener)
 		onPageScroll(e) {
-			// 传入scrollTop值并触发所有easy-loadimage组件下的滚动监听事件
+			// Truyền vào giá trị scrollTop và kích hoạt sự kiện theo dõi cuộn của tất cả component easy-loadimage
 			uni.$emit('scroll');
 		},
 		methods: {
@@ -122,7 +122,7 @@
 				this.old.scrollTop = e.detail.scrollTop
 			},
 			goTop(e) {
-				// 解决view层不同步的问题
+				// Giải quyết vấn đề lớp view không đồng bộ
 				this.scrollTop = this.old.scrollTop
 				this.$nextTick(() => {
 					this.scrollTop = 0
@@ -176,11 +176,11 @@
 					that.$set(that, 'bastList', that.bastList);
 					that.loading = false;
 					that.loadend = loadend;
-					that.loadTitle = loadend ? that.$t(`没有更多内容啦~`) : that.$t(`加载更多`);
+					that.loadTitle = loadend ? that.$t(`Không còn nội dung nào nữa~`) : that.$t(`Tải thêm`);
 					that.page = that.page + 1;
 				}).catch(err => {
 					that.loading = false,
-						that.loadTitle = that.$t(`加载更多`)
+						that.loadTitle = that.$t(`Tải thêm`)
 				});
 			},
 			getHostProduct: function() {
@@ -205,7 +205,7 @@
 			searchBut: function() {
 				let that = this;
 				if (!that.searchValue.trim()) return this.$util.Tips({
-					title: that.$t(`请输入要搜索的商品`)
+					title: that.$t(`Vui lòng nhập sản phẩm cần tìm`)
 				});
 				that.focus = false;
 				// if (that.searchValue.length > 0) {
@@ -213,13 +213,13 @@
 				that.loadend = false;
 				that.$set(that, 'bastList', []);
 				uni.showLoading({
-					title: that.$t(`正在搜索中`)
+					title: that.$t(`Đang tìm kiếm`)
 				});
 				that.getProductList();
 				uni.hideLoading();
 				// } else {
 				// 	return this.$util.Tips({
-				// 		title: '请输入要搜索的商品',
+				// 		title: 'Vui lòng nhập sản phẩm cần tìm',
 				// 		icon: 'none',
 				// 		duration: 1000,
 				// 		mask: true,

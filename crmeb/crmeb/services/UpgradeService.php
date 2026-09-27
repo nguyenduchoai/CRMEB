@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -12,45 +12,45 @@ namespace crmeb\services;
 
 class UpgradeService extends FileService
 {
-    //请求域名
+    //Domain yêu cầu
     public static $domain = 'http://shop.crmeb.net/';
-    //及时更新网址信息
+    //Cập nhật kịp thời thông tin địa chỉ web
     public static $updatewebinfourl = 'index.php/admin/server.upgrade_api/updatewebinfo.html';
-    //公共接口地址 获取版本号
+    //Địa chỉ API chung: lấy số phiên bản
     public static $isNowVersionUrl = 'index.php/admin/server.upgrade_api/now_version.html';
-    //公共接口地址 获取版本详情
+    //Địa chỉ API chung: lấy chi tiết phiên bản
     public static $isVersionInfo = 'index.php/admin/server.upgrade_api/version_info.html';
-    //公共接口地址 获取历史版本列表
+    //Địa chỉ API chung: lấy danh sách phiên bản lịch sử
     public static $isList = 'index.php/admin/server.upgrade_api/get_version_list.html';
-    //公共接口地址 写入更新版本信息
+    //Địa chỉ API chung: ghi thông tin cập nhật phiên bản
     public static $isInsertLog = 'index.php/admin/server.upgrade_api/set_upgrade_info.html';
-    //公共接口地址 获取大于当前版本的所有版本
+    //Địa chỉ API chung: lấy tất cả phiên bản lớn hơn phiên bản hiện tại
     public static $isNowVersion = 'index.php/admin/server.upgrade_api/get_now_version.html';
-    //公共接口地址 更新网址信息
+    //Địa chỉ API chung: cập nhật thông tin địa chỉ web
     protected static $UpdateWeBinfo = 'index.php/admin/server.upgrade_api/updatewebinfo.html';
-    //公共接口地址 获取多少版本未更新
+    //Địa chỉ API chung: lấy số phiên bản chưa cập nhật
     public static $NewVersionCount = 'index.php/admin/server.upgrade_api/new_version_count.html';
-    //公共接口地址 判断是否有权限 返回1有权限，0无权限
+    //Địa chỉ API chung: kiểm tra có quyền không, trả về 1 là có quyền, 0 là không có quyền
     protected static $Isauth = 'index.php/admin/server.upgrade_api/isauth.html';
-    //相隔付
+    //Thanh toán giãn cách
     private static $seperater = "{&&}";
 
-    //更新网址信息
+    //Cập nhật thông tin địa chỉ web
     public function snyweninfo($serverweb)
     {
         return self::request_post(self::$UpdateWeBinfo, $serverweb);
     }
 
-    //判断是否有权限 返回1有权限，0无权限
+    //Kiểm tra có quyền không, trả về 1 là có quyền, 0 là không có quyền
     public function isauth()
     {
         return self::request_post(self::$Isauth);
     }
 
     /*
-     *获取ip token 生成当前时间和过期时间
+     *Lấy ip token, tạo thời gian hiện tại và thời gian hết hạn
      * @param string ip
-     * @param int $valid_peroid 过期周期 15天
+     * @param int $valid_peroid Chu kỳ hết hạn 15 ngày
      */
     public static function get_token($ip = '', $valid_peroid = 1296000)
     {
@@ -75,30 +75,30 @@ class UpgradeService extends FileService
     {
         $pach = app()->getRootPath() . 'version';
         $request = app('request');
-        if (!file_exists($pach)) return self::getRet($pach . '升级文件丢失，请联系管理员');
+        if (!file_exists($pach)) return self::getRet($pach . 'Tệp nâng cấp bị thiếu, vui lòng liên hệ quản trị viên');
         $version = @file($pach);
-        if (!isset($version[0])) return self::getRet('获取失败');
+        if (!isset($version[0])) return self::getRet('Lấy dữ liệu thất bại');
         $lv = self::request_post(self::$isNowVersionUrl, ['token' => self::get_token($request->ip())]);
         if (isset($lv['code']) && $lv['code'] == 200)
             $version_lv = isset($lv['data']['version']) && $lv['data']['version'] ? $lv['data']['version'] : false;
         else
-            return isset($lv['msg']) ? self::getRet($lv['msg']) : self::getRet('获取失败');
-        if ($version_lv === false) return self::getRet('获取失败');
+            return isset($lv['msg']) ? self::getRet($lv['msg']) : self::getRet('Lấy dữ liệu thất bại');
+        if ($version_lv === false) return self::getRet('Lấy dữ liệu thất bại');
         if (strstr($version[0], '=') !== false) {
             $version = explode('=', $version[0]);
             if ($version[1] != $version_lv) {
                 return self::getRet($version_lv, 200);
             }
         }
-        return self::getRet('获取失败');
+        return self::getRet('Lấy dữ liệu thất bại');
     }
 
     public static function getVersion()
     {
         $pach = app()->getRootPath() . '.version';
-        if (!file_exists($pach)) return self::getRet($pach . '升级文件丢失，请联系管理员');
+        if (!file_exists($pach)) return self::getRet($pach . 'Tệp nâng cấp bị thiếu, vui lòng liên hệ quản trị viên');
         $version = @file($pach);
-        if (!isset($version[0]) && !isset($version[1])) return self::getRet('获取失败');
+        if (!isset($version[0]) && !isset($version[1])) return self::getRet('Lấy dữ liệu thất bại');
         $arr = [];
         foreach ($version as $val) {
             list($k, $v) = explode('=', $val);
@@ -108,7 +108,7 @@ class UpgradeService extends FileService
     }
 
     /**
-     * 模拟post进行url请求
+     * Giả lập post để gửi yêu cầu url
      * @param string $url
      * @param array $post_data
      */
@@ -126,14 +126,14 @@ class UpgradeService extends FileService
         $post_data = substr($o, 0, -1);
         $postUrl = $url;
         $curlPost = $post_data;
-        $ch = curl_init();//初始化curl
-        curl_setopt($ch, CURLOPT_URL, $postUrl);//抓取指定网页
-        curl_setopt($ch, CURLOPT_HEADER, 0);//设置header
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//要求结果为字符串且输出到屏幕上
-        curl_setopt($ch, CURLOPT_POST, 1);//post提交方式
+        $ch = curl_init();//Khởi tạo curl
+        curl_setopt($ch, CURLOPT_URL, $postUrl);//Lấy nội dung trang web chỉ định
+        curl_setopt($ch, CURLOPT_HEADER, 0);//Đặt header
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//Yêu cầu kết quả là chuỗi và xuất ra màn hình
+        curl_setopt($ch, CURLOPT_POST, 1);//Cách gửi post
         curl_setopt($ch, CURLOPT_POSTFIELDS, $curlPost);
         curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-        $data = curl_exec($ch);//运行curl
+        $data = curl_exec($ch);//Chạy curl
         curl_close($ch);
         if ($data) {
             $data = json_decode($data, true);
@@ -142,9 +142,9 @@ class UpgradeService extends FileService
     }
 
     /**
-     * 验证远程文件是否存在 以及下载
-     * @param string $url 文件路径
-     * @param string $savefile 保存地址
+     * Kiểm tra file từ xa có tồn tại không, và tải xuống
+     * @param string $url Đường dẫn tệp
+     * @param string $savefile Địa chỉ lưu
      */
     public static function check_remote_file_exists($url, $savefile)
     {
@@ -153,18 +153,18 @@ class UpgradeService extends FileService
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_NOBODY, true);
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
-        // 发送请求
+        // Gửi yêu cầu
         $result = curl_exec($curl);
         $found = false;
-        // 如果请求没有发送失败
+        // Nếu gửi yêu cầu không thất bại
         if ($result !== false) {
-            // 再检查http响应码是否为200
+            // Sau đó kiểm tra mã phản hồi http có phải 200 không
             $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
             if ($statusCode == 200) {
                 curl_close($curl);
 
                 $fileservice = new self;
-                //下载文件
+                //Tải xuống tệp
                 $zip = $fileservice->downRemoteFile($url, $savefile);
                 if ($zip['error'] > 0) return false;
                 if (!isset($zip['save_path']) && empty($zip['save_path'])) return false;
@@ -177,9 +177,9 @@ class UpgradeService extends FileService
     }
 
     /**
-     * 通用加密
-     * @param String $string 需要加密的字串
-     * @param String $skey 加密EKY
+     * Mã hóa dùng chung
+     * @param String $string Chuỗi cần mã hóa
+     * @param String $skey EKY mã hóa
      * @return String
      */
     private static function enCode($string = '', $skey = 'fb')
@@ -194,8 +194,8 @@ class UpgradeService extends FileService
     }
 
     /**
-     * 去除回车，去取空格，去除换行，去除tab
-     * @param String $str 需要去除的字串
+     * Bỏ ký tự carriage return, bỏ khoảng trắng, bỏ xuống dòng, bỏ tab
+     * @param String $str Chuỗi cần loại bỏ
      * @return String
      */
     public static function replace($str)

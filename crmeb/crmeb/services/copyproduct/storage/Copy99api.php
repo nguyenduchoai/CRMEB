@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -28,7 +28,7 @@ class Copy99api extends BaseCopyProduct
      */
     protected $host = ['taobao', 'tmall', 'jd', 'pinduoduo', 'suning', 'yangkeduo', '1688'];
 
-    //接口地址
+    //Địa chỉ API
     protected static $api = [
         'taobao' => 'https://api03.6bqb.com/taobao/detail', //https://api03.6bqb.com/app/taobao/detail
         'tmall' => 'https://api03.6bqb.com/tmall/detail',
@@ -38,12 +38,12 @@ class Copy99api extends BaseCopyProduct
         '1688' => 'https://api03.6bqb.com/alibaba/detail'
     ];
     protected static $apiKey = '';//996EF05B079F8706345938A0CD7339BB
-    //商品默认字段
+    //Trường mặc định của sản phẩm
     protected static $productInfo = [
         'cate_id' => '',
         'store_name' => '',
         'store_info' => '',
-        'unit_name' => '件',
+        'unit_name' => 'cái',
         'price' => 0,
         'keyword' => '',
         'ficti' => 0,
@@ -67,7 +67,7 @@ class Copy99api extends BaseCopyProduct
     ];
 
     /**
-     * 整合
+     * Tích hợp
      * @param $url
      * @param $method
      * @param $data
@@ -181,7 +181,7 @@ class Copy99api extends BaseCopyProduct
             'shopid' => $shopid,
         ];
         if (!$apikey) {
-            return self::setReturn(false, '请先去设置复制商品apiKey');
+            return self::setReturn(false, 'Vui lòng cài đặt apiKey sao chép sản phẩm trước');
         }
         $url = self::$api[$type] ?? '';
         $type = $type == '1688' ? 'alibaba' : $type;
@@ -190,7 +190,7 @@ class Copy99api extends BaseCopyProduct
         $method = 'get';
         self::$apiKey = $apikey;
         if (!$data || !$url || !is_callable(self::class, $action) || !is_callable(self::class, $deal_action)) {
-            return self::setReturn(false, '暂不支持该平台商品复制');
+            return self::setReturn(false, 'Hiện chưa hỗ trợ sao chép sản phẩm từ nền tảng này');
         }
         switch ($type) {
             case 'taobao':
@@ -200,14 +200,14 @@ class Copy99api extends BaseCopyProduct
             case 'alibaba':
                 $method = 'get';
                 if (!isset($data['itemid']) || !$data['itemid'])
-                    return self::setReturn(false, '缺少商品ID');
+                    return self::setReturn(false, 'Thiếu ID sản phẩm');
                 break;
             case 'suning':
                 $method = 'get';
                 if (!isset($data['itemid']) || !$data['itemid'])
-                    return self::setReturn(false, '缺少商品ID');
+                    return self::setReturn(false, 'Thiếu ID sản phẩm');
                 if (!isset($data['shopid']) || !$data['shopid'])
-                    return self::setReturn(false, '缺少商户ID');
+                    return self::setReturn(false, 'Thiếu ID người bán');
                 break;
         }
         $url = self::makeUrl($url, $method, $data);
@@ -215,18 +215,18 @@ class Copy99api extends BaseCopyProduct
             return self::setReturn(true, 'SUCCESS', $cache_info);
         }
         $info = self::$action($url, $data);
-        if (!$info) return self::setReturn(false, '获取商品失败');
+        if (!$info) return self::setReturn(false, 'Lấy sản phẩm thất bại');
         $info = json_decode($info, true);
         if (!$info || (!in_array($info['retcode'], ['0000']))) {
-            return self::setReturn(false, $info['message'] ?? '获取商品失败', $info);
+            return self::setReturn(false, $info['message'] ?? 'Lấy sản phẩm thất bại', $info);
         }
         $result = $info['data'];
-        //可能存在下一页  但是api中没有分页参数 暂留
+        //Có thể có trang tiếp theo  nhưng API không có tham số phân trang, tạm giữ lại
 //        if (isset($info['hasNext']) && $info['hasNext']) {
 //            $data['page'] = $info['page'] + 1;
 //        }
         $result = self::$deal_action($result);
-        //过滤采集到的规格 删除其中的空值
+        //Lọc quy cách đã thu thập, xóa các giá trị trống trong đó
         if ($result['items']) {
             foreach ($result['items'] as $k => $item) {
                 if (isset($item['value'])) {
@@ -244,9 +244,9 @@ class Copy99api extends BaseCopyProduct
         if (!$result['items']) {
             $result['items'] = [
                 [
-                    'value' => '默认',
+                    'value' => 'Mặc định',
                     'detail' => [
-                        'value' => '默认',
+                        'value' => 'Mặc định',
                         'pic' => ''
                     ]
                 ]
@@ -263,7 +263,7 @@ class Copy99api extends BaseCopyProduct
     }
 
     /**
-     * 获取淘宝商品
+     * Lấy sản phẩm Taobao
      * @param $url
      * @param $data
      * @param string $method
@@ -280,7 +280,7 @@ class Copy99api extends BaseCopyProduct
     }
 
     /**
-     * 处理获取淘宝的商品
+     * Xử lý lấy sản phẩm Taobao
      * @param $data
      * @return mixed
      */
@@ -329,7 +329,7 @@ class Copy99api extends BaseCopyProduct
 
 
     /**
-     * 获取天猫商品
+     * Lấy sản phẩm Tmall
      * @param $url
      * @param $data
      * @param string $method
@@ -346,7 +346,7 @@ class Copy99api extends BaseCopyProduct
     }
 
     /**
-     * 处理天猫商品
+     * Xử lý sản phẩm Tmall
      * @param $data
      * @return mixed
      */
@@ -399,7 +399,7 @@ class Copy99api extends BaseCopyProduct
     }
 
     /**
-     * 获取京东商品
+     * Lấy sản phẩm JD
      * @param $url
      * @param $data
      * @param string $method
@@ -416,7 +416,7 @@ class Copy99api extends BaseCopyProduct
     }
 
     /**
-     * 处理京东商品
+     * Xử lý sản phẩm JD
      * @param $data
      * @return mixed
      */
@@ -496,7 +496,7 @@ class Copy99api extends BaseCopyProduct
     }
 
     /**
-     * 获取拼多多商品
+     * Lấy sản phẩm Pinduoduo
      * @param $url
      * @param $data
      * @param string $method
@@ -513,7 +513,7 @@ class Copy99api extends BaseCopyProduct
     }
 
     /**
-     * 处理拼多多商品
+     * Xử lý sản phẩm Pinduoduo
      * @param $data
      * @return mixed
      */
@@ -574,7 +574,7 @@ class Copy99api extends BaseCopyProduct
     }
 
     /**
-     * 获取苏宁商品
+     * Lấy sản phẩm Suning
      * @param $url
      * @param $data
      * @param string $method
@@ -639,7 +639,7 @@ class Copy99api extends BaseCopyProduct
     }
 
     /**
-     * 处理苏宁商品
+     * Xử lý sản phẩm Suning
      * @param $data
      * @return mixed
      */
@@ -678,7 +678,7 @@ class Copy99api extends BaseCopyProduct
     }
 
     /**
-     * 格式化规格
+     * Định dạng quy cách
      * @param $attr
      * @return array
      */
@@ -730,17 +730,17 @@ class Copy99api extends BaseCopyProduct
             $valueNew[$count]['brokerage_two'] = $sukValue[$suk]['brokerage_two'] ? floatval($sukValue[$suk]['brokerage_two']) : 0;
             $count++;
         }
-        $header[] = ['title' => '图片', 'slot' => 'pic', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '售价', 'slot' => 'price', 'align' => 'center', 'minWidth' => 95];
-        $header[] = ['title' => '成本价', 'slot' => 'cost', 'align' => 'center', 'minWidth' => 95];
-        $header[] = ['title' => '划线价', 'slot' => 'ot_price', 'align' => 'center', 'minWidth' => 95];
-        $header[] = ['title' => '会员价', 'slot' => 'vip_price', 'align' => 'center', 'minWidth' => 140];
-        $header[] = ['title' => '库存', 'slot' => 'stock', 'align' => 'center', 'minWidth' => 95];
-        $header[] = ['title' => '商品编码', 'slot' => 'bar_code', 'align' => 'center', 'minWidth' => 120];
-        $header[] = ['title' => '条形码', 'slot' => 'bar_code_number', 'align' => 'center', 'minWidth' => 120];
-        $header[] = ['title' => '重量(KG)', 'slot' => 'weight', 'align' => 'center', 'minWidth' => 95];
-        $header[] = ['title' => '体积(m³)', 'slot' => 'volume', 'align' => 'center', 'minWidth' => 95];
-        $header[] = ['title' => '操作', 'slot' => 'action', 'align' => 'center', 'minWidth' => 70];
+        $header[] = ['title' => 'Hình ảnh', 'slot' => 'pic', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Giá bán', 'slot' => 'price', 'align' => 'center', 'minWidth' => 95];
+        $header[] = ['title' => 'Giá vốn', 'slot' => 'cost', 'align' => 'center', 'minWidth' => 95];
+        $header[] = ['title' => 'Giá gốc', 'slot' => 'ot_price', 'align' => 'center', 'minWidth' => 95];
+        $header[] = ['title' => 'Giá thành viên', 'slot' => 'vip_price', 'align' => 'center', 'minWidth' => 140];
+        $header[] = ['title' => 'Tồn kho', 'slot' => 'stock', 'align' => 'center', 'minWidth' => 95];
+        $header[] = ['title' => 'Mã sản phẩm', 'slot' => 'bar_code', 'align' => 'center', 'minWidth' => 120];
+        $header[] = ['title' => 'Mã vạch', 'slot' => 'bar_code_number', 'align' => 'center', 'minWidth' => 120];
+        $header[] = ['title' => 'Trọng lượng (KG)', 'slot' => 'weight', 'align' => 'center', 'minWidth' => 95];
+        $header[] = ['title' => 'Thể tích (m³)', 'slot' => 'volume', 'align' => 'center', 'minWidth' => 95];
+        $header[] = ['title' => 'Thao tác', 'slot' => 'action', 'align' => 'center', 'minWidth' => 70];
         $info = ['attr' => $attr, 'value' => $valueNew, 'header' => $header];
         return $info;
     }

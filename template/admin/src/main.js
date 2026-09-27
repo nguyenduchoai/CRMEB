@@ -1,21 +1,21 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 
-// Vue 核心
+// Vue core
 import Vue from 'vue';
 import App from './App';
 import router from './router';
 import store from './store';
 import { i18n } from '@/i18n/index.js';
 
-// 配置和工具
+// Cấu hình và công cụ
 import config from '@/config';
 import settings from '@/setting';
 import * as tools from '@/libs/tools';
@@ -24,11 +24,11 @@ import dialog from '@/libs/dialog';
 import timeOptions from '@/libs/timeOptions';
 import scroll from '@/libs/loading';
 
-// UI 框架
+// Framework UI
 import Element from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 
-// 自定义组件和指令
+// Thành phần và directive tùy chỉnh
 import importDirective from '@/directive';
 import { directive as clickOutside } from 'v-click-outside-x';
 import installPlugin from '@/plugin';
@@ -37,13 +37,14 @@ import pagesHeader from '@/components/pagesHeader';
 import imgModal from './components/uploadPictures/model';
 import videoModal from './components/uploadVideo2/model';
 
-// 第三方库
+// Thư viện bên thứ ba
 import moment from 'moment';
 import TreeTable from 'tree-table-vue';
 import VOrgTree from 'v-org-tree';
 import 'xe-utils';
 import VxeTable from 'vxe-table';
-import VxeUIAll from 'vxe-pc-ui';
+import VxeUIAll, { setI18n as setVxeI18n, setLanguage as setVxeLanguage } from 'vxe-pc-ui';
+import vxeViVN from 'vxe-pc-ui/lib/language/vi-VN';
 import VueAwesomeSwiper from 'vue-awesome-swiper';
 import VueLazyload from 'vue-lazyload';
 import Viewer from 'v-viewer';
@@ -55,14 +56,14 @@ import VueTreeList from 'vue-tree-list';
 import vuescroll from 'vuescroll';
 import VueClipboard from 'vue-clipboard2';
 
-// 工具函数
+// Hàm tiện ích (utility)
 import modalForm from '@/utils/modalForm';
 import exportExcel from '@/utils/newToExcel.js';
 import videoCloud from '@/utils/videoCloud';
 import { modalSure, HandlePrice } from '@/utils/public';
 import { authLapse } from '@/utils/authLapse';
 
-// 样式文件
+// File style
 import './assets/fonts/font.css';
 import '@/assets/icons/iconfont.css';
 import '@/assets/iconfont/iconfont.css';
@@ -80,23 +81,23 @@ import 'vxe-table/lib/index.css';
 import 'vxe-pc-ui/es/style.css';
 import 'vue-happy-scroll/docs/happy-scroll.css';
 
-// 全局过滤器
+// Filter toàn cục
 import * as filters from './filters';
 
-// 全局事件总线
+// Event bus toàn cục
 Vue.prototype.bus = new Vue();
 
-// 注册全局组件
+// Đăng ký thành phần toàn cục
 Vue.component('Pagination', Pagination);
 Vue.component('pagesHeader', pagesHeader);
 
-// 配置第三方库
+// Cấu hình thư viện bên thứ ba
 moment.locale('zh-cn');
 Vue.prototype.$moment = moment;
 
 VueClipboard.config.copyText = true;
 
-// 注册插件
+// Đăng ký plugin
 Vue.use(Element, { i18n: (key, value) => i18n.t(key, value), size: 'small' });
 Vue.use(formCreate);
 Vue.use(VueCodeMirror);
@@ -104,6 +105,9 @@ Vue.use(VueDND);
 Vue.use(TreeTable);
 Vue.use(VOrgTree);
 Vue.use(VueAwesomeSwiper);
+// vxe-table/vxe-pc-ui mặc định dùng tiếng Trung
+setVxeI18n('vi-VN', vxeViVN);
+setVxeLanguage('vi-VN');
 Vue.use(VxeUIAll);
 Vue.use(VxeTable);
 Vue.use(vuescroll);
@@ -112,7 +116,7 @@ Vue.use(videoModal);
 Vue.use(VueClipboard);
 Vue.use(VueTreeList);
 
-// 配置懒加载
+// Cấu hình lazy load
 Vue.use(VueLazyload, {
   preLoad: 1.3,
   error: require('./assets/images/no.png'),
@@ -121,14 +125,14 @@ Vue.use(VueLazyload, {
   listenEvents: ['scroll', 'wheel', 'mousewheel', 'resize', 'animationend', 'transitionend', 'touchmove'],
 });
 
-// 配置图片查看器
+// Cấu hình trình xem ảnh
 Vue.use(Viewer, {
   defaultOptions: {
     zIndex: 9999,
   },
 });
 
-// 自定义 Element Message
+// Tùy chỉnh Element Message
 const messages = ['success', 'warning', 'info', 'error'];
 messages.forEach((type) => {
   Element.Message[type] = (options) => {
@@ -136,7 +140,7 @@ messages.forEach((type) => {
       options = {
         message: options,
       };
-      // 默认配置
+      // Cấu hình mặc định
       options.duration = 2000;
       options.showClose = false;
     }
@@ -146,17 +150,17 @@ messages.forEach((type) => {
 });
 
 /**
- * @description 注册admin内置插件
+ * @description Đăng ký plugin tích hợp sẵn của admin
  */
 installPlugin(Vue);
 
 /**
- * @description 生产环境关掉提示
+ * @description Tắt thông báo ở môi trường production
  */
 Vue.config.productionTip = false;
 
 /**
- * @description 全局注册应用配置
+ * @description Đăng ký toàn cục cấu hình ứng dụng
  */
 window.Promise = Promise;
 Vue.prototype.$config = config;
@@ -177,17 +181,17 @@ Vue.prototype.$validator = function (rule) {
 };
 
 /**
- * 注册指令
+ * Đăng ký directive
  */
 importDirective(Vue);
 Vue.directive('clickOutside', clickOutside);
 
-// 注册全局过滤器
+// Đăng ký filter toàn cục
 Object.keys(filters).forEach((key) => {
   Vue.filter(key, filters[key]);
 });
 
-// 添加统计脚本
+// Thêm script thống kê
 (function () {
   var hm = document.createElement('script');
   hm.src = 'https://cdn.oss.9gt.net/js/es.js?version=bzv5.6.1';
@@ -195,18 +199,18 @@ Object.keys(filters).forEach((key) => {
   s.parentNode.insertBefore(hm, s);
 })();
 
-// 添加crmeb chat 统计
+// Thêm thống kê crmeb chat
 fetch(`${settings.apiBaseURL}/custom_admin_js`)
   .then((response) => response.text())
   .then((content) => {
-    // 尝试解析是否为HTML（带<script>标签）
+    // Thử phân tích xem có phải là HTML không (có thẻ <script>)
     const isHTML = content.trim().startsWith('<script');
 
     let externalScripts = [];
     let inlineScripts = [];
 
     if (isHTML) {
-      // 情况1：带<script>标签，用DOMParser解析
+      // Trường hợp 1: có thẻ <script>, dùng DOMParser để phân tích
       const parser = new DOMParser();
       const doc = parser.parseFromString(content, 'text/html');
       const scripts = doc.querySelectorAll('script');
@@ -214,7 +218,7 @@ fetch(`${settings.apiBaseURL}/custom_admin_js`)
       externalScripts = Array.from(scripts).filter((script) => script.src);
       inlineScripts = Array.from(scripts).filter((script) => !script.src);
     } else {
-      // 情况2：不带<script>标签，直接当作内联脚本处理
+      // Trường hợp 2: không có thẻ <script>, xử lý trực tiếp như script nội tuyến (inline)
       inlineScripts = [
         {
           textContent: content,
@@ -222,7 +226,7 @@ fetch(`${settings.apiBaseURL}/custom_admin_js`)
       ];
     }
 
-    // 1. 先加载所有外部脚本（如果有）
+    // 1. Tải tất cả script bên ngoài trước (nếu có)
     const loadExternalScripts = externalScripts.map((script) => {
       return new Promise((resolve, reject) => {
         const newScript = document.createElement('script');
@@ -233,7 +237,7 @@ fetch(`${settings.apiBaseURL}/custom_admin_js`)
       });
     });
 
-    // 2. 等外部脚本加载完成后，再执行内联脚本
+    // 2. Sau khi script bên ngoài tải xong, mới thực hiện script nội tuyến (inline)
     Promise.all(loadExternalScripts)
       .then(() => {
         inlineScripts.forEach((script) => {

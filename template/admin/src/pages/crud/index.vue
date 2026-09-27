@@ -15,7 +15,7 @@
             <el-input
               v-if="item.type === 'input'"
               v-model="from[item.field]"
-              :placeholder="'请输入' + item.name"
+              :placeholder="'Vui lòng nhập' + item.name"
               class="form_content_width"
               @input="change($event)"
             />
@@ -28,14 +28,14 @@
               format="yyyy/MM/dd"
               type="daterange"
               value-format="yyyy/MM/dd"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              start-placeholder="Ngày bắt đầu"
+              end-placeholder="Ngày kết thúc"
               style="width: 250px"
             ></el-date-picker>
             <el-select
               v-else-if="item.type === 'select'"
               v-model="from[item.field]"
-              placeholder="请选择"
+              placeholder="Vui lòng chọn"
               clearable
               @change="searchs"
               class="form_content_width"
@@ -45,7 +45,7 @@
           </el-form-item>
           <!-- <template v-for="(item, index) in search">
             <el-form-item :label="item.name + ':'" label-for="name" v-if="item.type === 'input'" :key="index">
-              <el-input v-model="from[item.field]" :placeholder="'请输入' + item.name" class="form_content_width"/>
+              <el-input v-model="from[item.field]" :placeholder="'Vui lòng nhập' + item.name" class="form_content_width"/>
             </el-form-item>
             <el-form-item :label="item.name + ':'" v-else-if="item.type === 'date-picker'" :key="index">
               <el-date-picker
@@ -56,8 +56,8 @@
                   format="yyyy/MM/dd"
                   type="daterange"
                   value-format="yyyy/MM/dd"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
+                  start-placeholder="Ngày bắt đầu"
+                  end-placeholder="Ngày kết thúc"
                   style="width: 250px"
               ></el-date-picker>
             </el-form-item>
@@ -69,7 +69,7 @@
             >
               <el-select
                   v-model="from[item.field]"
-                  placeholder="请选择"
+                  placeholder="Vui lòng chọn"
                   clearable
                   @change="searchs"
                   class="form_content_width"
@@ -79,7 +79,7 @@
             </el-form-item>
           </template> -->
           <el-form-item>
-            <el-button type="primary" v-db-click @click="searchs">查询</el-button>
+            <el-button type="primary" v-db-click @click="searchs">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -87,7 +87,7 @@
     <el-card shadow="never" class="ivu-mt" :class="search.length ? 'mt16' : ''">
       <el-row>
         <el-col v-bind="grid">
-          <el-button type="primary" v-db-click @click="add">添加</el-button>
+          <el-button type="primary" v-db-click @click="add">Thêm</el-button>
         </el-col>
       </el-row>
       <el-table
@@ -95,8 +95,8 @@
         ref="table"
         class="mt14"
         v-loading="loading"
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column :label="item.title" :min-width="item.minWidth" v-for="(item, index) in columns" :key="index">
           <template slot-scope="scope">
@@ -119,11 +119,11 @@
               <span>{{ scope.row[item.slot][0] }}--{{ scope.row[item.slot][1] }}</span>
             </template>
             <template v-else-if="item.slot === 'action'">
-              <a v-db-click @click="show(scope.row)">详情</a>
+              <a v-db-click @click="show(scope.row)">Chi tiết</a>
               <el-divider direction="vertical" />
-              <a v-db-click @click="edit(scope.row)">修改</a>
+              <a v-db-click @click="edit(scope.row)">Sửa</a>
               <el-divider direction="vertical"></el-divider>
-              <a v-db-click @click="del(scope.row, '删除', scope.$index)">删除</a>
+              <a v-db-click @click="del(scope.row, 'Xóa', scope.$index)">Xóa</a>
             </template>
             <template v-else-if="item.from_type === 'switches'">
               <el-switch
@@ -144,7 +144,7 @@
       </div>
     </el-card>
 
-    <el-dialog title="查看详情" :visible.sync="dialogTableVisible" v-if="dialogTableVisible">
+    <el-dialog title="Xem chi tiết" :visible.sync="dialogTableVisible" v-if="dialogTableVisible">
       <el-descriptions :title="readFields.name">
         <el-descriptions-item :label="item.comment" v-for="(item, index) in readFields.all" :key="index">
           <div v-if="item.from_type == 'frameImageOne'">
@@ -242,7 +242,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     searchs() {
       this.from.page = 1;
       this.getList();
@@ -260,7 +260,7 @@ export default {
         });
         this.search = res.data.search;
         res.data.columns.push({
-          title: '操作',
+          title: 'Thao tác',
           slot: 'action',
           fixed: 'right',
           width: 100,
@@ -326,12 +326,12 @@ export default {
         this.getList();
       });
     },
-    // 添加
+    // Thêm
     add() {
       let url = this.methodApi.create;
       this.$modalForm(getCreateApi(url)).then(() => this.getList());
     },
-    //列表
+    //Danh sách
     getList() {
       this.loading = true;
       let url = this.methodApi.index;
@@ -347,12 +347,12 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 修改
+    // Sửa
     edit(row) {
       let url = this.methodApi.edit.replace('<id>', row[this.curdKey]);
       this.$modalForm(getEditApi(url)).then(() => this.getList());
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let url = this.methodApi.delete.replace('<id>', row[this.curdKey]);
       let delfromData = {

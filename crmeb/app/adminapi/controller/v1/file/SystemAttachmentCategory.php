@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\system\attachment\SystemAttachmentCategoryServices;
 use think\facade\App;
 
 /**
- * 图片分类管理类
+ * Lớp quản lý danh mục ảnh
  * Class SystemAttachmentCategory
  * @package app\adminapi\controller\v1\file
  */
@@ -37,7 +37,7 @@ class SystemAttachmentCategory extends AuthController
     }
 
     /**
-     * 显示资源列表
+     * Hiển thị danh sách resource
      * @return \think\Response
      * @throws \ReflectionException
      * @throws \think\db\exception\DataNotFoundException
@@ -57,7 +57,7 @@ class SystemAttachmentCategory extends AuthController
     }
 
     /**
-     * 新增表单
+     * Form thêm mới
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
@@ -71,7 +71,7 @@ class SystemAttachmentCategory extends AuthController
     }
 
     /**
-     * 保存新增
+     * Lưu mục thêm mới
      * @return mixed
      */
     public function save()
@@ -90,7 +90,7 @@ class SystemAttachmentCategory extends AuthController
     }
 
     /**
-     * 编辑表单
+     * Form sửa
      * @param $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -101,7 +101,7 @@ class SystemAttachmentCategory extends AuthController
     }
 
     /**
-     * 保存更新的资源
+     * Lưu resource đã cập nhật
      * @param $id
      * @return mixed
      */
@@ -116,7 +116,7 @@ class SystemAttachmentCategory extends AuthController
             return app('json')->fail(400100);
         }
         if ($data['pid'] == $id) {
-            return app('json')->fail('上级分类不能是自己');
+            return app('json')->fail('Danh mục cha không thể là chính nó');
         }
         $info = $this->service->get($id);
         $count = $this->service->count(['pid' => $id]);
@@ -126,7 +126,7 @@ class SystemAttachmentCategory extends AuthController
     }
 
     /**
-     * 删除指定资源
+     * Xóa resource được chỉ định
      * @param int $id
      * @return \think\Response
      */

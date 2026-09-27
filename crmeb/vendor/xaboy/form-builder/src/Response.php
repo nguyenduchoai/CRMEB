@@ -74,7 +74,7 @@ abstract class Response
      * @param array $data
      * @return HttpResponse
      */
-    public static function uploadSucc($filePath, $msg = '上传成功', array $data = [])
+    public static function uploadSucc($filePath, $msg = 'Tải lên thành công', array $data = [])
     {
         $data['filePath'] = $filePath;
         return self::succ($msg, $data);
@@ -87,7 +87,7 @@ abstract class Response
      * @param null|array $data
      * @return HttpResponse
      */
-    public static function uploadFail($msg = '上传失败', $data = null)
+    public static function uploadFail($msg = 'Tải lên thất bại', $data = null)
     {
         return self::fail($msg, $data);
     }
@@ -100,7 +100,7 @@ abstract class Response
      * @param array $data
      * @return HttpResponse
      */
-    public static function uploadSuccess($filePath, $msg = '上传成功', array $data = [])
+    public static function uploadSuccess($filePath, $msg = 'Tải lên thành công', array $data = [])
     {
         return self::uploadSucc($filePath, $msg, $data);
     }

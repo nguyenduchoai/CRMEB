@@ -1,5 +1,5 @@
 <template>
-	<!-- 新闻列表 -->
+	<!-- Danh sách tin tức -->
 	<view v-show="!isSortType" :style="[articleWrapperStyle]">
 		<view class="articleList" :class="{
 			large: dataConfig.styleConfig.tabVal == 0,

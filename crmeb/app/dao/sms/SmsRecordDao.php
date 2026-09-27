@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,14 +15,14 @@ use app\dao\BaseDao;
 use app\model\sms\SmsRecord;
 
 /**
- * 短信发送记录
+ * Lịch sử gửi SMS
  * Class SmsRecordDao
  * @package app\dao\sms
  */
 class SmsRecordDao extends BaseDao
 {
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     public function setModel(): string
@@ -31,7 +31,7 @@ class SmsRecordDao extends BaseDao
     }
 
     /**
-     * 短信发送记录
+     * Lịch sử gửi SMS
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -46,7 +46,7 @@ class SmsRecordDao extends BaseDao
     }
 
     /**
-     * 获取10分钟前20条无状态的短信记录
+     * Lấy 20 bản ghi SMS không có trạng thái từ 10 phút trước
      * @return array
      */
     public function getCodeNull()

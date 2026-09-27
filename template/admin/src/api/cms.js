@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -11,8 +11,8 @@
 import request from '@/libs/request';
 
 /**
- * @description 文章管理--列表
- * @param {Object} param data {Object} 传值参数
+ * @description Quản lý bài viết -- Danh sách
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function cmsListApi(data) {
   return request({
@@ -23,8 +23,8 @@ export function cmsListApi(data) {
 }
 
 /**
- * @description 文章管理--新增编辑
- * @param {Object} param data {Object} 传值参数
+ * @description Quản lý bài viết -- Thêm/sửa
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function cmsAddApi(data) {
   return request({
@@ -35,8 +35,8 @@ export function cmsAddApi(data) {
 }
 
 /**
- * @description 文章管理--文章详情
- * @param {Number} param id {Number} 文章id
+ * @description Quản lý bài viết -- Chi tiết bài viết
+ * @param {Number} param id {Number} ID bài viết
  */
 export function createApi(id) {
   return request({
@@ -46,7 +46,7 @@ export function createApi(id) {
 }
 
 /**
- * @description 文章分类--新增表单
+ * @description Danh mục bài viết -- Form thêm mới
  */
 export function categoryAddApi() {
   return request({
@@ -56,8 +56,8 @@ export function categoryAddApi() {
 }
 
 /**
- * @description 文章分类--列表
- * @param {Object} param params {Object} 传值
+ * @description Danh mục bài viết -- Danh sách
+ * @param {Object} param params {Object} Truyền giá trị
  */
 export function categoryListApi(params) {
   return request({
@@ -67,8 +67,8 @@ export function categoryListApi(params) {
   });
 }
 /**
- * @description 文章分类--新版列表
- * @param {Object} param params {Object} 传值
+ * @description Danh mục bài viết -- Danh sách bản mới
+ * @param {Object} param params {Object} Truyền giá trị
  */
 export function categoryTreeListApi() {
   return request({
@@ -78,8 +78,8 @@ export function categoryTreeListApi() {
 }
 
 /**
- * @description 文章分类--编辑表单
- * @param {Number} param id {Number} 文章id
+ * @description Danh mục bài viết -- Form sửa
+ * @param {Number} param id {Number} ID bài viết
  */
 export function categoryEditApi(id) {
   return request({
@@ -89,8 +89,8 @@ export function categoryEditApi(id) {
 }
 
 /**
- * @description 文章分类--修改状态
- * @param {Object} param data {Object} 传值
+ * @description Danh mục bài viết -- Đổi trạng thái
+ * @param {Object} param data {Object} Truyền giá trị
  */
 export function statusApi(data) {
   return request({
@@ -100,9 +100,9 @@ export function statusApi(data) {
 }
 
 /**
- * @description 文章分类--关联商品
- * @param {Number} param id {Number} 文章id
- * @param {Object} param data {Object} 传值
+ * @description Danh mục bài viết -- Liên kết sản phẩm
+ * @param {Number} param id {Number} ID bài viết
+ * @param {Object} param data {Object} Truyền giá trị
  */
 export function relationApi(data, id) {
   return request({

@@ -17,7 +17,7 @@
 					<text :style="{ fontSize: px(item.fontsize) }">{{ item.name }}</text>
 				</view>
 			</view>
-			<!--actions长度设置为0，可直接传按钮进来-->
+			<!--Đặt độ dài actions bằng 0 thì có thể truyền trực tiếp button vào-->
 			<view class="tui-swipeout-button-right-group" @touchend.stop="loop" @tap="handlerParentButton"
 				v-if="actions.length === 0" :style="{ width: operateWidth + 'px', right: '-' + operateWidth + 'px' }">
 				<slot name="button"></slot>
@@ -35,11 +35,11 @@
 		emits: ['click'],
 		mixins: [colors],
 		props: {
-			// name: '删除',
+			// name: 'Xóa',
 			// color: '#fff',
-			// fontsize: 32,//单位rpx
-			// width: 80, //单位px
-			// icon: 'like.png',//此处为图片地址
+			// fontsize: 32,//đơn vị rpx
+			// width: 80, //đơn vị px
+			// icon: 'like.png',//đây là địa chỉ hình ảnh
 			// background: '#ed3f14'
 			actions: {
 				type: Array,
@@ -47,12 +47,12 @@
 					return [];
 				}
 			},
-			//点击按钮时是否自动关闭
+			//Khi click button có tự động đóng hay không
 			closable: {
 				type: Boolean,
 				default: true
 			},
-			//设为false，可以滑动多行不关闭菜单
+			//Đặt false thì có thể vuốt nhiều dòng mà không đóng menu
 			showMask: {
 				type: Boolean,
 				default: true
@@ -67,17 +67,17 @@
 					return {};
 				}
 			},
-			//禁止滑动
+			//Cấm vuốt
 			forbid: {
 				type: Boolean,
 				default: false
 			},
-			//手动开关
+			//Công tắc thủ công
 			open: {
 				type: Boolean,
 				default: false
 			},
-			//背景色
+			//Màu nền
 			backgroundColor: {
 				type: String,
 				default: '#fff'
@@ -98,7 +98,7 @@
 					pageX: 0,
 					pageY: 0
 				},
-				//限制滑动距离
+				//Giới hạn khoảng cách vuốt
 				limitMove: 0,
 				//move position
 				position: {
@@ -117,7 +117,7 @@
 				return Math.abs(x1 - x2) >= Math.abs(y1 - y2) ? (x1 - x2 > 0 ? 'Left' : 'Right') : y1 - y2 > 0 ? 'Up' :
 					'Down';
 			},
-			//阻止事件冒泡
+			//Chặn event bubble (sự kiện nổi bọt)
 			loop() {},
 			updateButtonSize() {
 				const actions = this.actions;
@@ -228,7 +228,7 @@
 				};
 				this.isShowBtn = false;
 			},
-			//控制自定义按钮菜单
+			//Điều khiển menu button tùy chỉnh
 			handlerParentButton(event) {
 				if (this.closable) {
 					this.closeButtonGroup();

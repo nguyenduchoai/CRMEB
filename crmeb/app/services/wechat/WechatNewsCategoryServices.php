@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,10 +20,10 @@ use app\services\article\ArticleServices;
  *
  * Class UserWechatuserServices
  * @package app\services\user
- * @method delete($id, ?string $key = null)  删除
- * @method update($id, array $data, ?string $key = null) 更新数据
- * @method save(array $data) 插入数据
- * @method get(int $id, ?array $field = []) 获取一条数据
+ * @method delete($id, ?string $key = null)  Xóa
+ * @method update($id, array $data, ?string $key = null) Cập nhật dữ liệu
+ * @method save(array $data) Thêm dữ liệu
+ * @method get(int $id, ?array $field = []) Lấy một dòng dữ liệu
  */
 class WechatNewsCategoryServices extends BaseServices
 {
@@ -38,7 +38,7 @@ class WechatNewsCategoryServices extends BaseServices
     }
 
     /**
-     * 获取配置分类
+     * Lấy danh mục cấu hình
      * @param array $where
      * @return array
      */
@@ -60,7 +60,7 @@ class WechatNewsCategoryServices extends BaseServices
     }
 
     /**
-     * 获取一条图文
+     * Lấy một bài viết ảnh-văn
      * @param int $id
      * @return array|false|\PDOStatement|string|\think\Model
      */
@@ -81,7 +81,7 @@ class WechatNewsCategoryServices extends BaseServices
     }
 
     /**
-     * 发送客服消息选择文章列表
+     * Gửi tin nhắn CSKH, danh sách bài viết để chọn
      * @param $where
      * @return array
      */
@@ -98,7 +98,7 @@ class WechatNewsCategoryServices extends BaseServices
         return ['list' => $list];
     }
 
-    /**整理图文资源
+    /**Xử lý tài nguyên bài viết ảnh-văn
      * @param $wechatNews
      * @return bool
      */
@@ -109,7 +109,7 @@ class WechatNewsCategoryServices extends BaseServices
         return $services->tidyNews($wechatNews);
     }
 
-    /**发送的用户
+    /**Người dùng được gửi
      * @param $user_ids
      * @param $column
      * @param $key
@@ -123,7 +123,7 @@ class WechatNewsCategoryServices extends BaseServices
     }
 
     /**
-     * 获取文章id
+     * Lấy ID bài viết
      * @return array
      */
     public function getNewIds()

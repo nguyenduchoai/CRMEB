@@ -277,7 +277,7 @@ export default {
         }
       }
     },
-    // 获取组件参数
+    // Lấy tham số thành phần (component)
     getConfig(data) {},
     handleSubmit(name) {
       let obj = {};

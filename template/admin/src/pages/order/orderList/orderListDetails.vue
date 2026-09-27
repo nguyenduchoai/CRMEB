@@ -30,11 +30,11 @@ export default {
     changeGetTabs() {
       this.$parent.getTabs();
     },
-    // 列表数据
+    // Dữ liệu danh sách
     getData(res) {
       this.$refs.table.getList(res);
     },
-    // 模块数据
+    // Dữ liệu mô-đun
     getCards(list) {
       this.cardLists = list;
     },

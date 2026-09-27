@@ -4,7 +4,7 @@
       <el-col :span="4" class="left-wrapper">
         <div class="tree_tit" v-db-click @click="addSort">
           <i class="el-icon-circle-plus"></i>
-          添加分组
+          Thêm nhóm
         </div>
         <div class="tree">
           <el-tree
@@ -30,8 +30,8 @@
                   <i class="el-icon-more el-icon--right"></i>
                   <template slot="dropdown">
                     <el-dropdown-menu>
-                      <el-dropdown-item command="1">编辑分组</el-dropdown-item>
-                      <el-dropdown-item v-if="data.id" command="2">删除分组</el-dropdown-item>
+                      <el-dropdown-item command="1">Sửa nhóm</el-dropdown-item>
+                      <el-dropdown-item v-if="data.id" command="2">Xóa nhóm</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
@@ -45,14 +45,14 @@
           <el-row class="mb14">
             <el-col :span="18">
               <el-button v-auth="['marketing-channel_code-create']" type="primary" v-db-click @click="add"
-                >新建渠道码</el-button
+                >Tạo mã kênh</el-button
               >
-              <!-- <el-button v-auth="['marketing-channel_code-create']" type="success" v-db-click @click="addSort">添加分组</el-button> -->
+              <!-- <el-button v-auth="['marketing-channel_code-create']" type="success" v-db-click @click="addSort">Thêm nhóm</el-button> -->
             </el-col>
             <el-col :span="6">
               <div class="flex">
-                <el-input class="mr10" v-model="tableFrom.name" search placeholder="请输入渠道码名称"> </el-input>
-                <el-button type="primary" v-db-click @click="userSearchs">搜索</el-button>
+                <el-input class="mr10" v-model="tableFrom.name" search placeholder="Vui lòng nhập tên mã kênh"> </el-input>
+                <el-button type="primary" v-db-click @click="userSearchs">Tìm kiếm</el-button>
               </div>
             </el-col>
           </el-row>
@@ -60,57 +60,57 @@
             :data="tableList"
             v-loading="loading"
             highlight-current-row
-            no-userFrom-text="暂无数据"
-            no-filtered-userFrom-text="暂无筛选结果"
+            no-userFrom-text="Chưa có dữ liệu"
+            no-filtered-userFrom-text="Không có kết quả phù hợp"
           >
-            <el-table-column label="渠道码" width="80">
+            <el-table-column label="Mã kênh" width="80">
               <template slot-scope="scope">
                 <div class="tabBox_img" v-viewer>
                   <img v-lazy="scope.row.image" />
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="渠道码名称" min-width="80">
+            <el-table-column label="Tên mã kênh" min-width="80">
               <template slot-scope="scope">
                 <span>{{ scope.row.name }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="总关注数" min-width="80">
+            <el-table-column label="Tổng lượt theo dõi" min-width="80">
               <template slot-scope="scope">
                 <span>{{ scope.row.follow }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="昨日新增关注" min-width="80">
+            <el-table-column label="Lượt theo dõi mới hôm qua" min-width="80">
               <template slot-scope="scope">
                 <span>{{ scope.row.y_follow }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="用户标签" min-width="80">
+            <el-table-column label="Nhãn người dùng" min-width="80">
               <template slot-scope="scope">
                 <el-tag class="label-name" v-for="(item, index) in scope.row.label_name" :key="index">{{
                   item
                 }}</el-tag>
               </template>
             </el-table-column>
-            <el-table-column label="时间" min-width="80">
+            <el-table-column label="Thời gian" min-width="80">
               <template slot-scope="scope">
-                <span v-if="scope.row.stop === 0"> 永久 </span>
+                <span v-if="scope.row.stop === 0"> Vĩnh viễn </span>
                 <span v-if="scope.row.stop === 1">
                   <div>{{ scope.row.add_time }}</div>
                   <div>-</div>
                   <div>{{ scope.row.end_time }}</div>
                 </span>
-                <span v-if="scope.row.stop === -1">已过期</span>
+                <span v-if="scope.row.stop === -1">Đã hết hạn</span>
               </template>
             </el-table-column>
-            <el-table-column label="关联推广员" min-width="80">
+            <el-table-column label="CTV liên kết" min-width="80">
               <template slot-scope="scope">
                 <div class="tabBox_img" v-viewer>
                   <img v-lazy="scope.row.avatar" />
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="状态" min-width="80">
+            <el-table-column label="Trạng thái" min-width="80">
               <template slot-scope="scope">
                 <el-switch
                   class="defineSwitch"
@@ -121,24 +121,24 @@
                   :disabled="scope.row.lottery_status == 2 ? true : false"
                   @change="onchangeIsShow(scope.row)"
                   size="large"
-                  active-text="开启"
-                  inactive-text="关闭"
+                  active-text="Bật"
+                  inactive-text="Tắt"
                 >
                 </el-switch>
               </template>
             </el-table-column>
-            <el-table-column label="操作" fixed="right" width="170">
+            <el-table-column label="Thao tác" fixed="right" width="170">
               <template slot-scope="scope">
-                <a v-db-click @click="edit(scope.row)">编辑</a>
+                <a v-db-click @click="edit(scope.row)">Sửa</a>
                 <el-divider direction="vertical"></el-divider>
-                <a v-db-click @click="del(scope.row, '删除二维码', scope.$index)">删除</a>
+                <a v-db-click @click="del(scope.row, 'Xóa mã QR', scope.$index)">Xóa</a>
                 <el-divider direction="vertical"></el-divider>
                 <el-dropdown size="small" @command="changeMenu(scope.row, $event)" :transfer="true">
-                  <span class="el-dropdown-link">更多<i class="el-icon-arrow-down el-icon--right"></i> </span>
+                  <span class="el-dropdown-link">Xem thêm<i class="el-icon-arrow-down el-icon--right"></i> </span>
                   <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="1">下载</el-dropdown-item>
-                    <el-dropdown-item command="2">统计</el-dropdown-item>
-                    <el-dropdown-item command="3">用户列表</el-dropdown-item>
+                    <el-dropdown-item command="1">Tải xuống</el-dropdown-item>
+                    <el-dropdown-item command="2">Thống kê</el-dropdown-item>
+                    <el-dropdown-item command="3">Danh sách người dùng</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
               </template>
@@ -156,21 +156,21 @@
         </el-card>
       </el-col>
     </el-row>
-    <el-dialog :visible.sync="modals" title="渠道码用户列表" :close-on-click-modal="false" width="900px">
-      <el-table ref="selection" :data="tabList" empty-text="暂无数据" highlight-current-row max-height="400">
+    <el-dialog :visible.sync="modals" title="Danh sách người dùng mã kênh" :close-on-click-modal="false" width="900px">
+      <el-table ref="selection" :data="tabList" empty-text="Chưa có dữ liệu" highlight-current-row max-height="400">
         <el-table-column label="UID" min-width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.uid }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="用户头像" min-width="120">
+        <el-table-column label="Ảnh đại diện người dùng" min-width="120">
           <template slot-scope="scope">
             <div class="tabBox_img" v-viewer>
               <img v-lazy="scope.row.avatar" />
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="用户昵称" min-width="120">
+        <el-table-column label="Biệt danh người dùng" min-width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.nickname }}</span>
           </template>
@@ -205,8 +205,8 @@ export default {
   filters: {
     typeFilter(status) {
       const statusMap = {
-        wechat: '微信用户',
-        routine: '小程序用户',
+        wechat: 'Người dùng WeChat',
+        routine: 'Người dùng Mini Program',
       };
       return statusMap[status];
     },
@@ -305,10 +305,10 @@ export default {
       }
     },
     downLoadCode(url) {
-      if (!url) return this.$message.warning('暂无二维码');
+      if (!url) return this.$message.warning('Chưa có mã QR');
       var image = new Image();
       image.src = url;
-      // 解决跨域 Canvas 污染问题
+      // Giải quyết vấn đề Canvas bị nhiễm (tainted) do cross-origin
       image.setAttribute('crossOrigin', 'anonymous');
       image.onload = function () {
         var canvas = document.createElement('canvas');
@@ -317,15 +317,15 @@ export default {
         var context = canvas.getContext('2d');
         context.drawImage(image, 0, 0, image.width, image.height);
 
-        var url = canvas.toDataURL(); //得到图片的base64编码数据
-        var a = document.createElement('a'); // 生成一个a元素
-        var event = new MouseEvent('click'); // 创建一个单击事件
-        a.download = name || 'photo'; // 设置图片名称
-        a.href = url; // 将生成的URL设置为a.href属性
-        a.dispatchEvent(event); // 触发a的单击事件
+        var url = canvas.toDataURL(); //Lấy dữ liệu mã hóa base64 của ảnh
+        var a = document.createElement('a'); // Tạo một phần tử a
+        var event = new MouseEvent('click'); // Tạo một sự kiện click
+        a.download = name || 'photo'; // Đặt tên ảnh
+        a.href = url; // Đặt URL đã tạo vào thuộc tính a.href
+        a.dispatchEvent(event); // Kích hoạt sự kiện click của a
       };
     },
-    // 获取渠道码用户列表
+    // Lấy danh sách người dùng theo mã kênh
     getUserList() {
       getUserList(this.userData)
         .then(async (res) => {
@@ -345,12 +345,12 @@ export default {
         });
     },
 
-    // 获取分组
+    // Lấy nhóm
     getUserLabelAll(key) {
       wechatQrcodeTree().then((res) => {
         let data = res.data.data;
         let obj = {
-          cate_name: '全部',
+          cate_name: 'Tất cả',
           id: '',
         };
         data.unshift(obj);
@@ -365,11 +365,11 @@ export default {
         this.labelSort = data;
       });
     },
-    // 添加分类
+    // Thêm danh mục
     addSort() {
       this.$modalForm(wechatQrcodeCreate(0)).then(() => this.getUserLabelAll());
     },
-    //编辑标签
+    //Sửa nhãn
     labelEdit(item) {
       this.$modalForm(wechatQrcodeCreate(item.id)).then(() => this.getUserLabelAll(1));
     },
@@ -395,7 +395,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 显示标签小菜单
+    // Hiển thị menu nhỏ nhãn
     showMenu(item) {
       this.labelSort.forEach((el) => {
         if (el.id == item.id) {
@@ -423,13 +423,13 @@ export default {
         nickname: '',
       };
     },
-    // 编辑
+    // Sửa
     edit(row) {
       this.$router.push({
         path: this.$routeProStr + '/marketing/channel_code/create?id=' + row.id,
       });
     },
-    // 添加
+    // Thêm
     add() {
       this.$router.push({
         path: this.$routeProStr + '/marketing/channel_code/create',
@@ -453,12 +453,12 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 搜索
+    // Tìm kiếm
     userSearchs() {
       this.formValidate.page = 1;
       this.getList();
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -476,7 +476,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       wechatQrcodeList(this.tableFrom)
@@ -491,7 +491,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 修改是否显示
+    // Sửa có hiển thị hay không
     onchangeIsShow(row) {
       let data = {
         id: row.id,
@@ -505,12 +505,12 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 点击菜单
+    // Bấm vào menu
     clickMenu(data, name) {
       if (name == 1) {
         this.labelEdit(data);
       } else if (name == 2) {
-        this.deleteSort(data, '删除分类');
+        this.deleteSort(data, 'Xóa danh mục');
       }
     },
   },

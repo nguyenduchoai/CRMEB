@@ -7,19 +7,19 @@
 						<img :src="sginTip" alt="" srcset="" />
 					</view>
 					<navigator class="right acea-row row-middle" hover-class="none" url="/pages/users/user_sgin_list/index">
-						<view>{{ $t(`明细`) }}</view>
+						<view>{{ $t(`Chi tiết`) }}</view>
 					</navigator>
 				</view>
 			</view>
 			<view class="wrapper">
 				<view class="sgin-num">
 					<view class="text">
-						<text>已连续签到</text>
+						<text>Đã điểm danh liên tiếp</text>
 						<text class="num">{{ continuousSignDays }}</text>
-						<text>天</text>
+						<text>ngày</text>
 					</view>
 					<view class="tip" v-if="signRemindSwitch == 1">
-						<text class="mr16">签到提醒</text>
+						<text class="mr16">Nhắc nhở điểm danh</text>
 						<switch :checked="remindStatus" color="#FFCC33" @change="changeRemind" />
 					</view>
 				</view>
@@ -52,28 +52,28 @@
 						</view>
 					</template>
 				</view>
-				<button class="but bg-color on" v-if="checkSign">{{ $t(`今日已签到，明日再来吧`) }}</button>
+				<button class="but bg-color on" v-if="checkSign">{{ $t(`Hôm nay bạn đã điểm danh, ngày mai quay lại nhé`) }}</button>
 				<form @submit="goSign" v-else>
-					<button class="but bg-color" formType="submit">{{ $t(`立即签到`) }}</button>
+					<button class="but bg-color" formType="submit">{{ $t(`Điểm danh ngay`) }}</button>
 				</form>
 				<view class="tip" v-if="nextContinuousDays > 0">
 					<img :src="`${imgHost}/statics/images/sgin_icon_4.png`" alt="" />
-					再连续签到{{ nextContinuousDays }}天，可额外获得惊喜礼包
+					Điểm danh liên tiếp thêm {{ nextContinuousDays }} ngày để nhận thêm gói quà bất ngờ
 				</view>
 				<view class="lock"></view>
 			</view>
 			<view class="wrapper wrapper2">
-				<view class="tip">{{ $t(`已累计签到`) }}</view>
+				<view class="tip">{{ $t(`Đã điểm danh tổng cộng`) }}</view>
 				<view class="list2 acea-row row-center row-bottom">
 					<view class="item">{{ signCount[0] || 0 }}</view>
 					<view class="item">{{ signCount[1] || 0 }}</view>
 					<view class="item">{{ signCount[2] || 0 }}</view>
 					<view class="item">{{ signCount[3] || 0 }}</view>
-					<view class="data">{{ $t(`天`) }}</view>
+					<view class="data">{{ $t(`ngày`) }}</view>
 				</view>
 				<view class="tip2" v-if="nextCumulativeDays > 0">
 					<img :src="`${imgHost}/statics/images/sgin_icon_4.png`" alt="" />
-					{{ $t(`再累计签到`) }}{{ nextCumulativeDays }}{{ $t(`天，可额外获得惊喜礼包`) }}
+					{{ $t(`Điểm danh tích lũy thêm`) }}{{ nextCumulativeDays }}{{ $t(`ngày để nhận thêm gói quà bất ngờ`) }}
 				</view>
 				<view class="list3" v-if="signList.length">
 					<view class="item acea-row" v-for="(item, index) in signList" :key="index">
@@ -84,7 +84,7 @@
 						<view class="num">+{{ item.number }}</view>
 					</view>
 					<view class="loading" @click="goSignList" v-if="signList.length >= 8">
-						{{ $t(`点击加载更多`) }}
+						{{ $t(`Nhấn để tải thêm`) }}
 						<text class="iconfont icon-xiangyou"></text>
 					</view>
 				</view>
@@ -95,9 +95,9 @@
 					<view class="signHeight">
 						<image src="../static/signH.png"></image>
 					</view>
-					<view class="state">{{ $t(`签到成功`) }}</view>
-					<view class="integral">{{ $t(`获得`) }}{{ integral }}{{ $t(`积分`) }}</view>
-					<view class="signTipBnt" @click="close">{{ $t(`好的`) }}</view>
+					<view class="state">{{ $t(`Điểm danh thành công`) }}</view>
+					<view class="integral">{{ $t(`nhận được`) }}{{ integral }}{{ $t(`Điểm thưởng`) }}</view>
+					<view class="signTipBnt" @click="close">{{ $t(`OK`) }}</view>
 				</view>
 			</view>
 			<view class="mask" @touchmove.stop.prevent="false" :hidden="active == false"></view>
@@ -148,21 +148,21 @@
 				signSystemList: [],
 				signList: [],
 				integral: 0,
-				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false, //是否隐藏授权
+				isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+				isShowAuth: false, //Có ẩn ủy quyền hay không
 				sign_index: 0,
 				picUrl: [],
 				imgHost: HTTP_REQUEST_URL,
 				sginBg: '',
 				sginTip: '',
-				signMode: 0, // 0月签到 1周签到
+				signMode: 0, // 0 điểm danh theo tháng 1 điểm danh theo tuần
 				nextContinuousDays: 0,
 				nextCumulativeDays: 0,
 				continuousSignDays: 0,
 				signRemindSwitch: 0,
 				checkSign: 0,
 				remindStatus: false,
-				weekArr: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+				weekArr: ['Thứ 2', 'Thứ 3', 'Thứ 4', 'Thứ 5', 'Thứ 6', 'Thứ 7', 'Chủ nhật']
 			};
 		},
 		computed: mapGetters(['isLogin']),
@@ -190,14 +190,14 @@
 		},
 		methods: {
 			/**
-			 * 授权回调
+			 * Callback ủy quyền
 			 */
 			onLoadFun: function() {
 				this.getUserInfo();
 				this.getSignSysteam();
 				this.getSignList();
 			},
-			// 授权关闭
+			// Đóng ủy quyền
 			authColse: function(e) {
 				this.isShowAuth = e;
 			},
@@ -207,20 +207,20 @@
 					this.sginTip = `${this.imgHost}/statics/images/sgin_tip_${res.data.status}.png`;
 					let theme = ['#1db0fc', '#42CA4D', '#e93323', '#ff448f', '#FE5C2D'];
 					uni.setNavigationBarColor({
-						frontColor: '#ffffff', // 必写项
-						backgroundColor: theme[res.data.status - 1] // 必写项
+						frontColor: '#ffffff', // Trường bắt buộc
+						backgroundColor: theme[res.data.status - 1] // Trường bắt buộc
 					});
 				});
 			},
 			/**
-			 * 获取签到配置
+			 * Lấy cấu hình điểm danh
 			 */
 			getSignSysteam: function() {
 				let that = this;
 				getSignConfig().then((res) => {
 					if (!res.data.signStatus) {
 						return that.$util.Tips({
-							title: that.$t(`签到功能已关闭`)
+							title: that.$t(`Tính năng điểm danh đã tắt`)
 						}, {
 							tab: 3
 						});
@@ -265,14 +265,14 @@
 				return src;
 			},
 			/**
-			 * 去签到记录页面
+			 * Đến trang lịch sử điểm danh
 			 *
 			 */
 			goSignList: function() {
 				return this.$util.Tips('/pages/users/user_sgin_list/index');
 			},
 			/**
-			 * 获取用户信息
+			 * Lấy thông tin người dùng
 			 */
 			getUserInfo: function() {
 				let that = this;
@@ -288,7 +288,7 @@
 			},
 
 			/**
-			 * 获取签到列表
+			 * Lấy danh sách điểm danh
 			 *
 			 */
 			getSignList: function() {
@@ -301,36 +301,36 @@
 				});
 			},
 			/**
-			 * 数字转中文
+			 * Chuyển số sang chữ số Trung Quốc
 			 *
 			 */
 			Rp: function(n) {
-				let cnum = ['零', '一', '二', '三', '四', '五', '六', '七', '八', '九'];
+				let cnum = ['không', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', '7', '8', '9'];
 				let s = '';
-				n = '' + n; // 数字转为字符串
+				n = '' + n; // Chuyển số thành chuỗi
 				for (let i = 0; i < n.length; i++) {
 					s += cnum[parseInt(n.charAt(i))];
 				}
 				return s;
 			},
 			/**
-			 * 数字分割为数组
-			 * @param int num 需要分割的数字
-			 * @param int length 需要分割为n位数组
+			 * Tách số thành mảng
+			 * @param int num Số cần tách
+			 * @param int length Cần tách thành mảng n chữ số
 			 */
 			PrefixInteger: function(num, length) {
 				return (Array(length).join('0') + num).slice(-length).split('');
 			},
 
 			/**
-			 * 用户签到
+			 * Người dùng điểm danh
 			 */
 			goSign: function(e) {
 				let that = this,
 					sum_sgin_day = that.userInfo.sum_sgin_day;
 				if (that.userInfo.is_day_sgin)
 					return this.$util.Tips({
-						title: that.$t(`您今日已签到!`)
+						title: that.$t(`Hôm nay bạn đã điểm danh!`)
 					});
 				setSignIntegral()
 					.then((res) => {
@@ -352,7 +352,7 @@
 					});
 			},
 			/**
-			 * 关闭签到提示
+			 * Đóng thông báo điểm danh
 			 */
 			close: function() {
 				this.active = false;
@@ -531,14 +531,14 @@
 			background-color: #eeeeee;
 		}
 
-		/*白色样式（false的样式）*/
+		/*Kiểu trắng (kiểu khi false)*/
 		/deep/ .wx-switch-input::before {
 			width: 76rpx !important;
 			height: 40rpx !important;
 			background-color: #eeeeee;
 		}
 
-		/*绿色样式（true的样式）*/
+		/*Kiểu xanh lá (kiểu khi true)*/
 		/deep/ .wx-switch-input::after {
 			width: 32rpx !important;
 			height: 32rpx !important;

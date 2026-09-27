@@ -4,18 +4,18 @@
       <el-form ref="formValidate" :model="formValidate" label-width="80px" @submit.native.prevent>
         <el-row :gutter="24">
           <el-col v-bind="grid">
-            <el-form-item :label="!authType ? '接口名称：' : '按钮名称：'" prop="menu_name">
+            <el-form-item :label="!authType ? 'Tên API:' : 'Tên nút:'" prop="menu_name">
               <div class="add">
                 <el-input
                   v-model="formValidate.menu_name"
-                  :placeholder="!authType ? '请输入接口名称' : '请输入按钮名称'"
+                  :placeholder="!authType ? 'Vui lòng nhập tên API' : 'Vui lòng nhập tên nút'"
                 >
                 </el-input>
               </div>
             </el-form-item>
           </el-col>
           <el-col v-bind="grid">
-            <el-form-item label="父级分类：">
+            <el-form-item label="Danh mục cha:">
               <el-cascader
                 :options="menuList"
                 change-on-select
@@ -26,19 +26,19 @@
             </el-form-item>
           </el-col>
           <el-col v-bind="grid" v-if="authType">
-            <el-form-item label="图标：">
-              <el-input v-model="formValidate.icon" placeholder="请选择图标，点击右面图标" icon="ios-appstore">
+            <el-form-item label="Biểu tượng:">
+              <el-input v-model="formValidate.icon" placeholder="Vui lòng chọn biểu tượng, nhấp vào biểu tượng bên phải" icon="ios-appstore">
                 <el-button slot="append" icon="el-icon-picture-outline" v-db-click @click="iconClick"></el-button>
               </el-input>
             </el-form-item>
           </el-col>
           <el-col v-bind="grid" v-if="authType">
-            <el-form-item label="排序：">
-              <el-input type="number" v-model="formValidate.sort" placeholder="请输入排序" number></el-input>
+            <el-form-item label="Thứ tự sắp xếp:">
+              <el-input type="number" v-model="formValidate.sort" placeholder="Vui lòng nhập thứ tự sắp xếp" number></el-input>
             </el-form-item>
           </el-col>
           <el-col v-bind="grid">
-            <el-form-item label="是否显示：">
+            <el-form-item label="Hiển thị:">
               <el-radio-group v-model="formValidate.is_show_path">
                 <el-radio :label="item.value" v-for="(item, i) in isShowPathRadio" :key="i">
                   <span>{{ item.label }}</span>
@@ -49,14 +49,14 @@
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button v-db-click @click="handleReset">取 消</el-button>
-        <el-button type="primary" v-db-click @click="handleSubmit('formValidate')" :disabled="valids">提 交</el-button>
+        <el-button v-db-click @click="handleReset">Hủy</el-button>
+        <el-button type="primary" v-db-click @click="handleSubmit('formValidate')" :disabled="valids">Gửi</el-button>
       </span>
     </el-dialog>
-    <el-dialog :visible.sync="modal12" width="720px" title="图标选择">
+    <el-dialog :visible.sync="modal12" width="720px" title="Chọn biểu tượng">
       <el-input
         v-model="iconVal"
-        placeholder="输入关键词搜索,注意全是英文"
+        placeholder="Nhập từ khóa để tìm kiếm, lưu ý chỉ dùng tiếng Anh"
         clearable
         style="width: 300px"
         @change="upIcon(iconVal)"
@@ -74,18 +74,18 @@
         </div>
       </div>
     </el-dialog>
-    <el-dialog :visible.sync="ruleModal" width="1100px" title="权限列表" @closed="modalchange">
+    <el-dialog :visible.sync="ruleModal" width="1100px" title="Danh sách quyền" @closed="modalchange">
       <div class="search-rule">
         <el-input
           class="mr10"
           v-model="searchRule"
-          placeholder="输入关键词搜索"
+          placeholder="Nhập từ khóa để tìm kiếm"
           clearable
           style="width: 300px"
           ref="search"
         />
-        <el-button type="primary" v-db-click @click="searchRules">搜索</el-button>
-        <el-button v-db-click @click="init">重置</el-button>
+        <el-button type="primary" v-db-click @click="searchRules">Tìm kiếm</el-button>
+        <el-button v-db-click @click="init">Đặt lại</el-button>
       </div>
       <div class="rule">
         <div
@@ -97,9 +97,9 @@
           v-db-click
           @click="selectRule(item)"
         >
-          <div>接口名称：{{ item.real_name }}</div>
-          <div>请求方式：{{ item.method }}</div>
-          <div>接口地址：{{ item.rule }}</div>
+          <div>Tên API: {{ item.real_name }}</div>
+          <div>Phương thức yêu cầu: {{ item.method }}</div>
+          <div>Địa chỉ API: {{ item.rule }}</div>
         </div>
       </div>
     </el-dialog>
@@ -235,7 +235,7 @@ export default {
     },
   },
   methods: {
-    // 获取权限列表
+    // Lấy danh sách quyền
     getRuleList() {
       getRuleList().then((res) => {
         this.ruleList = res.data;
@@ -264,11 +264,11 @@ export default {
     changeRadio(n) {
       this.authType = n === 1 ? true : false;
     },
-    // 搜索
+    // Tìm kiếm
     upIcon(n) {
       this.searchData = this.list.filter((item) => item.indexOf(this.iconVal) > -1);
     },
-    // 搜索规则
+    // Tìm kiếm quy tắc
     searchRules() {
       if (this.searchRule.trim()) {
         this.arrs = [];
@@ -291,7 +291,7 @@ export default {
         label: val,
       });
     },
-    // 获取新增表单
+    // Lấy biểu mẫu thêm mới
     getAddFrom() {
       addMenus()
         .then(async (res) => {
@@ -308,9 +308,9 @@ export default {
       this.formValidate.icon = n;
       this.modal12 = false;
     },
-    // 提交
+    // Gửi
     handleSubmit(name) {
-      //判断是否选择父级分类
+      //Kiểm tra có chọn danh mục cấp cha hay không
       if (this.formValidate.path) {
         let length = this.formValidate.path.length;
         this.formValidate.pid = this.formValidate.path[length - 1] || 0;
@@ -322,20 +322,20 @@ export default {
       };
       if (this.authType) {
         if (!this.formValidate.menu_name) {
-          return this.$message.warning('请填写按钮名称');
+          return this.$message.warning('Vui lòng điền tên nút');
         }
         if (!this.formValidate.menu_path) {
-          return this.$message.warning('请填写路由地址');
+          return this.$message.warning('Vui lòng điền địa chỉ route');
         }
       } else {
         if (!this.formValidate.menu_name) {
-          return this.$message.warning('请填写接口名称');
+          return this.$message.warning('Vui lòng điền tên API');
         }
         if (!this.formValidate.methods) {
-          return this.$message.warning('请选择请求方式');
+          return this.$message.warning('Vui lòng chọn phương thức yêu cầu');
         }
         if (!this.formValidate.api_url) {
-          return this.$message.warning('请选择接口地址');
+          return this.$message.warning('Vui lòng chọn địa chỉ API');
         }
       }
       this.valids = true;
@@ -424,20 +424,20 @@ export default {
   overflow: scroll;
 }
 
-/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+/*Định nghĩa chiều cao, chiều rộng và nền thanh cuộn; chiều cao, chiều rộng tương ứng kích thước thanh cuộn ngang, dọc*/
 .rule::-webkit-scrollbar {
   width: 10px;
   height: 10px;
   background-color: #f5f5f5;
 }
 
-/*定义滚动条轨道 内阴影+圆角*/
+/*Định nghĩa rãnh thanh cuộn: bóng đổ trong + góc tròn*/
 .rule::-webkit-scrollbar-track {
   border-radius: 4px;
   background-color: #f5f5f5;
 }
 
-/*定义滑块 内阴影+圆角*/
+/*Định nghĩa thanh trượt: đổ bóng trong + góc tròn*/
 .rule::-webkit-scrollbar-thumb {
   border-radius: 4px;
   background-color: #555;

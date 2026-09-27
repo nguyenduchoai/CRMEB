@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,7 +18,7 @@ use app\services\shipping\ExpressServices;
 use think\facade\App;
 
 /**
- * 一号通平台物流服务
+ * Dịch vụ vận chuyển nền tảng Yihaotong
  * Class Export
  * @package app\adminapi\controller\v1\serve
  */
@@ -37,7 +37,7 @@ class Export extends AuthController
     }
 
     /**
-     * 物流公司
+     * Đơn vị vận chuyển
      * @return mixed
      */
     public function getExportAll()
@@ -47,7 +47,7 @@ class Export extends AuthController
 
     /**
      *
-     * 获取面单信息
+     * Lấy thông tin vận đơn
      * @param string $com
      * @return mixed
      */
@@ -60,7 +60,7 @@ class Export extends AuthController
     }
 
     /**
-     * 打印电子面单是否开启
+     * Có mở in vận đơn điện tử không
      * @return mixed
      */
     public function dumpIsOpen(ServeServices $services)
@@ -84,7 +84,7 @@ class Export extends AuthController
     /**
      * @param ServeServices $services
      * @return \think\Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/15
      */

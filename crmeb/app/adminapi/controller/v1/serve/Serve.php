@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -39,7 +39,7 @@ class Serve extends AuthController
     }
 
     /**
-     * 检测登录
+     * Kiểm tra đăng nhập
      * @return mixed
      */
     public function is_login()
@@ -53,7 +53,7 @@ class Serve extends AuthController
     }
 
     /**
-     * 获取套餐列表
+     * Lấy danh sách gói
      * @param string $type
      * @return mixed
      */
@@ -68,7 +68,7 @@ class Serve extends AuthController
     }
 
     /**
-     * 获取支付码
+     * Lấy mã thanh toán
      * @return mixed
      */
     public function payMeal()
@@ -107,7 +107,7 @@ class Serve extends AuthController
     }
 
     /**
-     * 开通打印电子面单
+     * Mở dịch vụ in vận đơn điện tử
      * @return mixed
      */
     public function openExpress()
@@ -132,7 +132,7 @@ class Serve extends AuthController
     }
 
     /**
-     * 获取用户信息，用户信息内包含是否开通服务字段
+     * Lấy thông tin người dùng, trong đó có trường cho biết đã mở dịch vụ hay chưa
      * @return mixed
      */
     public function getUserInfo()
@@ -141,7 +141,7 @@ class Serve extends AuthController
     }
 
     /**
-     * 查询记录
+     * Truy vấn lịch sử
      * @return mixed
      */
     public function getRecord()
@@ -156,7 +156,7 @@ class Serve extends AuthController
     }
 
     /**
-     * 开通服务
+     * Mở dịch vụ
      * @param int $type
      * @return mixed
      */
@@ -172,7 +172,7 @@ class Serve extends AuthController
     }
 
     /**
-     * 修改密码
+     * Đổi mật khẩu
      * @return mixed
      */
     public function modify()
@@ -193,7 +193,7 @@ class Serve extends AuthController
     }
 
     /**
-     * 修改手机号
+     * Sửa số điện thoại
      * @return mixed
      */
     public function updatePhone()

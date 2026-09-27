@@ -8,7 +8,7 @@ use app\services\user\UserLevelServices;
 use crmeb\interfaces\ListenerInterface;
 
 /**
- * 用户升级事件
+ * Event nâng cấp người dùng
  * Class UserLevelListener
  * @package app\listener\user
  */
@@ -18,7 +18,7 @@ class UserLevelListener implements ListenerInterface
     {
         [$uid] = $event;
 
-        //用户升级
+        //Nâng hạng người dùng
         /** @var UserLevelServices $levelServices */
         $levelServices = app()->make(UserLevelServices::class);
         $levelServices->detection((int)$uid);

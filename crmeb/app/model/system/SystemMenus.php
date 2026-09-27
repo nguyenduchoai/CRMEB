@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use crmeb\traits\ModelTrait;
 use think\Model;
 
 /**
- * 菜单规则模型
+ * Model quy tắc menu
  * Class SystemMenus
  * @package app\model\system
  */
@@ -25,19 +25,19 @@ class SystemMenus extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'system_menus';
 
     /**
-     * 参数修改器
+     * Setter tham số
      * @param $value
      * @return false|string
      */
@@ -53,7 +53,7 @@ class SystemMenus extends BaseModel
     }
 
     /**
-     * 参数获取器
+     * Getter tham số
      * @param $_value
      * @return mixed
      */
@@ -63,17 +63,17 @@ class SystemMenus extends BaseModel
     }
 
     /**
-     * pid获取器
+     * Getter pid
      * @param $value
      * @return mixed|string
      */
     public function getPidStrAttr($value)
     {
-        return !$value ? '顶级' : $this->where('pid', $value)->value('menu_name');
+        return !$value ? 'Cấp cao nhất' : $this->where('pid', $value)->value('menu_name');
     }
 
     /**
-     * 默认条件查询器
+     * Bộ truy vấn điều kiện mặc định
      * @param Model $query
      * @param $value
      */
@@ -83,7 +83,7 @@ class SystemMenus extends BaseModel
     }
 
     /**
-     * 是否显示搜索器
+     * Bộ lọc có hiển thị hay không
      * @param Model $query
      * @param $value
      */
@@ -95,7 +95,7 @@ class SystemMenus extends BaseModel
     }
 
     /**
-     * 是否删除搜索器
+     * Bộ lọc đã xóa hay chưa
      * @param Model $query
      * @param $value
      */
@@ -105,7 +105,7 @@ class SystemMenus extends BaseModel
     }
 
     /**
-     * Pid搜索器
+     * Bộ lọc Pid
      * @param Model $query
      * @param $value
      */
@@ -115,7 +115,7 @@ class SystemMenus extends BaseModel
     }
 
     /**
-     * 规格搜索器
+     * Bộ lọc phân loại
      * @param Model $query
      * @param $value
      */
@@ -125,7 +125,7 @@ class SystemMenus extends BaseModel
     }
 
     /**
-     * 搜索菜单
+     * Tìm kiếm menu
      * @param Model $query
      * @param $value
      */
@@ -137,7 +137,7 @@ class SystemMenus extends BaseModel
     }
 
     /**
-     * 方法搜索器
+     * Bộ lọc phương thức
      * @param Model $query
      * @param $value
      */
@@ -147,7 +147,7 @@ class SystemMenus extends BaseModel
     }
 
     /**
-     * 控制器搜索器
+     * Bộ lọc controller
      * @param Model $query
      * @param $value
      */
@@ -157,7 +157,7 @@ class SystemMenus extends BaseModel
     }
 
     /**
-     * 访问地址搜索器
+     * Bộ lọc địa chỉ truy cập
      * @param Model $query
      * @param $value
      */
@@ -167,7 +167,7 @@ class SystemMenus extends BaseModel
     }
 
     /**
-     * 参数搜索器
+     * Bộ lọc tham số
      * @param Model $query
      * @param $value
      */
@@ -179,7 +179,7 @@ class SystemMenus extends BaseModel
     }
 
     /**
-     * 权限标识搜索器
+     * Bộ lọc định danh quyền
      * @param Model $query
      * @param $value
      */
@@ -192,7 +192,7 @@ class SystemMenus extends BaseModel
     }
 
     /**
-     * 菜单规格搜索
+     * Tìm kiếm quy cách menu
      * @param Model $query
      * @param $value
      */
@@ -205,7 +205,7 @@ class SystemMenus extends BaseModel
     }
 
     /**
-     * Id搜索器
+     * Bộ lọc Id
      * @param Model $query
      * @param $value
      */
@@ -241,18 +241,18 @@ class SystemMenus extends BaseModel
     }
 
     /**
-     * 模块检测
+     * Kiểm tra module
      * @param Model $query
      * @param $value
      */
     public function searchNoModelAttr($query, $value)
     {
         $query->when(!in_array('seckill', $value), function ($q1) {
-            $q1->whereNotLike('menu_name', '%秒杀%');
+            $q1->whereNotLike('menu_name', '%flash sale%');
         })->when(!in_array('bargain', $value), function ($q2) {
-            $q2->whereNotLike('menu_name', '%砍价%');
+            $q2->whereNotLike('menu_name', '%săn giảm giá%');
         })->when(!in_array('combination', $value), function ($q3) {
-            $q3->whereNotLike('menu_name', '%拼团%');
+            $q3->whereNotLike('menu_name', '%mua chung%');
         });
     }
 }

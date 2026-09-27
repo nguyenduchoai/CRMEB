@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -14,7 +14,7 @@ use think\facade\App;
 use app\services\user\OutUserServices;
 
 /**
- * 用户控制器
+ * Controller người dùng
  * Class User
  * @package app\outapi\controller
  */
@@ -33,7 +33,7 @@ class User extends AuthController
     }
 
     /**
-     * 用户列表
+     * Danh sách người dùng
      * @return mixed
      */
     public function lst()
@@ -47,7 +47,7 @@ class User extends AuthController
     }
 
     /**
-     * 保存新建的资源
+     * Lưu resource mới tạo
      *
      * @param \think\Request $request
      * @return \think\Response
@@ -72,7 +72,7 @@ class User extends AuthController
     }
 
     /**
-     * 更新用户
+     * Cập nhật người dùng
      * @param $uid
      * @return mixed
      */
@@ -94,7 +94,7 @@ class User extends AuthController
     }
 
     /**
-     * 赠送相关
+     * Liên quan đến tặng
      * @param int $uid
      * @return mixed
      * @throws \think\Exception
@@ -120,10 +120,10 @@ class User extends AuthController
     }
 
     /**
-     * 获取用户详情
+     * Lấy chi tiết người dùng
      * @param $uid
      * @return \think\Response
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/06/20
      */
@@ -135,7 +135,7 @@ class User extends AuthController
     }
 
     /**
-     * 赠送余额
+     * Tặng số dư
      * @param int $uid
      * @return mixed
      * @throws \think\Exception
@@ -161,7 +161,7 @@ class User extends AuthController
     }
 
     /**
-     * 赠送积分
+     * Tặng điểm thưởng
      * @param int $uid
      * @return mixed
      * @throws \think\Exception
@@ -187,7 +187,7 @@ class User extends AuthController
     }
 
     /**
-     * 修改余额
+     * Chỉnh sửa số dư
      * @param $uid
      * @return \think\Response
      * @author wuhaotian
@@ -201,11 +201,11 @@ class User extends AuthController
         ], true);
         if (!$uid) return app('json')->fail(100100);
         $this->services->changeUserData((int)$uid, $money, 'now_money');
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
     /**
-     * 修改积分
+     * Chỉnh sửa điểm thưởng
      * @param $uid
      * @return \think\Response
      * @author wuhaotian
@@ -219,6 +219,6 @@ class User extends AuthController
         ], true);
         if (!$uid) return app('json')->fail(100100);
         $this->services->changeUserData((int)$uid, $integral, 'integral');
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 }

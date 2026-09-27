@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -33,11 +33,11 @@ use Guzzle\Http\EntityBody;
  * Class StorePinkServices
  * @package app\services\activity
  * @method getPinkCount(array $where)
- * @method int count(array $where = []) 获取指定条件下的条数
+ * @method int count(array $where = []) Lấy số lượng bản ghi theo điều kiện chỉ định
  * @method getPinkOkSumTotalNum()
- * @method isPink(int $id, int $uid) 是否能继续拼团
- * @method getPinkUserOne(int $id) 拼团
- * @method getCount(array $where) 获取某些条件总数
+ * @method isPink(int $id, int $uid) Có thể tiếp tục mua chung hay không
+ * @method getPinkUserOne(int $id) Mua chung
+ * @method getCount(array $where) Lấy tổng số theo một số điều kiện
  * @method value(array $where, string $field)
  * @method getColumn(array $where, string $field, ?string $key)
  * @method update(array $where, array $data)
@@ -76,20 +76,20 @@ class StorePinkServices extends BaseServices
     }
 
     /**
-     * 拼团列表头部
+     * Đầu trang danh sách mua chung
      * @return array
      */
     public function getStatistics()
     {
         $res = [
-            ['col' => 6, 'count' => $this->dao->count(), 'name' => '参与人数(人)', 'className' => 'iconfaqirenshu'],
-            ['col' => 6, 'count' => $this->dao->count(['k_id' => 0, 'status' => 2]), 'name' => '成团数量(个)', 'className' => 'iconshengyukucun'],
+            ['col' => 6, 'count' => $this->dao->count(), 'name' => 'Số người tham gia (người)', 'className' => 'iconfaqirenshu'],
+            ['col' => 6, 'count' => $this->dao->count(['k_id' => 0, 'status' => 2]), 'name' => 'Số nhóm thành công (nhóm)', 'className' => 'iconshengyukucun'],
         ];
         return compact('res');
     }
 
     /**
-     * 参团人员
+     * Người tham gia nhóm
      * @param int $id
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -102,7 +102,7 @@ class StorePinkServices extends BaseServices
     }
 
     /**
-     * 拼团退款
+     * Hoàn tiền mua chung
      * @param $order
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
@@ -117,15 +117,15 @@ class StorePinkServices extends BaseServices
         } else {
             return true;
         }
-        //正在拼团 团长
+        //Đang mua chung: trưởng nhóm
         $count = $this->dao->getOne(['id' => $id, 'uid' => $order['uid']]);
-        //正在拼团 团员
+        //Đang mua chung: thành viên nhóm
         $countY = $this->dao->getOne(['k_id' => $id, 'uid' => $order['uid']]);
         if (!$count && !$countY) {
             return $res;
         }
-        if ($count) {//团长
-            //判断团内是否还有其他人  如果有  团长为第二个进团的人
+        if ($count) {//Trưởng nhóm
+            //Kiểm tra trong nhóm còn người khác không, nếu có thì trưởng nhóm là người vào nhóm thứ hai
             $kCount = $this->dao->getPinking(['k_id' => $id]);
             if ($kCount) {
                 $res11 = $this->dao->update($id, ['k_id' => $kCount['id']], 'k_id');
@@ -137,16 +137,16 @@ class StorePinkServices extends BaseServices
                 $res1 = $res3 = true;
                 $res2 = $this->dao->update($id, ['stop_time' => time() - 1, 'is_refund' => $id, 'status' => 3]);
             }
-            //修改结束时间为前一秒  团长ID为0
+            //Cập nhật thời gian kết thúc thành giây trước đó, ID trưởng nhóm là 0
             $res = $res1 && $res2 && $res3;
-        } else if ($countY) {//团员
+        } else if ($countY) {//Thành viên nhóm
             $res = $this->dao->update($countY['id'], ['stop_time' => time() - 1, 'is_refund' => $id, 'status' => 3]);
         }
         return $res;
     }
 
     /**
-     * 拼团详情查看拼团列表
+     * Xem danh sách mua chung ở chi tiết mua chung
      * @param int $id
      * @param bool $type
      * @return array
@@ -185,7 +185,7 @@ class StorePinkServices extends BaseServices
                 $v['h'] = date('H', (int)$v['stop_time']);
                 $v['i'] = date('i', (int)$v['stop_time']);
                 $v['s'] = date('s', (int)$v['stop_time']);
-                $pinkAll[] = $v['id'];//开团团长ID
+                $pinkAll[] = $v['id'];//ID trưởng nhóm khi mở nhóm
                 $v['stop_time'] = (int)$v['stop_time'];
                 $v['avatar'] = set_file_url($v['avatar']);
             }
@@ -195,7 +195,7 @@ class StorePinkServices extends BaseServices
     }
 
     /**
-     * 获取成团列表信息
+     * Lấy thông tin danh sách nhóm đã thành công
      * @param int $uid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -207,13 +207,13 @@ class StorePinkServices extends BaseServices
         $list = $this->dao->successList($uid);
         $msg = [];
         foreach ($list as &$item) {
-            if (isset($item['nickname'])) $msg[] = $item['nickname'] .= '拼团成功';
+            if (isset($item['nickname'])) $msg[] = $item['nickname'] .= 'Mua chung thành công';
         }
         return $msg;
     }
 
     /**
-     * 查找拼团信息
+     * Tìm thông tin mua chung
      * @param $pink
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -222,7 +222,7 @@ class StorePinkServices extends BaseServices
      */
     public function getPinkMemberAndPinkK($pink)
     {
-        //查找拼团团员和团长
+        //Tìm thành viên và trưởng nhóm mua chung
         if ($pink['k_id']) {
             $pinkAll = $this->dao->getPinkUserList(['k_id' => $pink['k_id']]);
             $pinkT = $this->dao->getPinkUserOne($pink['k_id']);
@@ -234,7 +234,7 @@ class StorePinkServices extends BaseServices
         $count = $pinkT['people'] - $count;
         $idAll = [];
         $uidAll = [];
-        //收集拼团用户id和拼团id
+        //Thu thập id người dùng và id mua chung
         foreach ($pinkAll as $k => $v) {
             $idAll[$k] = $v['id'];
             $uidAll[$k] = $v['uid'];
@@ -245,7 +245,7 @@ class StorePinkServices extends BaseServices
     }
 
     /**
-     * 拼团失败
+     * Mua chung thất bại
      * @param $pinkAll
      * @param $pinkT
      * @param $pinkBool
@@ -261,7 +261,7 @@ class StorePinkServices extends BaseServices
         $orderRefundService = app()->make(StoreOrderRefundServices::class);
         $pinkIds = [];
         try {
-            if ($pinkT['stop_time'] < time()) {//拼团时间超时  退款
+            if ($pinkT['stop_time'] < time()) {//Mua chung quá thời gian, hoàn tiền
                 $virtual = $this->virtualCombination($pinkT['id']);
                 if ($virtual) return 1;
                 $pinkBool = -1;
@@ -269,8 +269,8 @@ class StorePinkServices extends BaseServices
                 $oids = array_column($pinkAll, 'order_id_key');
                 $orders = $orderService->getColumn([['id', 'in', $oids]], '*', 'id');
                 $refundData = [
-                    'refund_reason' => '拼团时间超时',
-                    'refund_explain' => '拼团时间超时',
+                    'refund_reason' => 'Hết thời gian mua chung',
+                    'refund_explain' => 'Hết thời gian mua chung',
                     'refund_img' => json_encode([]),
                 ];
                 foreach ($pinkAll as $v) {
@@ -297,7 +297,7 @@ class StorePinkServices extends BaseServices
     }
 
     /**
-     * 失败发送消息和修改状态
+     * Gửi tin nhắn và cập nhật trạng thái khi thất bại
      * @param $uid
      * @param $pid
      * @param bool $isRemove
@@ -319,7 +319,7 @@ class StorePinkServices extends BaseServices
 
 
     /**
-     * 判断拼团状态
+     * Kiểm tra trạng thái mua chung
      * @param $pinkId
      * @return bool
      */
@@ -327,12 +327,12 @@ class StorePinkServices extends BaseServices
     {
         if (!$pinkId) return false;
         $stopTime = $this->dao->value(['id' => $pinkId], 'stop_time');
-        if ($stopTime < time()) return true; //拼团结束
-        else return false;//拼团未结束
+        if ($stopTime < time()) return true; //Mua chung kết thúc
+        else return false;//Mua chung chưa kết thúc
     }
 
     /**
-     * 获取拼团order_id
+     * Lấy order_id mua chung
      * @param int $id
      * @param int $uid
      * @return mixed
@@ -347,7 +347,7 @@ class StorePinkServices extends BaseServices
     }
 
     /**
-     * 拼团成功
+     * Mua chung thành công
      * @param $uidAll
      * @param $idAll
      * @param $uid
@@ -373,7 +373,7 @@ class StorePinkServices extends BaseServices
     }
 
     /**
-     * 拼团成功修改
+     * Cập nhật khi mua chung thành công
      * @param $uidAll
      * @param $pid
      * @return bool
@@ -383,7 +383,7 @@ class StorePinkServices extends BaseServices
      */
     public function orderPinkAfter($uidAll, $pid)
     {
-        //发送消息之前去除虚拟用户
+        //Loại bỏ người dùng ảo trước khi gửi tin nhắn
         foreach ($uidAll as $key => $uid) {
             if ($uid == 0) unset($uidAll[$key]);
         }
@@ -399,7 +399,7 @@ class StorePinkServices extends BaseServices
         if (!$pinkList) return false;
         foreach ($pinkList as $item) {
             $item['nickname'] = $pinkT_name;
-            //用户发送消息
+            //Gửi tin nhắn cho người dùng
             event('NoticeListener', [
                 [
                     'list' => $item,
@@ -410,7 +410,7 @@ class StorePinkServices extends BaseServices
         }
         $this->dao->update([['uid', 'in', $uidAll], ['id|k_id', '=', $pid]], ['is_tpl' => 1]);
 
-        //拼团卡密和优惠券商品，成团后发放
+        //Sản phẩm mã thẻ và phiếu giảm giá của mua chung, phát sau khi tạo nhóm thành công
         $orderInfos = $orderService->getColumn([['order_id', 'in', $order_ids]], '*', 'order_id');
         foreach ($orderInfos as $orderInfo) {
             if (in_array($orderInfo['virtual_type'], [1, 2])) {
@@ -424,7 +424,7 @@ class StorePinkServices extends BaseServices
     }
 
     /**
-     * 创建拼团
+     * Tạo mua chung
      * @param $order
      * @return mixed
      */
@@ -440,33 +440,33 @@ class StorePinkServices extends BaseServices
         $userServices = app()->make(UserServices::class);
         $userInfo = $userServices->get($orderInfo['uid']);
         if ($orderInfo['pink_id']) {
-            //拼团存在
+            //Mua chung đã tồn tại
             $res = false;
-            $pink['uid'] = $orderInfo['uid'];//用户id
+            $pink['uid'] = $orderInfo['uid'];//id người dùng
             $pink['nickname'] = $userInfo['nickname'];
             $pink['avatar'] = $userInfo['avatar'];
             if ($this->isPinkBe($pink, $orderInfo['pink_id'])) return false;
-            $pink['order_id'] = $orderInfo['order_id'];//订单id  生成
-            $pink['order_id_key'] = $orderInfo['id'];//订单id  数据库id
-            $pink['total_num'] = $orderInfo['total_num'];//购买个数
-            $pink['total_price'] = $orderInfo['pay_price'];//总金额
-            $pink['k_id'] = $orderInfo['pink_id'];//拼团id
+            $pink['order_id'] = $orderInfo['order_id'];//ID đơn hàng  được tạo
+            $pink['order_id_key'] = $orderInfo['id'];//ID đơn hàng  ID database
+            $pink['total_num'] = $orderInfo['total_num'];//Số lượng mua
+            $pink['total_price'] = $orderInfo['pay_price'];//Tổng số tiền
+            $pink['k_id'] = $orderInfo['pink_id'];//ID mua chung
             foreach ($orderInfo['cartInfo'] as $v) {
-                $pink['cid'] = $v['combination_id'];//拼团商品id
-                $pink['pid'] = $v['product_id'];//商品id
-                $pink['people'] = $product['people'];//几人拼团
-                $pink['price'] = $v['productInfo']['price'];//单价
-                $pink['stop_time'] = 0;//结束时间
-                $pink['add_time'] = time();//开团时间
+                $pink['cid'] = $v['combination_id'];//ID sản phẩm mua chung
+                $pink['pid'] = $v['product_id'];//id sản phẩm
+                $pink['people'] = $product['people'];//Số người mua chung
+                $pink['price'] = $v['productInfo']['price'];//Đơn giá
+                $pink['stop_time'] = 0;//Thời gian kết thúc
+                $pink['add_time'] = time();//Thời gian mở nhóm
                 $res = $this->save($pink);
             }
-            // 拼团团成功发送模板消息
+            // Gửi tin nhắn mẫu khi nhóm mua chung thành công
             event('NoticeListener', [['orderInfo' => $orderInfo, 'title' => $product['title'], 'pink' => $pink], 'can_pink_success']);
 
-            //处理拼团完成
+            //Xử lý khi mua chung hoàn thành
             list($pinkAll, $pinkT, $count, $idAll, $uidAll) = $this->getPinkMemberAndPinkK($pink);
             if ($pinkT['status'] == 1) {
-                if (!$count)//组团完成
+                if (!$count)//Tạo nhóm hoàn thành
                     $this->pinkComplete($uidAll, $idAll, $pink['uid'], $pinkT);
                 else
                     $this->pinkFail($pinkAll, $pinkT, 0);
@@ -475,25 +475,25 @@ class StorePinkServices extends BaseServices
             if ($res) return true;
             else return false;
         } else {
-            //创建拼团
+            //Tạo mua chung
             $res = false;
-            $pink['uid'] = $orderInfo['uid'];//用户id
+            $pink['uid'] = $orderInfo['uid'];//id người dùng
             $pink['nickname'] = $userInfo['nickname'];
             $pink['avatar'] = $userInfo['avatar'];
-            $pink['order_id'] = $orderInfo['order_id'];//订单id  生成
-            $pink['order_id_key'] = $orderInfo['id'];//订单id  数据库id
-            $pink['total_num'] = $orderInfo['total_num'];//购买个数
-            $pink['total_price'] = $orderInfo['pay_price'];//总金额
-            $pink['k_id'] = 0;//拼团id
+            $pink['order_id'] = $orderInfo['order_id'];//ID đơn hàng  được tạo
+            $pink['order_id_key'] = $orderInfo['id'];//ID đơn hàng  ID database
+            $pink['total_num'] = $orderInfo['total_num'];//Số lượng mua
+            $pink['total_price'] = $orderInfo['pay_price'];//Tổng số tiền
+            $pink['k_id'] = 0;//ID mua chung
             /** @var StoreOrderServices $orderServices */
             $orderServices = app()->make(StoreOrderServices::class);
             foreach ($orderInfo['cartInfo'] as $v) {
-                $pink['cid'] = $v['combination_id'];//拼团商品id
-                $pink['pid'] = $v['product_id'];//商品id
-                $pink['people'] = $product['people'];//几人拼团
-                $pink['price'] = $v['productInfo']['price'];//单价
-                $pink['stop_time'] = time() + $product->effective_time * 3600;//结束时间
-                $pink['add_time'] = time();//开团时间
+                $pink['cid'] = $v['combination_id'];//ID sản phẩm mua chung
+                $pink['pid'] = $v['product_id'];//id sản phẩm
+                $pink['people'] = $product['people'];//Số người mua chung
+                $pink['price'] = $v['productInfo']['price'];//Đơn giá
+                $pink['stop_time'] = time() + $product->effective_time * 3600;//Thời gian kết thúc
+                $pink['add_time'] = time();//Thời gian mở nhóm
                 $res1 = $this->dao->save($pink);
                 $res2 = $orderServices->update($orderInfo['id'], ['pink_id' => $res1['id']]);
                 $res = $res1 && $res2;
@@ -501,7 +501,7 @@ class StorePinkServices extends BaseServices
             }
 
             PinkJob::dispatchSecs((int)(($product->effective_time * 3600) + 60), [$pink['id']]);
-            // 开团成功发送模板消息
+            // Gửi tin nhắn mẫu khi mở nhóm thành công
             event('NoticeListener', [['orderInfo' => $orderInfo, 'title' => $product['title'], 'pink' => $pink], 'open_pink_success']);
 
             if ($res) return true;
@@ -510,7 +510,7 @@ class StorePinkServices extends BaseServices
     }
 
     /**
-     * 是否拼团
+     * Có phải mua chung hay không
      * @param array $data
      * @param int $id
      * @return int
@@ -527,7 +527,7 @@ class StorePinkServices extends BaseServices
     }
 
     /**
-     * 取消拼团
+     * Hủy mua chung
      * @param int $uid
      * @param int $cid
      * @param int $pink_id
@@ -553,10 +553,10 @@ class StorePinkServices extends BaseServices
         if (count($pinkAll)) {
             $count = $pinkT['people'] - ($this->dao->count(['k_id' => $pink_id, 'is_refund' => 0]) + 1);
             if ($count) {
-                //拼团未完成，拼团有成员取消开团取 紧跟团长后拼团的人
+                //Mua chung chưa hoàn thành, nếu có thành viên hủy thì lấy người mua chung ngay sau trưởng nhóm làm người mở nhóm
                 if (isset($pinkAll[0])) $nextPinkT = $pinkAll[0];
             } else {
-                //拼团完成
+                //Mua chung hoàn thành
                 $this->PinkComplete($uidAll, $idAll, $uid, $pinkT);
                 throw new ApiException(410316);
             }
@@ -565,11 +565,11 @@ class StorePinkServices extends BaseServices
         $orderService = app()->make(StoreOrderServices::class);
         /** @var StoreOrderRefundServices $orderRefundService */
         $orderRefundService = app()->make(StoreOrderRefundServices::class);
-        //取消开团
+        //Hủy mở nhóm
         $order = $orderService->get($pinkT['order_id_key']);
         $refundData = [
-            'refund_reason' => '用户手动取消拼团',
-            'refund_explain' => '用户手动取消拼团',
+            'refund_reason' => 'Người dùng tự hủy mua chung',
+            'refund_explain' => 'Người dùng tự hủy mua chung',
             'refund_img' => json_encode([]),
         ];
         $res1 = $orderRefundService->applyRefund((int)$order['id'], (int)$order['uid'], $order, [], 1, (float)$order['pay_price'], $refundData, 1);
@@ -577,7 +577,7 @@ class StorePinkServices extends BaseServices
         if ($res1 && $res2) {
             $this->orderPinkAfterNo($pinkT['uid'], $pinkT['id'], true, $order->is_channel);
         }
-        //当前团有人的时候
+        //Khi nhóm hiện tại còn có người
         if (is_array($nextPinkT)) {
             $this->dao->update($nextPinkT['id'], ['k_id' => 0, 'status' => 1, 'stop_time' => $pinkT['stop_time']]);
             $this->dao->update($pinkT['id'], ['k_id' => $nextPinkT['id']], 'k_id');
@@ -587,7 +587,7 @@ class StorePinkServices extends BaseServices
     }
 
     /**
-     * 获取拼团海报
+     * Lấy poster mua chung
      * @param $pinkId
      * @param $from
      * @param $user
@@ -602,11 +602,11 @@ class StorePinkServices extends BaseServices
         $data['title'] = $storeCombinationInfo['title'];
         $data['image'] = $storeCombinationInfo['image'];
         $data['price'] = $pinkInfo['price'];
-        $data['label'] = $pinkInfo['people'] . '人团';
+        $data['label'] = $pinkInfo['people'] . 'người/nhóm';
         if ($pinkInfo['k_id']) $pinkAll = $this->getPinkMember($pinkInfo['k_id']);
         else $pinkAll = $this->getPinkMember($pinkInfo['id']);
         $count = count($pinkAll);
-        $data['msg'] = '原价￥' . $storeCombinationInfo['product_price'] . ' 还差' . ($pinkInfo['people'] - $count) . '人拼团成功';
+        $data['msg'] = 'Giá gốc ₫' . $storeCombinationInfo['product_price'] . ' còn thiếu' . ($pinkInfo['people'] - $count) . 'người nữa là mua chung thành công';
 
         /** @var SystemAttachmentServices $systemAttachmentServices */
         $systemAttachmentServices = app()->make(SystemAttachmentServices::class);
@@ -614,7 +614,7 @@ class StorePinkServices extends BaseServices
         try {
             $siteUrl = sys_config('site_url');
             if ($from == 'routine') {
-                //小程序
+                //Mini Program
                 $name = $pinkId . '_' . $user['uid'] . '_' . $user['is_promoter'] . '_pink_share_routine.jpg';
                 $imageInfo = $systemAttachmentServices->getInfo(['name' => $name]);
                 if (!$imageInfo) {
@@ -670,14 +670,14 @@ class StorePinkServices extends BaseServices
                     'type' => 1
                 ]);
                 if ($posterImage['image_type'] == 1) $posterImage['dir'] = $siteUrl . $posterImage['dir'];
-                $routinePosterImage = set_http_type($posterImage['dir'], 0);//小程序推广海报
+                $routinePosterImage = set_http_type($posterImage['dir'], 0);//Poster giới thiệu Mini Program
                 return $routinePosterImage;
             } else if ($from == 'wechat') {
-                //公众号
+                //OA WeChat
                 $name = $pinkId . '_' . $user['uid'] . '_' . $user['is_promoter'] . '_pink_share_wap.jpg';
                 $imageInfo = $systemAttachmentServices->getInfo(['name' => $name]);
                 if (!$imageInfo) {
-                    $codeUrl = set_http_type($siteUrl . '/pages/activity/goods_combination_status/index?id=' . $pinkId . '&spread=' . $user['uid'], 1);//二维码链接
+                    $codeUrl = set_http_type($siteUrl . '/pages/activity/goods_combination_status/index?id=' . $pinkId . '&spread=' . $user['uid'], 1);//Liên kết mã QR
                     $imageInfo = PosterServices::getQRCodePath($codeUrl, $name);
                     if (is_string($imageInfo)) {
                         throw new ApiException(410167);
@@ -713,7 +713,7 @@ class StorePinkServices extends BaseServices
                     'type' => 1
                 ]);
                 if ($posterImage['image_type'] == 1) $posterImage['dir'] = $siteUrl . $posterImage['dir'];
-                $wapPosterImage = set_http_type($posterImage['dir'], 1);//公众号推广海报
+                $wapPosterImage = set_http_type($posterImage['dir'], 1);//Poster giới thiệu OA WeChat
                 return $wapPosterImage;
             }
             throw new ApiException(100100);
@@ -723,7 +723,7 @@ class StorePinkServices extends BaseServices
     }
 
     /**
-     * 修改到期的拼团状态
+     * Cập nhật trạng thái mua chung đã hết hạn
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -740,8 +740,8 @@ class StorePinkServices extends BaseServices
     }
 
     /**
-     * 拼团成功
-     * @param array $pinkRegimental 成功的团长编号
+     * Mua chung thành công
+     * @param array $pinkRegimental Mã trưởng nhóm thành công
      * @return bool
      * @throws \Exception
      */
@@ -754,14 +754,14 @@ class StorePinkServices extends BaseServices
             $pinkList = implode(',', $pinkList);
             $this->dao->update([['id', 'in', $pinkList]], ['stop_time' => time(), 'status' => 2]);
             $pinkUidList = $this->dao->getColumn([['id', 'in', $pinkList], ['is_tpl', '=', 0]], 'uid', 'uid');
-            if (count($pinkUidList)) $this->orderPinkAfter($pinkUidList, $item);//发送模板消息
+            if (count($pinkUidList)) $this->orderPinkAfter($pinkUidList, $item);//Gửi tin nhắn mẫu
         }
         return true;
     }
 
     /**
-     * 拼团失败
-     * @param array $pinkRegimental 失败的团长编号
+     * Mua chung thất bại
+     * @param array $pinkRegimental Mã trưởng nhóm thất bại
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -779,12 +779,12 @@ class StorePinkServices extends BaseServices
                 /** @var StoreOrderRefundServices $orderRefundService */
                 $orderRefundService = app()->make(StoreOrderRefundServices::class);
                 $refundData = [
-                    'refund_reason' => '拼团时间超时',
-                    'refund_explain' => '拼团时间超时',
+                    'refund_reason' => 'Hết thời gian mua chung',
+                    'refund_explain' => 'Hết thời gian mua chung',
                     'refund_img' => json_encode([]),
                 ];
                 foreach ($refundPinkList as &$items) {
-                    $orderRefundService->applyRefund((int)$items['id'], (int)$items['uid'], $items, [], 1, (float)$items['pay_price'], $refundData, 1);//申请退款
+                    $orderRefundService->applyRefund((int)$items['id'], (int)$items['uid'], $items, [], 1, (float)$items['pay_price'], $refundData, 1);//Yêu cầu hoàn tiền
                 }
             }
             $this->dao->update([['id', 'in', $pinkList]], ['status' => 3]);
@@ -793,7 +793,7 @@ class StorePinkServices extends BaseServices
     }
 
     /**
-     * 虚拟拼团
+     * Mua chung ảo
      * @param $pinkId
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
@@ -833,11 +833,11 @@ class StorePinkServices extends BaseServices
                 $data[$i]['status'] = 2;
                 $data[$i]['is_virtual'] = 1;
             }
-            //添加虚拟团员
+            //Thêm thành viên ảo
             $this->dao->saveAll($data);
-            //更改团员状态为拼团成功
+            //Đổi trạng thái thành viên thành mua chung thành công
             $this->dao->update($pinkId, ['stop_time' => $time, 'status' => 2], 'k_id');
-            //更改团长为拼团成功
+            //Đổi trạng thái trưởng nhóm thành mua chung thành công
             $this->dao->update($pinkId, ['stop_time' => $time, 'status' => 2]);
             $uidAll = $this->dao->getColumn([['id|k_id', '=', $pinkId]], 'uid');
             $this->orderPinkAfter($uidAll, $pinkId);
@@ -848,7 +848,7 @@ class StorePinkServices extends BaseServices
     }
 
     /**
-     * 获取拼团海报详情信息
+     * Lấy thông tin chi tiết poster mua chung
      * @param int $id
      * @param $user
      * @return mixed
@@ -866,11 +866,11 @@ class StorePinkServices extends BaseServices
         $data['url'] = '';
         $data['image'] = $storeCombinationInfo['image'];
         $data['price'] = $pinkInfo['price'];
-        $data['label'] = $pinkInfo['people'] . '人团';
+        $data['label'] = $pinkInfo['people'] . 'người/nhóm';
         if ($pinkInfo['k_id']) $pinkAll = $this->getPinkMember($pinkInfo['k_id']);
         else $pinkAll = $this->getPinkMember($pinkInfo['id']);
         $count = count($pinkAll);
-        $data['msg'] = '原价￥' . $storeCombinationInfo['product_price'] . ' 还差' . ($pinkInfo['people'] - $count) . '人拼团成功';
+        $data['msg'] = 'Giá gốc ₫' . $storeCombinationInfo['product_price'] . ' còn thiếu' . ($pinkInfo['people'] - $count) . 'người nữa là mua chung thành công';
 
         /** @var SystemAttachmentServices $systemAttachmentServices */
         $systemAttachmentServices = app()->make(SystemAttachmentServices::class);
@@ -878,7 +878,7 @@ class StorePinkServices extends BaseServices
         try {
             $siteUrl = sys_config('site_url');
             if (request()->isRoutine()) {
-                //小程序
+                //Mini Program
                 $name = $id . '_' . $user['uid'] . '_' . $user['is_promoter'] . '_pink_share_routine.jpg';
                 $imageInfo = $systemAttachmentServices->getInfo(['name' => $name]);
                 if (!$imageInfo) {

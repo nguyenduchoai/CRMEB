@@ -1,11 +1,11 @@
 <?php
 /**
  *  +----------------------------------------------------------------------
- *  | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+ *  | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
  *  +----------------------------------------------------------------------
  *  | Copyright (c) 2016~2022 https://www.crmeb.com All rights reserved.
  *  +----------------------------------------------------------------------
- *  | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+ *  | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
  *  +----------------------------------------------------------------------
  *  | Author: CRMEB Team <admin@crmeb.com>
  *  +----------------------------------------------------------------------
@@ -19,9 +19,9 @@ use crmeb\services\upload\BaseClient;
 use crmeb\services\upload\extend\cos\XML;
 
 /**
- * 华为云上传
+ * Tải lên Huawei Cloud
  * Class Client
- * @author 等风来
+ * @author Deng Fenglai
  * @email 136327134@qq.com
  * @date 2023/5/18
  * @package crmeb\services\upload\extend\obs
@@ -74,18 +74,18 @@ class Client extends BaseClient
         'x-oss-process'
     ];
 
-    //桶acl
+    //acl bucket
     const OBS_ACL = [
         [
             'value' => 'public-read',
-            'label' => '公共读(推荐)',
+            'label' => 'Đọc công khai (khuyên dùng)',
         ],
         [
             'value' => 'public-read-write',
-            'label' => '公共读写',
+            'label' => 'Đọc/ghi công khai',
         ],
     ];
-    //默认acl
+    //acl mặc định
     const DEFAULT_OBS_ACL = 'public-read';
 
     protected $isCname = false;
@@ -103,13 +103,13 @@ class Client extends BaseClient
     protected $secretKey;
 
     /**
-     * 桶名
+     * Tên bucket
      * @var string
      */
     protected $bucketName;
 
     /**
-     * 地区
+     * Khu vực
      * @var string
      */
     protected $region;
@@ -141,35 +141,35 @@ class Client extends BaseClient
     }
 
     /**
-     * 检测
-     * @author 等风来
+     * Kiểm tra
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/18
      */
     protected function checkOptions()
     {
         if (!$this->bucketName) {
-            throw new UploadException('请传入桶名');
+            throw new UploadException('Vui lòng cung cấp tên bucket');
         }
         if (!$this->region) {
-            throw new UploadException('请传入所属地域');
+            throw new UploadException('Vui lòng cung cấp khu vực');
         }
         if (!$this->accessKeyId) {
-            throw new UploadException('请传入SecretId');
+            throw new UploadException('Vui lòng cung cấp SecretId');
         }
         if (!$this->secretKey) {
-            throw new UploadException('请传入SecretKey');
+            throw new UploadException('Vui lòng cung cấp SecretKey');
         }
 
         return $this;
     }
 
     /**
-     * 上传图片
+     * Tải lên ảnh
      * @param string $key
      * @param $body
      * @return mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/18
      */
@@ -190,10 +190,10 @@ class Client extends BaseClient
     }
 
     /**
-     * 删除上传对象
+     * Xóa object đã tải lên
      * @param string $key
      * @return mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/18
      */
@@ -211,9 +211,9 @@ class Client extends BaseClient
     }
 
     /**
-     * 获取桶
+     * Lấy bucket
      * @return false|string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/16
      */
@@ -236,7 +236,7 @@ class Client extends BaseClient
     }
 
     /**
-     * 设置桶的策略
+     * Đặt policy của bucket
      * @param string $bucket
      * @param string $region
      * @param array $data
@@ -260,12 +260,12 @@ class Client extends BaseClient
     }
 
     /**
-     * 创建桶
+     * Tạo bucket
      * @param string $bucket
      * @param string $region
      * @param string $acl
      * @return mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/18
      */
@@ -286,11 +286,11 @@ class Client extends BaseClient
     }
 
     /**
-     * 删除桶
+     * Xóa bucket
      * @param string $bucket
      * @param string $region
      * @return mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/18
      */
@@ -307,10 +307,10 @@ class Client extends BaseClient
     }
 
     /**
-     * 获取桶的自定义域名
+     * Lấy domain tùy chỉnh của bucket
      * @param string $bucket
      * @param string $region
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/18
      */
@@ -327,12 +327,12 @@ class Client extends BaseClient
     }
 
     /**
-     * 设置桶的自定义域名
+     * Đặt domain tùy chỉnh của bucket
      * @param string $bucket
      * @param string $region
      * @param array $data
      * @return mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/18
      */
@@ -349,9 +349,9 @@ class Client extends BaseClient
     }
 
     /**
-     * 设置跨域
+     * Đặt CORS
      * @return bool
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/18
      */
@@ -373,7 +373,7 @@ class Client extends BaseClient
     }
 
     /**
-     * 删除跨域
+     * Xóa CORS
      * @param string $bucket
      * @param string $region
      * @return mixed
@@ -396,7 +396,7 @@ class Client extends BaseClient
     /**
      * @param $res
      * @return mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/18
      */
@@ -409,7 +409,7 @@ class Client extends BaseClient
     }
 
     /**
-     * 获取请求域名
+     * Lấy domain yêu cầu
      * @param string $bucket
      * @param string $region
      * @return string
@@ -420,9 +420,9 @@ class Client extends BaseClient
     protected function getRequestUrl(string $bucket = '', string $region = '')
     {
         if ($this->type == 'hw') {
-            $url = '.myhuaweicloud.com';  // 华为
+            $url = '.myhuaweicloud.com';  // Huawei
         } else {
-            $url = '.ctyun.cn';  // 天翼
+            $url = '.ctyun.cn';  // Tianyi
         }
         if ($bucket) {
             return $bucket . '.obs.' . $region . $url;
@@ -433,9 +433,9 @@ class Client extends BaseClient
 
 
     /**
-     * 地域名称
+     * Tên region
      * @return \string[][]
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/17
      */
@@ -444,80 +444,80 @@ class Client extends BaseClient
         return [
             [
                 'value' => 'cn-north-1',
-                'label' => '华北-北京一',
+                'label' => 'Bắc Trung Quốc - Beijing 1',
             ],
 //            [
 //                'value' => 'cn-north-4',
-//                'label' => '华北-北京四',
+//                'label' => 'North China - Beijing 4',
 //            ],
             [
                 'value' => 'cn-north-9',
-                'label' => '华北-乌兰察布一',
+                'label' => 'Bắc Trung Quốc - Ulanqab 1',
             ],
             [
                 'value' => 'cn-east-2',
-                'label' => '华东-上海二',
+                'label' => 'Đông Trung Quốc - Shanghai 2',
             ],
             [
                 'value' => 'cn-east-3',
-                'label' => '华东-上海一',
+                'label' => 'Đông Trung Quốc - Shanghai 1',
             ],
             [
                 'value' => 'cn-south-1',
-                'label' => '华南-广州',
+                'label' => 'Nam Trung Quốc - Guangzhou',
             ],
             [
                 'value' => 'ap-southeast-1',
-                'label' => '中国-香港',
+                'label' => 'Trung Quốc - Hồng Kông',
             ],
             [
                 'value' => 'cn-south-4',
-                'label' => '华南-广州-友好用户环境',
+                'label' => 'Nam Trung Quốc - Guangzhou - Chỉ dành cho khách mời',
             ],
             [
                 'value' => 'cn-southwest-2',
-                'label' => '西南-贵阳一',
+                'label' => 'Tây Nam Trung Quốc - Guiyang 1',
             ],
             [
                 'value' => 'la-north-2',
-                'label' => '拉美-墨西哥城二',
+                'label' => 'Mỹ Latinh - Mexico City 2',
             ],
             [
                 'value' => 'na-mexico-1',
-                'label' => '拉美-墨西哥城一',
+                'label' => 'Mỹ Latinh - Mexico City 1',
             ],
             [
                 'value' => 'sa-brazil-1',
-                'label' => '拉美-圣保罗一',
+                'label' => 'Mỹ Latinh - São Paulo 1',
             ],
             [
                 'value' => 'la-south-2',
-                'label' => '拉美-圣地亚哥',
+                'label' => 'Mỹ Latinh - Santiago',
             ],
             [
                 'value' => 'tr-west-1',
-                'label' => '土耳其-伊斯坦布尔',
+                'label' => 'Thổ Nhĩ Kỳ - Istanbul',
             ],
             [
                 'value' => 'ap-southeast-2',
-                'label' => '亚太-曼谷',
+                'label' => 'Châu Á - Thái Bình Dương - Bangkok',
             ],
             [
                 'value' => 'ap-southeast-3',
-                'label' => '亚太-新加坡',
+                'label' => 'Châu Á - Thái Bình Dương - Singapore',
             ],
             [
                 'value' => 'af-south-1',
-                'label' => '非洲-约翰内斯堡',
+                'label' => 'Châu Phi - Johannesburg',
             ]
         ];
     }
 
     /**
-     * 设置桶名
+     * Đặt tên bucket
      * @param string $bucketName
      * @return $this
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/16
      */
@@ -529,10 +529,10 @@ class Client extends BaseClient
 
 
     /**
-     * 获取签名
+     * Lấy chữ ký (signature)
      * @param array $result
      * @return array
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/17
      */
@@ -553,7 +553,7 @@ class Client extends BaseClient
     }
 
     /**
-     * 处理签名数据
+     * Xử lý dữ liệu chữ ký
      * @param $method
      * @param $headers
      * @param $pathArgs
@@ -561,7 +561,7 @@ class Client extends BaseClient
      * @param $objectKey
      * @param null $expires
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/17
      */
@@ -646,14 +646,14 @@ class Client extends BaseClient
     }
 
     /**
-     * 发起请求
+     * Khởi tạo yêu cầu
      * @param string $url
      * @param string $method
      * @param array $data
      * @param array $clientHeader
      * @param int $timeout
      * @return false|string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/16
      */
@@ -686,12 +686,12 @@ class Client extends BaseClient
 
 
     /**
-     * 组合成xml
+     * Kết hợp thành xml
      * @param array $data
      * @param string $root
      * @param string $itemKey
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2022/10/17
      */

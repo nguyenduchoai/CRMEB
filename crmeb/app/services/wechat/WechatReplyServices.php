@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -22,8 +22,8 @@ use crmeb\services\FormBuilder;
 /**
  * Class UserWechatuserServices
  * @package app\services\user
- * @method delete($id, ?string $key = null)  删除
- * @method update($id, array $data, ?string $key = null) 更新数据
+ * @method delete($id, ?string $key = null)  Xóa
+ * @method update($id, array $data, ?string $key = null) Cập nhật dữ liệu
  */
 class WechatReplyServices extends BaseServices
 {
@@ -38,7 +38,7 @@ class WechatReplyServices extends BaseServices
     }
 
     /**
-     * 消息类型
+     * Loại thông báo
      * @return string[]
      */
     public function replyType()
@@ -47,7 +47,7 @@ class WechatReplyServices extends BaseServices
     }
 
     /**
-     * 自定义简单查询总数
+     * Truy vấn tổng số tùy chỉnh đơn giản
      * @param array $where
      * @return int
      */
@@ -57,7 +57,7 @@ class WechatReplyServices extends BaseServices
     }
 
     /**
-     * 复杂条件搜索列表
+     * Danh sách tìm kiếm theo điều kiện phức tạp
      * @param array $where
      * @param string $field
      * @return array
@@ -71,7 +71,7 @@ class WechatReplyServices extends BaseServices
     }
 
     /**
-     * 关注回复
+     * Trả lời khi theo dõi
      * @param string $key
      * @return array|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
@@ -90,7 +90,7 @@ class WechatReplyServices extends BaseServices
     }
 
     /**
-     * 保存关键字
+     * Lưu từ khóa
      * @param $data
      * @param $id
      * @param $key
@@ -145,7 +145,7 @@ class WechatReplyServices extends BaseServices
     }
 
     /**
-     * 获取所有关键字
+     * Lấy tất cả từ khóa
      * @param array $where
      * @return array
      */
@@ -160,16 +160,16 @@ class WechatReplyServices extends BaseServices
             if ($item['data']) $item['data'] = json_decode($item['data'], true);
             switch ($item['type']) {
                 case 'text':
-                    $item['typeName'] = '文字消息';
+                    $item['typeName'] = 'Tin nhắn văn bản';
                     break;
                 case  'image':
-                    $item['typeName'] = '图片消息';
+                    $item['typeName'] = 'Tin nhắn hình ảnh';
                     break;
                 case 'news':
-                    $item['typeName'] = '图文消息';
+                    $item['typeName'] = 'Tin nhắn hình ảnh và văn bản';
                     break;
                 case 'voice':
-                    $item['typeName'] = '声音消息';
+                    $item['typeName'] = 'Tin nhắn thoại';
                     break;
             }
             $keys = $keyServices->getColumn(['reply_id' => $item['id']], 'keys');
@@ -179,7 +179,7 @@ class WechatReplyServices extends BaseServices
     }
 
     /**
-     * 查询一条
+     * Truy vấn một bản ghi
      * @param $key
      * @return array|null|\think\Model
      * @throws \think\db\exception\DataNotFoundException
@@ -198,7 +198,7 @@ class WechatReplyServices extends BaseServices
     }
 
     /**
-     * 整理文本输入的消息
+     * Xử lý tin nhắn dạng văn bản nhập vào
      * @param $data
      * @param $key
      * @return array|bool
@@ -214,7 +214,7 @@ class WechatReplyServices extends BaseServices
     }
 
     /**
-     * 整理图片资源
+     * Xử lý tài nguyên hình ảnh
      * @param $data
      * @param $id
      * @return array|mixed
@@ -233,7 +233,7 @@ class WechatReplyServices extends BaseServices
             $res = $reply['data'];
         } else {
             $res = [];
-            //TODO 图片转media
+            //TODO Chuyển ảnh sang media
             $res['src'] = $data['src'];
             try {
                 $material = WechatService::materialService()->uploadImage(url_to_path($data['src']));
@@ -250,7 +250,7 @@ class WechatReplyServices extends BaseServices
     }
 
     /**
-     * 整理声音资源
+     * Xử lý tài nguyên âm thanh
      * @param $data
      * @param $id
      * @return array|mixed
@@ -269,7 +269,7 @@ class WechatReplyServices extends BaseServices
             $res = $reply['data'];
         } else {
             $res = [];
-            //TODO 声音转media
+            //TODO Chuyển âm thanh sang media
             $res['src'] = $data['src'];
             try {
                 $material = WechatService::materialService()->uploadVoice(url_to_path($data['src']));
@@ -286,7 +286,7 @@ class WechatReplyServices extends BaseServices
     }
 
     /**
-     * 整理图文资源
+     * Xử lý tài nguyên bài viết ảnh-văn
      * @param $data
      * @param $id
      * @return bool
@@ -306,7 +306,7 @@ class WechatReplyServices extends BaseServices
     }
 
     /**
-     * 获取关键字
+     * Lấy từ khóa
      * @param $key
      * @param string $openId
      * @return array|\EasyWeChat\Message\Image|\EasyWeChat\Message\News|\EasyWeChat\Message\Text|\EasyWeChat\Message\Transfer|\EasyWeChat\Message\Voice
@@ -327,7 +327,7 @@ class WechatReplyServices extends BaseServices
     }
 
     /**
-     * 根据关键字内容返回对应的内容
+     * Theo nội dung từ khóa, trả về nội dung tương ứng
      * @param array $res
      * @return array|\EasyWeChat\Message\Image|\EasyWeChat\Message\News|\EasyWeChat\Message\Text|\EasyWeChat\Message\Voice
      */
@@ -350,14 +350,14 @@ class WechatReplyServices extends BaseServices
     }
 
     /**
-     * 添加修改客服自动回复表单
+     * Biểu mẫu thêm/sửa tự động trả lời CSKH
      * @param int $id
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/3
      */
@@ -368,22 +368,22 @@ class WechatReplyServices extends BaseServices
             $replyInfo = $this->dao->get($id, ['*'], ['kefuKey']);
             $replyInfo['data'] = json_decode($replyInfo['data'], true);
         }
-        $field[] = FormBuilder::input('keys', '关键字', $replyInfo['keys'] ?? '')->col(24)->required();
-        $field[] = FormBuilder::radio('type', '回复类型', (string)($replyInfo['type'] ?? 'text'))->appendControl('text', [
-            FormBuilder::input('data', '回复内容', (string)($replyInfo['data']['content'] ?? ''))->required(),
+        $field[] = FormBuilder::input('keys', 'Từ khóa', $replyInfo['keys'] ?? '')->col(24)->required();
+        $field[] = FormBuilder::radio('type', 'Loại trả lời', (string)($replyInfo['type'] ?? 'text'))->appendControl('text', [
+            FormBuilder::input('data', 'Nội dung trả lời', (string)($replyInfo['data']['content'] ?? ''))->required(),
         ])->appendControl('image', [
-            FormBuilder::frameImage('data', '回复图片', $this->url(config('app.admin_prefix', 'admin') . '/widget.images/index', ['fodder' => 'data'], true), (string)($replyInfo['data']['src'] ?? ''))->icon('el-icon-picture-outline')->width('950px')->height('560px')->Props(['footer' => false]),
-        ])->options([['label' => '文字消息', 'value' => 'text'], ['label' => '图片消息', 'value' => 'image']]);
-        $field[] = FormBuilder::radio('status', '状态', $replyInfo['status'] ?? 1)->options([['label' => '开启', 'value' => 1], ['label' => '关闭', 'value' => 0]]);
-        return create_form('客服自动回复', $field, $this->url('/app/kefu/auto_reply/save/' . $id), 'POST');
+            FormBuilder::frameImage('data', 'Hình ảnh trả lời', $this->url(config('app.admin_prefix', 'admin') . '/widget.images/index', ['fodder' => 'data'], true), (string)($replyInfo['data']['src'] ?? ''))->icon('el-icon-picture-outline')->width('950px')->height('560px')->Props(['footer' => false]),
+        ])->options([['label' => 'Tin nhắn văn bản', 'value' => 'text'], ['label' => 'Tin nhắn hình ảnh', 'value' => 'image']]);
+        $field[] = FormBuilder::radio('status', 'Trạng thái', $replyInfo['status'] ?? 1)->options([['label' => 'Bật', 'value' => 1], ['label' => 'Tắt', 'value' => 0]]);
+        return create_form('Tự động trả lời CSKH', $field, $this->url('/app/kefu/auto_reply/save/' . $id), 'POST');
     }
 
     /**
-     * 保存自动回复
+     * Lưu trả lời tự động
      * @param $id
      * @param $data
      * @return bool
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/3
      */
@@ -413,10 +413,10 @@ class WechatReplyServices extends BaseServices
     }
 
     /**
-     * 删除自动回复
+     * Xóa trả lời tự động
      * @param $id
      * @return bool
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/3
      */

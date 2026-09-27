@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -23,7 +23,7 @@ use think\facade\Log;
 
 
 /**
- * 短信发送消息列表
+ * Danh sách tin nhắn SMS đã gửi
  * Created by PhpStorm.
  * User: xurongyao <763569752@qq.com>
  * Date: 2021/9/22 1:23 PM
@@ -31,13 +31,13 @@ use think\facade\Log;
 class SmsService extends NoticeService
 {
     /**
-     * 短信类型
+     * Loại SMS
      * @var string[]
      */
     private $smsType = ['yihaotong', 'aliyun', 'tencent'];
 
     /**
-     * 发送短信消息
+     * Gửi tin nhắn SMS
      * @param $phone
      * @param array $data
      * @return bool|void
@@ -50,7 +50,7 @@ class SmsService extends NoticeService
                     $this->send(true, $phone, $data, $this->noticeInfo['mark']);
                     return true;
                 } catch (\Throwable $e) {
-                    Log::error('发送短信失败,失败原因:' . $e->getMessage());
+                    Log::error('Gửi SMS thất bại, nguyên nhân:' . $e->getMessage());
                 }
             }
         } catch (\Exception $e) {
@@ -60,7 +60,7 @@ class SmsService extends NoticeService
     }
 
     /**
-     * 发送短信
+     * Gửi SMS
      * @param bool $switch
      * @param $phone
      * @param array $data
@@ -70,14 +70,14 @@ class SmsService extends NoticeService
     public function send(bool $switch, $phone, array $data, string $mark)
     {
         if ($switch && $phone) {
-            //获取发送短信驱动类型
+            //Lấy loại driver gửi SMS
             $type = $this->smsType[sys_config('sms_type', 0)];
             if ($type == 'tencent') {
                 $data = $this->handleTencent($mark, $data);
             }
             $smsMake = app()->make(ServeServices::class)->sms($type);
             $smsId = $mark == 'verify_code' ? app()->make(SystemNotificationServices::class)->value(['mark' => 'verify_code'], 'sms_id') : $this->noticeInfo['sms_id'];
-            //发送短信
+            //Gửi SMS
             $res = $smsMake->send($phone, $smsId, $data);
             if ($res === false) {
                 throw new ApiException($smsMake->getError());
@@ -89,7 +89,7 @@ class SmsService extends NoticeService
     }
 
     /**
-     * 退款发送管理员消息任务
+     * Nhiệm vụ gửi tin nhắn cho quản trị viên khi hoàn tiền
      * @param $order
      * @return bool
      */
@@ -109,7 +109,7 @@ class SmsService extends NoticeService
     }
 
     /**
-     * 用户确认收货管理员短信提醒
+     * SMS nhắc quản trị viên khi người dùng xác nhận đã nhận hàng
      * @param $switch
      * @param $adminList
      * @param $order
@@ -130,7 +130,7 @@ class SmsService extends NoticeService
     }
 
     /**
-     * 下单成功给客服管理员发送短信
+     * Gửi SMS cho quản trị viên/CSKH khi đặt hàng thành công
      * @param $switch
      * @param $adminList
      * @param $order
@@ -151,7 +151,7 @@ class SmsService extends NoticeService
     }
 
     /**
-     * 处理腾讯云参数
+     * Xử lý tham số Tencent Cloud
      * @param $mark
      * @param $data
      * @return array

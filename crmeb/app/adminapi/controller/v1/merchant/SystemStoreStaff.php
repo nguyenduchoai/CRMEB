@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,14 +16,14 @@ use think\facade\App;
 use app\adminapi\controller\AuthController;
 
 /**
- * 店员
+ * Nhân viên cửa hàng
  * Class SystemStoreStaff
  * @package app\adminapi\controller\v1\merchant
  */
 class SystemStoreStaff extends AuthController
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * SystemStoreStaff constructor.
      * @param App $app
      * @param SystemStoreStaffServices $services
@@ -35,7 +35,7 @@ class SystemStoreStaff extends AuthController
     }
 
     /**
-     * 获取店员列表
+     * Lấy danh sách nhân viên cửa hàng
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -50,7 +50,7 @@ class SystemStoreStaff extends AuthController
     }
 
     /**
-     * 门店列表
+     * Danh sách cửa hàng
      * @param SystemStoreServices $services
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -63,7 +63,7 @@ class SystemStoreStaff extends AuthController
     }
 
     /**
-     * 店员新增表单
+     * Form thêm nhân viên cửa hàng
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      * @throws \think\db\exception\DataNotFoundException
@@ -76,7 +76,7 @@ class SystemStoreStaff extends AuthController
     }
 
     /**
-     * 店员修改表单
+     * Form sửa nhân viên cửa hàng
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      * @throws \think\db\exception\DataNotFoundException
@@ -92,7 +92,7 @@ class SystemStoreStaff extends AuthController
     }
 
     /**
-     * 保存店员信息
+     * Lưu thông tin nhân viên cửa hàng
      * @param int $id
      * @return mixed
      */
@@ -152,7 +152,7 @@ class SystemStoreStaff extends AuthController
     }
 
     /**
-     * 设置单个店员是否开启
+     * Thiết lập bật/tắt cho một nhân viên cửa hàng
      * @param string $is_show
      * @param string $id
      * @return mixed
@@ -171,7 +171,7 @@ class SystemStoreStaff extends AuthController
     }
 
     /**
-     * 删除店员
+     * Xóa nhân viên cửa hàng
      * @param $id
      * @return mixed
      */

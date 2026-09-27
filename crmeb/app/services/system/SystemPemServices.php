@@ -25,7 +25,7 @@ class SystemPemServices extends BaseServices
         if ($info) {
             $path = root_path('runtime/pem') . $info['path'] . '.pem';
             if (!file_exists($path)) {
-                // 如果runtime/pem文件夹不存在，创建文件夹
+                // Nếu thư mục runtime/pem không tồn tại thì tạo thư mục
                 if (!file_exists(root_path('runtime/pem'))) {
                     mkdir(root_path('runtime/pem'), 0777, true);
                 }

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -22,7 +22,7 @@ use Qiniu\Config;
 
 
 /**
- * TODO 七牛云上传
+ * TODO Tải lên Qiniu Cloud
  * Class Qiniu
  */
 class Qiniu extends BaseUpload
@@ -40,43 +40,43 @@ class Qiniu extends BaseUpload
     protected $secretKey;
 
     /**
-     * 句柄
+     * Handle
      * @var object
      */
     protected $handle;
 
     /**
-     * 空间域名 Domain
+     * Domain của space Domain
      * @var mixed
      */
     protected $uploadUrl;
 
     /**
-     * 存储空间名称  公开空间
+     * Tên space lưu trữ  space công khai
      * @var mixed
      */
     protected $storageName;
 
     /**
-     * COS使用  所属地域
+     * COS sử dụng  region trực thuộc
      * @var mixed|null
      */
     protected $storageRegion;
 
     /**
-     * 水印位置
+     * Vị trí hình mờ
      * @var string[]
      */
     protected $position = [
-        '1' => 'NorthWest',//：左上
-        '2' => 'North',//：中上
-        '3' => 'NorthEast',//：右上
-        '4' => 'West',//：左中
-        '5' => 'Center',//：中部
-        '6' => 'East',//：右中
-        '7' => 'SouthWest',//：左下
-        '8' => 'South',//：中下
-        '9' => 'SouthEast',//：右下
+        '1' => 'NorthWest',//: Trên trái
+        '2' => 'North',//: Trên giữa
+        '3' => 'NorthEast',//: Trên phải
+        '4' => 'West',//: Giữa trái
+        '5' => 'Center',//: Chính giữa
+        '6' => 'East',//: Giữa phải
+        '7' => 'SouthWest',//: Dưới trái
+        '8' => 'South',//: Dưới giữa
+        '9' => 'SouthEast',//: Dưới phải
     ];
 
     /**
@@ -85,7 +85,7 @@ class Qiniu extends BaseUpload
     protected $cdn;
 
     /**
-     * 初始化
+     * Khởi tạo
      * @param array $config
      * @return mixed|void
      */
@@ -101,7 +101,7 @@ class Qiniu extends BaseUpload
     }
 
     /**
-     * 实例化七牛云
+     * Khởi tạo instance Qiniu Cloud
      * @return object|Auth
      */
     protected function app()
@@ -114,7 +114,7 @@ class Qiniu extends BaseUpload
     }
 
     /**
-     * 上传文件
+     * Tải lên file
      * @param string $file
      * @param bool $realName
      * @return array|bool|mixed|\StdClass|string
@@ -123,17 +123,17 @@ class Qiniu extends BaseUpload
     {
         $fileHandle = app()->request->file($file);
         if (!$fileHandle) {
-            return $this->setError('上传的文件不存在');
+            return $this->setError('Tệp tải lên không tồn tại');
         }
         if ($this->validate) {
             if (!in_array(strtolower(pathinfo($fileHandle->getOriginalName(), PATHINFO_EXTENSION)), $this->validate['fileExt'])) {
-                return $this->setError('不合法的文件后缀');
+                return $this->setError('Phần mở rộng tệp không hợp lệ');
             }
             if (filesize($fileHandle) > $this->validate['filesize']) {
-                return $this->setError('文件过大');
+                return $this->setError('Tệp quá lớn');
             }
             if (!in_array($fileHandle->getOriginalMime(), $this->validate['fileMime'])) {
-                return $this->setError('不合法的文件类型');
+                return $this->setError('Loại tệp không hợp lệ');
             }
         }
         $key = $this->saveFileName($fileHandle->getRealPath(), $fileHandle->getOriginalExtension());
@@ -158,7 +158,7 @@ class Qiniu extends BaseUpload
     }
 
     /**
-     * 文件流上传
+     * Tải lên bằng file stream
      * @param $fileContent
      * @param string|null $key
      * @return array|bool|mixed|\StdClass
@@ -189,7 +189,7 @@ class Qiniu extends BaseUpload
     }
 
     /**
-     * 缩略图
+     * Ảnh thu nhỏ
      * @param string $filePath
      * @param string $fileName
      * @param string $type
@@ -222,7 +222,7 @@ class Qiniu extends BaseUpload
     }
 
     /**
-     * 水印
+     * Watermark
      * @param string $filePath
      * @return mixed|string
      */
@@ -238,13 +238,13 @@ class Qiniu extends BaseUpload
                 $filePath .= '|watermark';
             }
             switch ($waterConfig['watermark_type']) {
-                case 1://图片
+                case 1://Hình ảnh
                     if (!$waterConfig['watermark_image']) {
                         throw new AdminException(400722);
                     }
                     $waterPath = $filePath .= '/1/image/' . base64_encode($waterConfig['watermark_image']) . '/gravity/' . ($this->position[$waterConfig['watermark_position']] ?? 'SouthEest') . '/dissolve/' . $waterConfig['watermark_opacity'] . '/dx/' . $waterConfig['watermark_x'] . '/dy/' . $waterConfig['watermark_y'];
                     break;
-                case 2://文字
+                case 2://Văn bản
                     if (!$waterConfig['watermark_text']) {
                         throw new AdminException(400723);
                     }
@@ -256,7 +256,7 @@ class Qiniu extends BaseUpload
     }
 
     /**
-     * 获取上传配置信息
+     * Lấy thông tin cấu hình tải lên
      * @return array
      */
     public function getSystem()
@@ -268,7 +268,7 @@ class Qiniu extends BaseUpload
     }
 
     /**
-     * TODO 删除资源
+     * TODO xóa resource
      * @param $key
      * @param $bucket
      * @return mixed
@@ -280,7 +280,7 @@ class Qiniu extends BaseUpload
     }
 
     /**
-     * 获取七牛云上传密钥
+     * Lấy khóa tải lên Qiniu Cloud
      * @return mixed|string
      */
     public function getTempKeys()
@@ -294,7 +294,7 @@ class Qiniu extends BaseUpload
     }
 
     /**
-     * 获取当前所有桶列表
+     * Lấy danh sách tất cả bucket hiện tại
      * @param string|null $region
      * @param bool $line
      * @param bool $shared
@@ -319,7 +319,7 @@ class Qiniu extends BaseUpload
     {
         $regionData = $this->getRegion();
         if (!in_array($region, array_column($regionData, 'value'))) {
-            return $this->setError('七牛云:无效的区域');
+            return $this->setError('Qiniu Cloud: khu vực không hợp lệ');
         }
         $url = 'https://' . Config::UC_HOST . '/mkbucketv3/' . $name . '/region/' . $region;
         $body = null;
@@ -329,15 +329,15 @@ class Qiniu extends BaseUpload
         if (!$ret->ok()) {
             $error = new Error($url, $ret);
             if ('bucket exists' === $error->message()) {
-                return $this->setError('七牛云：云空间已存在');
+                return $this->setError('Qiniu Cloud: bucket đã tồn tại');
             }
-            return $this->setError('七牛云：' . $error->message());
+            return $this->setError('Qiniu Cloud:' . $error->message());
         }
         return ($ret->body === null) ? array() : $ret->json();
     }
 
     /**
-     * 获取区域
+     * Lấy khu vực
      * @return mixed|\string[][]
      */
     public function getRegion()
@@ -345,33 +345,33 @@ class Qiniu extends BaseUpload
         return [
             [
                 'value' => 'z0',
-                'label' => '华东'
+                'label' => 'Đông Trung Quốc'
             ],
             [
                 'value' => 'z1',
-                'label' => '华北'
+                'label' => 'Bắc Trung Quốc'
             ],
             [
                 'value' => 'z2',
-                'label' => '华南'
+                'label' => 'Nam Trung Quốc'
             ],
             [
                 'value' => 'na0',
-                'label' => '北美'
+                'label' => 'Bắc Mỹ'
             ],
             [
                 'value' => 'as0',
-                'label' => '东南亚'
+                'label' => 'Đông Nam Á'
             ],
             [
                 'value' => 'cn-east-2',
-                'label' => '华东-浙江2'
+                'label' => 'Đông Trung Quốc - Zhejiang 2'
             ],
         ];
     }
 
     /**
-     * 删除空间
+     * Xóa không gian lưu trữ (bucket)
      * @param string $name
      * @return bool|mixed
      */
@@ -386,7 +386,7 @@ class Qiniu extends BaseUpload
     }
 
     /**
-     * 获取七牛域名
+     * Lấy domain Qiniu
      * @param string $name
      * @return array|bool|mixed|null
      */
@@ -399,7 +399,7 @@ class Qiniu extends BaseUpload
         $ret = Client::post($url, $body, $headers);
         if (!$ret->ok()) {
             $error = new Error($url, $ret);
-            return $this->setError('七牛云：' . $error->message());
+            return $this->setError('Qiniu Cloud:' . $error->message());
         }
         return ($ret->body === null) ? array() : $ret->json();
     }
@@ -412,7 +412,7 @@ class Qiniu extends BaseUpload
         $ret = Client::get($url, $headers);
         if (!$ret->ok()) {
             $error = new Error($url, $ret);
-            return $this->setError('七牛云：' . $error->message());
+            return $this->setError('Qiniu Cloud:' . $error->message());
         }
         return ($ret->body === null) ? array() : $ret->json();
     }
@@ -456,13 +456,13 @@ class Qiniu extends BaseUpload
         $ret = Client::post($url, $bodyJson, $headers);
         if (!$ret->ok()) {
             $error = new Error($url, $ret);
-            return $this->setError('七牛云：' . $error->message());
+            return $this->setError('Qiniu Cloud:' . $error->message());
         }
         return ($ret->body === null) ? array() : $ret->json();
     }
 
     /**
-     * 跨域
+     * Cross-domain
      * @param string $name
      * @param string $region
      * @return bool

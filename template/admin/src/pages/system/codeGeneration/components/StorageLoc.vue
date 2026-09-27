@@ -1,51 +1,51 @@
 <template>
   <div class="main">
     <el-alert closable class="mb20">
-      <template v-slot:title>crud生成文件位置说明</template>
+      <template v-slot:title>Hướng dẫn vị trí tệp do crud tạo ra</template>
       <template>
-        <p>1、生成的文件位置尽量不能修改，可以在创建后自行移动</p>
-        <p>2、生成的文件位置不会包含文件的绝对路径，在创建时会携带提前预设的绝对路径</p>
-        <p>3、前端模板文件默认位置在：config/app.php的admin_template_path中配置</p>
-        <p>4、后端默认生成位置为：网站根目录</p>
-        <p>5、确保前端/admin/src目录、后端app目录有写入创建文件权限</p>
+        <p>1. Hạn chế sửa vị trí tệp được tạo, có thể tự di chuyển sau khi tạo</p>
+        <p>2. Vị trí tệp được tạo không bao gồm đường dẫn tuyệt đối, khi tạo sẽ tự kèm đường dẫn tuyệt đối đã thiết lập sẵn</p>
+        <p>3. Vị trí mặc định của tệp mẫu frontend được cấu hình tại: admin_template_path trong config/app.php</p>
+        <p>4. Vị trí tạo mặc định của backend là: thư mục gốc của website</p>
+        <p>5. Đảm bảo thư mục frontend /admin/src, thư mục backend app có quyền ghi và tạo tệp</p>
       </template>
     </el-alert>
     <el-form ref="foundation" :model="storage" :rules="storageRules" label-width="140px">
-      <el-form-item label="生成controller位置：">
-        <el-input class="form-width" v-model="storage.controller" disabled placeholder="请输入"></el-input>
-        <div class="tip">生成后端控制器文件存放位置</div>
+      <el-form-item label="Vị trí tạo controller:">
+        <el-input class="form-width" v-model="storage.controller" disabled placeholder="Vui lòng nhập"></el-input>
+        <div class="tip">Vị trí lưu tệp controller backend được tạo</div>
       </el-form-item>
-      <el-form-item label="生成service位置：">
-        <el-input class="form-width" v-model="storage.service" disabled placeholder="请输入"></el-input>
-        <div class="tip">生成后端service文件存放位置</div>
+      <el-form-item label="Vị trí tạo service:">
+        <el-input class="form-width" v-model="storage.service" disabled placeholder="Vui lòng nhập"></el-input>
+        <div class="tip">Vị trí lưu tệp service backend được tạo</div>
       </el-form-item>
-      <el-form-item label="生成dao位置：">
-        <el-input class="form-width" v-model="storage.dao" disabled placeholder="请输入"></el-input>
-        <div class="tip">生成后端dao文件存放位置</div>
+      <el-form-item label="Vị trí tạo dao:">
+        <el-input class="form-width" v-model="storage.dao" disabled placeholder="Vui lòng nhập"></el-input>
+        <div class="tip">Vị trí lưu tệp dao backend được tạo</div>
       </el-form-item>
-      <el-form-item label="生成model位置：">
-        <el-input class="form-width" v-model="storage.model" disabled placeholder="请输入"></el-input>
-        <div class="tip">生成后端model文件存放位置</div>
+      <el-form-item label="Vị trí tạo model:">
+        <el-input class="form-width" v-model="storage.model" disabled placeholder="Vui lòng nhập"></el-input>
+        <div class="tip">Vị trí lưu tệp model backend được tạo</div>
       </el-form-item>
-      <el-form-item label="生成route位置：">
-        <el-input class="form-width" v-model="storage.route" disabled placeholder="请输入"></el-input>
-        <div class="tip">生成后端路由存放位置</div>
+      <el-form-item label="Vị trí tạo route:">
+        <el-input class="form-width" v-model="storage.route" disabled placeholder="Vui lòng nhập"></el-input>
+        <div class="tip">Vị trí lưu route backend được tạo</div>
       </el-form-item>
-      <el-form-item label="生成validate位置：">
-        <el-input class="form-width" v-model="storage.validate" disabled placeholder="请输入"></el-input>
-        <div class="tip">生成后端验证器存放位置</div>
+      <el-form-item label="Vị trí tạo validate:">
+        <el-input class="form-width" v-model="storage.validate" disabled placeholder="Vui lòng nhập"></el-input>
+        <div class="tip">Vị trí lưu validator backend được tạo</div>
       </el-form-item>
-      <el-form-item label="生成pages位置：">
-        <el-input class="form-width" v-model="storage.pages" disabled placeholder="请输入"></el-input>
-        <div class="tip">生成前端页面文件存放位置</div>
+      <el-form-item label="Vị trí tạo pages:">
+        <el-input class="form-width" v-model="storage.pages" disabled placeholder="Vui lòng nhập"></el-input>
+        <div class="tip">Vị trí lưu tệp trang frontend được tạo</div>
       </el-form-item>
-      <el-form-item label="生成api位置：">
-        <el-input class="form-width" v-model="storage.api" disabled placeholder="请输入"></el-input>
-        <div class="tip">生成前端api接口文件存放位置</div>
+      <el-form-item label="Vị trí tạo api:">
+        <el-input class="form-width" v-model="storage.api" disabled placeholder="Vui lòng nhập"></el-input>
+        <div class="tip">Vị trí lưu tệp API frontend được tạo</div>
       </el-form-item>
-      <el-form-item label="生成router位置：">
-        <el-input class="form-width" v-model="storage.router" disabled placeholder="请输入"></el-input>
-        <div class="tip">生成前端路由存放位置</div>
+      <el-form-item label="Vị trí tạo router:">
+        <el-input class="form-width" v-model="storage.router" disabled placeholder="Vui lòng nhập"></el-input>
+        <div class="tip">Vị trí lưu route frontend được tạo</div>
       </el-form-item>
     </el-form>
   </div>

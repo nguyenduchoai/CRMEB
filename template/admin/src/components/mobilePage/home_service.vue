@@ -14,11 +14,11 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'home_service',
-  cname: '悬浮按钮',
+  cname: 'Nút nổi',
   configName: 'c_home_service',
   icon: '#iconzujian-xuanfuanniu',
-  type: 2, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'customerService', // 外面匹配名称
+  type: 2, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'customerService', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -56,47 +56,47 @@ export default {
   data() {
     return {
       defaultConfig: {
-        cname: '悬浮按钮',
+        cname: 'Nút nổi',
         name: 'customerService',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
         },
-        titleLeft: '按钮设置',
-        titleRight: '位置设置',
+        titleLeft: 'Cài đặt nút',
+        titleRight: 'Cài đặt vị trí',
         buttonConfig: {
-          title: '按钮跳转',
+          title: 'Liên kết của nút',
           tabVal: 0,
           tabList: [
             {
-              name: '页面链接',
+              name: 'Liên kết trang',
             },
             {
-              name: '客服入口',
+              name: 'Lối vào CSKH',
             },
           ],
         },
         locationConfig: {
-          title: '展示位置',
+          title: 'Vị trí hiển thị',
           tabVal: 1,
           tabList: [
             {
-              name: '左',
+              name: 'Trái',
             },
             {
-              name: '右',
+              name: 'Phải',
             },
           ],
         },
         logoConfig: {
-          title: '建议：展示上传100*100px；',
+          title: 'Đề xuất: tải lên ảnh 100*100px;',
           url: '',
           link: '',
         },
-        // 页面间距
+        // Lề trang
         topConfig: {
-          title: '上下偏移',
+          title: 'Độ lệch dọc',
           val: 0,
           min: 0,
         },
@@ -104,7 +104,7 @@ export default {
       imgUrl: '',
       pageData: {},
       mTop: 0,
-      positions: 1, //展示位置
+      positions: 1, //Vị trí hiển thị
     };
   },
   mounted() {

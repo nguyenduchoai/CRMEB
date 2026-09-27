@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -14,7 +14,7 @@ use app\Request;
 use app\services\user\UserSignServices;
 
 /**
- * 用户签到
+ * Người dùng điểm danh
  * Class UserController
  * @package app\api\controller\v1\user
  */
@@ -32,7 +32,7 @@ class UserSignController
     }
 
     /**
-     * 签到 配置
+     * Điểm danh - Cấu hình
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -45,7 +45,7 @@ class UserSignController
     }
 
     /**
-     * 签到 列表
+     * Điểm danh - Danh sách
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -64,7 +64,7 @@ class UserSignController
     }
 
     /**
-     * 签到
+     * Điểm danh
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -74,7 +74,7 @@ class UserSignController
     public function sign_integral(Request $request)
     {
         if (sys_config('sign_status') == 0) {
-            return app('json')->fail('签到功能未开启');
+            return app('json')->fail('Chức năng điểm danh chưa được bật');
         }
         $uid = (int)$request->uid();
         $integral = $this->services->sign($uid);
@@ -82,7 +82,7 @@ class UserSignController
     }
 
     /**
-     * 签到用户信息
+     * Thông tin người dùng điểm danh
      * @param Request $request
      * @return mixed
      */
@@ -98,7 +98,7 @@ class UserSignController
     }
 
     /**
-     * 签到列表（年月）
+     * Danh sách điểm danh (theo năm tháng)
      * @param Request $request
      * @return mixed
      */
@@ -109,11 +109,11 @@ class UserSignController
     }
 
     /**
-     * 用户设置签到提醒
+     * Người dùng thiết lập nhắc điểm danh
      * @param Request $request
      * @param $status
      * @return \think\Response
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/9
      */

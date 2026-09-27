@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,14 +21,14 @@ class YiLianYun extends BasePrinter
 {
 
     /**
-     * 初始化
+     * Khởi tạo
      * @param array $config
      * @return mixed|void
      */
     protected function initialize(array $config){}
 
     /**
-     * 开始打印
+     * Bắt đầu in
      * @return bool|mixed|string
      * @throws \Exception
      */
@@ -59,7 +59,7 @@ class YiLianYun extends BasePrinter
     }
 
     /**
-     * 设置打印内容
+     * Đặt nội dung in
      * @param $content
      * @param int $times
      * @return YiLianYun
@@ -71,14 +71,14 @@ class YiLianYun extends BasePrinter
     }
 
 //    /**
-//     * 设置打印内容
+//     * Đặt nội dung in
 //     * @param array $config
 //     * @return YiLianYun
 //     */
 //    public function setPrinterContent(array $config): self
 //    {
 //        $printTime = date('Y-m-d H:i:s', time());
-//        $goodsStr = '<table><tr><td>商品名称</td><td>数量</td><td>单价</td><td>金额</td></tr>';
+//        $goodsStr = '<table><tr><td>Tên sản phẩm</td><td>Số lượng</td><td>Đơn giá</td><td>Thành tiền</td></tr>';
 //        $product = $config['product'];
 //        foreach ($product as $item) {
 //            $goodsStr .= '<tr>';
@@ -94,23 +94,23 @@ class YiLianYun extends BasePrinter
 //        $this->printerContent = <<<CONTENT
 //<FB><center> ** {$name} **</center></FB>
 //<FH2><FW2>----------------</FW2></FH2>
-//订单编号：{$orderInfo['order_id']}\r
-//打印时间: {$printTime} \r
-//付款时间: {$orderTime}\r
-//姓    名: {$orderInfo['real_name']}\r
-//电    话: {$orderInfo['user_phone']}\r
-//地    址: {$orderInfo['user_address']}\r
-//赠送积分: {$orderInfo['gain_integral']}\r
-//订单备注：{$orderInfo['mark']}\r
-//*************商品***************\r
+//Mã đơn hàng: {$orderInfo['order_id']}\r
+//Thời gian in: {$printTime} \r
+//Thời gian thanh toán: {$orderTime}\r
+//Họ tên: {$orderInfo['real_name']}\r
+//Điện thoại: {$orderInfo['user_phone']}\r
+//Địa chỉ: {$orderInfo['user_address']}\r
+//Điểm thưởng tặng: {$orderInfo['gain_integral']}\r
+//Ghi chú đơn hàng: {$orderInfo['mark']}\r
+//*************Sản phẩm***************\r
 //{$goodsStr}
 //********************************\r
 //<FH>
-//<LR>合计：￥{$orderInfo['total_price']},优惠: ￥{$orderInfo['coupon_price']}</LR>
-//<LR>邮费：￥{$orderInfo['pay_postage']},抵扣：￥{$orderInfo['deduction_price']}</LR>
-//<right>实际支付：￥{$orderInfo['pay_price']}</right>
+//<LR>Tổng cộng: ₫{$orderInfo['total_price']}, ưu đãi: ₫{$orderInfo['coupon_price']}</LR>
+//<LR>Phí vận chuyển: ₫{$orderInfo['pay_postage']}, khấu trừ: ₫{$orderInfo['deduction_price']}</LR>
+//<right>Thực tế thanh toán: ₫{$orderInfo['pay_price']}</right>
 //</FH>
-//<FS><center> ** 完 **</center></FS>
+//<FS><center> ** Hoàn tất **</center></FS>
 //CONTENT;
 //        return $this;
 //    }

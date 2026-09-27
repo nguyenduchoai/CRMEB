@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -19,7 +19,7 @@ use crmeb\exceptions\AdminException;
 /**
  * Class StoreDescriptionService
  * @package app\services\product\product
- * @method value($where, ?string $field = null) 获取字段
+ * @method value($where, ?string $field = null) Lấy trường
  */
 class StoreDescriptionServices extends BaseServices
 {
@@ -33,7 +33,7 @@ class StoreDescriptionServices extends BaseServices
     }
 
     /**
-     * 获取商品详情
+     * Lấy chi tiết sản phẩm
      * @param array $where
      * @return string
      */
@@ -45,7 +45,7 @@ class StoreDescriptionServices extends BaseServices
     }
 
     /**
-     * 保存商品详情
+     * Lưu chi tiết sản phẩm
      * @param int $id
      * @param string $description
      * @param int $type

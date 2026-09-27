@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,7 +21,7 @@ use app\model\product\product\StoreProductReply;
 class StoreProductReplyDao extends BaseDao
 {
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -30,7 +30,7 @@ class StoreProductReplyDao extends BaseDao
     }
 
     /**
-     * 后台评论列表
+     * Danh sách đánh giá ở trang quản trị
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -45,7 +45,7 @@ class StoreProductReplyDao extends BaseDao
     }
 
     /**
-     * 获取最近一条最好的评论
+     * Lấy đánh giá tốt nhất gần đây nhất
      * @param int $productId
      * @return array|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
@@ -61,7 +61,7 @@ class StoreProductReplyDao extends BaseDao
     }
 
     /**
-     * 评论条件
+     * Điều kiện đánh giá
      * @param int $id
      * @param int $type
      * @return \crmeb\basic\BaseModel|mixed|\think\Model
@@ -87,7 +87,7 @@ class StoreProductReplyDao extends BaseDao
     }
 
     /**
-     * 评论条数
+     * Số lượng đánh giá
      * @param int $id
      * @param int $type
      * @return int
@@ -98,7 +98,7 @@ class StoreProductReplyDao extends BaseDao
     }
 
     /**
-     * 评论内容
+     * Nội dung đánh giá
      * @param int $id
      * @param int $type
      * @return array

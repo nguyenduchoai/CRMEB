@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use app\services\agent\AgentLevelTaskServices;
 use think\facade\App;
 
 /**
- * 分销等级任务控制器
+ * Controller nhiệm vụ cấp độ CTV
  * Class AgentLevelTask
  * @package app\controller\admin\v1\agent
  */
@@ -34,7 +34,7 @@ class AgentLevelTask extends AuthController
     }
 
     /**
-     * 显示等级任务列表
+     * Hiển thị danh sách nhiệm vụ theo hạng
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -56,7 +56,7 @@ class AgentLevelTask extends AuthController
     }
 
     /**
-     * 等级任务添加表单
+     * Form thêm nhiệm vụ theo hạng
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
@@ -71,7 +71,7 @@ class AgentLevelTask extends AuthController
     }
 
     /**
-     * 保存等级任务
+     * Lưu nhiệm vụ theo hạng
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -102,7 +102,7 @@ class AgentLevelTask extends AuthController
     }
 
     /**
-     * 显示指定的资源
+     * Hiển thị resource được chỉ định
      * @param $id
      */
     public function read($id)
@@ -111,7 +111,7 @@ class AgentLevelTask extends AuthController
     }
 
     /**
-     * 等级任务修改表单
+     * Form sửa nhiệm vụ theo hạng
      * @param $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -122,7 +122,7 @@ class AgentLevelTask extends AuthController
     }
 
     /**
-     * 修改等级任务
+     * Sửa nhiệm vụ theo hạng
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -154,7 +154,7 @@ class AgentLevelTask extends AuthController
     }
 
     /**
-     * 删除等级任务
+     * Xóa nhiệm vụ cấp độ
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -181,7 +181,7 @@ class AgentLevelTask extends AuthController
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param int $id
      * @param string $status
      * @return mixed

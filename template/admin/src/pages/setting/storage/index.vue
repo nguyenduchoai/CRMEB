@@ -14,41 +14,41 @@
         </div>
         <el-alert closable v-if="currentTab == 1">
           <template slot="title">
-            <p>上传图片时会生成缩略图</p>
-            <p>未设置按照系统默认生成，系统默认：大图800*800，中图300*300，小图150*150</p>
-            <p>水印只在上传图片时生成，原图，大中小缩略图上都按照比例存在。</p>
-            <p>若上传图片时未开启水印，则该图在开启水印之后依旧无水印效果。</p>
+            <p>Ảnh thu nhỏ sẽ được tạo khi tải ảnh lên</p>
+            <p>Nếu không thiết lập sẽ tạo theo mặc định của hệ thống, mặc định: ảnh lớn 800*800, ảnh vừa 300*300, ảnh nhỏ 150*150</p>
+            <p>Watermark chỉ được tạo khi tải ảnh lên, và hiển thị theo tỷ lệ trên ảnh gốc cũng như ảnh thu nhỏ cỡ lớn, vừa, nhỏ.</p>
+            <p>Nếu khi tải ảnh lên chưa bật watermark, thì ảnh đó vẫn sẽ không có watermark kể cả sau khi bật watermark.</p>
           </template>
         </el-alert>
         <el-alert closable v-else>
           <template slot="title">
             <p v-if="currentTab == 2">
-              七牛云开通方法：<a href="https://doc.crmeb.com/single/v5/7792" target="_blank">点击查看</a>
+              Cách kích hoạt Qiniu Cloud:<a href="https://doc.crmeb.com/single/v5/7792" target="_blank">Nhấp để xem</a>
             </p>
             <p v-if="currentTab == 3">
-              阿里云oss开通方法：<a href="https://doc.crmeb.com/single/v5/7790" target="_blank">点击查看</a>
+              Cách kích hoạt Alibaba Cloud oss:<a href="https://doc.crmeb.com/single/v5/7790" target="_blank">Nhấp để xem</a>
             </p>
             <p v-if="currentTab == 4">
-              腾讯云cos开通方法：<a href="https://doc.crmeb.com/single/v5/7791" target="_blank">点击查看</a>
+              Cách kích hoạt Tencent Cloud cos:<a href="https://doc.crmeb.com/single/v5/7791" target="_blank">Nhấp để xem</a>
             </p>
             <p v-if="currentTab == 5">
-              京东云cos开通方法：<a href="https://doc.crmeb.com/single/v5/8522" target="_blank">点击查看</a>
+              Cách kích hoạt JD Cloud cos:<a href="https://doc.crmeb.com/single/v5/8522" target="_blank">Nhấp để xem</a>
             </p>
             <p v-if="currentTab == 6">
-              华为云cos开通方法：<a href="https://doc.crmeb.com/single/v5/8523" target="_blank">点击查看</a>
+              Cách kích hoạt Huawei Cloud cos:<a href="https://doc.crmeb.com/single/v5/8523" target="_blank">Nhấp để xem</a>
             </p>
             <p v-if="currentTab == 7">
-              天翼云cos开通方法：<a href="https://doc.crmeb.com/single/v5/8524" target="_blank">点击查看</a>
+              Cách kích hoạt Tianyi Cloud cos:<a href="https://doc.crmeb.com/single/v5/8524" target="_blank">Nhấp để xem</a>
             </p>
-            <p>第一步： 添加【存储空间】（空间名称不能重复）</p>
-            <p>第二步： 开启【使用状态】</p>
+            <p>Bước 1: Thêm [Không gian lưu trữ] (tên không gian không được trùng)</p>
+            <p>Bước 2: Bật [Trạng thái sử dụng]</p>
             <template v-if="currentTab == 2">
-              <p>第三步（必选）： 选择云存储空间列表上的修改【空间域名操作】</p>
-              <p>第四步（必选）： 选择云存储空间列表上的修改【CNAME配置】，打开后复制记录值到对应的平台解析</p>
+              <p>Bước 3 (bắt buộc): Trong danh sách không gian lưu trữ đám mây, chọn thao tác [Sửa tên miền không gian]</p>
+              <p>Bước 4 (bắt buộc): Trong danh sách không gian lưu trữ đám mây, chọn [Cấu hình CNAME], sau khi mở, sao chép giá trị bản ghi sang nền tảng tương ứng để phân giải tên miền</p>
             </template>
             <template v-else>
-              <p>第三步（可选）： 选择云存储空间列表上的修改【空间域名操作】</p>
-              <p>第四步（可选）： 选择云存储空间列表上的修改【CNAME配置】，打开后复制记录值到对应的平台解析</p>
+              <p>Bước 3 (tùy chọn): Trong danh sách không gian lưu trữ đám mây, chọn thao tác [Sửa tên miền không gian]</p>
+              <p>Bước 4 (tùy chọn): Trong danh sách không gian lưu trữ đám mây, chọn [Cấu hình CNAME], sau khi mở, sao chép giá trị bản ghi sang nền tảng tương ứng để phân giải tên miền</p>
             </template>
           </template>
         </el-alert>
@@ -58,23 +58,23 @@
       <el-card :bordered="false" shadow="never" class="ivu-mt">
         <el-row>
           <el-col :span="24">
-            <span class="save-type"> 存储方式： </span>
+            <span class="save-type"> Phương thức lưu trữ: </span>
             <el-radio-group v-model="formValidate.upload_type" @input="changeSave">
-              <el-radio label="1">本地存储</el-radio>
-              <el-radio label="2">七牛云存储</el-radio>
-              <el-radio label="3">阿里云存储</el-radio>
-              <el-radio label="4">腾讯云存储</el-radio>
-              <el-radio label="5">京东云存储</el-radio>
-              <el-radio label="6">华为云存储</el-radio>
-              <el-radio label="7">天翼云存储</el-radio>
+              <el-radio label="1">Lưu trữ cục bộ</el-radio>
+              <el-radio label="2">Lưu trữ Qiniu Cloud</el-radio>
+              <el-radio label="3">Lưu trữ Alibaba Cloud</el-radio>
+              <el-radio label="4">Lưu trữ Tencent Cloud</el-radio>
+              <el-radio label="5">Lưu trữ JD Cloud</el-radio>
+              <el-radio label="6">Lưu trữ Huawei Cloud</el-radio>
+              <el-radio label="7">Lưu trữ Tianyi Cloud</el-radio>
             </el-radio-group>
             <!-- <el-switch :active-value="1"  :inactive-value="0"
               v-model="localStorage"
               size="large"
               @change="addSwitch"
             >
-              <span slot="open">开启</span>
-              <span slot="close">关闭</span>
+              <span slot="open">Bật</span>
+              <span slot="close">Tắt</span>
              </el-switch> -->
           </el-col>
         </el-row>
@@ -82,15 +82,15 @@
       <el-card :bordered="false" shadow="never" class="ivu-mt">
         <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate">
           <div class="abbreviation">
-            <el-form-item label="是否开启缩略图：" label-width="110px">
+            <el-form-item label="Bật ảnh thu nhỏ:" label-width="110px">
               <el-switch
                 :active-value="1"
                 :inactive-value="0"
                 v-model="formValidate.image_thumb_status"
                 size="large"
               >
-                <span slot="open">开启</span>
-                <span slot="close">关闭</span>
+                <span slot="open">Bật</span>
+                <span slot="close">Tắt</span>
               </el-switch>
             </el-form-item>
             <div class="top" v-if="formValidate.image_thumb_status == 1">
@@ -99,25 +99,25 @@
                   <div class="img">
                     <img class="imgs" src="../../../assets/images/abbreviationBig.png" alt="" />
                   </div>
-                  <div>缩略大图</div>
+                  <div>Ảnh thu nhỏ cỡ lớn</div>
                 </div>
                 <div class="topRight">
-                  <el-form-item label="宽：">
+                  <el-form-item label="Rộng:">
                     <el-input
                       class="topIput"
                       type="number"
                       v-model="formValidate.thumb_big_width"
-                      placeholder="请输入宽度"
+                      placeholder="Vui lòng nhập chiều rộng"
                     >
                       <span slot="append">px</span>
                     </el-input>
                   </el-form-item>
-                  <el-form-item label="高：">
+                  <el-form-item label="Cao:">
                     <el-input
                       class="topIput"
                       type="number"
                       v-model="formValidate.thumb_big_height"
-                      placeholder="请输入高度"
+                      placeholder="Vui lòng nhập chiều cao"
                     >
                       <span slot="append">px</span>
                     </el-input>
@@ -129,25 +129,25 @@
                   <div class="img">
                     <img class="imgs" src="../../../assets/images/abbreviation.png" alt="" />
                   </div>
-                  <div>缩略中图</div>
+                  <div>Ảnh thu nhỏ cỡ vừa</div>
                 </div>
                 <div class="topRight">
-                  <el-form-item label="宽：">
+                  <el-form-item label="Rộng:">
                     <el-input
                       class="topIput"
                       type="number"
                       v-model="formValidate.thumb_mid_width"
-                      placeholder="请输入宽度"
+                      placeholder="Vui lòng nhập chiều rộng"
                     >
                       <span slot="append">px</span>
                     </el-input>
                   </el-form-item>
-                  <el-form-item label="高：">
+                  <el-form-item label="Cao:">
                     <el-input
                       type="number"
                       class="topIput"
                       v-model="formValidate.thumb_mid_height"
-                      placeholder="请输入高度"
+                      placeholder="Vui lòng nhập chiều cao"
                     >
                       <span slot="append">px</span>
                     </el-input>
@@ -159,25 +159,25 @@
                   <div class="img">
                     <img class="imgs" src="../../../assets/images/abbreviationSmall.png" alt="" />
                   </div>
-                  <div>缩略小图</div>
+                  <div>Ảnh thu nhỏ cỡ nhỏ</div>
                 </div>
                 <div class="topRight">
-                  <el-form-item label="宽：">
+                  <el-form-item label="Rộng:">
                     <el-input
                       class="topIput"
                       type="number"
                       v-model="formValidate.thumb_small_width"
-                      placeholder="请输入宽度"
+                      placeholder="Vui lòng nhập chiều rộng"
                     >
                       <span slot="append">px</span>
                     </el-input>
                   </el-form-item>
-                  <el-form-item label="高：">
+                  <el-form-item label="Cao:">
                     <el-input
                       class="topIput"
                       type="number"
                       v-model="formValidate.thumb_small_height"
-                      placeholder="请输入高度"
+                      placeholder="Vui lòng nhập chiều cao"
                     >
                       <span slot="append">px</span>
                     </el-input>
@@ -187,48 +187,48 @@
             </div>
             <el-divider />
             <div class="content mt20">
-              <el-form-item label="是否开启水印：" label-width="110px">
+              <el-form-item label="Bật watermark:" label-width="110px">
                 <el-switch
                   :active-value="1"
                   :inactive-value="0"
                   v-model="formValidate.image_watermark_status"
                   size="large"
                 >
-                  <span slot="open">开启</span>
-                  <span slot="close">关闭</span>
+                  <span slot="open">Bật</span>
+                  <span slot="close">Tắt</span>
                 </el-switch>
               </el-form-item>
               <div v-if="formValidate.image_watermark_status == 1">
-                <el-form-item label="类型：" label-width="110px">
+                <el-form-item label="Loại:" label-width="110px">
                   <el-radio-group v-model="formValidate.watermark_type">
-                    <el-radio :label="1">图片</el-radio>
-                    <el-radio :label="2">文字</el-radio>
+                    <el-radio :label="1">Hình ảnh</el-radio>
+                    <el-radio :label="2">Văn bản</el-radio>
                   </el-radio-group>
                 </el-form-item>
                 <div v-if="formValidate.watermark_type == 1">
                   <div class="flex">
-                    <el-form-item class="contentIput" label="透明度：" prop="name" label-width="110px">
+                    <el-form-item class="contentIput" label="Độ trong suốt:" prop="name" label-width="110px">
                       <el-input
                         class="topIput"
                         type="number"
                         v-model="formValidate.watermark_opacity"
-                        placeholder="请输入水印透明度"
+                        placeholder="Vui lòng nhập độ trong suốt của watermark"
                       >
                       </el-input>
                     </el-form-item>
-                    <el-form-item class="contentIput" label="倾斜度：" prop="mail" label-width="110px">
+                    <el-form-item class="contentIput" label="Độ nghiêng:" prop="mail" label-width="110px">
                       <el-input
                         class="topIput"
                         type="number"
                         v-model="formValidate.watermark_rotate"
-                        placeholder="请输入水印倾斜度"
+                        placeholder="Vui lòng nhập độ nghiêng của watermark"
                       >
                       </el-input>
                     </el-form-item>
                   </div>
                   <div class="flex">
-                    <el-form-item class="contentIput" label="图片：" prop="name" label-width="110px">
-                      <div class="picBox" v-db-click @click="modalPicTap('单选')">
+                    <el-form-item class="contentIput" label="Hình ảnh:" prop="name" label-width="110px">
+                      <div class="picBox" v-db-click @click="modalPicTap('Chọn một')">
                         <div class="pictrue" v-if="formValidate.watermark_image">
                           <img :src="formValidate.watermark_image" />
                         </div>
@@ -237,7 +237,7 @@
                         </div>
                       </div>
                     </el-form-item>
-                    <el-form-item class="contentIput" label="位置：" prop="mail" label-width="110px">
+                    <el-form-item class="contentIput" label="Vị trí:" prop="mail" label-width="110px">
                       <div class="conents">
                         <div class="positionBox">
                           <div
@@ -254,23 +254,23 @@
                     </el-form-item>
                   </div>
                   <div class="flex">
-                    <el-form-item class="contentIput" label="横坐标偏移量：" label-width="110px" prop="name">
+                    <el-form-item class="contentIput" label="Độ lệch trục X:" label-width="110px" prop="name">
                       <el-input
                         class="topIput"
                         type="number"
                         v-model="formValidate.watermark_x"
-                        placeholder="请输入水印横坐标偏移量"
+                        placeholder="Vui lòng nhập độ lệch trục X của watermark"
                         style="width: 240px"
                       >
                         <span slot="append">px</span>
                       </el-input>
                     </el-form-item>
-                    <el-form-item class="contentIput" label="纵坐标偏移量：" label-width="110px" prop="mail">
+                    <el-form-item class="contentIput" label="Độ lệch trục Y:" label-width="110px" prop="mail">
                       <el-input
                         class="topIput"
                         type="number"
                         v-model="formValidate.watermark_y"
-                        placeholder="请输入水印纵坐标偏移量"
+                        placeholder="Vui lòng nhập độ lệch trục Y của watermark"
                         style="width: 240px"
                       >
                         <span slot="append">px</span>
@@ -278,28 +278,28 @@
                     </el-form-item>
                   </div>
                 </div>
-                <!-- 水印类型为文字 -->
+                <!-- Loại hình mờ là chữ -->
                 <div v-else>
                   <div class="flex">
-                    <el-form-item class="contentIput" label="文字：" label-width="110px" prop="name">
-                      <el-input class="topIput" v-model="formValidate.watermark_text" placeholder="请输入水印文字">
+                    <el-form-item class="contentIput" label="Văn bản:" label-width="110px" prop="name">
+                      <el-input class="topIput" v-model="formValidate.watermark_text" placeholder="Vui lòng nhập văn bản watermark">
                       </el-input>
                     </el-form-item>
-                    <el-form-item class="contentIput" label="文字大小：" label-width="110px">
+                    <el-form-item class="contentIput" label="Cỡ chữ:" label-width="110px">
                       <el-input
                         class="topIput"
                         type="number"
                         v-model="formValidate.watermark_text_size"
-                        placeholder="请输入水印文字大小"
+                        placeholder="Vui lòng nhập cỡ chữ watermark"
                       >
                       </el-input>
                     </el-form-item>
                   </div>
                   <div class="flex">
-                    <el-form-item class="contentIput" label="字体颜色：" prop="name" label-width="110px">
+                    <el-form-item class="contentIput" label="Màu chữ:" prop="name" label-width="110px">
                       <el-color-picker v-model="formValidate.watermark_text_color"></el-color-picker>
                     </el-form-item>
-                    <el-form-item class="contentIput" label="位置：" prop="mail" label-width="110px">
+                    <el-form-item class="contentIput" label="Vị trí:" prop="mail" label-width="110px">
                       <div class="conents">
                         <div class="positionBox">
                           <div
@@ -316,32 +316,32 @@
                     </el-form-item>
                   </div>
                   <div class="flex">
-                    <el-form-item class="contentIput" label="字体旋转角度：" label-width="110px">
+                    <el-form-item class="contentIput" label="Góc xoay chữ:" label-width="110px">
                       <el-input
                         class="topIput"
                         type="number"
                         v-model="formValidate.watermark_text_angle"
-                        placeholder="请输入水印字体旋转角度"
+                        placeholder="Vui lòng nhập góc xoay chữ của watermark"
                       >
                       </el-input>
                     </el-form-item>
-                    <el-form-item class="contentIput" label="横坐标偏移量：" label-width="110px">
+                    <el-form-item class="contentIput" label="Độ lệch trục X:" label-width="110px">
                       <el-input
                         class="topIput"
                         type="number"
                         v-model="formValidate.watermark_x"
-                        placeholder="请输入水印横坐标偏移量"
+                        placeholder="Vui lòng nhập độ lệch trục X của watermark"
                       >
                         <span slot="append">px</span>
                       </el-input>
                     </el-form-item>
                   </div>
-                  <el-form-item class="contentIput" label="纵坐标偏移量：" prop="mail" label-width="110px">
+                  <el-form-item class="contentIput" label="Độ lệch trục Y:" prop="mail" label-width="110px">
                     <el-input
                       class="topIput"
                       type="number"
                       v-model="formValidate.watermark_y"
-                      placeholder="请输入水印纵坐标偏移量"
+                      placeholder="Vui lòng nhập độ lệch trục Y của watermark"
                     >
                       <span slot="append">px</span>
                     </el-input>
@@ -350,21 +350,21 @@
               </div>
             </div>
             <el-form-item>
-              <el-button type="primary" v-db-click @click="handleSubmit('formValidate')">保存</el-button>
+              <el-button type="primary" v-db-click @click="handleSubmit('formValidate')">Lưu</el-button>
             </el-form-item>
           </div>
         </el-form>
       </el-card>
     </div>
-    <!-- 缩略图配置 -->
+    <!-- Cấu hình ảnh thu nhỏ -->
     <div class="pt10" v-else-if="currentTab == 10"></div>
     <div class="pt10" v-else>
       <el-card :bordered="false" shadow="never" class="ivu-mt">
         <el-row class="mb20">
           <el-col :span="24">
-            <el-button type="primary" v-db-click @click="addStorageBtn">添加存储空间</el-button>
-            <el-button type="success" v-db-click @click="synchro" style="margin-left: 20px">同步存储空间</el-button>
-            <el-button v-db-click @click="addConfigBtn" style="float: right">修改配置信息</el-button>
+            <el-button type="primary" v-db-click @click="addStorageBtn">Thêm không gian lưu trữ</el-button>
+            <el-button type="success" v-db-click @click="synchro" style="margin-left: 20px">Đồng bộ không gian lưu trữ</el-button>
+            <el-button v-db-click @click="addConfigBtn" style="float: right">Sửa thông tin cấu hình</el-button>
           </el-col>
         </el-row>
         <el-table
@@ -373,25 +373,25 @@
           class="mt14"
           v-loading="loading"
           highlight-current-row
-          no-userFrom-text="暂无数据"
-          no-filtered-userFrom-text="暂无筛选结果"
+          no-userFrom-text="Chưa có dữ liệu"
+          no-filtered-userFrom-text="Không có kết quả phù hợp"
         >
-          <el-table-column label="储存空间名称" min-width="120">
+          <el-table-column label="Tên không gian lưu trữ" min-width="120">
             <template slot-scope="scope">
               <span>{{ scope.row.name }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="区域" min-width="90">
+          <el-table-column label="Khu vực" min-width="90">
             <template slot-scope="scope">
               <span>{{ scope.row._region }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="空间域名" min-width="130">
+          <el-table-column label="Tên miền không gian lưu trữ" min-width="130">
             <template slot-scope="scope">
               <span>{{ scope.row.domain }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="使用状态" min-width="90">
+          <el-table-column label="Trạng thái sử dụng" min-width="90">
             <template slot-scope="scope">
               <el-switch
                 class="defineSwitch"
@@ -401,31 +401,31 @@
                 :value="scope.row.status"
                 @change="changeSwitch(scope.row, index)"
                 size="large"
-                active-text="开启"
-                inactive-text="关闭"
+                active-text="Bật"
+                inactive-text="Tắt"
               >
               </el-switch>
             </template>
           </el-table-column>
-          <el-table-column label="创建时间" min-width="130">
+          <el-table-column label="Thời gian tạo" min-width="130">
             <template slot-scope="scope">
               <span>{{ scope.row._add_time }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="更新时间" min-width="130">
+          <el-table-column label="Thời gian cập nhật" min-width="130">
             <template slot-scope="scope">
               <span>{{ scope.row._update_time }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="操作" fixed="right" width="220">
+          <el-table-column label="Thao tác" fixed="right" width="220">
             <template slot-scope="scope">
               <template v-if="scope.row.domain && scope.row.domain != scope.row.cname">
-                <span class="btn" v-db-click @click="config(scope.row)">CNAME配置</span>
+                <span class="btn" v-db-click @click="config(scope.row)">Cấu hình CNAME</span>
                 <el-divider direction="vertical"></el-divider>
               </template>
-              <span class="btn" v-db-click @click="edit(scope.row)">修改空间域名</span>
+              <span class="btn" v-db-click @click="edit(scope.row)">Sửa tên miền không gian lưu trữ</span>
               <el-divider direction="vertical"></el-divider>
-              <span class="btn" v-db-click @click="del(scope.row, '删除该数据', scope.$index)">删除</span>
+              <span class="btn" v-db-click @click="del(scope.row, 'Xóa dữ liệu này', scope.$index)">Xóa</span>
             </template>
           </el-table-column>
         </el-table>
@@ -440,17 +440,17 @@
         </div>
       </el-card>
     </div>
-    <el-dialog :visible.sync="configuModal" title="CNAME配置" width="570px">
+    <el-dialog :visible.sync="configuModal" title="Cấu hình CNAME" width="570px">
       <div>
-        <div class="confignv"><span class="configtit">主机记录：</span>{{ configData.domain }}</div>
-        <div class="confignv"><span class="configtit">记录类型：</span>CNAME</div>
+        <div class="confignv"><span class="configtit">Bản ghi host:</span>{{ configData.domain }}</div>
+        <div class="confignv"><span class="configtit">Loại bản ghi:</span>CNAME</div>
         <div class="confignv">
-          <span class="configtit">记录值：</span>{{ configData.cname }}
-          <span class="copy copy-data" v-db-click @click="insertCopy(configData.cname)">复制</span>
+          <span class="configtit">Giá trị bản ghi:</span>{{ configData.cname }}
+          <span class="copy copy-data" v-db-click @click="insertCopy(configData.cname)">Sao chép</span>
         </div>
       </div>
     </el-dialog>
-    <el-dialog :visible.sync="modalPic" width="950px" title="上传商品图" :close-on-click-modal="false">
+    <el-dialog :visible.sync="modalPic" width="950px" title="Tải lên ảnh sản phẩm" :close-on-click-modal="false">
       <uploadPictures
         :isChoice="isChoice"
         @getPic="getPic"
@@ -485,7 +485,7 @@ export default {
     return {
       modalPic: false,
       saveType: 0,
-      isChoice: '单选',
+      isChoice: 'Chọn một',
       gridBtn: {
         xl: 4,
         lg: 8,
@@ -517,28 +517,28 @@ export default {
         watermark_position: 1,
       },
       boxs: [
-        { content: '左上', id: 1 },
-        { content: '上', id: 2 },
-        { content: '右上', id: 3 },
-        { content: '左中', id: 4 },
-        { content: '中', id: 5 },
-        { content: '右中', id: 6 },
-        { content: '左下', id: 7 },
-        { content: '下', id: 8 },
-        { content: '右下', id: 9 },
+        { content: 'Trên trái', id: 1 },
+        { content: 'Lên', id: 2 },
+        { content: 'Trên phải', id: 3 },
+        { content: 'Giữa trái', id: 4 },
+        { content: 'Chính giữa', id: 5 },
+        { content: 'Giữa phải', id: 6 },
+        { content: 'Dưới trái', id: 7 },
+        { content: 'Xuống', id: 8 },
+        { content: 'Dưới phải', id: 9 },
       ],
       ruleValidate: {},
       configuModal: false,
       configData: '',
       headerList: [
-        { label: '储存配置', value: '1' },
-        { label: '七牛云储存', value: '2' },
-        { label: '阿里云储存', value: '3' },
-        { label: '腾讯云储存', value: '4' },
-        { label: '京东云储存', value: '5' },
-        { label: '华为云储存', value: '6' },
-        { label: '天翼云储存', value: '7' },
-        // { label: "缩略图配置", value: "10" },
+        { label: 'Cấu hình lưu trữ', value: '1' },
+        { label: 'Lưu trữ Qiniu Cloud', value: '2' },
+        { label: 'Lưu trữ Alibaba Cloud', value: '3' },
+        { label: 'Lưu trữ Tencent Cloud', value: '4' },
+        { label: 'Lưu trữ JD Cloud', value: '5' },
+        { label: 'Lưu trữ Huawei Cloud', value: '6' },
+        { label: 'Lưu trữ Tianyi Cloud', value: '7' },
+        // { label: "Cấu hình ảnh thu nhỏ", value: "10" },
       ],
 
       total: 0,
@@ -577,10 +577,10 @@ export default {
     insertCopy(text) {
       this.$copyText(text)
         .then((message) => {
-          this.$message.success('复制成功');
+          this.$message.success('Sao chép thành công');
         })
         .catch((err) => {
-          this.$message.error('复制失败');
+          this.$message.error('Sao chép thất bại');
         });
     },
     changeSave(type) {
@@ -610,7 +610,7 @@ export default {
         this.postMessage(this.formValidate);
       }
     },
-    //保存接口
+    //API lưu
     postMessage(data) {
       positionPostApi(data)
         .then((res) => {
@@ -620,11 +620,11 @@ export default {
           this.$message.error(err.msg);
         });
     },
-    // 选择图片
+    // Chọn ảnh
     modalPicTap() {
       this.modalPic = true;
     },
-    // 选中图片
+    // Ảnh đã chọn
     getPic(pc) {
       this.formValidate.watermark_image = pc.att_dir;
       this.modalPic = false;
@@ -633,7 +633,7 @@ export default {
       this.configuModal = true;
       this.configData = row;
     },
-    //同步储存空间
+    //Đồng bộ dung lượng lưu trữ
     synchro() {
       storageSynchApi(this.currentTab)
         .then((res) => {
@@ -644,19 +644,19 @@ export default {
           this.$message.error(err.msg);
         });
     },
-    // 添加存储空间
+    // Thêm không gian lưu trữ
     addStorageBtn() {
       this.$modalForm(addStorageApi(this.currentTab)).then(() => {
         this.getlist();
       });
     },
-    // 修改配置信息
+    // Sửa thông tin cấu hình
     addConfigBtn() {
       this.$modalForm(addConfigApi(this.currentTab)).then(() => {
         this.getlist();
       });
     },
-    //修改空间域名
+    //Sửa tên miền không gian lưu trữ
     edit(row) {
       this.$modalForm(editStorageApi(row.id)).then(() => {
         this.getlist();
@@ -665,11 +665,11 @@ export default {
     changeSwitch(row, item) {
       return new Promise((resolve) => {
         this.$msgbox({
-          title: '切换状态',
-          message: '您确认要切换使用状态吗',
+          title: 'Chuyển trạng thái',
+          message: 'Bạn có chắc chắn muốn chuyển trạng thái sử dụng không',
           showCancelButton: true,
-          cancelButtonText: '取消',
-          confirmButtonText: '确定',
+          cancelButtonText: 'Hủy',
+          confirmButtonText: 'Xác nhận',
           iconClass: 'el-icon-warning',
           confirmButtonClass: 'btn-custom-cancel',
         })
@@ -728,7 +728,7 @@ export default {
           this.$message.error(err.msg);
         });
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,

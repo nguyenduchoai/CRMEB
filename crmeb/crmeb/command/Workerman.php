@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -55,11 +55,11 @@ class Workerman extends Command
 
     protected function configure()
     {
-        // 指令配置
+        // Cấu hình lệnh (command)
         $this->setName('workerman')
             ->addArgument('status', Argument::REQUIRED, 'start/stop/reload/status/connections')
             ->addArgument('server', Argument::OPTIONAL, 'admin/chat/channel')
-            ->addOption('d', null, Option::VALUE_NONE, 'daemon（守护进程）方式启动')
+            ->addOption('d', null, Option::VALUE_NONE, 'Khởi động ở chế độ daemon (tiến trình nền)')
             ->setDescription('start/stop/restart workerman');
     }
 
@@ -89,12 +89,12 @@ class Workerman extends Command
         $confing['wss_open'] = 0;
         $confing['wss_local_cert'] = $sslConfig['wssLocalCert'] ?? '';
         $confing['wss_local_pk'] = $sslConfig['wssLocalpk'] ?? '';
-        // 证书最好是申请的证书
+        // Chứng chỉ tốt nhất nên là chứng chỉ đã đăng ký (xin cấp)
         if ($confing['wss_open']) {
             $context = [
                 'ssl' => [
-                    // 请使用绝对路径
-                    'local_cert' => realpath('public' . $confing['wss_local_cert']), // 也可以是crt文件
+                    // Vui lòng dùng đường dẫn tuyệt đối
+                    'local_cert' => realpath('public' . $confing['wss_local_cert']), // Cũng có thể là file crt
                     'local_pk' => realpath('public' . $confing['wss_local_pk']),
                     'verify_peer' => false,
                 ]
@@ -106,7 +106,7 @@ class Workerman extends Command
         Worker::$logFile = app()->getRootPath() . 'runtime/workerman.log';
         if (!$server || $server == 'admin') {
             var_dump('admin');
-            //创建 admin 长连接服务
+            //Tạo service kết nối lâu dài cho admin
             $this->workerServer = new Worker($this->config['admin']['protocol'] . '://' . $this->config['admin']['ip'] . ':' . $this->config['admin']['port'], $context);
             $this->workerServer->count = $this->config['admin']['serverCount'];
             if ($confing['wss_open']) {
@@ -116,7 +116,7 @@ class Workerman extends Command
 
         if (!$server || $server == 'chat') {
             var_dump('chat');
-            //创建 h5 chat 长连接服务
+            //Tạo service kết nối lâu dài cho h5 chat
             $this->chatWorkerServer = new Worker($this->config['chat']['protocol'] . '://' . $this->config['chat']['ip'] . ':' . $this->config['chat']['port'], $context);
             $this->chatWorkerServer->count = $this->config['chat']['serverCount'];
             if ($confing['wss_open']) {
@@ -126,7 +126,7 @@ class Workerman extends Command
 
         if (!$server || $server == 'channel') {
             var_dump('channel');
-            //创建内部通讯服务
+            //Tạo service giao tiếp nội bộ
             $this->channelServer = new Server($this->config['channel']['ip'], $this->config['channel']['port']);
         }
         $this->bindHandle();
@@ -141,13 +141,13 @@ class Workerman extends Command
     {
         if (!is_null($this->workerServer)) {
             $server = new WorkermanService($this->workerServer, $this->channelServer);
-            // 连接时回调
+            // Callback khi kết nối
             $this->workerServer->onConnect = [$server, 'onConnect'];
-            // 收到客户端信息时回调
+            // Callback khi nhận thông tin từ client
             $this->workerServer->onMessage = [$server, 'onMessage'];
-            // 进程启动后的回调
+            // Callback sau khi process khởi động
             $this->workerServer->onWorkerStart = [$server, 'onWorkerStart'];
-            // 断开时触发的回调
+            // Callback được kích hoạt khi ngắt kết nối
             $this->workerServer->onClose = [$server, 'onClose'];
         }
 

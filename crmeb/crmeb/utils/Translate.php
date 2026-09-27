@@ -6,7 +6,7 @@ use crmeb\exceptions\ApiException;
 use Volc\Base\V4Curl;
 
 /**
- * 机器翻译
+ * Dịch máy
  */
 class Translate extends V4Curl
 {

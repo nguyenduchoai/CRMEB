@@ -17,7 +17,7 @@ class Utility
     }
 
     /**
-     * 加密数据
+     * Mã hóa dữ liệu
      * @param string $plaintext
      * @param int $padding
      * @return string

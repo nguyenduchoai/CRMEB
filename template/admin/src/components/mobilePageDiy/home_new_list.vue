@@ -35,11 +35,11 @@ export default {
       }
     },
   },
-  cname: '新闻列表',
+  cname: 'Danh sách tin tức',
   icon: 'iconwenzhangliebiao1',
   configName: 'c_new_list',
-  type: 0, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'articleList', // 外面匹配名称
+  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'articleList', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -76,7 +76,7 @@ export default {
   data() {
     return {
       list: [],
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'articleList',
         timestamp: this.num,
@@ -85,10 +85,10 @@ export default {
         },
         numConfig: {
           val: 3,
-          title: '文章数量',
+          title: 'Số lượng bài viết',
         },
         selectConfig: {
-          title: '文章分类',
+          title: 'Danh mục bài viết',
           activeValue: '',
           list: [
             {
@@ -102,26 +102,26 @@ export default {
           ],
         },
         selectList: {
-          title: '文章列表',
+          title: 'Danh sách bài viết',
           list: [],
         },
         listStyle: {
           cname: 'listStyle',
-          title: '文本位置',
+          title: 'Vị trí văn bản',
           type: 0,
           list: [
             {
-              val: '居左',
+              val: 'Căn trái',
               icon: 'icondoc_left',
             },
             {
-              val: '居右',
+              val: 'Căn phải',
               icon: 'icondoc_right',
             },
           ],
         },
         bgColor: {
-          title: '背景颜色',
+          title: 'Màu nền',
           default: [
             {
               item: '#fff',
@@ -134,47 +134,47 @@ export default {
           ],
         },
         bgStyle: {
-          title: '背景样式',
+          title: 'Kiểu nền',
           name: 'bgStyle',
           type: 0,
           list: [
             {
-              val: '直角',
+              val: 'Góc vuông',
               icon: 'iconPic_square',
             },
             {
-              val: '圆角',
+              val: 'Bo góc',
               icon: 'iconPic_fillet',
             },
           ],
         },
         conStyle: {
-          title: '内容样式',
+          title: 'Kiểu nội dung',
           name: 'conStyle',
           type: 0,
           list: [
             {
-              val: '直角',
+              val: 'Góc vuông',
               icon: 'iconPic_square',
             },
             {
-              val: '圆角',
+              val: 'Bo góc',
               icon: 'iconPic_fillet',
             },
           ],
         },
         prConfig: {
-          title: '背景边距',
+          title: 'Lề nền',
           val: 0,
           min: 0,
         },
         itemConfig: {
-          title: '文章间距',
+          title: 'Khoảng cách bài viết',
           val: 0,
           min: 0,
         },
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },
@@ -224,7 +224,7 @@ export default {
         } else {
           this.list = [
             {
-              title: '文章标题文章标题文章标题文章 标题文章标题',
+              title: 'Tiêu đề bài viết tiêu đề bài viết tiêu đề bài viết tiêu đề bài viết',
               add_time: '1621474811',
               type: 'noList',
             },

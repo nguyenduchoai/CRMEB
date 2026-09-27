@@ -1,19 +1,19 @@
 <template>
-  <el-dialog :visible.sync="modals" width="720px" title="订单发送货" class="order_box" :show-close="true">
+  <el-dialog :visible.sync="modals" width="720px" title="Thực hiện giao đơn hàng" class="order_box" :show-close="true">
     <el-form ref="formItem" :model="formItem" label-width="100px" @submit.native.prevent>
-      <el-form-item label="选择类型：">
+      <el-form-item label="Chọn loại:">
         <el-radio-group v-model="formItem.type" @input="changeRadio">
-          <el-radio label="1">打印电子面单</el-radio>
-          <el-radio label="2">送货</el-radio>
-          <el-radio label="3">虚拟</el-radio>
+          <el-radio label="1">In vận đơn điện tử</el-radio>
+          <el-radio label="2">Cửa hàng tự giao</el-radio>
+          <el-radio label="3">Hàng ảo</el-radio>
         </el-radio-group>
       </el-form-item>
       <div v-show="formItem.type === '1'">
-        <el-form-item label="快递公司：">
+        <el-form-item label="Đơn vị vận chuyển:">
           <el-select
             v-model="formItem.delivery_name"
             filterable
-            placeholder="请选择快递公司"
+            placeholder="Vui lòng chọn đơn vị vận chuyển"
             style="width: 80%"
             @change="expressChange"
           >
@@ -26,10 +26,10 @@
           </el-select>
         </el-form-item>
         <template v-if="formItem.type === '1'">
-          <el-form-item label="电子面单：" class="express_temp_id">
+          <el-form-item label="Vận đơn điện tử:" class="express_temp_id">
             <el-select
               v-model="formItem.express_temp_id"
-              placeholder="请选择电子面单"
+              placeholder="Vui lòng chọn vận đơn điện tử"
               style="width: 80%"
               @change="expressTempChange"
             >
@@ -40,24 +40,24 @@
                 :label="item.title"
               ></el-option>
             </el-select>
-            <el-button v-if="formItem.express_temp_id" type="text" v-db-click @click="preview">预览</el-button>
+            <el-button v-if="formItem.express_temp_id" type="text" v-db-click @click="preview">Xem trước</el-button>
           </el-form-item>
-          <el-form-item label="寄件人姓名：">
-            <el-input v-model="formItem.to_name" placeholder="请输入寄件人姓名" style="width: 80%"></el-input>
+          <el-form-item label="Họ tên người gửi:">
+            <el-input v-model="formItem.to_name" placeholder="Vui lòng nhập họ tên người gửi" style="width: 80%"></el-input>
           </el-form-item>
-          <el-form-item label="寄件人电话：">
-            <el-input v-model="formItem.to_tel" placeholder="请输入寄件人电话" style="width: 80%"></el-input>
+          <el-form-item label="Số điện thoại người gửi:">
+            <el-input v-model="formItem.to_tel" placeholder="Vui lòng nhập số điện thoại người gửi" style="width: 80%"></el-input>
           </el-form-item>
-          <el-form-item label="寄件人地址：">
-            <el-input v-model="formItem.to_addr" placeholder="请输入寄件人地址" style="width: 80%"></el-input>
+          <el-form-item label="Địa chỉ người gửi:">
+            <el-input v-model="formItem.to_addr" placeholder="Vui lòng nhập địa chỉ người gửi" style="width: 80%"></el-input>
           </el-form-item>
         </template>
       </div>
       <div v-show="formItem.type === '2'">
-        <el-form-item label="送货人：">
+        <el-form-item label="Người giao hàng:">
           <el-select
             v-model="formItem.sh_delivery"
-            placeholder="请选择送货人"
+            placeholder="Vui lòng chọn người giao hàng"
             style="width: 80%"
             @change="shDeliveryChange"
           >
@@ -71,20 +71,20 @@
         </el-form-item>
       </div>
       <div v-show="formItem.type === '3'">
-        <el-form-item label="备注：">
+        <el-form-item label="Ghi chú:">
           <el-input
             v-model="formItem.fictitious_content"
             type="textarea"
             :autosize="{ minRows: 2, maxRows: 5 }"
-            placeholder="备注"
+            placeholder="Ghi chú"
             style="width: 80%"
           ></el-input>
         </el-form-item>
       </div>
     </el-form>
     <div slot="footer">
-      <el-button v-db-click @click="cancel">取消</el-button>
-      <el-button type="primary" v-db-click @click="putSend">提交</el-button>
+      <el-button v-db-click @click="cancel">Hủy</el-button>
+      <el-button type="primary" v-db-click @click="putSend">Gửi</el-button>
     </div>
     <div ref="viewer" v-viewer v-show="temp">
       <img :src="temp.pic" style="display: none" />
@@ -190,7 +190,7 @@ export default {
         fictitious_content: '',
       };
     },
-    // 物流公司列表
+    // Danh sách đơn vị vận chuyển
     getList() {
       getExpressData(1)
         .then(async (res) => {
@@ -202,7 +202,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 提交
+    // Gửi
     putSend(name) {
       let data = Object.assign(this.formItem);
       let arr = [];
@@ -218,17 +218,17 @@ export default {
       }
       if (this.formItem.type === '1') {
         if (this.formItem.delivery_name === '') {
-          return this.$message.error('快递公司不能为空');
+          return this.$message.error('Đơn vị vận chuyển không được để trống');
         } else if (this.formItem.express_temp_id === '') {
-          return this.$message.error('电子面单不能为空');
+          return this.$message.error('Vận đơn điện tử không được để trống');
         } else if (this.formItem.to_name === '') {
-          return this.$message.error('寄件人姓名不能为空');
+          return this.$message.error('Họ tên người gửi không được để trống');
         } else if (this.formItem.to_tel === '') {
-          return this.$message.error('寄件人电话不能为空');
+          return this.$message.error('Số điện thoại người gửi không được để trống');
         } else if (!/^1(3|4|5|7|8|9|6)\d{9}$/i.test(this.formItem.to_tel)) {
-          return this.$message.error('请输入正确的手机号码');
+          return this.$message.error('Vui lòng nhập đúng số điện thoại');
         } else if (this.formItem.to_addr === '') {
-          return this.$message.error('寄件人地址不能为空');
+          return this.$message.error('Địa chỉ người gửi không được để trống');
         }
       }
       if (this.formItem.type === '2') {
@@ -236,7 +236,7 @@ export default {
           this.formItem.express_temp_id = '';
         }
         if (this.formItem.sh_delivery === '') {
-          return this.$message.error('送货人不能为空');
+          return this.$message.error('Người giao hàng không được để trống');
         }
       }
       otherBatchDelivery(data)
@@ -254,7 +254,7 @@ export default {
       this.modals = false;
       this.reset();
     },
-    // 电子面单列表
+    // Danh sách vận đơn điện tử
     expressChange(value) {
       let expressItem = this.express.find((item) => {
         return item.value === value;
@@ -272,7 +272,7 @@ export default {
           .then((res) => {
             this.expressTemp = res.data;
             if (!res.data.length) {
-              this.$message.error('请配置你所选快递公司的电子面单');
+              this.$message.error('Vui lòng cấu hình vận đơn điện tử cho đơn vị vận chuyển bạn đã chọn');
             }
           })
           .catch((err) => {

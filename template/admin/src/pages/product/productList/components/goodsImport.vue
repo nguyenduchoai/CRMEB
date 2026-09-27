@@ -1,11 +1,11 @@
-<!-- 商品导入 -->
+<!-- Nhập sản phẩm -->
 <template>
   <div class="goods-import">
-    <!-- 下载模板 -->
+    <!-- Tải mẫu xuống -->
     <div class="download acea-row row-middle">
-      <span>上传前请先按Excel模板中的格式编辑内容</span>
+      <span>Trước khi tải lên, vui lòng chỉnh sửa nội dung theo định dạng trong mẫu Excel</span>
       <img src="@/assets/images/excel-icon.png" alt="" />
-      <a href="/product_migration.xlsx" download class="download-text cup">下载Excel模板</a>
+      <a href="/product_migration.xlsx" download class="download-text cup">Tải xuống mẫu Excel</a>
     </div>
 
     <div class="goods-upload mt20">
@@ -23,49 +23,48 @@
       >
         <template>
           <img class="el-upload-dragger__icon mb20" src="@/assets/images/upload-icon.png" alt="" />
-          <div class="el-upload__text">将文件拖到此处，或<em>点击添加</em></div>
-          <div class="el-upload__trip">支持 .xls，.xlsx，限10M以内</div>
+          <div class="el-upload__text">Kéo tệp vào đây, hoặc<em>nhấn để thêm</em></div>
+          <div class="el-upload__trip">Hỗ trợ .xls, .xlsx, tối đa 10M</div>
         </template>
       </el-upload>
       <div v-show="fileUrl && !importStatus" class="file-info">
         <img class="el-upload-dragger__icon mb20" src="@/assets/images/upload-icon.png" alt="" />
         <div class="el-upload__text">{{ fileName }}</div>
         <div class="flex mt12" v-if="fileUrl && !importLoading">
-          <div class="active-btn" @click="selectFile">重新上传</div>
-          <div class="active-btn" @click="fileUrl = ''">删除</div>
+          <div class="active-btn" @click="selectFile">Tải lên lại</div>
+          <div class="active-btn" @click="fileUrl = ''">Xóa</div>
         </div>
         <div class="el-upload__trip" v-if="importLoading">
-          正在导入，您可关闭当前弹窗，稍候可在列表查看导入结果
+          Đang nhập, bạn có thể đóng cửa sổ này, lát nữa có thể xem kết quả nhập trong danh sách
           <i class="el-icon-loading"></i>
         </div>
-        <el-button v-else class="btn-import" type="primary" size="small" @click="importGoods">立即导入</el-button>
+        <el-button v-else class="btn-import" type="primary" size="small" @click="importGoods">Nhập ngay</el-button>
       </div>
       <div v-show="fileUrl && importStatus" class="file-info">
         <img class="el-upload-dragger__icon mb20" :src="statusImage" alt="" />
         <div class="el-upload__text">
-          共导入 {{ resultData.all }} 个，成功 {{ resultData.success }} 个，失败 {{ resultData.fail }} 跳过
-          {{ resultData.jump }} 个
+          Đã nhập tổng cộng {{ resultData.all }} mục, thành công {{ resultData.success }} mục, thất bại {{ resultData.fail }} mục, bỏ qua {{ resultData.jump }} mục
         </div>
         <div class="el-upload__trip" v-if="resultData.fail > 0">
-          您可以下载失败数据，修改后再重新导入 <span class="active-btn" @click="downloadFailData">下载失败数据</span>
+          Bạn có thể tải xuống dữ liệu thất bại, chỉnh sửa rồi nhập lại <span class="active-btn" @click="downloadFailData">Tải xuống dữ liệu thất bại</span>
         </div>
         <div>
-          <el-button class="btn-import" size="small" @click="selectFile">再次导入</el-button>
-          <el-button type="primary" class="btn-import" @click="close">完成</el-button>
+          <el-button class="btn-import" size="small" @click="selectFile">Nhập lại</el-button>
+          <el-button type="primary" class="btn-import" @click="close">Hoàn thành</el-button>
         </div>
       </div>
     </div>
-    <!-- 导入规则 -->
+    <!-- Quy tắc nhập -->
     <div class="import-rule mt20">
-      <div class="rule-title">导入规则</div>
-      <!-- 1. 请先下载模板，在模板中按字段填写信息，然后上传该文件。
-2. 导入未完成之前，请勿关闭页面，否则可能数据错误。
-3. 文件大小不超过10MB。
-4. 限制导入10000行记录，超出部分请分多次导入。 -->
-      <div class="rule-text">1. 请先下载模板，在模板中按字段填写信息，然后上传该文件。</div>
-      <div class="rule-text">2. 导入未完成之前，请勿关闭页面，否则可能数据错误。</div>
-      <div class="rule-text">3. 文件大小不超过10MB。</div>
-      <div class="rule-text">4. 限制导入10000行记录，超出部分请分多次导入。</div>
+      <div class="rule-title">Quy tắc nhập</div>
+      <!-- 1. Vui lòng tải mẫu xuống trước, điền thông tin vào mẫu theo từng trường, sau đó tải file này lên.
+2. Trước khi nhập xong, vui lòng không đóng trang, nếu không dữ liệu có thể bị lỗi.
+3. Kích thước file không vượt quá 10MB.
+4. Giới hạn nhập 10000 dòng bản ghi, phần vượt quá vui lòng nhập nhiều lần. -->
+      <div class="rule-text">1. Vui lòng tải xuống mẫu trước, điền thông tin theo các trường trong mẫu, sau đó tải tệp lên.</div>
+      <div class="rule-text">2. Không đóng trang khi chưa nhập xong, nếu không dữ liệu có thể bị lỗi.</div>
+      <div class="rule-text">3. Kích thước tệp không quá 10MB.</div>
+      <div class="rule-text">4. Giới hạn nhập 10000 dòng, phần vượt quá vui lòng chia thành nhiều lần nhập.</div>
     </div>
   </div>
 </template>
@@ -106,16 +105,16 @@ export default {
           this.statusImage = require('@/assets/images/file-success.png');
         }
       },
-      deep: true, // 默认值是 false，代表是否深度监听
+      deep: true, // Giá trị mặc định là false, đại diện cho việc có theo dõi sâu hay không
     },
   },
   mounted() {},
   methods: {
     fileChange(file, fileList) {
       if (isXlsUpload(file)) {
-        // 限制10M
+        // Giới hạn 10M
         if (file.size >= 10485760) {
-          this.$message.error('文件大小不能超过10MB');
+          this.$message.error('Kích thước tệp không được vượt quá 10MB');
           return false;
         } else {
           this.fileName = file.name;
@@ -127,7 +126,7 @@ export default {
     selectFile() {
       this.importStatus = false;
       this.importLoading = false;
-      // 调起选择文件
+      // Gọi mở chọn file
       this.$refs['upload'].$refs['upload-inner'].handleClick();
     },
     handleSuccess(res, file, fileList) {
@@ -143,7 +142,7 @@ export default {
         file: this.fileUrl,
       })
         .then((res) => {
-          // 返回导入结果
+          // Trả về kết quả nhập
           this.importStatus = true;
           this.resultData = res.data;
         })
@@ -160,7 +159,7 @@ export default {
       this.$emit('close');
     },
     downloadFailData() {
-      // 下载失败数据
+      // Tải xuống dữ liệu thất bại
     },
   },
 };

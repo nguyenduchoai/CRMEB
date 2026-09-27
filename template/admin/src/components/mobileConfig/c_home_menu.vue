@@ -22,7 +22,7 @@ import { mapState, mapMutations, mapActions } from 'vuex';
 import rightBtn from '@/components/rightBtn/index.vue';
 export default {
   name: 'c_home_menu',
-  cname: '导航组',
+  cname: 'Nhóm điều hướng',
   componentsName: 'home_menu',
   props: {
     activeIndex: {
@@ -150,10 +150,10 @@ export default {
           configNme: 'fillet',
         },
       ],
-      type: 0, //展示样式索引
-      setUp: 0, //0：内容；1：样式
-      type2: 0, //导航样式索引
-      type3: 0, //色调索引
+      type: 0, //Chỉ mục kiểu hiển thị
+      setUp: 0, //0: nội dung; 1: kiểu
+      type2: 0, //Chỉ mục kiểu điều hướng
+      type3: 0, //Chỉ mục tông màu
     };
   },
   watch: {

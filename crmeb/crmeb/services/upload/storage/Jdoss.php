@@ -10,7 +10,7 @@ use crmeb\services\upload\BaseUpload;
 use Guzzle\Http\EntityBody;
 
 /**
- * 京东云COS文件上传
+ * Tải lên file COS của JD Cloud
  * Class Jdoss
  * @package crmeb\services\upload\storage
  */
@@ -19,7 +19,7 @@ class Jdoss extends BaseUpload
 
 
     /**
-     * 应用id
+     * id ứng dụng
      * @var string
      */
     protected $appid;
@@ -37,25 +37,25 @@ class Jdoss extends BaseUpload
     protected $secretKey;
 
     /**
-     * 句柄
+     * Handle
      * @var S3Client
      */
     protected $handle;
 
     /**
-     * 空间域名 Domain
+     * Domain của space Domain
      * @var mixed
      */
     protected $uploadUrl;
 
     /**
-     * 存储空间名称  公开空间
+     * Tên space lưu trữ  space công khai
      * @var mixed
      */
     protected $storageName;
 
     /**
-     * COS使用  所属地域
+     * COS sử dụng  region trực thuộc
      * @var mixed|null
      */
     protected $storageRegion;
@@ -66,23 +66,23 @@ class Jdoss extends BaseUpload
     protected $cdn;
 
     /**
-     * 水印位置
+     * Vị trí hình mờ
      * @var string[]
      */
     protected $position = [
-        '1' => 'northwest',//：左上
-        '2' => 'north',//：中上
-        '3' => 'northeast',//：右上
-        '4' => 'west',//：左中
-        '5' => 'center',//：中部
-        '6' => 'east',//：右中
-        '7' => 'southwest',//：左下
-        '8' => 'south',//：中下
-        '9' => 'southeast',//：右下
+        '1' => 'northwest',//: Trên trái
+        '2' => 'north',//: Trên giữa
+        '3' => 'northeast',//: Trên phải
+        '4' => 'west',//: Giữa trái
+        '5' => 'center',//: Chính giữa
+        '6' => 'east',//: Giữa phải
+        '7' => 'southwest',//: Dưới trái
+        '8' => 'south',//: Dưới giữa
+        '9' => 'southeast',//: Dưới phải
     ];
 
     /**
-     * 初始化
+     * Khởi tạo
      * @param array $config
      * @return mixed|void
      */
@@ -127,17 +127,17 @@ class Jdoss extends BaseUpload
     {
         $fileHandle = app()->request->file($file);
         if (!$fileHandle) {
-            return $this->setError('上传的文件不存在');
+            return $this->setError('Tệp tải lên không tồn tại');
         }
         if ($this->validate) {
             if (!in_array(strtolower(pathinfo($fileHandle->getOriginalName(), PATHINFO_EXTENSION)), $this->validate['fileExt'])) {
-                return $this->setError('不合法的文件后缀');
+                return $this->setError('Phần mở rộng tệp không hợp lệ');
             }
             if (filesize($fileHandle) > $this->validate['filesize']) {
-                return $this->setError('文件过大');
+                return $this->setError('Tệp quá lớn');
             }
             if (!in_array($fileHandle->getOriginalMime(), $this->validate['fileMime'])) {
-                return $this->setError('不合法的文件类型');
+                return $this->setError('Loại tệp không hợp lệ');
             }
         }
         $key = $this->saveFileName($fileHandle->getRealPath(), $fileHandle->getOriginalExtension());
@@ -220,22 +220,22 @@ class Jdoss extends BaseUpload
         $regionData = $this->getRegion();
         $regionData = array_column($regionData, 'value');
         if (!in_array($region, $regionData)) {
-            return $this->setError('COS:无效的区域!');
+            return $this->setError('COS: khu vực không hợp lệ!');
         }
         $this->storageRegion = $region;
         $app = $this->app();
-        //检测桶
+        //Kiểm tra bucket
         try {
             $app->headBucket([
                 'Bucket' => $name
             ]);
         } catch (\Throwable $e) {
-            //桶不存在返回404
+            //Bucket không tồn tại trả về 404
             if (strstr('404', $e->getMessage())) {
                 return $this->setError('COS:' . $e->getMessage());
             }
         }
-        //创建桶
+        //Tạo bucket
         try {
             $res = $app->createBucket([
                 'Bucket' => $name,
@@ -243,9 +243,9 @@ class Jdoss extends BaseUpload
             ]);
         } catch (\Throwable $e) {
             if (strstr('[curl] 6', $e->getMessage())) {
-                return $this->setError('COS:无效的区域!!');
+                return $this->setError('COS: khu vực không hợp lệ!!');
             } else if (strstr('Access Denied.', $e->getMessage())) {
-                return $this->setError('COS:无权访问');
+                return $this->setError('COS: không có quyền truy cập');
             }
             return $this->setError('COS:' . $e->getMessage());
         }
@@ -257,19 +257,19 @@ class Jdoss extends BaseUpload
         return [
             [
                 'value' => 'cn-north-1',
-                'label' => '华北-北京'
+                'label' => 'Bắc Trung Quốc - Beijing'
             ],
             [
                 'value' => 'cn-east-1',
-                'label' => '华东-宿迁'
+                'label' => 'Đông Trung Quốc - Suqian'
             ],
             [
                 'value' => 'cn-east-2',
-                'label' => '华东-上海'
+                'label' => 'Đông Trung Quốc - Shanghai'
             ],
             [
                 'value' => 'cn-south-1',
-                'label' => '华南-广州'
+                'label' => 'Nam Trung Quốc - Guangzhou'
             ]
         ];
     }
@@ -344,7 +344,7 @@ class Jdoss extends BaseUpload
     }
 
     /**
-     * 获取OSS上传密钥
+     * Lấy khóa tải lên OSS
      * @return mixed|void
      */
     public function getTempKeys($key = '', $path = '', $contentType = '', $expires = '+10 minutes')
@@ -371,7 +371,7 @@ class Jdoss extends BaseUpload
     }
 
     /**
-     * 缩略图
+     * Ảnh thu nhỏ
      * @param string $filePath
      * @param string $fileName
      * @param string $type
@@ -404,7 +404,7 @@ class Jdoss extends BaseUpload
     }
 
     /**
-     * 水印
+     * Watermark
      * @param string $filePath
      * @return mixed|string
      */
@@ -418,13 +418,13 @@ class Jdoss extends BaseUpload
                 $filePath .= '?x-oss-process=image';
             }
             switch ($waterConfig['watermark_type']) {
-                case 1://图片
+                case 1://Hình ảnh
                     if (!$waterConfig['watermark_image']) {
                         throw new AdminException(400722);
                     }
                     $waterPath = $filePath .= '/watermark,image_' . base64_encode($waterConfig['watermark_image']) . ',t_' . $waterConfig['watermark_opacity'] . ',g_' . ($this->position[$waterConfig['watermark_position']] ?? 'nw') . ',x_' . $waterConfig['watermark_x'] . ',y_' . $waterConfig['watermark_y'];
                     break;
-                case 2://文字
+                case 2://Văn bản
                     if (!$waterConfig['watermark_text']) {
                         throw new AdminException(400723);
                     }

@@ -20,7 +20,7 @@ class StorePointRecordServices extends BaseServices
     }
 
     /**
-     * 积分记录
+     * Lịch sử điểm thưởng
      * @param $where
      * @return array
      */
@@ -28,33 +28,33 @@ class StorePointRecordServices extends BaseServices
     {
         $where['category'] = 'integral';
         $status = [
-            'invite_user' => '邀新奖励',
-            'system_add' => '系统增加积分',
-            'system_sub' => '系统减少积分',
-            'gain' => '下单赠送积分',
-            'product_gain' => '购买商品赠送积分',
-            'deduction' => '下单积分抵扣',
-            'lottery_use' => '参与抽奖使用积分',
-            'lottery_add' => '抽奖中奖赠送积分',
-            'order_deduction' => '扣除订单下单赠送积分',
-            'storeIntegral_use' => '积分兑换商品',
-            'pay_product_integral_back' => '返还下单使用积分',
-            'sign' => '签到获得积分',
+            'invite_user' => 'Thưởng mời người mới',
+            'system_add' => 'Hệ thống cộng điểm thưởng',
+            'system_sub' => 'Hệ thống trừ điểm thưởng',
+            'gain' => 'Tặng điểm thưởng khi đặt hàng',
+            'product_gain' => 'Tặng điểm thưởng khi mua sản phẩm',
+            'deduction' => 'Khấu trừ điểm thưởng khi đặt hàng',
+            'lottery_use' => 'Dùng điểm thưởng tham gia quay thưởng',
+            'lottery_add' => 'Tặng điểm thưởng khi trúng quay thưởng',
+            'order_deduction' => 'Trừ điểm thưởng đã tặng khi đặt hàng',
+            'storeIntegral_use' => 'Đổi điểm lấy sản phẩm',
+            'pay_product_integral_back' => 'Hoàn lại điểm thưởng đã dùng khi đặt hàng',
+            'sign' => 'Nhận điểm thưởng khi điểm danh',
         ];
         [$page, $limit] = $this->getPageValue();
         $list = $this->dao->getList($where, '*', $page, $limit);
-        //关联用户
+        //Người dùng liên kết
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
         $uids = array_column($list, 'uid');
         $nicknameArr = $userServices->getColumn([['uid', 'in', $uids]], 'nickname', 'uid');
-        //关联订单
+        //Đơn hàng liên quan
         /** @var StoreOrderServices $orderServices */
         $orderServices = app()->make(StoreOrderServices::class);
         /** @var StoreIntegralOrderServices $integralOrderServices */
         $integralOrderServices = app()->make(StoreIntegralOrderServices::class);
         foreach ($list as &$item) {
-            $item['nickname'] = $nicknameArr[$item['uid']] ?? '未知用户';
+            $item['nickname'] = $nicknameArr[$item['uid']] ?? 'Người dùng không xác định';
             if ($item['type'] == 'gain' || $item['type'] == 'deduction' || $item['type'] == 'product_deduction' || $item['type'] == 'pay_product_integral_back') {
                 $item['relation'] = $orderServices->value(['id' => $item['link_id']], 'order_id');
             } elseif ($item['type'] == 'storeIntegral_use') {
@@ -69,7 +69,7 @@ class StorePointRecordServices extends BaseServices
     }
 
     /**
-     * 积分记录备注
+     * Ghi chú lịch sử điểm thưởng
      * @param $data
      * @return bool
      */
@@ -85,7 +85,7 @@ class StorePointRecordServices extends BaseServices
     }
 
     /**
-     * 订单统计基础
+     * Cơ sở thống kê đơn hàng
      * @param $where
      * @return array
      */
@@ -100,14 +100,14 @@ class StorePointRecordServices extends BaseServices
     }
 
     /**
-     * 订单趋势
+     * Xu hướng đơn hàng
      * @param $where
      * @return array
      */
     public function getTrend($where)
     {
         $time = explode('-', $where['time']);
-        if (count($time) != 2) throw new AdminException('请选择时间');
+        if (count($time) != 2) throw new AdminException('Vui lòng chọn thời gian');
         $dayCount = (strtotime($time[1]) - strtotime($time[0])) / 86400 + 1;
         $data = [];
         if ($dayCount == 1) {
@@ -123,7 +123,7 @@ class StorePointRecordServices extends BaseServices
     }
 
     /**
-     * 订单趋势
+     * Xu hướng đơn hàng
      * @param $time
      * @param $num
      * @param false $excel
@@ -153,8 +153,8 @@ class StorePointRecordServices extends BaseServices
         $point_sub = array_column($this->dao->getPointTrend($time, $timeType, 'add_time', 'sum(number)', 'sub'), 'num', 'days');
         $data = $series = [];
         foreach ($xAxis as $item) {
-            $data['积分积累'][] = isset($point_add[$item]) ? floatval($point_add[$item]) : 0;
-            $data['积分消耗'][] = isset($point_sub[$item]) ? floatval($point_sub[$item]) : 0;
+            $data['Điểm tích lũy'][] = isset($point_add[$item]) ? floatval($point_add[$item]) : 0;
+            $data['Điểm thưởng đã dùng'][] = isset($point_sub[$item]) ? floatval($point_sub[$item]) : 0;
         }
         foreach ($data as $key => $item) {
             $series[] = [
@@ -167,13 +167,13 @@ class StorePointRecordServices extends BaseServices
     }
 
     /**
-     * 订单来源
+     * Nguồn đơn hàng
      * @param $where
      * @return array
      */
     public function getChannel($where)
     {
-        $bing_xdata = ['订单赠送', '商品赠送', '后台赠送', '签到获得', '九宫格抽奖'];
+        $bing_xdata = ['Tặng theo đơn hàng', 'Tặng theo sản phẩm', 'Tặng từ trang quản trị', 'Nhận từ điểm danh', 'Quay thưởng 9 ô'];
         $color = ['#64a1f4', '#3edeb5', '#70869f', '#ffc653', '#fc7d6a'];
         $data = ['gain', 'product_gain', 'system_add', 'sign', 'lottery_add'];
         $bing_data = [];
@@ -198,13 +198,13 @@ class StorePointRecordServices extends BaseServices
     }
 
     /**
-     * 订单类型
+     * Loại đơn hàng
      * @param $where
      * @return array
      */
     public function getType($where)
     {
-        $bing_xdata = ['订单抵扣', '九宫格抽奖', '后台减少', '退款退回', '兑换商品'];
+        $bing_xdata = ['Khấu trừ khi đặt hàng', 'Quay thưởng 9 ô', 'Trừ từ trang quản trị', 'Hoàn điểm do hoàn tiền', 'Đổi sản phẩm'];
         $color = ['#64a1f4', '#3edeb5', '#70869f', '#ffc653', '#fc7d6a'];
         $data = ['deduction', 'lottery_use', 'system_sub', 'order_deduction', 'storeIntegral_use'];
         $bing_data = [];

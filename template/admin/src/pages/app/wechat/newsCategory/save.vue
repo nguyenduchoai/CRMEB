@@ -38,7 +38,7 @@
             </div>
           </div>
           <!-- <div class="acea-row row-center-wrapper">
-            <el-button class="mt20" type="primary" v-db-click @click="handleAdd">添加图文</el-button>
+            <el-button class="mt20" type="primary" v-db-click @click="handleAdd">Thêm bài viết</el-button>
           </div> -->
         </el-col>
         <el-col :xl="18" :lg="18" :md="12" :sm="24" :xs="24">
@@ -53,23 +53,23 @@
           >
             <el-row :gutter="24">
               <el-col :span="24" class="ml40">
-                <el-form-item label="标题：" prop="title">
-                  <el-input style="width: 60%" v-model="saveForm.title" type="text" placeholder="请输入文章标题" />
+                <el-form-item label="Tiêu đề:" prop="title">
+                  <el-input style="width: 60%" v-model="saveForm.title" type="text" placeholder="Vui lòng nhập tiêu đề bài viết" />
                 </el-form-item>
               </el-col>
               <el-col :span="24" class="ml40">
-                <el-form-item label="作者：" prop="author">
-                  <el-input style="width: 60%" v-model="saveForm.author" type="text" placeholder="请输入作者名称" />
+                <el-form-item label="Tác giả:" prop="author">
+                  <el-input style="width: 60%" v-model="saveForm.author" type="text" placeholder="Vui lòng nhập tên tác giả" />
                 </el-form-item>
               </el-col>
               <el-col :span="24" class="ml40">
-                <el-form-item label="摘要：" prop="synopsis">
-                  <el-input style="width: 60%" v-model="saveForm.synopsis" type="textarea" placeholder="请输入摘要" />
+                <el-form-item label="Tóm tắt:" prop="synopsis">
+                  <el-input style="width: 60%" v-model="saveForm.synopsis" type="textarea" placeholder="Vui lòng nhập tóm tắt" />
                 </el-form-item>
               </el-col>
               <el-col :span="24" class="ml40">
-                <el-form-item label="图文封面：" prop="image_input">
-                  <div class="picBox" v-db-click @click="modalPicTap('单选')">
+                <el-form-item label="Ảnh bìa bài viết:" prop="image_input">
+                  <div class="picBox" v-db-click @click="modalPicTap('Chọn một')">
                     <div class="pictrue" v-if="saveForm.image_input">
                       <img :src="saveForm.image_input" />
                     </div>
@@ -78,16 +78,16 @@
                     </div>
                   </div>
                 </el-form-item>
-                <el-form-item label="正文：" prop="content">
+                <el-form-item label="Nội dung:" prop="content">
                   <WangEditor style="width: 90%" :content="content" @editorContent="getEditorContent"></WangEditor>
                 </el-form-item>
               </el-col>
               <el-col :span="24" class="ml40">
                 <el-form-item>
-                  <el-button type="primary" class="submission" v-db-click @click="subFrom('saveForm')">提交</el-button>
+                  <el-button type="primary" class="submission" v-db-click @click="subFrom('saveForm')">Gửi</el-button>
                 </el-form-item>
               </el-col>
-              <el-dialog :visible.sync="modalPic" width="1024px" title="上传文章图" :close-on-click-modal="false">
+              <el-dialog :visible.sync="modalPic" width="1024px" title="Tải lên ảnh bài viết" :close-on-click-modal="false">
                 <uploadPictures
                   :isChoice="isChoice"
                   @getPic="getPic"
@@ -136,25 +136,25 @@ export default {
       if (this.saveForm.image_input) {
         callback();
       } else {
-        callback(new Error('请上传图文封面'));
+        callback(new Error('Vui lòng tải lên ảnh bìa bài viết'));
       }
     };
     return {
       myConfig: {
-        autoHeightEnabled: false, // 编辑器不自动被内容撑高
-        initialFrameHeight: 500, // 初始容器高度
-        initialFrameWidth: '100%', // 初始容器宽度
+        autoHeightEnabled: false, // Trình soạn thảo không tự động giãn cao theo nội dung
+        initialFrameHeight: 500, // Chiều cao container ban đầu
+        initialFrameWidth: '100%', // Chiều rộng container ban đầu
         UEDITOR_HOME_URL: '/UEditor/',
         serverUrl: '',
       },
       ruleValidate: {
-        title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
-        author: [{ required: true, message: '请输入作者', trigger: 'blur' }],
+        title: [{ required: true, message: 'Vui lòng nhập tiêu đề', trigger: 'blur' }],
+        author: [{ required: true, message: 'Vui lòng nhập tác giả', trigger: 'blur' }],
         image_input: [{ required: true, validator: validateUpload, trigger: 'change' }],
-        content: [{ required: true, message: '请输入正文', trigger: 'change' }],
-        synopsis: [{ required: true, message: '请输入文章摘要', trigger: 'blur' }],
+        content: [{ required: true, message: 'Vui lòng nhập nội dung', trigger: 'change' }],
+        synopsis: [{ required: true, message: 'Vui lòng nhập tóm tắt bài viết', trigger: 'blur' }],
       },
-      isChoice: '单选',
+      isChoice: 'Chọn một',
       dragging: null,
       isDel: false,
       msg: '',
@@ -218,16 +218,16 @@ export default {
     getEditorContent(data) {
       this.saveForm.content = data;
     },
-    // 点击图文封面
+    // Click vào ảnh bìa bài viết ảnh-văn
     modalPicTap() {
       this.modalPic = true;
     },
-    // 获取图片信息
+    // Lấy thông tin ảnh
     getPic(pc) {
       this.saveForm.image_input = pc.att_dir;
       this.modalPic = false;
     },
-    // 添加图文按钮
+    // Nút thêm bài viết
     handleAdd() {
       if (!this.check()) return false;
       let obj = {
@@ -240,7 +240,7 @@ export default {
       };
       this.list.push(obj);
     },
-    // 点击模块
+    // Bấm module
     onSubSave(i) {
       this.current = i;
       this.list.map((item, index) => {
@@ -249,16 +249,16 @@ export default {
       });
       this.content = this.saveForm.content;
     },
-    // 删除
+    // Xóa
     del(i) {
       if (i === 0) {
-        this.$message.warning('不能再删除了');
+        this.$message.warning('Không thể xóa thêm nữa');
       } else {
         this.list.splice(i, 1);
         this.saveForm = {};
       }
     },
-    // 详情
+    // Chi tiết
     info() {
       wechatNewsInfotApi(this.$route.params.id)
         .then(async (res) => {
@@ -271,7 +271,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 提交数据
+    // Gửi dữ liệu
     subFrom(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
@@ -299,42 +299,42 @@ export default {
     check() {
       for (let index in this.list) {
         if (!this.list[index].title) {
-          this.$message.warning('请输入文章的标题');
+          this.$message.warning('Vui lòng nhập tiêu đề của bài viết');
           return false;
         } else if (!this.list[index].author) {
-          this.$message.warning('请输入文章的作者');
+          this.$message.warning('Vui lòng nhập tác giả của bài viết');
           return false;
         } else if (!this.list[index].synopsis) {
-          this.$message.warning('请输入文章的摘要');
+          this.$message.warning('Vui lòng nhập tóm tắt của bài viết');
           return false;
         } else if (!this.list[index].image_input) {
-          this.$message.warning('请输入文章的图文封面');
+          this.$message.warning('Vui lòng tải lên ảnh bìa của bài viết');
           return false;
         } else if (!this.list[index].content) {
-          this.$message.warning('请输入文章的内容');
+          this.$message.warning('Vui lòng nhập nội dung của bài viết');
           return false;
         } else {
           return true;
         }
       }
       // if(!this.saveForm.title){
-      //     this.$message.warning('请输入文章的标题');
+      //     this.$message.warning('Vui lòng nhập tiêu đề bài viết');
       //     return false;
       // }
       // else if(!this.saveForm.author){
-      //     this.$message.warning('请输入文章的作者');
+      //     this.$message.warning('Vui lòng nhập tác giả bài viết');
       //     return false;
       // }
       // else if(!this.saveForm.synopsis){
-      //     this.$message.warning('请输入文章的摘要');
+      //     this.$message.warning('Vui lòng nhập tóm tắt bài viết');
       //     return false;
       // }
       // else if(!this.saveForm.image_input){
-      //     this.$message.warning('请输入文章的图文封面');
+      //     this.$message.warning('Vui lòng nhập ảnh bìa bài viết');
       //     return false;
       // }
       // else if(!this.saveForm.content){
-      //     this.$message.warning('请输入文章的内容');
+      //     this.$message.warning('Vui lòng nhập nội dung bài viết');
       //     return false;
       // }else{
       //     return true

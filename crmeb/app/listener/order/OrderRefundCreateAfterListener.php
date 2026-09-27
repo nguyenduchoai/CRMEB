@@ -7,7 +7,7 @@ use app\services\order\OutStoreOrderRefundServices;
 use crmeb\interfaces\ListenerInterface;
 
 /**
- * 售后单生成
+ * Tạo đơn hậu mãi
  * Class orderRefundCreateAfter
  * @package app\listener\order
  */

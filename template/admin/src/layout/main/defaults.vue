@@ -23,13 +23,13 @@ export default {
     return {};
   },
   computed: {
-    // 是否开启固定 header
+    // Có bật cố định header hay không
     isFixedHeader() {
       return this.$store.state.themeConfig.themeConfig.isFixedHeader;
     },
   },
   watch: {
-    // 监听路由的变化
+    // Theo dõi thay đổi route
     $route: {
       handler() {
         this.$refs.layoutDefaultsScrollbarRef.wrap.scrollTop = 0;

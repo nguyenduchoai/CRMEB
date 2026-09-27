@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -58,11 +58,11 @@ function s2ab(s) {
 }
 
 /*
- * th => 表头
- * data => 数据
- * fileName => 文件名
- * fileType => 文件类型
- * sheetName => sheet页名
+ * th => tiêu đề bảng
+ * data => dữ liệu
+ * fileName => tên tệp
+ * fileType => loại tệp
+ * sheetName => tên trang tính (sheet)
  */
 export default function toExcel({ th, data, fileName, fileType, sheetName }) {
   data.unshift(th);
@@ -73,6 +73,6 @@ export default function toExcel({ th, data, fileName, fileType, sheetName }) {
   wb.Sheets[sheetName] = ws;
   fileType = fileType || 'xlsx';
   let wbout = XLSX.write(wb, { bookType: fileType, bookSST: false, type: 'binary' });
-  fileName = fileName || '列表';
+  fileName = fileName || 'Danh sách';
   saveAs(new Blob([s2ab(wbout)], { type: 'application/octet-stream' }), `${fileName}.${fileType}`);
 }

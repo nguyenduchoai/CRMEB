@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -19,7 +19,7 @@ use crmeb\exceptions\AdminException;
 use think\facade\App;
 
 /**
- * 事业部控制器
+ * Controller đại lý khu vực
  * Class Division
  * @package app\adminapi\controller\v1\agent
  */
@@ -37,7 +37,7 @@ class Division extends AuthController
     }
 
     /**
-     * 事业部列表
+     * Danh sách đại lý khu vực
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -57,7 +57,7 @@ class Division extends AuthController
     }
 
     /**
-     * 下级列表
+     * Danh sách cấp dưới
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -74,7 +74,7 @@ class Division extends AuthController
     }
 
     /**
-     * 添加编辑事业部
+     * Thêm/sửa đại lý khu vực
      * @param $uid
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -85,7 +85,7 @@ class Division extends AuthController
     }
 
     /**
-     * 保存事业部
+     * Lưu đại lý khu vực
      * @return mixed
      */
     public function divisionSave()
@@ -108,7 +108,7 @@ class Division extends AuthController
     }
 
     /**
-     * 添加编辑代理商
+     * Thêm/sửa đại lý
      * @param $uid
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -119,7 +119,7 @@ class Division extends AuthController
     }
 
     /**
-     * 保存代理商
+     * Lưu đại lý
      * @param UserServices $userServices
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -142,9 +142,9 @@ class Division extends AuthController
         $userInfo = $userServices->getUserInfo($data['uid'], 'is_division,is_agent,is_staff');
         if (!$userInfo) throw new AdminException(100100);
         if ($data['edit'] == 0) {
-            if ($userInfo['is_division']) throw new AdminException('此用户是事业部，请勿添加为代理商');
-            if ($userInfo['is_agent']) throw new AdminException('此用户是代理商，无法重复添加');
-            if ($userInfo['is_staff']) throw new AdminException('此用户是下级员工，无法添加为代理商');
+            if ($userInfo['is_division']) throw new AdminException('Người dùng này là đại lý khu vực, vui lòng không thêm làm đại lý');
+            if ($userInfo['is_agent']) throw new AdminException('Người dùng này đã là đại lý, không thể thêm lại');
+            if ($userInfo['is_staff']) throw new AdminException('Người dùng này là nhân viên cấp dưới, không thể thêm làm đại lý');
             $divisionUserInfo = $userServices->count(['uid' => (int)$data['division_id'], 'is_division' => 1, 'division_id' => $data['division_id']]);
             if (!$divisionUserInfo) throw new AdminException(100100);
         }
@@ -153,7 +153,7 @@ class Division extends AuthController
     }
 
     /**
-     * 设置状态
+     * Thiết lập trạng thái
      * @param $status
      * @param $uid
      * @return mixed
@@ -165,7 +165,7 @@ class Division extends AuthController
     }
 
     /**
-     * 删除成功
+     * Xóa thành công
      * @param $type
      * @param $uid
      * @return mixed
@@ -177,7 +177,7 @@ class Division extends AuthController
     }
 
     /**
-     * 后台申请列表
+     * Danh sách yêu cầu ở quản trị
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -201,7 +201,7 @@ class Division extends AuthController
     }
 
     /**
-     * 审核表单
+     * Biểu mẫu duyệt
      * @param $id
      * @param $type
      * @return mixed
@@ -216,7 +216,7 @@ class Division extends AuthController
     }
 
     /**
-     * 代理商审核
+     * Duyệt đại lý
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -239,7 +239,7 @@ class Division extends AuthController
     }
 
     /**
-     * 删除代理商审核
+     * Xóa duyệt đại lý
      * @param $id
      * @return mixed
      */
@@ -252,11 +252,11 @@ class Division extends AuthController
     }
 
     /**
-     * 添加员工表单
+     * Form thêm nhân viên
      * @param $uid
      * @return \think\Response
      * @throws \FormBuilder\Exception\FormBuilderException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2024/1/22
      */
@@ -266,12 +266,12 @@ class Division extends AuthController
     }
 
     /**
-     * 保存员工
+     * Lưu nhân viên
      * @return \think\Response
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2024/1/22
      */
@@ -288,7 +288,7 @@ class Division extends AuthController
     }
 
     /**
-     * 分销统计
+     * Thống kê tiếp thị liên kết
      * @return \think\Response
      * @author wuhaotian
      * @email 442384644@qq.com

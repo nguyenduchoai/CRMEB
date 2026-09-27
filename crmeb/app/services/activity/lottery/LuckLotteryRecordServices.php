@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -27,7 +27,7 @@ use crmeb\services\pay\Pay;
 use think\facade\Log;
 
 /**
- *  抽奖记录
+ *  Lịch sử quay thưởng
  * Class LuckLotteryRecordServices
  * @package app\services\activity\lottery
  */
@@ -44,7 +44,7 @@ class LuckLotteryRecordServices extends BaseServices
     }
 
     /**
-     * 获取抽奖记录列表
+     * Lấy danh sách bản ghi quay thưởng
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -63,7 +63,7 @@ class LuckLotteryRecordServices extends BaseServices
     }
 
     /**
-     * 获取中奖记录
+     * Lấy lịch sử trúng thưởng
      * @param array $where
      * @param int $limit
      * @return array
@@ -83,7 +83,7 @@ class LuckLotteryRecordServices extends BaseServices
     }
 
     /**
-     * 参与抽奖数据统计
+     * Thống kê dữ liệu tham gia quay thưởng
      * @param int $lottery_id
      * @return int[]
      */
@@ -100,7 +100,7 @@ class LuckLotteryRecordServices extends BaseServices
     }
 
     /**
-     * 写入中奖纪录
+     * Ghi lại bản ghi trúng thưởng
      * @param int $uid
      * @param array $prize
      * @param array $userInfo
@@ -137,7 +137,7 @@ class LuckLotteryRecordServices extends BaseServices
     }
 
     /**
-     * 领取奖品
+     * Nhận phần thưởng
      * @param int $uid
      * @param int $lottery_record_id
      * @param string $receive_info
@@ -164,7 +164,7 @@ class LuckLotteryRecordServices extends BaseServices
         $data = ['is_receive' => 1, 'receive_time' => time(), 'receive_info' => $receive_info];
         $prize = $lotteryRecord['prize'];
         $this->transaction(function () use ($uid, $userInfo, $lottery_record_id, $data, $prize, $userServices, $receive_info, $lotteryRecord) {
-            //奖品类型1：未中奖2：积分3:余额4：红包5:优惠券6：站内商品7：等级经验8：用户等级 9：svip天数
+            //Loại giải thưởng 1: không trúng thưởng 2: điểm thưởng 3: số dư 4: lì xì 5: phiếu giảm giá 6: sản phẩm nội bộ 7: điểm kinh nghiệm hạng 8: hạng người dùng 9: số ngày SVIP
             switch ($prize['type']) {
                 case 1:
                     break;
@@ -217,17 +217,17 @@ class LuckLotteryRecordServices extends BaseServices
                                 $openid,
                                 '',
                                 bcmul($prize['num'], '100', 0),
-                                '抽奖活动红包中奖',
+                                'Trúng lì xì từ chương trình quay thưởng',
                                 sys_config('site_url') . '/api/transfer/notify/' . $type,
-                                '劳务报酬',
+                                'Thù lao lao động',
                                 [
                                     [
-                                        'info_type' => '岗位类型',
-                                        'info_content' => '抽奖'
+                                        'info_type' => 'Loại vị trí công việc',
+                                        'info_content' => 'Quay thưởng'
                                     ],
                                     [
-                                        'info_type' => '报酬说明',
-                                        'info_content' => '抽奖活动红包中奖'
+                                        'info_type' => 'Mô tả thù lao',
+                                        'info_content' => 'Trúng lì xì từ chương trình quay thưởng'
                                     ],
                                 ]
                             );
@@ -241,7 +241,7 @@ class LuckLotteryRecordServices extends BaseServices
                             ]);
                             event('NoticeListener', [['uid' => $uid, 'order_id' => $wechat_order_id, 'extractNumber' => $prize['num'], 'type' => 2], 'revenue_received']);
                         } else {
-                            WechatService::merchantPay($openid, $wechat_order_id, (string)$prize['num'], '抽奖中奖红包');
+                            WechatService::merchantPay($openid, $wechat_order_id, (string)$prize['num'], 'Lì xì trúng quay thưởng');
                         }
                     }
                     break;
@@ -251,7 +251,7 @@ class LuckLotteryRecordServices extends BaseServices
                     try {
                         $couponIssueService->issueUserCoupon($prize['coupon_id'], $userInfo);
                     } catch (\Throwable $e) {
-                        Log::error('抽奖领取优惠券失败，原因：' . $e->getMessage());
+                        Log::error('Nhận phiếu giảm giá từ quay thưởng thất bại, nguyên nhân:' . $e->getMessage());
                     }
                     break;
                 case 6:
@@ -269,7 +269,7 @@ class LuckLotteryRecordServices extends BaseServices
     }
 
     /**
-     * 发货、备注
+     * Giao hàng, ghi chú
      * @param int $lottery_record_id
      * @param array $data
      * @return bool
@@ -285,7 +285,7 @@ class LuckLotteryRecordServices extends BaseServices
         }
         $deliver_info = $lotteryRecord['deliver_info'];
         $edit = [];
-        //备注
+        //Ghi chú
         if ($data['deliver_name'] && $data['deliver_number']) {
             if ($lotteryRecord['type'] != 6 && ($data['deliver_name'] || $data['deliver_number'])) {
                 throw new ApiException(410055);
@@ -307,7 +307,7 @@ class LuckLotteryRecordServices extends BaseServices
     }
 
     /**
-     * 获取中奖记录
+     * Lấy lịch sử trúng thưởng
      * @param int $uid
      * @param array $where
      * @return array

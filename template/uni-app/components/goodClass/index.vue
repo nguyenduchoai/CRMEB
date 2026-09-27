@@ -3,9 +3,9 @@
 		<view class="item acea-row row-between-wrapper" v-for="(item,index) in tempArr" :key='index'
 			@click="goDetail(item)">
 			<view class="pictrue">
-				<span class="pictrue_log pictrue_log_class" v-if="item.activity && item.activity.type === '1' && $permission('seckill')">{{$t(`秒杀`)}}</span>
-				<span class="pictrue_log pictrue_log_class" v-if="item.activity && item.activity.type === '2' && $permission('bargain')">{{$t(`砍价`)}}</span>
-				<span class="pictrue_log pictrue_log_class" v-if="item.activity && item.activity.type === '3' && $permission('combination')">{{$t(`拼团`)}}</span>
+				<span class="pictrue_log pictrue_log_class" v-if="item.activity && item.activity.type === '1' && $permission('seckill')">{{$t(`Flash sale`)}}</span>
+				<span class="pictrue_log pictrue_log_class" v-if="item.activity && item.activity.type === '2' && $permission('bargain')">{{$t(`Săn giảm giá`)}}</span>
+				<span class="pictrue_log pictrue_log_class" v-if="item.activity && item.activity.type === '3' && $permission('combination')">{{$t(`Mua chung`)}}</span>
 				<image :src="item.image" mode=""></image>
 			</view>
 			<view class="pictxt">
@@ -24,13 +24,13 @@
 							v-if="item.activity && (item.activity.type === '1' || item.activity.type === '2' || item.activity.type === '3')">
 						</view>
 						<view v-else>
-							<!-- 多规格 -->
+							<!-- Nhiều quy cách -->
 							<view class="bnt acea-row row-center-wrapper" @click.stop="goCartDuo(item)"
 								v-if="item.spec_type">
-								{{$t(`选规格`)}}
+								{{$t(`Chọn phân loại`)}}
 								<text class="num" v-if="isLogin && item.cart_num">{{item.cart_num}}</text>
 							</view>
-							<!-- 单规格 -->
+							<!-- Một quy cách -->
 							<view class="iconfont icon-gouwuche6 acea-row row-center-wrapper"
 								v-if="!item.spec_type && !item.cart_num" @click.stop="goCartDan(item,index)"></view>
 							<view class="cart acea-row row-middle" v-if="!item.spec_type && item.cart_num">
@@ -42,7 +42,7 @@
 							</view>
 						</view>
 					</view>
-					<view class="bnt acea-row row-center-wrapper end" v-else>{{$t(`已售罄`)}}</view>
+					<view class="bnt acea-row row-center-wrapper end" v-else>{{$t(`Đã bán hết`)}}</view>
 				</view>
 			</view>
 		</view>

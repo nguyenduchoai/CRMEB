@@ -1,24 +1,24 @@
 .
-├── app 程序主目录
-├── backup 数据库/程序升级备份目录
-├── config 系统配置
-├── crmeb crmeb核心文件目录
-├── public 程序入口目录
-├── route 程序入口路由配置
-├── runtime 缓存目录
-├── temp docker临时文件目录
-├── vendor 扩展包compose 安装目录
-├── LICENSE.txt 开源协议
-├── README.md 系统说明
-├── baota.sh 宝塔快速配置环境文件
+├── app Thư mục chính của chương trình
+├── backup Thư mục sao lưu cơ sở dữ liệu/nâng cấp chương trình
+├── config Cấu hình hệ thống
+├── crmeb Thư mục tệp lõi của crmeb
+├── public Thư mục điểm vào của chương trình
+├── route Cấu hình định tuyến điểm vào của chương trình
+├── runtime Thư mục bộ nhớ đệm (cache)
+├── temp Thư mục tệp tạm của docker
+├── vendor Thư mục cài đặt gói mở rộng compose
+├── LICENSE.txt Giấy phép mã nguồn mở
+├── README.md Giới thiệu hệ thống
+├── baota.sh Tệp cấu hình nhanh môi trường trên Baota (BT Panel)
 ├── build.example.php
 ├── composer.json
 ├── composer.lock
 ├── filetree.txt
-├── think tp命令文件入口
-├── timer.pid 定时任务生成文件
+├── think Tệp điểm vào của lệnh tp
+├── timer.pid Tệp do tác vụ định kỳ tạo ra
 ├── updatesql.sql
-├── workerman.bat windows 启动workerman命令文件
-└── workerman.pid workerman生成文件
+├── workerman.bat windows tệp lệnh khởi động workerman
+└── workerman.pid Tệp do workerman tạo ra
 
 9 directories, 12 files

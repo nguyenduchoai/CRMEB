@@ -46,9 +46,9 @@
 						<view class="wrapper">
 							<view class="share acea-row row-between row-bottom">
 								<view class="money font-color">
-									<text class="text">{{ $t(`到手价`) }}</text>
+									<text class="text">{{ $t(`Giá cuối cùng`) }}</text>
 									<baseMoney class="mr-12" :money="realPriceData.real_price" symbolSize="24" integerSize="40" decimalSize="24" weight color="var(--view-theme)"></baseMoney>
-									<text class="text text--w111-333">{{ $t(`售价`) }}</text>
+									<text class="text text--w111-333">{{ $t(`Giá bán`) }}</text>
 									<baseMoney class="mr-12" :money="realPriceData.price" symbolSize="24" integerSize="24" decimalSize="24" weight color="#333"></baseMoney>
 									<view
 										class="vip-money"
@@ -62,22 +62,22 @@
 							</view>
 							<view class="introduce" v-text="storeInfo.store_name || ''"></view>
 							<view class="limit_good" v-if="storeInfo.limit_type > 0">
-								{{ storeInfo.limit_type == 1 ? $t(`单次限购`) : $t(`永久限购`) }}{{ storeInfo.limit_num }}{{ $t(storeInfo.unit_name) }}
+								{{ storeInfo.limit_type == 1 ? $t(`Giới hạn mỗi lần mua`) : $t(`Giới hạn mua vĩnh viễn`) }}{{ storeInfo.limit_num }}{{ $t(storeInfo.unit_name) }}
 								<text class="line" v-if="storeInfo.limit_type > 0 && storeInfo.min_qty > 1">|</text>
-								<text v-if="storeInfo.min_qty > 1">{{ $t(`起购`) }}{{ storeInfo.min_qty + storeInfo.unit_name }}</text>
+								<text v-if="storeInfo.min_qty > 1">{{ $t(`Mua tối thiểu`) }}{{ storeInfo.min_qty + storeInfo.unit_name }}</text>
 							</view>
 							<view class="label acea-row row-between-wrapper" style="padding-bottom: 20rpx">
 								<view class="delete-line">{{ $t(`￥`) }}{{ ot_price || 0 }}</view>
 								<view class="">
-									{{ $t(`库存`) }} : {{ attr.productSelect.stock || 0 }}
+									{{ $t(`Tồn kho`) }} : {{ attr.productSelect.stock || 0 }}
 									{{ $t(storeInfo.unit_name) || '' }}
 								</view>
 								<view class="">
-									{{ $t(`销量`) }} : {{ storeInfo.fsales || 0 }}
+									{{ $t(`Lượt bán`) }} : {{ storeInfo.fsales || 0 }}
 									{{ $t(storeInfo.unit_name) || '' }}
 								</view>
 							</view>
-							<!-- 商品标签 -->
+							<!-- Nhãn sản phẩm -->
 							<view class="flex flex-wrap mt-24 p-x-15" v-if="storeInfo.label_list && storeInfo.label_list.length">
 								<BaseTag
 									:text="label.name"
@@ -92,15 +92,15 @@
 								></BaseTag>
 							</view>
 							<view v-if="!is_money_level && storeInfo.vip_price && storeInfo.is_vip" class="svip acea-row row-between-wrapper">
-								<view class="">{{ $t(`开通“超级会员”立省`) }}{{ diff }}{{ $t(`元`) }}</view>
+								<view class="">{{ $t(`Đăng ký “Siêu thành viên” tiết kiệm ngay`) }}{{ diff }}{{ $t(`đ`) }}</view>
 								<navigator url="/pages/annex/vip_paid/index">
-									{{ $t(`立即开通`) }}
+									{{ $t(`Kích hoạt ngay`) }}
 									<text class="iconfont icon-jiantou"></text>
 								</navigator>
 							</view>
 							<view class="presell_count" v-if="storeInfo.presale">
 								<view>
-									<view>{{ $t(`预售活动时间`) }}：</view>
+									<view>{{ $t(`Thời gian đặt trước`) }}：</view>
 									<view v-if="storeInfo.presale_start_time && storeInfo.presale_end_time" class="presell_time">
 										<view class="iconfont icon-shijian1"></view>
 										{{ storeInfo.presale_start_time }}
@@ -108,47 +108,47 @@
 										{{ storeInfo.presale_end_time }}
 									</view>
 								</view>
-								<view>{{ $t(`预售结束后`) }} {{ storeInfo.presale_day }} {{ $t(`天内发货`) }}</view>
+								<view>{{ $t(`Sau khi kết thúc đặt trước`) }} {{ storeInfo.presale_day }} {{ $t(`ngày sẽ giao hàng`) }}</view>
 							</view>
 							<!-- <view class='coupon acea-row row-between-wrapper' v-if="storeInfo.give_integral > 0">
 									<view class='hide line1 acea-row'>
-										赠积分：
-										<view class='activity'>赠送 {{storeInfo.give_integral}} 积分</view>
+										Tặng điểm thưởng:
+										<view class='activity'>Tặng {{storeInfo.give_integral}} điểm thưởng</view>
 									</view>
 								</view> -->
 							<view v-if="couponList.length" class="coupon acea-row row-between-wrapper" @click="couponTap" style="margin-top: 0rpx">
 								<view class="hide line1 acea-row">
-									{{ $t(`优惠券`) }}：
+									{{ $t(`Phiếu giảm giá`) }}：
 									<template v-for="(item, index) in couponList">
-										<view v-if="index < 2" class="activity" :key="index">{{ $t(`满`) }} {{ item.use_min_price }} {{ $t(`减`) }} {{ item.coupon_price }}</view>
+										<view v-if="index < 2" class="activity" :key="index">{{ $t(`Đơn từ`) }} {{ item.use_min_price }} {{ $t(`Trừ`) }} {{ item.coupon_price }}</view>
 									</template>
 								</view>
 								<view class="iconfont icon-jiantou"></view>
 							</view>
 							<view class="coupon acea-row row-between-wrapper" v-if="activity.length">
 								<view class="line1 acea-row">
-									<text class="coupon-title">{{ $t(`活动`) }}：</text>
+									<text class="coupon-title">{{ $t(`Chương trình`) }}：</text>
 									<view v-for="(item, index) in activity" :key="index" @click="goActivity(item)">
 										<view
 											v-if="item.type === '1' && $permission('seckill')"
 											:class="index == 0 ? 'activity_pin' : '' || index == 1 ? 'activity_miao' : '' || index == 2 ? 'activity_kan' : ''"
 										>
 											<text class="iconfonts iconfont icon-pintuan"></text>
-											<text class="activity_title">{{ $t(`参与秒杀`) }}</text>
+											<text class="activity_title">{{ $t(`Tham gia flash sale`) }}</text>
 										</view>
 										<view
 											:class="index == 0 ? 'activity_pin' : '' || index == 1 ? 'activity_miao' : '' || index == 2 ? 'activity_kan' : ''"
 											v-if="item.type === '2' && $permission('bargain')"
 										>
 											<text class="iconfonts iconfont icon-shenhezhong"></text>
-											<text class="activity_title">{{ $t(`参与砍价`) }}</text>
+											<text class="activity_title">{{ $t(`Tham gia săn giảm giá`) }}</text>
 										</view>
 										<view
 											:class="index == 0 ? 'activity_pin' : '' || index == 1 ? 'activity_miao' : '' || index == 2 ? 'activity_kan' : ''"
 											v-if="item.type === '3' && $permission('combination')"
 										>
 											<text class="iconfonts iconfont icon-kanjia"></text>
-											<text class="activity_title">{{ $t(`参与拼团`) }}</text>
+											<text class="activity_title">{{ $t(`Tham gia mua chung`) }}</text>
 										</view>
 									</view>
 								</view>
@@ -169,17 +169,17 @@
 								<view class="flexs" v-show="!storeInfo.attrPics.length">
 									<image :src="item.image" v-for="(item, index) in skuArr.slice(0, 4)" :key="index" class="attrImg"></image>
 								</view>
-								<view class="switchTxt">{{ $t(`共`) }}{{ skuArr.length }} {{ $t(`种规格可选`) }}</view>
+								<view class="switchTxt">{{ $t(`Tổng`) }}{{ skuArr.length }} {{ $t(`phân loại để chọn`) }}</view>
 							</view>
 						</view>
-						<!-- 参数 -->
+						<!-- Tham số -->
 						<view
 							v-if="(storeInfo.params_list && storeInfo.params_list.length) || (storeInfo.protection_list && storeInfo.protection_list.length)"
 							class="attribute acea-row row-between-wrapper"
 						>
 							<view v-if="storeInfo.params_list && storeInfo.params_list.length" class="flex justify-between card" @click="openModal('specs')">
 								<view style="display: flex; align-items: center; width: 90%">
-									<view>{{ $t(`参数`) }}：</view>
+									<view>{{ $t(`Tham số`) }}：</view>
 									<view class="flex params-list line1" style="width: 82%">
 										<view class="item" v-for="(item, index) in storeInfo.params_list" :key="index">
 											<view class="name">{{ item.name }}/</view>
@@ -194,7 +194,7 @@
 							<view class="line" v-if="(storeInfo.params_list && storeInfo.params_list.length) && (storeInfo.protection_list && storeInfo.protection_list.length)"></view>
 							<view v-if="storeInfo.protection_list && storeInfo.protection_list.length" class="flex justify-between card" @click="openModal('protection')">
 								<view style="display: flex; align-items: center; width: 90%">
-									<view>{{ $t(`服务`) }}：</view>
+									<view>{{ $t(`Dịch vụ`) }}：</view>
 									<view class="flex params-list line1" style="width: 82%">
 										<view class="item" v-for="(item, index) in storeInfo.protection_list" :key="index">
 											<image class="w-30 h-30 mr-3" :src="item.image" mode=""></image>
@@ -208,10 +208,10 @@
 					</view>
 					<view class="userEvaluation" id="past1" v-if="replyCount">
 						<view class="title acea-row row-between-wrapper">
-							<view>{{ $t(`用户评价`) }}({{ replyCount }})</view>
+							<view>{{ $t(`Người dùng đánh giá`) }}({{ replyCount }})</view>
 							<navigator class="praise" hover-class="none" :url="'/pages/goods/goods_comment_list/index?product_id=' + id">
 								<text class="font-num">{{ replyChance }}%</text>
-								{{ $t(`好评率`) }}
+								{{ $t(`Tỷ lệ đánh giá tốt`) }}
 								<text class="iconfont icon-jiantou"></text>
 							</navigator>
 						</view>
@@ -219,13 +219,13 @@
 							<userEvaluation :reply="reply"></userEvaluation>
 						</block>
 					</view>
-					<!-- 优品推荐 -->
+					<!-- Đề xuất sản phẩm tốt -->
 					<view class="superior" v-if="good_list.length" id="past2">
 						<view class="title acea-row row-center-wrapper">
 							<view class="lingw acea-row row-center-wrapper">
 								<view class="lingn"></view>
 							</view>
-							<view class="titleTxt">{{ $t(`优品推荐`) }}</view>
+							<view class="titleTxt">{{ $t(`Đề xuất sản phẩm tốt`) }}</view>
 							<view class="lingw acea-row row-center-wrapper">
 								<view class="lingn"></view>
 							</view>
@@ -246,9 +246,9 @@
 										<view class="item" v-for="(val, indexn) in item.list" :key="indexn" @click="goDetail(val)">
 											<view class="pictrue">
 												<image :src="val.image"></image>
-												<span class="pictrue_log pictrue_log_class" v-if="val.activity && val.activity.type === '1' && $permission('seckill')">{{ $t(`秒杀`) }}</span>
-												<span class="pictrue_log pictrue_log_class" v-if="val.activity && val.activity.type === '2' && $permission('bargain')">{{ $t(`砍价`) }}</span>
-												<span class="pictrue_log pictrue_log_class" v-if="val.activity && val.activity.type === '3' && $permission('combination')">{{ $t(`拼团`) }}</span>
+												<span class="pictrue_log pictrue_log_class" v-if="val.activity && val.activity.type === '1' && $permission('seckill')">{{ $t(`Flash sale`) }}</span>
+												<span class="pictrue_log pictrue_log_class" v-if="val.activity && val.activity.type === '2' && $permission('bargain')">{{ $t(`Săn giảm giá`) }}</span>
+												<span class="pictrue_log pictrue_log_class" v-if="val.activity && val.activity.type === '3' && $permission('combination')">{{ $t(`Mua chung`) }}</span>
 											</view>
 											<view class="name line1">{{ val.store_name }}</view>
 											<view class="money font-color">{{ $t(`￥`) }}{{ val.price }}</view>
@@ -260,7 +260,7 @@
 						</view>
 					</view>
 					<view class="product-intro" id="past3">
-						<view class="title">{{ $t(`产品介绍`) }}</view>
+						<view class="title">{{ $t(`Giới thiệu sản phẩm`) }}</view>
 						<view class="conter">
 							<!-- #ifndef APP-PLUS -->
 							<parser :html="description" ref="article" :tag-style="tagStyle"></parser>
@@ -277,32 +277,32 @@
 			<view class="footer acea-row row-between-wrapper" :class="{ eject: storeInfo.id }">
 				<!-- <button open-type="contact" hover-class='none' class='item'>
 						<view class='iconfont icon-kefu'></view>
-						<view>客服</view>
+						<view>Chăm sóc khách hàng</view>
 					</button> -->
 
 				<navigator v-if="!is_gift" hover-class="none" class="item" open-type="reLaunch" url="/pages/index/index">
 					<view class="iconfont icon-shouye6"></view>
-					<view class="p_center">{{ $t(`首页`) }}</view>
+					<view class="p_center">{{ $t(`Trang chủ`) }}</view>
 				</navigator>
 				<view @click="setCollect" class="item">
 					<view class="iconfont icon-shoucang1" v-if="storeInfo.userCollect"></view>
 					<view class="iconfont icon-shoucang" v-else></view>
-					<view class="p_center">{{ $t(`收藏`) }}</view>
+					<view class="p_center">{{ $t(`Yêu thích`) }}</view>
 				</view>
 				<view class="animated item" :class="animated == true ? 'bounceIn' : ''" @click="goCart">
 					<view class="iconfont icon-gouwuche1">
 						<text class="num bg-color" v-if="parseFloat(CartCount) > 0">{{ CartCount || 0 }}</text>
 					</view>
-					<view class="p_center">{{ $t(`购物车`) }}</view>
+					<view class="p_center">{{ $t(`Giỏ hàng`) }}</view>
 				</view>
 				<view v-if="is_gift" @click="goGift()" class="item">
 					<image class="gift-icon" src="@/static/images/gift-icon.png" mode=""></image>
-					<view class="p_center">{{ $t(`送礼物`) }}</view>
+					<view class="p_center">{{ $t(`Tặng quà`) }}</view>
 				</view>
 				<view v-if="noGoods" class="presale">
 					<view class="acea-row">
 						<form class="bnts bg-color-hui">
-							<button class="bnts bg-color-hui" form-type="submit">{{ $t(`暂无产品`) }}</button>
+							<button class="bnts bg-color-hui" form-type="submit">{{ $t(`Sản phẩm không khả dụng`) }}</button>
 						</form>
 					</view>
 				</view>
@@ -311,24 +311,24 @@
 						<view class="bnt acea-row" :class="!storeInfo.cart_button ? 'virbnt' : ''" v-if="attr.productSelect.stock <= 0">
 							<form v-if="storeInfo.cart_button" @submit="joinCart" class="joinCart bnts" :class="!storeInfo.cart_button ? 'virbnt' : ''">
 								<button class="joinCart bnts" form-type="submit">
-									{{ $t(`加入购物车`) }}
+									{{ $t(`Thêm vào giỏ hàng`) }}
 								</button>
 							</form>
 							<form class="buy bnts bg-color-hui">
 								<button class="buy bnts bg-color-hui" form-type="submit" :class="!storeInfo.cart_button ? 'virbnt' : ''">
-									{{ $t(`已售罄`) }}
+									{{ $t(`Đã bán hết`) }}
 								</button>
 							</form>
 						</view>
 						<view class="bnt acea-row" v-else>
 							<form v-if="storeInfo.cart_button" @submit="joinCart" class="joinCart bnts">
 								<button class="joinCart bnts" form-type="submit">
-									{{ $t(`加入购物车`) }}
+									{{ $t(`Thêm vào giỏ hàng`) }}
 								</button>
 							</form>
 							<form @submit="goBuy" class="buy bnts" :class="!storeInfo.cart_button ? 'virbnt' : ''">
 								<button class="buy bnts" :class="!storeInfo.cart_button ? 'virbnt' : ''" form-type="submit">
-									{{ $t(`立即购买`) }}
+									{{ $t(`Mua ngay`) }}
 								</button>
 							</form>
 						</view>
@@ -336,17 +336,17 @@
 					<view class="presale" v-else>
 						<view class="acea-row" v-if="presale_pay_status === 1 || presale_pay_status === 3">
 							<form class="bnts bg-color-hui">
-								<button class="bnts bg-color-hui" form-type="submit">{{ presale_pay_status === 1 ? $t(`未开始`) : $t(`已结束`) }}</button>
+								<button class="bnts bg-color-hui" form-type="submit">{{ presale_pay_status === 1 ? $t(`Chưa bắt đầu`) : $t(`Đã kết thúc`) }}</button>
 							</form>
 						</view>
 						<view class="acea-row" v-else-if="attr.productSelect.quota <= 0 || attr.productSelect.quota < attr.productSelect.cart_num">
 							<form class="bnts bg-color-hui">
-								<button class="bnts bg-color-hui" form-type="submit">{{ $t(`已售罄`) }}</button>
+								<button class="bnts bg-color-hui" form-type="submit">{{ $t(`Đã bán hết`) }}</button>
 							</form>
 						</view>
 						<view class="bnts acea-row" v-else-if="presale_pay_status === 2">
 							<form @submit="goBuy" class="bnts">
-								<button class="bnts" form-type="submit">{{ $t(`立即购买`) }}</button>
+								<button class="bnts" form-type="submit">{{ $t(`Mua ngay`) }}</button>
 							</form>
 						</view>
 					</view>
@@ -355,10 +355,10 @@
 				<!-- 	<view v-else>
 						<view class="virbnt acea-row" :class="storeInfo.is_virtual?'virbnt':''" v-if="attr.productSelect.stock <= 0">
 							<form class="buy bnts bg-color-hui"><button class="virbuy virbnts bg-color-hui"
-									form-type="submit">已售罄</button></form>
+									form-type="submit">Đã hết hàng</button></form>
 						</view>
 						<view class="virbnt acea-row" v-else>
-							<form @submit="goBuy" class="buy bnts"><button class="virbuy virbnts" form-type="submit">立即购买</button>
+							<form @submit="goBuy" class="buy bnts"><button class="virbuy virbnts" form-type="submit">Mua ngay</button>
 							</form>
 						</view>
 					</view> -->
@@ -370,7 +370,7 @@
 				:showAnimate="showAnimate"
 				@boxStatus="boxStatus"
 			></shareRedPackets>
-			<!-- 组件 -->
+			<!-- Thành phần -->
 			<productWindow
 				:attr="attr"
 				:isShow="1"
@@ -398,59 +398,59 @@
 				@ChangCouponsUseState="ChangCouponsUseState"
 				@tabCouponType="tabCouponType"
 			></couponListWindow>
-			<!-- 分享按钮 -->
+			<!-- Nút chia sẻ -->
 			<view class="generate-posters acea-row row-middle" :class="posters ? 'on' : ''">
 				<!-- #ifndef MP -->
 				<button class="item" hover-class="none" v-if="weixinStatus === true" @click="H5ShareBox = true">
 					<view class="iconfont icon-weixin3"></view>
-					<view class="">{{ $t(`发送给朋友`) }}</view>
+					<view class="">{{ $t(`Gửi cho bạn bè`) }}</view>
 				</button>
 				<!-- #endif -->
 				<!-- #ifdef MP -->
 				<button class="item" open-type="share" hover-class="none" @click="goFriend">
 					<view class="iconfont icon-weixin3"></view>
-					<view class="">{{ $t(`发送给朋友`) }}</view>
+					<view class="">{{ $t(`Gửi cho bạn bè`) }}</view>
 				</button>
 				<!-- #endif -->
 				<!-- #ifdef H5  -->
 				<div class="item copy-data" v-if="storeInfo.command_word != ''" :data-clipboard-text="storeInfo.command_word">
 					<view class="iconfont icon-fuzhikouling"></view>
-					<text>{{ $t(`复制口令`) }}</text>
+					<text>{{ $t(`Sao chép mã chia sẻ`) }}</text>
 				</div>
 				<!-- #endif -->
 				<!-- #ifdef APP-PLUS -->
 				<view class="item" @click="appShare('WXSceneSession')">
 					<view class="iconfont icon-weixin3"></view>
-					<view class="">{{ $t(`微信好友`) }}</view>
+					<view class="">{{ $t(`Bạn bè WeChat`) }}</view>
 				</view>
 				<view class="item" @click="appShare('WXSenceTimeline')">
 					<view class="iconfont icon-pengyouquan"></view>
-					<view class="">{{ $t(`微信朋友圈`) }}</view>
+					<view class="">{{ $t(`Khoảnh khắc WeChat`) }}</view>
 				</view>
 				<!-- #endif -->
 				<button class="item" hover-class="none" @click="goPoster">
 					<view class="iconfont icon-haibao"></view>
-					<view class="">{{ $t(`生成海报`) }}</view>
+					<view class="">{{ $t(`Tạo poster`) }}</view>
 				</button>
 			</view>
 			<view class="mask" v-if="posters" @click="listenerActionClose"></view>
 			<!-- #ifdef MP -->
 			<!-- <authorize @onLoadFun="onLoadFun" :isAuto="isAuto" :isShowAuth="isShowAuth" @authColse="authColse"></authorize> -->
 			<!-- #endif -->
-			<!-- 海报展示 -->
+			<!-- Hiển thị poster -->
 			<view class="poster-pop" v-if="posterImageStatus">
 				<image src="../../static/images/poster-close.png" class="close" @click="posterImageClose"></image>
 				<image class="poster-img" :src="posterImage"></image>
 				<!-- #ifndef H5  -->
-				<view class="save-poster" @click="savePosterPath">{{ $t(`保存到手机`) }}</view>
+				<view class="save-poster" @click="savePosterPath">{{ $t(`Lưu vào điện thoại`) }}</view>
 				<!-- #endif -->
 				<!-- #ifdef H5 -->
-				<view class="keep">{{ $t(`长按图片可以保存到手机`) }}</view>
+				<view class="keep">{{ $t(`Nhấn giữ ảnh để lưu vào điện thoại`) }}</view>
 				<!-- #endif -->
 			</view>
 			<view class="mask" v-if="posterImageStatus"></view>
 			<canvas class="canvas" canvas-id="myCanvas" v-if="canvasStatus"></canvas>
-			<!-- 发送给朋友图片 -->
+			<!-- Gửi ảnh cho bạn bè -->
 			<view class="share-box" v-if="H5ShareBox">
 				<image :src="imgHost + '/statics/images/share-info.png'" @click="H5ShareBox = false"></image>
 			</view>
@@ -474,7 +474,7 @@
 			/>
 			<!-- #endif -->
 			<specs ref="specs" :specsInfo="storeInfo.params_list" @myevent="mySpecs"></specs>
-			<!-- 服务抽屉 -->
+			<!-- Drawer dịch vụ -->
 			<serviceModal ref="protection" :ensureInfo="storeInfo.protection_list"></serviceModal>
 		</view>
 	</view>
@@ -547,11 +547,11 @@ export default {
 			imgHost: HTTP_REQUEST_URL,
 			sysHeight: sysHeight,
 			noGoods: false,
-			showSkeleton: true, //骨架屏显示隐藏
-			isNodes: 0, //控制什么时候开始抓取元素节点,只要数值改变就重新抓取
+			showSkeleton: true, //Hiện/ẩn skeleton screen
+			isNodes: 0, //Kiểm soát thời điểm bắt đầu lấy node phần tử, chỉ cần giá trị thay đổi là lấy lại
 			Active: false,
 			presale_pay_status: 1,
-			//属性是否打开
+			//Thuộc tính có mở hay không
 			coupon: {
 				coupon: false,
 				type: -1,
@@ -560,36 +560,36 @@ export default {
 			},
 			showAnimate: false,
 			showMenuIcon: false,
-			attrTxt: this.$t(`请选择`), //属性页面提示
-			attrValue: '', //已选属性
-			animated: false, //购物车动画
-			id: 0, //商品id
-			replyCount: 0, //总评论数量
-			reply: [], //评论列表
-			storeInfo: {}, //商品详情
-			productValue: [], //系统属性
-			couponList: [], //优惠券
-			cart_num: 1, //购买数量
-			isAuto: false, //没有授权的不会自动授权
-			isShowAuth: false, //是否隐藏授权
-			isOpen: false, //是否打开属性组件
+			attrTxt: this.$t(`Vui lòng chọn`), //Gợi ý trên trang thuộc tính
+			attrValue: '', //Thuộc tính đã chọn
+			animated: false, //Hiệu ứng giỏ hàng
+			id: 0, //id sản phẩm
+			replyCount: 0, //Tổng số lượng đánh giá
+			reply: [], //Danh sách đánh giá
+			storeInfo: {}, //Chi tiết sản phẩm
+			productValue: [], //Thuộc tính hệ thống
+			couponList: [], //Phiếu giảm giá
+			cart_num: 1, //Số lượng mua
+			isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+			isShowAuth: false, //Có ẩn ủy quyền hay không
+			isOpen: false, //Có mở component thuộc tính hay không
 			actionSheetHidden: true,
 			posterImageStatus: false,
-			storeImage: '', //海报产品图
-			PromotionCode: '', //二维码图片
-			canvasStatus: false, //海报绘图标签
-			posterImage: '', //海报路径
+			storeImage: '', //Ảnh sản phẩm trên poster
+			PromotionCode: '', //Ảnh mã QR
+			canvasStatus: false, //Thẻ vẽ poster
+			posterImage: '', //Đường dẫn poster
 			posterbackgd: '/static/images/posterbackgd.png',
 			sharePacket: {
-				isState: true //默认不显示
-			}, //分销商详细
-			uid: 0, //用户uid
+				isState: true //Mặc định không hiển thị
+			}, //Chi tiết nhà phân phối
+			uid: 0, //uid người dùng
 			circular: false,
 			autoplay: false,
 			interval: 3000,
 			duration: 500,
 			clientHeight: '',
-			systemStore: {}, //门店信息
+			systemStore: {}, //Thông tin cửa hàng
 			good_list: [],
 			replyChance: 0,
 			CartCount: 0,
@@ -605,7 +605,7 @@ export default {
 			},
 			description: '',
 			navActive: 0,
-			H5ShareBox: false, //公众号分享图片
+			H5ShareBox: false, //Ảnh chia sẻ của OA WeChat
 			activity: [],
 			navH: '',
 			navList: [],
@@ -625,10 +625,10 @@ export default {
 				table: 'width:100%',
 				video: 'width:100%;height:100%;'
 			},
-			returnShow: true, //判断顶部返回是否出现
+			returnShow: true, //Kiểm tra nút quay lại phía trên có xuất hiện hay không
 			diff: '',
 			is_money_level: 1,
-			is_vip: 0, //是否是会员
+			is_vip: 0, //Có phải thành viên hay không
 			navbarRight: 0,
 			homeTop: 20,
 			routineContact: 0,
@@ -636,7 +636,7 @@ export default {
 			selectSku: {},
 			currentPage: false,
 			svip_price_open: 1,
-			is_gift: 0, // 是否支持送礼
+			is_gift: 0, // Có hỗ trợ tặng quà hay không
 			isGiftOrder: 0,
 			realPriceData: {
 				is_vip: 0,
@@ -682,25 +682,25 @@ export default {
 		uni.getSystemInfo({
 			success: function (res) {
 				that.height = res.windowHeight;
-				//res.windowHeight:获取整个窗口高度为px，*2为rpx；98为头部占据的高度；
+				//res.windowHeight: lấy chiều cao toàn bộ window là px, *2 ra rpx; 98 là chiều cao phần đầu trang chiếm;
 				// #ifndef APP-PLUS || H5 || MP-ALIPAY
 				that.navbarRight = res.windowWidth - uni.getMenuButtonBoundingClientRect().left;
 				// #endif
 			}
 		});
-		//扫码携带参数处理
+		//Xử lý tham số mang theo khi quét mã
 		// #ifdef MP
 		if (options.scene) {
 			let value = that.$util.getUrlParams(decodeURIComponent(options.scene));
 			if (value.id) options.id = value.id;
-			//记录推广人uid
+			//Ghi lại uid người giới thiệu
 			if (value.pid) app.globalData.spid = value.pid;
 		}
 		if (!options.id) {
 			this.showSkeleton = false;
 			return that.$util.Tips(
 				{
-					title: that.$t(`缺少参数无法查看商品`)
+					title: that.$t(`Thiếu tham số, không thể xem sản phẩm`)
 				},
 				{
 					tab: 3,
@@ -730,14 +730,14 @@ export default {
 			const clipboard = new ClipboardJS('.copy-data');
 			clipboard.on('success', () => {
 				this.$util.Tips({
-					title: this.$t(`复制成功`)
+					title: this.$t(`Sao chép thành công`)
 				});
 			});
 			// #endif
 		});
 	},
 	/**
-	 * 用户点击右上角分享
+	 * Người dùng click chia sẻ ở góc trên phải
 	 */
 	// #ifdef MP
 	onShareAppMessage: function () {
@@ -767,7 +767,7 @@ export default {
 		this.currentPage = !this.currentPage;
 	},
 	methods: {
-		// 操作菜单
+		// Menu thao tác
 		moreNav() {
 			this.currentPage = !this.currentPage;
 		},
@@ -792,12 +792,12 @@ export default {
 			this.PromotionCode = res;
 			// #endif
 		},
-		// app分享
+		// Chia sẻ app
 		// #ifdef APP-PLUS
 		appShare(scene) {
 			let that = this;
-			let routes = getCurrentPages(); // 获取当前打开过的页面路由数组
-			let curRoute = routes[routes.length - 1].$page.fullPath; // 获取当前页面路由，也就是最后一个打开的页面路由
+			let routes = getCurrentPages(); // Lấy mảng route các trang đã từng mở
+			let curRoute = routes[routes.length - 1].$page.fullPath; // Lấy route trang hiện tại, tức route trang được mở cuối cùng
 			uni.share({
 				provider: 'weixin',
 				scene: scene,
@@ -808,14 +808,14 @@ export default {
 				imageUrl: that.storeInfo.small_image,
 				success: function (res) {
 					// uni.showToast({
-					// 	title: that.$t(`分享成功`),
+					// 	title: that.$t(`Chia sẻ thành công`),
 					// 	icon: "success",
 					// });
 					that.posters = false;
 				},
 				fail: function (err) {
 					uni.showToast({
-						title: that.$t(`分享失败`),
+						title: that.$t(`Chia sẻ thất bại`),
 						icon: 'none',
 						duration: 2000
 					});
@@ -847,7 +847,7 @@ export default {
 			}
 		},
 		/**
-		 * 购物车手动填写
+		 * Điền thủ công vào giỏ hàng
 		 *
 		 */
 		iptCartNum: function (e) {
@@ -861,7 +861,7 @@ export default {
 				});
 			}
 		},
-		// 后退
+		// quay lại
 		returns() {
 			// #ifdef H5
 			return history.back();
@@ -912,7 +912,7 @@ export default {
 			}
 		},
 		/*
-		 *去商品详情页
+		 *Đến trang chi tiết sản phẩm
 		 */
 		goDetail(item) {
 			if (item.activity.length == 0) {
@@ -921,21 +921,21 @@ export default {
 				});
 				return;
 			}
-			// 砍价
+			// Săn giảm giá
 			if (item.activity && item.activity.type == 2) {
 				uni.redirectTo({
 					url: `/pages/activity/goods_bargain_details/index?id=${item.activity.id}&bargain=${this.uid}`
 				});
 				return;
 			}
-			// 拼团
+			// Mua chung
 			if (item.activity && item.activity.type == 3) {
 				uni.redirectTo({
 					url: `/pages/activity/goods_combination_details/index?id=${item.activity.id}`
 				});
 				return;
 			}
-			// 秒杀
+			// Flash sale
 			if (item.activity && item.activity.type == 1) {
 				uni.redirectTo({
 					url: `/pages/activity/goods_seckill_details/index?id=${item.activity.id}&time_id=${item.activity.time_id}`
@@ -943,7 +943,7 @@ export default {
 				return;
 			}
 		},
-		// 微信登录回调
+		// Callback đăng nhập WeChat
 		onLoadFun: function (e) {
 			// this.getUserInfo();
 			// this.get_product_collect();
@@ -952,7 +952,7 @@ export default {
 			this.$set(this.coupon, 'coupon', false);
 		},
 		/*
-		 * 获取用户信息
+		 * Lấy thông tin người dùng
 		 */
 		getUserInfo: function () {
 			let that = this;
@@ -962,16 +962,16 @@ export default {
 			});
 		},
 		/**
-		 * 购物车数量加和数量减
+		 * Tăng và giảm số lượng giỏ hàng
 		 *
 		 */
 		ChangeCartNum: function (changeValue) {
-			//changeValue:是否 加|减
-			//获取当前变动属性
+			//changeValue: có tăng hay giảm
+			//Lấy thuộc tính vừa thay đổi hiện tại
 			let productSelect = this.productValue[this.attrValue];
-			//如果没有属性,赋值给商品默认库存
+			//Nếu không có thuộc tính, gán bằng tồn kho mặc định của sản phẩm
 			if (productSelect === undefined && !this.attr.productAttr.length) productSelect = this.attr.productSelect;
-			//无属性值即库存为0；不存在加减；
+			//Không có giá trị thuộc tính thì tồn kho là 0; không có tăng giảm;
 			let stock = productSelect.stock || 0;
 			let num = this.attr.productSelect;
 			if (productSelect === undefined || (this.storeInfo.limit_num && num.cart_num >= this.storeInfo.limit_num && changeValue)) return;
@@ -993,14 +993,14 @@ export default {
 			this.$set(this.attr.productAttr[val.indexw], 'index', this.attr.productAttr[val.indexw].attr_values[val.indexn]);
 		},
 		/**
-		 * 属性变动赋值
+		 * Gán giá trị khi thuộc tính thay đổi
 		 *
 		 */
 		ChangeAttr: function (res) {
 			let productSelect = this.productValue[res];
 			if (!productSelect) {
 				this.$util.Tips({
-					title: this.$t(`重新选择`),
+					title: this.$t(`Chọn lại`),
 					success: () => {
 						this.noGoods = true;
 						this.attr.productSelect.stock = 0;
@@ -1020,7 +1020,7 @@ export default {
 				this.$set(this.attr.productSelect, 'cart_num', this.storeInfo.min_qty);
 				// this.$set(this.attr.productSelect, 'vip_price', productSelect.vip_price);
 				this.$set(this, 'attrValue', res);
-				this.$set(this, 'attrTxt', this.$t(`已选择`));
+				this.$set(this, 'attrTxt', this.$t(`Đã chọn`));
 				this.setRealPrice(this.storeInfo.id, productSelect.unique);
 			} else {
 				this.$set(this.attr.productSelect, 'image', productSelect.image);
@@ -1030,7 +1030,7 @@ export default {
 				this.$set(this.attr.productSelect, 'cart_num', 0);
 				this.$set(this.attr.productSelect, 'vip_price', this.storeInfo.vip_price);
 				this.$set(this, 'attrValue', '');
-				this.$set(this, 'attrTxt', this.$t(`请选择`));
+				this.$set(this, 'attrTxt', this.$t(`Vui lòng chọn`));
 			}
 		},
 		setRealPrice(id, unique) {
@@ -1042,7 +1042,7 @@ export default {
 			});
 		},
 		/**
-		 * 领取完毕移除当前页面领取过的优惠券展示
+		 * Sau khi nhận xong, ẩn hiển thị phiếu giảm giá đã nhận trên trang hiện tại
 		 */
 		ChangCoupons: function (e) {
 			let coupon = e;
@@ -1067,13 +1067,13 @@ export default {
 				.exec();
 		},
 		/**
-		 * 获取产品详情
+		 * Lấy chi tiết sản phẩm
 		 *
 		 */
 		getGoodsDetails() {
 			let that = this;
 			uni.showLoading({
-				title: '加载中',
+				title: 'Đang tải',
 				mask: true
 			});
 			getProductDetail(that.id)
@@ -1097,7 +1097,7 @@ export default {
 						this.description = this.description.replace(/<img/gi, '<img style="max-width:100%;height:auto;float:left;display:block" ');
 						this.description = this.description.replace(/<video/gi, '<video style="width:100%;height:300px;display:block" ');
 					}
-					that.$set(that, 'presale_pay_status', res.data.storeInfo.presale_pay_status); // 1未开始; 2进行中; 3已结束
+					that.$set(that, 'presale_pay_status', res.data.storeInfo.presale_pay_status); // 1 chưa bắt đầu; 2 đang diễn ra; 3 đã kết thúc
 					that.$set(that, 'reply', res.data.reply ? [res.data.reply] : []);
 					that.$set(that, 'replyCount', res.data.replyCount);
 					that.$set(that, 'replyChance', res.data.replyChance);
@@ -1132,12 +1132,12 @@ export default {
 					}
 					this.$set(this, 'selectSku', that.skuArr[0]);
 					that.$set(that, 'diff', that.$util.$h.Sub(storeInfo.price, storeInfo.vip_price));
-					var navList = [that.$t(`商品`), that.$t(`详情`)];
+					var navList = [that.$t(`Sản phẩm`), that.$t(`Chi tiết`)];
 					if (res.data.replyCount) {
-						navList.splice(1, 0, that.$t(`评价`));
+						navList.splice(1, 0, that.$t(`Đánh giá`));
 					}
 					// if (goodArray.length) {
-					// 	navList.splice(-1, 0, '推荐');
+					// 	navList.splice(-1, 0, 'Gợi ý');
 					// }
 					that.$set(that, 'navList', navList);
 					that.$set(that, 'storeImage', that.storeInfo.image);
@@ -1173,11 +1173,11 @@ export default {
 					that.downloadFilestoreImage();
 					// #endif
 					if (!res.data.productAttr.length) {
-						// 单规格
+						// Một quy cách
 						that.DefaultSelect();
 						this.setRealPrice(storeInfo.id, res.data.spec_unique);
 					} else {
-						// 多规格
+						// Nhiều quy cách
 						that.DefaultSelect();
 					}
 					that.getCartCount();
@@ -1185,7 +1185,7 @@ export default {
 				})
 				.catch((err) => {
 					uni.hideLoading();
-					//状态异常返回上级页面
+					//Trạng thái bất thường thì quay về trang trước
 					return that.$util.Tips(
 						{
 							title: err.toString()
@@ -1203,7 +1203,7 @@ export default {
 				heightArr = [];
 			for (var i = 0; i < that.navList.length; i++) {
 				//productList
-				//获取元素所在位置
+				//Lấy vị trí của phần tử
 				var query = uni.createSelectorQuery().in(this);
 				var idView = '#past' + i;
 				if (
@@ -1228,7 +1228,7 @@ export default {
 			}
 		},
 		/**
-		 * 拨打电话
+		 * Gọi điện
 		 */
 		makePhone: function () {
 			uni.makePhoneCall({
@@ -1236,13 +1236,13 @@ export default {
 			});
 		},
 		/**
-		 * 打开地图
+		 * Mở bản đồ
 		 *
 		 */
 		showMaoLocation: function () {
 			if (!this.systemStore.latitude || !this.systemStore.longitude)
 				return this.$util.Tips({
-					title: this.$t(`缺少经纬度信息无法查看地图`)
+					title: this.$t(`Thiếu thông tin kinh độ, vĩ độ nên không thể xem bản đồ`)
 				});
 			uni.openLocation({
 				latitude: parseFloat(this.systemStore.latitude),
@@ -1254,7 +1254,7 @@ export default {
 			});
 		},
 		/**
-		 * 默认选中属性
+		 * Thuộc tính được chọn mặc định
 		 *
 		 */
 		DefaultSelect: function () {
@@ -1273,7 +1273,7 @@ export default {
 			for (let i = 0; i < productAttr.length; i++) {
 				this.$set(productAttr[i], 'index', value[i]);
 			}
-			//sort();排序函数:数字-英文-汉字；
+			//sort(); hàm sắp xếp: số - chữ Anh - chữ Hán;
 			let productSelect = this.productValue[value.join(',')];
 			if (productSelect && productAttr.length) {
 				this.$set(this.attr.productSelect, 'store_name', this.storeInfo.store_name);
@@ -1284,7 +1284,7 @@ export default {
 				this.$set(this.attr.productSelect, 'cart_num', this.storeInfo.min_qty);
 				this.$set(this, 'attrValue', value.join(','));
 				// this.$set(this.attr.productSelect, 'vip_price', productSelect.vip_price);
-				this.$set(this, 'attrTxt', this.$t(`已选择`));
+				this.$set(this, 'attrTxt', this.$t(`Đã chọn`));
 				this.setRealPrice(this.storeInfo.id, productSelect.unique);
 			} else if (!productSelect && productAttr.length) {
 				this.$set(this.attr.productSelect, 'store_name', this.storeInfo.store_name);
@@ -1295,7 +1295,7 @@ export default {
 				this.$set(this.attr.productSelect, 'cart_num', 0);
 				this.$set(this.attr.productSelect, 'vip_price', this.storeInfo.vip_price);
 				this.$set(this, 'attrValue', '');
-				this.$set(this, 'attrTxt', this.$t(`请选择`));
+				this.$set(this, 'attrTxt', this.$t(`Vui lòng chọn`));
 			} else if (!productSelect && !productAttr.length) {
 				this.$set(this.attr.productSelect, 'store_name', this.storeInfo.store_name);
 				this.$set(this.attr.productSelect, 'image', this.storeInfo.image);
@@ -1305,11 +1305,11 @@ export default {
 				this.$set(this.attr.productSelect, 'cart_num', this.storeInfo.min_qty);
 				this.$set(this.attr.productSelect, 'vip_price', this.storeInfo.vip_price);
 				this.$set(this, 'attrValue', '');
-				this.$set(this, 'attrTxt', this.$t(`请选择`));
+				this.$set(this, 'attrTxt', this.$t(`Vui lòng chọn`));
 			}
 		},
 		/**
-		 * 获取优惠券
+		 * Lấy phiếu giảm giá
 		 *
 		 */
 		getCouponList(type) {
@@ -1365,7 +1365,7 @@ export default {
 		/**
 		 *
 		 *
-		 * 收藏商品
+		 * Sản phẩm yêu thích
 		 */
 		setCollect: function () {
 			if (this.isLogin === false) {
@@ -1390,7 +1390,7 @@ export default {
 			}
 		},
 		/**
-		 * 打开属性插件
+		 * Mở plugin thuộc tính
 		 */
 		selecAttr: function () {
 			this.$refs.proSwiper.videoIsPause();
@@ -1401,7 +1401,7 @@ export default {
 			this.$refs[ref].isShow = true;
 		},
 		/**
-		 * 打开优惠券插件
+		 * Mở plugin phiếu giảm giá
 		 */
 		couponTap: function () {
 			let that = this;
@@ -1419,11 +1419,11 @@ export default {
 			this.isGiftOrder = 0;
 		},
 		/**
-		 * 打开属性加入购物车
+		 * Mở thuộc tính để thêm vào giỏ hàng
 		 *
 		 */
 		joinCart: function (e) {
-			//是否登录
+			//Có đăng nhập hay không
 			if (this.isLogin === false) {
 				toLogin();
 			} else {
@@ -1437,32 +1437,32 @@ export default {
 			});
 		},
 		/*
-		 * 加入购物车
+		 * Thêm vào giỏ hàng
 		 */
 		goCat(news) {
 			let that = this,
 				productSelect = that.productValue[this.attrValue];
 			that.currentPage = false;
-			//打开属性
+			//Mở thuộc tính
 			if (that.attrValue) {
-				//默认选中了属性，但是没有打开过属性弹窗还是自动打开让用户查看默认选中的属性
+				//Đã chọn thuộc tính mặc định nhưng chưa từng mở popup thuộc tính thì vẫn tự động mở để người dùng xem thuộc tính được chọn mặc định
 				that.attr.cartAttr = !that.isOpen ? true : false;
 			} else {
 				if (that.isOpen) that.attr.cartAttr = true;
 				else that.attr.cartAttr = !that.attr.cartAttr;
 			}
-			//只有关闭属性弹窗时进行加入购物车
+			//Chỉ thêm vào giỏ hàng khi đóng popup thuộc tính
 			if (that.attr.cartAttr === true && that.isOpen === false) return (that.isOpen = true);
-			//如果有属性,没有选择,提示用户选择
+			//Nếu có thuộc tính mà chưa chọn, nhắc người dùng chọn
 			if (that.attr.productAttr.length && productSelect === undefined && that.isOpen === true)
 				return that.$util.Tips({
-					title: that.$t(`产品库存不足，请选择其它属性`)
+					title: that.$t(`Sản phẩm không đủ tồn kho, vui lòng chọn thuộc tính khác`)
 				});
 			if (that.attr.productSelect.cart_num <= 0) {
 				that.attr.productSelect.cart_num = 1;
 				that.isOpen = false;
 				return that.$util.Tips({
-					title: that.$t(`请选择数量`)
+					title: that.$t(`Vui lòng chọn số lượng`)
 				});
 			}
 			let q = {
@@ -1484,7 +1484,7 @@ export default {
 						});
 					} else {
 						that.$util.Tips({
-							title: that.$t(`添加成功`),
+							title: that.$t(`Thêm thành công`),
 							success: () => {
 								that.getCartCount(true);
 							}
@@ -1500,8 +1500,8 @@ export default {
 				});
 		},
 		/**
-		 * 获取购物车数量
-		 * @param boolean 是否展示购物车动画和重置属性
+		 * Lấy số lượng giỏ hàng
+		 * @param boolean Có hiển thị hiệu ứng giỏ hàng và reset thuộc tính hay không
 		 */
 		getCartCount: function (isAnima) {
 			let that = this;
@@ -1514,7 +1514,7 @@ export default {
 					// 	index: Number(uni.getStorageSync('FOOTER_ADDCART')) || 2,
 					// 	text: that.CartCount + ''
 					// })
-					//加入购物车后重置属性
+					//Reset thuộc tính sau khi thêm vào giỏ hàng
 					if (isAnima) {
 						that.animated = true;
 						setTimeout(function () {
@@ -1529,7 +1529,7 @@ export default {
 			this.goBuy();
 		},
 		/**
-		 * 立即购买
+		 * Mua ngay
 		 */
 		goBuy() {
 			if (this.isLogin === false) {
@@ -1542,12 +1542,12 @@ export default {
 		open(data) {
 			this.showMenuIcon = data;
 		},
-		// 授权关闭
+		// Đóng ủy quyền
 		authColse: function (e) {
 			this.isShowAuth = e;
 		},
 		/**
-		 * 分享打开
+		 * Mở chia sẻ
 		 *
 		 */
 		listenerActionSheet() {
@@ -1560,22 +1560,22 @@ export default {
 
 			this.posters = true;
 		},
-		// 分享关闭
+		// Đóng chia sẻ
 		listenerActionClose: function () {
 			this.posters = false;
 			this.posterImageStatus = false;
 		},
-		//隐藏海报
+		//Ẩn poster
 		posterImageClose: function () {
 			this.posterImageStatus = false;
 		},
 
-		// 小程序关闭分享弹窗；
+		// Đóng popup chia sẻ của Mini Program;
 		goFriend: function () {
 			this.posters = false;
 		},
 		/*
-		 * 保存到手机相册
+		 * Lưu vào album điện thoại
 		 */
 		// #ifdef MP
 		savePosterPath: function () {
@@ -1591,13 +1591,13 @@ export default {
 									success: function (res) {
 										that.posterImageClose();
 										that.$util.Tips({
-											title: that.$t(`保存成功`),
+											title: that.$t(`Lưu thành công`),
 											icon: 'success'
 										});
 									},
 									fail: function (res) {
 										that.$util.Tips({
-											title: that.$t(`保存失败`)
+											title: that.$t(`Lưu thất bại`)
 										});
 									}
 								});
@@ -1609,13 +1609,13 @@ export default {
 							success: function (res) {
 								that.posterImageClose();
 								that.$util.Tips({
-									title: that.$t(`保存成功`),
+									title: that.$t(`Lưu thành công`),
 									icon: 'success'
 								});
 							},
 							fail: function (res) {
 								that.$util.Tips({
-									title: that.$t(`保存失败`)
+									title: that.$t(`Lưu thất bại`)
 								});
 							}
 						});
@@ -1632,13 +1632,13 @@ export default {
 				success: function (res) {
 					that.posterImageClose();
 					that.$util.Tips({
-						title: that.$t(`保存成功`),
+						title: that.$t(`Lưu thành công`),
 						icon: 'success'
 					});
 				},
 				fail: function (res) {
 					that.$util.Tips({
-						title: that.$t(`保存失败`)
+						title: that.$t(`Lưu thất bại`)
 					});
 				}
 			});
@@ -1669,14 +1669,14 @@ export default {
 			this.$set(this.coupon, 'type', type);
 			this.getCouponList(type);
 		},
-		//点击sku图片打开轮播图
+		//Click ảnh sku để mở banner trình chiếu
 		showImg(index) {
 			this.$refs.cusPreviewImg.open(this.selectSku.suk);
 		},
 		showSwiperImg(index) {
 			this.$refs.cusSwiperImg.open(index);
 		},
-		//滑动轮播图选择商品
+		//Vuốt banner trình chiếu để chọn sản phẩm
 		changeSwitch(e) {
 			let productSelect = this.skuArr[e];
 			this.$set(this, 'selectSku', productSelect);
@@ -1702,7 +1702,7 @@ export default {
 				this.$set(this.attr.productSelect, 'stock', productSelect.stock);
 				this.$set(this.attr.productSelect, 'unique', productSelect.unique);
 				this.$set(this.attr.productSelect, 'vipPrice', productSelect.vipPrice);
-				this.$set(this, 'attrTxt', this.$t(`已选择`));
+				this.$set(this, 'attrTxt', this.$t(`Đã chọn`));
 				this.$set(this, 'attrValue', productSelect.suk);
 			}
 		}
@@ -1812,8 +1812,8 @@ export default {
 	z-index: 277;
 	border-top: 1rpx solid #f0f0f0;
 	height: 100rpx;
-	height: calc(100rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-	height: calc(100rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+	height: calc(100rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+	height: calc(100rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 	transform: translate3d(0, 100%, 0);
 	transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
 	.gift-icon {

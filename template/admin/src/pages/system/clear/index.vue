@@ -1,8 +1,8 @@
 <template>
   <div>
     <!-- <div class="acea-row row-center clear_tit">
-      <el-button type="primary" v-db-click @click="clearCache" class="mr20">清除缓存</el-button>
-      <el-button type="primary" v-db-click @click="clearlog">清除日志</el-button>
+      <el-button type="primary" v-db-click @click="clearCache" class="mr20">Xóa bộ nhớ đệm</el-button>
+      <el-button type="primary" v-db-click @click="clearlog">Xóa log</el-button>
     </div> -->
     <el-card :bordered="false" shadow="never" class="ivu-mt">
       <el-row :gutter="24">
@@ -10,7 +10,7 @@
           <div class="clear_box">
             <span class="clear_box_sp1" v-text="item.title"></span>
             <span class="clear_box_sp2" v-text="item.tlt"></span>
-            <el-button :type="item.typeName" v-db-click @click="onChange(index)">立即清除</el-button>
+            <el-button :type="item.typeName" v-db-click @click="onChange(index)">Xóa ngay</el-button>
           </div>
         </el-col>
       </el-row>
@@ -33,14 +33,14 @@ export default {
       delfromData: {},
       tabList: [
         {
-          title: '清除缓存',
-          tlt: '清除系统的所有缓存',
+          title: 'Xóa bộ nhớ đệm',
+          tlt: 'Xóa toàn bộ bộ nhớ đệm (cache) của hệ thống',
           typeName: 'primary',
           type: '11',
         },
         {
-          title: '清除日志',
-          tlt: '清除系统的所有日志文件',
+          title: 'Xóa nhật ký',
+          tlt: 'Xóa toàn bộ tệp nhật ký của hệ thống',
           typeName: 'primary',
           type: 'temp',
         },
@@ -57,7 +57,7 @@ export default {
     },
     clearCache() {
       let delfromData = {
-        title: '清除缓存',
+        title: 'Xóa bộ nhớ đệm',
         num: 0,
         url: `system/refresh_cache/cache`,
         method: 'get',
@@ -73,7 +73,7 @@ export default {
     },
     clearlog() {
       let delfromData = {
-        title: '清除日志',
+        title: 'Xóa nhật ký',
         num: 0,
         url: `system/refresh_cache/log`,
         method: 'get',

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,7 +20,7 @@ use crmeb\exceptions\AdminException;
 use think\facade\App;
 
 /**
- * 预售控制器
+ * Controller đặt trước
  * Class StoreAdvance
  * @package app\adminapi\controller\v1\marketing
  */
@@ -38,7 +38,7 @@ class StoreAdvance extends AuthController
     }
 
     /**
-     * 管理端预售列表
+     * Danh sách đặt trước ở quản trị
      * @return mixed
      */
     public function index()
@@ -53,7 +53,7 @@ class StoreAdvance extends AuthController
     }
 
     /**
-     * 添加/修改预售商品
+     * Thêm/sửa sản phẩm đặt trước
      * @param $id
      * @return mixed
      */
@@ -106,7 +106,7 @@ class StoreAdvance extends AuthController
     }
 
     /**
-     * 详情
+     * Chi tiết
      * @param $id
      * @return mixed
      */
@@ -117,7 +117,7 @@ class StoreAdvance extends AuthController
     }
 
     /**
-     * 删除预售
+     * Xóa đặt trước
      * @param $id
      * @return mixed
      */
@@ -132,7 +132,7 @@ class StoreAdvance extends AuthController
     }
 
     /**
-     * 预售商品上下架
+     * Bật/tắt hiển thị sản phẩm đặt trước
      * @param $id
      * @param $status
      * @return mixed

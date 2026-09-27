@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,7 +17,7 @@ use app\services\user\UserLabelServices;
 use think\facade\App;
 
 /**
- * 用户标签控制器
+ * Controller nhãn người dùng
  * Class UserLabel
  * @package app\adminapi\controller\v1\user
  */
@@ -36,7 +36,7 @@ class UserLabel extends AuthController
     }
 
     /**
-     * 标签列表
+     * Danh sách nhãn
      * @param int $label_cate
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -49,7 +49,7 @@ class UserLabel extends AuthController
     }
 
     /**
-     * 添加修改标签表单
+     * Form thêm/sửa nhãn
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
@@ -63,7 +63,7 @@ class UserLabel extends AuthController
     }
 
     /**
-     * 保存标签表单数据
+     * Lưu dữ liệu form nhãn
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -82,7 +82,7 @@ class UserLabel extends AuthController
     }
 
     /**
-     * 删除
+     * Xóa
      * @param $id
      * @throws \Exception
      */
@@ -97,7 +97,7 @@ class UserLabel extends AuthController
     }
 
     /**
-     * 标签分类
+     * Danh mục nhãn
      * @param UserLabelCateServices $services
      * @return mixed
      */
@@ -107,7 +107,7 @@ class UserLabel extends AuthController
     }
 
     /**
-     * 设置用户标签
+     * Đặt nhãn người dùng
      * @param UserLabelRelationServices $services
      * @param $uid
      * @return mixed
@@ -129,7 +129,7 @@ class UserLabel extends AuthController
     }
 
     /**
-     * 获取带分类的用户标签列表
+     * Lấy danh sách nhãn người dùng kèm danh mục
      * @param \app\services\user\label\UserLabelCateServices $userLabelCateServices
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException

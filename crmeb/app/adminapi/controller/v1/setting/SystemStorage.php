@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -45,7 +45,7 @@ class SystemStorage extends AuthController
     }
 
     /**
-     * 获取创建数据表单
+     * Lấy form tạo dữ liệu
      * @param $type
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -59,7 +59,7 @@ class SystemStorage extends AuthController
     }
 
     /**
-     * 获取配置表单
+     * Lấy form cấu hình
      * @param $type
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -70,7 +70,7 @@ class SystemStorage extends AuthController
     }
 
     /**
-     * 获取配置类型
+     * Lấy loại cấu hình
      * @return mixed
      */
     public function getConfig()
@@ -108,7 +108,7 @@ class SystemStorage extends AuthController
     }
 
     /**
-     * 保存类型
+     * Lưu loại
      * @param $type
      * @return mixed
      */
@@ -137,7 +137,7 @@ class SystemStorage extends AuthController
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param SystemConfigServices $services
      * @param $id
      * @return mixed
@@ -156,7 +156,7 @@ class SystemStorage extends AuthController
 //        $services->update('upload_type', ['value' => json_encode($info->type)], 'menu_name');
         \crmeb\services\CacheService::clear();
 
-        //设置跨域规则
+        //Thiết lập quy tắc CORS
         try {
             $upload = UploadService::init($info->type);
             $res = $upload->setBucketCors($info->name, $info->region);
@@ -166,7 +166,7 @@ class SystemStorage extends AuthController
         } catch (\Throwable $e) {
         }
 
-        //修改状态
+        //Sửa trạng thái
         $this->services->transaction(function () use ($id, $info) {
 //            $this->services->update(['status' => 1, 'is_delete' => 0], ['status' => 0]);
             $this->services->update(['type' => $info->type], ['status' => 0]);
@@ -208,7 +208,7 @@ class SystemStorage extends AuthController
 
         }
 //        if (strstr($domain, 'https://') !== false && !$data['pri']) {
-//            return app('json')->fail('域名为HTTPS访问时，必须填写证书');
+//            return app('json')->fail('Khi tên miền truy cập bằng HTTPS, phải điền chứng chỉ');
 //        }
 
         $this->services->updateDomain($id, $domain, ['cdn' => $cdn]);
@@ -217,7 +217,7 @@ class SystemStorage extends AuthController
     }
 
     /**
-     * 删除
+     * Xóa
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -238,7 +238,7 @@ class SystemStorage extends AuthController
     }
 
     /**
-     * 切换存储类型
+     * Chuyển đổi loại lưu trữ
      * @param SystemConfigServices $services
      * @param $type
      * @return mixed

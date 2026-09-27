@@ -1,9 +1,9 @@
 <template>
-	<!-- 拼团活动 -->
+	<!-- Hoạt động mua chung -->
 	<view>
 		<view :style="[boxStyle]" v-if="combinationList.length">
 			<view>
-				<!-- 拼团头部 -->
+				<!-- Phần đầu mua chung -->
 				<view class="w-full h-96 px-24 flex-between-center bg-cover" :style="[headerStyle]">
 					<view class="flex-y-center">
 						<text class="fs-32 lh-44rpx fw-500" :style="[titleStyle]" v-if="titleConfig">{{ titleTxtConfig }}</text>
@@ -12,15 +12,15 @@
 						<view class="avatar-group flex-y-center mr-20" v-if="pinkInfo.avatars && pinkInfo.avatars.length">
 							<image v-for="(item, index) in pinkInfo.avatars" :key="index" :src="item" mode="" class="w-36 h-36 rd-50-p111-"></image>
 						</view>
-						<text class="fs-26 text--w111-999 lh-36rpx" :style="[tipsColor]">{{ pinkInfo.pink_count }}{{ $t(`人参与拼团`) }}</text>
+						<text class="fs-26 text--w111-999 lh-36rpx" :style="[tipsColor]">{{ pinkInfo.pink_count }}{{ $t(`người tham gia mua chung`) }}</text>
 					</view>
 					<view class="flex-y-center fs-24 text--w111-999" :style="[headerBntColor]" @tap="goPage('/pages/activity/goods_combination/index')">
 						<text>{{ rightBntTxt }}</text>
 						<text class="iconfont icon-ic_rightarrow fs-24" :style="[headerBntColor]"></text>
 					</view>
 				</view>
-				<!-- 拼团列表 -->
-				<!-- 单列 -->
+				<!-- Danh sách mua chung -->
+				<!-- Một cột -->
 				<view class="pt-32 pr-20 pb-32 pl-20" :style="[boxContentStyle]" v-if="goodStyleConfig == 0">
 					<view class="w-full flex justify-between item" v-for="(item, index) in combinationList" :key="index" @tap="goDetail(item)">
 						<easy-loadimage :image-src="item.image" width="240rpx" height="240rpx" :borderRadius="imgStyle"></easy-loadimage>
@@ -29,8 +29,8 @@
 								<view class="w-full fs-28 h-80 lh-40rpx line2" :style="[productStyle]" v-if="checkboxInfo.includes(0)">{{ item.title }}</view>
 								<view class="flex mt-14" v-if="checkboxInfo.includes(1)">
 									<view class="flex fs-20 rd-8rpx" :style="[labelBg]">
-										<text class="tuan-num text--w111-fff flex-center" v-if="checkboxInfo.includes(1)">{{ item.people }}{{ $t(`人团`) }}</text>
-										<text class="complete flex-center" :style="[pinkNumStyle]">已拼{{ item.pink_count || 0 }}份</text>
+										<text class="tuan-num text--w111-fff flex-center" v-if="checkboxInfo.includes(1)">{{ item.people }}{{ $t(`người/nhóm`) }}</text>
+										<text class="complete flex-center" :style="[pinkNumStyle]">Đã có {{ item.pink_count || 0 }} lượt mua chung</text>
 									</view>
 								</view>
 							</view>
@@ -43,25 +43,25 @@
 										decimalSize="36"
 										weight
 										:color="priceColor"
-										preFix="拼团价"
+										preFix="Giá mua chung"
 										preFixSize="24"
 										:textColor="priceColor"
 										v-if="checkboxInfo.includes(2)"
 									></baseMoney>
 									<text class="text-line fs-28 text--w111-999 pt-14 Regular" v-if="checkboxInfo.includes(3)" :style="[otPriceColor]">{{ $t(`¥`) }}{{ item.product_price }}</text>
 								</view>
-								<view class="w-144 h-56 rd-30rpx flex-center fs-24 text--w111-fff" v-if="!showBtn" :style="[btnBgColor]">{{ $t(`去拼团`) }}</view>
+								<view class="w-144 h-56 rd-30rpx flex-center fs-24 text--w111-fff" v-if="!showBtn" :style="[btnBgColor]">{{ $t(`Mua chung ngay`) }}</view>
 							</view>
 						</view>
 					</view>
 				</view>
-				<!-- 两列 -->
+				<!-- Hai cột -->
 				<view class="grid-column-2 grid-gap-22rpx pt-32 pr-20 pb-32 pl-20" :style="[boxContentStyle]" v-if="goodStyleConfig == 1">
 					<view v-for="(item, index) in combinationList" :key="index" @tap="goDetail(item)">
 						<easy-loadimage :image-src="item.image" width="100%" height="324rpx" :borderRadius="imgStyle"></easy-loadimage>
 						<view class="w-full mt-16 line1" :style="[productStyle]" v-if="checkboxInfo.includes(1)">
 							<view class="inline fs-20 rd-4rpx mr-10 rd-4rpx" :style="[labelBg]">
-								<text class="complete flex-center rd-4rpx" :style="[pinkNumStyle]">{{ item.people }}{{ $t(`人团`) }}</text>
+								<text class="complete flex-center rd-4rpx" :style="[pinkNumStyle]">{{ item.people }}{{ $t(`người/nhóm`) }}</text>
 							</view>
 							<view class="inline fs-28 lh-40rpx" v-if="checkboxInfo.includes(0)">{{ item.title }}</view>
 						</view>
@@ -70,15 +70,15 @@
 								<baseMoney :money="item.price" symbolSize="24" integerSize="36" decimalSize="36" weight :color="priceColor" v-if="checkboxInfo.includes(2)"></baseMoney>
 								<text class="text-line fs-28 text--w111-999 Regular" v-if="checkboxInfo.includes(3)" :style="[otPriceColor]">{{ $t(`¥`) }}{{ item.product_price }}</text>
 							</view>
-							<view class="w-144 h-56 rd-30rpx flex-center fs-24 text--w111-fff bg--w111-E93323" v-if="!showBtn" :style="[btnBgColor]">{{ $t(`去拼团`) }}</view>
+							<view class="w-144 h-56 rd-30rpx flex-center fs-24 text--w111-fff bg--w111-E93323" v-if="!showBtn" :style="[btnBgColor]">{{ $t(`Mua chung ngay`) }}</view>
 						</view>
 					</view>
 				</view>
-				<!-- 三列 -->
+				<!-- Ba cột -->
 				<view class="grid-column-3 grid-gap-18rpx pt-32 pr-20 pb-32 pl-20" :style="[boxContentStyle]" v-if="goodStyleConfig == 2">
 					<view class="relative" v-for="(item, index) in combinationList" :key="index" @tap="goDetail(item)">
 						<view class="abs-tag z-20" :style="[labelBg]" v-if="checkboxInfo.includes(1)">
-							<text class="circle-tag flex-center fs-22" :style="[pinkNumStyle]">{{ item.people }}{{ $t(`人团`) }}</text>
+							<text class="circle-tag flex-center fs-22" :style="[pinkNumStyle]">{{ item.people }}{{ $t(`người/nhóm`) }}</text>
 						</view>
 						<easy-loadimage :image-src="item.image" width="100%" height="212rpx" :borderRadius="imgStyle"></easy-loadimage>
 						<view class="w-full line1 mt-16 fs-26" :style="[productStyle]" v-if="checkboxInfo.includes(0)">{{ item.title }}</view>
@@ -88,11 +88,11 @@
 						<view class="text-line fs-24 text--w111-999 Regular lh-32rpx" :style="[otPriceColor]" v-if="checkboxInfo.includes(3)">{{ $t(`¥`) }}{{ item.product_price }}</view>
 					</view>
 				</view>
-				<!-- 滑动 -->
+				<!-- Vuốt -->
 				<scroll-view scroll-x="true" show-scrollbar="false" :style="[boxContentStyle]" class="white-nowrap vertical-middle w-full p-32" v-if="goodStyleConfig == 3">
 					<view class="inline-block relative" :class="{ 'ml-20': index }" v-for="(item, index) in combinationList" :key="index" @tap="goDetail(item)">
 						<view class="abs-tag z-20" :style="[labelBg]" v-if="checkboxInfo.includes(1)">
-							<text class="circle-tag flex-center fs-22" :style="[pinkNumStyle]">{{ item.people }}{{ $t(`人团`) }}</text>
+							<text class="circle-tag flex-center fs-22" :style="[pinkNumStyle]">{{ item.people }}{{ $t(`người/nhóm`) }}</text>
 						</view>
 						<easy-loadimage :image-src="item.image" width="224rpx" height="224rpx" :borderRadius="imgStyle"></easy-loadimage>
 						<view class="w-222 line1 mt-16 fs-26" :style="[productStyle]" v-if="checkboxInfo.includes(0)">{{ item.title }}</view>
@@ -155,7 +155,7 @@ export default {
 				background: `linear-gradient(90deg, ${this.dataConfig.moduleColor.color[0].item} 0%, ${this.dataConfig.moduleColor.color[1].item} 100%)`
 			};
 		},
-		/*商品模板*/
+		/*Template sản phẩm*/
 		goodStyleConfig() {
 			return this.dataConfig.goodStyleConfig.tabVal;
 		},
@@ -178,15 +178,15 @@ export default {
 				borderRadius
 			};
 		},
-		/*标题是文本还是图片*/
+		/*Tiêu đề là văn bản hay hình ảnh*/
 		titleConfig() {
 			return this.dataConfig.titleConfig.tabVal;
 		},
-		/*标题文本*/
+		/*Văn bản tiêu đề*/
 		titleTxtConfig() {
 			return this.dataConfig.titleTxtConfig.value;
 		},
-		/*标题图片*/
+		/*Ảnh tiêu đề*/
 		titleImg() {
 			return this.styleConfig ? this.titleUrl : this.titleColorUrl;
 		},
@@ -196,30 +196,30 @@ export default {
 		titleUrl() {
 			return this.dataConfig.imgConfig.url;
 		},
-		/*标题提示文字*/
+		/*Chữ gợi ý tiêu đề*/
 		tipsColor() {
 			return {
 				color: this.styleConfig ? this.dataConfig.tipsColor.color[0].item : this.dataConfig.tipsColor2.color[0].item
 			};
 		},
-		/*分割线颜色*/
+		/*Màu đường phân chia*/
 		dividerColor() {
 			return {
 				color: this.dataConfig.dividerColor.color[0].item
 			};
 		},
-		/*头部按钮文本*/
+		/*Văn bản nút phần đầu*/
 		rightBntTxt() {
 			return this.dataConfig.rightBntConfig.value;
 		},
-		/*头部按钮样式*/
+		/*Style nút phần đầu*/
 		headerBntColor() {
 			return {
 				color: this.styleConfig ? this.dataConfig.headerBntColor.color[0].item : this.dataConfig.headerBntColor2.color[0].item,
 				fontSize: `${this.dataConfig.bntNumber.val * 2}rpx`
 			};
 		},
-		/*商品图片圆角样式*/
+		/*Style góc tròn ảnh sản phẩm*/
 		imgStyle() {
 			let borderRadius = `${this.dataConfig.filletImg.val * 2}rpx`;
 			if (this.dataConfig.filletImg.type) {
@@ -229,14 +229,14 @@ export default {
 			}
 			return borderRadius;
 		},
-		/*商品名称样式*/
+		/*Style tên sản phẩm*/
 		productStyle() {
 			return {
 				color: this.dataConfig.goodsNameColor.color[0].item,
 				fontWeight: this.dataConfig.goodsName.tabVal ? 'normal' : 'bold'
 			};
 		},
-		/* 展示信息 */
+		/* Thông tin hiển thị */
 		checkboxInfo() {
 			return this.dataConfig.checkboxInfo.type;
 		},
@@ -252,11 +252,11 @@ export default {
 				height: '32rpx'
 			};
 		},
-		/* 价格颜色 */
+		/* Màu giá */
 		priceColor() {
 			return this.dataConfig.toneConfig.tabVal ? this.dataConfig.pinkPriceColor.color[0].item : 'var(--view-theme)';
 		},
-		/* 划线价颜色 */
+		/* Màu giá gốc (gạch ngang) */
 		otPriceColor() {
 			return {
 				color: this.dataConfig.goodsPriceColor.color[0].item
@@ -265,7 +265,7 @@ export default {
 		showBtn() {
 			return this.dataConfig.pinkConfig.tabVal;
 		},
-		/* 按钮颜色 */
+		/* Màu nút */
 		btnBgColor() {
 			return {
 				background: this.dataConfig.toneConfig.tabVal
@@ -274,7 +274,7 @@ export default {
 				color: this.dataConfig.goodsBntTxtColor.color[0].item
 			};
 		},
-		/*商品数量*/
+		/*Số lượng sản phẩm*/
 		numberConfig() {
 			return this.dataConfig.numberConfig.val;
 		}
@@ -304,7 +304,7 @@ export default {
 			});
 			// #endif
 		},
-		// 拼团列表
+		// Danh sách mua chung
 		getCombinationList: function () {
 			let that = this;
 			let limit = that.$config.LIMIT;
@@ -322,7 +322,7 @@ export default {
 					});
 				});
 		},
-		// 拼团数据（拼团人数头部图片）
+		// Dữ liệu mua chung (ảnh đầu số người tham gia mua chung)
 		pink: function () {
 			pink().then((res) => {
 				this.pinkInfo = res.data;

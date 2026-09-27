@@ -10,19 +10,19 @@ class LangCode extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'lang_code';
 
     /**
-     * type_id搜索器
+     * Bộ lọc type_id
      * @param $query
      * @param $value
      */
@@ -32,7 +32,7 @@ class LangCode extends BaseModel
     }
 
     /**
-     * code搜索器
+     * Bộ lọc code
      * @param $query
      * @param $value
      */
@@ -42,7 +42,7 @@ class LangCode extends BaseModel
     }
 
     /**
-     * remarks搜索器
+     * Bộ lọc remarks
      * @param $query
      * @param $value
      */
@@ -52,7 +52,7 @@ class LangCode extends BaseModel
     }
 
     /**
-     * is_admin搜索器
+     * Bộ lọc is_admin
      * @param $query
      * @param $value
      */

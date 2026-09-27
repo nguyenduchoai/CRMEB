@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -30,8 +30,8 @@ use crmeb\services\CacheService;
  *
  * Class StoreIntegralServices
  * @package app\services\activity
- * @method getOne(array $where, ?string $field = '*', array $with = []) 根据条件获取一条数据
- * @method get(int $id, ?array $field) 获取一条数据
+ * @method getOne(array $where, ?string $field = '*', array $with = []) Lấy một dữ liệu theo điều kiện
+ * @method get(int $id, ?array $field) Lấy một dòng dữ liệu
  */
 class StoreIntegralServices extends BaseServices
 {
@@ -47,7 +47,7 @@ class StoreIntegralServices extends BaseServices
     }
 
     /**
-     * 获取指定条件下的条数
+     * Lấy số lượng bản ghi theo điều kiện chỉ định
      * @param array $where
      */
     public function getCount(array $where)
@@ -56,7 +56,7 @@ class StoreIntegralServices extends BaseServices
     }
 
     /**
-     * 积分商品添加
+     * Thêm sản phẩm đổi điểm
      * @param int $id
      * @param array $data
      */
@@ -91,7 +91,7 @@ class StoreIntegralServices extends BaseServices
                 if (!$res) throw new AdminException(100007);
             } else {
                 if (!$storeProductServices->getOne(['is_del' => 0, 'id' => $data['product_id']])) {
-                    throw new AdminException('无法添加回收站商品');
+                    throw new AdminException('Không thể thêm sản phẩm trong thùng rác');
                 }
                 $data['add_time'] = time();
                 $res = $this->dao->save($data);
@@ -104,7 +104,7 @@ class StoreIntegralServices extends BaseServices
     }
 
     /**
-     * 批量添加商品
+     * Thêm sản phẩm theo lô
      * @param array $data
      */
     public function saveBatchData(array $data)
@@ -150,7 +150,7 @@ class StoreIntegralServices extends BaseServices
     }
 
     /**
-     * 积分商品列表
+     * Danh sách sản phẩm đổi điểm
      * @param array $where
      * @return array
      */
@@ -163,7 +163,7 @@ class StoreIntegralServices extends BaseServices
     }
 
     /**
-     * 获取详情
+     * Lấy chi tiết
      * @param int $id
      * @return array|\think\Model|null
      */
@@ -185,7 +185,7 @@ class StoreIntegralServices extends BaseServices
     }
 
     /**
-     * 获取规格
+     * Lấy phân loại
      * @param int $id
      * @param int $pid
      * @return mixed
@@ -211,20 +211,20 @@ class StoreIntegralServices extends BaseServices
         foreach ($items as $key => $item) {
             $header[] = ['title' => $item['value'], 'key' => 'value' . ($key + 1), 'align' => 'center', 'minWidth' => 80];
         }
-        $header[] = ['title' => '图片', 'slot' => 'pic', 'align' => 'center', 'minWidth' => 120];
-        $header[] = ['title' => '兑换积分', 'slot' => 'price', 'type' => 1, 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '库存', 'key' => 'stock', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '兑换次数', 'slot' => 'quota', 'type' => 1, 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '重量(KG)', 'key' => 'weight', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '体积(m³)', 'key' => 'volume', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '商品编码', 'key' => 'bar_code', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '条形码', 'key' => 'bar_code_number', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Hình ảnh', 'slot' => 'pic', 'align' => 'center', 'minWidth' => 120];
+        $header[] = ['title' => 'Điểm quy đổi', 'slot' => 'price', 'type' => 1, 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Tồn kho', 'key' => 'stock', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Số lượt đổi', 'slot' => 'quota', 'type' => 1, 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Trọng lượng (KG)', 'key' => 'weight', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Thể tích (m³)', 'key' => 'volume', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Mã sản phẩm', 'key' => 'bar_code', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Mã vạch', 'key' => 'bar_code_number', 'align' => 'center', 'minWidth' => 80];
         $attrs['header'] = $header;
         return $attrs;
     }
 
     /**
-     * 获得规格
+     * Lấy phân loại
      * @param $attr
      * @param $id
      * @param $type
@@ -265,7 +265,7 @@ class StoreIntegralServices extends BaseServices
     }
 
     /**
-     * 积分商品详情
+     * Chi tiết sản phẩm đổi điểm
      * @param Request $request
      * @param int $id
      * @return mixed
@@ -310,13 +310,13 @@ class StoreIntegralServices extends BaseServices
         $storeVisit = app()->make(StoreVisitServices::class);
         $storeVisit->setView($uid, $id, 'combination', $storeInfo['product_id'], 'view');
         $data['routine_contact_type'] = sys_config('routine_contact_type', 0);
-        //浏览记录
+        //Lịch sử xem
         ProductLogJob::dispatch(['visit', ['uid' => $uid, 'product_id' => $storeInfo['product_id']]]);
         return $data;
     }
 
     /**
-     * 修改销量和库存
+     * Cập nhật lượt bán và tồn kho
      * @param $num
      * @param $integralId
      * @return bool
@@ -327,26 +327,26 @@ class StoreIntegralServices extends BaseServices
         if ($unique) {
             /** @var StoreProductAttrValueServices $skuValueServices */
             $skuValueServices = app()->make(StoreProductAttrValueServices::class);
-            //减去积分商品的sku库存增加销量
+            //Trừ tồn kho SKU sản phẩm đổi điểm, tăng lượt bán
             $res = false !== $skuValueServices->decProductAttrStock($integralId, $unique, $num, 4);
-            //减去积分商品库存
+            //Trừ tồn kho sản phẩm đổi điểm
             $res = $res && $this->dao->decStockIncSales(['id' => $integralId, 'type' => 4], $num);
-            //获取拼团的sku
+            //Lấy sku mua chung
             $sku = $skuValueServices->value(['product_id' => $integralId, 'unique' => $unique, 'type' => 4], 'suk');
-            //减去当前普通商品sku的库存增加销量
+            //Giảm tồn kho sku của sản phẩm thường hiện tại, tăng lượt bán
             $res = $res && $skuValueServices->decStockIncSales(['product_id' => $product_id, 'suk' => $sku, 'type' => 0], $num);
         } else {
             $res = false !== $this->dao->decStockIncSales(['id' => $integralId, 'type' => 4], $num);
         }
         /** @var StoreProductServices $services */
         $services = app()->make(StoreProductServices::class);
-        //减去普通商品库存
+        //Giảm tồn kho sản phẩm thường
         $res = $res && $services->decProductStock($num, $product_id);
         return $res;
     }
 
     /**
-     * 获取一条积分商品
+     * Lấy một sản phẩm đổi điểm
      * @param $id
      * @return mixed
      */
@@ -356,7 +356,7 @@ class StoreIntegralServices extends BaseServices
     }
 
     /**
-     * 验证积分商品下单库存限量
+     * Kiểm tra giới hạn tồn kho khi đặt hàng sản phẩm đổi điểm
      * @param int $uid
      * @param int $integralId
      * @param int $num
@@ -398,7 +398,7 @@ class StoreIntegralServices extends BaseServices
     }
 
     /**
-     * 获取推荐积分商品
+     * Lấy sản phẩm đổi điểm được đề xuất
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException

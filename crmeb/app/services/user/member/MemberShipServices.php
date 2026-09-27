@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -27,7 +27,7 @@ class MemberShipServices extends BaseServices
         $this->dao = $memberShipDao;
     }
 
-    /**后台获取会员类型
+    /**Admin lấy loại thành viên
      * @param array $where
      * @return array
      */
@@ -40,7 +40,7 @@ class MemberShipServices extends BaseServices
 
     }
 
-    /**获取会员卡api接口
+    /**Lấy api interface thẻ thành viên
      * @return mixed
      */
     public function getApiList(array $where)
@@ -48,7 +48,7 @@ class MemberShipServices extends BaseServices
         return $this->dao->getApiList($where);
     }
 
-    /** 卡类型编辑保存
+    /** Sửa và lưu loại thẻ
      * @param int $id
      * @param array $data
      */
@@ -77,7 +77,7 @@ class MemberShipServices extends BaseServices
 
     }
 
-    /**获取卡会员天数
+    /**Lấy số ngày thành viên của thẻ
      * @param array $where
      * @return mixed
      */
@@ -87,7 +87,7 @@ class MemberShipServices extends BaseServices
     }
 
     /**
-     * 修改会员类型状态
+     * Sửa trạng thái loại thành viên
      * @param $id
      * @param $is_del
      * @return bool

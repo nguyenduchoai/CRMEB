@@ -19,7 +19,7 @@ class CustomEventListener
             $listener_log_open = config("log.listener_log", false);
             if ($listener_log_open) {
                 $date = date('Y-m-d H:i:s', time());
-                Log::write($date . '自定义事件错误:' . $e->getMessage(), 'listener');
+                Log::write($date . 'Lỗi sự kiện tùy chỉnh:' . $e->getMessage(), 'listener');
             }
         }
     }

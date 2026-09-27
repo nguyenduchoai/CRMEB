@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -31,7 +31,7 @@ class AccessToken extends HttpService
     protected $accessToken;
 
     /**
-     * 请求接口
+     * API yêu cầu
      * @var string
      */
     protected $apiUrl;
@@ -42,25 +42,25 @@ class AccessToken extends HttpService
     protected $clientId;
 
     /**
-     * 终端号码
+     * Số terminal
      * @var string
      */
     protected $machineCode;
 
     /**
-     * 开发者id
+     * id nhà phát triển
      * @var string
      */
     protected $partner;
 
     /**
-     * 驱动类型
+     * Loại driver
      * @var string
      */
     protected $name;
 
     /**
-     * 配置文件名
+     * Tên file cấu hình
      * @var string
      */
     protected $configFile;
@@ -72,19 +72,19 @@ class AccessToken extends HttpService
     protected $apiKey;
 
     /**
-     * 飞鹅云SN
+     * Feieyun SN
      * @var string
      */
     protected $feySn;
 
     /**
-     * 飞鹅云UYEK
+     * Feieyun UYEK
      * @var string
      */
     protected $feyUkey;
 
     /**
-     * 飞鹅云USER
+     * Feieyun USER
      * @var string
      */
     protected $feyUser;
@@ -103,7 +103,7 @@ class AccessToken extends HttpService
     }
 
     /**
-     * 获取token
+     * Lấy token
      * @return mixed|null|string
      * @throws \Exception
      */
@@ -122,7 +122,7 @@ class AccessToken extends HttpService
     }
 
     /**
-     * 获取易联云token
+     * Lấy token Yilianyun
      * @return mixed|null|string
      * @throws \Exception
      */
@@ -153,7 +153,7 @@ class AccessToken extends HttpService
     }
 
     /**
-     * 生成UUID4
+     * Tạo UUID4
      * @return string
      */
     public function createUuid()
@@ -163,7 +163,7 @@ class AccessToken extends HttpService
     }
 
     /**
-     * 获取属性
+     * Lấy thuộc tính
      * @param $name
      * @return mixed
      */

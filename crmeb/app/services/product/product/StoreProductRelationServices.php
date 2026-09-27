@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -33,7 +33,7 @@ class StoreProductRelationServices extends BaseServices
     }
 
     /**
-     * 用户是否点赞或收藏商品
+     * Người dùng có thích hoặc yêu thích sản phẩm không
      * @param array $where
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
@@ -51,7 +51,7 @@ class StoreProductRelationServices extends BaseServices
     }
 
     /**
-     * 获取用户收藏数量
+     * Lấy số lượng yêu thích của người dùng
      * @param int $uid
      * @return int
      */
@@ -61,13 +61,13 @@ class StoreProductRelationServices extends BaseServices
     }
 
     /**
-     * 收藏
+     * Yêu thích
      * @param int $uid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/03/01
      */
@@ -97,7 +97,7 @@ class StoreProductRelationServices extends BaseServices
     }
 
     /**
-     * 添加点赞 收藏
+     * Thêm thích, yêu thích
      * @param int $productId
      * @param int $uid
      * @param string $relationType
@@ -116,10 +116,10 @@ class StoreProductRelationServices extends BaseServices
         if (!$this->dao->save($data)) {
             throw new ApiException(100006);
         }
-        //收藏记录
+        //Bản ghi yêu thích
         ProductLogJob::dispatch(['collect', ['uid' => $uid, 'product_id' => $productId]]);
 
-        //自定义事件-用户商品收藏
+        //Sự kiện tùy chỉnh - người dùng yêu thích sản phẩm
         event('CustomEventListener', ['user_product_collect', [
             'product_id' => $productId,
             'uid' => $uid,
@@ -130,7 +130,7 @@ class StoreProductRelationServices extends BaseServices
     }
 
     /**
-     * 取消 点赞 收藏
+     * Bỏ thích, yêu thích
      * @param array $productId
      * @param int $uid
      * @param string $relationType
@@ -153,7 +153,7 @@ class StoreProductRelationServices extends BaseServices
     }
 
     /**
-     * 批量 添加点赞 收藏
+     * Thêm thích, yêu thích theo lô
      * @param array $productIdS
      * @param int $uid
      * @param string $relationType

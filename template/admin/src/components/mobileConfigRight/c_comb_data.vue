@@ -22,7 +22,7 @@
         <DatePicker
           type="date"
           v-model="configData.specifyDate"
-          placeholder="请选择"
+          placeholder="Vui lòng chọn"
           style="margin-top: 6px"
           v-if="configData.tabData == 1 && configData.tabVal == 0 && configData.type == 'data'"
         />
@@ -30,7 +30,7 @@
           type="time"
           format="HH:mm"
           v-model="configData.specifyDate"
-          placeholder="请选择"
+          placeholder="Vui lòng chọn"
           style="margin-top: 6px"
           v-else-if="configData.tabData == 1 && configData.tabVal == 0 && configData.type == 'time'"
         />
@@ -39,7 +39,7 @@
           placement="bottom-end"
           v-model="configData.specifyDate"
           format="yyyy/MM/dd"
-          placeholder="请选择"
+          placeholder="Vui lòng chọn"
           style="margin-top: 6px"
           v-else-if="configData.tabData == 1 && configData.tabVal == 0 && configData.type == 'daterange'"
           @change="getDaterange"
@@ -49,7 +49,7 @@
           type="timerange"
           v-model="configData.specifyDate"
           placement="bottom-end"
-          placeholder="请选择"
+          placeholder="Vui lòng chọn"
           style="margin-top: 6px"
           v-else-if="configData.tabData == 1 && configData.tabVal == 0 && configData.type == 'timerange'"
         />

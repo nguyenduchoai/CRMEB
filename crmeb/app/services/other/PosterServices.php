@@ -8,7 +8,7 @@ use think\facade\Config;
 class PosterServices
 {
     /**
-     * TODO 砍价 拼团 分享海报生成
+     * TODO tạo ảnh chia sẻ săn giảm giá, mua chung
      * @param array $data
      * @param $path
      * @return array|bool|string
@@ -19,36 +19,36 @@ class PosterServices
         $config = array(
             'text' => array(
                 array(
-                    'text' => $data['price'],//TODO 价格
+                    'text' => $data['price'],//TODO giá
                     'left' => 116,
                     'top' => 200,
-                    'fontPath' => app()->getRootPath() . 'public/statics/font/Alibaba-PuHuiTi-Regular.otf',     //字体文件
-                    'fontSize' => 50,             //字号
-                    'fontColor' => '255,0,0',       //字体颜色
+                    'fontPath' => app()->getRootPath() . 'public/statics/font/Alibaba-PuHuiTi-Regular.otf',     //File font
+                    'fontSize' => 50,             //Cỡ chữ
+                    'fontColor' => '255,0,0',       //Màu chữ
                     'angle' => 0,
                 ),
                 array(
-                    'text' => $data['label'],//TODO 标签
+                    'text' => $data['label'],//TODO nhãn
                     'left' => 450,
                     'top' => 188,
-                    'fontPath' => app()->getRootPath() . 'public/statics/font/Alibaba-PuHuiTi-Regular.otf',     //字体文件
-                    'fontSize' => 24,             //字号
-                    'fontColor' => '255,255,255',       //字体颜色
+                    'fontPath' => app()->getRootPath() . 'public/statics/font/Alibaba-PuHuiTi-Regular.otf',     //File font
+                    'fontSize' => 24,             //Cỡ chữ
+                    'fontColor' => '255,255,255',       //Màu chữ
                     'angle' => 0,
                 ),
                 array(
-                    'text' => $data['msg'],//TODO 简述
+                    'text' => $data['msg'],//TODO mô tả ngắn
                     'left' => 80,
                     'top' => 270,
-                    'fontPath' => app()->getRootPath() . 'public/statics/font/Alibaba-PuHuiTi-Regular.otf',     //字体文件
-                    'fontSize' => 22,             //字号
-                    'fontColor' => '40,40,40',       //字体颜色
+                    'fontPath' => app()->getRootPath() . 'public/statics/font/Alibaba-PuHuiTi-Regular.otf',     //File font
+                    'fontSize' => 22,             //Cỡ chữ
+                    'fontColor' => '40,40,40',       //Màu chữ
                     'angle' => 0,
                 )
             ),
             'image' => array(
                 array(
-                    'url' => $data['image'],     //图片
+                    'url' => $data['image'],     //Hình ảnh
                     'stream' => 0,
                     'left' => 120,
                     'top' => 340,
@@ -59,7 +59,7 @@ class PosterServices
                     'opacity' => 100
                 ),
                 array(
-                    'url' => $data['url'],     //二维码资源
+                    'url' => $data['url'],     //Resource mã QR
                     'stream' => 0,
                     'left' => 260,
                     'top' => 890,
@@ -72,35 +72,35 @@ class PosterServices
             ),
             'background' => 'statics/poster/poster.jpg'
         );
-        if (!file_exists($config['background'])) exception('缺少系统预设背景图片');
+        if (!file_exists($config['background'])) exception('Thiếu ảnh nền mặc định của hệ thống');
         if (strlen($data['title']) < 36) {
             $text = array(
-                'text' => $data['title'],//TODO 标题
+                'text' => $data['title'],//TODO tiêu đề
                 'left' => 76,
                 'top' => 100,
-                'fontPath' => app()->getRootPath() . 'public/statics/font/Alibaba-PuHuiTi-Regular.otf',     //字体文件
-                'fontSize' => 32,         //字号
-                'fontColor' => '0,0,0',       //字体颜色
+                'fontPath' => app()->getRootPath() . 'public/statics/font/Alibaba-PuHuiTi-Regular.otf',     //File font
+                'fontSize' => 32,         //Cỡ chữ
+                'fontColor' => '0,0,0',       //Màu chữ
                 'angle' => 0,
             );
             array_push($config['text'], $text);
         } else {
             $titleOne = array(
-                'text' => mb_strimwidth($data['title'], 0, 24),//TODO 标题
+                'text' => mb_strimwidth($data['title'], 0, 24),//TODO tiêu đề
                 'left' => 76,
                 'top' => 70,
-                'fontPath' => app()->getRootPath() . 'public/statics/font/Alibaba-PuHuiTi-Regular.otf',     //字体文件
-                'fontSize' => 32,         //字号
-                'fontColor' => '0,0,0',       //字体颜色
+                'fontPath' => app()->getRootPath() . 'public/statics/font/Alibaba-PuHuiTi-Regular.otf',     //File font
+                'fontSize' => 32,         //Cỡ chữ
+                'fontColor' => '0,0,0',       //Màu chữ
                 'angle' => 0,
             );
             $titleTwo = array(
-                'text' => mb_strimwidth($data['title'], mb_strlen(mb_strimwidth($data['title'], 0, 24)), 24),//TODO 标题
+                'text' => mb_strimwidth($data['title'], mb_strlen(mb_strimwidth($data['title'], 0, 24)), 24),//TODO tiêu đề
                 'left' => 76,
                 'top' => 120,
-                'fontPath' => app()->getRootPath() . 'public/statics/font/Alibaba-PuHuiTi-Regular.otf',     //字体文件
-                'fontSize' => 32,         //字号
-                'fontColor' => '0,0,0',       //字体颜色
+                'fontPath' => app()->getRootPath() . 'public/statics/font/Alibaba-PuHuiTi-Regular.otf',     //File font
+                'fontSize' => 32,         //Cỡ chữ
+                'fontColor' => '0,0,0',       //Màu chữ
                 'angle' => 0,
             );
             array_push($config['text'], $titleOne);
@@ -110,7 +110,7 @@ class PosterServices
     }
 
     /**
-     * TODO 生成分享二维码图片
+     * TODO tạo ảnh mã QR chia sẻ
      * @param array $config
      * @param $path
      * @return array|bool|string
@@ -131,19 +131,19 @@ class PosterServices
             'text' => '',
             'left' => 0,
             'top' => 0,
-            'fontSize' => 32,       //字号
-            'fontColor' => '255,255,255', //字体颜色
+            'fontSize' => 32,       //Cỡ chữ
+            'fontColor' => '255,255,255', //Màu chữ
             'angle' => 0,
         );
-        $background = $config['background'];//海报最底层得背景
+        $background = $config['background'];//Lớp nền dưới cùng của ảnh chia sẻ
         if (substr($background, 0, 1) === '/') {
             $background = substr($background, 1);
         }
         $background = str_replace('https://', 'http://', $background);
         $backgroundInfo = getimagesize($background);
         $background = imagecreatefromstring(file_get_contents($background));
-        $backgroundWidth = $backgroundInfo[0];  //背景宽度
-        $backgroundHeight = $backgroundInfo[1];  //背景高度
+        $backgroundWidth = $backgroundInfo[0];  //Chiều rộng nền
+        $backgroundHeight = $backgroundInfo[1];  //Chiều cao nền
         $imageRes = imageCreatetruecolor($backgroundWidth, $backgroundHeight);
         $color = imagecolorallocate($imageRes, 0, 0, 0);
         imagefill($imageRes, 0, 0, $color);
@@ -166,7 +166,7 @@ class PosterServices
                 imagecopyresampled($canvas, $res, 0, 0, 0, 0, $val['width'], $val['height'], $resWidth, $resHeight);
                 $val['left'] = $val['left'] < 0 ? $backgroundWidth - abs($val['left']) - $val['width'] : $val['left'];
                 $val['top'] = $val['top'] < 0 ? $backgroundHeight - abs($val['top']) - $val['height'] : $val['top'];
-                imagecopymerge($imageRes, $canvas, $val['left'], $val['top'], $val['right'], $val['bottom'], $val['width'], $val['height'], $val['opacity']);//左，上，右，下，宽度，高度，透明度
+                imagecopymerge($imageRes, $canvas, $val['left'], $val['top'], $val['right'], $val['bottom'], $val['width'], $val['height'], $val['opacity']);//Trái, trên, phải, dưới, chiều rộng, chiều cao, độ trong suốt
             }
         }
         if (isset($config['text']) && !empty($config['text'])) {
@@ -203,7 +203,7 @@ class PosterServices
 
 
     /**
-     * TODO 获取小程序二维码是否生成
+     * TODO lấy trạng thái đã tạo mã QR Mini Program hay chưa
      * @param $url
      * @return array
      */
@@ -219,9 +219,9 @@ class PosterServices
     }
 
     /**
-     * TODO 修改 https 和 http 移动到common
-     * @param $url $url 域名
-     * @param int $type 0 返回https 1 返回 http
+     * TODO sửa https và http, chuyển vào common
+     * @param $url $url Tên miền
+     * @param int $type 0 Trả về https, 1 thì trả về http
      * @return string
      */
     public static function setHttpType($url, $type = 0)
@@ -237,7 +237,7 @@ class PosterServices
 
 
     /**
-     * 获取二维码
+     * Lấy mã QR
      * @param $url
      * @param $name
      * @return array|bool|string
@@ -247,16 +247,16 @@ class PosterServices
         if (!strlen(trim($url)) || !strlen(trim($name))) return false;
         try {
             $uploadType = sys_config('upload_type');
-            //TODO 没有选择默认使用本地上传
+            //TODO nếu không chọn thì mặc định dùng tải lên cục bộ
             if (!$uploadType) $uploadType = 1;
             $uploadType = (int)$uploadType;
             $siteUrl = sys_config('site_url');
-            if (!$siteUrl) return '请前往后台设置->系统设置->网站域名 填写您的域名格式为：http://域名';
+            if (!$siteUrl) return 'Vui lòng vào Cài đặt quản trị->Cài đặt hệ thống->Tên miền website để điền tên miền của bạn, định dạng: http://tên-miền';
             $info = [];
             $outfiles = Config::get('qrcode.cache_dir');
             $code = new QRcode();
             if (!file_exists($outfiles)) mkdir($outfiles, 0775, true);
-            $wapCodePath = $code->png($url, $outfiles . '/' . $name)->getPath(); //获取二维码生成的地址
+            $wapCodePath = $code->png($url, $outfiles . '/' . $name)->getPath(); //Lấy địa chỉ tạo mã QR
             $content = file_get_contents('.' . $wapCodePath);
             if ($uploadType === 1) {
                 $info["code"] = 200;
@@ -283,7 +283,7 @@ class PosterServices
         }
     }
 
-    /**分级返回下级所有分类ID
+    /**Trả về tất cả ID danh mục cấp dưới theo từng cấp
      * @param $data
      * @param string $children
      * @param string $field

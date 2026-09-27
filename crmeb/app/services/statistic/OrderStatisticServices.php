@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -22,14 +22,14 @@ use crmeb\exceptions\AdminException;
 class OrderStatisticServices extends BaseServices
 {
     /**
-     * 订单统计基础
+     * Cơ sở thống kê đơn hàng
      * @param $where
      * @return array
      */
     public function getBasic($where)
     {
         $time = explode('-', $where['time']);
-        if (count($time) != 2) throw new AdminException('请选择时间');
+        if (count($time) != 2) throw new AdminException('Vui lòng chọn thời gian');
         /** @var StoreOrderServices $orderService */
         $orderService = app()->make(StoreOrderServices::class);
         $data['pay_price'] = $orderService->sum(['paid' => 1, 'pid' => 0, 'time' => $where['time']], 'pay_price', true);
@@ -40,14 +40,14 @@ class OrderStatisticServices extends BaseServices
     }
 
     /**
-     * 订单趋势
+     * Xu hướng đơn hàng
      * @param $where
      * @return array
      */
     public function getTrend($where)
     {
         $time = explode('-', $where['time']);
-        if (count($time) != 2) throw new AdminException('请选择时间');
+        if (count($time) != 2) throw new AdminException('Vui lòng chọn thời gian');
         $dayCount = bcadd(bcdiv(bcsub(strtotime($time[1]), strtotime($time[0])), '86400'), '1');
         $data = [];
         if ($dayCount == 1) {
@@ -63,7 +63,7 @@ class OrderStatisticServices extends BaseServices
     }
 
     /**
-     * 订单趋势
+     * Xu hướng đơn hàng
      * @param $time
      * @param $num
      * @param false $excel
@@ -98,10 +98,10 @@ class OrderStatisticServices extends BaseServices
         $refund_count = array_column($storeOrder->getProductTrend($time, $timeType, 'add_time', 'count(id)', 'refund'), 'num', 'days');
         $data = $series = [];
         foreach ($xAxis as $item) {
-            $data['订单金额'][] = isset($pay_price[$item]) ? floatval($pay_price[$item]) : 0;
-            $data['订单量'][] = isset($pay_count[$item]) ? floatval($pay_count[$item]) : 0;
-            $data['退款金额'][] = isset($refund_price[$item]) ? floatval($refund_price[$item]) : 0;
-            $data['退款订单量'][] = isset($refund_count[$item]) ? floatval($refund_count[$item]) : 0;
+            $data['Số tiền đơn hàng'][] = isset($pay_price[$item]) ? floatval($pay_price[$item]) : 0;
+            $data['Số đơn hàng'][] = isset($pay_count[$item]) ? floatval($pay_count[$item]) : 0;
+            $data['Số tiền hoàn'][] = isset($refund_price[$item]) ? floatval($refund_price[$item]) : 0;
+            $data['Số đơn hoàn tiền'][] = isset($refund_count[$item]) ? floatval($refund_count[$item]) : 0;
         }
         foreach ($data as $key => $item) {
             $series[] = [
@@ -114,7 +114,7 @@ class OrderStatisticServices extends BaseServices
     }
 
     /**
-     * 订单来源
+     * Nguồn đơn hàng
      * @param $where
      * @return array
      */
@@ -123,7 +123,7 @@ class OrderStatisticServices extends BaseServices
         /** @var StoreOrderServices $orderService */
         $orderService = app()->make(StoreOrderServices::class);
 
-        $bing_xdata = ['公众号', '小程序', 'H5', 'PC', 'APP'];
+        $bing_xdata = ['OA WeChat', 'Mini Program', 'H5', 'PC', 'APP'];
         $color = ['#64a1f4', '#3edeb5', '#70869f', '#ffc653', '#fc7d6a'];
         $bing_data = [];
         foreach ($bing_xdata as $key => $item) {
@@ -148,7 +148,7 @@ class OrderStatisticServices extends BaseServices
     }
 
     /**
-     * 订单类型
+     * Loại đơn hàng
      * @param $where
      * @return array
      */
@@ -157,7 +157,7 @@ class OrderStatisticServices extends BaseServices
         /** @var StoreOrderServices $orderService */
         $orderService = app()->make(StoreOrderServices::class);
 
-        $bing_xdata = ['普通订单', '秒杀订单', '砍价订单', '拼团订单', '预售订单'];
+        $bing_xdata = ['Đơn hàng thường', 'Đơn flash sale', 'Đơn săn giảm giá', 'Đơn mua chung', 'Đơn đặt trước'];
         $model_checkbox = sys_config('model_checkbox', ['seckill', 'bargain', 'combination']);
         $color = ['#64a1f4', '#3edeb5', '#70869f', '#ffc653', '#fc7d6a'];
         $bing_data = [];

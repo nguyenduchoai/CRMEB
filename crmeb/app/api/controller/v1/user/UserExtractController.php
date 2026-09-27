@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\user\UserExtractServices;
 use think\facade\Config;
 
 /**
- * 提现类
+ * Lớp rút tiền
  * Class UserExtractController
  * @package app\api\controller\user
  */
@@ -33,7 +33,7 @@ class UserExtractController
     }
 
     /**
-     * 提现银行
+     * Ngân hàng rút tiền
      * @param Request $request
      * @return mixed
      */
@@ -44,7 +44,7 @@ class UserExtractController
     }
 
     /**
-     * 提现申请
+     * Yêu cầu rút tiền
      * @param Request $request
      * @return mixed
      */
@@ -70,10 +70,10 @@ class UserExtractController
             if (!preg_match('/^([1-9]{1})(\d{15}|\d{16}|\d{18})$/', $extractInfo['cardnum']))
                 return app('json')->fail(410116);
         if ($extractInfo['extract_type'] == 'weixin') {
-            if (trim($extractInfo['user_name']) == '') return app('json')->fail('请填写真实姓名');
+            if (trim($extractInfo['user_name']) == '') return app('json')->fail('Vui lòng nhập họ tên');
         } elseif ($extractInfo['extract_type'] == 'alipay') {
             if (trim($extractInfo['alipay_code']) == '') return app('json')->fail(410117);
-            if (trim($extractInfo['user_name']) == '') return app('json')->fail('请填写真实姓名');
+            if (trim($extractInfo['user_name']) == '') return app('json')->fail('Vui lòng nhập họ tên');
         } elseif ($extractInfo['extract_type'] == 'bank') {
             if (!$extractInfo['cardnum']) return app('json')->fail(410118);
             if (!$extractInfo['bankname']) return app('json')->fail(410119);

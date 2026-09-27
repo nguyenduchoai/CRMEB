@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 应用设置
+// | Cài đặt ứng dụng
 // +----------------------------------------------------------------------
 
 use think\facade\Env;
@@ -18,40 +18,40 @@ use think\facade\Env;
 defined('DS') || define('DS', DIRECTORY_SEPARATOR);
 
 return [
-    // 应用地址
+    // Địa chỉ ứng dụng
     'app_host'         => Env::get('app.host', ''),
-    // 应用的命名空间
+    // Namespace của ứng dụng
     'app_namespace'    => '',
-    // 是否启用路由
+    // Có bật route không
     'with_route'       => true,
-    // 是否启用事件
+    // Có bật event không
     'with_event'       => true,
-    // 自动多应用模式
+    // Chế độ đa ứng dụng tự động
     'auto_multi_app'   => true,
-    // 应用映射（自动多应用模式有效）
+    // Mapping ứng dụng (chỉ có hiệu lực ở chế độ đa ứng dụng tự động)
     'app_map'          => [],
-    // 域名绑定（自动多应用模式有效）
+    // Liên kết domain (chỉ có hiệu lực ở chế độ đa ứng dụng tự động)
     'domain_bind'      => [],
-    // 禁止URL访问的应用列表（自动多应用模式有效）
+    // Danh sách ứng dụng cấm truy cập qua URL (chỉ có hiệu lực ở chế độ đa ứng dụng tự động)
     'deny_app_list'    => [],
-    // 默认应用
+    // Ứng dụng mặc định
     'default_app'      => '',
 
     'app_express'      => true,
-    // 默认时区
-    'default_timezone' => 'Asia/Shanghai',
-    // 异常页面的模板文件
+    // Múi giờ mặc định
+    'default_timezone' => 'Asia/Ho_Chi_Minh',
+    // File template trang lỗi (exception)
     'exception_tmpl'   => app()->getRootPath() . 'public/statics/exception.tpl',
-    // 错误显示信息,非调试模式有效
-    'error_message'    => '页面错误！请稍后再试～',
-    // 显示错误信息
+    // Thông tin hiển thị lỗi, chỉ có hiệu lực ở chế độ không debug
+    'error_message'    => 'Lỗi trang! Vui lòng thử lại sau~',
+    // Hiển thị thông tin lỗi
     'show_error_msg'   => false,
-    // 没有开启消息队列命令或者定时任务命令的提醒开关
+    // Công tắc nhắc nhở khi chưa mở lệnh hàng đợi tin nhắn hoặc lệnh tác vụ định kỳ
     'console_remind'   => true,
-    // admin路由前缀
+    // Tiền tố route admin
     'admin_prefix'     => 'admin',
-    //代码生成功能生成前端文件的路径
+    //Đường dẫn file frontend do chức năng sinh code tạo ra
     'admin_template_path' => dirname(root_path()) . DS . 'template' . DS . 'admin' . DS . 'src' . DS,
-    //在保存crud的是否是否直接生成文件
+    //Khi lưu crud có tạo file trực tiếp luôn không
     'crud_make'        => true
 ];

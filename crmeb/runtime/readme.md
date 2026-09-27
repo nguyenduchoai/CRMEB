@@ -1,22 +1,22 @@
-crmeb/runtime目录在CRMEB项目中的主要作用是用于保存项目运行期间生成的临时文件。
+Vai trò chính của thư mục crmeb/runtime trong dự án CRMEB là lưu các tệp tạm được tạo ra trong quá trình dự án chạy.
 
-ThinkPHP框架在运行过程中会自动生成一些临时文件,比如缓存、日志文件等。这些文件的位置就被设计在runtime目录下。
+Framework ThinkPHP sẽ tự động tạo ra một số tệp tạm trong quá trình chạy, chẳng hạn như tệp bộ nhớ đệm (cache), tệp nhật ký (log), v.v. Vị trí của các tệp này được thiết kế nằm trong thư mục runtime.
 
-具体来说:
+Cụ thể:
 
-- 放置缓存compile结果,避免每次都重新编译路由等
-- 缓存模板视图文件,加速模板渲染
-- 保存日志文件,方便排查问题
-- Session文件以key-value方式存储
-- 上传文件临时存放位置
+- Chứa kết quả compile được lưu đệm, tránh việc mỗi lần đều phải biên dịch lại định tuyến, v.v.
+- Lưu đệm các tệp view của template, tăng tốc kết xuất (render) template
+- Lưu các tệp nhật ký (log), thuận tiện cho việc tìm và khắc phục sự cố
+- Các tệp Session được lưu trữ theo dạng key-value
+- Vị trí lưu tạm các tệp tải lên
 
-使用这个目录有以下优点:
+Việc sử dụng thư mục này có các ưu điểm sau:
 
-- 实现资源的动态创建与自动清理
-- 与源代码完全隔离,运行期安全可控
-- 易于部署式替换整个目录
-- 一定程度减轻源代码管理优化需要
+- Tạo tài nguyên động và tự động dọn dẹp
+- Tách biệt hoàn toàn với mã nguồn, an toàn và dễ kiểm soát khi chạy
+- Dễ dàng thay thế toàn bộ thư mục khi triển khai
+- Giảm bớt phần nào nhu cầu quản lý và tối ưu mã nguồn
 
-总体来说,它承担了项目运行时临时资源的读写工作。
+Nhìn chung, nó đảm nhận việc đọc/ghi các tài nguyên tạm khi dự án chạy.
 
-通过合理利用这个目录,可以改善项目性能和部署运维需求。
+Bằng cách sử dụng hợp lý thư mục này, có thể cải thiện hiệu năng dự án và đáp ứng nhu cầu triển khai, vận hành.

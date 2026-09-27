@@ -10,7 +10,7 @@
         inline
         @submit.native.prevent
       >
-        <el-form-item label="活动时间：">
+        <el-form-item label="Thời gian chương trình:">
           <el-date-picker
             v-model="timeVal"
             type="daterange"
@@ -18,110 +18,110 @@
             @change="onchangeTime"
             format="yyyy/MM/dd"
             value-format="yyyy/MM/dd"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            start-placeholder="Ngày bắt đầu"
+            end-placeholder="Ngày kết thúc"
             :picker-options="pickerOptions"
             style="width: 250px"
             class="mr20"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="活动状态：">
+        <el-form-item label="Trạng thái chương trình:">
           <el-select
             class="form_content_width"
             v-model="tableFrom.start"
             clearable
             @change="userSearchs"
-            placeholder="全部"
+            placeholder="Tất cả"
           >
-            <el-option label="全部" value="" />
-            <el-option label="未开始" :value="0" />
-            <el-option label="进行中" :value="1" />
-            <el-option label="已结束" :value="2" />
+            <el-option label="Tất cả" value="" />
+            <el-option label="Chưa bắt đầu" :value="0" />
+            <el-option label="Đang diễn ra" :value="1" />
+            <el-option label="Đã kết thúc" :value="2" />
           </el-select>
         </el-form-item>
-        <el-form-item label="活动类型：">
+        <el-form-item label="Loại chương trình:">
           <el-select
             class="form_content_width"
             v-model="tableFrom.factor"
             clearable
             @change="userSearchs"
-            placeholder="全部"
+            placeholder="Tất cả"
           >
-            <el-option label="全部" value="" />
-            <el-option label="积分抽取" :value="1" />
-            <el-option label="订单支付" :value="3" />
-            <el-option label="订单评价" :value="4" />
+            <el-option label="Tất cả" value="" />
+            <el-option label="Quay bằng điểm thưởng" :value="1" />
+            <el-option label="Thanh toán đơn hàng" :value="3" />
+            <el-option label="Đánh giá đơn hàng" :value="4" />
           </el-select>
         </el-form-item>
-        <el-form-item label="开启状态：">
+        <el-form-item label="Trạng thái bật:">
           <el-select
             class="form_content_width"
             v-model="tableFrom.status"
             clearable
             @change="userSearchs"
-            placeholder="全部"
+            placeholder="Tất cả"
           >
-            <el-option label="全部" value="" />
-            <el-option label="开启" :value="1" />
-            <el-option label="关闭" :value="0" />
+            <el-option label="Tất cả" value="" />
+            <el-option label="Bật" :value="1" />
+            <el-option label="Tắt" :value="0" />
           </el-select>
         </el-form-item>
 
-        <el-form-item label="搜索抽奖：">
+        <el-form-item label="Tìm kiếm quay thưởng:">
           <el-input
             class="form_content_width"
-            placeholder="请输入活动名称"
+            placeholder="Vui lòng nhập tên chương trình"
             v-model="tableFrom.keyword"
             @change="userSearchs"
           />
         </el-form-item>
-        <el-button type="primary" v-db-click @click="userSearchs()">搜索</el-button>
+        <el-button type="primary" v-db-click @click="userSearchs()">Tìm kiếm</el-button>
       </el-form>
     </el-card>
     <el-card class="mt-20" :bordered="false" shadow="never">
-      <el-button class="mb12" type="primary" v-db-click @click="openPage(0)">创建抽奖活动</el-button>
-      <el-table :data="tableList" v-loading="loading" highlight-current-row no-userFrom-text="暂无数据">
+      <el-button class="mb12" type="primary" v-db-click @click="openPage(0)">Tạo chương trình quay thưởng</el-button>
+      <el-table :data="tableList" v-loading="loading" highlight-current-row no-userFrom-text="Chưa có dữ liệu">
         <el-table-column label="ID" min-width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="活动名称" min-width="120">
+        <el-table-column label="Tên chương trình" min-width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="活动类型" min-width="100">
+        <el-table-column label="Loại chương trình" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.lottery_type }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="抽奖人数" min-width="100">
+        <el-table-column label="Số người quay thưởng" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.records_total_user }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="中奖人数" min-width="100">
+        <el-table-column label="Số người trúng thưởng" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.records_wins_user }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="抽奖次数" min-width="100">
+        <el-table-column label="Số lượt quay" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.records_total_num }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="中奖次数" min-width="100">
+        <el-table-column label="Số lần trúng thưởng" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.records_wins_num }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="活动状态" min-width="100">
+        <el-table-column label="Trạng thái chương trình" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.status_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="开启状态" min-width="100">
+        <el-table-column label="Trạng thái bật" min-width="100">
           <template slot-scope="scope">
             <el-switch
               class="defineSwitch"
@@ -131,34 +131,34 @@
               :value="scope.row.status"
               @change="onchangeIsShow(scope.row)"
               size="large"
-              active-text="开启"
-              inactive-text="关闭"
+              active-text="Bật"
+              inactive-text="Tắt"
             >
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="活动时间" min-width="180">
+        <el-table-column label="Thời gian chương trình" min-width="180">
           <template slot-scope="scope">
-            <p>开始：{{ scope.row.start_time }}</p>
-            <p>结束：{{ scope.row.end_time }}</p>
+            <p>Bắt đầu: {{ scope.row.start_time }}</p>
+            <p>Kết thúc: {{ scope.row.end_time }}</p>
           </template>
         </el-table-column>
-        <el-table-column label="操作" min-width="180" fixed="right">
+        <el-table-column label="Thao tác" min-width="180" fixed="right">
           <template slot-scope="scope">
-            <a @click="edit(scope.row)">编辑</a>
+            <a @click="edit(scope.row)">Sửa</a>
             <el-divider direction="vertical" />
-            <a @click="openPage(1, scope.row)">抽奖记录</a>
+            <a @click="openPage(1, scope.row)">Lịch sử quay thưởng</a>
             <el-divider direction="vertical" />
             <template>
               <el-dropdown @command="(command) => changeMenu(scope.row, command, scope.$index)">
-                <span class="el-dropdown-link">更多<i class="el-icon-arrow-down el-icon--right"></i> </span>
+                <span class="el-dropdown-link">Xem thêm<i class="el-icon-arrow-down el-icon--right"></i> </span>
                 <el-dropdown-menu slot="dropdown">
-                  <!-- <el-dropdown-item command="1">拉黑人员</el-dropdown-item>
-                    <el-dropdown-item command="2">拉黑列表</el-dropdown-item> -->
+                  <!-- <el-dropdown-item command="1">Chặn người dùng</el-dropdown-item>
+                    <el-dropdown-item command="2">Danh sách chặn</el-dropdown-item> -->
                   <el-dropdown-item command="3">
-                    <span class="copy copy-data" :data-clipboard-text="copyLink(scope.row)">复制链接</span>
+                    <span class="copy copy-data" :data-clipboard-text="copyLink(scope.row)">Sao chép liên kết</span>
                   </el-dropdown-item>
-                  <el-dropdown-item command="4">删除抽奖</el-dropdown-item>
+                  <el-dropdown-item command="4">Xóa quay thưởng</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </template>
@@ -218,25 +218,25 @@ export default {
       ruleShip: ruleShip,
       ruleMark: ruleMark,
       fromList: {
-        title: '选择时间',
+        title: 'Chọn giờ',
         fromTxt: [
-          { text: '全部', val: '' },
-          { text: '今天', val: 'today' },
-          { text: '昨天', val: 'yesterday' },
-          { text: '最近7天', val: 'lately7' },
-          { text: '最近30天', val: 'lately30' },
-          { text: '本月', val: 'month' },
-          { text: '本年', val: 'year' },
+          { text: 'Tất cả', val: '' },
+          { text: 'Hôm nay', val: 'today' },
+          { text: 'Hôm qua', val: 'yesterday' },
+          { text: '7 ngày qua', val: 'lately7' },
+          { text: '30 ngày qua', val: 'lately30' },
+          { text: 'Tháng này', val: 'month' },
+          { text: 'Năm nay', val: 'year' },
         ],
       },
       typeList: [
-        { text: '全部', val: '' },
-        { text: '未中奖', val: '1' },
-        { text: '积分', val: '2' },
-        { text: '余额', val: '3' },
-        { text: '红包', val: '4' },
-        { text: '优惠券', val: '5' },
-        { text: '商品', val: '6' },
+        { text: 'Tất cả', val: '' },
+        { text: 'Không trúng thưởng', val: '1' },
+        { text: 'Điểm thưởng', val: '2' },
+        { text: 'Số dư', val: '3' },
+        { text: 'Lì xì', val: '4' },
+        { text: 'Phiếu giảm giá', val: '5' },
+        { text: 'Sản phẩm', val: '6' },
       ],
       blackList: [],
       loading2: false,
@@ -298,13 +298,13 @@ export default {
       const clipboard = new ClipboardJS('.copy-data');
       clipboard.on('success', () => {
         console.log('11');
-        this.$message.success('复制成功');
+        this.$message.success('Sao chép thành công');
       });
     });
     this.getList();
   },
   methods: {
-    // 操作
+    // Thao tác
     changeMenu(row, name, index) {
       console.log(row, name, index);
       switch (name) {
@@ -315,17 +315,17 @@ export default {
           this.onCopy(row);
           break;
         case '4':
-          this.del(row, '删除活动', index);
+          this.del(row, 'xóa chương trình', index);
           break;
       }
     },
     onCopy(row) {
       this.$copyText(this.copyLink(row))
         .then((message) => {
-          this.$message.success('复制成功');
+          this.$message.success('Sao chép thành công');
         })
         .catch((err) => {
-          this.$message.error('复制失败');
+          this.$message.error('Sao chép thất bại');
         });
     },
     copyLink(row) {
@@ -338,7 +338,7 @@ export default {
     customerPle() {
       this.customerShow = true;
     },
-    // 选择人员
+    // Chọn người dùng
     selectCustomer(e) {
       console.log(e);
       this.customerShow = false;
@@ -363,7 +363,7 @@ export default {
         path: url,
       });
     },
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.time = e;
       if (!e || !e[0]) {
@@ -374,7 +374,7 @@ export default {
       this.tableFrom.page = 1;
       this.getList();
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -392,7 +392,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       lotteryList(this.tableFrom)
@@ -407,7 +407,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 修改是否显示
+    // Sửa có hiển thị hay không
     onchangeIsShow(row) {
       let data = {
         id: row.id,
@@ -421,7 +421,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.tableFrom.page = 1;
       this.getList();

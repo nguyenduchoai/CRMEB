@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\user\UserAddressServices;
 use app\services\wechat\WechatUserServices;
 
 /**
- * 用户地址类
+ * Lớp địa chỉ người dùng
  * Class UserController
  * @package app\api\controller\store
  */
@@ -33,7 +33,7 @@ class UserAddressController
     }
 
     /**
-     * 地址 获取单个
+     * Địa chỉ - Lấy một địa chỉ
      * @param Request $request
      * @param $id
      * @return mixed
@@ -50,7 +50,7 @@ class UserAddressController
     }
 
     /**
-     * 地址列表
+     * Danh sách địa chỉ
      * @param Request $request
      * @return mixed
      */
@@ -61,7 +61,7 @@ class UserAddressController
     }
 
     /**
-     * 设置默认地址
+     * Đặt địa chỉ mặc định
      * @param Request $request
      * @return mixed
      */
@@ -80,7 +80,7 @@ class UserAddressController
     }
 
     /**
-     * 获取默认地址
+     * Lấy địa chỉ mặc định
      * @param Request $request
      * @return mixed
      */
@@ -96,7 +96,7 @@ class UserAddressController
     }
 
     /**
-     * 修改 添加地址
+     * Sửa - Thêm địa chỉ
      * @param Request $request
      * @return mixed
      */
@@ -112,9 +112,9 @@ class UserAddressController
             [['id', 'd'], 0],
             [['type', 'd'], 0]
         ]);
-        if (!isset($addressInfo['address']['province']) || !$addressInfo['address']['province'] || $addressInfo['address']['province'] == '省') return app('json')->fail(410151);
-        if (!isset($addressInfo['address']['city']) || !$addressInfo['address']['city'] || $addressInfo['address']['city'] == '市') return app('json')->fail(410152);
-        if (!isset($addressInfo['address']['district']) || !$addressInfo['address']['district'] || $addressInfo['address']['district'] == '区') return app('json')->fail(410152);
+        if (!isset($addressInfo['address']['province']) || !$addressInfo['address']['province'] || $addressInfo['address']['province'] == 'Tỉnh') return app('json')->fail(410151);
+        if (!isset($addressInfo['address']['city']) || !$addressInfo['address']['city'] || $addressInfo['address']['city'] == 'Thành phố') return app('json')->fail(410152);
+        if (!isset($addressInfo['address']['district']) || !$addressInfo['address']['district'] || $addressInfo['address']['district'] == 'Quận/Huyện') return app('json')->fail(410152);
         if (!isset($addressInfo['address']['city_id']) && $addressInfo['type'] == 0) return app('json')->fail(410153);
         if (!$addressInfo['detail']) return app('json')->fail(410154);
         $uid = (int)$request->uid();
@@ -129,7 +129,7 @@ class UserAddressController
     }
 
     /**
-     * 删除地址
+     * Xóa địa chỉ
      * @param Request $request
      * @return mixed
      */

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -42,7 +42,7 @@ class OtherOrderController
     }
 
     /**
-     * 计算会员线下付款金额
+     * Tính số tiền thành viên thanh toán ngoại tuyến
      * @param Request $request
      * @return mixed
      */
@@ -55,9 +55,9 @@ class OtherOrderController
         /** @var UserServices $userService */
         $userService = app()->make(UserServices::class);
         $user_info = $userService->get($uid, ['is_money_level']);
-        //会员线下享受折扣
+        //Thành viên được chiết khấu khi thanh toán ngoại tuyến
         if ($user_info->is_money_level > 0) {
-            //看是否开启线下享受折扣
+            //Kiểm tra có mở chiết khấu khi thanh toán ngoại tuyến không
             /** @var MemberCardServices $memberCardService */
             $memberCardService = app()->make(MemberCardServices::class);
             $offline_rule_number = $memberCardService->isOpenMemberCard('offline');
@@ -115,11 +115,11 @@ class OtherOrderController
 
         $payType = app()->make(OrderPayServices::class)->getPayType($payType);
 
-        //支付金额为0
+        //Số tiền thanh toán bằng 0
         if (bcsub((string)$orderInfo['pay_price'], '0', 2) <= 0) {
-            //创建订单jspay支付
+            //Tạo đơn hàng thanh toán jspay
             $payPriceStatus = $OtherOrderServices->zeroYuanPayment($orderInfo);
-            if ($payPriceStatus)//0元支付成功
+            if ($payPriceStatus)//Thanh toán 0đ thành công
                 return app('json')->status('success', 410217, $info);
             else
                 return app('json')->status('pay_error');
@@ -150,7 +150,7 @@ class OtherOrderController
     }
 
     /**
-     * 线下支付方式
+     * Phương thức thanh toán ngoại tuyến
      * @return mixed
      */
     public function pay_type(Request $request)
@@ -160,7 +160,7 @@ class OtherOrderController
         $payType['site_name'] = sys_config('site_name');
         $payType['now_money'] = $request->user('now_money');
         $payType['offline_pay_status'] = true;
-        $payType['yue_pay_status'] = (int)sys_config('balance_func_status') && (int)sys_config('yue_pay_status') == 1 ? 1 : 0;//余额支付 1 开启 2 关闭
+        $payType['yue_pay_status'] = (int)sys_config('balance_func_status') && (int)sys_config('yue_pay_status') == 1 ? 1 : 0;//Thanh toán bằng số dư: 1 là bật, 2 là tắt
         return app('json')->success($payType);
     }
 }

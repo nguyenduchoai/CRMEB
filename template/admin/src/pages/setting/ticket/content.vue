@@ -1,62 +1,62 @@
 <template>
   <div>
-    <pages-header ref="pageHeader" title="小票配置" :backUrl="$routeProStr + '/setting/ticket'"></pages-header>
+    <pages-header ref="pageHeader" title="Cấu hình biên lai" :backUrl="$routeProStr + '/setting/ticket'"></pages-header>
     <el-card :bordered="false" shadow="never" class="mt16">
       <div class="flex justify-between warpper">
         <el-form :model="formItem" label-width="120px">
-          <el-form-item label="小票头部：">
-            <el-checkbox v-model="formItem.header" :true-label="1" :false-label="0">商家名称</el-checkbox>
+          <el-form-item label="Phần đầu biên lai:">
+            <el-checkbox v-model="formItem.header" :true-label="1" :false-label="0">Tên cửa hàng</el-checkbox>
           </el-form-item>
-          <el-form-item label="配送信息：">
-            <el-checkbox v-model="formItem.delivery" :true-label="1" :false-label="0">配送信息</el-checkbox>
+          <el-form-item label="Thông tin giao hàng:">
+            <el-checkbox v-model="formItem.delivery" :true-label="1" :false-label="0">Thông tin giao hàng</el-checkbox>
           </el-form-item>
-          <el-form-item label="买家备注：">
-            <el-checkbox v-model="formItem.buyer_remarks" :true-label="1" :false-label="0">买家备注</el-checkbox>
+          <el-form-item label="Ghi chú của người mua:">
+            <el-checkbox v-model="formItem.buyer_remarks" :true-label="1" :false-label="0">Ghi chú của người mua</el-checkbox>
           </el-form-item>
-          <el-form-item label="商品信息：">
+          <el-form-item label="Thông tin sản phẩm:">
             <el-checkbox-group v-model="formItem.goods">
-              <el-checkbox :label="0">商品基础信息</el-checkbox>
-              <el-checkbox :label="1">规格编码</el-checkbox>
+              <el-checkbox :label="0">Thông tin cơ bản của sản phẩm</el-checkbox>
+              <el-checkbox :label="1">Mã phân loại</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
-          <el-form-item label="运费信息：">
-            <el-checkbox v-model="formItem.freight" :true-label="1" :false-label="0">运费</el-checkbox>
+          <el-form-item label="Thông tin phí vận chuyển:">
+            <el-checkbox v-model="formItem.freight" :true-label="1" :false-label="0">Phí vận chuyển</el-checkbox>
           </el-form-item>
-          <el-form-item label="优惠信息：">
-            <el-checkbox v-model="formItem.preferential" :true-label="1" :false-label="0">优惠总计</el-checkbox>
+          <el-form-item label="Thông tin ưu đãi:">
+            <el-checkbox v-model="formItem.preferential" :true-label="1" :false-label="0">Tổng ưu đãi</el-checkbox>
           </el-form-item>
-          <el-form-item label="支付信息：">
+          <el-form-item label="Thông tin thanh toán:">
             <el-checkbox-group v-model="formItem.pay">
-              <el-checkbox :label="0">支付方式</el-checkbox>
-              <el-checkbox :label="1">实收金额</el-checkbox>
+              <el-checkbox :label="0">Phương thức thanh toán</el-checkbox>
+              <el-checkbox :label="1">Số tiền thực thu</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
-          <el-form-item label="其他订单信息：">
+          <el-form-item label="Thông tin khác của đơn hàng:">
             <el-checkbox-group v-model="formItem.order">
-              <el-checkbox :label="0">订单编号</el-checkbox>
-              <el-checkbox :label="1">下单时间</el-checkbox>
-              <el-checkbox :label="2">支付时间</el-checkbox>
-              <el-checkbox :label="3">打印时间</el-checkbox>
+              <el-checkbox :label="0">Mã đơn hàng</el-checkbox>
+              <el-checkbox :label="1">Thời gian đặt hàng</el-checkbox>
+              <el-checkbox :label="2">Thời gian thanh toán</el-checkbox>
+              <el-checkbox :label="3">Thời gian in</el-checkbox>
             </el-checkbox-group>
           </el-form-item>
-          <el-form-item label="推广二维码：">
-            <el-checkbox v-model="formItem.code" :true-label="1" :false-label="0">选择系统链接</el-checkbox>
+          <el-form-item label="Mã QR giới thiệu:">
+            <el-checkbox v-model="formItem.code" :true-label="1" :false-label="0">Chọn liên kết hệ thống</el-checkbox>
             <div v-if="formItem.code" class="link">
               <div class="select-link">
-                链接：{{ formItem.code_url }}
-                <span class="change" @click="getLink(index)">{{ formItem.code_url ? '修改' : '选择' }}</span>
+                Liên kết: {{ formItem.code_url }}
+                <span class="change" @click="getLink(index)">{{ formItem.code_url ? 'Sửa' : 'Chọn' }}</span>
               </div>
             </div>
           </el-form-item>
-          <el-form-item label="底部公告：">
-            <el-checkbox v-model="formItem.show_notice" :true-label="1" :false-label="0">底部公告</el-checkbox>
+          <el-form-item label="Thông báo cuối biên lai:">
+            <el-checkbox v-model="formItem.show_notice" :true-label="1" :false-label="0">Thông báo cuối biên lai</el-checkbox>
             <div v-if="formItem.show_notice">
               <el-input
                 v-model="formItem.notice_content"
                 maxlength="80"
                 show-word-limit
                 type="textarea"
-                placeholder="请输入公告内容"
+                placeholder="Vui lòng nhập nội dung thông báo"
                 style="width: 500px"
               />
             </div>
@@ -65,114 +65,114 @@
         <div class="ticket-preview">
           <div class="out-line"></div>
           <div class="ticket-content">
-            <div v-if="formItem.header === 1" class="ticket-header">商家名称</div>
-            <!-- 配送方式 -->
+            <div v-if="formItem.header === 1" class="ticket-header">Tên cửa hàng</div>
+            <!-- Phương thức giao hàng -->
             <div class="delivery btn-line" v-if="formItem.delivery === 1">
               <div class="form-box">
-                <div class="label">配送方式：</div>
-                <div class="content">商家配送</div>
+                <div class="label">Phương thức giao hàng:</div>
+                <div class="content">Cửa hàng tự giao</div>
               </div>
               <div class="form-box">
-                <div class="label">客户姓名：</div>
-                <div class="content">收货人姓名</div>
+                <div class="label">Tên khách hàng:</div>
+                <div class="content">Họ tên người nhận</div>
               </div>
               <div class="form-box">
-                <div class="label">客户电话：</div>
+                <div class="label">Số điện thoại khách hàng:</div>
                 <div class="content">13023354455</div>
               </div>
               <div class="form-box">
-                <div class="label">收货地址：</div>
-                <div class="content">上海市浦东新区世界大道25号B座309室</div>
+                <div class="label">Địa chỉ nhận hàng:</div>
+                <div class="content">Phòng 309, Tòa B, số 25 Shijie Avenue, Pudong New Area, Shanghai</div>
               </div>
             </div>
-            <!-- 备注 -->
+            <!-- Ghi chú -->
             <div class="buyer-remarks btn-line" v-if="formItem.buyer_remarks === 1">
               <div class="form-box">
-                <div class="label">买家备注：</div>
-                <div class="content">请在收货时向商家留言，谢谢！</div>
+                <div class="label">Ghi chú của người mua:</div>
+                <div class="content">Vui lòng để lại lời nhắn cho người bán khi nhận hàng, cảm ơn!</div>
               </div>
             </div>
-            <!-- 商品 -->
+            <!-- Sản phẩm -->
             <div v-if="formItem.goods.includes(0)">
               <div class="goods btn-line">
-                <div class="xing">*************************商品***********************</div>
+                <div class="xing">*************************Sản phẩm***********************</div>
                 <div class="flex justify-between">
-                  <span>商品</span>
-                  <span>单价</span>
-                  <span>数量</span>
-                  <span>金额</span>
+                  <span>Sản phẩm</span>
+                  <span>Đơn giá</span>
+                  <span>Số lượng</span>
+                  <span>Số tiền</span>
                 </div>
               </div>
               <div class="goods-msg btn-line">
                 <div class="flex justify-between">
-                  <span>商品1</span>
+                  <span>Sản phẩm 1</span>
                   <span>100.0</span>
                   <span>2</span>
                   <span>200.0</span>
                 </div>
                 <div class="flex justify-between">
-                  <span>(规格1)</span>
+                  <span>(Phân loại 1)</span>
                   <span></span>
                   <span></span>
                   <span></span>
                 </div>
                 <div v-if="formItem.goods.includes(1)" class="flex py-10">
-                  <span>规格编码：</span>
+                  <span>Mã quy cách:</span>
                   <span>FKXQW4567vw59</span>
                 </div>
               </div>
               <div class="goods-msg pb-10 pt-10">
                 <div class="flex justify-between">
-                  <span>商品2</span>
+                  <span>Sản phẩm 2</span>
                   <span>100.0</span>
                   <span>2</span>
                   <span>200.0</span>
                 </div>
                 <div class="flex justify-between">
-                  <span>(规格2)</span>
+                  <span>(Phân loại 2)</span>
                   <span></span>
                   <span></span>
                   <span></span>
                 </div>
                 <div v-if="formItem.goods.includes(1)" class="flex py-10">
-                  <span>规格编码：</span>
+                  <span>Mã quy cách:</span>
                   <span>FKXQW4567vw50</span>
                 </div>
               </div>
               <div class="xing">**************************************************</div>
-              <!-- 合计 -->
+              <!-- Tổng cộng -->
               <div class="pay flex flex-col align-end btn-line">
                 <template>
-                  <div class="fw-500">合计：400.00元</div>
+                  <div class="fw-500">Tổng cộng: 400.00đ</div>
                 </template>
               </div>
             </div>
-            <!-- 运费优惠 -->
+            <!-- Ưu đãi phí vận chuyển -->
             <div
               class="pay flex flex-col align-end btn-line"
               v-if="formItem.freight === 1 || formItem.preferential === 1"
             >
               <template>
-                <div v-if="formItem.freight === 1">运费：+30.00元</div>
-                <div v-if="formItem.preferential === 1">优惠：-80.00元</div>
-                <div v-if="formItem.preferential === 1">抵扣：-20.00元</div>
+                <div v-if="formItem.freight === 1">Phí vận chuyển: +30.00đ</div>
+                <div v-if="formItem.preferential === 1">Ưu đãi: -80.00đ</div>
+                <div v-if="formItem.preferential === 1">Khấu trừ: -20.00đ</div>
               </template>
             </div>
-            <!-- 支付信息 -->
+            <!-- Thông tin thanh toán -->
 
             <div class="pay flex flex-col align-end btn-line" v-if="formItem.pay.length > 0">
-              <div v-if="formItem.pay.includes(0)">支付方式：微信支付</div>
-              <div v-if="formItem.pay.includes(1)" class="fw-500">实际支付：330.00元</div>
+              <div v-if="formItem.pay.includes(0)">Phương thức thanh toán: WeChat Pay</div>
+              <div v-if="formItem.pay.includes(1)" class="fw-500">Thanh toán thực tế: 330.00đ</div>
             </div>
-            <!-- 订单信息 -->
+            <!-- Thông tin đơn hàng -->
 
             <div class="order pt-10 btn-line" v-if="formItem.order.length > 0">
-              <div v-if="formItem.order.includes(0)">订单编号：wx1234567890</div>
-              <div v-if="formItem.order.includes(1)">下单时间：2022/06/18 12:00:00</div>
-              <div v-if="formItem.order.includes(2)">支付时间：2022/06/18 12:00:00</div>
-              <div v-if="formItem.order.includes(3)">打印时间：2022/06/18 14:20:00</div>
+              <div v-if="formItem.order.includes(0)">Mã đơn hàng: wx1234567890</div>
+              <div v-if="formItem.order.includes(1)">Thời gian đặt hàng: 2022/06/18 12:00:00</div>
+              <div v-if="formItem.order.includes(2)">Thời gian thanh toán: 2022/06/18 12:00:00</div>
+              <div v-if="formItem.order.includes(3)">Thời gian in: 2022/06/18 14:20:00</div>
             </div>
-            <!-- 二维码 -->
+            <!-- Mã QR -->
             <div class="code">
               <div v-show="formItem.code" id="qrcode"></div>
               <div class="mt-20" v-if="formItem.show_notice">
@@ -187,7 +187,7 @@
       </div>
     </el-card>
     <el-card :bordered="false" dis-hover class="fixed-card">
-      <el-button type="primary" class="submission" @click="save">保存</el-button>
+      <el-button type="primary" class="submission" @click="save">Lưu</el-button>
     </el-card>
     <linkaddress ref="linkaddres" @linkUrl="linkUrl"></linkaddress>
   </div>
@@ -253,10 +253,10 @@ export default {
     save() {
       printSaveContent(this.id, this.formItem)
         .then((res) => {
-          this.$message.success('保存成功');
+          this.$message.success('Lưu thành công');
         })
         .catch((err) => {
-          this.$message.error('保存失败');
+          this.$message.error('Lưu thất bại');
         });
     },
     getLink(index) {
@@ -272,7 +272,7 @@ export default {
       let obj = document.getElementById('qrcode');
       obj.innerHTML = '';
       qrcode = new QRCode(obj, {
-        text: url, // 需要转换为二维码的内容
+        text: url, // Nội dung cần chuyển đổi thành mã QR
         width: 128,
         height: 128,
         colorDark: '#000000',

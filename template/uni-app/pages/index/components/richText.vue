@@ -1,5 +1,5 @@
 <template>
-	<!-- 富文本 -->
+	<!-- Văn bản định dạng -->
 	<view v-show="!isSortType" :style="[richTextWrapStyle]">
 		<view class="richText" v-if="description" :style="[richTextStyle]">
 			<!-- #ifndef APP-PLUS -->

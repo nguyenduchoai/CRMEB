@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -26,7 +26,7 @@ class StoreProductAttrValue extends BaseModel
     use ModelTrait;
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'store_product_attr_value';
@@ -34,7 +34,7 @@ class StoreProductAttrValue extends BaseModel
     protected $insert = ['unique'];
 
     /**
-     * sku 字段写入
+     * Ghi trường sku
      * @param $value
      * @return string
      */
@@ -44,7 +44,7 @@ class StoreProductAttrValue extends BaseModel
     }
 
     /**
-     * Unique字段写入
+     * Ghi trường Unique
      * @param $value
      * @param $data
      * @return mixed
@@ -58,7 +58,7 @@ class StoreProductAttrValue extends BaseModel
     }
 
     /**
-     * 商品搜索器
+     * Bộ lọc sản phẩm
      * @param Model $query
      * @param $value
      * @param $data
@@ -73,7 +73,7 @@ class StoreProductAttrValue extends BaseModel
     }
 
     /**
-     * 商品类型搜索器
+     * Bộ lọc loại sản phẩm
      * @param Model $query
      * @param $value
      * @param $data
@@ -84,7 +84,7 @@ class StoreProductAttrValue extends BaseModel
     }
 
     /**
-     * 商品属性名称搜索器
+     * Bộ lọc tên thuộc tính sản phẩm
      * @param Model $query
      * @param $value
      * @param $data
@@ -97,7 +97,7 @@ class StoreProductAttrValue extends BaseModel
     }
 
     /**
-     * 规格唯一值搜索器
+     * Bộ lọc giá trị duy nhất của phân loại
      * @param Model $query
      * @param $value
      * @param $data
@@ -114,7 +114,7 @@ class StoreProductAttrValue extends BaseModel
     }
 
     /**
-     * 关联商品
+     * Liên kết sản phẩm
      * @return \think\model\relation\HasOne
      */
     public function product()
@@ -123,7 +123,7 @@ class StoreProductAttrValue extends BaseModel
     }
 
     /**
-     * 关联积分商城表
+     * Liên kết bảng cửa hàng đổi điểm
      * @return \think\model\relation\HasOne
      */
     public function storeIntegral()
@@ -132,7 +132,7 @@ class StoreProductAttrValue extends BaseModel
     }
 
     /**
-     * 编号搜索器
+     * Bộ lọc mã số
      * @param Model $query
      * @param $value
      * @param $data

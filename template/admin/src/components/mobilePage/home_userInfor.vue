@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="text">
-          <div class="name acea-row row-middle">用户名称<img src="../../assets/images/vip-diy.png" /></div>
+          <div class="name acea-row row-middle">Tên người dùng<img src="../../assets/images/vip-diy.png" /></div>
           <div class="acea-row row-middle">
             <div
               class="progress"
@@ -50,23 +50,23 @@
       <div class="right acea-row row-bottom">
         <div class="item" v-if="checkType.slice(0, 3).indexOf(1) != -1">
           <div class="num">20</div>
-          <div>积分</div>
+          <div>Điểm thưởng</div>
         </div>
         <div class="item" v-if="checkType.slice(0, 3).indexOf(2) != -1">
           <div class="num">200</div>
-          <div>余额</div>
+          <div>Số dư</div>
         </div>
         <div class="item" v-if="checkType.slice(0, 3).indexOf(0) != -1">
           <div class="num">2</div>
-          <div>优惠券</div>
+          <div>Phiếu giảm giá</div>
         </div>
         <div class="item" v-if="checkType.slice(0, 3).indexOf(4) != -1">
           <div class="num">80</div>
-          <div>收藏</div>
+          <div>Yêu thích</div>
         </div>
         <div class="item" v-if="checkType.slice(0, 3).indexOf(5) != -1">
           <div class="num">80</div>
-          <div>浏览</div>
+          <div>Xem</div>
         </div>
       </div>
     </div>
@@ -87,7 +87,7 @@
             </div>
           </div>
           <div class="text">
-            <div class="name acea-row row-middle">用户名称<img src="../../assets/images/vip-diy.png" /></div>
+            <div class="name acea-row row-middle">Tên người dùng<img src="../../assets/images/vip-diy.png" /></div>
             <div class="acea-row row-middle">
               <div
                 class="progress"
@@ -113,19 +113,19 @@
       </div>
       <div class="list acea-row row-around">
         <div class="item" v-if="checkType.indexOf(1) != -1">
-          <div>积分<span class="num">20000</span></div>
+          <div>Điểm thưởng<span class="num">20000</span></div>
         </div>
         <div class="item" v-if="checkType.indexOf(2) != -1">
-          <div>余额<span class="num">200</span></div>
+          <div>Số dư<span class="num">200</span></div>
         </div>
         <div class="item" v-if="checkType.indexOf(0) != -1">
-          <div>优惠券<span class="num">2</span></div>
+          <div>Phiếu giảm giá<span class="num">2</span></div>
         </div>
         <div class="item" v-if="checkType.indexOf(4) != -1">
-          <div>收藏<span class="num">80</span></div>
+          <div>Yêu thích<span class="num">80</span></div>
         </div>
         <div class="item" v-if="checkType.indexOf(5) != -1">
-          <div>浏览<span class="num">80</span></div>
+          <div>Xem<span class="num">80</span></div>
         </div>
       </div>
     </div>
@@ -137,11 +137,11 @@ import { mapState, mapMutations } from 'vuex';
 // import theme from "@/mixins/theme";
 export default {
   name: 'home_userInfor',
-  cname: '用户信息',
+  cname: 'Thông tin người dùng',
   configName: 'c_userInfor',
   icon: '#iconzujian-yonghuxinxi',
-  type: 0, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'userInfor', // 外面匹配名称
+  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'userInfor', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -181,80 +181,80 @@ export default {
   // mixins: [theme],
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
-        cname: '用户信息',
+        cname: 'Thông tin người dùng',
         name: 'userInfor',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
         },
-        titleLeft: '展示设置',
-        titleImg: '默认头像',
-        titleRight: '进度条',
-        titleCurrency: '通用样式',
+        titleLeft: 'Cài đặt hiển thị',
+        titleImg: 'Ảnh đại diện mặc định',
+        titleRight: 'Thanh tiến độ',
+        titleCurrency: 'Kiểu chung',
         styleConfig: {
-          title: '选择风格',
+          title: 'Chọn phong cách',
           tabVal: 1,
           tabList: [
             {
-              name: '样式一',
+              name: 'Kiểu 1',
             },
             {
-              name: '样式二',
+              name: 'Kiểu 2',
             },
           ],
         },
         checkboxInfo: {
-          title: '是否展示',
+          title: 'Hiển thị',
           name: 'checkboxInfo',
           userType: 1,
           type: [1, 2],
           list: [
             {
               id: 1,
-              name: '积分',
+              name: 'Điểm thưởng',
             },
             {
               id: 2,
-              name: '余额',
+              name: 'Số dư',
             },
             {
               id: 4,
-              name: '收藏',
+              name: 'Yêu thích',
             },
             {
               id: 0,
-              name: '优惠券',
+              name: 'Phiếu giảm giá',
             },
             {
               id: 5,
-              name: '浏览',
+              name: 'Xem',
             },
           ],
         },
         logoConfig: {
-          info: '建议：图片尺寸90px * 90px',
+          info: 'Đề xuất: kích thước ảnh 90px * 90px',
           url: '',
           type: 'code',
           delType: 1,
-          name: '上传图片',
+          name: 'Tải lên ảnh',
         },
         toneConfig: {
-          title: '色调',
+          title: 'Tông màu',
           tabVal: 0,
           tabList: [
             {
-              name: '跟随主题风格',
+              name: 'Theo phong cách chủ đề',
             },
             {
-              name: '自定义',
+              name: 'Tùy chỉnh',
             },
           ],
         },
         progressColor: {
-          title: '进度条',
+          title: 'Thanh tiến độ',
           default: [
             {
               item: '#e93323',
@@ -273,7 +273,7 @@ export default {
           ],
         },
         progressBgColor: {
-          title: '进度条背景',
+          title: 'Nền thanh tiến độ',
           default: [
             {
               item: '#EEEEEE',
@@ -286,7 +286,7 @@ export default {
           ],
         },
         moduleColor: {
-          title: '组件背景',
+          title: 'Nền thành phần',
           default: [
             {
               item: '#fff',
@@ -305,7 +305,7 @@ export default {
           ],
         },
         bottomBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           default: [
             {
               item: '#fff',
@@ -318,39 +318,39 @@ export default {
           ],
         },
         topConfig: {
-          title: '上边距',
+          title: 'Lề trên',
           val: 0,
           min: 0,
         },
         bottomConfig: {
-          title: '下边距',
+          title: 'Lề dưới',
           val: 0,
           min: 0,
         },
         prConfig: {
-          title: '左右边距',
+          title: 'Lề trái phải',
           val: 0,
           min: 0,
         },
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },
         fillet: {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 0,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],

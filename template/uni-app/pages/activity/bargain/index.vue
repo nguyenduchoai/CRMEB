@@ -9,27 +9,27 @@
 						</div>
 						<div class="text acea-row row-column-around">
 							<div class="line1" style="width: 100%;">{{ item.title }}</div>
-							<count-down :justify-left="'justify-content:left'" :is-day="true" :tip-text="$t(`倒计时`) "
-								:day-text=" $t(`天`) " :hour-text=" $t(`时`) " :minute-text=" $t(`分`) " :second-text=" $t(`秒`)"
+							<count-down :justify-left="'justify-content:left'" :is-day="true" :tip-text="$t(`Đếm ngược`) "
+								:day-text=" $t(`ngày`) " :hour-text=" $t(`giờ`) " :minute-text=" $t(`phút`) " :second-text=" $t(`giây`)"
 								:datatime="item.datatime" v-if="item.status === 1"></count-down>
-							<div class="successTxt font-num" v-else-if="item.status === 3">{{$t(`砍价成功`)}}</div>
-							<div class="endTxt" v-else>{{$t(`活动已结束`)}}</div>
+							<div class="successTxt font-num" v-else-if="item.status === 3">{{$t(`Săn giảm giá thành công`)}}</div>
+							<div class="endTxt" v-else>{{$t(`Chương trình đã kết thúc`)}}</div>
 							<div class="money font-num">
-								{{$t(`已砍至`)}}<span class="symbol">{{$t(`￥`)}}</span><span class="num">{{ item.residue_price }}</span>
+								{{$t(`Đã giảm còn`)}}<span class="symbol">{{$t(`￥`)}}</span><span class="num">{{ item.residue_price }}</span>
 							</div>
 						</div>
 					</div>
 					<div class="bottom acea-row row-between-wrapper">
-						<div class="purple" v-if="item.status === 1">{{$t(`活动进行中`)}}</div>
-						<div class="success" v-if="item.status === 3">{{$t(`砍价成功`)}}</div>
-						<div class="end" v-if="item.status === 2">{{$t(`活动已结束`)}}</div>
+						<div class="purple" v-if="item.status === 1">{{$t(`Đang diễn ra`)}}</div>
+						<div class="success" v-if="item.status === 3">{{$t(`Săn giảm giá thành công`)}}</div>
+						<div class="end" v-if="item.status === 2">{{$t(`Chương trình đã kết thúc`)}}</div>
 						<div class="acea-row row-middle row-right">
 							<div class="bnt cancel" v-if="item.status === 1"
 								@click="getBargainUserCancel(item.bargain_id)">
-								{{$t(`取消活动`)}}
+								{{$t(`Hủy hoạt động`)}}
 							</div>
 							<div class="bnt bg-color-red" v-if="item.status === 1" @click="goDetail(item.bargain_id)">
-								{{$t(`继续砍价`)}}
+								{{$t(`Tiếp tục săn giảm giá`)}}
 							</div>
 						</div>
 						<div class="acea-row row-middle row-right success"  v-if="item.status === 3">
@@ -41,7 +41,7 @@
 			</div>
 		</block>
 		<block v-if="bargain.length == 0">
-			<emptyPage :title="$t(`暂无砍价记录`)"></emptyPage>
+			<emptyPage :title="$t(`Chưa có lịch sử săn giảm giá`)"></emptyPage>
 		</block>
 		<!-- #ifndef MP -->
 		<home></home>
@@ -74,10 +74,10 @@
 		data: function() {
 			return {
 				bargain: [],
-				status: false, //砍价列表是否获取完成 false 未完成 true 完成
-				loadingList: false, //当前接口是否请求完成 false 完成 true 未完成
-				page: 1, //页码
-				limit: 20, //数量
+				status: false, //Danh sách săn giảm giá đã lấy xong hay chưa, false là chưa xong, true là xong
+				loadingList: false, //API hiện tại đã request xong hay chưa, false là xong, true là chưa xong
+				page: 1, //Số trang
+				limit: 20, //Số lượng
 				userInfo: {}
 			};
 		},
@@ -91,7 +91,7 @@
 					url: `/pages/activity/goods_bargain_details/index?id=${id}&bargain=${this.userInfo.uid}`
 				})
 			},
-			// 砍价列表
+			// Danh sách săn giảm giá
 			goList: function() {
 				uni.navigateTo({
 					url: '/pages/activity/goods_bargain/index'
@@ -139,7 +139,7 @@
 					});
 			},
 			/**
-			 * 获取个人用户信息
+			 * Lấy thông tin người dùng cá nhân
 			 */
 			getUserInfo: function() {
 				let that = this;
@@ -155,7 +155,7 @@
 </script>
 
 <style lang="scss">
-	/*砍价记录*/
+	/*Lịch sử săn giảm giá*/
 	.bargain-record .item .picTxt .text .time .styleAll {
 		color: #fc4141;
 		font-size: 24rpx;

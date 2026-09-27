@@ -16,7 +16,7 @@
       >
         <el-row :gutter="24">
           <el-col :span="24">
-            <el-form-item label="选择商品：">
+            <el-form-item label="Chọn sản phẩm:">
               <div class="box">
                 <div class="box-item" v-for="(item, index) in goodsList" :key="index">
                   <img :src="item.image" alt="" />
@@ -31,7 +31,7 @@
         </el-row>
       </el-form>
       <div class="active-btn" v-if="goodsList.length > 0">
-        <el-button type="primary" v-db-click @click="liveGoods">生成直播商品</el-button>
+        <el-button type="primary" v-db-click @click="liveGoods">Tạo sản phẩm livestream</el-button>
       </div>
       <div class="table-box" v-if="isShowBox">
         <el-table
@@ -39,15 +39,15 @@
           ref="table"
           class="mt14"
           v-loading="loading"
-          no-userFrom-text="暂无数据"
-          no-filtered-userFrom-text="暂无筛选结果"
+          no-userFrom-text="Chưa có dữ liệu"
+          no-filtered-userFrom-text="Không có kết quả phù hợp"
         >
-          <el-table-column label="商品ID" width="80">
+          <el-table-column label="ID sản phẩm" width="80">
             <template slot-scope="scope">
               <span>{{ scope.row.id }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="商品信息" min-width="90">
+          <el-table-column label="Thông tin sản phẩm" min-width="90">
             <template slot-scope="scope">
               <div class="product_box">
                 <img :src="scope.row.image" alt="" />
@@ -55,19 +55,19 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="直播售价" min-width="130">
+          <el-table-column label="Giá bán livestream" min-width="130">
             <template slot-scope="scope">
               <span>{{ scope.row.price }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="库存" min-width="130">
+          <el-table-column label="Tồn kho" min-width="130">
             <template slot-scope="scope">
               <span>{{ scope.row.stock }}</span>
             </template>
           </el-table-column>
-          <el-table-column label="操作" fixed="right" width="80">
+          <el-table-column label="Thao tác" fixed="right" width="80">
             <template slot-scope="scope">
-              <a v-db-click @click="del(scope.row, scope.$index)">删除</a>
+              <a v-db-click @click="del(scope.row, scope.$index)">Xóa</a>
             </template>
           </el-table-column>
         </el-table>
@@ -80,12 +80,12 @@
             @click="bindSub"
             :disabled="disabled"
             :loading="loadings"
-            >提交</el-button
+            >Gửi</el-button
           >
         </div>
       </div>
     </el-card>
-    <el-dialog :visible.sync="modals" title="商品列表" class="paymentFooter" width="1000px">
+    <el-dialog :visible.sync="modals" title="Danh sách sản phẩm" class="paymentFooter" width="1000px">
       <goods-list ref="goodslist" :selectIds="selectIds" @getProductId="getProductId" :ischeckbox="true"></goods-list>
     </el-dialog>
   </div>
@@ -127,7 +127,7 @@ export default {
     selectGoods() {
       this.modals = true;
     },
-    // 生成直播商品
+    // Tạo sản phẩm livestream
     liveGoods() {
       let array = [];
       this.goodsList.map((el) => {
@@ -144,7 +144,7 @@ export default {
           this.$message.error(error.msg);
         });
     },
-    //对象数组去重；
+    //Loại bỏ trùng lặp trong mảng object;
     unique(arr) {
       const res = new Map();
       return arr.filter((arr) => !res.has(arr.product_id) && res.set(arr.product_id, 1));
@@ -169,7 +169,7 @@ export default {
         this.isShowBox = false;
       }
     },
-    // 提交
+    // Gửi
     bindSub() {
       this.disabled = true;
       this.loadings = true;
@@ -177,7 +177,7 @@ export default {
         goods_info: this.tabList,
       })
         .then((res) => {
-          this.$message.success('添加成功');
+          this.$message.success('Thêm thành công');
           this.disabled = false;
           setTimeout(() => {
             this.$router.push({ path: this.$routeProStr + '/marketing/live/live_goods' });

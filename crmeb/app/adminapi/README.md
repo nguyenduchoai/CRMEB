@@ -1,17 +1,17 @@
-crmeb/app/adminapi这个目录主要是后台管理系统的API接口文件。
+Thư mục crmeb/app/adminapi chủ yếu chứa các tệp API của hệ thống quản trị.
 
-具体来说:
+Cụ thể:
 
-- adminapi目录下的文件都是后台管理系统的控制器(Controller)文件,这些控制器被用来处理后台系统的各种请求。
+- Các tệp trong thư mục adminapi đều là tệp bộ điều khiển (Controller) của hệ thống quản trị, các controller này được dùng để xử lý mọi loại yêu cầu của hệ thống quản trị.
 
-- 每一个控制器文件对应后台管理系统某个功能模块,比如AuthController处理认证模块请求,StoreProduct处理商品模块请求等。
+- Mỗi tệp controller tương ứng với một mô-đun chức năng của hệ thống quản trị, ví dụ AuthController xử lý các yêu cầu của mô-đun xác thực, StoreProduct xử lý các yêu cầu của mô-đun sản phẩm, v.v.
 
-- 控制器内有各种方法,这些方法就相当于API接口,可以处理GET、POST请求,返回JSON数据。
+- Trong controller có nhiều phương thức, các phương thức này tương đương với các API, có thể xử lý yêu cầu GET, POST và trả về dữ liệu JSON.
 
-- 浏览器或APP在调用这些API接口时,会发送请求到相应的控制器方法,例如登录接口请求到Login文件的login方法。
+- Khi trình duyệt hoặc APP gọi các API này, yêu cầu sẽ được gửi đến phương thức controller tương ứng, ví dụ yêu cầu của API đăng nhập được gửi đến phương thức login trong tệp Login.
 
-- 控制器处理完请求后,通过返回Response对象返回处理结果给浏览器或APP。
+- Sau khi xử lý xong yêu cầu, controller trả kết quả xử lý về cho trình duyệt hoặc APP thông qua việc trả về đối tượng Response.
 
-所以简单来说,adminapi目录负责后台管理系统的所有API接口,这些接口被APP或前端调用来完成各种管理操作,如查询数据、添加修改删除等。开发者在新增后台功能时,也需要在此目录增加对应的控制器和接口。
+Nói một cách đơn giản, thư mục adminapi phụ trách toàn bộ API của hệ thống quản trị, các API này được APP hoặc frontend gọi để thực hiện các thao tác quản lý như truy vấn dữ liệu, thêm, sửa, xóa, v.v. Khi thêm chức năng mới cho trang quản trị, lập trình viên cũng cần thêm controller và API tương ứng trong thư mục này.
 
-它实际上负责后台系统的通信交互层,解耦了后端逻辑和前端展示,采用 RESTful规范设计。
+Thực chất, thư mục này phụ trách tầng giao tiếp tương tác của hệ thống quản trị, tách rời (decouple) logic backend với phần hiển thị frontend, và được thiết kế theo chuẩn RESTful.

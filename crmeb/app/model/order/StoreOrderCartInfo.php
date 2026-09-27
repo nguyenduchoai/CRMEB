@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use crmeb\traits\ModelTrait;
 use think\Model;
 
 /**
- * TODO 订单记录Model
+ * TODO Model lịch sử đơn hàng
  * Class StoreOrderCartInfo
  * @package app\model\order
  */
@@ -25,19 +25,19 @@ class StoreOrderCartInfo extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'store_order_cart_info';
 
     /**
-     * 购物车信息获取器
+     * Getter thông tin giỏ hàng
      * @param $value
      * @return array|mixed
      */
@@ -47,7 +47,7 @@ class StoreOrderCartInfo extends BaseModel
     }
 
     /**
-     * 订单ID搜索器
+     * Bộ lọc ID đơn hàng
      * @param Model $query
      * @param $value
      * @param $data
@@ -58,7 +58,7 @@ class StoreOrderCartInfo extends BaseModel
     }
 
     /**
-     * 购物车ID搜索器
+     * Bộ lọc ID giỏ hàng
      * @param Model $query
      * @param $value
      * @param $data
@@ -73,7 +73,7 @@ class StoreOrderCartInfo extends BaseModel
     }
 
     /**
-     * 原购物车ID搜索器
+     * Bộ lọc ID giỏ hàng gốc
      * @param Model $query
      * @param $value
      * @param $data
@@ -88,7 +88,7 @@ class StoreOrderCartInfo extends BaseModel
     }
 
     /**
-     *  拆分状态搜索器
+     *  Bộ lọc trạng thái tách đơn
      * @param Model $query
      * @param $value
      * @param $data

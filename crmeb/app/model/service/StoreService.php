@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,7 +18,7 @@ use crmeb\traits\ModelTrait;
 use think\Model;
 
 /**
- * 客服
+ * CSKH
  * Class StoreService
  * @package app\model\service
  */
@@ -27,13 +27,13 @@ class StoreService extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'store_service';
@@ -51,7 +51,7 @@ class StoreService extends BaseModel
     }
 
     /**
-     * 用户名一对多关联
+     * Liên kết một-nhiều với tên người dùng
      * @return mixed
      */
     public function user()
@@ -62,7 +62,7 @@ class StoreService extends BaseModel
     }
 
     /**
-     * uid搜索器
+     * Bộ lọc uid
      * @param Model $query
      * @param $value
      */
@@ -72,7 +72,7 @@ class StoreService extends BaseModel
     }
 
     /**
-     * status搜索器
+     * Bộ lọc status
      * @param Model $query
      * @param $value
      */
@@ -82,7 +82,7 @@ class StoreService extends BaseModel
     }
 
     /**
-     * account搜索器
+     * Bộ lọc account
      * @param Model $query
      * @param $value
      */
@@ -92,7 +92,7 @@ class StoreService extends BaseModel
     }
 
     /**
-     * phone搜索器
+     * Bộ lọc phone
      * @param Model $query
      * @param $value
      */
@@ -112,7 +112,7 @@ class StoreService extends BaseModel
     }
 
     /**
-     * 用户昵称搜索器
+     * Bộ lọc biệt danh người dùng
      * @param Model $query
      * @param $value
      */
@@ -122,7 +122,7 @@ class StoreService extends BaseModel
     }
 
     /**
-     * 用户uid搜索器
+     * Bộ lọc uid người dùng
      * @param Model $query
      * @param $value
      */
@@ -132,7 +132,7 @@ class StoreService extends BaseModel
     }
 
     /**
-     * 客服在线搜索器
+     * Bộ lọc CSKH đang online
      * @param $query
      * @param $value
      */

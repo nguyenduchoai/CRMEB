@@ -1,15 +1,15 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 
 /**
- * diy配置
+ * Cấu hình diy
  * */
 
 import toolCom from '@/components/diyComponents/index.js';
@@ -25,7 +25,7 @@ export default {
             val: true,
           },
           imgUrl: {
-            title: '最多可添加1张图片，图片建议宽度128 * 45px',
+            title: 'Có thể thêm tối đa 1 ảnh, kích thước ảnh đề xuất 128 * 45px',
             url: '',
           },
           titleInfo: {
@@ -33,15 +33,15 @@ export default {
             type: 8,
             list: [
               {
-                title: '商城简介',
-                val: '好物尽享 任你选择',
+                title: 'Giới thiệu cửa hàng',
+                val: 'Hàng tốt thỏa thích, tha hồ lựa chọn',
                 max: 20,
-                pla: '选填，不超过10个字',
+                pla: 'Không bắt buộc, tối đa 10 ký tự',
               },
             ],
           },
           hotList: {
-            title: '热词最多20个字，鼠标拖拽左侧圆点可调整热词顺序',
+            title: 'Từ khóa phổ biến tối đa 20 ký tự, kéo thả chấm tròn bên trái để điều chỉnh thứ tự từ khóa',
             max: 99,
             list: [
               {
@@ -56,7 +56,7 @@ export default {
             val: true,
           },
           imgUrl: {
-            title: '最多可添加1张图片，图片建议宽度128 * 45px',
+            title: 'Có thể thêm tối đa 1 ảnh, kích thước ảnh đề xuất 128 * 45px',
             url: '',
           },
           titleInfo: {
@@ -64,15 +64,15 @@ export default {
             type: 8,
             list: [
               {
-                title: '商城简介',
-                val: '好物尽享 任你选择',
+                title: 'Giới thiệu cửa hàng',
+                val: 'Hàng tốt thỏa thích, tha hồ lựa chọn',
                 max: 20,
-                pla: '选填，不超过10个字',
+                pla: 'Không bắt buộc, tối đa 10 ký tự',
               },
             ],
           },
           hotList: {
-            title: '热词最多20个字，鼠标拖拽左侧圆点可调整热词顺序',
+            title: 'Từ khóa phổ biến tối đa 20 ký tự, kéo thả chấm tròn bên trái để điều chỉnh thứ tự từ khóa',
             max: 99,
             list: [
               {
@@ -89,23 +89,23 @@ export default {
             val: true,
           },
           imgList: {
-            title: '最多可添加10张图片，建议宽度750px',
+            title: 'Có thể thêm tối đa 10 ảnh, chiều rộng đề xuất 750px',
             max: 10,
             list: [
               {
                 img: '',
                 info: [
                   {
-                    title: '标题',
+                    title: 'Tiêu đề',
                     value: '',
                     maxlength: 10,
-                    tips: '选填，不超过十个字',
+                    tips: 'Không bắt buộc, tối đa 10 ký tự',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -113,16 +113,16 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
+                    title: 'Tiêu đề',
                     value: '',
                     maxlength: 10,
-                    tips: '选填，不超过十个字',
+                    tips: 'Không bắt buộc, tối đa 10 ký tự',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -134,23 +134,23 @@ export default {
             val: true,
           },
           imgList: {
-            title: '最多可添加10张图片，建议宽度750px',
+            title: 'Có thể thêm tối đa 10 ảnh, chiều rộng đề xuất 750px',
             max: 10,
             list: [
               {
                 img: '',
                 info: [
                   {
-                    title: '标题',
+                    title: 'Tiêu đề',
                     value: '',
                     maxlength: 10,
-                    tips: '选填，不超过十个字',
+                    tips: 'Không bắt buộc, tối đa 10 ký tự',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -158,16 +158,16 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
+                    title: 'Tiêu đề',
                     value: '',
                     maxlength: 10,
-                    tips: '选填，不超过十个字',
+                    tips: 'Không bắt buộc, tối đa 10 ký tự',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -181,23 +181,23 @@ export default {
             val: true,
           },
           imgList: {
-            title: '最多可添加20个，图片建议宽度96*96px；鼠标拖拽左侧圆点可调整图标顺序',
+            title: 'Có thể thêm tối đa 20 mục, kích thước ảnh đề xuất 96*96px; kéo thả chấm tròn bên trái để điều chỉnh thứ tự biểu tượng',
             max: 20,
             list: [
               {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '商品分类',
+                    title: 'Tiêu đề',
+                    value: 'Danh mục sản phẩm',
                     maxlength: 5,
-                    tips: '请填写标题',
+                    tips: 'Vui lòng điền tiêu đề',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/goods_cate/goods_cate',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -205,16 +205,16 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '领优惠券',
+                    title: 'Tiêu đề',
+                    value: 'Nhận phiếu giảm giá',
                     maxlength: 5,
-                    tips: '请填写标题',
+                    tips: 'Vui lòng điền tiêu đề',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/users/user_get_coupon/index',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -222,16 +222,16 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '行业资讯',
+                    title: 'Tiêu đề',
+                    value: 'Tin tức ngành',
                     maxlength: 5,
-                    tips: '请填写标题',
+                    tips: 'Vui lòng điền tiêu đề',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/extension/news_list/index',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -239,16 +239,16 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '我的收藏',
+                    title: 'Tiêu đề',
+                    value: 'Yêu thích của tôi',
                     maxlength: 5,
-                    tips: '请填写标题',
+                    tips: 'Vui lòng điền tiêu đề',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/users/user_goods_collection/index',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -256,16 +256,16 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '拼团活动',
+                    title: 'Tiêu đề',
+                    value: 'Hoạt động mua chung',
                     maxlength: 5,
-                    tips: '请填写标题',
+                    tips: 'Vui lòng điền tiêu đề',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/activity/goods_combination/index',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -273,16 +273,16 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '秒杀活动',
+                    title: 'Tiêu đề',
+                    value: 'Hoạt động flash sale',
                     maxlength: 5,
-                    tips: '请填写标题',
+                    tips: 'Vui lòng điền tiêu đề',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/activity/goods_seckill/index',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -290,16 +290,16 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '砍价活动',
+                    title: 'Tiêu đề',
+                    value: 'Hoạt động săn giảm giá',
                     maxlength: 5,
-                    tips: '请填写标题',
+                    tips: 'Vui lòng điền tiêu đề',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/activity/goods_bargain/index',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -307,16 +307,16 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '地址管理',
+                    title: 'Tiêu đề',
+                    value: 'Quản lý địa chỉ',
                     maxlength: 5,
-                    tips: '请填写标题',
+                    tips: 'Vui lòng điền tiêu đề',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/activity/goods_bargain/index',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -328,23 +328,23 @@ export default {
             val: true,
           },
           imgList: {
-            title: '最多可添加20个，图片建议宽度96*96px；鼠标拖拽左侧圆点可调整图标顺序',
+            title: 'Có thể thêm tối đa 20 mục, kích thước ảnh đề xuất 96*96px; kéo thả chấm tròn bên trái để điều chỉnh thứ tự biểu tượng',
             max: 20,
             list: [
               {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '商品分类',
+                    title: 'Tiêu đề',
+                    value: 'Danh mục sản phẩm',
                     maxlength: 5,
-                    tips: '请填写标题',
+                    tips: 'Vui lòng điền tiêu đề',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/goods_cate/goods_cate',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -352,16 +352,16 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '领优惠券',
+                    title: 'Tiêu đề',
+                    value: 'Nhận phiếu giảm giá',
                     maxlength: 5,
-                    tips: '请填写标题',
+                    tips: 'Vui lòng điền tiêu đề',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/users/user_get_coupon/index',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -369,16 +369,16 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '行业资讯',
+                    title: 'Tiêu đề',
+                    value: 'Tin tức ngành',
                     maxlength: 5,
-                    tips: '请填写标题',
+                    tips: 'Vui lòng điền tiêu đề',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/extension/news_list/index',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -386,16 +386,16 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '我的收藏',
+                    title: 'Tiêu đề',
+                    value: 'Yêu thích của tôi',
                     maxlength: 5,
-                    tips: '请填写标题',
+                    tips: 'Vui lòng điền tiêu đề',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/users/user_goods_collection/index',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -403,16 +403,16 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '拼团活动',
+                    title: 'Tiêu đề',
+                    value: 'Hoạt động mua chung',
                     maxlength: 5,
-                    tips: '请填写标题',
+                    tips: 'Vui lòng điền tiêu đề',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/activity/goods_combination/index',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -420,16 +420,16 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '秒杀活动',
+                    title: 'Tiêu đề',
+                    value: 'Hoạt động flash sale',
                     maxlength: 5,
-                    tips: '请填写标题',
+                    tips: 'Vui lòng điền tiêu đề',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/activity/goods_seckill/index',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -437,16 +437,16 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '砍价活动',
+                    title: 'Tiêu đề',
+                    value: 'Hoạt động săn giảm giá',
                     maxlength: 5,
-                    tips: '请填写标题',
+                    tips: 'Vui lòng điền tiêu đề',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/activity/goods_bargain/index',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -454,16 +454,16 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '地址管理',
+                    title: 'Tiêu đề',
+                    value: 'Quản lý địa chỉ',
                     maxlength: 5,
-                    tips: '请填写标题',
+                    tips: 'Vui lòng điền tiêu đề',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/activity/goods_bargain/index',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -490,7 +490,7 @@ export default {
             val: true,
           },
           imgUrl: {
-            title: '最多可添加10个模板，图片建议宽度124 * 28px',
+            title: 'Có thể thêm tối đa 10 mẫu, kích thước ảnh đề xuất 124 * 28px',
             url: '',
           },
           newList: {
@@ -499,16 +499,16 @@ export default {
               {
                 chiild: [
                   {
-                    title: '标题',
-                    val: 'CRMEB_PRO 1.1正式公测啦',
+                    title: 'Tiêu đề',
+                    val: 'CRMEB_PRO 1.1 đã chính thức mở beta công khai',
                     max: 20,
-                    pla: '选填，不超过四个字',
+                    pla: 'Không bắt buộc, tối đa 4 ký tự',
                   },
                   {
-                    title: '链接',
-                    val: '链接',
+                    title: 'Liên kết',
+                    val: 'Liên kết',
                     max: 99,
-                    pla: '选填',
+                    pla: 'Không bắt buộc',
                   },
                 ],
               },
@@ -520,7 +520,7 @@ export default {
             val: true,
           },
           imgUrl: {
-            title: '最多可添加10个模板，图片建议宽度124 * 28px',
+            title: 'Có thể thêm tối đa 10 mẫu, kích thước ảnh đề xuất 124 * 28px',
             url: '',
           },
           newList: {
@@ -529,16 +529,16 @@ export default {
               {
                 chiild: [
                   {
-                    title: '标题',
-                    val: 'CRMEB_PRO 1.1正式公测啦',
+                    title: 'Tiêu đề',
+                    val: 'CRMEB_PRO 1.1 đã chính thức mở beta công khai',
                     max: 20,
-                    pla: '选填，不超过四个字',
+                    pla: 'Không bắt buộc, tối đa 4 ký tự',
                   },
                   {
-                    title: '链接',
-                    val: '链接',
+                    title: 'Liên kết',
+                    val: 'Liên kết',
                     max: 99,
-                    pla: '选填',
+                    pla: 'Không bắt buộc',
                   },
                 ],
               },
@@ -553,29 +553,29 @@ export default {
           },
           imgList: {
             isDelete: true,
-            title: '最多可添加3组模块，第一张336*298px,后两张416*124px',
+            title: 'Có thể thêm tối đa 3 nhóm khối, ảnh đầu tiên 336*298px, hai ảnh sau 416*124px',
             max: 3,
             list: [
               {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '一起来拼团',
+                    title: 'Tiêu đề',
+                    value: 'Cùng nhau mua chung',
                     maxlength: 20,
-                    tips: '标题',
+                    tips: 'Tiêu đề',
                   },
                   {
-                    title: '描述',
-                    value: '优惠多多',
+                    title: 'Mô tả',
+                    value: 'Ưu đãi ngập tràn',
                     maxlength: 20,
-                    tips: '描述',
+                    tips: 'Mô tả',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/activity/goods_combination/index',
                     maxlength: 999,
-                    tips: '链接',
+                    tips: 'Liên kết',
                   },
                 ],
               },
@@ -583,22 +583,22 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '秒杀专区',
+                    title: 'Tiêu đề',
+                    value: 'Khu flash sale',
                     maxlength: 20,
-                    tips: '标题',
+                    tips: 'Tiêu đề',
                   },
                   {
-                    title: '描述',
-                    value: '新能源汽车优惠多多',
+                    title: 'Mô tả',
+                    value: 'Ô tô năng lượng mới ưu đãi ngập tràn',
                     maxlength: 20,
-                    tips: '描述',
+                    tips: 'Mô tả',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/activity/goods_seckill/index',
                     maxlength: 999,
-                    tips: '链接',
+                    tips: 'Liên kết',
                   },
                 ],
               },
@@ -606,22 +606,22 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '砍价活动',
+                    title: 'Tiêu đề',
+                    value: 'Hoạt động săn giảm giá',
                     maxlength: 20,
-                    tips: '标题',
+                    tips: 'Tiêu đề',
                   },
                   {
-                    title: '描述',
-                    value: '呼朋唤友来砍价~~',
+                    title: 'Mô tả',
+                    value: 'Rủ bạn bè cùng săn giảm giá~~',
                     maxlength: 20,
-                    tips: '描述',
+                    tips: 'Mô tả',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/activity/goods_bargain/index',
                     maxlength: 999,
-                    tips: '链接',
+                    tips: 'Liên kết',
                   },
                 ],
               },
@@ -635,29 +635,29 @@ export default {
           },
           imgList: {
             isDelete: true,
-            title: '最多可添加3组模块，第一张336*298px,后两张416*124px',
+            title: 'Có thể thêm tối đa 3 nhóm khối, ảnh đầu tiên 336*298px, hai ảnh sau 416*124px',
             max: 3,
             list: [
               {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '一起来拼团',
+                    title: 'Tiêu đề',
+                    value: 'Cùng nhau mua chung',
                     maxlength: 20,
-                    tips: '标题',
+                    tips: 'Tiêu đề',
                   },
                   {
-                    title: '描述',
-                    value: '优惠多多',
+                    title: 'Mô tả',
+                    value: 'Ưu đãi ngập tràn',
                     maxlength: 20,
-                    tips: '描述',
+                    tips: 'Mô tả',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/activity/goods_combination/index',
                     maxlength: 999,
-                    tips: '链接',
+                    tips: 'Liên kết',
                   },
                 ],
               },
@@ -665,22 +665,22 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '秒杀专区',
+                    title: 'Tiêu đề',
+                    value: 'Khu flash sale',
                     maxlength: 20,
-                    tips: '标题',
+                    tips: 'Tiêu đề',
                   },
                   {
-                    title: '描述',
-                    value: '新能源汽车优惠多多',
+                    title: 'Mô tả',
+                    value: 'Ô tô năng lượng mới ưu đãi ngập tràn',
                     maxlength: 20,
-                    tips: '描述',
+                    tips: 'Mô tả',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/activity/goods_seckill/index',
                     maxlength: 999,
-                    tips: '链接',
+                    tips: 'Liên kết',
                   },
                 ],
               },
@@ -688,22 +688,22 @@ export default {
                 img: '',
                 info: [
                   {
-                    title: '标题',
-                    value: '砍价活动',
+                    title: 'Tiêu đề',
+                    value: 'Hoạt động săn giảm giá',
                     maxlength: 20,
-                    tips: '标题',
+                    tips: 'Tiêu đề',
                   },
                   {
-                    title: '描述',
-                    value: '呼朋唤友来砍价~~',
+                    title: 'Mô tả',
+                    value: 'Rủ bạn bè cùng săn giảm giá~~',
                     maxlength: 20,
-                    tips: '描述',
+                    tips: 'Mô tả',
                   },
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '/pages/activity/goods_bargain/index',
                     maxlength: 999,
-                    tips: '链接',
+                    tips: 'Liên kết',
                   },
                 ],
               },
@@ -721,27 +721,27 @@ export default {
             title: '',
             list: [
               {
-                title: '标题',
-                val: '直播间',
+                title: 'Tiêu đề',
+                val: 'Phòng livestream',
                 max: 20,
-                pla: '选填，不超过六个字',
+                pla: 'Không bắt buộc, tối đa 6 ký tự',
               },
               {
-                title: '介绍',
-                val: '精彩直播',
+                title: 'Giới thiệu',
+                val: 'Livestream hấp dẫn',
                 max: 8,
-                pla: '选填，不超过8个字',
+                pla: 'Không bắt buộc, tối đa 8 ký tự',
               },
               {
-                title: '链接',
+                title: 'Liên kết',
                 val: '/pages/columnGoods/live_list/index',
                 max: 999,
-                pla: '选填',
+                pla: 'Không bắt buộc',
               },
             ],
           },
           numConfig: {
-            title: '显示数量',
+            title: 'Số lượng hiển thị',
             val: 3,
           },
         },
@@ -753,27 +753,27 @@ export default {
             title: '',
             list: [
               {
-                title: '标题',
-                val: '直播间',
+                title: 'Tiêu đề',
+                val: 'Phòng livestream',
                 max: 20,
-                pla: '选填，不超过六个字',
+                pla: 'Không bắt buộc, tối đa 6 ký tự',
               },
               {
-                title: '介绍',
-                val: '精彩直播',
+                title: 'Giới thiệu',
+                val: 'Livestream hấp dẫn',
                 max: 8,
-                pla: '选填，不超过8个字',
+                pla: 'Không bắt buộc, tối đa 8 ký tự',
               },
               {
-                title: '链接',
+                title: 'Liên kết',
                 val: '/pages/columnGoods/live_list/index',
                 max: 999,
-                pla: '选填',
+                pla: 'Không bắt buộc',
               },
             ],
           },
           numConfig: {
-            title: '显示数量',
+            title: 'Số lượng hiển thị',
             val: 3,
           },
         },
@@ -787,22 +787,22 @@ export default {
             title: '',
             list: [
               {
-                title: '标题',
-                val: '快速选择',
+                title: 'Tiêu đề',
+                val: 'Chọn nhanh',
                 max: 4,
-                pla: '选填，不超过4个字',
+                pla: 'Không bắt buộc, tối đa 4 ký tự',
               },
               {
-                title: '介绍',
-                val: '诚意推荐品质商品',
+                title: 'Giới thiệu',
+                val: 'Tận tâm gợi ý sản phẩm chất lượng',
                 max: 8,
-                pla: '选填，不超过8个字',
+                pla: 'Không bắt buộc, tối đa 8 ký tự',
               },
               {
-                title: '链接',
+                title: 'Liên kết',
                 val: '/pages/goods_cate/goods_cate',
                 max: 999,
-                pla: '选填',
+                pla: 'Không bắt buộc',
               },
             ],
           },
@@ -811,18 +811,18 @@ export default {
           //     type: 1,
           //     tabList: [
           //         {
-          //             name: '自动选择',
+          //             name: 'Tự động chọn',
           //             icon: 'iconzidongxuanze'
           //         },
           //         {
-          //             name: '手动选择',
+          //             name: 'Chọn thủ công',
           //             icon: 'iconshoudongxuanze'
           //         }
           //     ]
           // },
           // selectConfig: {
-          //     title: '商品分类',
-          //     type: 1,//type=1时只是传二级分类
+          //     title: 'Danh mục sản phẩm',
+          //     type: 1,//type=1 thì chỉ truyền danh mục cấp 2
           //     activeValue: '',
           //     list: [
           //         {
@@ -836,7 +836,7 @@ export default {
           //     ]
           // },
           // numConfig: {
-          //     title:'显示数量',
+          //     title:'Số lượng hiển thị',
           //     val: 6
           // },
           // goodsList: {
@@ -852,22 +852,22 @@ export default {
             title: '',
             list: [
               {
-                title: '标题',
-                val: '快速选择',
+                title: 'Tiêu đề',
+                val: 'Chọn nhanh',
                 max: 4,
-                pla: '选填，不超过4个字',
+                pla: 'Không bắt buộc, tối đa 4 ký tự',
               },
               {
-                title: '介绍',
-                val: '诚意推荐品质商品',
+                title: 'Giới thiệu',
+                val: 'Tận tâm gợi ý sản phẩm chất lượng',
                 max: 8,
-                pla: '选填，不超过8个字',
+                pla: 'Không bắt buộc, tối đa 8 ký tự',
               },
               {
-                title: '链接',
+                title: 'Liên kết',
                 val: '/pages/goods_cate/goods_cate',
                 max: 999,
-                pla: '选填',
+                pla: 'Không bắt buộc',
               },
             ],
           },
@@ -876,18 +876,18 @@ export default {
           //     type: 1,
           //     tabList: [
           //         {
-          //             name: '自动选择',
+          //             name: 'Tự động chọn',
           //             icon: 'iconzidongxuanze'
           //         },
           //         {
-          //             name: '手动选择',
+          //             name: 'Chọn thủ công',
           //             icon: 'iconshoudongxuanze'
           //         }
           //     ]
           // },
           // selectConfig: {
-          //     title: '商品分类',
-          //     type: 1,//type=1时只是传二级分类
+          //     title: 'Danh mục sản phẩm',
+          //     type: 1,//type=1 thì chỉ truyền danh mục cấp 2
           //     activeValue: '',
           //     list: [
           //         {
@@ -901,7 +901,7 @@ export default {
           //     ]
           // },
           // numConfig: {
-          //     title:'显示数量',
+          //     title:'Số lượng hiển thị',
           //     val: 6
           // },
           // goodsList: {
@@ -916,17 +916,17 @@ export default {
             val: true,
           },
           imgList: {
-            title: '图片建议尺寸338 * 206px；鼠标拖拽左侧圆点可调整版块顺序',
+            title: 'Kích thước ảnh đề xuất 338 * 206px; kéo thả chấm tròn bên trái để điều chỉnh thứ tự khối',
             max: 10,
             list: [
               {
                 img: '',
                 info: [
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -938,17 +938,17 @@ export default {
             val: true,
           },
           imgList: {
-            title: '图片建议尺寸338 * 206px；鼠标拖拽左侧圆点可调整版块顺序',
+            title: 'Kích thước ảnh đề xuất 338 * 206px; kéo thả chấm tròn bên trái để điều chỉnh thứ tự khối',
             max: 10,
             list: [
               {
                 img: '',
                 info: [
                   {
-                    title: '链接',
+                    title: 'Liên kết',
                     value: '',
                     maxlength: 999,
-                    tips: '请填写链接',
+                    tips: 'Vui lòng nhập liên kết',
                   },
                 ],
               },
@@ -984,11 +984,11 @@ export default {
             type: 1,
             tabList: [
               {
-                name: '自动选择',
+                name: 'Chọn tự động',
                 icon: 'iconzidongxuanze',
               },
               {
-                name: '手动选择',
+                name: 'Chọn thủ công',
                 icon: 'iconshoudongxuanze',
               },
             ],
@@ -998,15 +998,15 @@ export default {
             type: 2,
             list: [
               {
-                title: '商品类型',
-                val: '限时秒杀',
+                title: 'Loại sản phẩm',
+                val: 'Flash sale giờ vàng',
                 max: 20,
-                pla: '选填，不超过四个字',
+                pla: 'Không bắt buộc, tối đa 4 ký tự',
               },
             ],
           },
           selectConfig: {
-            title: '商品分类',
+            title: 'Danh mục sản phẩm',
             activeValue: '',
             list: [
               {
@@ -1023,20 +1023,20 @@ export default {
             val: 6,
           },
           goodsSort: {
-            title: '商品排序',
+            title: 'Sắp xếp sản phẩm',
             name: 'goodsSort',
             type: 0,
             list: [
               {
-                val: '系统排序',
+                val: 'Sắp xếp theo hệ thống',
                 icon: 'iconComm_whole',
               },
               {
-                val: '销量最高',
+                val: 'Bán chạy nhất',
                 icon: 'iconComm_number',
               },
               {
-                val: '最新上架',
+                val: 'Mới lên kệ',
                 icon: 'iconzuixin',
               },
             ],
@@ -1055,11 +1055,11 @@ export default {
             type: 1,
             tabList: [
               {
-                name: '自动选择',
+                name: 'Chọn tự động',
                 icon: 'iconzidongxuanze',
               },
               {
-                name: '手动选择',
+                name: 'Chọn thủ công',
                 icon: 'iconshoudongxuanze',
               },
             ],
@@ -1069,15 +1069,15 @@ export default {
             type: 2,
             list: [
               {
-                title: '商品类型',
-                val: '限时秒杀',
+                title: 'Loại sản phẩm',
+                val: 'Flash sale giờ vàng',
                 max: 20,
-                pla: '选填，不超过四个字',
+                pla: 'Không bắt buộc, tối đa 4 ký tự',
               },
             ],
           },
           selectConfig: {
-            title: '商品分类',
+            title: 'Danh mục sản phẩm',
             activeValue: '',
             list: [
               {
@@ -1094,20 +1094,20 @@ export default {
             val: 6,
           },
           goodsSort: {
-            title: '商品排序',
+            title: 'Sắp xếp sản phẩm',
             name: 'goodsSort',
             type: 0,
             list: [
               {
-                val: '系统排序',
+                val: 'Sắp xếp theo hệ thống',
                 icon: 'iconComm_whole',
               },
               {
-                val: '销量最高',
+                val: 'Bán chạy nhất',
                 icon: 'iconComm_number',
               },
               {
-                val: '最新上架',
+                val: 'Mới lên kệ',
                 icon: 'iconzuixin',
               },
             ],
@@ -1128,11 +1128,11 @@ export default {
             type: 1,
             tabList: [
               {
-                name: '自动选择',
+                name: 'Chọn tự động',
                 icon: 'iconzidongxuanze',
               },
               {
-                name: '手动选择',
+                name: 'Chọn thủ công',
                 icon: 'iconshoudongxuanze',
               },
             ],
@@ -1142,15 +1142,15 @@ export default {
             type: 3,
             list: [
               {
-                title: '商品类型',
-                val: '拼团列表',
+                title: 'Loại sản phẩm',
+                val: 'Danh sách mua chung',
                 max: 20,
-                pla: '选填，不超过四个字',
+                pla: 'Không bắt buộc, tối đa 4 ký tự',
               },
             ],
           },
           selectConfig: {
-            title: '商品分类',
+            title: 'Danh mục sản phẩm',
             activeValue: '',
             list: [
               {
@@ -1167,20 +1167,20 @@ export default {
             val: 6,
           },
           goodsSort: {
-            title: '商品排序',
+            title: 'Sắp xếp sản phẩm',
             name: 'goodsSort',
             type: 0,
             list: [
               {
-                val: '系统排序',
+                val: 'Sắp xếp theo hệ thống',
                 icon: 'iconComm_whole',
               },
               {
-                val: '销量最高',
+                val: 'Bán chạy nhất',
                 icon: 'iconComm_number',
               },
               {
-                val: '最新上架',
+                val: 'Mới lên kệ',
                 icon: 'iconzuixin',
               },
             ],
@@ -1199,11 +1199,11 @@ export default {
             type: 1,
             tabList: [
               {
-                name: '自动选择',
+                name: 'Chọn tự động',
                 icon: 'iconzidongxuanze',
               },
               {
-                name: '手动选择',
+                name: 'Chọn thủ công',
                 icon: 'iconshoudongxuanze',
               },
             ],
@@ -1213,15 +1213,15 @@ export default {
             type: 3,
             list: [
               {
-                title: '商品类型',
-                val: '拼团列表',
+                title: 'Loại sản phẩm',
+                val: 'Danh sách mua chung',
                 max: 20,
-                pla: '选填，不超过四个字',
+                pla: 'Không bắt buộc, tối đa 4 ký tự',
               },
             ],
           },
           selectConfig: {
-            title: '商品分类',
+            title: 'Danh mục sản phẩm',
             activeValue: '',
             list: [
               {
@@ -1238,20 +1238,20 @@ export default {
             val: 6,
           },
           goodsSort: {
-            title: '商品排序',
+            title: 'Sắp xếp sản phẩm',
             name: 'goodsSort',
             type: 0,
             list: [
               {
-                val: '系统排序',
+                val: 'Sắp xếp theo hệ thống',
                 icon: 'iconComm_whole',
               },
               {
-                val: '销量最高',
+                val: 'Bán chạy nhất',
                 icon: 'iconComm_number',
               },
               {
-                val: '最新上架',
+                val: 'Mới lên kệ',
                 icon: 'iconzuixin',
               },
             ],
@@ -1272,11 +1272,11 @@ export default {
             type: 1,
             tabList: [
               {
-                name: '自动选择',
+                name: 'Chọn tự động',
                 icon: 'iconzidongxuanze',
               },
               {
-                name: '手动选择',
+                name: 'Chọn thủ công',
                 icon: 'iconshoudongxuanze',
               },
             ],
@@ -1286,15 +1286,15 @@ export default {
             type: 8,
             list: [
               {
-                title: '商品类型',
-                val: '砍价列表',
+                title: 'Loại sản phẩm',
+                val: 'Danh sách săn giảm giá',
                 max: 20,
-                pla: '选填，不超过四个字',
+                pla: 'Không bắt buộc, tối đa 4 ký tự',
               },
             ],
           },
           selectConfig: {
-            title: '商品分类',
+            title: 'Danh mục sản phẩm',
             activeValue: '',
             list: [
               {
@@ -1311,20 +1311,20 @@ export default {
             val: 6,
           },
           goodsSort: {
-            title: '商品排序',
+            title: 'Sắp xếp sản phẩm',
             name: 'goodsSort',
             type: 0,
             list: [
               {
-                val: '系统排序',
+                val: 'Sắp xếp theo hệ thống',
                 icon: 'iconComm_whole',
               },
               {
-                val: '销量最高',
+                val: 'Bán chạy nhất',
                 icon: 'iconComm_number',
               },
               {
-                val: '最新上架',
+                val: 'Mới lên kệ',
                 icon: 'iconzuixin',
               },
             ],
@@ -1343,11 +1343,11 @@ export default {
             type: 1,
             tabList: [
               {
-                name: '自动选择',
+                name: 'Chọn tự động',
                 icon: 'iconzidongxuanze',
               },
               {
-                name: '手动选择',
+                name: 'Chọn thủ công',
                 icon: 'iconshoudongxuanze',
               },
             ],
@@ -1357,15 +1357,15 @@ export default {
             type: 8,
             list: [
               {
-                title: '商品类型',
-                val: '砍价列表',
+                title: 'Loại sản phẩm',
+                val: 'Danh sách săn giảm giá',
                 max: 20,
-                pla: '选填，不超过四个字',
+                pla: 'Không bắt buộc, tối đa 4 ký tự',
               },
             ],
           },
           selectConfig: {
-            title: '商品分类',
+            title: 'Danh mục sản phẩm',
             activeValue: '',
             list: [
               {
@@ -1382,20 +1382,20 @@ export default {
             val: 6,
           },
           goodsSort: {
-            title: '商品排序',
+            title: 'Sắp xếp sản phẩm',
             name: 'goodsSort',
             type: 0,
             list: [
               {
-                val: '系统排序',
+                val: 'Sắp xếp theo hệ thống',
                 icon: 'iconComm_whole',
               },
               {
-                val: '销量最高',
+                val: 'Bán chạy nhất',
                 icon: 'iconComm_number',
               },
               {
-                val: '最新上架',
+                val: 'Mới lên kệ',
                 icon: 'iconzuixin',
               },
             ],
@@ -1415,22 +1415,22 @@ export default {
             title: '',
             list: [
               {
-                title: '标题',
-                val: '快速选择',
+                title: 'Tiêu đề',
+                val: 'Chọn nhanh',
                 max: 4,
-                pla: '选填，不超过4个字',
+                pla: 'Không bắt buộc, tối đa 4 ký tự',
               },
               {
-                title: '介绍',
-                val: '诚意推荐品质商品',
+                title: 'Giới thiệu',
+                val: 'Tận tâm gợi ý sản phẩm chất lượng',
                 max: 8,
-                pla: '选填，不超过8个字',
+                pla: 'Không bắt buộc, tối đa 8 ký tự',
               },
               {
-                title: '链接',
+                title: 'Liên kết',
                 val: '/pages/columnGoods/HotNewGoods/index',
                 max: 999,
-                pla: '选填',
+                pla: 'Không bắt buộc',
               },
             ],
           },
@@ -1439,43 +1439,43 @@ export default {
             type: 1,
             tabList: [
               {
-                name: '自动选择',
+                name: 'Chọn tự động',
                 icon: 'iconzidongxuanze',
               },
               {
-                name: '手动选择',
+                name: 'Chọn thủ công',
                 icon: 'iconshoudongxuanze',
               },
             ],
           },
           selectSortConfig: {
-            title: '商品类型',
+            title: 'Loại sản phẩm',
             activeValue: '',
             list: [
               {
                 activeValue: '0',
-                title: '商品列表',
+                title: 'Danh sách sản phẩm',
               },
               // {
               //   activeValue: '4',
-              //   title: '热门榜单',
+              //   title: 'Bảng xếp hạng phổ biến',
               // },
               // {
               //   activeValue: '5',
-              //   title: '首发新品',
+              //   title: 'Sản phẩm mới ra mắt',
               // },
               // {
               //   activeValue: '6',
-              //   title: '促销单品',
+              //   title: 'Sản phẩm khuyến mãi',
               // },
               {
                 activeValue: '7',
-                title: '优品推荐',
+                title: 'Đề xuất sản phẩm tốt',
               },
             ],
           },
           selectConfig: {
-            title: '商品分类',
+            title: 'Danh mục sản phẩm',
             activeValue: '',
             list: [
               {
@@ -1492,20 +1492,20 @@ export default {
             val: 6,
           },
           goodsSort: {
-            title: '商品排序',
+            title: 'Sắp xếp sản phẩm',
             name: 'goodsSort',
             type: 0,
             list: [
               {
-                val: '系统排序',
+                val: 'Sắp xếp theo hệ thống',
                 icon: 'iconComm_whole',
               },
               {
-                val: '销量最高',
+                val: 'Bán chạy nhất',
                 icon: 'iconComm_number',
               },
               {
-                val: '最新上架',
+                val: 'Mới lên kệ',
                 icon: 'iconzuixin',
               },
             ],
@@ -1523,22 +1523,22 @@ export default {
             title: '',
             list: [
               {
-                title: '标题',
-                val: '快速选择',
+                title: 'Tiêu đề',
+                val: 'Chọn nhanh',
                 max: 4,
-                pla: '选填，不超过4个字',
+                pla: 'Không bắt buộc, tối đa 4 ký tự',
               },
               {
-                title: '介绍',
-                val: '诚意推荐品质商品',
+                title: 'Giới thiệu',
+                val: 'Tận tâm gợi ý sản phẩm chất lượng',
                 max: 8,
-                pla: '选填，不超过8个字',
+                pla: 'Không bắt buộc, tối đa 8 ký tự',
               },
               {
-                title: '链接',
+                title: 'Liên kết',
                 val: '/pages/columnGoods/HotNewGoods/index?type=1',
                 max: 999,
-                pla: '选填',
+                pla: 'Không bắt buộc',
               },
             ],
           },
@@ -1547,43 +1547,43 @@ export default {
             type: 1,
             tabList: [
               {
-                name: '自动选择',
+                name: 'Chọn tự động',
                 icon: 'iconzidongxuanze',
               },
               {
-                name: '手动选择',
+                name: 'Chọn thủ công',
                 icon: 'iconshoudongxuanze',
               },
             ],
           },
           selectSortConfig: {
-            title: '商品类型',
+            title: 'Loại sản phẩm',
             activeValue: '',
             list: [
               {
                 activeValue: '0',
-                title: '商品列表',
+                title: 'Danh sách sản phẩm',
               },
               // {
               //   activeValue: '4',
-              //   title: '热门榜单',
+              //   title: 'Bảng xếp hạng phổ biến',
               // },
               // {
               //   activeValue: '5',
-              //   title: '首发新品',
+              //   title: 'Sản phẩm mới ra mắt',
               // },
               // {
               //   activeValue: '6',
-              //   title: '促销单品',
+              //   title: 'Sản phẩm khuyến mãi',
               // },
               {
                 activeValue: '7',
-                title: '精品推荐',
+                title: 'Đề xuất nổi bật',
               },
             ],
           },
           selectConfig: {
-            title: '商品分类',
+            title: 'Danh mục sản phẩm',
             activeValue: '',
             list: [
               {
@@ -1600,20 +1600,20 @@ export default {
             val: 6,
           },
           goodsSort: {
-            title: '商品排序',
+            title: 'Sắp xếp sản phẩm',
             name: 'goodsSort',
             type: 0,
             list: [
               {
-                val: '系统排序',
+                val: 'Sắp xếp theo hệ thống',
                 icon: 'iconComm_whole',
               },
               {
-                val: '销量最高',
+                val: 'Bán chạy nhất',
                 icon: 'iconComm_number',
               },
               {
-                val: '最新上架',
+                val: 'Mới lên kệ',
                 icon: 'iconzuixin',
               },
             ],
@@ -1651,22 +1651,22 @@ export default {
             title: '',
             list: [
               {
-                title: '标题',
-                val: '精品推荐',
+                title: 'Tiêu đề',
+                val: 'Đề xuất nổi bật',
                 max: 20,
-                pla: '选填，不超过四个字',
+                pla: 'Không bắt buộc, tối đa 4 ký tự',
               },
               {
-                title: '标题',
-                val: '精品推荐',
+                title: 'Tiêu đề',
+                val: 'Đề xuất nổi bật',
                 max: 20,
-                pla: '选填，不超过四个字',
+                pla: 'Không bắt buộc, tối đa 4 ký tự',
               },
               {
-                title: '链接',
+                title: 'Liên kết',
                 val: '/pages/columnGoods/HotNewGoods/index?type=1',
                 max: 999,
-                pla: '选填',
+                pla: 'Không bắt buộc',
               },
             ],
           },
@@ -1679,22 +1679,22 @@ export default {
             title: '',
             list: [
               {
-                title: '标题',
-                val: '精品推荐',
+                title: 'Tiêu đề',
+                val: 'Đề xuất nổi bật',
                 max: 20,
-                pla: '选填，不超过四个字',
+                pla: 'Không bắt buộc, tối đa 4 ký tự',
               },
               {
-                title: '标题',
-                val: '精品推荐',
+                title: 'Tiêu đề',
+                val: 'Đề xuất nổi bật',
                 max: 20,
-                pla: '选填，不超过四个字',
+                pla: 'Không bắt buộc, tối đa 4 ký tự',
               },
               {
-                title: '链接',
+                title: 'Liên kết',
                 val: '/pages/columnGoods/HotNewGoods/index?type=1',
                 max: 999,
-                pla: '选填',
+                pla: 'Không bắt buộc',
               },
             ],
           },
@@ -1706,7 +1706,7 @@ export default {
             val: true,
           },
           imgUrl: {
-            title: '最多可添加1张图片，图片建议宽度128 * 45px',
+            title: 'Có thể thêm tối đa 1 ảnh, kích thước ảnh đề xuất 128 * 45px',
             url: '',
           },
         },
@@ -1715,7 +1715,7 @@ export default {
             val: true,
           },
           imgUrl: {
-            title: '最多可添加1张图片，图片建议宽度128 * 45px',
+            title: 'Có thể thêm tối đa 1 ảnh, kích thước ảnh đề xuất 128 * 45px',
             url: '',
           },
         },
@@ -1726,10 +1726,10 @@ export default {
             val: true,
           },
           tabBarList: {
-            title: '图片建议宽度81*81px',
+            title: 'Kích thước ảnh đề xuất 81*81px',
             list: [
               {
-                name: '首页',
+                name: 'Trang chủ',
                 imgList: [
                   'https://qiniu.crmeb.net/attach/2021/04/9ebdf202104251644215768.png',
                   'https://qiniu.crmeb.net/attach/2021/04/44bc420210425164421586.png',
@@ -1737,7 +1737,7 @@ export default {
                 link: '/pages/index/index',
               },
               {
-                name: '分类',
+                name: 'Danh mục',
                 imgList: [
                   'https://qiniu.crmeb.net/attach/2021/04/b62c8202104251644218412.png',
                   'https://qiniu.crmeb.net/attach/2021/04/9509c202104251644214836.png',
@@ -1745,12 +1745,12 @@ export default {
                 link: '/pages/goods_cate/goods_cate',
               },
               // {
-              //     name:'周边',
+              //     name:'Xung quanh',
               //     imgList:[require('@/assets/images/foo3-01.png'),require('@/assets/images/foo3-02.png')],
               //     pagePath: ''
               // },
               {
-                name: '购物车',
+                name: 'Giỏ hàng',
                 imgList: [
                   'https://qiniu.crmeb.net/attach/2021/04/2e682202104251644216849.png',
                   'https://qiniu.crmeb.net/attach/2021/04/6b3cb202104251644218211.png',
@@ -1758,7 +1758,7 @@ export default {
                 link: '/pages/order_addcart/order_addcart',
               },
               {
-                name: '我的',
+                name: 'Tôi',
                 imgList: [
                   'https://qiniu.crmeb.net/attach/2021/04/3329c20210425164421428.png',
                   'https://qiniu.crmeb.net/attach/2021/04/031ce202104251644215432.png',
@@ -1773,10 +1773,10 @@ export default {
             val: true,
           },
           tabBarList: {
-            title: '图片建议宽度81*81px',
+            title: 'Kích thước ảnh đề xuất 81*81px',
             list: [
               {
-                name: '首页',
+                name: 'Trang chủ',
                 imgList: [
                   'https://qiniu.crmeb.net/attach/2021/04/9ebdf202104251644215768.png',
                   'https://qiniu.crmeb.net/attach/2021/04/44bc420210425164421586.png',
@@ -1784,7 +1784,7 @@ export default {
                 link: '/pages/index/index',
               },
               {
-                name: '分类',
+                name: 'Danh mục',
                 imgList: [
                   'https://qiniu.crmeb.net/attach/2021/04/b62c8202104251644218412.png',
                   'https://qiniu.crmeb.net/attach/2021/04/9509c202104251644214836.png',
@@ -1792,12 +1792,12 @@ export default {
                 link: '/pages/goods_cate/goods_cate',
               },
               // {
-              //     name:'周边',
+              //     name:'Xung quanh',
               //     imgList:[require('@/assets/images/foo3-01.png'),require('@/assets/images/foo3-02.png')],
               //     pagePath: ''
               // },
               {
-                name: '购物车',
+                name: 'Giỏ hàng',
                 imgList: [
                   'https://qiniu.crmeb.net/attach/2021/04/2e682202104251644216849.png',
                   'https://qiniu.crmeb.net/attach/2021/04/6b3cb202104251644218211.png',
@@ -1805,7 +1805,7 @@ export default {
                 link: '/pages/order_addcart/order_addcart',
               },
               {
-                name: '我的',
+                name: 'Tôi',
                 imgList: [
                   'https://qiniu.crmeb.net/attach/2021/04/3329c20210425164421428.png',
                   'https://qiniu.crmeb.net/attach/2021/04/031ce202104251644215432.png',
@@ -2131,7 +2131,7 @@ export default {
   },
   mutations: {
     /**
-     * @description 设置选中name
+     * @description Đặt name được chọn
      * @param {Object} state vuex state
      * @param {String} name
      */
@@ -2247,7 +2247,7 @@ export default {
       }
     },
     /**
-     * @description 更新默认数据
+     * @description Cập nhật dữ liệu mặc định
      * @param {Object} state vuex state
      * @param {Object} data
      */

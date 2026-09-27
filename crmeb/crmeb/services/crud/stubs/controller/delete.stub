@@ -1,5 +1,5 @@
     /**
-     * 删除
+     * Xóa
      * @param $id
      * @return \think\Response
      * @date {%DATE%}

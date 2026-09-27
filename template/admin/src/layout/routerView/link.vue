@@ -9,10 +9,10 @@
     <div class="layout-view-bg-white flex layout-view-link">
       <div class="layout-link-warp">
         <i class="layout-link-icon iconfont icon-xingqiu"></i>
-        <div class="layout-link-msg">页面 "{{ $t(meta.title) }}" 已在新窗口中打开</div>
+        <div class="layout-link-msg">Trang “{{ $t(meta.title) }}” đã được mở trong cửa sổ mới</div>
         <el-button class="mt30" round size="small" v-db-click @click="onGotoFullPage">
           <i class="iconfont icon-lianjie"></i>
-          <span>立即前往</span>
+          <span>Đi ngay</span>
         </el-button>
       </div>
     </div>
@@ -30,7 +30,7 @@ export default {
     },
   },
   methods: {
-    // 立即前往
+    // Đi ngay
     onGotoFullPage() {
       const { origin, pathname } = window.location;
       if (verifyUrl(this.isLink)) window.open(this.isLink);

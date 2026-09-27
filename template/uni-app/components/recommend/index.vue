@@ -2,7 +2,7 @@
 	<view class='recommend' :style="colorStyle">
 		<view class='title acea-row row-center-wrapper'>
 			<text class='iconfont icon-zhuangshixian'></text>
-			<text class='name'>{{$t(`热门推荐`)}}</text>
+			<text class='name'>{{$t(`Gợi ý nổi bật`)}}</text>
 			<text class='iconfont icon-zhuangshixian lefticon'></text>
 		</view>
 		<view class='recommendList acea-row row-between-wrapper'>
@@ -11,11 +11,11 @@
 				<view class='pictrue'>
 					<easy-loadimage mode="widthFix" :image-src="item.image"></easy-loadimage>
 					<span class="pictrue_log_big pictrue_log_class"
-						v-if="item.activity && item.activity.type === '1' && $permission('seckill')">{{$t(`秒杀`)}}</span>
+						v-if="item.activity && item.activity.type === '1' && $permission('seckill')">{{$t(`Flash sale`)}}</span>
 					<span class="pictrue_log_big pictrue_log_class"
-						v-if="item.activity && item.activity.type === '2' && $permission('bargain')">{{$t(`砍价`)}}</span>
+						v-if="item.activity && item.activity.type === '2' && $permission('bargain')">{{$t(`Săn giảm giá`)}}</span>
 					<span class="pictrue_log_big pictrue_log_class"
-						v-if="item.activity && item.activity.type === '3' && $permission('combination')">{{$t(`拼团`)}}</span>
+						v-if="item.activity && item.activity.type === '3' && $permission('combination')">{{$t(`Mua chung`)}}</span>
 				</view>
 				<view class='name line2'>{{item.store_name}}</view>
 				<view class='money font-color'>{{$t(`￥`)}}<text class='num'>{{item.price}}</text></view>

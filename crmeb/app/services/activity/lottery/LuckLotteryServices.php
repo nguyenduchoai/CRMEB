@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -34,22 +34,22 @@ use crmeb\services\CacheService;
 class LuckLotteryServices extends BaseServices
 {
     /**
-     * 抽奖形式，奖品数量
+     * Hình thức quay thưởng, số lượng giải thưởng
      * @var int[]
      */
     protected $lottery_type = [
-        '1' => 8 //九宫格
+        '1' => 8 //Lưới 9 ô
     ];
     /**
-     * 抽奖类型
+     * Loại hình quay thưởng
      * @var string[]
      */
     protected $lottery_factor = [
-        '1' => '积分抽取',
-//        '2' => '余额抽奖',
-        '3' => '订单支付',
-        '4' => '订单评价',
-//        '5' => '关注公众号抽奖'
+        '1' => 'Quay bằng điểm thưởng',
+//        '2' => 'Quay thưởng bằng số dư',
+        '3' => 'Thanh toán đơn hàng',
+        '4' => 'Đánh giá đơn hàng',
+//        '5' => 'Quay thưởng khi theo dõi OA WeChat'
     ];
 
     /**
@@ -73,15 +73,15 @@ class LuckLotteryServices extends BaseServices
         }
         $data = $this->dao->getList($where, '*', 'id desc', $page, $limit);
         foreach ($data['list'] as &$item) {
-            $item['lottery_type'] = $this->lottery_factor[$item['factor']] ?? '未知';
+            $item['lottery_type'] = $this->lottery_factor[$item['factor']] ?? 'Không xác định';
             if ($item['start_time'] > time()) {
-                $item['status_name'] = '未开始';
+                $item['status_name'] = 'Chưa bắt đầu';
                 $item['lottery_status'] = 0;
             } else if ($item['end_time'] < time()) {
-                $item['status_name'] = '已结束';
+                $item['status_name'] = 'Đã kết thúc';
                 $item['lottery_status'] = 2;
             } else if ($item['end_time'] > time() && $item['start_time'] < time()) {
-                $item['status_name'] = '进行中';
+                $item['status_name'] = 'Đang diễn ra';
                 $item['lottery_status'] = 1;
             }
             $item['start_time'] = $item['start_time'] ? date('Y-m-d H:i:s', $item['start_time']) : '';
@@ -102,7 +102,7 @@ class LuckLotteryServices extends BaseServices
     }
 
     /**
-     * 获取抽奖详情
+     * Lấy chi tiết quay thưởng
      * @param int $id
      * @return array|\think\Model
      * @throws \think\db\exception\DataNotFoundException
@@ -139,7 +139,7 @@ class LuckLotteryServices extends BaseServices
     }
 
     /**
-     * 根据类型获取数据
+     * Lấy dữ liệu theo loại
      * @param int $factor
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -182,7 +182,7 @@ class LuckLotteryServices extends BaseServices
     }
 
     /**
-     * 添加抽奖活动以及奖品
+     * Thêm chương trình quay thưởng và giải thưởng
      * @param array $data
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -194,7 +194,7 @@ class LuckLotteryServices extends BaseServices
         $prizes = $data['prize'];
         $total = array_sum(array_column($prizes, 'percent'));
         if ($total != 100) {
-            throw new AdminException('奖品概率之和不是100%，请检查！');
+            throw new AdminException('Tổng xác suất trúng của các phần thưởng không bằng 100%, vui lòng kiểm tra!');
         }
         $prize_num = $this->lottery_type[1];
         if (count($prizes) != $prize_num) {
@@ -226,7 +226,7 @@ class LuckLotteryServices extends BaseServices
                 $sort++;
             }
             if (!$prizeStatus) {
-                throw new AdminException('必须设置至少一个未中奖');
+                throw new AdminException('Phải thiết lập ít nhất một ô không trúng thưởng');
             }
             if (!$luckPrizeServices->saveAll($data)) {
                 throw new AdminException(400536);
@@ -236,7 +236,7 @@ class LuckLotteryServices extends BaseServices
     }
 
     /**
-     * 修改抽奖活动以及奖品
+     * Sửa chương trình quay thưởng và giải thưởng
      * @param int $id
      * @param array $data
      * @return mixed
@@ -257,7 +257,7 @@ class LuckLotteryServices extends BaseServices
             $allPercent = bcadd((string)$allPercent, (string)$v, 2);
         }
         if ($allPercent != 100) {
-            throw new AdminException('奖品概率之和不是100%，请检查！');
+            throw new AdminException('Tổng xác suất trúng của các phần thưởng không bằng 100%, vui lòng kiểm tra!');
         }
         unset($data['prize'], $data['id']);
         $prize_num = $this->lottery_type[1];
@@ -300,7 +300,7 @@ class LuckLotteryServices extends BaseServices
                 $sort++;
             }
             if (!$prizeStatus) {
-                throw new AdminException('必须设置至少一个未中奖');
+                throw new AdminException('Phải thiết lập ít nhất một ô không trúng thưởng');
             }
             if ($insert) {
                 if (!$luckPrizeServices->saveAll($insert)) {
@@ -315,7 +315,7 @@ class LuckLotteryServices extends BaseServices
             if (!$this->dao->update($id, $data)) {
                 throw new AdminException(100007);
             }
-            //上架
+            //Đang bán
             if (!$lottery['status'] && $data['status']) {
                 $this->setStatus($id, $data['status']);
             }
@@ -324,7 +324,7 @@ class LuckLotteryServices extends BaseServices
     }
 
     /**
-     * 获取用户某个抽奖活动剩余抽奖次数
+     * Lấy số lượt quay thưởng còn lại của người dùng trong một chương trình
      * @param int $uid
      * @param int $lottery_id
      * @param array $userInfo
@@ -351,7 +351,7 @@ class LuckLotteryServices extends BaseServices
         if (!$lottery) {
             throw new ApiException(410057);
         }
-        //抽奖类型：1:积分2：余额3：下单支付成功4：订单评价5：拉新人
+        //Loại hình quay thưởng: 1: điểm thưởng 2: số dư 3: đặt hàng thanh toán thành công 4: đánh giá đơn hàng 5: giới thiệu người mới
         switch ($lottery['factor']) {
             case 1:
                 /** @var UserBillServices $userBillServices */
@@ -372,7 +372,7 @@ class LuckLotteryServices extends BaseServices
     }
 
     /**
-     * 验证用户抽奖资格（用户等级、付费会员、用户标签）
+     * Kiểm tra điều kiện quay thưởng của người dùng (hạng người dùng, thành viên trả phí, nhãn người dùng)
      * @param int $uid
      * @param int $lottery_id
      * @param array $userInfo
@@ -398,13 +398,13 @@ class LuckLotteryServices extends BaseServices
         if (!$lottery) {
             throw new ApiException(410057);
         }
-        //部分用户参与
+        //Một phần người dùng tham gia
         if ($lottery['attends_user'] == 2) {
-            //用户等级
+            //Hạng người dùng
             if ($lottery['user_level'] && !in_array($userInfo['level'], $lottery['user_level'])) {
                 throw new ApiException(410059);
             }
-            //用户标签
+            //Nhãn người dùng
             if ($lottery['user_label']) {
                 /** @var UserLabelRelationServices $userlableRelation */
                 $userlableRelation = app()->make(UserLabelRelationServices::class);
@@ -413,7 +413,7 @@ class LuckLotteryServices extends BaseServices
                     throw new ApiException(410059);
                 }
             }
-            //是否是付费会员
+            //Có phải thành viên trả phí không
             if ($lottery['is_svip'] != -1) {
                 if (($lottery['is_svip'] == 1 && $userInfo['is_money_level'] <= 0) || ($lottery['is_svip'] == 0 && $userInfo['is_money_level'] > 0)) {
                     throw new ApiException(410059);
@@ -424,7 +424,7 @@ class LuckLotteryServices extends BaseServices
     }
 
     /**
-     * 抽奖
+     * Quay thưởng
      * @param int $uid
      * @param int $lottery_id
      * @return mixed
@@ -447,7 +447,7 @@ class LuckLotteryServices extends BaseServices
         }
         $userInfo = $userInfo->toArray();
         $lottery = $lottery->toArray();
-        //验证用户身份
+        //Xác thực danh tính người dùng
         $this->checkoutUserAuth($uid, $lottery_id, $userInfo, $lottery);
 
         /** @var LuckPrizeServices $lotteryPrizeServices */
@@ -457,7 +457,7 @@ class LuckLotteryServices extends BaseServices
             throw new ApiException(410060);
         }
         if ($this->getLotteryNum($uid, $lottery_id, $userInfo, $lottery) < 1) {
-            //抽奖类型：1:积分2：余额3：下单支付成功4：订单评价5：拉新人
+            //Loại hình quay thưởng: 1: điểm thưởng 2: số dư 3: đặt hàng thanh toán thành công 4: đánh giá đơn hàng 5: giới thiệu người mới
             switch ($lottery['factor']) {
                 case 1:
                     throw new ApiException(410061);
@@ -476,26 +476,26 @@ class LuckLotteryServices extends BaseServices
         return $this->transaction(function () use ($uid, $lotteryPrize, $userInfo, $lottery, $channel_type) {
             /** @var LuckPrizeServices $luckPrizeServices */
             $luckPrizeServices = app()->make(LuckPrizeServices::class);
-            //随机抽奖
+            //Quay thưởng ngẫu nhiên
             $prize = $luckPrizeServices->getLuckPrize($lotteryPrize);
             if (!$prize) {
                 throw new ApiException(410060);
             }
-            //中奖扣除积分、余额
+            //Trúng thưởng thì trừ điểm thưởng, số dư
             $this->lotteryFactor($uid, $userInfo, $lottery);
-            //中奖减少奖品数量
+            //Trúng thưởng thì giảm số lượng giải thưởng
             $luckPrizeServices->decPrizeNum($prize['id'], $prize);
             /** @var LuckLotteryRecordServices $lotteryRecordServices */
             $lotteryRecordServices = app()->make(LuckLotteryRecordServices::class);
-            //中奖写入记录
+            //Trúng thưởng thì ghi lại bản ghi
             $record = $lotteryRecordServices->insertPrizeRecord($uid, $prize, $userInfo, $channel_type);
-            //不是站内商品直接领奖
+            //Không phải sản phẩm nội bộ thì nhận thưởng trực tiếp
             if ($prize['type'] != 6) {
                 $lotteryRecordServices->receivePrize($uid, (int)$record->id);
             }
             $prize['lottery_record_id'] = $record->id;
 
-            //自定义事件-用户抽奖
+            //Sự kiện tùy chỉnh - người dùng quay thưởng
             event('CustomEventListener', ['user_lottery', [
                 'uid' => $uid,
                 'lottery_id' => $prize['lottery_id'],
@@ -509,7 +509,7 @@ class LuckLotteryServices extends BaseServices
     }
 
     /**
-     * 抽奖消耗扣除用户积分、余额等
+     * Quay thưởng tiêu tốn thì trừ điểm thưởng, số dư... của người dùng
      * @param int $uid
      * @param array $userInfo
      * @param array $lottery
@@ -521,7 +521,7 @@ class LuckLotteryServices extends BaseServices
         if (!$userInfo || !$lottery) {
             return true;
         }
-        //抽奖类型：1:积分2：余额3：下单支付成功4：订单评价5：拉新人
+        //Loại hình quay thưởng: 1: điểm thưởng 2: số dư 3: đặt hàng thanh toán thành công 4: đánh giá đơn hàng 5: giới thiệu người mới
         switch ($lottery['factor']) {
             case 1:
                 if ($userInfo['integral'] > $lottery['factor_num']) {
@@ -555,7 +555,7 @@ class LuckLotteryServices extends BaseServices
                 break;
             case 3:
             case 4:
-                //销毁抽奖次数缓存
+                //Xóa bộ nhớ đệm số lượt quay thưởng
                 $this->delCacheLotteryNum($uid, $lottery['factor'] == 3 ? 'order' : 'comment');
                 break;
             case 5:
@@ -576,7 +576,7 @@ class LuckLotteryServices extends BaseServices
     }
 
     /**
-     * 删除
+     * Xóa
      * @param int $id
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
@@ -596,7 +596,7 @@ class LuckLotteryServices extends BaseServices
     }
 
     /**
-     * 设置抽奖活动状态
+     * Đặt trạng thái chương trình quay thưởng
      * @param int $id
      * @param $status
      * @return false|mixed
@@ -613,7 +613,7 @@ class LuckLotteryServices extends BaseServices
     }
 
     /**
-     *  下单支付、评论缓存抽奖次数
+     *  Lưu tạm số lượt quay thưởng khi đặt hàng thanh toán, đánh giá
      * @param int $uid
      * @param string $type
      * @return bool
@@ -631,7 +631,7 @@ class LuckLotteryServices extends BaseServices
     }
 
     /**
-     * 取出下单支付、评论得到的抽奖次数
+     * Lấy ra số lượt quay thưởng có được từ đặt hàng thanh toán, đánh giá
      * @param int $uid
      * @param string $type
      * @return int|mixed
@@ -645,7 +645,7 @@ class LuckLotteryServices extends BaseServices
     }
 
     /**
-     * 抽奖之后销毁缓存
+     * Xóa bộ nhớ đệm sau khi quay thưởng
      * @param int $uid
      * @param string $type
      * @return bool

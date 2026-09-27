@@ -3,23 +3,23 @@
 		<view class='evaluate-list'>
 			<view class='generalComment acea-row row-between-wrapper'>
 				<view class='acea-row row-middle'>
-					<view class='evaluate'>{{$t(`评分`)}}</view>
+					<view class='evaluate'>{{$t(`Điểm đánh giá`)}}</view>
 					<view class='start' :class="'star'+replyData.reply_star"></view>
 				</view>
-				<view>{{$t(`好评率`)}}<text class='font-num'>{{replyData.reply_chance}}%</text></view>
+				<view>{{$t(`Tỷ lệ đánh giá tốt`)}}<text class='font-num'>{{replyData.reply_chance}}%</text></view>
 			</view>
 			<view class='nav acea-row row-middle'>
 				<view class='item' :class='type==0 ? "bg-color":""' @click='changeType(0)'>
-					{{$t(`全部`)}}({{replyData.sum_count}})
+					{{$t(`Tất cả`)}}({{replyData.sum_count}})
 				</view>
 				<view class='item' :class='type==1 ? "bg-color":""' @click='changeType(1)'>
-					{{$t(`好评`)}}({{replyData.good_count}})
+					{{$t(`Đánh giá tốt`)}}({{replyData.good_count}})
 				</view>
 				<view class='item' :class='type==2 ? "bg-color":""' @click='changeType(2)'>
-					{{$t(`中评`)}}({{replyData.in_count}})
+					{{$t(`Đánh giá trung bình`)}}({{replyData.in_count}})
 				</view>
 				<view class='item' :class='type==3 ? "bg-color":""' @click='changeType(3)'>
-					{{$t(`差评`)}}({{replyData.poor_count}})
+					{{$t(`Đánh giá kém`)}}({{replyData.poor_count}})
 				</view>
 			</view>
 			<userEvaluation :reply="reply"></userEvaluation>
@@ -31,7 +31,7 @@
 					<image :src="imgHost + '/statics/images/noMessage.png'"></image>
 				</view>
 				<view class="text">
-					{{$t(`暂无评论`)}}
+					{{$t(`Chưa có đánh giá`)}}
 				</view>
 			</view>
 		</view>
@@ -69,18 +69,18 @@
 				type: 0,
 				loading: false,
 				loadend: false,
-				loadTitle: this.$t(`加载更多`),
+				loadTitle: this.$t(`Tải thêm`),
 				page: 1,
 				limit: 20
 			};
 		},
 		/**
-		 * 生命周期函数--监听页面加载
+		 * Hàm lifecycle -- theo dõi khi trang load
 		 */
 		onLoad(options) {
 			let that = this;
 			if (!options.product_id) return that.$util.Tips({
-				title: that.$t(`缺少参数`)
+				title: that.$t(`Thiếu tham số`)
 			}, {
 				tab: 3,
 				url: 1
@@ -97,7 +97,7 @@
 		},
 		methods: {
 			/**
-			 * 获取评论统计数据
+			 * Lấy dữ liệu thống kê đánh giá
 			 * 
 			 */
 			getProductReplyCount: function() {
@@ -107,7 +107,7 @@
 				});
 			},
 			/**
-			 * 分页获取评论
+			 * Lấy đánh giá theo trang
 			 */
 			getProductReplyList: function() {
 				let that = this;
@@ -126,15 +126,15 @@
 					that.$set(that, 'reply', that.reply);
 					that.loading = false;
 					that.loadend = loadend;
-					that.loadTitle = loadend ? that.$t(`没有更多内容啦~`) : that.$t(`加载更多`);
+					that.loadTitle = loadend ? that.$t(`Không còn nội dung nào nữa~`) : that.$t(`Tải thêm`);
 					that.page = that.page + 1;
 				}).catch(err => {
 					that.loading = false,
-						that.loadTitle = that.$t(`加载更多`)
+						that.loadTitle = that.$t(`Tải thêm`)
 				});
 			},
 			/*
-			 * 点击事件切换
+			 * Chuyển đổi khi click
 			 * */
 			changeType: function(e) {
 				let type = parseInt(e);
@@ -147,7 +147,7 @@
 			}
 		},
 		/**
-		 * 页面上拉触底事件的处理函数
+		 * Hàm xử lý sự kiện kéo lên đến đáy trang
 		 */
 		onReachBottom: function() {
 			this.getProductReplyList();

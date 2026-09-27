@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -11,8 +11,8 @@
 import request from '@/libs/request';
 
 /**
- * @description 订单管理--列表
- * @param {Object} param data {Object} 传值参数
+ * @description Quản lý đơn hàng -- Danh sách
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function orderList(data) {
   return request({
@@ -23,8 +23,8 @@ export function orderList(data) {
 }
 
 /**
- * @description 发票头部统计
- * @param {Object} param data {Object} 传值参数
+ * @description Thống kê phần đầu hóa đơn
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function orderInvoiceChart(data) {
   return request({
@@ -35,8 +35,8 @@ export function orderInvoiceChart(data) {
 }
 
 /**
- * @description 发票头部统计
- * @param {Object} param data {Object} 传值参数
+ * @description Thống kê phần đầu hóa đơn
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function orderInvoiceList(data) {
   return request({
@@ -47,8 +47,8 @@ export function orderInvoiceList(data) {
 }
 
 /**
- * @description 发票提交订单
- * @param {Object} param data {Object} 传值参数
+ * @description Đơn hàng submit hóa đơn
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function orderInvoiceSet(id, data) {
   return request({
@@ -59,8 +59,8 @@ export function orderInvoiceSet(id, data) {
 }
 
 /**
- * @description 发票订单详情；
- * @param {Object} param data {Object} 传值参数
+ * @description Chi tiết đơn hàng hóa đơn;
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function orderInvoiceInfo(id) {
   return request({
@@ -70,8 +70,8 @@ export function orderInvoiceInfo(id) {
 }
 
 /**
- * @description 订单数据--列表
- * @param {Object} param data {Object} 传值参数
+ * @description Dữ liệu đơn hàng -- Danh sách
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function getOrdes(data) {
   return request({
@@ -82,8 +82,8 @@ export function getOrdes(data) {
 }
 
 /**
- * @description 订单表单编辑数据
- * @param {Number} param id {Number} 订单id
+ * @description Dữ liệu sửa form đơn hàng
+ * @param {Number} param id {Number} ID đơn hàng
  */
 export function getOrdeDatas(id) {
   return request({
@@ -93,8 +93,8 @@ export function getOrdeDatas(id) {
 }
 
 /**
- * @description 订单表单详情数据
- * @param {Number} param id {Number} 订单id
+ * @description Dữ liệu chi tiết form đơn hàng
+ * @param {Number} param id {Number} ID đơn hàng
  */
 export function getDataInfo(id) {
   return request({
@@ -104,8 +104,8 @@ export function getDataInfo(id) {
 }
 
 /**
- * @description 订单表单详情数据-新
- * @param {Number} param id {Number} 订单id
+ * @description Dữ liệu chi tiết form đơn hàng - mới
+ * @param {Number} param id {Number} ID đơn hàng
  */
 export function getDataInfoNew(id) {
   return request({
@@ -115,9 +115,9 @@ export function getDataInfoNew(id) {
 }
 
 /**
- * @description 修改备注信息
- * @param {Number} param data.id {Number} 订单id
- * @param {String} param data.remark {String} 备注信息
+ * @description Sửa thông tin ghi chú
+ * @param {Number} param data.id {Number} ID đơn hàng
+ * @param {String} param data.remark {String} Thông tin ghi chú
  */
 export function putRemarkData(data) {
   return request({
@@ -128,9 +128,9 @@ export function putRemarkData(data) {
 }
 
 /**
- * @description 获取订单记录
- * @param {Number} param data.id {Number} 订单id
- * @param {String} param data.datas {String} 分页参数
+ * @description Lấy lịch sử đơn hàng
+ * @param {Number} param data.id {Number} ID đơn hàng
+ * @param {String} param data.datas {String} Tham số phân trang
  */
 export function getOrderRecord(data) {
   return request({
@@ -141,8 +141,8 @@ export function getOrderRecord(data) {
 }
 
 /**
- * @description 获取退款表单数据
- * @param {Number} param id {Number} 订单id
+ * @description Lấy dữ liệu form hoàn tiền
+ * @param {Number} param id {Number} ID đơn hàng
  */
 export function getRefundFrom(id) {
   return request({
@@ -151,8 +151,8 @@ export function getRefundFrom(id) {
   });
 }
 /**
- * @description 退款
- * @param {Number} param id {Number} 订单id
+ * @description Hoàn tiền
+ * @param {Number} param id {Number} ID đơn hàng
  */
 export function refundPrice(id, data) {
   return request({
@@ -163,8 +163,8 @@ export function refundPrice(id, data) {
 }
 
 /**
- * @description 新版-获取退款表单数据
- * @param {Number} param id {Number} 订单id
+ * @description Bản mới - Lấy dữ liệu form hoàn tiền
+ * @param {Number} param id {Number} ID đơn hàng
  */
 export function getNewRefundFrom(id) {
   return request({
@@ -174,7 +174,7 @@ export function getNewRefundFrom(id) {
 }
 
 /**
- * @description 获取快递公司
+ * @description Lấy đơn vị vận chuyển
  */
 export function getExpressData(status) {
   return request({
@@ -184,8 +184,8 @@ export function getExpressData(status) {
 }
 
 /**
- * @description 获取不退款表单数据
- * @param {Number} param id {Number} 订单id
+ * @description Lấy dữ liệu form không hoàn tiền
+ * @param {Number} param id {Number} ID đơn hàng
  */
 export function getnoRefund(id) {
   return request({
@@ -194,8 +194,8 @@ export function getnoRefund(id) {
   });
 }
 /**
- * @description 新版-获取不退款表单数据
- * @param {Number} param id {Number} 订单id
+ * @description Bản mới - Lấy dữ liệu form không hoàn tiền
+ * @param {Number} param id {Number} ID đơn hàng
  */
 export function getNewnoRefundFrom(id) {
   return request({
@@ -205,9 +205,9 @@ export function getNewnoRefundFrom(id) {
 }
 
 /**
- * @description 发送货提交表单
- * @param {Number} param data.id {Number} 订单id
- * @param {Object} param data.datas {Object} 表单信息
+ * @description Form submit giao hàng
+ * @param {Number} param data.id {Number} ID đơn hàng
+ * @param {Object} param data.datas {Object} Thông tin biểu mẫu
  */
 export function putDelivery(data) {
   return request({
@@ -225,7 +225,7 @@ export function orderSheetInfo() {
 }
 
 /**
- * 所有配送员列表
+ * Danh sách tất cả người giao hàng
  */
 export function deliveryList() {
   return request({
@@ -235,7 +235,7 @@ export function deliveryList() {
 }
 
 /**
- * 订单时获取所有配送员列表
+ * Lấy danh sách tất cả người giao hàng khi tạo đơn
  */
 export function orderDeliveryList() {
   return request({
@@ -245,7 +245,7 @@ export function orderDeliveryList() {
 }
 
 /**
- * 列表修改账号状态
+ * Danh sách đổi trạng thái tài khoản
  * @param {*} data data
  */
 export function orderDeliveryStatus(data) {
@@ -256,7 +256,7 @@ export function orderDeliveryStatus(data) {
 }
 
 /**
- * 编辑配送员表单
+ * Biểu mẫu sửa nhân viên giao hàng
  * @param {*} id id
  */
 export function orderDeliveryEdit(id) {
@@ -267,7 +267,7 @@ export function orderDeliveryEdit(id) {
 }
 
 /**
- * 新增配送员表单
+ * Form thêm người giao hàng
  */
 export function orderDeliveryAdd() {
   return request({
@@ -277,8 +277,8 @@ export function orderDeliveryAdd() {
 }
 
 /**
- * 电子面单模板
- * @param {com} data 快递公司编号
+ * Mẫu vận đơn điện tử
+ * @param {com} data Mã đơn vị vận chuyển
  */
 export function orderExpressTemp(data) {
   return request({
@@ -289,8 +289,8 @@ export function orderExpressTemp(data) {
 }
 
 /**
- * @description 子订单列表---拆单
- * @param {Object} param data {Object} 传值参数
+ * @description Danh sách đơn hàng con -- Tách đơn
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function splitOrderList(id) {
   return request({
@@ -300,8 +300,8 @@ export function splitOrderList(id) {
 }
 
 /**
- * @description 获取订单可拆分商品列表
- * @param {Object} param data {Object} 传值参数
+ * @description Lấy danh sách sản phẩm có thể tách của đơn hàng
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function splitCartInfo(id) {
   return request({
@@ -311,9 +311,9 @@ export function splitCartInfo(id) {
 }
 
 /**
- * @description 拆单发送货
- * @param {Number} param data.id {Number} 订单id
- * @param {Object} param data.datas {Object} 表单信息
+ * @description Tách đơn để giao hàng
+ * @param {Number} param data.id {Number} ID đơn hàng
+ * @param {Object} param data.datas {Object} Thông tin biểu mẫu
  */
 export function splitDelivery(data) {
   return request({
@@ -324,8 +324,8 @@ export function splitDelivery(data) {
 }
 
 /**
- * @description 获取退积分表单
- * @param {Number} param id {Number} 订单id
+ * @description Lấy biểu mẫu hoàn điểm thưởng
+ * @param {Number} param id {Number} ID đơn hàng
  */
 export function refundIntegral(id) {
   return request({
@@ -335,9 +335,9 @@ export function refundIntegral(id) {
 }
 
 /**
- * @description 立即支付
- * @param {String} param path {String} 请求地址
- * @param {String} param method {String} 请求方式
+ * @description Thanh toán ngay
+ * @param {String} param path {String} Địa chỉ request
+ * @param {String} param method {String} Phương thức yêu cầu
  */
 export function payOffline(path, method) {
   return request({
@@ -347,8 +347,8 @@ export function payOffline(path, method) {
 }
 
 /**
- * @description 配送信息表单
- * @param {Number} param id {Number} 订单id
+ * @description Form thông tin giao hàng
+ * @param {Number} param id {Number} ID đơn hàng
  */
 export function getDistribution(id) {
   return request({
@@ -358,8 +358,8 @@ export function getDistribution(id) {
 }
 
 /**
- * @description 订单物流信息
- * @param {Number} param id {Number} 订单id
+ * @description Thông tin vận chuyển đơn hàng
+ * @param {Number} param id {Number} ID đơn hàng
  */
 export function getExpress(id) {
   return request({
@@ -369,8 +369,8 @@ export function getExpress(id) {
 }
 
 /**
- * @description  订单核销
- * @param {String} param data {String} 核销内容
+ * @description  Xác nhận sử dụng đơn hàng
+ * @param {String} param data {String} Nội dung xác nhận sử dụng
  */
 export function putWrite(data) {
   return request({
@@ -381,7 +381,7 @@ export function putWrite(data) {
 }
 
 /**
- * @description 订单管理 -- 导出
+ * @description Quản lý đơn hàng -- Xuất
  */
 export function storeOrderApi(data) {
   return request({
@@ -392,7 +392,7 @@ export function storeOrderApi(data) {
 }
 
 /**
- * @description 核销单个订单
+ * @description Xác nhận sử dụng cho một đơn hàng
  */
 export function writeUpdate(order_id) {
   return request({
@@ -402,7 +402,7 @@ export function writeUpdate(order_id) {
 }
 
 /**
- * 收银订单
+ * Đơn thu ngân
  */
 export function orderScanList(data) {
   return request({
@@ -413,7 +413,7 @@ export function orderScanList(data) {
 }
 
 /**
- * 线下收款码
+ * Mã thu tiền ngoại tuyến
  */
 export function orderOfflineScan(id) {
   return request({
@@ -424,8 +424,8 @@ export function orderOfflineScan(id) {
 }
 
 /**
- * @description 售后订单
- * @param {Object} param data {Object} 传值参数
+ * @description Đơn đổi trả
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function orderRefundList(data) {
   return request({
@@ -436,8 +436,8 @@ export function orderRefundList(data) {
 }
 
 /**
- * @description 批量发货记录
- * @param {Object} param data {Object} 传值参数
+ * @description Lịch sử giao hàng hàng loạt
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function queueIndex(data) {
   return request({
@@ -448,8 +448,8 @@ export function queueIndex(data) {
 }
 
 /**
- * @description 批量发货-手动
- * @param {Object} param data {Object} 传值参数
+ * @description Giao hàng hàng loạt - Thủ công
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function handBatchDelivery(data) {
   return request({
@@ -459,8 +459,8 @@ export function handBatchDelivery(data) {
   });
 }
 /**
- * @description 下载
- * @param {Object} param data {Object} 传值参数
+ * @description Tải xuống
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function batchOrderDelivery(id, type, catchType) {
   return request({
@@ -469,7 +469,7 @@ export function batchOrderDelivery(id, type, catchType) {
   });
 }
 /**
- * @description 积分商城订单 -- 导出
+ * @description Đơn hàng cửa hàng đổi điểm -- Xuất
  */
 export function storeIntegralOrder(data) {
   return request({
@@ -480,8 +480,8 @@ export function storeIntegralOrder(data) {
 }
 
 /**
- * @description 任务列表-查看
- * @param {Object} param data {Object} 传值参数
+ * @description Danh sách task - Xem
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function deliveryLog(id, type, data) {
   return request({
@@ -492,8 +492,8 @@ export function deliveryLog(id, type, data) {
 }
 
 /**
- * @description 下载物流公司对照表
- * @param {Object} param data {Object} 传值参数
+ * @description Tải bảng đối chiếu đơn vị vận chuyển
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function exportExpressList(id) {
   return request({
@@ -503,8 +503,8 @@ export function exportExpressList(id) {
 }
 
 /**
- * @description 批量发货-自动
- * @param {Object} param data {Object} 传值参数
+ * @description Giao hàng hàng loạt - Tự động
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function otherBatchDelivery(data) {
   return request({
@@ -514,8 +514,8 @@ export function otherBatchDelivery(data) {
   });
 }
 /**
- * @description 商家寄件金额计算
- * @param {Object} param data {Object} 传值参数
+ * @description Tính phí gửi hàng của shop
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function orderPrice(data) {
   return request({
@@ -525,8 +525,8 @@ export function orderPrice(data) {
   });
 }
 /**
- * @description 取消商家寄件
- * @param {Object} param data {Object} 传值参数
+ * @description Hủy yêu cầu gửi hàng của người bán
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function shipmentCancelOrder(id, data) {
   return request({
@@ -536,8 +536,8 @@ export function shipmentCancelOrder(id, data) {
   });
 }
 /**
- * @description 重新执行
- * @param {Object} param data {Object} 传值参数
+ * @description Thực thi lại
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function queueAgain(id, type) {
   return request({
@@ -546,8 +546,8 @@ export function queueAgain(id, type) {
   });
 }
 /**
- * @description 清除异常任务
- * @param {Object} param data {Object} 传值参数
+ * @description Xóa tác vụ lỗi
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function queueDel(id, type) {
   return request({
@@ -557,8 +557,8 @@ export function queueDel(id, type) {
 }
 
 /**
- * @description 停止任务
- * @param {Object} param data {Object} 传值参数
+ * @description Dừng tác vụ
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function stopWrongQueue(id) {
   return request({
@@ -568,8 +568,8 @@ export function stopWrongQueue(id) {
 }
 
 /**
- * @description 上架寄件快递列表
- * @param {Object} param data {Object} 传值参数
+ * @description Danh sách đơn vị chuyển phát gửi hàng đang hoạt động
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function kuaidiComsList() {
   return request({
@@ -579,9 +579,9 @@ export function kuaidiComsList() {
 }
 
 /**
- * @description 修改退款订单备注信息
- * @param {Number} param data.id {Number} 订单id
- * @param {String} param data.remark {String} 备注信息
+ * @description Sửa ghi chú đơn hoàn tiền
+ * @param {Number} param data.id {Number} ID đơn hàng
+ * @param {String} param data.remark {String} Thông tin ghi chú
  */
 export function putRefundRemarkData(data) {
   return request({
@@ -592,7 +592,7 @@ export function putRefundRemarkData(data) {
 }
 
 /**
- * @description 导入发货单
+ * @description Nhập phiếu giao hàng
  */
 export function importExpress(data) {
   return request({
@@ -603,8 +603,8 @@ export function importExpress(data) {
 }
 
 /**
- * @description 配货单-打印
- * @param id  订单id
+ * @description Phiếu soạn hàng - In
+ * @param id  ID đơn hàng
  */
 export function distributionOrder(id) {
   return request({
@@ -613,8 +613,8 @@ export function distributionOrder(id) {
   });
 }
 /**
- * @description 发票管理
- * @param id  发票id
+ * @description Quản lý hóa đơn
+ * @param id  ID hóa đơn
  */
 export function invoiceIssuanceUrl(id) {
   return request({
@@ -623,8 +623,8 @@ export function invoiceIssuanceUrl(id) {
   });
 }
 /**
- * @description 发票下载
- * @param id  发票id
+ * @description Tải hóa đơn
+ * @param id  ID hóa đơn
  */
 export function downInvoice(id) {
   return request({
@@ -633,8 +633,8 @@ export function downInvoice(id) {
   });
 }
 /**
- * @description 开具负数发票
- * @param id  发票id
+ * @description Xuất hóa đơn điều chỉnh giảm
+ * @param id  ID hóa đơn
  */
 export function redInvoiceIssuance(id) {
   return request({
@@ -643,9 +643,9 @@ export function redInvoiceIssuance(id) {
   });
 }
 /**
- * @description 发票状态修改
- * @param id  发票id
- * @param data  发票信息
+ * @description Sửa trạng thái hóa đơn
+ * @param id  ID hóa đơn
+ * @param data  Thông tin hóa đơn
  */
 export function saveInvoiceInfo(id, data) {
   return request({
@@ -655,8 +655,8 @@ export function saveInvoiceInfo(id, data) {
   });
 }
 /**
- * @description 发票分类搜索
- * @param name  发票分类名称
+ * @description Tìm kiếm danh mục hóa đơn
+ * @param name  Tên danh mục hóa đơn
  */
 export function invoiceCategory(name) {
   return request({
@@ -666,8 +666,8 @@ export function invoiceCategory(name) {
   });
 }
 /**
- * @description 提交电子发票配置
- * @param data  发票信息
+ * @description Submit cấu hình hóa đơn điện tử
+ * @param data  Thông tin hóa đơn
  */
 export function saveBasics(data) {
   return request({
@@ -677,7 +677,7 @@ export function saveBasics(data) {
   });
 }
 /**
- * @description 获取电子发票配置
+ * @description Lấy cấu hình hóa đơn điện tử
  */
 export function invoiceConfig() {
   return request({

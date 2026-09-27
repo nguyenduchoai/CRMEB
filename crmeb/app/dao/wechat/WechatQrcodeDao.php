@@ -18,7 +18,7 @@ class WechatQrcodeDao extends BaseDao
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @param $where
      * @param $page
      * @param $limit
@@ -37,7 +37,7 @@ class WechatQrcodeDao extends BaseDao
     }
 
     /**
-     * 更新次数
+     * Cập nhật số lần
      * @param $id
      * @param $isFollow
      */

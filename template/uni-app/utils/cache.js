@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2024 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -23,14 +23,14 @@ class Cache {
 	}
 
 	/**
-	 * 获取当前时间戳
+	 * Lấy timestamp hiện tại
 	 */
 	time() {
 		return Math.round(new Date() / 1000);
 	}
 
 	/**
-	 * 字符串转时间戳
+	 * Chuyển chuỗi thành timestamp
 	 * @param {Object} expiresTime
 	 */
 	strTotime(expiresTime) {
@@ -41,7 +41,7 @@ class Cache {
 
 
 	/**
-	 * 设置过期时间缓存
+	 * Đặt cache có thời gian hết hạn
 	 * @param {Object} key
 	 * @param {Object} expire
 	 */
@@ -71,9 +71,9 @@ class Cache {
 	}
 
 	/**
-	 * 缓存是否过期,过期自动删除
+	 * Cache có hết hạn hay không, hết hạn sẽ tự động xóa
 	 * @param {Object} key
-	 * @param {Object} $bool true = 删除,false = 不删除
+	 * @param {Object} $bool true = Xóa, false = không xóa
 	 */
 	getExpireCahe(key, $bool) {
 		try {
@@ -111,7 +111,7 @@ class Cache {
 	}
 
 	/**
-	 * 设置缓存
+	 * Đặt cache
 	 * @param {Object} key
 	 * @param {Object} data
 	 */
@@ -130,7 +130,7 @@ class Cache {
 	}
 
 	/**
-	 * 检测缓存是否存在
+	 * Kiểm tra cache có tồn tại hay không
 	 * @param {Object} key
 	 */
 	has(checkwhethethecacheexists, isDel) {
@@ -139,7 +139,7 @@ class Cache {
 	}
 
 	/**
-	 * 获取缓存
+	 * Lấy cache
 	 * @param {Object} key
 	 * @param {Object} $default
 	 * @param {Object} expire
@@ -170,7 +170,7 @@ class Cache {
 	}
 
 	/**
-	 * 删除缓存
+	 * Xóa cache
 	 * @param {Object} key
 	 */
 	clear(key) {
@@ -196,7 +196,7 @@ class Cache {
 	}
 
 	/**
-	 * 清除过期缓存
+	 * Xóa bộ nhớ đệm đã hết hạn
 	 */
 	clearOverdue() {
 		let cahceValue = this.cacheGetHandler(this.cacheExpire),
@@ -215,11 +215,11 @@ class Cache {
 				}
 			});
 		}
-		//保存没有过期的缓存标签
+		//Lưu tag cache chưa hết hạn
 		if (newTagValue.length !== cahceValue.length) {
 			this.cacheSetHandler(this.cacheExpire, newTagValue);
 		}
-		//删除过期缓存
+		//Xóa bộ nhớ đệm đã hết hạn
 		newBeOverdueValue.forEach(k => {
 			this.cacheClearHandler(k);
 		})

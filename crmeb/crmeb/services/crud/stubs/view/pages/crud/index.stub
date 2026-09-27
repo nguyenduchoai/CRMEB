@@ -4,7 +4,7 @@
     <el-card shadow="never" dis-hover class="ivu-mt {%CLASS_NAME%}">
       <el-row type="flex">
         <el-col v-bind="grid">
-          <el-button v-auth="['{%AUTH%}-add']" type="primary" icon="md-add" @click="add">添加{%MENUS%}</el-button>
+          <el-button v-auth="['{%AUTH%}-add']" type="primary" icon="md-add" @click="add">Thêm {%MENUS%}</el-button>
         </el-col>
       </el-row>
       <el-table
@@ -15,13 +15,13 @@
           highlight-current-row
       >
 {%CONTENT_TABLE_VUE%}
-        <el-table-column label="操作">
+        <el-table-column label="Thao tác">
             <template slot-scope="scope">
-              <a @click="show(scope.row)">详情</a>
+              <a @click="show(scope.row)">Chi tiết</a>
               <el-divider direction="vertical" />
-              <a @click="edit(scope.row.id)">修改</a>
+              <a @click="edit(scope.row.id)">Sửa</a>
               <el-divider direction="vertical" />
-              <a @click="del(scope.row, '删除{%MENUS%}', scope.$index)">删除</a>
+              <a @click="del(scope.row, 'Xóa {%MENUS%}', scope.$index)">Xóa</a>
             </template>
         </el-table-column>
       </el-table>
@@ -30,7 +30,7 @@
       </div>
     </el-card>
 
-    <el-dialog title="查看详情" :visible.sync="dialogTableVisible" v-if='dialogTableVisible'>
+    <el-dialog title="Xem chi tiết" :visible.sync="dialogTableVisible" v-if='dialogTableVisible'>
         <el-descriptions title="{%MODEL_NAME%}">
 {%CONTENT_DESCRIPTIONS_VUE%}
         </el-descriptions>
@@ -85,7 +85,7 @@ export default {
           this.$Message.error(res.msg);
         })
     },
-    //修改状态
+    //Sửa trạng thái
     updateStatus(row, field) {
         {%NAME_CAMEL%}StatusApi(row.id, {field: field, value: row[field]})
         .then(async (res) => {
@@ -95,16 +95,16 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 添加
+    // Thêm
     add() {
       this.$modalForm(get{%NAME_STUDLY%}CreateApi()).then(() => this.getList());
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     searchs() {
       this.from.page = 1;
       this.getList();
     },
-    //列表
+    //Danh sách
     getList() {
       this.loading = true;
       get{%NAME_STUDLY%}ListApi(this.from)
@@ -119,16 +119,16 @@ export default {
             this.$Message.error(res.msg);
           });
     },
-    //分页
+    //Phân trang
     pageChange(index) {
       this.from.page = index;
       this.getList();
     },
-    // 修改
+    // Sửa
     edit(id) {
       this.$modalForm(get{%NAME_STUDLY%}EditApi(id)).then(() => this.getList());
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,

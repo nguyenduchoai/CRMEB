@@ -9,27 +9,27 @@
       <div class="item" :style="{ background: themeColor[0].item }">
         <div class="left">
           <div class="num"><span>￥</span>50</div>
-          <div class="txt">满100元可用</div>
+          <div class="txt">Dùng cho đơn từ 100đ</div>
         </div>
-        <div class="right">立<br />即<br />领<br />取</div>
+        <div class="right">Nhận<br />ngay<br />ưu<br />đãi</div>
         <div class="roll up-roll" :style="{ background: bgColor[0].item }"></div>
         <div class="roll down-roll" :style="{ background: bgColor[0].item }"></div>
       </div>
       <div class="item gary">
         <div class="left">
           <div class="num"><span>￥</span>50</div>
-          <div class="txt">满100元可用</div>
+          <div class="txt">Dùng cho đơn từ 100đ</div>
         </div>
-        <div class="right">立<br />即<br />领<br />取</div>
+        <div class="right">Nhận<br />ngay<br />ưu<br />đãi</div>
         <div class="roll up-roll" :style="{ background: bgColor[0].item }"></div>
         <div class="roll down-roll" :style="{ background: bgColor[0].item }"></div>
       </div>
       <div class="item" :style="{ background: themeColor[0].item }">
         <div class="left">
           <div class="num"><span>￥</span>50</div>
-          <div class="txt">满100元可用</div>
+          <div class="txt">Dùng cho đơn từ 100đ</div>
         </div>
-        <div class="right">立<br />即<br />领<br />取</div>
+        <div class="right">Nhận<br />ngay<br />ưu<br />đãi</div>
         <div class="roll up-roll" :style="{ background: bgColor[0].item }"></div>
         <div class="roll down-roll" :style="{ background: bgColor[0].item }"></div>
       </div>
@@ -41,11 +41,11 @@
 import { mapState } from 'vuex';
 export default {
   name: 'home_coupon',
-  cname: '优惠券',
+  cname: 'Phiếu giảm giá',
   configName: 'c_home_coupon',
   icon: 'iconyouhuiquan1',
-  type: 1, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'coupon', // 外面匹配名称
+  type: 1, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'coupon', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -81,12 +81,12 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'coupon',
         timestamp: this.num,
         bgColor: {
-          title: '背景颜色',
+          title: 'Màu nền',
           default: [
             {
               item: '#F8F8F8',
@@ -99,27 +99,27 @@ export default {
           ],
         },
         bgStyle: {
-          title: '背景样式',
+          title: 'Kiểu nền',
           name: 'bgStyle',
           type: 0,
           list: [
             {
-              val: '直角',
+              val: 'Góc vuông',
               icon: 'iconPic_square',
             },
             {
-              val: '圆角',
+              val: 'Bo góc',
               icon: 'iconPic_fillet',
             },
           ],
         },
         prConfig: {
-          title: '背景边距',
+          title: 'Lề nền',
           val: 0,
           min: 0,
         },
         themeColor: {
-          title: '主题颜色',
+          title: 'Màu chủ đề',
           default: [
             {
               item: '#E93323',
@@ -131,9 +131,9 @@ export default {
             },
           ],
         },
-        // 页面间距
+        // Lề trang
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },

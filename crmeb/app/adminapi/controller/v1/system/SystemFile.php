@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\adminapi\controller\AuthController;
 use app\services\system\log\SystemFileServices;
 
 /**
- * 文件校验控制器
+ * Controller kiểm tra file
  * Class SystemFile
  * @package app\admin\controller\system
  *
@@ -23,7 +23,7 @@ use app\services\system\log\SystemFileServices;
 class SystemFile extends AuthController
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * SystemFile constructor.
      * @param App $app
      * @param SystemFileServices $services
@@ -35,7 +35,7 @@ class SystemFile extends AuthController
     }
 
     /**
-     * 文件校验记录
+     * Lịch sử kiểm tra file
      * @return mixed
      */
     public function index()
@@ -66,7 +66,7 @@ class SystemFile extends AuthController
         return app('json')->success($this->services->login($password, 'file_edit'));
     }
 
-    //打开目录
+    //Mở thư mục
     public function opendir()
     {
         [$dir, $fileDir, $superior] = $this->request->getMore([
@@ -77,7 +77,7 @@ class SystemFile extends AuthController
         return app('json')->success($this->services->opendir($dir, $fileDir, $superior));
     }
 
-    //文件备注
+    //Ghi chú tệp
     public function fileMark()
     {
         [$path, $fileToken] = $this->request->postMore([
@@ -88,7 +88,7 @@ class SystemFile extends AuthController
         return app('json')->success($this->services->markForm($path, $fileToken));
     }
 
-    //文件备注保存
+    //Lưu ghi chú file
     public function fileMarkSave()
     {
         [$full_path, $mark] = $this->request->postMore([
@@ -101,7 +101,7 @@ class SystemFile extends AuthController
         return app('json')->success(100000);
     }
 
-    //读取文件
+    //Đọc tệp
     public function openfile()
     {
         $file = $this->request->param('filepath');
@@ -109,13 +109,13 @@ class SystemFile extends AuthController
         return app('json')->success($this->services->openfile($file));
     }
 
-    //保存文件
+    //Lưu tệp
     public function savefile()
     {
         $comment = $this->request->param('comment');
         $filepath = $this->request->param('filepath');
         if (empty($filepath)) {
-            return app('json')->fail('文件路径不存在');
+            return app('json')->fail('Đường dẫn tệp không tồn tại');
         }
         $res = $this->services->savefile($filepath, $comment);
         if ($res) {
@@ -126,7 +126,7 @@ class SystemFile extends AuthController
     }
 
     /**
-     * 创建文件夹
+     * Tạo thư mục
      * @return mixed
      *
      * @date 2022/09/17
@@ -164,7 +164,7 @@ class SystemFile extends AuthController
     }
 
     /**
-     * 创建文件
+     * Tạo tệp
      * @return mixed
      *
      * @date 2022/09/17
@@ -202,7 +202,7 @@ class SystemFile extends AuthController
     }
 
     /**
-     * 删除文件或文件夹
+     * Xóa file hoặc thư mục
      * @return mixed
      *
      * @date 2022/09/17
@@ -225,7 +225,7 @@ class SystemFile extends AuthController
     }
 
     /**
-     * 文件重命名
+     * Đổi tên file
      * @return mixed
      *
      * @date 2022/09/28

@@ -43,7 +43,7 @@
 <script type="text/babel">
 /**
  * VerifyPoints
- * @description 点选
+ * @description Nhấn chọn
  * */
 import { aesEncrypt } from './../utils/ase.js';
 import { getAjcaptcha, ajcaptchaCheck } from '@/api/api.js';
@@ -51,7 +51,7 @@ import { getAjcaptcha, ajcaptchaCheck } from '@/api/api.js';
 export default {
 	name: 'VerifyPoints',
 	props: {
-		//弹出式pop，固定fixed
+		//Dạng pop-up (pop), cố định (fixed)
 		mode: {
 			type: String,
 			default: 'fixed'
@@ -59,7 +59,7 @@ export default {
 		captchaType: {
 			type: String
 		},
-		//间隔
+		//Khoảng cách
 		vSpace: {
 			type: Number,
 			default: 5
@@ -89,15 +89,15 @@ export default {
 	},
 	data() {
 		return {
-			secretKey: '', //后端返回的加密秘钥 字段
+			secretKey: '', //Trường khóa mã hóa do backend trả về
 			checkNum: 3, //
-			fontPos: [], // 选中的坐标信息
-			checkPosArr: [], //用户点击的坐标
-			num: 1, //点击的记数
-			pointBackImgBase: '', //后端获取到的背景图片
-			poinTextList: [], //后端返回的点击字体顺序
-			backToken: '', //后端返回的token值
-			imgRand: 0, //随机的背景图片
+			fontPos: [], // Thông tin tọa độ đã chọn
+			checkPosArr: [], //Tọa độ người dùng bấm vào
+			num: 1, //Số lần bấm
+			pointBackImgBase: '', //Ảnh nền lấy được từ backend
+			poinTextList: [], //Thứ tự chữ cần bấm do backend trả về
+			backToken: '', //Giá trị token do backend trả về
+			imgRand: 0, //Ảnh nền ngẫu nhiên
 			setSize: {
 				imgHeight: 0,
 				imgWidth: 0,
@@ -117,7 +117,7 @@ export default {
 	},
 	methods: {
 		init() {
-			//加载页面
+			//Tải trang
 			this.fontPos.splice(0, this.fontPos.length);
 			this.checkPosArr.splice(0, this.checkPosArr.length);
 			this.num = 1;
@@ -136,11 +136,11 @@ export default {
 					this.checkPosArr.push(this.getMousePos(this.$refs.canvas, e));
 					if (this.num == this.checkNum) {
 						this.num = this.createPoint(this.getMousePos(this.$refs.canvas, e));
-						//按比例转换坐标值
+						//Chuyển đổi giá trị tọa độ theo tỷ lệ
 						this.checkPosArr = this.pointTransfrom(this.checkPosArr, this.imgSize);
-						//等创建坐标执行完
+						//Chờ tạo tọa độ thực hiện xong
 						setTimeout(() => {
-							//发送后端请求
+							//Gửi request tới backend
 							var captchaVerification = this.secretKey
 								? aesEncrypt(this.backToken + '---' + JSON.stringify(this.checkPosArr), this.secretKey)
 								: this.backToken + '---' + JSON.stringify(this.checkPosArr);
@@ -154,7 +154,7 @@ export default {
 									let res = result.data;
 									this.barAreaColor = '#4cae4c';
 									this.barAreaBorderColor = '#5cb85c';
-									this.text = '验证成功';
+									this.text = 'Xác thực thành công';
 									this.bindingClick = false;
 									setTimeout(() => {
 										if (this.mode == 'pop') {
@@ -168,7 +168,7 @@ export default {
 									this.$parent.$emit('error', this);
 									this.barAreaColor = '#d9534f';
 									this.barAreaBorderColor = '#d9534f';
-									this.text = '验证失败';
+									this.text = 'Xác minh thất bại';
 									setTimeout(() => {
 										this.refresh();
 									}, 700);
@@ -181,7 +181,7 @@ export default {
 				})
 				.exec();
 		},
-		//获取坐标
+		//Lấy tọa độ
 		getMousePos: function (obj, e) {
 			let position = {
 				x: Math.ceil(e.detail.x) - this.imgLeft,
@@ -189,7 +189,7 @@ export default {
 			};
 			return position;
 		},
-		//创建坐标点
+		//Tạo điểm tọa độ
 		createPoint: function (pos) {
 			this.tempPoints.push(Object.assign({}, pos));
 			return ++this.num;
@@ -206,15 +206,15 @@ export default {
 
 			this.getPictrue();
 
-			// this.text = '验证失败'
+			// this.text = 'Xác thực thất bại'
 			this.showRefresh = true;
 		},
-		// 请求背景图片和验证图片
+		// Yêu cầu ảnh nền và ảnh xác thực
 		getPictrue() {
 			let data = {
 				captchaType: this.captchaType,
 				clientUid: uni.getStorageSync('point'),
-				ts: Date.now() // 现在的时间戳
+				ts: Date.now() // Timestamp hiện tại
 			};
 			getAjcaptcha(data)
 				.then((result) => {
@@ -223,13 +223,13 @@ export default {
 					this.backToken = res.token;
 					this.secretKey = res.secretKey;
 					this.poinTextList = res.wordList;
-					this.text = '请依次点击【' + this.poinTextList.join(',') + '】';
+					this.text = 'Vui lòng nhấn lần lượt vào [' + this.poinTextList.join(',') + '】';
 				})
 				.catch(() => {
 					this.pointBackImgBase = null;
 				});
 		},
-		//坐标转换函数
+		//Hàm chuyển đổi tọa độ
 		pointTransfrom(pointArr, imgSize) {
 			var newPointArr = pointArr.map((p) => {
 				let x = Math.round((310 * p.x) / parseInt(imgSize.width));
@@ -240,7 +240,7 @@ export default {
 		}
 	},
 	watch: {
-		// type变化则全面刷新
+		// Khi type thay đổi thì làm mới toàn bộ
 		type: {
 			immediate: true,
 			handler() {
@@ -325,7 +325,7 @@ export default {
 }
 
 /* ---------------------------- */
-/*常规验证码*/
+/*Mã xác thực thông thường*/
 .verify-code {
 	font-size: 20px;
 	text-align: center;
@@ -374,7 +374,7 @@ export default {
 	margin-top: 10px;
 }
 
-/*滑动验证码*/
+/*Mã xác thực dạng trượt*/
 .verify-bar-area {
 	position: relative;
 	background: #ffffff;
@@ -466,7 +466,7 @@ export default {
 	z-index: 3;
 }
 
-/*字体图标的css*/
+/*CSS của font chữ biểu tượng (icon font)*/
 /*@font-face {font-family: "iconfont";*/
 /*src: url('../fonts/iconfont.eot?t=1508229193188'); !* IE9*!*/
 /*src: url('../fonts/iconfont.eot?t=1508229193188#iefix') format('embedded-opentype'), !* IE6-IE8 *!*/

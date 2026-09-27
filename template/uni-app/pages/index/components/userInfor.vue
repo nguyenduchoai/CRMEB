@@ -9,7 +9,7 @@
 					<image v-if="!isLogin" :src="dataConfig.logoConfig.url || '@/static/images/f.png'"></image>
 				</view>
 				<view class="text">
-					<view v-if="!isLogin" class="name">{{ $t(`请点击登录`) }}</view>
+					<view v-if="!isLogin" class="name">{{ $t(`Vui lòng nhấn để đăng nhập`) }}</view>
 					<view v-else class="name acea-row row-middle">
 						<view class="nameCon line1">{{ diyInfo.nickname }}</view>
 						<view class="lable" v-if="diyInfo.level>0" :style="[lableStyle]">
@@ -32,23 +32,23 @@
 					<template v-if="dataConfig.styleConfig.tabVal == 1">
 						<view class="item" v-if="checkType.indexOf(1) > -1" @click.stop="goIntegral">
 							<view class="num">{{diyInfo.integral||0}}</view>
-							<view>{{ $t(`积分`) }}</view>
+							<view>{{ $t(`Điểm thưởng`) }}</view>
 						</view>
 						<view class="item" v-if="checkType.indexOf(2) > -1" @click.stop="goMoney">
 							<view class="num">{{diyInfo.now_money||0}}</view>
-							<view>{{ $t(`余额`) }}</view>
+							<view>{{ $t(`Số dư`) }}</view>
 						</view>
 						<view class="item" v-if="checkType.indexOf(0) > -1" @click.stop="goCoupon">
 							<view class="num">{{diyInfo.couponCount||0}}</view>
-							<view>{{ $t(`优惠券`) }}</view>
+							<view>{{ $t(`Phiếu giảm giá`) }}</view>
 						</view>
 						<view class="item" v-if="checkType.indexOf(4) > -1" @click.stop="goCollection">
 							<view class="num">{{diyInfo.collectCount||0}}</view>
-							<view>{{ $t(`收藏`) }}</view>
+							<view>{{ $t(`Yêu thích`) }}</view>
 						</view>
 						<view class="item" v-if="checkType.indexOf(5) > -1" @click.stop="goVisit">
 							<view class="num">{{diyInfo.visit_num||0}}</view>
-							<view>{{ $t(`浏览`) }}</view>
+							<view>{{ $t(`Xem`) }}</view>
 						</view>
 					</template>
 				</view>
@@ -56,23 +56,23 @@
 			<view v-if="dataConfig.styleConfig.tabVal == 0 && isLogin" class="bottom acea-row row-middle">
 				<view v-if="checkType.indexOf(1) != -1" class="item" @click.stop="goIntegral">
 					<view class="num">{{diyInfo.integral||0}}</view>
-					<view>{{ $t(`积分`) }}</view>
+					<view>{{ $t(`Điểm thưởng`) }}</view>
 				</view>
 				<view v-if="checkType.indexOf(2) != -1" class="item" @click.stop="goMoney">
 					<view class="num">{{diyInfo.now_money||0}}</view>
-					<view>{{ $t(`余额`) }}</view>
+					<view>{{ $t(`Số dư`) }}</view>
 				</view>
 				<view v-if="checkType.indexOf(0) != -1" class="item" @click.stop="goCoupon">
 					<view class="num">{{diyInfo.coupon_num||0}}</view>
-					<view>{{ $t(`优惠券`) }}</view>
+					<view>{{ $t(`Phiếu giảm giá`) }}</view>
 				</view>
 				<view v-if="checkType.indexOf(4) != -1" class="item" @click.stop="goCollection">
 					<view class="num">{{diyInfo.collectCount||0}}</view>
-					<view>{{ $t(`收藏`) }}</view>
+					<view>{{ $t(`Yêu thích`) }}</view>
 				</view>
 				<view v-if="checkType.indexOf(5) != -1" class="item" @click.stop="goVisit">
 					<view class="num">{{diyInfo.visit_num||0}}</view>
-					<view>{{ $t(`浏览`) }}</view>
+					<view>{{ $t(`Xem`) }}</view>
 				</view>
 			</view>
 			<!-- <view class="codePopup" :style="colorStyle" v-show="isCode">
@@ -87,7 +87,7 @@
 					<w-qrcode :options="config.qrc" @generate="hello"></w-qrcode>
 				</view>
 				<view class="codeNum">{{config.bar.code}}</view>
-				<view class="tip">如遇到扫码失败请将屏幕调至最亮重新扫码</view>
+				<view class="tip">Nếu quét mã thất bại, vui lòng chỉnh màn hình sáng nhất rồi quét lại</view>
 			</view>
 			<view class="iconfont icon-guanbi2" @click="closeCode"></view>
 		</view> -->
@@ -170,28 +170,28 @@
 					bar: {
 						code: '',
 						color: ['#000'],
-						bgColor: '#FFFFFF', // 背景色
-						width: 480, // 宽度
-						height: 110 // 高度
+						bgColor: '#FFFFFF', // Màu nền
+						width: 480, // Chiều rộng
+						height: 110 // Chiều cao
 					},
 					qrc: {
 						code: '',
-						size: 380, // 二维码大小
-						level: 3, //等级 0～4
-						bgColor: '#FFFFFF', //二维码背景色 默认白色
+						size: 380, // Kích thước mã QR
+						level: 3, //Cấp độ 0~4
+						bgColor: '#FFFFFF', //Màu nền mã QR, mặc định màu trắng
 						border: {
-							color: ['#eee', '#eee'], //边框颜色支持渐变色
-							lineWidth: 3, //边框宽度
+							color: ['#eee', '#eee'], //Màu viền hỗ trợ gradient
+							lineWidth: 3, //Độ rộng viền
 						},
-						// img: '/static/logo.png', //图片
-						// iconSize: 40, //二维码图标的大小
-						color: ['#333', '#333'], //边框颜色支持渐变色
+						// img: '/static/logo.png', //hình ảnh
+						// iconSize: 40, //kích thước icon mã QR
+						color: ['#333', '#333'], //Màu viền hỗ trợ gradient
 					}
 				},
 				codeList: [{
-					name: '会员码'
+					name: 'Mã thành viên'
 				}, {
-					name: '付款码'
+					name: 'Mã thanh toán'
 				}],
 				codeIndex: 0,
 				isCode: false,
@@ -199,7 +199,7 @@
 				textColor: '',
 				progressColor: this.dataConfig.progressColor.color,
 				mbCongfig: 0,
-				prConfig: 0, //背景边距
+				prConfig: 0, //Lề nền
 				itemStyle: 0,
 				checkType: this.dataConfig.checkboxInfo.type,
 				diyInfo: {},
@@ -310,10 +310,10 @@
 				});
 			},
 			colorToRgba(str, n) {
-				// 十六进制颜色值的正则表达式
+				// Regex của giá trị màu hex
 				const reg = /^#([0-9a-fA-f]{3}|[0-9a-fA-f]{6})$/;
 				let sColor = str.toLowerCase();
-				// 十六进制颜色转换为RGB格式
+				// Chuyển màu hex sang định dạng RGB
 				if (sColor && reg.test(sColor)) {
 					if (sColor.length === 4) {
 						let sColorNew = '#';
@@ -322,7 +322,7 @@
 						}
 						sColor = sColorNew;
 					}
-					// 处理六位颜色值
+					// Xử lý giá trị màu 6 chữ số
 					const sColorChange = [];
 					for (let k = 1; k < 7; k += 2) {
 						sColorChange.push(parseInt(`0x${sColor.slice(k, k + 2)}`, 16));

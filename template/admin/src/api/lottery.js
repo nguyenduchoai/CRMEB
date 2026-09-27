@@ -1,16 +1,16 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 import request from '@/libs/request';
 
 /**
- * @description 九宫格抽奖 -- 列表
+ * @description Vòng quay 9 ô -- Danh sách
  */
 export function lotteryListApi(data) {
   return request({
@@ -21,8 +21,8 @@ export function lotteryListApi(data) {
 }
 
 /**
- * @description 九宫格抽奖 -- 详情
- * @param id 抽奖活动id
+ * @description Vòng quay 9 ô -- Chi tiết
+ * @param id ID chương trình quay thưởng
  */
 export function lotteryDetailApi(id) {
   return request({
@@ -32,8 +32,8 @@ export function lotteryDetailApi(id) {
 }
 
 /**
- * @description 九宫格抽奖 -- 新版详情
- * @param id 抽奖活动id
+ * @description Vòng quay 9 ô -- Chi tiết bản mới
+ * @param id ID chương trình quay thưởng
  */
 export function lotteryNewDetailApi(type) {
   return request({
@@ -43,7 +43,7 @@ export function lotteryNewDetailApi(type) {
 }
 
 /**
- * @description 九宫格抽奖 -- 创建
+ * @description Vòng quay 9 ô -- Tạo mới
  */
 export function lotteryCreateApi(data) {
   return request({
@@ -54,7 +54,7 @@ export function lotteryCreateApi(data) {
 }
 /**
  **
- * @description 九宫格抽奖 -- 修改/编辑
+ * @description Vòng quay 9 ô -- Sửa/chỉnh sửa
  */
 export function lotteryEditApi(id, data) {
   return request({
@@ -66,7 +66,7 @@ export function lotteryEditApi(id, data) {
 
 /**
  **
- * @description 九宫格抽奖 -- 删除
+ * @description Vòng quay 9 ô -- Xóa
  */
 export function lotteryDelApi(id) {
   return request({
@@ -77,7 +77,7 @@ export function lotteryDelApi(id) {
 
 /**
  **
- * @description 九宫格抽奖 -- 显示状态
+ * @description Vòng quay 9 ô -- Trạng thái hiển thị
  */
 export function lotteryStatusApi(data) {
   return request({
@@ -88,7 +88,7 @@ export function lotteryStatusApi(data) {
 
 /**
  **
- * @description 九宫格抽奖 -- 中奖记录
+ * @description Vòng quay 9 ô -- Lịch sử trúng thưởng
  */
 export function lotteryRecordList(data) {
   return request({
@@ -100,7 +100,7 @@ export function lotteryRecordList(data) {
 
 /**
  **
- * @description 九宫格抽奖 -- 中奖发货/备注处理
+ * @description Vòng quay 9 ô -- Giao hàng trúng thưởng / xử lý ghi chú
  */
 export function lotteryRecordDeliver(data) {
   return request({
@@ -112,7 +112,7 @@ export function lotteryRecordDeliver(data) {
 
 /**
  **
- * @description 抽奖列表
+ * @description Danh sách quay thưởng
  */
 export function lotteryList(data) {
   return request({
@@ -123,7 +123,7 @@ export function lotteryList(data) {
 }
 /**
  **
- * @description 抽奖类型获取
+ * @description Lấy loại quay thưởng
  */
 export function factorListApi(data) {
   return request({
@@ -134,7 +134,7 @@ export function factorListApi(data) {
 
 /**
  **
- * @description 抽奖配置保存
+ * @description Lưu cấu hình quay thưởng
  */
 export function factorUseApi(data) {
   return request({
@@ -145,8 +145,8 @@ export function factorUseApi(data) {
 }
 
 /**
- * @description 抽奖状态切换
- * @param data {Object} 传值
+ * @description Chuyển trạng thái quay thưởng
+ * @param data {Object} Truyền giá trị
  */
 export function lotteryStatus(data) {
   return request({

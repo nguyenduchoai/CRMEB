@@ -319,7 +319,7 @@
 					}
 				}
 			},
-            // 获取组件参数
+            // Lấy tham số thành phần (component)
             // getConfig (data) {
             //     newcomerList({
             //         page: 1,

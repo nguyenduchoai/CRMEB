@@ -10,7 +10,7 @@ use app\model\agent\DivisionAgentApply;
 class DivisionAgentApplyDao extends BaseDao
 {
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -19,7 +19,7 @@ class DivisionAgentApplyDao extends BaseDao
     }
 
     /**
-     * 申请代理商列表
+     * Danh sách đăng ký làm đại lý
      * @param array $where
      * @param string $field
      * @param array $with

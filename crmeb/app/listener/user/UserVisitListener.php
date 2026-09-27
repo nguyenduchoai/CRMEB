@@ -8,7 +8,7 @@ use app\services\product\product\StoreVisitServices;
 use crmeb\interfaces\ListenerInterface;
 
 /**
- * 写入用户访问
+ * Ghi lượt truy cập người dùng
  * Class UserVisitListener
  * @package app\listener\user
  */
@@ -18,7 +18,7 @@ class UserVisitListener implements ListenerInterface
     {
         [$uid, $product_id, $product_type, $cate, $type] = $event;
 
-        //写入用户访问记录
+        //Ghi lịch sử truy cập người dùng
         /** @var StoreVisitServices $storeVisit */
         $storeVisit = app()->make(StoreVisitServices::class);
         $storeVisit->setView($uid, $product_id, $product_type, $cate, $type);

@@ -14,28 +14,27 @@
       <el-row class="mb14" v-if="currentTab == 1">
         <el-col>
           <el-button v-auth="['app-wechat-template-sync']" type="primary" v-db-click @click="routineTemplate"
-            >同步小程序订阅消息</el-button
+            >Đồng bộ tin nhắn đăng ký Mini Program</el-button
           >
           <el-button v-auth="['app-wechat-template-sync']" type="primary" v-db-click @click="wechatTemplate"
-            >同步微信模版消息</el-button
+            >Đồng bộ tin nhắn mẫu WeChat</el-button
           >
         </el-col>
       </el-row>
       <el-row class="mb14" v-if="currentTab == 3">
         <el-col>
-          <el-button type="primary" v-db-click @click="notificationForm(0)">添加通知</el-button>
+          <el-button type="primary" v-db-click @click="notificationForm(0)">Thêm thông báo</el-button>
         </el-col>
       </el-row>
       <el-alert v-if="currentTab == 1" type="warning" :closable="false">
         <template slot="title">
-          <p class="alert_title">小程序订阅消息</p>
-          登录微信小程序后台，基本设置，服务类目增加《生活服务 > 百货/超市/便利店》 (否则同步小程序订阅消息会报错)<br />
-          同步小程序订阅消息，是在小程序后台未添加订阅消息模板的前提下使用的，会新增一个模板消息并把信息同步过来，并新本项目数据库。<br />
+          <p class="alert_title">Tin nhắn đăng ký Mini Program</p>
+          Đăng nhập trang quản trị Mini Program WeChat, vào Cài đặt cơ bản, thêm danh mục dịch vụ “Dịch vụ đời sống > Bách hóa/Siêu thị/Cửa hàng tiện lợi” (nếu không, việc đồng bộ tin nhắn đăng ký Mini Program sẽ báo lỗi)<br />
+          Đồng bộ tin nhắn đăng ký Mini Program được dùng khi chưa thêm mẫu tin nhắn đăng ký trong trang quản trị Mini Program, hệ thống sẽ tạo mới một tin nhắn mẫu, đồng bộ thông tin về và cập nhật vào cơ sở dữ liệu của dự án này.<br />
           <br />
-          <p class="alert_title">微信模板消息</p>
-          登录微信公众号后台，选择模板消息，在账号详情下的服务类目中手动设置服务类目，《生活服务 >
-          百货/超市/便利店》(否则同步模板消息不成功)<br />
-          同步公众号模板消息，同步公众号模板会删除公众号后台现有的模板，并重新添加新的模板，然后同步信息到数据库，如果多个项目使用同一个公众号的模板，请谨慎操作。
+          <p class="alert_title">Tin nhắn mẫu WeChat</p>
+          Đăng nhập trang quản trị OA WeChat, chọn Tin nhắn mẫu, trong mục Danh mục dịch vụ ở phần Chi tiết tài khoản, thiết lập thủ công danh mục dịch vụ “Dịch vụ đời sống > Bách hóa/Siêu thị/Cửa hàng tiện lợi” (nếu không, việc đồng bộ tin nhắn mẫu sẽ không thành công)<br />
+          Đồng bộ tin nhắn mẫu OA WeChat, thao tác này sẽ xóa các mẫu hiện có trong trang quản trị OA WeChat và thêm lại mẫu mới, sau đó đồng bộ thông tin vào cơ sở dữ liệu, nếu nhiều dự án dùng chung mẫu của cùng một OA WeChat, vui lòng thao tác thận trọng.
         </template>
       </el-alert>
       <el-table
@@ -44,25 +43,25 @@
         class="mt14"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column label="ID" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="通知类型" min-width="130">
+        <el-table-column label="Loại thông báo" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="通知场景说明" min-width="130">
+        <el-table-column label="Mô tả tình huống thông báo" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.title }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="站内信" min-width="130">
+        <el-table-column label="Thông báo nội bộ" min-width="130">
           <template slot-scope="scope">
             <el-switch
               v-if="scope.row.is_system !== 0"
@@ -78,7 +77,7 @@
             <div v-else>-</div>
           </template>
         </el-table-column>
-        <el-table-column label="公众号模板" min-width="130">
+        <el-table-column label="Mẫu OA WeChat" min-width="130">
           <template slot-scope="scope">
             <el-switch
               v-if="scope.row.is_wechat !== 0"
@@ -95,7 +94,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="发送短信" min-width="130">
+        <el-table-column label="Gửi SMS" min-width="130">
           <template slot-scope="scope">
             <el-switch
               v-if="scope.row.is_sms !== 0"
@@ -110,7 +109,7 @@
             <div v-else>-</div>
           </template>
         </el-table-column>
-        <el-table-column label="企业微信" min-width="130" v-if="currentTab != 1">
+        <el-table-column label="WeCom" min-width="130" v-if="currentTab != 1">
           <template slot-scope="scope">
             <el-switch
               v-if="scope.row.is_ent_wechat !== 0"
@@ -125,7 +124,7 @@
             <div v-else>-</div>
           </template>
         </el-table-column>
-        <el-table-column label="小程序订阅" min-width="130" v-if="currentTab == 1 || currentTab == 3">
+        <el-table-column label="Tin nhắn đăng ký Mini Program" min-width="130" v-if="currentTab == 1 || currentTab == 3">
           <template slot-scope="scope">
             <el-switch
               v-if="scope.row.is_routine !== 0"
@@ -141,14 +140,14 @@
             <div v-else>-</div>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" :width="currentTab == 3 ? 130 : 70">
+        <el-table-column label="Thao tác" fixed="right" :width="currentTab == 3 ? 130 : 70">
           <template slot-scope="scope">
-            <a class="setting btn" v-db-click @click="setting(scope.row)">设置</a>
+            <a class="setting btn" v-db-click @click="setting(scope.row)">Cài đặt</a>
             <template v-if="currentTab == 3">
               <el-divider direction="vertical"></el-divider>
-              <a class="setting btn" v-db-click @click="notificationForm(scope.row.id)">编辑</a>
+              <a class="setting btn" v-db-click @click="notificationForm(scope.row.id)">Sửa</a>
               <el-divider direction="vertical"></el-divider>
-              <a class="setting btn" v-db-click @click="del(scope.row, '删除', scope.$index)">删除</a>
+              <a class="setting btn" v-db-click @click="del(scope.row, 'Xóa', scope.$index)">Xóa</a>
             </template>
           </template>
         </el-table-column>
@@ -166,9 +165,9 @@ export default {
       modalTitle: '',
       notificationModal: false,
       headerList: [
-        { label: '会员通知', value: '1' },
-        { label: '平台通知', value: '2' },
-        { label: '自定义通知', value: '3' },
+        { label: 'Thông báo thành viên', value: '1' },
+        { label: 'Thông báo nền tảng', value: '2' },
+        { label: 'Thông báo tùy chỉnh', value: '3' },
       ],
       levelLists: [],
       currentTab: '1',
@@ -197,7 +196,7 @@ export default {
         this.levelLists = res.data;
       });
     },
-    // 同步订阅消息
+    // Đồng bộ tin nhắn đăng ký
     routineTemplate() {
       routineSyncTemplate()
         .then((res) => {
@@ -208,7 +207,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 同步微信模版消息
+    // Đồng bộ tin nhắn mẫu WeChat
     wechatTemplate() {
       wechatSyncTemplate()
         .then((res) => {
@@ -219,11 +218,11 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 开启关闭
+    // Bật tắt
     changeStatus() {},
-    // 列表
+    // Danh sách
     notice() {},
-    // 设置
+    // Cài đặt
     setting(row) {
       this.$router.push({
         path: this.$routeProStr + '/setting/notification/notificationEdit?id=' + row.id,
@@ -239,7 +238,7 @@ export default {
         this.notificationModal = true;
       });
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,

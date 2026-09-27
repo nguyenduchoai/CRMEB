@@ -27,11 +27,11 @@
 import { mapState, mapMutations } from 'vuex';
 export default {
   name: 'z_ueditor',
-  cname: '富文本',
+  cname: 'Văn bản định dạng',
   configName: 'c_ueditor_box',
   icon: '#iconzujian-fuwenben',
-  type: 2, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'richText', // 外面匹配名称
+  type: 2, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'richText', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -68,19 +68,19 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
-        cname: '富文本',
+        cname: 'Văn bản định dạng',
         name: 'richText',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
         },
-        titleLeft: '富文本内容',
-        titleRight: '通用样式',
+        titleLeft: 'Nội dung văn bản định dạng',
+        titleRight: 'Kiểu chung',
         bgColor: {
-          title: '组件背景',
+          title: 'Nền thành phần',
           name: 'bgColor',
           default: [
             {
@@ -94,7 +94,7 @@ export default {
           ],
         },
         bottomBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           name: 'bgColor',
           default: [
             {
@@ -108,22 +108,22 @@ export default {
           ],
         },
         topConfig: {
-          title: '上边距',
+          title: 'Lề trên',
           val: 0,
           min: 0,
         },
         bottomConfig: {
-          title: '下边距',
+          title: 'Lề dưới',
           val: 0,
           min: 0,
         },
         lrConfig: {
-          title: '左右边距',
+          title: 'Lề trái phải',
           val: 0,
           min: 0,
         },
         udConfig: {
-          title: '页面上间距',
+          title: 'Lề trên trang',
           val: 0,
           min: 0,
         },
@@ -131,19 +131,19 @@ export default {
           val: '',
         },
         fillet: {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 0,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],

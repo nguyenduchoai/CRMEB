@@ -12,11 +12,11 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'home_service',
-  cname: '在线客服',
+  cname: 'CSKH trực tuyến',
   configName: 'c_home_service',
   icon: 'iconkefu1',
-  type: 2, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'customerService', // 外面匹配名称
+  type: 2, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'customerService', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -60,12 +60,12 @@ export default {
           tabVal: 0,
         },
         logoConfig: {
-          title: '最多可添加1张图片，建议宽度100 * 100px',
+          title: 'Có thể thêm tối đa 1 ảnh, kích thước đề xuất 100 * 100px',
           url: '',
         },
-        // 页面间距
+        // Lề trang
         topConfig: {
-          title: '距顶部比例',
+          title: 'Tỷ lệ cách mép trên',
           val: 0,
           min: 0,
         },

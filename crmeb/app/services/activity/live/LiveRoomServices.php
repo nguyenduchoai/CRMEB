@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -144,7 +144,7 @@ class LiveRoomServices extends BaseServices
             $coverImg = $downloadImage->downloadImage($room['cover_img'])['path'];
             $shareImg = $downloadImage->downloadImage($room['share_img'])['path'];
         } catch (\Throwable $e) {
-            Log::error('添加直播间封面图出错误，原因：' . $e->getMessage());
+            Log::error('Lỗi khi thêm ảnh bìa phòng livestream, nguyên nhân:' . $e->getMessage());
             $coverImg = $room['cover_img'];
             $shareImg = $room['share_img'];
         }
@@ -198,7 +198,7 @@ class LiveRoomServices extends BaseServices
     }
 
     /**
-     * 直播间添加商品
+     * Thêm sản phẩm vào phòng livestream
      * @param $room_id
      * @param array $ids
      * @return bool
@@ -218,7 +218,7 @@ class LiveRoomServices extends BaseServices
         $data = [];
         /** @var LiveRoomGoodsServices $liveRoomGoodsServices */
         $liveRoomGoodsServices = app()->make(LiveRoomGoodsServices::class);
-        //查询已经关联的
+        //Truy vấn các mục đã liên kết
         $roomGoods = $liveRoomGoodsServices->getColumn(['live_room_id' => $room_id], 'live_goods_id', 'Live_goods_id');
         $goods_ids = [];
         foreach ($goods as $key => $item) {
@@ -240,7 +240,7 @@ class LiveRoomServices extends BaseServices
     }
 
     /**
-     * 同步直播间状态
+     * Đồng bộ trạng thái phòng livestream
      * @return bool
      * @throws \Exception
      */

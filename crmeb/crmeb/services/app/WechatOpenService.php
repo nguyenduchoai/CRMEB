@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -42,7 +42,7 @@ class WechatOpenService
     }
 
     /**
-     * 使用授权码换取公众号的接口调用凭据和授权信息
+     * Dùng mã ủy quyền để đổi lấy thông tin xác thực gọi API và thông tin ủy quyền của OA WeChat
      * @param string $code
      * @return \EasyWeChat\Support\Collection
      */
@@ -52,7 +52,7 @@ class WechatOpenService
     }
 
     /**
-     * 获取授权方的公众号帐号基本信息
+     * Lấy thông tin cơ bản tài khoản OA WeChat của bên được ủy quyền
      * @param string $appid
      * @return \EasyWeChat\Support\Collection
      */

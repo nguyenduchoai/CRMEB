@@ -10,62 +10,62 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="优惠券名称：" label-for="coupon_title">
+          <el-form-item label="Tên phiếu giảm giá:" label-for="coupon_title">
             <el-input
               v-model="tableFrom.coupon_title"
-              placeholder="请输入优惠券名称"
+              placeholder="Vui lòng nhập tên phiếu giảm giá"
               class="form_content_width"
               maxlength="18"
               show-word-limit
             />
           </el-form-item>
-          <el-form-item label="优惠券类型：" label-for="coupon_type">
+          <el-form-item label="Loại phiếu giảm giá:" label-for="coupon_type">
             <el-select
               v-model="tableFrom.coupon_type"
-              placeholder="请选择"
+              placeholder="Vui lòng chọn"
               clearable
               @change="userSearchs"
               class="form_content_width"
             >
-              <el-option value="0" label="通用券"></el-option>
-              <el-option value="1" label="品类券"></el-option>
-              <el-option value="2" label="商品券"></el-option>
+              <el-option value="0" label="Phiếu toàn cửa hàng"></el-option>
+              <el-option value="1" label="Phiếu theo danh mục"></el-option>
+              <el-option value="2" label="Phiếu theo sản phẩm"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="是否有效：" label-for="status">
+          <el-form-item label="Trạng thái hiệu lực:" label-for="status">
             <el-select
               v-model="tableFrom.status"
-              placeholder="请选择"
+              placeholder="Vui lòng chọn"
               clearable
               @change="userSearchs"
               class="form_content_width"
             >
-              <el-option value="1" label="正常"></el-option>
-              <el-option value="0" label="未开启"></el-option>
+              <el-option value="1" label="Bình thường"></el-option>
+              <el-option value="0" label="Chưa bật"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="发放方式：" label-for="status">
+          <el-form-item label="Hình thức phát hành:" label-for="status">
             <el-select
               v-model="receive_type"
-              placeholder="请选择"
+              placeholder="Vui lòng chọn"
               clearable
               @change="userSearchs"
               class="form_content_width"
             >
-              <el-option value="all" label="全部"></el-option>
-              <el-option value="1" label="用户领取"></el-option>
-              <el-option value="2" label="系统赠送"></el-option>
+              <el-option value="all" label="Tất cả"></el-option>
+              <el-option value="1" label="Người dùng tự nhận"></el-option>
+              <el-option value="2" label="Hệ thống tặng"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="userSearchs">查询</el-button>
+            <el-button type="primary" v-db-click @click="userSearchs">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
     <el-card :bordered="false" shadow="never" class="ivu-mt mt16">
       <el-button v-auth="['admin-marketing-store_coupon-add']" type="primary" icon="md-add" v-db-click @click="add"
-        >添加优惠券</el-button
+        >Thêm phiếu giảm giá</el-button
       >
       <el-table
         :data="tableList"
@@ -73,65 +73,65 @@
         class="mt14"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column label="ID" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="优惠券名称" min-width="150">
+        <el-table-column label="Tên phiếu giảm giá" min-width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.coupon_title }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="优惠券类型" min-width="80">
+        <el-table-column label="Loại phiếu giảm giá" min-width="80">
           <template slot-scope="scope">
-            <span v-if="scope.row.type === 1">品类券</span>
-            <span v-else-if="scope.row.type === 2">商品券</span>
-            <span v-else-if="scope.row.type === 3">会员券</span>
-            <span v-else>通用券</span>
+            <span v-if="scope.row.type === 1">Phiếu theo danh mục</span>
+            <span v-else-if="scope.row.type === 2">Phiếu theo sản phẩm</span>
+            <span v-else-if="scope.row.type === 3">Phiếu thành viên</span>
+            <span v-else>Phiếu toàn cửa hàng</span>
           </template>
         </el-table-column>
-        <el-table-column label="面值" min-width="100">
+        <el-table-column label="Mệnh giá" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.coupon_price }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="领取方式" min-width="150">
+        <el-table-column label="Hình thức nhận" min-width="150">
           <template slot-scope="scope">
-            <span v-if="scope.row.receive_type === 1 || scope.row.receive_type === 4">用户领取</span>
-            <span v-else>系统赠送</span>
+            <span v-if="scope.row.receive_type === 1 || scope.row.receive_type === 4">Người dùng tự nhận</span>
+            <span v-else>Hệ thống tặng</span>
           </template>
         </el-table-column>
-        <el-table-column label="领取日期" min-width="100">
+        <el-table-column label="Ngày nhận" min-width="100">
           <template slot-scope="scope">
             <div v-if="scope.row.start_time">
               {{ scope.row.start_time | formatDate }} - {{ scope.row.end_time | formatDate }}
             </div>
-            <span v-else>不限时</span>
+            <span v-else>Không giới hạn thời gian</span>
           </template>
         </el-table-column>
-        <el-table-column label="使用时间" min-width="100">
+        <el-table-column label="Thời gian sử dụng" min-width="100">
           <template slot-scope="scope">
             <div v-if="scope.row.start_use_time">
               {{ scope.row.start_use_time | formatDate }} -
               {{ scope.row.end_use_time | formatDate }}
             </div>
-            <div v-else>{{ scope.row.coupon_time }}天</div>
+            <div v-else>{{ scope.row.coupon_time }} ngày</div>
           </template>
         </el-table-column>
-        <el-table-column label="发布数量" min-width="100">
+        <el-table-column label="Số lượng phát hành" min-width="100">
           <template slot-scope="scope">
-            <span v-if="scope.row.is_permanent">不限量</span>
+            <span v-if="scope.row.is_permanent">Không giới hạn</span>
             <div v-else>
-              <span class="fa">发布：{{ scope.row.total_count }}</span>
-              <span class="sheng ml10">剩余：{{ scope.row.remain_count }}</span>
+              <span class="fa">Phát hành: {{ scope.row.total_count }}</span>
+              <span class="sheng ml10">Còn lại: {{ scope.row.remain_count }}</span>
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="是否开启" min-width="100">
+        <el-table-column label="Bật" min-width="100">
           <template slot-scope="scope">
             <el-switch
               :active-value="1"
@@ -144,15 +144,15 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="200">
+        <el-table-column label="Thao tác" fixed="right" width="200">
           <template slot-scope="scope">
-            <a v-db-click @click="receive(scope.row)">领取记录</a>
+            <a v-db-click @click="receive(scope.row)">Lịch sử nhận</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="edit(scope.row)">编辑</a>
+            <a v-db-click @click="edit(scope.row)">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="copy(scope.row)">复制</a>
+            <a v-db-click @click="copy(scope.row)">Sao chép</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="couponDel(scope.row, '删除发布的优惠券', scope.$index)">删除</a>
+            <a v-db-click @click="couponDel(scope.row, 'Xóa phiếu giảm giá đã phát hành', scope.$index)">Xóa</a>
           </template>
         </el-table-column>
       </el-table>
@@ -166,35 +166,35 @@
         />
       </div>
     </el-card>
-    <!-- 领取记录 -->
-    <el-dialog :visible.sync="modals2" title="领取记录" :close-on-click-modal="false" width="720px">
+    <!-- Lịch sử nhận -->
+    <el-dialog :visible.sync="modals2" title="Lịch sử nhận" :close-on-click-modal="false" width="720px">
       <el-table
         :data="receiveList"
         ref="table"
         v-loading="loading2"
         highlight-current-row
         height="500"
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column label="ID" min-width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.uid }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="用户名" min-width="150">
+        <el-table-column label="Tên người dùng" min-width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.nickname }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="用户头像" min-width="150">
+        <el-table-column label="Ảnh đại diện người dùng" min-width="150">
           <template slot-scope="scope">
             <div class="tabBox_img" v-viewer>
               <img v-lazy="scope.row.avatar" />
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="领取时间" min-width="150">
+        <el-table-column label="Thời gian nhận" min-width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.add_time }}</span>
           </template>
@@ -271,7 +271,7 @@ export default {
     },
   },
   methods: {
-    // 失效
+    // Hết hiệu lực
     couponInvalid(row, tit, num) {
       this.delfromData = {
         title: tit,
@@ -282,7 +282,7 @@ export default {
       };
       this.$refs.modelSure.modals = true;
     },
-    // 领取记录
+    // Lịch sử nhận
     receive(row) {
       this.modals2 = true;
       this.rows = row;
@@ -302,12 +302,12 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 领取记录改变分页
+    // Thay đổi phân trang của lịch sử nhận
     receivePageChange(index) {
       this.receiveFrom.page = index;
       this.getReceivelist(this.rows);
     },
-    // 删除
+    // Xóa
     couponDel(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -326,7 +326,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       this.tableFrom.receive_type = this.receive_type === 'all' ? '' : this.receive_type;
@@ -343,28 +343,28 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.tableFrom.page = 1;
       this.getList();
     },
-    // 添加优惠券
+    // Thêm phiếu giảm giá
     add() {
       this.$router.push({ path: this.$routeProStr + '/marketing/store_coupon_issue/create' });
     },
-    // 复制
+    // Sao chép
     copy(data) {
       this.$router.push({
         path: this.$routeProStr + `/marketing/store_coupon_issue/create/${data.id}`,
       });
     },
-    // 复制
+    // Sao chép
     edit(data) {
       this.$router.push({
         path: this.$routeProStr + `/marketing/store_coupon_issue/create/${data.id}/1`,
       });
     },
-    // 是否开启
+    // Bật
     openChange(data) {
       couponStatusApi(data).then(() => this.getList());
     },

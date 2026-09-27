@@ -1,73 +1,73 @@
 .
 ├── basic
-│   ├── BaseController.php //控制器基类
-│   ├── BaseJobs.php //队列基类
-│   ├── BaseManager.php //驱动管理基类
-│   ├── BaseModel.php //model基类
-│   └── BaseStorage.php //驱动基类
+│   ├── BaseController.php //Lớp cơ sở của controller
+│   ├── BaseJobs.php //Lớp cơ sở của hàng đợi
+│   ├── BaseManager.php //Lớp cơ sở quản lý driver
+│   ├── BaseModel.php //Lớp cơ sở của model
+│   └── BaseStorage.php //Lớp cơ sở của driver
 ├── command
-│   ├── stubs //命令模版
-│   ├── Dao.php //创建Dao类命令
-│   ├── Service.php //创建Service类命令
-│   ├── Timer.php //定时任务命令类
-│   └── Workerman.php //workman命令类
+│   ├── stubs //Mẫu lệnh (stub)
+│   ├── Dao.php //Lệnh tạo lớp Dao
+│   ├── Service.php //Lệnh tạo lớp Service
+│   ├── Timer.php //Lớp lệnh tác vụ định kỳ
+│   └── Workerman.php //Lớp lệnh workman
 ├── exceptions
-│   ├── AdminException.php //后台管理端异常处理
-│   ├── ApiException.php //移动端接口异常处理
-│   ├── AuthException.php //用户授权异常处理
-│   ├── PayException.php //支付异常处理
-│   ├── SmsException.php //短信异常处理
-│   ├── TemplateException.php //微信模版消息异常处理
-│   ├── UploadException.php //上传异常处理
-│   └── WechatReplyException.php //微信自动回复异常处理
+│   ├── AdminException.php //Xử lý ngoại lệ cho trang quản trị
+│   ├── ApiException.php //Xử lý ngoại lệ API di động
+│   ├── AuthException.php //Xử lý ngoại lệ ủy quyền người dùng
+│   ├── PayException.php //Xử lý ngoại lệ thanh toán
+│   ├── SmsException.php //Xử lý ngoại lệ SMS
+│   ├── TemplateException.php //Xử lý ngoại lệ tin nhắn mẫu WeChat
+│   ├── UploadException.php //Xử lý ngoại lệ tải lên
+│   └── WechatReplyException.php //Xử lý ngoại lệ trả lời tự động WeChat
 ├── interfaces
-│   ├── JobInterface.php //队列任务
-│   ├── ListenerInterface.php //事件
-│   ├── MiddlewareInterface.php //中间件
-│   └── ProviderInterface.php //容器
+│   ├── JobInterface.php //Tác vụ hàng đợi
+│   ├── ListenerInterface.php //Sự kiện
+│   ├── MiddlewareInterface.php //Middleware (phần mềm trung gian)
+│   └── ProviderInterface.php //Container
 ├── services
-│   ├── app //应用端
+│   ├── app //Phía ứng dụng
 │   ├── easywechat //easywechat
-│   ├── express //物流查询
-│   ├── pay //支付
-│   ├── printer //打印机
-│   ├── copyproduct //采集商品
-│   ├── serve //服务平台
-│   ├── sms //短信
-│   ├── template //模版消息
-│   ├── upload //上传
+│   ├── express //Tra cứu vận chuyển
+│   ├── pay //Thanh toán
+│   ├── printer //Máy in
+│   ├── copyproduct //Thu thập sản phẩm
+│   ├── serve //Nền tảng dịch vụ
+│   ├── sms //SMS
+│   ├── template //Tin nhắn mẫu
+│   ├── upload //Tải lên
 │   ├── workerman //workerman
-│   ├── AccessTokenServeService.php //获取token
+│   ├── AccessTokenServeService.php //Lấy token
 │   ├── AliPayService.php
-│   ├── CacheService.php //缓存类
-│   ├── FileService.php //文件处理类
-│   ├── FormBuilder.php //自动生成表单类
-│   ├── GroupDataService.php //组合数据类
-│   ├── HttpService.php //curl 请求处理类
-│   ├── MysqlBackupService.php //数据库备份管理类
-│   ├── SpreadsheetExcelService.php //excel处理类
-│   ├── SystemConfigService.php //系统配置获取类
-│   ├── UpgradeService.php //系统更新类
-│   └──  UploadService.php //文件上传类
+│   ├── CacheService.php //Lớp bộ nhớ đệm (cache)
+│   ├── FileService.php //Lớp xử lý tệp
+│   ├── FormBuilder.php //Lớp tự động tạo biểu mẫu
+│   ├── GroupDataService.php //Lớp dữ liệu tổ hợp
+│   ├── HttpService.php //curl lớp xử lý yêu cầu
+│   ├── MysqlBackupService.php //Lớp quản lý sao lưu cơ sở dữ liệu
+│   ├── SpreadsheetExcelService.php //Lớp xử lý excel
+│   ├── SystemConfigService.php //Lớp lấy cấu hình hệ thống
+│   ├── UpgradeService.php //Lớp cập nhật hệ thống
+│   └──  UploadService.php //Lớp tải lên tệp
 ├── traits
-│   ├── ErrorTrait.php //错误处理扩展类
-│   ├── JwtAuthModelTrait.php //Jwt鉴权扩展类
-│   ├── ModelTrait.php //model扩展类
-│   ├── QueueTrait.php //队列扩展累
-│   ├── SearchDaoTrait.php //dao扩展类
-│   └── ServicesTrait.php //Services扩展类
+│   ├── ErrorTrait.php //Lớp mở rộng xử lý lỗi
+│   ├── JwtAuthModelTrait.php //Lớp mở rộng xác thực Jwt
+│   ├── ModelTrait.php //Lớp mở rộng model
+│   ├── QueueTrait.php //Lớp mở rộng hàng đợi
+│   ├── SearchDaoTrait.php //Lớp mở rộng dao
+│   └── ServicesTrait.php //Lớp mở rộng Services
 ├── utils
-│   ├── Arr.php //操作数组帮助类
-│   ├── Canvas.php //图片处理类
-│   ├── Captcha.php //验证码类
-│   ├── DownloadImage.php //远程图片下载类
-│   ├── ErrorCode.php //错误码处理类
-│   ├── Hook.php //钩子类
-│   ├── Json.php //Json处理类
-│   ├── JwtAuth.php //Jwt鉴权类
-│   ├── QRcode.php //二维码获取类 TODO
-│   ├── Queue.php //队列类
-│   └── Str.php //字符处理类
+│   ├── Arr.php //Lớp hỗ trợ thao tác mảng
+│   ├── Canvas.php //Lớp xử lý hình ảnh
+│   ├── Captcha.php //Lớp mã xác thực (captcha)
+│   ├── DownloadImage.php //Lớp tải xuống hình ảnh từ xa
+│   ├── ErrorCode.php //Lớp xử lý mã lỗi
+│   ├── Hook.php //Lớp hook
+│   ├── Json.php //Lớp xử lý Json
+│   ├── JwtAuth.php //Lớp xác thực Jwt
+│   ├── QRcode.php //Lớp lấy mã QR TODO
+│   ├── Queue.php //Lớp hàng đợi
+│   └── Str.php //Lớp xử lý chuỗi ký tự
 └── filetree.txt
 
 17 directories, 70 files

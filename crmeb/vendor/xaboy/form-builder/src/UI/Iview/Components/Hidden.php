@@ -52,6 +52,6 @@ class Hidden extends FormComponent
      */
     public function createValidate()
     {
-        throw new FormBuilderException('hidden 组件不支持 createValidate 方法');
+        throw new FormBuilderException('Thành phần hidden không hỗ trợ phương thức createValidate');
     }
 }

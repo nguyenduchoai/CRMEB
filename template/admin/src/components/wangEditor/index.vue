@@ -4,14 +4,14 @@
       <div ref="wang-editor" class="wang-editor" />
     </div>
     <div v-if="monacoBox">
-      <el-button type="primary" class="bottom" v-db-click @click="getHtmlint">可视化界面</el-button>
+      <el-button type="primary" class="bottom" v-db-click @click="getHtmlint">Giao diện trực quan</el-button>
       <monaco class="monaco-box" @change="changeValue" :value="newHtml" />
     </div>
 
-    <el-dialog :visible.sync="modalPic" width="1024px" title="上传图片" :close-on-click-modal="false">
+    <el-dialog :visible.sync="modalPic" width="1024px" title="Tải lên ảnh" :close-on-click-modal="false">
       <uploadPictures v-if="modalPic" :isChoice="isChoice" @getPic="getPic"></uploadPictures>
     </el-dialog>
-    <el-dialog :visible.sync="modalVideo" width="1024px" title="上传视频" :close-on-click-modal="false">
+    <el-dialog :visible.sync="modalVideo" width="1024px" title="Tải lên video" :close-on-click-modal="false">
       <uploadVideo v-if="modalVideo" @getVideo="getvideo"></uploadVideo>
     </el-dialog>
   </div>
@@ -45,7 +45,7 @@ export default {
       monacoBox: false,
       value: '',
       modalPic: false,
-      isChoice: '多选',
+      isChoice: 'Chọn nhiều',
       picTit: 'danFrom',
       img: '',
       modalVideo: false,
@@ -93,7 +93,7 @@ export default {
 
       this.$emit('input', value);
     },
-    // 获取多张图信息
+    // Lấy thông tin nhiều ảnh
     getPic(pc) {
       let _this = this;
       _this.img = pc;
@@ -104,7 +104,7 @@ export default {
     },
     getimg() {
       this.modalPic = true;
-      this.isChoice = '多选';
+      this.isChoice = 'Chọn nhiều';
     },
     getvideoint() {
       // this.modalVideo = true;
@@ -175,21 +175,21 @@ export default {
         'code',
         'splitLine',
       ];
-      // 配置全屏功能按钮是否展示
+      // Cấu hình nút chức năng toàn màn hình có hiển thị hay không
       //   this.editor.config.showFullScreen = false
       this.editor.config.uploadImgShowBase64 = true;
       //   this.editor.config.uploadImgAccept = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp']
       this.editor.config.zIndex = 0;
       //   this.editor.config.uploadImgMaxSize = this.uploadSize * 1024 * 1024
       this.editor.config.compatibleMode = () => {
-        // 返回 true 表示使用兼容模式；返回 false 使用标准模式
+        // Trả về true nghĩa là dùng chế độ tương thích; trả về false là dùng chế độ chuẩn
         return true;
       };
       this.editor.config.onchange = (newHtml) => {
         this.newHtml = newHtml;
         this.$emit('editorContent', newHtml);
       };
-      this.editor.config.onchangeTimeout = 300; // change后多久更新数据
+      this.editor.config.onchangeTimeout = 300; // Sau bao lâu thì cập nhật dữ liệu kể từ khi change
 
       this.editor.create();
     },

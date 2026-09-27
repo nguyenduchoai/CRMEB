@@ -14,7 +14,7 @@
 			<video class="vid" :src="advData.video_link" :autoplay="true" :loop="true" :muted="true"
 				:controls="false"></video>
 		</view>
-		<view class="jump-over" @click.stop="launchFlag()">{{$t(`跳过`)}}<text v-if="closeType == 1">{{times}}</text>
+		<view class="jump-over" @click.stop="launchFlag()">{{$t(`Bỏ qua`)}}<text v-if="closeType == 1">{{times}}</text>
 		</view>
 	</view>
 </template>
@@ -25,8 +25,8 @@
 			return {
 				autoplay: true,
 				duration: 500,
-				jumpover: this.$t(`跳过`),
-				experience: this.$t(`立即体验`),
+				jumpover: this.$t(`Bỏ qua`),
+				experience: this.$t(`Trải nghiệm ngay`),
 				timecount: undefined,
 				times: 0
 			}
@@ -36,7 +36,7 @@
 				type: Object,
 				default: () => {}
 			},
-			// 1 倒计时 2 手动关闭(预留)
+			// 1 đếm ngược 2 đóng thủ công (dự trữ)
 			closeType: {
 				type: Number,
 				default: 1

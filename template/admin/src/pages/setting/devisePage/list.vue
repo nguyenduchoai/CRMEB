@@ -3,7 +3,7 @@
     <el-card :bordered="false" shadow="never" class="ivu-mt">
       <el-row>
         <el-col v-bind="grid">
-          <el-button v-auth="['admin-template']" type="primary" v-db-click @click="add">添加模板</el-button>
+          <el-button v-auth="['admin-template']" type="primary" v-db-click @click="add">Thêm mẫu</el-button>
         </el-col>
       </el-row>
       <el-table
@@ -12,51 +12,51 @@
         class="mt14"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
-        <el-table-column label="页面ID" width="90">
+        <el-table-column label="ID trang" width="90">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="页面名称" min-width="130">
+        <el-table-column label="Tên trang" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="页面类型" min-width="130">
+        <el-table-column label="Loại trang" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.template_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="添加时间" min-width="130">
+        <el-table-column label="Thời gian thêm" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.add_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="更新时间" min-width="130">
+        <el-table-column label="Thời gian cập nhật" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.update_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="170">
+        <el-table-column label="Thao tác" fixed="right" width="170">
           <template slot-scope="scope">
             <div style="display: inline-block" v-if="scope.row.status != 1">
-              <a v-db-click @click="setStatus(scope.row, index)">设为首页</a>
+              <a v-db-click @click="setStatus(scope.row, index)">Đặt làm trang chủ</a>
             </div>
             <el-divider direction="vertical" v-if="scope.row.status != 1" />
             <div style="display: inline-block" v-if="scope.row.status || scope.row.type">
-              <a v-db-click @click="edit(scope.row)">编辑</a>
+              <a v-db-click @click="edit(scope.row)">Sửa</a>
             </div>
             <el-divider direction="vertical" v-if="scope.row.status || scope.row.type" />
             <template>
               <el-dropdown size="small" @command="changeMenu(scope.row, index, $event)" :transfer="true">
-                <span class="el-dropdown-link">更多<i class="el-icon-arrow-down el-icon--right"></i> </span>
+                <span class="el-dropdown-link">Xem thêm<i class="el-icon-arrow-down el-icon--right"></i> </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item command="1" v-show="!scope.row.type">设置默认数据</el-dropdown-item>
-                  <el-dropdown-item command="2" v-show="!scope.row.type">恢复默认数据</el-dropdown-item>
-                  <el-dropdown-item command="3" v-show="scope.row.id != 1">删除模板</el-dropdown-item>
+                  <el-dropdown-item command="1" v-show="!scope.row.type">Đặt dữ liệu mặc định</el-dropdown-item>
+                  <el-dropdown-item command="2" v-show="!scope.row.type">Khôi phục dữ liệu mặc định</el-dropdown-item>
+                  <el-dropdown-item command="3" v-show="scope.row.id != 1">Xóa mẫu</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </template>
@@ -66,7 +66,7 @@
     </el-card>
     <el-dialog
       :visible.sync="isTemplate"
-      title="开发移动端链接"
+      title="Liên kết di động phát triển"
       width="470px"
       :show-close="true"
       :close-on-click-modal="false"
@@ -84,7 +84,7 @@
             <el-row :gutter="24">
               <el-col :span="24">
                 <el-col v-bind="grid">
-                  <el-form-item label="开发移动端链接：" prop="link" label-for="link">
+                  <el-form-item label="Liên kết di động phát triển:" prop="link" label-for="link">
                     <el-input v-model="formItem.link" placeholder="http://localhost:8080" />
                   </el-form-item>
                 </el-col>
@@ -94,8 +94,8 @@
         </el-card>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button v-db-click @click="cancel">取消</el-button>
-        <el-button type="primary" v-db-click @click="handleSubmit('formItem')">提交</el-button>
+        <el-button v-db-click @click="cancel">Hủy</el-button>
+        <el-button type="primary" v-db-click @click="handleSubmit('formItem')">Gửi</el-button>
       </span>
     </el-dialog>
   </div>
@@ -124,7 +124,7 @@ export default {
         link: '',
       },
       ruleValidate: {
-        link: [{ required: true, message: '请输入移动端链接', trigger: 'blur' }],
+        link: [{ required: true, message: 'Vui lòng nhập liên kết di động', trigger: 'blur' }],
       },
     };
   },
@@ -158,12 +158,12 @@ export default {
           this.recovery(row);
           break;
         case '3':
-          this.del(row, '删除此模板', index);
+          this.del(row, 'Xóa mẫu này', index);
           break;
         default:
       }
     },
-    //设置默认数据
+    //Đặt dữ liệu mặc định
     setDefault(row) {
       getRecovery(row.id)
         .then((res) => {
@@ -174,11 +174,11 @@ export default {
           this.$message.error(err.msg);
         });
     },
-    // 添加
+    // Thêm
     add() {
       this.$modalForm(getDiyCreate()).then(() => this.getList());
     },
-    // 获取列表
+    // Lấy danh sách
     getList() {
       this.loading = true;
       diyList().then((res) => {
@@ -186,7 +186,7 @@ export default {
         this.list = res.data.list;
       });
     },
-    // 编辑
+    // Sửa
     edit(row) {
       this.formItem.id = row.id;
       if (row.type) {
@@ -195,7 +195,7 @@ export default {
         this.$router.push({ path: this.$routeProStr + '/setting/pages/diy', query: { id: row.id, type: 0 } });
       }
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -212,7 +212,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 使用模板
+    // Dùng mẫu
     setStatus(row) {
       setStatus(row.id)
         .then((res) => {

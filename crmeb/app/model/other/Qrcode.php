@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -26,19 +26,19 @@ class Qrcode extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'qrcode';
 
     /**
-     * type 搜索器
+     * Bộ lọc type
      * @param Model $query
      * @param $value
      */
@@ -50,7 +50,7 @@ class Qrcode extends BaseModel
     }
 
     /**
-     * status 搜索器
+     * Bộ lọc status
      * @param Model $query
      * @param $value
      */
@@ -62,7 +62,7 @@ class Qrcode extends BaseModel
     }
 
     /**
-     * third_type 搜索器
+     * Bộ lọc third_type
      * @param Model $query
      * @param $value
      */
@@ -74,7 +74,7 @@ class Qrcode extends BaseModel
     }
 
     /**
-     * third_id 搜索器
+     * Bộ lọc third_id
      * @param Model $query
      * @param $value
      */

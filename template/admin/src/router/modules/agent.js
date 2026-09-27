@@ -1,9 +1,9 @@
 // +---------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +---------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +---------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +---------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +---------------------------------------------------------------------
@@ -31,7 +31,7 @@ export default {
       name: `${pre}agentManage`,
       meta: {
         auth: ['agent-agent-manage'],
-        title: '分销员管理',
+        title: 'Quản lý cộng tác viên',
       },
       component: () => import('@/pages/agent/agentManage'),
     },
@@ -40,7 +40,7 @@ export default {
       name: `${pre}agentManage`,
       meta: {
         auth: ['admin-agent-spread-apply'],
-        title: '分销员申请',
+        title: 'Đơn đăng ký cộng tác viên',
       },
       component: () => import('@/pages/agent/spread/apply'),
     },

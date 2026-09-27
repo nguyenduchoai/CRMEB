@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# 进入项目容器运行PHP脚本文件
+# Vào container dự án để chạy file script PHP
 
-# 进入容器
+# Vào container
 docker exec -it crmeb_php /bin/bash
-# 进入项目
+# Vào dự án
 cd /var/www
-# 启动 定时任务
+# Khởi động tác vụ định kỳ
 php think timer start --d
-# 启动 长连接
+# Khởi động kết nối lâu dài
 php think workerman start --d
-# 启动 队列
+# Khởi động hàng đợi
 php think queue:listen --queue
 

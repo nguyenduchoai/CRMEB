@@ -88,7 +88,7 @@ class WordData extends BaseData
                 || $targetPoint->x > $originPoint->x + self::FONTSIZE
                 || $targetPoint->y - self::FONTSIZE > $originPoint->y
                 || $targetPoint->y > $originPoint->y + self::FONTSIZE) {
-                throw new WordException('验证失败!');
+                throw new WordException('Xác minh thất bại!');
             }
         }
     }

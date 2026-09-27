@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,7 +24,7 @@ class StoreCartDao extends BaseDao
 {
 
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -43,7 +43,7 @@ class StoreCartDao extends BaseDao
     }
 
     /**
-     * 搜索
+     * Tìm kiếm
      * @param array $where
      * @param bool $search
      * @return \crmeb\basic\BaseModel|mixed|\think\Model
@@ -54,7 +54,7 @@ class StoreCartDao extends BaseDao
         return parent::search($where, $search)->when(isset($where['id']) && $where['id'], function ($query) use ($where) {
             $query->whereIn('id', $where['id']);
         })->when(isset($where['status']), function ($query) use ($where) {
-            //兼容之前老用户 数据库默认值null
+            //Tương thích với người dùng cũ trước đây, giá trị mặc định trong database là null
             if ($where['status'] == 1) {
                 $query->where(function ($or) {
                     $or->where('status', 1)->whereOr('status', 'exp', 'is null');
@@ -67,7 +67,7 @@ class StoreCartDao extends BaseDao
     }
 
     /**
-     * 根据商品id获取购物车数量
+     * Lấy số lượng giỏ hàng theo id sản phẩm
      * @param array $ids
      * @param int $uid
      * @return mixed
@@ -78,7 +78,7 @@ class StoreCartDao extends BaseDao
     }
 
     /**
-     * 获取购物车列表
+     * Lấy danh sách giỏ hàng
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -97,7 +97,7 @@ class StoreCartDao extends BaseDao
     }
 
     /**
-     * 修改购物车数据未已删除
+     * Cập nhật dữ liệu giỏ hàng thành đã xóa
      * @param array $id
      * @param array $data
      * @return \crmeb\basic\BaseModel
@@ -108,7 +108,7 @@ class StoreCartDao extends BaseDao
     }
 
     /**
-     * 删除购物车
+     * Xóa giỏ hàng
      * @param int $uid
      * @param array $ids
      * @return bool
@@ -120,7 +120,7 @@ class StoreCartDao extends BaseDao
     }
 
     /**
-     * 获取购物车数量
+     * Lấy số lượng giỏ hàng
      * @param $uid
      * @param $type
      * @param $numType
@@ -136,7 +136,7 @@ class StoreCartDao extends BaseDao
     }
 
     /**
-     * 用户购物车统计数据
+     * Dữ liệu thống kê giỏ hàng của người dùng
      * @param $uid
      * @param $type
      * @param string $field
@@ -154,7 +154,7 @@ class StoreCartDao extends BaseDao
     }
 
     /**
-     * 修改购物车数量
+     * Cập nhật số lượng giỏ hàng
      * @param $cartId
      * @param $cartNum
      * @param $uid
@@ -165,7 +165,7 @@ class StoreCartDao extends BaseDao
     }
 
     /**
-     * 修改购物车状态
+     * Cập nhật trạng thái giỏ hàng
      * @param $cartIds
      * @return \crmeb\basic\BaseModel
      */
@@ -175,7 +175,7 @@ class StoreCartDao extends BaseDao
     }
 
     /**
-     * 获取购物车最大的id
+     * Lấy id lớn nhất của giỏ hàng
      * @return mixed
      */
     public function getCartIdMax()
@@ -184,7 +184,7 @@ class StoreCartDao extends BaseDao
     }
 
     /**
-     * 求和
+     * Tính tổng
      * @param $where
      * @param $field
      * @return float
@@ -195,7 +195,7 @@ class StoreCartDao extends BaseDao
     }
 
     /**
-     * 购物车趋势
+     * Xu hướng giỏ hàng
      * @param $time
      * @param $timeType
      * @param $str

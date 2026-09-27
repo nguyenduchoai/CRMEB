@@ -4,13 +4,13 @@ const tagsViewRoutesModule = {
     tagsViewRoutes: [],
   },
   mutations: {
-    // 设置 TagsView 路由
+    // Đặt route cho TagsView
     getTagsViewRoutes(state, data) {
       state.tagsViewRoutes = data;
     },
   },
   actions: {
-    // 设置 TagsView 路由
+    // Đặt route cho TagsView
     async setTagsViewRoutes({ commit }, data) {
       commit('getTagsViewRoutes', data);
     },

@@ -10,18 +10,18 @@
           inline
           @submit.native.prevent
         >
-          <el-form-item label="字典名称：" label-for="name">
-            <el-input clearable v-model="from.name" placeholder="请输入字典名称" class="form_content_width" />
+          <el-form-item label="Tên từ điển:" label-for="name">
+            <el-input clearable v-model="from.name" placeholder="Vui lòng nhập tên từ điển" class="form_content_width" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="searchs">查询</el-button>
+            <el-button type="primary" v-db-click @click="searchs">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
     <el-card :bordered="false" shadow="never" class="ivu-mt mt16">
       <el-button v-auth="['system-crud-data_dictionary']" type="primary" v-db-click @click="add"
-        >添加数据字典</el-button
+        >Thêm từ điển dữ liệu</el-button
       >
       <el-table
         :data="dictionaryList"
@@ -29,29 +29,29 @@
         class="mt14"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column label="ID" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="name" label="字典名称" min-width="100"> </el-table-column>
-        <el-table-column prop="mark" label="数据标识" min-width="200"> </el-table-column>
-        <el-table-column prop="level" label="类型" min-width="200">
+        <el-table-column prop="name" label="Tên từ điển" min-width="100"> </el-table-column>
+        <el-table-column prop="mark" label="Mã định danh dữ liệu" min-width="200"> </el-table-column>
+        <el-table-column prop="level" label="Loại" min-width="200">
           <template slot-scope="scope">
-            <span>{{ scope.row.level ? '多级' : '一级' }}</span>
+            <span>{{ scope.row.level ? 'Nhiều cấp' : 'Cấp 1' }}</span>
           </template>
         </el-table-column>
-        <el-table-column prop="add_time" label="添加时间" min-width="200"> </el-table-column>
-        <el-table-column fixed="right" label="操作" width="200">
+        <el-table-column prop="add_time" label="Thời gian thêm" min-width="200"> </el-table-column>
+        <el-table-column fixed="right" label="Thao tác" width="200">
           <template slot-scope="scope">
-            <a v-db-click @click="eidtOptions(scope.row.id)">编辑</a>
+            <a v-db-click @click="eidtOptions(scope.row.id)">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="dataOptions(scope.row.id)">数据管理</a>
+            <a v-db-click @click="dataOptions(scope.row.id)">Quản lý dữ liệu</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa', scope.$index)">Xóa</a>
           </template>
         </el-table-column>
       </el-table>
@@ -132,7 +132,7 @@ export default {
         this.total = res.data.count;
       });
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -150,7 +150,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 添加
+    // Thêm
     add() {
       this.$modalForm(getDataDictionaryForm(0))
         .then((res) => {
@@ -158,7 +158,7 @@ export default {
         })
         .catch((err) => {});
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     searchs() {
       this.from.page = 1;
       this.getCrudDataDictionary();

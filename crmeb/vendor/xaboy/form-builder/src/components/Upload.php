@@ -116,7 +116,7 @@ class Upload extends FormComponentDriver
         return $this;
     }
 
-    public function getPlaceHolder($pre = '请上传')
+    public function getPlaceHolder($pre = 'Vui lòng tải lên')
     {
         return parent::getPlaceHolder($pre);
     }

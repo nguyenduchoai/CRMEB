@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,7 +24,7 @@ class StoreCouponIssueDao extends BaseDao
 {
 
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -64,7 +64,7 @@ class StoreCouponIssueDao extends BaseDao
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -81,7 +81,7 @@ class StoreCouponIssueDao extends BaseDao
     }
 
     /**
-     * 优惠券数量
+     * Số lượng phiếu giảm giá
      * @param $where
      * @return int
      * @throws \ReflectionException
@@ -92,10 +92,10 @@ class StoreCouponIssueDao extends BaseDao
     }
 
     /**
-     * 获取优惠券列表
-     * @param int $uid 用户ID
-     * @param int $type 0通用，1分类，2商品
-     * @param array|int $typeId 分类ID或商品ID
+     * Lấy danh sách phiếu giảm giá
+     * @param int $uid ID người dùng
+     * @param int $type 0 dùng chung, 1 danh mục, 2 sản phẩm
+     * @param array|int $typeId ID danh mục hoặc ID sản phẩm
      * @param int $page
      * @param int $limit
      * @return array
@@ -139,7 +139,7 @@ class StoreCouponIssueDao extends BaseDao
     }
 
     /**
-     * PC端获取优惠券
+     * Lấy phiếu giảm giá ở PC
      * @param int $uid
      * @param array $cate_ids
      * @param int $product_id
@@ -175,7 +175,7 @@ class StoreCouponIssueDao extends BaseDao
     }
 
     /**
-     * 获取优惠券数量
+     * Lấy số lượng phiếu giảm giá
      * @param $productId
      * @param $cateId
      * @return mixed
@@ -213,7 +213,7 @@ class StoreCouponIssueDao extends BaseDao
     }
 
     /**
-     * 获取优惠卷详情
+     * Lấy chi tiết phiếu giảm giá
      * @param int $id
      * @return array|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
@@ -236,7 +236,7 @@ class StoreCouponIssueDao extends BaseDao
     }
 
     /**
-     * 获取金大于额的优惠卷金额
+     * Lấy số tiền phiếu giảm giá khi số tiền lớn hơn mức tối thiểu
      * @param string $totalPrice
      * @return float
      */
@@ -248,7 +248,7 @@ class StoreCouponIssueDao extends BaseDao
     }
 
     /**
-     * 获取新人券
+     * Lấy phiếu giảm giá người mới
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -270,7 +270,7 @@ class StoreCouponIssueDao extends BaseDao
     }
 
     /**
-     * 获取一条优惠券信息
+     * Lấy một thông tin phiếu giảm giá
      * @param int $id
      * @return mixed
      */
@@ -280,7 +280,7 @@ class StoreCouponIssueDao extends BaseDao
     }
 
     /**
-     * 获取满赠、下单、关注赠送优惠券
+     * Lấy phiếu giảm giá tặng theo đơn tối thiểu, tặng khi đặt hàng, tặng khi theo dõi
      * @param array $where
      * @param string $field
      * @return array
@@ -305,7 +305,7 @@ class StoreCouponIssueDao extends BaseDao
     }
 
     /**
-     * 获取商品优惠卷列表
+     * Lấy danh sách phiếu giảm giá của sản phẩm
      * @param $where
      * @param $field
      * @return array
@@ -319,7 +319,7 @@ class StoreCouponIssueDao extends BaseDao
     }
 
     /**
-     * 获取优惠券弹窗列表
+     * Lấy danh sách phiếu giảm giá hiển thị popup
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -346,7 +346,7 @@ class StoreCouponIssueDao extends BaseDao
     }
 
 
-    /**api数据获取优惠券
+    /**Lấy phiếu giảm giá cho dữ liệu API
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -359,7 +359,7 @@ class StoreCouponIssueDao extends BaseDao
     }
 
     /**
-     * 检测是否有商品券
+     * Kiểm tra có phiếu giảm giá theo sản phẩm hay không
      * @param $product_id
      * @return bool
      */

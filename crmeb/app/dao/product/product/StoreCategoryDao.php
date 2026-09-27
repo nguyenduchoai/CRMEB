@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,7 +21,7 @@ use app\model\product\product\StoreCategory;
 class StoreCategoryDao extends BaseDao
 {
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -30,7 +30,7 @@ class StoreCategoryDao extends BaseDao
     }
 
     /**
-     * 获取分类列表
+     * Lấy danh sách danh mục
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -58,7 +58,7 @@ class StoreCategoryDao extends BaseDao
     }
 
     /**
-     * 添加修改选择上级分类列表
+     * Danh sách chọn danh mục cấp trên khi thêm/sửa
      * @param array $where
      * @return array
      * @throws \ReflectionException
@@ -69,7 +69,7 @@ class StoreCategoryDao extends BaseDao
     }
 
     /**
-     * 根据id获取分类
+     * Lấy danh mục theo id
      * @param string $cateIds
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -82,7 +82,7 @@ class StoreCategoryDao extends BaseDao
     }
 
     /**
-     * 前端分类页面分离列表
+     * Danh sách danh mục dùng riêng cho trang frontend
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -94,7 +94,7 @@ class StoreCategoryDao extends BaseDao
     }
 
     /**
-     * 根据分类id获取上级id
+     * Lấy id cấp trên theo id danh mục
      * @param array $cateId
      * @return array
      */
@@ -104,7 +104,7 @@ class StoreCategoryDao extends BaseDao
     }
 
     /**
-     * 获取首页展示的二级分类  排序默认降序
+     * Lấy danh mục cấp 2 hiển thị ở trang chủ  sắp xếp giảm dần theo mặc định
      * @param int $limit
      * @param string $field
      * @return array
@@ -118,7 +118,7 @@ class StoreCategoryDao extends BaseDao
     }
 
     /**
-     * 获取一级分类和二级分类组成的集合
+     * Lấy tập hợp gồm danh mục cấp 1 và cấp 2
      * @param $cateId
      * @return mixed
      */
@@ -130,7 +130,7 @@ class StoreCategoryDao extends BaseDao
     }
 
     /**
-     * 按照个数获取一级分类下有商品的分类ID
+     * Lấy id danh mục cấp 1 có sản phẩm theo số lượng
      * @param $page
      * @param $limit
      * @return array
@@ -149,7 +149,7 @@ class StoreCategoryDao extends BaseDao
     }
 
     /**
-     * 按照个数获取一级分类下有商品的分类个数
+     * Lấy số lượng danh mục cấp 1 có sản phẩm theo số lượng
      * @param $page
      * @param $limit
      * @return int
@@ -166,7 +166,7 @@ class StoreCategoryDao extends BaseDao
     }
 
     /**
-     * 通过分类id 获取（自己以及下级）的所有分类
+     * Lấy tất cả danh mục (bản thân và cấp dưới) theo id danh mục
      * @param $id
      * @param string $field
      * @return array
@@ -188,7 +188,7 @@ class StoreCategoryDao extends BaseDao
     }
 
     /**
-     * 可以搜索的获取所有二级分类
+     * Lấy tất cả danh mục cấp 2 có thể tìm kiếm
      * @param array $where
      * @param string $field
      * @param int $limit
@@ -203,10 +203,10 @@ class StoreCategoryDao extends BaseDao
         return $this->getModel()->where('is_show', 1)->field($field)
             ->when(in_array($pid, [0, -1]), function ($query) use ($pid) {
                 switch ($pid) {
-                    case -1://所有一级
+                    case -1://Tất cả cấp 1
                         $query->where('pid', 0);
                         break;
-                    case 0://所有二级
+                    case 0://Tất cả cấp 2
                         $query->where('pid', '>', 0);
                 }
             })->when((int)$pid > 0, function ($query) use ($pid) {

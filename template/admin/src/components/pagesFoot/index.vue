@@ -11,9 +11,9 @@
       </div>
       <div v-if="navStyleConfig != 2">
         <p v-if="index == isSpecial" :style="{ color: toneConfig ? activeTxtColor : colorStyle.theme }">
-          {{ item.name || '自定义' }}
+          {{ item.name || 'Tùy chỉnh' }}
         </p>
-        <p v-else :style="{ color: toneConfig ? txtColor : '#1A1A1A' }">{{ item.name || '自定义' }}</p>
+        <p v-else :style="{ color: toneConfig ? txtColor : '#1A1A1A' }">{{ item.name || 'Tùy chỉnh' }}</p>
       </div>
     </div>
   </div>
@@ -37,9 +37,9 @@
         </div>
         <div v-if="navStyleConfig != 2">
           <p v-if="index == isSpecial" :style="{ color: toneConfig ? activeTxtColor : colorStyle.theme }">
-            {{ item.name || '自定义' }}
+            {{ item.name || 'Tùy chỉnh' }}
           </p>
-          <p v-else :style="{ color: toneConfig ? txtColor : '#1A1A1A' }">{{ item.name || '自定义' }}</p>
+          <p v-else :style="{ color: toneConfig ? txtColor : '#1A1A1A' }">{{ item.name || 'Tùy chỉnh' }}</p>
         </div>
       </div>
     </div>
@@ -121,7 +121,7 @@ export default {
       this.$store.commit('mobildConfig/footBottom', this.mTop);
       this.menuList = [];
       this.$set(this, 'menuList', data.menuList.length ? data.menuList : 5);
-      if (data.status.title == '是否显示') {
+      if (data.status.title == 'Hiển thị') {
         this.isSpecial = 2;
       } else {
         this.isSpecial = 0;

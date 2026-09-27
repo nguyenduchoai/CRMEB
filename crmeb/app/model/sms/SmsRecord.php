@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use crmeb\traits\ModelTrait;
 use think\Model;
 
 /**
- *  短信记录Model
+ *  Model lịch sử SMS
  * Class SmsRecord
  * @package app\model\sms
  */
@@ -25,25 +25,25 @@ class SmsRecord extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'sms_record';
 
     /**
-     * 短信状态
+     * Trạng thái SMS
      * @var array
      */
-    protected $resultcode = ['100' => '成功', '130' => '失败', '131' => '空号', '132' => '停机', '133' => '关机', '134' => '无状态'];
+    protected $resultcode = ['100' => 'Thành công', '130' => 'Thất bại', '131' => 'Số không tồn tại', '132' => 'Thuê bao tạm khóa', '133' => 'Tắt máy', '134' => 'Không có trạng thái'];
 
     /**
-     * 时间获取器
+     * Getter thời gian
      * @param $value
      * @return false|string
      */
@@ -53,17 +53,17 @@ class SmsRecord extends BaseModel
     }
 
     /**
-     * 状态码获取器
+     * Getter mã trạng thái
      * @param $value
      * @return mixed|string
      */
     protected function getResultcodeAttr($value)
     {
-        return $this->resultcode[$value] ?? '无状态';
+        return $this->resultcode[$value] ?? 'Không có trạng thái';
     }
 
     /**
-     * 电话号码搜索器
+     * Bộ lọc số điện thoại
      * @param Model $query
      * @param $value
      * @param $data
@@ -74,7 +74,7 @@ class SmsRecord extends BaseModel
     }
 
     /**
-     * 短信状态搜索器
+     * Bộ lọc trạng thái SMS
      * @param Model $query
      * @param $value
      * @param $data
@@ -85,7 +85,7 @@ class SmsRecord extends BaseModel
     }
 
     /**
-     * uid搜索器
+     * Bộ lọc uid
      * @param Model $query
      * @param $value
      */

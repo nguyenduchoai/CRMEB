@@ -6,14 +6,14 @@
       :style="{ marginTop: slider + 'px', background: activeColor }"
     >
       <div class="home_product">
-        <!-- 单列 -->
+        <!-- Một cột -->
         <template v-if="itemStyle == 0">
           <div class="list-wrapper itemA" v-if="list.length > 0">
             <div class="item" :class="conStyle ? '' : 'itemOn'" v-for="(item, index) in list" :index="index">
               <div class="img-box">
                 <img v-if="item.image" :src="item.image" alt="" />
                 <div v-else class="empty-box"><span class="iconfont-diy icontupian"></span></div>
-                <div class="label" :style="{ background: labelColor }" v-if="index == 0">标签</div>
+                <div class="label" :style="{ background: labelColor }" v-if="index == 0">Nhãn</div>
               </div>
               <div class="info">
                 <div class="hd">
@@ -28,7 +28,7 @@
                     :class="priceShow ? '' : 'on'"
                     v-if="item.couponId.length && couponShow"
                   >
-                    券
+                    Coupon
                   </div>
                 </div>
               </div>
@@ -38,11 +38,11 @@
             <div class="item" :class="conStyle ? '' : 'itemOn'">
               <div class="img-box">
                 <div class="empty-box"><span class="iconfont-diy icontupian"></span></div>
-                <div class="label" :style="{ background: labelColor }">砍价</div>
+                <div class="label" :style="{ background: labelColor }">Săn giảm giá</div>
               </div>
               <div class="info">
                 <div class="hd">
-                  <div class="title line2" v-if="titleShow">商品名称</div>
+                  <div class="title line2" v-if="titleShow">Tên sản phẩm</div>
                   <div class="old-price" v-if="opriceShow">¥99.99</div>
                 </div>
                 <div class="price" :style="{ color: fontColor }">
@@ -53,21 +53,21 @@
                     :class="priceShow ? '' : 'on'"
                     v-if="couponShow"
                   >
-                    券
+                    Coupon
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </template>
-        <!-- 二列 -->
+        <!-- Hai cột -->
         <template v-if="itemStyle == 1">
           <div class="list-wrapper itemC" v-if="list.length > 0">
             <div class="item" :class="conStyle ? '' : 'itemOn'" v-for="(item, index) in list" :index="index">
               <div class="img-box">
                 <img v-if="item.image" :src="item.image" alt="" />
                 <div v-else class="empty-box"><span class="iconfont-diy icontupian"></span></div>
-                <div class="label" :style="{ background: labelColor }" v-if="index == 0">标签</div>
+                <div class="label" :style="{ background: labelColor }" v-if="index == 0">Nhãn</div>
               </div>
               <div class="info">
                 <div class="hd">
@@ -82,7 +82,7 @@
                     :class="priceShow ? '' : 'on'"
                     v-if="item.couponId.length && couponShow"
                   >
-                    券
+                    Coupon
                   </div>
                 </div>
               </div>
@@ -92,11 +92,11 @@
             <div class="item" :class="conStyle ? '' : 'itemOn'">
               <div class="img-box">
                 <div class="empty-box"><span class="iconfont-diy icontupian"></span></div>
-                <div class="label" :style="{ background: labelColor }">砍价</div>
+                <div class="label" :style="{ background: labelColor }">Săn giảm giá</div>
               </div>
               <div class="info">
                 <div class="hd">
-                  <div class="title line2" v-if="titleShow">商品名称</div>
+                  <div class="title line2" v-if="titleShow">Tên sản phẩm</div>
                   <div class="old-price" v-if="opriceShow">¥99.99</div>
                 </div>
                 <div class="price" :style="{ color: fontColor }">
@@ -107,21 +107,21 @@
                     :class="priceShow ? '' : 'on'"
                     v-if="couponShow"
                   >
-                    券
+                    Coupon
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </template>
-        <!-- 三列 -->
+        <!-- Ba cột -->
         <template v-if="itemStyle == 2">
           <div class="list-wrapper itemB" v-if="list.length > 0">
             <div class="item" :class="conStyle ? '' : 'itemOn'" v-for="(item, index) in list" :index="index">
               <div class="img-box">
                 <img v-if="item.image" :src="item.image" alt="" />
                 <div v-else class="empty-box"><span class="iconfont-diy icontupian"></span></div>
-                <div class="label" :style="{ background: labelColor }" v-if="index == 0">标签</div>
+                <div class="label" :style="{ background: labelColor }" v-if="index == 0">Nhãn</div>
               </div>
               <div class="info">
                 <div class="hd">
@@ -136,7 +136,7 @@
                     :class="priceShow ? '' : 'on'"
                     v-if="item.couponId.length && couponShow"
                   >
-                    券
+                    Coupon
                   </div>
                 </div>
               </div>
@@ -146,11 +146,11 @@
             <div class="item" :class="conStyle ? '' : 'itemOn'">
               <div class="img-box">
                 <div class="empty-box"><span class="iconfont-diy icontupian"></span></div>
-                <div class="label" :style="{ background: labelColor }">砍价</div>
+                <div class="label" :style="{ background: labelColor }">Săn giảm giá</div>
               </div>
               <div class="info">
                 <div class="hd">
-                  <div class="title line2" v-if="titleShow">商品名称</div>
+                  <div class="title line2" v-if="titleShow">Tên sản phẩm</div>
                   <div class="old-price" v-if="opriceShow">¥99.99</div>
                 </div>
                 <div class="price" :style="{ color: fontColor }">
@@ -161,14 +161,14 @@
                     :class="priceShow ? '' : 'on'"
                     v-if="couponShow"
                   >
-                    券
+                    Coupon
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </template>
-        <!-- 大图 -->
+        <!-- Ảnh lớn -->
         <template v-if="itemStyle == 3">
           <div class="listBig" v-if="list.length > 0">
             <div class="itemBig" :class="conStyle ? '' : 'itemOn'" v-for="(item, index) in list" :key="index">
@@ -176,14 +176,14 @@
                 <img v-if="item.recommend_image" :src="item.recommend_image" alt="" />
                 <img v-else-if="item.image" :src="item.image" alt="" />
                 <div v-else class="empty-box"><span class="iconfont-diy icontupian"></span></div>
-                <div class="label" :style="{ background: labelColor }" v-if="index == 0">标签</div>
+                <div class="label" :style="{ background: labelColor }" v-if="index == 0">Nhãn</div>
               </div>
               <div class="name line2">
                 <span
                   class="coupon"
                   :style="'border:1px solid ' + labelColor + ';color:' + labelColor"
                   v-if="item.couponId.length && couponShow"
-                  >券</span
+                  >Coupon</span
                 ><span v-if="titleShow">{{ item.store_name }}</span>
               </div>
               <div class="price" :style="{ color: fontColor }">
@@ -197,15 +197,15 @@
             <div class="itemBig" :class="conStyle ? '' : 'itemOn'">
               <div class="img-box">
                 <div class="empty-box"><span class="iconfont-diy icontupian"></span></div>
-                <div class="label" :style="{ background: labelColor }">砍价</div>
+                <div class="label" :style="{ background: labelColor }">Săn giảm giá</div>
               </div>
               <div class="name line2">
                 <span
                   :style="'border:1px solid ' + labelColor + ';color:' + labelColor"
                   class="coupon"
                   v-if="couponShow"
-                  >券</span
-                ><span v-if="titleShow">商品名称</span>
+                  >Coupon</span
+                ><span v-if="titleShow">Tên sản phẩm</span>
               </div>
               <div class="price" :style="{ color: fontColor }">
                 <span v-if="priceShow">￥<span class="num">66.66</span></span
@@ -223,11 +223,11 @@
 import { mapState } from 'vuex';
 export default {
   name: 'home_goods_list',
-  cname: '商品列表',
+  cname: 'Danh sách sản phẩm',
   configName: 'c_home_goods_list',
   icon: 'iconshangpinliebiao1',
-  type: 0, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'goodList', // 外面匹配名称
+  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'goodList', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -263,7 +263,7 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'goodList',
         timestamp: this.num,
@@ -271,38 +271,38 @@ export default {
           tabVal: 0,
         },
         tabConfig: {
-          title: '选择模板',
+          title: 'Chọn mẫu',
           tabVal: 0,
           type: 1,
           tabList: [
             {
-              name: '自动选择',
+              name: 'Chọn tự động',
               icon: 'iconzidongxuanze',
             },
             {
-              name: '手动选择',
+              name: 'Chọn thủ công',
               icon: 'iconshoudongxuanze',
             },
           ],
         },
         titleShow: {
-          title: '是否显示名称',
+          title: 'Hiển thị tên',
           val: true,
         },
         opriceShow: {
-          title: '是否显示原价',
+          title: 'Hiển thị giá gốc',
           val: true,
         },
         priceShow: {
-          title: '是否显示价格',
+          title: 'Hiển thị giá',
           val: true,
         },
         couponShow: {
-          title: '是否显示优惠券',
+          title: 'Hiển thị phiếu giảm giá',
           val: true,
         },
         selectConfig: {
-          title: '商品分类',
+          title: 'Danh mục sản phẩm',
           activeValue: [],
           list: [
             {
@@ -316,20 +316,20 @@ export default {
           ],
         },
         goodsSort: {
-          title: '商品排序',
+          title: 'Sắp xếp sản phẩm',
           name: 'goodsSort',
           type: 0,
           list: [
             {
-              val: '综合',
+              val: 'Tổng hợp',
               icon: 'iconComm_whole',
             },
             {
-              val: '销量',
+              val: 'Lượt bán',
               icon: 'iconComm_number',
             },
             {
-              val: '价格',
+              val: 'Giá',
               icon: 'iconComm_Price',
             },
           ],
@@ -338,7 +338,7 @@ export default {
           val: 6,
         },
         themeColor: {
-          title: '背景颜色',
+          title: 'Màu nền',
           name: 'themeColor',
           default: [
             {
@@ -352,7 +352,7 @@ export default {
           ],
         },
         fontColor: {
-          title: '价格颜色',
+          title: 'Màu giá',
           name: 'fontColor',
           default: [
             {
@@ -366,7 +366,7 @@ export default {
           ],
         },
         labelColor: {
-          title: '活动标签',
+          title: 'Nhãn chương trình',
           name: 'labelColor',
           default: [
             {
@@ -380,70 +380,70 @@ export default {
           ],
         },
         itemStyle: {
-          title: '显示类型',
+          title: 'Kiểu hiển thị',
           name: 'itemSstyle',
           type: 0,
           list: [
             {
-              val: '单列',
+              val: 'Một cột',
               icon: 'iconzuoyoutuwen',
             },
             {
-              val: '两列',
+              val: 'Hai cột',
               icon: 'iconlianglie',
             },
             {
-              val: '三列',
+              val: 'Ba cột',
               icon: 'iconsanlie',
             },
             {
-              val: '大图',
+              val: 'Ảnh lớn',
               icon: 'icondanlie',
             },
           ],
         },
         bgStyle: {
-          title: '背景样式',
+          title: 'Kiểu nền',
           name: 'bgStyle',
           type: 0,
           list: [
             {
-              val: '直角',
+              val: 'Góc vuông',
               icon: 'iconPic_square',
             },
             {
-              val: '圆角',
+              val: 'Bo góc',
               icon: 'iconPic_fillet',
             },
           ],
         },
         conStyle: {
-          title: '内容样式',
+          title: 'Kiểu nội dung',
           name: 'conStyle',
           type: 1,
           list: [
             {
-              val: '直角',
+              val: 'Góc vuông',
               icon: 'iconPic_square',
             },
             {
-              val: '圆角',
+              val: 'Bo góc',
               icon: 'iconPic_fillet',
             },
           ],
         },
         prConfig: {
-          title: '背景边距',
+          title: 'Lề nền',
           val: 0,
           min: 0,
         },
         mbConfig: {
-          title: '商品间距',
+          title: 'Khoảng cách sản phẩm',
           val: 0,
           min: 0,
         },
         productList: {
-          title: '商品列表',
+          title: 'Danh sách sản phẩm',
           list: [],
         },
         goodsList: {

@@ -3,7 +3,7 @@
     <div class="goods_detail_wrapper" style="height: 640px">
       <HappyScroll size="5" resize hide-horizontal>
         <div style="width: 375px">
-          <div class="title-box">商品详情</div>
+          <div class="title-box">Chi tiết sản phẩm</div>
           <div class="swiper-box">
             <el-carousel :autoplay="goodsInfo.productInfo.slider_image.length > 1" v-model="value2" loop arrow="never">
               <el-carousel-item v-for="(item, index) in goodsInfo.productInfo.slider_image" :key="index">
@@ -23,16 +23,16 @@
             </div>
             <div class="name">{{ goodsInfo.productInfo.store_name }}</div>
             <div class="msg">
-              <div class="item">原价:￥{{ goodsInfo.productInfo.ot_price }}</div>
-              <div class="item">库存:{{ goodsInfo.productInfo.stock }}{{ goodsInfo.productInfo.unit_name }}</div>
+              <div class="item">Giá gốc: ₫{{ goodsInfo.productInfo.ot_price }}</div>
+              <div class="item">Tồn kho: {{ goodsInfo.productInfo.stock }} {{ goodsInfo.productInfo.unit_name }}</div>
               <div class="item">
-                销量:{{ goodsInfo.productInfo.sales + goodsInfo.productInfo.ficti
-                }}{{ goodsInfo.productInfo.unit_name }}
+                Lượt bán: {{ goodsInfo.productInfo.sales + goodsInfo.productInfo.ficti
+                }} {{ goodsInfo.productInfo.unit_name }}
               </div>
             </div>
           </div>
           <div class="con-box">
-            <div class="title-box">商品介绍</div>
+            <div class="title-box">Giới thiệu sản phẩm</div>
             <div class="content" v-html="goodsInfo.productInfo.description"></div>
           </div>
         </div>

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -33,7 +33,7 @@ class AppVersionServices extends BaseServices
     }
 
     /**
-     * 版本列表
+     * Danh sách phiên bản
      * @param $platform
      * @return array
      */
@@ -49,7 +49,7 @@ class AppVersionServices extends BaseServices
     }
 
     /**
-     * 添加版本表单
+     * Form thêm phiên bản
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
      */
@@ -59,22 +59,22 @@ class AppVersionServices extends BaseServices
             $info = $this->dao->get($id);
         }
         $field[] = Form::hidden('id', $info['id'] ?? 0);
-        $field[] = Form::input('version', '版本号', $info['version'] ?? '')->col(24);
-        $field[] = Form::radio('platform', '平台类型', $info['platform'] ?? 1)->options([['label' => 'Android', 'value' => 1], ['label' => 'IOS', 'value' => 2]]);
-        $field[] = Form::input('info', '版本介绍', $info['info'] ?? '')->type('textarea');
-        $field[] = Form::input('url', '下载链接', $info['url'] ?? '')->appendRule('suffix', [
+        $field[] = Form::input('version', 'Số phiên bản', $info['version'] ?? '')->col(24);
+        $field[] = Form::radio('platform', 'Loại nền tảng', $info['platform'] ?? 1)->options([['label' => 'Android', 'value' => 1], ['label' => 'IOS', 'value' => 2]]);
+        $field[] = Form::input('info', 'Giới thiệu phiên bản', $info['info'] ?? '')->type('textarea');
+        $field[] = Form::input('url', 'Liên kết tải xuống', $info['url'] ?? '')->appendRule('suffix', [
             'type' => 'div',
             'class' => 'tips-info',
-            'domProps' => ['innerHTML' => '填写下载链接，Android的为压缩包的url地址，点击升级会自动下载压缩包替换安装，例如：域名/xxx.zip；IOS的为应用商店链接地址，直接跳转AppStore，例如：itms-apps://itunes.apple.com/cn/app/id1234567890']
+            'domProps' => ['innerHTML' => 'Nhập liên kết tải xuống, với Android là địa chỉ url của gói nén, khi bấm nâng cấp sẽ tự động tải gói nén về và cài đặt thay thế, ví dụ: tên-miền/xxx.zip; với IOS là liên kết App Store, chuyển thẳng đến AppStore, ví dụ: itms-apps://itunes.apple.com/cn/app/id1234567890']
         ]);
-        $field[] = Form::radio('is_force', '强制', $info['is_force'] ?? 1)->options([['label' => '开启', 'value' => 1], ['label' => '关闭', 'value' => 0]]);
-        $field[] = Form::radio('is_new', '是否最新', $info['is_new'] ?? 1)->options([['label' => '是', 'value' => 1], ['label' => '否', 'value' => 0]]);
-        return create_form('添加版本信息', $field, Url::buildUrl('/system/version_save'), 'POST');
+        $field[] = Form::radio('is_force', 'Bắt buộc cập nhật', $info['is_force'] ?? 1)->options([['label' => 'Bật', 'value' => 1], ['label' => 'Tắt', 'value' => 0]]);
+        $field[] = Form::radio('is_new', 'Bản mới nhất', $info['is_new'] ?? 1)->options([['label' => 'Có', 'value' => 1], ['label' => 'Không', 'value' => 0]]);
+        return create_form('Thêm thông tin phiên bản', $field, Url::buildUrl('/system/version_save'), 'POST');
 
     }
 
     /**
-     * 保存数据
+     * Lưu dữ liệu
      * @param $id
      * @param $data
      * @return mixed
@@ -99,7 +99,7 @@ class AppVersionServices extends BaseServices
     }
 
     /**
-     * 获取系统下最新的版本信息
+     * Lấy thông tin phiên bản mới nhất của hệ thống
      * @param $platform
      * @return array
      * @throws \think\db\exception\DataNotFoundException

@@ -22,31 +22,31 @@
       <div class="signInBg acea-row row-middle row-around" v-if="styleConfig == 0">
         <div class="item">
           <img src="../../assets/images/gift4.png" />
-          <div>今天</div>
+          <div>Hôm nay</div>
         </div>
         <div class="item">
           <img src="../../assets/images/points.png" />
-          <div>周二</div>
+          <div>Thứ 3</div>
         </div>
         <div class="item">
           <img src="../../assets/images/points.png" />
-          <div>周三</div>
+          <div>Thứ 4</div>
         </div>
         <div class="item">
           <img src="../../assets/images/gift3.png" />
-          <div>周四</div>
+          <div>Thứ 5</div>
         </div>
         <div class="item">
           <img src="../../assets/images/gift2.png" />
-          <div>周五</div>
+          <div>Thứ 6</div>
         </div>
         <div class="item">
           <img src="../../assets/images/points.png" />
-          <div>周六</div>
+          <div>Thứ 7</div>
         </div>
         <div class="item gift">
           <img src="../../assets/images/gift.png" />
-          <div>周日</div>
+          <div>Chủ nhật</div>
         </div>
         <div
           class="bnt"
@@ -55,7 +55,7 @@
             background: toneConfig ? `linear-gradient(90deg,${bntBgColorRight} 0%,${bntBgColorLeft} 100%)` : themeColor,
           }"
         >
-          签到
+          Điểm danh
         </div>
       </div>
       <div class="signInBg on acea-row row-between-wrapper" v-else>
@@ -65,7 +65,7 @@
           </div>
           <div>
             <div class="acea-row row-middle">
-              <span class="name">签到立即获取</span>
+              <span class="name">Điểm danh để nhận ngay</span>
               <div
                 class="points acea-row row-center-wrapper"
                 :style="{
@@ -84,7 +84,7 @@
                 </div>
               </div>
             </div>
-            <div class="tips">连续签到3天，额外活动15积分</div>
+            <div class="tips">Điểm danh liên tục 3 ngày, nhận thêm 15 điểm thưởng</div>
           </div>
         </div>
         <div
@@ -94,7 +94,7 @@
             background: toneConfig ? `linear-gradient(90deg,${bntBgColorRight} 0%,${bntBgColorLeft} 100%)` : themeColor,
           }"
         >
-          立即签到
+          Điểm danh ngay
         </div>
       </div>
     </div>
@@ -106,11 +106,11 @@ import { mapState, mapMutations } from 'vuex';
 // import theme from "@/mixins/theme";
 export default {
   name: 'sign_in',
-  cname: '签到',
+  cname: 'Điểm danh',
   configName: 'c_sign_in',
   icon: '#iconzujian-qiandao',
-  type: 1, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'signIn', // 外面匹配名称
+  type: 1, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'signIn', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -151,37 +151,37 @@ export default {
   // mixins: [theme],
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
-        cname: '签到',
+        cname: 'Điểm danh',
         name: 'signIn',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
         },
-        titleLeft: '展示设置',
-        titleRight: '签到样式',
-        titleCurrency: '通用样式',
+        titleLeft: 'Cài đặt hiển thị',
+        titleRight: 'Kiểu điểm danh',
+        titleCurrency: 'Kiểu chung',
         styleConfig: {
-          title: '选择风格',
+          title: 'Chọn phong cách',
           tabVal: 0,
           type: 'signIn',
         },
         toneConfig: {
-          title: '色调',
+          title: 'Tông màu',
           tabVal: 0,
           tabList: [
             {
-              name: '跟随主题风格',
+              name: 'Theo phong cách chủ đề',
             },
             {
-              name: '自定义',
+              name: 'Tùy chỉnh',
             },
           ],
         },
         bntBgColor: {
-          title: '按钮背景',
+          title: 'Nền nút',
           name: 'bntBgColor',
           default: [
             {
@@ -201,7 +201,7 @@ export default {
           ],
         },
         bntTxtColor: {
-          title: '按钮文字',
+          title: 'Chữ trên nút',
           name: 'bntTxtColor',
           default: [
             {
@@ -215,7 +215,7 @@ export default {
           ],
         },
         labelBgColor: {
-          title: '标签背景',
+          title: 'Nền nhãn',
           name: 'labelBgColor',
           default: [
             {
@@ -229,7 +229,7 @@ export default {
           ],
         },
         labelTxtColor: {
-          title: '标签文字',
+          title: 'Chữ nhãn',
           name: 'labelBgColor',
           default: [
             {
@@ -243,7 +243,7 @@ export default {
           ],
         },
         moduleColor: {
-          title: '组件背景',
+          title: 'Nền thành phần',
           name: 'moduleColor',
           default: [
             {
@@ -263,7 +263,7 @@ export default {
           ],
         },
         moduleColor2: {
-          title: '组件背景',
+          title: 'Nền thành phần',
           name: 'moduleColor2',
           default: [
             {
@@ -283,7 +283,7 @@ export default {
           ],
         },
         bottomBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           name: 'bgColor',
           default: [
             {
@@ -297,39 +297,39 @@ export default {
           ],
         },
         topConfig: {
-          title: '上边距',
+          title: 'Lề trên',
           val: 0,
           min: 0,
         },
         bottomConfig: {
-          title: '下边距',
+          title: 'Lề dưới',
           val: 0,
           min: 0,
         },
         prConfig: {
-          title: '左右边距',
+          title: 'Lề trái phải',
           val: 0,
           min: 0,
         },
         mbConfig: {
-          title: '页面上间距',
+          title: 'Lề trên trang',
           val: 0,
           min: 0,
         },
         fillet: {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 0,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],

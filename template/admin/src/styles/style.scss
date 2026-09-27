@@ -41,7 +41,7 @@
   -webkit-flex-wrap: wrap;
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
-  /* 辅助类 */
+  /* Class hỗ trợ */
 }
 
 .acea-row.row-middle {
@@ -144,7 +144,7 @@
   justify-content: space-between;
 }
 
-/* 上下左右垂直居中 */
+/* Căn giữa trên dưới trái phải theo chiều dọc */
 .acea-row.row-center-wrapper {
   -webkit-box-align: center;
   -moz-box-align: center;
@@ -160,7 +160,7 @@
   justify-content: center;
 }
 
-/* 上下两边居中对齐 */
+/* Căn giữa hai bên trên dưới */
 .acea-row.row-between-wrapper {
   -webkit-box-align: center;
   -moz-box-align: center;
@@ -180,7 +180,7 @@
   width: 100%;
 }
 
-/*表单公共样式*/
+/*Style chung cho form*/
 html,
 body {
   font-size: 12px;
@@ -209,7 +209,7 @@ body {
   height: 50% !important;
 }
 
-/*表格公共样式*/
+/*Style chung cho table*/
 .ivu-table-header .ivu-table-cell {
   color: #999;
   font-size: 13px;
@@ -355,7 +355,7 @@ body {
   height: 33px;
 }
 
-/*距离样式*/
+/*Style khoảng cách*/
 .mr {
   margin-right: 15px;
 }
@@ -529,7 +529,7 @@ body {
   /*margin: 0 !important;*/
 }
 
-/*设置导航菜单*/
+/*Đặt menu điều hướng*/
 .i-layout-menu-side-title-icon-single .ivu-icon {
   font-size: 20px;
 }
@@ -542,7 +542,7 @@ body {
   font-size: 12px !important;
 }
 
-/*添加商品页面*/
+/*Trang thêm sản phẩm*/
 #shopp-manager .ivu-form-item-content {
   line-height: 23px !important;
 }
@@ -562,13 +562,13 @@ body {
   cursor: pointer;
 }
 
-/*字体上移变蓝色*/
+/*Chữ dịch lên và chuyển màu xanh*/
 .font-blue:hover {
   color: #2d8cf0;
   cursor: pointer;
 }
 
-/*tab标签栏*/
+/*Thanh tab*/
 .i-layout-tabs-fix {
   z-index: 5 !important;
 }
@@ -703,7 +703,7 @@ body {
   width: 0;
 }
 
-/*复制pro*/
+/*Copy pro*/
 .ivu-text-left {
   text-align: left;
 }
@@ -737,7 +737,7 @@ body {
   max-width: 100%;
 }
 
-/*客服*/
+/*CSKH*/
 .mask-footer {
   display: flex;
   justify-content: flex-end;
@@ -875,7 +875,7 @@ body {
   padding: 0 10px 10px;
 }
 
-/* form-create tips 样式 */
+/* Style tips của form-create */
 .tips-info {
   line-height: 18px;
   margin-top: 3px;
@@ -912,21 +912,21 @@ body {
   color: #fff !important;
 }
 
-/*打开时文字位置设置*/
+/*Đặt vị trí chữ khi mở*/
 .defineSwitch .el-switch__label--right {
   z-index: 1;
   right: -8px;
-  /*不同场景下可能不同，自行调整*/
+  /*Có thể khác nhau ở từng trường hợp, tự điều chỉnh*/
 }
 
-/*关闭时文字位置设置*/
+/*Đặt vị trí chữ khi đóng*/
 .defineSwitch .el-switch__label--left {
   z-index: 1;
   left: 22px;
-  /*不同场景下可能不同，自行调整*/
+  /*Có thể khác nhau ở từng trường hợp, tự điều chỉnh*/
 }
 
-/*显示文字*/
+/*Chữ hiển thị*/
 .defineSwitch .el-switch__label.is-active {
   display: block;
 }
@@ -934,7 +934,7 @@ body {
 .defineSwitch.el-switch .el-switch__core,
 .defineSwitch.el-switch .el-switch__label {
   width: 55px !important;
-  /*开关按钮的宽度大小*/
+  /*Độ rộng của nút bật/tắt*/
 }
 
 .df-jcsb {

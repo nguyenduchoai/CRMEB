@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\activity\live\LiveAnchorServices;
 use think\facade\App;
 
 /**
- * 直播间主播
+ * Streamer của phòng livestream
  * Class LiveAnchor
  * @package app\controller\admin\store
  */
@@ -33,7 +33,7 @@ class LiveAnchor extends AuthController
     }
 
     /**
-     * 列表
+     * Danh sách
      * @return mixed
      */
     public function list()
@@ -45,7 +45,7 @@ class LiveAnchor extends AuthController
     }
 
     /**
-     * 添加修改表单
+     * Form thêm/sửa
      * @return mixed
      */
     public function add()
@@ -57,7 +57,7 @@ class LiveAnchor extends AuthController
     }
 
     /**
-     * 保存标签表单数据
+     * Lưu dữ liệu form nhãn
      * @return mixed
      */
     public function save()
@@ -79,7 +79,7 @@ class LiveAnchor extends AuthController
     }
 
     /**
-     * 删除
+     * Xóa
      * @return mixed
      * @throws \Exception
      */
@@ -94,7 +94,7 @@ class LiveAnchor extends AuthController
     }
 
     /**
-     * 设置会员等级显示|隐藏
+     * Thiết lập hiện|ẩn hạng thành viên
      * @param string $id
      * @param string $is_show
      * @return mixed
@@ -107,7 +107,7 @@ class LiveAnchor extends AuthController
     }
 
     /**
-     * 同步主播
+     * Đồng bộ streamer
      * @return mixed
      */
     public function syncAnchor()

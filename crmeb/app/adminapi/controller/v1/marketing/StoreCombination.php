@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use app\services\activity\combination\StorePinkServices;
 use think\facade\App;
 
 /**
- * 拼团管理
+ * Quản lý mua chung
  * Class StoreCombination
  * @package app\admin\controller\store
  */
@@ -34,7 +34,7 @@ class StoreCombination extends AuthController
     }
 
     /**
-     * 拼团列表
+     * Danh sách mua chung
      * @return mixed
      */
     public function index()
@@ -51,7 +51,7 @@ class StoreCombination extends AuthController
     }
 
     /**
-     * 拼团统计
+     * Thống kê mua chung
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -66,7 +66,7 @@ class StoreCombination extends AuthController
     }
 
     /**
-     * 详情
+     * Chi tiết
      * @param $id
      * @return mixed
      */
@@ -77,7 +77,7 @@ class StoreCombination extends AuthController
     }
 
     /**
-     * 保存新建的资源
+     * Lưu resource mới tạo
      * @param int $id
      */
     public function save($id = 0)
@@ -104,9 +104,9 @@ class StoreCombination extends AuthController
             ['sort', 0],
             ['copy', 0],
             ['virtual', 100],
-            ['logistics', []],//物流方式
-            ['freight', 1],//运费设置
-            ['postage', 0],//邮费
+            ['logistics', []],//Hình thức vận chuyển
+            ['freight', 1],//Cài đặt phí vận chuyển
+            ['postage', 0],//Phí vận chuyển
             ['custom_form', ''],
             ['virtual_type', 0],
             ['is_commission', 0],
@@ -126,7 +126,7 @@ class StoreCombination extends AuthController
                 return app('json')->fail(100026);
             }
         }
-        //限制编辑
+        //Hạn chế sửa
         if ($data['copy'] == 0 && $combination) {
             if ($combination['stop_time'] < time()) {
                 return app('json')->fail(400508);
@@ -144,7 +144,7 @@ class StoreCombination extends AuthController
     }
 
     /**
-     * 删除拼团
+     * Xóa mua chung
      * @param $id
      * @return mixed
      */
@@ -155,7 +155,7 @@ class StoreCombination extends AuthController
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param $id
      * @param $status
      * @return mixed
@@ -165,15 +165,15 @@ class StoreCombination extends AuthController
         if ($status == 1) {
             $info = $this->services->get($id);
             if ($info['stop_time'] < time()) {
-                return app('json')->fail('活动已结束，无法继续上架');
+                return app('json')->fail('Hoạt động đã kết thúc, không thể tiếp tục đăng bán');
             }
         }
         $this->services->update($id, ['is_show' => $status]);
-        return app('json')->success('设置成功');
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
-     * 拼团列表
+     * Danh sách mua chung
      * @return mixed
      */
     public function combine_list()
@@ -189,7 +189,7 @@ class StoreCombination extends AuthController
     }
 
     /**
-     * 拼团人列表
+     * Danh sách người mua chung
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -205,7 +205,7 @@ class StoreCombination extends AuthController
     }
 
     /**
-     * 拼团统计
+     * Thống kê mua chung
      * @param $id
      * @return mixed
      */
@@ -216,7 +216,7 @@ class StoreCombination extends AuthController
     }
 
     /**
-     * 活动参与人
+     * Người tham gia hoạt động
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -237,7 +237,7 @@ class StoreCombination extends AuthController
     }
 
     /**
-     * 拼团订单
+     * Đơn mua chung
      * @param $id
      * @return mixed
      */
@@ -251,7 +251,7 @@ class StoreCombination extends AuthController
     }
 
     /**
-     * 立即成团
+     * Thành nhóm ngay
      * @param $id
      * @return \think\Response
      * @throws \think\db\exception\DataNotFoundException
@@ -266,6 +266,6 @@ class StoreCombination extends AuthController
         /** @var StorePinkServices $storePinkServices */
         $storePinkServices = app()->make(StorePinkServices::class);
         $storePinkServices->virtualCombination($id, 'admin');
-        return app('json')->success('成团成功');
+        return app('json')->success('Đã thành nhóm');
     }
 }

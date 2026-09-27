@@ -12,11 +12,11 @@
 import { mapState, mapMutations } from 'vuex';
 export default {
   name: 'z_ueditor',
-  cname: '富文本',
+  cname: 'Văn bản định dạng',
   configName: 'c_ueditor_box',
   icon: 'iconfuwenben1',
-  type: 2, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'richText', // 外面匹配名称
+  type: 2, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'richText', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -53,7 +53,7 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'richText',
         timestamp: this.num,
@@ -61,7 +61,7 @@ export default {
           tabVal: 0,
         },
         bgColor: {
-          title: '背景色',
+          title: 'Màu nền',
           name: 'bgColor',
           default: [
             {
@@ -75,12 +75,12 @@ export default {
           ],
         },
         lrConfig: {
-          title: '左右边距',
+          title: 'Lề trái phải',
           val: 0,
           min: 0,
         },
         udConfig: {
-          title: '上下边距',
+          title: 'Lề trên dưới',
           val: 0,
           min: 0,
         },

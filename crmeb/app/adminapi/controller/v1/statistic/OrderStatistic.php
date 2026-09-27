@@ -15,7 +15,7 @@ class OrderStatistic extends AuthController
     }
 
     /**
-     * 订单统计基础信息
+     * Thông tin cơ bản thống kê đơn hàng
      * @return mixed
      */
     public function getBasic()
@@ -28,7 +28,7 @@ class OrderStatistic extends AuthController
     }
 
     /**
-     * 订单统计趋势图
+     * Biểu đồ xu hướng thống kê đơn hàng
      * @return mixed
      */
     public function getTrend()
@@ -41,7 +41,7 @@ class OrderStatistic extends AuthController
     }
 
     /**
-     * 订单来源
+     * Nguồn đơn hàng
      * @return mixed
      */
     public function getChannel()
@@ -54,7 +54,7 @@ class OrderStatistic extends AuthController
     }
 
     /**
-     * 订单类型
+     * Loại đơn hàng
      * @return mixed
      */
     public function getType()

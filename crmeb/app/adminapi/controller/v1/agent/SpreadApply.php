@@ -29,12 +29,12 @@ class SpreadApply extends AuthController
             ['refusal_reason', ''],
         ], true);
         $this->services->applyExamine($id, $uid, $status, $refusal_reason);
-        return app('json')->success($status == 1 ? '审核通过' : '拒绝成功');
+        return app('json')->success($status == 1 ? 'Đã duyệt' : 'Từ chối thành công');
     }
 
     public function applyDelete($id)
     {
         $this->services->applyDelete($id);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 }

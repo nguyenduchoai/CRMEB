@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -19,8 +19,8 @@ use app\dao\user\UserSearchDao;
  *
  * Class UserLabelServices
  * @package app\services\user
- *  * @method getColumn(array $where, string $field, string $key = '') 获取某个字段数组
- *  * @method getKeywordResult(int $uid, string $keyword, int $preTime = 7200) 获取全局|用户某个关键词搜素结果
+ *  * @method getColumn(array $where, string $field, string $key = '') Lấy mảng của một trường (field)
+ *  * @method getKeywordResult(int $uid, string $keyword, int $preTime = 7200) Lấy kết quả tìm kiếm theo từ khóa của toàn hệ thống|người dùng
  */
 class UserSearchServices extends BaseServices
 {
@@ -36,7 +36,7 @@ class UserSearchServices extends BaseServices
 
 
     /**
-     * 获取用户搜索关键词列表
+     * Lấy danh sách từ khóa tìm kiếm của người dùng
      * @param int $uid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -53,7 +53,7 @@ class UserSearchServices extends BaseServices
     }
 
     /**
-     * 用户增加搜索记录
+     * Người dùng thêm bản ghi tìm kiếm
      * @param int $uid
      * @param string $key
      * @param array $result

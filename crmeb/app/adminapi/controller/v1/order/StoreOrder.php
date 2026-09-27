@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -31,7 +31,7 @@ use app\services\user\UserServices;
 use think\facade\App;
 
 /**
- * 订单管理
+ * Quản lý đơn hàng
  * Class StoreOrder
  * @package app\adminapi\controller\v1\order
  */
@@ -50,7 +50,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 获取订单类型数量
+     * Lấy số lượng theo loại đơn hàng
      * @return mixed
      */
     public function chart()
@@ -67,7 +67,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 订单列表
+     * Danh sách đơn hàng
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -94,7 +94,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 核销码核销
+     * Xác nhận sử dụng bằng mã xác nhận
      * @param StoreOrderWriteOffServices $services
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -116,7 +116,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 订单号核销
+     * Xác nhận sử dụng theo mã đơn hàng
      * @param StoreOrderWriteOffServices $services
      * @param $order_id
      * @return mixed
@@ -143,7 +143,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 订单改价表单
+     * Form đổi giá đơn hàng
      * @param $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -155,7 +155,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 订单改价
+     * Sửa giá đơn hàng
      * @param $id
      * @return mixed
      * @throws \Exception
@@ -182,7 +182,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 获取快递公司
+     * Lấy đơn vị vận chuyển
      * @return mixed
      */
     public function express(ExpressServices $services)
@@ -197,7 +197,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 批量删除用户已经删除的订单
+     * Xóa theo lô các đơn hàng người dùng đã xóa
      * @return mixed
      */
     public function del_orders()
@@ -215,7 +215,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 删除订单
+     * Xóa đơn hàng
      * @param $id
      * @return mixed
      */
@@ -236,7 +236,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 订单发送货
+     * Thực hiện giao đơn hàng
      * @param $id
      * @param StoreOrderDeliveryServices $services
      * @return mixed
@@ -245,30 +245,30 @@ class StoreOrder extends AuthController
     {
         $data = $this->request->postMore([
             ['type', 1],
-            ['delivery_name', ''],//快递公司名称
-            ['delivery_id', ''],//快递单号
-            ['delivery_code', ''],//快递公司编码
+            ['delivery_name', ''],//Tên đơn vị vận chuyển
+            ['delivery_id', ''],//Mã vận đơn
+            ['delivery_code', ''],//Mã đơn vị vận chuyển
 
-            ['express_record_type', 2],//发货记录类型:2=电子面单；3=商家寄件
-            ['express_temp_id', ""],//电子面单模板
-            ['to_name', ''],//寄件人姓名
-            ['to_tel', ''],//寄件人电话
-            ['to_addr', ''],//寄件人地址
+            ['express_record_type', 2],//Loại lịch sử giao hàng: 2 = vận đơn điện tử; 3 = shop tự gửi hàng
+            ['express_temp_id', ""],//Mẫu vận đơn điện tử
+            ['to_name', ''],//Họ tên người gửi
+            ['to_tel', ''],//Số điện thoại người gửi
+            ['to_addr', ''],//Địa chỉ người gửi
 
-            ['sh_delivery_name', ''],//送货人姓名
-            ['sh_delivery_id', ''],//送货人电话
-            ['sh_delivery_uid', ''],//送货人ID
+            ['sh_delivery_name', ''],//Họ tên người giao hàng
+            ['sh_delivery_id', ''],//Số điện thoại người giao hàng
+            ['sh_delivery_uid', ''],//ID người giao hàng
 
-            ['fictitious_content', ''],//虚拟发货内容
+            ['fictitious_content', ''],//Nội dung giao hàng ảo
 
-            ['day_type', 0], //顺丰传 0今天，1明天，2后台
-            ['pickup_time', []],//开始时间 9:00，结束时间 10:00  开始时间和结束时间之间不能小于一个小时
+            ['day_type', 0], //Tham số gửi SF Express: 0 là hôm nay, 1 là ngày mai, 2 là chọn ở backend
+            ['pickup_time', []],//Thời gian bắt đầu 9:00, thời gian kết thúc 10:00. Khoảng giữa thời gian bắt đầu và kết thúc không được nhỏ hơn 1 giờ
         ]);
         return app('json')->success(100010, $services->delivery((int)$id, $data));
     }
 
     /**
-     * 订单拆单发送货
+     * Tách đơn để giao hàng
      * @param $id
      * @param StoreOrderDeliveryServices $services
      * @return mixed
@@ -280,27 +280,27 @@ class StoreOrder extends AuthController
     {
         $data = $this->request->postMore([
             ['type', 1],
-            ['delivery_name', ''],//快递公司名称
-            ['delivery_id', ''],//快递单号
-            ['delivery_code', ''],//快递公司编码
+            ['delivery_name', ''],//Tên đơn vị vận chuyển
+            ['delivery_id', ''],//Mã vận đơn
+            ['delivery_code', ''],//Mã đơn vị vận chuyển
 
-            ['express_record_type', 2],//发货记录类型
-            ['express_temp_id', ""],//电子面单模板
-            ['to_name', ''],//寄件人姓名
-            ['to_tel', ''],//寄件人电话
-            ['to_addr', ''],//寄件人地址
+            ['express_record_type', 2],//Loại bản ghi giao hàng
+            ['express_temp_id', ""],//Mẫu vận đơn điện tử
+            ['to_name', ''],//Họ tên người gửi
+            ['to_tel', ''],//Số điện thoại người gửi
+            ['to_addr', ''],//Địa chỉ người gửi
 
-            ['sh_delivery_name', ''],//送货人姓名
-            ['sh_delivery_id', ''],//送货人电话
-            ['sh_delivery_uid', ''],//送货人ID
+            ['sh_delivery_name', ''],//Họ tên người giao hàng
+            ['sh_delivery_id', ''],//Số điện thoại người giao hàng
+            ['sh_delivery_uid', ''],//ID người giao hàng
 
-            ['fictitious_content', ''],//虚拟发货内容
+            ['fictitious_content', ''],//Nội dung giao hàng ảo
 
             ['cart_ids', []],
 
-            ['day_type', 0], //顺丰传 0今天，1明天，2后台
-            ['pickup_time', []],//开始时间 9:00，结束时间 10:00  开始时间和结束时间之间不能小于一个小时
-            ['service_type', ''],//快递业务类型
+            ['day_type', 0], //Tham số gửi SF Express: 0 là hôm nay, 1 là ngày mai, 2 là chọn ở backend
+            ['pickup_time', []],//Thời gian bắt đầu 9:00, thời gian kết thúc 10:00. Khoảng giữa thời gian bắt đầu và kết thúc không được nhỏ hơn 1 giờ
+            ['service_type', ''],//Loại nghiệp vụ vận chuyển
         ]);
         if (!$id) {
             return app('json')->fail(100100);
@@ -318,10 +318,10 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 获取寄件预扣金额
+     * Lấy số tiền tạm giữ khi gửi hàng
      * @param ServeServices $services
      * @return \think\Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/6/16
      */
@@ -337,7 +337,7 @@ class StoreOrder extends AuthController
 
         $orderInfo = $this->services->get($data['orderId'], ['user_address', 'cart_id']);
         if (!$orderInfo) {
-            return app('json')->fail('订单没有查询到');
+            return app('json')->fail('Không tìm thấy đơn hàng');
         }
         $weight = '0';
         if ($data['cart_ids']) {
@@ -370,7 +370,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 获取订单可拆分发货商品列表
+     * Lấy danh sách sản phẩm có thể tách để giao trong đơn hàng
      * @param $id
      * @param StoreOrderCartInfoServices $services
      * @return mixed
@@ -384,7 +384,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 获取订单拆分子订单列表
+     * Lấy danh sách đơn con đã tách của đơn hàng
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -401,8 +401,8 @@ class StoreOrder extends AuthController
 
 
     /**
-     * 确认收货
-     * @param $id 订单id
+     * Xác nhận đã nhận hàng
+     * @param $id ID đơn hàng
      * @return mixed
      * @throws \Exception
      */
@@ -431,7 +431,7 @@ class StoreOrder extends AuthController
 
 
     /**
-     * 获取配置信息
+     * Lấy thông tin cấu hình
      * @return mixed
      */
     public function getDeliveryInfo()
@@ -447,8 +447,8 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 退款表单生成
-     * @param $id 订单id
+     * Tạo form hoàn tiền
+     * @param $id ID đơn hàng
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
@@ -461,8 +461,8 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 订单退款
-     * @param $id 订单id
+     * Hoàn tiền đơn hàng
+     * @param $id ID đơn hàng
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -483,15 +483,15 @@ class StoreOrder extends AuthController
         }
 
         $refundData = [
-            'refund_reason' => '后台主动退款',
-            'refund_explain' => '后台主动退款',
+            'refund_reason' => 'Hoàn tiền chủ động từ trang quản trị',
+            'refund_explain' => 'Hoàn tiền chủ động từ trang quản trị',
             'refund_img' => json_encode([]),
         ];
 
         $res = $services->applyRefund((int)$id, $order['uid'], $order, $data['cart_ids'], 1, (float)$data['refund_price'], $refundData);
 
         if (!$res) {
-            return app('json')->fail('退款单生成失败');
+            return app('json')->fail('Tạo phiếu hoàn tiền thất bại');
         }
 
         $orderRefund = $services->getOrderOne(['store_order_id' => $id]);
@@ -501,7 +501,7 @@ class StoreOrder extends AuthController
         $data['refund_type'] = 6;
         $data['refunded_time'] = time();
 
-        //0元退款
+        //Hoàn tiền 0đ
         if ($orderRefund['refund_price'] == 0 && in_array($orderRefund['refund_type'], [1, 5])) {
             $refund_price = 0;
         } else {
@@ -532,7 +532,7 @@ class StoreOrder extends AuthController
         $refund_data['open_id'] = $wechatUserServices->uidToOpenid((int)$order['uid'], 'routine') ?? '';
         $refund_data['refund_no'] = $orderRefund['order_id'];
         $refund_data['order_id'] = $orderRefund['order_id'];
-        //修改订单退款状态
+        //Sửa trạng thái hoàn tiền đơn hàng
         unset($data['refund_price']);
         if ($services->agreeRefund($orderRefund['id'], $refund_data)) {
             $services->update($orderRefund['id'], $data);
@@ -544,8 +544,8 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 订单详情
-     * @param $id 订单id
+     * Chi tiết đơn hàng
+     * @param $id ID đơn hàng
      * @return mixed
      * @throws \ReflectionException
      */
@@ -559,7 +559,7 @@ class StoreOrder extends AuthController
         $userInfo = $services->get($orderInfo['uid']);
         if (!$userInfo) return app('json')->fail(400119);
         $userInfo = $userInfo->hidden(['pwd', 'add_ip', 'last_ip', 'login_type']);
-        $userInfo['spread_name'] = '无';
+        $userInfo['spread_name'] = 'Không có';
         if ($userInfo['spread_uid']) {
             $spreadName = $services->value(['uid' => $userInfo['spread_uid']], 'nickname');
             if ($spreadName) {
@@ -572,7 +572,7 @@ class StoreOrder extends AuthController
         }
 
         $orderInfo = $this->services->tidyOrder($orderInfo->toArray(), true, true);
-        //核算优惠金额
+        //Tính toán số tiền ưu đãi
         $vipTruePrice = $levelPrice = $memberPrice = 0;
         foreach ($orderInfo['cartInfo'] as $cart) {
             $vipTruePrice = bcadd((string)$vipTruePrice, (string)$cart['vip_sum_truePrice'], 2);
@@ -589,7 +589,7 @@ class StoreOrder extends AuthController
             $orderInfo['_store_name'] = $storeServices->value(['id' => $orderInfo['store_id']], 'name');
         } else
             $orderInfo['_store_name'] = '';
-        $orderInfo['spread_name'] = $services->value(['uid' => $orderInfo['spread_uid']], 'nickname') ?? '无';
+        $orderInfo['spread_name'] = $services->value(['uid' => $orderInfo['spread_uid']], 'nickname') ?? 'Không có';
         $orderInfo['_info'] = app()->make(StoreOrderCartInfoServices::class)->getOrderCartInfo((int)$orderInfo['id']);
         $cart_num = 0;
         $refund_num = array_sum(array_column($orderInfo['refund'], 'refund_num'));
@@ -602,8 +602,8 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 查询物流信息
-     * @param $id 订单id
+     * Truy vấn thông tin vận chuyển
+     * @param $id ID đơn hàng
      * @return mixed
      */
     public function get_express($id, ExpressServices $services)
@@ -623,8 +623,8 @@ class StoreOrder extends AuthController
 
 
     /**
-     * 获取修改配送信息表单结构
-     * @param $id 订单id
+     * Lấy cấu trúc form sửa thông tin giao hàng
+     * @param $id ID đơn hàng
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
@@ -637,8 +637,8 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 修改配送信息
-     * @param $id  订单id
+     * Sửa thông tin giao hàng
+     * @param $id  ID đơn hàng
      * @return mixed
      */
     public function update_distribution(StoreOrderDeliveryServices $services, $id)
@@ -650,7 +650,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 不退款表单结构
+     * Cấu trúc form không hoàn tiền
      * @param StoreOrderRefundServices $services
      * @param $id
      * @return mixed
@@ -663,7 +663,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 订单不退款
+     * Đơn hàng không hoàn tiền
      * @param StoreOrderRefundServices $services
      * @param $id
      * @return mixed
@@ -691,10 +691,10 @@ class StoreOrder extends AuthController
             }
         }
         $services->storeProductOrderRefundNo((int)$id, $refund_reason);
-        //提醒推送
+        //Đẩy thông báo nhắc nhở
         event('NoticeListener', [['orderInfo' => $orderInfo], 'send_order_refund_no_status']);
 
-        //自定义消息-订单拒绝退款
+        //Thông báo tùy chỉnh - Đơn hàng từ chối hoàn tiền
         $orderInfo['time'] = date('Y-m-d H:i:s');
         $orderInfo['phone'] = $orderInfo['user_phone'];
         event('CustomNoticeListener', [$orderInfo['uid'], $orderInfo, 'order_refund_fail']);
@@ -703,8 +703,8 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 线下支付
-     * @param $id 订单id
+     * Thanh toán ngoại tuyến
+     * @param $id ID đơn hàng
      * @return mixed
      */
     public function pay_offline(OrderOfflineServices $services, $id)
@@ -719,7 +719,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 退积分表单获取
+     * Lấy form trả điểm thưởng
      * @param $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -732,7 +732,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 退积分保存
+     * Lưu trả điểm thưởng
      * @param $id
      * @return mixed
      */
@@ -757,7 +757,7 @@ class StoreOrder extends AuthController
         if ($bj < 0) {
             return app('json')->fail(400163);
         }
-        //积分退款处理
+        //Xử lý hoàn điểm thưởng
         $orderInfo->back_integral = $data['back_integral'];
         if ($services->refundIntegral($orderInfo, $back_integral)) {
             return app('json')->success(400164);
@@ -767,7 +767,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 修改备注
+     * Sửa ghi chú
      * @param $id
      * @return mixed
      */
@@ -790,7 +790,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 获取订单状态列表并分页
+     * Lấy danh sách trạng thái đơn hàng có phân trang
      * @param $id
      * @return mixed
      */
@@ -801,7 +801,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 小票打印机打印
+     * In bằng máy in hóa đơn (biên lai)
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -820,7 +820,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 电子面单模板
+     * Mẫu vận đơn điện tử
      * @param $com
      * @return mixed
      */
@@ -834,7 +834,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 获取模板
+     * Lấy mẫu
      */
     public function express_temp(ServeServices $services)
     {
@@ -847,7 +847,7 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 订单发货后打印电子面单
+     * In vận đơn điện tử sau khi đơn hàng được giao
      * @param $orderId
      * @param StoreOrderDeliveryServices $storeOrderDeliveryServices
      * @return mixed
@@ -859,10 +859,10 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 获取快递信息
+     * Lấy thông tin chuyển phát
      * @param ServeServices $services
      * @return \think\Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/15
      */
@@ -872,32 +872,32 @@ class StoreOrder extends AuthController
     }
 
     /**
-     * 取消商家寄件
+     * Hủy yêu cầu gửi hàng của người bán
      * @param $id
      * @return \think\Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/15
      */
     public function shipmentCancelOrder($id)
     {
         if (!$id) {
-            return app('json')->fail('缺少参数');
+            return app('json')->fail('Thiếu tham số');
         }
 
         $msg = $this->request->post('msg', '');
         if (!$msg) {
-            return app('json')->fail('请填写取消寄件原因');
+            return app('json')->fail('Vui lòng nhập lý do hủy gửi hàng');
         }
         if ($this->services->shipmentCancelOrder((int)$id, $msg)) {
-            return app('json')->success('取消成功');
+            return app('json')->success('Hủy thành công');
         } else {
-            return app('json')->fail('取消失败');
+            return app('json')->fail('Hủy thất bại');
         }
     }
 
     /**
-     * 导入批量发货
+     * Nhập giao hàng theo lô
      * @return \think\Response|void
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
@@ -908,33 +908,33 @@ class StoreOrder extends AuthController
         ], true);
         if (!$file) return app('json')->fail(400168);
         $file = public_path() . substr($file, 1);
-        // 获取文件后缀
+        // Lấy phần mở rộng của file
         $suffix = strtolower(pathinfo($file, PATHINFO_EXTENSION));
         if (!in_array($suffix, ['xls', 'xlsx'])) {
-            return app('json')->fail('文件格式不正确，请上传xls或xlsx格式的文件！');
+            return app('json')->fail('Định dạng tệp không đúng, vui lòng tải lên tệp định dạng xls hoặc xlsx!');
         }
         $expressData = app()->make(FileService::class)->readExcel($file, 'express', 2, ucfirst($suffix));
         foreach ($expressData as $item) {
             OrderExpressJob::dispatch([$item]);
         }
-        return app('json')->success('批量发货成功');
+        return app('json')->success('Giao hàng hàng loạt thành công');
     }
 
     /**
-     * 配货单
+     * Phiếu soạn hàng
      * @param $order_id
      * @return \think\Response
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/10/11
      */
     public function printShipping($order_id)
     {
         if (!$order_id) {
-            return app('json')->fail('参数错误');
+            return app('json')->fail('Tham số không hợp lệ');
         }
         $data = $this->services->printShippingData($order_id);
         return app('json')->success($data);

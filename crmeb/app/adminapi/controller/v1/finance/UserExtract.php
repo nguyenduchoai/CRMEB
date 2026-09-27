@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -34,7 +34,7 @@ class UserExtract extends AuthController
     }
 
     /**
-     * 显示资源列表
+     * Hiển thị danh sách resource
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -55,7 +55,7 @@ class UserExtract extends AuthController
     }
 
     /**
-     * 显示编辑资源表单页
+     * Hiển thị trang form sửa resource
      * @param $id
      * @return mixed
      */
@@ -66,7 +66,7 @@ class UserExtract extends AuthController
     }
 
     /**
-     * 保存更新的资源
+     * Lưu resource đã cập nhật
      * @param Request $request
      * @param $id
      * @return mixed
@@ -113,7 +113,7 @@ class UserExtract extends AuthController
     }
 
     /**
-     * 拒绝
+     * Từ chối
      * @param $id
      * @return mixed
      */
@@ -128,7 +128,7 @@ class UserExtract extends AuthController
     }
 
     /**
-     * 通过
+     * Duyệt
      * @param $id
      * @return mixed
      */
@@ -138,12 +138,12 @@ class UserExtract extends AuthController
         $res = $this->services->adopt((int)$id);
         if ($res) {
             if ($res === 'v3_extract') {
-                return app('json')->success('提现成功，等待用户确认收款');
+                return app('json')->success('Rút tiền thành công, đang chờ người dùng xác nhận nhận tiền');
             } else {
-                return app('json')->success('提现成功');
+                return app('json')->success('Rút tiền thành công');
             }
         } else {
-            return app('json')->success('操作失败');
+            return app('json')->success('Thao tác thất bại');
         }
     }
 }

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,18 +16,18 @@ use crmeb\services\sms\BaseSms;
 use crmeb\services\HttpService;
 
 /**
- * 腾讯云短信
+ * SMS Tencent Cloud
  * Class Tencent
  * @package crmeb\services\sms\storage
  */
 class Tencent extends BaseSms
 {
 
-    //接口请求地址
+    //Địa chỉ yêu cầu API
     const API_URL = 'https://sms.tencentcloudapi.com';
 
     /**
-     * 发送模板id
+     * id mẫu gửi
      * @var array
      */
     protected $templates = [];
@@ -48,13 +48,13 @@ class Tencent extends BaseSms
     protected $secretKey = '';
 
     /**
-     * 短信SDKid
+     * SDKid SMS
      * @var string
      */
     protected $smsSdkAppId = '';
 
     /**
-     * 短信签名
+     * Chữ ký SMS
      * @var string
      */
     protected $signName = '';
@@ -65,19 +65,19 @@ class Tencent extends BaseSms
     protected $region = "ap-guangzhou";
 
     /**
-     * 版本号
+     * Số phiên bản
      * @var string
      */
     protected $version = "2021-01-11";
 
     /**
-     * 加密方式
+     * Cách mã hóa
      * @var string
      */
     protected $algorithm = 'TC3-HMAC-SHA256';
 
     /**
-     * 产品名称
+     * Tên sản phẩm
      * @var string
      */
     protected $service = 'sms';
@@ -124,7 +124,7 @@ class Tencent extends BaseSms
     }
 
     /**
-     * 获取请求header
+     * Lấy header của yêu cầu
      * @param string $boby
      * @return string[]
      */

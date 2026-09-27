@@ -2,7 +2,7 @@
   <div class="diy-page">
     <el-card :bordered="false" shadow="never" class="ivu-mt" style="margin: 0 10px">
       <div class="diy-wrapper" :style="'height:' + clientHeight + 'px;'">
-        <!-- 左侧 -->
+        <!-- Bên trái -->
         <div class="left">
           <div class="title-bar">
             <div
@@ -32,10 +32,10 @@
                 filter=".search"
               >
                 <!--filter=".search , .navbar"-->
-                <!--:class="{ search: element.cname == '搜索框' , navbar: element.cname == '商品分类' }"-->
+                <!--:class="{ search: element.cname == 'Khung tìm kiếm' , navbar: element.cname == 'Danh mục sản phẩm' }"-->
                 <div
                   class="list-group-item"
-                  :class="{ search: element.cname == '搜索框' }"
+                  :class="{ search: element.cname == 'Ô tìm kiếm' }"
                   v-for="(element, index) in item.list"
                   :key="element.id"
                   v-db-click
@@ -43,7 +43,7 @@
                   v-show="item.isOpen"
                 >
                   <div>
-                    <div class="position" style="display: none">释放鼠标将组建添加到此处</div>
+                    <div class="position" style="display: none">Thả chuột để thêm thành phần vào đây</div>
                     <span class="conter iconfont-diy" :class="element.icon"></span>
                     <p class="conter">{{ element.cname }}</p>
                   </div>
@@ -51,23 +51,23 @@
               </draggable>
             </div>
           </div>
-          <!--                    <div style="padding: 0 20px"><el-button type="primary" style="width: 100%" v-db-click @click="saveConfig">保存</el-button></div>-->
+          <!--                    <div style="padding: 0 20px"><el-button type="primary" style="width: 100%" v-db-click @click="saveConfig">Lưu</el-button></div>-->
           <div class="wrapper" v-else :style="'height:' + (clientHeight - 46) + 'px;'">
             <div class="link-item" v-for="(item, index) in urlList" :key="index">
               <div class="name">{{ item.name }}</div>
-              <div class="link-txt">地址：{{ item.url }}</div>
+              <div class="link-txt">Địa chỉ: {{ item.url }}</div>
               <div class="params">
-                <span class="txt">参数：</span>
+                <span class="txt">Tham số:</span>
                 <span>{{ item.parameter }}</span>
               </div>
               <div class="lable">
-                <p class="txt">例如：{{ item.example }}</p>
-                <el-button size="small" v-db-click @click="onCopy(item.example)">复制 </el-button>
+                <p class="txt">Ví dụ: {{ item.example }}</p>
+                <el-button size="small" v-db-click @click="onCopy(item.example)">Sao chép </el-button>
               </div>
             </div>
           </div>
         </div>
-        <!-- 中间 -->
+        <!-- Ở giữa -->
         <div
           class="wrapper-con"
           style="flex: 1; background: #f0f2f5; display: flex; justify-content: center; padding-top: 20px; height: 100%"
@@ -166,13 +166,13 @@
                 </div>
               </div>
               <div class="defaultData" v-if="pageId !== 0">
-                <div class="data" v-db-click @click="setmoren">设置默认</div>
-                <div class="data" v-db-click @click="getmoren">恢复默认</div>
+                <div class="data" v-db-click @click="setmoren">Đặt làm mặc định</div>
+                <div class="data" v-db-click @click="getmoren">Khôi phục mặc định</div>
               </div>
             </div>
           </div>
         </div>
-        <!-- 右侧 -->
+        <!-- Bên phải -->
         <div class="right-box">
           <div class="mConfig-item" style="background-color: #fff" v-for="(item, key) in rConfig" :key="key">
             <div class="title-bar">{{ item.cname }}</div>
@@ -188,9 +188,9 @@
       </div>
     </el-card>
     <!--<div class="foot-box">-->
-    <!--<el-button v-db-click @click="reast">重置</el-button>-->
+    <!--<el-button v-db-click @click="reast">Đặt lại</el-button>-->
     <!--<el-button type="primary" v-db-click @click="saveConfig" :loading="loading"-->
-    <!--&gt;保存-->
+    <!--&gt;Lưu-->
     <!--</el-button-->
     <!--&gt;-->
     <!--</div>-->
@@ -222,8 +222,8 @@ export default {
   },
   computed: {
     ...mapState({
-      titleTxt: (state) => state.mobildConfig.pageTitle || '首页',
-      nameTxt: (state) => state.mobildConfig.pageName || '模板',
+      titleTxt: (state) => state.mobildConfig.pageTitle || 'Trang chủ',
+      nameTxt: (state) => state.mobildConfig.pageName || 'Mẫu',
       showTxt: (state) => state.mobildConfig.pageShow,
       colorTxt: (state) => state.mobildConfig.pageColor,
       picTxt: (state) => state.mobildConfig.pagePic,
@@ -234,15 +234,15 @@ export default {
   },
   data() {
     return {
-      clientHeight: '', //页面动态高度
+      clientHeight: '', //Chiều cao động của trang
       rollHeight: '',
-      leftMenu: [], // 左侧菜单
-      lConfig: [], // 左侧组件
-      mConfig: [], // 中间组件渲染
-      rConfig: [], // 右侧组件配置
+      leftMenu: [], // Menu bên trái
+      lConfig: [], // Thành phần bên trái
+      mConfig: [], // Render thành phần ở giữa
+      rConfig: [], // Cấu hình thành phần bên phải
       activeConfigName: '',
-      propsObj: {}, // 组件传递的数据,
-      activeIndex: -100, // 选中的下标
+      propsObj: {}, // Dữ liệu do thành phần truyền,
+      activeIndex: -100, // Chỉ số được chọn
       number: 0,
       pageId: '',
       pageName: '',
@@ -250,11 +250,11 @@ export default {
       category: [],
       tabList: [
         {
-          title: '组件库',
+          title: 'Thư viện thành phần',
           key: 0,
         },
         {
-          title: '页面链接',
+          title: 'Liên kết trang',
           key: 1,
         },
       ],
@@ -279,12 +279,12 @@ export default {
   mounted() {
     let imgList = {
       imgList: [require('@/assets/images/foot-005.png'), require('@/assets/images/foot-006.png')],
-      name: '购物车',
+      name: 'Giỏ hàng',
       link: '/pages/order_addcart/order_addcart',
     };
     this.$nextTick(() => {
       this.$store.commit('mobildConfig/FOOTER', {
-        title: '是否自定义',
+        title: 'Tùy chỉnh',
         name: imgList,
       });
       this.arraySort();
@@ -293,7 +293,7 @@ export default {
       } else {
         this.showTitle();
       }
-      this.clientHeight = `${document.documentElement.clientHeight}` - 65.81; //获取浏览器可视区域高度
+      this.clientHeight = `${document.documentElement.clientHeight}` - 65.81; //Lấy chiều cao vùng hiển thị của trình duyệt
       let H = `${document.documentElement.clientHeight}` - 180;
       this.rollHeight = H > 650 ? 650 : H;
       let that = this;
@@ -326,16 +326,16 @@ export default {
     onCopy(copyData) {
       this.$copyText(copyData)
         .then((message) => {
-          this.$message.success('复制成功');
+          this.$message.success('Sao chép thành công');
         })
         .catch((err) => {
-          this.$message.error('复制失败');
+          this.$message.error('Sao chép thất bại');
         });
     },
     onError() {
-      this.$message.error('复制失败');
+      this.$message.error('Sao chép thất bại');
     },
-    //设置默认数据
+    //Đặt dữ liệu mặc định
     setmoren() {
       setDefault(this.pageId)
         .then((res) => {
@@ -345,7 +345,7 @@ export default {
           this.$message.error(err.msg);
         });
     },
-    //恢复默认
+    //Khôi phục mặc định
     getmoren() {
       recovery(this.pageId)
         .then((res) => {
@@ -356,17 +356,17 @@ export default {
           this.$message.error(err.msg);
         });
     },
-    // 获取url
+    // Lấy url
     getUrlList() {
       getUrl().then((res) => {
         this.urlList = res.data.url;
       });
     },
-    // 左侧tab
+    // Tab bên trái
     bindTab(index) {
       this.tabCur = index;
     },
-    // 页面标题点击
+    // Nhấp vào tiêu đề trang
     showTitle() {
       this.activeIndex = -100;
       let obj = {};
@@ -375,14 +375,14 @@ export default {
           // this.rConfig = obj
           obj = mConfig[i];
           obj.configName = mConfig[i].name;
-          obj.cname = '页面设置';
+          obj.cname = 'Cài đặt trang';
         }
       }
       let abc = obj;
       this.rConfig = [];
       this.rConfig[0] = JSON.parse(JSON.stringify(obj));
     },
-    // 页面底部点击
+    // Nhấp vào chân trang
     showFoot() {
       this.activeIndex = -101;
       let obj = {};
@@ -391,27 +391,27 @@ export default {
           // this.rConfig = obj
           obj = mConfig[i];
           obj.configName = mConfig[i].name;
-          obj.cname = '底部菜单';
+          obj.cname = 'Menu dưới cùng';
         }
       }
       let abc = obj;
       this.rConfig = [];
       this.rConfig[0] = JSON.parse(JSON.stringify(obj));
     },
-    // 对象转数组
+    // Chuyển object thành mảng
     objToArr(data) {
       let obj = Object.keys(data);
       let m = obj.map((key) => data[key]);
       return m;
     },
     log(evt) {
-      // 中间拖拽排序
+      // Kéo thả sắp xếp ở giữa
       if (evt.moved) {
         if (evt.moved.element.name == 'search_box' || evt.moved.element.name == 'nav_bar') {
-          return this.$message.warning('该组件禁止拖拽');
+          return this.$message.warning('Thành phần này không cho phép kéo thả');
         }
         // if (evt.moved.element.name == "nav_bar") {
-        //     return this.$message.warning("该组件禁止拖拽");
+        //     return this.$message.warning("Thành phần này không được phép kéo thả");
         // }
         evt.moved.oldNum = this.mConfig[evt.moved.oldIndex].num;
         evt.moved.newNum = this.mConfig[evt.moved.newIndex].num;
@@ -428,7 +428,7 @@ export default {
         this.$store.commit('mobildConfig/SETCONFIGNAME', item.name);
         this.$store.commit('mobildConfig/defaultArraySort', evt.moved);
       }
-      // 从左向右拖拽排序
+      // Kéo thả sắp xếp từ trái sang phải
       if (evt.added) {
         let data = evt.added.element;
         let obj = {};
@@ -445,7 +445,7 @@ export default {
         });
         evt.added.list = this.mConfig;
         this.activeIndex = evt.added.newIndex;
-        // 保存组件名称
+        // Lưu tên thành phần
         this.$store.commit('mobildConfig/SETCONFIGNAME', data.name);
         this.$store.commit('mobildConfig/defaultArraySort', evt.added);
       }
@@ -456,12 +456,12 @@ export default {
         ...data,
       };
     },
-    //数组元素互换位置
+    //Đổi vị trí phần tử trong mảng
     swapArray(arr, index1, index2) {
       arr[index1] = arr.splice(index2, 1, arr[index1])[0];
       return arr;
     },
-    //点击上下移动；
+    //Nhấp để di chuyển lên xuống;
     movePage(item, index, type) {
       if (type) {
         if (index == 0) {
@@ -473,15 +473,15 @@ export default {
         }
       }
       if (item.name == 'search_box' || item.name == 'nav_bar') {
-        return this.$message.warning('该组件禁止移动');
+        return this.$message.warning('Thành phần này không cho phép di chuyển');
       }
       // if (item.name == "nav_bar") {
-      //     return this.$message.warning("该组件禁止移动");
+      //     return this.$message.warning("Thành phần này không được phép di chuyển");
       // }
       if (type) {
         // if(this.mConfig[index-1].name  == "search_box" || this.mConfig[index-1].name  == "nav_bar"){
         if (this.mConfig[index - 1].name == 'search_box') {
-          return this.$message.warning('搜索框必须为顶部');
+          return this.$message.warning('Ô tìm kiếm phải nằm trên cùng');
         }
         this.swapArray(this.mConfig, index - 1, index);
       } else {
@@ -510,18 +510,18 @@ export default {
       this.$store.commit('mobildConfig/SETCONFIGNAME', item.name);
       this.$store.commit('mobildConfig/defaultArraySort', obj);
     },
-    // 组件添加
+    // Thêm thành phần
     addDomCon(item, type, index) {
       if (item.name == 'search_box') {
-        if (this.isSearch) return this.$message.error('该组件只能添加一次');
+        if (this.isSearch) return this.$message.error('Thành phần này chỉ được thêm một lần');
         this.isSearch = true;
       }
       if (item.name == 'nav_bar') {
-        if (this.isTab) return this.$message.error('该组件只能添加一次');
+        if (this.isTab) return this.$message.error('Thành phần này chỉ được thêm một lần');
         this.isTab = true;
       }
       if (item.name == 'home_product') {
-        if (this.isHomeProduct) return this.$message.error('该组件只能添加一次');
+        if (this.isHomeProduct) return this.$message.error('Thành phần này chỉ được thêm một lần');
         this.isHomeProduct = true;
       }
       idGlobal += 1;
@@ -562,13 +562,13 @@ export default {
       this.mConfig.forEach((el, index) => {
         el.num = new Date().getTime() * 1000 + index;
       });
-      // 保存组件名称
+      // Lưu tên thành phần
       obj.element = item;
       obj.list = this.mConfig;
       this.$store.commit('mobildConfig/SETCONFIGNAME', item.name);
       this.$store.commit('mobildConfig/defaultArraySort', obj);
     },
-    //中间页点击添加模块；
+    //Nhấp ở trang giữa để thêm mô-đun;
     bindAddDom(item, type, index) {
       let i = item;
       this.lConfig.forEach((j) => {
@@ -578,11 +578,11 @@ export default {
       });
       this.addDomCon(i, type, index);
     },
-    //左边配置模块点击添加；
+    //Nhấp thêm ở mô-đun cấu hình bên trái;
     addDom(item, type) {
       this.addDomCon(item, type);
     },
-    // 点击显示相应的配置
+    // Nhấp để hiển thị cấu hình tương ứng
     bindconfig(item, index) {
       this.rConfig = [];
       let tempItem = JSON.parse(JSON.stringify(item));
@@ -590,7 +590,7 @@ export default {
       this.activeIndex = index;
       this.$store.commit('mobildConfig/SETCONFIGNAME', item.name);
     },
-    // 组件删除
+    // Xóa thành phần
     bindDelete(item, key) {
       if (item.name == 'search_box') {
         this.isSearch = false;
@@ -613,10 +613,10 @@ export default {
           this.showTitle();
         }
       }
-      // 删除第几个配置
+      // Xóa cấu hình thứ mấy
       this.$store.commit('mobildConfig/DELETEARRAY', item);
     },
-    // 组件返回
+    // Trả về thành phần
     config(data) {
       let propsObj = this.propsObj;
       propsObj.data = data;
@@ -626,21 +626,21 @@ export default {
       arr[index1] = arr.splice(index2, 1, arr[index1])[0];
       return arr;
     },
-    // 数组排序
+    // Sắp xếp mảng
     arraySort() {
       let tempArr = [];
       let basis = {
-        title: '基础组件',
+        title: 'Thành phần cơ bản',
         list: [],
         isOpen: true,
       };
       let marketing = {
-        title: '营销组件',
+        title: 'Thành phần marketing',
         list: [],
         isOpen: true,
       };
       let tool = {
-        title: '工具组件',
+        title: 'Thành phần công cụ',
         list: [],
         isOpen: true,
       };
@@ -692,10 +692,10 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 保存配置
+    // Lưu cấu hình
     saveConfig() {
       if (this.mConfig.length == 0) {
-        return this.$message.error('暂未添加任何组件，保存失败！');
+        return this.$message.error('Chưa thêm thành phần nào, lưu thất bại!');
       }
       this.loading = true;
       let val = this.$store.state.mobildConfig.defaultArray;
@@ -708,7 +708,7 @@ export default {
         this.diySaveDate(val);
       });
     },
-    // 获取默认配置
+    // Lấy cấu hình mặc định
     getDefaultConfig() {
       diyGetInfo(this.pageId, {
         type: 1,
@@ -753,7 +753,7 @@ export default {
               tempARR.push(tempItem);
               obj[el.timestamp] = el;
               this.mConfig.push(tempItem);
-              // 保存默认组件配置
+              // Lưu cấu hình thành phần mặc định
               this.$store.commit('mobildConfig/ADDARRAY', {
                 num: el.timestamp,
                 val: el,
@@ -778,17 +778,17 @@ export default {
         this.category = res.data;
       });
     },
-    // 重置
+    // Đặt lại
     reast() {
       if (this.pageId == 0) {
-        this.$message.error('新增页面，无法重置');
+        this.$message.error('Trang mới thêm, không thể đặt lại');
       } else {
         this.$msgbox({
-          title: '提示',
-          message: '重置会恢复到上次保存的数据，确定不保存当前操作吗？',
+          title: 'Thông báo',
+          message: 'Đặt lại sẽ khôi phục về dữ liệu đã lưu lần trước, bạn có chắc không lưu thao tác hiện tại?',
           showCancelButton: true,
-          cancelButtonText: '取消',
-          confirmButtonText: '确定',
+          cancelButtonText: 'Hủy',
+          confirmButtonText: 'Xác nhận',
           iconClass: 'el-icon-warning',
           confirmButtonClass: 'btn-custom-cancel',
         })
@@ -889,7 +889,7 @@ export default {
   width: 80px !important;
 }
 
-/* 定义滑块 内阴影+圆角 */
+/* Định nghĩa thanh trượt: đổ bóng trong + góc tròn */
 ::-webkit-scrollbar-thumb {
   -webkit-box-shadow: inset 0 0 6px #fff;
   display: none;
@@ -905,7 +905,7 @@ export default {
 }
 
 ::-webkit-scrollbar {
-  width: 4px !important; /* 对垂直流动条有效 */
+  width: 4px !important; /* Áp dụng cho thanh cuộn dọc */
 }
 
 .scrollCon {

@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2024 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -11,12 +11,12 @@
 import request from "@/utils/request.js";
 /**
  * 
- * 所有活动接口 包括：拼团，砍价，秒杀
+ * API của tất cả hoạt động, bao gồm: mua chung, săn giảm giá, flash sale
  * 
  */
 
 /**
- * 拼团列表
+ * Danh sách mua chung
  * 
  */
 export function getCombinationList(data) {
@@ -26,7 +26,7 @@ export function getCombinationList(data) {
 }
 
 /**
- * 拼团详情
+ * Chi tiết mua chung
  * 
  */
 export function getCombinationDetail(id) {
@@ -34,21 +34,21 @@ export function getCombinationDetail(id) {
 }
 
 /**
- * 拼团 开团
+ * Mua chung - Mở nhóm
  */
 export function getCombinationPink(id) {
 	return request.get("combination/pink/" + id);
 }
 
 /**
- * 拼团 取消开团
+ * Mua chung - Hủy mở nhóm
  */
 export function postCombinationRemove(data) {
 	return request.post("combination/remove", data);
 }
 
 /**
- * 砍价列表
+ * Danh sách săn giảm giá
  */
 export function getBargainList(data) {
 	return request.get("bargain/list", data, {
@@ -57,7 +57,7 @@ export function getBargainList(data) {
 }
 
 /**
- * 拼团轮播
+ * Banner trình chiếu mua chung
  * 
  */
 export function getCombinationBannerList(data) {
@@ -67,7 +67,7 @@ export function getCombinationBannerList(data) {
 }
 
 /**
- * 拼团人数
+ * Số người mua chung
  * 
  */
 export function getPink(data) {
@@ -78,7 +78,7 @@ export function getPink(data) {
 
 /**
  * 
- * 砍价列表(已参与)
+ * Danh sách săn giảm giá (đã tham gia)
  * @param object data
  */
 export function getBargainUserList(data) {
@@ -87,21 +87,21 @@ export function getBargainUserList(data) {
 
 
 /**
- * 砍价产品详情
+ * Chi tiết sản phẩm săn giảm giá
  */
 export function getBargainDetail(id, uid) {
 	return request.get(`bargain/detail/${id}?bargainUid=${uid}`);
 }
 
 /**
- * 砍价 开启砍价用户信息
+ * Săn giảm giá - Thông tin người dùng bắt đầu săn giảm giá
  */
 export function postBargainStartUser(data) {
 	return request.post("bargain/start/user", data);
 }
 
 /**
- * 砍价开启
+ * Bắt đầu săn giảm giá
  */
 export function postBargainStart(bargainId) {
 	return request.post("bargain/start", {
@@ -110,35 +110,35 @@ export function postBargainStart(bargainId) {
 }
 
 /**
- * 砍价 帮助好友砍价
+ * Săn giảm giá - Giúp bạn bè giảm giá
  */
 export function postBargainHelp(data) {
 	return request.post("bargain/help", data);
 }
 
 /**
- * 砍价 砍掉金额
+ * Săn giảm giá - Số tiền đã giảm
  */
 export function postBargainHelpPrice(data) {
 	return request.post("bargain/help/price", data);
 }
 
 /**
- * 砍价 砍价帮
+ * Săn giảm giá - Người giúp giảm giá
  */
 export function postBargainHelpList(data) {
 	return request.post("bargain/help/list", data);
 }
 
 /**
- * 砍价 砍价帮总人数、剩余金额、进度条、已经砍掉的价格
+ * Săn giảm giá - Tổng số người giúp giảm giá, số tiền còn lại, thanh tiến trình, giá đã giảm được
  */
 export function postBargainHelpCount(data) {
 	return request.post("bargain/help/count", data);
 }
 
 /**
- * 砍价 观看/分享/参与次数
+ * Săn giảm giá - Số lần xem/chia sẻ/tham gia
  */
 export function postBargainShare(bargainId) {
 	return request.post("bargain/share", {
@@ -147,7 +147,7 @@ export function postBargainShare(bargainId) {
 }
 
 /**
- * 秒杀产品时间区间
+ * Khoảng thời gian sản phẩm flash sale
  * 
  */
 export function getSeckillIndexTime() {
@@ -157,7 +157,7 @@ export function getSeckillIndexTime() {
 }
 
 /**
- * 秒杀产品列表
+ * Danh sách sản phẩm flash sale
  * @param int time
  * @param object data
  */
@@ -168,7 +168,7 @@ export function getSeckillList(time, data) {
 }
 
 /**
- * 秒杀产品详情
+ * Chi tiết sản phẩm flash sale
  * @param int id
  */
 export function getSeckillDetail(id, data) {
@@ -176,7 +176,7 @@ export function getSeckillDetail(id, data) {
 }
 
 /**
- * 砍价海报
+ * Poster săn giảm giá
  * @param object data
  * 
  */
@@ -185,7 +185,7 @@ export function getBargainPoster(data) {
 }
 
 /**
- * 拼团海报
+ * Poster mua chung
  * @param object data
  * 
  */
@@ -194,28 +194,28 @@ export function getCombinationPoster(data) {
 }
 
 /**
- * 砍价取消
+ * Hủy săn giảm giá
  */
 export function getBargainUserCancel(data) {
 	return request.post("bargain/user/cancel", data);
 }
 
 /**
- * 获取秒杀小程序二维码
+ * Lấy mã QR Mini Program flash sale
  */
 export function seckillCode(id, data) {
 	return request.get("seckill/code/" + id, data);
 }
 
 /**
- * 获取拼团小程序二维码
+ * Lấy mã QR Mini Program mua chung
  */
 export function scombinationCode(id) {
 	return request.get("combination/code/" + id);
 }
 
 /**
- * 获取砍价海报详细信息
+ * Lấy thông tin chi tiết poster săn giảm giá
  */
 export function getCombinationPosterData(id) {
 	return request.get("combination/poster_info/" + id);
@@ -223,27 +223,27 @@ export function getCombinationPosterData(id) {
 
 
 /**
- * 获取砍价海报详细信息
+ * Lấy thông tin chi tiết poster săn giảm giá
  */
 export function getBargainPosterData(id) {
 	return request.get("bargain/poster_info/" + id);
 }
 
 /**
- * 获取积分订单详细信息
+ * Lấy thông tin chi tiết đơn hàng đổi điểm
  */
 export function integralOrderConfirm(data) {
 	return request.post('store_integral/order/confirm', data);
 }
 
 /**
- * 获取积分订单创建
+ * Lấy tạo đơn hàng đổi điểm
  */
 export function integralOrderCreate(data) {
 	return request.post('store_integral/order/create', data);
 }
 /**
- * 获取积分订单详情
+ * Lấy chi tiết đơn hàng đổi điểm
  * @param string cartId
  */
 export function integralOrderDetails(order) {
@@ -251,7 +251,7 @@ export function integralOrderDetails(order) {
 }
 
 /**
- * 积分产品详情
+ * Chi tiết sản phẩm đổi điểm
  * @param int id
  * 
  */
@@ -262,7 +262,7 @@ export function getIntegralProductDetail(id) {
 }
 
 /**
- * 积分商城商品列表
+ * Danh sách sản phẩm cửa hàng đổi điểm
  * @param object data
  */
 export function getStoreIntegralList(data) {
@@ -272,7 +272,7 @@ export function getStoreIntegralList(data) {
 }
 
 /**
- * 积分兑换列表
+ * Danh sách đổi điểm
  * @param object data
  */
 export function getIntegralOrderList(data) {
@@ -280,14 +280,14 @@ export function getIntegralOrderList(data) {
 }
 
 /**
- * 积分兑换详情
+ * Chi tiết đổi điểm
  */
 export function getLogisticsDetails(orderId) {
 	return request.get(`store_integral/order/express/${orderId}`);
 }
 
 /**
- * 积分兑换订单确认收货
+ * Xác nhận đã nhận hàng đơn đổi điểm
  * @param object data
  */
 export function orderTake(data) {
@@ -295,7 +295,7 @@ export function orderTake(data) {
 }
 
 /**
- * 积分兑换订单删除
+ * Xóa đơn đổi điểm
  * @param object data
  */
 export function orderDel(data) {
@@ -303,7 +303,7 @@ export function orderDel(data) {
 }
 
 /**
- * 预售商品列表
+ * Danh sách sản phẩm đặt trước
  */
 export function getPresellList(data) {
 	return request.get("advance/list", data);

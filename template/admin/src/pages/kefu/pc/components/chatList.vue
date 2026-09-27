@@ -29,23 +29,23 @@
             <div class="hd">
               <span class="name line1">{{ item.nickname }}</span>
               <template v-if="item.type == 2">
-                <span class="label">小程序</span>
+                <span class="label">Mini Program</span>
               </template>
               <template v-if="item.type == 3">
                 <span class="label H5">H5</span>
               </template>
               <template v-if="item.type == 1">
-                <span class="label wechat">公众号</span>
+                <span class="label wechat">OA WeChat</span>
               </template>
               <template v-if="item.type == 0">
-                <span class="label pc">PC端</span>
+                <span class="label pc">PC</span>
               </template>
             </div>
             <div class="bd line1">
               <template v-if="item.message_type <= 2">{{ item.message }}</template>
-              <template v-if="item.message_type == 3">[图片]</template>
-              <template v-if="item.message_type == 5">[商品]</template>
-              <template v-if="item.message_type == 6">[订单]</template>
+              <template v-if="item.message_type == 3">[Hình ảnh]</template>
+              <template v-if="item.message_type == 5">[Sản phẩm]</template>
+              <template v-if="item.message_type == 6">[Đơn hàng]</template>
             </div>
           </div>
           <div class="right-box">
@@ -58,7 +58,7 @@
           </div>
         </div>
       </vue-scroll>
-      <empty v-else msg="暂无用户列表" status="1"></empty>
+      <empty v-else msg="Chưa có danh sách người dùng" status="1"></empty>
     </div>
   </div>
 </template>
@@ -103,8 +103,8 @@ export default {
               el.online = nVal.online;
               if (nVal.online == 1) {
                 this.$notify.info({
-                  title: '上线通知',
-                  message: `${el.nickname}上线`,
+                  title: 'Thông báo người dùng trực tuyến',
+                  message: `${el.nickname} đã trực tuyến`,
                 });
               }
             }
@@ -132,7 +132,7 @@ export default {
       hdTab: [
         {
           key: 0,
-          title: '用户列表',
+          title: 'Danh sách người dùng',
         },
       ],
       userList: [],
@@ -174,13 +174,13 @@ export default {
   filters: {
     toDay: function (value) {
       if (!value) return '';
-      return dayjs.unix(value).format('M月D日 HH:mm');
+      return dayjs.unix(value).format('D/M HH:mm');
     },
   },
   mounted() {
     let that = this;
     Socket.then((ws) => {
-      //用户转接
+      //Chuyển tiếp người dùng
       ws.$on('transfer', (data) => {
         let status = false;
         that.userList.forEach((el, index, arr) => {
@@ -197,7 +197,7 @@ export default {
               arr.unshift(oldVal);
             }
             this.$notify.info({
-              title: '您有一条转接消息！',
+              title: 'Bạn có một tin nhắn được chuyển tiếp!',
             });
           }
         });
@@ -224,7 +224,7 @@ export default {
         }
         if (data.recored.is_tourist != this.hdTabCur && data.recored.id) {
           this.$notify.info({
-            title: this.hdTabCur ? '用户发来消息啦！' : '游客发来消息啦！',
+            title: this.hdTabCur ? 'Người dùng vừa gửi tin nhắn!' : 'Khách vãng lai vừa gửi tin nhắn!',
           });
         }
       });
@@ -235,7 +235,7 @@ export default {
     this.getList();
   },
   methods: {
-    //切换
+    //Chuyển đổi
     changeTab(item) {
       if (this.hdTabCur == item.key) return;
       this.hdTabCur = item.key;
@@ -272,7 +272,7 @@ export default {
     chartReachBottom() {
       this.getList();
     },
-    // 选择用户
+    // Chọn người dùng
     selectUser(item) {
       if (this.curId == item.id) return;
       item.mssage_num = 0;

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,7 +17,7 @@ use crmeb\utils\Canvas;
 use think\facade\App;
 
 /**
- * 线下收银
+ * Thu ngân tại quầy
  * Class OtherOrder
  * @package app\adminapi\controller\v1\order
  */
@@ -35,7 +35,7 @@ class OtherOrder extends AuthController
     }
 
     /**
-     * 线下收银订单列表
+     * Danh sách đơn hàng thu ngân tại chỗ
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -55,7 +55,7 @@ class OtherOrder extends AuthController
     }
 
     /**
-     * 线下收银二维码
+     * Mã QR thu ngân tại chỗ
      * @return mixed
      * @throws \Exception
      */
@@ -64,18 +64,18 @@ class OtherOrder extends AuthController
         [$type] = $this->request->getMore([
             ['type', 1]
         ], true);
-        //生成h5地址
+        //Tạo địa chỉ h5
         $weixinPage = "/pages/annex/offline_pay/index";
         $weixinFileName = "wechat_offline_scan.png";
         /** @var QrcodeServices $QrcodeService */
         $QrcodeService = app()->make(QrcodeServices::class);
         $wechatQrcode = $QrcodeService->getWechatQrcodePath($weixinFileName, $weixinPage, false, false);
-        //生成小程序地址
+        //Tạo địa chỉ Mini Program
         $routineQrcode = $QrcodeService->getRoutineQrcodePath(4, 6, 3, [], false);
         $qrcod = ['wechat' => $wechatQrcode, 'routine' => $routineQrcode];
         $data = [];
         if ($type) {
-            //生成画布
+            //Tạo canvas
             $canvas = Canvas::instance();
             $path = 'uploads/offline/';
             $imageType = 'jpg';

@@ -13,7 +13,7 @@
     import { mapState, mapMutations, mapActions } from 'vuex'
     export default {
         name: 'c_home_pink',
-        cname: '拼团',
+        cname: 'Mua chung',
         componentsName: 'home_pink',
         props: {
             activeIndex: {

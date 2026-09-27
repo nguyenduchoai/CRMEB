@@ -18,7 +18,7 @@ class OutInterfaceServices extends BaseServices
     }
 
     /**
-     * 验证对外接口权限
+     * Kiểm tra quyền API đối ngoại
      * @param Request $request
      * @return bool
      */
@@ -44,7 +44,7 @@ class OutInterfaceServices extends BaseServices
     }
 
     /**
-     * 对外接口列表
+     * Danh sách API bên ngoài
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -52,11 +52,11 @@ class OutInterfaceServices extends BaseServices
      */
     public function outInterfaceList(): array
     {
-        // 获取系统路由分类列表
+        // Lấy danh sách danh mục route hệ thống
         $list = app()->make(SystemRouteCateServices::class)->selectList(['app_name' => 'outapi'], 'id,pid,name,name as title')->toArray();
-        // 获取系统路由列表
+        // Lấy danh sách route hệ thống
         $data = app()->make(SystemRouteServices::class)->selectList(['app_name' => 'outapi'], 'id,cate_id as pid,name,name as title')->toArray();
-        // 遍历分类列表，将分类下的路由添加到对应的子节点中
+        // Lặp qua danh sách danh mục, thêm route trong danh mục vào node con tương ứng
         foreach ($list as &$item) {
             foreach ($data as $k => $v) {
                 if ($item['id'] == $v['pid']) {
@@ -64,13 +64,13 @@ class OutInterfaceServices extends BaseServices
                 }
             }
         }
-        // 返回完整的外部接口列表
+        // Trả về danh sách API bên ngoài đầy đủ
         return $list;
     }
 
 
     /**
-     * 新增对外接口文档
+     * Thêm tài liệu API đối ngoại
      * @param $id
      * @param $data
      * @return bool
@@ -90,7 +90,7 @@ class OutInterfaceServices extends BaseServices
     }
 
     /**
-     * 对外接口文档
+     * Tài liệu API công khai
      * @param $id
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -110,7 +110,7 @@ class OutInterfaceServices extends BaseServices
     }
 
     /**
-     * 修改接口名称
+     * Sửa tên API
      * @param $data
      * @return bool
      */
@@ -122,7 +122,7 @@ class OutInterfaceServices extends BaseServices
     }
 
     /**
-     * 删除接口
+     * Xóa API
      * @param $id
      * @return bool
      */

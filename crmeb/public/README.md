@@ -1,29 +1,29 @@
-crmeb/public目录在CRMEB项目中的主要作用是:
+Vai trò chính của thư mục crmeb/public trong dự án CRMEB là:
 
-- 作为网站前端或移动端访问的入口目录
+- Là thư mục điểm vào để truy cập từ front-end website hoặc thiết bị di động
 
-- 存放项目对外访问的静态资源,如css、js、图片等文件
+- Lưu trữ các tài nguyên tĩnh được truy cập từ bên ngoài của dự án, như các tệp css, js, hình ảnh, v.v.
 
-- 包含index.php入口文件,用于路由到具体控制器
+- Chứa tệp điểm vào index.php, dùng để định tuyến đến controller cụ thể
 
-- 通过.htaccess实现伪静态URL规则的解析
+- Phân giải quy tắc URL giả tĩnh (rewrite) thông qua .htaccess
 
-具体来说:
+Cụ thể:
 
-- 用户通过浏览器或APP都访问public目录下的文件
+- Người dùng dù truy cập qua trình duyệt hay APP đều truy cập các tệp trong thư mục public
 
-- 目录下文件不会包含任何项目核心代码
+- Các tệp trong thư mục không chứa bất kỳ mã nguồn lõi nào của dự án
 
-- 路由解析后分发到实际的控制器处处理
+- Sau khi phân tích định tuyến, yêu cầu được chuyển đến controller thực tế để xử lý
 
-- 资源文件可以通过CDN或其他方式托管发布
+- Các tệp tài nguyên có thể được lưu trữ và phân phối qua CDN hoặc các cách khác
 
-使用这个目录设计的优点:
+Ưu điểm của cách thiết kế thư mục này:
 
-- 隐藏实际项目内部文件结构
+- Ẩn cấu trúc tệp nội bộ thực tế của dự án
 
-- 提高安全性,外部无法直接访问代码
+- Tăng tính bảo mật, bên ngoài không thể truy cập trực tiếp mã nguồn
 
-- 实现静态资源优化发布效果
+- Tối ưu việc phân phối tài nguyên tĩnh
 
-所以它扮演着项目对外"外壳"的作用,承担了项目入口和资源存放功能。
+Vì vậy, nó đóng vai trò “lớp vỏ” đối ngoại của dự án, đảm nhận chức năng điểm vào của dự án và lưu trữ tài nguyên.

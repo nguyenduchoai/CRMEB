@@ -1,11 +1,11 @@
 <?php
 /**
  *  +----------------------------------------------------------------------
- *  | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+ *  | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
  *  +----------------------------------------------------------------------
  *  | Copyright (c) 2016~2022 https://www.crmeb.com All rights reserved.
  *  +----------------------------------------------------------------------
- *  | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+ *  | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
  *  +----------------------------------------------------------------------
  *  | Author: CRMEB Team <admin@crmeb.com>
  *  +----------------------------------------------------------------------
@@ -20,7 +20,7 @@ use think\helper\Str;
 
 /**
  * Class ViewApi
- * @author 等风来
+ * @author Deng Fenglai
  * @email 136327134@qq.com
  * @date 2023/4/1
  * @package crmeb\services\crud
@@ -50,7 +50,7 @@ class ViewApi extends Make
 
     /**
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/4
      */
@@ -63,7 +63,7 @@ class ViewApi extends Make
      * @param string $name
      * @param array $options
      * @return ViewApi
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/4
      */
@@ -80,11 +80,11 @@ class ViewApi extends Make
     }
 
     /**
-     * 设置页面JS内容
+     * Đặt nội dung JS trang
      * @param string $name
      * @param string $route
      * @return $this
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
@@ -117,17 +117,17 @@ class ViewApi extends Make
     }
 
     /**
-     * 设置页面api内容
+     * Đặt nội dung api trang
      * @param string $name
      * @param string $path
      * @return $this
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
     protected function setApi(string $name, string $path)
     {
-        //生成api
+        //Tạo api
         [, $content] = $this->getStubContent($name, $this->name);
 
         $contentStr = str_replace($this->var, $this->value, $content);
@@ -143,7 +143,7 @@ class ViewApi extends Make
      * @param string $path
      * @param string $name
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/4
      */
@@ -155,7 +155,7 @@ class ViewApi extends Make
     }
 
     /**
-     * 模板文件配置
+     * Cấu hình file mẫu
      * @param string $type
      * @return mixed
      */

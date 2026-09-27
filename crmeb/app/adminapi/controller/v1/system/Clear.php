@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\system\log\ClearServices;
 use app\adminapi\controller\AuthController;
 
 /**
- * 首页控制器
+ * Controller trang chủ
  * Class Clear
  * @package app\admin\controller
  *
@@ -29,7 +29,7 @@ class Clear extends AuthController
     }
 
     /**
-     * 刷新数据缓存
+     * Làm mới cache dữ liệu
      */
     public function refresh_cache()
     {
@@ -39,7 +39,7 @@ class Clear extends AuthController
 
 
     /**
-     * 删除日志
+     * Xóa log
      */
     public function delete_log()
     {

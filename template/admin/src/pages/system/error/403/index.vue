@@ -1,5 +1,5 @@
 <template>
-  <error-content code="403" desc="抱歉，你无权访问该页面" :src="src" />
+  <error-content code="403" desc="Xin lỗi, bạn không có quyền truy cập trang này" :src="src" />
 </template>
 
 <script>

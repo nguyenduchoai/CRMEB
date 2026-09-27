@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -25,7 +25,7 @@ class MemberCard extends AuthController
 {
 
     /**
-     * 初始化service层句柄
+     * Khởi tạo handle tầng service
      * MemberCard constructor.
      * @param App $app
      * @param MemberCardServices $memberCardServices
@@ -37,7 +37,7 @@ class MemberCard extends AuthController
     }
 
     /**
-     * 会员卡列表
+     * Danh sách thẻ thành viên
      * @param $card_batch_id
      * @return mixed
      */
@@ -58,7 +58,7 @@ class MemberCard extends AuthController
     }
 
     /**
-     * 会员分类
+     * Danh mục thành viên
      * @return mixed
      */
     public function member_ship()
@@ -70,7 +70,7 @@ class MemberCard extends AuthController
     }
 
     /**
-     * 保存分类
+     * Lưu danh mục
      * @param $id
      * @param MemberShipServices $memberShipServices
      * @return mixed
@@ -90,7 +90,7 @@ class MemberCard extends AuthController
     }
 
     /**
-     * 删除
+     * Xóa
      * @param $id
      * @param MemberShipServices $memberShipServices
      * @return mixed
@@ -103,7 +103,7 @@ class MemberCard extends AuthController
     }
 
     /**
-     * 获取会员记录
+     * Lấy lịch sử thành viên
      * @return mixed
      */
     public function member_record()
@@ -121,7 +121,7 @@ class MemberCard extends AuthController
     }
 
     /**
-     * 会员权益
+     * Quyền lợi thành viên
      * @return mixed
      */
     public function member_right()
@@ -133,7 +133,7 @@ class MemberCard extends AuthController
     }
 
     /**
-     * 保存会员权益
+     * Lưu quyền lợi thành viên
      * @param $id
      * @param MemberRightServices $memberRightServices
      * @return mixed
@@ -155,7 +155,7 @@ class MemberCard extends AuthController
     }
 
     /**
-     * 会员卡激活冻结状态修改
+     * Sửa trạng thái kích hoạt/khóa thẻ thành viên
      * @return mixed
      */
     public function set_status()
@@ -170,7 +170,7 @@ class MemberCard extends AuthController
     }
 
     /**
-     * 付费会员类型启用/禁用
+     * Bật/tắt loại thành viên trả phí
      * @return mixed
      */
     public function set_ship_status()

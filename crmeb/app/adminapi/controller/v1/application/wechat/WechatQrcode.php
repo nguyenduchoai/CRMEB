@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -36,7 +36,7 @@ class WechatQrcode extends AuthController
     }
 
     /**
-     * 分类列表
+     * Danh sách danh mục
      * @return mixed
      */
     public function getCateList()
@@ -47,7 +47,7 @@ class WechatQrcode extends AuthController
     }
 
     /**
-     * 添加编辑表单
+     * Form thêm/sửa
      * @param $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -61,7 +61,7 @@ class WechatQrcode extends AuthController
     }
 
     /**
-     * 保存数据
+     * Lưu dữ liệu
      * @return mixed
      */
     public function saveCate()
@@ -75,7 +75,7 @@ class WechatQrcode extends AuthController
     }
 
     /**
-     * 删除分类
+     * Xóa danh mục
      * @param $id
      * @return mixed
      */
@@ -86,7 +86,7 @@ class WechatQrcode extends AuthController
     }
 
     /**
-     * 保存渠道码
+     * Lưu mã kênh
      * @param $id
      * @return mixed
      */
@@ -107,7 +107,7 @@ class WechatQrcode extends AuthController
     }
 
     /**
-     * 获取渠道码列表
+     * Lấy danh sách mã kênh
      * @return mixed
      */
     public function qrcodeList()
@@ -122,7 +122,7 @@ class WechatQrcode extends AuthController
     }
 
     /**
-     * 获取详情
+     * Lấy chi tiết
      * @param int $id
      * @return mixed
      */
@@ -134,7 +134,7 @@ class WechatQrcode extends AuthController
     }
 
     /**
-     * 删除渠道码
+     * Xóa mã kênh
      * @param int $id
      * @return mixed
      */
@@ -146,7 +146,7 @@ class WechatQrcode extends AuthController
     }
 
     /**
-     * 切换状态
+     * Chuyển trạng thái
      * @param $id
      * @param $status
      * @return mixed
@@ -159,7 +159,7 @@ class WechatQrcode extends AuthController
     }
 
     /**
-     * 用户列表
+     * Danh sách người dùng
      * @param $qid
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -173,7 +173,7 @@ class WechatQrcode extends AuthController
 
 
     /**
-     * 渠道码统计
+     * Thống kê mã kênh
      * @param $qid
      * @return mixed
      */

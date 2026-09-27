@@ -4,21 +4,21 @@
 		<view v-if="insert || show" class="uni-calendar__content" :class="{ 'uni-calendar--fixed': !insert, 'uni-calendar--ani-show': aniMaskShow }">
 			<view v-if="!insert" class="uni-calendar__header uni-calendar--fixed-top">
 				<view class="uni-calendar__header-btn-box" @click="close">
-					<text class="uni-calendar__header-text uni-calendar--fixed-width">{{ $t(`取消`) }}</text>
+					<text class="uni-calendar__header-text uni-calendar--fixed-width">{{ $t(`Hủy`) }}</text>
 				</view>
 				<view class="uni-calendar__header-btn-box" @click="confirm">
-					<text class="uni-calendar__header-text uni-calendar--fixed-width">{{ $t(`确定`) }}</text>
+					<text class="uni-calendar__header-text uni-calendar--fixed-width">{{ $t(`Xác nhận`) }}</text>
 				</view>
 			</view>
 			<view class="uni-calendar__header">
 				<view class="uni-calendar__header-btn-box" @click="pre">
 					<view class="uni-calendar__header-btn uni-calendar--left"></view>
 				</view>
-				<text class="uni-calendar__header-text">{{ (nowDate.year || '') + $t(`年`) + (nowDate.month || '') + $t(`月`) }}</text>
+				<text class="uni-calendar__header-text">{{ (nowDate.year || '') + $t(`năm`) + (nowDate.month || '') + $t(`Tháng`) }}</text>
 				<view class="uni-calendar__header-btn-box" @click="next">
 					<view class="uni-calendar__header-btn uni-calendar--right"></view>
 				</view>
-				<text class="uni-calendar__backtoday" @click="backtoday">{{ $t(`回到当天`) }}</text>
+				<text class="uni-calendar__backtoday" @click="backtoday">{{ $t(`Về hôm nay`) }}</text>
 			</view>
 			<view class="uni-calendar__box">
 				<view v-if="showMonth" class="uni-calendar__box-bg">
@@ -26,25 +26,25 @@
 				</view>
 				<view class="uni-calendar__weeks">
 					<view class="uni-calendar__weeks-day">
-						<text class="uni-calendar__weeks-day-text">{{ $t(`天`) }}</text>
+						<text class="uni-calendar__weeks-day-text">{{ $t(`ngày`) }}</text>
 					</view>
 					<view class="uni-calendar__weeks-day">
-						<text class="uni-calendar__weeks-day-text">{{ $t(`一`) }}</text>
+						<text class="uni-calendar__weeks-day-text">{{ $t(`T2`) }}</text>
 					</view>
 					<view class="uni-calendar__weeks-day">
-						<text class="uni-calendar__weeks-day-text">{{ $t(`二`) }}</text>
+						<text class="uni-calendar__weeks-day-text">{{ $t(`T3`) }}</text>
 					</view>
 					<view class="uni-calendar__weeks-day">
-						<text class="uni-calendar__weeks-day-text">{{ $t(`三`) }}</text>
+						<text class="uni-calendar__weeks-day-text">{{ $t(`T4`) }}</text>
 					</view>
 					<view class="uni-calendar__weeks-day">
-						<text class="uni-calendar__weeks-day-text">{{ $t(`四`) }}</text>
+						<text class="uni-calendar__weeks-day-text">{{ $t(`T5`) }}</text>
 					</view>
 					<view class="uni-calendar__weeks-day">
-						<text class="uni-calendar__weeks-day-text">{{ $t(`五`) }}</text>
+						<text class="uni-calendar__weeks-day-text">{{ $t(`T6`) }}</text>
 					</view>
 					<view class="uni-calendar__weeks-day">
-						<text class="uni-calendar__weeks-day-text">{{ $t(`六`) }}</text>
+						<text class="uni-calendar__weeks-day-text">{{ $t(`T7`) }}</text>
 					</view>
 				</view>
 				<view class="uni-calendar__weeks" v-for="(item, weekIndex) in weeks" :key="weekIndex">
@@ -66,14 +66,14 @@ export default {
 	},
 	props: {
 		/**
-		 * 当前日期
+		 * Ngày hiện tại
 		 */
 		date: {
 			type: String,
 			default: ''
 		},
 		/**
-		 * 打点日期
+		 * Ngày đánh dấu (dot)
 		 */
 		selected: {
 			type: Array,
@@ -82,42 +82,42 @@ export default {
 			}
 		},
 		/**
-		 * 是否开启阴历日期
+		 * Có mở hiển thị ngày âm lịch hay không
 		 */
 		lunar: {
 			type: Boolean,
 			default: false
 		},
 		/**
-		 * 开始时间
+		 * Thời gian bắt đầu
 		 */
 		startDate: {
 			type: String,
 			default: ''
 		},
 		/**
-		 * 结束时间
+		 * Thời gian kết thúc
 		 */
 		endDate: {
 			type: String,
 			default: ''
 		},
 		/**
-		 * 范围
+		 * Phạm vi
 		 */
 		range: {
 			type: Boolean,
 			default: false
 		},
 		/**
-		 * 插入
+		 * Chèn
 		 */
 		insert: {
 			type: Boolean,
 			default: true
 		},
 		/**
-		 * 是否显示月份背景
+		 * Có hiển thị nền tháng hay không
 		 */
 		showMonth: {
 			type: Boolean,
@@ -140,7 +140,7 @@ export default {
 		}
 	},
 	created() {
-		// 获取日历方法实例
+		// Lấy instance phương thức lịch
 		this.cale = new Calendar({
 			date: this.date,
 			selected: this.selected,
@@ -151,7 +151,7 @@ export default {
 		this.init(this.cale.date.fullDate);
 	},
 	methods: {
-		// 取消穿透
+		// Hủy xuyên qua (penetrate)
 		clean() {},
 		init(date) {
 			this.weeks = this.cale.weeks;
@@ -203,7 +203,7 @@ export default {
 		choiceDate(weeks) {
 			if (weeks.disable) return;
 			this.calendar = weeks;
-			// 设置多选
+			// Đặt chọn nhiều (multi-select)
 			this.cale.setMultiple(this.calendar.fullDate);
 			this.weeks = this.cale.weeks;
 			this.change();

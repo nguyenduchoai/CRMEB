@@ -37,17 +37,17 @@
               <img src="../../assets/images/shan.png" />
             </div>
             <div class="label bgblue" v-if="item.type == 1">
-              <span class="txt">预告</span>
-              <span class="msg">08月08日 20:00</span>
+              <span class="txt">Sắp phát sóng</span>
+              <span class="msg">08/08 20:00</span>
             </div>
-            <div class="label bggary" v-if="item.type == 0">回放</div>
-            <div class="label bgred" v-if="item.type == 2"><span class="iconfont-diy iconzhibozhong"></span>直播中</div>
+            <div class="label bggary" v-if="item.type == 0">Xem lại</div>
+            <div class="label bgred" v-if="item.type == 2"><span class="iconfont-diy iconzhibozhong"></span>Đang livestream</div>
           </div>
           <div class="info">
-            <div class="title" v-if="checkboxInfo.indexOf(0) != -1">这里是直播标题这里是直播标题这里是直播标题...</div>
+            <div class="title" v-if="checkboxInfo.indexOf(0) != -1">Đây là tiêu đề livestream đây là tiêu đề livestream đây là tiêu đề livestream...</div>
             <div class="people" v-if="checkboxInfo.indexOf(1) != -1">
               <img src="@/assets/images/ren.png" alt="" />
-              <span>主播：王小丫</span>
+              <span>Streamer: Trần Thị B</span>
             </div>
           </div>
         </div>
@@ -82,9 +82,9 @@
                 :style="{
                   borderRadius: imgRadius2,
                 }"
-                >预告</span
+                >Sắp phát sóng</span
               >
-              <span class="msg">08月08日 20:00</span>
+              <span class="msg">08/08 20:00</span>
             </div>
             <div
               class="label bggary"
@@ -93,7 +93,7 @@
               }"
               v-if="item.type == 0"
             >
-              回放
+              Xem lại
             </div>
             <div
               class="label bgred"
@@ -102,14 +102,14 @@
               }"
               v-if="item.type == 2"
             >
-              <span class="iconfont-diy iconzhibozhong"></span>直播中
+              <span class="iconfont-diy iconzhibozhong"></span>Đang livestream
             </div>
           </div>
           <div class="info">
-            <div class="title line1" v-if="checkboxInfo.indexOf(0) != -1">直播标题直播标题直播标 题直播标题</div>
+            <div class="title line1" v-if="checkboxInfo.indexOf(0) != -1">Tiêu đề livestream tiêu đề livestream tiêu đề livestream</div>
             <div class="people" v-if="checkboxInfo.indexOf(1) != -1">
               <img src="@/assets/images/ren.png" alt="" />
-              <span>主播：王小丫</span>
+              <span>Streamer: Trần Thị B</span>
             </div>
           </div>
         </div>
@@ -133,15 +133,15 @@
               <img src="../../assets/images/shan.png" />
             </div>
             <div class="label bgblue" v-if="item.type == 1">
-              <span class="txt">预告</span>
-              <span class="msg">08月08日 20:00</span>
+              <span class="txt">Sắp phát sóng</span>
+              <span class="msg">08/08 20:00</span>
             </div>
-            <div class="label bggary" v-if="item.type == 0">回放</div>
-            <div class="label bgred" v-if="item.type == 2"><span class="iconfont-diy iconzhibozhong"></span>直播中</div>
+            <div class="label bggary" v-if="item.type == 0">Xem lại</div>
+            <div class="label bgred" v-if="item.type == 2"><span class="iconfont-diy iconzhibozhong"></span>Đang livestream</div>
           </div>
           <div class="info">
             <div class="left">
-              <div class="title line2" v-if="checkboxInfo.indexOf(0) != -1">直播标题直播标题直播标 题直播标题</div>
+              <div class="title line2" v-if="checkboxInfo.indexOf(0) != -1">Tiêu đề livestream tiêu đề livestream tiêu đề livestream</div>
             </div>
             <div class="goods-wrapper">
               <template v-if="item.goods.length > 0">
@@ -168,7 +168,7 @@
                 <img src="../../assets/images/shan.png" />
               </div>
               <div class="label bgred" v-if="item.type == 2">
-                <span class="iconfont-diy iconzhibozhong"></span>直播中
+                <span class="iconfont-diy iconzhibozhong"></span>Đang livestream
               </div>
               <div
                 class="info"
@@ -178,11 +178,11 @@
                 }"
               >
                 <div class="title line1" v-if="checkboxInfo.indexOf(0) != -1">
-                  这里是直播标题这里是直播标题这里是直播标题...
+                  Đây là tiêu đề livestream đây là tiêu đề livestream đây là tiêu đề livestream...
                 </div>
                 <div class="people" v-if="checkboxInfo.indexOf(1) != -1">
                   <img src="@/assets/images/ren.png" alt="" />
-                  <span>主播：王小丫</span>
+                  <span>Streamer: Trần Thị B</span>
                 </div>
               </div>
             </div>
@@ -195,16 +195,16 @@
             }"
           >
             <div class="name line1">
-              <div class="label" v-if="item.type == 1">预告</div>
-              <div class="label bggary" v-if="item.type == 0">回放</div>
-              <div v-if="checkboxInfo.indexOf(0) != -1">这里是直播标题这里...</div>
+              <div class="label" v-if="item.type == 1">Sắp phát sóng</div>
+              <div class="label bggary" v-if="item.type == 0">Xem lại</div>
+              <div v-if="checkboxInfo.indexOf(0) != -1">Đây là tiêu đề livestream đây...</div>
             </div>
             <div class="people acea-row row-middle" v-if="checkboxInfo.indexOf(1) != -1">
               <img src="@/assets/images/ren.png" alt="" />
               <div class="acea-row row-middle">
-                <span>主播：王小丫</span>
+                <span>Streamer: Trần Thị B</span>
                 <div class="line"></div>
-                <span>08月28日 18:00</span>
+                <span>28/08 18:00</span>
               </div>
             </div>
           </div>
@@ -218,10 +218,10 @@
 import { mapState, mapMutations } from 'vuex';
 export default {
   name: 'wechat_live',
-  cname: '小程序直播',
+  cname: 'Livestream Mini Program',
   configName: 'c_wechat_live',
-  type: 1, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'liveBroadcast', // 外面匹配名称
+  type: 1, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'liveBroadcast', // Tên khớp bên ngoài
   icon: '#iconzujian-xiaochengxuzhibo',
   props: {
     index: {
@@ -259,82 +259,82 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
-        cname: '小程序直播',
+        cname: 'Livestream Mini Program',
         name: 'liveBroadcast',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
         },
-        titleLeft: '展示设置',
-        titleContent: '内容展示',
-        titleRight: '直播样式',
-        titleCurrency: '通用样式',
+        titleLeft: 'Cài đặt hiển thị',
+        titleContent: 'Hiển thị nội dung',
+        titleRight: 'Kiểu livestream',
+        titleCurrency: 'Kiểu chung',
         styleConfig: {
-          title: '选择风格',
+          title: 'Chọn phong cách',
           tabVal: 0,
           tabList: [
             {
-              name: '样式一',
+              name: 'Kiểu 1',
             },
             {
-              name: '样式二',
+              name: 'Kiểu 2',
             },
             {
-              name: '样式三',
+              name: 'Kiểu 3',
             },
             {
-              name: '样式四',
+              name: 'Kiểu 4',
             },
           ],
         },
         numberConfig: {
-          title: '直播数量',
+          title: 'Số lượng livestream',
           val: 3,
           min: 1,
         },
         checkboxInfo: {
-          title: '展示信息',
+          title: 'Thông tin hiển thị',
           name: 'checkboxInfo',
           type: [0, 1],
           list: [
             {
               id: 0,
-              name: '直播标题',
+              name: 'Tiêu đề livestream',
             },
             {
               id: 1,
-              name: '用户名称',
+              name: 'Tên người dùng',
             },
           ],
         },
         liveConfig: {
-          title: '直播间距',
+          title: 'Khoảng cách livestream',
           val: 10,
           min: 0,
         },
         filletImg: {
-          title: '图片圆角',
+          title: 'Bo góc ảnh',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 8,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         moduleColor: {
-          title: '组件背景',
+          title: 'Nền thành phần',
           default: [
             {
               item: '#fff',
@@ -353,7 +353,7 @@ export default {
           ],
         },
         bottomBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           default: [
             {
               item: '#f5f5f5',
@@ -366,39 +366,39 @@ export default {
           ],
         },
         topConfig: {
-          title: '上边距',
+          title: 'Lề trên',
           val: 0,
           min: 0,
         },
         bottomConfig: {
-          title: '下边距',
+          title: 'Lề dưới',
           val: 0,
           min: 0,
         },
         prConfig: {
-          title: '左右边距',
+          title: 'Lề trái phải',
           val: 10,
           min: 0,
         },
         mbConfig: {
-          title: '页面上间距',
+          title: 'Lề trên trang',
           val: 0,
           min: 0,
         },
         fillet: {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 8,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
@@ -406,7 +406,7 @@ export default {
       },
       live: [
         {
-          title: '直播中',
+          title: 'Đang livestream',
           name: 'playBg',
           type: 2,
           color: '',
@@ -419,7 +419,7 @@ export default {
           ],
         },
         {
-          title: '预告',
+          title: 'Sắp phát sóng',
           name: 'notBg',
           type: 1,
           color: '',
@@ -440,7 +440,7 @@ export default {
           ],
         },
         {
-          title: '回放',
+          title: 'Xem lại',
           name: 'endBg',
           type: 0,
           color: '',

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -39,7 +39,7 @@ class UserLevelServices extends BaseServices
     }
 
     /**
-     * 某些条件获取单个
+     * Lấy một bản ghi theo một số điều kiện
      * @param array $where
      * @param string $field
      * @return mixed
@@ -50,7 +50,7 @@ class UserLevelServices extends BaseServices
     }
 
     /**
-     * 获取一些用户等级信息
+     * Lấy thông tin hạng của một số người dùng
      * @param array $uids
      * @param string $field
      * @param string $key
@@ -62,7 +62,7 @@ class UserLevelServices extends BaseServices
     }
 
     /**
-     * 清除用户等级
+     * Gỡ bỏ hạng người dùng
      * @param $uids
      * @return \crmeb\basic\BaseModel|mixed
      */
@@ -86,7 +86,7 @@ class UserLevelServices extends BaseServices
     }
 
     /**
-     * 根据用户uid 获取用户等级详细信息
+     * Theo uid người dùng, lấy thông tin chi tiết hạng người dùng
      * @param int $uid
      * @param string $field
      */
@@ -109,9 +109,9 @@ class UserLevelServices extends BaseServices
     }
 
     /**
-     * 设置用户等级
-     * @param $uid 用户uid
-     * @param $level_id 等级id
+     * Đặt hạng người dùng
+     * @param $uid uid người dùng
+     * @param $level_id ID cấp bậc
      * @return UserLevel|bool|\think\Model
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
@@ -130,11 +130,11 @@ class UserLevelServices extends BaseServices
         /** @var  $user */
         $user = app()->make(UserServices::class);
         $userinfo = $user->getUserInfo($uid);
-        //把之前等级作废
+        //Hủy hạng trước đó
         $this->dao->update(['uid' => $uid], ['status' => 0, 'is_del' => 1]);
-        //检查是否购买过
+        //Kiểm tra đã mua chưa
         $uservipinfo = $this->getWhereLevel(['uid' => $uid, 'level_id' => $level_id]);
-        $data['mark'] = '尊敬的用户' . $userinfo['nickname'] . '在' . date('Y-m-d H:i:s', time()) . '成为了' . $vipinfo['name'];
+        $data['mark'] = 'Quý khách' . $userinfo['nickname'] . 'vào lúc' . date('Y-m-d H:i:s', time()) . 'đã trở thành' . $vipinfo['name'];
         $data['add_time'] = time();
         if ($uservipinfo) {
             $data['status'] = 1;
@@ -158,14 +158,14 @@ class UserLevelServices extends BaseServices
             $change_exp = $vipinfo['exp_num'] - $userinfo['exp'];
             $pm = 1;
             $type = 'system_exp_add';
-            $title = '系统增加经验';
-            $mark = '系统增加' . $change_exp . '经验';
+            $title = 'Hệ thống cộng điểm kinh nghiệm';
+            $mark = 'Hệ thống cộng' . $change_exp . 'điểm kinh nghiệm';
         } else {
             $change_exp = $userinfo['exp'] - $vipinfo['exp_num'];
             $pm = 0;
             $type = 'system_exp_sub';
-            $title = '系统减少经验';
-            $mark = '系统减少' . $change_exp . '经验';
+            $title = 'Hệ thống trừ điểm kinh nghiệm';
+            $mark = 'Hệ thống trừ' . $change_exp . 'điểm kinh nghiệm';
         }
         $bill_data['uid'] = $uid;
         $bill_data['pm'] = $pm;
@@ -185,7 +185,7 @@ class UserLevelServices extends BaseServices
     }
 
     /**
-     * 会员列表
+     * Danh sách thành viên
      * @param $where
      * @return mixed
      */
@@ -197,7 +197,7 @@ class UserLevelServices extends BaseServices
     }
 
     /**
-     * 获取添加修改需要表单数据
+     * Lấy dữ liệu biểu mẫu cần cho thêm/sửa
      * @param int $id
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -213,23 +213,23 @@ class UserLevelServices extends BaseServices
                 throw new AdminException(100026);
             }
             $field[] = Form::hidden('id', $id);
-            $msg = '编辑用户等级';
+            $msg = 'Sửa hạng người dùng';
         } else {
-            $msg = '添加用户等级';
+            $msg = 'Thêm hạng người dùng';
         }
-        $field[] = Form::input('name', '等级名称', isset($vipInfo) ? $vipInfo->name : '')->maxlength(10)->col(24)->required();
-        $field[] = Form::number('grade', '等级', isset($vipInfo) ? $vipInfo->grade : 0)->min(0)->precision(0)->required();
-        $field[] = Form::number('discount', '享受折扣', isset($vipInfo) ? $vipInfo->discount : 100)->min(0)->max(100)->placeholder('输入折扣数100，代表原价，90代表9折')->required();
-        $field[] = Form::number('exp_num', '解锁经验值', isset($vipInfo) ? $vipInfo->exp_num : 0)->min(0)->precision(0)->required();
-        $field[] = Form::frameImage('icon', '图标', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'icon')), isset($vipInfo) ? $vipInfo->icon : '')->icon('el-icon-picture-outline')->width('950px')->height('560px')->props(['footer' => false]);
-        $field[] = Form::frameImage('image', '用户等级背景', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'image')), isset($vipInfo) ? $vipInfo->image : '')->icon('el-icon-picture-outline')->width('950px')->height('560px')->props(['footer' => false]);
-        $field[] = Form::radio('is_show', '是否显示', isset($vipInfo) ? $vipInfo->is_show : 0)->options([['label' => '显示', 'value' => 1], ['label' => '隐藏', 'value' => 0]])->col(24);
+        $field[] = Form::input('name', 'Tên cấp bậc', isset($vipInfo) ? $vipInfo->name : '')->maxlength(10)->col(24)->required();
+        $field[] = Form::number('grade', 'Cấp bậc', isset($vipInfo) ? $vipInfo->grade : 0)->min(0)->precision(0)->required();
+        $field[] = Form::number('discount', 'Chiết khấu được hưởng', isset($vipInfo) ? $vipInfo->discount : 100)->min(0)->max(100)->placeholder('Nhập mức chiết khấu, 100 là giá gốc, 90 là giảm 10%')->required();
+        $field[] = Form::number('exp_num', 'Điểm kinh nghiệm để mở khóa', isset($vipInfo) ? $vipInfo->exp_num : 0)->min(0)->precision(0)->required();
+        $field[] = Form::frameImage('icon', 'Biểu tượng', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'icon')), isset($vipInfo) ? $vipInfo->icon : '')->icon('el-icon-picture-outline')->width('950px')->height('560px')->props(['footer' => false]);
+        $field[] = Form::frameImage('image', 'Ảnh nền hạng người dùng', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'image')), isset($vipInfo) ? $vipInfo->image : '')->icon('el-icon-picture-outline')->width('950px')->height('560px')->props(['footer' => false]);
+        $field[] = Form::radio('is_show', 'Hiển thị', isset($vipInfo) ? $vipInfo->is_show : 0)->options([['label' => 'Hiện', 'value' => 1], ['label' => 'Ẩn', 'value' => 0]])->col(24);
         return create_form($msg, $field, Url::buildUrl('/user/user_level'), 'POST');
     }
 
     /*
-     * 会员等级添加或者修改
-     * @param $id 修改的等级id
+     * Thêm hoặc sửa hạng thành viên
+     * @param $id ID hạng cần sửa
      * @return json
      * */
     public function save(int $id, array $data)
@@ -247,7 +247,7 @@ class UserLevelServices extends BaseServices
         if ($levelNext && $data['exp_num'] >= $levelNext['exp_num']) {
             throw new AdminException(400674);
         }
-        //修改
+        //Sửa
         if ($id) {
             if (($levelOne && $levelOne['id'] != $id) || ($levelThree && $levelThree['id'] != $id)) {
                 throw new AdminException(400675);
@@ -266,7 +266,7 @@ class UserLevelServices extends BaseServices
             if ($levelTwo) {
                 throw new AdminException(400676);
             }
-            //新增
+            //Thêm mới
             $data['add_time'] = time();
             if (!$systemUserLevel->save($data)) {
                 throw new AdminException(100022);
@@ -276,7 +276,7 @@ class UserLevelServices extends BaseServices
     }
 
     /**
-     * 假删除
+     * Xóa giả (soft delete)
      * @param int $id
      * @return mixed
      */
@@ -293,7 +293,7 @@ class UserLevelServices extends BaseServices
     }
 
     /**
-     * 设置是否显示
+     * Thiết lập hiện/ẩn
      * @param int $id
      * @param $is_show
      * @return mixed
@@ -312,7 +312,7 @@ class UserLevelServices extends BaseServices
     }
 
     /**
-     * 快速修改
+     * Sửa nhanh
      * @param int $id
      * @param $is_show
      * @return mixed
@@ -331,13 +331,13 @@ class UserLevelServices extends BaseServices
     }
 
     /**
-     * 检测用户会员升级
+     * Kiểm tra nâng cấp thành viên của người dùng
      * @param $uid
      * @return bool
      */
     public function detection(int $uid)
     {
-        //商城会员是否开启
+        //Thành viên trên shop có được mở không
         if (!sys_config('member_func_status')) {
             return true;
         }
@@ -360,10 +360,10 @@ class UserLevelServices extends BaseServices
             if (in_array($vipinfo['id'], $userLevel)) {
                 continue;
             }
-            $data['mark'] = '尊敬的用户' . $user['nickname'] . '在' . date('Y-m-d H:i:s', time()) . '成为了' . $vipinfo['name'];
+            $data['mark'] = 'Quý khách' . $user['nickname'] . 'vào lúc' . date('Y-m-d H:i:s', time()) . 'đã trở thành' . $vipinfo['name'];
             $uservip = $this->dao->getOne(['uid' => $uid, 'level_id' => $vipinfo['id']]);
             if ($uservip) {
-                //降级在升级情况
+                //Trường hợp hạ cấp trong khi nâng cấp
                 $data['status'] = 1;
                 $data['is_del'] = 0;
                 if (!$this->dao->update($uservip['id'], $data, 'id')) {
@@ -392,12 +392,12 @@ class UserLevelServices extends BaseServices
     }
 
     /**
-     * 会员等级列表
+     * Danh sách hạng thành viên
      * @param int $uid
      */
     public function grade(int $uid)
     {
-        //商城会员是否开启
+        //Thành viên trên shop có được mở không
         if (!sys_config('member_func_status')) {
             return [];
         }
@@ -419,14 +419,14 @@ class UserLevelServices extends BaseServices
     }
 
     /**
-     * 获取会员信息
+     * Lấy thông tin thành viên
      * @param int $uid
      * @return array[]
      */
     public function getUserLevelInfo(int $uid)
     {
         $data = ['user' => [], 'level_info' => [], 'level_list' => [], 'task' => []];
-        //商城会员是否开启
+        //Thành viên trên shop có được mở không
         if (!sys_config('member_func_status')) {
             return $data;
         }
@@ -465,7 +465,7 @@ class UserLevelServices extends BaseServices
     }
 
     /**
-     * 经验列表
+     * Danh sách điểm kinh nghiệm
      * @param int $uid
      * @return array
      */

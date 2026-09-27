@@ -1,5 +1,5 @@
 <template>
-	<!-- 标题 -->
+	<!-- Tiêu đề -->
 	<view v-show="!isSortType" :style="[titleWrapperStyle]">
 		<view :style="[titleWrapStyle]">
 			<view @click="goLink" class="title acea-row row-middle row-between" :style="[titleLocation]">

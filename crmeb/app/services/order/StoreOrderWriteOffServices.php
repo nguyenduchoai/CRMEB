@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,7 +20,7 @@ use app\services\user\UserServices;
 use crmeb\exceptions\ApiException;
 
 /**
- * 核销订单
+ * Đơn hàng xác nhận sử dụng
  * Class StoreOrderWriteOffServices
  * @package app\sservices\order
  */
@@ -28,7 +28,7 @@ class StoreOrderWriteOffServices extends BaseServices
 {
 
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * StoreOrderWriteOffServices constructor.
      * @param StoreOrderDao $dao
      */
@@ -38,7 +38,7 @@ class StoreOrderWriteOffServices extends BaseServices
     }
 
     /**
-     * 订单核销
+     * Xác nhận sử dụng đơn hàng
      * @param string $code
      * @param int $confirm
      * @param int $uid
@@ -70,12 +70,12 @@ class StoreOrderWriteOffServices extends BaseServices
         if ($uid) {
             $isAuth = true;
             switch ($orderInfo['shipping_type']) {
-                case 1://配送订单
+                case 1://Đơn hàng giao tận nơi
                     /** @var DeliveryServiceServices $deliverServiceServices */
                     $deliverServiceServices = app()->make(DeliveryServiceServices::class);
                     $isAuth = $deliverServiceServices->getCount(['uid' => $uid, 'status' => 1]) > 0;
                     break;
-                case 2://自提订单
+                case 2://Đơn hàng nhận tại cửa hàng
                     /** @var SystemStoreStaffServices $storeStaffServices */
                     $storeStaffServices = app()->make(SystemStoreStaffServices::class);
                     $staffInfo = $storeStaffServices->get(['uid' => $uid, 'verify_status' => 1, 'status' => 1]);

@@ -15,7 +15,7 @@ export default {
     return {};
   },
   computed: {
-    // 设置是否显示 tagsView
+    // Đặt có hiển thị tagsView hay không
     setShowTagsView() {
       let { layout, isTagsview } = this.$store.state.themeConfig.themeConfig;
       return layout !== 'classic' && isTagsview;

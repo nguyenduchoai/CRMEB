@@ -10,57 +10,57 @@
       >
         <el-scope.row :gutter="24">
           <el-col>
-            <el-form-item label="活动类型：" clearable>
+            <el-form-item label="Loại chương trình:" clearable>
               <el-select
                 style="width: 200px"
                 v-model="tableFrom.factor"
-                placeholder="请选择活动类型"
+                placeholder="Vui lòng chọn loại chương trình"
                 clearable
                 @change="userSearchs"
               >
-                <el-option value="1" label="积分抽取"></el-option>
-                <el-option value="3" label="订单支付"></el-option>
-                <el-option value="4" label="订单评价"></el-option>
+                <el-option value="1" label="Quay bằng điểm thưởng"></el-option>
+                <el-option value="3" label="Thanh toán đơn hàng"></el-option>
+                <el-option value="4" label="Đánh giá đơn hàng"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col>
-            <el-form-item label="活动状态：" clearable>
+            <el-form-item label="Trạng thái chương trình:" clearable>
               <el-select
                 style="width: 200px"
                 v-model="tableFrom.start_status"
-                placeholder="请选择"
+                placeholder="Vui lòng chọn"
                 clearable
                 @change="userSearchs"
               >
-                <el-option value="0" label="未开始"></el-option>
-                <el-option value="1" label="进行中"></el-option>
-                <el-option value="-1" label="已结束"></el-option>
+                <el-option value="0" label="Chưa bắt đầu"></el-option>
+                <el-option value="1" label="Đang diễn ra"></el-option>
+                <el-option value="-1" label="Đã kết thúc"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
 
           <el-col>
-            <el-form-item label="上架状态：">
+            <el-form-item label="Trạng thái đăng bán:">
               <el-select
                 style="width: 200px"
-                placeholder="请选择"
+                placeholder="Vui lòng chọn"
                 v-model="tableFrom.status"
                 clearable
                 @change="userSearchs"
               >
-                <el-option value="1" label="上架"></el-option>
-                <el-option value="0" label="下架"></el-option>
+                <el-option value="1" label="Đang bán"></el-option>
+                <el-option value="0" label="Ngừng bán"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col>
-            <el-form-item label="抽奖搜索：" label-for="store_name">
+            <el-form-item label="Tìm kiếm quay thưởng:" label-for="store_name">
               <el-input
                 search
                 enter-button
                 style="width: 200px"
-                placeholder="请输入抽奖名称，ID"
+                placeholder="Vui lòng nhập tên chương trình quay thưởng, ID"
                 v-model="tableFrom.store_name"
                 @on-search="userSearchs"
               />
@@ -69,7 +69,7 @@
         </el-scope.row>
         <el-scope.row class="mb20">
           <el-button v-auth="['marketing-store_bargain-create']" type="primary" v-db-click @click="add" class="mr10"
-            >添加抽奖</el-button
+            >Thêm quay thưởng</el-button
           >
         </el-scope.row>
       </el-form>
@@ -77,45 +77,45 @@
         :data="tableList"
         v-loading="loading"
         highlight-scope.row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column label="ID" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="活动名称" min-width="130">
+        <el-table-column label="Tên chương trình" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="活动类型" min-width="130">
+        <el-table-column label="Loại chương trình" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.lottery_type }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="参与次数" min-width="130">
+        <el-table-column label="Số lượt tham gia" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.lottery_all }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="抽奖人数" min-width="130">
+        <el-table-column label="Số người quay thưởng" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.lottery_people }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="中奖人数" min-width="130">
+        <el-table-column label="Số người trúng thưởng" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.lottery_win }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="活动状态" min-width="130">
+        <el-table-column label="Trạng thái chương trình" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.status_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="上架状态" min-width="130">
+        <el-table-column label="Trạng thái đăng bán" min-width="130">
           <template slot-scope="scope">
             <el-switch
               class="defineSwitch"
@@ -126,32 +126,32 @@
               :disabled="scope.row.lottery_status == 2 ? true : false"
               @change="onchangeIsShow(scope.row)"
               size="large"
-              active-text="上架"
-              inactive-text="下架"
+              active-text="Đang bán"
+              inactive-text="Ngừng bán"
             >
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="活动时间" min-width="130">
+        <el-table-column label="Thời gian chương trình" min-width="130">
           <template slot-scope="scope">
-            <div>起：{{ scope.row.start_time || '--' }}</div>
-            <div>止：{{ scope.row.end_time || '--' }}</div>
+            <div>Từ: {{ scope.row.start_time || '--' }}</div>
+            <div>Đến: {{ scope.row.end_time || '--' }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="活动状态" min-width="130">
+        <el-table-column label="Trạng thái chương trình" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.status_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="170">
+        <el-table-column label="Thao tác" fixed="right" width="170">
           <template slot-scope="scope">
-            <a v-db-click @click="edit(scope.row)">编辑</a>
+            <a v-db-click @click="edit(scope.row)">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除抽奖', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa quay thưởng', scope.$index)">Xóa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="copy(scope.row)">复制</a>
+            <a v-db-click @click="copy(scope.row)">Sao chép</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="getRecording(scope.row)">抽奖记录</a>
+            <a v-db-click @click="getRecording(scope.row)">Lịch sử quay thưởng</a>
           </template>
         </el-table-column>
       </el-table>
@@ -211,11 +211,11 @@ export default {
     this.getList();
   },
   methods: {
-    // 添加
+    // Thêm
     add() {
       this.$router.push({ path: this.$routeProStr + '/marketing/lottery/create' });
     },
-    // 编辑
+    // Sửa
     edit(row) {
       this.$router.push({
         name: 'marketing_create',
@@ -224,7 +224,7 @@ export default {
         },
       });
     },
-    // 一键复制
+    // Sao chép một chạm
     copy(row) {
       this.$router.push({
         name: 'marketing_create',
@@ -234,7 +234,7 @@ export default {
         },
       });
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -252,7 +252,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    //查看抽奖记录
+    //Xem lịch sử quay thưởng
     getRecording(row) {
       this.$router.push({
         path: this.$routeProStr + `/marketing/lottery/recording_list`,
@@ -261,7 +261,7 @@ export default {
         },
       });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       this.tableFrom.start_status = this.tableFrom.start_status || '';
@@ -278,12 +278,12 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.tableFrom.page = 1;
       this.getList();
     },
-    // 修改是否显示
+    // Sửa có hiển thị hay không
     onchangeIsShow(row) {
       let data = {
         id: row.id,

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,9 +24,9 @@ use app\services\other\UploadService;
  *
  * Class SystemAttachmentServices
  * @package app\services\attachment
- * @method getYesterday() 获取昨日生成数据
- * @method delYesterday() 删除昨日生成数据
- * @method scanUploadImage($scan_token) 获取扫码上传的图片数据
+ * @method getYesterday() Lấy dữ liệu sinh ra hôm qua
+ * @method delYesterday() Xóa dữ liệu sinh ra hôm qua
+ * @method scanUploadImage($scan_token) Lấy dữ liệu ảnh tải lên bằng quét mã
  */
 class SystemAttachmentServices extends BaseServices
 {
@@ -41,7 +41,7 @@ class SystemAttachmentServices extends BaseServices
     }
 
     /**
-     * 获取单个资源
+     * Lấy một tài nguyên
      * @param array $where
      * @param string $field
      * @return array
@@ -55,7 +55,7 @@ class SystemAttachmentServices extends BaseServices
     }
 
     /**
-     * 获取图片列表
+     * Lấy danh sách hình ảnh
      * @param array $where
      * @return array
      */
@@ -77,7 +77,7 @@ class SystemAttachmentServices extends BaseServices
     }
 
     /**
-     * 删除图片
+     * Xóa ảnh
      * @param string $ids
      */
     public function del(string $ids)
@@ -105,7 +105,7 @@ class SystemAttachmentServices extends BaseServices
     }
 
     /**
-     * 图片上传
+     * Tải lên ảnh
      * @param int $pid
      * @param string $file
      * @param int $upload_type
@@ -165,7 +165,7 @@ class SystemAttachmentServices extends BaseServices
     }
 
     /**
-     * 添加信息
+     * Thêm thông tin
      * @param array $data
      */
     public function save(array $data)
@@ -174,7 +174,7 @@ class SystemAttachmentServices extends BaseServices
     }
 
     /**
-     * TODO 添加附件记录
+     * TODO Thêm bản ghi tệp đính kèm
      * @param $name
      * @param $att_size
      * @param $att_type
@@ -205,7 +205,7 @@ class SystemAttachmentServices extends BaseServices
     }
 
     /**
-     * 推广名片生成
+     * Tạo card giới thiệu
      * @param $name
      */
     public function getLikeNameList($name)
@@ -214,7 +214,7 @@ class SystemAttachmentServices extends BaseServices
     }
 
     /**
-     * 清除昨日海报
+     * Xóa poster ngày hôm qua
      * @return bool
      * @throws \Exception
      */
@@ -247,7 +247,7 @@ class SystemAttachmentServices extends BaseServices
     }
 
     /**
-     * 视频分片上传
+     * Tải lên video theo từng phần (chunk)
      * @param $data
      * @param $file
      * @return mixed
@@ -293,22 +293,22 @@ class SystemAttachmentServices extends BaseServices
     }
 
     /**
-     * 网络图片上传
+     * Tải lên ảnh từ mạng
      * @param $data
      * @return bool
      * @throws \Exception
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/06/13
      */
     public function onlineUpload($data)
     {
-        //生成附件目录
+        //Tạo thư mục tệp đính kèm
         if (make_path('attach', 3, true) === '') {
             throw new AdminException(400555);
         }
 
-        //上传图片
+        //Tải lên ảnh
         /** @var SystemAttachmentServices $systemAttachmentService */
         $systemAttachmentService = app()->make(SystemAttachmentServices::class);
         $siteUrl = sys_config('site_url');
@@ -316,13 +316,13 @@ class SystemAttachmentServices extends BaseServices
         foreach ($data['images'] as $image) {
             $uploadValue = app()->make(CopyTaobaoServices::class)->downloadImage($image);
             if (is_array($uploadValue)) {
-                //TODO 拼接图片地址
+                //TODO ghép địa chỉ ảnh
                 if ($uploadValue['image_type'] == 1) {
                     $imagePath = $siteUrl . $uploadValue['path'];
                 } else {
                     $imagePath = $uploadValue['path'];
                 }
-                //写入数据库
+                //Ghi vào cơ sở dữ liệu
                 if (!$uploadValue['is_exists']) {
                     $systemAttachmentService->save([
                         'name' => $uploadValue['name'],

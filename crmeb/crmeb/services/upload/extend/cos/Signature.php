@@ -1,11 +1,11 @@
 <?php
 /**
  *  +----------------------------------------------------------------------
- *  | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+ *  | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
  *  +----------------------------------------------------------------------
  *  | Copyright (c) 2016~2022 https://www.crmeb.com All rights reserved.
  *  +----------------------------------------------------------------------
- *  | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+ *  | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
  *  +----------------------------------------------------------------------
  *  | Author: CRMEB Team <admin@crmeb.com>
  *  +----------------------------------------------------------------------
@@ -14,8 +14,8 @@
 namespace crmeb\services\upload\extend\cos;
 
 /**
- * Class 生成签名
- * @author 等风来
+ * Class tạo chữ ký
+ * @author Deng Fenglai
  * @email 136327134@qq.com
  * @date 2022/9/26
  * @package crmeb\services\upload\extend\cos
@@ -90,7 +90,7 @@ class Signature
     }
 
     /**
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2022/9/29
      * @param $haystack
@@ -112,7 +112,7 @@ class Signature
      * @param array $querys
      * @param array $headers
      * @return string[]
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2022/9/26
      */
@@ -129,7 +129,7 @@ class Signature
      * @param array $headers
      * @param string $expires
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2022/9/26
      */
@@ -143,14 +143,14 @@ class Signature
         foreach ($querys as $query) {
             if (!empty($query)) {
                 $tmpquery = explode('=', $query);
-                //为了保证CI的key中有=号的情况也能正常通过，ci在这层之前已经encode了，这里需要拆开重新encode，防止上方explode拆错
+                //Để đảm bảo trường hợp key của CI có dấu = cũng qua được bình thường, ci đã encode trước tầng này, ở đây cần tách ra encode lại, tránh explode phía trên tách sai
                 $key = strtolower(rawurlencode(urldecode($tmpquery[0])));
                 if (count($tmpquery) >= 2) {
                     $value = $tmpquery[1];
                 } else {
                     $value = "";
                 }
-                //host开关
+                //Switch host
                 if (!$this->options['signHost'] && $key == 'host') {
                     continue;
                 }
@@ -196,7 +196,7 @@ class Signature
      * @param array $headers
      * @param string $expires
      * @return string[]
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2022/9/26
      */

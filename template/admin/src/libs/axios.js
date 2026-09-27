@@ -1,9 +1,9 @@
 // +---------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +---------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +---------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +---------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +---------------------------------------------------------------------
@@ -45,12 +45,12 @@ class HttpRequest {
     }
   }
   interceptors(instance, url) {
-    // 请求拦截
+    // Chặn request (interceptor)
     instance.interceptors.request.use(
       (config) => {
-        // 添加全局的loading...
+        // Thêm loading toàn cục...
         if (!Object.keys(this.queue).length) {
-          // Spin.show() // 不建议开启，因为界面不友好
+          // Spin.show() // Không nên bật, vì giao diện không thân thiện
         }
         this.queue[url] = true;
         return config;
@@ -59,7 +59,7 @@ class HttpRequest {
         return Promise.reject(error);
       },
     );
-    // 响应拦截
+    // Chặn response (interceptor)
     instance.interceptors.response.use(
       (res) => {
         this.destroy(url);

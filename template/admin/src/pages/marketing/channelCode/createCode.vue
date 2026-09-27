@@ -7,17 +7,17 @@
     ></pages-header>
     <el-card :bordered="false" shadow="never" class="mt16">
       <el-form :model="formData" label-width="100px" :rules="ruleValidate">
-        <el-form-item label="渠道码名称：">
+        <el-form-item label="Tên mã kênh:">
           <el-input
             clearable
             v-model="formData.name"
-            placeholder="请输入渠道码名称"
+            placeholder="Vui lòng nhập tên mã kênh"
             class="content_width"
             maxlength="20"
             show-word-limit
           ></el-input>
         </el-form-item>
-        <el-form-item label="渠道码分组：">
+        <el-form-item label="Nhóm mã kênh:">
           <el-select clearable v-model="formData.cate_id" class="content_width">
             <el-option
               :value="item.id"
@@ -27,7 +27,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="用户标签：">
+        <el-form-item label="Nhãn người dùng:">
           <div style="display: flex">
             <div class="labelInput acea-row row-between-wrapper" v-db-click @click="openLabel">
               <div style="width: 90%">
@@ -36,14 +36,14 @@
                     item.label_name
                   }}</el-tag>
                 </div>
-                <span class="span" v-else>选择用户关联标签</span>
+                <span class="span" v-else>Chọn nhãn gắn cho người dùng</span>
               </div>
               <div class="ivu-icon ivu-icon-ios-arrow-down"></div>
             </div>
-            <span class="addfont" v-db-click @click="addLabel">新增标签</span>
+            <span class="addfont" v-db-click @click="addLabel">Thêm nhãn</span>
           </div>
         </el-form-item>
-        <el-form-item label="关联推广员：">
+        <el-form-item label="CTV liên kết:">
           <div class="picBox" v-db-click @click="customer">
             <div class="pictrue" v-if="formData.avatar">
               <img v-lazy="formData.avatar" />
@@ -52,12 +52,12 @@
               <i class="el-icon-user" style="font-size: 24px"></i>
             </div>
           </div>
-          <div class="trip">扫码注册的新用户,将自动成为此推广员的下级,与分销推广功能一致</div>
+          <div class="trip">Người dùng mới quét mã đăng ký sẽ tự động trở thành cấp dưới của CTV này, tương tự tính năng giới thiệu affiliate</div>
         </el-form-item>
-        <el-form-item label="有效期：">
+        <el-form-item label="Thời hạn hiệu lực:">
           <el-radio-group v-model="isReceiveTime">
-            <el-radio :label="0">永久</el-radio>
-            <el-radio :label="1">有效期</el-radio>
+            <el-radio :label="0">Vĩnh viễn</el-radio>
+            <el-radio :label="1">Thời hạn hiệu lực</el-radio>
           </el-radio-group>
           <div v-show="isReceiveTime">
             <el-input-number
@@ -65,33 +65,33 @@
               :max="10000"
               :precision="0"
               v-model="formData.time"
-              placeholder="请输入天数"
+              placeholder="Vui lòng nhập số ngày"
               class="content_width input-number-unit-class"
-              class-unit="天"
+              class-unit="ngày"
             ></el-input-number>
           </div>
-          <div class="trip">临时码过期后不能再扫码,永久二维码最大创建数量为10万个</div>
+          <div class="trip">Mã tạm thời sau khi hết hạn sẽ không thể quét được nữa, số lượng mã QR vĩnh viễn được tạo tối đa là 10 vạn</div>
         </el-form-item>
-        <el-form-item label="回复内容：">
+        <el-form-item label="Nội dung trả lời:">
           <el-radio-group v-model="formData.type">
-            <el-radio label="text">文字内容</el-radio>
-            <el-radio label="voice">声音消息</el-radio>
-            <el-radio label="image">图片消息</el-radio>
-            <el-radio label="news">图文消息</el-radio>
+            <el-radio label="text">Nội dung văn bản</el-radio>
+            <el-radio label="voice">Tin nhắn thoại</el-radio>
+            <el-radio label="image">Tin nhắn hình ảnh</el-radio>
+            <el-radio label="news">Tin nhắn hình ảnh và văn bản</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="消息内容：" prop="content" v-if="formData.type === 'text' || formData.type === 'url'">
+        <el-form-item label="Nội dung tin nhắn:" prop="content" v-if="formData.type === 'text' || formData.type === 'url'">
           <el-input
             type="textarea"
             rows="2"
             clearable
             v-model="formData.content.content"
-            :placeholder="formData.type === 'text' ? '请填写消息内容' : '请填写网址链接'"
+            :placeholder="formData.type === 'text' ? 'Vui lòng điền nội dung tin nhắn' : 'Vui lòng điền liên kết trang web'"
             class="content_width"
           ></el-input>
         </el-form-item>
-        <el-form-item label="选取图文：" v-if="formData.type === 'news'">
-          <el-button v-db-click @click="modals = true">选择图文消息</el-button>
+        <el-form-item label="Chọn tin bài:" v-if="formData.type === 'news'">
+          <el-button v-db-click @click="modals = true">Chọn tin bài</el-button>
           <div class="news-box" v-if="formData.content.list.title">
             <img class="news_pic" :src="formData.content.list.image_input[0]" />
             <span>{{ formData.content.list.title }}</span>
@@ -99,14 +99,14 @@
           </div>
         </el-form-item>
         <el-form-item
-          :label="formData.type === 'image' ? '图片地址：' : '语音地址：'"
+          :label="formData.type === 'image' ? 'Địa chỉ hình ảnh:' : 'Địa chỉ tệp âm thanh:'"
           prop="src"
           v-if="formData.type === 'image' || formData.type === 'voice'"
         >
           <div class="acea-row row-middle">
             <el-input
               readonly="readonly"
-              placeholder="请填入链接地址"
+              placeholder="Vui lòng điền địa chỉ liên kết"
               class="content_width mr15"
               v-model="formData.content.src"
             />
@@ -124,24 +124,24 @@
               accept="image/*,.mp3"
               :before-upload="beforeUpload"
             >
-              <el-button type="primary">上传</el-button>
+              <el-button type="primary">Tải lên</el-button>
             </el-upload>
           </div>
-          <span v-show="formData.type === 'image'">文件最大2Mb，支持bmp/png/jpeg/jpg/gif格式</span>
-          <span v-show="formData.type === 'voice'">文件最大2Mb，支持mp3格式,播放长度不超过60s</span>
+          <span v-show="formData.type === 'image'">Tệp tối đa 2Mb, hỗ trợ định dạng bmp/png/jpeg/jpg/gif</span>
+          <span v-show="formData.type === 'voice'">Tệp tối đa 2Mb, hỗ trợ định dạng mp3, thời lượng phát không quá 60s</span>
         </el-form-item>
         <el-form-item>
           <el-button class="submit" type="primary" v-db-click @click="save" :loading="loading" :disabled="disabled"
-            >立即提交</el-button
+            >Gửi ngay</el-button
           >
         </el-form-item>
       </el-form>
     </el-card>
-    <el-dialog :visible.sync="customerShow" title="请选择商城用户" :show-close="true" width="1000px">
+    <el-dialog :visible.sync="customerShow" title="Vui lòng chọn người dùng cửa hàng" :show-close="true" width="1000px">
       <customerInfo v-if="customerShow" @imageObject="imageObject"></customerInfo>
     </el-dialog>
-    <!--图文消息 -->
-    <el-dialog :visible.sync="modals" title="发送消息" width="1200px" class="modelBox">
+    <!--Tin nhắn hình ảnh và văn bản -->
+    <el-dialog :visible.sync="modals" title="Gửi tin nhắn" width="1200px" class="modelBox">
       <news-category
         v-if="modals"
         @getCentList="getCentList"
@@ -154,7 +154,7 @@
     <el-dialog
       :visible.sync="labelShow"
       scrollable
-      title="请选择用户标签"
+      title="Vui lòng chọn nhãn người dùng"
       :closable="false"
       width="540px"
       :footer-hide="true"
@@ -223,14 +223,14 @@ export default {
         name: [
           {
             required: true,
-            message: '请填写二维码名称',
+            message: 'Vui lòng điền tên mã QR',
             trigger: 'blur',
           },
         ],
         cate_id: [
           {
             required: true,
-            message: '请选择二维码分组',
+            message: 'Vui lòng chọn nhóm mã QR',
             trigger: 'change',
           },
         ],
@@ -265,7 +265,7 @@ export default {
       this.labelShow = false;
       this.dataLabel = dataLabel;
     },
-    // 标签弹窗关闭
+    // Đóng popup nhãn
     labelClose() {
       this.labelShow = false;
     },
@@ -294,7 +294,7 @@ export default {
     addLabel() {
       this.$modalForm(userLabelAddApi(0)).then(() => this.userLabel());
     },
-    // 用户标签
+    // Nhãn người dùng
     userLabel() {
       labelListApi()
         .then((res) => {
@@ -316,7 +316,7 @@ export default {
     delContent() {
       this.formData.content.list = {};
     },
-    // 上传成功
+    // Tải lên thành công
     handleSuccess(res, file) {
       if (res.status === 200) {
         this.formData.content.src = res.data.src;
@@ -327,38 +327,38 @@ export default {
     },
     handleFormatError(file) {
       if (this.formData.type === 'image') {
-        this.$message.warning('请上传bmp/png/jpeg/jpg/gif格式的图片');
+        this.$message.warning('Vui lòng tải lên ảnh định dạng bmp/png/jpeg/jpg/gif');
       } else {
-        this.$message.warning('请上传mp3/wma/wav/amr格式的语音');
+        this.$message.warning('Vui lòng tải lên âm thanh định dạng mp3/wma/wav/amr');
       }
     },
     handleMaxSize(file) {
-      this.$message.warning('请上传文件2M以内的文件');
+      this.$message.warning('Vui lòng tải lên tệp có dung lượng không quá 2M');
     },
-    // 上传头部token
+    // Token trong header khi tải lên
     getToken() {
       this.header['Authori-zation'] = 'Bearer ' + getCookies('token');
     },
     selectMenu(name) {
       this.formData.type = name;
     },
-    // 获取分类
+    // Lấy danh mục
     getUserLabelAll() {
       wechatQrcodeTree().then((res) => {
         let data = res.data.data;
         this.labelSort = data;
       });
     },
-    // 创建
+    // Tạo
     save() {
       if (!this.formData.name) {
-        return this.$message.error('请输入二维码名称');
+        return this.$message.error('Vui lòng nhập tên mã QR');
       }
       if (!this.formData.cate_id) {
-        return this.$message.error('请选择分组');
+        return this.$message.error('Vui lòng chọn nhóm');
       }
       if (!this.dataLabel.length) {
-        return this.$message.error('请选择用户标签');
+        return this.$message.error('Vui lòng chọn nhãn người dùng');
       } else {
         let ids = [];
         this.dataLabel.map((i) => {
@@ -367,28 +367,28 @@ export default {
         this.formData.label_id = ids;
       }
       if (!this.formData.uid) {
-        return this.$message.error('请选择推广员');
+        return this.$message.error('Vui lòng chọn CTV');
       }
       if (this.isReceiveTime) {
         if (this.formData.time < 1) {
-          return this.$message.error('使用有效期限不能小于1天');
+          return this.$message.error('Thời hạn sử dụng không được ít hơn 1 ngày');
         }
       } else {
         this.formData.time = 0;
       }
       if (this.formData.type === 'text' || this.formData.type === 'url') {
         if (!this.formData.content.content.trim()) {
-          return this.$message.error('请输入内容');
+          return this.$message.error('Vui lòng nhập nội dung');
         }
       }
       if (this.formData.type === 'voice' || this.formData.type === 'image') {
         if (!this.formData.content.src.trim()) {
-          return this.$message.error('请先上传消息');
+          return this.$message.error('Vui lòng tải lên tin nhắn trước');
         }
       }
       if (this.formData.type === 'news') {
         if (!this.formData.content.list.title.trim()) {
-          return this.$message.error('请选择图文消息');
+          return this.$message.error('Vui lòng chọn tin bài');
         }
       }
       this.disabled = false;

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\outapi\validate\StoreCategoryValidate;
 use app\services\product\product\StoreCategoryServices;
 
 /**
- * 商品分类控制器
+ * Controller danh mục sản phẩm
  * Class StoreCategory
  * @package app\outapi\controller
  */
@@ -38,7 +38,7 @@ class StoreCategory extends AuthController
     }
 
     /**
-     * 分类列表
+     * Danh sách danh mục
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -57,7 +57,7 @@ class StoreCategory extends AuthController
     }
 
     /**
-     * 新增分类
+     * Thêm danh mục
      * @return mixed
      */
     public function save()
@@ -76,7 +76,7 @@ class StoreCategory extends AuthController
     }
 
     /**
-     * 更新分类
+     * Cập nhật danh mục
      * @param $id
      * @return mixed
      */
@@ -96,7 +96,7 @@ class StoreCategory extends AuthController
     }
 
     /**
-     * 删除分类
+     * Xóa danh mục
      * @param $id
      * @return mixed
      */
@@ -107,7 +107,7 @@ class StoreCategory extends AuthController
     }
 
     /**
-     * 详情
+     * Chi tiết
      * @param $id
      * @return mixed
      */
@@ -118,7 +118,7 @@ class StoreCategory extends AuthController
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param string $id
      * @param string $is_show
      */

@@ -1,47 +1,47 @@
 import config from '../../package.json';
 
-// 1、window.localStorage 浏览器永久缓存
+// 1. Cache vĩnh viễn của trình duyệt window.localStorage
 export const Local = {
-  // 查看 v2.4.3版本更新日志
+  // Xem changelog phiên bản v2.4.3
   setKey(key) {
     // @ts-ignore
     return `${config.name}:${key}`;
   },
-  // 设置永久缓存
+  // Đặt cache vĩnh viễn
   set(key, val) {
     window.localStorage.setItem(Local.setKey(key), JSON.stringify(val));
   },
-  // 获取永久缓存
+  // Lấy cache vĩnh viễn
   get(key) {
     let json = window.localStorage.getItem(Local.setKey(key));
     return JSON.parse(json);
   },
-  // 移除永久缓存
+  // Xóa cache vĩnh viễn
   remove(key) {
     window.localStorage.removeItem(Local.setKey(key));
   },
-  // 移除全部永久缓存
+  // Xóa toàn bộ cache vĩnh viễn
   clear() {
     window.localStorage.clear();
   },
 };
 
-// 2、window.sessionStorage 浏览器临时缓存
+// 2. Cache tạm thời của trình duyệt window.sessionStorage
 export const Session = {
-  // 设置临时缓存
+  // Đặt cache tạm thời
   set(key, val) {
     window.sessionStorage.setItem(Local.setKey(key), JSON.stringify(val));
   },
-  // 获取临时缓存
+  // Lấy cache tạm thời
   get(key) {
     let json = window.sessionStorage.getItem(Local.setKey(key));
     return JSON.parse(json);
   },
-  // 移除临时缓存
+  // Xóa cache tạm thời
   remove(key) {
     window.sessionStorage.removeItem(Local.setKey(key));
   },
-  // 移除全部临时缓存
+  // Xóa toàn bộ cache tạm thời
   clear() {
     window.sessionStorage.clear();
   },

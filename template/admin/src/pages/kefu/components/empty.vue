@@ -1,6 +1,6 @@
 <template>
   <div class="empty-wrapper">
-    <!-- 用户列表 -->
+    <!-- Danh sách người dùng -->
     <template v-if="status == 1">
       <img src="@/assets/images/no_chat.png" alt="" />
     </template>

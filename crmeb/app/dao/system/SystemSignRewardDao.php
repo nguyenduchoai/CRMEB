@@ -6,16 +6,16 @@ use app\dao\BaseDao;
 use app\model\system\SystemSignReward;
 
 /**
- * @author: 吴汐
+ * @author: Wu Xi
  * @email: 442384644@qq.com
  * @date: 2023/7/28
  */
 class SystemSignRewardDao extends BaseDao
 {
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/7/28
      */

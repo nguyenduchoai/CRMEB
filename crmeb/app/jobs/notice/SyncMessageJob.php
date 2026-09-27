@@ -14,7 +14,7 @@ class SyncMessageJob extends BaseJobs
     use QueueTrait;
 
     /**
-     * 同步小程序订阅消息
+     * Đồng bộ tin nhắn đăng ký Mini Program
      * @param $template
      * @return bool
      */
@@ -36,7 +36,7 @@ class SyncMessageJob extends BaseJobs
             try {
                 $tempid = MiniProgramService::addSubscribeTemplate($key, $kid, $data['name']);
             } catch (\Throwable $e) {
-                Log::error('同步订阅消息失败：' . $e->getMessage());
+                Log::error('Đồng bộ tin nhắn đăng ký thất bại:' . $e->getMessage());
                 return true;
             }
             app()->make(SystemNotificationServices::class)->update(['routine_tempkey' => $key], ['routine_tempid' => $tempid, 'routine_kid' => json_encode($kid)]);
@@ -46,11 +46,11 @@ class SyncMessageJob extends BaseJobs
     }
 
     /**
-     * 同步公众号模版消息
+     * Đồng bộ tin nhắn mẫu OA WeChat
      * @param $key
      * @param $content
      * @return bool
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/16
      */
@@ -64,7 +64,7 @@ class SyncMessageJob extends BaseJobs
         try {
             $res = WechatService::addTemplateId($key, $name);
         } catch (\Throwable $e) {
-            Log::error('同步模版消息失败：' . $e->getMessage());
+            Log::error('Đồng bộ tin nhắn mẫu thất bại:' . $e->getMessage());
             return true;
         }
         if (!$res->errcode && $res->template_id) {

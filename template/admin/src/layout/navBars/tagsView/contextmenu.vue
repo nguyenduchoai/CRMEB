@@ -49,7 +49,7 @@ export default {
   },
   computed: {
     dropdowns() {
-      // 99 为 `Dropdown 下拉菜单` 的宽度
+      // 99 là chiều rộng của `Dropdown menu thả xuống`
       if (this.dropdown.x + 99 > document.documentElement.clientWidth) {
         return {
           x: document.documentElement.clientWidth - 99 - 5,
@@ -61,15 +61,15 @@ export default {
     },
   },
   mounted() {
-    // 监听页面监听进行右键菜单的关闭
+    // Theo dõi trang để đóng menu chuột phải
     document.body.addEventListener('click', this.closeContextmenu);
   },
   methods: {
-    // 当前项菜单点击
+    // Bấm mục menu hiện tại
     onCurrentContextmenuClick(id) {
       this.$emit('currentContextmenuClick', { id, path: this.path });
     },
-    // 打开右键菜单：判断是否固定，固定则不显示关闭按钮
+    // Mở menu chuột phải: kiểm tra có cố định (pin) hay không, nếu cố định thì không hiển thị nút đóng
     openContextmenu(item) {
       this.path = item.path;
       item.meta.isAffix ? (this.dropdownList[1].affix = true) : (this.dropdownList[1].affix = false);
@@ -78,16 +78,16 @@ export default {
         this.isShow = true;
       }, 80);
     },
-    // 关闭右键菜单
+    // Đóng menu chuột phải
     closeContextmenu() {
       this.isShow = false;
     },
   },
   destroyed() {
-    // 页面卸载时，移除右键菜单监听事件
+    // Khi trang unload, gỡ bỏ sự kiện theo dõi menu chuột phải
     document.body.removeEventListener('click', this.closeContextmenu);
   },
-  // 监听下拉菜单位置
+  // Theo dõi vị trí menu thả xuống
   watch: {
     dropdown: {
       handler({ x }) {

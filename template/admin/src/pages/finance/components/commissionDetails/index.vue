@@ -8,65 +8,65 @@
       @submit.native.prevent
       inline
     >
-      <el-form-item label="订单搜索：" label-for="status1">
+      <el-form-item label="Tìm kiếm đơn hàng:" label-for="status1">
         <el-input
           v-model="formValidate.keywords"
-          placeholder="请输入交易单号/交易人"
+          placeholder="Vui lòng nhập mã giao dịch/người giao dịch"
           class="form_content_width"
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" v-db-click @click="searchs">搜索</el-button>
+        <el-button type="primary" v-db-click @click="searchs">Tìm kiếm</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button v-db-click @click="reset">重置</el-button>
+        <el-button v-db-click @click="reset">Đặt lại</el-button>
       </el-form-item>
     </el-form>
     <el-table
       :data="tabList"
       ref="table"
       v-loading="loading"
-      no-userFrom-text="暂无数据"
-      no-filtered-userFrom-text="暂无筛选结果"
+      no-userFrom-text="Chưa có dữ liệu"
+      no-filtered-userFrom-text="Không có kết quả phù hợp"
       class="table"
     >
-      <el-table-column label="交易单号" width="180">
+      <el-table-column label="Mã giao dịch" width="180">
         <template slot-scope="scope">
           <span>{{ scope.row.flow_id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="关联订单" min-width="130">
+      <el-table-column label="Đơn hàng liên quan" min-width="130">
         <template slot-scope="scope">
           <span>{{ scope.row.order_id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="交易时间" min-width="130">
+      <el-table-column label="Thời gian giao dịch" min-width="130">
         <template slot-scope="scope">
           <span>{{ scope.row.add_time }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="交易金额" min-width="130">
+      <el-table-column label="Giá trị giao dịch" min-width="130">
         <template slot-scope="scope">
           <div v-if="scope.row.price >= 0" class="z-price">+{{ scope.row.price }}</div>
           <div v-if="scope.row.price < 0" class="f-price">{{ scope.row.price }}</div>
         </template>
       </el-table-column>
-      <el-table-column label="交易用户" min-width="130">
+      <el-table-column label="Người giao dịch" min-width="130">
         <template slot-scope="scope">
           <span>{{ scope.row.nickname }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="交易类型" min-width="130">
+      <el-table-column label="Loại giao dịch" min-width="130">
         <template slot-scope="scope">
           <span>{{ scope.row.trading_type }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="支付方式" min-width="130">
+      <el-table-column label="Phương thức thanh toán" min-width="130">
         <template slot-scope="scope">
           <span>{{ scope.row.pay_type_name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="备注" min-width="130">
+      <el-table-column label="Ghi chú" min-width="130">
         <template slot-scope="scope">
           <span>{{ scope.row.mark }}</span>
         </template>
@@ -114,23 +114,23 @@ export default {
       tabList: [],
       payment: [
         {
-          title: '全部',
+          title: 'Tất cả',
           value: '',
         },
         {
-          title: '微信',
+          title: 'WeChat',
           value: 'weixin',
         },
         {
-          title: '支付宝',
+          title: 'Alipay',
           value: 'alipay',
         },
         {
-          title: '银行卡',
+          title: 'Thẻ ngân hàng',
           value: 'bank',
         },
         {
-          title: '线下支付',
+          title: 'Thanh toán ngoại tuyến',
           value: 'offline',
         },
       ],
@@ -168,12 +168,12 @@ export default {
       this.formValidate.page = 1;
       this.getList();
     },
-    // 时间
+    // Thời gian
     onchangeTime(e) {
       this.formValidate.start_time = e[0];
       this.formValidate.end_time = e[1];
     },
-    // 列表
+    // Danh sách
     getList() {
       this.formValidate.ids = this.ids;
       this.loading = true;
@@ -200,7 +200,7 @@ export default {
       };
       this.getList();
     },
-    // 关闭按钮
+    // Nút đóng
     cancel() {
       this.$emit('close');
       this.formValidate = {

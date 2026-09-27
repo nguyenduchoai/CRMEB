@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,34 +18,34 @@ use app\services\order\StoreOrderServices;
 use app\services\product\product\StoreProductServices;
 
 /**
- * 客服聊天记录
+ * Lịch sử trò chuyện CSKH
  * Class StoreServiceLogServices
  * @package app\services\kefu\service
- * @method whereByCount(array $where) 根据条件获取条数
- * @method getServiceList(array $where, int $page, int $limit, array $field = ['*']) 获取聊天记录并分页
- * @method saveAll(array $data) 插入数据
- * @method getMessageNum(array $where) 获取聊天记录条数
+ * @method whereByCount(array $where) Lấy số lượng theo điều kiện
+ * @method getServiceList(array $where, int $page, int $limit, array $field = ['*']) Lấy lịch sử chat có phân trang
+ * @method saveAll(array $data) Thêm dữ liệu
+ * @method getMessageNum(array $where) Lấy số lượng bản ghi chat
  */
 class StoreServiceLogServices extends BaseServices
 {
     /**
-     * 消息类型
-     * @var array  1=文字 2=表情 3=图片 4=语音 5 = 商品链接 6 = 订单类型
+     * Loại thông báo
+     * @var array  1 = văn bản 2 = biểu tượng cảm xúc 3 = hình ảnh 4 = ghi âm 5 = liên kết sản phẩm 6 = loại đơn hàng
      */
     const MSN_TYPE = [1, 2, 3, 4, 5, 6];
 
     /**
-     * 商品链接消息类型
+     * Loại tin nhắn liên kết sản phẩm
      */
     const MSN_TYPE_GOODS = 5;
 
     /**
-     * 订单信息消息类型
+     * Loại tin nhắn thông tin đơn hàng
      */
     const MSN_TYPE_ORDER = 6;
 
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * StoreServiceLogServices constructor.
      * @param StoreServiceLogDao $dao
      */
@@ -55,7 +55,7 @@ class StoreServiceLogServices extends BaseServices
     }
 
     /**
-     * 获取聊天记录中的uid和to_uid
+     * Lấy uid và to_uid trong bản ghi chat
      * @param int $uid
      * @return array
      */
@@ -75,7 +75,7 @@ class StoreServiceLogServices extends BaseServices
     }
 
     /**
-     * 获取某个用户的客服聊天记录
+     * Lấy bản ghi chat CSKH của một người dùng
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -91,7 +91,7 @@ class StoreServiceLogServices extends BaseServices
     }
 
     /**
-     * 获取聊天记录列表
+     * Lấy danh sách bản ghi chat
      * @param array $where
      * @param int $uid
      * @return array
@@ -107,7 +107,7 @@ class StoreServiceLogServices extends BaseServices
     }
 
     /**
-     * 聊天列表格式化
+     * Định dạng danh sách chat
      * @param array $list
      * @param int $uid
      * @return array
@@ -190,7 +190,7 @@ class StoreServiceLogServices extends BaseServices
     }
 
     /**
-     * 获取聊天记录
+     * Lấy lịch sử trò chuyện
      * @param array $where
      * @param int $page
      * @param int $limit

@@ -8,7 +8,7 @@
     <meta name="viewport"
         content="width=device-width, viewport-fit=cover, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <title>支付完成</title>
+    <title>Thanh toán hoàn tất</title>
     <script type="text/javascript" charset="UTF-8" src="https://wx.gtimg.com/pay_h5/goldplan/js/jgoldplan-1.0.0.js">
     </script>
     <script type="text/javascript" src="https://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
@@ -103,22 +103,22 @@
         </div>
         <div class="col_box">
             <div class="col">
-                <div class="lab">产品名称</div>
-                <div id="p_name" class="ct">产品名称</div>
+                <div class="lab">Tên sản phẩm</div>
+                <div id="p_name" class="ct">Tên sản phẩm</div>
             </div>
             <div class="col">
-                <div class="lab">实付金额</div>
+                <div class="lab">Số tiền thực trả</div>
                 <div id="price" class="ct price">¥</div>
             </div>
         </div>
         <div class="btns">
-            <!-- <div id="backHome" class="btn home">返回首页</div> -->
-            <div id="toOrder" class="btn detail">查看详情</div>
+            <!-- <div id="backHome" class="btn home">Về trang chủ</div> -->
+            <div id="toOrder" class="btn detail">Xem chi tiết</div>
         </div>
     </div>
 
     <script>
-        //获取返回页面参数
+        //Lấy tham số trang trả về
         function getQueryString(name) {
             var query = window.location.search.substring(1);
             var vars = query.split("&");
@@ -130,12 +130,12 @@
             }
             return null;
         };
-        //获取参数
-        var sub_mch_id = getQueryString("sub_mch_id"); //特约商户号
+        //Lấy tham số
+        var sub_mch_id = getQueryString("sub_mch_id"); //Mã merchant đặc biệt
         console.log("sub_mch_id is " + sub_mch_id)
-        var out_trade_no = getQueryString("out_trade_no"); //商户订单号
+        var out_trade_no = getQueryString("out_trade_no"); //Mã đơn hàng của merchant
         console.log("out_trade_no is " + out_trade_no)
-        var check_code = getQueryString("check_code"); //md5 校验码
+        var check_code = getQueryString("check_code"); //Mã kiểm tra (checksum) md5
         console.log("check_code is " + check_code)
 
 
@@ -157,7 +157,7 @@
                     $("#b_name").html(info.site_name)
                     $("#p_name").html(info.goods_name)
                     $("#price").html(info.pay_price)
-                    //初始化小票
+                    //Khởi tạo phiếu in
                     var initData = {
                         action: 'onIframeReady',
                         displayStyle: 'SHOW_CUSTOM_PAGE'
@@ -165,11 +165,11 @@
                     var initPostData = JSON.stringify(initData)
                     parent.postMessage(initPostData, 'https://payapp.weixin.qq.com')
 
-                    //注册点击事件(去详情)
+                    //Đăng ký sự kiện click (đi đến chi tiết)
                     document.getElementById("toOrder").onclick = () => {
                         var mchData = {
                             action: 'jumpOut',
-                            jumpOutUrl: info.jump_url //跳转的页面
+                            jumpOutUrl: info.jump_url //Trang chuyển đến
                         }
                         var postData = JSON.stringify(mchData)
                         parent.postMessage(postData, 'https://payapp.weixin.qq.com')

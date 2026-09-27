@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,7 +17,7 @@ use crmeb\traits\ModelTrait;
 use think\Model;
 
 /**
- * 分销员完成等级任务记录
+ * Lịch sử hoàn thành nhiệm vụ hạng của cộng tác viên
  * Class AgentLevelTaskRecord
  * @package app\model\agent
  */
@@ -27,19 +27,19 @@ class AgentLevelTaskRecord extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'agent_level_task_record';
 
     /**
-     * 关联分销员等级
+     * Liên kết hạng cộng tác viên
      * @return \think\model\relation\HasOne
      */
     public function level()
@@ -48,7 +48,7 @@ class AgentLevelTaskRecord extends BaseModel
     }
 
     /**
-     * 关联分销员等级任务
+     * Liên kết nhiệm vụ hạng cộng tác viên
      * @return \think\model\relation\HasOne
      */
     public function task()
@@ -57,7 +57,7 @@ class AgentLevelTaskRecord extends BaseModel
     }
 
     /**
-     * 分销员等级搜索器
+     * Bộ lọc hạng cộng tác viên
      * @param $query Model
      * @param $value
      */
@@ -67,7 +67,7 @@ class AgentLevelTaskRecord extends BaseModel
     }
 
     /**
-     * 等级任务搜索器
+     * Bộ lọc nhiệm vụ hạng
      * @param $query Model
      * @param $value
      */
@@ -81,7 +81,7 @@ class AgentLevelTaskRecord extends BaseModel
     }
 
     /**
-     * 用户搜索器
+     * Bộ lọc người dùng
      * @param $query Model
      * @param $value
      */
@@ -91,7 +91,7 @@ class AgentLevelTaskRecord extends BaseModel
     }
 
     /**
-     * 状态搜索器
+     * Bộ lọc trạng thái
      * @param $query Model
      * @param $value
      */

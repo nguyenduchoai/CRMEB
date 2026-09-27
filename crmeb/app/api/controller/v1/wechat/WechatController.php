@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,7 +17,7 @@ use app\services\wechat\WechatServices as WechatAuthServices;
 use crmeb\services\CacheService;
 
 /**
- * 微信公众号
+ * OA WeChat
  * Class WechatController
  * @package app\api\controller\wechat
  */
@@ -35,7 +35,7 @@ class WechatController
     }
 
     /**
-     * 微信公众号服务
+     * Dịch vụ OA WeChat
      * @return \think\Response
      */
     public function serve()
@@ -44,7 +44,7 @@ class WechatController
     }
 
     /**
-     * 微信小程序公众号服务
+     * Dịch vụ Mini Program và OA WeChat
      * @return \think\Response
      */
     public function miniServe()
@@ -53,7 +53,7 @@ class WechatController
     }
 
     /**
-     * 支付异步回调
+     * Callback thanh toán bất đồng bộ
      */
     public function notify()
     {
@@ -66,7 +66,7 @@ class WechatController
     }
 
     /**
-     * 公众号权限配置信息获取
+     * Lấy thông tin cấu hình quyền OA WeChat
      * @param Request $request
      * @return mixed
      */
@@ -76,7 +76,7 @@ class WechatController
     }
 
     /**
-     * App微信登陆
+     * Đăng nhập WeChat trên App
      * @param Request $request
      * @return mixed
      * @throws \Psr\SimpleCache\InvalidArgumentException
@@ -94,7 +94,7 @@ class WechatController
             if (!$captcha) {
                 return app('json')->fail(410004);
             }
-            //验证验证码
+            //Xác thực mã xác thực
             $verifyCode = CacheService::get('code_' . $phone);
             if (!$verifyCode)
                 return app('json')->fail(410009);
@@ -115,7 +115,7 @@ class WechatController
     }
 
     /**
-     * 关注二维码
+     * Mã QR theo dõi
      * @return mixed
      * @throws \Exception
      */

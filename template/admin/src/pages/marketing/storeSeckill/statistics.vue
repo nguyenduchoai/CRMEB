@@ -14,30 +14,30 @@
         label-position="right"
         @submit.native.prevent
         inline
-        ><el-form-item v-if="type == 1" label="订单状态：" label-for="status">
+        ><el-form-item v-if="type == 1" label="Trạng thái đơn hàng:" label-for="status">
           <el-select
             v-model="pagination.status"
             clearable
-            placeholder="请选择订单状态"
+            placeholder="Vui lòng chọn trạng thái đơn hàng"
             @change="changeStatus"
             class="form_content_width"
           >
-            <el-option value="1" label="待发货"></el-option>
-            <el-option value="2" label="待收货"></el-option>
-            <el-option value="3" label="待评价"></el-option>
-            <el-option value="4" label="交易完成"></el-option>
+            <el-option value="1" label="Chờ giao hàng"></el-option>
+            <el-option value="2" label="Chờ nhận hàng"></el-option>
+            <el-option value="3" label="Chờ đánh giá"></el-option>
+            <el-option value="4" label="Giao dịch hoàn tất"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="订单搜索：" label-for="title">
+        <el-form-item label="Tìm kiếm đơn hàng:" label-for="title">
           <el-input
             clearable
             v-model="pagination.real_name"
-            placeholder="请输入用户姓名|手机号|UID"
+            placeholder="Vui lòng nhập họ tên người dùng|số điện thoại|UID"
             class="form_content_width"
           />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-db-click @click="changeStatus">查询</el-button>
+          <el-button type="primary" v-db-click @click="changeStatus">Tra cứu</el-button>
         </el-form-item>
       </el-form>
       <el-tabs v-model="type" @tab-click="onClickTab">
@@ -48,8 +48,8 @@
         ref="table"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column
           :label="item.title"
@@ -100,64 +100,64 @@ export default {
       tabs: [
         {
           type: '0',
-          label: '活动参与人',
+          label: 'Người tham gia hoạt động',
         },
         {
           type: '1',
-          label: '活动订单',
+          label: 'Đơn hàng chương trình',
         },
       ],
       type: 0,
       loading: false,
       thead: [
         {
-          title: '用户姓名',
+          title: 'Họ tên người dùng',
           key: 'real_name',
         },
         {
-          title: '购买件数',
+          title: 'Số sản phẩm đã mua',
           key: 'goods_num',
         },
         {
-          title: '支付订单数',
+          title: 'Số đơn hàng đã thanh toán',
           key: 'order_num',
         },
         {
-          title: '支付金额',
+          title: 'Số tiền thanh toán',
           key: 'total_price',
         },
         {
-          title: '最近参与时间',
+          title: 'Thời gian tham gia gần nhất',
           key: 'add_time',
         },
       ],
       thead2: [
         {
-          title: '订单号',
+          title: 'Mã đơn hàng',
           key: 'order_id',
         },
         {
-          title: '用户',
+          title: 'Người dùng',
           key: 'real_name',
         },
         {
-          title: '订单状态',
+          title: 'Trạng thái đơn hàng',
           key: 'status',
         },
         {
-          title: '订单支付金额',
+          title: 'Số tiền thanh toán đơn hàng',
           key: 'pay_price',
         },
         {
-          title: '订单商品数',
+          title: 'Số sản phẩm trong đơn hàng',
           key: 'total_num',
         },
         {
-          title: '下单时间',
+          title: 'Thời gian đặt hàng',
           key: 'add_time',
         },
         {
-          title: '支付时间',
+          title: 'Thời gian thanh toán',
           key: 'pay_time',
         },
       ],
@@ -165,25 +165,25 @@ export default {
         {
           col: 6,
           count: 0,
-          name: '下单人数（人）',
+          name: 'Số người đặt hàng (người)',
           className: 'iconxiadanrenshu',
         },
         {
           col: 6,
           count: 0,
-          name: '支付订单额（元）',
+          name: 'Giá trị đơn đã thanh toán (đ)',
           className: 'iconzhifudingdan',
         },
         {
           col: 6,
           count: 0,
-          name: '支付人数（人）',
+          name: 'Số người thanh toán (người)',
           className: 'iconzhifurenshu',
         },
         {
           col: 6,
           count: 0,
-          name: '剩余库存/总库存',
+          name: 'Tồn kho còn lại/Tổng tồn kho',
           className: 'iconshengyukucun',
         },
       ],
@@ -206,7 +206,7 @@ export default {
       this.pagination.page = 1;
       this.getList();
     },
-    // 统计
+    // Thống kê
     getStatistics(id) {
       getseckillStatistics(id).then((res) => {
         let arr = ['order_count', 'all_price', 'pay_count', 'pay_rate'];
@@ -215,7 +215,7 @@ export default {
         });
       });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       if (this.type == 0) {
@@ -234,12 +234,12 @@ export default {
         });
       }
     },
-    // 标签切换
+    // Chuyển đổi tab
     onClickTab(e) {
       this.type = e.index;
       this.getList();
     },
-    // 搜索
+    // Tìm kiếm
     searchList() {
       this.pagination.page = 1;
       this.getList();

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,7 +20,7 @@ use think\File;
 use think\Image;
 
 /**
- * 本地上传
+ * Tải lên từ máy
  * Class Local
  * @package crmeb\services\upload\storage
  */
@@ -28,13 +28,13 @@ class Local extends BaseUpload
 {
 
     /**
-     * 默认存放路径
+     * Đường dẫn lưu trữ mặc định
      * @var string
      */
     protected $defaultPath;
 
     /**
-     * 缩略图、水印图存放位置
+     * Vị trí lưu ảnh thu nhỏ, ảnh watermark
      * @var string
      */
     public $thumbWaterPath = 'thumb_water';
@@ -54,11 +54,11 @@ class Local extends BaseUpload
     public function getTempKeys()
     {
         // TODO: Implement getTempKeys() method.
-        return $this->setError('请检查您的上传配置，视频默认oss上传');
+        return $this->setError('Vui lòng kiểm tra cấu hình tải lên, video mặc định được tải lên oss');
     }
 
     /**
-     * 生成上传文件目录
+     * Tạo thư mục tải lên file
      * @param $path
      * @param null $root
      * @return string
@@ -70,7 +70,7 @@ class Local extends BaseUpload
     }
 
     /**
-     * 检查上传目录不存在则生成
+     * Kiểm tra nếu thư mục tải lên không tồn tại thì tạo mới
      * @param $dir
      * @return bool
      */
@@ -80,7 +80,7 @@ class Local extends BaseUpload
     }
 
     /**
-     * 检测filepath是否是远程地址
+     * Kiểm tra filepath có phải là địa chỉ từ xa (remote) không
      * @param string $filePath
      * @return bool
      */
@@ -90,10 +90,10 @@ class Local extends BaseUpload
     }
 
     /**
-     * 生成与配置相关的文件名称以及路径
-     * @param string $filePath 原地址
-     * @param string $toPath 保存目录
-     * @param array $config 配置相关参数
+     * Tạo tên file và đường dẫn liên quan đến cấu hình
+     * @param string $filePath Địa chỉ gốc
+     * @param string $toPath Thư mục lưu
+     * @param array $config Tham số liên quan đến cấu hình
      * @param string $root
      * @return string
      */
@@ -105,7 +105,7 @@ class Local extends BaseUpload
     }
 
     /**
-     * 文件上传
+     * Tải tệp lên
      * @param string $file
      * @return array|bool|mixed|\StdClass
      */
@@ -113,17 +113,17 @@ class Local extends BaseUpload
     {
         $fileHandle = app()->request->file($file);
         if (!$fileHandle) {
-            return $this->setError('上传的文件不存在');
+            return $this->setError('Tệp tải lên không tồn tại');
         }
         if ($this->validate) {
             if (!in_array(strtolower(pathinfo($fileHandle->getOriginalName(), PATHINFO_EXTENSION)), $this->validate['fileExt'])) {
-                return $this->setError('不合法的文件后缀');
+                return $this->setError('Phần mở rộng tệp không hợp lệ');
             }
             if (filesize($fileHandle) > $this->validate['filesize']) {
-                return $this->setError('文件过大');
+                return $this->setError('Tệp quá lớn');
             }
             if (!in_array($fileHandle->getOriginalMime(), $this->validate['fileMime'])) {
-                return $this->setError('不合法的文件类型');
+                return $this->setError('Loại tệp không hợp lệ');
             }
             if (in_array($fileHandle->getOriginalMime(), ['image/x-icon', 'image/png', 'image/gif', 'image/jpeg', 'image/jpg', 'image/webp'])) {
                 $stream = fopen($fileHandle->getPathname(), 'r');
@@ -133,7 +133,7 @@ class Local extends BaseUpload
                 }
                 $image = @imagecreatefromstring($content);
                 if ($image === false) {
-                    return $this->setError('文件内容不合法');
+                    return $this->setError('Nội dung tệp không hợp lệ');
                 }
             }
         }
@@ -172,7 +172,7 @@ class Local extends BaseUpload
     }
 
     /**
-     * 文件流上传
+     * Tải lên bằng file stream
      * @param $fileContent
      * @param string|null $key
      * @return array|bool|mixed|\StdClass
@@ -204,7 +204,7 @@ class Local extends BaseUpload
     }
 
     /**
-     * 文件流下载保存图片
+     * Dùng luồng file (file stream) để tải xuống và lưu ảnh
      * @param string $fileContent
      * @param string|null $key
      * @return array|bool|mixed|\StdClass
@@ -229,7 +229,7 @@ class Local extends BaseUpload
     }
 
     /**
-     * 生成缩略图
+     * Tạo ảnh thu nhỏ
      * @param string $filePath
      * @param string $fileName
      * @param string $type
@@ -240,7 +240,7 @@ class Local extends BaseUpload
         $config = $this->thumbConfig;
         $data = ['big' => $filePath, 'mid' => $filePath, 'small' => $filePath];
         $this->fileInfo->filePathBig = $this->fileInfo->filePathMid = $this->fileInfo->filePathSmall = $this->fileInfo->filePathWater = $filePath;
-        //地址存在且不是远程地址
+        //Địa chỉ tồn tại và không phải địa chỉ từ xa
         $filePath = str_replace(sys_config('site_url'), '', $filePath);
         if ($filePath && !$this->checkFilePathIsRemote($filePath)) {
             $findPath = str_replace($fileName, $type . '_' . $fileName, $filePath);
@@ -258,7 +258,7 @@ class Local extends BaseUpload
                         $height = 'thumb_' . $v . '_height';
                         $width = 'thumb_' . $v . '_width';
                         $savePath = str_replace($fileName, $v . '_' . $fileName, $filePath);
-                        //防止重复生成
+                        //Tránh tạo trùng lặp
                         if (!file_exists('.' . $savePath)) {
                             $Image = Image::open(app()->getRootPath() . 'public' . $filePath);
                             $Image->thumb($config[$width], $config[$height])->save(root_path() . 'public' . $savePath);
@@ -275,7 +275,7 @@ class Local extends BaseUpload
     }
 
     /**
-     * 添加水印
+     * Thêm watermark
      * @param string $filePath
      * @return mixed|string
      */
@@ -297,7 +297,7 @@ class Local extends BaseUpload
     }
 
     /**
-     * 图片水印
+     * Watermark ảnh
      * @param string $filePath
      * @param array $waterConfig
      * @param string $waterPath
@@ -309,12 +309,12 @@ class Local extends BaseUpload
             $waterConfig = $this->waterConfig;
         }
         $watermark_image = $waterConfig['watermark_image'];
-        //远程图片
+        //Ảnh từ xa (remote)
         $filePath = str_replace(sys_config('site_url'), '', $filePath);
         if ($watermark_image && $this->checkFilePathIsRemote($watermark_image)) {
-            //看是否在本地
+            //Kiểm tra xem có ở local không
             $pathName = $this->getFilePath($watermark_image, true);
-            if ($pathName == $watermark_image) {//不再本地  继续下载
+            if ($pathName == $watermark_image) {//Không ở local thì tiếp tục tải xuống
                 [$p, $e] = $this->getFileName($watermark_image);
                 $name = 'water_image_' . md5($watermark_image) . '.' . $e;
                 $this->defaultPath = Config::get('filesystem.disks.' . Config::get('filesystem.default') . '.url');
@@ -347,7 +347,7 @@ class Local extends BaseUpload
     }
 
     /**
-     * 文字水印
+     * Watermark chữ
      * @param string $filePath
      * @param array $waterConfig
      * @return string
@@ -378,7 +378,7 @@ class Local extends BaseUpload
     }
 
     /**
-     * 删除文件
+     * Xóa file
      * @param string $filePath
      * @return bool|mixed
      */

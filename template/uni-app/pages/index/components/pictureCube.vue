@@ -1,5 +1,5 @@
 <template>
-	<!-- 图片魔方 -->
+	<!-- Lưới ảnh -->
 	<view class="pictureCube" :style="[wrapperStyle]" v-if="picList.length">
 		<view class="advert1" v-if="style==0">
 			<view class="item" v-for="(item,index) in picList" :key="index" :style="[imgGap]" @click="goDetail(item)">
@@ -183,10 +183,10 @@
 			this.computedHeight();
 		},
 		methods: {
-			//替换安全域名
+			//Thay domain an toàn
 			setDomain: function(url) {
 				url = url ? url.toString() : '';
-				//本地调试打开,生产请注销
+				//Mở khi debug local, khi lên production hãy comment lại
 				if (url.indexOf("https://") > -1) return url;
 				else return url.replace('http://', 'https://');
 			},

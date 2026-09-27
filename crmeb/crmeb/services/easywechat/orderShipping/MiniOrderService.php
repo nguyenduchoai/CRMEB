@@ -33,7 +33,7 @@ class MiniOrderService
     }
 
     /**
-     * 初始化
+     * Khởi tạo
      * @param bool $cache
      * @return Application
      */
@@ -50,13 +50,13 @@ class MiniOrderService
 
 
     /**
-     * 上传订单
-     * @param string $out_trade_no 订单号(商城订单好)
-     * @param int $logistics_type 物流模式，发货方式枚举值：1、实体物流配送采用快递公司进行实体物流配送形式 2、同城配送 3、虚拟商品，虚拟商品，例如话费充值，点卡等，无实体配送形式 4、用户自提
-     * @param array $shipping_list 物流信息列表，发货物流单列表，支持统一发货（单个物流单）和分拆发货（多个物流单）两种模式，多重性: [1, 10]
-     * @param string $payer_openid 支付者，支付者信息
-     * @param int $delivery_mode 发货模式，发货模式枚举值：1、UNIFIED_DELIVERY（统一发货）2、SPLIT_DELIVERY（分拆发货） 示例值: UNIFIED_DELIVERY
-     * @param bool $is_all_delivered 分拆发货模式时必填，用于标识分拆发货模式下是否已全部发货完成，只有全部发货完成的情况下才会向用户推送发货完成通知。示例值: true/false
+     * Tải lên đơn hàng
+     * @param string $out_trade_no Mã đơn hàng (mã đơn hàng của shop)
+     * @param int $logistics_type Chế độ vận chuyển, giá trị enum cách giao hàng: 1. Vận chuyển vật lý, dùng đơn vị vận chuyển để giao hàng vật lý 2. Giao hàng nội thành 3. Sản phẩm ảo, sản phẩm ảo ví dụ nạp tiền điện thoại, thẻ game..., không có hình thức giao hàng vật lý 4. Người dùng tự lấy hàng
+     * @param array $shipping_list Danh sách thông tin vận chuyển, danh sách vận đơn giao hàng, hỗ trợ hai chế độ: giao hàng thống nhất (một vận đơn) và giao hàng chia nhỏ (nhiều vận đơn), số lượng: [1, 10]
+     * @param string $payer_openid Người thanh toán, thông tin người thanh toán
+     * @param int $delivery_mode Chế độ giao hàng, giá trị enum chế độ giao hàng: 1. UNIFIED_DELIVERY (giao hàng thống nhất) 2. SPLIT_DELIVERY (giao hàng chia nhỏ). Giá trị ví dụ: UNIFIED_DELIVERY
+     * @param bool $is_all_delivered Bắt buộc điền khi ở chế độ giao hàng chia nhỏ, dùng để xác định đã giao hàng xong toàn bộ ở chế độ chia nhỏ chưa, chỉ khi giao hàng xong toàn bộ mới đẩy thông báo hoàn tất giao hàng cho người dùng. Giá trị ví dụ: true/false
      * @return array
      *
      * @throws HttpException
@@ -69,7 +69,7 @@ class MiniOrderService
     }
 
     /**
-     * 合单
+     * Hợp đơn
      * @param string $out_trade_no
      * @param int $logistics_type
      * @param array $sub_orders
@@ -88,7 +88,7 @@ class MiniOrderService
     }
 
     /**
-     * 签收通知
+     * Thông báo ký nhận
      * @param string $merchant_trade_no
      * @param string $received_time
      * @return array
@@ -102,7 +102,7 @@ class MiniOrderService
     }
 
     /**
-     * 判断是否开通
+     * Kiểm tra đã mở chưa
      * @return bool
      * @throws HttpException
      *
@@ -116,7 +116,7 @@ class MiniOrderService
 
 
     /**
-     * 设置小修跳转路径
+     * Đặt đường dẫn chuyển trang Mini Program
      * @param $path
      * @return array
      * @throws HttpException

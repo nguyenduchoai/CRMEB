@@ -1,6 +1,6 @@
 <?php
 /**
- * @author: 吴汐
+ * @author: Wu Xi
  * @email: 442384644@qq.com
  * @date: 2023/8/3
  */
@@ -14,7 +14,7 @@ class StoreServiceAutoReply extends AuthController
 {
     /**
      * @return \think\Response
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/3
      */
@@ -30,14 +30,14 @@ class StoreServiceAutoReply extends AuthController
     }
 
     /**
-     * 获取自动回复表单
+     * Lấy form trả lời tự động
      * @param int $id
      * @return \think\Response
      * @throws \FormBuilder\Exception\FormBuilderException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/3
      */
@@ -47,10 +47,10 @@ class StoreServiceAutoReply extends AuthController
     }
 
     /**
-     * 保存自动回复
+     * Lưu trả lời tự động
      * @param int $id
      * @return \think\Response
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/3
      */
@@ -67,10 +67,10 @@ class StoreServiceAutoReply extends AuthController
     }
 
     /**
-     * 删除自动回复
+     * Xóa trả lời tự động
      * @param $id
      * @return \think\Response
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/3
      */

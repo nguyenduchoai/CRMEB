@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -40,7 +40,7 @@ class Diy extends AuthController
     }
 
     /**
-     * DIY列表
+     * Danh sách DIY
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -60,7 +60,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 保存可视化编辑资源
+     * Lưu resource chỉnh sửa trực quan
      * @param int $id
      * @return mixed
      */
@@ -95,7 +95,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 保存Diy资源
+     * Lưu resource Diy
      * @param int $id
      * @return mixed
      */
@@ -175,7 +175,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 删除模板
+     * Xóa mẫu
      * @param $id
      * @return mixed
      */
@@ -186,7 +186,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 使用模板
+     * Dùng mẫu
      * @param $id
      * @return mixed
      */
@@ -197,7 +197,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 获取一条数据
+     * Lấy một dòng dữ liệu
      * @param int $id
      * @param StoreProductServices $services
      * @param StoreSeckillServices $seckillServices
@@ -257,7 +257,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 获取diy数据
+     * Lấy dữ liệu diy
      * @param $id
      * @param StoreProductServices $services
      * @return mixed
@@ -286,13 +286,13 @@ class Diy extends AuthController
                         } else {
                             $item['goodsList']['list'] = [];
                         }
-                    } elseif ($item['name'] === 'articleList') {//文章
+                    } elseif ($item['name'] === 'articleList') {//Bài viết
                         $data = [];
                         if ($item['selectConfig']['activeValue'] ?? 0) {
                             $data = $articleServices->getList(['cid' => $item['selectConfig']['activeValue'] ?? 0], 0, $item['numConfig']['val'] ?? 0);
                         }
                         $item['selectList']['list'] = $data['list'] ?? [];
-                    } elseif ($item['name'] === 'promotionList') {//活动模仿
+                    } elseif ($item['name'] === 'promotionList') {//Sao chép hoạt động
                         $data = [];
                         if (isset($item['tabConfig']['tabCur']) && $typeArr = $item['tabConfig']['list'][$item['tabConfig']['tabCur']] ?? []) {
                             $val = $typeArr['link']['activeVal'] ?? 0;
@@ -316,7 +316,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 获取推荐商品
+     * Lấy sản phẩm đề xuất
      * @param $type
      * @param int $num
      * @return array|array[]
@@ -329,26 +329,26 @@ class Diy extends AuthController
         /** @var StoreProductServices $services */
         $services = app()->make(StoreProductServices::class);
         $info = [];
-        if ($type == 1) {// 精品推荐
-            $info = $services->getRecommendProduct(0, 'is_best', $num);// 精品推荐个数
-        } else if ($type == 2) {//  热门榜单
-            $info = $services->getRecommendProduct(0, 'is_hot', $num);// 热门榜单 猜你喜欢
-        } else if ($type == 3) {// 首发新品
-            $info = $services->getRecommendProduct(0, 'is_new', $num);// 首发新品
-        } else if ($type == 4) {// 促销单品
-            $info = $services->getRecommendProduct(0, 'is_benefit', $num);// 促销单品
-        } else if ($type == 5) {// 会员商品
+        if ($type == 1) {// Đề xuất nổi bật
+            $info = $services->getRecommendProduct(0, 'is_best', $num);// Số lượng đề xuất nổi bật
+        } else if ($type == 2) {//  Top bán chạy
+            $info = $services->getRecommendProduct(0, 'is_hot', $num);// Bảng xếp hạng phổ biến - Có thể bạn thích
+        } else if ($type == 3) {// Hàng mới ra mắt
+            $info = $services->getRecommendProduct(0, 'is_new', $num);// Hàng mới ra mắt
+        } else if ($type == 4) {// Sản phẩm khuyến mãi
+            $info = $services->getRecommendProduct(0, 'is_benefit', $num);// Sản phẩm khuyến mãi
+        } else if ($type == 5) {// Sản phẩm thành viên
             $whereVip = [
                 ['vip_price', '>', 0],
                 ['is_vip', '=', 1],
             ];
-            $info = $services->getRecommendProduct(0, $whereVip, $num);// 会员商品
+            $info = $services->getRecommendProduct(0, $whereVip, $num);// Sản phẩm thành viên
         }
         return $info;
     }
 
     /**
-     * 推荐商品展示
+     * Hiển thị sản phẩm đề xuất
      * @param $type
      * @return \think\Response
      * @throws \think\db\exception\DataNotFoundException
@@ -369,7 +369,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 获取uni-app路径
+     * Lấy đường dẫn uni-app
      * @return mixed
      */
     public function getUrl()
@@ -380,9 +380,9 @@ class Diy extends AuthController
             foreach ($url as $key => &$link) {
                 $link['url'] = $link['link'];
                 $link['parameter'] = trim($link['param']);
-                if (!in_array('seckill', $model_checkbox) && strpos($link['name'], '秒杀') !== false) unset($url[$key]);
-                if (!in_array('bargain', $model_checkbox) && strpos($link['name'], '砍价') !== false) unset($url[$key]);
-                if (!in_array('combination', $model_checkbox) && strpos($link['name'], '拼团') !== false) unset($url[$key]);
+                if (!in_array('seckill', $model_checkbox) && strpos($link['name'], 'Flash sale') !== false) unset($url[$key]);
+                if (!in_array('bargain', $model_checkbox) && strpos($link['name'], 'Săn giảm giá') !== false) unset($url[$key]);
+                if (!in_array('combination', $model_checkbox) && strpos($link['name'], 'Mua chung') !== false) unset($url[$key]);
             }
         } else {
             /** @var CacheServices $cache */
@@ -393,7 +393,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 获取商品分类
+     * Lấy danh mục sản phẩm
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -408,7 +408,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 获取商品
+     * Lấy sản phẩm
      * @return mixed
      */
     public function getProduct()
@@ -436,7 +436,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 获取提货点自提开启状态
+     * Lấy trạng thái mở nhận tại điểm nhận hàng
      * @return mixed
      */
     public function getStoreStatus()
@@ -446,7 +446,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 还原模板数据
+     * Khôi phục dữ liệu mẫu
      * @param $id
      * @return mixed
      */
@@ -465,7 +465,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 获取二级分类
+     * Lấy danh mục cấp 2
      * @return mixed
      */
     public function getByCategory()
@@ -480,7 +480,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 添加页面
+     * Thêm trang
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
@@ -490,7 +490,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 保存页面
+     * Lưu trang
      * @return mixed
      */
     public function save()
@@ -508,7 +508,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 设置默认数据
+     * Đặt dữ liệu mặc định
      * @param $id
      * @return mixed
      */
@@ -527,7 +527,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 获取商品列表
+     * Lấy danh sách sản phẩm
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -557,7 +557,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 分类、个人中心、一键换色
+     * Danh mục, trang cá nhân, đổi màu nhanh
      * @param $type
      * @return mixed
      */
@@ -568,7 +568,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 保存分类、个人中心、一键换色
+     * Lưu danh mục, trang cá nhân, đổi màu nhanh
      * @param $status
      * @param $type
      * @return mixed
@@ -588,7 +588,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 获取个人中心数据
+     * Lấy dữ liệu trang cá nhân
      * @return mixed
      */
     public function getMember()
@@ -598,7 +598,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 保存个人中心数据
+     * Lưu dữ liệu trang cá nhân
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -620,7 +620,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 获取开屏广告
+     * Lấy quảng cáo màn hình khởi động
      * @return mixed
      */
     public function getOpenAdv()
@@ -641,7 +641,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 保存开屏广告
+     * Lưu quảng cáo màn hình khởi động
      * @return mixed
      */
     public function openAdvAdd()
@@ -661,7 +661,7 @@ class Diy extends AuthController
     }
 
     /**
-     * 获取单个diy小程序预览二维码
+     * Lấy mã QR xem trước Mini Program diy của một trang
      * @param $id
      * @return mixed
      */

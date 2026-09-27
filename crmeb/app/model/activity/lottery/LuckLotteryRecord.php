@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -28,19 +28,19 @@ class LuckLotteryRecord extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'luck_lottery_record';
 
     /**
-     * 收货信息修改器
+     * Setter thông tin nhận hàng
      * @param $value
      * @return false|string
      */
@@ -53,7 +53,7 @@ class LuckLotteryRecord extends BaseModel
     }
 
     /**
-     * 收货信息获取器
+     * Getter thông tin nhận hàng
      * @param $value
      * @param $data
      * @return mixed
@@ -64,7 +64,7 @@ class LuckLotteryRecord extends BaseModel
     }
 
     /**
-     * 发货信息修改器
+     * Setter thông tin giao hàng
      * @param $value
      * @return false|string
      */
@@ -77,7 +77,7 @@ class LuckLotteryRecord extends BaseModel
     }
 
     /**
-     * 发货信息获取器
+     * Getter thông tin giao hàng
      * @param $value
      * @param $data
      * @return mixed
@@ -88,7 +88,7 @@ class LuckLotteryRecord extends BaseModel
     }
 
     /**
-     * 关联抽奖
+     * Liên kết quay thưởng
      * @return \think\model\relation\HasOne
      */
     public function lottery()
@@ -97,7 +97,7 @@ class LuckLotteryRecord extends BaseModel
     }
 
     /**
-     * 关联奖品
+     * Liên kết giải thưởng
      * @return \think\model\relation\HasOne
      */
     public function prize()
@@ -106,7 +106,7 @@ class LuckLotteryRecord extends BaseModel
     }
 
     /**
-     * 关联用户
+     * Người dùng liên kết
      * @return \think\model\relation\HasOne
      */
     public function user()
@@ -115,7 +115,7 @@ class LuckLotteryRecord extends BaseModel
     }
 
     /**
-     * 用户uid搜索器
+     * Bộ lọc uid người dùng
      * @param $query Model
      * @param $value
      */
@@ -125,7 +125,7 @@ class LuckLotteryRecord extends BaseModel
     }
 
     /**
-     * 关键词搜索器
+     * Bộ lọc từ khóa
      * @param $query Model
      * @param $value
      */
@@ -145,7 +145,7 @@ class LuckLotteryRecord extends BaseModel
     }
 
     /**
-     * 抽奖id搜索器
+     * Bộ lọc id quay thưởng
      * @param $query Model
      * @param $value
      */
@@ -155,7 +155,7 @@ class LuckLotteryRecord extends BaseModel
     }
 
     /**
-     * 奖品id搜索器
+     * Bộ lọc id giải thưởng
      * @param $query Model
      * @param $value
      */
@@ -165,7 +165,7 @@ class LuckLotteryRecord extends BaseModel
     }
 
     /**
-     * 奖品类型搜索器
+     * Bộ lọc loại giải thưởng
      * @param $query Model
      * @param $value
      */
@@ -181,7 +181,7 @@ class LuckLotteryRecord extends BaseModel
     }
 
     /**
-     * 奖品不再这个类型中搜索器
+     * Bộ lọc giải thưởng không thuộc loại này
      * @param $query Model
      * @param $value
      */
@@ -197,7 +197,7 @@ class LuckLotteryRecord extends BaseModel
     }
 
     /**
-     * 是否领取
+     * Đã nhận hay chưa
      * @param $query Model
      * @param $value
      */
@@ -207,7 +207,7 @@ class LuckLotteryRecord extends BaseModel
     }
 
     /**
-     * 是否发货处理
+     * Có xử lý giao hàng hay không
      * @param $query Model
      * @param $value
      */

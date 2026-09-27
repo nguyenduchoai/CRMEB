@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -22,7 +22,7 @@ use app\services\user\UserServices;
 use think\facade\App;
 
 /**
- * 订单管理
+ * Quản lý đơn hàng
  * Class StoreOrder
  * @package app\controller\admin\v1\order
  */
@@ -41,7 +41,7 @@ class StoreIntegralOrder extends AuthController
     }
 
     /**
-     * 获取订单类型数量
+     * Lấy số lượng theo loại đơn hàng
      * @return mixed
      */
     public function chart()
@@ -55,7 +55,7 @@ class StoreIntegralOrder extends AuthController
     }
 
     /**
-     * 获取订单列表
+     * Lấy danh sách đơn hàng
      * @return mixed
      */
     public function lst()
@@ -73,7 +73,7 @@ class StoreIntegralOrder extends AuthController
     }
 
     /**
-     * 获取快递公司
+     * Lấy đơn vị vận chuyển
      * @return mixed
      */
     public function express(ExpressServices $services)
@@ -87,7 +87,7 @@ class StoreIntegralOrder extends AuthController
     }
 
     /**
-     * 批量删除用户已经删除的订单
+     * Xóa theo lô các đơn hàng người dùng đã xóa
      * @return mixed
      */
     public function del_orders()
@@ -104,7 +104,7 @@ class StoreIntegralOrder extends AuthController
     }
 
     /**
-     * 删除订单
+     * Xóa đơn hàng
      * @param $id
      * @return mixed
      */
@@ -118,7 +118,7 @@ class StoreIntegralOrder extends AuthController
     }
 
     /**
-     * 订单发送货
+     * Thực hiện giao đơn hàng
      * @param $id
      * @return mixed
      */
@@ -126,28 +126,28 @@ class StoreIntegralOrder extends AuthController
     {
         $data = $this->request->postMore([
             ['type', 1],
-            ['delivery_name', ''],//快递公司名称
-            ['delivery_id', ''],//快递单号
-            ['delivery_code', ''],//快递公司编码
+            ['delivery_name', ''],//Tên đơn vị vận chuyển
+            ['delivery_id', ''],//Mã vận đơn
+            ['delivery_code', ''],//Mã đơn vị vận chuyển
 
-            ['express_record_type', 2],//发货记录类型
-            ['express_temp_id', ""],//电子面单模板
-            ['to_name', ''],//寄件人姓名
-            ['to_tel', ''],//寄件人电话
-            ['to_addr', ''],//寄件人地址
+            ['express_record_type', 2],//Loại bản ghi giao hàng
+            ['express_temp_id', ""],//Mẫu vận đơn điện tử
+            ['to_name', ''],//Họ tên người gửi
+            ['to_tel', ''],//Số điện thoại người gửi
+            ['to_addr', ''],//Địa chỉ người gửi
 
-            ['sh_delivery_name', ''],//送货人姓名
-            ['sh_delivery_id', ''],//送货人电话
-            ['sh_delivery_uid', ''],//送货人ID
+            ['sh_delivery_name', ''],//Họ tên người giao hàng
+            ['sh_delivery_id', ''],//Số điện thoại người giao hàng
+            ['sh_delivery_uid', ''],//ID người giao hàng
 
-            ['fictitious_content', '']//虚拟发货内容
+            ['fictitious_content', '']//Nội dung giao hàng ảo
         ]);
         $this->services->delivery((int)$id, $data);
         return app('json')->success(100010);
     }
 
     /**
-     * 确认收货
+     * Xác nhận đã nhận hàng
      * @param $id
      * @return mixed
      */
@@ -167,13 +167,13 @@ class StoreIntegralOrder extends AuthController
         if (!$this->services->update($id, $data)) {
             return app('json')->fail(400116);
         } else {
-            //增加收货订单状态
+            //Thêm trạng thái đơn hàng đã nhận
             /** @var StoreIntegralOrderStatusServices $statusService */
             $statusService = app()->make(StoreIntegralOrderStatusServices::class);
             $statusService->save([
                 'oid' => $order['id'],
                 'change_type' => 'take_delivery',
-                'change_message' => '已收货',
+                'change_message' => 'Đã nhận hàng',
                 'change_time' => time()
             ]);
             return app('json')->success(400117);
@@ -181,8 +181,8 @@ class StoreIntegralOrder extends AuthController
     }
 
     /**
-     * 订单详情
-     * @param $id 订单id
+     * Chi tiết đơn hàng
+     * @param $id ID đơn hàng
      * @return mixed
      */
     public function order_info($id)
@@ -201,8 +201,8 @@ class StoreIntegralOrder extends AuthController
     }
 
     /**
-     * 查询物流信息
-     * @param $id 订单id
+     * Truy vấn thông tin vận chuyển
+     * @param $id ID đơn hàng
      * @return mixed
      */
     public function get_express($id, ExpressServices $services)
@@ -221,8 +221,8 @@ class StoreIntegralOrder extends AuthController
     }
 
     /**
-     * 获取修改配送信息表单结构
-     * @param $id 订单id
+     * Lấy cấu trúc form sửa thông tin giao hàng
+     * @param $id ID đơn hàng
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
@@ -235,8 +235,8 @@ class StoreIntegralOrder extends AuthController
     }
 
     /**
-     * 修改配送信息
-     * @param $id  订单id
+     * Sửa thông tin giao hàng
+     * @param $id  ID đơn hàng
      * @return mixed
      */
     public function update_distribution($id)
@@ -249,7 +249,7 @@ class StoreIntegralOrder extends AuthController
 
 
     /**
-     * 修改备注
+     * Sửa ghi chú
      * @param $id
      * @return mixed
      */
@@ -264,7 +264,7 @@ class StoreIntegralOrder extends AuthController
     }
 
     /**
-     * 获取订单状态列表并分页
+     * Lấy danh sách trạng thái đơn hàng có phân trang
      * @param $id
      * @return mixed
      */
@@ -275,7 +275,7 @@ class StoreIntegralOrder extends AuthController
     }
 
     /**
-     * 易联云打印机打印
+     * In bằng máy in Yilianyun
      * @param $id
      * @return mixed
      */
@@ -295,7 +295,7 @@ class StoreIntegralOrder extends AuthController
     }
 
     /**
-     * 电子面单模板
+     * Mẫu vận đơn điện tử
      * @param $com
      * @return mixed
      */
@@ -309,7 +309,7 @@ class StoreIntegralOrder extends AuthController
     }
 
     /**
-     * 获取模板
+     * Lấy mẫu
      */
     public function express_temp(ServeServices $services)
     {
@@ -319,7 +319,7 @@ class StoreIntegralOrder extends AuthController
     }
 
     /**
-     * 订单发货后打印电子面单
+     * In vận đơn điện tử sau khi đơn hàng được giao
      * @param $order_id
      * @param StoreOrderDeliveryServices $storeOrderDeliveryServices
      * @return mixed
@@ -331,7 +331,7 @@ class StoreIntegralOrder extends AuthController
     }
 
     /**
-     * 获取配置信息
+     * Lấy thông tin cấu hình
      * @return mixed
      */
     public function getDeliveryInfo()

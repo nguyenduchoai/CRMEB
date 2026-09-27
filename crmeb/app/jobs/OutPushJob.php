@@ -14,7 +14,7 @@ class OutPushJob extends BaseJobs
     use QueueTrait;
 
     /**
-     * 订单推送
+     * Đẩy thông báo đơn hàng
      * @param int $oid
      * @param string $pushUrl
      * @param int $step
@@ -23,7 +23,7 @@ class OutPushJob extends BaseJobs
     public function orderCreate(int $oid, string $pushUrl, int $step = 0): bool
     {
         if ($step > 2) {
-            Log::error('订单' . $oid . '推送失败');
+            Log::error('Đơn hàng' . $oid . 'đẩy dữ liệu thất bại');
             return true;
         }
 
@@ -34,7 +34,7 @@ class OutPushJob extends BaseJobs
                 OutPushJob::dispatchSecs(($step + 1) * 5, 'orderCreate', [$oid, $pushUrl, $step + 1]);
             }
         } catch (\Exception $e) {
-            Log::error('订单' . $oid . '推送失败,失败原因:' . $e->getMessage());
+            Log::error('Đơn hàng' . $oid . 'đẩy dữ liệu thất bại, nguyên nhân:' . $e->getMessage());
             OutPushJob::dispatchSecs(($step + 1) * 5, 'orderCreate', [$oid, $pushUrl, $step + 1]);
         }
 
@@ -42,7 +42,7 @@ class OutPushJob extends BaseJobs
     }
 
     /**
-     * 订单支付推送
+     * Đẩy dữ liệu thanh toán đơn hàng
      * @param int $oid
      * @param string $pushUrl
      * @param int $step
@@ -51,7 +51,7 @@ class OutPushJob extends BaseJobs
     public function paySuccess(int $oid, string $pushUrl, int $step = 0): bool
     {
         if ($step > 2) {
-            Log::error('订单支付' . $oid . '推送失败');
+            Log::error('Thanh toán đơn hàng' . $oid . 'đẩy dữ liệu thất bại');
             return true;
         }
 
@@ -62,7 +62,7 @@ class OutPushJob extends BaseJobs
                 OutPushJob::dispatchSecs(($step + 1) * 5, 'paySuccess', [$oid, $pushUrl, $step + 1]);
             }
         } catch (\Exception $e) {
-            Log::error('订单支付' . $oid . '推送失败,失败原因:' . $e->getMessage());
+            Log::error('Thanh toán đơn hàng' . $oid . 'đẩy dữ liệu thất bại, nguyên nhân:' . $e->getMessage());
             OutPushJob::dispatchSecs(($step + 1) * 5, 'paySuccess', [$oid, $pushUrl, $step + 1]);
         }
 
@@ -70,7 +70,7 @@ class OutPushJob extends BaseJobs
     }
 
     /**
-     * 售后单生成
+     * Tạo đơn hậu mãi
      * @param int $oid
      * @param string $pushUrl
      * @param int $step
@@ -79,7 +79,7 @@ class OutPushJob extends BaseJobs
     public function refundCreate(int $oid, string $pushUrl, int $step = 0): bool
     {
         if ($step > 2) {
-            Log::error('售后单' . $oid . '推送失败');
+            Log::error('Đơn đổi trả' . $oid . 'đẩy dữ liệu thất bại');
             return true;
         }
 
@@ -90,14 +90,14 @@ class OutPushJob extends BaseJobs
                 OutPushJob::dispatchSecs(($step + 1) * 5, 'refundCreate', [$oid, $pushUrl, $step + 1]);
             }
         } catch (\Exception $e) {
-            Log::error('售后单' . $oid . '推送失败,失败原因:' . $e->getMessage());
+            Log::error('Đơn đổi trả' . $oid . 'đẩy dữ liệu thất bại, nguyên nhân:' . $e->getMessage());
             OutPushJob::dispatchSecs(($step + 1) * 5, 'refundCreate', [$oid, $pushUrl, $step + 1]);
         }
         return true;
     }
 
     /**
-     * 取消申请
+     * Hủy yêu cầu
      * @param int $oid
      * @param string $pushUrl
      * @param int $step
@@ -106,7 +106,7 @@ class OutPushJob extends BaseJobs
     public function refundCancel(int $oid, string $pushUrl, int $step = 0): bool
     {
         if ($step > 2) {
-            Log::error('取消售后单' . $oid . '推送失败');
+            Log::error('Hủy đơn đổi trả' . $oid . 'đẩy dữ liệu thất bại');
             return true;
         }
 
@@ -117,14 +117,14 @@ class OutPushJob extends BaseJobs
                 OutPushJob::dispatchSecs(($step + 1) * 5, 'refundCancel', [$oid, $pushUrl, $step + 1]);
             }
         } catch (\Exception $e) {
-            Log::error('取消售后单' . $oid . '推送失败,失败原因:' . $e->getMessage());
+            Log::error('Hủy đơn đổi trả' . $oid . 'đẩy dữ liệu thất bại, nguyên nhân:' . $e->getMessage());
             OutPushJob::dispatchSecs(($step + 1) * 5, 'refundCancel', [$oid, $pushUrl, $step + 1]);
         }
         return true;
     }
 
     /**
-     * 余额，积分，佣金，经验变动推送
+     * Đẩy thông báo thay đổi số dư, điểm thưởng, hoa hồng, điểm kinh nghiệm
      * @param array $data
      * @param string $pushUrl
      * @param int $step
@@ -133,7 +133,7 @@ class OutPushJob extends BaseJobs
     public function userUpdate(array $data, string $pushUrl, int $step = 0): bool
     {
         if ($step > 2) {
-            Log::error('用户变动推送失败');
+            Log::error('Đẩy dữ liệu thay đổi người dùng thất bại');
             return true;
         }
 

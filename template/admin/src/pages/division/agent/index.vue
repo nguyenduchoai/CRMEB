@@ -10,16 +10,16 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="搜索：">
+          <el-form-item label="Tìm kiếm:">
             <el-input
               clearable
-              placeholder="请输入姓名、UID"
+              placeholder="Vui lòng nhập họ tên, UID"
               v-model="formValidate.keyword"
               class="form_content_width"
             />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="userSearchs">查询</el-button>
+            <el-button type="primary" v-db-click @click="userSearchs">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -29,7 +29,7 @@
         <el-col :xs="24" :sm="24" ref="rightBox">
           <el-row>
             <el-col v-bind="grid">
-              <el-button type="primary" v-db-click @click="groupAdd('0')" class="mr20">添加代理商</el-button>
+              <el-button type="primary" v-db-click @click="groupAdd('0')" class="mr20">Thêm đại lý</el-button>
             </el-col>
           </el-row>
           <el-table
@@ -38,44 +38,44 @@
             class="mt14"
             v-loading="loading"
             highlight-current-row
-            no-formValidate-text="暂无数据"
-            no-filtered-formValidate-text="暂无筛选结果"
+            no-formValidate-text="Chưa có dữ liệu"
+            no-filtered-formValidate-text="Không có kết quả phù hợp"
           >
-            <el-table-column label="用户UID" width="100">
+            <el-table-column label="UID người dùng" width="100">
               <template slot-scope="scope">
                 <span>{{ scope.row.uid }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="头像" min-width="90">
+            <el-table-column label="Ảnh đại diện" min-width="90">
               <template slot-scope="scope">
                 <div class="tabBox_img" v-viewer>
                   <img v-lazy="scope.row.avatar" />
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="名称" min-width="130">
+            <el-table-column label="Tên" min-width="130">
               <template slot-scope="scope">
                 <div class="acea-row">
                   <div v-text="scope.row.division_name" class="ml10"></div>
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="分销比例" min-width="130">
+            <el-table-column label="Tỷ lệ hoa hồng" min-width="130">
               <template slot-scope="scope">
                 <span> {{ scope.row.division_percent }}%</span>
               </template>
             </el-table-column>
-            <el-table-column label="员工数量" min-width="130">
+            <el-table-column label="Số lượng nhân viên" min-width="130">
               <template slot-scope="scope">
                 <span>{{ scope.row.agent_count }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="截止时间" min-width="130">
+            <el-table-column label="Thời gian hết hạn" min-width="130">
               <template slot-scope="scope">
                 <span>{{ scope.row.division_end_time }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="状态" min-width="130">
+            <el-table-column label="Trạng thái" min-width="130">
               <template slot-scope="scope">
                 <el-switch
                   :active-value="1"
@@ -88,15 +88,15 @@
                 </el-switch>
               </template>
             </el-table-column>
-            <el-table-column label="操作" fixed="right" width="220">
+            <el-table-column label="Thao tác" fixed="right" width="220">
               <template slot-scope="scope">
-                <a v-db-click @click="staffAdd(scope.row.uid)">添加员工</a>
+                <a v-db-click @click="staffAdd(scope.row.uid)">Thêm nhân viên</a>
                 <el-divider direction="vertical"></el-divider>
-                <a v-db-click @click="jump(scope.row.uid)">查看员工</a>
+                <a v-db-click @click="jump(scope.row.uid)">Xem nhân viên</a>
                 <el-divider direction="vertical"></el-divider>
-                <a v-db-click @click="groupAdd(scope.row.uid)">编辑</a>
+                <a v-db-click @click="groupAdd(scope.row.uid)">Sửa</a>
                 <el-divider direction="vertical"></el-divider>
-                <a v-db-click @click="del(scope.row, '删除代理商', scope.$index, 2)">删除</a>
+                <a v-db-click @click="del(scope.row, 'Xóa đại lý', scope.$index, 2)">Xóa</a>
               </template>
             </el-table-column>
           </el-table>
@@ -112,49 +112,49 @@
         </el-col>
       </el-row>
     </el-card>
-    <el-dialog :visible.sync="staffModal" title="员工列表" class="order_box" width="1000px">
+    <el-dialog :visible.sync="staffModal" title="Danh sách nhân viên" class="order_box" width="1000px">
       <el-table
         :data="clerkLists"
         ref="table"
         class="mt20"
         v-loading="loading"
         highlight-current-row
-        no-formValidate-text="暂无数据"
-        no-filtered-formValidate-text="暂无筛选结果"
+        no-formValidate-text="Chưa có dữ liệu"
+        no-filtered-formValidate-text="Không có kết quả phù hợp"
       >
-        <el-table-column label="用户UID" width="120">
+        <el-table-column label="UID người dùng" width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.uid }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="头像" min-width="120">
+        <el-table-column label="Ảnh đại diện" min-width="120">
           <template slot-scope="scope">
             <div class="tabBox_img" v-viewer>
               <img v-lazy="scope.row.avatar" />
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="姓名" min-width="130">
+        <el-table-column label="Họ tên" min-width="130">
           <template slot-scope="scope">
             <div class="acea-row">
-              <i class="el-icon-male mr10" v-show="scope.row.sex === '男'" style="color: #2db7f5; font-size: 15px"></i>
+              <i class="el-icon-male mr10" v-show="scope.row.sex === 'Nam'" style="color: #2db7f5; font-size: 15px"></i>
               <i
                 class="el-icon-female mr10"
-                v-show="scope.row.sex === '女'"
+                v-show="scope.row.sex === 'Nữ'"
                 style="color: #ed4014; font-size: 15px"
               ></i>
               <div v-text="scope.row.nickname" class=""></div>
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="分销比例" min-width="130">
+        <el-table-column label="Tỷ lệ hoa hồng" min-width="130">
           <template slot-scope="scope">
             <span> {{ scope.row.division_percent }}%</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="120">
+        <el-table-column label="Thao tác" width="120">
           <template slot-scope="scope">
-            <a v-db-click @click="del(scope.row, '删除员工', scope.$index, 3)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa nhân viên', scope.$index, 3)">Xóa</a>
           </template>
         </el-table-column>
       </el-table>
@@ -248,7 +248,7 @@ export default {
         this.staffModal = true;
       });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       this.formValidate.division_type = 2;
@@ -264,7 +264,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 添加表单
+    // Biểu mẫu thêm
     groupAdd(id) {
       this.$modalForm(agentFrom(id))
         .then((res) => {
@@ -272,7 +272,7 @@ export default {
         })
         .catch((err) => {});
     },
-    //添加员工表单
+    //Form thêm nhân viên
     staffAdd(id) {
       this.$modalForm(staffAddFrom(id))
         .then((res) => {
@@ -280,7 +280,7 @@ export default {
         })
         .catch((err) => {});
     },
-    // 修改是否显示
+    // Sửa có hiển thị hay không
     onchangeIsShow(row) {
       let data = {
         id: row.uid,
@@ -294,9 +294,9 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 编辑
+    // Sửa
     edit(row) {},
-    // 删除
+    // Xóa
     del(row, tit, num, type) {
       let delfromData = {
         title: tit,

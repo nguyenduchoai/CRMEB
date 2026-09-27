@@ -10,32 +10,36 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 多语言设置
+// | Cài đặt đa ngôn ngữ
 // +----------------------------------------------------------------------
 
 use think\facade\Env;
 
 return [
-    // 默认语言
-    'default_lang' => Env::get('lang.default_lang', 'zh-cn'),
-    // 允许的语言列表
-    'allow_lang_list' => ['zh-cn', 'en-us'],
-    // 多语言自动侦测变量名
+    // Ngôn ngữ mặc định
+    'default_lang' => Env::get('lang.default_lang', 'vi-vn'),
+    // Danh sách ngôn ngữ được phép
+    'allow_lang_list' => ['vi-vn', 'en-us', 'zh-cn'],
+    // Tên biến tự động phát hiện đa ngôn ngữ
     'detect_var' => 'lang',
-    // 是否使用Cookie记录
+    // Có dùng Cookie để ghi lại không
     'use_cookie' => true,
-    // 多语言cookie变量
+    // Biến cookie đa ngôn ngữ
     'cookie_var' => 'cb_lang',
-    // 扩展语言包
+    // Gói ngôn ngữ mở rộng
     'extend_list' => [
+        'vi-vn' => [app()->getBasePath() . 'lang/vi_vn.php', app()->getBasePath() . 'lang/vi_vn_think.php'],
+        'vi_vn' => [app()->getBasePath() . 'lang/vi_vn.php', app()->getBasePath() . 'lang/vi_vn_think.php'],
         'zh_cn' => app()->getBasePath() . 'lang/zh_cn.php',
         'en_us' => app()->getBasePath() . 'lang/en_us.php',
     ],
-    // Accept-Language转义为对应语言包名称
+    // Chuyển đổi Accept-Language sang tên gói ngôn ngữ tương ứng
     'accept_language' => [
+        'vi' => 'vi-vn',
+        'vi-vn' => 'vi-vn',
         'zh-hans-cn' => 'zh_cn',
         'en-hans-us' => 'en_us',
     ],
-    // 是否支持语言分组
+    // Có hỗ trợ nhóm ngôn ngữ không
     'allow_group' => true,
 ];

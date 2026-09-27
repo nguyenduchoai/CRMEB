@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -19,7 +19,7 @@ use QCloud\COSSTS\Sts;
 use crmeb\services\upload\extend\cos\Client as CrmebClient;
 
 /**
- * 腾讯云COS文件上传
+ * Tải lên file Tencent Cloud COS
  * Class COS
  * @package crmeb\services\upload\storage
  */
@@ -27,7 +27,7 @@ class Cos extends BaseUpload
 {
 
     /**
-     * 应用id
+     * id ứng dụng
      * @var string
      */
     protected $appid;
@@ -45,25 +45,25 @@ class Cos extends BaseUpload
     protected $secretKey;
 
     /**
-     * 句柄
+     * Handle
      * @var CrmebClient
      */
     protected $handle;
 
     /**
-     * 空间域名 Domain
+     * Domain của space Domain
      * @var mixed
      */
     protected $uploadUrl;
 
     /**
-     * 存储空间名称  公开空间
+     * Tên space lưu trữ  space công khai
      * @var mixed
      */
     protected $storageName;
 
     /**
-     * COS使用  所属地域
+     * COS sử dụng  region trực thuộc
      * @var mixed|null
      */
     protected $storageRegion;
@@ -74,23 +74,23 @@ class Cos extends BaseUpload
     protected $cdn;
 
     /**
-     * 水印位置
+     * Vị trí hình mờ
      * @var string[]
      */
     protected $position = [
-        '1' => 'northwest',//：左上
-        '2' => 'north',//：中上
-        '3' => 'northeast',//：右上
-        '4' => 'west',//：左中
-        '5' => 'center',//：中部
-        '6' => 'east',//：右中
-        '7' => 'southwest',//：左下
-        '8' => 'south',//：中下
-        '9' => 'southeast',//：右下
+        '1' => 'northwest',//: Trên trái
+        '2' => 'north',//: Trên giữa
+        '3' => 'northeast',//: Trên phải
+        '4' => 'west',//: Giữa trái
+        '5' => 'center',//: Chính giữa
+        '6' => 'east',//: Giữa phải
+        '7' => 'southwest',//: Dưới trái
+        '8' => 'south',//: Dưới giữa
+        '9' => 'southeast',//: Dưới phải
     ];
 
     /**
-     * 初始化
+     * Khởi tạo
      * @param array $config
      * @return mixed|void
      */
@@ -108,7 +108,7 @@ class Cos extends BaseUpload
     }
 
     /**
-     * 实例化cos
+     * Khởi tạo (instance) cos
      * @return CrmebClient
      */
     protected function app()
@@ -125,10 +125,10 @@ class Cos extends BaseUpload
     }
 
     /**
-     * 上传文件
+     * Tải lên file
      * @param string|null $file
-     * @param bool $isStream 是否为流上传
-     * @param string|null $fileContent 流内容
+     * @param bool $isStream Có phải tải lên bằng stream không
+     * @param string|null $fileContent Nội dung stream
      * @return array|bool|\StdClass
      */
     protected function upload(string $file = null, bool $isStream = false, string $fileContent = null)
@@ -136,17 +136,17 @@ class Cos extends BaseUpload
         if (!$isStream) {
             $fileHandle = app()->request->file($file);
             if (!$fileHandle) {
-                return $this->setError('上传的文件不存在');
+                return $this->setError('Tệp tải lên không tồn tại');
             }
             if ($this->validate) {
                 if (!in_array(strtolower(pathinfo($fileHandle->getOriginalName(), PATHINFO_EXTENSION)), $this->validate['fileExt'])) {
-                    return $this->setError('不合法的文件后缀');
+                    return $this->setError('Phần mở rộng tệp không hợp lệ');
                 }
                 if (filesize($fileHandle) > $this->validate['filesize']) {
-                    return $this->setError('文件过大');
+                    return $this->setError('Tệp quá lớn');
                 }
                 if (!in_array($fileHandle->getOriginalMime(), $this->validate['fileMime'])) {
-                    return $this->setError('不合法的文件类型');
+                    return $this->setError('Loại tệp không hợp lệ');
                 }
             }
             $key = $this->saveFileName($fileHandle->getRealPath(), $fileHandle->getOriginalExtension());
@@ -171,7 +171,7 @@ class Cos extends BaseUpload
     }
 
     /**
-     * 文件流上传
+     * Tải lên bằng file stream
      * @param  $fileContent
      * @param string|null $key
      * @return array|bool|mixed|\StdClass
@@ -185,7 +185,7 @@ class Cos extends BaseUpload
     }
 
     /**
-     * 文件上传
+     * Tải tệp lên
      * @param string $file
      * @param bool $realName
      * @return array|bool|mixed|\StdClass
@@ -196,7 +196,7 @@ class Cos extends BaseUpload
     }
 
     /**
-     * 缩略图
+     * Ảnh thu nhỏ
      * @param string $filePath
      * @param string $fileName
      * @param string $type
@@ -229,7 +229,7 @@ class Cos extends BaseUpload
     }
 
     /**
-     * 水印
+     * Watermark
      * @param string $filePath
      * @return mixed|string
      */
@@ -245,13 +245,13 @@ class Cos extends BaseUpload
                 $filePath .= '&watermark';
             }
             switch ($waterConfig['watermark_type']) {
-                case 1://图片
+                case 1://Hình ảnh
                     if (!$waterConfig['watermark_image']) {
                         throw new AdminException(400722);
                     }
                     $waterPath = $filePath .= '/1/image/' . base64_encode($waterConfig['watermark_image']) . '/gravity/' . ($this->position[$waterConfig['watermark_position']] ?? 'northwest') . '/blogo/1/dx/' . $waterConfig['watermark_x'] . '/dy/' . $waterConfig['watermark_y'];
                     break;
-                case 2://文字
+                case 2://Văn bản
                     if (!$waterConfig['watermark_text']) {
                         throw new AdminException(400723);
                     }
@@ -263,7 +263,7 @@ class Cos extends BaseUpload
     }
 
     /**
-     * TODO 删除资源
+     * TODO xóa resource
      * @param $key
      * @return mixed
      */
@@ -277,7 +277,7 @@ class Cos extends BaseUpload
     }
 
     /**
-     * 生成签名
+     * Tạo chữ ký
      * @return array|mixed
      * @throws \Exception
      */
@@ -288,18 +288,18 @@ class Cos extends BaseUpload
             'url' => 'https://sts.tencentcloudapi.com/',
             'domain' => 'sts.tencentcloudapi.com',
             'proxy' => '',
-            'secretId' => $this->accessKey, // 固定密钥
-            'secretKey' => $this->secretKey, // 固定密钥
-            'bucket' => $this->storageName, // 换成你的 bucket
-            'region' => $this->storageRegion, // 换成 bucket 所在园区
-            'durationSeconds' => 1800, // 密钥有效期
-            'allowPrefix' => '*', // 这里改成允许的路径前缀，可以根据自己网站的用户登录态判断允许上传的具体路径，例子： a.jpg 或者 a/* 或者 * (使用通配符*存在重大安全风险, 请谨慎评估使用)
-            // 密钥的权限列表。简单上传和分片需要以下的权限，其他权限列表请看 https://cloud.tencent.com/document/product/436/31923
+            'secretId' => $this->accessKey, // Khóa cố định
+            'secretKey' => $this->secretKey, // Khóa cố định
+            'bucket' => $this->storageName, // Đổi thành bucket của bạn
+            'region' => $this->storageRegion, // Đổi thành khu vực chứa bucket
+            'durationSeconds' => 1800, // Thời hạn hiệu lực của khóa
+            'allowPrefix' => '*', // Ở đây đổi thành tiền tố đường dẫn được phép, có thể dựa vào trạng thái đăng nhập của người dùng trên website để xác định đường dẫn cụ thể được phép tải lên, ví dụ: a.jpg hoặc a/* hoặc * (dùng ký tự đại diện * có rủi ro an toàn nghiêm trọng, vui lòng đánh giá kỹ trước khi dùng)
+            // Danh sách quyền của khóa. Tải lên đơn giản và tải lên theo phần cần các quyền sau, các quyền khác xem tại https://cloud.tencent.com/document/product/436/31923
             'allowActions' => [
-                // 简单上传
+                // Tải lên đơn giản
                 'name/cos:PutObject',
                 'name/cos:PostObject',
-                // 分片上传
+                // Tải lên theo phần (multipart)
                 'name/cos:InitiateMultipartUpload',
                 'name/cos:ListMultipartUploads',
                 'name/cos:ListParts',
@@ -307,7 +307,7 @@ class Cos extends BaseUpload
                 'name/cos:CompleteMultipartUpload'
             ]
         ];
-        // 获取临时密钥，计算签名
+        // Lấy khóa tạm thời, tính chữ ký
         $result = $sts->getTempKeys($config);
         $result['url'] = $this->uploadUrl . '/';
         $result['cdn'] = $this->cdn;
@@ -318,7 +318,7 @@ class Cos extends BaseUpload
     }
 
     /**
-     * 计算临时密钥用的签名
+     * Chữ ký dùng để tính khóa tạm thời
      * @param $opt
      * @param $key
      * @param $method
@@ -339,7 +339,7 @@ class Cos extends BaseUpload
         return pack("H" . $len, $data);
     }
 
-    // obj 转 query string
+    // Chuyển obj thành query string
     public function json2str($obj, $notEncode = false)
     {
         ksort($obj);
@@ -353,7 +353,7 @@ class Cos extends BaseUpload
         return join('&', $arr);
     }
 
-    // v2接口的key首字母小写，v3改成大写，此处做了向下兼容
+    // Chữ đầu của key trong API v2 viết thường, v3 đổi thành viết hoa, ở đây đã làm tương thích ngược
     public function backwardCompat($result)
     {
         if (!is_array($result)) {
@@ -373,7 +373,7 @@ class Cos extends BaseUpload
     }
 
     /**
-     * 桶列表
+     * Danh sách bucket
      * @param string|null $region
      * @param bool $line
      * @param bool $shared
@@ -394,10 +394,10 @@ class Cos extends BaseUpload
     }
 
     /**
-     * 创建桶
+     * Tạo bucket
      * @param string $name
      * @param string $region
-     * @param string $acl public-read=公共独写
+     * @param string $acl public-read = đọc chung, ghi riêng
      * @return bool|mixed
      */
     public function createBucket(string $name, string $region = '', string $acl = 'public-read')
@@ -405,27 +405,27 @@ class Cos extends BaseUpload
         $regionData = $this->getRegion();
         $regionData = array_column($regionData, 'value');
         if (!in_array($region, $regionData)) {
-            return $this->setError('COS:无效的区域!');
+            return $this->setError('COS: khu vực không hợp lệ!');
         }
         $this->storageRegion = $region;
         $app = $this->app();
-        //检测桶
+        //Kiểm tra bucket
         try {
             $app->headBucket($name);
         } catch (\Throwable $e) {
-            //桶不存在返回404
+            //Bucket không tồn tại trả về 404
             if (strstr('404', $e->getMessage())) {
                 return $this->setError('COS:' . $e->getMessage());
             }
         }
-        //创建桶
+        //Tạo bucket
         try {
             $res = $app->createBucket($name . '-' . $this->appid, '', $acl);
         } catch (\Throwable $e) {
             if (strstr('[curl] 6', $e->getMessage())) {
-                return $this->setError('COS:无效的区域!!');
+                return $this->setError('COS: khu vực không hợp lệ!!');
             } else if (strstr('Access Denied.', $e->getMessage())) {
-                return $this->setError('COS:无权访问');
+                return $this->setError('COS: không có quyền truy cập');
             }
             return $this->setError('COS:' . $e->getMessage());
         }
@@ -433,7 +433,7 @@ class Cos extends BaseUpload
     }
 
     /**
-     * 删除桶
+     * Xóa bucket
      * @param string $name
      * @return bool|mixed
      */
@@ -465,7 +465,7 @@ class Cos extends BaseUpload
     }
 
     /**
-     * 绑定域名
+     * Gắn domain
      * @param string $name
      * @param string $domain
      * @param string|null $region
@@ -498,15 +498,15 @@ class Cos extends BaseUpload
     }
 
     /**
-     * 处理
+     * Xử lý
      * @param string $message
      * @return string
      */
     protected function setMessage(string $message)
     {
         $data = [
-            'The specified bucket does not exist.' => '指定的存储桶不存在。',
-            'Please add CNAME/TXT record to DNS then try again later. Please allow up to 10 mins before your DNS takes effect.' => '请将CNAME记录添加到DNS，然后稍后重试。在DNS生效前，请等待最多10分钟。'
+            'The specified bucket does not exist.' => 'Bucket được chỉ định không tồn tại.',
+            'Please add CNAME/TXT record to DNS then try again later. Please allow up to 10 mins before your DNS takes effect.' => 'Vui lòng thêm bản ghi CNAME vào DNS, sau đó thử lại. Trước khi DNS có hiệu lực, vui lòng chờ tối đa 10 phút.'
         ];
         $msg = $data[$message] ?? '';
         if ($msg) {
@@ -521,7 +521,7 @@ class Cos extends BaseUpload
     }
 
     /**
-     * 设置跨域
+     * Đặt CORS
      * @param string $name
      * @param string $region
      * @return bool
@@ -547,7 +547,7 @@ class Cos extends BaseUpload
     }
 
     /**
-     * 地域
+     * Khu vực
      * @return mixed|\string[][]
      */
     public function getRegion()
@@ -555,91 +555,91 @@ class Cos extends BaseUpload
         return [
             [
                 'value' => 'ap-chengdu',
-                'label' => '成都'
+                'label' => 'Chengdu'
             ],
             [
                 'value' => 'ap-shanghai',
-                'label' => '上海'
+                'label' => 'Shanghai'
             ],
             [
                 'value' => 'ap-guangzhou',
-                'label' => '广州'
+                'label' => 'Guangzhou'
             ],
             [
                 'value' => 'ap-nanjing',
-                'label' => '南京'
+                'label' => 'Nanjing'
             ],
             [
                 'value' => 'ap-beijing',
-                'label' => '北京'
+                'label' => 'Beijing'
             ],
             [
                 'value' => 'ap-chongqing',
-                'label' => '重庆'
+                'label' => 'Chongqing'
             ],
             [
                 'value' => 'ap-shenzhen-fsi',
-                'label' => '深圳金融'
+                'label' => 'Shenzhen (Tài chính)'
             ],
             [
                 'value' => 'ap-shanghai-fsi',
-                'label' => '上海金融'
+                'label' => 'Shanghai (Tài chính)'
             ],
             [
                 'value' => 'ap-beijing-fsi',
-                'label' => '北京金融'
+                'label' => 'Beijing (Tài chính)'
             ],
             [
                 'value' => 'ap-hongkong',
-                'label' => '中国香港'
+                'label' => 'Hồng Kông (Trung Quốc)'
             ],
             [
                 'value' => 'ap-singapore',
-                'label' => '新加坡'
+                'label' => 'Singapore'
             ],
             [
                 'value' => 'ap-mumbai',
-                'label' => '孟买'
+                'label' => 'Mumbai'
             ],
             [
                 'value' => 'ap-jakarta',
-                'label' => '雅加达'
+                'label' => 'Jakarta'
             ],
             [
                 'value' => 'ap-seoul',
-                'label' => '首尔'
+                'label' => 'Seoul'
             ],
             [
                 'value' => 'ap-bangkok',
-                'label' => '曼谷'
+                'label' => 'Bangkok'
             ],
             [
                 'value' => 'ap-tokyo',
-                'label' => '东京'
+                'label' => 'Tokyo'
             ],
             [
                 'value' => 'na-siliconvalley',
-                'label' => '硅谷（美西）'
+                'label' => 'Silicon Valley (Miền Tây nước Mỹ)'
             ],
             [
                 'value' => 'na-ashburn',
-                'label' => '弗吉尼亚（美东）'
+                'label' => 'Virginia (Miền Đông nước Mỹ)'
             ],
             [
                 'value' => 'na-toronto',
-                'label' => '多伦多'
+                'label' => 'Toronto'
             ],
             [
                 'value' => 'sa-saopaulo',
-                'label' => '圣保罗'
+                'label' => 'São Paulo'
             ],
             [
                 'value' => 'eu-frankfurt',
-                'label' => '法兰克福'
+                'label' => 'Frankfurt'
             ],
             [
                 'value' => 'eu-moscow',
-                'label' => '莫斯科'
+                'label' => 'Moscow'
             ]
         ];
     }

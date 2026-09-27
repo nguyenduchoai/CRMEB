@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,7 +17,7 @@ use app\services\activity\lottery\LuckLotteryServices;
 use think\facade\App;
 
 /**
- * 抽奖活动
+ * Hoạt động quay thưởng
  * Class LuckLottery
  * @package app\controller\admin\v1\marketing\lottery
  */
@@ -36,7 +36,7 @@ class LuckLottery extends AuthController
     }
 
     /**
-     * 抽奖列表
+     * Danh sách quay thưởng
      * @return mixed
      */
     public function index()
@@ -52,7 +52,7 @@ class LuckLottery extends AuthController
     }
 
     /**
-     * 抽奖活动详情
+     * Chi tiết hoạt động quay thưởng
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -68,7 +68,7 @@ class LuckLottery extends AuthController
     }
 
     /**
-     * 添加抽奖
+     * Thêm quay thưởng
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -120,7 +120,7 @@ class LuckLottery extends AuthController
     }
 
     /**
-     * 修改抽奖
+     * Sửa vòng quay may mắn
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -176,7 +176,7 @@ class LuckLottery extends AuthController
     }
 
     /**
-     * 删除抽奖
+     * Xóa quay thưởng
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -193,7 +193,7 @@ class LuckLottery extends AuthController
     }
 
     /**
-     * 设置活动状态
+     * Thiết lập trạng thái hoạt động
      * @param string $id
      * @param string $status
      * @return mixed
@@ -221,6 +221,6 @@ class LuckLottery extends AuthController
             [['evaluate', 'd'], 0],
         ]);
         $this->services->factorUse($data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 }

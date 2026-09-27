@@ -10,61 +10,61 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="是否显示：">
+          <el-form-item label="Hiển thị:">
             <el-select v-model="formValidate.status" clearable @change="search" class="form_content_width">
-              <el-option value="" label="全部"></el-option>
-              <el-option :value="1" label="显示"></el-option>
-              <el-option :value="0" label="不显示"></el-option>
+              <el-option value="" label="Tất cả"></el-option>
+              <el-option :value="1" label="Hiện"></el-option>
+              <el-option :value="0" label="Không hiển thị"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="等级名称：">
+          <el-form-item label="Tên cấp độ:">
             <el-input
               clearable
-              placeholder="请输入等级名称"
+              placeholder="Vui lòng nhập tên cấp độ"
               v-model="formValidate.keyword"
               class="form_content_width"
             />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="search">查询</el-button>
+            <el-button type="primary" v-db-click @click="search">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
     <el-card :bordered="false" shadow="never" class="ivu-mt mt16">
-      <el-button type="primary" v-db-click @click="groupAdd">添加等级</el-button>
+      <el-button type="primary" v-db-click @click="groupAdd">Thêm hạng</el-button>
       <el-table
         class="mt14"
         :data="tabList"
         ref="table"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column label="ID" width="50">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="商品图片" min-width="90">
+        <el-table-column label="Hình ảnh sản phẩm" min-width="90">
           <template slot-scope="scope">
             <div class="tabBox_img" v-viewer>
               <img v-lazy="scope.row.image" />
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="名称" min-width="130">
+        <el-table-column label="Tên" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="等级" min-width="130">
+        <el-table-column label="Cấp bậc" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.grade }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="一级分佣比例" min-width="150">
+        <el-table-column label="Tỷ lệ hoa hồng cấp 1" min-width="150">
           <template slot-scope="scope">
             <span
               >{{
@@ -75,7 +75,7 @@
             >
           </template>
         </el-table-column>
-        <el-table-column label="二级分佣比例" min-width="150">
+        <el-table-column label="Tỷ lệ hoa hồng cấp 2" min-width="150">
           <template slot-scope="scope">
             <span
               >{{
@@ -86,37 +86,37 @@
             >
           </template>
         </el-table-column>
-        <el-table-column label="任务总数" min-width="150">
+        <el-table-column label="Tổng số nhiệm vụ" min-width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.task_total_num }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="需完成数量" min-width="150">
+        <el-table-column label="Số lượng cần hoàn thành" min-width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.task_num }}</span>
           </template>
         </el-table-column>
-        <!-- <el-table-column label="一级上浮比例" min-width="130">
+        <!-- <el-table-column label="Tỷ lệ tăng thêm cấp 1" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.one_brokerage }}%</span>
           </template>
         </el-table-column>
-        <el-table-column label="一级分佣比例(上浮后)" min-width="150">
+        <el-table-column label="Tỷ lệ chia hoa hồng cấp 1 (sau khi tăng)" min-width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.one_brokerage_ratio }}%</span>
           </template>
         </el-table-column>
-        <el-table-column label="二级上浮比例" min-width="130">
+        <el-table-column label="Tỷ lệ tăng thêm cấp 2" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.two_brokerage }}%</span>
           </template>
         </el-table-column>
-        <el-table-column label="二级分佣比例(上浮后)" min-width="150">
+        <el-table-column label="Tỷ lệ chia hoa hồng cấp 2 (sau khi tăng)" min-width="150">
           <template slot-scope="scope">
             <span>{{ scope.row.two_brokerage_ratio }}%</span>
           </template>
         </el-table-column> -->
-        <el-table-column label="是否显示" min-width="130">
+        <el-table-column label="Hiển thị" min-width="130">
           <template slot-scope="scope">
             <el-switch
               class="defineSwitch"
@@ -126,19 +126,19 @@
               :value="scope.row.status"
               @change="onchangeIsShow(scope.row)"
               size="large"
-              active-text="显示"
-              inactive-text="隐藏"
+              active-text="Hiện"
+              inactive-text="Ẩn"
             >
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="170">
+        <el-table-column label="Thao tác" fixed="right" width="170">
           <template slot-scope="scope">
-            <a v-db-click @click="addTask(scope.row)">等级任务</a>
+            <a v-db-click @click="addTask(scope.row)">Nhiệm vụ lên hạng</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="edit(scope.row, '编辑')">编辑</a>
+            <a v-db-click @click="edit(scope.row, 'Sửa')">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除这条信息', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'xóa thông tin này', scope.$index)">Xóa</a>
           </template>
         </el-table-column>
       </el-table>
@@ -153,25 +153,25 @@
       </div>
     </el-card>
     <div class="task-modal">
-      <el-dialog :visible.sync="modal2" title="添加任务" width="1000px">
+      <el-dialog :visible.sync="modal2" title="Thêm nhiệm vụ" width="1000px">
         <el-form :model="taskData" :label-width="labelWidth" :label-position="labelPosition" inline>
-          <el-form-item label="是否显示：">
+          <el-form-item label="Hiển thị:">
             <el-select v-model="taskData.status" class="form_content_width" clearable>
-              <el-option :value="1" label="显示"></el-option>
-              <el-option :value="0" label="不显示"></el-option>
+              <el-option :value="1" label="Hiện"></el-option>
+              <el-option :value="0" label="Không hiển thị"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="任务名称：">
-            <el-input v-model="taskData.keyword" placeholder="请输入任务名称" clearable class="form_content_width" />
+          <el-form-item label="Tên nhiệm vụ:">
+            <el-input v-model="taskData.keyword" placeholder="Vui lòng nhập tên nhiệm vụ" clearable class="form_content_width" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="searchTask">搜索</el-button>
+            <el-button type="primary" v-db-click @click="searchTask">Tìm kiếm</el-button>
           </el-form-item>
         </el-form>
         <div>
           <div class="add-task">
-            <el-button type="primary" v-db-click @click="taskAdd()">添加等级任务</el-button>
-            <el-button type="primary" v-db-click @click="taskEdit()">设置完成数量</el-button>
+            <el-button type="primary" v-db-click @click="taskAdd()">Thêm nhiệm vụ cấp bậc</el-button>
+            <el-button type="primary" v-db-click @click="taskEdit()">Thiết lập số lượng cần hoàn thành</el-button>
           </div>
           <div>
             <el-table
@@ -180,30 +180,30 @@
               class="mt14"
               v-loading="taskLoading"
               highlight-current-row
-              no-userFrom-text="暂无数据"
-              no-filtered-userFrom-text="暂无筛选结果"
+              no-userFrom-text="Chưa có dữ liệu"
+              no-filtered-userFrom-text="Không có kết quả phù hợp"
             >
               <el-table-column label="ID" width="80">
                 <template slot-scope="scope">
                   <span>{{ scope.row.id }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="名称" min-width="130">
+              <el-table-column label="Tên" min-width="130">
                 <template slot-scope="scope">
                   <span>{{ scope.row.name }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="任务类型" min-width="80">
+              <el-table-column label="Loại nhiệm vụ" min-width="80">
                 <template slot-scope="scope">
                   <span>{{ scope.row.type_name }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="限定数量" min-width="80">
+              <el-table-column label="Số lượng quy định" min-width="80">
                 <template slot-scope="scope">
                   <span>{{ scope.row.number }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="是否显示" min-width="80">
+              <el-table-column label="Hiển thị" min-width="80">
                 <template slot-scope="scope">
                   <el-switch
                     class="defineSwitch"
@@ -212,24 +212,24 @@
                     v-model="scope.row.status"
                     :value="scope.row.status"
                     @change="onchangeTaskIsShow(scope.row)"
-                    active-text="开启"
-                    inactive-text="关闭"
+                    active-text="Bật"
+                    inactive-text="Tắt"
                   >
-                    <span slot="open">开启</span>
-                    <span slot="close">关闭</span>
+                    <span slot="open">Bật</span>
+                    <span slot="close">Tắt</span>
                   </el-switch>
                 </template>
               </el-table-column>
-              <el-table-column label="排序" min-width="50">
+              <el-table-column label="Thứ tự sắp xếp" min-width="50">
                 <template slot-scope="scope">
                   <span>{{ scope.row.sort }}</span>
                 </template>
               </el-table-column>
-              <el-table-column label="操作" fixed="right" width="170">
+              <el-table-column label="Thao tác" fixed="right" width="170">
                 <template slot-scope="scope">
-                  <a v-db-click @click="editTask(scope.row, '编辑')">编辑</a>
+                  <a v-db-click @click="editTask(scope.row, 'Sửa')">Sửa</a>
                   <el-divider direction="vertical"></el-divider>
-                  <a v-db-click @click="delTask(scope.row, '删除这条信息', scope.$index)">删除</a>
+                  <a v-db-click @click="delTask(scope.row, 'xóa thông tin này', scope.$index)">Xóa</a>
                 </template>
               </el-table-column>
             </el-table>
@@ -291,47 +291,47 @@ export default {
         {
           slot: 'image',
           minWidth: 35,
-          title: '背景图',
+          title: 'Ảnh nền',
         },
         {
           key: 'name',
           minWidth: 35,
-          title: '名称',
+          title: 'Tên',
         },
         {
           key: 'grade',
           minWidth: 35,
-          title: '等级',
+          title: 'Cấp bậc',
         },
         {
           slot: 'one_brokerage',
           minWidth: 35,
-          title: '一级上浮比例',
+          title: 'Tỷ lệ tăng thêm cấp 1',
         },
         {
           slot: 'one_brokerage_ratio',
           minWidth: 35,
-          title: '一级分佣比例(上浮后)',
+          title: 'Tỷ lệ hoa hồng cấp 1 (sau khi tăng)',
         },
         {
           slot: 'two_brokerage',
           minWidth: 35,
-          title: '二级上浮比例',
+          title: 'Tỷ lệ tăng thêm cấp 2',
         },
         {
           slot: 'two_brokerage_ratio',
           minWidth: 35,
-          title: '二级分佣比例(上浮后)',
+          title: 'Tỷ lệ hoa hồng cấp 2 (sau khi tăng)',
         },
         {
           slot: 'status',
           minWidth: 35,
-          title: '是否显示',
+          title: 'Hiển thị',
         },
         {
           minWidth: 120,
           slot: 'action',
-          title: '操作',
+          title: 'Thao tác',
         },
       ],
       columns2: [
@@ -343,33 +343,33 @@ export default {
         {
           key: 'name',
           minWidth: 35,
-          title: '名称',
+          title: 'Tên',
         },
         {
           key: 'type_name',
           minWidth: 35,
-          title: '任务类型',
+          title: 'Loại nhiệm vụ',
         },
         {
           key: 'number',
           minWidth: 35,
-          title: '限定数量',
+          title: 'Số lượng quy định',
         },
         {
           slot: 'status',
           minWidth: 35,
-          title: '是否显示',
+          title: 'Hiển thị',
         },
         {
           key: 'sort',
           minWidth: 35,
-          title: '排序',
+          title: 'Thứ tự sắp xếp',
         },
         {
           fixed: 'right',
           minWidth: 120,
           slot: 'action',
-          title: '操作',
+          title: 'Thao tác',
         },
       ],
       FromData: null,
@@ -411,7 +411,7 @@ export default {
       this.getListHeader();
       this.getList();
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       membershipDataListApi(this.formValidate)
@@ -426,7 +426,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 列表
+    // Danh sách
     getTaskList() {
       this.taskLoading = true;
       levelTaskListDataAddApi(this.taskData)
@@ -441,7 +441,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     search() {
       this.formValidate.page = 1;
       this.getList();
@@ -453,7 +453,7 @@ export default {
     taskEdit() {
       this.$modalForm(getTaskNumFormApi(this.id)).then(() => this.getList());
     },
-    // 添加表单
+    // Biểu mẫu thêm
     groupAdd() {
       this.$modalForm(membershipDataAddApi({}, '/agent/level/create')).then(() => this.getList());
     },
@@ -462,7 +462,7 @@ export default {
         this.getTaskList(),
       );
     },
-    // 修改是否显示
+    // Sửa có hiển thị hay không
     onchangeIsShow(row) {
       membershipSetApi(`agent/level/set_status/${row.id}/${row.status}`)
         .then(async (res) => {
@@ -473,7 +473,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 修改是否显示
+    // Sửa có hiển thị hay không
     onchangeTaskIsShow(row) {
       levelTaskSetApi(`agent/level_task/set_status/${row.id}/${row.status}`)
         .then(async (res) => {
@@ -484,28 +484,28 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    //添加等级任务
+    //Thêm nhiệm vụ cấp bậc
     addTask(row) {
       this.id = row.id;
       this.modal2 = true;
       this.taskData.id = row.id;
       this.getTaskList();
     },
-    // 编辑
+    // Sửa
     edit(row) {
       let data = {
         gid: row.gid,
       };
       this.$modalForm(membershipDataEditApi(data, `agent/level/${row.id}/edit`)).then(() => this.getList());
     },
-    // 编辑
+    // Sửa
     editTask(row) {
       let data = {
         gid: row.gid,
       };
       this.$modalForm(levelTaskDataEditApi(data, `agent/level_task/${row.id}/edit`)).then(() => this.getTaskList());
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -523,7 +523,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 删除
+    // Xóa
     delTask(row, tit, num) {
       let delfromData = {
         title: tit,

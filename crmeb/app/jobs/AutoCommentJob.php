@@ -14,7 +14,7 @@ class AutoCommentJob extends BaseJobs
     use QueueTrait;
 
     /**
-     * 自动评价
+     * Tự động đánh giá
      * @param $id
      * @param $cart_ids
      * @return bool

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- 常用语 -->
+    <!-- Câu nói thường dùng -->
     <div class="words-mask" v-if="isWords">
       <div class="content">
         <div class="title-box">
@@ -20,13 +20,13 @@
             </div>
           </div>
           <div class="input-box">
-            <el-input v-model="wordsData.searchTxt" placeholder="搜索快捷回复" :search="true" @on-search="bindSearch" />
+            <el-input v-model="wordsData.searchTxt" placeholder="Tìm kiếm câu trả lời nhanh" :search="true" @on-search="bindSearch" />
           </div>
         </div>
         <div class="scroll-box">
           <div class="scroll-left">
             <div class="left-item add_cate" v-db-click @click.stop="openCate(0)" v-if="wordsTabCur">
-              <span class="iconfont iconjiahao"></span> 分组
+              <span class="iconfont iconjiahao"></span> Nhóm
             </div>
             <div
               class="left-item"
@@ -42,9 +42,9 @@
             <vue-scroll :ops="wordsData.ops" @load-before-deactivate="handleWordsScroll">
               <div class="slot-load" slot="load-deactive"></div>
               <div class="slot-load" slot="load-beforeDeactive"></div>
-              <div class="slot-load" slot="load-active">下滑加载更多</div>
+              <div class="slot-load" slot="load-active">Kéo xuống để tải thêm</div>
               <div class="msg-item add-mg" v-show="wordsTabCur" v-db-click @click.stop="addMsg">
-                <span class="iconfont icontianjia11"></span>添加话术
+                <span class="iconfont icontianjia11"></span>Thêm câu trả lời mẫu
               </div>
               <div
                 class="msg-item"
@@ -61,7 +61,7 @@
         </div>
       </div>
     </div>
-    <!-- 添加分组  -->
+    <!-- Thêm nhóm  -->
     <el-dialog
       :visible.sync="cateData.isCate"
       width="470px"
@@ -70,20 +70,20 @@
       class="words-box"
     >
       <div class="mask-title">
-        {{ cateData.status ? '编辑分组' : '新增分组' }}
+        {{ cateData.status ? 'Sửa nhóm' : 'Thêm nhóm' }}
         <span class="iconfont iconcha" v-db-click @click.stop="closeCate"></span>
       </div>
       <div class="input-box">
-        <el-input class="noinput" v-model="cateData.name" placeholder="请输入分组名称" />
+        <el-input class="noinput" v-model="cateData.name" placeholder="Vui lòng nhập tên nhóm" />
       </div>
       <div class="input-box">
-        <el-input class="noinput" v-model="cateData.sort" placeholder="请输入分组排序" />
+        <el-input class="noinput" v-model="cateData.sort" placeholder="Vui lòng nhập thứ tự sắp xếp nhóm" />
       </div>
       <el-button v-db-click @click.stop="cateConfirm" class="subBtn" type="primary" :disabled="cateStatus"
-        >确定</el-button
+        >Xác nhận</el-button
       >
     </el-dialog>
-    <!-- 添加话术  -->
+    <!-- Thêm câu trả lời mẫu  -->
     <el-dialog
       :visible.sync="msgData.isCateMeg"
       width="470px"
@@ -92,14 +92,14 @@
       class="words-box"
     >
       <div class="mask-title">
-        {{ msgData.status ? '修改话术' : '添加话术' }}
+        {{ msgData.status ? 'Sửa câu trả lời mẫu' : 'Thêm câu trả lời mẫu' }}
         <span class="iconfont iconcha" v-db-click @click.stop="closeMsgBox"></span>
       </div>
       <div class="input-box">
-        <el-input class="noinput" v-model="msgData.title" placeholder="请输入标题名称 (选填)" />
+        <el-input class="noinput" v-model="msgData.title" placeholder="Vui lòng nhập tiêu đề (không bắt buộc)" />
       </div>
       <div class="input-box text-area">
-        <el-input class="noinput" :rows="4" type="textarea" v-model="msgData.message" placeholder="请输入您的话术" />
+        <el-input class="noinput" :rows="4" type="textarea" v-model="msgData.message" placeholder="Vui lòng nhập mẫu câu trả lời của bạn" />
       </div>
       <div class="input-box">
         <el-select v-model="msgData.msgCateId">
@@ -107,24 +107,24 @@
         </el-select>
       </div>
       <el-button v-db-click @click.stop="msgConfirm" class="subBtn" type="primary" :disabled="msgStatus"
-        >确定</el-button
+        >Xác nhận</el-button
       >
     </el-dialog>
-    <!-- 编辑弹窗  -->
+    <!-- Popup sửa  -->
     <div class="edit-box" v-if="isWordShow">
       <div class="head">
         <div class="tit-bar">
-          {{ wordsTabCur ? '个人库' : '公共库' }}<span v-db-click @click.stop="isWordShow = false">完成</span>
+          {{ wordsTabCur ? 'Thư viện cá nhân' : 'Thư viện chung' }}<span v-db-click @click.stop="isWordShow = false">Hoàn thành</span>
         </div>
         <div class="input-box noinput">
-          <el-input v-model="wordsData.searchTxt" placeholder="搜索快捷回复" :search="true" @on-search="bindSearch" />
+          <el-input v-model="wordsData.searchTxt" placeholder="Tìm kiếm câu trả lời nhanh" :search="true" @on-search="bindSearch" />
         </div>
       </div>
       <div class="scroll-box">
         <div class="scroll-left">
           <div class="top">
             <div class="left-item add_cate" v-db-click @click.stop="openCate(0)" v-if="wordsTabCur">
-              <span class="iconfont iconjiahao"></span> 分组
+              <span class="iconfont iconjiahao"></span> Nhóm
             </div>
             <div
               class="left-item"
@@ -137,27 +137,27 @@
             </div>
           </div>
           <div class="bom" v-if="wordsTabCur">
-            <div class="left-item edits-box" v-db-click @click.stop="editList.status = true">编辑分组</div>
+            <div class="left-item edits-box" v-db-click @click.stop="editList.status = true">Sửa nhóm</div>
           </div>
         </div>
         <div class="right-box">
           <vue-scroll :ops="wordsData.ops" @load-before-deactivate="handleWordsScroll">
             <div class="slot-load" slot="load-deactive"></div>
             <div class="slot-load" slot="load-beforeDeactive"></div>
-            <div class="slot-load" slot="load-active">下滑加载更多</div>
+            <div class="slot-load" slot="load-active">Kéo xuống để tải thêm</div>
             <div class="msg-item" v-for="(item, index) in wordsList" :key="index">
               <span class="title">{{ item.title }}</span
               >{{ item.message }}
               <div class="edit-bar" v-if="wordsTabCur">
                 <span class="iconfont iconbianji1" v-db-click @click.stop="bindEdit(item)"></span>
-                <span class="iconfont iconshanchu1" v-db-click @click.stop="delMsg(item, '删除话术', index)"></span>
+                <span class="iconfont iconshanchu1" v-db-click @click.stop="delMsg(item, 'Xóa câu trả lời mẫu', index)"></span>
               </div>
             </div>
           </vue-scroll>
         </div>
       </div>
     </div>
-    <!-- 编辑分组列表 -->
+    <!-- Sửa danh sách nhóm -->
     <el-dialog
       :visible.sync="editList.status"
       width="470px"
@@ -166,7 +166,7 @@
       class="words-box cate-list"
     >
       <div class="mask-title">
-        编辑分组
+        Sửa nhóm
         <span class="iconfont iconcha" v-db-click @click.stop="editList.status = false"></span>
       </div>
       <div class="list-box">
@@ -178,7 +178,7 @@
               class="iconfont iconshanchu1"
               v-if="index > 0"
               v-db-click
-              @click.stop="delCate(item, '删除分组', index)"
+              @click.stop="delCate(item, 'Xóa nhóm', index)"
             ></span>
           </div>
         </div>
@@ -222,15 +222,15 @@ export default {
   },
   data() {
     return {
-      isWordShow: false, // 编辑窗
+      isWordShow: false, // Cửa sổ sửa
       wordsList: [],
       wordsTab: [
         {
-          title: '个人库',
+          title: 'Thư viện cá nhân',
           key: 1,
         },
         {
-          title: '公共库',
+          title: 'Thư viện chung',
           key: 0,
         },
       ],
@@ -267,28 +267,28 @@ export default {
         page: 1,
         limit: 15,
         searchTxt: '',
-        cate: [], // 分类
-        cateId: '', // 分类id
+        cate: [], // Danh mục
+        cateId: '', // ID danh mục
       },
-      // 分组数据
+      // Dữ liệu nhóm
       cateData: {
-        status: 0, // 0 新增 1编辑
+        status: 0, // 0 thêm mới 1 sửa
         name: '',
         sort: '',
-        isCate: false, // 分组状态开关
+        isCate: false, // Công tắc trạng thái nhóm
         id: '',
       },
-      // 编辑分组列表
+      // Sửa danh sách nhóm
       editList: {
         status: false,
       },
-      // 话术添加数据
+      // Dữ liệu thêm mẫu câu
       msgData: {
         isCateMeg: false,
         msgCateId: '',
         message: '',
         title: '',
-        status: 0, // 0 新增 1修改
+        status: 0, // 0 thêm mới 1 sửa
         editId: '',
       },
       selectData: '',
@@ -298,26 +298,26 @@ export default {
     Promise.all([this.getServiceCate()]);
   },
   methods: {
-    // 关闭添加话术弹窗
+    // Đóng popup thêm mẫu câu
     closeMsgBox() {
       this.msgData.isCateMeg = false;
     },
-    // 选择话术
+    // Chọn mẫu câu
     selectWords(item) {
       this.$emit('selectMsg', item.message);
     },
-    // 关闭弹窗
+    // Đóng popup
     closeBox() {
       this.$emit('closeBox');
     },
-    // 搜索
+    // Tìm kiếm
     bindSearch() {
       this.wordsData.page = 1;
       this.wordsData.isScroll = true;
       this.wordsList = [];
       this.getWordsList();
     },
-    // 顶部切换
+    // Chuyển đổi phía trên
     bindTab(item) {
       console.log('111');
       this.wordsTabCur = item.key;
@@ -327,7 +327,7 @@ export default {
       this.wordsList = [];
       this.getServiceCate();
     },
-    // 选择话术分类
+    // Chọn danh mục mẫu câu
     changeCate(item) {
       this.wordsData.isScroll = true;
       this.wordsList = [];
@@ -336,7 +336,7 @@ export default {
       this.msgData.msgCateId = item.id;
       this.getWordsList();
     },
-    // 获取话术分类
+    // Lấy danh mục mẫu câu CSKH
     getServiceCate() {
       serviceCate({
         type: this.wordsTabCur,
@@ -349,12 +349,12 @@ export default {
         this.getWordsList();
       });
     },
-    // 话术滚动到底部
+    // Mẫu câu cuộn xuống cuối
     handleWordsScroll(vm, refreshDom, done) {
       this.getWordsList();
       done();
     },
-    // 常用语
+    // Câu nói thường dùng
     getWordsList() {
       speeChcraft({
         page: this.wordsData.page,
@@ -368,7 +368,7 @@ export default {
         this.wordsData.page++;
       });
     },
-    // 打开分组弹窗
+    // Mở popup nhóm
     openCate(key, item) {
       this.cateData.status = key;
       this.cateData.isCate = true;
@@ -377,13 +377,13 @@ export default {
         this.cateData.id = item.id;
       }
     },
-    // 关闭分组弹窗
+    // Đóng popup nhóm
     closeCate() {
       this.cateData.isCate = false;
       this.cateData.name = '';
       this.cateData.sort = '';
     },
-    // 分组添加
+    // Thêm nhóm
     cateConfirm() {
       if (!this.cateData.status) {
         addServiceCate({
@@ -420,12 +420,12 @@ export default {
         });
       }
     },
-    // 话术打开
+    // Mở mẫu câu
     addMsg() {
       this.msgData.isCateMeg = true;
       this.msgData.status = 0;
     },
-    // 话术添加
+    // Thêm mẫu câu
     msgConfirm() {
       if (!this.msgData.status) {
         addSpeeChcraft({
@@ -465,7 +465,7 @@ export default {
         });
       }
     },
-    // 编辑话术
+    // Sửa câu trả lời mẫu
     bindEdit(item) {
       this.msgData.status = 1;
       this.msgData.isCateMeg = true;
@@ -473,7 +473,7 @@ export default {
       this.msgData.title = item.title;
       this.msgData.editId = item.id;
     },
-    // 删除话术
+    // Xóa câu trả lời mẫu
     delMsg(row, tit, num) {
       let delfromData = {
         title: tit,

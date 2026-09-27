@@ -2,18 +2,18 @@
 	<view :style="colorStyle">
 		<view class="ChangePassword">
 			<form @submit="editPwd">
-				<view class="phone">{{$t(`当前手机号`)}}：{{phone}}</view>
+				<view class="phone">{{$t(`Số điện thoại hiện tại`)}}：{{phone}}</view>
 				<view class="list">
 					<view class="item">
-						<input type='password' :placeholder='$t(`设置新密码`)' placeholder-class='placeholder'
+						<input type='password' :placeholder='$t(`Đặt mật khẩu mới`)' placeholder-class='placeholder'
 							name="password" :value="password"></input>
 					</view>
 					<view class="item">
-						<input type='password' :placeholder='$t(`确认新密码`)' placeholder-class='placeholder'
+						<input type='password' :placeholder='$t(`Xác nhận mật khẩu mới`)' placeholder-class='placeholder'
 							name="qr_password" :value="qr_password"></input>
 					</view>
 					<view class="item acea-row row-between-wrapper">
-						<input type='number' :placeholder='$t(`填写验证码`)' placeholder-class='placeholder' class="codeIput"
+						<input type='number' :placeholder='$t(`Nhập mã xác thực`)' placeholder-class='placeholder' class="codeIput"
 							name="captcha" :value="captcha"></input>
 						<button class="code font-num" :class="disabled === true ? 'on' : ''" :disabled='disabled'
 							@click="code">
@@ -21,7 +21,7 @@
 						</button>
 					</view>
 				</view>
-				<button form-type="submit" class="confirmBnt bg-color">{{$t(`确认修改`)}}</button>
+				<button form-type="submit" class="confirmBnt bg-color">{{$t(`Xác nhận sửa`)}}</button>
 			</form>
 		</view>
 		<!-- #ifdef MP -->
@@ -68,8 +68,8 @@
 				password: '',
 				captcha: '',
 				qr_password: '',
-				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false, //是否隐藏授权
+				isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+				isShowAuth: false, //Có ẩn ủy quyền hay không
 				key: '',
 			};
 		},
@@ -96,17 +96,17 @@
 		},
 		methods: {
 			/**
-			 * 授权回调
+			 * Callback ủy quyền
 			 */
 			onLoadFun: function(e) {
 				this.getUserInfo();
 			},
-			// 授权关闭
+			// Đóng ủy quyền
 			authColse: function(e) {
 				this.isShowAuth = e
 			},
 			/**
-			 * 获取个人用户信息
+			 * Lấy thông tin người dùng cá nhân
 			 */
 			getUserInfo: function() {
 				let that = this;
@@ -118,13 +118,13 @@
 				});
 			},
 			/**
-			 * 发送验证码
+			 * Gửi mã xác thực
 			 * 
 			 */
 			async code() {
 				let that = this;
 				if (!that.userInfo.phone) return that.$util.Tips({
-					title: that.$t(`手机号码不存在,无法发送验证码！`)
+					title: that.$t(`Số điện thoại không tồn tại, không thể gửi mã xác thực!`)
 				});
 				this.$refs.verify.show()
 
@@ -150,7 +150,7 @@
 				});
 			},
 			/**
-			 * H5登录 修改密码
+			 * Đăng nhập H5, đổi mật khẩu
 			 * 
 			 */
 			editPwd: function(e) {
@@ -159,13 +159,13 @@
 					qr_password = e.detail.value.qr_password,
 					captcha = e.detail.value.captcha;
 				if (!password) return that.$util.Tips({
-					title: that.$t(`请输入新密码`)
+					title: that.$t(`Vui lòng nhập mật khẩu mới`)
 				});
 				if (qr_password != password) return that.$util.Tips({
-					title: that.$t(`两次输入的密码不一致！`)
+					title: that.$t(`Mật khẩu nhập hai lần không khớp!`)
 				});
 				if (!captcha) return that.$util.Tips({
-					title: that.$t(`请输入验证码`)
+					title: that.$t(`Vui lòng nhập mã xác thực`)
 				});
 				phoneRegisterReset({
 					account: that.userInfo.phone,

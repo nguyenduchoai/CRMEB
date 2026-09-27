@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\product\product\StoreProductReplyServices;
 use think\facade\App;
 
 /**
- * 评论管理 控制器
+ * Controller quản lý đánh giá
  * Class StoreProductReply
  * @package app\admin\controller\store
  */
@@ -28,7 +28,7 @@ class StoreProductReply extends AuthController
     }
 
     /**
-     * 显示资源列表
+     * Hiển thị danh sách resource
      *
      * @return \think\Response
      */
@@ -49,7 +49,7 @@ class StoreProductReply extends AuthController
     }
 
     /**
-     * 删除评论
+     * Xóa đánh giá
      * @param $id
      * @return mixed
      */
@@ -60,7 +60,7 @@ class StoreProductReply extends AuthController
     }
 
     /**
-     * 回复评论
+     * Trả lời đánh giá
      * @param $id
      * @return mixed
      */
@@ -74,7 +74,7 @@ class StoreProductReply extends AuthController
     }
 
     /**
-     * 创建虚拟评论表单
+     * Tạo form đánh giá ảo
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
@@ -87,7 +87,7 @@ class StoreProductReply extends AuthController
     }
 
     /**
-     * 保存虚拟评论
+     * Lưu đánh giá ảo
      * @return mixed
      */
     public function save_fictitious_reply()
@@ -113,7 +113,7 @@ class StoreProductReply extends AuthController
     }
 
     /**
-     * 商品评论审核
+     * Duyệt đánh giá sản phẩm
      * @param $id
      * @param $status
      * @return \think\Response
@@ -124,11 +124,11 @@ class StoreProductReply extends AuthController
     public function set_status($id, $status)
     {
         $this->services->update($id, ['status' => $status]);
-        return app('json')->success($status == 1 ? '审核通过' : '拒绝成功');
+        return app('json')->success($status == 1 ? 'Đã duyệt' : 'Từ chối thành công');
     }
 
     /**
-     * 批量商品评论审核
+     * Duyệt đánh giá sản phẩm theo lô
      * @return \think\Response
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -141,6 +141,6 @@ class StoreProductReply extends AuthController
             ['status', 0]
         ], true);
         $this->services->batchUpdate($ids, ['status' => $status]);
-        return app('json')->success($status == 1 ? '审核通过' : '拒绝成功');
+        return app('json')->success($status == 1 ? 'Đã duyệt' : 'Từ chối thành công');
     }
 }

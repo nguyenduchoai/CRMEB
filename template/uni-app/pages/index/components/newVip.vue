@@ -4,13 +4,13 @@
 			<view class="header acea-row row-between row-middle">
 				<view class="title-box acea-row row-middle">
 					<image :src="`${imgHost}/statics/images/newVip1.png`" class="image"></image>
-					<view class="info">{{ $t(`超值优惠 限时专享`) }}</view>
+					<view class="info">{{ $t(`Ưu đãi siêu hời, chỉ trong thời gian có hạn`) }}</view>
 				</view>
-				<view class="more" @click="goNewList">{{ $t(`去逛逛`) }}<text class="iconfont icon-ic_rightarrow"></text></view>
+				<view class="more" @click="goNewList">{{ $t(`Dạo xem`) }}<text class="iconfont icon-ic_rightarrow"></text></view>
 			</view>
 			<view class="wrapper">
 				<view class="coupon" v-if="couponList.length && dataConfig.checkboxInfo.type.includes(1)">
-					<view class="title">{{ $t(`新人红包`) }}</view>
+					<view class="title">{{ $t(`Lì xì người mới`) }}</view>
 					<view class="content">
 						<scroll-view scroll-x="true">
 							<view class="list acea-row">
@@ -18,17 +18,17 @@
 									<view class="back" :style="[couponStyle]"></view>
 									<view class="money" :style="[moneyStyle]">
 										<view v-if="item.coupon_type == 1">{{ $t(`¥`) }}<text class="number">{{ item.coupon_price }}</text></view>
-										<view v-else-if="item.coupon_type == 2"><text class="number">{{ parseFloat(item.coupon_price)/10 }}</text>{{ $t(`折`) }}</view>
+										<view v-else-if="item.coupon_type == 2"><text class="number">{{ parseFloat(item.coupon_price)/10 }}</text>{{ $t(`/10 giá`) }}</view>
 									</view>
-									<view v-if="item.use_min_price" class="info" :style="[couponInfoStyle]">{{ $t(`满`) }}{{ item.use_min_price }}{{ $t(`可用`) }}</view>
-									<view v-else class="info" :style="[couponInfoStyle]">{{ $t(`无门槛券`) }}</view>
+									<view v-if="item.use_min_price" class="info" :style="[couponInfoStyle]">{{ $t(`Đơn từ`) }}{{ item.use_min_price }}{{ $t(`Khả dụng`) }}</view>
+									<view v-else class="info" :style="[couponInfoStyle]">{{ $t(`Phiếu không điều kiện`) }}</view>
 								</view>
 							</view>
 						</scroll-view>
 					</view>
 				</view>
 				<view class="product" v-if="productList.length && dataConfig.checkboxInfo.type.includes(2)">
-					<view class="title">{{ $t(`新人商品专区`) }}</view>
+					<view class="title">{{ $t(`Khu sản phẩm dành cho người mới`) }}</view>
 					<view class="content">
 						<scroll-view scroll-x="true">
 							<view class="list acea-row">
@@ -46,7 +46,7 @@
 				<image :src="`${imgHost}/statics/images/newVip2.png`" class="image"></image>
 				<view class="text">
 					<view class="info acea-row row-middle">
-						{{ $t(`新用户注册领积分`) }}
+						{{ $t(`Người dùng mới đăng ký nhận điểm thưởng`) }}
 						<view class="red" :style="[bonusRedStyle]">
 							<view class="inner acea-row row-middle">
 								<image :src="`${imgHost}/statics/images/newVip3.png`" class="image"></image>
@@ -54,25 +54,25 @@
 							</view>
 						</view>
 					</view>
-					<view class="">{{ $t(`新用户注册后即可获得积分`) }}</view>
+					<view class="">{{ $t(`Người dùng mới đăng ký là nhận được điểm thưởng`) }}</view>
 				</view>
-				<view class="button" :style="[buttonStyle]" @click="goNewList">{{ $t(`去看看`) }}</view>
+				<view class="button" :style="[buttonStyle]" @click="goNewList">{{ $t(`Xem ngay`) }}</view>
 			</view>
 		</view>
 		<view class="newVip" :style="[newVipBorderRadius]" v-else>
 			<view class="header acea-row row-between row-middle">
-				<view class="title">{{ $t(`新人专享福利`) }}</view>
-				<view class="more" @click="goNewList">{{ $t(`更多优惠`) }}<text class="iconfont icon-ic_rightarrow"></text></view>
+				<view class="title">{{ $t(`Ưu đãi dành riêng cho người mới`) }}</view>
+				<view class="more" @click="goNewList">{{ $t(`Thêm ưu đãi`) }}<text class="iconfont icon-ic_rightarrow"></text></view>
 			</view>
 			<view class="bonus" :style="[bonusStyle]" v-if="dataConfig.checkboxInfo.type.includes(0)">
 				<view class="inner acea-row row-middle">
 					<image :src="`${imgHost}/statics/images/newVip3.png`" class="image"></image>
-					{{ $t(`新用户注册即可`) }}
-					<text class="red" :style="[bonusRedStyle]">{{ $t(`赠送积分`) }}</text>
+					{{ $t(`Người dùng mới chỉ cần đăng ký là được`) }}
+					<text class="red" :style="[bonusRedStyle]">{{ $t(`Tặng điểm thưởng`) }}</text>
 				</view>
 			</view>
 			<view class="coupon" v-if="dataConfig.checkboxInfo.type.includes(1) && couponList.length">
-				<view class="title">{{ $t(`专属优惠券`) }}</view>
+				<view class="title">{{ $t(`Phiếu giảm giá độc quyền`) }}</view>
 				<view class="content acea-row" :style="[couponContentStyle]">
 					<scroll-view scroll-x="true">
 						<view class="list acea-row">
@@ -80,31 +80,31 @@
 								<view class="item-top acea-row row-center row-middle">
 									<view class="money" :style="[moneyStyle]">
 										<view v-if="item.coupon_type == 1">{{ $t(`¥`) }}<text class="number">{{ item.coupon_price }}</text></view>
-										<view v-else-if="item.coupon_type == 2"><text class="number">{{ parseFloat(item.coupon_price)/10 }}</text>折</view>
+										<view v-else-if="item.coupon_type == 2"><text class="number">{{ parseFloat(item.coupon_price)/10 }}</text>/10 giá</view>
 									</view>
 								</view>
 								<view class="item-bottom acea-row row-column row-center row-middle">
 									<view class="name" :style="[couponTypeStyle]">
-										<text v-if="item.coupon_type == 1">{{ $t(`品类券`) }}</text>
-										<text v-else-if="item.coupon_type == 2">{{ $t(`商品券`) }}</text>
-										<text v-else-if="item.coupon_type == 3">{{ $t(`品牌券`) }}</text>
-										<text v-else>{{ $t(`通用券`) }}</text>
+										<text v-if="item.coupon_type == 1">{{ $t(`Phiếu theo danh mục`) }}</text>
+										<text v-else-if="item.coupon_type == 2">{{ $t(`Phiếu theo sản phẩm`) }}</text>
+										<text v-else-if="item.coupon_type == 3">{{ $t(`Phiếu theo thương hiệu`) }}</text>
+										<text v-else>{{ $t(`Phiếu toàn cửa hàng`) }}</text>
 									</view>
-									<view v-if="item.use_min_price" class="info">{{ $t(`满`) }}{{ item.use_min_price }}{{ $t(`可用`) }}</view>
-									<view v-else class="info">{{ $t(`无门槛券`) }}</view>
+									<view v-if="item.use_min_price" class="info">{{ $t(`Đơn từ`) }}{{ item.use_min_price }}{{ $t(`Khả dụng`) }}</view>
+									<view v-else class="info">{{ $t(`Phiếu không điều kiện`) }}</view>
 								</view>
 							</view>
 						</view>
 					</scroll-view>
 					<view class="station" :style="[stationStyle]">
 						<view class="money">{{ $t(`¥`) }}<text class="number">{{ totalPrice }}</text></view>
-						<view class="info">{{ $t(`新人专享优惠券`) }}</view>
-						<view class="button" :style="[buttonStyle]" @click="goUser">{{ $t(`一键领取`) }}</view>
+						<view class="info">{{ $t(`Phiếu giảm giá dành riêng cho người mới`) }}</view>
+						<view class="button" :style="[buttonStyle]" @click="goUser">{{ $t(`Nhận tất cả`) }}</view>
 					</view>
 				</view>
 			</view>
 			<view class="product" v-if="productList.length && dataConfig.checkboxInfo.type.includes(2)">
-				<view class="title">{{ $t(`新人商品专区`) }}</view>
+				<view class="title">{{ $t(`Khu sản phẩm dành cho người mới`) }}</view>
 				<view class="content">
 					<scroll-view scroll-x="true">
 						<view class="list acea-row">
@@ -249,13 +249,13 @@
 				}
 				return styleObject;
 			},
-			// 组件背景
+			// Nền thành phần
 			newVip2Background() {
 				return {
 					'background': `linear-gradient(90deg, ${this.dataConfig.moduleColor.color[0].item} 0%, ${this.dataConfig.moduleColor.color[1].item} 99%)`,
 				};
 			},
-			// 背景圆角
+			// Bo góc nền
 			newVipBorderRadius() {
 				let borderRadius = `${this.dataConfig.fillet.val * 2}rpx`;
 				if (this.dataConfig.fillet.type) {
@@ -266,7 +266,7 @@
 					'border-radius': borderRadius,
 				};
 			},
-			// 底部背景
+			// Nền phía dưới
 			newVipWrapStyle() {
 				return {
 					'padding': `${this.dataConfig.topConfig.val * 2}rpx ${this.dataConfig.prConfig.val * 2}rpx ${this.dataConfig.bottomConfig.val * 2}rpx`,

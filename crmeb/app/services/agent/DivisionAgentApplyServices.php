@@ -31,7 +31,7 @@ class DivisionAgentApplyServices extends BaseServices
     }
 
     /**
-     * 申请详情
+     * Chi tiết đăng ký
      * @param $uid
      * @return array|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
@@ -49,7 +49,7 @@ class DivisionAgentApplyServices extends BaseServices
     }
 
     /**
-     * 代理商申请
+     * Đăng ký đại lý
      * @param $data
      * @param int $id
      * @return bool
@@ -76,7 +76,7 @@ class DivisionAgentApplyServices extends BaseServices
 
 
     /**
-     * 管理端代理商申请列表
+     * Danh sách đăng ký đại lý ở trang quản trị
      * @param $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -100,7 +100,7 @@ class DivisionAgentApplyServices extends BaseServices
     }
 
     /**
-     * 删除代理商审核
+     * Xóa duyệt đại lý
      * @param $id
      * @return bool
      */
@@ -112,7 +112,7 @@ class DivisionAgentApplyServices extends BaseServices
     }
 
     /**
-     * 审核表单
+     * Biểu mẫu duyệt
      * @param $id
      * @param $type
      * @return array
@@ -125,19 +125,19 @@ class DivisionAgentApplyServices extends BaseServices
         $field[] = Form::hidden('type', $type);
         $field[] = Form::hidden('id', $id);
         if ($type) {
-            $field[] = Form::number('division_percent', '佣金比例', '')->placeholder('代理商佣金比例1-100')->info('填写1-100，如填写50代表返佣50%,但是不能高于上级事业部的比例')->style(['width' => '173px'])->min(0)->max(100)->required();
-            $field[] = Form::date('division_end_time', '到期时间', '')->placeholder('代理商代理到期时间');
-            $field[] = Form::radio('division_status', '代理状态', 1)->options([['label' => '开通', 'value' => 1], ['label' => '关闭', 'value' => 0]]);
-            $title = '同意申请';
+            $field[] = Form::number('division_percent', 'Tỷ lệ hoa hồng', '')->placeholder('Tỷ lệ hoa hồng của đại lý 1-100')->info('Nhập 1-100, ví dụ nhập 50 nghĩa là trả hoa hồng 50%, nhưng không được cao hơn tỷ lệ của đại lý khu vực cấp trên')->style(['width' => '173px'])->min(0)->max(100)->required();
+            $field[] = Form::date('division_end_time', 'Thời gian hết hạn', '')->placeholder('Thời gian hết hạn đại lý');
+            $field[] = Form::radio('division_status', 'Trạng thái đại lý', 1)->options([['label' => 'Kích hoạt', 'value' => 1], ['label' => 'Tắt', 'value' => 0]]);
+            $title = 'Duyệt đơn đăng ký';
         } else {
-            $field[] = Form::textarea('refusal_reason', '拒绝原因', '')->rows(5);
-            $title = '拒绝申请';
+            $field[] = Form::textarea('refusal_reason', 'Lý do từ chối', '')->rows(5);
+            $title = 'Từ chối yêu cầu';
         }
         return create_form($title, $field, Route::buildUrl('/agent/division/apply_agent/save'), 'POST');
     }
 
     /**
-     * 审核代理商
+     * Duyệt đại lý
      * @param $data
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -183,7 +183,7 @@ class DivisionAgentApplyServices extends BaseServices
     }
 
     /**
-     * 获取员工列表
+     * Lấy danh sách nhân viên
      * @param $userInfo
      * @param $where
      * @param string $field
@@ -214,7 +214,7 @@ class DivisionAgentApplyServices extends BaseServices
             $systemAttachment = app()->make(SystemAttachmentServices::class);
             $name = 'routine_agent_' . $where['agent_id'] . '.jpg';
             $imageInfo = $systemAttachment->getInfo(['name' => $name]);
-            //检测远程文件是否存在
+            //Kiểm tra file từ xa có tồn tại không
             if (isset($imageInfo['att_dir']) && strstr($imageInfo['att_dir'], 'http') !== false && curl_file_exist($imageInfo['att_dir']) === false) {
                 $imageInfo = null;
                 $systemAttachment->delete(['name' => $name]);
@@ -245,7 +245,7 @@ class DivisionAgentApplyServices extends BaseServices
         }
         return compact('list', 'count', 'codeUrl');
 
-        //代理商邀请员工二维码为公众号渠道码，需要配置公众号并开启关注自动生成用户使用
+        //Mã QR mời nhân viên của đại lý là mã kênh OA WeChat, cần cấu hình OA WeChat và mở tính năng tự động tạo người dùng khi theo dõi để sử dụng
 //        try {
 //            /** @var SystemAttachmentServices $systemAttachment */
 //            $systemAttachment = app()->make(SystemAttachmentServices::class);
@@ -255,7 +255,7 @@ class DivisionAgentApplyServices extends BaseServices
 //            if (!$imageInfo) {
 //                /** @var QrcodeServices $qrCode */
 //                $qrCode = app()->make(QrcodeServices::class);
-//                //公众号
+//                //OA WeChat
 //                $resCode = $qrCode->getForeverQrcode('agent', $where['agent_id']);
 //                if ($resCode) {
 //                    $res = ['res' => $resCode, 'id' => $resCode['id']];
@@ -268,12 +268,12 @@ class DivisionAgentApplyServices extends BaseServices
 //            }
 //            $codeUrl = strpos($imageInfo['att_dir'], 'http') === false ? $siteUrl . $imageInfo['att_dir'] : $imageInfo['att_dir'];
 //        } catch (\Exception $e) {
-//            Log::error('邀请员工二维码生成失败，失败原因' . $e->getMessage());
+//            Log::error('Tạo mã QR mời nhân viên thất bại, lý do thất bại' . $e->getMessage());
 //        }
     }
 
     /**
-     * 下载图片
+     * Tải hình ảnh
      * @param string $url
      * @param string $name
      * @param int $type
@@ -286,7 +286,7 @@ class DivisionAgentApplyServices extends BaseServices
     {
         if (!strlen(trim($url))) return '';
         if (!strlen(trim($name))) {
-            //TODO 获取要下载的文件名称
+            //TODO lấy tên file cần tải xuống
             $downloadImageInfo = $this->getImageExtname($url);
             $ext = $downloadImageInfo['ext_name'];
             $name = $downloadImageInfo['file_name'];
@@ -297,16 +297,16 @@ class DivisionAgentApplyServices extends BaseServices
         if (!in_array($ext, Config::get('upload.fileExt'))) {
             throw new AdminException(400558);
         }
-        //TODO 获取远程文件所采用的方法
+        //TODO lấy phương thức dùng để tải file từ xa
         if ($type) {
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); //TODO 跳过证书检查
-            if (stripos($url, "https://") !== FALSE) curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);  //TODO 从证书中检查SSL加密算法是否存在
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); //TODO bỏ qua kiểm tra chứng chỉ
+            if (stripos($url, "https://") !== FALSE) curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);  //TODO kiểm tra trong chứng chỉ xem có thuật toán mã hóa SSL không
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('user-agent:' . $_SERVER['HTTP_USER_AGENT']));
-            if (ini_get('open_basedir') == '' && ini_get('safe_mode' == 'Off')) curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);//TODO 是否采集301、302之后的页面
+            if (ini_get('open_basedir') == '' && ini_get('safe_mode' == 'Off')) curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);//TODO có thu thập trang sau khi chuyển hướng 301, 302 không
             $content = curl_exec($ch);
             curl_close($ch);
         } else {
@@ -320,7 +320,7 @@ class DivisionAgentApplyServices extends BaseServices
             }
         }
         $size = strlen(trim($content));
-        if (!$content || $size <= 2) return '图片流获取失败';
+        if (!$content || $size <= 2) return 'Lấy luồng dữ liệu hình ảnh thất bại';
         $upload_type = sys_config('upload_type', 1);
         $upload = UploadService::init();
         if ($upload->to('attach/spread/agent')->setAuthThumb(false)->stream($content, $name) === false) {
@@ -337,7 +337,7 @@ class DivisionAgentApplyServices extends BaseServices
     }
 
     /**
-     * 获取即将要下载的图片扩展名
+     * Lấy phần mở rộng của ảnh sẽ tải xuống
      * @param string $url
      * @param string $ex
      * @return array|string[]

@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<!-- 搜索框 -->
+		<!-- Ô tìm kiếm -->
 		<!-- #ifdef H5  -->
 		<view class="header" :style="[headerStyle]">
 			<view class="serch-wrapper acea-row row-middle" :style="[serchWrapperStyle,txtPosition]">
@@ -154,7 +154,7 @@
 			that.$store.commit('hotWords/setHotWord', that.hotWords);
 			// #ifdef MP || APP-PLUS
 			setTimeout(() => {
-				// 获取小程序头部高度
+				// Lấy chiều cao phần đầu Mini Program
 				let info = uni.createSelectorQuery().in(this).select(".mp-header");
 				info.boundingClientRect(function(data) {
 					that.marTop = data.height
@@ -357,7 +357,7 @@
 					color: var(--view-theme);
 				}
 
-				// 没有logo，直接搜索框
+				// Không có logo, chỉ có ô tìm kiếm
 				&.on {
 					/* #ifdef MP */
 					width: 70%;
@@ -367,12 +367,12 @@
 					/* #endif */
 				}
 
-				// 设置圆角
+				// Đặt góc tròn
 				&.fillet {
 					border-radius: 29rpx;
 				}
 
-				// 文本框文字居中
+				// Chữ trong ô văn bản căn giữa
 				&.row-center {
 					padding: 0;
 				}

@@ -2,8 +2,8 @@ import CryptoJS from 'crypto-js';
 import JSEncrypt from 'jsencrypt';
 
 /**
- * @word hash256要加密的内容
- * @keyWord String  服务器随机返回的关键字
+ * @word Nội dung cần mã hóa bằng hash256
+ * @keyWord String  Từ khóa server trả về ngẫu nhiên
  *  */
 export function aesEncryptHash(word, keyWord = 'XwKsGlMcdPMEhR1B') {
   var key = CryptoJS.enc.Utf8.parse(keyWord);
@@ -12,8 +12,8 @@ export function aesEncryptHash(word, keyWord = 'XwKsGlMcdPMEhR1B') {
   return encrypted.toString();
 }
 /**
- * @word key加密
- * @keyWord String  服务器随机返回的关键字
+ * @word Mã hóa key
+ * @keyWord String  Từ khóa server trả về ngẫu nhiên
  *  */
 export function encryptWithKey(password, publicKey) {
   const encryptor = new JSEncrypt();

@@ -50,7 +50,7 @@ class CustomNoticeListener implements ListenerInterface
             $MessageSystemServices = app()->make(MessageSystemServices::class);
             $MessageSystemServices->save($data);
         } catch (\Exception $e) {
-            Log::error('发送站内信失败,失败原因:' . $e->getMessage());
+            Log::error('Gửi thông báo nội bộ thất bại, nguyên nhân:' . $e->getMessage());
             return true;
         }
     }
@@ -73,7 +73,7 @@ class CustomNoticeListener implements ListenerInterface
             app()->make(ServeServices::class)->sms($type)->send($infoData['phone'], $noticeData['sms_id'], $sendData);
             return true;
         } catch (\Exception $e) {
-            Log::error('发送短信失败,失败原因:' . $e->getMessage());
+            Log::error('Gửi SMS thất bại, nguyên nhân:' . $e->getMessage());
             return true;
         }
     }
@@ -100,7 +100,7 @@ class CustomNoticeListener implements ListenerInterface
             }
             return true;
         } catch (\Exception $e) {
-            Log::error('发送微信模版消息失败,失败原因:' . $e->getMessage());
+            Log::error('Gửi tin nhắn mẫu WeChat thất bại, nguyên nhân:' . $e->getMessage());
             return true;
         }
     }
@@ -127,7 +127,7 @@ class CustomNoticeListener implements ListenerInterface
             }
             return true;
         } catch (\Exception $e) {
-            Log::error('发送小程序订阅消息失败,失败原因:' . $e->getMessage());
+            Log::error('Gửi tin nhắn đăng ký Mini Program thất bại, nguyên nhân:' . $e->getMessage());
             return true;
         }
     }
@@ -153,7 +153,7 @@ class CustomNoticeListener implements ListenerInterface
                 'markdown' => ['content' => $d]
             ]));
         } catch (\Throwable $e) {
-            Log::error('发送企业群消息失败,失败原因:' . $e->getMessage());
+            Log::error('Gửi tin nhắn nhóm WeCom thất bại, nguyên nhân:' . $e->getMessage());
         }
     }
 }

@@ -124,7 +124,7 @@ class BlockData extends BaseData
         ) {
             return;
         }
-        throw new BlockException('验证失败！');
+        throw new BlockException('Xác minh thất bại!');
     }
 
 }

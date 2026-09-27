@@ -1,26 +1,26 @@
 <template>
-  <!-- 会员价/佣金 -->
+  <!-- Giá thành viên/Hoa hồng -->
   <el-row>
     <el-col :span="24">
-      <el-form-item label="付费会员专属：">
+      <el-form-item label="Dành riêng cho thành viên trả phí:">
         <el-switch :active-value="1" :inactive-value="0" v-model="formValidate.vip_product" size="large">
-          <span slot="open">开启</span>
-          <span slot="close">关闭</span>
+          <span slot="open">Bật</span>
+          <span slot="close">Tắt</span>
         </el-switch>
-        <div class="tips-info">开启后仅付费会员可以看见并购买此商品</div>
+        <div class="tips-info">Khi bật, chỉ thành viên trả phí mới có thể xem và mua sản phẩm này</div>
       </el-form-item>
     </el-col>
     <el-col :span="24">
-      <el-form-item label="单独设置：">
+      <el-form-item label="Thiết lập riêng:">
         <el-checkbox-group v-model="formValidate.is_sub" @change="checkAllGroupChange">
-          <el-checkbox :label="1">佣金设置（数字即返佣金额）</el-checkbox>
-          <el-checkbox :label="0">付费会员价</el-checkbox>
+          <el-checkbox :label="1">Cài đặt hoa hồng (số nhập vào là số tiền hoa hồng)</el-checkbox>
+          <el-checkbox :label="0">Giá thành viên trả phí</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
     </el-col>
     <el-col :span="24" v-if="formValidate.is_sub.length">
-      <!--单规格返佣-->
-      <el-form-item label="商品属性：" v-if="formValidate.spec_type === 0">
+      <!--Hoa hồng quy cách đơn-->
+      <el-form-item label="Thuộc tính sản phẩm:" v-if="formValidate.spec_type === 0">
         <el-table :data="oneFormValidate">
           <el-table-column
             :label="item.title"
@@ -65,7 +65,7 @@
                   v-if="!row.coupon_id && formValidate.virtual_type == 2"
                   v-db-click
                   @click="addGoodsCoupon(scope.$index, 'oneFormValidate')"
-                  >选择优惠券</el-button
+                  >Chọn phiếu giảm giá</el-button
                 >
                 <span
                   class="see"
@@ -78,14 +78,14 @@
                   v-else-if="!row.virtual_list.length && !row.stock && formValidate.virtual_type == 1"
                   v-db-click
                   @click="addVirtual(scope.$index, 'oneFormValidate')"
-                  >添加卡密</el-button
+                  >Thêm mã thẻ</el-button
                 >
                 <span
                   class="see"
                   v-else-if="(row.virtual_list.length || row.stock) && formValidate.virtual_type == 1"
                   v-db-click
                   @click="see(row, 'oneFormValidate', scope.$index)"
-                  >已设置</span
+                  >Đã thiết lập</span
                 >
               </template>
               <template v-else-if="item.slot === 'brokerage'">
@@ -95,7 +95,7 @@
                   :min="0"
                   :max="9999999999"
                   class="priceBox input-number-unit-class"
-                  class-unit="元"
+                  class-unit="đ"
                 ></el-input-number>
               </template>
               <template v-else-if="item.slot === 'brokerage_two'">
@@ -105,7 +105,7 @@
                   :min="0"
                   :max="9999999999"
                   class="priceBox input-number-unit-class"
-                  class-unit="元"
+                  class-unit="đ"
                 ></el-input-number>
               </template>
               <template v-else-if="item.slot === 'vip_price'">
@@ -115,7 +115,7 @@
                   :min="0"
                   :max="9999999999"
                   class="priceBox input-number-unit-class"
-                  class-unit="元"
+                  class-unit="đ"
                   @input="changeVipPrice(0, 'oneFormValidate')"
                 ></el-input-number>
               </template>
@@ -134,46 +134,46 @@
           </el-table-column>
         </el-table>
       </el-form-item>
-      <!--多规格返佣-->
-      <el-form-item label="批量设置：" v-if="formValidate.spec_type === 1">
+      <!--Hoa hồng đa quy cách-->
+      <el-form-item label="Thiết lập hàng loạt:" v-if="formValidate.spec_type === 1">
         <span v-if="formValidate.is_sub.indexOf(1) > -1">
-          <span class="brokerage">一级返佣：</span
+          <span class="brokerage">Hoa hồng cấp 1:</span
           ><el-input-number
             :controls="false"
-            placeholder="请输入一级返佣"
+            placeholder="Vui lòng nhập hoa hồng cấp 1"
             class="columnsBox input_width input-number-unit-class"
-            class-unit="元"
+            class-unit="đ"
             :value="manyBrokerage"
             @input="(val) => $emit('update:manyBrokerage', val)"
           >
           </el-input-number>
-          <span class="brokerage">二级返佣：</span
+          <span class="brokerage">Hoa hồng cấp 2:</span
           ><el-input-number
             :controls="false"
-            placeholder="请输入二级返佣"
+            placeholder="Vui lòng nhập hoa hồng cấp 2"
             class="columnsBox input_width input-number-unit-class"
-            class-unit="元"
+            class-unit="đ"
             :value="manyBrokerageTwo"
             @input="(val) => $emit('update:manyBrokerageTwo', val)"
           ></el-input-number>
         </span>
         <span class="brokerage" v-if="formValidate.is_sub.indexOf(0) > -1">
-          会员价：<el-input-number
+          Giá thành viên:<el-input-number
             :controls="false"
-            placeholder="请输入会员价"
+            placeholder="Vui lòng nhập giá thành viên"
             :min="0"
             :max="9999999999"
             class="columnsBox input_width input-number-unit-class"
-            class-unit="元"
+            class-unit="đ"
             :value="manyVipPrice"
             @input="(val) => $emit('update:manyVipPrice', val)"
             @focus="$emit('update:manyVipDiscount', undefined)"
           ></el-input-number>
         </span>
         <span class="brokerage" v-if="formValidate.is_sub.indexOf(0) > -1">
-          会员折扣：<el-input-number
+          Chiết khấu thành viên:<el-input-number
             :controls="false"
-            placeholder="请输入折扣比例"
+            placeholder="Vui lòng nhập tỷ lệ chiết khấu"
             :min="0"
             :max="9999999999"
             class="columnsBox input_width input-number-unit-class"
@@ -183,10 +183,10 @@
             @focus="$emit('update:manyVipPrice', undefined)"
           ></el-input-number>
         </span>
-        <el-button type="primary" v-db-click @click="brokerageSetUp">批量设置</el-button>
+        <el-button type="primary" v-db-click @click="brokerageSetUp">Thiết lập hàng loạt</el-button>
       </el-form-item>
       <el-form-item
-        label="商品属性："
+        label="Thuộc tính sản phẩm:"
         v-if="formValidate.spec_type == 1 && formValidate.is_sub.length && manyFormValidate.length && columnsInstal2"
       >
         <el-table :data="manyFormValidate.slice(1)">
@@ -233,7 +233,7 @@
                   v-if="!row.coupon_id && formValidate.virtual_type == 2"
                   v-db-click
                   @click="addGoodsCoupon(scope.$index + 1, 'manyFormValidate')"
-                  >选择优惠券</el-button
+                  >Chọn phiếu giảm giá</el-button
                 >
                 <span
                   class="see"
@@ -246,14 +246,14 @@
                   v-else-if="!row.virtual_list.length && !row.stock && formValidate.virtual_type == 1"
                   v-db-click
                   @click="addVirtual(scope.$index + 1, 'manyFormValidate')"
-                  >添加卡密</el-button
+                  >Thêm mã thẻ</el-button
                 >
                 <span
                   class="see"
                   v-else-if="(row.virtual_list.length || row.stock) && formValidate.virtual_type == 1"
                   v-db-click
                   @click="see(row, 'manyFormValidate', scope.$index + 1)"
-                  >已设置</span
+                  >Đã thiết lập</span
                 >
               </template>
               <template v-else-if="item.slot === 'volume'">
@@ -266,7 +266,7 @@
                   :min="0"
                   :max="9999999999"
                   class="priceBox input-number-unit-class"
-                  class-unit="元"
+                  class-unit="đ"
                   @input="
                     (val) => {
                       const newData = [...manyFormValidate];
@@ -283,7 +283,7 @@
                   :min="0"
                   :max="9999999999"
                   class="priceBox input-number-unit-class"
-                  class-unit="元"
+                  class-unit="đ"
                   @input="
                     (val) => {
                       const newData = [...manyFormValidate];
@@ -300,7 +300,7 @@
                   :min="0"
                   :max="9999999999"
                   class="priceBox input-number-unit-class"
-                  class-unit="元"
+                  class-unit="đ"
                   @input="
                     (val) => {
                       const newData = [...manyFormValidate];

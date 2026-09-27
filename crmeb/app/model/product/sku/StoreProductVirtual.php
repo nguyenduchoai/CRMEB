@@ -12,19 +12,19 @@ class StoreProductVirtual extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'store_product_virtual';
 
     /**
-     * 卡号搜索器
+     * Bộ lọc số thẻ
      * @param $query
      * @param $value
      */
@@ -34,7 +34,7 @@ class StoreProductVirtual extends BaseModel
     }
 
     /**
-     * 卡密搜索器
+     * Bộ lọc mã thẻ
      * @param $query
      * @param $value
      */
@@ -44,7 +44,7 @@ class StoreProductVirtual extends BaseModel
     }
 
     /**
-     * 商品搜索器
+     * Bộ lọc sản phẩm
      * @param $query
      * @param $value
      */
@@ -54,7 +54,7 @@ class StoreProductVirtual extends BaseModel
     }
 
     /**
-     * 用户搜索器
+     * Bộ lọc người dùng
      * @param $query
      * @param $value
      */
@@ -64,7 +64,7 @@ class StoreProductVirtual extends BaseModel
     }
 
     /**
-     * 订单搜索器
+     * Bộ lọc đơn hàng
      * @param $query
      * @param $value
      */

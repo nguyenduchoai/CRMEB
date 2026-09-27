@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -23,19 +23,19 @@ use app\model\activity\coupon\StoreCouponUser;
 class StoreCouponUserCouponDao extends BaseDao
 {
     /**
-     * 主表别名
+     * Alias bảng chính
      * @var string
      */
     protected $alias = 'a';
 
     /**
-     * 连表别名
+     * Alias bảng liên kết
      * @var string
      */
     protected $joinAlis = 'b';
 
     /**
-     * 主表模型
+     * Model bảng chính
      * @return string
      */
     public function setModel(): string
@@ -44,7 +44,7 @@ class StoreCouponUserCouponDao extends BaseDao
     }
 
     /**
-     * 连表表明
+     * Tên bảng liên kết
      * @return string
      */
     public function setJoinModel(): string
@@ -53,7 +53,7 @@ class StoreCouponUserCouponDao extends BaseDao
     }
 
     /**
-     * 设置模型
+     * Thiết lập model
      * @return \crmeb\basic\BaseModel
      */
     public function getModel()
@@ -65,7 +65,7 @@ class StoreCouponUserCouponDao extends BaseDao
     }
 
     /**
-     * 根据下单金额获取用户能使用的优惠卷
+     * Lấy phiếu giảm giá người dùng có thể sử dụng theo số tiền đặt hàng
      * @param int $uid
      * @param string $truePrice
      * @param int $productId
@@ -91,7 +91,7 @@ class StoreCouponUserCouponDao extends BaseDao
     }
 
     /**
-     * 获取购买金额最小使用范围内的优惠卷
+     * Lấy phiếu giảm giá trong phạm vi số tiền mua tối thiểu được áp dụng
      * @param $uid
      * @param $price
      * @param $value

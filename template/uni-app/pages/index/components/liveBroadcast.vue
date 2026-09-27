@@ -1,5 +1,5 @@
 <template>
-	<!-- 小程序直播 -->
+	<!-- Livestream Mini Program -->
 	<!-- #ifdef MP -->
 	<view v-show="!isSortType">
 		<view :style="[liveWrapperStyle]">
@@ -17,14 +17,14 @@
 							<view class="img-box">
 								<view class="label-a acea-row row-middle" v-if="item.live_status == 101">
 									<text class="iconfont icon-ic_video1"></text>
-									<text>{{ $t(`直播中`) }}</text>
+									<text>{{ $t(`Đang livestream`) }}</text>
 								</view>
 								<view class="label-b acea-row row-middle" v-else-if="item.live_status == 102">
-									<view class="txt acea-row row-middle">{{ $t(`预告`) }}</view>
+									<view class="txt acea-row row-middle">{{ $t(`Sắp phát sóng`) }}</view>
 									<view class="msg">{{ item.show_time }}</view>
 								</view>
 								<view class="label-c acea-row row-middle" v-else-if="item.live_status == 103">
-									<text>{{ $t(`回放`) }}</text>
+									<text>{{ $t(`Xem lại`) }}</text>
 								</view>
 								<easy-loadimage mode="widthFix" :image-src="item.cover_img" :borderRadius="imgStyle" width="100%" height="400rpx"></easy-loadimage>
 							</view>
@@ -32,7 +32,7 @@
 								<view class="title line2" v-if="titleShow">{{ item.name }}</view>
 								<view class="people acea-row row-middle" v-if="anchorShow">
 									<image :src="item.anchor_img || require('@/static/images/f.png')" class="w-40 h-40 borderRadius20 mr-12"></image>
-									<text>{{ $t(`主播`) }}：{{ item.anchor_name }}</text>
+									<text>{{ $t(`Streamer`) }}：{{ item.anchor_name }}</text>
 								</view>
 							</view>
 						</navigator>
@@ -51,14 +51,14 @@
 							<view class="img-box">
 								<view class="label-a" v-if="item.live_status == 101">
 									<text class="iconfont icon-ic_video1"></text>
-									<text>{{ $t(`直播中`) }}</text>
+									<text>{{ $t(`Đang livestream`) }}</text>
 								</view>
 								<view class="label-b" v-else-if="item.live_status == 102">
-									<view class="txt acea-row row-middle">{{ $t(`预告`) }}</view>
+									<view class="txt acea-row row-middle">{{ $t(`Sắp phát sóng`) }}</view>
 									<view class="msg">{{ item.show_time }}</view>
 								</view>
 								<view class="label-c" v-else-if="item.live_status == 103">
-									<text>{{ $t(`回放`) }}</text>
+									<text>{{ $t(`Xem lại`) }}</text>
 								</view>
 								<easy-loadimage mode="widthFix" :image-src="item.cover_img" :borderRadius="imgStyle" width="332rpx" height="236rpx"></easy-loadimage>
 							</view>
@@ -89,14 +89,14 @@
 								<view class="img-box">
 									<view class="label-a" v-if="item.live_status == 101">
 										<text class="iconfont icon-ic_video1"></text>
-										<text>{{ $t(`直播中`) }}</text>
+										<text>{{ $t(`Đang livestream`) }}</text>
 									</view>
 									<view class="label-b acea-row" v-else-if="item.live_status == 102">
-										<view class="txt">{{ $t(`预告`) }}</view>
+										<view class="txt">{{ $t(`Sắp phát sóng`) }}</view>
 										<view class="msg">{{ item.show_time }}</view>
 									</view>
 									<view class="label-c" v-else-if="item.live_status == 103">
-										<text>{{ $t(`回放`) }}</text>
+										<text>{{ $t(`Xem lại`) }}</text>
 									</view>
 									<easy-loadimage mode="widthFix" :image-src="item.cover_img" :borderRadius="imgStyle" width="280rpx" height="200rpx"></easy-loadimage>
 								</view>
@@ -104,7 +104,7 @@
 									<view class="title line1" v-if="titleShow">{{ item.name }}</view>
 									<view class="people acea-row row-middle" v-if="anchorShow">
 										<image :src="item.anchor_img || require('@/static/images/f.png')" class="w-40 h-40 borderRadius20 mr-12"></image>
-										<text>{{ $t(`主播`) }}：{{ item.anchor_name }}</text>
+										<text>{{ $t(`Streamer`) }}：{{ item.anchor_name }}</text>
 									</view>
 								</view>
 							</navigator>
@@ -126,19 +126,19 @@
 									<view class="acea-row row-middle">
 										<view class="label-a acea-row row-middle" v-if="item.live_status == 101">
 											<text class="iconfont icon-ic_video1"></text>
-											<text>{{ $t(`直播中`) }}</text>
+											<text>{{ $t(`Đang livestream`) }}</text>
 										</view>
 										<view class="label-b acea-row row-middle" v-else-if="item.live_status == 102">
-											<text>{{ $t(`预告`) }}</text>
+											<text>{{ $t(`Sắp phát sóng`) }}</text>
 										</view>
 										<view class="label-c acea-row row-middle" v-else-if="item.live_status == 103">
-											<text>{{ $t(`回放`) }}</text>
+											<text>{{ $t(`Xem lại`) }}</text>
 											<view class="title line1" v-if="titleShow">{{ item.name }}</view>
 										</view>
 									</view>
 									<view class="people acea-row row-middle" v-if="anchorShow">
 										<image :src="item.anchor_img || require('@/static/images/f.png')" class="w-40 h-40 borderRadius20 mr-12"></image>
-										<text>{{ $t(`主播`) }}：{{ item.anchor_name }}</text>
+										<text>{{ $t(`Streamer`) }}：{{ item.anchor_name }}</text>
 										<text class="time">{{ item.show_time }}</text>
 									</view>
 								</view>
@@ -152,14 +152,14 @@
 								<view class="img-box">
 									<view class="label-a" v-if="item.live_status == 101">
 										<text class="iconfont icon-ic_video1"></text>
-										<text>{{ $t(`直播中`) }}</text>
+										<text>{{ $t(`Đang livestream`) }}</text>
 									</view>
 									<view class="label-b acea-row" v-else-if="item.live_status == 102">
-										<view class="txt">{{ $t(`预告`) }}</view>
+										<view class="txt">{{ $t(`Sắp phát sóng`) }}</view>
 										<view class="msg">{{ item.show_time }}</view>
 									</view>
 									<view class="label-c acea-row row-middle" v-else-if="item.live_status == 103">
-										<text>{{ $t(`回放`) }}</text>
+										<text>{{ $t(`Xem lại`) }}</text>
 										<easy-loadimage mode="widthFix" :image-src="item.cover_img" :borderRadius="imgStyle" width="100%" height="670rpx"></easy-loadimage>
 									</view>
 								</view>
@@ -167,7 +167,7 @@
 									<view class="title line1" v-if="titleShow">{{ item.name }}</view>
 									<view class="people acea-row row-middle" v-if="anchorShow">
 										<image :src="item.anchor_img || require('@/static/images/f.png')" class="w-40 h-40 borderRadius20 mr-12"></image>
-										<text>{{ $t(`主播`) }}：{{ item.anchor_name }}</text>
+										<text>{{ $t(`Streamer`) }}：{{ item.anchor_name }}</text>
 									</view>
 								</view>
 							</navigator>

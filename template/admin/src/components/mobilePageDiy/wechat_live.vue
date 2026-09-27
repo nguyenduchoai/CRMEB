@@ -1,8 +1,8 @@
 <template>
   <div class="mobile-page" style="padding-bottom: 10px" :style="[{ background: bg }, { marginTop: cSlider + 'px' }]">
     <div class="title-box">
-      <span>直播间{{ bg }}</span>
-      <span>更多</span>
+      <span>Phòng livestream {{ bg }}</span>
+      <span>Xem thêm</span>
     </div>
     <div class="live-wrapper-a" v-if="listStyle == 0">
       <div
@@ -16,21 +16,21 @@
             <span class="iconfont-diy icontupian"></span>
           </div>
           <div class="label bgblue" v-if="item.type == 1">
-            <span class="txt">预告</span>
+            <span class="txt">Sắp phát sóng</span>
             <span class="msg">7/29 10:00</span>
           </div>
           <div class="label bggary" v-if="item.type == 0">
-            <span class="iconfont-diy iconyijieshu" style="margin-right: 5px"></span>回放
+            <span class="iconfont-diy iconyijieshu" style="margin-right: 5px"></span>Xem lại
           </div>
           <div class="label bgred" v-if="item.type == 2">
-            <span class="iconfont-diy iconzhibozhong" style="margin-right: 5px"></span>直播中
+            <span class="iconfont-diy iconzhibozhong" style="margin-right: 5px"></span>Đang livestream
           </div>
         </div>
         <div class="info">
-          <div class="title">直播标题直播标题直播标 题直播标题</div>
+          <div class="title">Tiêu đề livestream tiêu đề livestream tiêu đề livestream</div>
           <div class="people">
             <img src="@/assets/images/ren.png" alt="" />
-            <span>樱桃小丸子</span>
+            <span>Nhóc Maruko</span>
           </div>
           <div class="goods-wrapper">
             <template v-if="item.goods.length > 0">
@@ -40,7 +40,7 @@
               </div>
             </template>
             <template v-else>
-              <div class="empty-goods">暂无商品</div>
+              <div class="empty-goods">Chưa có sản phẩm</div>
             </template>
           </div>
         </div>
@@ -58,21 +58,21 @@
             <span class="iconfont-diy icontupian"></span>
           </div>
           <div class="label bgblue" v-if="item.type == 1">
-            <span class="txt">预告</span>
+            <span class="txt">Sắp phát sóng</span>
             <span class="msg">7/29 10:00</span>
           </div>
           <div class="label bggary" v-if="item.type == 0">
-            <span class="iconfont-diy iconyijieshu" style="margin-right: 5px"></span>回放
+            <span class="iconfont-diy iconyijieshu" style="margin-right: 5px"></span>Xem lại
           </div>
           <div class="label bgred" v-if="item.type == 2">
-            <span class="iconfont-diy iconzhibozhong" style="margin-right: 5px"></span>直播中
+            <span class="iconfont-diy iconzhibozhong" style="margin-right: 5px"></span>Đang livestream
           </div>
         </div>
         <div class="info">
-          <div class="title">直播标题直播标题直播标 题直播标题</div>
+          <div class="title">Tiêu đề livestream tiêu đề livestream tiêu đề livestream</div>
           <div class="people">
             <img src="@/assets/images/ren.png" alt="" />
-            <span>樱桃小丸子</span>
+            <span>Nhóc Maruko</span>
           </div>
         </div>
       </div>
@@ -89,22 +89,22 @@
             <span class="iconfont-diy icontupian"></span>
           </div>
           <div class="label bgblue" v-if="item.type == 1">
-            <span class="txt">预告</span>
+            <span class="txt">Sắp phát sóng</span>
             <span class="msg">7/29 10:00</span>
           </div>
           <div class="label bggary" v-if="item.type == 0">
-            <span class="iconfont-diy iconyijieshu" style="margin-right: 5px"></span>回放
+            <span class="iconfont-diy iconyijieshu" style="margin-right: 5px"></span>Xem lại
           </div>
           <div class="label bgred" v-if="item.type == 2">
-            <span class="iconfont-diy iconzhibozhong" style="margin-right: 5px"></span>直播中
+            <span class="iconfont-diy iconzhibozhong" style="margin-right: 5px"></span>Đang livestream
           </div>
         </div>
         <div class="info">
           <div class="left">
-            <div class="title line1">直播标题直播标题直播标 题直播标题</div>
+            <div class="title line1">Tiêu đề livestream tiêu đề livestream tiêu đề livestream</div>
             <div class="people">
               <img src="@/assets/images/ren.png" alt="" />
-              <span>樱桃小丸子</span>
+              <span>Nhóc Maruko</span>
             </div>
           </div>
           <div class="goods-wrapper">
@@ -115,7 +115,7 @@
               </div>
             </template>
             <template v-else>
-              <div class="empty-goods">暂无商品</div>
+              <div class="empty-goods">Chưa có sản phẩm</div>
             </template>
           </div>
         </div>
@@ -128,10 +128,10 @@
 import { mapState, mapMutations } from 'vuex';
 export default {
   name: 'wechat_live',
-  cname: '小程序直播',
+  cname: 'Livestream Mini Program',
   configName: 'c_wechat_live',
-  type: 1, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'liveBroadcast', // 外面匹配名称
+  type: 1, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'liveBroadcast', // Tên khớp bên ngoài
   icon: 'iconxiaochengxuzhibo1',
   props: {
     index: {
@@ -169,7 +169,7 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'liveBroadcast',
         timestamp: this.num,
@@ -177,7 +177,7 @@ export default {
           tabVal: 0,
         },
         bg: {
-          title: '背景色',
+          title: 'Màu nền',
           name: 'bg',
           default: [
             {
@@ -191,7 +191,7 @@ export default {
           ],
         },
         boxShadow: {
-          title: '阴影颜色',
+          title: 'Màu đổ bóng',
           name: 'playBg',
           default: [
             {
@@ -205,38 +205,38 @@ export default {
           ],
         },
         limit: {
-          title: '显示个数',
+          title: 'Số mục hiển thị',
           val: 4,
         },
         listStyle: {
-          title: '列表样式',
+          title: 'Kiểu danh sách',
           name: 'listStyle',
           type: 0,
           list: [
             {
-              val: '单列',
+              val: 'Một cột',
               icon: 'iconPic_big',
             },
             {
-              val: '双列',
+              val: 'Hai cột',
               icon: 'iconPic_small',
             },
             {
-              val: '大图',
+              val: 'Ảnh lớn',
               icon: 'iconbanner_1',
             },
           ],
         },
-        // 页面间距
+        // Lề trang
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },
       },
       live: [
         {
-          title: '直播中',
+          title: 'Đang livestream',
           name: 'playBg',
           type: 2,
           color: '',
@@ -244,7 +244,7 @@ export default {
           goods: [],
         },
         {
-          title: '回放',
+          title: 'Xem lại',
           name: 'endBg',
           type: 0,
           color: '',
@@ -265,7 +265,7 @@ export default {
           ],
         },
         {
-          title: '预告',
+          title: 'Sắp phát sóng',
           name: 'notBg',
           type: 1,
           color: '',

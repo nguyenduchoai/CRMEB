@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -35,7 +35,7 @@ class AppVersion extends AuthController
     }
 
     /**
-     * 版本列表
+     * Danh sách phiên bản
      * @return \think\Response
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -50,7 +50,7 @@ class AppVersion extends AuthController
     }
 
     /**
-     * 新增版本表单
+     * Form thêm phiên bản
      * @param $id
      * @return \think\Response
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -64,7 +64,7 @@ class AppVersion extends AuthController
     }
 
     /**
-     * 保存数据
+     * Lưu dữ liệu
      * @return \think\Response
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -88,7 +88,7 @@ class AppVersion extends AuthController
     }
 
     /**
-     * 删除App版本
+     * Xóa phiên bản App
      * @param $id
      * @return \think\Response
      * @author wuhaotian
@@ -98,6 +98,6 @@ class AppVersion extends AuthController
     public function del($id)
     {
         $this->services->delete($id);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 }

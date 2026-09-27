@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -33,7 +33,7 @@ class SystemUserLevelServices extends BaseServices
     }
 
     /**
-     * 单个等级
+     * Một hạng
      * @param int $id
      * @param string $field
      * @return array
@@ -47,7 +47,7 @@ class SystemUserLevelServices extends BaseServices
     }
 
     /**
-     * 获取某条件等级
+     * Lấy hạng theo điều kiện
      * @param array $where
      * @param string $field
      * @return array
@@ -61,7 +61,7 @@ class SystemUserLevelServices extends BaseServices
     }
 
     /**
-     * 获取所有等级列表
+     * Lấy danh sách tất cả các hạng
      * @param string $field
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -85,7 +85,7 @@ class SystemUserLevelServices extends BaseServices
     }
 
     /**
-     * 获取条件的会员等级列表
+     * Lấy danh sách hạng thành viên theo điều kiện
      * @param array $where
      * @param string $field
      */
@@ -100,7 +100,7 @@ class SystemUserLevelServices extends BaseServices
     }
 
     /**
-     * 获取一些用户等级名称
+     * Lấy tên một số hạng người dùng
      * @param $ids
      * @return array
      */
@@ -110,7 +110,7 @@ class SystemUserLevelServices extends BaseServices
     }
 
     /**
-     * 获取会员等级列表
+     * Lấy danh sách hạng thành viên
      * @param int $leval_id
      * @return array
      */

@@ -1,11 +1,11 @@
 <?php
 /**
  *  +----------------------------------------------------------------------
- *  | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+ *  | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
  *  +----------------------------------------------------------------------
  *  | Copyright (c) 2016~2022 https://www.crmeb.com All rights reserved.
  *  +----------------------------------------------------------------------
- *  | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+ *  | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
  *  +----------------------------------------------------------------------
  *  | Author: CRMEB Team <admin@crmeb.com>
  *  +----------------------------------------------------------------------
@@ -17,9 +17,9 @@ use think\App;
 use think\helper\Str;
 
 /**
- * 创建crud基类
+ * Tạo class cơ sở crud
  * Class Make
- * @author 等风来
+ * @author Deng Fenglai
  * @email 136327134@qq.com
  * @date 2023/3/13
  * @package crmeb\services\crud
@@ -28,19 +28,19 @@ abstract class Make
 {
 
     /**
-     * 名称
+     * Tên
      * @var string
      */
     protected $name = '';
 
     /**
-     * 文件类型
+     * Loại tệp
      * @var string
      */
     protected $fileMime = 'php';
 
     /**
-     * 文件全部路径
+     * Toàn bộ đường dẫn file
      * @var string
      */
     protected $filePathName = null;
@@ -51,61 +51,61 @@ abstract class Make
     protected $fileBasePath;
 
     /**
-     * 文件内容
+     * Nội dung tệp
      * @var string
      */
     protected $content = '';
 
     /**
-     * 实际文件存放
+     * Vị trí lưu file thực tế
      * @var string
      */
     protected $pathname = '';
 
     /**
-     * 命名空间路径
+     * Đường dẫn namespace
      * @var string
      */
     protected $usePath = '';
 
     /**
-     * 变量名称
+     * Tên biến
      * @var array
      */
     protected $var = [];
 
     /**
-     * 内容
+     * Nội dung
      * @var array
      */
     protected $value = [];
 
     /**
-     * 参数
+     * Tham số
      * @var array
      */
     protected $options = [];
 
     /**
-     * 数据库获取器后缀
+     * Hậu tố getter cơ sở dữ liệu
      * @var string
      */
     protected $attrPrefix = '_label';
 
     /**
-     * 代码生成功能生成前端文件的路径
+     * Đường dẫn file frontend do chức năng sinh code tạo ra
      * @var string
      */
     protected $adminTemplatePath;
 
     /**
-     * 默认保存路径
+     * Đường dẫn lưu mặc định
      * @var string
      */
     protected $basePath;
 
     /**
-     * 默认文件夹
+     * Thư mục mặc định
      * @var string
      */
     protected $baseDir;
@@ -132,10 +132,10 @@ abstract class Make
     }
 
     /**
-     * 设置默认路径
+     * Đặt đường dẫn mặc định
      * @param string $basePath
      * @return $this
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/18
      */
@@ -148,9 +148,9 @@ abstract class Make
     }
 
     /**
-     * 获取字段后缀
+     * Lấy hậu tố trường
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/22
      */
@@ -161,7 +161,7 @@ abstract class Make
 
     /**
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/11
      */
@@ -171,8 +171,8 @@ abstract class Make
     }
 
     /**
-     * 设置默认保存目录
-     * @author 等风来
+     * Đặt thư mục lưu mặc định
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/4
      */
@@ -182,20 +182,20 @@ abstract class Make
     }
 
     /**
-     * 获取保存文件的目录
+     * Lấy thư mục lưu file
      * @param string $path
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/4
      */
     protected function getBasePath(string $path = '')
     {
-        //替换成本地路径格式
+        //Thay thành định dạng đường dẫn local
         $path = str_replace('/', DS, $path);
         $pathAttr = explode(DS, $path);
         $basePathAttr = explode(DS, $this->baseDir);
-        //替换掉和基础目录相同的
+        //Thay thế phần trùng với thư mục cơ sở
         if (count($pathAttr) > 1) {
             $newsPath = array_merge(array_diff($basePathAttr, $pathAttr))[0] ?? '';
             if ($newsPath !== 'crud') {
@@ -204,17 +204,17 @@ abstract class Make
                 $this->baseDir = '';
             }
         }
-        //多个斜杠的替换成一个
+        //Thay nhiều dấu gạch chéo thành một
         $this->fileBasePath = str_replace(DS . DS, DS, $this->basePath . ($this->baseDir ? $this->baseDir . DS : '') . ($path ? $path . DS : ''));
 
         return $this->fileBasePath;
     }
 
     /**
-     * 设置文件保存就路径名称
+     * Đặt tên đường dẫn lưu file
      * @param string $filePathName
      * @return $this
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/7
      */
@@ -227,10 +227,10 @@ abstract class Make
     }
 
     /**
-     * 生成tab
+     * Tạo tab
      * @param int $num
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/29
      */
@@ -240,9 +240,9 @@ abstract class Make
     }
 
     /**
-     * 执行创建
+     * Thực hiện tạo
      * @return Make
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/13
      */
@@ -276,18 +276,18 @@ abstract class Make
     }
 
     /**
-     * 模板文件配置
+     * Cấu hình file mẫu
      * @param string $type
      * @return mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/13
      */
     abstract protected function getStub(string $type = '');
 
     /**
-     * 自动获取模板变量
-     * @author 等风来
+     * Tự động lấy biến mẫu
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/29
      */
@@ -302,8 +302,8 @@ abstract class Make
     }
 
     /**
-     * 提取value key
-     * @author 等风来
+     * Trích xuất value key
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/29
      */
@@ -317,8 +317,8 @@ abstract class Make
     }
 
     /**
-     * 设置默认值
-     * @author 等风来
+     * Đặt giá trị mặc định
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/13
      */
@@ -336,10 +336,10 @@ abstract class Make
     }
 
     /**
-     * 提取模板文件
+     * Trích xuất file mẫu
      * @param string $name
      * @return array
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/13
      */
@@ -355,11 +355,11 @@ abstract class Make
     }
 
     /**
-     * 获取文件路径
+     * Lấy đường dẫn file
      * @param string $path
      * @param string $name
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/13
      */
@@ -373,7 +373,7 @@ abstract class Make
     /**
      * @param string $path
      * @return mixed|string|null
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/13
      */
@@ -392,10 +392,10 @@ abstract class Make
     }
 
     /**
-     * 获取保存文件路径
+     * Lấy đường dẫn lưu file
      * @param string $name
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/13
      */
@@ -407,10 +407,10 @@ abstract class Make
     }
 
     /**
-     * 获取类名
+     * Lấy tên class
      * @param string $name
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/13
      */
@@ -434,10 +434,10 @@ abstract class Make
     }
 
     /**
-     * 获取命名空间名
+     * Lấy tên namespace
      * @param string $app
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/13
      */
@@ -447,10 +447,10 @@ abstract class Make
     }
 
     /**
-     * 设置内容
+     * Đặt nội dung
      * @param string $content
      * @return array|string|string[]
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/14
      */
@@ -463,7 +463,7 @@ abstract class Make
     /**
      * @param string $pathname
      * @return $this
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/18
      */
@@ -476,7 +476,7 @@ abstract class Make
     /**
      * @param string $key
      * @return mixed|null
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/18
      */
@@ -486,9 +486,9 @@ abstract class Make
     }
 
     /**
-     * 获取命名空间路径
+     * Lấy đường dẫn namespace
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/18
      */
@@ -498,9 +498,9 @@ abstract class Make
     }
 
     /**
-     * 获取内容
+     * Lấy nội dung
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/18
      */
@@ -511,7 +511,7 @@ abstract class Make
 
     /**
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/18
      */
@@ -522,7 +522,7 @@ abstract class Make
 
     /**
      * @return array
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/18
      */

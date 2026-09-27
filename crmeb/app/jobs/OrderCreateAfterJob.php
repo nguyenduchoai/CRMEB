@@ -18,7 +18,7 @@ class OrderCreateAfterJob extends BaseJobs
     use QueueTrait;
 
     /**
-     * 订单后置处理
+     * Xử lý sau đơn hàng
      * @param $orderId
      * @param $cartInfo
      * @param $priceData
@@ -67,7 +67,7 @@ class OrderCreateAfterJob extends BaseJobs
             }
             $isCommission = 0;
             if ($orderInfo['combination_id']) {
-                //检测拼团是否参与返佣
+                //Kiểm tra mua chung có tham gia trả hoa hồng không
                 /** @var StoreCombinationServices $combinationServices */
                 $combinationServices = app()->make(StoreCombinationServices::class);
                 $isCommission = $combinationServices->value(['id' => $orderInfo['combination_id']], 'is_commission');
@@ -83,7 +83,7 @@ class OrderCreateAfterJob extends BaseJobs
             }
             $createService->update(['id' => $orderId], $orderData);
         } catch (\Throwable $e) {
-            Log::error('计算订单实际优惠、积分、邮费、佣金失败，原因：' . $e->getMessage());
+            Log::error('Tính ưu đãi thực tế, điểm thưởng, phí vận chuyển, hoa hồng của đơn hàng thất bại, nguyên nhân:' . $e->getMessage());
         }
 
         return true;

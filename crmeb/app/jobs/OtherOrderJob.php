@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,7 +20,7 @@ use crmeb\traits\QueueTrait;
 use think\facade\Log;
 
 /**
- * 订单消息队列
+ * Hàng đợi tin nhắn đơn hàng
  * Class OrderJob
  * @package crmeb\jobs
  */
@@ -29,37 +29,37 @@ class OtherOrderJob extends BaseJobs
     use QueueTrait;
 
     /**
-     * 执行订单支付成功发送消息
+     * Thực hiện gửi tin nhắn khi đơn hàng thanh toán thành công
      * @param $order
      * @return bool
      */
     public function doJob($order)
     {
-        //更新用户支付订单数量
+        //Cập nhật số đơn hàng đã thanh toán của người dùng
         try {
             $this->setUserPayCountAndPromoter($order);
         } catch (\Throwable $e) {
-            Log::error('更新用户订单数失败,失败原因:' . $e->getMessage());
+            Log::error('Cập nhật số đơn hàng của người dùng thất bại, nguyên nhân:' . $e->getMessage());
         }
 
-        // 计算用户节省金额
+        // Tính số tiền tiết kiệm của người dùng
         try {
             $this->setEconomizeMoney($order);
         } catch (\Throwable $e) {
-            Log::error('计算节省金额,失败原因:' . $e->getMessage());
+            Log::error('Tính số tiền tiết kiệm thất bại, nguyên nhân:' . $e->getMessage());
         }
 
-        //收银订单赠送积分
+        //Tặng điểm thưởng cho đơn hàng thu ngân
         try {
             $this->sendMemberIntegral($order);
         } catch (\Throwable $e) {
-            Log::error('消费积分返还失败,失败原因:' . $e->getMessage());
+            Log::error('Hoàn trả điểm thưởng đã dùng thất bại, nguyên nhân:' . $e->getMessage());
         }
         return true;
     }
 
     /**
-     * 设置用户购买次数和检测时候成为推广人
+     * Thiết lập số lần mua của người dùng và kiểm tra thời điểm trở thành người giới thiệu
      * @param $order
      */
     public function setUserPayCountAndPromoter($order)
@@ -82,13 +82,13 @@ class OtherOrderJob extends BaseJobs
         }
     }
 
-    /** 线下付款奖励积分
+    /** Tặng điểm thưởng khi thanh toán ngoại tuyến
      * @param $order
      * @return bool
      */
     public function sendMemberIntegral($order)
     {
-        //只有线下付款才奖励
+        //Chỉ tặng điểm khi thanh toán ngoại tuyến
         if ($order['type'] == 3) {
             $order_give_integral = sys_config('order_give_integral');
             $order_integral = bcmul($order_give_integral, (string)$order['pay_price'], 0);
@@ -97,7 +97,7 @@ class OtherOrderJob extends BaseJobs
             $userInfo = $userService->getUserInfo($order['uid']);
             if (!$userInfo) return false;
             if ($userInfo['is_money_level'] > 0) {
-                //看是否开启消费返积分翻倍奖励
+                //Kiểm tra có mở thưởng nhân đôi điểm hoàn khi chi tiêu hay không
                 /** @var MemberCardServices $memberCardService */
                 $memberCardService = app()->make(MemberCardServices::class);
                 $integral_rule_number = $memberCardService->isOpenMemberCard('integral');
@@ -113,12 +113,12 @@ class OtherOrderJob extends BaseJobs
     }
 
     /**
-     * 计算节省金额
+     * Tính số tiền tiết kiệm
      * @param $order
      */
     public function setEconomizeMoney($order)
     {
-        //只有线下付款才计算节省
+        //Chỉ tính tiết kiệm khi thanh toán ngoại tuyến
         if ($order['type'] == 3) {
             /** @var StoreOrderEconomizeServices $economizeService */
             $economizeService = app()->make(StoreOrderEconomizeServices::class);

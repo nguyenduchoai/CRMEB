@@ -1,5 +1,5 @@
 /**
- * 修改数据
+ * Dữ liệu cần chỉnh sửa
  * @param id
  * @return {*}
  */

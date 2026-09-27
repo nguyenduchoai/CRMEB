@@ -21,9 +21,9 @@
           <div class="acea-row row-right" v-if="configData.tabCur == index">
             <div class="conter">
               <div class="c_row-item" v-if="tabIndex == 4">
-                <div class="c_label">上传图片</div>
+                <div class="c_label">Tải lên ảnh</div>
                 <div class="color-box">
-                  <div class="box" @click="modalPicTap('单选')">
+                  <div class="box" @click="modalPicTap('Chọn một')">
                     <div class="pictrue acea-row row-center-wrapper" v-if="item.image">
                       <img :src="item.image" alt="" />
                       <div class="iconfont icondel_1" @click.stop="bindPicDelete"></div>
@@ -33,9 +33,9 @@
                 </div>
               </div>
               <div class="c_row-item">
-                <el-col class="c_label"> 选择方式 </el-col>
+                <el-col class="c_label"> Cách chọn </el-col>
                 <el-col class="color-box">
-                  <el-select v-model="item.tabVal" placeholder="请选择" @change="tabChange">
+                  <el-select v-model="item.tabVal" placeholder="Vui lòng chọn" @change="tabChange">
                     <el-option
                       v-for="(itemn, indexn) in typeList"
                       :value="itemn.activeValue"
@@ -46,7 +46,7 @@
                 </el-col>
               </div>
               <div class="goods-box acea-row" v-if="item.tabVal == 1">
-                <div class="title">选择商品</div>
+                <div class="title">Chọn sản phẩm</div>
                 <div class="list">
                   <draggable class="dragArea list-group" :list="item.goodsList.list" group="peoples">
                     <div
@@ -66,11 +66,11 @@
               </div>
               <div v-else>
                 <div class="c_row-item" v-if="item.tabVal == 2">
-                  <el-col class="label" :span="4">品牌名称</el-col>
+                  <el-col class="label" :span="4">Tên thương hiệu</el-col>
                   <el-col :span="19" class="slider-box">
                     <el-cascader
                       @change="brandChange"
-                      placeholder="请选择品牌"
+                      placeholder="Vui lòng chọn thương hiệu"
                       size="mini"
                       v-model="item.brandConfig.brandVal"
                       :options="brandData"
@@ -82,11 +82,11 @@
                   </el-col>
                 </div>
                 <div class="c_row-item" v-else-if="item.tabVal == 3">
-                  <el-col class="label" :span="4">商品分类</el-col>
+                  <el-col class="label" :span="4">Danh mục sản phẩm</el-col>
                   <el-col :span="19" class="slider-box">
                     <el-cascader
                       @change="sliderChange"
-                      placeholder="请选择分类"
+                      placeholder="Vui lòng chọn danh mục"
                       size="mini"
                       v-model="item.selectConfig.activeValue"
                       :options="treeSelect"
@@ -98,7 +98,7 @@
                   </el-col>
                 </div>
                 <div class="c_row-item" v-else>
-                  <el-col class="label" :span="4">商品标签</el-col>
+                  <el-col class="label" :span="4">Nhãn sản phẩm</el-col>
                   <el-col :span="19" class="slider-box">
                     <div
                       class="labelInput acea-row row-between-wrapper"
@@ -113,7 +113,7 @@
                             >{{ j.label_name }}</el-tag
                           >
                         </div>
-                        <span class="span" v-else>选择商品标签</span>
+                        <span class="span" v-else>Chọn nhãn sản phẩm</span>
                       </div>
                       <div class="iconfont iconxiayi"></div>
                     </div>
@@ -121,7 +121,7 @@
                 </div>
                 <div class="c_row-item">
                   <el-col class="label" :span="4">
-                    <span>商品数量</span>
+                    <span>Số lượng sản phẩm</span>
                   </el-col>
                   <el-col :span="19" class="slider-box on">
                     <!-- sliderChange -->
@@ -136,17 +136,17 @@
                   </el-col>
                 </div>
                 <div class="c_row-item">
-                  <el-col class="c_label"> 商品排序 </el-col>
+                  <el-col class="c_label"> Sắp xếp sản phẩm </el-col>
                   <el-col class="color-box">
                     <el-radio-group v-model="item.goodsSort" @input="radioChange()">
                       <el-radio :label="0">
-                        <span>综合</span>
+                        <span>Tổng hợp</span>
                       </el-radio>
                       <el-radio :label="1">
-                        <span>销量</span>
+                        <span>Lượt bán</span>
                       </el-radio>
                       <el-radio :label="2">
-                        <span>价格</span>
+                        <span>Giá</span>
                       </el-radio>
                     </el-radio-group>
                   </el-col>
@@ -162,14 +162,14 @@
     </div>
     <div v-if="configData.list">
       <div class="add-btn" @click="addHotTxt">
-        <el-button style="width: 100%; height: 40px">+ 添加</el-button>
+        <el-button style="width: 100%; height: 40px">+ Thêm</el-button>
       </div>
     </div>
-    <!-- 商品标签 -->
+    <!-- Nhãn sản phẩm -->
     <el-dialog
       :visible.sync="storeLabelShow"
       scrollable
-      title="选择商品标签"
+      title="Chọn nhãn sản phẩm"
       :closable="true"
       width="540"
       :footer-hide="true"
@@ -182,7 +182,7 @@
         @close="storeLabelClose"
       ></storeLabelList>
     </el-dialog>
-    <el-dialog :visible.sync="modals" title="商品列表" class="paymentFooter" width="900">
+    <el-dialog :visible.sync="modals" title="Danh sách sản phẩm" class="paymentFooter" width="900">
       <goods-list
         ref="goodslist"
         :ischeckbox="true"
@@ -193,7 +193,7 @@
         v-if="modals"
       ></goods-list>
     </el-dialog>
-    <el-dialog :visible.sync="modalPic" width="960px" :title="configData.header ? configData.header : '上传图片'">
+    <el-dialog :visible.sync="modalPic" width="960px" :title="configData.header ? configData.header : 'Tải lên ảnh'">
       <uploadPictures
         :isChoice="isChoice"
         @getPic="getPic"
@@ -239,7 +239,7 @@ export default {
       storeLabelShow: false,
       modals: false,
       modalPic: false,
-      isChoice: '单选',
+      isChoice: 'Chọn một',
       gridBtn: {
         xl: 4,
         lg: 8,
@@ -257,15 +257,15 @@ export default {
       typeList: [
         {
           activeValue: 1,
-          title: '指定商品',
+          title: 'Sản phẩm chỉ định',
         },
         {
           activeValue: 3,
-          title: '指定分类',
+          title: 'Danh mục chỉ định',
         },
         {
           activeValue: 4,
-          title: '商品标签',
+          title: 'Nhãn sản phẩm',
         },
       ],
       brandData: [],
@@ -293,14 +293,14 @@ export default {
     },
   },
   methods: {
-    // 点击图文封面
+    // Click vào ảnh bìa bài viết ảnh-văn
     modalPicTap(title) {
       this.modalPic = true;
     },
     bindPicDelete() {
       this.configData.list[this.configData.tabCur].image = '';
     },
-    // 获取图片信息
+    // Lấy thông tin ảnh
     getPic(pc) {
       this.$nextTick(() => {
         this.configData.list[this.configData.tabCur].image = pc.att_dir;
@@ -328,7 +328,7 @@ export default {
     openGoods() {
       this.modals = true;
     },
-    //对象数组去重；
+    //Loại bỏ trùng lặp trong mảng object;
     unique(arr) {
       const res = new Map();
       return arr.filter((arr) => !res.has(arr.id) && res.set(arr.id, 1));
@@ -369,7 +369,7 @@ export default {
       this.configData.list[this.configData.tabCur].goodsLabel.activeValue = storeActiveIds;
       this.$emit('getConfig', { name: 'goodsLabel' });
     },
-    // 标签弹窗关闭
+    // Đóng popup nhãn
     storeLabelClose() {
       this.storeLabelShow = false;
     },
@@ -380,8 +380,8 @@ export default {
         if (this.itemObj.link) {
           this.itemObj.link.activeVal = 0;
         }
-        this.itemObj.chiild[0].val = '首发新品';
-        this.itemObj.chiild[1].val = '最新出炉';
+        this.itemObj.chiild[0].val = 'Hàng mới ra mắt';
+        this.itemObj.chiild[1].val = 'Mới ra lò';
         this.itemObj.tabVal = 0;
         this.itemObj.selectConfig.activeValue = [];
         this.itemObj.goodsLabel.activeValue = [];
@@ -408,7 +408,7 @@ export default {
         this.configData.list.push(obj);
       }
     },
-    // 删除数组
+    // Xóa mảng
     bindDelete(index) {
       if (this.configData.list.length == 1) {
         let itemObj = this.configData.list[0];
@@ -427,11 +427,11 @@ export default {
     radioChange(e) {
       this.$emit('getConfig', { name: 'promotion', values: e });
     },
-    // 品牌
+    // Thương hiệu
     brandChange() {
       this.$emit('getConfig', { name: 'brands' });
     },
-    //商品分类
+    //Danh mục sản phẩm
     sliderChange(e) {
       this.configData.list[this.configData.tabCur].selectConfig.activeValue = e;
       this.$emit('getConfig', { name: 'cascader', values: e });

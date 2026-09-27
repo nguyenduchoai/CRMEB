@@ -1,8 +1,8 @@
 <template>
   <div class="layout-navbars-breadcrumb-user-news">
     <div class="head-box">
-      <div class="head-box-title">系统通知</div>
-      <div class="head-box-btn" v-if="newsList.length > 0" v-db-click @click="onAllReadClick">全部已读</div>
+      <div class="head-box-title">Thông báo hệ thống</div>
+      <div class="head-box-btn" v-if="newsList.length > 0" v-db-click @click="onAllReadClick">Đánh dấu tất cả đã đọc</div>
     </div>
     <div class="content-box">
       <template v-if="newsList.length > 0">
@@ -21,7 +21,7 @@
       <div class="content-box-empty" v-else>
         <div class="content-box-empty-margin">
           <img class="no-msg" src="@/assets/images/no-msg.png" alt="" />
-          <div class="mt15">暂无通知</div>
+          <div class="mt15">Chưa có thông báo</div>
         </div>
       </div>
     </div>
@@ -57,12 +57,12 @@ export default {
 
       ws.$on('NEW_ORDER', function (data) {
         that.$notify.info({
-          title: '新订单',
-          message: '您有一个新的订单,ID为(' + data.order_id + '),请注意查看',
+          title: 'Đơn hàng mới',
+          message: 'Bạn có một đơn hàng mới (ID: ' + data.order_id + '), vui lòng kiểm tra',
         });
         if (newOrderAudioLink) newOrderAudioLink.play();
         that.messageList.push({
-          title: '新订单提醒',
+          title: 'Thông báo đơn hàng mới',
           icon: 'md-bulb',
           iconColor: '#87d068',
           time: 0,
@@ -71,12 +71,12 @@ export default {
       });
       ws.$on('NEW_REFUND_ORDER', function (data) {
         that.$notify.info({
-          title: '退款订单提醒',
-          message: '您有一个订单申请退款,ID为(' + data.order_id + '),请注意查看',
+          title: 'Thông báo đơn hoàn tiền',
+          message: 'Bạn có một đơn hàng yêu cầu hoàn tiền (ID: ' + data.order_id + '), vui lòng kiểm tra',
         });
         if (newOrderAudioLink) newOrderAudioLink.play();
         that.messageList.push({
-          title: '退款订单提醒',
+          title: 'Thông báo đơn hoàn tiền',
           icon: 'md-information',
           iconColor: '#fe5c57',
           time: 0,
@@ -85,16 +85,16 @@ export default {
       });
       ws.$on('WITHDRAW', function (data) {
         // that.$Notice.warning({
-        //   title: '提现提醒',
+        //   title: 'Nhắc nhở rút tiền',
         //   duration: 8,
-        //   desc: '有用户申请提现,编号为(' + data.id + '),请注意查看',
+        //   desc: 'Có người dùng yêu cầu rút tiền, mã số là (' + data.id + '), vui lòng chú ý kiểm tra',
         // });
         that.$notify.info({
-          title: '提现提醒',
-          message: '有用户申请提现,编号为(' + data.id + '),请注意查看',
+          title: 'Thông báo rút tiền',
+          message: 'Có người dùng yêu cầu rút tiền (mã số: ' + data.id + '), vui lòng kiểm tra',
         });
         that.messageList.push({
-          title: '退款订单提醒',
+          title: 'Thông báo đơn hoàn tiền',
           icon: 'md-people',
           iconColor: '#f06292',
           time: 0,
@@ -103,11 +103,11 @@ export default {
       });
       ws.$on('STORE_STOCK', function (data) {
         that.$notify.info({
-          title: '库存预警',
-          message: '商品ID为(' + data.id + ')的库存不足啦,请注意查看~',
+          title: 'Cảnh báo tồn kho',
+          message: 'Sản phẩm (ID: ' + data.id + ') sắp hết hàng, vui lòng kiểm tra~',
         });
         that.messageList.push({
-          title: '库存预警',
+          title: 'Cảnh báo tồn kho',
           icon: 'md-information',
           iconColor: '#fe5c57',
           time: 0,
@@ -116,11 +116,11 @@ export default {
       });
       ws.$on('PAY_SMS_SUCCESS', function (data) {
         that.$notify.info({
-          title: '短信充值成功',
-          message: '恭喜您充值' + data.price + '元，获得' + data.number + '条短信',
+          title: 'Nạp tiền SMS thành công',
+          message: 'Chúc mừng bạn đã nạp ' + data.price + 'đ, nhận được ' + data.number + ' tin nhắn SMS',
         });
         that.messageList.push({
-          title: '短信充值成功',
+          title: 'Nạp tiền SMS thành công',
           icon: 'md-bulb',
           iconColor: '#87d068',
           time: 0,
@@ -130,35 +130,35 @@ export default {
     });
   },
   filters: {
-    // 1 待发货 2 库存报警  3评论回复  4提现申请
+    // 1 chờ giao hàng 2 cảnh báo tồn kho 3 trả lời bình luận 4 yêu cầu rút tiền
     msgType(type) {
       let typeName;
       switch (type) {
         case 1:
-          typeName = '待发货订单提醒';
+          typeName = 'Thông báo đơn hàng chờ giao hàng';
           break;
         case 2:
-          typeName = '库存报警';
+          typeName = 'Cảnh báo tồn kho';
           break;
         case 3:
-          typeName = '评论回复';
+          typeName = 'Trả lời đánh giá';
           break;
         case 4:
-          typeName = '提现申请';
+          typeName = 'Yêu cầu rút tiền';
           break;
         default:
-          typeName = '其它';
+          typeName = 'Khác';
       }
       return typeName;
     },
   },
   methods: {
-    // 全部已读点击
+    // Bấm đánh dấu đã đọc tất cả
     onAllReadClick() {
       this.newsList = [];
       this.$emit('haveNews', !!this.newsList.length);
     },
-    // 前往通知中心点击
+    // Bấm đi tới trung tâm thông báo
     onGoToGiteeClick() {},
     getNotict() {
       jnoticeRequest()

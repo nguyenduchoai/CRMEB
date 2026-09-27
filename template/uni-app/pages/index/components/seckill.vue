@@ -1,13 +1,13 @@
 <template>
-	<!-- 秒杀列表 -->
+	<!-- Danh sách flash sale -->
 	<view :style="[boxStyle]" v-if="spikeList.length > 0">
 		<view>
-			<!-- 秒杀头部 -->
+			<!-- Phần đầu flash sale -->
 			<view class="w-full h-96 px-24 flex-between-center bg-cover" :style="[headerStyle]">
 				<view class="flex-y-center">
 					<text class="fs-32 lh-44rpx fw-500" :style="[titleStyle]" v-if="titleConfig">{{titleTxtConfig}}</text>
 					<image :src="titleImg" class="w-140 h-32" v-else></image>
-					<text class="fs-26 text--w111-999 lh-36rpx pl-20" :style="[tipsColor]">{{ $t(`距离结束`) }}</text>
+					<text class="fs-26 text--w111-999 lh-36rpx pl-20" :style="[tipsColor]">{{ $t(`Kết thúc sau`) }}</text>
 					<countDown
 					:is-day="false"
 					tip-text=" "
@@ -26,7 +26,7 @@
 					<text class="iconfont icon-ic_rightarrow fs-24" :style="[headerBntColor]"></text>
 				</view>
 			</view>
-			<!-- 单列 -->
+			<!-- Một cột -->
 			<view class="pt-32 pr-20 pb-32 pl-20 bg--w111-fff" :style="[boxContentStyle]"
 				v-if="goodStyleConfig == 0">
 				<view class="w-full flex justify-between item"
@@ -50,7 +50,7 @@
 									<image src="@/static/images/lightning.png" class="lightning"
 										:style="{left: item.percent +'%',transform:item.percent==100?'translateX(-100%)':'translateX(0)'}"></image>
 								</view>
-								<text class="fs-22 lh-30rpx pl-12" :style="{color: priceColor}">已抢{{item.percent +'%'}}</text>
+								<text class="fs-22 lh-30rpx pl-12" :style="{color: priceColor}">Đã bán {{item.percent +'%'}}</text>
 							</view>
 						</view>
 						<view class="flex justify-between items-end">
@@ -61,7 +61,7 @@
 									integerSize="36"
 									decimalSize="36" weight
 									:color="priceColor"
-									preFix="秒杀价"
+									preFix="Giá flash sale"
 									preFixSize="24"
 									:textColor="priceColor"
 									v-if="checkboxInfo.includes(2)"></baseMoney>
@@ -70,12 +70,12 @@
 									:style="[otPriceColor]">{{ $t(`¥`) }}{{item.product_price.toString().split('.')[1] ? item.product_price :  item.product_price + '.00'}}</text>
 							</view>
 							<view class='w-144 h-56 rd-30rpx flex-center fs-24 text--w111-fff'
-								v-if="!showBtn" :style="[btnBgColor]">{{ $t(`去抢购`) }}</view>
+								v-if="!showBtn" :style="[btnBgColor]">{{ $t(`Mua ngay`) }}</view>
 						</view>
 					</view>
 				</view>
 			</view>
-			<!-- 两列 -->
+			<!-- Hai cột -->
 			<view class="grid-column-2 grid-gap-22rpx pt-32 pr-20 pb-32 pl-20" :style="[boxContentStyle]" v-if="goodStyleConfig == 1">
 				<view v-for="(item,index) in spikeList" :key="index"
 					@tap="goDetails(item)">
@@ -102,11 +102,11 @@
 								>{{ $t(`¥`) }}{{item.product_price.toString().split('.')[1] ? item.product_price :  item.product_price + '.00'}}</text>
 						</view>
 						<view class='w-144 h-56 rd-30rpx flex-center fs-24 text--w111-fff bg--w111-E93323'
-							v-if="!showBtn" :style="[btnBgColor]">{{ $t(`去抢购`) }}</view>
+							v-if="!showBtn" :style="[btnBgColor]">{{ $t(`Mua ngay`) }}</view>
 					</view>
 				</view>
 			</view>
-			<!-- 三列 -->
+			<!-- Ba cột -->
 			<view class="grid-column-3 grid-gap-18rpx pt-32 pr-20 pb-32 pl-20" :style="[boxContentStyle]" v-if="goodStyleConfig == 2">
 				<view v-for="(item,index) in spikeList" :key="index"
 					@tap="goDetails(item)">
@@ -133,7 +133,7 @@
 						>{{ $t(`¥`) }}{{item.product_price.toString().split('.')[1] ? item.product_price :  item.product_price + '.00'}}</view>
 				</view>
 			</view>
-			<!-- 滑动 -->
+			<!-- Vuốt -->
 			<scroll-view scroll-x="true" show-scrollbar="false"
 				class="white-nowrap vertical-middle w-full p-32"
 				:style="[boxContentStyle]"
@@ -162,7 +162,7 @@
 								>{{ $t(`¥`) }}{{item.product_price.toString().split('.')[1] ? item.product_price :  item.product_price + '.00'}}</view>
 						</view>
 						<view class="qiang flex-center fs-24 text--w111-fff"
-							v-if="!showBtn" :style="[btnBgColor]">{{ $t(`抢`) }}</view>
+							v-if="!showBtn" :style="[btnBgColor]">{{ $t(`Mua`) }}</view>
 					</view>
 				</view>
 			</scroll-view>
@@ -242,7 +242,7 @@
 					background: `linear-gradient(90deg, ${this.dataConfig.moduleColor.color[0].item} 0%, ${this.dataConfig.moduleColor.color[1].item} 100%)`,
 				};
 			},
-			/*商品模板*/
+			/*Template sản phẩm*/
 			goodStyleConfig(){
 				return this.dataConfig.goodStyleConfig.tabVal
 			},
@@ -264,15 +264,15 @@
 
 				}
 			},
-			/*标题是文本还是图片*/
+			/*Tiêu đề là văn bản hay hình ảnh*/
 			titleConfig(){
 				return this.dataConfig.titleConfig.tabVal
 			},
-			/*标题文本*/
+			/*Văn bản tiêu đề*/
 			titleTxtConfig(){
 				return this.dataConfig.titleTxtConfig.value
 			},
-			/*标题图片*/
+			/*Ảnh tiêu đề*/
 			titleImg(){
 				return this.styleConfig ? this.titleUrl : this.titleColorUrl
 			},
@@ -282,24 +282,24 @@
 			titleUrl(){
 				return this.dataConfig.imgConfig.url
 			},
-			/*标题提示文字*/
+			/*Chữ gợi ý tiêu đề*/
 			tipsColor(){
 				return {
 					color: this.styleConfig ? this.dataConfig.tipsColor.color[0].item : this.dataConfig.tipsColor2.color[0].item
 				}
 			},
-			/*头部按钮文本*/
+			/*Văn bản nút phần đầu*/
 			rightBntTxt(){
 				return this.dataConfig.rightBntConfig.value
 			},
-			/*头部按钮样式*/
+			/*Style nút phần đầu*/
 			headerBntColor(){
 				return {
 					color: this.styleConfig ? this.dataConfig.headerBntColor.color[0].item : this.dataConfig.headerBntColor2.color[0].item,
 					fontSize: `${this.dataConfig.bntNumber.val * 2}rpx`
 				}
 			},
-			/*商品图片圆角样式*/
+			/*Style góc tròn ảnh sản phẩm*/
 			imgStyle(){
 				let borderRadius = `${this.dataConfig.filletImg.val * 2}rpx`;
 				if (this.dataConfig.filletImg.type) {
@@ -308,22 +308,22 @@
 				}
 				return borderRadius
 			},
-			/*商品名称样式*/
+			/*Style tên sản phẩm*/
 			productStyle(){
 				return {
 					color: this.dataConfig.goodsNameColor.color[0].item,
 					fontWeight: this.dataConfig.goodsName.tabVal ? 'normal' : 'bold'
 				}
 			},
-			/* 展示信息 */
+			/* Thông tin hiển thị */
 			checkboxInfo(){
 				return this.dataConfig.checkboxInfo.type
 			},
-			/* 价格颜色 */
+			/* Màu giá */
 			priceColor(){
 				return this.dataConfig.toneConfig.tabVal ? this.dataConfig.progressTxtColor.color[0].item : 'var(--view-theme)'
 			},
-			/* 划线价颜色 */
+			/* Màu giá gốc (gạch ngang) */
 			otPriceColor(){
 				return {
 					color: this.dataConfig.goodsPriceColor.color[0].item
@@ -332,7 +332,7 @@
 			showBtn(){
 				return this.dataConfig.seckillConfig.tabVal
 			},
-			/* 按钮颜色 */
+			/* Màu nút */
 			btnBgColor(){
 				return {
 					background: this.dataConfig.toneConfig.tabVal ? `linear-gradient(90deg,${this.dataConfig.goodsBntColor.color[1].item} 0%,${this.dataConfig.goodsBntColor.color[0].item} 100%)`: 'linear-gradient(90deg, var(--view-gradient) 0%, var(--view-theme) 100%)',
@@ -342,7 +342,7 @@
 			progressBgColor(){
 				return this.dataConfig.toneConfig.tabVal ? `linear-gradient(90deg,${this.dataConfig.progressColor.color[0].item} 0%,${this.dataConfig.progressColor.color[1].item} 100%)`: 'linear-gradient(45deg, var(--view-gradient) 0%, var(--view-theme) 100%)'
 			},
-			/*倒计时背景色*/
+			/*Màu nền đồng hồ đếm ngược*/
 			numberBgColor(){
 				return this.styleConfig ?  `linear-gradient(90deg, ${this.dataConfig.numberBgColor.color[0].item} 0%, ${this.dataConfig.numberBgColor.color[1].item} 100%)` : `linear-gradient(90deg, ${this.dataConfig.numberBgColor2.color[0].item} 0%, ${this.dataConfig.numberBgColor2.color[1].item} 100%)`
 			},
@@ -352,7 +352,7 @@
 			dotColor(){
 				return this.styleConfig ?  this.dataConfig.numberBgColor.color[0].item : this.dataConfig.numberBgColor2.color[0].item
 			},
-			/*商品数量*/
+			/*Số lượng sản phẩm*/
 			numberConfig(){
 				return this.dataConfig.numberConfig.val
 			}

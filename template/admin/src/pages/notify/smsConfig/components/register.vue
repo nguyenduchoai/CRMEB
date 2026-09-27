@@ -3,19 +3,19 @@
     <el-col :span="24">
       <div class="index_from page-account-container">
         <div class="page-account-top">
-          <span class="page-account-top-tit">一号通账户注册</span>
+          <span class="page-account-top-tit">Đăng ký tài khoản Yihaotong</span>
         </div>
         <el-form ref="formInline" :model="formInline" :rules="ruleInline" @submit.native.prevent>
           <!--<el-form-item prop="account">-->
           <!--<el-input type="text" v-model="formInline.account" prefix="ios-contact-outline"-->
-          <!--placeholder="请输入短信平台账号" />-->
+          <!--placeholder="Vui lòng nhập tài khoản nền tảng SMS" />-->
           <!--</el-form-item>-->
           <el-form-item prop="phone" class="maxInpt">
             <el-input
               type="number"
               v-model="formInline.phone"
               prefix="ios-contact-outline"
-              placeholder="请输入您的手机号"
+              placeholder="Vui lòng nhập số điện thoại của bạn"
             />
           </el-form-item>
           <el-form-item prop="password" class="maxInpt">
@@ -23,19 +23,19 @@
               type="password"
               v-model="formInline.password"
               prefix="ios-lock-outline"
-              placeholder="请输入密码"
+              placeholder="Vui lòng nhập mật khẩu"
             />
           </el-form-item>
           <!--<el-form-item prop="password">-->
           <!--<el-input type="password" v-model="formInline.password" prefix="ios-lock-outline"-->
-          <!--placeholder="请确认短信平台密码/token" />-->
+          <!--placeholder="Vui lòng xác nhận mật khẩu/token nền tảng SMS" />-->
           <!--</el-form-item>-->
           <!-- <el-form-item prop="url" class="maxInpt">
-            <el-input type="text" v-model="formInline.url" prefix="ios-contact-outline" placeholder="请输入网址域名" />
+            <el-input type="text" v-model="formInline.url" prefix="ios-contact-outline" placeholder="Vui lòng nhập tên miền URL" />
           </el-form-item> -->
           <!--<el-form-item prop="sign">-->
           <!--<el-input type="text" v-model="formInline.sign" prefix="ios-contact-outline"-->
-          <!--placeholder="请输入短信签名，例如：CRMEB" />-->
+          <!--placeholder="Vui lòng nhập chữ ký SMS, ví dụ: CRMEB" />-->
           <!--</el-form-item>-->
           <el-form-item prop="verify_code" class="maxInpt">
             <div class="code">
@@ -43,19 +43,19 @@
                 type="text"
                 v-model="formInline.verify_code"
                 prefix="ios-keypad-outline"
-                placeholder="请输入验证码"
+                placeholder="Vui lòng nhập mã xác thực"
               />
               <el-button :disabled="!canClick" v-db-click @click="cutDown">{{ cutNUm }}</el-button>
             </div>
           </el-form-item>
           <el-form-item class="maxInpt">
             <el-button type="primary" long size="large" v-db-click @click="handleSubmit('formInline')" class="btn"
-              >注册</el-button
+              >Đăng ký</el-button
             >
           </el-form-item>
         </el-form>
         <div class="page-account-other">
-          <span v-db-click @click="changelogo">立即登录</span>
+          <span v-db-click @click="changelogo">Đăng nhập ngay</span>
         </div>
       </div>
     </el-col>
@@ -69,15 +69,15 @@ export default {
   data() {
     const validatePhone = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error('请填写手机号'));
+        return callback(new Error('Vui lòng điền số điện thoại'));
       } else if (!/^1[3456789]\d{9}$/.test(value)) {
-        callback(new Error('手机号格式不正确!'));
+        callback(new Error('Số điện thoại không đúng định dạng!'));
       } else {
         callback();
       }
     };
     return {
-      cutNUm: '获取验证码',
+      cutNUm: 'Lấy mã xác thực',
       canClick: true,
       formInline: {
         url: '',
@@ -86,17 +86,17 @@ export default {
         phone: '',
       },
       ruleInline: {
-        account: [{ required: true, message: '请输入短信平台账号', trigger: 'blur' }],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
-        // url: [{ required: true, message: '请输入网址域名', trigger: 'blur' }],
+        account: [{ required: true, message: 'Vui lòng nhập tài khoản nền tảng SMS', trigger: 'blur' }],
+        password: [{ required: true, message: 'Vui lòng nhập mật khẩu', trigger: 'blur' }],
+        // url: [{ required: true, message: 'Vui lòng nhập tên miền URL', trigger: 'blur' }],
         phone: [{ required: true, validator: validatePhone, trigger: 'blur' }],
-        sign: [{ required: true, message: '请输入短信签名', trigger: 'blur' }],
-        verify_code: [{ required: true, message: '请输入验证码', trigger: 'blur' }],
+        sign: [{ required: true, message: 'Vui lòng nhập chữ ký SMS', trigger: 'blur' }],
+        verify_code: [{ required: true, message: 'Vui lòng nhập mã xác thực', trigger: 'blur' }],
       },
     };
   },
   methods: {
-    // 短信验证码
+    // Mã xác thực SMS
     cutDown() {
       if (this.formInline.phone) {
         if (!this.canClick) return;
@@ -115,16 +115,16 @@ export default {
         let time = setInterval(() => {
           this.cutNUm--;
           if (this.cutNUm === 0) {
-            this.cutNUm = '获取验证码';
+            this.cutNUm = 'Lấy mã xác thực';
             this.canClick = true;
             clearInterval(time);
           }
         }, 1000);
       } else {
-        this.$message.warning('请填写手机号!');
+        this.$message.warning('Vui lòng nhập số điện thoại!');
       }
     },
-    // 注册
+    // Đăng ký
     handleSubmit(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
@@ -143,7 +143,7 @@ export default {
         }
       });
     },
-    // 立即登录
+    // Đăng nhập ngay
     changelogo() {
       this.$emit('on-change');
     },

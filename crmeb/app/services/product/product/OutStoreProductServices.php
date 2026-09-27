@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -23,21 +23,21 @@ use crmeb\exceptions\AdminException;
 /**
  * Class OutStoreProductServices
  * @package app\services\product\product
- * @method getOne(array $where) 获取一条数据
- * @method update(int $id, array $data) 获取一条数据
- * @method delete($id, ?string $key = null) 删除数据
- * @method value($where, ?string $field = null) 获取字段
- * @method incStockDecSales(array $where, int $num, string $stock = 'stock', string $sales = 'sales') 加库存减销量
- * @method count(array $where) 获取指定条件下的数量
- * @method getColumn(array $where, string $field, string $key = '') 获取某个字段数组
- * @method getSearchList(array $where, int $page = 0, int $limit = 0, ?array $field = ['*']) 获取列表
- * @method get(int $id, array $field) 获取一条数据
- * @method getCid(int $page, int $limit) 获取一级分类ID
- * @method downAdvance() 预售商品自动到期下架
+ * @method getOne(array $where) Lấy một dòng dữ liệu
+ * @method update(int $id, array $data) Lấy một dòng dữ liệu
+ * @method delete($id, ?string $key = null) Xóa dữ liệu
+ * @method value($where, ?string $field = null) Lấy trường
+ * @method incStockDecSales(array $where, int $num, string $stock = 'stock', string $sales = 'sales') Tăng tồn kho, giảm lượt bán
+ * @method count(array $where) Lấy số lượng theo điều kiện chỉ định
+ * @method getColumn(array $where, string $field, string $key = '') Lấy mảng của một trường
+ * @method getSearchList(array $where, int $page = 0, int $limit = 0, ?array $field = ['*']) Lấy danh sách
+ * @method get(int $id, array $field) Lấy một dòng dữ liệu
+ * @method getCid(int $page, int $limit) Lấy ID danh mục cấp 1
+ * @method downAdvance() Sản phẩm đặt trước tự động gỡ bán khi hết hạn
  */
 class OutStoreProductServices extends BaseServices
 {
-    protected $productType = ['普通商品', '卡密商品', '优惠券', '虚拟商品'];
+    protected $productType = ['Sản phẩm thường', 'Sản phẩm mã thẻ', 'Phiếu giảm giá', 'Sản phẩm ảo'];
 
     public function __construct(StoreProductDao $dao)
     {
@@ -45,7 +45,7 @@ class OutStoreProductServices extends BaseServices
     }
 
     /**
-     * 新增编辑商品
+     * Thêm sửa sản phẩm
      * @param int $id
      * @param array $data
      * @param int $validate
@@ -60,7 +60,7 @@ class OutStoreProductServices extends BaseServices
         }
 
         $data['brand_id'] = 0;
-        $data['logistics'] = 1; // 物流方式
+        $data['logistics'] = 1; // Hình thức vận chuyển
 
         $detail = $data['attrs'];
         $attr = $data['items'];
@@ -76,7 +76,7 @@ class OutStoreProductServices extends BaseServices
             if ($data['limit_num'] <= 0) throw new AdminException(400571);
         }
 
-        // 固定邮费 0为包邮
+        // Phí vận chuyển cố định, 0 là miễn phí vận chuyển
         $data['freight'] = 2;
         $data['postage'] = (float)$data['postage'];
         if (bccomp($data['postage'], '0.00', 2) < 0) {
@@ -85,11 +85,11 @@ class OutStoreProductServices extends BaseServices
 
         if (count($data['activity']) == 4) {
             foreach ($data['activity'] as $k => $v) {
-                if ($v == '秒杀') {
+                if ($v == 'Flash sale') {
                     $data['activity'][$k] = 1;
-                } elseif ($v == '砍价') {
+                } elseif ($v == 'Săn giảm giá') {
                     $data['activity'][$k] = 2;
-                } elseif ($v == '拼团') {
+                } elseif ($v == 'Mua chung') {
                     $data['activity'][$k] = 3;
                 } else {
                     $data['activity'][$k] = 0;
@@ -171,14 +171,14 @@ class OutStoreProductServices extends BaseServices
             if ($data['spec_type'] == 0) {
                 $attr = [
                     [
-                        'value' => '规格',
+                        'value' => 'Quy cách',
                         'detailValue' => '',
                         'attrHidden' => '',
-                        'detail' => ['默认']
+                        'detail' => ['Mặc định']
                     ]
                 ];
-                $detail[0]['value1'] = '规格';
-                $detail[0]['detail'] = ['规格' => '默认'];
+                $detail[0]['value1'] = 'Quy cách';
+                $detail[0]['detail'] = ['Quy cách' => 'Mặc định'];
             }
             if ($id) {
                 $this->dao->update($id, $data);
@@ -220,7 +220,7 @@ class OutStoreProductServices extends BaseServices
     }
 
     /**
-     * 设置商品上下架
+     * Đặt hiển thị/gỡ sản phẩm
      * @param int $id
      * @param int $is_show
      */
@@ -229,7 +229,7 @@ class OutStoreProductServices extends BaseServices
         if (empty($id)) throw new AdminException(100100);
 
         if ($is_show) {
-            // 检查商品是否可以上架
+            // Kiểm tra sản phẩm có thể hiển thị không
             $this->checkShelves($id);
         }
 
@@ -245,7 +245,7 @@ class OutStoreProductServices extends BaseServices
     }
 
     /**
-     * 获取商品详情
+     * Lấy chi tiết sản phẩm
      * @param int $id
      * @return array|\think\Model|null
      */
@@ -280,19 +280,19 @@ class OutStoreProductServices extends BaseServices
         $productInfo['description'] = $storeDescriptionServices->getDescription(['product_id' => $id, 'type' => 0]);
         /** @var StoreProductAttrServices $storeProductAttrServices */
         $storeProductAttrServices = app()->make(StoreProductAttrServices::class);
-        //无属性添加默认属性
+        //Không có thuộc tính thì thêm thuộc tính mặc định
         if (!$storeProductAttrResultServices->getResult(['product_id' => $id, 'type' => 0])) {
             $attr = [
                 [
-                    'value' => '规格',
+                    'value' => 'Quy cách',
                     'detailValue' => '',
                     'attrHidden' => '',
-                    'detail' => ['默认']
+                    'detail' => ['Mặc định']
                 ]
             ];
             $detail[0] = [
-                'value1' => '默认',
-                'detail' => ['规格' => '默认'],
+                'value1' => 'Mặc định',
+                'detail' => ['Quy cách' => 'Mặc định'],
                 'pic' => $productInfo['image'],
                 'price' => $productInfo['price'],
                 'cost' => $productInfo['cost'],
@@ -351,7 +351,7 @@ class OutStoreProductServices extends BaseServices
     }
 
     /**
-     * 获取选择的商品列表
+     * Lấy danh sách sản phẩm đã chọn
      * @param array $where
      * @return array
      */
@@ -382,7 +382,7 @@ class OutStoreProductServices extends BaseServices
     }
 
     /**
-     * 上架检测
+     * Kiểm tra khi hiển thị
      * @param int $id
      * @return void
      * @throws \think\db\exception\DataNotFoundException
@@ -432,7 +432,7 @@ class OutStoreProductServices extends BaseServices
     }
 
     /**
-     * 同步库存
+     * Đồng bộ tồn kho
      * @param array $items
      * @return void
      */
@@ -440,7 +440,7 @@ class OutStoreProductServices extends BaseServices
     {
         return $this->transaction(function () use ($items) {
             $goods = $saveData = [];
-            // 同步规格value库存
+            // Đồng bộ tồn kho value của phân loại
             /** @var StoreProductAttrValueServices $storeProductAttrValueServices */
             $storeProductAttrValueServices = app()->make(StoreProductAttrValueServices::class);
             $list = $storeProductAttrValueServices->getColumn(['bar_code' => array_column($items, 'bar_code')], 'id, product_id, bar_code, stock', 'bar_code');
@@ -464,7 +464,7 @@ class OutStoreProductServices extends BaseServices
     }
 
     /**
-     * 计算商品库存
+     * Tính tồn kho sản phẩm
      * @param int $id
      * @return void
      */

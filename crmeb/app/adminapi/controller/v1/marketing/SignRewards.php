@@ -1,6 +1,6 @@
 <?php
 /**
- * @author: 吴汐
+ * @author: Wu Xi
  * @email: 442384644@qq.com
  * @date: 2023/7/31
  */
@@ -24,13 +24,13 @@ class SignRewards extends AuthController
     }
 
     /**
-     * 签到奖励列表
+     * Danh sách phần thưởng điểm danh
      * @return \think\Response
      * @throws \ReflectionException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/7/31
      */
@@ -44,13 +44,13 @@ class SignRewards extends AuthController
     }
 
     /**
-     * 新增签到奖励
+     * Thêm thưởng điểm danh
      * @return \think\Response
      * @throws \FormBuilder\Exception\FormBuilderException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/7/31
      */
@@ -64,14 +64,14 @@ class SignRewards extends AuthController
     }
 
     /**
-     * 修改签到奖励
+     * Sửa thưởng điểm danh
      * @param $id
      * @return \think\Response
      * @throws \FormBuilder\Exception\FormBuilderException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/7/31
      */
@@ -82,10 +82,10 @@ class SignRewards extends AuthController
     }
 
     /**
-     * 保存签到奖励
+     * Lưu phần thưởng điểm danh
      * @param $id
      * @return \think\Response
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/7/31
      */
@@ -102,10 +102,10 @@ class SignRewards extends AuthController
     }
 
     /**
-     * 删除签到奖励
+     * Xóa phần thưởng điểm danh
      * @param $id
      * @return \think\Response
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/7/31
      */

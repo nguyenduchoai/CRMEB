@@ -17,26 +17,26 @@ use think\Model;
 abstract class BaseDao
 {
     /**
-     * 当前表名别名
+     * Alias của bảng hiện tại
      * @var string
      */
     protected $alias;
 
     /**
-     * join表别名
+     * Alias của bảng join
      * @var string
      */
     protected $joinAlis;
 
 
     /**
-     * 获取当前模型
+     * Lấy model hiện tại
      * @return string
      */
     abstract protected function setModel(): string;
 
     /**
-     * 设置join链表模型
+     * Thiết lập model bảng liên kết (join)
      * @return string
      */
     protected function setJoinModel(): string
@@ -44,7 +44,7 @@ abstract class BaseDao
     }
 
     /**
-     * 读取数据条数
+     * Đọc số lượng dữ liệu
      * @param array $where
      * @param bool $search
      * @return int
@@ -56,7 +56,7 @@ abstract class BaseDao
     }
 
     /**
-     * 获取某些条件数据
+     * Lấy dữ liệu theo một số điều kiện
      * @param array $where
      * @param string $field
      * @param int $page
@@ -84,7 +84,7 @@ abstract class BaseDao
      * @param bool $search
      * @return BaseModel
      * @throws \ReflectionException
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/14
      */
@@ -105,7 +105,7 @@ abstract class BaseDao
     }
 
     /**
-     * 获取某些条件总数
+     * Lấy tổng số theo một số điều kiện
      * @param array $where
      * @return int
      */
@@ -115,7 +115,7 @@ abstract class BaseDao
     }
 
     /**
-     * 获取某些条件去重总数
+     * Lấy tổng số đã loại trùng theo một số điều kiện
      * @param array $where
      * @param $field
      * @param bool $search
@@ -134,7 +134,7 @@ abstract class BaseDao
     }
 
     /**
-     * 获取模型
+     * Lấy model
      * @return BaseModel
      */
     protected function getModel()
@@ -143,7 +143,7 @@ abstract class BaseDao
     }
 
     /**
-     * 获取主键
+     * Lấy khóa chính
      * @return array|string
      */
     protected function getPk()
@@ -153,7 +153,7 @@ abstract class BaseDao
 
     /**
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/2/8
      */
@@ -163,7 +163,7 @@ abstract class BaseDao
     }
 
     /**
-     * 获取一条数据
+     * Lấy một dòng dữ liệu
      * @param $id
      * @param array|null $field
      * @param array|null $with
@@ -185,10 +185,10 @@ abstract class BaseDao
     }
 
     /**
-     * 查询一条数据是否存在
+     * Truy vấn xem một dữ liệu có tồn tại không
      * @param $map
      * @param string $field
-     * @return bool 是否存在
+     * @return bool Có tồn tại không
      */
     public function be($map, string $field = '')
     {
@@ -198,7 +198,7 @@ abstract class BaseDao
     }
 
     /**
-     * 根据条件获取一条数据
+     * Lấy một dữ liệu theo điều kiện
      * @param array $where
      * @param string|null $field
      * @param array $with
@@ -214,7 +214,7 @@ abstract class BaseDao
     }
 
     /**
-     * 获取单个字段值
+     * Lấy giá trị của một trường
      * @param $where
      * @param string|null $field
      * @return mixed
@@ -226,7 +226,7 @@ abstract class BaseDao
     }
 
     /**
-     * 获取某个字段数组
+     * Lấy mảng của một trường
      * @param array $where
      * @param string $field
      * @param string $key
@@ -239,7 +239,7 @@ abstract class BaseDao
 
 
     /**
-     * 删除
+     * Xóa
      * @param int|string|array $id
      * @return mixed
      */
@@ -254,11 +254,11 @@ abstract class BaseDao
     }
 
     /**
-     * 删除记录
+     * Xóa lịch sử
      * @param int $id
      * @param bool $force
      * @return bool
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/15
      */
@@ -268,7 +268,7 @@ abstract class BaseDao
     }
 
     /**
-     * 更新数据
+     * Cập nhật dữ liệu
      * @param int|string|array $id
      * @param array $data
      * @param string|null $key
@@ -287,7 +287,7 @@ abstract class BaseDao
     /**
      * @param $where
      * @return array|mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/6
      */
@@ -300,7 +300,7 @@ abstract class BaseDao
     }
 
     /**
-     * 批量更新数据
+     * Cập nhật dữ liệu theo lô
      * @param array $ids
      * @param array $data
      * @param string|null $key
@@ -312,7 +312,7 @@ abstract class BaseDao
     }
 
     /**
-     * 插入数据
+     * Thêm dữ liệu
      * @param array $data
      * @return mixed
      */
@@ -322,7 +322,7 @@ abstract class BaseDao
     }
 
     /**
-     * 插入数据
+     * Thêm dữ liệu
      * @param array $data
      * @return \think\Collection
      * @throws \Exception
@@ -333,7 +333,7 @@ abstract class BaseDao
     }
 
     /**
-     * 获取某个字段内的值
+     * Lấy giá trị trong một trường nào đó
      * @param $value
      * @param string $filed
      * @param string|null $valueKey
@@ -346,11 +346,11 @@ abstract class BaseDao
     }
 
     /**
-     * 获取搜索器和搜索条件key,以及不在搜索器的条件数组
+     * Lấy searcher và key điều kiện tìm kiếm, cùng mảng điều kiện không thuộc searcher
      * @param array $where
      * @return array[]
      * @throws \ReflectionException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/03/18
      */
@@ -377,12 +377,12 @@ abstract class BaseDao
     }
 
     /**
-     * 根据搜索器获取搜索内容
+     * Lấy nội dung tìm kiếm theo searcher
      * @param $where
      * @param $search
      * @return BaseModel
      * @throws \ReflectionException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/03/18
      */
@@ -395,10 +395,10 @@ abstract class BaseDao
     }
 
     /**
-     * 过滤数据表中不存在的where条件字段
+     * Lọc bỏ các trường điều kiện where không tồn tại trong bảng dữ liệu
      * @param array $where
      * @return array
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/04/11
      */
@@ -414,12 +414,12 @@ abstract class BaseDao
     }
 
     /**
-     * 搜索
+     * Tìm kiếm
      * @param array $where
      * @param bool $search
      * @return BaseModel
      * @throws \ReflectionException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/03/18
      */
@@ -433,7 +433,7 @@ abstract class BaseDao
     }
 
     /**
-     * 求和
+     * Tính tổng
      * @param array $where
      * @param string $field
      * @param bool $search
@@ -450,7 +450,7 @@ abstract class BaseDao
     }
 
     /**
-     * 高精度加法
+     * Phép cộng độ chính xác cao
      * @param $key
      * @param string $incField
      * @param string $inc
@@ -467,7 +467,7 @@ abstract class BaseDao
     }
 
     /**
-     * 高精度 减法
+     * Phép trừ độ chính xác cao
      * @param $key
      * @param string $decField
      * @param string $dec
@@ -484,7 +484,7 @@ abstract class BaseDao
     }
 
     /**
-     * 高精度计算并保存
+     * Tính toán độ chính xác cao và lưu lại
      * @param $key
      * @param string $incField
      * @param string $inc
@@ -516,7 +516,7 @@ abstract class BaseDao
     }
 
     /**
-     * 减库存加销量
+     * Giảm tồn kho, tăng lượt bán
      * @param array $where
      * @param int $num
      * @param string $stock
@@ -546,7 +546,7 @@ abstract class BaseDao
     }
 
     /**
-     * 加库存减销量
+     * Tăng tồn kho, giảm lượt bán
      * @param array $where
      * @param int $num
      * @param string $stock
@@ -576,7 +576,7 @@ abstract class BaseDao
     }
 
     /**
-     * 获取条件数据中的某个值的最大值
+     * Lấy giá trị lớn nhất của một trường trong dữ liệu theo điều kiện
      * @param array $where
      * @param string $field
      * @return mixed
@@ -587,7 +587,7 @@ abstract class BaseDao
     }
 
     /**
-     * 获取条件数据中的某个值的最小值
+     * Lấy giá trị nhỏ nhất của một trường trong dữ liệu theo điều kiện
      * @param array $where
      * @param string $field
      * @return mixed
@@ -598,7 +598,7 @@ abstract class BaseDao
     }
 
     /**
-     * 获取(条件)按照(排序)的第一条
+     * Lấy bản ghi đầu tiên theo (điều kiện) sắp xếp theo (sort)
      * @param array $where
      * @param string $order
      * @return mixed

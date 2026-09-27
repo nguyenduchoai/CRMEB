@@ -22,7 +22,7 @@
 					</view>
 				</view>
 				<view class="flex-between-center mt-12">
-					<text class="fs-22 text--w111-999">已售{{item.sales}}{{item.unit_name}}</text>
+					<text class="fs-22 text--w111-999">Đã bán {{item.sales}} {{item.unit_name}}</text>
 					<view class="w-44 h-44 rd-24 bg-gradient flex-center" v-if="goDetail=='goDetail'">
 						<text class="iconfont icon-ic_ShoppingCart1 text--w111-fff fs-26"></text>
 					</view>

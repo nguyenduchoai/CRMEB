@@ -166,7 +166,7 @@ if (!function_exists('echo_value')) {
             font-size:16px;
             border-top-left-radius: 4px;
             border-top-right-radius: 4px;
-            font-family: Consolas,"Liberation Mono",Courier,Verdana,"微软雅黑",serif;
+            font-family: Consolas,"Liberation Mono",Courier,Verdana,"Microsoft YaHei",serif;
         }
         .exception .code{
             float: left;
@@ -209,7 +209,7 @@ if (!function_exists('echo_value')) {
             display: inline-block;
             border-left: 1px solid #fff;
             font-size:14px;
-            font-family: Consolas,"Liberation Mono",Courier,Verdana,"微软雅黑",serif;
+            font-family: Consolas,"Liberation Mono",Courier,Verdana,"Microsoft YaHei",serif;
         }
         .exception .trace{
             padding: 6px;
@@ -217,7 +217,7 @@ if (!function_exists('echo_value')) {
             border-top: 0 none;
             line-height: 16px;
             font-size:14px;
-            font-family: Consolas,"Liberation Mono",Courier,Verdana,"微软雅黑",serif;
+            font-family: Consolas,"Liberation Mono",Courier,Verdana,"Microsoft YaHei",serif;
         }
         .exception .trace h2:hover {
             text-decoration: underline;
@@ -256,7 +256,7 @@ if (!function_exists('echo_value')) {
         }
         .exception-var table tbody{
             font-size: 13px;
-            font-family: Consolas, "Liberation Mono", Courier, "微软雅黑",serif;
+            font-family: Consolas, "Liberation Mono", Courier, "Microsoft YaHei",serif;
         }
         .exception-var table td{
             padding: 0 6px;
@@ -475,11 +475,11 @@ if (!function_exists('echo_value')) {
                     if (expand) {
                         dom.attributes['data-expand'].value = '1';
                         ol.style.display = 'none';
-                        dom.innerText = 'Call Stack (展开)';
+                        dom.innerText = 'Call Stack (mở rộng)';
                     } else {
                         dom.attributes['data-expand'].value = '0';
                         ol.style.display = 'block';
-                        dom.innerText = 'Call Stack (折叠)';
+                        dom.innerText = 'Call Stack (thu gọn)';
                     }
                 };
                 var traces = $('.trace');

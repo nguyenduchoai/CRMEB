@@ -1,24 +1,24 @@
 <template>
   <div class="customer">
     <el-form ref="formValidate" :model="formValidate" label-width="80px" inline @submit.native.prevent>
-      <el-form-item label="搜索用户：">
+      <el-form-item label="Tìm kiếm người dùng:">
         <el-input
           clearable
-          placeholder="请输入用户UID、昵称或手机号"
+          placeholder="Vui lòng nhập UID, biệt danh hoặc số điện thoại"
           v-model="formValidate.nickname"
           class="form_content_width"
         ></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" v-db-click @click="userSearchs">查询</el-button>
+        <el-button type="primary" v-db-click @click="userSearchs">Tra cứu</el-button>
       </el-form-item>
     </el-form>
     <el-table
       class="mt15"
       v-loading="loading2"
       highlight-current-row
-      no-userFrom-text="暂无数据"
-      no-filtered-userFrom-text="暂无筛选结果"
+      no-userFrom-text="Chưa có dữ liệu"
+      no-filtered-userFrom-text="Không có kết quả phù hợp"
       ref="selection"
       :data="tableList2"
       height="450"
@@ -39,30 +39,30 @@
           <span>{{ scope.row.uid }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="用户头像" min-width="90">
+      <el-table-column label="Ảnh đại diện người dùng" min-width="90">
         <template slot-scope="scope">
           <div class="tabBox_img" v-viewer>
             <img v-lazy="scope.row.headimgurl" />
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="用户昵称" min-width="180">
+      <el-table-column label="Biệt danh người dùng" min-width="180">
         <template slot-scope="scope">
           <div>{{ scope.row.nickname }}</div>
-          <div style="color: red">{{ scope.row.is_del ? '用户已注销' : '' }}</div>
+          <div style="color: red">{{ scope.row.is_del ? 'Người dùng đã hủy tài khoản' : '' }}</div>
         </template>
       </el-table-column>
-      <el-table-column label="手机号" min-width="180">
+      <el-table-column label="Số điện thoại" min-width="180">
         <template slot-scope="scope">
           <div>{{ scope.row.phone }}</div>
         </template>
       </el-table-column>
-      <el-table-column label="是否关注公众号" min-width="130">
+      <el-table-column label="Theo dõi OA WeChat" min-width="130">
         <template slot-scope="scope">
-          <span v-text="scope.row.subscribe === 1 ? '关注' : '未关注'"></span>
+          <span v-text="scope.row.subscribe === 1 ? 'Đã theo dõi' : 'Chưa theo dõi'"></span>
         </template>
       </el-table-column>
-      <el-table-column label="注册时间" min-width="180">
+      <el-table-column label="Thời gian đăng ký" min-width="180">
         <template slot-scope="scope">
           <div>{{ scope.row.add_time }}</div>
         </template>
@@ -94,16 +94,16 @@ export default {
       tableList2: [],
       timeVal: [],
       fromList: {
-        title: '选择时间',
+        title: 'Chọn giờ',
         custom: true,
         fromTxt: [
-          { text: '全部', val: '' },
-          { text: '今天', val: 'today' },
-          { text: '昨天', val: 'yesterday' },
-          { text: '最近7天', val: 'lately7' },
-          { text: '最近30天', val: 'lately30' },
-          { text: '本月', val: 'month' },
-          { text: '本年', val: 'year' },
+          { text: 'Tất cả', val: '' },
+          { text: 'Hôm nay', val: 'today' },
+          { text: 'Hôm qua', val: 'yesterday' },
+          { text: '7 ngày qua', val: 'lately7' },
+          { text: '30 ngày qua', val: 'lately30' },
+          { text: 'Tháng này', val: 'month' },
+          { text: 'Năm nay', val: 'year' },
         ],
       },
       currentid: 0,
@@ -117,19 +117,19 @@ export default {
     this.getListService();
   },
   methods: {
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e;
       this.formValidate.data = this.timeVal ? this.timeVal.join('-') : '';
       this.getListService();
     },
-    // 选择时间
+    // Chọn giờ
     selectChange(tab) {
       this.formValidate.data = tab;
       this.timeVal = [];
       this.getListService();
     },
-    // 客服列表
+    // Danh sách nhân viên CSKH
     getListService() {
       this.loading2 = true;
       kefucreateApi(this.formValidate)
@@ -147,7 +147,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 搜索
+    // Tìm kiếm
     userSearchs() {
       this.formValidate.page = 1;
       this.getListService();
@@ -171,7 +171,7 @@ export default {
           });
         }
       } else {
-        this.$message.warning('请先选择商品');
+        this.$message.warning('Vui lòng chọn sản phẩm trước');
       }
     },
   },

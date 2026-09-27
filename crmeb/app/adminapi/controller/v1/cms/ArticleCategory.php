@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use crmeb\services\CacheService;
 use think\facade\App;
 
 /**
- * 文章分类管理
+ * Quản lý danh mục bài viết
  * Class ArticleCategory
  * @package app\adminapi\controller\v1\cms
  */
@@ -39,7 +39,7 @@ class ArticleCategory extends AuthController
     }
 
     /**
-     * 获取分类列表
+     * Lấy danh sách danh mục
      * @return mixed
      */
     public function index()
@@ -57,7 +57,7 @@ class ArticleCategory extends AuthController
     }
 
     /**
-     * 创建新增表单
+     * Tạo form thêm mới
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
@@ -67,7 +67,7 @@ class ArticleCategory extends AuthController
     }
 
     /**
-     * 保存新建分类
+     * Lưu danh mục mới tạo
      * @return mixed
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
@@ -92,7 +92,7 @@ class ArticleCategory extends AuthController
     }
 
     /**
-     * 创建修改表单
+     * Tạo form sửa
      * @param int $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -104,7 +104,7 @@ class ArticleCategory extends AuthController
     }
 
     /**
-     * 保存修改分类
+     * Lưu danh mục đã sửa
      * @param $id
      * @return mixed
      * @throws \Psr\SimpleCache\InvalidArgumentException
@@ -127,7 +127,7 @@ class ArticleCategory extends AuthController
     }
 
     /**
-     * 删除文章分类
+     * Xóa danh mục bài viết
      * @param $id
      * @return mixed
      * @throws \Psr\SimpleCache\InvalidArgumentException
@@ -142,7 +142,7 @@ class ArticleCategory extends AuthController
     }
 
     /**
-     * 修改文章分类状态
+     * Sửa trạng thái danh mục bài viết
      * @param int $id
      * @param int $status
      * @return mixed
@@ -158,7 +158,7 @@ class ArticleCategory extends AuthController
     }
 
     /**
-     * 获取文章分类
+     * Lấy danh mục bài viết
      * @return mixed
      */
     public function categoryList()
@@ -167,7 +167,7 @@ class ArticleCategory extends AuthController
     }
 
     /**
-     * 树形列表
+     * Danh sách dạng cây
      * @return mixed
      * @throws \ReflectionException
      */

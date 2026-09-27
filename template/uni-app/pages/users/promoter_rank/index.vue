@@ -15,21 +15,21 @@
 								<image :src="Two.avatar"></image>
 							</view>
 							<view class="name line1">{{Two.nickname}}</view>
-							<view class="num">{{Two.count}}{{$t(`人`)}}</view>
+							<view class="num">{{Two.count}}{{$t(`người`)}}</view>
 						</view>
 						<view class="item one" v-if="One.uid">
 							<view class="pictrue">
 								<image :src="One.avatar"></image>
 							</view>
 							<view class="name line1">{{One.nickname}}</view>
-							<view class="num">{{One.count}}{{$t(`人`)}}</view>
+							<view class="num">{{One.count}}{{$t(`người`)}}</view>
 						</view>
 						<view class="item three" v-if="Three.uid">
 							<view class="pictrue">
 								<image :src="Three.avatar"></image>
 							</view>
 							<view class="name line1">{{Three.nickname}}</view>
-							<view class="num">{{Three.count}}{{$t(`人`)}}</view>
+							<view class="num">{{Three.count}}{{$t(`người`)}}</view>
 						</view>
 					</view>
 				</view>
@@ -43,7 +43,7 @@
 						</view>
 						<view class="text line1">{{item.nickname}}</view>
 					</view>
-					<view class="people font-color">{{item.count}}{{$t(`人`)}}</view>
+					<view class="people font-color">{{item.count}}{{$t(`người`)}}</view>
 				</view>
 			</view>
 		</view>
@@ -81,7 +81,7 @@
 		mixins:[colors],
 		data() {
 			return {
-				navList: [this.$t(`周榜`), this.$t(`月榜`)],
+				navList: [this.$t(`Top tuần`), this.$t(`Top tháng`)],
 				active: 0,
 				page: 1,
 				limit: 10,
@@ -92,8 +92,8 @@
 				Two: {},
 				One: {},
 				Three: {},
-				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false //是否隐藏授权
+				isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+				isShowAuth: false //Có ẩn ủy quyền hay không
 			};
 		},
 		computed: mapGetters(['isLogin']),
@@ -124,7 +124,7 @@
 			onLoadFun() {
 				this.getRanklist();
 			},
-			// 授权关闭
+			// Đóng ủy quyền
 			authColse: function(e) {
 				this.isShowAuth = e
 			},

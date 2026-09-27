@@ -1,9 +1,9 @@
 // +---------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +---------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +---------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +---------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +---------------------------------------------------------------------
@@ -31,7 +31,7 @@ export default {
       name: `${pre}code_generation`,
       meta: {
         auth: ['system-config-code-generation'],
-        title: '代码生成',
+        title: 'Tạo mã nguồn',
         activeMenu: routePre + '/system/code_generation_list',
       },
       component: () => import('@/pages/system/codeGeneration/index'),
@@ -41,7 +41,7 @@ export default {
       name: `${pre}code_data_dictionary`,
       meta: {
         auth: ['system-code-data_dictionary'],
-        title: '数据字典',
+        title: 'Từ điển dữ liệu',
         activeMenu: routePre + '/system/code_data_dictionary',
       },
       component: () => import('@/pages/system/codeDataDictionary/index'),
@@ -51,7 +51,7 @@ export default {
       name: `${pre}code_data_dictionary_datalist`,
       meta: {
         auth: ['system-code-data_dictionary-dataList'],
-        title: '数据管理页面',
+        title: 'Trang quản lý dữ liệu',
         activeMenu: routePre + '/system/code_data_dictionary',
       },
       component: () => import('@/pages/system/codeDataDictionary/dataList'),
@@ -61,7 +61,7 @@ export default {
       name: `${pre}code_generation_list`,
       meta: {
         auth: ['system-config-code-generation-list'],
-        title: '代码生成列表',
+        title: 'Danh sách tạo mã nguồn',
       },
       component: () => import('@/pages/system/codeGeneration/list'),
     },
@@ -70,7 +70,7 @@ export default {
       name: `${pre}backend_routing`,
       meta: {
         auth: ['system-config-backend-routing'],
-        title: '接口管理',
+        title: 'Quản lý API',
       },
       component: () => import('@/pages/system/backendRouting/index'),
     },
@@ -79,7 +79,7 @@ export default {
       name: `${pre}file`,
       meta: {
         auth: ['system-file'],
-        title: '附件管理',
+        title: 'Quản lý tệp đính kèm',
       },
       component: () => import('@/pages/system/file/index'),
     },
@@ -88,7 +88,7 @@ export default {
       name: `${pre}clear`,
       meta: {
         auth: ['system-clear'],
-        title: '刷新缓存',
+        title: 'Làm mới bộ nhớ đệm',
       },
       component: () => import('@/pages/system/clear/index'),
     },
@@ -97,7 +97,7 @@ export default {
       name: `${pre}systemLog`,
       meta: {
         auth: ['system-maintain-system-log'],
-        title: '系统日志',
+        title: 'Nhật ký hệ thống',
       },
       component: () => import('@/pages/system/maintain/systemLog/index'),
     },
@@ -106,7 +106,7 @@ export default {
       name: `${pre}systemFile`,
       meta: {
         auth: ['system-maintain-system-file'],
-        title: '文件校验',
+        title: 'Kiểm tra tệp',
       },
       component: () => import('@/pages/system/maintain/systemFile/index'),
     },
@@ -115,7 +115,7 @@ export default {
       name: `${pre}systemCleardata`,
       meta: {
         auth: ['system-maintain-system-cleardata'],
-        title: '清除数据',
+        title: 'Xóa dữ liệu',
       },
       component: () => import('@/pages/system/maintain/systemCleardata/index'),
     },
@@ -124,7 +124,7 @@ export default {
       name: `${pre}systemDatabackup`,
       meta: {
         auth: ['system-maintain-system-databackup'],
-        title: '数据备份',
+        title: 'Sao lưu dữ liệu',
       },
       component: () => import('@/pages/system/maintain/systemDatabackup/index'),
     },
@@ -133,7 +133,7 @@ export default {
       name: `${pre}opendir`,
       meta: {
         auth: ['system-maintain-system-file'],
-        title: '文件管理',
+        title: 'Quản lý tệp',
       },
       component: () => import('@/pages/system/maintain/systemFile/opendir'),
     },
@@ -142,7 +142,7 @@ export default {
       name: `${pre}opendir_login`,
       meta: {
         auth: ['system-maintain-system-file'],
-        title: '文件管理入口',
+        title: 'Lối vào quản lý tệp',
         activeMenu: routePre + '/system/maintain/system_file/opendir',
       },
       component: () => import('@/pages/system/maintain/systemFile/login'),
@@ -152,7 +152,7 @@ export default {
       name: `${pre}configTab`,
       meta: {
         auth: ['system-config-system_config-tab'],
-        title: '配置分类',
+        title: 'Danh mục cấu hình',
       },
       component: () => import('@/pages/system/configTab/index'),
     },
@@ -161,7 +161,7 @@ export default {
       name: `${pre}configTabList`,
       meta: {
         auth: ['system-config-system_config_tab-list'],
-        title: '配置列表',
+        title: 'Danh sách cấu hình',
         activeMenu: routePre + '/system/config/system_config_tab/index',
       },
       component: () => import('@/pages/system/configTab/list'),
@@ -171,7 +171,7 @@ export default {
       name: `${pre}group`,
       meta: {
         auth: ['system-config-system_config-group'],
-        title: '组合数据',
+        title: 'Dữ liệu tổ hợp',
       },
       component: () => import('@/pages/system/group/index'),
     },
@@ -180,7 +180,7 @@ export default {
       name: `${pre}groupList`,
       meta: {
         auth: ['system-config-system_config-list'],
-        title: '组合数据列表',
+        title: 'Danh sách dữ liệu tổ hợp',
         activeMenu: routePre + '/system/config/system_group/index',
       },
       component: () => import('@/pages/system/group/list'),
@@ -190,7 +190,7 @@ export default {
       name: `${pre}auth`,
       meta: {
         auth: ['system-maintain-auth'],
-        title: '商业授权',
+        title: 'Giấy phép thương mại',
       },
       component: () => import('@/pages/system/auth/index'),
     },
@@ -199,7 +199,7 @@ export default {
       name: `${pre}upgradeclient`,
       meta: {
         auth: ['system-onlineUpgrade-index'],
-        title: '在线升级',
+        title: 'Nâng cấp trực tuyến',
       },
       component: () => import('@/pages/system/onlineUpgrade/index'),
     },
@@ -208,7 +208,7 @@ export default {
       name: `${pre}crontab`,
       meta: {
         auth: ['system-crontab-index'],
-        title: '定时任务',
+        title: 'Tác vụ định kỳ',
       },
       component: () => import('@/pages/system/crontab/index'),
     },
@@ -217,7 +217,7 @@ export default {
       name: `${pre}event`,
       meta: {
         auth: ['system-event-index'],
-        title: '自定义事件',
+        title: 'Sự kiện tùy chỉnh',
       },
       component: () => import('@/pages/system/event/index'),
     },
@@ -226,7 +226,7 @@ export default {
       name: `${pre}systemMenus`,
       meta: {
         auth: ['system-system-menus'],
-        title: '权限规则',
+        title: 'Quy tắc quyền',
       },
       component: () => import('@/pages/system/systemMenus/index'),
     },

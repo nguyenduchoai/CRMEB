@@ -26,7 +26,7 @@ class StoreProductProtection extends AuthController
 
     public function protectionInfo($id)
     {
-        if (!$id) return app('json')->fail('参数错误');
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $info = $this->services->protectionInfo($id);
         return app('json')->success($info);
     }
@@ -46,20 +46,20 @@ class StoreProductProtection extends AuthController
             ['status', 0]
         ]);
         $this->services->protectionSave($id, $data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     public function protectionStatus($id, $status)
     {
-        if (!$id) return app('json')->fail('参数错误');
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $this->services->protectionStatus($id, $status);
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
     public function protectionDel($id)
     {
-        if (!$id) return app('json')->fail('参数错误');
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $this->services->protectionDel($id);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 }

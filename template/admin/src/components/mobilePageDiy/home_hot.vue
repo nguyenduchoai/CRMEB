@@ -28,11 +28,11 @@
 import { mapState } from 'vuex';
 export default {
   name: 'home_hot',
-  cname: '活动魔方',
+  cname: 'Lưới khuyến mãi',
   icon: 'iconhuodongmofang1',
   configName: 'c_home_hot',
-  type: 1, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'activeParty', // 外面匹配名称
+  type: 1, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'activeParty', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -68,7 +68,7 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'activeParty',
         timestamp: this.num,
@@ -76,40 +76,40 @@ export default {
           tabVal: 0,
         },
         titleConfig: {
-          title: '促销标题',
-          value: '超值爆款',
-          place: '请输入标题',
+          title: 'Tiêu đề khuyến mãi',
+          value: 'Hàng hot giá tốt',
+          place: 'Vui lòng nhập tiêu đề',
           max: 10,
         },
         desConfig: {
-          title: '促销简介',
-          value: '美好生活由此开始',
-          place: '请输入简介',
+          title: 'Mô tả khuyến mãi',
+          value: 'Cuộc sống tươi đẹp bắt đầu từ đây',
+          place: 'Vui lòng nhập mô tả ngắn',
           max: 8,
         },
         menuConfig: {
-          title: '最多可添加4个版块，图片建议尺寸140 * 140px；鼠标拖拽左侧圆点可 调整版块顺序',
+          title: 'Có thể thêm tối đa 4 khối, kích thước ảnh đề xuất 140 * 140px; kéo thả chấm tròn bên trái để điều chỉnh thứ tự khối',
           maxList: 4,
           list: [
             {
               img: '',
               info: [
                 {
-                  title: '标题',
-                  value: '今日推荐',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Gợi ý hôm nay',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '简介',
-                  value: '店主诚意推荐 品质商品',
-                  tips: '选填，不超过20个字',
+                  title: 'Mô tả ngắn',
+                  value: 'Chủ shop tận tâm gợi ý sản phẩm chất lượng',
+                  tips: 'Không bắt buộc, tối đa 20 ký tự',
                   max: 20,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -118,21 +118,21 @@ export default {
               img: '',
               info: [
                 {
-                  title: '标题',
-                  value: '热门榜单',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Top bán chạy',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '简介',
-                  value: '店主诚意推荐 品质商品',
-                  tips: '选填，不超过20个字',
+                  title: 'Mô tả ngắn',
+                  value: 'Chủ shop tận tâm gợi ý sản phẩm chất lượng',
+                  tips: 'Không bắt buộc, tối đa 20 ký tự',
                   max: 20,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -141,21 +141,21 @@ export default {
               img: '',
               info: [
                 {
-                  title: '标题',
-                  value: '首发新品',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Hàng mới ra mắt',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '简介',
-                  value: '新品上架等 你来拿',
-                  tips: '选填，不超过20个字',
+                  title: 'Mô tả ngắn',
+                  value: 'Hàng mới lên kệ, chờ bạn rinh về',
+                  tips: 'Không bắt buộc, tối đa 20 ký tự',
                   max: 20,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -164,21 +164,21 @@ export default {
               img: '',
               info: [
                 {
-                  title: '标题',
-                  value: '促销单品',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Sản phẩm khuyến mãi',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '简介',
-                  value: '综合评选好 产品',
-                  tips: '选填，不超过20个字',
+                  title: 'Mô tả ngắn',
+                  value: 'Sản phẩm tốt qua bình chọn tổng hợp',
+                  tips: 'Không bắt buộc, tối đa 20 ký tự',
                   max: 20,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -186,7 +186,7 @@ export default {
           ],
         },
         themeColor: {
-          title: '主题颜色',
+          title: 'Màu chủ đề',
           name: 'themeColor',
           default: [
             {
@@ -200,7 +200,7 @@ export default {
           ],
         },
         bgColor: {
-          title: '标签背景颜色',
+          title: 'Màu nền nhãn',
           name: 'bgColor',
           default: [
             {
@@ -220,7 +220,7 @@ export default {
           ],
         },
         boxColor: {
-          title: '背景颜色',
+          title: 'Màu nền',
           name: 'boxColor',
           default: [
             {
@@ -233,9 +233,9 @@ export default {
             },
           ],
         },
-        // 页面间距
+        // Lề trang
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 0,
           min: 0,
         },

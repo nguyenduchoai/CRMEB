@@ -55,7 +55,7 @@ export function clearStorage() {
 	try {
 		uni.clearStorageSync();
 	} catch (e) {
-		throw new Error('处理失败');
+		throw new Error('Xử lý thất bại');
 	}
 }
 export function Toast(title, icon = 'none', obj = {}, duration = 800) {
@@ -69,7 +69,7 @@ export function Toast(title, icon = 'none', obj = {}, duration = 800) {
 	};
 	uni.showToast(toastData);
 }
-export function Loading(title = '正在加载...', obj = {}) {
+export function Loading(title = 'Đang tải...', obj = {}) {
 	uni.showLoading({
 		title: title,
 		mask: true,
@@ -80,16 +80,16 @@ export function hideLoading() {
 	try {
 		uni.hideLoading();
 	} catch (e) {
-		throw new Error('处理失败');
+		throw new Error('Xử lý thất bại');
 	}
 }
-export function Modal(title = '提示', content = '这是一个模态弹窗!', obj = {
+export function Modal(title = 'Thông báo', content = 'Đây là một hộp thoại modal!', obj = {
 	showCancel: true,
-	cancelText: '取消',
-	confirmText: '确定'
+	cancelText: 'Hủy',
+	confirmText: 'Xác nhận'
 }) {
-	obj.cancelText = '确定';
-	obj.confirmText = '取消';
+	obj.cancelText = 'Xác nhận';
+	obj.confirmText = 'Hủy';
 	return new Promise((reslove, reject) => {
 		uni.showModal({
 			title: title,

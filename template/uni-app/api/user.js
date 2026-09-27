@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2024 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -11,7 +11,7 @@
 import request from "@/utils/request.js";
 
 /**
- * 获取用户信息
+ * Lấy thông tin người dùng
  * 
  */
 export function getUserInfo() {
@@ -19,7 +19,7 @@ export function getUserInfo() {
 }
 
 /**
- * 设置用户分享
+ * Đặt chia sẻ người dùng
  * 
  */
 export function userShare() {
@@ -27,8 +27,8 @@ export function userShare() {
 }
 
 /**
- * h5用户登录
- * @param data object 用户账号密码
+ * Đăng nhập người dùng h5
+ * @param data object Tài khoản mật khẩu người dùng
  */
 export function loginH5(data) {
 	return request.post("login", data, {
@@ -37,8 +37,8 @@ export function loginH5(data) {
 }
 
 /**
- * h5用户手机号登录
- * @param data object 用户手机号 也只能
+ * Đăng nhập số điện thoại người dùng h5
+ * @param data object Số điện thoại người dùng, cũng chỉ có thể
  */
 export function loginMobile(data) {
 	return request.post("login/mobile", data, {
@@ -47,7 +47,7 @@ export function loginMobile(data) {
 }
 
 /**
- * 验证码key
+ * Key mã xác thực (OTP)
  */
 export function getCodeApi() {
 	return request.get("verify_code", {}, {
@@ -56,8 +56,8 @@ export function getCodeApi() {
 }
 
 /**
- * h5用户发送验证码
- * @param data object 用户手机号
+ * h5 người dùng gửi mã xác thực (OTP)
+ * @param data object Số điện thoại người dùng
  */
 export function registerVerify(data) {
 	return request.post("register/verify", data, {
@@ -66,8 +66,8 @@ export function registerVerify(data) {
 }
 
 /**
- * h5用户手机号注册
- * @param data object 用户手机号 验证码 密码
+ * Đăng ký số điện thoại người dùng h5
+ * @param data object Số điện thoại người dùng, mã xác thực, mật khẩu
  */
 export function register(data) {
 	return request.post("register", data, {
@@ -76,8 +76,8 @@ export function register(data) {
 }
 
 /**
- * 用户手机号修改密码
- * @param data object 用户手机号 验证码 密码
+ * Đổi mật khẩu bằng số điện thoại người dùng
+ * @param data object Số điện thoại người dùng, mã xác thực, mật khẩu
  */
 export function registerReset(data) {
 	return request.post("register/reset", data, {
@@ -86,7 +86,7 @@ export function registerReset(data) {
 }
 
 /**
- * 获取用户中心菜单
+ * Lấy menu trang cá nhân người dùng
  *
  */
 export function getMenuList() {
@@ -96,14 +96,14 @@ export function getMenuList() {
 }
 
 /*
- * 签到用户信息
+ * Thông tin người dùng điểm danh
  * */
 export function postSignUser(sign) {
 	return request.post("sign/user", sign);
 }
 
 /**
- * 获取签到配置
+ * Lấy cấu hình điểm danh
  * 
  */
 export function getSignConfig() {
@@ -111,7 +111,7 @@ export function getSignConfig() {
 }
 
 /**
- * 获取签到列表
+ * Lấy danh sách điểm danh
  * @param object data
  */
 export function getSignList(data) {
@@ -119,14 +119,14 @@ export function getSignList(data) {
 }
 
 /**
- * 用户签到
+ * Người dùng điểm danh
  */
 export function setSignIntegral() {
 	return request.post('sign/integral')
 }
 
 /**
- * 签到列表(年月)
+ * Danh sách điểm danh (năm tháng)
  * @param object data
  * 
  */
@@ -135,7 +135,7 @@ export function getSignMonthList(data) {
 }
 
 /**
- * 活动状态
+ * Trạng thái chương trình
  * 
  */
 export function userActivity() {
@@ -143,21 +143,21 @@ export function userActivity() {
 }
 
 /*
- * 资金明细（types|0=全部,1=消费,2=充值,3=返佣,4=提现）
+ * Chi tiết dòng tiền (types|0=tất cả,1=tiêu dùng,2=nạp tiền,3=trả hoa hồng,4=rút tiền)
  * */
 export function getCommissionInfo(q, types) {
 	return request.get("spread/commission/" + types, q);
 }
 
 /*
- * 积分记录
+ * Lịch sử điểm thưởng
  * */
 export function getIntegralList(q) {
 	return request.get("integral/list", q);
 }
 
 /**
- * 获取分销海报图片
+ * Lấy ảnh poster tiếp thị liên kết
  * 
  */
 export function spreadBanner() {
@@ -176,7 +176,7 @@ export function spreadBanner() {
 
 /**
  *
- * 获取推广用户一级和二级
+ * Lấy người dùng giới thiệu cấp 1 và cấp 2
  * @param object data
  */
 export function spreadPeople(data) {
@@ -185,7 +185,7 @@ export function spreadPeople(data) {
 
 /**
  * 
- * 推广佣金/提现总和
+ * Tổng hoa hồng giới thiệu/rút tiền
  * @param int type
  */
 export function spreadCount(type) {
@@ -193,7 +193,7 @@ export function spreadCount(type) {
 }
 
 /*
- * 推广数据
+ * Dữ liệu giới thiệu
  * */
 export function getSpreadInfo() {
 	return request.get("commission");
@@ -202,7 +202,7 @@ export function getSpreadInfo() {
 
 /**
  * 
- * 推广订单
+ * Đơn hàng giới thiệu
  * @param object data
  */
 export function spreadOrder(data) {
@@ -211,7 +211,7 @@ export function spreadOrder(data) {
 
 /**
  * 
- * 事业部/推广订单
+ * Đơn hàng đại lý khu vực/giới thiệu
  * @param object data
  */
 export function divisionOrder(data) {
@@ -219,21 +219,21 @@ export function divisionOrder(data) {
 }
 
 /*
- * 获取推广人排行
+ * Lấy bảng xếp hạng người giới thiệu
  * */
 export function getRankList(q) {
 	return request.get("rank", q);
 }
 
 /*
- * 获取佣金排名
+ * Lấy xếp hạng hoa hồng
  * */
 export function getBrokerageRank(q) {
 	return request.get("brokerage_rank", q);
 }
 
 /**
- * 提现申请
+ * Yêu cầu rút tiền
  * @param object data
  */
 export function extractCash(data) {
@@ -241,7 +241,7 @@ export function extractCash(data) {
 }
 
 /**
- * 提现银行/提现最低金额
+ * Ngân hàng rút tiền/số tiền rút tối thiểu
  * 
  */
 export function extractBank() {
@@ -249,7 +249,7 @@ export function extractBank() {
 }
 
 /**
- * 会员等级列表
+ * Danh sách hạng thành viên
  * 
  */
 export function userLevelGrade() {
@@ -257,8 +257,8 @@ export function userLevelGrade() {
 }
 
 /**
- * 获取某个等级任务
- * @param int id 任务id
+ * Lấy nhiệm vụ của một hạng nào đó
+ * @param int id ID nhiệm vụ
  */
 export function userLevelTask(id) {
 	return request.get('user/level/task/' + id);
@@ -266,7 +266,7 @@ export function userLevelTask(id) {
 
 
 /**
- * 检查用户是否可以成为会员
+ * Kiểm tra người dùng có thể trở thành thành viên hay không
  * 
  */
 export function userLevelDetection() {
@@ -275,7 +275,7 @@ export function userLevelDetection() {
 
 /**
  * 
- * 地址列表
+ * Danh sách địa chỉ
  * @param object data
  */
 export function getAddressList(data) {
@@ -283,7 +283,7 @@ export function getAddressList(data) {
 }
 
 /**
- * 设置默认地址
+ * Đặt địa chỉ mặc định
  * @param int id
  */
 export function setAddressDefault(id) {
@@ -293,7 +293,7 @@ export function setAddressDefault(id) {
 }
 
 /**
- * 修改 添加地址
+ * Sửa - Thêm địa chỉ
  * @param object data
  */
 export function editAddress(data) {
@@ -301,7 +301,7 @@ export function editAddress(data) {
 }
 
 /**
- * 删除地址
+ * Xóa địa chỉ
  * @param int id
  * 
  */
@@ -312,7 +312,7 @@ export function delAddress(id) {
 }
 
 /**
- * 获取单个地址
+ * Lấy một địa chỉ
  * @param int id 
  */
 export function getAddressDetail(id) {
@@ -320,7 +320,7 @@ export function getAddressDetail(id) {
 }
 
 /**
- * 修改用户信息
+ * Chỉnh sửa thông tin người dùng
  * @param object
  */
 export function userEdit(data) {
@@ -328,34 +328,34 @@ export function userEdit(data) {
 }
 
 /*
- * 退出登录
+ * Đăng xuất
  * */
 export function getLogout() {
 	return request.get("logout");
 }
 /**
- * 小程序充值
+ * Nạp tiền qua Mini Program
  * 
  */
 export function rechargeRoutine(data) {
 	return request.post('recharge/routine', data)
 }
 /*
- * 公众号充值
+ * Nạp tiền qua OA WeChat
  * 
  */
 export function rechargeWechat(data) {
 	return request.post("recharge/wechat", data);
 }
 /*
- * 公众号充值
+ * Nạp tiền qua OA WeChat
  * 
  */
 export function recharge(data) {
 	return request.post("recharge/recharge", data);
 }
 /**
- * 获取默认地址
+ * Lấy địa chỉ mặc định
  * 
  */
 export function getAddressDefault() {
@@ -363,14 +363,14 @@ export function getAddressDefault() {
 }
 
 /**
- * 充值金额选择
+ * Chọn số tiền nạp
  */
 export function getRechargeApi() {
 	return request.get("recharge/index");
 }
 
 /**
- * 登录记录
+ * Lịch sử đăng nhập
  */
 export function setVisit(data) {
 	return request.post('user/set_visit', {
@@ -381,20 +381,20 @@ export function setVisit(data) {
 }
 
 /**
- * 客服列表
+ * Danh sách nhân viên CSKH
  */
 export function serviceList() {
 	return request.get("user/service/list");
 }
 /**
- * 客服详情
+ * Chi tiết CSKH
  */
 export function getChatRecord(data) {
 	return request.get("v2/user/service/record", data);
 }
 
 /**
- * 静默绑定推广人
+ * Liên kết ngầm với người giới thiệu
  * @param {Object} puid
  */
 export function spread(puid) {
@@ -402,14 +402,14 @@ export function spread(puid) {
 }
 
 /**
- * 会员详情
+ * Chi tiết thành viên
  */
 export function getlevelInfo() {
 	return request.get("user/level/info");
 }
 
 /**
- * 会员经验列表
+ * Danh sách điểm kinh nghiệm thành viên
  */
 export function getlevelExpList(data) {
 	return request.get("user/level/expList", data);
@@ -417,7 +417,7 @@ export function getlevelExpList(data) {
 
 
 /**
- * 微信直接手机号登录
+ * Đăng nhập trực tiếp bằng số điện thoại qua WeChat
  */
 export function phoneWxSilenceAuth(data) {
 	return request.post('v2/phone_wx_silence_auth', data, {
@@ -426,7 +426,7 @@ export function phoneWxSilenceAuth(data) {
 }
 
 /**
- * 小程序直接手机号登录
+ * Đăng nhập trực tiếp bằng số điện thoại qua Mini Program
  */
 export function phoneSilenceAuth(data) {
 	return request.post('v2/phone_silence_auth', data, {
@@ -435,7 +435,7 @@ export function phoneSilenceAuth(data) {
 }
 
 /**
- * 用户发票列表
+ * Danh sách hóa đơn của người dùng
  * @param {Object} data
  */
 export function invoiceList(data) {
@@ -445,7 +445,7 @@ export function invoiceList(data) {
 }
 
 /**
- * 用户添加|修改发票
+ * Người dùng thêm|sửa hóa đơn
  * @param {Object} data
  */
 export function invoiceSave(data) {
@@ -455,7 +455,7 @@ export function invoiceSave(data) {
 }
 
 /**
- * 用户删除发票
+ * Người dùng xóa hóa đơn
  * @param {Object} data
  */
 export function invoiceDelete(id) {
@@ -463,7 +463,7 @@ export function invoiceDelete(id) {
 }
 
 /**
- * 获取用户默认发票
+ * Lấy hóa đơn mặc định của người dùng
  * @param {Object} type
  */
 export function invoiceDefault(type) {
@@ -471,7 +471,7 @@ export function invoiceDefault(type) {
 }
 
 /**
- * 用户单个发票详情
+ * Chi tiết một hóa đơn của người dùng
  * @param {Object} id
  */
 export function invoiceDetail(id) {
@@ -479,7 +479,7 @@ export function invoiceDetail(id) {
 }
 
 /**
- * 订单申请开票
+ * Đơn hàng yêu cầu xuất hóa đơn
  * @param {Object} id
  */
 export function invoiceOrder(data) {
@@ -487,7 +487,7 @@ export function invoiceOrder(data) {
 }
 
 /**
- * 订单详情中申请开票
+ * Yêu cầu xuất hóa đơn trong chi tiết đơn hàng
  * @param {Object} id
  */
 export function makeUpinvoice(data) {
@@ -495,14 +495,14 @@ export function makeUpinvoice(data) {
 }
 
 /**
- * 会员卡主界面
+ * Giao diện chính thẻ thành viên
  */
 export function memberCard() {
 	return request.get('user/member/card/index');
 }
 
 /**
- * 卡密领取会员卡
+ * Nhận thẻ thành viên bằng mã thẻ
  * @param {Object} data
  */
 export function memberCardDraw(data) {
@@ -510,7 +510,7 @@ export function memberCardDraw(data) {
 }
 
 /**
- * 购买会员卡
+ * Mua thẻ thành viên
  * @param {Object} data
  */
 export function memberCardCreate(data) {
@@ -518,14 +518,14 @@ export function memberCardCreate(data) {
 }
 
 /**
- * 会员优惠券
+ * Phiếu giảm giá thành viên
  */
 export function memberCouponsList() {
 	return request.get('user/member/coupons/list');
 }
 
 /**
- * svip推荐商品
+ * Sản phẩm đề xuất svip
  * @param {Object} id
  */
 export function groomList(id, data) {
@@ -533,7 +533,7 @@ export function groomList(id, data) {
 }
 
 /**
- * 付费会员结束
+ * Kết thúc thành viên trả phí
  * @param {Object} data
  */
 export function memberOverdueTime(data) {
@@ -541,7 +541,7 @@ export function memberOverdueTime(data) {
 }
 
 /**
- * 新版分享海报信息获取
+ * Lấy thông tin poster chia sẻ phiên bản mới
  * 
  */
 export function spreadMsg() {
@@ -550,7 +550,7 @@ export function spreadMsg() {
 
 
 /**
- * 图片链接转base64
+ * Chuyển link ảnh sang base64
  * 
  */
 export function imgToBase(data) {
@@ -558,7 +558,7 @@ export function imgToBase(data) {
 }
 
 /**
- * 获取小程序二维码
+ * Lấy mã QR Mini Program
  * 
  */
 export function routineCode(data) {
@@ -566,35 +566,35 @@ export function routineCode(data) {
 }
 
 /**
- * 消息中心
+ * Trung tâm tin nhắn
  */
 export function serviceRecord(data) {
 	return request.get('user/record', data);
 }
 
 /**
- * 消息中心-站内信列表
+ * Trung tâm tin nhắn - danh sách thông báo nội bộ
  */
 export function messageSystem(data) {
 	return request.get('user/message_system/list', data);
 }
 
 /**
- * 消息中心-站内信列表详情
+ * Trung tâm tin nhắn - chi tiết danh sách thông báo nội bộ
  */
 export function getMsgDetails(id) {
 	return request.get('user/message_system/detail/' + id);
 }
 
 /**
- * 消息中心-消息已读/删除
+ * Trung tâm tin nhắn - tin nhắn đã đọc/xóa
  */
 export function msgLookDel(data) {
 	return request.get('user/message_system/edit_message', data);
 }
 
 /**
- * 苹果账号登录
+ * Đăng nhập tài khoản Apple
  * @param {Object} data
  */
 export function appleLogin(data) {
@@ -604,7 +604,7 @@ export function appleLogin(data) {
 }
 
 /*
- * 获取隐私协议
+ * Lấy chính sách bảo mật
  * */
 export function getUserAgreement(type) {
 	return request.get(`get_agreement/${type}`, {}, {
@@ -613,31 +613,31 @@ export function getUserAgreement(type) {
 }
 
 /**
- * 获取分销等级列表
- * @param int id 任务id
+ * Lấy danh sách cấp độ CTV
+ * @param int id ID nhiệm vụ
  */
 export function agentLevelList() {
 	return request.get('v2/agent/level_list');
 }
 
 /**
- * 获取分销任务列表
- * @param int id 任务id
+ * Lấy danh sách nhiệm vụ tiếp thị liên kết
+ * @param int id ID nhiệm vụ
  */
 export function agentLevelTaskList(id) {
 	return request.get('v2/agent/level_task_list?id=' + id);
 }
 
 /**
- * 获取代付详情
- * @param int id 任务id
+ * Lấy chi tiết thanh toán hộ
+ * @param int id ID nhiệm vụ
  */
 export function friendDetail(id) {
 	return request.get('order/friend_detail?order_id=' + id);
 }
 
 /**
- * 员工列表
+ * Danh sách nhân viên
  * @param object data
  * 
  */
@@ -647,7 +647,7 @@ export function clerkPeople(data) {
 
 /**
  * 
- * 员工比例
+ * Tỷ lệ nhân viên
  * @param object data
  */
 export function setClerkPercent(data) {
@@ -656,7 +656,7 @@ export function setClerkPercent(data) {
 
 /**
  * 
- * 删除员工
+ * Xóa nhân viên
  * @param object data
  */
 export function delClerkPercent(id) {
@@ -664,7 +664,7 @@ export function delClerkPercent(id) {
 }
 
 /**
- * 注销用户
+ * Hủy tài khoản người dùng
  * @param int id
  * 
  */
@@ -672,7 +672,7 @@ export function cancelUser() {
 	return request.get('user_cancel');
 }
 /**
- * 获取多语言类型
+ * Lấy loại đa ngôn ngữ
  */
 
 export function getLangList() {
@@ -682,7 +682,7 @@ export function getLangList() {
 }
 
 /**
- * 获取多语言JSON
+ * Lấy JSON đa ngôn ngữ
  */
 
 export function getLangJson() {
@@ -692,7 +692,7 @@ export function getLangJson() {
 }
 
 /**
- * 获取多语言是否切换
+ * Lấy trạng thái có chuyển đổi đa ngôn ngữ hay không
  */
 
 export function getLangVersion() {
@@ -703,7 +703,7 @@ export function getLangVersion() {
 
 /**
  * 
- * 小程序绑定手机号
+ * Liên kết số điện thoại trên Mini Program
  * @param object data
  */
 export function mpBindingPhone(data) {
@@ -711,7 +711,7 @@ export function mpBindingPhone(data) {
 }
 
 /**
- *  签到提醒切换
+ *  Chuyển đổi nhắc nhở điểm danh
  */
 
 export function changeRemindStatus(status) {
@@ -722,14 +722,14 @@ export function changeRemindStatus(status) {
 
 
 /**
- * 绑定员工
+ * Liên kết nhân viên
  * 
  */
 export function spreadAgent(data) {
 	return request.post(`agent/spread`, data);
 }
 
-// 用户确认商家转账
+// Người dùng xác nhận chuyển khoản cho shop
 export function transferInfoApi(data) {
 	return request.get(`transfer/info`, data);
 }

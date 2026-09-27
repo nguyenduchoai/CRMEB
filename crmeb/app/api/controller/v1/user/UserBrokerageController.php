@@ -17,7 +17,7 @@ class UserBrokerageController
     }
 
     /**
-     * 推广数据    昨天的佣金   累计提现金额  当前佣金
+     * Dữ liệu giới thiệu    Hoa hồng hôm qua   Số tiền đã rút lũy kế  Hoa hồng hiện tại
      * @param Request $request
      * @return mixed
      */
@@ -28,7 +28,7 @@ class UserBrokerageController
     }
 
     /**
-     * 佣金排行
+     * Xếp hạng hoa hồng
      * @param Request $request
      * @return mixed
      */

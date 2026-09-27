@@ -5,13 +5,13 @@
         <span>{{ configData.title }}</span>
       </div>
       <div class="style-box acea-row row-middle">
-        <div class="bnt" @click="styleTap">修改风格</div>
-        <div class="name">当前：样式{{ configData.tabVal + 1 }}</div>
+        <div class="bnt" @click="styleTap">Đổi phong cách</div>
+        <div class="name">Hiện tại: Kiểu {{ configData.tabVal + 1 }}</div>
       </div>
     </div>
     <el-dialog
       :visible.sync="modals"
-      title="风格选择器"
+      title="Bộ chọn phong cách"
       height="500"
       :width="configData.type == 'signIn' || configData.type == 'ranking' ? '630px' : '910px'"
     >
@@ -33,12 +33,12 @@
             />
             <span class="iconfont icona-zu80222" v-if="current == index"></span>
           </div>
-          <div class="name">风格{{ index + 1 }}</div>
+          <div class="name">Phong cách {{ index + 1 }}</div>
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button v-db-click @click="cancel">取 消</el-button>
-        <el-button type="primary" v-db-click @click="ok">确 定</el-button>
+        <el-button v-db-click @click="cancel">Hủy</el-button>
+        <el-button type="primary" v-db-click @click="ok">Xác nhận</el-button>
       </span>
     </el-dialog>
   </div>

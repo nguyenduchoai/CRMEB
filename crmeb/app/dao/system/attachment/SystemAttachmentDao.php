@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,7 +24,7 @@ class SystemAttachmentDao extends BaseDao
 {
 
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -33,7 +33,7 @@ class SystemAttachmentDao extends BaseDao
     }
 
     /**
-     * 获取图片列表
+     * Lấy danh sách hình ảnh
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -48,7 +48,7 @@ class SystemAttachmentDao extends BaseDao
     }
 
     /**
-     * 移动图片
+     * Di chuyển ảnh
      * @param array $data
      * @return \crmeb\basic\BaseModel
      */
@@ -58,7 +58,7 @@ class SystemAttachmentDao extends BaseDao
     }
 
     /**
-     * 获取名称
+     * Lấy tên
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -73,7 +73,7 @@ class SystemAttachmentDao extends BaseDao
     }
 
     /**
-     * 获取昨日系统生成
+     * Lấy dữ liệu hệ thống tạo ngày hôm qua
      * @return \think\Collection
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -85,7 +85,7 @@ class SystemAttachmentDao extends BaseDao
     }
 
     /**
-     * 删除昨日生成海报
+     * Xóa poster tạo ngày hôm qua
      * @throws \Exception
      */
     public function delYesterday()
@@ -94,13 +94,13 @@ class SystemAttachmentDao extends BaseDao
     }
 
     /**
-     * 获取扫码上传的图片数据
+     * Lấy dữ liệu ảnh tải lên bằng quét mã
      * @param $scan_token
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/06/13
      */

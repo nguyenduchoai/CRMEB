@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -13,30 +13,30 @@ module.exports = {
 	LOGIN_STATUS: 'LOGIN_STATUS_TOKEN',
 	//uid
 	UID:'UID',
-	//用户信息
+	//Thông tin người dùng
 	USER_INFO: 'USER_INFO',
-	//token过期时间
+	//Thời gian hết hạn token
 	EXPIRES_TIME: 'EXPIRES_TIME',
-	//微信登录
+	//Đăng nhập bằng WeChat
 	WX_AUTH: 'WX_AUTH',
-	//公众号登录code
+	//Code đăng nhập OA WeChat
 	STATE_KEY: 'wx_authorize_state',
-	//登录类型
+	//Loại đăng nhập
 	LOGINTYPE: 'loginType',
-	//登录跳转地址
+	//Địa chỉ chuyển hướng sau đăng nhập
 	BACK_URL: 'login_back_url',
-	//小程序登录状态code
+	//Code trạng thái đăng nhập Mini Program
 	STATE_R_KEY: 'roution_authorize_state',
-	//logo 地址
+	//Địa chỉ logo
 	LOGO_URL: 'LOGO_URL',
-	//模板缓存
+	//Cache template
 	SUBSCRIBE_MESSAGE: 'SUBSCRIBE_MESSAGE',
 
 	TIPS_KEY: 'TIPS_KEY',
 
 	SPREAD: 'spread',
-	//缓存经度
+	//Cache kinh độ
 	CACHE_LONGITUDE: 'LONGITUDE',
-	//缓存纬度
+	//Cache vĩ độ
 	CACHE_LATITUDE: 'LATITUDE',
 }

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,16 +17,16 @@ use app\services\BaseServices;
 use crmeb\exceptions\AdminException;
 
 /**
- * 包邮
+ * Miễn phí vận chuyển
  * Class ShippingTemplatesFreeServices
  * @package app\services\shipping
- * @method  delete($id, ?string $key = null) 删除数据
- * @method isFree($tempId, $cityid, $number, $price) 是否可以满足包邮
+ * @method  delete($id, ?string $key = null) Xóa dữ liệu
+ * @method isFree($tempId, $cityid, $number, $price) Có đủ điều kiện miễn phí vận chuyển hay không
  */
 class ShippingTemplatesFreeServices extends BaseServices
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * ShippingTemplatesFreeServices constructor.
      * @param ShippingTemplatesDao $dao
      */
@@ -36,7 +36,7 @@ class ShippingTemplatesFreeServices extends BaseServices
     }
 
     /**
-     * 添加包邮信息
+     * Thêm thông tin miễn phí vận chuyển
      * @param array $appointInfo
      * @param int $type
      * @param int $tempId
@@ -83,7 +83,7 @@ class ShippingTemplatesFreeServices extends BaseServices
     }
 
     /**
-     * 获得指定包邮城市地址
+     * Lấy địa chỉ thành phố miễn phí vận chuyển chỉ định
      * @param int $tempId
      * @return array
      */
@@ -107,7 +107,7 @@ class ShippingTemplatesFreeServices extends BaseServices
     }
 
     /**
-     * 获取包邮的省份
+     * Lấy tỉnh được miễn phí vận chuyển
      * @param string $uniqid
      * @param int $provinceId
      * @return array
@@ -121,7 +121,7 @@ class ShippingTemplatesFreeServices extends BaseServices
         foreach ($infoList as $item) {
             $childrenData[] = [
                 'city_id' => $item['province_id'],
-                'name' => $item['name'] ?? '全国',
+                'name' => $item['name'] ?? 'Toàn quốc',
                 'children' => $this->getCityTemp($uniqid, $item['province_id'])
             ];
         }
@@ -129,7 +129,7 @@ class ShippingTemplatesFreeServices extends BaseServices
     }
 
     /**
-     * 获取市区数据
+     * Lấy dữ liệu quận/thành phố
      * @param string $uniqid
      * @param int $provinceId
      * @return array
@@ -143,7 +143,7 @@ class ShippingTemplatesFreeServices extends BaseServices
         foreach ($infoList as $item) {
             $childrenData[] = [
                 'city_id' => $item['city_id'],
-                'name' => $item['name'] ?? '全国',
+                'name' => $item['name'] ?? 'Toàn quốc',
             ];
         }
         return $childrenData;

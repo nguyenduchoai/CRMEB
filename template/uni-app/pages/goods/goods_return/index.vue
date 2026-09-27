@@ -19,7 +19,7 @@
 				</view>
 				<view class='list'>
 					<view class='item acea-row row-between-wrapper'>
-						<view>{{$t(`退货件数`)}}</view>
+						<view>{{$t(`Số lượng trả hàng`)}}</view>
 						<view class='num' v-if="refundCartInfo.length !== 1 || refund_total_num == 1">
 							{{refund_total_num}}
 						</view>
@@ -32,7 +32,7 @@
 						</picker>
 					</view>
 					<view class='item acea-row row-between-wrapper' v-if="status && status._type !== 1">
-						<view>{{$t(`退款类型`)}}</view>
+						<view>{{$t(`Loại hoàn tiền`)}}</view>
 						<picker v-if="status._is_back" class='num' @change="returnGoodsChange" :value="returnGoods"
 							:range="returnGoodsData">
 							<view class="picker acea-row row-between-wrapper">
@@ -41,11 +41,11 @@
 							</view>
 						</picker>
 						<view class="" v-else>
-							仅退款
+							Chỉ hoàn tiền
 						</view>
 					</view>
 					<view class='item acea-row row-between-wrapper'>
-						<view>{{$t(`退款原因`)}}</view>
+						<view>{{$t(`Lý do hoàn tiền`)}}</view>
 						<picker class='num' @change="bindPickerChange" :value="index" :range="RefundArray">
 							<view class="picker acea-row row-between-wrapper">
 								<view class='reason'>{{RefundArray[index]}}</view>
@@ -54,13 +54,13 @@
 						</picker>
 					</view>
 					<view class='item textarea acea-row row-between'>
-						<view>{{$t(`备注说明`)}}</view>
-						<textarea :placeholder='$t(`填写备注信息，100字以内`)' class='num' name="refund_reason_wap_explain"
-							:placeholder-class='$t(`填写备注信息，100字以内`)'></textarea>
+						<view>{{$t(`Ghi chú`)}}</view>
+						<textarea :placeholder='$t(`Nhập ghi chú, tối đa 100 ký tự`)' class='num' name="refund_reason_wap_explain"
+							:placeholder-class='$t(`Nhập ghi chú, tối đa 100 ký tự`)'></textarea>
 					</view>
 					<view class='item acea-row row-between upload'>
 						<view class='title acea-row row-between-wrapper'>
-							<view>{{$t(`上传图片`)}}</view>
+							<view>{{$t(`Tải lên ảnh`)}}</view>
 							<view class='tip'></view>
 						</view>
 						<view class='upload acea-row row-middle'>
@@ -71,12 +71,12 @@
 							<view class='pictrue acea-row row-center-wrapper row-column' @tap='uploadpic'
 								v-if="refund_reason_wap_img.length < 3">
 								<text class='iconfont icon-icon25201'></text>
-								<view>{{$t(`上传图片`)}}</view>
+								<view>{{$t(`Tải lên ảnh`)}}</view>
 							</view>
 						</view>
 					</view>
 				</view>
-				<button class='returnBnt bg-color' form-type="submit">{{$t(`申请退款`)}}</button>
+				<button class='returnBnt bg-color' form-type="submit">{{$t(`Yêu cầu hoàn tiền`)}}</button>
 			</view>
 		</form>
 	</view>
@@ -114,7 +114,7 @@
 				status: {},
 				RefundArray: [],
 				refundCartInfo: [],
-				returnGoodsData: [this.$t(`仅退款`), this.$t(`退货并退款`)],
+				returnGoodsData: [this.$t(`Chỉ hoàn tiền`), this.$t(`Trả hàng và hoàn tiền`)],
 				refund_total_num: 0,
 				index: 0,
 				returnGoods: 0,
@@ -170,7 +170,7 @@
 				})
 			},
 			/**
-			 * 获取退款理由
+			 * Lấy lý do hoàn tiền
 			 */
 			getRefundReason: function() {
 				let that = this;
@@ -180,7 +180,7 @@
 			},
 
 			/**
-			 * 删除图片
+			 * Xóa ảnh
 			 * 
 			 */
 			DelPic: function(e) {
@@ -192,7 +192,7 @@
 			},
 
 			/**
-			 * 上传文件
+			 * Tải lên file
 			 * 
 			 */
 			uploadpic: function() {
@@ -204,18 +204,18 @@
 			},
 
 			/**
-			 * 申请退货
+			 * Yêu cầu trả hàng
 			 */
 			subRefund: function(e) {
 				if (this.isRes) return
 				uni.showLoading({
-					title: this.$t(`申请中`)
+					title: this.$t(`Đang xử lý`)
 				});
 				let that = this,
 					value = e.detail.value;
-				//收集form表单
+				//Thu thập dữ liệu form
 				if (!value.refund_reason_wap_explain) return this.$util.Tips({
-					title: this.$t(`请输入备注`)
+					title: this.$t(`Vui lòng nhập ghi chú`)
 				});
 				let cartInfo = this.refundCartInfo;
 				if (cartInfo.length === 1) {
@@ -236,7 +236,7 @@
 					uni.hideLoading();
 					this.isRes = false
 					return this.$util.Tips({
-						title: this.$t(`申请成功`),
+						title: this.$t(`Gửi yêu cầu thành công`),
 						icon: 'success'
 					}, {
 						tab: 5,

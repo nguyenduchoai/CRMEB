@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,7 +20,7 @@ use think\Model;
 /**
  * Class StoreServiceRecordServices
  * @package app\services\kefu\service
- * @method array|Model|null getLatelyMsgUid(array $where, string $key) 查询最近和用户聊天的uid用户
+ * @method array|Model|null getLatelyMsgUid(array $where, string $key) Tra cứu uid người dùng vừa chat gần nhất
  */
 class StoreServiceRecordServices extends BaseServices
 {
@@ -35,7 +35,7 @@ class StoreServiceRecordServices extends BaseServices
     }
 
     /**
-     * 获取客服用户聊天列表
+     * Lấy danh sách chat của người dùng với CSKH
      * @param int $userId
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -68,7 +68,7 @@ class StoreServiceRecordServices extends BaseServices
     }
 
     /**
-     * 更新客服用户信息
+     * Cập nhật thông tin người dùng CSKH
      * @param int $uid
      * @param array $data
      * @return mixed
@@ -79,7 +79,7 @@ class StoreServiceRecordServices extends BaseServices
     }
 
     /**
-     * 写入聊天相关人数据
+     * Ghi dữ liệu người liên quan đến chat
      * @param int $uid
      * @param int $toUid
      * @param string $message

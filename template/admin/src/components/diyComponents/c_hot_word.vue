@@ -1,7 +1,7 @@
 <template>
   <div class="line-box">
     <div class="title">
-      <p>搜索热词</p>
+      <p>Từ khóa tìm kiếm phổ biến</p>
       <span>{{ datas[name].title }}</span>
     </div>
     <div class="input-box">
@@ -10,7 +10,7 @@
           <div class="icon">
             <i class="el-icon-s-grid" style="font-size: 20px"></i>
           </div>
-          <el-input v-model="item.val" placeholder="选填，不超过十个字" :maxlength="item.maxlength || 10" />
+          <el-input v-model="item.val" placeholder="Không bắt buộc, tối đa 10 ký tự" :maxlength="item.maxlength || 10" />
           <div class="close" v-db-click @click="close(index)">
             <i class="el-icon-close" style="color: #d8d8d8; font-size: 20px"></i>
           </div>
@@ -21,7 +21,7 @@
           type="primary"
           ghost
           style="width: 100%; height: 40px; border-color: var(--prev-color-primary); color: var(--prev-color-primary)"
-          >添加热词</el-button
+          >Thêm từ khóa phổ biến</el-button
         >
       </div>
     </div>
@@ -71,7 +71,7 @@ export default {
       if (this.datas[this.name].list.length < 20) {
         this.datas[this.name].list.push(obj);
       } else {
-        this.$message.warning('最多添加20个热词');
+        this.$message.warning('Chỉ được thêm tối đa 20 từ khóa phổ biến');
       }
     },
     close(index) {

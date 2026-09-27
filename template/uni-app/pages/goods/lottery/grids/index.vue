@@ -7,7 +7,7 @@
 				<view class="grids-top">
 					<image src="../../static/font-left.png" mode=""></image>
 					<view class="grids-title">
-						<view>{{ $t(`恭喜您`) }}，{{ $t(`获得`) }} {{ lottery_num }} {{ $t(`次`) }}</view>
+						<view>{{ $t(`Chúc mừng bạn`) }}，{{ $t(`nhận được`) }} {{ lottery_num }} {{ $t(`lượt`) }}</view>
 					</view>
 					<image src="../../static/font-right.png" mode=""></image>
 				</view>
@@ -22,7 +22,7 @@
 			<!-- #ifdef H5 -->
 			<view class="invite-people" v-if="factor == 5" @click="H5ShareBox = true">
 				<view class="invite">
-					{{ $t(`邀请好友`) }}
+					{{ $t(`Mời bạn bè`) }}
 				</view>
 			</view>
 			<!-- #endif -->
@@ -41,7 +41,7 @@
 				"
 			></userAddress>
 			<!-- #ifdef H5 -->
-			<!-- 分享-->
+			<!-- Chia sẻ-->
 			<view class="share-box" v-if="H5ShareBox">
 				<image :src="imgHost + '/statics/images/share-info.png'" @click="H5ShareBox = false"></image>
 			</view>
@@ -58,7 +58,7 @@
 		</view>
 		<view class="no-lottery" v-else-if="!lotteryShow && loading">
 			<image :src="imgHost + '/statics/images/no-thing.png'"></image>
-			<text>{{ $t(`商家暂未上架活动哦`) }}～</text>
+			<text>{{ $t(`Cửa hàng chưa đăng chương trình nào`) }}～</text>
 		</view>
 		<!-- #ifndef MP -->
 		<home></home>
@@ -106,10 +106,10 @@ export default {
 			aleartType: 0,
 			aleartStatus: false,
 			lottery_draw_param: {
-				startIndex: 3, //开始抽奖位置，从0开始
-				totalCount: 3, //一共要转的圈数
-				winingIndex: 1, //中奖的位置，从0开始
-				speed: 100 //抽奖动画的速度 [数字越大越慢,默认100]
+				startIndex: 3, //Vị trí bắt đầu quay thưởng, tính từ 0
+				totalCount: 3, //Tổng số vòng cần quay
+				winingIndex: 1, //Vị trí trúng thưởng, tính từ 0
+				speed: 100 //Tốc độ hiệu ứng quay thưởng [số càng lớn càng chậm, mặc định 100]
 			},
 			userList: {
 				type: 'user',
@@ -129,17 +129,17 @@ export default {
 			alData: {},
 			type: '',
 			followCode: false,
-			//二维码参数
+			//Tham số mã QR
 			codeShow: false,
 			cid: '1',
 			ifShow: true,
-			val: '', // 要生成的二维码值
-			lv: 3, // 二维码容错级别 ， 一般不用设置，默认就行
-			onval: true, // val值变化时自动重新生成二维码
-			loadMake: true, // 组件加载完成后自动生成二维码
-			src: '', // 二维码生成后的图片地址或base64
+			val: '', // Giá trị mã QR cần tạo
+			lv: 3, // Mức chịu lỗi mã QR, thường không cần đặt, để mặc định là được
+			onval: true, // Khi giá trị val thay đổi thì tự tạo lại mã QR
+			loadMake: true, // Sau khi component tải xong thì tự tạo mã QR
+			src: '', // Địa chỉ ảnh hoặc base64 của mã QR sau khi tạo
 			codeSrc: '',
-			image: '', //上部背景图
+			image: '', //Ảnh nền phía trên
 			is_content: 0,
 			is_all_record: 0,
 			is_personal_record: 0,
@@ -190,7 +190,7 @@ export default {
 		//#endif
 		getLotteryData(type, lottery_id) {
 			uni.showLoading({
-				title: this.$t(`获取抽奖信息`)
+				title: this.$t(`Đang tải thông tin quay thưởng`)
 			});
 			getLotteryData(type, lottery_id)
 				.then((res) => {
@@ -238,7 +238,7 @@ export default {
 			receiveLottery(addData)
 				.then((res) => {
 					this.$util.Tips({
-						title: this.$t(`领取成功`)
+						title: this.$t(`Nhận thành công`)
 					});
 					this.addressModel = false;
 				})
@@ -274,9 +274,9 @@ export default {
 						title: err
 					});
 				});
-			// //props修改在小程序和APP端不成功，所以在这里使用回调函数传参，
+			// //sửa props không thành công trên Mini Program và APP, nên ở đây dùng hàm callback để truyền tham số,
 		},
-		// 抽奖完成
+		// Hoàn tất quay thưởng
 		luck_draw_finish(param) {
 			this.aleartType = 2;
 			this.aleartStatus = true;

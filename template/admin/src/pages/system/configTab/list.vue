@@ -2,22 +2,22 @@
   <div>
     <pages-header
       ref="pageHeader"
-      :title="`配置列表${$route.query.config_name ? ` - ` + $route.query.config_name : ''}`"
+      :title="`Danh sách cấu hình${$route.query.config_name ? ` - ` + $route.query.config_name : ''}`"
       :backUrl="$routeProStr + '/system/config/system_config_tab/index'"
     ></pages-header>
     <el-card :bordered="false" shadow="never" class="mt16">
       <el-row v-if="!$route.query.config_name">
         <el-col v-bind="grid">
-          <!-- <el-button type="primary" v-db-click @click="goIndex">配置分类</el-button> -->
-          <el-button type="primary" v-db-click @click="configureAdd">添加配置</el-button>
+          <!-- <el-button type="primary" v-db-click @click="goIndex">Danh mục cấu hình</el-button> -->
+          <el-button type="primary" v-db-click @click="configureAdd">Thêm cấu hình</el-button>
         </el-col>
       </el-row>
       <el-table
         :data="classList"
         ref="table"
         v-loading="loading"
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
         class="mt14"
       >
         <el-table-column label="ID" width="80">
@@ -25,22 +25,22 @@
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="配置名称" min-width="130">
+        <el-table-column label="Tên cấu hình" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.info }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="字段变量" min-width="130">
+        <el-table-column label="Biến trường" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.menu_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="字段类型" min-width="130">
+        <el-table-column label="Loại trường" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.type }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="值" min-width="130">
+        <el-table-column label="Giá trị" min-width="130">
           <template slot-scope="scope">
             <span
               v-if="
@@ -71,20 +71,20 @@
                 </div>
               </div>
             </div>
-            <span v-if="scope.row.type === 'switch'">{{ scope.row.value == 1 ? '开启' : '关闭' }}</span>
+            <span v-if="scope.row.type === 'switch'">{{ scope.row.value == 1 ? 'Bật' : 'Tắt' }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="关联配置/值" min-width="130">
+        <el-table-column label="Cấu hình/Giá trị liên kết" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.link_data }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="配置分类" min-width="130">
+        <el-table-column label="Danh mục cấu hình" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.config_tab_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="是否显示" min-width="130">
+        <el-table-column label="Hiển thị" min-width="130">
           <template slot-scope="scope">
             <el-switch
               class="defineSwitch"
@@ -94,38 +94,38 @@
               :value="scope.row.status"
               @change="onchangeIsShow(scope.row)"
               size="large"
-              active-text="显示"
-              inactive-text="隐藏"
+              active-text="Hiện"
+              inactive-text="Ẩn"
             >
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="120">
+        <el-table-column label="Thao tác" fixed="right" width="120">
           <template slot-scope="scope">
-            <a v-db-click @click="edit(scope.row)">编辑</a>
+            <a v-db-click @click="edit(scope.row)">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除分类', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa danh mục', scope.$index)">Xóa</a>
           </template>
         </el-table-column>
       </el-table>
     </el-card>
 
-    <!-- 新建 表单-->
+    <!-- Tạo mới Biểu mẫu-->
     <el-dialog
       :visible.sync="modals2"
-      :title="`${rowId ? '修改' : '添加'}配置字段`"
+      :title="`${rowId ? 'Sửa' : 'Thêm'} trường cấu hình`"
       :close-on-click-modal="false"
       :show-close="true"
       width="720px"
     >
       <el-tabs v-if="!rowId" v-model="typeFrom.type" @tab-click="onhangeTab" class="tabsName">
-        <el-tab-pane label="文本框 " name="0"></el-tab-pane>
-        <el-tab-pane label="多行文本框" name="1"></el-tab-pane>
-        <el-tab-pane label="单选框" name="2"></el-tab-pane>
-        <el-tab-pane label="文件上传" name="3"></el-tab-pane>
-        <el-tab-pane label="多选框" name="4"></el-tab-pane>
-        <el-tab-pane label="下拉框" name="5"></el-tab-pane>
-        <el-tab-pane label="开关" name="6"></el-tab-pane>
+        <el-tab-pane label="Ô văn bản " name="0"></el-tab-pane>
+        <el-tab-pane label="Ô văn bản nhiều dòng" name="1"></el-tab-pane>
+        <el-tab-pane label="Ô chọn một" name="2"></el-tab-pane>
+        <el-tab-pane label="Tải tệp lên" name="3"></el-tab-pane>
+        <el-tab-pane label="Ô chọn nhiều" name="4"></el-tab-pane>
+        <el-tab-pane label="Danh sách thả xuống" name="5"></el-tab-pane>
+        <el-tab-pane label="Công tắc" name="6"></el-tab-pane>
       </el-tabs>
       <form-create
         v-if="rules.length != 0"
@@ -138,11 +138,11 @@
         handleIcon="false"
       ></form-create>
       <span slot="footer" class="dialog-footer">
-        <el-button v-db-click @click="modals2 = false">取消</el-button>
-        <el-button type="primary" v-db-click @click="submitForm">确定</el-button>
+        <el-button v-db-click @click="modals2 = false">Hủy</el-button>
+        <el-button type="primary" v-db-click @click="submitForm">Xác nhận</el-button>
       </span>
     </el-dialog>
-    <!-- 编辑表单-->
+    <!-- Form sửa-->
     <edit-from ref="edits" :FromData="FromData" @submitFail="submitFail"></edit-from>
   </div>
 </template>
@@ -212,7 +212,7 @@ export default {
       handler: function (val, oldVal) {
         this.getList();
       },
-      // 深度观察监听
+      // Theo dõi sâu
       deep: true,
     },
   },
@@ -220,14 +220,14 @@ export default {
     this.getList();
   },
   methods: {
-    // 点击tab
+    // Nhấp tab
     onhangeTab() {
       this.classAdd();
     },
     submitForm() {
       this.fapi.submit();
     },
-    // 新增表单
+    // Form thêm mới
     classAdd() {
       configTabAddApi(this.typeFrom)
         .then(async (res) => {
@@ -243,7 +243,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 编辑表单
+    // Form sửa
     edit(row) {
       this.rowId = row.id;
       configTabEditApi(row.id)
@@ -261,7 +261,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 提交表单
+    // Gửi biểu mẫu
     onSubmit(formData) {
       request({
         url: this.FromRequestData.action,
@@ -281,24 +281,24 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 修改成功
+    // Sửa thành công
     submitFail() {
       this.getList();
     },
-    // 跳转到配置分类页面
+    // Chuyển đến trang danh mục cấu hình
     goIndex() {
       this.$router.push({
         path: this.$routeProStr + '/system/config/system_config_tab/index',
       });
     },
-    // 添加配置
+    // Thêm cấu hình
     configureAdd() {
       // this.modals2 = true;
       this.rowId = 0;
       this.typeFrom.type = 0;
       this.classAdd();
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       this.formValidate.tab_id = this.$route.params.id;
@@ -319,7 +319,7 @@ export default {
       this.formValidate.page = index;
       this.getList();
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -337,7 +337,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 修改是否显示
+    // Sửa có hiển thị hay không
     onchangeIsShow(row) {
       configSetStatusApi(row.id, row.status)
         .then(async (res) => {

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\activity\combination\StorePinkServices;
 use app\services\order\StoreCartServices;
 
 /**
- * 购物车类
+ * Lớp giỏ hàng
  * Class StoreCartController
  * @package app\api\controller\store
  */
@@ -29,7 +29,7 @@ class StoreCartController
     }
 
     /**
-     * 购物车 列表
+     * Giỏ hàng - Danh sách
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -39,13 +39,13 @@ class StoreCartController
     public function lst(Request $request)
     {
         [$status] = $request->postMore([
-            ['status', 1],//购物车商品状态
+            ['status', 1],//Trạng thái sản phẩm trong giỏ hàng
         ], true);
         return app('json')->success($this->services->getUserCartList($request->uid(), $status));
     }
 
     /**
-     * 购物车 添加
+     * Giỏ hàng - Thêm
      * @param Request $request
      * @return mixed
      * @throws \Psr\SimpleCache\InvalidArgumentException
@@ -56,16 +56,16 @@ class StoreCartController
     public function add(Request $request)
     {
         $where = $request->postMore([
-            [['productId', 'd'], 0],//普通商品编号
-            [['cartNum', 'd'], 1], //购物车数量
-            ['uniqueId', ''],//属性唯一值
-            [['new', 'd'], 0],// 1 加入购物车直接购买  0 加入购物车
-            [['is_new', 'd'], 0],// 1 加入购物车直接购买  0 加入购物车
-            [['combinationId', 'd'], 0],//拼团商品编号
-            [['secKillId', 'd'], 0],//秒杀商品编号
-            [['bargainId', 'd'], 0],//砍价商品编号
-            [['advanceId', 'd'], 0],//预售商品编号
-            [['pinkId', 'd'], 0],//拼团团队ID
+            [['productId', 'd'], 0],//Mã sản phẩm thường
+            [['cartNum', 'd'], 1], //Số lượng trong giỏ hàng
+            ['uniqueId', ''],//Giá trị duy nhất của thuộc tính
+            [['new', 'd'], 0],// 1 là thêm vào giỏ hàng và mua ngay, 0 là thêm vào giỏ hàng
+            [['is_new', 'd'], 0],// 1 là thêm vào giỏ hàng và mua ngay, 0 là thêm vào giỏ hàng
+            [['combinationId', 'd'], 0],//Mã sản phẩm mua chung
+            [['secKillId', 'd'], 0],//Mã sản phẩm flash sale
+            [['bargainId', 'd'], 0],//Mã sản phẩm săn giảm giá
+            [['advanceId', 'd'], 0],//Mã sản phẩm đặt trước
+            [['pinkId', 'd'], 0],//ID nhóm mua chung
         ]);
         if ($where['is_new'] || $where['new']) $new = true;
         else $new = false;
@@ -94,14 +94,14 @@ class StoreCartController
     }
 
     /**
-     * 购物车 删除商品
+     * Giỏ hàng - Xóa sản phẩm
      * @param Request $request
      * @return mixed
      */
     public function del(Request $request)
     {
         $where = $request->postMore([
-            ['ids', ''],//购物车编号
+            ['ids', ''],//Mã giỏ hàng
         ]);
         $where['ids'] = is_array($where['ids']) ? $where['ids'] : explode(',', $where['ids']);
         if (!count($where['ids']))
@@ -112,7 +112,7 @@ class StoreCartController
     }
 
     /**
-     * 购物车 修改商品数量
+     * Giỏ hàng - Sửa số lượng sản phẩm
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -122,8 +122,8 @@ class StoreCartController
     public function num(Request $request)
     {
         $where = $request->postMore([
-            ['id', 0],//购物车编号
-            ['number', 0],//购物车编号
+            ['id', 0],//Mã giỏ hàng
+            ['number', 0],//Mã giỏ hàng
         ]);
         if (!$where['id'] || !is_numeric($where['id'])) return app('json')->fail(100100);
         if (!$where['number'] || !is_numeric($where['number'])) return app('json')->fail(100007);
@@ -133,7 +133,7 @@ class StoreCartController
     }
 
     /**
-     * 购物车 统计 数量 价格
+     * Giỏ hàng - Thống kê số lượng, giá
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -143,14 +143,14 @@ class StoreCartController
     public function count(Request $request)
     {
         [$numType] = $request->postMore([
-            ['numType', true],//购物车编号
+            ['numType', true],//Mã giỏ hàng
         ], true);
         $uid = (int)$request->uid();
         return app('json')->success($this->services->getUserCartCount($uid, $numType));
     }
 
     /**
-     * 购物车重选
+     * Chọn lại giỏ hàng
      * @param Request $request
      * @return mixed
      */

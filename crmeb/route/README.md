@@ -1,34 +1,34 @@
-crmeb/route目录在CRMEB项目中的主要作用是用于定义项目的路由规则。
+Vai trò chính của thư mục crmeb/route trong dự án CRMEB là định nghĩa các quy tắc định tuyến của dự án.
 
-1. 定义一个 Route::miss 方法处理路由未匹配的情况
+1. Định nghĩa một phương thức Route::miss để xử lý trường hợp không khớp định tuyến
 
-2. 根据请求路径获取应用名称(如 admin、app 等)
+2. Lấy tên ứng dụng dựa trên đường dẫn yêu cầu (như admin, app, v.v.)
 
-3. 根据应用名称返回不同的视图文件
+3. Trả về các tệp view khác nhau tùy theo tên ứng dụng
 
-   - admin前台后台分别返回不同入口
+   - admin trả về các điểm vào riêng cho front-end và back-end
 
-   - app/kefu定义了对应的视图
+   - app/kefu định nghĩa view tương ứng
 
-   - home覆盖移动端和PC入口
+   - home bao gồm điểm vào cho di động và PC
 
-   - 其它情况判断是否移动端返回不同视图
+   - Các trường hợp khác kiểm tra có phải thiết bị di động hay không để trả về view khác nhau
 
-4. 完整定义了项目所有可能的路由入口
+4. Định nghĩa đầy đủ mọi điểm vào định tuyến có thể có của dự án
 
-5. 根据请求信息智能匹配视图资源文件
+5. Khớp thông minh các tệp tài nguyên view dựa trên thông tin yêu cầu
 
-主要作用:
+Vai trò chính:
 
-- 统一处理所有路由匹配
-- 隐藏实际控制器入口
-- 根据应用名分发页面
-- 实现PC端和移动端自动切换
+- Xử lý thống nhất mọi việc khớp định tuyến
+- Ẩn điểm vào thực tế của controller
+- Phân phối trang theo tên ứng dụng
+- Tự động chuyển đổi giữa PC và di động
 
-这种设计可以:
+Thiết kế này có thể:
 
-- 完整覆盖所有路由情况
-- 隐藏实际路由层次结构
-- 实现智能的页面分发
+- Bao quát đầy đủ mọi trường hợp định tuyến
+- Ẩn cấu trúc phân cấp định tuyến thực tế
+- Phân phối trang một cách thông minh
 
-是动态路由设计的一个很好范例。
+Đây là một ví dụ rất tốt về thiết kế định tuyến động.

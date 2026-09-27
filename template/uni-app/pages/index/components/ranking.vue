@@ -14,7 +14,7 @@
 					<view class="rank-card" :style="[rankCardStyle]">
 						<view class="fs-28 lh-40rpx fw-600 flex-y-center" :style="[rankItemTitleStyle]">
 							<text class="iconfont icon-ic_fire fs-32"></text>
-							<text class="pl-8 font-color" :style="[rankItemTitleStyle]">{{ $t(`销量榜`) }}</text>
+							<text class="pl-8 font-color" :style="[rankItemTitleStyle]">{{ $t(`Top bán chạy`) }}</text>
 						</view>
 						<view class="rd-12rpx bg--w111-fff mt-18 p-14 h-400" v-if="sales.length">
 							<view class="rank-pro-item flex-y-center" v-for="(item,index) in sales" :key="index">
@@ -38,7 +38,7 @@
 					<view class="rank-card" :style="[rankCardStyle]">
 						<view class="fs-28 lh-40rpx fw-600 flex-y-center" :style="[rankItemTitleStyle]">
 							<text class="iconfont icon-ic_fire fs-32"></text>
-							<text class="pl-8 font-color" :style="[rankItemTitleStyle]">{{ $t(`收藏榜`) }}</text>
+							<text class="pl-8 font-color" :style="[rankItemTitleStyle]">{{ $t(`Top yêu thích`) }}</text>
 						</view>
 						<view class="rd-12rpx bg--w111-fff mt-18 p-14 h-400" v-if="collect.length">
 							<view class="rank-pro-item flex-y-center" v-for="(item,index) in collect" :key="index">
@@ -62,7 +62,7 @@
 					<view class="rank-card" :style="[rankCardStyle]">
 						<view class="fs-28 lh-40rpx fw-600 flex-y-center" :style="[rankItemTitleStyle]">
 							<text class="iconfont icon-ic_fire fs-32"></text>
-							<text class="pl-8 font-color" :style="[rankItemTitleStyle]">{{ $t(`好评榜`) }}</text>
+							<text class="pl-8 font-color" :style="[rankItemTitleStyle]">{{ $t(`Top đánh giá tốt`) }}</text>
 						</view>
 						<view class="rd-12rpx bg--w111-fff mt-18 p-14 h-400" v-if="star.length">
 							<view class="rank-pro-item flex-y-center" v-for="(item,index) in star" :key="index">
@@ -87,7 +87,7 @@
 				<scroll-view scroll-x="true" class="white-nowrap vertical-middle w-full mt-20"
 					show-scrollbar="false" >
 					<view class="inline-block type-3 rd-16rpx mr-24" :style="[rankCardStyle]" v-if="sales.length">
-						<view class="fs-26 fw-500" :style="[rankItemTitleStyle]">{{ $t(`销量榜`) }}</view>
+						<view class="fs-26 fw-500" :style="[rankItemTitleStyle]">{{ $t(`Top bán chạy`) }}</view>
 						<view class="flex mt-20">
 							<view class="w-296 h-296 relative mr-12">
 								<image :src="sales[0].image" class="w-full h-full" :style="{borderRadius:imgStyle}"></image>
@@ -119,7 +119,7 @@
 						</view>
 					</view>
 					<view class="inline-block type-3 rd-16rpx mr-24" :style="[rankCardStyle]" v-if="star.length">
-						<view class="fs-26 fw-500" :style="[rankItemTitleStyle]">{{ $t(`好评榜`) }}</view>
+						<view class="fs-26 fw-500" :style="[rankItemTitleStyle]">{{ $t(`Top đánh giá tốt`) }}</view>
 						<view class="flex mt-20">
 							<view class="w-296 h-296 relative mr-12">
 								<image :src="star[0].image" class="w-full h-full" :style="{borderRadius:imgStyle}"></image>
@@ -151,7 +151,7 @@
 						</view>
 					</view>
 					<view class="inline-block type-3 rd-16rpx mr-24" :style="[rankCardStyle]" v-if="collect.length">
-						<view class="fs-26 fw-500" :style="[rankItemTitleStyle]">{{ $t(`收藏榜`) }}</view>
+						<view class="fs-26 fw-500" :style="[rankItemTitleStyle]">{{ $t(`Top yêu thích`) }}</view>
 						<view class="flex mt-20">
 							<view class="w-296 h-296 relative mr-12">
 								<image :src="collect[0].image" class="w-full h-full" :style="{borderRadius:imgStyle}"></image>
@@ -238,19 +238,19 @@
 			styleConfig(){
 				return this.dataConfig.styleConfig.tabVal
 			},
-			/*标题是文本还是图片*/
+			/*Tiêu đề là văn bản hay hình ảnh*/
 			titleConfig(){
 				return this.dataConfig.titleConfig.tabVal
 			},
-			/*标题文本*/
+			/*Văn bản tiêu đề*/
 			titleTxtConfig(){
 				return this.dataConfig.titleTxtConfig.value
 			},
-			/*标题图片*/
+			/*Ảnh tiêu đề*/
 			titleImg(){
 				return this.dataConfig.imgConfig.url
 			},
-			/*卡片颜色和圆角*/
+			/*Màu và góc tròn của card*/
 			rankCardStyle(){
 				let filletBg = this.dataConfig.filletBg.type;
 				let valListBg = this.dataConfig.filletBg.valList;
@@ -260,7 +260,7 @@
 					background: `linear-gradient(172deg, ${this.dataConfig.listBgColor.color[0].item} 0%, ${this.dataConfig.listBgColor.color[1].item} 100%)`
 				}
 			},
-			/*商品图片圆角样式*/
+			/*Style góc tròn ảnh sản phẩm*/
 			imgStyle(){
 				let borderRadius = `${this.dataConfig.filletImg.val * 2}rpx`;
 				if (this.dataConfig.filletImg.type) {
@@ -274,11 +274,11 @@
 					color: this.dataConfig.toneConfig.tabVal ? `${this.dataConfig.classColor.color[0].item} !important` : 'var(--view-theme) !important'
 				}
 			},
-			/* 价格颜色 */
+			/* Màu giá */
 			priceColor(){
 				return this.dataConfig.toneConfig.tabVal ? this.dataConfig.goodsPriceColor.color[0].item : 'var(--view-theme)'
 			},
-			/*头部按钮样式*/
+			/*Style nút phần đầu*/
 			headerBntColor(){
 				return {
 					color: this.dataConfig.headerBntColor.color[0].item,

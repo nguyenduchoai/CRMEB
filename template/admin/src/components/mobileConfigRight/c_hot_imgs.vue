@@ -1,20 +1,20 @@
 <template>
   <div class="hot_imgs">
-    <div class="title">最多可添加4个版块，图片建议尺寸140 * 140px；鼠标拖拽左侧圆点可 调整版块顺序</div>
+    <div class="title">Có thể thêm tối đa 4 khối, kích thước ảnh đề xuất 140 * 140px; kéo thả chấm tròn bên trái để điều chỉnh thứ tự khối</div>
     <div class="list-box">
       <draggable class="dragArea list-group" :list="defaults.menu" group="people" handle=".move-icon">
         <div class="item" v-for="(item, index) in defaults.menu" :key="index">
           <div class="move-icon">
             <Icon type="ios-keypad-outline" size="22" />
           </div>
-          <div class="img-box" @click="modalPicTap('单选', index)">
+          <div class="img-box" @click="modalPicTap('Chọn một', index)">
             <img :src="item.img" alt="" v-if="item.img" />
             <div class="upload-box" v-else><Icon type="ios-camera-outline" size="36" /></div>
             <div>
               <el-dialog
                 :visible.sync="modalPic"
                 width="960px"
-                title="上传图片"
+                title="Tải lên ảnh"
               >
                 <uploadPictures
                   :isChoice="isChoice"
@@ -38,7 +38,7 @@
       </draggable>
     </div>
     <div class="add-btn" v-if="defaults.menu.length < 4">
-      <el-button style="width: 100%; height: 40px" @click="addBox">添加板块</el-button>
+      <el-button style="width: 100%; height: 40px" @click="addBox">Thêm khối</el-button>
     </div>
   </div>
 </template>
@@ -70,7 +70,7 @@ export default {
         },
       ],
       modalPic: false,
-      isChoice: '单选',
+      isChoice: 'Chọn một',
       gridBtn: {
         xl: 4,
         lg: 8,
@@ -106,42 +106,42 @@ export default {
         img: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1594458238721&di=d9978a807dcbf5d8a01400875bc51162&imgtype=0&src=http%3A%2F%2Fattachments.gfan.com%2Fforum%2F201604%2F23%2F002205xqdkj84gnw4oi85v.jpg',
         info: [
           {
-            title: '标题',
+            title: 'Tiêu đề',
             value: '',
-            tips: '选填，不超过4个字',
+            tips: 'Không bắt buộc, tối đa 4 ký tự',
             max: 4,
           },
           {
-            title: '简介',
+            title: 'Mô tả ngắn',
             value: '',
-            tips: '选填，不超过20个字',
+            tips: 'Không bắt buộc, tối đa 20 ký tự',
             max: 20,
           },
         ],
         link: {
-          title: '链接',
+          title: 'Liên kết',
           optiops: [
             {
               type: 0,
               value: '',
-              label: '一级>二级分类',
+              label: 'Danh mục cấp 1 > cấp 2',
             },
             {
               type: 1,
               value: '',
-              label: '自定义链接',
+              label: 'Liên kết tùy chỉnh',
             },
           ],
         },
       };
       this.defaults.menu.push(obj);
     },
-    // 点击图文封面
+    // Click vào ảnh bìa bài viết ảnh-văn
     modalPicTap(title, index) {
       this.activeIndex = index;
       this.modalPic = true;
     },
-    // 添加自定义弹窗
+    // Thêm popup tùy chỉnh
     addCustomDialog(editorId) {
       window.UE.registerUI(
         'test-dialog',
@@ -150,17 +150,17 @@ export default {
             iframeUrl: '/admin/widget.images/index.html?fodder=dialog',
             editor: editor,
             name: uiName,
-            title: '上传图片',
+            title: 'Tải lên ảnh',
             cssRules: 'width:1200px;height:500px;padding:20px;',
           });
           this.dialog = dialog;
-          // 参考上面的自定义按钮
+          // Tham khảo nút tùy chỉnh ở trên
           var btn = new window.UE.ui.Button({
             name: 'dialog-button',
-            title: '上传图片',
+            title: 'Tải lên ảnh',
             cssRules: `background-image: url(../../../assets/images/icons.png);background-position: -726px -77px;`,
             onclick: function () {
-              // 渲染dialog
+              // Render dialog
               dialog.render();
               dialog.open();
             },
@@ -171,7 +171,7 @@ export default {
         37,
       );
     },
-    // 获取图片信息
+    // Lấy thông tin ảnh
     getPic(pc) {
       this.defaults.menu[this.activeIndex].img = pc.att_dir;
       this.modalPic = false;

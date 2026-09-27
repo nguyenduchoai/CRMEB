@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,59 +15,59 @@ use EasyWeChat\Core\AccessToken;
 use EasyWeChat\Core\Exceptions\InvalidArgumentException;
 
 /**
- * 小程序订阅消息
+ * Tin nhắn đăng ký Mini Program
  * Class ProgramSubscribe
  * @package crmeb\utils
  * @method $this
- * @method $this template(string $template_id) 设置模板id
- * @method $this withTemplateId(string $template_id) 设置模板id
- * @method $this andTemplateId(string $template_id) 设置模板id
- * @method $this andTemplate(string $template_id) 设置模板id
- * @method $this andUses(string $template_id) 设置模板id
- * @method $this to(string $touser) 设置opendid
- * @method $this andReceiver(string $touser) 设置opendid
- * @method $this withReceiver(string $touser) 设置opendid
- * @method $this with(array $data) 设置发送内容
- * @method $this andData(array $data) 设置发送内容
- * @method $this withData(array $data) 设置发送内容
- * @method $this data(array $data) 设置发送内容
- * @method $this withUrl(string $page) 设置跳转路径
+ * @method $this template(string $template_id) Đặt id mẫu
+ * @method $this withTemplateId(string $template_id) Đặt id mẫu
+ * @method $this andTemplateId(string $template_id) Đặt id mẫu
+ * @method $this andTemplate(string $template_id) Đặt id mẫu
+ * @method $this andUses(string $template_id) Đặt id mẫu
+ * @method $this to(string $touser) Đặt opendid
+ * @method $this andReceiver(string $touser) Đặt opendid
+ * @method $this withReceiver(string $touser) Đặt opendid
+ * @method $this with(array $data) Đặt nội dung gửi
+ * @method $this andData(array $data) Đặt nội dung gửi
+ * @method $this withData(array $data) Đặt nội dung gửi
+ * @method $this data(array $data) Đặt nội dung gửi
+ * @method $this withUrl(string $page) Đặt đường dẫn chuyển trang
  */
 class ProgramSubscribe extends AbstractAPI
 {
 
     /**
-     * 添加模板接口
+     * API thêm mẫu
      */
     const API_SET_TEMPLATE_ADD = 'https://api.weixin.qq.com/wxaapi/newtmpl/addtemplate';
 
     /**
-     * 删除模板消息接口
+     * API xóa tin nhắn mẫu
      */
     const API_SET_TEMPLATE_DEL = 'https://api.weixin.qq.com/wxaapi/newtmpl/deltemplate';
 
     /**
-     * 获取模板消息列表
+     * Lấy danh sách tin nhắn mẫu
      */
     const API_GET_TEMPLATE_LIST = 'https://api.weixin.qq.com/wxaapi/newtmpl/gettemplate';
 
     /**
-     * 获取模板消息分类
+     * Lấy phân loại tin nhắn mẫu
      */
     const API_GET_TEMPLATE_CATE = 'https://api.weixin.qq.com/wxaapi/newtmpl/getcategory';
 
     /**
-     * 获取模板消息关键字
+     * Lấy từ khóa tin nhắn mẫu
      */
     const API_GET_TEMPLATE_KEYWORKS = 'https://api.weixin.qq.com/wxaapi/newtmpl/getpubtemplatekeywords';
 
     /**
-     * 获取公共模板
+     * Lấy mẫu chung
      */
     const API_GET_PUBLIC_TEMPLATE = 'https://api.weixin.qq.com/wxaapi/newtmpl/getpubtemplatetitles';
 
     /**
-     * 发送模板消息
+     * Gửi tin nhắn mẫu
      */
     const API_SUBSCRIBE_SEND = 'https://api.weixin.qq.com/cgi-bin/message/subscribe/send';
 
@@ -104,7 +104,7 @@ class ProgramSubscribe extends AbstractAPI
     }
 
     /**
-     * 获取当前拥有的模板列表
+     * Lấy danh sách mẫu hiện có
      * @return \EasyWeChat\Support\Collection|null
      * @throws \EasyWeChat\Core\Exceptions\HttpException
      */
@@ -114,7 +114,7 @@ class ProgramSubscribe extends AbstractAPI
     }
 
     /**
-     * 获取公众模板列表
+     * Lấy danh sách mẫu công khai
      * @param string $ids
      * @param int $start
      * @param int $limit
@@ -132,7 +132,7 @@ class ProgramSubscribe extends AbstractAPI
     }
 
     /**
-     * 获取模板分类
+     * Lấy phân loại mẫu
      * @return \EasyWeChat\Support\Collection|null
      * @throws \EasyWeChat\Core\Exceptions\HttpException
      */
@@ -142,8 +142,8 @@ class ProgramSubscribe extends AbstractAPI
     }
 
     /**
-     * 获取模板标题下的关键词列表
-     * @param string $tid 模板标题 id，可通过接口获取
+     * Lấy danh sách từ khóa dưới tiêu đề mẫu
+     * @param string $tid id tiêu đề mẫu, có thể lấy qua API
      * @return \EasyWeChat\Support\Collection|null
      * @throws \EasyWeChat\Core\Exceptions\HttpException
      */
@@ -156,10 +156,10 @@ class ProgramSubscribe extends AbstractAPI
     }
 
     /**
-     * 添加订阅模板消息
-     * @param string $tid 模板标题 id，可通过接口获取，也可登录小程序后台查看获取
-     * @param array $kidList 模板序列号 关键词顺序可以自由搭配（例如 [3,5,4] 或 [4,5,3]），最多支持5个，最少2个关键词组合
-     * @param string $sceneDesc 服务场景描述，15个字以内
+     * Thêm tin nhắn mẫu đăng ký
+     * @param string $tid id tiêu đề mẫu, có thể lấy qua API, hoặc đăng nhập backend Mini Program để xem và lấy
+     * @param array $kidList Số thứ tự mẫu, thứ tự từ khóa có thể kết hợp tự do (ví dụ [3,5,4] hoặc [4,5,3]), hỗ trợ tối đa 5, tối thiểu 2 từ khóa kết hợp
+     * @param string $sceneDesc Mô tả tình huống dịch vụ, trong vòng 15 ký tự
      * @return \EasyWeChat\Support\Collection|null
      * @throws \EasyWeChat\Core\Exceptions\HttpException
      */
@@ -174,7 +174,7 @@ class ProgramSubscribe extends AbstractAPI
     }
 
     /**
-     * 删除模板消息
+     * Xóa tin nhắn mẫu
      * @param string $priTmplId
      * @return \EasyWeChat\Support\Collection|null
      * @throws \EasyWeChat\Core\Exceptions\HttpException
@@ -188,7 +188,7 @@ class ProgramSubscribe extends AbstractAPI
     }
 
     /**
-     * 发送订阅消息
+     * Gửi tin nhắn đăng ký
      * @param array $data
      * @return \EasyWeChat\Support\Collection|null
      * @throws InvalidArgumentException
@@ -214,7 +214,7 @@ class ProgramSubscribe extends AbstractAPI
     }
 
     /**
-     * 设置订阅消息发送data
+     * Đặt data gửi tin nhắn đăng ký
      * @param array $data
      * @return array
      */

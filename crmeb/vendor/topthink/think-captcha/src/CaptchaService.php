@@ -15,7 +15,7 @@ class CaptchaService extends Service
         Validate::maker(function ($validate) {
             $validate->extend('captcha', function ($value) {
                 return captcha_check($value);
-            }, ':attribute错误!');
+            }, ':attribute không đúng!');
         });
     }
 }

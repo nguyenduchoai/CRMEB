@@ -14,7 +14,7 @@
     export default {
         name: 'c_home_seckill',
         componentsName: 'home_seckill',
-        cname: '秒杀',
+        cname: 'Flash sale',
         props: {
             activeIndex: {
                 type: null
@@ -559,7 +559,7 @@
 					}
 				}
 			},
-            // 获取组件参数
+            // Lấy tham số thành phần (component)
             getConfig (data) {}
         }
     }

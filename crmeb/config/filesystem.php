@@ -20,8 +20,8 @@ return [
             'root'       => app()->getRootPath() . 'runtime/pem',
             'url'        => '',
         ],
-        // 更多的磁盘配置信息
+        // Các thông tin cấu hình ổ đĩa khác
     ],
-    //系统开发密码
+    //Mật khẩu phát triển hệ thống
     'password' => ''
 ];

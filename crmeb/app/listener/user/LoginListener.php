@@ -7,7 +7,7 @@ namespace app\listener\user;
 use crmeb\interfaces\ListenerInterface;
 
 /**
- * 用户登录后置事件
+ * Event sau khi người dùng đăng nhập
  * Class LoginListener
  * @package app\listener\user
  */

@@ -2,31 +2,31 @@
   <el-card :bordered="false" shadow="never" class="ivu-mt" v-loading="spinShow">
     <div class="acea-row row-between-wrapper mb20">
       <div class="statics-header-title">
-        <h4>商品概况</h4>
+        <h4>Tổng quan sản phẩm</h4>
         <el-tooltip width="500" placement="right-start">
           <i class="el-icon-question ml10"></i>
           <div slot="content">
-            <div>商品浏览量</div>
-            <div>在选定条件下，所有商品详情页被访问的次数，一个人在统计时间内访问多次记为多次</div>
+            <div>Lượt xem sản phẩm</div>
+            <div>Trong điều kiện đã chọn, số lần các trang chi tiết sản phẩm được truy cập, một người truy cập nhiều lần trong thời gian thống kê sẽ được tính nhiều lần</div>
             <br />
-            <div>商品访客数</div>
-            <div>在选定条件下，访问任何商品详情页的人数，一个人在统计时间范围内访问多次只记为一个</div>
+            <div>Số khách truy cập sản phẩm</div>
+            <div>Trong điều kiện đã chọn, số người truy cập bất kỳ trang chi tiết sản phẩm nào, một người truy cập nhiều lần trong khoảng thời gian thống kê chỉ được tính là một</div>
             <br />
-            <div>支付件数</div>
+            <div>Số lượng thanh toán</div>
             <div>
-              在选定条件下，成功付款订单的商品件数之和（拼团商品在成团之后计入，线下支付订单在后台确认支付后计入，不剔除退款订单）
+              Trong điều kiện đã chọn, tổng số lượng sản phẩm của các đơn hàng đã thanh toán thành công (sản phẩm mua chung được tính sau khi nhóm mua chung thành công, đơn hàng thanh toán ngoại tuyến được tính sau khi xác nhận thanh toán ở trang quản trị, không loại trừ đơn hoàn tiền)
             </div>
             <br />
-            <div>支付金额</div>
+            <div>Số tiền thanh toán</div>
             <div>
-              在选定条件下，成功付款订单的商品金额之和（拼团商品在成团之后计入，线下支付订单在后台确认支付后计入，不剔除退款订单）
+              Trong điều kiện đã chọn, tổng giá trị sản phẩm của các đơn hàng đã thanh toán thành công (sản phẩm mua chung được tính sau khi nhóm mua chung thành công, đơn hàng thanh toán ngoại tuyến được tính sau khi xác nhận thanh toán ở trang quản trị, không loại trừ đơn hoàn tiền)
             </div>
             <br />
-            <div>退款件数</div>
-            <div>在选定条件下，成功退款的商品件数之和</div>
+            <div>Số lượng hoàn tiền</div>
+            <div>Trong điều kiện đã chọn, tổng số lượng sản phẩm đã hoàn tiền thành công</div>
             <br />
-            <div>退款金额</div>
-            <div>在选定条件下，成功退款的商品金额之和</div>
+            <div>Số tiền hoàn</div>
+            <div>Trong điều kiện đã chọn, tổng giá trị sản phẩm đã hoàn tiền thành công</div>
           </div>
         </el-tooltip>
       </div>
@@ -39,14 +39,14 @@
           @change="onchangeTime"
           format="yyyy/MM/dd"
           value-format="yyyy/MM/dd"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          start-placeholder="Ngày bắt đầu"
+          end-placeholder="Ngày kết thúc"
           :picker-options="pickerOptions"
           style="width: 250px"
           class="mr20"
         ></el-date-picker>
-        <el-button type="primary" v-db-click @click="onSeach">查询</el-button>
-        <el-button type="primary" v-db-click @click="excel">导出</el-button>
+        <el-button type="primary" v-db-click @click="onSeach">Tra cứu</el-button>
+        <el-button type="primary" v-db-click @click="excel">Xuất</el-button>
       </div>
     </div>
     <div class="mb20">
@@ -63,7 +63,7 @@
             <span class="sp2" v-if="index === list.length - 1" v-text="item.list.num"></span>
             <span class="sp2" v-else v-text="item.list.num"></span>
             <span class="content-time spBlock"
-              >环比增长：<i class="content-is" :class="Number(item.list.percent) >= 0 ? 'up' : 'down'"
+              >Tăng trưởng so với kỳ trước:<i class="content-is" :class="Number(item.list.percent) >= 0 ? 'up' : 'down'"
                 >{{ item.list.percent }}%</i
               >
               <i
@@ -99,7 +99,7 @@ export default {
         xs: 24,
       },
       pickerOptions: this.$timeOptions,
-      name: '近30天',
+      name: '30 ngày gần đây',
       timeVal: [],
       dataTime: '',
       list: [],
@@ -119,7 +119,7 @@ export default {
     this.getTrend();
   },
   methods: {
-    // 导出
+    // Xuất
     excel() {
       statisticProductExcel({ data: this.dataTime }).then(async (res) => {
         res.data.url.map((item) => {
@@ -131,44 +131,44 @@ export default {
       this.getStatistics();
       this.getTrend();
     },
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e;
       this.dataTime = this.timeVal ? this.timeVal.join('-') : '';
     },
-    // 统计
+    // Thống kê
     getStatistics() {
       statisticBasicApi({ data: this.dataTime })
         .then(async (res) => {
           const cardLists = res.data;
           this.list = [
             {
-              name: '商品浏览量',
+              name: 'Lượt xem sản phẩm',
               icon: 'iconshangpinliulanliang',
               list: cardLists.browse,
             },
             {
-              name: '商品访客数',
+              name: 'Số khách truy cập sản phẩm',
               icon: 'iconshangpinfangkeshu',
               list: cardLists.user,
             },
             {
-              name: '支付件数',
+              name: 'Số lượng thanh toán',
               icon: 'iconzhifujianshu',
               list: cardLists.pay,
             },
             {
-              name: '支付金额',
+              name: 'Số tiền thanh toán',
               icon: 'iconzhifujine',
               list: cardLists.payPrice,
             },
             {
-              name: '退款件数',
+              name: 'Số lượng hoàn tiền',
               icon: 'icontuikuanjianshu',
               list: cardLists.refund,
             },
             {
-              name: '退款金额',
+              name: 'Số tiền hoàn',
               icon: 'icontuikuan',
               list: cardLists.refundPrice,
             },
@@ -178,7 +178,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 统计图
+    // Biểu đồ thống kê
     getTrend() {
       this.spinShow = true;
       statisticTrendApi({ data: this.dataTime })
@@ -244,7 +244,7 @@ export default {
             yAxis: [
               {
                 type: 'value',
-                name: '金额',
+                name: 'Số tiền',
                 axisLine: {
                   show: false,
                 },
@@ -265,7 +265,7 @@ export default {
               },
               {
                 type: 'value',
-                name: '数量',
+                name: 'Số lượng',
                 axisLine: {
                   show: false,
                 },

@@ -4,15 +4,15 @@
 			<text class="iconfont icon-fapiao2"
 				:style="invoiceData.is_invoice?'background-color: var(--view-theme)':'background-color: #999'"></text>
 			<view class="bill">
-				{{invoiceData.is_invoice?$t(`已开票`): $t(`未开票`)}}
+				{{invoiceData.is_invoice?$t(`Đã xuất hóa đơn`): $t(`Chưa xuất hóa đơn`)}}
 			</view>
 		</view>
 
 		<view class="aleart-body">
-			<view class="body-head">{{$t(`发票信息`)}}</view>
+			<view class="body-head">{{$t(`Thông tin hóa đơn`)}}</view>
 			<view class="label">
 				<view class="">
-					{{$t(`发票抬头`)}}
+					{{$t(`Tiêu đề hóa đơn`)}}
 				</view>
 				<view class="label-value">
 					{{invoiceData.name}}
@@ -20,33 +20,33 @@
 			</view>
 			<view class="label">
 				<view class="">
-					{{$t(`发票抬头类型`)}}
+					{{$t(`Loại tiêu đề hóa đơn`)}}
 				</view>
 				<view class="label-value">
-					{{invoiceData.header_type == 1?$t(`个人`):$t(`企业`)}}
+					{{invoiceData.header_type == 1?$t(`Cá nhân`):$t(`Doanh nghiệp`)}}
 				</view>
 			</view>
 			<view class="label">
 				<view class="">
-					{{$t(`发票类型`)}}
+					{{$t(`Loại hóa đơn`)}}
 				</view>
 				<view class="label-value">
-					{{invoiceData.type==1?$t(`电子普通发票`):$t(`电子专用发票`)}}
+					{{invoiceData.type==1?$t(`Hóa đơn điện tử thông thường`):$t(`Hóa đơn điện tử chuyên dụng`)}}
 				</view>
 			</view>
 			<view class="label" v-if="invoiceData.duty_number">
 				<view class="">
-					{{$t(`企业税号`)}}
+					{{$t(`Mã số thuế doanh nghiệp`)}}
 				</view>
 				<view class="label-value">
 					{{invoiceData.duty_number}}
 				</view>
 			</view>
 
-			<view class="body-head">{{$t(`联系信息`)}}</view>
+			<view class="body-head">{{$t(`Thông tin liên hệ`)}}</view>
 			<view class="label">
 				<view class="">
-					{{$t(`真实姓名`)}}
+					{{$t(`Họ tên`)}}
 				</view>
 				<view class="label-value">
 					{{invoiceData.name}}
@@ -54,7 +54,7 @@
 			</view>
 			<view class="label">
 				<view class="">
-					{{$t(`联系电话`)}}
+					{{$t(`Số điện thoại liên hệ`)}}
 				</view>
 				<view class="label-value">
 					{{invoiceData.drawer_phone}}
@@ -62,7 +62,7 @@
 			</view>
 			<view class="label">
 				<view class="">
-					{{$t(`联系邮箱`)}}
+					{{$t(`Email liên hệ`)}}
 				</view>
 				<view class="label-value">
 					{{invoiceData.email}}
@@ -70,7 +70,7 @@
 			</view>
 			<view class="label">
 				<view class="">
-					{{$t(`发票备注`)}}
+					{{$t(`Ghi chú hóa đơn`)}}
 				</view>
 				<view class="label-value">
 					{{invoiceData.remark}}
@@ -78,7 +78,7 @@
 			</view>
 		</view>
 		<view class="btn" @click="close">
-{{$t(`确认`)}}
+{{$t(`Xác nhận`)}}
 		</view>
 	</view>
 </template>
@@ -123,14 +123,14 @@
 		background-color: #fff;
 		padding: 30rpx;
 		border-radius: 12rpx;
-		background-image: -webkit-gradient(linear, //表示渐变的为直线 另外一个值是radial
-				50% 0, //直线型渐变的起点位置 后边有一个属性background-size规定背景的大小，30 X 15px  50% 0 都是乘以父元素的宽高。 
-				0 100%, //结束点的位置 和上类似
-				from(transparent), //起点的颜色
-				color-stop(.5, transparent), //中间某一个点必须达到这个颜色，表示变化过程  .5b表示这个渐变范围长度的总长的50%
-				color-stop(.5, #999999), //同上
-				to(#999999)), //结束段的颜色
-			//一个背景块的分为两个15X 15  组成。
+		background-image: -webkit-gradient(linear, //Biểu thị gradient là đường thẳng (linear), giá trị khác là radial
+				50% 0, //Vị trí điểm bắt đầu của gradient dạng thẳng. Phía sau có thuộc tính background-size quy định kích thước nền, 30 X 15px  50% 0 đều nhân với chiều rộng/cao của phần tử cha. 
+				0 100%, //Vị trí điểm kết thúc, tương tự như trên
+				from(transparent), //Màu điểm bắt đầu
+				color-stop(.5, transparent), //Một điểm giữa nào đó phải đạt màu này, biểu thị quá trình chuyển đổi. .5b biểu thị 50% tổng chiều dài phạm vi gradient này
+				color-stop(.5, #999999), //Như trên
+				to(#999999)), //Màu đoạn kết thúc
+			//Một khối nền được chia thành hai phần 15x15 tạo thành.
 
 			-webkit-gradient(linear, 50% 0, 100% 100%, from(transparent),
 				color-stop(.5, transparent),

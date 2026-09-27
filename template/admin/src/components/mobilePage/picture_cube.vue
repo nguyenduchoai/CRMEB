@@ -317,11 +317,11 @@
 import { mapState } from 'vuex';
 export default {
   name: 'picture_cube',
-  cname: '图片魔方',
+  cname: 'Lưới ảnh',
   configName: 'c_picture_cube',
   icon: '#iconzujian-tupianmofang',
-  type: 0, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'pictureCube', // 外面匹配名称
+  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'pictureCube', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -357,22 +357,22 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
-        cname: '图片魔方',
+        cname: 'Lưới ảnh',
         name: 'pictureCube',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
         },
-        titleLeft: '展示设置',
-        titleShow: '展示设置',
-        titleContent: '内容设置',
-        titleRight: '图片魔方',
-        titleCurrency: '通用样式',
+        titleLeft: 'Cài đặt hiển thị',
+        titleShow: 'Cài đặt hiển thị',
+        titleContent: 'Cài đặt nội dung',
+        titleRight: 'Lưới ảnh',
+        titleCurrency: 'Kiểu chung',
         styleConfig: {
-          title: '选择风格',
+          title: 'Chọn phong cách',
           tabVal: 0,
           count: 2,
           type: 'pictureCube',
@@ -392,8 +392,8 @@ export default {
               img: '',
               info: [
                 {
-                  title: '链接',
-                  tips: '请输入链接',
+                  title: 'Liên kết',
+                  tips: 'Vui lòng nhập liên kết',
                   value: '',
                   max: 100,
                 },
@@ -402,30 +402,30 @@ export default {
           ],
         },
         imgConfig: {
-          title: '图片间距',
+          title: 'Khoảng cách ảnh',
           val: 0,
           min: 0,
         },
         filletImg: {
-          title: '图片圆角',
+          title: 'Bo góc ảnh',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 0,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         bottomBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           default: [
             {
               item: '#f5f5f5',
@@ -438,22 +438,22 @@ export default {
           ],
         },
         topConfig: {
-          title: '上边距',
+          title: 'Lề trên',
           val: 0,
           min: 0,
         },
         bottomConfig: {
-          title: '下边距',
+          title: 'Lề dưới',
           val: 0,
           min: 0,
         },
         prConfig: {
-          title: '左右边距',
+          title: 'Lề trái phải',
           val: 0,
           min: 0,
         },
         mbConfig: {
-          title: '页面上间距',
+          title: 'Lề trên trang',
           val: 0,
           min: 0,
         },

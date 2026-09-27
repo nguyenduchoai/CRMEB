@@ -5,7 +5,7 @@
 				<view v-if="dataConfig.titleConfig.tabVal" class="title" :style="[titleStyle]">{{ dataConfig.titleTxtConfig.value }}</view>
 				<easy-loadimage v-else mode="widthFix" :image-src="titleImage" width="176rpx" height="32rpx"></easy-loadimage>
 				<view class="more" :style="[buttonStyle]" @click="goPointsMall">
-					<text>{{ $t(`更多`) }}</text>
+					<text>{{ $t(`Xem thêm`) }}</text>
 					<text class="iconfont icon-ic_rightarrow" :style="[buttonStyle]"></text>
 				</view>
 			</view>
@@ -16,7 +16,7 @@
 							<easy-loadimage mode="widthFix" :image-src="item.image" width="224rpx" height="224rpx" :borderRadius="goodsImage"></easy-loadimage>
 							<view class="price-box acea-row row-middle" :style="[priceBoxStyle]">
 								<view class="point">{{ item.price }}</view>
-								<view class="">{{ $t(`积分`) }}</view>
+								<view class="">{{ $t(`Điểm thưởng`) }}</view>
 							</view>
 						</view>
 					</scroll-view>
@@ -176,7 +176,7 @@
 					'color': color
 				};
 			},
-			// 数字样式
+			// Style số
 			numStyle() {
 				let styleConfig = this.dataConfig.styleConfig.tabVal;
 				let goodStyleConfig = this.dataConfig.goodStyleConfig.tabVal;

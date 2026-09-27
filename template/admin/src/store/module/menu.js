@@ -1,19 +1,19 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2021 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 /**
- * 菜单
+ * Menu
  * */
 import { cloneDeep } from 'lodash';
 import { includeArray } from '@/libs/system';
 
-// 根据 menu 配置的权限，过滤菜单
+// Lọc menu theo quyền được cấu hình trong menu
 function filterMenu(menuList, access, lastList) {
   menuList.forEach((menu) => {
     let menuAccess = menu.auth;
@@ -31,7 +31,7 @@ function filterMenu(menuList, access, lastList) {
   });
   return lastList;
 }
-// 递归处理顶部菜单问题
+// Xử lý đệ quy vấn đề menu trên cùng
 function getChilden(data) {
   if (data.children) {
     return getChilden(data.children[0]);
@@ -42,26 +42,26 @@ function getChilden(data) {
 export default {
   namespaced: true,
   state: {
-    // 顶部菜单
+    // Menu trên cùng
     header: [],
-    // 一级菜单名称
+    // Tên menu cấp 1
     oneMenuName: '',
-    // 侧栏菜单
+    // Menu thanh bên
     sider: [],
-    // 当前顶栏菜单的 name
+    // Name của menu thanh trên cùng hiện tại
     headerName: '',
-    // 当前所在菜单的 path
+    // Path của menu hiện tại
     activePath: '',
-    // 展开的子菜单 name 集合
+    // Tập hợp name của menu con đang mở
     openNames: [],
   },
   getters: {
     /**
-     * @description 根据 user 里登录用户权限，对侧边菜单进行鉴权过滤
+     * @description Lọc xác thực menu thanh bên theo quyền người dùng đăng nhập trong user
      * */
     filterSider(state, getters, rootState) {
       const userInfo = rootState.user.info;
-      // @权限
+      // @Quyền
       const access = userInfo.access;
       if (access && access.length) {
         return filterMenu(state.sider, access, []);
@@ -69,18 +69,18 @@ export default {
         return filterMenu(state.sider, [], []);
       }
     },
-    // 处理顶部路由递归
+    // Xử lý đệ quy route trên cùng
 
     /**
-     * @description 根据 user 里登录用户权限，对顶栏菜单进行鉴权过滤
+     * @description Lọc xác thực menu trên cùng theo quyền người dùng đăng nhập trong user
      * */
     filterHeader(state, getters, rootState) {
-      //  调用递归函数
+      //  Gọi hàm đệ quy
       state.header.forEach((item) => {
         item.path = getChilden(item);
       });
 
-      // @权限
+      // @Quyền
       const userInfo = rootState.admin.user.info;
       const access = userInfo.access;
       if (access && access.length) {
@@ -98,13 +98,13 @@ export default {
       }
     },
     /**
-     * @description 当前 header 的全部信息
+     * @description Toàn bộ thông tin của header hiện tại
      * */
     currentHeader(state) {
       return state.header.find((item) => item.name === state.headerName);
     },
     /**
-     * @description 在当前 header 下，是否隐藏 sider（及折叠按钮）
+     * @description Ở header hiện tại, có ẩn sider (và nút thu gọn) hay không
      * */
     hideSider(state, getters) {
       let visible = false;
@@ -114,7 +114,7 @@ export default {
   },
   mutations: {
     /**
-     * @description 设置侧边栏菜单
+     * @description Đặt menu thanh bên
      * @param {Object} state vuex state
      * @param {Array} menu menu
      */
@@ -122,7 +122,7 @@ export default {
       state.sider = menu;
     },
     /**
-     * @description 设置侧边栏菜单
+     * @description Đặt menu thanh bên
      * @param {Object} state vuex state
      * @param {Array} menu menu
      */
@@ -130,7 +130,7 @@ export default {
       state.oneMenuName = menu;
     },
     /**
-     * @description 设置顶栏菜单
+     * @description Đặt menu trên cùng
      * @param {Object} state vuex state
      * @param {Array} menu menu
      */
@@ -138,7 +138,7 @@ export default {
       state.header = menu;
     },
     /**
-     * @description 设置当前顶栏菜单 name
+     * @description Đặt name menu trên cùng hiện tại
      * @param {Object} state vuex state
      * @param {Array} name headerName
      */
@@ -146,7 +146,7 @@ export default {
       state.headerName = name;
     },
     /**
-     * @description 设置当前所在菜单的 path，用于侧栏菜单高亮当前项
+     * @description Đặt path của menu hiện tại, dùng để làm nổi bật mục hiện tại trong menu thanh bên
      * @param {Object} state vuex state
      * @param {Array} path fullPath
      */
@@ -154,7 +154,7 @@ export default {
       state.activePath = path;
     },
     /**
-     * @description 设置当前所在菜单的全部展开父菜单的 names 集合
+     * @description Đặt tập hợp names của toàn bộ menu cha đang mở của menu hiện tại
      * @param {Object} state vuex state
      * @param {Array} names openNames
      */

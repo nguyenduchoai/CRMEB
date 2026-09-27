@@ -48,11 +48,11 @@
 import { mapState } from 'vuex';
 export default {
   name: 'home_title',
-  cname: '文本标题',
+  cname: 'Tiêu đề văn bản',
   icon: '#iconzujian-biaoti',
   configName: 'c_home_title',
-  type: 2, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'titles', // 外面匹配名称
+  type: 2, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'titles', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -89,49 +89,49 @@ export default {
   data() {
     return {
       defaultConfig: {
-        cname: '文本标题',
+        cname: 'Tiêu đề văn bản',
         name: 'titles',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
         },
-        titleLeft: '标题设置',
-        titleRight: '文字设置',
-        titleCurrency: '通用样式',
+        titleLeft: 'Cài đặt tiêu đề',
+        titleRight: 'Cài đặt chữ',
+        titleCurrency: 'Kiểu chung',
         titleConfig: {
-          title: '标题名称',
-          value: '标题',
-          place: '请输入标题',
+          title: 'Tên tiêu đề',
+          value: 'Tiêu đề',
+          place: 'Vui lòng nhập tiêu đề',
           max: 10,
         },
         titleConfigRight: {
-          title: '右侧文字',
-          value: '更多',
-          place: '请输入右侧文字',
+          title: 'Chữ bên phải',
+          value: 'Xem thêm',
+          place: 'Vui lòng nhập chữ bên phải',
           max: 5,
         },
         buttonConfig: {
-          title: '右侧按钮',
+          title: 'Nút bên phải',
           tabVal: 0,
           tabList: [
             {
-              name: '显示',
+              name: 'Hiện',
             },
             {
-              name: '隐藏',
+              name: 'Ẩn',
             },
           ],
         },
         linkConfig: {
-          title: '链接',
+          title: 'Liên kết',
           value: '',
-          place: '请输入链接地址',
+          place: 'Vui lòng nhập địa chỉ liên kết',
           max: 100,
           type: 'link',
         },
         themeColor: {
-          title: '标题颜色',
+          title: 'Màu tiêu đề',
           name: 'themeColor',
           default: [
             {
@@ -145,7 +145,7 @@ export default {
           ],
         },
         buttonColor: {
-          title: '按钮颜色',
+          title: 'Màu nút',
           default: [
             {
               item: '#999999',
@@ -158,7 +158,7 @@ export default {
           ],
         },
         titleColor: {
-          title: '组件背景',
+          title: 'Nền thành phần',
           default: [
             {
               item: '#fff',
@@ -177,7 +177,7 @@ export default {
           ],
         },
         bottomBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           default: [
             {
               item: '#fff',
@@ -190,91 +190,91 @@ export default {
           ],
         },
         buttonText: {
-          title: '按钮文字',
+          title: 'Chữ trên nút',
           val: 12,
           min: 6,
         },
         topConfig: {
-          title: '上边距',
+          title: 'Lề trên',
           val: 0,
           min: 0,
         },
         bottomConfig: {
-          title: '下边距',
+          title: 'Lề dưới',
           val: 0,
           min: 0,
         },
         prConfig: {
-          title: '左右边距',
+          title: 'Lề trái phải',
           val: 0,
           min: 0,
         },
         textPosition: {
-          title: '标题位置',
+          title: 'Vị trí tiêu đề',
           tabVal: 0,
           tabList: [
             {
-              name: '左对齐',
+              name: 'Căn trái',
               style: 'left',
               icon: 'icondoc_left',
             },
             {
-              name: '居中对齐',
+              name: 'Căn giữa',
               style: 'center',
               icon: 'icondoc_center',
             },
             {
-              name: '右对齐',
+              name: 'Căn phải',
               style: 'right',
               icon: 'icondoc_right',
             },
           ],
         },
         textStyle: {
-          title: '标题样式',
+          title: 'Kiểu tiêu đề',
           tabVal: 0,
           tabList: [
             {
-              name: '正常',
+              name: 'Bình thường',
               style: 'normal',
               icon: 'icondoc_general',
             },
             {
-              name: '倾斜',
+              name: 'In nghiêng',
               style: 'italic',
               icon: 'icondoc_skew',
             },
             {
-              name: '加粗',
+              name: 'In đậm',
               style: 'bold',
               icon: 'icondoc_bold',
             },
           ],
         },
         fontSize: {
-          title: '标题文字',
+          title: 'Chữ tiêu đề',
           val: 16,
           min: 8,
         },
         mbConfig: {
-          title: '页面上间距',
+          title: 'Lề trên trang',
           val: 0,
           min: 0,
         },
         fillet: {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 0,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
