@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "搜索商品",
+  "navigationBarTitleText": "Tìm kiếm sản phẩm",
   "usingComponents": {
     "good-list": "/components/goodList/index",
     "recommend": "/components/recommend/index",

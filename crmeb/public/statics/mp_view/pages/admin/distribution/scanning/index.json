@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "订单核销",
+  "navigationBarTitleText": "Xác nhận sử dụng đơn hàng",
   "usingComponents": {
     "write-off-list": "/pages/admin/components/writeOffList/index"
   }

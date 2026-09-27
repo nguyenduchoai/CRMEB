@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "预售列表",
+  "navigationBarTitleText": "Danh sách đặt trước",
   "usingComponents": {
     "home": "/components/home/index"
   }

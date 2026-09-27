@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "余额充值",
+  "navigationBarTitleText": "Nạp tiền vào số dư",
   "usingComponents": {
     "payment": "/components/payment/index",
     "authorize": "/components/Authorize",

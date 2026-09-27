@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "兑换成功",
+  "navigationBarTitleText": "Đổi thành công",
   "usingComponents": {
     "authorize": "/components/Authorize"
   }

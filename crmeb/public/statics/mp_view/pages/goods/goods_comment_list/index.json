@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "商品评分",
+  "navigationBarTitleText": "Điểm đánh giá sản phẩm",
   "usingComponents": {
     "user-evaluation": "/components/userEvaluation/index"
   }

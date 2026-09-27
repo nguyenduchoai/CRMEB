@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "物流信息",
+  "navigationBarTitleText": "Thông tin vận chuyển",
   "usingComponents": {
     "recommend": "/components/recommend/index",
     "authorize": "/components/Authorize"

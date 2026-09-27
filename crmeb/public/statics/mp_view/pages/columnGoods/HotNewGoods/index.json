@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "精品推荐",
+  "navigationBarTitleText": "Đề xuất nổi bật",
   "usingComponents": {
     "good-list": "/components/goodList/index",
     "empty-page": "/components/emptyPage",

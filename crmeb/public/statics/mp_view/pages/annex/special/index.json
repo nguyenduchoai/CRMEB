@@ -1,7 +1,7 @@
 {
   "navigationBarTextStyle": "white",
   "navigationBarBackgroundColor": "#333333",
-  "navigationBarTitleText": "专题页",
+  "navigationBarTitleText": "Trang chủ đề",
   "componentPlaceholder": {
     "page-design": "view"
   },

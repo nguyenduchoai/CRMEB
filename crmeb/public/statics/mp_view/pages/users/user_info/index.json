@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "设置",
+  "navigationBarTitleText": "Cài đặt",
   "usingComponents": {
     "authorize": "/components/Authorize"
   }

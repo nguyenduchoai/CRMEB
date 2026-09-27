@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "订单统计",
+  "navigationBarTitleText": "Thống kê đơn hàng",
   "usingComponents": {
     "loading": "/components/Loading/index"
   }

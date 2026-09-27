@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "添加地址",
+  "navigationBarTitleText": "Thêm địa chỉ",
   "usingComponents": {
     "authorize": "/components/Authorize",
     "home": "/components/home/index"

@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "签到记录",
+  "navigationBarTitleText": "Lịch sử điểm danh",
   "usingComponents": {
     "empty-page": "/components/emptyPage",
     "authorize": "/components/Authorize"

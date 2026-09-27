@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "售后订单列表",
+  "navigationBarTitleText": "Danh sách đơn hậu mãi",
   "navigationStyle": "custom",
   "usingComponents": {
     "loading": "/components/Loading/index",

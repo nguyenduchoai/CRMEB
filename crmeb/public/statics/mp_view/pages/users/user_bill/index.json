@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "账单明细",
+  "navigationBarTitleText": "Chi tiết sao kê",
   "usingComponents": {
     "authorize": "/components/Authorize",
     "empty-page": "/components/emptyPage",

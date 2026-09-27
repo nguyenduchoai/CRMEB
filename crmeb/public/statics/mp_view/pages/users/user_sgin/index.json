@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "签到",
+  "navigationBarTitleText": "Điểm danh",
   "usingComponents": {
     "authorize": "/components/Authorize"
   }

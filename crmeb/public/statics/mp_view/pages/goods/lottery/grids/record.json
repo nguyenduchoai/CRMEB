@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "中奖记录",
+  "navigationBarTitleText": "Lịch sử trúng thưởng",
   "usingComponents": {
     "empty-page": "/components/emptyPage",
     "user-address": "/pages/goods/lottery/components/userAddress"
