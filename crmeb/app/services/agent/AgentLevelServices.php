@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -91,7 +91,7 @@ class AgentLevelServices extends BaseServices
         $userServices = app()->make(UserServices::class);
         $user = $userServices->getUserInfo($uid);
         if (!$user) {
-            throw new ApiException(410032);
+            throw new ApiException('Người dùng không tồn tại');
         }
         //Kiểm tra nâng hạng
         $this->checkUserLevelFinish($uid);
@@ -281,7 +281,7 @@ class AgentLevelServices extends BaseServices
     {
         $levelInfo = $this->getLevelInfo($id);
         if (!$levelInfo)
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         $field = [];
         $field[] = Form::hidden('id', $id);
         $field[] = Form::input('name', 'Tên cấp bậc', $levelInfo['name'])->maxlength(8)->col(24);
@@ -317,7 +317,7 @@ class AgentLevelServices extends BaseServices
         $userServices = app()->make(UserServices::class);
         $userInfo = $userServices->getUserInfo($uid);
         if (!$userInfo) {
-            throw new AdminException(400214);
+            throw new AdminException('Người dùng không tồn tại');
         }
         $levelList = $this->dao->getList(['is_del' => 0, 'status' => 1], '*', [], 0, 0, $userInfo['agent_level']);
         $setOptionLabel = function () use ($levelList) {
@@ -347,14 +347,14 @@ class AgentLevelServices extends BaseServices
         $userServices = app()->make(UserServices::class);
         $userInfo = $userServices->getUserInfo($uid, 'uid');
         if (!$userInfo) {
-            throw new AdminException(400214);
+            throw new AdminException('Người dùng không tồn tại');
         }
         $levelInfo = $this->getLevelInfo($id, 'id');
         if (!$levelInfo) {
-            throw new AdminException(400442);
+            throw new AdminException('Cấp độ CTV không tồn tại');
         }
         if ($userServices->update($uid, ['agent_level' => $id]) === false) {
-            throw new AdminException(400219);
+            throw new AdminException('Tặng thất bại');
         }
         return true;
     }

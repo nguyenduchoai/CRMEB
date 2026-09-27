@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -63,7 +63,7 @@ class StoreIntegralServices extends BaseServices
     public function saveData(int $id, array $data)
     {
         if ($data['num'] < $data['once_num']) {
-            throw new AdminException(400500);
+            throw new AdminException('Giới hạn số lượng mua mỗi lần không được lớn hơn tổng số lượng mua');
         }
         $description = $data['description'];
         $detail = $data['attrs'];
@@ -80,7 +80,7 @@ class StoreIntegralServices extends BaseServices
         /** @var StoreProductServices $storeProductServices */
         $storeProductServices = app()->make(StoreProductServices::class);
         if ($data['quota'] > $storeProductServices->value(['id' => $data['product_id']], 'stock')) {
-            throw new AdminException(400090);
+            throw new AdminException('Số lượng giới hạn không được vượt quá tồn kho sản phẩm');
         }
         $this->transaction(function () use ($id, $data, $description, $detail, $items, $storeDescriptionServices, $storeProductAttrServices, $storeProductServices) {
             if ($id) {
@@ -88,7 +88,7 @@ class StoreIntegralServices extends BaseServices
                 $storeDescriptionServices->saveDescription((int)$id, $description, 4);
                 $skuList = $storeProductServices->validateProductAttr($items, $detail, (int)$id, 4);
                 $storeProductAttrServices->saveProductAttr($skuList, (int)$id, 4);
-                if (!$res) throw new AdminException(100007);
+                if (!$res) throw new AdminException('Sửa thất bại');
             } else {
                 if (!$storeProductServices->getOne(['is_del' => 0, 'id' => $data['product_id']])) {
                     throw new AdminException('Không thể thêm sản phẩm trong thùng rác');
@@ -98,7 +98,7 @@ class StoreIntegralServices extends BaseServices
                 $storeDescriptionServices->saveDescription((int)$res->id, $description, 4);
                 $skuList = $storeProductServices->validateProductAttr($items, $detail, (int)$res->id, 4, 1, true);
                 $storeProductAttrServices->saveProductAttr($skuList, (int)$res->id, 4);
-                if (!$res) throw new AdminException(100022);
+                if (!$res) throw new AdminException('Thêm thất bại');
             }
         });
     }
@@ -117,9 +117,9 @@ class StoreIntegralServices extends BaseServices
         /** @var StoreProductAttrResultServices $storeProductAttrResultServices */
         $storeProductAttrResultServices = app()->make(StoreProductAttrResultServices::class);
         if (!$data) {
-            throw new AdminException(400337);
+            throw new AdminException('Vui lòng chọn sản phẩm');
         }
-        if (!$data['attrs']) throw new AdminException(400337);
+        if (!$data['attrs']) throw new AdminException('Vui lòng chọn sản phẩm');
         $attrs = [];
         foreach ($data['attrs'] as $k => $v) {
             $attrs[$v['product_id']][] = $v;
@@ -171,10 +171,10 @@ class StoreIntegralServices extends BaseServices
     {
         $info = $this->dao->get($id);
         if (!$info) {
-            throw new AdminException(400533);
+            throw new AdminException('Sản phẩm không tồn tại');
         }
         if ($info->is_del) {
-            throw new AdminException(400534);
+            throw new AdminException('Sản phẩm đổi điểm bạn đang xem đã bị xóa');
         }
         $info['price'] = floatval($info['price']);
         /** @var StoreDescriptionServices $storeDescriptionServices */
@@ -192,12 +192,31 @@ class StoreIntegralServices extends BaseServices
      */
     public function attrList(int $id, int $pid)
     {
+        /** @var StoreProductAttrServices $storeProductAttrService */
+        $storeProductAttrService = app()->make(StoreProductAttrServices::class);
         /** @var StoreProductAttrResultServices $storeProductAttrResultServices */
         $storeProductAttrResultServices = app()->make(StoreProductAttrResultServices::class);
-        $combinationResult = $storeProductAttrResultServices->value(['product_id' => $id, 'type' => 4], 'result');
-        $items = json_decode($combinationResult, true)['attr'];
-        $productAttr = $this->getAttr($items, $pid, 0);
-        $combinationAttr = $this->getAttr($items, $id, 4);
+        $integralResult = $storeProductAttrResultServices->value(['product_id' => $id, 'type' => 4], 'result');
+        $items = json_decode($integralResult, true)['attr'];
+        $productAttr = $storeProductAttrService->getProductAttr(['product_id' => $pid, 'type' => 0]);
+        $pAttr = [];
+        foreach ($productAttr as $key => $value) {
+            $pAttr[$key]['value'] = $value['attr_name'];
+            $pAttr[$key]['detailValue'] = '';
+            $pAttr[$key]['attrHidden'] = true;
+            $pAttr[$key]['detail'] = $value['attr_values'];
+        }
+
+        $integralAttr = $storeProductAttrService->getProductAttr(['product_id' => $id, 'type' => 4]);
+        $iAttr = [];
+        foreach ($integralAttr as $key => $value) {
+            $iAttr[$key]['value'] = $value['attr_name'];
+            $iAttr[$key]['detailValue'] = '';
+            $iAttr[$key]['attrHidden'] = true;
+            $iAttr[$key]['detail'] = $value['attr_values'];
+        }
+        $productAttr = $this->getAttr($pAttr, $pid, 0);
+        $combinationAttr = $this->getAttr($iAttr, $id, 4);
         foreach ($productAttr as $pk => $pv) {
             foreach ($combinationAttr as &$sv) {
                 if ($pv['detail'] == $sv['detail']) {
@@ -277,7 +296,7 @@ class StoreIntegralServices extends BaseServices
     {
         $storeInfo = $this->dao->getOne(['id' => $id], '*', ['getPrice']);
         if (!$storeInfo) {
-            throw new AdminException(400533);
+            throw new AdminException('Sản phẩm không tồn tại');
         } else {
             $storeInfo = $storeInfo->toArray();
         }
@@ -375,24 +394,24 @@ class StoreIntegralServices extends BaseServices
         }
         $StoreIntegralInfo = $this->getIntegralOne($integralId);
         if (!$StoreIntegralInfo) {
-            throw new ApiException(400093);
+            throw new ApiException('Sản phẩm đã ngừng bán hoặc đã bị xóa');
         }
         /** @var StoreIntegralOrderServices $orderServices */
         $orderServices = app()->make(StoreIntegralOrderServices::class);
         $userBuyCount = $orderServices->getBuyCount($uid, $integralId);
         if ($StoreIntegralInfo['once_num'] < $num && $StoreIntegralInfo['once_num'] != -1) {
-            throw new ApiException(410313, ['num' => $StoreIntegralInfo['once_num']]);
+            throw new ApiException('Mỗi đơn hàng chỉ được mua tối đa {:num} sản phẩm', ['num' => $StoreIntegralInfo['once_num']]);
         }
         if ($StoreIntegralInfo['num'] < ($userBuyCount + $num) && $StoreIntegralInfo['num'] != -1) {
-            throw new ApiException(410298, ['num' => $StoreIntegralInfo['num']]);
+            throw new ApiException('Mỗi người chỉ được mua tổng cộng tối đa {:num} sản phẩm', ['num' => $StoreIntegralInfo['num']]);
         }
         $res = $attrValueServices->getOne(['product_id' => $integralId, 'unique' => $unique, 'type' => 4]);
         if ($num > $res['quota']) {
-            throw new ApiException(410297, ['num' => $num]);
+            throw new ApiException('Tồn kho sản phẩm này không đủ {:num}', ['num' => $num]);
         }
         $product_stock = $attrValueServices->value(['product_id' => $StoreIntegralInfo['product_id'], 'suk' => $res['suk'], 'type' => 0], 'stock');
         if ($product_stock < $num) {
-            throw new ApiException(410297, ['num' => $num]);
+            throw new ApiException('Tồn kho sản phẩm này không đủ {:num}', ['num' => $num]);
         }
         return $unique;
     }

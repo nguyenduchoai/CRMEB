@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -76,9 +76,9 @@ class UserLabel extends AuthController
             ['label_cate', 0],
             ['label_name', ''],
         ]);
-        if (!$data['label_name'] = trim($data['label_name'])) return app('json')->fail(400322);
+        if (!$data['label_name'] = trim($data['label_name'])) return app('json')->fail('Nhãn thành viên không được để trống');
         $this->services->save((int)$data['id'], $data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -91,9 +91,9 @@ class UserLabel extends AuthController
         list($id) = $this->request->getMore([
             ['id', 0],
         ], true);
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $this->services->delLabel((int)$id);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -119,12 +119,12 @@ class UserLabel extends AuthController
             ['un_label_ids', []]
         ], true);
         if (!count($labels) && !count($unLabelIds)) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
-        if ($services->setUserLable($uid, $labels) && $services->unUserLabel($uid, $unLabelIds)) {
-            return app('json')->success(100014);
+        if ($services->setUserLabel($uid, $labels) && $services->unUserLabel($uid, $unLabelIds)) {
+            return app('json')->success('Cài đặt thành công');
         } else {
-            return app('json')->fail(100015);
+            return app('json')->fail('Cài đặt thất bại');
         }
     }
 

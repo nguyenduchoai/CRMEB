@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -83,7 +83,7 @@ class Common extends AuthController
                         ]);
                     }
                 } catch (\Throwable $e) {
-                    return app('json')->fail(400330);
+                    return app('json')->fail('Cấp phép thành công nhưng ghi vào cơ sở dữ liệu thất bại, vui lòng kiểm tra cấu hình kết nối cơ sở dữ liệu');
                 }
                 return app('json')->success(['status' => 1, 'copyright' => $res['data']['copyright'], 'authCode' => $authCode, 'day' => 0, 'force_reminder' => $upgradeStatus['force_reminder'] ?? 0]);
             default:
@@ -106,23 +106,23 @@ class Common extends AuthController
             ['captcha', ''],
         ]);
         if (!$data['company_name']) {
-            return app('json')->fail(400331);
+            return app('json')->fail('Vui lòng điền tên công ty');
         }
         if (!$data['domain_name']) {
-            return app('json')->fail(400332);
+            return app('json')->fail('Vui lòng điền tên miền được cấp phép');
         }
 
         if (!$data['phone']) {
-            return app('json')->fail(400333);
+            return app('json')->fail('Vui lòng điền số điện thoại');
         }
         if (!$data['order_id']) {
-            return app('json')->fail(400334);
+            return app('json')->fail('Vui lòng điền ID đơn hàng');
         }
         if (!$data['captcha']) {
-            return app('json')->fail(400137);
+            return app('json')->fail('Vui lòng điền mã xác thực');
         }
         $services->authApply($data);
-        return app('json')->success(400335);
+        return app('json')->success('Yêu cầu cấp phép thành công');
 
     }
 
@@ -388,7 +388,7 @@ class Common extends AuthController
             ]);
         }
         CacheService::clear();
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -405,7 +405,7 @@ class Common extends AuthController
             ['keyword', ''],
         ], true);
         if (empty($keyword)) {
-           return app('json')->fail(400239, 'Từ khóa không được để trống');
+           return app('json')->fail('Vui lòng nhập từ khóa', 'Từ khóa không được để trống');
         }
 
         // Lấy instance service menu hệ thống

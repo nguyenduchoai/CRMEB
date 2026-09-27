@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -326,7 +326,7 @@ class Local extends BaseUpload
                         $data = $down->path($this->thumbWaterPath)->downloadImage($waterConfig['watermark_image'], $name);
                         $watermark_image = $data['path'] ?? '';
                     } catch (\Throwable $e) {
-                        throw new AdminException(400724);
+                        throw new AdminException('Tải xuống ảnh watermark từ xa thất bại');
                     }
                 }
             } else {
@@ -334,7 +334,7 @@ class Local extends BaseUpload
             }
         }
         if (!$watermark_image) {
-            throw new AdminException(400722);
+            throw new AdminException('Vui lòng cấu hình ảnh watermark trước');
         }
         $savePath = public_path() . $filePath;
         try {
@@ -358,7 +358,7 @@ class Local extends BaseUpload
             $waterConfig = $this->waterConfig;
         }
         if (!$waterConfig['watermark_text']) {
-            throw new AdminException(400723);
+            throw new AdminException('Vui lòng cấu hình văn bản watermark trước');
         }
         $savePath = public_path() . $filePath;
         try {

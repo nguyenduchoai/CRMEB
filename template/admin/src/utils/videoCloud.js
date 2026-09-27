@@ -264,19 +264,16 @@ export default {
     return new Promise((resolve, reject) => {
       observable.subscribe({
         next: (result) => {
-          console.log(videoIng)
           const progress = Math.round(result.total.loaded / result.total.size);
           videoIng(true, progress);
           // Chủ yếu dùng để hiển thị tiến trình
         },
         error: (errResult) => {
           // Thông tin lỗi khi thất bại
-          console.log(errResult);
           reject({ msg: errResult });
         },
         complete: (result) => {
           // Thông tin trả về sau khi nhận thành công
-          console.log(result,'result');
           videoIng(false, 0);
           resolve({ url: res.data.cdn ? res.data.cdn + '/' + filename : fileUrl });
         },

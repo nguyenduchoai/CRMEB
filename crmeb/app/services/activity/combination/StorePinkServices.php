@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -548,7 +548,7 @@ class StorePinkServices extends BaseServices
             ['status', '=', 1],
             ['stop_time', '>', time()],
         ]);
-        if (!$pinkT) throw new ApiException(410314);
+        if (!$pinkT) throw new ApiException('Không tìm thấy thông tin mua chung, không thể hủy');
         list($pinkAll, $pinkT, $count, $idAll, $uidAll) = $this->getPinkMemberAndPinkK($pinkT);
         if (count($pinkAll)) {
             $count = $pinkT['people'] - ($this->dao->count(['k_id' => $pink_id, 'is_refund' => 0]) + 1);
@@ -558,7 +558,7 @@ class StorePinkServices extends BaseServices
             } else {
                 //Mua chung hoàn thành
                 $this->PinkComplete($uidAll, $idAll, $uid, $pinkT);
-                throw new ApiException(410316);
+                throw new ApiException('Mua chung đã hoàn thành, không thể hủy');
             }
         }
         /** @var StoreOrderServices $orderService */
@@ -625,7 +625,7 @@ class StorePinkServices extends BaseServices
                         $valueData .= '&pid=' . $user['uid'];
                     }
                     $res = MiniProgramService::appCodeUnlimitService($valueData, 'pages/activity/goods_combination_status/index', 280);
-                    if (!$res) throw new ApiException(410167);
+                    if (!$res) throw new ApiException('Tạo mã QR thất bại');
                     $uploadType = (int)sys_config('upload_type', 1);
                     $upload = UploadService::init();
                     $res = (string)EntityBody::factory($res);
@@ -656,7 +656,7 @@ class StorePinkServices extends BaseServices
                 if ($imageInfo['image_type'] == 1)
                     $data['url'] = $siteUrl . $url;
                 $posterImage = PosterServices::setShareMarketingPoster($data, 'routine/activity/pink/poster');
-                if (!is_array($posterImage)) throw new ApiException(410172);
+                if (!is_array($posterImage)) throw new ApiException('Tạo poster thất bại');
                 $systemAttachmentServices->save([
                     'name' => $posterImage['name'],
                     'att_dir' => $posterImage['dir'],
@@ -680,7 +680,7 @@ class StorePinkServices extends BaseServices
                     $codeUrl = set_http_type($siteUrl . '/pages/activity/goods_combination_status/index?id=' . $pinkId . '&spread=' . $user['uid'], 1);//Liên kết mã QR
                     $imageInfo = PosterServices::getQRCodePath($codeUrl, $name);
                     if (is_string($imageInfo)) {
-                        throw new ApiException(410167);
+                        throw new ApiException('Tạo mã QR thất bại');
                     }
                     $systemAttachmentServices->save([
                         'name' => $imageInfo['name'],
@@ -699,7 +699,7 @@ class StorePinkServices extends BaseServices
                 $data['url'] = $url;
                 if ($imageInfo['image_type'] == 1) $data['url'] = $siteUrl . $url;
                 $posterImage = PosterServices::setShareMarketingPoster($data, 'wap/activity/pink/poster');
-                if (!is_array($posterImage)) throw new ApiException(410172);
+                if (!is_array($posterImage)) throw new ApiException('Tạo poster thất bại');
                 $systemAttachmentServices->save([
                     'name' => $posterImage['name'],
                     'att_dir' => $posterImage['dir'],
@@ -716,7 +716,7 @@ class StorePinkServices extends BaseServices
                 $wapPosterImage = set_http_type($posterImage['dir'], 1);//Poster giới thiệu OA WeChat
                 return $wapPosterImage;
             }
-            throw new ApiException(100100);
+            throw new ApiException('Tham số không hợp lệ');
         } catch (\Exception $e) {
             throw new ApiException($e->getMessage());
         }
@@ -889,7 +889,7 @@ class StorePinkServices extends BaseServices
                         $valueData .= '&pid=' . $user['uid'];
                     }
                     $res = MiniProgramService::appCodeUnlimitService($valueData, 'pages/activity/goods_combination_status/index', 280);
-                    if (!$res) throw new ApiException(410167);
+                    if (!$res) throw new ApiException('Tạo mã QR thất bại');
                     $uploadType = (int)sys_config('upload_type', 1);
                     $upload = UploadService::init();
                     $res = $upload->to('routine/activity/pink/code')->validate()->setAuthThumb(false)->stream($res, $name);

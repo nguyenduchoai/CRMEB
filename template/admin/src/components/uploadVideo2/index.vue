@@ -57,7 +57,7 @@
         <div class="bnt acea-row row-middle df-jcsb">
           <div class="">
             <el-button
-              class="mr14"
+              class="mr8"
               type="primary"
               :disabled="checkPicList.length === 0"
               v-db-click
@@ -68,7 +68,7 @@
             >
             <!-- <el-button size="small" type="primary" v-db-click @click="uploadModal">Tải video lên</el-button> -->
             <el-button
-              class="mr14"
+              class="mr8"
               v-if="upload_type !== '1'"
               type="primary"
               size="small"
@@ -87,10 +87,12 @@
               style="display: inline-block"
               accept=".mp4"
             >
-              <el-button class="mr14" size="small" type="primary">Tải lên video</el-button>
+              <el-button class="mr8" size="small" type="primary">Tải lên video</el-button>
             </el-upload>
+            <!-- Nhập liên kết -->
+            <el-button class="mr8" size="small" type="primary" icon="el-icon-link" @click="openInputModal"></el-button>
             <el-button
-              class="mr14"
+              class="mr8"
               size="small"
               :disabled="!checkPicList.length && !ids.length"
               v-db-click
@@ -111,7 +113,7 @@
           </div>
           <div>
             <el-input
-              class="mr14"
+              class="mr8"
               v-model="fileData.real_name"
               placeholder="Vui lòng nhập tên video"
               size="small"
@@ -251,6 +253,13 @@
       <video :src="imageUrl" controls />
     </el-dialog>
     <input type="file" ref="refid" style="display: none" @change="zh_uploadFile_change" />
+    <!-- Hộp thoại nhập liên kết -->
+    <el-dialog title="Nhập liên kết video" append-to-body :visible.sync="inputModal" width="400px">
+      <div class="flex">
+        <el-input class="mr-20" v-model="inputUrl" placeholder="Vui lòng nhập liên kết video" />
+        <el-button type="primary" @click="uploadByUrl">Đã sử dụng</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -352,6 +361,8 @@ export default {
       upload: {
         videoIng: false, // Có hiển thị thanh tiến trình không;
       },
+      inputModal: false, // Hộp thoại nhập liên kết
+      inputUrl: '', // Liên kết video đã nhập
     };
   },
   mounted() {
@@ -367,6 +378,10 @@ export default {
     this.getFileList();
   },
   methods: {
+    // Mở hộp thoại nhập liên kết
+    openInputModal() {
+      this.inputModal = true;
+    },
     //Lấy loại tải lên video
     uploadType() {
       uploadType().then((res) => {
@@ -390,14 +405,12 @@ export default {
       if (evfile.target.files[0].type !== 'video/mp4') {
         return that.$message.error('Chỉ được tải lên tệp mp4');
       }
-      console.log('111');
       debugger;
       let types = {
         key: evfile.target.files[0].name,
         contentType: evfile.target.files[0].type,
       };
       productGetTempKeysApi(types).then((res) => {
-        console.log(res, evfile, res.data.type);
         that.$videoCloud
           .videoUpload({
             type: res.data.type,
@@ -845,7 +858,6 @@ export default {
     },
     // Bấm dùng video đã chọn
     checkPics() {
-      console.log(this.checkPicList, 'this.checkPicList', this.isChoice);
       if (this.isChoice === 'one') {
         if (this.checkPicList.length > 1) return this.$message.warning('Chỉ được chọn tối đa một video');
         this.$emit('getVideo', this.checkPicList[0].att_dir);
@@ -856,6 +868,16 @@ export default {
         this.$emit('getPicD', this.checkPicList);
         this.$emit('getVideo', this.checkPicList);
       }
+    },
+    // Tải lên video qua liên kết
+    uploadByUrl() {
+      if (!this.inputUrl) {
+        this.$message.error('Vui lòng nhập liên kết video');
+        return;
+      }
+      this.$emit('getVideo', this.inputUrl);
+      this.$emit('getPicD', this.inputUrl);
+      this.inputUrl = '';
     },
     editName(item) {
       let it = item.real_name.split('.');

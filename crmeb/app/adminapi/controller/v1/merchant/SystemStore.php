@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -83,7 +83,7 @@ class SystemStore extends AuthController
     public function select_address()
     {
         $key = sys_config('tengxun_map_key');
-        if (!$key) return app('json')->fail(400124);
+        if (!$key) return app('json')->fail('Vui lòng cấu hình KEY Tencent Maps');
         return app('json')->success(compact('key'));
     }
 
@@ -95,12 +95,12 @@ class SystemStore extends AuthController
      */
     public function set_show($is_show = '', $id = '')
     {
-        ($is_show == '' || $id == '') && app('json')->fail(100100);
+        ($is_show == '' || $id == '') && app('json')->fail('Tham số không hợp lệ');
         $res = $this->services->update((int)$id, ['is_show' => (int)$is_show]);
         if ($res) {
-            return app('json')->success(100014);
+            return app('json')->success('Cài đặt thành công');
         } else {
-            return app('json')->fail(100015);
+            return app('json')->fail('Cài đặt thất bại');
         }
     }
 
@@ -127,7 +127,7 @@ class SystemStore extends AuthController
         $data['address'] = implode(',', $data['address']);
         $data['latlng'] = explode(',', $data['latlng']);
         if (!isset($data['latlng'][0]) || !isset($data['latlng'][1])) {
-            return app('json')->fail(400125);
+            return app('json')->fail('Vui lòng chọn vị trí cửa hàng');
         }
         $data['latitude'] = $data['latlng'][0];
         $data['longitude'] = $data['latlng'][1];
@@ -138,7 +138,7 @@ class SystemStore extends AuthController
             $data['image'] = $site_url . $data['image'];
         }
         $this->services->saveStore((int)$id, $data);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
@@ -148,23 +148,23 @@ class SystemStore extends AuthController
      */
     public function delete($id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $storeInfo = $this->services->get($id);
         if (!$storeInfo) {
-            return app('json')->fail(100026);
+            return app('json')->fail('Dữ liệu không tồn tại');
         }
         if ($storeInfo->is_del == 1) {
             $storeInfo->is_del = 0;
             if (!$storeInfo->save())
-                return app('json')->fail(100041);
+                return app('json')->fail('Khôi phục thất bại');
             else
-                return app('json')->success(100040);
+                return app('json')->success('Khôi phục thành công');
         } else {
             $storeInfo->is_del = 1;
             if (!$storeInfo->save())
-                return app('json')->fail(100008);
+                return app('json')->fail('Xóa thất bại');
             else
-                return app('json')->success(100002);
+                return app('json')->success('Xóa thành công');
         }
     }
 }

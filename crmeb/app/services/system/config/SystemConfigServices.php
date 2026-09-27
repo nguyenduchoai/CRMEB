@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -1039,7 +1039,7 @@ class SystemConfigServices extends BaseServices
         }
         $auth = $this->postUrl[$name]['auth'] ?? false;
         if ($auth === false) {
-            throw new AdminException(400601);
+            throw new AdminException('Yêu cầu không được phép');
         }
         if ($auth) {
             /** @var SystemConfigTabServices $systemConfigTabServices */
@@ -1047,7 +1047,7 @@ class SystemConfigServices extends BaseServices
             foreach ($post as $key => $value) {
                 $tab_ids = $systemConfigTabServices->getColumn([['eng_title', 'IN', $auth]], 'id');
                 if (!$tab_ids || !in_array($key, $this->dao->getColumn([['config_tab_id', 'IN', $tab_ids]], 'menu_name'))) {
-                    throw new AdminException(400602);
+                    throw new AdminException('Không được phép cài đặt danh mục này');
                 }
             }
         }
@@ -1067,7 +1067,7 @@ class SystemConfigServices extends BaseServices
     {
         $menu = $this->dao->get($id)->getData();
         if (!$menu) {
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         /** @var SystemConfigTabServices $service */
         $service = app()->make(SystemConfigTabServices::class);
@@ -1300,7 +1300,7 @@ class SystemConfigServices extends BaseServices
         $data['parameter'] = str_replace("\r\n", "\n", $data['parameter']);//Ngăn không tương thích
         $parameter = explode("\n", $data['parameter']);
         if (count($parameter) < 2) {
-            throw new AdminException(400603);
+            throw new AdminException('Vui lòng nhập tham số cấu hình đúng định dạng');
         }
         foreach ($parameter as $k => $v) {
             if (isset($v) && !empty($v)) {
@@ -1308,7 +1308,7 @@ class SystemConfigServices extends BaseServices
             }
         }
         if (count($option) < 2) {
-            throw new AdminException(400603);
+            throw new AdminException('Vui lòng nhập tham số cấu hình đúng định dạng');
         }
         $bool = 1;
         foreach ($option as $k => $v) {
@@ -1321,13 +1321,13 @@ class SystemConfigServices extends BaseServices
             }
         }
         if (!$bool) {
-            throw new AdminException(400603);
+            throw new AdminException('Vui lòng nhập tham số cấu hình đúng định dạng');
         }
         $num1 = count($option_new);//Lấy số lượng của mảng này
         $arr2 = array_unique($option_new);//Gộp các phần tử giống nhau
         $num2 = count($arr2);//Lấy số lượng mảng sau khi gộp
         if ($num1 > $num2) {
-            throw new AdminException(400603);
+            throw new AdminException('Vui lòng nhập tham số cấu hình đúng định dạng');
         }
         return true;
     }
@@ -1351,12 +1351,12 @@ class SystemConfigServices extends BaseServices
                 switch ($k) {
                     case 'required':
                         if ($v == 'true' && $data['value'] === '') {
-                            throw new AdminException(400604, ['name' => $data['info'] ?? '']);
+                            throw new AdminException('Vui lòng nhập giá trị mặc định cho {:name}', ['name' => $data['info'] ?? '']);
                         }
                         break;
                     case 'url':
                         if ($v == 'true' && !check_link($data['value'])) {
-                            throw new AdminException(400605, ['name' => $data['info'] ?? '']);
+                            throw new AdminException('Vui lòng nhập đúng url cho {:name}', ['name' => $data['info'] ?? '']);
                         }
                         break;
                 }
@@ -1422,7 +1422,7 @@ WSS;
         try {
             file_put_contents($wssFile, $content);
         } catch (\Throwable $e) {
-            throw new AdminException(400606);
+            throw new AdminException('Lưu chứng chỉ wss thất bại');
         }
     }
 

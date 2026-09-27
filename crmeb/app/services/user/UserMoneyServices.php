@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -119,9 +119,10 @@ class UserMoneyServices extends BaseServices
      * @param int|string|array $number
      * @param int|string $balance
      * @param $linkId
+     * @param string $mark
      * @return bool|mixed
      */
-    public function income(string $type, int $uid, $number, $balance, $linkId)
+    public function income(string $type, int $uid, $number, $balance, $linkId, string $mark = '')
     {
         $data = $this->incomeData[$type] ?? null;
         if (!$data) {
@@ -137,10 +138,10 @@ class UserMoneyServices extends BaseServices
             }, $key);
             $value = array_values($number);
             $data['number'] = $number['number'] ?? 0;
-            $data['mark'] = str_replace($key, $value, $data['mark']);
+            $data['mark'] = $mark == '' ? str_replace($key, $value, $data['mark']) : $mark;
         } else {
             $data['number'] = $number;
-            $data['mark'] = str_replace(['{%num%}'], $number, $data['mark']);
+            $data['mark'] = $mark == '' ? str_replace(['{%num%}'], $number, $data['mark']) : $mark;
         }
         $data['add_time'] = time();
 
@@ -180,7 +181,7 @@ class UserMoneyServices extends BaseServices
                 $item['relation'] = $rechargeServices->value(['id' => $item['link_id']], 'order_id');
             } elseif ($item['type'] == 'pay_member') {
                 $item['relation'] = $otherOrderServices->value(['id' => $item['link_id']], 'order_id');
-            }  else {
+            } else {
                 $item['relation'] = $status[$item['type']];
             }
             $item['add_time'] = date('Y-m-d H:i:s', $item['add_time']);
@@ -200,7 +201,7 @@ class UserMoneyServices extends BaseServices
         if ($this->dao->update($id, ['mark' => $mark])) {
             return true;
         } else {
-            throw new AdminException(100025);
+            throw new AdminException('Ghi chú thất bại');
         }
     }
 
@@ -330,7 +331,7 @@ class UserMoneyServices extends BaseServices
     public function getType($where)
     {
         $bing_xdata = ['Hệ thống trừ', 'Hoàn tiền nạp', 'Mua sản phẩm', 'Mua gói thành viên'];
-        $color = ['#64a1f4', '#3edeb5', '#70869f'];
+        $color = ['#64a1f4', '#3edeb5', '#70869f', '#ffc653'];
         $data = ['system_sub', 'recharge_refund', 'pay_product', 'pay_member'];
         $bing_data = [];
         foreach ($data as $key => $item) {

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -68,12 +68,12 @@ class LangCountry extends AuthController
             ['type_id', 0],
         ]);
         $this->services->langCountrySave($id, $data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     public function langCountryDel($id)
     {
         $this->services->langCountryDel($id);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 }

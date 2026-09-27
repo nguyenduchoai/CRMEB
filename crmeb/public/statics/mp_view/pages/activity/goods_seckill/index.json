@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Flash sale giờ vàng",
+  "navigationBarTitleText": "限时秒杀",
   "usingComponents": {
     "home": "/components/home/index"
   }

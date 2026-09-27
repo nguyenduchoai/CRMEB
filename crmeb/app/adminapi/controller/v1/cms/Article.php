@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -78,7 +78,7 @@ class Article extends AuthController
             ['status', 1]
         ]);
         $this->service->save($data);
-        return app('json')->success(100021);
+        return app('json')->success('Thêm thành công');
     }
 
     /**
@@ -92,7 +92,7 @@ class Article extends AuthController
      */
     public function read($id = 0)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $info = $this->service->read($id);
         return app('json')->success($info);
     }
@@ -104,9 +104,9 @@ class Article extends AuthController
      */
     public function delete($id = 0)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $this->service->del($id);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -116,15 +116,15 @@ class Article extends AuthController
      */
     public function relation($id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         list($product_id) = $this->request->postMore([
             ['product_id', 0]
         ], true);
         $res = $this->service->bindProduct($id, $product_id);
         if ($res) {
-            return app('json')->success(400300);
+            return app('json')->success('Liên kết thành công');
         } else {
-            return app('json')->fail(400301);
+            return app('json')->fail('Liên kết thất bại');
         }
     }
 
@@ -135,12 +135,12 @@ class Article extends AuthController
      */
     public function unrelation($id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $res = $this->service->bindProduct($id);
         if ($res) {
-            return app('json')->success(100019);
+            return app('json')->success('Hủy thành công');
         } else {
-            return app('json')->fail(100020);
+            return app('json')->fail('Hủy thất bại');
         }
     }
 }

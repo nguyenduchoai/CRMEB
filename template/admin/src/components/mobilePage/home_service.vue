@@ -1,12 +1,14 @@
 <template>
-  <div class="service-box" :class="positions ? '' : 'on'" :style="{ marginTop: mTop + 'px' }">
-    <div class="img-box">
-      <img :src="imgUrl" alt="" v-if="imgUrl" />
-      <div class="empty-box on" v-else>
-        <img src="../../assets/images/shan.png" />
+  <common_wrapper :config="configObj">
+    <div class="service-box" :class="positions ? '' : 'on'">
+      <div class="img-box">
+        <img :src="imgUrl" alt="" v-if="imgUrl" />
+        <div class="empty-box on" v-else>
+          <img src="../../assets/images/shan.png" />
+        </div>
       </div>
     </div>
-  </div>
+  </common_wrapper>
 </template>
 
 <script>
@@ -94,17 +96,99 @@ export default {
           url: '',
           link: '',
         },
-        // Lề trang
-        topConfig: {
-          title: 'Độ lệch dọc',
+        zIndexConfig: {
+          title: 'Thứ tự lớp thành phần',
           val: 0,
           min: 0,
+        },
+        borderConfig: {
+          title: 'Cài đặt viền',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0, // 0: Hide, 1: Show
+          styleConfig: {
+            title: 'Kiểu viền',
+            tabVal: 0,
+            tabList: [
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
+            ],
+          },
+          widthConfig: {
+            title: 'Độ dày viền',
+            val: 1,
+            min: 1,
+          },
+          colorConfig: {
+            title: 'Màu viền',
+            default: [{ item: '#e5e5e5' }],
+            color: [{ item: '#e5e5e5' }],
+          },
+        },
+        shadowConfig: {
+          title: 'Cài đặt đổ bóng',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0, // 0: Hide, 1: Show
+          colorConfig: {
+            title: 'Màu đổ bóng',
+            default: [{ item: 'rgba(0,0,0,0.1)' }],
+            color: [{ item: 'rgba(0,0,0,0.1)' }],
+          },
+          xConfig: {
+            title: 'Độ lệch trục X',
+            val: 0,
+            min: -50,
+          },
+          yConfig: {
+            title: 'Độ lệch trục Y',
+            val: 0,
+            min: -50,
+          },
+          blurConfig: {
+            title: 'Bán kính làm mờ',
+            val: 10,
+            min: 0,
+          },
+          spreadConfig: {
+            title: 'Bán kính lan tỏa',
+            val: 0,
+            min: -50,
+          },
+        },
+        componentBgConfig: {
+          title: 'Nền thành phần',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0, // 0: Hide, 1: Show
+          colorConfig: {
+            title: 'Màu nền',
+            default: [{ item: '#fff' }],
+            color: [{ item: '#fff' }],
+          },
+        },
+        // Lề trang
+        paddingConfig: {
+          title: 'Lề trong',
+          val: 0,
+          min: 0,
+          isAll: false,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        },
+        marginConfig: {
+          title: 'Lề ngoài',
+          val: 0,
+          min: 0,
+          isAll: false,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
       },
       imgUrl: '',
       pageData: {},
       mTop: 0,
       positions: 1, //Vị trí hiển thị
+      configObj: null,
     };
   },
   mounted() {
@@ -116,11 +200,14 @@ export default {
   methods: {
     setConfig(data) {
       if (!data) return;
-      if (data.topConfig) {
-        this.mTop = data.topConfig.val;
-        this.imgUrl = data.logoConfig.url;
-        this.positions = data.locationConfig.tabVal;
+      this.configObj = data;
+      for (let key in this.defaultConfig) {
+        if (this.configObj[key] === undefined) {
+          this.$set(this.configObj, key, this.defaultConfig[key]);
+        }
       }
+      this.imgUrl = data.logoConfig.url;
+      this.positions = data.locationConfig.tabVal;
     },
   },
 };
@@ -151,7 +238,7 @@ export default {
         width: 26px;
         height: 20px;
       }
-      .iconfont-diy {
+      .iconfont {
         font-size: 20px;
       }
     }

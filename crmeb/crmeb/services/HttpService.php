@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -10,6 +10,8 @@
 // +----------------------------------------------------------------------
 
 namespace crmeb\services;
+
+use think\facade\Log;
 
 /**
  * Class HttpService
@@ -65,7 +67,6 @@ class HttpService
             $url .= (stripos($url, '?') === false ? '?' : '&');
             $url .= (is_array($data) ? http_build_query($data) : $data);
         }
-
         return self::request($url, 'get', array(), $header, $timeout);
     }
 

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -46,7 +46,7 @@ class SystemGroupData extends AuthController
             ['gid', 0],
             ['config_name', '']
         ], true);
-        if (!$gid && !$config_name) return app('json')->fail(100100);
+        if (!$gid && !$config_name) return app('json')->fail('Tham số không hợp lệ');
         if (!$gid) {
             $gid = $services->value(['config_name' => $config_name], 'id');
         }
@@ -65,7 +65,7 @@ class SystemGroupData extends AuthController
             ['status', ''],
             ['config_name', '']
         ]);
-        if (!$where['gid'] && !$where['config_name']) return app('json')->fail(100100);
+        if (!$where['gid'] && !$where['config_name']) return app('json')->fail('Tham số không hợp lệ');
         if (!$where['gid']) {
             $where['gid'] = $group->value(['config_name' => $where['config_name']], 'id');
         }
@@ -82,10 +82,10 @@ class SystemGroupData extends AuthController
     {
         $gid = $this->request->param('gid/d');
         if ($this->services->isGroupGidSave($gid, 4, 'index_categy_images')) {
-            return app('json')->fail(400298);
+            return app('json')->fail('Không được nhiều hơn bốn');
         }
         if ($this->services->isGroupGidSave($gid, 7, 'sign_day_num')) {
-            return app('json')->fail(400299);
+            return app('json')->fail('Số ngày điểm danh không được cấu hình quá 7 ngày');
         }
         return app('json')->success($this->services->createForm($gid));
     }
@@ -105,7 +105,7 @@ class SystemGroupData extends AuthController
             foreach ($groupDatas as $groupData) {
                 $groupData = json_decode($groupData, true);
                 if (isset($groupData['order_status']['value']) && $groupData['order_status']['value'] == $params['order_status']) {
-                    return app('json')->fail(400188);
+                    return app('json')->fail('Vui lòng không thêm trùng lặp');
                 }
             }
         }
@@ -121,7 +121,7 @@ class SystemGroupData extends AuthController
             foreach ($fields as $index => $field) {
                 if ($key == $field["title"]) {
                     if ($param == "")
-                        return app('json')->fail(400297);
+                        return app('json')->fail('Trường không được để trống');
                     else {
                         $value[$key]["type"] = $field["type"];
                         $value[$key]["value"] = $param;
@@ -138,7 +138,7 @@ class SystemGroupData extends AuthController
         ];
         $this->services->save($data);
         \crmeb\services\CacheService::clear();
-        return app('json')->success(400189);
+        return app('json')->success('Thêm dữ liệu thành công');
     }
 
     /**
@@ -162,7 +162,7 @@ class SystemGroupData extends AuthController
     {
         $gid = $this->request->param('gid/d');
         if (!$gid) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         return app('json')->success($this->services->updateForm((int)$gid, (int)$id));
     }
@@ -191,7 +191,7 @@ class SystemGroupData extends AuthController
             foreach ($fields as $index => $field) {
                 if ($key == $field["title"]) {
                     if ($param == '')
-                        return app('json')->fail(400297);
+                        return app('json')->fail('Trường không được để trống');
                     else {
                         $value[$key]["type"] = $field["type"];
                         $value[$key]["value"] = $param;
@@ -206,7 +206,7 @@ class SystemGroupData extends AuthController
         ];
         $this->services->update($id, $data);
         \crmeb\services\CacheService::clear();
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**
@@ -218,10 +218,10 @@ class SystemGroupData extends AuthController
     public function delete($id)
     {
         if (!$this->services->delete($id))
-            return app('json')->fail(100008);
+            return app('json')->fail('Xóa thất bại');
         else {
             \crmeb\services\CacheService::clear();
-            return app('json')->success(100002);
+            return app('json')->success('Xóa thành công');
         }
     }
 
@@ -233,10 +233,10 @@ class SystemGroupData extends AuthController
      */
     public function set_status($id, $status)
     {
-        if ($status == '' || $id == 0) return app('json')->fail(100100);
+        if ($status == '' || $id == 0) return app('json')->fail('Tham số không hợp lệ');
         $this->services->update($id, ['status' => $status]);
         \crmeb\services\CacheService::clear();
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
 
@@ -253,10 +253,10 @@ class SystemGroupData extends AuthController
         $name = $services->value(['id' => $gid], 'config_name');
         if ($name == 'sign_day_num') {
             if (!$params['sign_num']) {
-                throw new AdminException(400196);
+                throw new AdminException('Vui lòng nhập điểm thưởng tặng khi điểm danh');
             }
             if (!preg_match('/^\+?[1-9]\d*$/', $params['sign_num'])) {
-                throw new AdminException(400197);
+                throw new AdminException('Vui lòng nhập số nguyên lớn hơn hoặc bằng 0');
             }
         }
     }
@@ -283,17 +283,17 @@ class SystemGroupData extends AuthController
         /** @var CacheServices $cache */
         $cache = app()->make(CacheServices::class);
         $cache->setDbCache('kf_adv', $content);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     public function saveAll()
     {
         $params = request()->post();
         if (!isset($params['config_name']) || !isset($params['data'])) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         $this->services->saveAllData($params['data'], $params['config_name']);
-        return app('json')->success(400295);
+        return app('json')->success('Thêm nhóm dữ liệu thành công');
     }
 
 
@@ -319,6 +319,6 @@ class SystemGroupData extends AuthController
         /** @var CacheServices $cache */
         $cache = app()->make(CacheServices::class);
         $cache->setDbCache('user_agreement', $content);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 }

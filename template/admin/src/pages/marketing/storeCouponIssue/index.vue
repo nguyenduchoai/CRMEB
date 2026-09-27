@@ -17,6 +17,7 @@
               class="form_content_width"
               maxlength="18"
               show-word-limit
+              clearable
             />
           </el-form-item>
           <el-form-item label="Loại phiếu giảm giá:" label-for="coupon_type">
@@ -127,7 +128,7 @@
             <span v-if="scope.row.is_permanent">Không giới hạn</span>
             <div v-else>
               <span class="fa">Phát hành: {{ scope.row.total_count }}</span>
-              <span class="sheng ml10">Còn lại: {{ scope.row.remain_count }}</span>
+              <span class="sheng">Còn lại: {{ scope.row.remain_count }}</span>
             </div>
           </template>
         </el-table-column>

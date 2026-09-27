@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Danh sách nhân viên",
+  "navigationBarTitleText": "员工列表",
   "navigationBarBackgroundColor": "#e93323",
   "navigationBarTextStyle": "white",
   "usingComponents": {

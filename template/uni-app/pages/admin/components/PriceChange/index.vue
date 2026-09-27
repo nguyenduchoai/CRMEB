@@ -6,31 +6,31 @@
 				<span class="iconfont icon-guanbi" @click="close"></span>
 			</view>
 			<view class="listChange" v-if="status == 0 || status == 2">
-				<view class="item acea-row row-between-wrapper" v-if="orderInfo.refund_status === 0">
+				<view class="item acea-row row-between-wrapper" v-if="orderInfo.refund_status === 0 && status != 2">
 					<view>{{$t(`Tổng giá sản phẩm`)}}({{$t(`￥`)}})</view>
 					<view class="money">
 						{{ orderInfo.total_price }}<span class="iconfont icon-suozi"></span>
 					</view>
 				</view>
-				<view class="item acea-row row-between-wrapper" v-if="orderInfo.refund_status === 0">
+				<view class="item acea-row row-between-wrapper" v-if="orderInfo.refund_status === 0 && status != 2">
 					<view>{{$t(`Phí vận chuyển ban đầu`)}}({{$t(`￥`)}})</view>
 					<view class="money">
 						{{ orderInfo.pay_postage }}<span class="iconfont icon-suozi"></span>
 					</view>
 				</view>
-				<view class="item acea-row row-between-wrapper" v-if="orderInfo.refund_status === 0">
+				<view class="item acea-row row-between-wrapper" v-if="orderInfo.refund_status === 0 && status != 2">
 					<view>{{$t(`Thanh toán thực tế`)}}({{$t(`￥`)}})</view>
 					<view class="money">
 						<input type="text" v-model="price" :class="focus === true ? 'on' : ''" @focus="priceChange" />
 					</view>
 				</view>
-				<view class="item acea-row row-between-wrapper" v-if="orderInfo.refund_status === 1">
+				<view class="item acea-row row-between-wrapper" v-if="orderInfo.refund_status === 1 || status == 2">
 					<view>{{$t(`Thanh toán thực tế`)}}({{$t(`￥`)}})</view>
 					<view class="money">
 						{{ orderInfo.pay_price }}<span class="iconfont icon-suozi"></span>
 					</view>
 				</view>
-				<view class="item acea-row row-between-wrapper" v-if="orderInfo.refund_status === 1">
+				<view class="item acea-row row-between-wrapper" v-if="(orderInfo.refund_status === 1 || status == 2) && isRefund == 1">
 					<view>{{$t(`Số tiền hoàn`)}}({{$t(`￥`)}})</view>
 					<view class="money">
 						<input type="text" v-model="refund_price" :class="focus === true ? 'on' : ''"
@@ -45,10 +45,10 @@
 			</view>
 			<view class="modify" @click="save">
 				{{
-          status == 1 || orderInfo.refund_status == 0 ? $t(`Lưu chỉnh sửa`) : $t(`Xác nhận hoàn tiền`)
+          status == 1 || orderInfo.refund_status == 0 ? $t(`Lưu chỉnh sửa`) : (isRefund === 1 ? $t(`Xác nhận hoàn tiền`) : $t(`Đồng ý trả hàng`))
         }}
 			</view>
-			<view class="modify1" @click="refuse" v-if="orderInfo.refund_status == 1 && status == 0">
+			<view class="modify1" @click="refuse" v-if="orderInfo.refund_status == 1">
 				{{$t(`Từ chối hoàn tiền`)}}
 			</view>
 		</view>
@@ -183,7 +183,8 @@
 		props: {
 			change: Boolean,
 			orderInfo: Object,
-			status: String
+			status: String,
+			isRefund: Number
 		},
 		data: function() {
 			return {
@@ -197,7 +198,7 @@
 			orderInfo: function(nVal) {
 				this.price = this.orderInfo.pay_price;
 				this.refund_price = this.orderInfo.pay_price;
-				this.remark = "";
+				this.remark = this.orderInfo.remark;
 			}
 		},
 		mounted: function() {},

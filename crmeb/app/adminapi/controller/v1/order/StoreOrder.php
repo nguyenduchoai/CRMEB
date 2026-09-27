@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -12,6 +12,7 @@ namespace app\adminapi\controller\v1\order;
 
 use app\adminapi\controller\AuthController;
 use app\adminapi\validate\order\StoreOrderValidate;
+use app\jobs\MiniOrderJob;
 use app\jobs\OrderExpressJob;
 use app\services\serve\ServeServices;
 use app\services\wechat\WechatUserServices;
@@ -107,12 +108,12 @@ class StoreOrder extends AuthController
             ['code', ''],
             ['confirm', 0]
         ], true);
-        if (!$code) return app('json')->fail(100100);
+        if (!$code) return app('json')->fail('Tham số không hợp lệ');
         $orderInfo = $services->writeOffOrder($code, (int)$confirm);
         if ($confirm == 0) {
-            return app('json')->success(400151, $orderInfo);
+            return app('json')->success('Xác thực thành công', $orderInfo);
         }
-        return app('json')->success(400152);
+        return app('json')->success('Xác nhận sử dụng thành công');
     }
 
     /**
@@ -128,16 +129,16 @@ class StoreOrder extends AuthController
     {
         $orderInfo = $this->services->getOne(['order_id' => $order_id, 'is_del' => 0]);
         if ($orderInfo->shipping_type != 2 && $orderInfo->delivery_type != 'send') {
-            return app('json')->fail(400153);
+            return app('json')->fail('Không tìm thấy đơn hàng cần xác nhận sử dụng');
         } else {
             if (!$orderInfo->verify_code) {
-                return app('json')->fail(100100);
+                return app('json')->fail('Tham số không hợp lệ');
             }
             $orderInfo = $services->writeOffOrder($orderInfo->verify_code, 1);
             if ($orderInfo) {
-                return app('json')->success(400151);
+                return app('json')->success('Xác thực thành công');
             } else {
-                return app('json')->fail(400154);
+                return app('json')->fail('Xác nhận sử dụng thất bại');
             }
         }
     }
@@ -150,7 +151,7 @@ class StoreOrder extends AuthController
      */
     public function edit($id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         return app('json')->success($this->services->updateForm($id));
     }
 
@@ -162,7 +163,7 @@ class StoreOrder extends AuthController
      */
     public function update($id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $data = $this->request->postMore([
             ['order_id', ''],
             ['total_price', 0],
@@ -174,11 +175,11 @@ class StoreOrder extends AuthController
 
         $this->validate($data, StoreOrderValidate::class);
 
-        if ($data['total_price'] < 0) return app('json')->fail(400155);
-        if ($data['pay_price'] < 0) return app('json')->fail(400155);
+        if ($data['total_price'] < 0) return app('json')->fail('Số tiền đơn hàng là bắt buộc');
+        if ($data['pay_price'] < 0) return app('json')->fail('Số tiền đơn hàng là bắt buộc');
 
         $this->services->updateOrder((int)$id, $data);
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**
@@ -205,13 +206,13 @@ class StoreOrder extends AuthController
         [$ids] = $this->request->postMore([
             ['ids', []],
         ], true);
-        if (!count($ids)) return app('json')->fail(400156);
+        if (!count($ids)) return app('json')->fail('Vui lòng chọn đơn hàng cần xóa');
         if ($this->services->getOrderIdsCount($ids))
-            return app('json')->fail(400157);
+            return app('json')->fail('Trong các đơn hàng bạn chọn có đơn người dùng chưa xóa');
         if ($this->services->batchUpdate($ids, ['is_system_del' => 1]))
-            return app('json')->success(100002);
+            return app('json')->success('Xóa thành công');
         else
-            return app('json')->fail(100008);
+            return app('json')->fail('Xóa thất bại');
     }
 
     /**
@@ -222,17 +223,17 @@ class StoreOrder extends AuthController
     public function del($id)
     {
         if (!$id || !($orderInfo = $this->services->get($id)))
-            return app('json')->fail(400118);
+            return app('json')->fail('Đơn hàng không tồn tại');
         if (!$orderInfo->is_del)
-            return app('json')->fail(400157);
+            return app('json')->fail('Trong các đơn hàng bạn chọn có đơn người dùng chưa xóa');
         $orderInfo->is_system_del = 1;
         if ($orderInfo->save()) {
             /** @var StoreOrderRefundServices $refundServices */
             $refundServices = app()->make(StoreOrderRefundServices::class);
             $refundServices->update(['store_order_id' => $id], ['is_system_del' => 1]);
-            return app('json')->success(100002);
+            return app('json')->success('Xóa thành công');
         } else
-            return app('json')->fail(100008);
+            return app('json')->fail('Xóa thất bại');
     }
 
     /**
@@ -264,7 +265,7 @@ class StoreOrder extends AuthController
             ['day_type', 0], //Tham số gửi SF Express: 0 là hôm nay, 1 là ngày mai, 2 là chọn ở backend
             ['pickup_time', []],//Thời gian bắt đầu 9:00, thời gian kết thúc 10:00. Khoảng giữa thời gian bắt đầu và kết thúc không được nhỏ hơn 1 giờ
         ]);
-        return app('json')->success(100010, $services->delivery((int)$id, $data));
+        return app('json')->success('Thao tác thành công', $services->delivery((int)$id, $data));
     }
 
     /**
@@ -303,18 +304,17 @@ class StoreOrder extends AuthController
             ['service_type', ''],//Loại nghiệp vụ vận chuyển
         ]);
         if (!$id) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         if (!$data['cart_ids']) {
-            return app('json')->fail(400158);
+            return app('json')->fail('Vui lòng chọn sản phẩm cần giao');
         }
         foreach ($data['cart_ids'] as $cart) {
             if (!isset($cart['cart_id']) || !$cart['cart_id'] || !isset($cart['cart_num']) || !$cart['cart_num']) {
-                return app('json')->fail(400159);
+                return app('json')->fail('Vui lòng chọn lại sản phẩm cần giao hoặc số lượng giao');
             }
         }
-        $services->splitDelivery((int)$id, $data);
-        return app('json')->success(100010);
+        return app('json')->success('Thao tác thành công', $services->splitDelivery((int)$id, $data));
     }
 
     /**
@@ -347,7 +347,7 @@ class StoreOrder extends AuthController
             ], 'cart_info', 'cart_id');
             foreach ($data['cart_ids'] as $cart) {
                 if (!isset($cart['cart_id']) || !$cart['cart_id'] || !isset($cart['cart_num']) || !$cart['cart_num']) {
-                    return app('json')->fail(400159);
+                    return app('json')->fail('Vui lòng chọn lại sản phẩm cần giao hoặc số lượng giao');
                 }
                 if (isset($cartList[$cart['cart_id']])) {
                     $value = is_string($cartList[$cart['cart_id']]) ? json_decode($cartList[$cart['cart_id']], true) : $cartList[$cart['cart_id']];
@@ -378,7 +378,7 @@ class StoreOrder extends AuthController
     public function split_cart_info($id, StoreOrderCartInfoServices $services)
     {
         if (!$id) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         return app('json')->success($services->getSplitCartList((int)$id));
     }
@@ -394,7 +394,7 @@ class StoreOrder extends AuthController
     public function split_order($id)
     {
         if (!$id) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         return app('json')->success($this->services->getSplitOrderList(['pid' => $id, 'is_system_del' => 0], ['*'], ['split', 'pink', 'invoice']));
     }
@@ -408,24 +408,24 @@ class StoreOrder extends AuthController
      */
     public function take_delivery(StoreOrderTakeServices $services, $id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $order = $this->services->get($id);
         if (!$order)
-            return app('json')->fail(400118);
+            return app('json')->fail('Đơn hàng không tồn tại');
         if ($order['status'] == 2)
-            return app('json')->fail(400114);
+            return app('json')->fail('Không thể xác nhận nhận hàng nhiều lần');
         if ($order['paid'] == 1 && $order['status'] == 1)
             $data['status'] = 2;
         else if ($order['pay_type'] == 'offline')
             $data['status'] = 2;
         else
-            return app('json')->fail(400115);
+            return app('json')->fail('Vui lòng giao hàng hoặc giao tận nơi trước');
 
         if (!$this->services->update($id, $data)) {
-            return app('json')->fail(400116);
+            return app('json')->fail('Xác nhận nhận hàng thất bại, vui lòng thử lại sau');
         } else {
             $services->storeProductOrderUserTakeDelivery($order);
-            return app('json')->success(400117);
+            return app('json')->success('Xác nhận nhận hàng thành công');
         }
     }
 
@@ -455,7 +455,7 @@ class StoreOrder extends AuthController
     public function refund(StoreOrderRefundServices $services, $id)
     {
         if (!$id) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         return app('json')->success($services->refundOrderForm((int)$id, 'order'));
     }
@@ -475,11 +475,11 @@ class StoreOrder extends AuthController
             ['cart_ids', []]
         ]);
         if (!$id) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         $order = $this->services->get($id);
         if (!$order) {
-            return app('json')->fail(400118);
+            return app('json')->fail('Đơn hàng không tồn tại');
         }
 
         $refundData = [
@@ -506,10 +506,10 @@ class StoreOrder extends AuthController
             $refund_price = 0;
         } else {
             if (!$data['refund_price']) {
-                return app('json')->fail(400146);
+                return app('json')->fail('Vui lòng nhập số tiền hoàn');
             }
             if ($orderRefund['refund_price'] == $orderRefund['refunded_price']) {
-                return app('json')->fail(400147);
+                return app('json')->fail('Đã hoàn hết số tiền thanh toán, không thể hoàn tiền thêm');
             }
             $refund_price = $data['refund_price'];
         }
@@ -517,7 +517,7 @@ class StoreOrder extends AuthController
         $data['refunded_price'] = bcadd($data['refund_price'], $orderRefund['refunded_price'], 2);
         $bj = bccomp((string)$orderRefund['refund_price'], (string)$data['refunded_price'], 2);
         if ($bj < 0) {
-            return app('json')->fail(400148);
+            return app('json')->fail('Số tiền hoàn lớn hơn số tiền đã thanh toán, vui lòng sửa lại số tiền hoàn');
         }
 
         $refund_data['pay_price'] = $order['pay_price'];
@@ -536,10 +536,10 @@ class StoreOrder extends AuthController
         unset($data['refund_price']);
         if ($services->agreeRefund($orderRefund['id'], $refund_data)) {
             $services->update($orderRefund['id'], $data);
-            return app('json')->success(400149);
+            return app('json')->success('Hoàn tiền thành công');
         } else {
             $services->storeProductOrderRefundYFasle((int)$orderRefund['id'], $refund_price);
-            return app('json')->fail(400150);
+            return app('json')->fail('Hoàn tiền thất bại');
         }
     }
 
@@ -552,12 +552,12 @@ class StoreOrder extends AuthController
     public function order_info($id)
     {
         if (!$id || !($orderInfo = $this->services->get($id, [], ['refund', 'invoice']))) {
-            return app('json')->fail(400118);
+            return app('json')->fail('Đơn hàng không tồn tại');
         }
         /** @var UserServices $services */
         $services = app()->make(UserServices::class);
         $userInfo = $services->get($orderInfo['uid']);
-        if (!$userInfo) return app('json')->fail(400119);
+        if (!$userInfo) return app('json')->fail('Thông tin người dùng không tồn tại');
         $userInfo = $userInfo->hidden(['pwd', 'add_ip', 'last_ip', 'login_type']);
         $userInfo['spread_name'] = 'Không có';
         if ($userInfo['spread_uid']) {
@@ -609,9 +609,9 @@ class StoreOrder extends AuthController
     public function get_express($id, ExpressServices $services)
     {
         if (!$id || !($orderInfo = $this->services->get($id)))
-            return app('json')->fail(400118);
+            return app('json')->fail('Đơn hàng không tồn tại');
         if ($orderInfo['delivery_type'] != 'express' || !$orderInfo['delivery_id'])
-            return app('json')->fail(400120);
+            return app('json')->fail('Mã vận đơn không tồn tại');
 
         $cacheName = $orderInfo['order_id'] . $orderInfo['delivery_id'];
 
@@ -631,7 +631,7 @@ class StoreOrder extends AuthController
     public function distribution(StoreOrderDeliveryServices $services, $id)
     {
         if (!$id) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         return app('json')->success($services->distributionForm((int)$id));
     }
@@ -644,9 +644,9 @@ class StoreOrder extends AuthController
     public function update_distribution(StoreOrderDeliveryServices $services, $id)
     {
         $data = $this->request->postMore([['delivery_name', ''], ['delivery_code', ''], ['delivery_id', '']]);
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $services->updateDistribution($id, $data);
-        return app('json')->success(100010);
+        return app('json')->success('Thao tác thành công');
     }
 
     /**
@@ -658,7 +658,7 @@ class StoreOrder extends AuthController
      */
     public function no_refund(StoreOrderRefundServices $services, $id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         return app('json')->success($services->noRefundForm((int)$id));
     }
 
@@ -671,10 +671,10 @@ class StoreOrder extends AuthController
     public function update_un_refund(StoreOrderRefundServices $services, $id)
     {
         if (!$id || !($orderInfo = $this->services->get($id)))
-            return app('json')->fail(400118);
+            return app('json')->fail('Đơn hàng không tồn tại');
         [$refund_reason] = $this->request->postMore([['refund_reason', '']], true);
         if (!$refund_reason) {
-            return app('json')->fail(400113);
+            return app('json')->fail('Lý do từ chối không được để trống');
         }
         $orderInfo->refund_reason = $refund_reason;
         $orderInfo->refund_status = 0;
@@ -699,7 +699,7 @@ class StoreOrder extends AuthController
         $orderInfo['phone'] = $orderInfo['user_phone'];
         event('CustomNoticeListener', [$orderInfo['uid'], $orderInfo, 'order_refund_fail']);
 
-        return app('json')->success(100010);
+        return app('json')->success('Thao tác thành công');
     }
 
     /**
@@ -709,12 +709,12 @@ class StoreOrder extends AuthController
      */
     public function pay_offline(OrderOfflineServices $services, $id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $res = $services->orderOffline((int)$id);
         if ($res) {
-            return app('json')->success(100010);
+            return app('json')->success('Thao tác thành công');
         } else {
-            return app('json')->fail(100005);
+            return app('json')->fail('Thao tác thất bại');
         }
     }
 
@@ -727,7 +727,7 @@ class StoreOrder extends AuthController
     public function refund_integral(StoreOrderRefundServices $services, $id)
     {
         if (!$id)
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         return app('json')->success($services->refundIntegralForm((int)$id));
     }
 
@@ -740,29 +740,29 @@ class StoreOrder extends AuthController
     {
         [$back_integral] = $this->request->postMore([['back_integral', 0]], true);
         if (!$id || !($orderInfo = $this->services->get($id))) {
-            return app('json')->fail(400118);
+            return app('json')->fail('Đơn hàng không tồn tại');
         }
         if ($orderInfo->is_del) {
-            return app('json')->fail(400160);
+            return app('json')->fail('Đơn hàng đã bị xóa, không thể hoàn điểm thưởng');
         }
         if ($back_integral <= 0) {
-            return app('json')->fail(400161);
+            return app('json')->fail('Vui lòng nhập điểm thưởng');
         }
         if ($orderInfo['use_integral'] == $orderInfo['back_integral']) {
-            return app('json')->fail(400162);
+            return app('json')->fail('Đã hoàn hết điểm thưởng');
         }
 
         $data['back_integral'] = bcadd((string)$back_integral, (string)$orderInfo['back_integral'], 2);
         $bj = bccomp((string)$orderInfo['use_integral'], (string)$data['back_integral'], 2);
         if ($bj < 0) {
-            return app('json')->fail(400163);
+            return app('json')->fail('Số điểm hoàn lớn hơn số điểm đã thanh toán, vui lòng sửa lại số điểm hoàn');
         }
         //Xử lý hoàn điểm thưởng
         $orderInfo->back_integral = $data['back_integral'];
         if ($services->refundIntegral($orderInfo, $back_integral)) {
-            return app('json')->success(400164);
+            return app('json')->success('Hoàn điểm thưởng thành công');
         } else {
-            return app('json')->fail(400165);
+            return app('json')->fail('Hoàn điểm thưởng thất bại');
         }
     }
 
@@ -775,18 +775,18 @@ class StoreOrder extends AuthController
     {
         $data = $this->request->postMore([['remark', '']]);
         if (!$data['remark'])
-            return app('json')->fail(400106);
+            return app('json')->fail('Ghi chú không được để trống');
         if (!$id)
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
 
         if (!$order = $this->services->get($id)) {
-            return app('json')->fail(400118);
+            return app('json')->fail('Đơn hàng không tồn tại');
         }
         $order->remark = $data['remark'];
         if ($order->save()) {
-            return app('json')->success(100024);
+            return app('json')->success('Ghi chú thành công');
         } else
-            return app('json')->fail(100025);
+            return app('json')->fail('Ghi chú thất bại');
     }
 
     /**
@@ -796,7 +796,7 @@ class StoreOrder extends AuthController
      */
     public function status(StoreOrderStatusServices $services, $id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         return app('json')->success($services->getStatusList(['oid' => $id])['list']);
     }
 
@@ -810,12 +810,12 @@ class StoreOrder extends AuthController
      */
     public function order_print($id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $res = $this->services->orderPrintTicket($id, true);
         if ($res) {
-            return app('json')->success(100010);
+            return app('json')->success('Thao tác thành công');
         } else {
-            return app('json')->fail(100005);
+            return app('json')->fail('Thao tác thất bại');
         }
     }
 
@@ -827,7 +827,7 @@ class StoreOrder extends AuthController
     public function expr_temp(ServeServices $services, $com)
     {
         if (!$com) {
-            return app('json')->fail(400123);
+            return app('json')->fail('Thiếu mã đơn vị vận chuyển');
         }
         $list = $services->express()->temp($com);
         return app('json')->success($list);
@@ -840,7 +840,7 @@ class StoreOrder extends AuthController
     {
         $data = $this->request->getMore([['com', '']]);
         if (!$data['com']) {
-            return app('json')->fail(400123);
+            return app('json')->fail('Thiếu mã đơn vị vận chuyển');
         }
         $tpd = $services->express()->temp($data['com']);
         return app('json')->success($tpd['data']);
@@ -855,7 +855,7 @@ class StoreOrder extends AuthController
     public function order_dump($order_id, StoreOrderDeliveryServices $storeOrderDeliveryServices)
     {
         $storeOrderDeliveryServices->orderDump($order_id);
-        return app('json')->success(400121);
+        return app('json')->success('In thành công');
     }
 
     /**
@@ -868,6 +868,7 @@ class StoreOrder extends AuthController
      */
     public function getKuaidiComs(ServeServices $services)
     {
+        MiniOrderJob::dispatch('syncOrderShipping');
         return app('json')->success($services->express()->getKuaidiComs());
     }
 
@@ -906,7 +907,7 @@ class StoreOrder extends AuthController
         [$file] = $this->request->getMore([
             ['file', '']
         ], true);
-        if (!$file) return app('json')->fail(400168);
+        if (!$file) return app('json')->fail('Vui lòng tải lên tệp');
         $file = public_path() . substr($file, 1);
         // Lấy phần mở rộng của file
         $suffix = strtolower(pathinfo($file, PATHINFO_EXTENSION));
@@ -938,5 +939,31 @@ class StoreOrder extends AuthController
         }
         $data = $this->services->printShippingData($order_id);
         return app('json')->success($data);
+    }
+
+    /**
+     * Sửa địa chỉ nhận hàng
+     * @param $id
+     * @return \think\Response
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @author wuhaotian
+     * @email 442384644@qq.com
+     * @date 2025/9/8
+     */
+    public function editAddress($id)
+    {
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
+        $data = $this->request->postMore([
+            ['real_name', ''],
+            ['user_phone', ''],
+            ['user_address', '']
+        ]);
+        if (!$data['real_name']) return app('json')->fail('Vui lòng nhập họ tên người nhận');
+        if (!$data['user_phone']) return app('json')->fail('Vui lòng nhập số điện thoại người nhận');
+        if (!$data['user_address']) return app('json')->fail('Vui lòng nhập địa chỉ người nhận');
+        $this->services->editAddress($id, $data);
+        return app('json')->success('Sửa thành công');
     }
 }

@@ -1,5 +1,13 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 namespace app\services\system;
 
 use app\dao\system\SystemEventDao;
@@ -486,7 +494,7 @@ class SystemEventServices extends BaseServices
         } else {
             $res = $this->dao->update(['id' => $data['id']], $data);
         }
-        if (!$res) throw new AdminException(100006);
+        if (!$res) throw new AdminException('Lưu thất bại');
         return true;
     }
 
@@ -522,7 +530,7 @@ class SystemEventServices extends BaseServices
     public function setEventStatus($id, $is_open)
     {
         $res = $this->dao->update(['id' => $id], ['is_open' => $is_open]);
-        if (!$res) throw new AdminException(100014);
+        if (!$res) throw new AdminException('Cài đặt thành công');
         return true;
     }
 }

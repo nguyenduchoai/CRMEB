@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -107,7 +107,7 @@ class Oss extends BaseUpload
     protected function app()
     {
         if (!$this->accessKey || !$this->secretKey) {
-            throw new UploadException(400721);
+            throw new UploadException('Vui lòng cấu hình accessKey và secretKey trước');
         }
         $this->handle = new OssClient($this->accessKey, $this->secretKey, $this->storageRegion);
         //Không tự động tạo nữa
@@ -240,13 +240,13 @@ class Oss extends BaseUpload
             switch ($waterConfig['watermark_type']) {
                 case 1://Hình ảnh
                     if (!$waterConfig['watermark_image']) {
-                        throw new AdminException(400722);
+                        throw new AdminException('Vui lòng cấu hình ảnh watermark trước');
                     }
                     $waterPath = $filePath .= '/watermark,image_' . base64_encode($waterConfig['watermark_image']) . ',t_' . $waterConfig['watermark_opacity'] . ',g_' . ($this->position[$waterConfig['watermark_position']] ?? 'nw') . ',x_' . $waterConfig['watermark_x'] . ',y_' . $waterConfig['watermark_y'];
                     break;
                 case 2://Văn bản
                     if (!$waterConfig['watermark_text']) {
-                        throw new AdminException(400723);
+                        throw new AdminException('Vui lòng cấu hình văn bản watermark trước');
                     }
                     $waterConfig['watermark_text_color'] = str_replace('#', '', $waterConfig['watermark_text_color']);
                     $waterPath = $filePath .= '/watermark,text_' . base64_encode($waterConfig['watermark_text']) . ',color_' . $waterConfig['watermark_text_color'] . ',size_' . $waterConfig['watermark_text_size'] . ',g_' . ($this->position[$waterConfig['watermark_position']] ?? 'nw') . ',x_' . $waterConfig['watermark_x'] . ',y_' . $waterConfig['watermark_y'];

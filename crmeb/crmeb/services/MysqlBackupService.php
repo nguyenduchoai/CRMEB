@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -66,7 +66,7 @@ class MysqlBackupService
         $this->setDbConn();
         //Kiểm tra file có ghi được không
         if (!$this->checkPath($this->config['path'])) {
-            throw new AdminException(400734);
+            throw new AdminException('Tệp không thể ghi');
         }
     }
 
@@ -198,7 +198,7 @@ class MysqlBackupService
     {
         //
         if (!is_numeric($time)) {
-            throw new AdminException(400735);
+            throw new AdminException('Định dạng thời gian không đúng');
         }
         switch ($type) {
             case 'time':
@@ -220,7 +220,7 @@ class MysqlBackupService
                 if (count($list) === $last[0]) {
                     return $list;
                 } else {
-                    throw new AdminException(400736);
+                    throw new AdminException('Tệp có thể đã bị hỏng, vui lòng kiểm tra');
                 }
             case 'pathname':
                 return "{$this->config['path']}{$this->file['name']}-{$this->file['part']}.sql";
@@ -246,12 +246,12 @@ class MysqlBackupService
             $file = $this->getFile('time', $time);
             array_map("unlink", $this->getFile('time', $time));
             if (count($this->getFile('time', $time))) {
-                throw new AdminException(100008);
+                throw new AdminException('Xóa thất bại');
             } else {
                 return $time;
             }
         } else {
-            throw new AdminException(400735);
+            throw new AdminException('Định dạng thời gian không đúng');
         }
     }
 
@@ -281,7 +281,7 @@ class MysqlBackupService
             header('Content-Disposition: attachment; filename=' . basename($fileName));
             return readfile($fileName);
         } else {
-            throw new AdminException(400736);
+            throw new AdminException('Tệp có thể đã bị hỏng, vui lòng kiểm tra');
         }
     }
 
@@ -407,11 +407,11 @@ class MysqlBackupService
                 $list = $db->query("OPTIMIZE TABLE {$tables}");
             }
             if (!$list) {
-                throw new AdminException(400737);
+                throw new AdminException('Lỗi khi sửa chữa, vui lòng thử lại');
             }
             return $list;
         } else {
-            throw new AdminException(400738);
+            throw new AdminException('Vui lòng chỉ định bảng cần sửa chữa');
         }
     }
 
@@ -436,10 +436,10 @@ class MysqlBackupService
             if ($list) {
                 return $list;
             } else {
-                throw new AdminException(400737);
+                throw new AdminException('Lỗi khi sửa chữa, vui lòng thử lại');
             }
         } else {
-            throw new AdminException(400738);
+            throw new AdminException('Vui lòng chỉ định bảng cần sửa chữa');
         }
     }
 

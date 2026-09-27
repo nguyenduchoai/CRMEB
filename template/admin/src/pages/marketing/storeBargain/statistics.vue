@@ -29,11 +29,12 @@
             <el-option value="4" label="Giao dịch hoàn tất"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="Tìm kiếm đơn hàng:" label-for="title">
+        <el-form-item label="Tìm kiếm:" label-for="title">
           <el-input
             v-model="pagination.real_name"
             :placeholder="type == 1 ? 'Vui lòng nhập họ tên người dùng|mã đơn hàng|UID' : 'Vui lòng nhập UID người dùng'"
             class="form_content_width"
+            clearable
           />
         </el-form-item>
         <el-form-item>
@@ -318,6 +319,10 @@ export default {
     },
     // Chuyển đổi tab
     onClickTab(e) {
+      // Khi chuyển tab, đặt lại điều kiện tìm kiếm, số trang đặt lại về 1
+      this.pagination.page = 1;
+      this.pagination.real_name = '';
+      this.pagination.status = '';
       this.type = e.index;
       this.getList(this.id);
     },

@@ -1,15 +1,5 @@
 <template>
-  <div
-    class="mobile-page"
-    :style="{
-      marginTop: mTOP + 'px',
-      paddingTop: topConfig + 'px',
-      paddingBottom: bottomConfig + 'px',
-      paddingLeft: prConfig + 'px',
-      paddingRight: prConfig + 'px',
-      background: bottomBgColor,
-    }"
-  >
+  <common_wrapper :config="configObj">
     <div class="wrapper" v-if="styleConfig == 0">
       <div
         class="item"
@@ -159,7 +149,7 @@
         </div>
       </div>
     </div>
-    <div class="wrapper2 acea-row row-between-wrapper" v-else>
+    <div class="wrapper2" v-else>
       <div
         class="item"
         :class="list.length % 2 == 0 ? 'on2' : 'on1'"
@@ -236,7 +226,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </common_wrapper>
 </template>
 
 <script>
@@ -301,6 +291,7 @@ export default {
       // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         cname: 'Danh sách bài viết',
+        desc: 'Giới thiệu danh sách bài viết',
         name: 'articleList',
         timestamp: this.num,
         isHide: false,
@@ -312,6 +303,67 @@ export default {
         titleArticle: 'Cài đặt bài viết',
         titleList: 'Cài đặt danh sách',
         titleCurrency: 'Kiểu chung',
+        zIndexConfig: {
+          title: 'Thứ tự lớp thành phần',
+          val: 0,
+          min: 0,
+        },
+        borderConfig: {
+          title: 'Cài đặt viền',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0, // 0: Hide, 1: Show
+          styleConfig: {
+            title: 'Kiểu viền',
+            tabVal: 0,
+            tabList: [
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
+            ],
+          },
+          widthConfig: {
+            title: 'Độ dày viền',
+            val: 1,
+            min: 1,
+          },
+          colorConfig: {
+            title: 'Màu viền',
+            default: [{ item: '#e5e5e5' }],
+            color: [{ item: '#e5e5e5' }],
+          },
+        },
+        shadowConfig: {
+          title: 'Cài đặt đổ bóng',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0,
+          colorConfig: {
+            title: 'Màu đổ bóng',
+            default: [{ item: 'rgba(0,0,0,0.1)' }],
+            color: [{ item: 'rgba(0,0,0,0.1)' }],
+          },
+          xConfig: {
+            title: 'Độ lệch trục X',
+            val: 0,
+            min: -50,
+          },
+          yConfig: {
+            title: 'Độ lệch trục Y',
+            val: 0,
+            min: -50,
+          },
+          blurConfig: {
+            title: 'Bán kính làm mờ',
+            val: 10,
+            min: 0,
+          },
+          spreadConfig: {
+            title: 'Bán kính lan tỏa',
+            val: 0,
+            min: -50,
+          },
+        },
         styleConfig: {
           title: 'Chọn phong cách',
           tabVal: 1,
@@ -320,10 +372,10 @@ export default {
               name: 'Hiển thị ảnh lớn',
             },
             {
-              name: 'Hiển thị hai cột (dọc)',
+              name: 'Một cột dọc',
             },
             {
-              name: 'Hiển thị hai cột (ngang)',
+              name: 'Hai cột ngang',
             },
           ],
         },
@@ -386,7 +438,7 @@ export default {
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         nameConfig: {
-          title: 'Tên sản phẩm',
+          title: 'Tiêu đề bài viết',
           tabVal: 1,
           tabList: [
             {
@@ -423,7 +475,7 @@ export default {
           ],
         },
         nameColor: {
-          title: 'Tên sản phẩm',
+          title: 'Tiêu đề bài viết',
           default: [
             {
               item: '#333333',
@@ -473,6 +525,29 @@ export default {
               item: '#999999',
             },
           ],
+        },
+        componentBgConfig: {
+          title: 'Cài đặt nền',
+          tabVal: 0,
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
+          colorConfig: {
+            title: 'Màu nền',
+            default: [{ item: '#F5F5F5' }, { item: '#F5F5F5' }],
+            color: [{ item: '#F5F5F5' }, { item: '#F5F5F5' }],
+          },
+          colorDirection: {
+            title: 'Hướng chuyển màu',
+            tabVal: 0,
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
+          },
+          imageConfig: {
+            header: 'Ảnh nền',
+            title: '',
+            name: 'Tải lên ảnh',
+            type: 'code',
+            url: '',
+            info: 'Kích thước đề xuất: 750px * 400px',
+          },
         },
         bgColor: {
           title: 'Nền thành phần',
@@ -546,7 +621,6 @@ export default {
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
       },
-      mTOP: 0,
       bgColorLeft: '',
       bgColorRight: '',
       itemStyle: 0,
@@ -566,6 +640,8 @@ export default {
       // likeColor: '',
       statisticColor: '',
       bottomBgColor: '',
+      configObj: {},
+      pageData: {},
       topConfig: 0,
       bottomConfig: 0,
       toneConfig: 0,
@@ -594,36 +670,69 @@ export default {
     },
     setConfig(data) {
       if (!data) return;
-      if (data.mbConfig) {
-        this.styleConfig = data.styleConfig.tabVal;
-        this.checkboxList = data.checkboxList.type;
-        this.filletImg = data.filletImg.type;
-        this.filletValImg = data.filletImg.val;
-        this.valListImg = data.filletImg.valList;
-        this.fillet = data.fillet.type;
-        this.filletVal = data.fillet.val;
-        this.valList = data.fillet.valList;
-        this.bgColorLeft = data.bgColor.color[0].item;
-        this.bgColorRight = data.bgColor.color[1].item;
-        this.nameConfig = data.nameConfig.tabVal;
-        this.nameColor = data.nameColor.color[0].item;
-        this.timeColor = data.timeColor.color[0].item;
-        this.browseColor = data.browseColor.color[0].item;
-        // this.likeColor = data.likeColor.color[0].item;
-        this.likeSuccessColor = data.likeSuccessColor.color[0].item;
-        this.statisticColor = data.statisticColor.color[0].item;
-        this.bottomBgColor = data.bottomBgColor.color[0].item;
-        this.topConfig = data.topConfig.val;
-        this.bottomConfig = data.bottomConfig.val;
-        this.toneConfig = data.toneConfig.tabVal;
-        this.mTOP = data.mbConfig.val;
-        this.prConfig = data.prConfig.val;
-        const selectList = data.selectList.list || [];
-        if (selectList.length) {
-          this.list = selectList;
-        } else {
-          this.list = data.numConfig.val;
+      for (let key in this.defaultConfig) {
+        if (data[key] == undefined) {
+          this.$set(data, key, JSON.parse(JSON.stringify(this.defaultConfig[key])));
         }
+      }
+      this.styleConfig = data.styleConfig.tabVal;
+      this.checkboxList = data.checkboxList.type;
+      this.filletImg = data.filletImg.type;
+      this.filletValImg = data.filletImg.val;
+      this.valListImg = data.filletImg.valList;
+      this.fillet = data.fillet.type;
+      this.filletVal = data.fillet.val;
+      this.valList = data.fillet.valList;
+      this.bgColorLeft = data.bgColor.color[0].item;
+      this.bgColorRight = data.bgColor.color[1].item;
+      this.nameConfig = data.nameConfig.tabVal;
+      this.nameColor = data.nameColor.color[0].item;
+      this.timeColor = data.timeColor.color[0].item;
+      this.browseColor = data.browseColor.color[0].item;
+      // this.likeColor = data.likeColor.color[0].item;
+      this.likeSuccessColor = data.likeSuccessColor.color[0].item;
+      this.statisticColor = data.statisticColor.color[0].item;
+      this.bottomBgColor = data.bottomBgColor.color[0].item;
+      this.topConfig = data.topConfig.val;
+      this.bottomConfig = data.bottomConfig.val;
+      this.toneConfig = data.toneConfig.tabVal;
+      this.mTOP = data.mbConfig ? data.mbConfig.val : 0;
+      this.prConfig = data.prConfig.val;
+
+      this.configObj = data;
+
+      if (!data.paddingConfig) {
+        let paddingConfig = {
+          title: 'Lề trong',
+          val: 0,
+          min: 0,
+          isAll: false,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        };
+        paddingConfig.valList[0].val = data.topConfig.val;
+        paddingConfig.valList[2].val = data.bottomConfig.val;
+        paddingConfig.valList[1].val = data.prConfig.val;
+        paddingConfig.valList[3].val = data.prConfig.val;
+        this.$set(this.configObj, 'paddingConfig', paddingConfig);
+      }
+
+      if (!data.marginConfig) {
+        let marginConfig = {
+          title: 'Lề ngoài',
+          val: 0,
+          min: 0,
+          isAll: false,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        };
+        marginConfig.valList[0].val = data.mbConfig ? data.mbConfig.val : 0;
+        this.$set(this.configObj, 'marginConfig', marginConfig);
+      }
+
+      const selectList = data.selectList.list || [];
+      if (selectList.length) {
+        this.list = selectList;
+      } else {
+        this.list = data.numConfig.val;
       }
     },
   },
@@ -631,6 +740,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.mobile-page {
+  display: inline-block;
+  width: -webkit-fill-available;
+}
 .empty-box {
   background: #f3f9ff;
   img {
@@ -639,9 +752,16 @@ export default {
   }
 }
 .wrapper2 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+  
   .item {
-    width: 173px;
+    width: calc(50% - 5px);
     margin-bottom: 10px;
+    box-sizing: border-box;
+    
     &.on1 {
       &:nth-last-child(1) {
         margin-bottom: 0;
@@ -666,6 +786,7 @@ export default {
     }
     .text {
       padding: 8px 10px 4px 10px;
+      box-sizing: border-box;
       .name {
         color: #333333;
         font-size: 14px;

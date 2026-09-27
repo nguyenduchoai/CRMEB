@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -49,7 +49,7 @@ class StoreOrderSuccessServices extends BaseServices
     public function zeroYuanPayment(array $orderInfo, int $uid, string $payType = PayServices::YUE_PAY)
     {
         if ($orderInfo['paid']) {
-            throw new ApiException(410265);
+            throw new ApiException('Đơn hàng này đã được thanh toán');
         }
         return $this->paySuccess($orderInfo, $payType);//Thanh toán bằng số dư thành công
     }

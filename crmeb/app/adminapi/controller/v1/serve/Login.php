@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -82,9 +82,9 @@ class Login extends AuthController
         $res = $this->services->user()->register($data);
         if ($res) {
             $services->updateSmsConfig($data['account'], md5($data['account'] . md5($data['password'])));
-            return app('json')->success(400170);
+            return app('json')->success('Đăng ký thành công');
         } else {
-            return app('json')->fail(400171);
+            return app('json')->fail('Đăng ký thất bại');
         }
     }
 
@@ -109,9 +109,9 @@ class Login extends AuthController
             CacheService::clear();
             CacheService::set('sms_account', $account);
             $services->updateSmsConfig($account, $password);
-            return app('json')->success(400139, $res);
+            return app('json')->success('Đăng nhập thành công', $res);
         } else {
-            return app('json')->fail(400172);
+            return app('json')->fail('Đăng nhập thất bại');
         }
     }
 }

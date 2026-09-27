@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -110,7 +110,7 @@ class StoreProduct extends AuthController
             ['type', 0]
         ]);
         $services->setDbCache($this->adminId . '_product_data', $data, 68400);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -121,7 +121,7 @@ class StoreProduct extends AuthController
     public function deleteCacheData(CacheServices $services)
     {
         $services->delectDbCache($this->adminId . '_product_data');
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -161,7 +161,7 @@ class StoreProduct extends AuthController
         $del = $this->service->value(['id' => $id], 'is_del');
         if ($del == 1) return app('json')->fail('Sản phẩm đã bị xóa, vui lòng khôi phục sản phẩm trước');
         $this->service->setShow([$id], $is_show);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
@@ -174,7 +174,7 @@ class StoreProduct extends AuthController
             ['ids', []]
         ], true);
         $this->service->setShow($ids, 1);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
@@ -187,7 +187,7 @@ class StoreProduct extends AuthController
             ['ids', []]
         ], true);
         $this->service->setShow($ids, 0);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
@@ -244,6 +244,7 @@ class StoreProduct extends AuthController
             ['presale_time', 0],//Thời gian đặt trước
             ['presale_day', 0],//Ngày giao hàng đặt trước
             ['vip_product', 0],//Có phải sản phẩm dành cho thành viên trả phí không
+            ['vip_product_type', 0],//0: chỉ thành viên trả phí được xem, 1: chỉ thành viên trả phí được mua
             ['is_sub', []],//Hoa hồng là riêng hay theo mặc định
             ['recommend', []],//Đề xuất sản phẩm
             ['activity', []],//Thứ tự ưu tiên hoạt động
@@ -270,7 +271,7 @@ class StoreProduct extends AuthController
             ['gift_price', 0],//Phụ phí quà tặng
         ]);
         $this->service->save((int)$id, $data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -409,7 +410,7 @@ class StoreProduct extends AuthController
         } else {
             $re = $upload->getTempKeys();
         }
-        return $re ? app('json')->success($re) : app('json')->fail(100016);
+        return $re ? app('json')->success($re) : app('json')->fail('Lấy dữ liệu thất bại');
     }
 
     /**
@@ -422,7 +423,7 @@ class StoreProduct extends AuthController
     public function check_activity($id)
     {
         $this->service->checkActivity($id);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -435,7 +436,7 @@ class StoreProduct extends AuthController
         $data = $this->request->getMore([
             ['file', ""]
         ]);
-        if (!$data['file']) return app('json')->fail(400168);
+        if (!$data['file']) return app('json')->fail('Vui lòng tải lên tệp');
         $file = public_path() . substr($data['file'], 1);
         // Lấy phần mở rộng của file
         $suffix = strtolower(pathinfo($file, PATHINFO_EXTENSION));
@@ -471,7 +472,7 @@ class StoreProduct extends AuthController
             ['gift_price', 0],
         ]);
         $this->service->batchSetting($data);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
@@ -522,7 +523,7 @@ class StoreProduct extends AuthController
         [$file] = $this->request->getMore([
             ['file', ""]
         ], true);
-        if (!$file) return app('json')->fail(400168);
+        if (!$file) return app('json')->fail('Vui lòng tải lên tệp');
         $res = $this->service->productImport($file);
         return app('json')->success('Nhập thành công', $res);
     }
@@ -553,6 +554,7 @@ class StoreProduct extends AuthController
             ['is_sub', 0],
             ['is_vip', 0],
             ['vip_product', 0],
+            ['vip_product_type', 0],
             ['attr_value', []],
         ]);
         $this->service->otherSave($id, $type, $data);

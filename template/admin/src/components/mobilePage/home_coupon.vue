@@ -1,178 +1,62 @@
 <template>
-  <div
-    class="couponCon"
-    :style="{
-      background: bottomBgColor,
-      marginTop: mTop + 'px',
-      paddingTop: topConfig + 'px',
-      paddingBottom: bottomConfig + 'px',
-      paddingLeft: prConfig + 'px',
-      paddingRight: prConfig + 'px',
-    }"
-  >
+  <common_wrapper :config="configObj">
     <div
-      class="coupon1 acea-row row-middle"
-      :style="{
-        background: moduleColor2,
-        borderRadius: bgRadius,
-      }"
-      v-if="styleConfig == 0"
-    >
-      <div class="list acea-row row-middle">
-        <div
-          class="item"
-          v-for="(item, index) in numberConfig"
-          :key="index"
-          :style="{
-            marginRight: spacingConfig + 'px',
-            background: toneConfig ? couponBgColor : colorStyle.theme,
-          }"
-        >
-          <div
-            class="money"
-            :style="{
-              color: toneConfig ? couponMoneyColor : colorStyle.theme,
-            }"
-          >
-            <div><span class="lable">¥</span>70</div>
-            <div class="tips">Dùng cho đơn từ 5000</div>
-          </div>
-          <div
-            class="sill"
-            :style="{
-              background: toneConfig
-                ? `linear-gradient(90deg,${bntBgColorRight} 0%,${bntBgColorLeft} 100%)`
-                : themeColor,
-            }"
-          >
-            Dùng cho đơn từ 200
-          </div>
-          <img src="../../assets/images/newVip02.png" />
-        </div>
-      </div>
-    </div>
-    <div
-      class="coupon2 acea-row row-middle"
+      class="couponCon"
       :style="{
         background: moduleColor,
         borderRadius: bgRadius,
       }"
-      v-else-if="styleConfig == 1"
-    >
-      <div class="list acea-row row-middle">
-        <div
-          class="item"
-          :style="{
-            marginRight: spacingConfig + 'px',
-          }"
-          v-for="(item, index) in numberConfig"
-          :key="index"
-        >
-          <div class="type">Phiếu theo danh mục</div>
-          <div
-            class="money"
-            :style="{
-              color: toneConfig ? couponMoneyColor : colorStyle.theme,
-            }"
-          >
-            <span class="label">¥</span>50
-          </div>
-          <div
-            class="tips"
-            :style="{
-              color: toneConfig ? couponMoneyColor : colorStyle.theme,
-            }"
-          >
-            Dùng cho đơn từ 500đ
-          </div>
-          <div
-            class="bnt"
-            :style="{
-              background: toneConfig
-                ? `linear-gradient(90deg,${bntBgColorRight} 0%,${bntBgColorLeft} 100%)`
-                : themeColor,
-            }"
-          >
-            Nhận ngay
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="coupon acea-row row-middle"
-      :style="{
-        background: moduleColor2,
-        borderRadius: bgRadius,
-      }"
-      v-else-if="styleConfig == 2"
-    >
-      <div class="list acea-row row-middle">
-        <div
-          class="itemCon"
-          :style="{
-            marginRight: spacingConfig + 'px',
-            background: toneConfig ? couponMoneyColor : colorStyle.theme,
-          }"
-          v-for="(item, index) in numberConfig"
-          :key="index"
-        >
-          <div
-            class="item"
-            :style="{
-              borderColor: toneConfig ? couponMoneyColor : colorStyle.theme,
-            }"
-          >
-            <div
-              class="left"
-              :style="{
-                color: toneConfig ? couponMoneyColor : colorStyle.theme,
-              }"
-            >
-              <div class="num"><span>￥</span>50</div>
-              <div class="txt">Dùng cho đơn từ 100đ</div>
-            </div>
-            <div
-              class="right"
-              :style="{
-                color: toneConfig ? couponMoneyColor : colorStyle.theme,
-                borderLeftColor: toneConfig ? couponMoneyColor : colorStyle.theme,
-              }"
-            >
-              <div class="rightCon">Nhận ngay</div>
-            </div>
-            <div
-              class="roll up-roll"
-              :style="{
-                background: moduleColor2,
-                borderColor: toneConfig ? couponMoneyColor : colorStyle.theme,
-              }"
-            ></div>
-            <div
-              class="roll down-roll"
-              :style="{
-                background: moduleColor2,
-                borderColor: toneConfig ? couponMoneyColor : colorStyle.theme,
-              }"
-            ></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="coupon4"
-      :style="{
-        background: moduleColor2,
-        borderRadius: bgRadius,
-      }"
-      v-else-if="styleConfig == 3"
     >
       <div
-        class="list acea-row row-middle"
+        class="coupon1 acea-row row-middle"
         :style="{
-          background: toneConfig ? couponBgColor : colorStyle.theme,
+          borderRadius: bgRadius,
         }"
+        v-if="styleConfig == 0"
       >
-        <div class="listCon acea-row row-middle">
+        <div class="list acea-row row-middle">
+          <div
+            class="item"
+            v-for="(item, index) in numberConfig"
+            :key="index"
+            :style="{
+              marginRight: spacingConfig + 'px',
+              background: toneConfig ? couponBgColor : colorStyle.theme,
+            }"
+          >
+            <div class="money">
+              <div
+                :style="{
+                  color: toneConfig ? couponMoneyColor : colorStyle.theme,
+                }"
+              >
+                <span class="lable">¥</span>70
+              </div>
+              <div class="tips">Dùng cho đơn từ 5000</div>
+            </div>
+            <div
+              class="sill"
+              :style="{
+                background: toneConfig
+                  ? `linear-gradient(90deg,${bntBgColorRight} 0%,${bntBgColorLeft} 100%)`
+                  : themeColor,
+              }"
+            >
+              Dùng cho đơn từ 200
+            </div>
+            <img src="../../assets/images/newVip02.png" />
+          </div>
+        </div>
+      </div>
+      <div
+        class="coupon2 acea-row row-middle"
+        :style="{
+          background: moduleColor,
+          borderRadius: bgRadius,
+        }"
+        v-else-if="styleConfig == 1"
+      >
+        <div class="list acea-row row-middle">
           <div
             class="item"
             :style="{
@@ -180,17 +64,8 @@
             }"
             v-for="(item, index) in numberConfig"
             :key="index"
-            v-if="index < 4"
           >
-            <div
-              class="type"
-              :style="{
-                color: toneConfig ? couponMoneyColor : colorStyle.theme,
-                background: toneConfig ? couponMoneyColor : colorStyle.theme,
-              }"
-            >
-              <div class="typeCon">Phiếu toàn cửa hàng</div>
-            </div>
+            <div class="type">Phiếu theo danh mục</div>
             <div
               class="money"
               :style="{
@@ -199,69 +74,150 @@
             >
               <span class="label">¥</span>50
             </div>
-            <div class="tips">Dùng cho đơn từ 5000</div>
+            <div class="tips">Dùng cho đơn từ 500đ</div>
+            <div
+              class="bnt"
+              :style="{
+                background: toneConfig
+                  ? `linear-gradient(90deg,${bntBgColorRight} 0%,${bntBgColorLeft} 100%)`
+                  : themeColor,
+              }"
+            >
+              Nhận ngay
+            </div>
           </div>
         </div>
+      </div>
+      <div
+        class="coupon acea-row row-middle"
+        :style="{
+          borderRadius: bgRadius,
+        }"
+        v-else-if="styleConfig == 2"
+      >
+        <div class="list acea-row row-middle">
+          <div
+            class="itemCon"
+            :style="{
+              marginRight: spacingConfig + 'px',
+            }"
+            v-for="(item, index) in numberConfig"
+            :key="index"
+          >
+            <div class="item">
+              <div class="left">
+                <div
+                  class="num"
+                  :style="{
+                    color: toneConfig ? couponMoneyColor : colorStyle.theme,
+                  }"
+                >
+                  <span>￥</span>50
+                </div>
+                <div class="txt">Dùng cho đơn từ 100đ</div>
+              </div>
+              <div class="right">
+                <div class="rightCon">Nhận ngay</div>
+              </div>
+              <div class="roll up-roll"></div>
+              <div class="roll down-roll"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="coupon4"
+        :style="{
+          borderRadius: bgRadius,
+        }"
+        v-else-if="styleConfig == 3"
+      >
         <div
-          class="pocket"
+          class="list acea-row row-middle"
           :style="{
-            background: toneConfig ? `linear-gradient(0deg,${bntBgColorRight} 0%,${bntBgColorLeft} 100%)` : themeColor2,
+            background: toneConfig ? couponBgColor : colorStyle.theme,
           }"
         >
-          <div class="tips">Nhận phiếu trước, mua sắm sau</div>
-          <div class="info">Nhận phiếu rồi đặt hàng · Hưởng ưu đãi mua sắm</div>
+          <div class="listCon acea-row row-middle">
+            <template v-for="(item, index) in numberConfig">
+              <div
+                class="item"
+                :style="{
+                  marginRight: spacingConfig + 'px',
+                }"
+                :key="index"
+                v-if="index < 4"
+              >
+                <div class="type">
+                  <div class="typeCon">Phiếu toàn cửa hàng</div>
+                </div>
+                <div
+                  class="money"
+                  :style="{
+                    color: toneConfig ? couponMoneyColor : colorStyle.theme,
+                  }"
+                >
+                  <span class="label">¥</span>50
+                </div>
+                <div class="tips">Dùng cho đơn từ 5000</div>
+              </div>
+            </template>
+          </div>
           <div
-            class="bnt"
+            class="pocket"
             :style="{
-              color: toneConfig ? couponMoneyColor : colorStyle.theme,
-              background: toneConfig ? couponMoneyColor : colorStyle.theme,
+              background: toneConfig
+                ? `linear-gradient(0deg,${bntBgColorRight} 0%,${bntBgColorLeft} 100%)`
+                : themeColor2,
             }"
           >
-            <div class="bntCon">Nhận ngay</div>
+            <div class="tips">Nhận phiếu trước, mua sắm sau</div>
+            <div class="info">Nhận phiếu rồi đặt hàng · Hưởng ưu đãi mua sắm</div>
+            <div class="bnt">
+              <div class="bntCon">Nhận ngay</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="coupon5 acea-row row-middle"
+        :style="{
+          borderRadius: bgRadius,
+        }"
+        v-else
+      >
+        <div class="list acea-row row-middle">
+          <div
+            class="item acea-row row-middle"
+            :style="{
+              marginRight: spacingConfig + 'px',
+              background: toneConfig
+                ? `linear-gradient(0deg,${bntBgColorRight} 0%,${bntBgColorLeft} 100%)`
+                : themeColor2,
+            }"
+            v-for="(item, index) in numberConfig"
+            :key="index"
+          >
+            <div class="left">
+              <div
+                class="money"
+                :style="{
+                  color: toneConfig ? couponMoneyColor : colorStyle.theme,
+                }"
+              >
+                <span class="label">¥</span>50
+              </div>
+              <div class="tips">Dùng cho đơn từ 5000</div>
+            </div>
+            <div class="right acea-row row-center">
+              <div class="rightCon">Nhận</div>
+            </div>
+            <div class="roll"></div>
           </div>
         </div>
       </div>
     </div>
-    <div
-      class="coupon5 acea-row row-middle"
-      :style="{
-        background: moduleColor2,
-        borderRadius: bgRadius,
-      }"
-      v-else
-    >
-      <div class="list acea-row row-middle">
-        <div
-          class="item acea-row row-middle"
-          :style="{
-            marginRight: spacingConfig + 'px',
-            background: toneConfig ? `linear-gradient(0deg,${bntBgColorRight} 0%,${bntBgColorLeft} 100%)` : themeColor2,
-          }"
-          v-for="(item, index) in numberConfig"
-          :key="index"
-        >
-          <div
-            class="left"
-            :style="{
-              color: toneConfig ? couponMoneyColor : colorStyle.theme,
-            }"
-          >
-            <div class="money"><span class="label">¥</span>50</div>
-            <div class="tips">Dùng cho đơn từ 5000</div>
-          </div>
-          <div class="right acea-row row-center">
-            <div class="rightCon">Nhận</div>
-          </div>
-          <div
-            class="roll"
-            :style="{
-              background: moduleColor2,
-            }"
-          ></div>
-        </div>
-      </div>
-    </div>
-  </div>
+  </common_wrapper>
 </template>
 
 <script>
@@ -317,10 +273,96 @@ export default {
       defaultConfig: {
         cname: 'Phiếu giảm giá',
         name: 'coupon',
+        desc: 'Giới thiệu phiếu giảm giá',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
+        },
+        zIndexConfig: {
+          title: 'Thứ tự lớp thành phần',
+          val: 0,
+          min: 0,
+        },
+        borderConfig: {
+          title: 'Cài đặt viền',
+          tabVal: 0,
+          tabList: [
+            {
+              name: 'Ẩn',
+            },
+            {
+              name: 'Hiện',
+            },
+          ],
+          val: 0,
+          styleConfig: {
+            title: 'Kiểu viền',
+            tabVal: 0,
+            tabList: [
+              {
+                name: 'Nét liền',
+                style: 'solid',
+              },
+              {
+                name: 'Nét đứt',
+                style: 'dashed',
+              },
+              {
+                name: 'Nét chấm',
+                style: 'dotted',
+              },
+            ],
+          },
+          widthConfig: {
+            title: 'Độ dày viền',
+            val: 1,
+            min: 1,
+          },
+          colorConfig: {
+            title: 'Màu viền',
+            default: [
+              {
+                item: '#e5e5e5',
+              },
+            ],
+            color: [
+              {
+                item: '#e5e5e5',
+              },
+            ],
+          },
+        },
+        shadowConfig: {
+          title: 'Cài đặt đổ bóng',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0,
+          colorConfig: {
+            title: 'Màu đổ bóng',
+            default: [{ item: 'rgba(0,0,0,0.1)' }],
+            color: [{ item: 'rgba(0,0,0,0.1)' }],
+          },
+          xConfig: {
+            title: 'Độ lệch trục X',
+            val: 0,
+            min: -50,
+          },
+          yConfig: {
+            title: 'Độ lệch trục Y',
+            val: 0,
+            min: -50,
+          },
+          blurConfig: {
+            title: 'Bán kính làm mờ',
+            val: 10,
+            min: 0,
+          },
+          spreadConfig: {
+            title: 'Bán kính lan tỏa',
+            val: 0,
+            min: -50,
+          },
         },
         titleLeft: 'Cài đặt hiển thị',
         titleData: 'Dữ liệu phiếu giảm giá',
@@ -329,7 +371,20 @@ export default {
         styleConfig: {
           title: 'Chọn phong cách',
           tabVal: 0,
-          type: 'coupon',
+          tabList: [
+            {
+              name: 'Phong cách 1',
+            },
+            {
+              name: 'Phong cách 2',
+            },
+            {
+              name: 'Phong cách 3',
+            },
+            {
+              name: 'Phong cách 4',
+            },
+          ],
         },
         numberConfig: {
           title: 'Số lượng hiển thị',
@@ -418,18 +473,28 @@ export default {
             },
           ],
         },
-        moduleColor2: {
-          title: 'Nền thành phần',
-          default: [
-            {
-              item: '#ffffff',
-            },
-          ],
-          color: [
-            {
-              item: '#ffffff',
-            },
-          ],
+        componentBgConfig: {
+          title: 'Cài đặt nền',
+          tabVal: 0,
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
+          colorConfig: {
+            title: 'Màu nền',
+            default: [{ item: '#F5F5F5' }, { item: '#F5F5F5' }],
+            color: [{ item: '#F5F5F5' }, { item: '#F5F5F5' }],
+          },
+          colorDirection: {
+            title: 'Hướng chuyển màu',
+            tabVal: 0,
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
+          },
+          imageConfig: {
+            header: 'Ảnh nền',
+            title: '',
+            name: 'Tải lên ảnh',
+            type: 'code',
+            url: '',
+            info: 'Kích thước đề xuất: 750px * 400px',
+          },
         },
         bottomBgColor: {
           title: 'Nền phía dưới',
@@ -444,25 +509,19 @@ export default {
             },
           ],
         },
-        topConfig: {
-          title: 'Lề trên',
-          val: 0,
-          min: 0,
-        },
-        bottomConfig: {
-          title: 'Lề dưới',
-          val: 0,
-          min: 0,
-        },
-        prConfig: {
-          title: 'Lề trái phải',
+        paddingConfig: {
+          title: 'Lề trong',
+          isAll: false,
           val: 10,
           min: 0,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
-        mbConfig: {
-          title: 'Lề trên trang',
+        marginConfig: {
+          title: 'Lề ngoài',
+          isAll: false,
           val: 0,
           min: 0,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         fillet: {
           title: 'Bo góc nền',
@@ -487,21 +546,13 @@ export default {
       numberConfig: 0,
       styleConfig: 0,
       toneConfig: 0,
+      couponBgColor: '',
       couponMoneyColor: '',
       bntBgColorLeft: '',
       bntBgColorRight: '',
-      couponBgColor: '',
-      spacingConfig: 0,
       moduleColor: '',
-      moduleColor2: '',
-      topConfig: 0,
-      bottomConfig: 0,
-      prConfig: 0,
+      configObj: null,
       bgRadius: 0,
-      mTop: 0,
-      bottomBgColor: '',
-      themeColor: '',
-      themeColor2: '',
     };
   },
   mounted() {
@@ -513,33 +564,31 @@ export default {
   methods: {
     setConfig(data) {
       if (!data) return;
-      if (data.mbConfig) {
-        this.numberConfig = data.numberConfig.val;
-        this.styleConfig = data.styleConfig.tabVal;
-        this.toneConfig = data.toneConfig.tabVal;
-        this.couponMoneyColor = data.couponMoneyColor.color[0].item;
-        this.bntBgColorLeft = data.bntBgColor.color[0].item;
-        this.bntBgColorRight = data.bntBgColor.color[1].item;
-        this.couponBgColor = data.couponBgColor.color[0].item;
-        this.spacingConfig = data.spacingConfig.val;
-        let moduleColorLeft = data.moduleColor.color[0].item;
-        let moduleColorRight = data.moduleColor.color[1].item;
-        this.moduleColor = `linear-gradient(90deg,${moduleColorLeft} 0%,${moduleColorRight} 100%)`;
-        this.moduleColor2 = data.moduleColor2.color[0].item;
-        this.topConfig = data.topConfig.val;
-        this.bottomConfig = data.bottomConfig.val;
-        this.prConfig = data.prConfig.val;
-        let fillet = data.fillet.type;
-        let filletVal = data.fillet.val;
-        let valList = data.fillet.valList;
-        this.bgRadius = fillet
-          ? valList[0].val + 'px ' + valList[1].val + 'px ' + valList[3].val + 'px ' + valList[2].val + 'px'
-          : filletVal + 'px';
-        this.mTop = data.mbConfig.val;
-        this.bottomBgColor = data.bottomBgColor.color[0].item;
-        this.themeColor = `linear-gradient(90deg,${this.colorStyle.theme} 0%,${this.colorStyle.gradient} 100%)`;
-        this.themeColor2 = `linear-gradient(0deg,${this.colorStyle.theme} 0%,${this.colorStyle.gradient} 100%)`;
+      for (let key in this.defaultConfig) {
+        if (data[key] == undefined) {
+          this.$set(data, key, JSON.parse(JSON.stringify(this.defaultConfig[key])));
+        }
       }
+      this.numberConfig = data.numberConfig.val;
+      this.styleConfig = data.styleConfig.tabVal;
+      this.toneConfig = data.toneConfig.tabVal;
+      this.couponMoneyColor = data.couponMoneyColor.color[0].item;
+      this.bntBgColorLeft = data.bntBgColor.color[0].item;
+      this.bntBgColorRight = data.bntBgColor.color[1].item;
+      this.couponBgColor = data.couponBgColor.color[0].item;
+      this.spacingConfig = data.spacingConfig.val;
+      let moduleColorLeft = data.moduleColor.color[0].item;
+      let moduleColorRight = data.moduleColor.color[1].item;
+      this.moduleColor = `linear-gradient(90deg,${moduleColorLeft} 0%,${moduleColorRight} 100%)`;
+      let fillet = data.fillet.type;
+      let filletVal = data.fillet.val;
+      let valList = data.fillet.valList;
+      this.bgRadius = fillet
+        ? valList[0].val + 'px ' + valList[1].val + 'px ' + valList[3].val + 'px ' + valList[2].val + 'px'
+        : filletVal + 'px';
+      this.configObj = data;
+      this.themeColor = `linear-gradient(90deg,${this.colorStyle.theme} 0%,${this.colorStyle.gradient} 100%)`;
+      this.themeColor2 = `linear-gradient(0deg,${this.colorStyle.theme} 0%,${this.colorStyle.gradient} 100%)`;
     },
   },
 };
@@ -547,6 +596,8 @@ export default {
 
 <style scoped lang="scss">
 .couponCon {
+  // display: inline-block;
+  width: -webkit-fill-available;
   overflow: hidden;
 }
 .coupon5 {
@@ -611,10 +662,7 @@ export default {
 }
 .coupon4 {
   width: 100%;
-  height: 110px;
-  background: #ffffff;
   border-radius: 8px;
-  padding: 12px 10px;
 
   .list {
     background: #e93323;
@@ -755,10 +803,10 @@ export default {
   }
 }
 .coupon1 {
-  padding: 19px 0 12px 12px;
   overflow: hidden;
+  padding: 6px;
   .list {
-    margin-top: 12px;
+    margin-top: 18px;
     display: inline-flex;
     flex-wrap: nowrap;
 
@@ -817,11 +865,9 @@ export default {
   }
 }
 .coupon {
-  height: 99px;
-  background: #fff;
   overflow: hidden;
-  padding-left: 12px;
   width: 100%;
+  padding: 12px;
   .list {
     flex-wrap: nowrap;
   }

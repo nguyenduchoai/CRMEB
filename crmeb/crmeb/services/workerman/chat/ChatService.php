@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -99,6 +99,7 @@ class ChatService
 
     public function onConnect(TcpConnection $connection)
     {
+        var_dump('chatConnect');
         $this->connections[$connection->id] = $connection;
         $connection->lastMessageTime = time();
     }
@@ -108,8 +109,9 @@ class ChatService
         $connection->lastMessageTime = time();
         $res = json_decode($res, true);
         if (!$res || !isset($res['type']) || !$res['type'] || $res['type'] == 'ping') {
-            return $this->response->connection($connection)->success('ping', ['now' => time()]);
+            return $this->response->connection($connection)->success('ping', ['now' => time(), 'datetime' => date('Y-m-d H:i:s')]);
         }
+        var_dump('chatMessage', $res);
         if (!method_exists($this->handle, $res['type'])) return;
         try {
             $this->handle->{$res['type']}($connection, $res + ['data' => []], $this->response->connection($connection));
@@ -120,6 +122,8 @@ class ChatService
 
     public function onWorkerStart(Worker $worker)
     {
+        var_dump('chatWorkerStart');
+
         ChannelService::connet();
 
         Client::on('crmeb_chat', function ($eventData) use ($worker) {
@@ -186,7 +190,7 @@ class ChatService
 
     public function onClose(TcpConnection $connection)
     {
-        var_dump('close');
+        var_dump('chatClose');
         unset($this->connections[$connection->id]);
         if (isset($connection->user->uid)) {
             unset($this->user[$connection->user->uid]);

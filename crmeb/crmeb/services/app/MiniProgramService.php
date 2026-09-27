@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -556,8 +556,8 @@ class MiniProgramService
      */
     public static function payOrderRefund($orderNo, array $opt)
     {
-        if (!isset($opt['pay_price'])) throw new AdminException(400730);
-        if (sys_config('pay_weixin_client_key') == '' || sys_config('pay_weixin_client_cert') == '') throw new AdminException(400739);
+        if (!isset($opt['pay_price'])) throw new AdminException('Thiếu pay_price');
+        if (sys_config('pay_weixin_client_key') == '' || sys_config('pay_weixin_client_cert') == '') throw new AdminException('Vui lòng cấu hình chứng chỉ thanh toán');
         $totalFee = floatval(bcmul($opt['pay_price'], 100, 0));
         $refundFee = isset($opt['refund_price']) ? floatval(bcmul($opt['refund_price'], 100, 0)) : null;
         $refundReason = $opt['desc'] ?? '';
@@ -570,8 +570,8 @@ class MiniProgramService
         $refundAccount = $opt['refund_account'] ?? 'REFUND_SOURCE_UNSETTLED_FUNDS';
         try {
             $res = (self::refund($orderNo, $refundNo, $totalFee, $refundFee, $opUserId, $refundReason, $type, $refundAccount));
-            if ($res->return_code == 'FAIL') throw new AdminException(400731, ['msg' => $res->return_msg]);
-            if (isset($res->err_code)) throw new AdminException(400731, ['msg' => $res->err_code_des]);
+            if ($res->return_code == 'FAIL') throw new AdminException('Hoàn tiền thất bại: {:msg}', ['msg' => $res->return_msg]);
+            if (isset($res->err_code)) throw new AdminException('Hoàn tiền thất bại: {:msg}', ['msg' => $res->err_code_des]);
         } catch (\Exception $e) {
             throw new AdminException($e->getMessage());
         }

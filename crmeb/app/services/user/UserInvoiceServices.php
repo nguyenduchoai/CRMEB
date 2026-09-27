@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -79,16 +79,16 @@ class UserInvoiceServices extends BaseServices
     {
         $invoice = $this->getInvoice($id, $uid);
         if (!$invoice) {
-            throw new ApiException(100026);
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         $invoice_func = $this->invoiceFuncStatus();
         if (!$invoice_func['invoice_func']) {
-            throw new ApiException(410280);
+            throw new ApiException('Chưa bật tính năng hóa đơn');
         }
         //Hóa đơn chuyên dùng
         if ($invoice['type'] == 2) {
             if (!$invoice_func['special_invoice']) {
-                throw new ApiException(410281);
+                throw new ApiException('Chưa bật tính năng hóa đơn chuyên dụng');
             }
         }
         return $invoice;
@@ -142,7 +142,7 @@ class UserInvoiceServices extends BaseServices
         $invoice = $this->dao->get(['uid' => $uid, 'name' => $data['name'], 'drawer_phone' => $data['drawer_phone'], 'is_del' => 0]);
         if ($id) {
             if ($invoice && $id != $invoice['id']) {
-                throw new ApiException(410282);
+                throw new ApiException('Hóa đơn này đã tồn tại');
             }
             if ($this->dao->update($id, $data, 'id')) {
                 if ($data['is_default']) {
@@ -150,11 +150,11 @@ class UserInvoiceServices extends BaseServices
                 }
                 return ['type' => 'edit', 'msg' => 'Sửa hóa đơn thành công', 'data' => []];
             } else {
-                throw new ApiException(100007);
+                throw new ApiException('Sửa thất bại');
             }
         } else {
             if ($invoice) {
-                throw new ApiException(410282);
+                throw new ApiException('Hóa đơn này đã tồn tại');
             }
             if ($add_invoice = $this->dao->save($data)) {
                 $id = (int)$add_invoice['id'];
@@ -163,7 +163,7 @@ class UserInvoiceServices extends BaseServices
                 }
                 return ['type' => 'add', 'msg' => 'Thêm hóa đơn thành công', 'data' => ['id' => $id]];
             } else {
-                throw new ApiException(100022);
+                throw new ApiException('Thêm thất bại');
             }
         }
     }
@@ -179,13 +179,13 @@ class UserInvoiceServices extends BaseServices
     public function setDefaultInvoice(int $uid, int $id)
     {
         if (!$invoice = $this->getInvoice($id)) {
-            throw new ApiException(100026);
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         if ($invoice['uid'] != $uid) {
-            throw new ApiException(100101);
+            throw new ApiException('Thao tác không hợp lệ');
         }
         if (!$this->dao->setDefault($uid, $id, $invoice['header_type'], $invoice['type'])) {
-            throw new ApiException(410283);
+            throw new ApiException('Đặt hóa đơn mặc định thất bại');
         }
         return true;
     }
@@ -199,10 +199,10 @@ class UserInvoiceServices extends BaseServices
     {
         if ($invoice = $this->getInvoice($id)) {
             if ($invoice['uid'] != $uid) {
-                throw new ApiException(100101);
+                throw new ApiException('Thao tác không hợp lệ');
             }
             if (!$this->dao->update($id, ['is_del' => 1])) {
-                throw new ApiException(100008);
+                throw new ApiException('Xóa thất bại');
             }
         }
         return true;

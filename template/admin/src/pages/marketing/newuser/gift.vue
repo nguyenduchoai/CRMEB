@@ -69,7 +69,6 @@ export default {
     uniqueArray(arr) {
       const seen = {};
       return arr.filter((item) => {
-        console.log(item)
         item.title =
           item.use_min_price !== '0.00'
             ? `${item.title} | Đơn từ ${item.use_min_price}đ giảm ${item.coupon_price}đ`

@@ -4,7 +4,7 @@
       <draggable class="dragArea list-group" :list="listData" group="peoples" handle=".move-icon">
         <div class="item" v-for="(item, index) in listData" :key="index">
           <div class="move-icon">
-            <span class="iconfont-diy icondrag"></span>
+            <span class="iconfont icondrag"></span>
           </div>
           <div class="img-box" v-db-click @click="modalPicTap('Chọn một', index)">
             <img :src="item.pic" alt="" v-if="item.pic && item.pic != ''" />
@@ -27,9 +27,16 @@
                 </el-input>
               </div>
             </div>
+            <!-- Công tắc có hiển thị hay không -->
+            <div class="info-item">
+              <span>Hiển thị:</span>
+              <div class="input-box">
+                <el-switch class="defineSwitch" v-model="item.is_show" active-value="1" inactive-value="0" />
+              </div>
+            </div>
           </div>
           <div v-if="type != 1" class="delect-btn" v-db-click @click.stop="bindDelete(item, index)">
-            <span class="iconfont-diy icondel_1 cup"></span>
+            <span class="iconfont icondel_1 cup"></span>
           </div>
         </div>
       </draggable>
@@ -232,7 +239,7 @@ export default {
           }
           .input-box {
             flex: 1;
-            ::v-deepinput {
+            ::v-deep input {
               cursor: pointer;
             }
           }
@@ -245,7 +252,7 @@ export default {
         position: absolute;
         right: -13px;
         top: -13px;
-        .iconfont-diy {
+        .iconfont {
           font-size: 25px;
           color: #ff1818;
         }
@@ -264,7 +271,7 @@ export default {
   height: 100%;
   background: #ccc;
 }
-.iconfont-diy {
+.iconfont {
   color: #dddddd;
   font-size: 28px;
 }

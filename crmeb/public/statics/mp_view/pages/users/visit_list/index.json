@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Lịch sử xem",
+  "navigationBarTitleText": "浏览记录",
   "usingComponents": {
     "recommend": "/components/recommend/index",
     "home": "/components/home/index"

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -151,7 +151,7 @@ class WechatTemplateListService extends NoticeService
             'time5' => date('Y-m-d H:i:s', time()),
             'thing2' => $title,
             'amount3' => $order['refund_price'],
-        ], '/pages/goods/order_details/index?order_id=' . $order['refund_no'] . '&isReturen=1');
+        ], '/pages/goods/order_details/index?order_id=' . $order['refund_no'] . '&isReturn=1');
     }
 
     /**
@@ -168,7 +168,7 @@ class WechatTemplateListService extends NoticeService
             'thing2' => $title,
             'amount3' => $order['refund_price'],
             'thing4' => $order['refuse_reason'],
-        ], '/pages/goods/order_details/index?order_id=' . $order['refund_no'] . '&isReturen=1');
+        ], '/pages/goods/order_details/index?order_id=' . $order['refund_no'] . '&isReturn=1');
     }
 
     /**

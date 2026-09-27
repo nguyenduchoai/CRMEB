@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -66,13 +66,13 @@ class UserLevel extends AuthController
             ['exp_num', 0]
         ]);
         if ($data['valid_date'] == 0) $data['is_forever'] = 1;//Thời gian hiệu lực bằng 0 nghĩa là vĩnh viễn
-        if (!$data['name']) return app('json')->fail(400324);
-        if (!$data['grade']) return app('json')->fail(400325);
-        if (!$data['icon']) return app('json')->fail(400327);
-        if (!$data['image']) return app('json')->fail(400328);
-        if (!$data['exp_num']) return app('json')->fail(400329);
+        if (!$data['name']) return app('json')->fail('Vui lòng nhập tên cấp độ');
+        if (!$data['grade']) return app('json')->fail('Vui lòng nhập cấp độ');
+        if (!$data['icon']) return app('json')->fail('Vui lòng tải lên biểu tượng hạng');
+        if (!$data['image']) return app('json')->fail('Vui lòng tải lên ảnh nền của hạng');
+        if (!$data['exp_num']) return app('json')->fail('Vui lòng nhập điểm kinh nghiệm để lên hạng');
         $this->services->save((int)$data['id'], $data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /*
@@ -107,7 +107,7 @@ class UserLevel extends AuthController
      */
     public function set_show($is_show = '', $id = '')
     {
-        if ($is_show == '' || $id == '') return app('json')->fail(100100);
+        if ($is_show == '' || $id == '') return app('json')->fail('Tham số không hợp lệ');
         return app('json')->success($this->services->setShow((int)$id, (int)$is_show));
     }
 
@@ -122,9 +122,9 @@ class UserLevel extends AuthController
             ['field', ''],
             ['value', '']
         ]);
-        if ($data['field'] == '' || $data['value'] == '') return app('json')->fail(100100);
+        if ($data['field'] == '' || $data['value'] == '') return app('json')->fail('Tham số không hợp lệ');
         $this->services->setValue((int)$id, $data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
 

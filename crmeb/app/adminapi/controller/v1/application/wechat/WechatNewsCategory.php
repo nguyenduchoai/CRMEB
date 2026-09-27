@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -76,9 +76,9 @@ class WechatNewsCategory extends AuthController
     public function delete($id)
     {
         if (!$this->services->delete($id))
-            return app('json')->fail(100008);
+            return app('json')->fail('Xóa thất bại');
         else
-            return app('json')->success(100002);
+            return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -94,14 +94,14 @@ class WechatNewsCategory extends AuthController
         try {
             $id = [];
             $countList = count($data['list']);
-            if (!$countList) return app('json')->fail(400243);
+            if (!$countList) return app('json')->fail('Vui lòng thêm tin bài');
             /** @var ArticleServices $services */
             $services = app()->make(ArticleServices::class);
             foreach ($data['list'] as $k => $v) {
-                if ($v['title'] == '') return app('json')->fail(400244);
-                if ($v['author'] == '') return app('json')->fail(400245);
-                if ($v['content'] == '') return app('json')->fail(400246);
-                if ($v['synopsis'] == '') return app('json')->fail(400247);
+                if ($v['title'] == '') return app('json')->fail('Tiêu đề không được để trống');
+                if ($v['author'] == '') return app('json')->fail('Tác giả không được để trống');
+                if ($v['content'] == '') return app('json')->fail('Nội dung chính không được để trống');
+                if ($v['synopsis'] == '') return app('json')->fail('Tóm tắt không được để trống');
                 $v['status'] = 1;
                 $v['add_time'] = time();
                 if ($v['id']) {
@@ -119,8 +119,8 @@ class WechatNewsCategory extends AuthController
             }
             $countId = count($id);
             if ($countId != $countList) {
-                if ($data['id']) return app('json')->fail(100007);
-                else return app('json')->fail(100022);
+                if ($data['id']) return app('json')->fail('Sửa thất bại');
+                else return app('json')->fail('Thêm thất bại');
             } else {
                 $newsCategory['cate_name'] = $data['list'][0]['title'];
                 $newsCategory['new_id'] = implode(',', $id);
@@ -129,14 +129,14 @@ class WechatNewsCategory extends AuthController
                 $newsCategory['status'] = 1;
                 if ($data['id']) {
                     $this->services->update($data['id'], $newsCategory, 'id');
-                    return app('json')->success(100001);
+                    return app('json')->success('Sửa thành công');
                 } else {
                     $this->services->save($newsCategory);
-                    return app('json')->success(100021);
+                    return app('json')->success('Thêm thành công');
                 }
             }
         } catch (\Exception $e) {
-            return app('json')->fail(100101);
+            return app('json')->fail('Thao tác không hợp lệ');
         }
     }
 
@@ -149,7 +149,7 @@ class WechatNewsCategory extends AuthController
             ['id', 0],
             ['user_ids', '']
         ]);
-        if (!$data['id']) return app('json')->fail(100100);
+        if (!$data['id']) return app('json')->fail('Tham số không hợp lệ');
         $list = $this->services->getWechatNewsItem($data['id']);
         $wechatNews = [];
         if ($list) {
@@ -180,12 +180,12 @@ class WechatNewsCategory extends AuthController
                     }
                 }
                 if (!count($errorLog)) {
-                    return app('json')->success(100030);
+                    return app('json')->success('Gửi thành công');
                 } else {
-                    return app('json')->fail(100031);
+                    return app('json')->fail('Gửi thất bại');
                 }
             } else {
-                return app('json')->fail(100031);
+                return app('json')->fail('Gửi thất bại');
             }
 
         }

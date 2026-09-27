@@ -1,6 +1,13 @@
 <?php
-
-
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 namespace app\services\wechat;
 
 
@@ -70,7 +77,7 @@ class WechatQrcodeServices extends BaseServices
         if ($info) {
             $info = $info->toArray();
         } else {
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         /** @var UserServices $userService */
         $userService = app()->make(UserServices::class);
@@ -115,15 +122,15 @@ class WechatQrcodeServices extends BaseServices
         $data['data'] = json_encode($data['data']);
         if ($id) {
             $info = $this->dao->get($id);
-            if (!$info) throw new AdminException(100026);
+            if (!$info) throw new AdminException('Dữ liệu không tồn tại');
             if ($info['image'] == '') $data['image'] = $this->getChannelCode($id);
             $info = $this->dao->update($id, $data);
-            if (!$info) throw new AdminException(100006);
+            if (!$info) throw new AdminException('Lưu thất bại');
         } else {
             $info = $this->dao->save($data);
             $image = $this->getChannelCode($info['id']);
             $info = $this->dao->update($info['id'], ['image' => $image]);
-            if (!$info) throw new AdminException(100006);
+            if (!$info) throw new AdminException('Lưu thất bại');
         }
         return true;
     }
@@ -153,7 +160,7 @@ class WechatQrcodeServices extends BaseServices
             } else {
                 $res = false;
             }
-            if (!$res) throw new AdminException(400237);
+            if (!$res) throw new AdminException('Tạo mã QR thất bại');
             $imageInfo = $this->downloadImage($resCode['url'], $name);
             $systemAttachment->attachmentAdd($name, $imageInfo['size'], $imageInfo['type'], $imageInfo['att_dir'], $imageInfo['att_dir'], 1, $imageInfo['image_type'], time(), 1);
         }
@@ -183,7 +190,7 @@ class WechatQrcodeServices extends BaseServices
             $ext = $this->getImageExtname($name)['ext_name'];
         }
         if (!in_array($ext, Config::get('upload.fileExt'))) {
-            throw new AdminException(400558);
+            throw new AdminException('Sai định dạng');
         }
         //TODO lấy phương thức dùng để tải file từ xa
         if ($type) {

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -112,7 +112,7 @@ class DeliveryServiceServices extends BaseServices
     {
         $serviceInfo = $this->dao->get($id);
         if (!$serviceInfo) {
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         return create_form('Sửa nhân viên giao hàng', $this->createServiceForm($serviceInfo->toArray()), $this->url('/order/delivery/update/' . $id), 'PUT');
     }
@@ -158,34 +158,34 @@ class DeliveryServiceServices extends BaseServices
      */
     public function saveDeliveryService(array $data)
     {
-        if ($data['image'] == '') throw new AdminException(400250);
+        if ($data['image'] == '') throw new AdminException('Vui lòng chọn người dùng');
         $data['uid'] = $data['image']['uid'];
         /** @var UserServices $userService */
         $userService = app()->make(UserServices::class);
         $userInfo = $userService->get($data['uid']);
         if ($data['phone'] == '') {
             if (!$userInfo['phone']) {
-                throw new AdminException(400132);
+                throw new AdminException('Vui lòng điền số điện thoại');
             } else {
                 $data['phone'] = $userInfo['phone'];
             }
         } else {
             if (!check_phone($data['phone'])) {
-                throw new AdminException(400252);
+                throw new AdminException('Số điện thoại sai định dạng');
             }
         }
         if ($data['nickname'] == '') $data['nickname'] = $userInfo['nickname'];
         $data['avatar'] = $data['image']['image'];
         if ($this->dao->count(['uid' => $data['uid']])) {
-            throw new AdminException(400467);
+            throw new AdminException('Nhân viên giao hàng đã tồn tại');
         }
         if ($this->dao->count(['phone' => $data['phone']])) {
-            throw new AdminException(400468);
+            throw new AdminException('Mỗi số điện thoại chỉ được thêm một nhân viên giao hàng');
         }
         unset($data['image']);
         $data['add_time'] = time();
         $res = $this->dao->save($data);
-        if (!$res) throw new AdminException(100006);
+        if (!$res) throw new AdminException('Lưu thất bại');
         return true;
     }
 
@@ -199,22 +199,22 @@ class DeliveryServiceServices extends BaseServices
     {
         $delivery = $this->dao->get($id);
         if (!$delivery) {
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         if ($data["nickname"] == '') {
-            throw new AdminException(400469);
+            throw new AdminException('Tên nhân viên giao hàng không được để trống');
         }
         if (!$data['phone']) {
-            throw new AdminException(400132);
+            throw new AdminException('Vui lòng điền số điện thoại');
         }
         if (!check_phone($data['phone'])) {
-            throw new AdminException(400252);
+            throw new AdminException('Số điện thoại sai định dạng');
         }
         if ($delivery['phone'] != $data['phone'] && $this->dao->count(['phone' => $data['phone']])) {
-            throw new AdminException(400468);
+            throw new AdminException('Mỗi số điện thoại chỉ được thêm một nhân viên giao hàng');
         }
         $res = $this->dao->update($id, $data);
-        if (!$res) throw new AdminException(100007);
+        if (!$res) throw new AdminException('Sửa thất bại');
         return true;
     }
 }

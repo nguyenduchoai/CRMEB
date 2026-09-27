@@ -29,6 +29,7 @@
           {{ label.name }}
         </div>
         <img :src="label.image" class="img-tag" v-else />
+        <i class="el-icon-error" @click="close(label)"></i>
       </div>
     </vuedraggable>
   </div>
@@ -66,10 +67,13 @@ export default {
         if (nVal != oVal) {
           if (nVal.length) {
             this.labelList = [];
-            this.listData.map((item) => {
-              if (nVal.includes(item.id)) {
-                this.labelList.push(item);
-              }
+            // Tìm trong listData theo nVal, không thay đổi thứ tự kết quả tìm được
+            nVal.forEach((item) => {
+              this.listData.forEach((item2) => {
+                if (item == item2.id) {
+                  this.labelList.push(item2);
+                }
+              });
             });
           }
         }
@@ -81,14 +85,20 @@ export default {
   mounted() {},
   methods: {
     async onMoveSpec(event) {
-      console.log(event);
       const { newIndex, oldIndex } = event;
-      console.log(newIndex, oldIndex);
       const label = this.activeId[oldIndex];
       const newLabelList = [...this.activeId];
       newLabelList.splice(oldIndex, 1);
       newLabelList.splice(newIndex, 0, label);
-      console.log(newLabelList);
+      this.$emit('update:activeId', newLabelList);
+    },
+    close(label) {
+      let index = this.labelList.indexOf(label);
+      this.labelList.splice(index, 1);
+      let activeIndex = this.activeId.findIndex((item) => item == label.id);
+      this.activeId.splice(activeIndex, 1);
+      this.$emit('activeData', JSON.parse(JSON.stringify(this.labelList)));
+      const newLabelList = [...this.activeId];
       this.$emit('update:activeId', newLabelList);
     },
   },
@@ -106,6 +116,7 @@ export default {
     cursor: move;
     display: flex;
     align-items: center;
+    position: relative;
   }
   .label-item {
     height: 22px;
@@ -119,6 +130,14 @@ export default {
     border-radius: 2px;
     cursor: pointer;
     font-size: 12px;
+  }
+  .el-icon-error {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 14px;
+    color: #333333;
+    cursor: pointer;
   }
 
   .img-tag {

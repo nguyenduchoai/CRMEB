@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -38,12 +38,12 @@ class StoreCouponValidate extends Validate
      * @var array
      */
     protected $message = [
-        'title.require' => '400372',
-        'image.require' => '400337',
-        'category_id.require' => '400373',
-        'coupon_price.require' => '400374',
-        'use_min_price.require' => '400375',
-        'coupon_time.require' => '400376',
+        'title.require' => 'Vui lòng nhập tên phiếu giảm giá',
+        'image.require' => 'Vui lòng chọn sản phẩm',
+        'category_id.require' => 'Vui lòng chọn danh mục sản phẩm',
+        'coupon_price.require' => 'Vui lòng nhập mệnh giá phiếu giảm giá',
+        'use_min_price.require' => 'Vui lòng nhập số tiền tối thiểu để dùng phiếu giảm giá',
+        'coupon_time.require' => 'Vui lòng nhập thời hạn hiệu lực của phiếu giảm giá',
     ];
 
     protected $scene = [

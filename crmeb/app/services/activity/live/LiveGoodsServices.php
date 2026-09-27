@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -48,16 +48,16 @@ class LiveGoodsServices extends BaseServices
 
     public function create(array $product_ids)
     {
-        if (!$product_ids) throw new AdminException(100100);
+        if (!$product_ids) throw new AdminException('Tham số không hợp lệ');
         /** @var StoreProductServices $product */
         $productServices = app()->make(StoreProductServices::class);
         $products = $productServices->getColumn([['id', 'IN', $product_ids], ['is_del', '=', 0], ['is_show', '=', 1]], 'id,image,store_name,price,price as cost_price,stock', 'id');
         if (count($product_ids) != count($products)) {
-            throw new AdminException(400091);
+            throw new AdminException('Sản phẩm đã ngừng bán hoặc đã chuyển vào thùng rác');
         }
         $checkGoods = $this->dao->getCount([['product_id', 'IN', $product_ids], ['is_del', '=', 0], ['audit_status', '<>', 3]]);
         if ($checkGoods > 0) {
-            throw new AdminException(100022);
+            throw new AdminException('Thêm thất bại');
         }
         return array_merge($products);
     }
@@ -70,7 +70,7 @@ class LiveGoodsServices extends BaseServices
      */
     public function add(array $goods_info)
     {
-        if (!$goods_info) throw new AdminException(100100);
+        if (!$goods_info) throw new AdminException('Tham số không hợp lệ');
         $product_ids = array_column($goods_info, 'id');
         $this->create($product_ids);
         $miniUpload = MiniProgramService::materialTemporaryService();
@@ -106,7 +106,7 @@ class LiveGoodsServices extends BaseServices
             $dataAll[] = $data;
         }
         if (!$goods = $this->dao->saveAll($dataAll)) {
-            throw new AdminException(100022);
+            throw new AdminException('Thêm thất bại');
         }
         return true;
     }
@@ -131,7 +131,7 @@ class LiveGoodsServices extends BaseServices
                 $data['audit_id'] = $res['auditId'];
                 $data['audit_status'] = 1;
                 if (!$this->dao->update($good['id'], $data, 'id')) {
-                    throw new AdminException(100039);
+                    throw new AdminException('Đồng bộ thất bại');
                 }
             }
         }
@@ -141,7 +141,7 @@ class LiveGoodsServices extends BaseServices
     public function wxCreate($goods)
     {
         if ($goods['goods_id'])
-            throw new AdminException(400427);
+            throw new AdminException('Sản phẩm đã được tạo');
 
         $goods = $goods->toArray();
         /** @var DownloadImage $downloadImage */
@@ -158,7 +158,7 @@ class LiveGoodsServices extends BaseServices
     {
         $goods = $this->dao->get(['id' => $id, 'audit_status' => 2]);
         if (!$goods) {
-            throw new AdminException(400428);
+            throw new AdminException('Không cho phép thao tác này khi đang chờ duyệt hoặc duyệt thất bại');
         }
         $this->dao->update($id, ['is_show' => $is_show]);
         return true;
@@ -176,13 +176,13 @@ class LiveGoodsServices extends BaseServices
     {
         $goods = $this->dao->get($id);
         if (!$goods) {
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         if ($goods['audit_status'] != 0) {
-            throw new AdminException(400429);
+            throw new AdminException('Đang chờ duyệt hoặc đã được duyệt');
         }
         if (!$this->dao->update($id, ['audit_status' => 1])) {
-            throw new AdminException(100007);
+            throw new AdminException('Sửa thất bại');
         }
         return MiniProgramService::auditGoods((int)$goods['good_id']);
     }
@@ -199,16 +199,16 @@ class LiveGoodsServices extends BaseServices
     {
         $goods = $this->dao->get($id);
         if (!$goods) {
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         if ($goods['audit_status'] == 0) {
             return true;
         }
         if ($goods['audit_status'] != 1) {
-            throw new AdminException(400430);
+            throw new AdminException('Đã duyệt hoặc duyệt thất bại');
         }
         if (!$this->dao->update($id, ['audit_status' => 0])) {
-            throw new AdminException(100007);
+            throw new AdminException('Sửa thất bại');
         }
         return MiniProgramService::resetauditGoods((int)$goods['good_id'], $goods['audit_id']);
     }
@@ -226,10 +226,10 @@ class LiveGoodsServices extends BaseServices
         $goods = $this->dao->get(['id' => $id, 'is_del' => 0]);
         if ($goods) {
             if (in_array($goods['audit_status'], [0, 1])) {
-                throw new AdminException(400431);
+                throw new AdminException('Sản phẩm đang chờ duyệt, không thể xóa');
             }
             if (!$this->dao->update($id, ['is_del' => 1])) {
-                throw new AdminException(100008);
+                throw new AdminException('Xóa thất bại');
             }
             if (MiniProgramService::deleteGoods((int)$goods->goods_id)) {
                 /** @var LiveRoomGoodsServices $liveRoomGoods */

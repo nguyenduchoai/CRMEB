@@ -182,7 +182,6 @@ export default {
     },
     //Sửa thứ tự sắp xếp
     onDragDrop(a, b) {
-      console.log(a, b);
       this.formDynamic.value.splice(b, 1, ...this.formDynamic.value.splice(a, 1, this.formDynamic.value[b]));
     },
     // Chi tiết

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -71,7 +71,7 @@ class StoreCartController
         else $new = false;
         /** @var StoreCartServices $cartService */
         $cartService = app()->make(StoreCartServices::class);
-        if (!$where['productId'] || !is_numeric($where['productId'])) return app('json')->fail(100100);
+        if (!$where['productId'] || !is_numeric($where['productId'])) return app('json')->fail('Tham số không hợp lệ');
         $type = 0;
         if ($where['secKillId']) {
             $type = 1;
@@ -82,14 +82,14 @@ class StoreCartController
             if ($where['pinkId']) {
                 /** @var StorePinkServices $pinkServices */
                 $pinkServices = app()->make(StorePinkServices::class);
-                if ($pinkServices->isPinkStatus($where['pinkId'])) return app('json')->fail(410315);
+                if ($pinkServices->isPinkStatus($where['pinkId'])) return app('json')->fail('Mua chung đã hết hạn');
             }
         } elseif ($where['advanceId']) {
             $type = 6;
         }
         if ($type == 0) $cartService->checkVipGoodsBuy($request->user(), $where['productId']);
         $res = $cartService->setCart($request->uid(), $where['productId'], $where['cartNum'], $where['uniqueId'], $type, $new, $where['combinationId'], $where['secKillId'], $where['bargainId'], $where['advanceId']);
-        if (!$res) return app('json')->fail(100022);
+        if (!$res) return app('json')->fail('Thêm thất bại');
         else  return app('json')->success(['cartId' => $res]);
     }
 
@@ -105,10 +105,10 @@ class StoreCartController
         ]);
         $where['ids'] = is_array($where['ids']) ? $where['ids'] : explode(',', $where['ids']);
         if (!count($where['ids']))
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         if ($this->services->removeUserCart((int)$request->uid(), $where['ids']))
-            return app('json')->success(100002);
-        return app('json')->fail(100008);
+            return app('json')->success('Xóa thành công');
+        return app('json')->fail('Xóa thất bại');
     }
 
     /**
@@ -125,11 +125,11 @@ class StoreCartController
             ['id', 0],//Mã giỏ hàng
             ['number', 0],//Mã giỏ hàng
         ]);
-        if (!$where['id'] || !is_numeric($where['id'])) return app('json')->fail(100100);
-        if (!$where['number'] || !is_numeric($where['number'])) return app('json')->fail(100007);
+        if (!$where['id'] || !is_numeric($where['id'])) return app('json')->fail('Tham số không hợp lệ');
+        if (!$where['number'] || !is_numeric($where['number'])) return app('json')->fail('Sửa thất bại');
         $res = $this->services->changeUserCartNum($where['id'], $where['number'], $request->uid());
-        if ($res) return app('json')->success(100001);
-        else return app('json')->fail(100007);
+        if ($res) return app('json')->success('Sửa thành công');
+        else return app('json')->fail('Sửa thất bại');
     }
 
     /**
@@ -162,6 +162,6 @@ class StoreCartController
             ['unique', '']
         ], true);
         $this->services->modifyCart($cart_id, $product_id, $unique);
-        return app('json')->success(410225);
+        return app('json')->success('Chọn lại thành công');
     }
 }

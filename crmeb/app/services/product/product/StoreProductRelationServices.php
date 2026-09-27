@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -114,7 +114,7 @@ class StoreProductRelationServices extends BaseServices
         }
         $data['add_time'] = time();
         if (!$this->dao->save($data)) {
-            throw new ApiException(100006);
+            throw new ApiException('Lưu thất bại');
         }
         //Bản ghi yêu thích
         ProductLogJob::dispatch(['collect', ['uid' => $uid, 'product_id' => $productId]]);
@@ -148,7 +148,7 @@ class StoreProductRelationServices extends BaseServices
             ['type', '=', $relationType],
             ['category', '=', $category]
         ]);
-        if (!$storeProductRelation) throw new ApiException(100020);
+        if (!$storeProductRelation) throw new ApiException('Hủy thất bại');
         return true;
     }
 
@@ -174,7 +174,7 @@ class StoreProductRelationServices extends BaseServices
         }
         if ($relationData) {
             if (!$this->dao->saveAll($relationData)) {
-                throw new ApiException(100022);
+                throw new ApiException('Thêm thất bại');
             }
         }
         return true;

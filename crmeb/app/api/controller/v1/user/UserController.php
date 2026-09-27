@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -89,13 +89,13 @@ class UserController
             ['nickname', ''],
         ], true);
         if (!$avatar && $nickname == '') {
-            return app('json')->fail(410134);
+            return app('json')->fail('Vui lòng nhập biệt danh hoặc chọn ảnh đại diện');
         }
         $uid = (int)$request->uid();
         if ($this->services->eidtNickname($uid, ['avatar' => $avatar, 'nickname' => $nickname])) {
-            return app('json')->success(100014);
+            return app('json')->success('Cài đặt thành công');
         }
-        return app('json')->fail(100015);
+        return app('json')->fail('Cài đặt thất bại');
     }
 
     /**
@@ -126,13 +126,13 @@ class UserController
             ['url', ''],
             ['stay_time', 0]
         ]);
-        if ($data['url'] == '') return app('json')->fail(100100);
+        if ($data['url'] == '') return app('json')->fail('Tham số không hợp lệ');
         $data['uid'] = (int)$request->uid();
         $data['ip'] = $request->ip();
         if ($this->services->setVisit($data)) {
-            return app('json')->success(100021);
+            return app('json')->success('Thêm thành công');
         } else {
-            return app('json')->fail(100022);
+            return app('json')->fail('Thêm thất bại');
         }
     }
 
@@ -169,7 +169,7 @@ class UserController
             ['sort', ''],
         ]);
         if (!in_array($spreadInfo['grade'], [0, 1])) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         $uid = $request->uid();
         return app('json')->success($this->services->getUserSpreadGrade($uid, $spreadInfo['grade'], $spreadInfo['sort'], $spreadInfo['keyword']));
@@ -202,7 +202,7 @@ class UserController
         /** @var UserCancelServices $userCancelServices */
         $userCancelServices = app()->make(UserCancelServices::class);
         $userCancelServices->SetUserCancel($request->uid());
-        return app('json')->success(410135);
+        return app('json')->success('Hủy tài khoản thành công');
     }
 
     /**

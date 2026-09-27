@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -117,10 +117,10 @@ class LuckLotteryRecordServices extends BaseServices
             $userInfo = $userServices->getUserInfo($uid);
         }
         if (!$userInfo) {
-            throw new ApiException(410032);
+            throw new ApiException('Người dùng không tồn tại');
         }
         if (!$prize) {
-            throw new ApiException(410048);
+            throw new ApiException('Giải thưởng không tồn tại');
         }
         $data = [];
         $data['uid'] = $uid;
@@ -131,7 +131,7 @@ class LuckLotteryRecordServices extends BaseServices
         $data['channel_type'] = $channel_type;
         $data['add_time'] = time();
         if (!$res = $this->dao->save($data)) {
-            throw new ApiException(400439);
+            throw new ApiException('Ghi lịch sử trúng thưởng thất bại');
         }
         return $res;
     }
@@ -152,14 +152,14 @@ class LuckLotteryRecordServices extends BaseServices
         $userServices = app()->make(UserServices::class);
         $userInfo = $userServices->getUserInfo($uid);
         if (!$userInfo) {
-            throw new ApiException(410032);
+            throw new ApiException('Người dùng không tồn tại');
         }
         $lotteryRecord = $this->dao->get($lottery_record_id, ['*'], ['prize']);
         if (!$lotteryRecord || !isset($lotteryRecord['prize'])) {
-            throw new ApiException(410050);
+            throw new ApiException('Vui lòng tiếp tục tham gia quay thưởng');
         }
         if ($lotteryRecord['is_receive'] == 1) {
-            throw new ApiException(410051);
+            throw new ApiException('Đã nhận thành công');
         }
         $data = ['is_receive' => 1, 'receive_time' => time(), 'receive_info' => $receive_info];
         $prize = $lotteryRecord['prize'];
@@ -256,10 +256,10 @@ class LuckLotteryRecordServices extends BaseServices
                     break;
                 case 6:
                     if (!$receive_info['name'] || !$receive_info['phone'] || !$receive_info['address']) {
-                        throw new ApiException(410052);
+                        throw new ApiException('Vui lòng nhập thông tin người nhận');
                     }
                     if (!check_phone($receive_info['phone'])) {
-                        throw new ApiException(410053);
+                        throw new ApiException('Vui lòng nhập đúng số điện thoại người nhận');
                     }
                     break;
             }
@@ -281,17 +281,17 @@ class LuckLotteryRecordServices extends BaseServices
     {
         $lotteryRecord = $this->dao->get($lottery_record_id);
         if (!$lotteryRecord) {
-            throw new ApiException(410054);
+            throw new ApiException('Bản ghi quay thưởng không tồn tại');
         }
         $deliver_info = $lotteryRecord['deliver_info'];
         $edit = [];
         //Ghi chú
         if ($data['deliver_name'] && $data['deliver_number']) {
             if ($lotteryRecord['type'] != 6 && ($data['deliver_name'] || $data['deliver_number'])) {
-                throw new ApiException(410055);
+                throw new ApiException('Phần thưởng này không cần giao hàng');
             }
             if ($lotteryRecord['type'] == 6 && (!$data['deliver_name'] || !$data['deliver_number'])) {
-                throw new ApiException(410056);
+                throw new ApiException('Vui lòng chọn đơn vị vận chuyển hoặc nhập mã vận đơn');
             }
             $deliver_info['deliver_name'] = $data['deliver_name'];
             $deliver_info['deliver_number'] = $data['deliver_number'];
@@ -301,7 +301,7 @@ class LuckLotteryRecordServices extends BaseServices
         $deliver_info['mark'] = $data['mark'];
         $edit['deliver_info'] = $deliver_info;
         if (!$this->dao->update($lottery_record_id, $edit, 'id')) {
-            throw new ApiException(100005);
+            throw new ApiException('Thao tác thất bại');
         }
         return true;
     }

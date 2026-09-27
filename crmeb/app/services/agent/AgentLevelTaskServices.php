@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -156,7 +156,7 @@ class AgentLevelTaskServices extends BaseServices
         /** @var AgentLevelServices $levelServices */
         $levelServices = app()->make(AgentLevelServices::class);
         if (!$levelServices->getLevelInfo($level_id)) {
-            throw new AdminException(400443);
+            throw new AdminException('Cấp độ được chọn không tồn tại');
         }
         $taskList = $this->getTaskTypeAll();
         $setOptionLabel = function () use ($taskList) {
@@ -186,7 +186,7 @@ class AgentLevelTaskServices extends BaseServices
     {
         $levelTaskInfo = $this->getLevelTaskInfo($id);
         if (!$levelTaskInfo)
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         $field = [];
         $field[] = Form::hidden('id', $id);
         $taskList = $this->getTaskTypeAll();
@@ -247,13 +247,13 @@ class AgentLevelTaskServices extends BaseServices
         $userServices = app()->make(UserServices::class);
         $user = $userServices->getUserInfo($uid);
         if (!$user) {
-            throw new ApiException(410032);
+            throw new ApiException('Người dùng không tồn tại');
         }
         /** @var AgentLevelServices $levelServices */
         $levelServices = app()->make(AgentLevelServices::class);
         $levelInfo = $levelServices->getLevelInfo($level_id);
         if (!$levelInfo) {
-            throw new ApiException(410071);
+            throw new ApiException('Cấp độ CTV không tồn tại');
         }
         $taskList = $this->dao->getTaskList(['level_id' => $level_id, 'is_del' => 0, 'status' => 1]);
         if ($taskList) {
@@ -372,12 +372,12 @@ class AgentLevelTaskServices extends BaseServices
     public function checkTypeTask(int $id, array $data)
     {
         if (!$id && (!isset($data['level_id']) || !$data['level_id'])) {
-            throw new AdminException(100100);
+            throw new AdminException('Tham số không hợp lệ');
         }
         if ($id) {
             $task = $this->getLevelTaskInfo($id);
             if (!$task) {
-                throw new AdminException(100026);
+                throw new AdminException('Dữ liệu không tồn tại');
             }
             $data['level_id'] = $task['level_id'];
         }
@@ -385,21 +385,21 @@ class AgentLevelTaskServices extends BaseServices
         $agentLevelServices = app()->make(AgentLevelServices::class);
         $levelInfo = $agentLevelServices->getLevelInfo($data['level_id']);
         if (!$levelInfo) {
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         $task = $this->dao->getOne(['level_id' => $data['level_id'], 'type' => $data['type'], 'is_del' => 0]);
         if (($id && $task && $task['id'] != $id) || (!$id && $task)) {
-            throw new AdminException(400444);
+            throw new AdminException('Cấp độ này đã có nhiệm vụ loại này');
         }
         $taskList = $this->dao->getTypTaskList($data['type']);
         if ($taskList) {
             foreach ($taskList as $taskInfo) {
                 if (is_null($taskInfo['grade'])) continue;
                 if ($levelInfo['grade'] > $taskInfo['grade'] && $data['number'] <= $taskInfo['number']) {
-                    throw new AdminException(400445);
+                    throw new AdminException('Không được nhỏ hơn số lượng yêu cầu của nhiệm vụ cùng loại ở cấp độ thấp hơn');
                 }
                 if ($levelInfo['grade'] < $taskInfo['grade'] && $data['number'] >= $taskInfo['number']) {
-                    throw new AdminException(400446);
+                    throw new AdminException('Không được lớn hơn số lượng yêu cầu của nhiệm vụ cùng loại ở cấp độ cao hơn');
                 }
             }
         }

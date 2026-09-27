@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -138,7 +138,7 @@ class RoutineTemplateListService extends NoticeService
             'thing2' => $storeTitle,
             'amount3' => $order['pay_price'],
             'character_string6' => $data['order_id']
-        ], '/pages/goods/order_details/index?order_id=' . $data['order_id'] . '&isReturen=1');
+        ], '/pages/goods/order_details/index?order_id=' . $data['order_id'] . '&isReturn=1');
     }
 
     /**
@@ -155,7 +155,7 @@ class RoutineTemplateListService extends NoticeService
             'thing2' => $storeTitle,
             'amount3' => $order['pay_price'],
             'character_string6' => $order['order_id']
-        ], '/pages/goods/order_details/index?order_id=' . $order['order_id'] . '&isReturen=1');
+        ], '/pages/goods/order_details/index?order_id=' . $order['order_id'] . '&isReturn=1');
     }
 
     /**

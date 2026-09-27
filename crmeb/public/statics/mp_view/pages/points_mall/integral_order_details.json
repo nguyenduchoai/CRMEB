@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Chi tiết đơn đổi điểm",
+  "navigationBarTitleText": "兑换订单详情",
   "usingComponents": {
     "home": "/components/home/index",
     "order-goods": "/components/orderGoods/index",

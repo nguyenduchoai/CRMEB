@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -103,7 +103,7 @@ class OutStoreOrderRefundServices extends BaseServices
             $where = ['order_id' => $orderId];
         }
         $refund = $this->dao->get($where, $field, ['orderData']);
-        if (!$refund) throw new ApiException(410173);
+        if (!$refund) throw new ApiException('Đơn hàng không tồn tại');
         $refund = $refund->toArray();
 
         //Tính toán số tiền ưu đãi
@@ -152,7 +152,7 @@ class OutStoreOrderRefundServices extends BaseServices
     {
         $order = $this->dao->get(['order_id' => $orderId]);
         if (!$order) {
-            throw new ApiException(410173);
+            throw new ApiException('Đơn hàng không tồn tại');
         }
         /** @var StoreOrderRefundServices $refundServices */
         $refundServices = app()->make(StoreOrderRefundServices::class);
@@ -172,18 +172,18 @@ class OutStoreOrderRefundServices extends BaseServices
     {
         $orderRefund = $this->dao->get(['order_id' => $orderId]);
         if (!$orderRefund) {
-            throw new ApiException(100026);
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         if ($orderRefund['is_cancel'] == 1) {
-            throw new ApiException(400118);
+            throw new ApiException('Đơn hàng không tồn tại');
         }
 
         $order = $this->storeOrderServices->get((int)$orderRefund['store_order_id']);
         if (!$order) {
-            throw new ApiException(100026);
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         if (!in_array($orderRefund['refund_type'], [1, 5])) {
-            throw new ApiException(400144);
+            throw new ApiException('Trạng thái đơn đổi trả không hỗ trợ thao tác này');
         }
 
         $data['refund_type'] = 6;
@@ -197,16 +197,16 @@ class OutStoreOrderRefundServices extends BaseServices
             $refundPrice = 0;
         } else {
             if (!$refundPrice) {
-                throw new ApiException(400146);
+                throw new ApiException('Vui lòng nhập số tiền hoàn');
             }
             if ($orderRefund['refund_price'] == $orderRefund['refunded_price']) {
-                throw new ApiException(400147);
+                throw new ApiException('Đã hoàn hết số tiền thanh toán, không thể hoàn tiền thêm');
             }
 
             $data['refunded_price'] = bcadd($refundPrice, $orderRefund['refunded_price'], 2);
             $bj = bccomp((string)$orderRefund['refund_price'], $data['refunded_price'], 2);
             if ($bj < 0) {
-                throw new ApiException(400148);
+                throw new ApiException('Số tiền hoàn lớn hơn số tiền đã thanh toán, vui lòng sửa lại số tiền hoàn');
             }
         }
 
@@ -223,7 +223,7 @@ class OutStoreOrderRefundServices extends BaseServices
             return true;
         } else {
             $refundServices->storeProductOrderRefundYFasle((int)$orderRefund['id'], $refundPrice);
-            throw new ApiException(400150);
+            throw new ApiException('Hoàn tiền thất bại');
         }
     }
 
@@ -239,7 +239,7 @@ class OutStoreOrderRefundServices extends BaseServices
     {
         $orderRefund = $this->dao->get(['order_id' => $orderId]);
         if (!$orderRefund) {
-            throw new ApiException(100026);
+            throw new ApiException('Dữ liệu không tồn tại');
         }
 
         /** @var StoreOrderRefundServices $refundServices */
@@ -260,7 +260,7 @@ class OutStoreOrderRefundServices extends BaseServices
     {
         $orderRefund = $this->dao->get(['order_id' => $orderId]);
         if (!$orderRefund) {
-            throw new ApiException(100026);
+            throw new ApiException('Dữ liệu không tồn tại');
         }
 
         /** @var StoreOrderRefundServices $refundServices */
@@ -282,7 +282,7 @@ class OutStoreOrderRefundServices extends BaseServices
         $orderServices = app()->make(OutStoreOrderServices::class);
         $orderInfo = $orderServices->get($refundInfo['store_order_id'], ['id', 'order_id']);
         if (!$orderInfo) {
-            throw new AdminException(400118);
+            throw new AdminException('Đơn hàng không tồn tại');
         }
         $refundInfo['order'] = $orderInfo->toArray();
         return out_push($pushUrl, $refundInfo, 'Đơn đổi trả');
@@ -301,7 +301,7 @@ class OutStoreOrderRefundServices extends BaseServices
         $orderServices = app()->make(OutStoreOrderServices::class);
         $orderInfo = $orderServices->get($refundInfo['store_order_id'], ['id', 'order_id']);
         if (!$orderInfo) {
-            throw new AdminException(400118);
+            throw new AdminException('Đơn hàng không tồn tại');
         }
         $refundInfo['order'] = $orderInfo->toArray();
         return out_push($pushUrl, $refundInfo, 'Hủy đơn đổi trả');

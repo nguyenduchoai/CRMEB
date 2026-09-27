@@ -1,4 +1,8 @@
 {
+	"easycom": {
+		"autoscan": true,
+		"custom": {}
+	},
 	"pages": [ //Phần tử đầu tiên trong mảng pages biểu thị trang khởi động ứng dụng
 		{
 			"path": "pages/guide/index",
@@ -16,6 +20,11 @@
 				"navigationBarTextStyle": "black",
 				"app-plus": {
 					"scrollIndicator": "none"
+				},
+				"mp-weixin": {
+					"componentPlaceholder": {
+						"page-design": "view"
+					}
 				}
 			}
 		},
@@ -38,6 +47,11 @@
 			"style": {
 
 				"navigationBarTitleText": "Trang cá nhân",
+				"mp-weixin": {
+					"componentPlaceholder": {
+						"page-design": "view"
+					}
+				},
 				"enablePullDownRefresh": true
 					// #ifdef MP || APP-PLUS
 					,
@@ -63,7 +77,26 @@
 		}
 
 	],
-	"subPackages": [{ // Chia gói module (subpackage)
+	// Chia gói module (subpackage)
+	"subPackages": [
+			{
+			"root": "pages/goods_details",
+			"name": "goods_details",
+			"pages": [{
+					"path": "index",
+					"style": {
+						"navigationStyle": "custom",
+						"transparentTitle": "auto",
+						"mp-weixin": {
+							"componentPlaceholder": {
+								"page-design": "view",
+								"product-bottom": "view"
+							}
+						}
+					}
+				}]
+			},
+			{ 
 			"root": "pages/extension",
 			"name": "extension",
 			"pages": [{
@@ -111,7 +144,7 @@
 		}, {
 			"root": "pages/goods",
 			"name": "goods",
-			"pages": [{
+			"pages": [ {
 					"path": "goods_list/index",
 					"style": {
 						"navigationBarTitleText": "Danh sách sản phẩm",
@@ -316,7 +349,7 @@
 							// #endif
 						}
 					}
-				},{
+				}, {
 					"path": "receive_gifts_status/index",
 					"style": {
 						"navigationBarTitleText": "Kết quả nhận",
@@ -344,7 +377,7 @@
 							// #endif
 						}
 					}
-				},{
+				}, {
 					"path": "cashier/index",
 					"style": {
 						"navigationBarTitleText": "Thu ngân",
@@ -489,7 +522,7 @@
 							"scrollIndicator": "none"
 						}
 					}
-				}, 
+				},
 				{
 					"path": "binding_phone/index",
 					"style": {
@@ -706,7 +739,7 @@
 							// #endif
 						}
 					}
-				},{
+				}, {
 					"path": "user_spread_money/receiving",
 					"style": {
 						"navigationBarTitleText": "Thu tiền"
@@ -1015,31 +1048,7 @@
 				}
 			}
 		},
-		{
-			"root": "pages/goods_details",
-			"name": "goods_details",
-			"pages": [{
-				"path": "index",
-				"style": {
-					"navigationStyle": "custom",
-					"transparentTitle": "auto",
-					"app-plus": {
-						// #ifdef APP-PLUS
-						"titleNView": {
-							"padding-left": "10px",
-							"padding-right": "10px",
-							"type": "transparent",
-							"buttons": [ //Cấu hình nút thanh tiêu đề gốc,
-								{
-									"type": "menu" //Thêm nút chia sẻ vào thanh tiêu đề gốc, sự kiện click có thể theo dõi qua hàm onNavigationBarButtonTap của trang
-								}
-							]
-						}
-						// #endif
-					}
-				}
-			}]
-		},
+		
 		{
 			"root": "pages/activity",
 			"name": "activity",
@@ -1218,6 +1227,41 @@
 			"root": "pages/admin",
 			"name": "adminOrder",
 			"pages": [{
+					"path": "distribution/index",
+					"style": {
+						"navigationStyle": "custom",
+						"app-plus": {}
+					}
+				}, {
+					"path": "distribution/scanning/index",
+					"style": {
+						"navigationBarTitleText": "Xác nhận sử dụng đơn hàng",
+						"app-plus": {
+							// #ifdef APP-PLUS
+							"titleNView": {
+								"type": "default"
+							}
+							// #endif
+						}
+					}
+				}, {
+					"path": "distribution/scanning/detail/index",
+					"style": {
+						"navigationBarTitleText": "Xác nhận sử dụng đơn hàng",
+						"app-plus": {
+							// #ifdef APP-PLUS
+							"titleNView": {
+								"type": "default"
+							}
+							// #endif
+						}
+					}
+				}, {
+					"path": "distribution/orderDetail/index",
+					"style": {
+						"navigationStyle": "custom"
+					}
+				}, {
 					"path": "custom_date/index",
 					"style": {
 						"navigationBarTitleText": "Chọn ngày"
@@ -1273,6 +1317,75 @@
 							}
 							// #endif
 						}
+					}
+				},
+				{
+					"path": "refund/index",
+					"style": {
+						"navigationBarTitleText": "Đổi trả & hoàn tiền",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "logistics/index",
+					"style": {
+						"navigationBarTitleText": "Thông tin vận chuyển",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "refund_order_list/index",
+					"style": {
+						"navigationBarTitleText": "Danh sách đơn hậu mãi",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "refund_order_detail/index",
+					"style": {
+						"navigationBarTitleText": "Chi tiết đơn hậu mãi",
+						"navigationStyle": "custom"
+					}
+				},
+				{
+					"path": "goods/index",
+					"style": {
+						"navigationStyle": "custom",
+						"navigationBarTitleText": "Quản lý sản phẩm"
+					}
+				},
+				{
+					"path": "goods/specs",
+					"style": {
+						"navigationBarTitleText": "Sửa giá/tồn kho",
+						"navigationBarBackgroundColor": "#F5F5F5",
+						"app-plus": {
+							// #ifdef APP-PLUS
+							"titleNView": {
+								"type": "default"
+							}
+							// #endif
+						}
+					}
+				},
+				{
+					"path": "goods/addGoods",
+					"style": {
+						"navigationBarTitleText": "Thêm sản phẩm"
+					}
+				},
+				{
+					"path": "user/list",
+					"style": {
+						"navigationStyle": "custom",
+						"navigationBarTitleText": "Quản lý người dùng"
+					}
+				},
+				{
+					"path": "user/index",
+					"style": {
+						"navigationStyle": "custom",
+						"navigationBarTitleText": "Chi tiết người dùng"
 					}
 				},
 				{
@@ -1437,11 +1550,16 @@
 				{
 					"path": "special/index",
 					"style": {
-					"navigationBarTextStyle": "white",
-					"navigationBarBackgroundColor": "#333333",
-					"navigationBarTitleText": "Trang chủ đề",
+						"navigationBarTextStyle": "white",
+						"navigationBarBackgroundColor": "#333333",
+						"navigationBarTitleText": "Trang chủ đề",
 						"app-plus": {
 							"scrollIndicator": "none"
+						},
+						"mp-weixin": {
+							"componentPlaceholder": {
+								"page-design": "view"
+							}
 						}
 					}
 				},
@@ -1588,7 +1706,18 @@
 					}
 				}
 			]
-		}
+		},
+		{
+			"root": "subpackage/diyComponents",
+			"name": "diyComponents",
+			"pages": [{
+				"path": "pages/placeholder",
+				"style": {
+					"navigationBarTitleText": ""
+				}
+			}]
+		}	
+
 	],
 	"tabBar": { // Menu dưới cùng
 		"color": "#282828",

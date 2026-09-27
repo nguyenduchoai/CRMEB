@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -16,6 +16,7 @@ use app\services\diy\DiyProServices;
 use app\services\diy\DiyServices;
 use app\services\diy\PageCategoryServices;
 use app\services\diy\PageLinkServices;
+use app\services\diy\ThemeServices;
 use app\services\product\product\StoreCategoryServices;
 use think\facade\App;
 
@@ -53,10 +54,10 @@ class PageLink extends AuthController
      */
     public function getLinks($cate_id, PageCategoryServices $pageCategoryServices)
     {
-        if (!$cate_id) return app('json')->fail(100100);
+        if (!$cate_id) return app('json')->fail('Tham số không hợp lệ');
         $category = $pageCategoryServices->get((int)$cate_id);
         if (!$category) {
-            return app('json')->fail(400103);
+            return app('json')->fail('Danh mục không tồn tại');
         }
         switch ($category['type']) {
             case 'special':
@@ -88,17 +89,17 @@ class PageLink extends AuthController
             ['name', ''],
             ['url', '']
         ]);
-        if (!$cate_id || !$data['name'] || !$data['url']) return app('json')->fail(100100);
+        if (!$cate_id || !$data['name'] || !$data['url']) return app('json')->fail('Tham số không hợp lệ');
         $category = $pageCategoryServices->get((int)$cate_id);
         if (!$category) {
-            return app('json')->fail(400103);
+            return app('json')->fail('Danh mục không tồn tại');
         }
         $data['cate_id'] = $cate_id;
         $data['add_time'] = time();
         if (!$this->services->save($data)) {
-            return app('json')->fail(100022);
+            return app('json')->fail('Thêm thất bại');
         }
-        return app('json')->success(100021);
+        return app('json')->success('Thêm thành công');
     }
 
     /**
@@ -108,9 +109,9 @@ class PageLink extends AuthController
      */
     public function del($id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $this->services->del($id);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     public function getLinkCategory()
@@ -147,13 +148,13 @@ class PageLink extends AuthController
         if (!$cate_id) return app('json')->fail('Tham số không hợp lệ');
         $category = $pageCategoryServices->get((int)$cate_id);
         if (!$category) {
-            return app('json')->fail(400103);
+            return app('json')->fail('Danh mục không tồn tại');
         }
         switch ($category['type']) {
             case 'special':
-                /** @var DiyProServices $diyServices */
-                $diyProServices = app()->make(DiyProServices::class);
-                $data = $diyProServices->getList('link');
+                /** @var ThemeServices $themeServices */
+                $themeServices = app()->make(ThemeServices::class);
+                $data = $themeServices->getMicroPageList();
                 break;
             case 'product_category':
                 /** @var StoreCategoryServices $storeCategoryServices */

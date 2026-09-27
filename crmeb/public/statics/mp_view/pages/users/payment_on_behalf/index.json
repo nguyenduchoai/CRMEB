@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Bạn bè thanh toán hộ",
+  "navigationBarTitleText": "好友代付",
   "usingComponents": {
     "order-goods": "/components/orderGoods/index",
     "payment": "/components/payment/index",

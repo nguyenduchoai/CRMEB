@@ -24,8 +24,8 @@
               @change="userSearchs"
               class="form_content_width"
             >
-              <el-option value="1" label="Hiện"></el-option>
-              <el-option value="0" label="Ẩn"></el-option>
+              <el-option value="1" label="Bật"></el-option>
+              <el-option value="0" label="Tắt"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="Tên danh mục:" label-for="status2">

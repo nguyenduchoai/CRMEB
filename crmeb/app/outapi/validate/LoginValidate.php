@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -29,8 +29,8 @@ class LoginValidate extends Validate
      * @var string[]
      */
     protected $message = [
-        'appid.require' => 400133,
-        'appid.account' => 400140,
-        'appsecret.regex' => 400134,
+        'appid.require' => 'Vui lòng điền tài khoản',
+        'appid.account' => 'Tài khoản hoặc mật khẩu không đúng',
+        'appsecret.regex' => 'Vui lòng điền mật khẩu',
     ];
 }

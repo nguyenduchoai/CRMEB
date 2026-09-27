@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -54,21 +54,21 @@ class MemberShipServices extends BaseServices
      */
     public function save(int $id, array $data)
     {
-        if (!$data['title']) throw new AdminException(400641);
-        if (!$data['type']) throw new AdminException(400642);
+        if (!$data['title']) throw new AdminException('Vui lòng điền tên thẻ thành viên');
+        if (!$data['type']) throw new AdminException('Thiếu loại thẻ thành viên');
         if ($data['type'] == "ever") {
             $data['vip_day'] = -1;
         } else {
-            if (!$data['vip_day']) throw new AdminException(400643);
-            if ($data['vip_day'] < 0) throw new AdminException(400644);
+            if (!$data['vip_day']) throw new AdminException('Vui lòng điền thời hạn (ngày)');
+            if ($data['vip_day'] < 0) throw new AdminException('Thời hạn (ngày) không được là số âm');
         }
         if ($data['type'] == "free") {
             $data['pre_price'] = 0.00;
         } else {
-            if ($data['pre_price'] == 0 || $data['price'] == 0) throw new AdminException(400645);
+            if ($data['pre_price'] == 0 || $data['price'] == 0) throw new AdminException('Vui lòng điền giá');
         }
-        if ($data['pre_price'] < 0 || $data['price'] < 0) throw new AdminException(400646);
-        if ($data['pre_price'] > $data['price']) throw new AdminException(400647);
+        if ($data['pre_price'] < 0 || $data['price'] < 0) throw new AdminException('Giá không được là số âm');
+        if ($data['pre_price'] > $data['price']) throw new AdminException('Giá ưu đãi không được lớn hơn giá gốc');
         if ($id){
             return $this->dao->update($id, $data);
         }else{

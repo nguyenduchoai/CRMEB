@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -71,7 +71,7 @@ class WechatQrcode extends AuthController
             ['cate_name', '']
         ]);
         $this->qrcodeCateServices->saveData($data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -82,7 +82,7 @@ class WechatQrcode extends AuthController
     public function delCate($id)
     {
         $this->qrcodeCateServices->delCate($id);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -103,7 +103,7 @@ class WechatQrcode extends AuthController
             ['time', 0],
         ]);
         $this->wechatQrcodeServices->saveQrcode($id, $data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -128,7 +128,7 @@ class WechatQrcode extends AuthController
      */
     public function qrcodeInfo($id = 0)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $info = $this->wechatQrcodeServices->qrcodeInfo($id);
         return app('json')->success($info);
     }
@@ -140,9 +140,9 @@ class WechatQrcode extends AuthController
      */
     public function delQrcode($id = 0)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $this->wechatQrcodeServices->update($id, ['is_del' => 1]);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -153,9 +153,9 @@ class WechatQrcode extends AuthController
      */
     public function setStatus($id, $status)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $this->wechatQrcodeServices->update($id, ['status' => $status]);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**

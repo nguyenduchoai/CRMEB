@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -43,10 +43,10 @@ class Sms extends AuthController
     public function openServe(string $sign)
     {
         if (!$sign) {
-            return app('json')->fail(400179);
+            return app('json')->fail('Vui lòng cài đặt chữ ký SMS');
         }
         $this->services->sms()->setSign($sign)->open();
-        return app('json')->success(100044);
+        return app('json')->success('Kích hoạt thành công');
     }
 
     /**
@@ -65,10 +65,10 @@ class Sms extends AuthController
         $this->validate(['phone' => $phone], ServeValidata::class, 'phone');
 
         if (!$sign) {
-            return app('json')->fail(400179);
+            return app('json')->fail('Vui lòng cài đặt chữ ký SMS');
         }
         $this->services->sms()->modify($sign, $phone, $code);
-        return app('json')->success(400180);
+        return app('json')->success('Sửa chữ ký SMS thành công');
     }
 
     /**
@@ -99,7 +99,7 @@ class Sms extends AuthController
         ], true);
 
         if (!$title || !$content || !$type) {
-            return app('json')->success(400143);
+            return app('json')->success('Vui lòng nhập nội dung mẫu');
         }
         return app('json')->success($this->services->sms()->apply($title, $content, (int)$type));
     }

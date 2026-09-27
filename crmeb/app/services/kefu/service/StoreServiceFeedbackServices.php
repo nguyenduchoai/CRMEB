@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -63,7 +63,7 @@ class StoreServiceFeedbackServices extends BaseServices
     {
         $feedInfo = $this->dao->get($id);
         if (!$feedInfo) {
-            throw new AdminException(400460);
+            throw new AdminException('Không tìm thấy nội dung phản hồi');
         }
         $feedInfo = $feedInfo->toArray();
         $field = [

@@ -102,6 +102,16 @@ export function getProduct(data) {
 }
 
 /**
+ * @description Lấy các trường của thành phần tùy chỉnh
+ */
+export function getDiyField() {
+  return request({
+    url: 'diy_pro/text/field',
+    method: 'get',
+  });
+}
+
+/**
  * @description Lấy dữ liệu DIY
  * @param {Object} param data {Object} Tham số truyền giá trị
  */
@@ -335,8 +345,6 @@ export function diyUpdateName(id, data) {
   });
 }
 
-
-
 /** Dùng cho phiên bản 5.6+ */
 
 /**
@@ -375,6 +383,53 @@ export function diyProSave(id, data) {
   });
 }
 /**
+ * @description Lưu chủ đề cửa hàng
+ * @param type Lưu loại
+ * @param value Giá trị diy
+ */
+export function themeSave(id, data) {
+  return request({
+    url: 'theme/save/' + id,
+    method: 'post',
+    data: data,
+  });
+}
+/**
+ * @description Lấy chủ đề cửa hàng
+ * @param id ID chủ đề
+ * @param type Loại
+ * @return {Object} Dữ liệu chủ đề
+ */
+export function themeInfo(id, type) {
+  return request({
+    url: 'theme/info/' + id + '/' + type,
+    method: 'get',
+  });
+}
+
+/**
+ * @description Lấy danh sách bài viết
+ */
+export function getArticleList(data) {
+  return request({
+    url: 'theme/article',
+    method: 'get',
+    params: data,
+  });
+}
+
+/**
+ * @description Lấy danh sách phiếu giảm giá
+ */
+export function getCouponList(data) {
+  return request({
+    url: 'theme/coupon',
+    method: 'get',
+    params: data,
+  });
+}
+
+/**
  * @description Lấy danh sách sản phẩm
  */
 export function getProProduct(data) {
@@ -384,3 +439,151 @@ export function getProProduct(data) {
     params: data,
   });
 }
+
+/**
+ * @description Lấy danh sách sản phẩm của chủ đề
+ */
+export function getThemeProduct(data) {
+  return request({
+    url: 'theme/product',
+    method: 'get',
+    params: data,
+  });
+}
+
+/**
+ * @description Nhập chủ đề
+ * @param data
+ */
+export function importTheme(data) {
+  return request({
+    url: 'theme/import',
+    method: 'post',
+    data,
+  });
+}
+/**
+ * @description Lưu tên chủ đề
+ * @param id ID chủ đề
+ * @param data Tên chủ đề
+ */
+export function saveThemeTitle(id, data) {
+  return request({
+    url: 'theme/save_title/' + id,
+    method: 'post',
+    data: data,
+  });
+}
+
+/**
+ * @description Lưu ảnh bìa chủ đề
+ * @param id ID chủ đề
+ * @param data Địa chỉ ảnh bìa
+ */
+export function saveThemeImage(id, data) {
+  return request({
+    url: 'theme/save_image/' + id,
+    method: 'post',
+    data: data,
+  });
+}
+
+/**
+ * @description Lấy danh sách chủ đề
+ */
+export function getThemeList(data) {
+  return request({
+    url: 'theme/list',
+    method: 'get',
+    params: data,
+  });
+}
+/**
+ * @description Xuất chủ đề
+ * @param id ID chủ đề
+ */
+export function exportTheme(id) {
+  return request({
+    url: 'theme/export/' + id,
+    method: 'get',
+  });
+}
+
+/**
+ * @description Tra cứu bản ghi xuất chủ đề (dùng cho polling)
+ * @param recordId ID bản ghi tải xuống
+ */
+export function getExportRecord(recordId) {
+  return request({
+    url: 'theme/export_record/' + recordId,
+    method: 'get',
+  });
+}
+
+/**
+ * @description Áp dụng chủ đề
+ * @param id ID chủ đề
+ */
+export function useTheme(id) {
+  return request({
+    url: 'theme/use/' + id,
+    method: 'get',
+  });
+}
+
+/**
+ * @description Lấy chủ đề đang sử dụng
+ */
+export function getThemeUsing() {
+  return request({
+    url: 'theme/using',
+    method: 'get',
+  });
+}
+/**
+ * @description Khôi phục chủ đề
+ * @param id ID chủ đề
+ */
+export function restoreTheme(id) {
+  return request({
+    url: 'theme/restore/' + id,
+    method: 'get',
+  });
+}
+
+/**
+ * @description Áp dụng dữ liệu chủ đề
+ * @param id ID chủ đề hiện tại
+ * @param data {theme_id, type}
+ */
+export function useThemeData(id, data) {
+  return request({
+    url: 'theme/use_data/' + id,
+    method: 'get',
+    params: data,
+  });
+}
+
+/**
+ * @description Xóa chủ đề
+ * @param id ID chủ đề
+ */
+export function deleteTheme(id) {
+  return request({
+    url: 'theme/del/' + id,
+    method: 'delete',
+  });
+}
+
+/**
+ * @description Lấy danh sách trang micro
+ * @param data
+ */
+export function getMicroPageList(data) {
+  return request({
+    url: 'theme/micro_page',
+    method: 'get',
+    params: data,
+  });
+}
+

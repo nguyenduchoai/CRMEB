@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -33,7 +33,7 @@ class AdminCheckRoleMiddleware implements MiddlewareInterface
     public function handle(Request $request, \Closure $next)
     {
         if (!$request->adminId() || !$request->adminInfo())
-            throw new AuthException(100100);
+            throw new AuthException('Tham số không hợp lệ');
 
         if ($request->adminInfo()['level']) {
             /** @var SystemRoleServices $systemRoleService */

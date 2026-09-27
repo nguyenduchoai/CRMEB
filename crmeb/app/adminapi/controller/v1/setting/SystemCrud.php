@@ -1,15 +1,13 @@
 <?php
-/**
- *  +----------------------------------------------------------------------
- *  | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
- *  +----------------------------------------------------------------------
- *  | Copyright (c) 2016~2022 https://www.crmeb.com All rights reserved.
- *  +----------------------------------------------------------------------
- *  | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
- *  +----------------------------------------------------------------------
- *  | Author: CRMEB Team <admin@crmeb.com>
- *  +----------------------------------------------------------------------
- */
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 
 namespace app\adminapi\controller\v1\setting;
 
@@ -154,7 +152,7 @@ class SystemCrud extends AuthController
             //Thu thập dữ liệu hiển thị form
             if ($item['from_type']) {
                 if (!$name) {
-                    return app('json')->fail(500048, [], ['field' => $item['field']]);
+                    return app('json')->fail('Tên danh sách không được để trống', [], ['field' => $item['field']]);
                 }
                 if (!$option && in_array($item['from_type'], [FormTypeEnum::RADIO, FormTypeEnum::SELECT])) {
                     return app('json')->fail('Khi loại biểu mẫu là radio hoặc select, trường options không được để trống');
@@ -194,10 +192,10 @@ class SystemCrud extends AuthController
             }
         }
         if (!$fromField) {
-            return app('json')->fail(500046);
+            return app('json')->fail('Loại biểu mẫu phải chọn ít nhất một mục');
         }
         if (!$columnField) {
-            return app('json')->fail(500047);
+            return app('json')->fail('Tạo dữ liệu hiển thị danh sách thất bại');
         }
         $data['fromField'] = $fromField;
         $data['tableIndex'] = $tableIndex;
@@ -205,12 +203,12 @@ class SystemCrud extends AuthController
         $data['searchField'] = $searchField;
         $data['hasOneField'] = $hasOneField;
         if (!$data['tableName']) {
-            return app('json')->fail(500042);
+            return app('json')->fail('Tên bảng không được để trống');
         }
 
         $this->services->createCrud($id, $data);
 
-        return app('json')->success(500043);
+        return app('json')->success('Tạo chức năng thành công');
     }
 
     /**
@@ -227,11 +225,11 @@ class SystemCrud extends AuthController
         ], true);
 
         if (!$tableName) {
-            return app('json')->fail(500042);
+            return app('json')->fail('Tên bảng không được để trống');
         }
 
         if (in_array($tableName, SystemCrudServices::NOT_CRUD_TABANAME)) {
-            return app('json')->fail(500041);
+            return app('json')->fail('Bảng dữ liệu hệ thống, không thể tạo');
         }
 
         $routeName = 'crud/' . Str::snake($tableName);
@@ -283,12 +281,12 @@ class SystemCrud extends AuthController
     public function read($id)
     {
         if (!$id) {
-            return app('json')->fail(500035);
+            return app('json')->fail('API không tồn tại');
         }
 
         $info = $this->services->get($id);
         if (!$info) {
-            return app('json')->fail(100026);
+            return app('json')->fail('Dữ liệu không tồn tại');
         }
 
         $routeName = 'crud/' . Str::snake($info->table_name);
@@ -469,7 +467,7 @@ class SystemCrud extends AuthController
         }
 
         if (empty($filepath) || !$id) {
-            return app('json')->fail(410087);
+            return app('json')->fail('Lỗi nền tảng: đã xảy ra sự cố, vui lòng thử lại sau');
         }
         $crudInfo = $this->services->get($id, ['make_path']);
         if (!$crudInfo) {
@@ -494,9 +492,9 @@ class SystemCrud extends AuthController
         }
         $res = $service->savefile($makeFilepath, $comment);
         if ($res) {
-            return app('json')->success(100000);
+            return app('json')->success('Lưu thành công');
         } else {
-            return app('json')->fail(100006);
+            return app('json')->fail('Lưu thất bại');
         }
     }
 
@@ -538,9 +536,9 @@ class SystemCrud extends AuthController
         if (!$tableName) {
             return app('json')->fail('Thiếu tên bảng');
         }
-//        if (in_array($tableName, SystemCrudServices::NOT_CRUD_TABANAME)) {
-//            return app('json')->fail('Không được xem chi tiết bảng hiện tại');
-//        }
+        if (in_array($tableName, SystemCrudServices::NOT_CRUD_TABANAME)) {
+            return app('json')->fail('Không được phép xem chi tiết bảng hiện tại');
+        }
         $tableInfo = $this->services->getColumnNamesList($tableName);
 
         $data = [];
@@ -577,12 +575,12 @@ class SystemCrud extends AuthController
     public function delete(SystemMenusServices $services, $id)
     {
         if (!$id) {
-            return app('json')->fail(500035);
+            return app('json')->fail('API không tồn tại');
         }
 
         $info = $this->services->get($id);
         if (!$info) {
-            return app('json')->fail(100026);
+            return app('json')->fail('Dữ liệu không tồn tại');
         }
 
         $menusServices = app()->make(SystemMenusServices::class);
@@ -615,7 +613,7 @@ class SystemCrud extends AuthController
                 }
             }
             if ($errorFile) {
-                return app('json')->success(500040, [], [
+                return app('json')->success('Xóa tệp thất bại, lý do: {:message}', [], [
                     'message' => 'Tệp:' . implode("\n", $errorFile) . '; không thể xóa!'
                 ]);
             }
@@ -624,7 +622,7 @@ class SystemCrud extends AuthController
         $info->delete();
 
 
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -638,12 +636,12 @@ class SystemCrud extends AuthController
     public function download($id)
     {
         if (!$id) {
-            return app('json')->fail(500035);
+            return app('json')->fail('API không tồn tại');
         }
 
         $info = $this->services->get($id);
         if (!$info) {
-            return app('json')->fail(100026);
+            return app('json')->fail('Dữ liệu không tồn tại');
         }
         $zipPath = app()->getRootPath() . 'backup' . DS . Str::camel($info->table_name);
         $zipName = app()->getRootPath() . 'backup' . DS . Str::camel($info->table_name) . '.zip';
@@ -693,7 +691,7 @@ class SystemCrud extends AuthController
         ], $makePath, $zipPath);
 
         if (!extension_loaded('zip')) {
-            return app('json')->fail(500039);
+            return app('json')->fail('Chưa cài đặt extension zip');
         }
 
         $fileService = new FileService();

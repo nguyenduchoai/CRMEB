@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -35,13 +35,13 @@ class SystemAdminValidata extends Validate
      * @var array
      */
     protected $message = [
-        'account.require' => '400033',
-        'account.alphaDash' => '400034',
-        'conf_pwd.require' => '400263',
-        'pwd.require' => '400256',
-        'real_name.require' => '400035',
-        'roles.require' => '400036',
-        'roles.array' => '400037',
+        'account.require' => 'Vui lòng điền tài khoản quản trị viên',
+        'account.alphaDash' => 'Tài khoản quản trị viên phải là chữ cái tiếng Anh',
+        'conf_pwd.require' => 'Vui lòng nhập mật khẩu xác nhận',
+        'pwd.require' => 'Vui lòng nhập mật khẩu',
+        'real_name.require' => 'Vui lòng nhập họ tên quản trị viên',
+        'roles.require' => 'Vui lòng chọn vai trò quản trị viên',
+        'roles.array' => 'Vai trò phải là mảng',
     ];
 
     protected $scene = [

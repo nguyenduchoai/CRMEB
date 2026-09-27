@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -72,9 +72,9 @@ class LiveAnchor extends AuthController
         $this->validate($data, \app\adminapi\validate\marketing\LiveAnchorValidate::class, 'save');
         $res = $this->services->save((int)$data['id'], $data);
         if ($res === true) {
-            return app('json')->success(100000, ['auth' => false]);
+            return app('json')->success('Lưu thành công', ['auth' => false]);
         }else{
-            return app('json')->fail(100006);
+            return app('json')->fail('Lưu thất bại');
         }
     }
 
@@ -88,9 +88,9 @@ class LiveAnchor extends AuthController
         list($id) = $this->request->getMore([
             ['id', 0],
         ], true);
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $this->services->delAnchor((int)$id);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -101,9 +101,9 @@ class LiveAnchor extends AuthController
      */
     public function setShow($id = '', $is_show = '')
     {
-        if ($is_show == '' || $id == '') return app('json')->fail(100100);
+        if ($is_show == '' || $id == '') return app('json')->fail('Tham số không hợp lệ');
         $this->services->setShow((int)$id, (int)$is_show);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
@@ -113,6 +113,6 @@ class LiveAnchor extends AuthController
     public function syncAnchor()
     {
         $this->services->syncAnchor();
-        return app('json')->success(100038);
+        return app('json')->success('Đồng bộ thành công');
     }
 }

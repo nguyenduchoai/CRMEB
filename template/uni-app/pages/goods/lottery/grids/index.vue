@@ -167,6 +167,14 @@ export default {
 			toLogin();
 		}
 	},
+	// Chia sẻ lên Moments và cho bạn bè
+	onShareAppMessage() {
+		return {
+			title: 'Quay thưởng bằng điểm',
+			path: '/pages/goods/lottery/grids/index?type=' + this.type + '&lottery_id=' + this.lottery_id + '&spread=' + this.$store.state.app.uid,
+			imageUrl: this.image
+		}
+	},
 	methods: {
 		//#ifdef H5
 		ShareInfo(data) {

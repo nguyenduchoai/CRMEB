@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -55,7 +55,7 @@ class Login extends AuthController
 
         $token = $this->services->authLogin($appid, $appsecret);
 
-        return app('json')->success(100010, $token);
+        return app('json')->success('Thao tác thành công', $token);
     }
 
     /**
@@ -68,7 +68,7 @@ class Login extends AuthController
             ['access_token', ''],
         ], true);
         $token = $this->services->refresh($token);
-        return app('json')->success(100010, $token);
+        return app('json')->success('Thao tác thành công', $token);
     }
 
 }

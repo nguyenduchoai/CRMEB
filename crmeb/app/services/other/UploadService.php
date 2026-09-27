@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -86,7 +86,7 @@ class UploadService
             case 1:
                 break;
             default:
-                throw new UploadException(400733);
+                throw new UploadException('Bạn đã tắt tính năng tải lên');
         }
 
         //Ngoài lưu trữ cục bộ, tất cả còn lại đều lấy thông tin cấu hình

@@ -1,6 +1,13 @@
 <?php
-
-
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 namespace app\services\agent;
 
 
@@ -61,7 +68,7 @@ class DivisionAgentApplyServices extends BaseServices
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
         $divisionId = $userServices->value(['division_invite' => $data['division_invite']], 'division_id');
-        if (!$divisionId) throw new ApiException(410073);
+        if (!$divisionId) throw new ApiException('Mã mời không hợp lệ');
         $data['division_id'] = $divisionId;
         if ($id) {
             $data['status'] = 0;
@@ -70,7 +77,7 @@ class DivisionAgentApplyServices extends BaseServices
             $this->dao->update(['uid' => $data['uid']], ['is_del' => 1]);
             $res = $this->dao->save($data);
         }
-        if (!$res) throw new ApiException(100018);
+        if (!$res) throw new ApiException('Gửi thất bại');
         return true;
     }
 
@@ -107,7 +114,7 @@ class DivisionAgentApplyServices extends BaseServices
     public function delApply($id)
     {
         $res = $this->dao->update($id, ['is_del' => 1]);
-        if (!$res) throw new AdminException(100008);
+        if (!$res) throw new AdminException('Xóa thất bại');
         return true;
     }
 
@@ -120,7 +127,7 @@ class DivisionAgentApplyServices extends BaseServices
      */
     public function examineApply($id, $type)
     {
-        if (!$id) throw new AdminException(100100);
+        if (!$id) throw new AdminException('Tham số không hợp lệ');
         $field = [];
         $field[] = Form::hidden('type', $type);
         $field[] = Form::hidden('id', $id);
@@ -150,6 +157,7 @@ class DivisionAgentApplyServices extends BaseServices
         return $this->transaction(function () use ($applyInfo, $data) {
             if ($data['type'] == 1) {
                 $agentData = [
+                    'division_name' => $applyInfo['agent_name'],
                     'division_id' => $applyInfo['division_id'],
                     'agent_id' => $applyInfo['uid'],
                     'division_type' => 2,
@@ -166,8 +174,8 @@ class DivisionAgentApplyServices extends BaseServices
                 $userServices = app()->make(UserServices::class);
                 $division_info = $userServices->getUserInfo($applyInfo['division_id'], 'division_end_time,division_percent');
                 if ($applyInfo['division_id'] != 0) {
-                    if ($agentData['division_percent'] > $division_info['division_percent']) throw new AdminException(400448);
-                    if ($agentData['division_end_time'] > $division_info['division_end_time']) throw new AdminException(400449);
+                    if ($agentData['division_percent'] > $division_info['division_percent']) throw new AdminException('Tỷ lệ hoa hồng của đại lý không được lớn hơn tỷ lệ hoa hồng của đại lý khu vực');
+                    if ($agentData['division_end_time'] > $division_info['division_end_time']) throw new AdminException('Thời gian hết hạn của đại lý không được sau thời gian hết hạn của đại lý khu vực');
                 }
                 $applyInfo->status = 1;
                 $res = $applyInfo->save();
@@ -177,7 +185,7 @@ class DivisionAgentApplyServices extends BaseServices
                 $applyInfo->refusal_reason = $data['refusal_reason'];
                 $res = $applyInfo->save();
             }
-            if (!$res) throw new AdminException(100005);
+            if (!$res) throw new AdminException('Thao tác thất bại');
             return true;
         });
     }
@@ -262,7 +270,7 @@ class DivisionAgentApplyServices extends BaseServices
 //                } else {
 //                    $res = false;
 //                }
-//                if (!$res) throw new ApiException(410167);
+//                if (!$res) throw new ApiException('Tạo mã QR thất bại');
 //                $imageInfo = $this->downloadImage($resCode['url'], $name);
 //                $systemAttachment->attachmentAdd($name, $imageInfo['size'], $imageInfo['type'], $imageInfo['att_dir'], $imageInfo['att_dir'], 1, $imageInfo['image_type'], time(), 2);
 //            }
@@ -295,7 +303,7 @@ class DivisionAgentApplyServices extends BaseServices
             $ext = $this->getImageExtname($name)['ext_name'];
         }
         if (!in_array($ext, Config::get('upload.fileExt'))) {
-            throw new AdminException(400558);
+            throw new AdminException('Sai định dạng');
         }
         //TODO lấy phương thức dùng để tải file từ xa
         if ($type) {

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -249,7 +249,7 @@ class SystemGroupDataServices extends BaseServices
     {
         $groupData = $this->dao->get($id);
         if (!$groupData) {
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         return create_form('Sửa dữ liệu', $this->createGroupForm($gid, $groupData->toArray()), $this->url('/setting/group_data/' . $id), 'PUT');
     }
@@ -312,7 +312,7 @@ class SystemGroupDataServices extends BaseServices
         /** @var SystemGroupServices $systemGroupServices */
         $systemGroupServices = app()->make(SystemGroupServices::class);
         $gid = $systemGroupServices->value(['config_name' => $config_name], 'id');
-        if (!$gid) throw new AdminException(100026);
+        if (!$gid) throw new AdminException('Dữ liệu không tồn tại');
         $group = $systemGroupServices->getOne(['id' => $gid], 'id,config_name,fields');
         $fields = json_decode($group['fields'], true) ?? [];
         $this->transaction(function () use ($gid, $params, $fields) {
@@ -325,7 +325,7 @@ class SystemGroupDataServices extends BaseServices
                     foreach ($fields as $index => $field) {
                         if ($key == $field["title"]) {
                             if ($param == "") {
-                                throw new AdminException(400607, ['name' => $field["name"]]);
+                                throw new AdminException('{:name} không được để trống', ['name' => $field["name"]]);
                             } else {
                                 $value[$key]["type"] = $field["type"];
                                 $value[$key]["value"] = $param;
@@ -361,18 +361,18 @@ class SystemGroupDataServices extends BaseServices
         $name = $services->value(['id' => $gid], 'config_name');
         if ($name == 'routine_seckill_time') {
             if ($params['time'] == '') {
-                throw new AdminException(400190);
+                throw new AdminException('Vui lòng nhập thời gian bắt đầu');
             }
             if (!$params['continued']) {
-                throw new AdminException(400191);
+                throw new AdminException('Vui lòng nhập thời lượng');
             }
             if (!preg_match('/^(\d|1\d|2[0-3])$/', $params['time'])) {
-                throw new AdminException(400192);
+                throw new AdminException('Vui lòng nhập giờ chẵn trong khoảng 0-23');
             }
             if (!preg_match('/^([1-9]|1\d|2[0-4])$/', $params['continued'])) {
-                throw new AdminException(400193);
+                throw new AdminException('Vui lòng nhập giờ chẵn trong khoảng 1-24');
             }
-            if (($params['time'] + $params['continued']) > 24) throw new AdminException(400194);
+            if (($params['time'] + $params['continued']) > 24) throw new AdminException('Thời gian bắt đầu + thời lượng không được vượt quá 24 giờ');
             $list = $this->dao->getColumn(['gid' => $gid], 'value', 'id');
             if ($id) unset($list[$id]);
             $times = $time = [];
@@ -386,7 +386,7 @@ class SystemGroupDataServices extends BaseServices
                 $time[] = $params['time'] + $i;
             }
             foreach ($time as $v) {
-                if (in_array($v, $times)) throw new AdminException(400195);
+                if (in_array($v, $times)) throw new AdminException('Khung giờ đã được sử dụng');
             }
         }
     }

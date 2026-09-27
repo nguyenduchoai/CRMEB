@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Hoạt động mua chung",
+  "navigationBarTitleText": "拼团活动",
   "usingComponents": {
     "home": "/components/home/index"
   }

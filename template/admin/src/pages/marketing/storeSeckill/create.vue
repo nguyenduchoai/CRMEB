@@ -116,7 +116,7 @@
                   </el-checkbox-group>
                 </el-form-item>
               </el-col>
-              <el-col :span="24" v-if="formValidate.virtual_type == 0">
+              <el-col :span="24" v-if="formValidate.virtual_type == 0 && formValidate.logistics.includes('1')">
                 <el-form-item label="Cài đặt phí vận chuyển:" :prop="formValidate.freight != 1 ? 'freight' : ''">
                   <el-radio-group v-model="formValidate.freight">
                     <el-radio :label="2">Phí vận chuyển cố định</el-radio>
@@ -126,7 +126,7 @@
               </el-col>
               <el-col
                 :span="24"
-                v-if="formValidate.freight != 3 && formValidate.freight != 1 && formValidate.virtual_type == 0"
+                v-if="formValidate.freight != 3 && formValidate.freight != 1 && formValidate.virtual_type == 0 && formValidate.logistics.includes('1')"
               >
                 <el-form-item label="">
                   <div class="acea-row">
@@ -685,7 +685,7 @@ export default {
           is_postage: row.is_postage,
           is_hot: row.is_hot,
           status: 0,
-          description: row.description,
+          description: '',
           id: 0,
           product_id: row.id,
           temp_id: row.temp_id,

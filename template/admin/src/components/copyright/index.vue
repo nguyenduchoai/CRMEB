@@ -27,7 +27,7 @@ export default {
         {
           title: 'Cộng đồng',
           key: 'Cộng đồng',
-          href: 'http://q.crmeb.com',
+          href: 'https://www.crmeb.com/ask',
         },
         {
           title: 'Tài liệu',

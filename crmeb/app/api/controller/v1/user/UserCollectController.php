@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -55,12 +55,12 @@ class UserCollectController
             ['id', 0],
             ['category', 'product']
         ], true);
-        if (!$id || !is_numeric($id)) return app('json')->fail(100100);
+        if (!$id || !is_numeric($id)) return app('json')->fail('Tham số không hợp lệ');
         $res = $this->services->productRelation((int)$id, $request->uid(), 'collect', $category);
         if (!$res) {
-            return app('json')->fail(410130);
+            return app('json')->fail('Thêm vào yêu thích thất bại');
         } else {
-            return app('json')->success(410129);
+            return app('json')->success('Đã thêm vào yêu thích');
         }
     }
 
@@ -78,8 +78,8 @@ class UserCollectController
         ], true);
         $uid = (int)$request->uid();
         $res = $this->services->unProductRelation($id, $uid, 'collect', $category);
-        if (!$res) return app('json')->fail(100020);
-        else return app('json')->success(100019);
+        if (!$res) return app('json')->fail('Hủy thất bại');
+        else return app('json')->success('Hủy thành công');
     }
 
     /**
@@ -95,15 +95,15 @@ class UserCollectController
         ]);
         $collectInfo['id'] = explode(',', $collectInfo['id']);
         if (!count($collectInfo['id'])) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         $uid = (int)$request->uid();
         $productIdS = $collectInfo['id'];
         $res = $this->services->productRelationAll($productIdS, $uid, 'collect', $collectInfo['category']);
         if (!$res) {
-            return app('json')->fail(410130);
+            return app('json')->fail('Thêm vào yêu thích thất bại');
         } else {
-            return app('json')->success(410129);
+            return app('json')->success('Đã thêm vào yêu thích');
         }
     }
 }

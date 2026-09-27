@@ -1,15 +1,5 @@
 <template>
-  <div
-    class="mobile-page"
-    :style="{
-      background: bottomBgColor,
-      marginTop: mTop + 'px',
-      paddingTop: topConfig + 'px',
-      paddingBottom: bottomConfig + 'px',
-      paddingLeft: prConfig + 'px',
-      paddingRight: prConfig + 'px',
-    }"
-  >
+  <common_wrapper :config="configObj">
     <div class="home_product">
       <div class="hd_nav" v-if="styleConfig == 0">
         <div class="item" :class="index == tabCur ? 'active' : ''" v-for="(item, index) in navlist" :key="index">
@@ -28,63 +18,48 @@
         </div>
       </div>
       <div class="menus" :class="styleConfig == 2 ? 'on' : ''" v-else>
-        <div
-          class="item"
-          :class="index == tabCur ? 'on' : ''"
-          v-if="styleConfig == 1"
-          v-for="(item, index) in navlist"
-          :key="index"
-          :style="{
-            color: index == tabCur ? (toneConfig ? textColor : '#333') : '#282828',
-          }"
-        >
-          {{ item.chiild[0].val || 'Tiêu đề'
-          }}<span
-            :style="{
-              background: toneConfig ? decorateColor : themeColor,
-            }"
-          ></span>
-        </div>
-        <div
-          class="item"
-          :class="index == tabCur ? 'on3' : ''"
-          v-if="styleConfig == 2"
-          v-for="(item, index) in navlist"
-          :key="index"
-          :style="{
-            color: index == tabCur ? (toneConfig ? textColor2 : colorStyle.theme) : '#282828',
-          }"
-        >
-          {{ item.chiild[0].val || 'Tiêu đề'
-          }}<span
-            :style="{
-              borderColor: toneConfig ? decorateColor2 : colorStyle.theme,
-            }"
-          ></span>
-        </div>
-        <div
-          class="item"
-          :class="index == tabCur ? 'on2' : ''"
-          v-if="styleConfig == 3"
-          v-for="(item, index) in navlist"
-          :key="index"
-          :style="{
-            color: index == tabCur ? (toneConfig ? textColor3 : '#fff') : '#282828',
-            background: index == tabCur ? (toneConfig ? decorateColor : themeColor) : '',
-          }"
-        >
-          {{ item.chiild[0].val || 'Tiêu đề' }}
-        </div>
-        <div class="item pic" v-if="styleConfig == 4" v-for="(item, index) in navlist" :key="index">
+        <template v-if="styleConfig == 1">
           <div
-            class="pictrue acea-row row-center-wrapper"
-            :style="{ borderColor: index == tabCur ? (toneConfig ? decorateColorLeft : colorStyle.theme) : '#EEEEEE' }"
+            class="item"
+            :class="index == tabCur ? 'on' : ''"
+            v-for="(item, index) in navlist"
+            :key="index"
+            :style="{
+              color: index == tabCur ? (toneConfig ? textColor : '#333') : '#282828',
+            }"
           >
-            <img class="img" :src="item.image" v-if="item.image" />
-            <img src="../../assets/images/shan.png" v-else />
+            {{ item.chiild[0].val || 'Tiêu đề'
+            }}<span
+              :style="{
+                background: toneConfig ? decorateColor : themeColor,
+              }"
+            ></span>
           </div>
+        </template>
+        <template v-if="styleConfig == 2">
           <div
-            class="title"
+            class="item"
+            :class="index == tabCur ? 'on3' : ''"
+            v-for="(item, index) in navlist"
+            :key="index"
+            :style="{
+              color: index == tabCur ? (toneConfig ? textColor2 : colorStyle.theme) : '#282828',
+            }"
+          >
+            {{ item.chiild[0].val || 'Tiêu đề'
+            }}<span
+              :style="{
+                borderColor: toneConfig ? decorateColor2 : colorStyle.theme,
+              }"
+            ></span>
+          </div>
+        </template>
+        <template v-if="styleConfig == 3">
+          <div
+            class="item"
+            :class="index == tabCur ? 'on2' : ''"
+            v-for="(item, index) in navlist"
+            :key="index"
             :style="{
               color: index == tabCur ? (toneConfig ? textColor3 : '#fff') : '#282828',
               background: index == tabCur ? (toneConfig ? decorateColor : themeColor) : '',
@@ -92,7 +67,29 @@
           >
             {{ item.chiild[0].val || 'Tiêu đề' }}
           </div>
-        </div>
+        </template>
+        <template v-if="styleConfig == 4">
+          <div class="item pic" v-for="(item, index) in navlist" :key="index">
+            <div
+              class="pictrue acea-row row-center-wrapper"
+              :style="{
+                borderColor: index == tabCur ? (toneConfig ? decorateColorLeft : colorStyle.theme) : '#EEEEEE',
+              }"
+            >
+              <img class="img" :src="item.image" v-if="item.image" />
+              <img src="../../assets/images/shan.png" v-else />
+            </div>
+            <div
+              class="title"
+              :style="{
+                color: index == tabCur ? (toneConfig ? textColor3 : '#fff') : '#282828',
+                background: index == tabCur ? (toneConfig ? decorateColor : themeColor) : '',
+              }"
+            >
+              {{ item.chiild[0].val || 'Tiêu đề' }}
+            </div>
+          </div>
+        </template>
       </div>
       <div class="list-wrapper">
         <div class="item" v-for="(item, index) in list" :key="index">
@@ -124,7 +121,7 @@
               <img src="../../assets/images/goods01.png" />
             </div>
             <div class="price">
-              <div class="num">
+              <div class="num" :style="{ color: goodsPriceColor }">
                 <span>￥</span>{{ item.price ? $HandlePrice(item.price, 0) : 77
                 }}<span>{{ item.price ? $HandlePrice(item.price, 1) : '' }}</span>
               </div>
@@ -147,7 +144,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </common_wrapper>
 </template>
 
 <script>
@@ -157,6 +154,7 @@ export default {
   name: 'home_product',
   cname: 'Tab sản phẩm',
   configName: 'c_home_product',
+  desc: 'Tab sản phẩm',
   icon: '#iconzujian-shangpinxuanxiangka',
   type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
   defaultName: 'promotionList', // Tên khớp bên ngoài
@@ -202,6 +200,7 @@ export default {
       // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         cname: 'Tab sản phẩm',
+        desc: 'Tab sản phẩm',
         name: 'promotionList',
         timestamp: this.num,
         isHide: false,
@@ -334,6 +333,20 @@ export default {
             },
           ],
         },
+        goodsPriceColor: {
+          title: 'Giá sản phẩm',
+          name: 'goodsPriceColor',
+          default: [
+            {
+              item: '#E93323',
+            },
+          ],
+          color: [
+            {
+              item: '#E93323',
+            },
+          ],
+        },
         decorateColor: {
           title: 'Phần tử trang trí',
           default: [
@@ -450,38 +463,96 @@ export default {
             },
           ],
         },
-        topConfig: {
-          title: 'Lề trên',
+        componentBgConfig: {
+          title: 'Cài đặt nền',
+          tabVal: 0,
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
+          colorConfig: {
+            title: 'Màu nền',
+            default: [{ item: '#FFFFFF' }, { item: '#FFFFFF' }],
+            color: [{ item: '#FFFFFF' }, { item: '#FFFFFF' }],
+          },
+          colorDirection: {
+            title: 'Hướng chuyển màu',
+            tabVal: 0,
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
+          },
+          imageConfig: {
+            header: 'Ảnh nền',
+            title: '',
+            name: 'Tải lên ảnh',
+            type: 'code',
+            url: '',
+            info: 'Kích thước đề xuất: 750px * 400px',
+          },
+        },
+        zIndexConfig: {
+          title: 'Thứ tự lớp thành phần',
           val: 0,
           min: 0,
         },
-        bottomConfig: {
-          title: 'Lề dưới',
+        borderConfig: {
+          title: 'Cài đặt viền',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0,
-          min: 0,
+          styleConfig: {
+            title: 'Kiểu viền',
+            tabVal: 0,
+            tabList: [
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
+            ],
+          },
+          widthConfig: {
+            title: 'Độ dày viền',
+            val: 1,
+            min: 1,
+          },
+          colorConfig: {
+            title: 'Màu viền',
+            default: [{ item: '#e5e5e5' }],
+            color: [{ item: '#e5e5e5' }],
+          },
         },
-        prConfig: {
-          title: 'Lề trái phải',
-          val: 10,
-          min: 0,
-        },
-        mbConfig: {
-          title: 'Lề trang',
+        shadowConfig: {
+          title: 'Cài đặt đổ bóng',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0,
-          min: 0,
+          colorConfig: {
+            title: 'Màu đổ bóng',
+            default: [{ item: 'rgba(0,0,0,0.1)' }],
+            color: [{ item: 'rgba(0,0,0,0.1)' }],
+          },
+          xConfig: {
+            title: 'Độ lệch trục X',
+            val: 0,
+            min: -50,
+          },
+          yConfig: {
+            title: 'Độ lệch trục Y',
+            val: 0,
+            min: -50,
+          },
+          blurConfig: {
+            title: 'Bán kính làm mờ',
+            val: 10,
+            min: 0,
+          },
+          spreadConfig: {
+            title: 'Bán kính lan tỏa',
+            val: 0,
+            min: -50,
+          },
         },
         fillet: {
           title: 'Bo góc nền',
           type: 0,
           list: [
-            {
-              val: 'Tất cả',
-              icon: 'iconcaozuo-zhengti',
-            },
-            {
-              val: 'Từng góc',
-              icon: 'iconcaozuo-bianjiao',
-            },
+            { val: 'Tất cả', icon: 'iconcaozuo-zhengti' },
+            { val: 'Từng góc', icon: 'iconcaozuo-bianjiao' },
           ],
           valName: 'Giá trị bo góc',
           val: 0,
@@ -489,6 +560,7 @@ export default {
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
       },
+      configObj: null,
       navlist: [],
       imgStyle: '',
       tabCur: 0,
@@ -504,7 +576,6 @@ export default {
       decorateColorLeft: '',
       // bgColor:'',
       bottomBgColor: '',
-      mTop: 0,
       topConfig: 0,
       bottomConfig: 0,
       prConfig: 0,
@@ -515,6 +586,7 @@ export default {
       toneCartConfig: 0,
       bntBgColor: '',
       bntStyleConfig: 0,
+      goodsPriceColor: '',
     };
   },
   mounted() {
@@ -526,51 +598,80 @@ export default {
   methods: {
     setConfig(data) {
       if (!data) return;
-      if (data.mbConfig) {
-        this.styleConfig = data.styleConfig.tabVal;
-        this.cartConfig = data.cartConfig.tabVal;
-        this.bntStyleConfig = data.bntStyleConfig.tabVal;
-        this.toneCartConfig = data.toneCartConfig.tabVal;
-        let bntBgColorLeft = data.bntBgColor.color[0].item;
-        let bntBgColorRight = data.bntBgColor.color[1].item;
-        this.bntBgColor = `linear-gradient(90deg,${bntBgColorLeft} 0%,${bntBgColorRight} 100%)`;
-        this.toneConfig = data.toneConfig.tabVal;
-        this.textColor = data.textColor.color[0].item;
-        this.textColor2 = data.textColor2.color[0].item;
-        this.textColor3 = data.textColor3.color[0].item;
-        let decorateColorLeft = data.decorateColor.color[0].item;
-        let decorateColorRight = data.decorateColor.color[1].item;
-        this.decorateColorLeft = decorateColorLeft;
-        this.decorateColor = `linear-gradient(90deg,${decorateColorLeft} 0%,${decorateColorRight} 100%)`;
-        this.decorateColor2 = data.decorateColor2.color[0].item;
-        this.themeColor = `linear-gradient(90deg,${this.colorStyle.theme} 0%,${this.colorStyle.gradient} 100%)`;
-        // let bgColorLeft =  data.moduleColor.color[0].item;
-        // let bgColorRight =  data.moduleColor.color[1].item;
-        // this.bgColor = `linear-gradient(90deg,${bgColorLeft} 0%,${bgColorRight} 100%)`;
-        this.bottomBgColor = data.bottomBgColor.color[0].item;
-        this.mTop = data.mbConfig.val;
-        this.topConfig = data.topConfig.val;
-        this.bottomConfig = data.bottomConfig.val;
-        this.prConfig = data.prConfig.val;
-        let fillet = data.fillet.type;
-        let filletVal = data.fillet.val;
-        let valList = data.fillet.valList;
-        this.bgRadius = fillet
-          ? valList[0].val + 'px ' + valList[1].val + 'px 0 0'
-          : filletVal + 'px ' + filletVal + 'px 0 0';
-        this.bgRadius2 = fillet
-          ? '0 0 ' + valList[3].val + 'px ' + valList[2].val + 'px'
-          : '0 0 ' + filletVal + 'px ' + filletVal + 'px';
-        this.navlist = data.tabConfig.list;
-        this.tabCur = data.tabConfig.tabCur || 0;
-        let goods = data.tabConfig.list[this.tabCur];
-        if (goods.tabVal == 1 && goods.goodsList.list) {
-          this.list = goods.goodsList.list.length ? goods.goodsList.list : 2;
-        } else if (goods.goodsList.list) {
-          this.list = goods.productList.list.length ? goods.productList.list : 2;
-        } else {
-          this.list = goods.productList.list.length ? goods.productList.list : 2;
+      for (let key in this.defaultConfig) {
+        if (data[key] == undefined) {
+          this.$set(data, key, JSON.parse(JSON.stringify(this.defaultConfig[key])));
         }
+      }
+      this.styleConfig = data.styleConfig.tabVal;
+      this.cartConfig = data.cartConfig.tabVal;
+      this.bntStyleConfig = data.bntStyleConfig.tabVal;
+      this.toneCartConfig = data.toneCartConfig.tabVal;
+      let bntBgColorLeft = data.bntBgColor.color[0].item;
+      let bntBgColorRight = data.bntBgColor.color[1].item;
+      this.bntBgColor = `linear-gradient(90deg,${bntBgColorLeft} 0%,${bntBgColorRight} 100%)`;
+      this.toneConfig = data.toneConfig.tabVal;
+      this.textColor = data.textColor.color[0].item;
+      this.textColor2 = data.textColor2.color[0].item;
+      this.textColor3 = data.textColor3.color[0].item;
+      let decorateColorLeft = data.decorateColor.color[0].item;
+      let decorateColorRight = data.decorateColor.color[1].item;
+      this.decorateColorLeft = decorateColorLeft;
+      this.goodsPriceColor = this.toneCartConfig ? data.goodsPriceColor.color[0].item : '#E93323';
+      this.decorateColor = `linear-gradient(90deg,${decorateColorLeft} 0%,${decorateColorRight} 100%)`;
+      this.decorateColor2 = data.decorateColor2.color[0].item;
+      this.themeColor = `linear-gradient(90deg,${this.colorStyle.theme} 0%,${this.colorStyle.gradient} 100%)`;
+      // let bgColorLeft =  data.moduleColor.color[0].item;
+      // let bgColorRight =  data.moduleColor.color[1].item;
+      // this.bgColor = `linear-gradient(90deg,${bgColorLeft} 0%,${bgColorRight} 100%)`;
+      this.bottomBgColor = data.bottomBgColor.color[0].item;
+      this.configObj = data;
+      // Tương thích dữ liệu cũ
+      if (!data.paddingConfig) {
+        let paddingConfig = {
+          title: 'Lề trong',
+          isAll: false,
+          val: 0,
+          min: 0,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        };
+        if (data.topConfig) paddingConfig.valList[0].val = data.topConfig.val;
+        if (data.prConfig) {
+          paddingConfig.valList[1].val = data.prConfig.val;
+          paddingConfig.valList[3].val = data.prConfig.val;
+        }
+        if (data.bottomConfig) paddingConfig.valList[2].val = data.bottomConfig.val;
+        this.$set(this.configObj, 'paddingConfig', paddingConfig);
+      }
+      if (!data.marginConfig) {
+        let marginConfig = {
+          title: 'Lề ngoài',
+          isAll: false,
+          val: 0,
+          min: 0,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        };
+        if (data.mbConfig) marginConfig.valList[0].val = data.mbConfig.val;
+        this.$set(this.configObj, 'marginConfig', marginConfig);
+      }
+      let fillet = data.fillet.type;
+      let filletVal = data.fillet.val;
+      let valList = data.fillet.valList;
+      this.bgRadius = fillet
+        ? valList[0].val + 'px ' + valList[1].val + 'px 0 0'
+        : filletVal + 'px ' + filletVal + 'px 0 0';
+      this.bgRadius2 = fillet
+        ? '0 0 ' + valList[3].val + 'px ' + valList[2].val + 'px'
+        : '0 0 ' + filletVal + 'px ' + filletVal + 'px';
+      this.navlist = data.tabConfig.list;
+      this.tabCur = data.tabConfig.tabCur || 0;
+      let goods = data.tabConfig.list[this.tabCur];
+      if (goods.tabVal == 1 && goods.goodsList.list) {
+        this.list = goods.goodsList.list.length ? goods.goodsList.list : 2;
+      } else if (goods.goodsList.list) {
+        this.list = goods.productList.list.length ? goods.productList.list : 2;
+      } else {
+        this.list = goods.productList.list.length ? goods.productList.list : 2;
       }
     },
   },
@@ -578,6 +679,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.mobile-page {
+  display: inline-block;
+  width: -webkit-fill-available;
+}
 .menus {
   display: flex;
   align-items: center;
@@ -599,6 +704,7 @@ export default {
     padding: 0 5px;
     line-height: 20px;
     text-align: center;
+    white-space: nowrap;
   }
 
   .item {
@@ -698,6 +804,7 @@ export default {
       margin-right: 37px;
 
       .title {
+        white-space: nowrap;
         font-size: 15px;
         color: #282828;
         text-align: center;
@@ -836,7 +943,7 @@ export default {
             font-size: 20px;
             margin-right: 4px;
             font-family: SemiBold;
-
+            color: #e93323;
             span {
               font-size: 12px;
             }

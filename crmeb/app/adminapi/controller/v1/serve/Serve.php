@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -63,7 +63,7 @@ class Serve extends AuthController
         if ($res) {
             return app('json')->success($res);
         } else {
-            return app('json')->fail(400173);
+            return app('json')->fail('Lấy danh sách gói dịch vụ thất bại');
         }
     }
 
@@ -81,19 +81,19 @@ class Serve extends AuthController
             ['pay_type', ''],
         ]);
         $openInfo = $this->services->user()->getUser();
-        if (!$openInfo) app('json')->fail(400174);
+        if (!$openInfo) app('json')->fail('Lấy mã thanh toán thất bại');
         switch ($data['type']) {
             case "sms" :
-                if (!$openInfo['sms']['open']) return app('json')->fail(400175);
+                if (!$openInfo['sms']['open']) return app('json')->fail('Vui lòng kích hoạt dịch vụ SMS trước');
                 break;
             case "query" :
-                if (!$openInfo['query']['open']) return app('json')->fail(400176);
+                if (!$openInfo['query']['open']) return app('json')->fail('Vui lòng kích hoạt dịch vụ tra cứu vận chuyển trước');
                 break;
             case "dump" :
-                if (!$openInfo['dump']['open']) return app('json')->fail(400177);
+                if (!$openInfo['dump']['open']) return app('json')->fail('Vui lòng kích hoạt dịch vụ in vận đơn điện tử trước');
                 break;
             case "copy" :
-                if (!$openInfo['copy']['open']) return app('json')->fail(400178);
+                if (!$openInfo['copy']['open']) return app('json')->fail('Vui lòng kích hoạt dịch vụ thu thập sản phẩm trước');
                 break;
         }
         $this->validate($data, MealValidata::class);
@@ -102,7 +102,7 @@ class Serve extends AuthController
         if ($res) {
             return app('json')->success($res);
         } else {
-            return app('json')->fail(400174);
+            return app('json')->fail('Lấy mã thanh toán thất bại');
         }
     }
 
@@ -127,7 +127,7 @@ class Serve extends AuthController
         $systemConfigService = app()->make(SystemConfigServices::class);
         $systemConfigService->saveExpressInfo($data);
         $this->services->express()->open();
-        return app('json')->success(100044);
+        return app('json')->success('Kích hoạt thành công');
 
     }
 
@@ -168,7 +168,7 @@ class Serve extends AuthController
             $this->services->express()->open();
         }
 
-        return app('json')->success(100044);
+        return app('json')->success('Kích hoạt thành công');
     }
 
     /**
@@ -189,7 +189,7 @@ class Serve extends AuthController
         $data['password'] = md5($data['password']);
         $this->services->user()->modify($data);
         CacheService::delete('sms_account');
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**
@@ -208,6 +208,6 @@ class Serve extends AuthController
 
         $this->services->user()->modifyPhone($data);
         CacheService::delete('sms_account');
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 }

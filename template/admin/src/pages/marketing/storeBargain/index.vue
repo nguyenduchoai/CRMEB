@@ -10,7 +10,7 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="Trạng thái săn giảm giá:">
+          <el-form-item label="Trạng thái đăng bán:">
             <el-select
               placeholder="Vui lòng chọn"
               v-model="tableFrom.status"
@@ -18,8 +18,8 @@
               @change="userSearchs"
               class="form_content_width"
             >
-              <el-option value="1" label="Bật"></el-option>
-              <el-option value="0" label="Tắt"></el-option>
+              <el-option value="1" label="Đang bán"></el-option>
+              <el-option value="0" label="Ngừng bán"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="Tìm kiếm sản phẩm:" label-for="store_name">

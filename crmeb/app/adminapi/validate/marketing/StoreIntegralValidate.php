@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -40,14 +40,14 @@ class StoreIntegralValidate extends Validate
      * @var array
      */
     protected $message = [
-        'product_id.require' => '400337',
-        'title.require' => '400338',
-        'info.require' => '400347',
-        'unit_name.require' => '400348',
-        'image.require' => '400349',
-        'images.require' => '400349',
-        'description.require' => '400361',
-        'attrs.require' => '400362',
+        'product_id.require' => 'Vui lòng chọn sản phẩm',
+        'title.require' => 'Vui lòng nhập tên sản phẩm',
+        'info.require' => 'Vui lòng điền giới thiệu chương trình',
+        'unit_name.require' => 'Vui lòng điền đơn vị tính',
+        'image.require' => 'Vui lòng chọn ảnh trình chiếu sản phẩm',
+        'images.require' => 'Vui lòng chọn ảnh trình chiếu sản phẩm',
+        'description.require' => 'Vui lòng điền chi tiết sản phẩm',
+        'attrs.require' => 'Vui lòng chọn quy cách',
     ];
 
     protected $scene = [

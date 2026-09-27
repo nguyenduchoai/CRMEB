@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -221,7 +221,7 @@ class ExportServices extends BaseServices
         $export = $fileKey = [];
         /** @var StoreOrderServices $orderServices */
         $orderServices = app()->make(StoreOrderServices::class);
-        $data = $orderServices->getOrderList(['status' => 1, 'shipping_type' => 1, 'virtual_type' => 0])['data'];
+        $data = $orderServices->getOrderList(['status' => 1, 'shipping_type' => 1, 'virtual_type' => 0, 'pid' => 0])['data'];
         if (!empty($data)) {
             $i = 0;
             foreach ($data as $item) {
@@ -279,7 +279,7 @@ class ExportServices extends BaseServices
         if (isset($where['cate_id']) && $where['cate_id']) {
             /** @var StoreCategoryServices $storeCategory */
             $storeCategory = app()->make(StoreCategoryServices::class);
-            $cateIds = $storeCategory->getColumn(['pid' => $where['cate_id']], 'id');
+            $cateIds = $storeCategory->getColumn(['pid' => (int)$where['cate_id']], 'id');
         }
         if ($cateIds) {
             $cateIds[] = $where['cate_id'];
@@ -327,12 +327,19 @@ class ExportServices extends BaseServices
                         $attrArr[] = $attrArray['value'] . '=' . $detailString;
                     }
                     $attrString = implode(';', $attrArr);
+                    if (reset($cateName)['one'] == null) {
+                        $cate_name_one = reset($cateName)['two'] ?? '';
+                        $cate_name_two = '';
+                    } else {
+                        $cate_name_one = reset($cateName)['one'] ?? '';
+                        $cate_name_two = reset($cateName)['two'] ?? '';
+                    }
                     $one_data = [
                         'id' => intval($product_id),
                         'store_name' => $productInfo['store_name'],
                         'virtual_type' => $virtualType[$productInfo['virtual_type']],
-                        'cate_name_one' => reset($cateName)['one'] ?? '',
-                        'cate_name_two' => reset($cateName)['two'] ?? '',
+                        'cate_name_one' => $cate_name_one,
+                        'cate_name_two' => $cate_name_two,
                         'unit_name' => $productInfo['unit_name'],
                         'ficti' => intval($productInfo['ficti']),
                         'min_qty' => intval($productInfo['min_qty']),
@@ -342,8 +349,8 @@ class ExportServices extends BaseServices
                         'ot_price' => floatval($value['ot_price']),
                         'cost' => floatval($value['cost']),
                         'stock' => intval($value['stock']),
-                        'volume' => intval($value['volume'] ?? 0),
                         'weight' => intval($value['weight'] ?? 0),
+                        'volume' => intval($value['volume'] ?? 0),
                         'bar_code' => $value['bar_code'] ?? '',
                         'bar_code_number' => $value['bar_code_number'] ?? '',
                         'store_info' => $productInfo['store_info'],
@@ -1009,6 +1016,44 @@ class ExportServices extends BaseServices
         $header = ['Ngày/Giờ', 'Số khách truy cập', 'Lượt xem', 'Số người dùng mới', 'Số khách hàng đã mua', 'Số thành viên trả phí'];
         $title = ['Thống kê người dùng', 'Thống kê người dùng' . time(), ' Thời gian tạo:' . date('Y-m-d H:i:s', time())];
         $filename = 'Thống kê người dùng_' . date('YmdHis', time());
+        $suffix = 'xlsx';
+        $is_save = true;
+        return $this->export($header, $title, $export, $filename, $suffix, $is_save);
+    }
+
+    /**
+     * Xuất lịch sử xác nhận sử dụng
+     * @param array $data
+     * @return mixed|string[]
+     * @author wuhaotian
+     * @email 442384644@qq.com
+     * @date 2025/9/9
+     */
+    public function verifyOrder($data = [])
+    {
+        $export = [];
+        if (!empty($data)) {
+            foreach ($data as $item) {
+                $productName = '';
+                foreach ($item['_info'] as $productInfo) {
+                    $productName .= $productInfo['cart_info']['productInfo']['store_name'] . ' ';
+                }
+                $export[] = [
+                    $item['order_id'],
+                    $item['real_name'] . '/' . $item['uid'],
+                    $productName,
+                    $item['pay_price'],
+                    $item['clerk_name'],
+                    $item['store_name'],
+                    $item['pay_type_name'],
+                    $item['status_name']['status_name'],
+                    $item['add_time'],
+                ];
+            }
+        }
+        $header = ['Mã đơn hàng', 'Thông tin người dùng', 'Thông tin sản phẩm', 'Số tiền thanh toán', 'Nhân viên xác nhận', 'Cửa hàng xác nhận sử dụng', 'Trạng thái thanh toán', 'Trạng thái đơn hàng', 'Thời gian đặt hàng'];
+        $title = ['Xuất lịch sử xác nhận sử dụng', 'Xuất lịch sử xác nhận sử dụng' . time(), ' Thời gian tạo:' . date('Y-m-d H:i:s', time())];
+        $filename = 'Lịch sử xác nhận sử dụng_' . date('YmdHis', time());
         $suffix = 'xlsx';
         $is_save = true;
         return $this->export($header, $title, $export, $filename, $suffix, $is_save);

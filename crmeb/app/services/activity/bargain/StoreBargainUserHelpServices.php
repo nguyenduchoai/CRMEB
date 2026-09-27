@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -115,7 +115,7 @@ class StoreBargainUserHelpServices extends BaseServices
         //Số tiền săn giảm giá còn lại
         $coverPrice = bcsub((string)$bargainUserInfo['bargain_price'], (string)$bargainUserInfo['bargain_price_min'], 2);
         $surplusPrice = bcsub((string)$coverPrice, (string)$bargainUserInfo['price'], 2);//TODO Số tiền còn lại người dùng cần giảm
-        if (0.00 === (float)$surplusPrice) throw new ApiException(410299);
+        if (0.00 === (float)$surplusPrice) throw new ApiException('Săn giảm giá đã kết thúc');
         if (($bargainInfo['people_num'] - $people) == 1) {
             $price = $surplusPrice;
         } else {
@@ -130,7 +130,7 @@ class StoreBargainUserHelpServices extends BaseServices
         } else {
             //Giới hạn số lần giúp giảm giá
             $count = $this->dao->count(['uid' => $uid, 'bargain_id' => $bargainInfo['id'], 'type' => 0]);
-            if ($count >= $bargainInfo['bargain_num']) throw new ApiException(410310);
+            if ($count >= $bargainInfo['bargain_num']) throw new ApiException('Bạn không thể giúp giảm giá sản phẩm này nữa');
             $type = 0;
         }
         /** @var StoreBargainUserServices $bargainUserService */
@@ -145,7 +145,7 @@ class StoreBargainUserHelpServices extends BaseServices
             'type' => $type,
         ]);
         $res = $res1 && $res2;
-        if (!$res) throw new AdminException(410307);
+        if (!$res) throw new AdminException('Săn giảm giá thất bại');
         return $price;
     }
 

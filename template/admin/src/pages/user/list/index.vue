@@ -46,7 +46,7 @@
               </el-form-item>
             </div>
             <el-form-item class="search-form-sub">
-              <el-button type="primary" v-db-click @click="userSearchs">Tìm kiếm</el-button>
+              <el-button type="primary" v-db-click @click="userSearchs">Tra cứu</el-button>
               <el-button class="ResetSearch" v-db-click @click="reset('userFrom')">Đặt lại</el-button>
               <a class="ivu-ml-8 font12 ml10" v-db-click @click="collapse = !collapse">
                 <template v-if="!collapse"> Mở rộng <i class="el-icon-arrow-down" /> </template>
@@ -378,6 +378,11 @@
             <div>{{ scope.row.user_type }}</div>
           </template>
         </el-table-column>
+        <el-table-column label="Người giới thiệu" min-width="100">
+          <template slot-scope="scope">
+            <div>{{ scope.row.spread_uid_nickname }}</div>
+          </template>
+        </el-table-column>
         <el-table-column label="Số dư" prop="now_money" min-width="100" :sortable="true">
           <template slot-scope="scope">
             <div>{{ scope.row.now_money }}</div>
@@ -466,6 +471,7 @@
         v-if="labelShow"
         :uid="labelActive.uid"
         :only_get="!labelActive.uid"
+        :is_batch="is_batch"
         @close="labelClose"
         @activeData="activeData"
         @onceGetList="onceGetList"
@@ -564,6 +570,7 @@ export default {
       labelShow: false,
       customerShow: false,
       promoterShow: false,
+      is_batch: false,
       labelActive: {
         uid: 0,
       },
@@ -830,6 +837,7 @@ export default {
       if (this.ids.length === 0) {
         this.$message.warning('Vui lòng chọn người dùng cần gắn nhãn');
       } else {
+        this.is_batch = true;
         let uids = { uids: this.ids };
         this.labelActive.uid = 0;
         this.labelShow = true;
@@ -871,7 +879,7 @@ export default {
       // this.userSearchs();
     },
     // Đặt nhãn hàng loạt
-    activeData(data) {
+    activeData(data, type) {
       let labels = [];
       if (!data.length) return;
       data.map((i) => {
@@ -880,6 +888,7 @@ export default {
       saveSetLabel({
         uids: this.ids.join(','),
         label_id: labels,
+        label_type: type,
       }).then((res) => {
         this.labelShow = false;
         this.selectedIds = new Set();
@@ -957,6 +966,7 @@ export default {
       return str;
     },
     openLabel(row) {
+      this.is_batch = false;
       this.labelShow = true;
       this.labelActive.uid = row.uid;
     },
@@ -1127,6 +1137,10 @@ export default {
 
     // Tìm kiếm
     userSearchs() {
+      // Xóa người dùng đã chọn
+      this.ids = [];
+      this.selectedIds = [];
+      this.selectionList = [];
       this.userFrom.page = 1;
       this.getList();
     },
@@ -1258,7 +1272,8 @@ export default {
       //Chuyển new Set() thành mảng
       this.ids = [...this.selectedIds];
       // Tìm dom tương ứng với ref của table đã bind, tìm đối tượng objData của table, objData lưu dữ liệu của trang hiện tại
-      let objData = this.$refs.table.objData;
+      let objData = this.$refs.table?.objData;
+      if (!objData) return;
       for (let index in objData) {
         if (this.selectedIds.has(objData[index].uid)) {
           objData[index]._isChecked = true;

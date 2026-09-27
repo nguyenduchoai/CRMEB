@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -111,10 +111,10 @@ class OrderPayServices
         $payType = $this->getPayType($payType);
 
         if ($orderInfo['paid']) {
-            throw new ApiException(410174);
+            throw new ApiException('Đơn hàng đã được thanh toán');
         }
         if ($orderInfo['pay_price'] <= 0) {
-            throw new ApiException(410274);
+            throw new ApiException('Không cần thanh toán');
         }
 
         switch ($payType) {
@@ -130,7 +130,7 @@ class OrderPayServices
                     $services = app()->make(WechatUserServices::class);
                     $openid = $services->uidToOpenid($orderInfo['pay_uid'] ?? $orderInfo['uid'], $userType);
                     if (!$openid) {
-                        throw new ApiException(410275);
+                        throw new ApiException('Lấy openid người dùng thất bại, không thể thanh toán');
                     }
                 }
                 $options['openid'] = $openid;
@@ -167,7 +167,7 @@ class OrderPayServices
         }
 
         if (!$body) {
-            throw new ApiException(410276);
+            throw new ApiException('Chưa cấu hình tên website, không thể thanh toán');
         }
 
         //Khởi tạo thanh toán

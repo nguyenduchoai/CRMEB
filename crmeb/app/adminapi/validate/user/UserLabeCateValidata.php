@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -39,8 +39,8 @@ class UserLabeCateValidata extends Validate
      * @var array
      */
     protected $message = [
-        'name.require' => '400086',
-        'sort.require' => '400087',
-        'sort.number' => '400088'
+        'name.require' => 'Vui lòng điền tên danh mục nhãn',
+        'sort.require' => 'Vui lòng điền thứ tự sắp xếp danh mục nhãn',
+        'sort.number' => 'Danh mục nhãn phải là số'
     ];
 }

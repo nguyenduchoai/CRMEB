@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -92,7 +92,7 @@ class SystemStoreServices extends BaseServices
                 if ($this->dao->update($id, $data)) {
                     return true;
                 } else {
-                    throw new AdminException(100007);
+                    throw new AdminException('Sửa thất bại');
                 }
             } else {
                 $data['add_time'] = time();
@@ -100,7 +100,7 @@ class SystemStoreServices extends BaseServices
                 if ($this->dao->save($data)) {
                     return true;
                 } else {
-                    throw new AdminException(100006);
+                    throw new AdminException('Lưu thất bại');
                 }
             }
         });

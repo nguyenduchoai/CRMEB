@@ -38,7 +38,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="Tìm kiếm sản phẩm:" label-for="store_name">
-            <el-input placeholder="Vui lòng nhập tên sản phẩm, ID" v-model="tableFrom.store_name" class="form_content_width" />
+            <el-input placeholder="Vui lòng nhập tên sản phẩm, ID" v-model="tableFrom.store_name" clearable class="form_content_width" />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" v-db-click @click="userSearchs">Tra cứu</el-button>

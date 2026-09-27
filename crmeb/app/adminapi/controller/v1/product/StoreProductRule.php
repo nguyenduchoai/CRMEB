@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -56,7 +56,7 @@ class StoreProductRule extends AuthController
             ['spec', []]
         ]);
         $this->services->save($id, $data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -82,6 +82,6 @@ class StoreProductRule extends AuthController
             ['ids', '']
         ], true);
         $this->services->del((string)$ids);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 }

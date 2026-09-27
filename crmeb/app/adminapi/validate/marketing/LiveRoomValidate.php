@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -37,14 +37,14 @@ class LiveRoomValidate extends Validate
      * @var array
      */
     protected $message = [
-        'name.require' => '400342',
-        'cover_img.require' => '400343',
-        'share_img.require' => '400344',
-        'anchor_wechat.require' => '400345',
-        'start_time.require' => '400346',
-        'start_time.checkStartTime' => '400346',
-        'phone.require' => '400333',
-        'phone.checkPhone' => '400252',
+        'name.require' => 'Vui lòng nhập tên phòng livestream',
+        'cover_img.require' => 'Vui lòng chọn ảnh nền',
+        'share_img.require' => 'Vui lòng chọn ảnh chia sẻ',
+        'anchor_wechat.require' => 'Vui lòng chọn streamer',
+        'start_time.require' => 'Vui lòng chọn thời gian bắt đầu, kết thúc livestream',
+        'start_time.checkStartTime' => 'Vui lòng chọn thời gian bắt đầu, kết thúc livestream',
+        'phone.require' => 'Vui lòng điền số điện thoại',
+        'phone.checkPhone' => 'Số điện thoại sai định dạng',
     ];
 
     protected function checkPhone($value): bool

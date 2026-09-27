@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -124,7 +124,7 @@ class StoreCategoryDao extends BaseDao
      */
     public function getCateParentAndChildName(string $cateId)
     {
-        return $this->getModel()->alias('c')->join('StoreCategory b', 'b.id = c.pid')
+        return $this->getModel()->alias('c')->leftJoin('StoreCategory b', 'b.id = c.pid')
             ->where('c.id', 'IN', $cateId)->field('c.cate_name as two,b.cate_name as one,c.id')
             ->select()->toArray();
     }

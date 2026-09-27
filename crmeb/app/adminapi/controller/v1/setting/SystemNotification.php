@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -76,7 +76,7 @@ class SystemNotification extends AuthController
             ['mark', ''],
         ]);
         $this->services->notFormSave($id, $data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -89,9 +89,9 @@ class SystemNotification extends AuthController
      */
     public function delNot($id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $this->services->delete($id);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
 
@@ -108,7 +108,7 @@ class SystemNotification extends AuthController
             ['type', ''],
             ['id', 0]
         ]);
-        if (!$where['id']) return app('json')->fail(100100);
+        if (!$where['id']) return app('json')->fail('Tham số không hợp lệ');
         return app('json')->success($this->services->getNotInfo($where));
     }
 
@@ -148,12 +148,12 @@ class SystemNotification extends AuthController
             ['wechat_to_routine', ''],
         ]);
         if ($data['mark'] == 'verify_code') $data['type'] = 'is_sms';
-        if (!$data['id']) return app('json')->fail(100100);
+        if (!$data['id']) return app('json')->fail('Tham số không hợp lệ');
         if ($this->services->saveData($data)) {
             CacheService::clear();
-            return app('json')->success(100001);
+            return app('json')->success('Sửa thành công');
         } else {
-            return app('json')->fail(100007);
+            return app('json')->fail('Sửa thất bại');
         }
     }
 
@@ -170,10 +170,10 @@ class SystemNotification extends AuthController
      */
     public function set_status($type, $status, $id)
     {
-        if ($type == '' || $status == '' || $id == 0) return app('json')->fail(100100);
+        if ($type == '' || $status == '' || $id == 0) return app('json')->fail('Tham số không hợp lệ');
         $this->services->update($id, [$type => $status]);
         $res = $this->services->getOneNotce(['id' => $id]);
         CacheService::clear();
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 }

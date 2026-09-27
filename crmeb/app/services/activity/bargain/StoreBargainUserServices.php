@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -208,7 +208,7 @@ class StoreBargainUserServices extends BaseServices
     public function cancelBargain($bargainId, $uid)
     {
         $status = $this->dao->getBargainUserStatus($bargainId, $uid);
-        if ($status != 1) return app('json')->fail(100020);
+        if ($status != 1) return app('json')->fail('Hủy thất bại');
         $id = $this->dao->value(['bargain_id' => $bargainId, 'uid' => $uid, 'is_del' => 0], 'id');
         return $this->dao->update($id, ['is_del' => 1, 'status' => 2]);
     }
@@ -251,6 +251,9 @@ class StoreBargainUserServices extends BaseServices
             $item['already_num'] = $nums[$item['id']] ?? 0;
             $item['now_price'] = bcsub((string)$item['bargain_price'], (string)$item['price'], 2);
             $item['add_time'] = $item['add_time'] ? date('Y-m-d H:i:s', (int)$item['add_time']) : '';
+            if ($item['datatime'] < time() && $item['status'] == 1) {
+                $item['status'] = 2;
+            }
             $item['datatime'] = $item['datatime'] ? date('Y-m-d H:i:s', (int)$item['datatime']) : '';
         }
         return compact('list', 'count');

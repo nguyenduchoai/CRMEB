@@ -516,7 +516,7 @@ export default {
     this.seckillTimeList();
   },
   methods: {
-    stepActive(index){
+    stepActive(index) {
       this.current = index;
     },
     addGoods() {
@@ -574,14 +574,12 @@ export default {
     },
     searchWord() {
       let list = [];
-      console.log(this.tableData, this.keyword);
       this.tableData.forEach((item) => {
         let obj = item.store_name.indexOf(this.keyword);
         if (obj != -1) {
           list.push(item);
         }
       });
-      console.log(list);
       if (this.keyword) {
         this.searchTableData = list;
       } else {
@@ -649,7 +647,6 @@ export default {
     },
     // id sản phẩm
     getProductId(data) {
-      console.log(data, 'data');
       this.modals = false;
       let listChecked = JSON.parse(JSON.stringify(data));
       listChecked.forEach((item) => {
@@ -659,7 +656,6 @@ export default {
         item.attrs.forEach((value) => {
           value.cate_name = item.cate_name;
           value.store_label = item.store_label;
-          value.product_price = item.price;
           value.status = 1;
         });
       });

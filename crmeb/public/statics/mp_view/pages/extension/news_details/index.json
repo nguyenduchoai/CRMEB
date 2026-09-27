@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Chi tiết tin tức",
+  "navigationBarTitleText": "资讯详情",
   "usingComponents": {
     "share-info": "/pages/extension/components/shareInfo/index",
     "home": "/components/home/index",

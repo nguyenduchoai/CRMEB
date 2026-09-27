@@ -2,13 +2,13 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace app\dao\user;
 
@@ -312,5 +312,19 @@ class UserDao extends BaseDao
         return $this->search($where)->where('is_ever_level', 1)->whereOr(function ($qeury) use ($overdue_time) {
             $qeury->where('is_money_level', '>', 0)->where('overdue_time', '>', $overdue_time);
         })->count();
+    }
+
+    /**
+     * Dùng bộ lọc tìm kiếm (searcher)
+     * @param array $where
+     * @return \crmeb\basic\BaseModel
+     * @throws \ReflectionException
+     * @author wuhaotian
+     * @email 442384644@qq.com
+     * @date 2025/10/10
+     */
+    public function getSearch($where = [])
+    {
+        return $this->search($where);
     }
 }

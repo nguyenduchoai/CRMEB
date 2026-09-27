@@ -1,5 +1,13 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 namespace app\listener\order;
 
 use app\jobs\MiniOrderJob;
@@ -16,7 +24,7 @@ class OrderShippingListener implements ListenerInterface
     public function handle($event): void
     {
         /** @var StoreOrder $order */
-        [$order_type, $order, $delivery_type, $delivery_id, $delivery_code] = $event;
+        [$order_type, $order, $delivery_type, $delivery_id, $delivery_name] = $event;
         $order_shipping_open = sys_config('order_shipping_open', 0);  // Công tắc dịch vụ quản lý thông tin giao hàng Mini Program
         $secs = 0;
         if ($order && $order_shipping_open) {
@@ -69,6 +77,17 @@ class OrderShippingListener implements ListenerInterface
                 } else {
                     return;
                 }
+            } else if ($order_type == 'offline_scan') {  // Đơn hàng thành viên
+                if ($order['pay_type'] == 'weixin') {
+                    $delivery_type = 3;
+                    $item_desc = 'Người dùng quét mã thanh toán ngoại tuyến';
+                    $out_trade_no = $order['order_id'];
+                    $pay_uid = $order['uid'];
+                    $secs = 10;
+                    $path = '/pages/user/index';
+                } else {
+                    return;
+                }
             } else {
                 return;
             }
@@ -80,14 +99,27 @@ class OrderShippingListener implements ListenerInterface
             if (!isset($order['shipping_type']) || $order['shipping_type'] == 1) {
                 if ($delivery_type == 1) {
                     //Chỉ áp dụng cho đơn vị vận chuyển mặc định
-                    $expressData = ['Yunda Express' => 'YD','SF Express' => 'SF','YTO Express' => 'YTO','ZTO Express' => 'ZTO',
-                        'STO Express' => 'STO','Best Express' => 'HTKY','JD Logistics' => 'JD','J&T Express' => 'JTSD',
-                        'China Post Parcel' => 'YZPY','EMS' => 'EMS','Deppon Express' => 'DBL','ZJS Express' => 'ZJS',
+                    $expressData = [
+                        'Yunda Express' => 'YD',
+                        'SF Express' => 'SF',
+                        'YTO Express' => 'YTO',
+                        'ZTO Express' => 'ZTO',
+                        'STO Express' => 'STO',
+                        'Best Express' => 'HTKY',
+                        'JD Logistics' => 'JD',
+                        'J&T Express' => 'JTSD',
+                        'China Post Parcel' => 'YZPY',
+                        'EMS' => 'EMS',
+                        'Deppon Express' => 'DBL',
+                        'Deppon Logistics' => 'DBLKY',
+                        'ZJS Express' => 'ZJS',
+                        'UC Express' => 'UC',
+                        'Suning Logistics' => 'SNWL',
                     ];
                     $shipping_list = [
                         [
                             'tracking_no' => $delivery_id ?? '',
-                            'express_company' => $delivery_code,
+                            'express_company' => $expressData[$delivery_name] ?? '',
                             'item_desc' => $item_desc,
                             'contact' => [
                                 'receiver_contact' => $order['user_phone']

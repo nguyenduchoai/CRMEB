@@ -1,5 +1,13 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 namespace app\services\agent;
 
 use app\services\BaseServices;
@@ -88,7 +96,7 @@ class DivisionServices extends BaseServices
         /** @var SystemAdminServices $adminService */
         $adminService = app()->make(SystemAdminServices::class);
         $userInfo = $userServices->getUserInfo($uid);
-        if ($uid && !$userInfo) throw new AdminException(100100);
+        if ($uid && !$userInfo) throw new AdminException('Tham số không hợp lệ');
         if ($uid) {
             $adminInfo = $adminService->getInfo(['division_id' => $uid])->toArray();
             if (isset($adminInfo['roles'])) {
@@ -127,7 +135,7 @@ class DivisionServices extends BaseServices
     public function divisionSave($data)
     {
         if ((int)$data['uid'] == 0) $data['uid'] = $data['image']['uid'];
-        if ((int)$data['uid'] == 0) throw new AdminException(400450);
+        if ((int)$data['uid'] == 0) throw new AdminException('Vui lòng điền UID người dùng');
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
         if ($data['aid'] == 0) {
@@ -174,24 +182,24 @@ class DivisionServices extends BaseServices
             $adminService = app()->make(SystemAdminServices::class);
             if (!$aid) {
                 if ($adminData['pwd']) {
-                    if (!$adminData['conf_pwd']) throw new AdminException(400263);
-                    if ($adminData['pwd'] != $adminData['conf_pwd']) throw new AdminException(400264);
+                    if (!$adminData['conf_pwd']) throw new AdminException('Vui lòng nhập mật khẩu xác nhận');
+                    if ($adminData['pwd'] != $adminData['conf_pwd']) throw new AdminException('Hai mật khẩu đã nhập không khớp');
                     $adminService->create($adminData);
                 } else {
-                    throw new AdminException(400263);
+                    throw new AdminException('Vui lòng nhập mật khẩu xác nhận');
                 }
             } else {
                 $adminInfo = $adminService->get($aid);
                 if (!$adminInfo)
-                    throw new AdminException(400451);
+                    throw new AdminException('Không tìm thấy thông tin quản trị viên');
                 if ($adminInfo->is_del) {
-                    throw new AdminException(400452);
+                    throw new AdminException('Quản trị viên đã bị xóa');
                 }
                 if (!$adminData['real_name'])
-                    throw new AdminException(400453);
+                    throw new AdminException('Họ tên quản trị viên không được để trống');
                 if ($adminData['pwd']) {
-                    if (!$adminData['conf_pwd']) throw new AdminException(400263);
-                    if ($adminData['pwd'] != $adminData['conf_pwd']) throw new AdminException(400264);
+                    if (!$adminData['conf_pwd']) throw new AdminException('Vui lòng nhập mật khẩu xác nhận');
+                    if ($adminData['pwd'] != $adminData['conf_pwd']) throw new AdminException('Hai mật khẩu đã nhập không khớp');
                     $adminInfo->pwd = $this->passwordHash($adminData['pwd']);
                 }
                 $adminInfo->real_name = $adminData['real_name'];
@@ -237,7 +245,7 @@ class DivisionServices extends BaseServices
         /** @var UserServices $userService */
         $userService = app()->make(UserServices::class);
         $userInfo = $userService->get($uid);
-        if ($uid && !$userInfo) throw new AdminException(400214);
+        if ($uid && !$userInfo) throw new AdminException('Người dùng không tồn tại');
         $field = [];
         $options = [];
         $divisionList = $userService->getDivisionList(['status' => 1, 'division_type' => 1], 'uid,division_name');
@@ -291,8 +299,8 @@ class DivisionServices extends BaseServices
         ];
         $division_info = $userServices->getUserInfo($data['division_id'], 'division_end_time,division_percent');
         if ($division_info) {
-            if ($agentData['division_percent'] > $division_info['division_percent']) throw new AdminException(400448);
-            if ($agentData['division_end_time'] > $division_info['division_end_time']) throw new AdminException(400449);
+            if ($agentData['division_percent'] > $division_info['division_percent']) throw new AdminException('Tỷ lệ hoa hồng của đại lý không được lớn hơn tỷ lệ hoa hồng của đại lý khu vực');
+            if ($agentData['division_end_time'] > $division_info['division_end_time']) throw new AdminException('Thời gian hết hạn của đại lý không được sau thời gian hết hạn của đại lý khu vực');
         }
         $res = $userServices->update($uid, $agentData);
         if ($res) return true;
@@ -316,7 +324,7 @@ class DivisionServices extends BaseServices
         if ($res) {
             return true;
         } else {
-            throw new AdminException(100005);
+            throw new AdminException('Thao tác thất bại');
         }
     }
 
@@ -416,10 +424,10 @@ class DivisionServices extends BaseServices
             'division_end_time' => $agentInfo['division_end_time'],
             'is_promoter' => 1
         ];
-        if ($staffData['division_percent'] > $agentInfo['division_percent']) throw new AdminException(400448);
+        if ($staffData['division_percent'] > $agentInfo['division_percent']) throw new AdminException('Tỷ lệ hoa hồng của đại lý không được lớn hơn tỷ lệ hoa hồng của đại lý khu vực');
         if ($userInfo['agent_id'] != 0 && $userInfo['agent_id'] != $agentInfo['agent_id']) {
             $userServices->update(['staff_id' => $userInfo['uid'], 'spread_uid' => $userInfo['uid']], ['spread_uid' => $agentInfo['agent_id'], 'staff_id' => 0]);
-            $userServices->update(['staff_id' => $userInfo['uid'], 'not_spread_uid' => $userInfo['uid']], ['staff_id' => 0]);
+            $userServices->getSearch(['staff_id' => $userInfo['uid'], 'not_spread_uid' => $userInfo['uid']])->update(['staff_id' => 0]);
         }
         $res = $userServices->update($data['uid'], $staffData);
         if ($res) return true;

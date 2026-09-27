@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -30,13 +30,13 @@ class RegisterValidates extends Validate
     ];
 
     protected $message = [
-        'phone.require' => '410015',
-        'phone.regex' => '410018',
-        'account.require' => '410015',
-        'account.regex' => '410018',
-        'captcha.require' => '410004',
-        'captcha.length' => '410010',
-        'password.require' => '410011',
+        'phone.require' => 'Vui lòng nhập số điện thoại',
+        'phone.regex' => 'Số điện thoại không đúng định dạng',
+        'account.require' => 'Vui lòng nhập số điện thoại',
+        'account.regex' => 'Số điện thoại không đúng định dạng',
+        'captcha.require' => 'Vui lòng nhập mã xác thực',
+        'captcha.length' => 'Mã xác thực không đúng',
+        'password.require' => 'Mật khẩu phải dài từ 6 đến 16 ký tự',
     ];
 
 

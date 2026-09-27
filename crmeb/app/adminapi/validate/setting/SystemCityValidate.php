@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -33,9 +33,9 @@ class SystemCityValidate extends Validate
      * @var array
      */
     protected $message = [
-        'name.require' => '400038',
-        'level.number' => '400039',
-        'parent_id.number' => '400040',
+        'name.require' => 'Vui lòng điền tên thành phố',
+        'level.number' => 'Dữ liệu level sai định dạng, phải là số nguyên',
+        'parent_id.number' => 'Dữ liệu parent_id sai định dạng, phải là số nguyên',
     ];
 
     protected $scene = [

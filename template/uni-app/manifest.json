@@ -2,8 +2,8 @@
     "name" : "CRMEB phiên bản Tiêu chuẩn",
     "appid" : "__UNI__A3F1ED4",
     "description" : "CRMEB phiên bản Tiêu chuẩn",
-    "versionName" : "5.6.2",
-    "versionCode" : 562,
+    "versionName" : "6.0.0",
+    "versionCode" : 600,
     "transformPx" : false,
     "locale" : "vi",
     "fallbackLocale" : "vi",
@@ -71,7 +71,8 @@
                 },
                 "permissionPhoneState" : {
                     "request" : "none" //Tắt quyền gọi điện
-                }
+                },
+                "targetSdkVersion" : 30
             },
             /* Cấu hình build ios */
             "ios" : {

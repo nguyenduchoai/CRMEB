@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -25,9 +25,9 @@ class StoreServiceFeedbackValidate extends Validate
     ];
 
     protected $message = [
-        'phone.require' => '410157',
-        'phone.regex' => '410158',
-        'content.require' => '410163',
-        'rela_name.require' => '410155',
+        'phone.require' => 'Số điện thoại là bắt buộc',
+        'phone.regex' => 'Số điện thoại sai định dạng',
+        'content.require' => 'Vui lòng nhập nội dung phản hồi',
+        'rela_name.require' => 'Tên là bắt buộc',
     ];
 }

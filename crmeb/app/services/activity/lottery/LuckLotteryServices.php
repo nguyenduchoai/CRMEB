@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -77,10 +77,10 @@ class LuckLotteryServices extends BaseServices
             if ($item['start_time'] > time()) {
                 $item['status_name'] = 'Chưa bắt đầu';
                 $item['lottery_status'] = 0;
-            } else if ($item['end_time'] < time()) {
+            } else if (bcadd((string)$item['end_time'], '86400') < time()) {
                 $item['status_name'] = 'Đã kết thúc';
                 $item['lottery_status'] = 2;
-            } else if ($item['end_time'] > time() && $item['start_time'] < time()) {
+            } else {
                 $item['status_name'] = 'Đang diễn ra';
                 $item['lottery_status'] = 1;
             }
@@ -113,7 +113,7 @@ class LuckLotteryServices extends BaseServices
     {
         $lottery = $this->dao->getLottery($id, '*', ['prize']);
         if (!$lottery) {
-            throw new ApiException(410057);
+            throw new ApiException('Chương trình không tồn tại hoặc đã bị xóa');
         }
         $lottery = $lottery->toArray();
         if (isset($lottery['prize']) && $lottery['prize']) {
@@ -198,14 +198,14 @@ class LuckLotteryServices extends BaseServices
         }
         $prize_num = $this->lottery_type[1];
         if (count($prizes) != $prize_num) {
-            throw new AdminException(400535);
+            throw new AdminException('Vui lòng thêm sản phẩm');
         }
         unset($data['prize']);
         return $this->transaction(function () use ($data, $prizes) {
             $time = time();
             $data['add_time'] = $time;
             if (!$lottery = $this->dao->save($data)) {
-                throw new AdminException(400536);
+                throw new AdminException('Thêm chương trình quay thưởng thất bại');
             }
             if ($data['status']) {
                 $this->setStatus((int)$lottery->id, $data['status']);
@@ -229,7 +229,7 @@ class LuckLotteryServices extends BaseServices
                 throw new AdminException('Phải thiết lập ít nhất một ô không trúng thưởng');
             }
             if (!$luckPrizeServices->saveAll($data)) {
-                throw new AdminException(400536);
+                throw new AdminException('Thêm chương trình quay thưởng thất bại');
             }
             return true;
         });
@@ -248,7 +248,7 @@ class LuckLotteryServices extends BaseServices
     {
         $lottery = $this->dao->getLottery($id);
         if (!$lottery) {
-            throw new AdminException(400537);
+            throw new AdminException('Chương trình quay thưởng không tồn tại');
         }
         $newPrizes = $data['prize'];
         $percentArr = array_column($newPrizes, 'percent');
@@ -262,7 +262,7 @@ class LuckLotteryServices extends BaseServices
         unset($data['prize'], $data['id']);
         $prize_num = $this->lottery_type[1];
         if (count($newPrizes) != $prize_num) {
-            throw new AdminException(400535);
+            throw new AdminException('Vui lòng thêm sản phẩm');
         }
         if ($data['attends_user'] == 1) {
             $data['user_label'] = $data['user_level'] = [];
@@ -285,10 +285,10 @@ class LuckLotteryServices extends BaseServices
                 $prize['sort'] = $sort;
                 if (isset($prize['id']) && $prize['id']) {
                     if (!$prize['lottery_id']) {
-                        throw new AdminException(100100);
+                        throw new AdminException('Tham số không hợp lệ');
                     }
                     if (!$luckPrizeServices->update($prize['id'], $prize, 'id')) {
-                        throw new AdminException(100007);
+                        throw new AdminException('Sửa thất bại');
                     }
                 } else {
                     unset($prize['id']);
@@ -304,16 +304,16 @@ class LuckLotteryServices extends BaseServices
             }
             if ($insert) {
                 if (!$luckPrizeServices->saveAll($insert)) {
-                    throw new AdminException(100022);
+                    throw new AdminException('Thêm thất bại');
                 }
             }
             if ($delIds) {
                 if (!$luckPrizeServices->update([['id', 'in', $delIds]], ['is_del' => 1])) {
-                    throw new AdminException(100008);
+                    throw new AdminException('Xóa thất bại');
                 }
             }
             if (!$this->dao->update($id, $data)) {
-                throw new AdminException(100007);
+                throw new AdminException('Sửa thất bại');
             }
             //Đang bán
             if (!$lottery['status'] && $data['status']) {
@@ -343,13 +343,13 @@ class LuckLotteryServices extends BaseServices
             $userInfo = $userServices->getUserInfo($uid);
         }
         if (!$userInfo) {
-            throw new ApiException(410032);
+            throw new ApiException('Người dùng không tồn tại');
         }
         if (!$lottery) {
             $lottery = $this->dao->getLottery($lottery_id, '*', [], true);
         }
         if (!$lottery) {
-            throw new ApiException(410057);
+            throw new ApiException('Chương trình không tồn tại hoặc đã bị xóa');
         }
         //Loại hình quay thưởng: 1: điểm thưởng 2: số dư 3: đặt hàng thanh toán thành công 4: đánh giá đơn hàng 5: giới thiệu người mới
         switch ($lottery['factor']) {
@@ -367,7 +367,7 @@ class LuckLotteryServices extends BaseServices
             case 5:
                 return $userInfo['spread_lottery'] ?? 0;
             default:
-                throw new ApiException(410058);
+                throw new ApiException('Hiện chưa có chương trình thuộc loại này');
         }
     }
 
@@ -390,19 +390,19 @@ class LuckLotteryServices extends BaseServices
             $userInfo = $userServices->getUserInfo($uid);
         }
         if (!$userInfo) {
-            throw new ApiException(410032);
+            throw new ApiException('Người dùng không tồn tại');
         }
         if (!$lottery) {
             $lottery = $this->dao->getLottery($lottery_id, '*', [], true);
         }
         if (!$lottery) {
-            throw new ApiException(410057);
+            throw new ApiException('Chương trình không tồn tại hoặc đã bị xóa');
         }
         //Một phần người dùng tham gia
         if ($lottery['attends_user'] == 2) {
             //Hạng người dùng
             if ($lottery['user_level'] && !in_array($userInfo['level'], $lottery['user_level'])) {
-                throw new ApiException(410059);
+                throw new ApiException('Bạn tạm thời không thể tham gia chương trình này');
             }
             //Nhãn người dùng
             if ($lottery['user_label']) {
@@ -410,13 +410,13 @@ class LuckLotteryServices extends BaseServices
                 $userlableRelation = app()->make(UserLabelRelationServices::class);
                 $user_labels = $userlableRelation->getUserLabels($uid);
                 if (!array_intersect($lottery['user_label'], $user_labels)) {
-                    throw new ApiException(410059);
+                    throw new ApiException('Bạn tạm thời không thể tham gia chương trình này');
                 }
             }
             //Có phải thành viên trả phí không
             if ($lottery['is_svip'] != -1) {
                 if (($lottery['is_svip'] == 1 && $userInfo['is_money_level'] <= 0) || ($lottery['is_svip'] == 0 && $userInfo['is_money_level'] > 0)) {
-                    throw new ApiException(410059);
+                    throw new ApiException('Bạn tạm thời không thể tham gia chương trình này');
                 }
             }
         }
@@ -439,11 +439,11 @@ class LuckLotteryServices extends BaseServices
         $userServices = app()->make(UserServices::class);
         $userInfo = $userServices->getUserInfo($uid);
         if (!$userInfo) {
-            throw new ApiException(410032);
+            throw new ApiException('Người dùng không tồn tại');
         }
         $lottery = $this->dao->getLottery($lottery_id, '*', [], true);
         if (!$lottery) {
-            throw new ApiException(410057);
+            throw new ApiException('Chương trình không tồn tại hoặc đã bị xóa');
         }
         $userInfo = $userInfo->toArray();
         $lottery = $lottery->toArray();
@@ -454,23 +454,23 @@ class LuckLotteryServices extends BaseServices
         $lotteryPrizeServices = app()->make(LuckPrizeServices::class);
         $lotteryPrize = $lotteryPrizeServices->getPrizeList($lottery_id);
         if (!$lotteryPrize) {
-            throw new ApiException(410060);
+            throw new ApiException('Trạng thái chương trình không hợp lệ, vui lòng liên hệ quản trị viên');
         }
         if ($this->getLotteryNum($uid, $lottery_id, $userInfo, $lottery) < 1) {
             //Loại hình quay thưởng: 1: điểm thưởng 2: số dư 3: đặt hàng thanh toán thành công 4: đánh giá đơn hàng 5: giới thiệu người mới
             switch ($lottery['factor']) {
                 case 1:
-                    throw new ApiException(410061);
+                    throw new ApiException('Không đủ điểm thưởng khả dụng, không còn lượt quay thưởng');
                 case 2:
-                    throw new ApiException(410062);
+                    throw new ApiException('Số dư không đủ, không còn lượt quay thưởng');
                 case 3:
-                    throw new ApiException(410063);
+                    throw new ApiException('Mua sản phẩm để nhận thêm lượt quay thưởng');
                 case 4:
-                    throw new ApiException(410064);
+                    throw new ApiException('Đánh giá đơn hàng đã hoàn thành để nhận thêm lượt quay thưởng');
                 case 5:
-                    throw new ApiException(410065);
+                    throw new ApiException('Mời thêm bạn bè để nhận lượt quay thưởng');
                 default:
-                    throw new ApiException(410058);
+                    throw new ApiException('Hiện chưa có chương trình thuộc loại này');
             }
         }
         return $this->transaction(function () use ($uid, $lotteryPrize, $userInfo, $lottery, $channel_type) {
@@ -479,7 +479,7 @@ class LuckLotteryServices extends BaseServices
             //Quay thưởng ngẫu nhiên
             $prize = $luckPrizeServices->getLuckPrize($lotteryPrize);
             if (!$prize) {
-                throw new ApiException(410060);
+                throw new ApiException('Trạng thái chương trình không hợp lệ, vui lòng liên hệ quản trị viên');
             }
             //Trúng thưởng thì trừ điểm thưởng, số dư
             $this->lotteryFactor($uid, $userInfo, $lottery);
@@ -535,14 +535,14 @@ class LuckLotteryServices extends BaseServices
                 $userBillServices = app()->make(UserBillServices::class);
                 $userBillServices->income('lottery_use_integral', $uid, $lottery['factor_num'], $integral, $lottery['id']);
                 if (!$userServices->update($uid, ['integral' => $integral], 'uid')) {
-                    throw new ApiException(410066);
+                    throw new ApiException('Trừ điểm thưởng của người dùng khi quay thưởng thất bại');
                 }
                 break;
             case 2:
                 if ($userInfo['now_money'] >= $lottery['factor_num']) {
                     $now_money = bcsub((string)$userInfo['now_money'], (string)$lottery['factor_num'], 2);
                 } else {
-                    throw new ApiException(410067);
+                    throw new ApiException('Quay thưởng thất bại, số dư không đủ');
                 }
                 /** @var UserServices $userServices */
                 $userServices = app()->make(UserServices::class);
@@ -550,7 +550,7 @@ class LuckLotteryServices extends BaseServices
                 $userMoneyServices = app()->make(UserMoneyServices::class);
                 $userMoneyServices->income('lottery_use_money', $uid, $lottery['factor_num'], $now_money, $lottery['id']);
                 if (!$userServices->update($uid, ['now_money' => $now_money], 'uid')) {
-                    throw new ApiException(410068);
+                    throw new ApiException('Trừ số dư của người dùng khi quay thưởng thất bại');
                 }
                 break;
             case 3:
@@ -566,11 +566,11 @@ class LuckLotteryServices extends BaseServices
                     $spread_lottery = $userInfo['spread_lottery'] - 1;
                 }
                 if (!$userServices->update($uid, ['spread_lottery' => $spread_lottery], 'uid')) {
-                    throw new ApiException(410069);
+                    throw new ApiException('Trừ lượt quay thưởng nhận được từ giới thiệu của người dùng thất bại');
                 }
                 break;
             default:
-                throw new ApiException(410058);
+                throw new ApiException('Hiện chưa có chương trình thuộc loại này');
         }
         return true;
     }
@@ -589,7 +589,7 @@ class LuckLotteryServices extends BaseServices
         if ($lottery) {
             $res = $this->dao->update(['id' => $id], ['is_del' => 1]);
             if (!$res) {
-                throw new AdminException(100008);
+                throw new AdminException('Xóa thất bại');
             }
         }
         return true;

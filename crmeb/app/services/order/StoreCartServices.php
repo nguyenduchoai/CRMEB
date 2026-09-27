@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -98,7 +98,7 @@ class StoreCartServices extends BaseServices
             $cartInfo = $this->dao->getCartList(['uid' => $uid, 'status' => 1, 'id' => $cartIds], 0, 0, ['productInfo', 'attrInfo']);
         }
         if (!$cartInfo) {
-            throw new ApiException(410233);
+            throw new ApiException('Lấy thông tin giỏ hàng thất bại');
         }
         if ($is_gift == 1) {
             $addr = [];
@@ -159,21 +159,21 @@ class StoreCartServices extends BaseServices
                 $productServices = app()->make(StoreProductServices::class);
                 $productInfo = $productServices->isValidProduct($productId);
                 if (!$productInfo) {
-                    throw new ApiException(410295);
+                    throw new ApiException('Sản phẩm này đã ngừng bán hoặc bị xóa');
                 }
                 $attrInfo = $attrValueServices->getOne(['unique' => $unique, 'type' => 0]);
                 if (!$unique || !$attrInfo || $attrInfo['product_id'] != $productId) {
-                    throw new ApiException(410305);
+                    throw new ApiException('Vui lòng chọn thuộc tính sản phẩm hợp lệ');
                 }
                 $nowStock = $attrInfo['stock'];//Tồn kho hiện có
                 if ($cartNum > $nowStock) {
-                    throw new ApiException(410297, ['num' => $cartNum]);
+                    throw new ApiException('Tồn kho sản phẩm này không đủ {:num}', ['num' => $cartNum]);
                 }
                 if ($productInfo['is_virtual'] == 1 && $productInfo['virtual_type'] == 2 && $attrInfo['coupon_id']) {
                     /** @var StoreCouponIssueServices $issueCoupon */
                     $issueCoupon = app()->make(StoreCouponIssueServices::class);
                     if (!$issueCoupon->getCount(['id' => $attrInfo['coupon_id'], 'status' => 1, 'is_del' => 0])) {
-                        throw new ApiException(410234);
+                        throw new ApiException('Phiếu giảm giá bạn muốn mua đã hết hiệu lực, không thể mua');
                     }
                 }
                 $stockNum = $this->dao->value(['product_id' => $productId, 'product_attr_unique' => $unique, 'uid' => $uid, 'status' => 1], 'cart_num') ?: 0;
@@ -205,13 +205,13 @@ class StoreCartServices extends BaseServices
                 [$attrInfo, $unique, $productInfo] = $advanceService->checkAdvanceStock($uid, $advanceId, $cartNum, $unique);
                 break;
             default:
-                throw new ApiException(410236);
+                throw new ApiException('Vui lòng tải lại rồi thử lại');
         }
         if ($type && $type != 6) {
             //Tồn kho theo phân loại sản phẩm
             $product_stock = $attrValueServices->value(['product_id' => $productInfo['product_id'], 'suk' => $attrInfo['suk'], 'type' => 0], 'stock');
             if ($product_stock < $cartNum) {
-                throw new ApiException(410297, ['num' => $cartNum]);
+                throw new ApiException('Tồn kho sản phẩm này không đủ {:num}', ['num' => $cartNum]);
             }
         }
         return [$attrInfo, $unique, $bargainUserInfo['bargain_price_min'] ?? 0, $cartNum, $productInfo];
@@ -340,7 +340,7 @@ class StoreCartServices extends BaseServices
         if ($limitInfo['is_limit']) {
             $num = $this->dao->sum([['uid', '=', $uid], ['product_id', '=', $carInfo->product_id], ['id', '<>', $id]], 'cart_num') + $number;
             if ($limitInfo['limit_type'] == 1 && $num > $limitInfo['limit_num']) {
-                throw new ApiException(410239, ['limit' => $limitInfo['limit_num']]);
+                throw new ApiException('Số lượng mua mỗi lần không được vượt quá {:limit} sản phẩm', ['limit' => $limitInfo['limit_num']]);
             } else if ($limitInfo['limit_type'] == 2) {
                 /** @var StoreOrderCartInfoServices $orderCartServices */
                 $orderCartServices = app()->make(StoreOrderCartInfoServices::class);
@@ -348,14 +348,14 @@ class StoreCartServices extends BaseServices
                 $orderRefundNum = $orderCartServices->sum(['uid' => $uid, 'product_id' => $carInfo->product_id], 'refund_num');
                 $orderNum = $orderPayNum - $orderRefundNum;
                 if (($num + $orderNum) > $limitInfo['limit_num']) {
-                    throw new ApiException(410240, ['limit' => $limitInfo['limit_num'], 'pay_num' => $orderNum]);
+                    throw new ApiException('Mỗi khách chỉ được mua tối đa {:limit} sản phẩm này, bạn đã mua {:pay_num} sản phẩm', ['limit' => $limitInfo['limit_num'], 'pay_num' => $orderNum]);
                 }
             }
         }
 
         $stock = $productServices->getProductStock($carInfo->product_id, $carInfo->product_attr_unique);
-        if (!$stock) throw new ApiException(410237);
-        if ($stock < $number) throw new ApiException(410297, ['num' => $number]);
+        if (!$stock) throw new ApiException('Tạm hết hàng');
+        if ($stock < $number) throw new ApiException('Tồn kho sản phẩm này không đủ {:num}', ['num' => $number]);
         if ($carInfo->cart_num == $number) return true;
         return $this->dao->changeUserCartNum(['uid' => $uid, 'id' => $id], (int)$number);
     }
@@ -382,7 +382,9 @@ class StoreCartServices extends BaseServices
     public function getUserCartList(int $uid, int $status, string $cartIds = '')
     {
         [$page, $limit] = $this->getPageValue();
-        $list = $this->dao->getCartList(['uid' => $uid, 'status' => $status, 'id' => $cartIds], $page, $limit, ['productInfo', 'attrInfo']);
+        $list = $this->dao->getCartList(['uid' => $uid, 'status' => $status, 'id' => $cartIds], $page, $limit, ['productInfo', 'attrInfo' => function ($query) {
+            $query->where('type', 0);
+        }]);
         [$list, $valid, $invalid] = $this->handleCartList($uid, $list);
         $seckillIds = array_unique(array_column($list, 'seckill_id'));
         $bargainIds = array_unique(array_column($list, 'bargain_id'));
@@ -410,7 +412,7 @@ class StoreCartServices extends BaseServices
         if ($stock > 0) {
             $this->dao->update($cart_id, ['product_attr_unique' => $unique, 'cart_num' => 1]);
         } else {
-            throw new ApiException(410238);
+            throw new ApiException('Phân loại đã chọn không đủ tồn kho');
         }
     }
 
@@ -466,13 +468,13 @@ class StoreCartServices extends BaseServices
         $productServices = app()->make(StoreProductServices::class);
 
         if (!$productServices->isValidProduct((int)$productId, 'id')) {
-            throw new ApiException(410295);
+            throw new ApiException('Sản phẩm này đã ngừng bán hoặc bị xóa');
         }
         if (!($unique && $attrValueServices->getAttrvalueCount($productId, $unique, 0))) {
-            throw new ApiException(410305);
+            throw new ApiException('Vui lòng chọn thuộc tính sản phẩm hợp lệ');
         }
         if ($productServices->getProductStock((int)$productId, $unique) < $num) {
-            throw new ApiException(410297, ['num' => $num]);
+            throw new ApiException('Tồn kho sản phẩm này không đủ {:num}', ['num' => $num]);
         }
 
         $cart = $this->dao->getOne(['uid' => $uid, 'product_id' => $productId, 'product_attr_unique' => $unique]);
@@ -724,7 +726,7 @@ class StoreCartServices extends BaseServices
         $orderCartServices = app()->make(StoreOrderCartInfoServices::class);
 
         $limitInfo = $productServices->get($product_id, ['is_limit', 'limit_type', 'limit_num']);
-        if (!$limitInfo) throw new ApiException(410294);
+        if (!$limitInfo) throw new ApiException('Sản phẩm không tồn tại');
         $limitInfo = $limitInfo->toArray();
         if (!$limitInfo['is_limit']) return true;
         if ($limitInfo['limit_type'] == 1) {
@@ -733,7 +735,7 @@ class StoreCartServices extends BaseServices
                 $cartNum = $this->dao->sum(['uid' => $uid, 'product_id' => $product_id], 'cart_num');
             }
             if (($num + $cartNum) > $limitInfo['limit_num']) {
-                throw new ApiException(410239, ['limit' => $limitInfo['limit_num']]);
+                throw new ApiException('Số lượng mua mỗi lần không được vượt quá {:limit} sản phẩm', ['limit' => $limitInfo['limit_num']]);
             }
         } else if ($limitInfo['limit_type'] == 2) {
             $cartNum = $this->dao->sum(['uid' => $uid, 'product_id' => $product_id], 'cart_num');
@@ -741,7 +743,7 @@ class StoreCartServices extends BaseServices
             $orderRefundNum = $orderCartServices->sum(['uid' => $uid, 'product_id' => $product_id, 'split_status' => 0], 'refund_num');
             $orderNum = $orderPayNum - $orderRefundNum;
             if (($num + $orderNum + $cartNum) > $limitInfo['limit_num']) {
-                throw new ApiException(410240, ['limit' => $limitInfo['limit_num'], 'pay_num' => $orderNum]);
+                throw new ApiException('Mỗi khách chỉ được mua tối đa {:limit} sản phẩm này, bạn đã mua {:pay_num} sản phẩm', ['limit' => $limitInfo['limit_num'], 'pay_num' => $orderNum]);
             }
         }
         return true;

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -263,7 +263,7 @@ class Canvas
             }
 
             if (make_path($path, 4, true) === '') {
-                throw new \RuntimeException(400555);
+                throw new \RuntimeException('Không thể tạo thư mục, vui lòng kiểm tra quyền của thư mục tải lên');
             }
 
             $save_file = $this->path . $this->fileName . '.' . $this->imageType;

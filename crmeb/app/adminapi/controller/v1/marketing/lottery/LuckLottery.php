@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -62,7 +62,7 @@ class LuckLottery extends AuthController
     public function detail($id)
     {
         if (!$id) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         return app('json')->success($this->services->getLotteryInfo((int)$id));
     }
@@ -98,25 +98,25 @@ class LuckLottery extends AuthController
             ['prize', []]
         ]);
         if (!$data['name']) {
-            return app('json')->fail(400501);
+            return app('json')->fail('Vui lòng thêm tên chương trình quay thưởng');
         }
         if ($data['is_content'] && !$data['content']) {
-            return app('json')->fail(400502);
+            return app('json')->fail('Vui lòng thêm nội dung như mô tả quay thưởng');
         }
         [$start, $end] = $data['period'];
         unset($data['period']);
         $data['start_time'] = $start ? strtotime($start) : 0;
-        $data['end_time'] = $end ? strtotime($end) : 0;
+        $data['end_time'] = $end ? strtotime($end) + 86399 : 0;
         if ($data['start_time'] && $data['end_time'] && $data['end_time'] <= $data['start_time']) {
-            return app('json')->fail(400503);
+            return app('json')->fail('Thời gian kết thúc chương trình phải sau thời gian bắt đầu');
         }
         if (!$data['prize']) {
-            return app('json')->fail(400504);
+            return app('json')->fail('Vui lòng thêm giải thưởng');
         }
         if (in_array($data['factor'], [1, 2]) && !$data['factor_num']) {
-            return app('json')->fail(400505);
+            return app('json')->fail('Vui lòng điền số lượng tiêu hao');
         }
-        return app('json')->success($this->services->add($data) ? 100000 : 100006);
+        return app('json')->success($this->services->add($data) ? 'Lưu thành công' : 'Lưu thất bại');
     }
 
     /**
@@ -151,28 +151,28 @@ class LuckLottery extends AuthController
             ['prize', []]
         ]);
         if (!$id) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         if (!$data['name']) {
-            return app('json')->fail(400501);
+            return app('json')->fail('Vui lòng thêm tên chương trình quay thưởng');
         }
         [$start, $end] = $data['period'];
         unset($data['period']);
         $data['start_time'] = $start ? strtotime($start) : 0;
-        $data['end_time'] = $end ? strtotime($end) : 0;
+        $data['end_time'] = $end ? strtotime($end) + 86399 : 0;
         if ($data['start_time'] && $data['end_time'] && $data['end_time'] <= $data['start_time']) {
-            return app('json')->fail(400503);
+            return app('json')->fail('Thời gian kết thúc chương trình phải sau thời gian bắt đầu');
         }
         if ($data['is_content'] && !$data['content']) {
-            return app('json')->fail(400502);
+            return app('json')->fail('Vui lòng thêm nội dung như mô tả quay thưởng');
         }
         if (!$data['prize']) {
-            return app('json')->fail(400504);
+            return app('json')->fail('Vui lòng thêm giải thưởng');
         }
         if (in_array($data['factor'], [1, 2]) && !$data['factor_num']) {
-            return app('json')->fail(400505);
+            return app('json')->fail('Vui lòng điền số lượng tiêu hao');
         }
-        return app('json')->success($this->services->edit((int)$id, $data) ? 100001 : 100007);
+        return app('json')->success($this->services->edit((int)$id, $data) ? 'Sửa thành công' : 'Sửa thất bại');
     }
 
     /**
@@ -187,9 +187,9 @@ class LuckLottery extends AuthController
         list($id) = $this->request->getMore([
             ['id', 0],
         ], true);
-        if (!$id) return app('json')->fail(100026);
+        if (!$id) return app('json')->fail('Dữ liệu không tồn tại');
         $this->services->delLottery((int)$id);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -203,9 +203,9 @@ class LuckLottery extends AuthController
      */
     public function setStatus($id = '', $status = '')
     {
-        if ($status == '' || $id == '') return app('json')->fail(100100);
+        if ($status == '' || $id == '') return app('json')->fail('Tham số không hợp lệ');
         $this->services->setStatus((int)$id, (int)$status);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     public function factorList()

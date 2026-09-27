@@ -1,6 +1,13 @@
 <?php
-
-
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 namespace app\api\controller\v1\user;
 
 
@@ -45,10 +52,10 @@ class DivisionController
             ['images', []]
         ]);
         $verifyCode = CacheService::get('code_' . $data['phone']);
-        if ($verifyCode != $data['code']) return app('json')->fail(410010);
-        if ($data['division_invite'] == 0) return app('json')->fail(500028);
+        if ($verifyCode != $data['code']) return app('json')->fail('Mã xác thực không đúng');
+        if ($data['division_invite'] == 0) return app('json')->fail('Vui lòng nhập mã mời');
         $this->services->applyAgent($data, $id);
-        return app('json')->success(100017);
+        return app('json')->success('Gửi thành công');
     }
 
     /**
@@ -110,13 +117,13 @@ class DivisionController
             ['uid', 0],
         ], true);
         $agentId = $request->uid();
-        if (!$uid) return app('json')->fail(100100);
+        if (!$uid) return app('json')->fail('Tham số không hợp lệ');
         /** @var UserServices $userService */
         $userService = app()->make(UserServices::class);
         $upPercent = $userService->value(['uid' => $agentId], 'division_percent');
-        if ($agentPercent >= $upPercent) return app('json')->fail(410164);
+        if ($agentPercent >= $upPercent) return app('json')->fail('Tỷ lệ không được lớn hơn tỷ lệ của bạn');
         $userService->update(['uid' => $uid, 'agent_id' => $agentId], ['division_percent' => $agentPercent]);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
@@ -127,12 +134,12 @@ class DivisionController
      */
     public function delStaff(Request $request, $uid)
     {
-        if (!$uid) return app('json')->fail(100100);
+        if (!$uid) return app('json')->fail('Tham số không hợp lệ');
         $agentId = $request->uid();
         /** @var UserServices $userService */
         $userService = app()->make(UserServices::class);
         $userService->update(['uid' => $uid, 'agent_id' => $agentId], ['division_percent' => 0, 'agent_id' => 0, 'division_id' => 0, 'staff_id' => 0, 'division_type' => 0, 'is_staff' => 0]);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**

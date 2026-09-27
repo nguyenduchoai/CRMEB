@@ -153,7 +153,7 @@ export default {
           ];
         })
         .catch((res) => {
-          this.$message.error(res.msg);
+          this.$message.error(res);
         });
     },
     // Biểu đồ thống kê
@@ -251,7 +251,7 @@ export default {
           this.spinShow = false;
         })
         .catch((res) => {
-          this.$message.error(res.msg);
+          this.$message.error(res);
           this.spinShow = false;
         });
     },

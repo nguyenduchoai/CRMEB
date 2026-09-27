@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -75,10 +75,22 @@ class SystemDatabackup extends AuthController
         if ($is_field == 0) {
             $sql = "ALTER TABLE $table COMMENT '$mark'";
         } else {
-            $sql = "ALTER TABLE $table MODIFY COLUMN $field $type COMMENT '$mark'";
+            $fieldInfo = Db::query("SHOW FULL COLUMNS FROM `{$table}` WHERE Field = '{$field}'");
+            $sql = "ALTER TABLE $table MODIFY COLUMN ";
+            $sql .= $field . ' ' . $type . ' ';
+            if ($fieldInfo[0]['Null'] == 'NO') {
+                $sql .= 'NOT NULL ';
+                if (!is_null($fieldInfo[0]['Default'])) {
+                    $sql .= "DEFAULT '" . $fieldInfo[0]['Default'] . "' ";
+                }
+            }
+            if ($fieldInfo[0]['Extra']) {
+                $sql .= $fieldInfo[0]['Extra'] . ' ';
+            }
+            $sql .= "COMMENT '$mark'";
         }
         Db::execute($sql);
-        return app('json')->success(100024);
+        return app('json')->success('Ghi chú thành công');
     }
 
     /**
@@ -90,7 +102,7 @@ class SystemDatabackup extends AuthController
             ['tables', ''],
         ], true);
         $res = $this->services->getDbBackup()->optimize($tables);
-        return app('json')->success($res ? 100047 : 100048);
+        return app('json')->success($res ? 'Tối ưu hóa thành công' : 'Tối ưu hóa thất bại');
     }
 
     /**
@@ -102,7 +114,7 @@ class SystemDatabackup extends AuthController
             ['tables', ''],
         ], true);
         $res = $this->services->getDbBackup()->repair($tables);
-        return app('json')->success($res ? 100049 : 100050);
+        return app('json')->success($res ? 'Sửa chữa thành công' : 'Sửa chữa thất bại');
     }
 
     /**
@@ -114,7 +126,7 @@ class SystemDatabackup extends AuthController
             ['tables', ''],
         ], true);
         $data = $this->services->backup($tables);
-        return app('json')->success(100051);
+        return app('json')->success('Sao lưu thành công');
     }
 
     /**
@@ -132,7 +144,7 @@ class SystemDatabackup extends AuthController
     {
         $filename = intval(request()->post('filename'));
         $files = $this->services->getDbBackup()->delFile($filename);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -150,35 +162,35 @@ class SystemDatabackup extends AuthController
             $list = $db->getFile('timeverif', $time);
             if (is_array($list)) {
                 session::set('backup_list', $list);
-                return app('json')->success(400307, array('part' => 1, 'start' => 0));
+                return app('json')->success('Khởi tạo hoàn tất', array('part' => 1, 'start' => 0));
             } else {
-                return app('json')->fail(400308);
+                return app('json')->fail('Tệp sao lưu có thể đã bị hỏng, vui lòng kiểm tra');
             }
         } else if (is_numeric($part) && is_numeric($start) && $part && $start) {
             $list = session::get('backup_list');
             $start = $db->setFile($list)->import($start);
             if (false === $start) {
-                return app('json')->fail(400309);
+                return app('json')->fail('Lỗi khi khôi phục dữ liệu');
             } elseif (0 === $start) {
                 if (isset($list[++$part])) {
                     $data = array('part' => $part, 'start' => 0);
-                    return app('json')->success(400310, $data);
+                    return app('json')->success('Đang khôi phục...', $data);
                 } else {
                     session::delete('backup_list');
-                    return app('json')->success(400311);
+                    return app('json')->success('Khôi phục hoàn tất');
                 }
             } else {
                 $data = array('part' => $part, 'start' => $start[0]);
                 if ($start[1]) {
                     $rate = floor(100 * ($start[0] / $start[1]));
-                    return app('json')->success(400310, $data);
+                    return app('json')->success('Đang khôi phục...', $data);
                 } else {
                     $data['gz'] = 1;
-                    return app('json')->success(400310, $data);
+                    return app('json')->success('Đang khôi phục...', $data);
                 }
             }
         } else {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
     }
 

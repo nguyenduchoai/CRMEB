@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -110,10 +110,10 @@ class ArticleCategoryServices extends BaseServices
         /** @var ArticleServices $articleService */
         $articleService = app()->make(ArticleServices::class);
         $pidCount = $this->dao->count(['pid' => $id]);
-        if ($pidCount > 0) throw new AdminException(400454);
+        if ($pidCount > 0) throw new AdminException('Danh mục này có danh mục con, không thể xóa');
         $count = $articleService->count(['cid' => $id]);
         if ($count > 0) {
-            throw new AdminException(400455);
+            throw new AdminException('Danh mục này có bài viết, không thể xóa');
         } else {
             return $this->dao->delete($id);
         }

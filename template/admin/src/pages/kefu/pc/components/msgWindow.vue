@@ -258,7 +258,6 @@ export default {
     },
     // Chọn ở phần đầu
     bindTab(item) {
-      console.log('1122');
       debugger;
       this.tabCur = item.key;
       this.cateId = '';

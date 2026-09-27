@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -81,7 +81,7 @@ class LiveGoods extends AuthController
         }
         if ($error) return app('json')->fail(40137);
         $this->services->add($goods_info);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -91,7 +91,7 @@ class LiveGoods extends AuthController
      */
     public function detail($id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $goods = $this->services->get($id, ['*'], ['product']);
         return app('json')->success($goods ? $goods->toArray() : []);
     }
@@ -103,7 +103,7 @@ class LiveGoods extends AuthController
     public function syncGoods()
     {
         $this->services->syncGoodStatus();
-        return app('json')->success(100038);
+        return app('json')->success('Đồng bộ thành công');
     }
 
     /**
@@ -116,9 +116,9 @@ class LiveGoods extends AuthController
      */
     public function audit($id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $this->services->audit((int)$id);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
@@ -131,9 +131,9 @@ class LiveGoods extends AuthController
      */
     public function resetAudit($id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $this->services->resetAudit((int)$id);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
@@ -144,7 +144,7 @@ class LiveGoods extends AuthController
      */
     public function setShow(int $id, $is_show)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         return app('json')->success($this->services->isShow($id, $is_show));
     }
 
@@ -158,9 +158,9 @@ class LiveGoods extends AuthController
      */
     public function delete($id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $this->services->delete($id);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
 }

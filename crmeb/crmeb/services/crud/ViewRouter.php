@@ -1,15 +1,13 @@
 <?php
-/**
- *  +----------------------------------------------------------------------
- *  | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
- *  +----------------------------------------------------------------------
- *  | Copyright (c) 2016~2022 https://www.crmeb.com All rights reserved.
- *  +----------------------------------------------------------------------
- *  | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
- *  +----------------------------------------------------------------------
- *  | Author: CRMEB Team <admin@crmeb.com>
- *  +----------------------------------------------------------------------
- */
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 
 namespace crmeb\services\crud;
 
@@ -75,7 +73,7 @@ class ViewRouter extends Make
         $route = $options['route'] ?? Str::snake($name);
         $pagePath = $options['pagePath'] ?? Str::camel($name);
         if (!$route) {
-            throw new CrudException(500045);
+            throw new CrudException('Loại route resource không tồn tại');
         }
 
         $this->value['MENUS'] = $menus;

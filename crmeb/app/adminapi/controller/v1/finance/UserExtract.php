@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -61,7 +61,7 @@ class UserExtract extends AuthController
      */
     public function edit($id)
     {
-        if (!$id) return app('json')->fail(100026);
+        if (!$id) return app('json')->fail('Dữ liệu không tồn tại');
         return app('json')->success($this->services->edit((int)$id));
     }
 
@@ -73,10 +73,10 @@ class UserExtract extends AuthController
      */
     public function update(Request $request, $id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $id = (int)$id;
         $UserExtract = $this->services->getExtract($id);
-        if (!$UserExtract) app('json')->fail(100026);
+        if (!$UserExtract) app('json')->fail('Dữ liệu không tồn tại');
         if ($UserExtract['extract_type'] == 'alipay') {
             $data = $this->request->postMore([
                 'real_name',
@@ -84,9 +84,9 @@ class UserExtract extends AuthController
                 'extract_price',
                 'alipay_code',
             ]);
-            if (!$data['real_name']) return app('json')->fail(400107);
-            if ($data['extract_price'] <= -1) return app('json')->fail(400108);
-            if (!$data['alipay_code']) return app('json')->fail(400109);
+            if (!$data['real_name']) return app('json')->fail('Vui lòng nhập họ tên');
+            if ($data['extract_price'] <= -1) return app('json')->fail('Vui lòng nhập số tiền rút');
+            if (!$data['alipay_code']) return app('json')->fail('Vui lòng nhập tài khoản Alipay');
         } else if ($UserExtract['extract_type'] == 'weixin') {
             $data = $this->request->postMore([
                 'real_name',
@@ -94,8 +94,8 @@ class UserExtract extends AuthController
                 'extract_price',
                 'wechat',
             ]);
-            if ($data['extract_price'] <= -1) return app('json')->fail(400108);
-            if (!$data['wechat']) return app('json')->fail(400110);
+            if ($data['extract_price'] <= -1) return app('json')->fail('Vui lòng nhập số tiền rút');
+            if (!$data['wechat']) return app('json')->fail('Vui lòng nhập tài khoản WeChat');
         } else {
             $data = $this->request->postMore([
                 'real_name',
@@ -104,12 +104,12 @@ class UserExtract extends AuthController
                 'bank_code',
                 'bank_address',
             ]);
-            if (!$data['real_name']) return app('json')->fail(400107);
-            if ($data['extract_price'] <= -1) return app('json')->fail(400108);
-            if (!$data['bank_code']) return app('json')->fail(400111);
-            if (!$data['bank_address']) return app('json')->fail(400112);
+            if (!$data['real_name']) return app('json')->fail('Vui lòng nhập họ tên');
+            if ($data['extract_price'] <= -1) return app('json')->fail('Vui lòng nhập số tiền rút');
+            if (!$data['bank_code']) return app('json')->fail('Vui lòng nhập số thẻ ngân hàng');
+            if (!$data['bank_address']) return app('json')->fail('Vui lòng nhập ngân hàng mở tài khoản');
         }
-        return app('json')->success($this->services->update($id, $data) ? 100001 : 100007);
+        return app('json')->success($this->services->update($id, $data) ? 'Sửa thành công' : 'Sửa thất bại');
     }
 
     /**
@@ -119,12 +119,12 @@ class UserExtract extends AuthController
      */
     public function refuse($id)
     {
-        if (!$id) app('json')->fail(100100);
+        if (!$id) app('json')->fail('Tham số không hợp lệ');
         $data = $this->request->postMore([
             ['message', '']
         ]);
-        if ($data['message'] == '') return app('json')->fail(400113);
-        return app('json')->success($this->services->refuse((int)$id, $data['message']) ? 100014 : 100015);
+        if ($data['message'] == '') return app('json')->fail('Lý do từ chối không được để trống');
+        return app('json')->success($this->services->refuse((int)$id, $data['message']) ? 'Cài đặt thành công' : 'Cài đặt thất bại');
     }
 
     /**
@@ -134,7 +134,7 @@ class UserExtract extends AuthController
      */
     public function adopt($id)
     {
-        if (!$id) app('json')->fail(100100);
+        if (!$id) app('json')->fail('Tham số không hợp lệ');
         $res = $this->services->adopt((int)$id);
         if ($res) {
             if ($res === 'v3_extract') {

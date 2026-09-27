@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -116,31 +116,31 @@ class StoreCombination extends AuthController
         if ($data['section_time']) {
             [$start_time, $end_time] = $data['section_time'];
             if (strtotime($end_time) < time()) {
-                return app('json')->fail(400507);
+                return app('json')->fail('Thời gian kết thúc chương trình không được trước thời điểm hiện tại');
             }
         }
         $combination = [];
         if ($id) {
             $combination = $this->services->get((int)$id);
             if (!$combination) {
-                return app('json')->fail(100026);
+                return app('json')->fail('Dữ liệu không tồn tại');
             }
         }
         //Hạn chế sửa
         if ($data['copy'] == 0 && $combination) {
             if ($combination['stop_time'] < time()) {
-                return app('json')->fail(400508);
+                return app('json')->fail('Chương trình đã kết thúc, vui lòng thêm mới hoặc sao chép');
             }
         }
         if ($data['num'] < $data['once_num']) {
-            return app('json')->fail(400500);
+            return app('json')->fail('Giới hạn số lượng mua mỗi lần không được lớn hơn tổng số lượng mua');
         }
         if ($data['copy'] == 1) {
             $id = 0;
             unset($data['copy']);
         }
         $this->services->saveData($id, $data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -151,7 +151,7 @@ class StoreCombination extends AuthController
     public function delete($id)
     {
         $this->services->update($id, ['is_del' => 1]);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**

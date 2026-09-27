@@ -173,7 +173,7 @@ export default {
           value: '',
         },
         param: {
-          placeholder: 'Ví dụ định dạng tham số:\n1=Trắng\n2=Đỏ\n3=Đen',
+          placeholder: 'Định dạng tham số, ví dụ:\n1=>Trắng\n2=>Đỏ\n3=>Đen',
           value: '',
         },
       });

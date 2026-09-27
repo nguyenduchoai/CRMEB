@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -62,6 +62,9 @@ class StoreServiceRecordServices extends BaseServices
             if (isset($item['wx_avatar']) && $item['wx_avatar'] && !$item['avatar']) {
                 $item['avatar'] = $item['wx_avatar'];
             }
+            $item['avatar'] = set_file_url($item['avatar']);
+            $item['kefu_avatar'] = set_file_url($item['kefu_avatar']);
+            $item['wx_avatar'] = set_file_url($item['wx_avatar']);
             $item['_update_time'] = date('Y-m-d H:i', $item['update_time']);
         }
         return $list;

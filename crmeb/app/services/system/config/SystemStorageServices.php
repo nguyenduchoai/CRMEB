@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -188,10 +188,10 @@ class SystemStorageServices extends BaseServices
     {
         $storageInfo = $this->dao->get(['is_delete' => 0, 'id' => $id]);
         if (!$storageInfo) {
-            throw new AdminException(400608);
+            throw new AdminException('Lưu trữ đám mây cần xóa không tồn tại');
         }
         if ($storageInfo->status) {
-            throw new AdminException(400609);
+            throw new AdminException('Lưu trữ đám mây đang được sử dụng, cần kích hoạt không gian lưu trữ khác mới có thể xóa');
         }
 
         try {
@@ -277,7 +277,7 @@ class SystemStorageServices extends BaseServices
         //Lưu thông tin cấu hình
         $this->saveConfig($type, $data);
         if ($this->dao->count(['name' => $data['name']])) {
-            throw new AdminException(400610);
+            throw new AdminException('Tên không gian đám mây không được trùng');
         }
         //Lưu lưu trữ đám mây (cloud storage)
         $data['type'] = $type;
@@ -540,7 +540,7 @@ class SystemStorageServices extends BaseServices
     {
         $info = $this->dao->get($id);
         if (!$info) {
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         if ($info->domain != $domain) {
             $info->domain = $domain;

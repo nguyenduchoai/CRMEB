@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Danh sách cửa hàng",
+  "navigationBarTitleText": "门店列表",
   "usingComponents": {
     "loading": "/components/Loading/index"
   }

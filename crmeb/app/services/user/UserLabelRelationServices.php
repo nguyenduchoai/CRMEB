@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -52,26 +52,26 @@ class UserLabelRelationServices extends BaseServices
      * @return bool
      * @throws \Exception
      */
-    public function setUserLable($uids, array $labels)
+    public function setUserLabel($uids, array $labels, $label_type = 0)
     {
         if (!is_array($uids)) $uids = [$uids];
-        $re = $this->dao->delete([['uid', 'in', $uids]]);
-        if (!count($labels)) return true;
-        if ($re === false) {
-            throw new AdminException(400667);
+        if (!count($labels)) {
+            $this->dao->delete([['uid', 'in', $uids]]);
+            return true;
         }
-        /** @var UserServices $userServices */
-        $userServices = app()->make(UserServices::class);
-        $data = [];
-        foreach ($uids as $uid) {
-            foreach ($labels as $label) {
-                $data[] = ['uid' => $uid, 'label_id' => $label];
+        if ($label_type == 0 || $label_type == 1) {
+            if ($label_type == 0) $this->dao->delete([['uid', 'in', $uids]]);
+            $data = [];
+            foreach ($uids as $uid) {
+                foreach ($labels as $label) {
+                    $data[] = ['uid' => $uid, 'label_id' => $label];
+                }
             }
-            $userServices->update(['uid' => $uid], ['label_ids' => implode(',', $labels)]);
-        }
-        if ($data) {
-            if (!$this->dao->saveAll($data))
-                throw new AdminException(400668);
+            if ($data) {
+                if (!$this->dao->saveAll($data)) throw new AdminException('Đặt nhãn thất bại');
+            }
+        } else {
+            $this->dao->delete([['uid', 'in', $uids], ['label_id', 'in', $labels]]);
         }
         return true;
     }

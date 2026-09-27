@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -74,20 +74,20 @@ class SystemRole extends AuthController
             ['status', 0],
             ['checked_menus', [], '', 'rules']
         ]);
-        if (!$data['role_name']) return app('json')->fail(400220);
+        if (!$data['role_name']) return app('json')->fail('Vui lòng nhập tên vai trò');
         if (!is_array($data['rules']) || !count($data['rules']))
-            return app('json')->fail(400221);
+            return app('json')->fail('Vui lòng chọn ít nhất một quyền');
 
         $data['rules'] = implode(',', $data['rules']);
         if ($id) {
-            if (!$this->services->update($id, $data)) return app('json')->fail(100007);
+            if (!$this->services->update($id, $data)) return app('json')->fail('Sửa thất bại');
             CacheService::clear();
-            return app('json')->success(100001);
+            return app('json')->success('Sửa thành công');
         } else {
             $data['level'] = $this->adminInfo['level'] + 1;
-            if (!$this->services->save($data)) return app('json')->fail(400223);
+            if (!$this->services->save($data)) return app('json')->fail('Thêm vai trò thất bại');
             CacheService::clear();
-            return app('json')->success(400222);
+            return app('json')->success('Thêm vai trò thành công');
         }
     }
 
@@ -104,7 +104,7 @@ class SystemRole extends AuthController
     {
         $role = $this->services->get($id);
         if (!$role) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         $menus = $services->getMenus($this->adminInfo['level'] == 0 ? [] : $this->adminInfo['roles'], explode(',', $role['rules']));
         return app('json')->success(['role' => $role->toArray(), 'menus' => $menus]);
@@ -119,13 +119,13 @@ class SystemRole extends AuthController
     public function delete(SystemAdminServices $adminServices, $id)
     {
         if ($adminServices->checkRoleUse($id)) {
-            return app('json')->fail(400754);
+            return app('json')->fail('Vai trò đang được sử dụng, không thể xóa');
         }
         if (!$this->services->delete($id))
-            return app('json')->fail(100008);
+            return app('json')->fail('Xóa thất bại');
         else {
             CacheService::clear();
-            return app('json')->success(100002);
+            return app('json')->success('Xóa thành công');
         }
     }
 
@@ -138,18 +138,18 @@ class SystemRole extends AuthController
     public function set_status($id, $status)
     {
         if (!$id) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         $role = $this->services->get($id);
         if (!$role) {
-            return app('json')->fail(400199);
+            return app('json')->fail('Không tìm thấy vai trò này');
         }
         $role->status = $status;
         if ($role->save()) {
             CacheService::clear();
-            return app('json')->success(100001);
+            return app('json')->success('Sửa thành công');
         } else {
-            return app('json')->fail(100007);
+            return app('json')->fail('Sửa thất bại');
         }
     }
 }

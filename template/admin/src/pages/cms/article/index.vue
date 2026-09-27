@@ -68,7 +68,7 @@
         </el-table-column>
         <el-table-column label="Liên kết sản phẩm" min-width="130">
           <template slot-scope="scope">
-            <span>{{ scope.row.store_name }}</span>
+            <span>{{ scope.row.store_name || '--' }}</span>
           </template>
         </el-table-column>
         <el-table-column label="Lượt xem" min-width="80">
@@ -81,7 +81,7 @@
             <span>{{ scope.row.add_time | formatDate }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="Thao tác" fixed="right" width="210">
+        <el-table-column label="Thao tác" fixed="right" width="300">
           <template slot-scope="scope">
             <a v-db-click @click="edit(scope.row)">Sửa</a>
             <el-divider direction="vertical"></el-divider>

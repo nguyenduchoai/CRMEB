@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -125,7 +125,7 @@ class WechatReplyServices extends BaseServices
             $res = $this->dao->update($id, ['type' => $type, 'data' => json_encode($res), 'status' => $status], 'id');
             $res1 = $keyServices->saveAll($arr);
             if (!$res || !$res1) {
-                throw new AdminException(100006);
+                throw new AdminException('Lưu thất bại');
             }
         } else {
             $reply = $this->dao->save([
@@ -139,7 +139,7 @@ class WechatReplyServices extends BaseServices
                 $arr[$k]['reply_id'] = $reply->id;
             }
             $res = $keyServices->saveAll($arr);
-            if (!$res) throw new AdminException(100006);
+            if (!$res) throw new AdminException('Lưu thất bại');
         }
         return true;
     }
@@ -207,7 +207,7 @@ class WechatReplyServices extends BaseServices
     {
         $res = [];
         if (!isset($data['content']) || $data['content'] == '') {
-            throw new AdminException(400706);
+            throw new AdminException('Vui lòng nhập nội dung tin nhắn trả lời');
         }
         $res['content'] = $data['content'];
         return $res;
@@ -225,7 +225,7 @@ class WechatReplyServices extends BaseServices
     public function tidyImage($data, $id)
     {
         if (!isset($data['src']) || $data['src'] == '') {
-            throw new AdminException(400707);
+            throw new AdminException('Vui lòng tải lên hình ảnh trả lời');
         }
         $reply = $this->dao->get((int)$id);
         if ($reply) $reply['data'] = json_decode($reply['data'], true);
@@ -261,7 +261,7 @@ class WechatReplyServices extends BaseServices
     public function tidyVoice($data, $id)
     {
         if (!isset($data['src']) || $data['src'] == '') {
-            throw new AdminException(400708);
+            throw new AdminException('Vui lòng tải lên âm thanh trả lời');
         }
         $reply = $this->dao->get((int)$id);
         if ($reply) $reply['data'] = json_decode($reply['data'], true);
@@ -297,7 +297,7 @@ class WechatReplyServices extends BaseServices
 //            $data = $data['list'][0];
 //        }
         if (!count($data)) {
-            throw new AdminException(400709);
+            throw new AdminException('Vui lòng chọn tin bài');
         }
         $siteUrl = sys_config('site_url');
         if (empty($data['url'])) $data['url'] = $siteUrl . '/pages/extension/news_details/index?id=' . $data['id'];
@@ -408,7 +408,7 @@ class WechatReplyServices extends BaseServices
                 'key_type' => 1,
             ]);
         }
-        if (!$res) throw new AdminException(100006);
+        if (!$res) throw new AdminException('Lưu thất bại');
         return true;
     }
 

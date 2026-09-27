@@ -117,10 +117,6 @@ export default {
         },
         {
           components: toolCom.c_bg_color,
-          configNme: 'searchBoxColor',
-        },
-        {
-          components: toolCom.c_bg_color,
           configNme: 'tipColor',
         },
         {
@@ -154,32 +150,8 @@ export default {
       ],
       currencyStyle: [
         {
-          components: toolCom.c_title,
-          configNme: 'titleCurrency',
-        },
-        {
-          components: toolCom.c_bg_color,
-          configNme: 'moduleColor',
-        },
-        {
-          components: toolCom.c_bg_color,
-          configNme: 'bottomBgColor',
-        },
-        {
-          components: toolCom.c_slider,
-          configNme: 'topConfig',
-        },
-        {
-          components: toolCom.c_slider,
-          configNme: 'bottomConfig',
-        },
-        {
-          components: toolCom.c_slider,
-          configNme: 'prConfig',
-        },
-        {
-          components: toolCom.c_fillet,
-          configNme: 'fillet',
+          components: toolCom.c_common_style,
+          configNme: 'c_common_style',
         },
       ],
       setUp: 0,
@@ -239,12 +211,137 @@ export default {
   mounted() {
     this.$nextTick(() => {
       let value = JSON.parse(JSON.stringify(this.$store.state.mobildConfig.defaultArray[this.num]));
-      this.configObj = value;
+      this.configObj = this.patchConfig(value);
     });
   },
   methods: {
+    patchConfig(config) {
+      if (!config.paddingConfig) {
+        config.paddingConfig = {
+          title: 'Lề trong',
+          val: 0,
+          min: 0,
+          max: 100,
+          isAll: false,
+          valList: [
+            { val: config.topConfig ? config.topConfig.val : 0 },
+            { val: config.prConfig ? config.prConfig.val : 0 },
+            { val: config.bottomConfig ? config.bottomConfig.val : 0 },
+            { val: config.prConfig ? config.prConfig.val : 0 },
+          ],
+        };
+      }
+      if (!config.marginConfig) {
+        config.marginConfig = {
+          title: 'Lề ngoài',
+          val: 0,
+          min: 0,
+          max: 100,
+          isAll: false,
+          valList: [{ val: config.mbConfig ? config.mbConfig.val : 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        };
+      }
+      if (!config.componentBgConfig) {
+        config.componentBgConfig = {
+          title: 'Cài đặt nền',
+          tabVal: 0,
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
+          colorConfig: {
+            title: 'Màu nền',
+            default: [{ item: '#fff' }, { item: '#fff' }],
+            color: [{ item: '#fff' }, { item: '#fff' }],
+          },
+          colorDirection: {
+            title: 'Hướng chuyển màu',
+            tabVal: 0,
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
+          },
+          imageConfig: {
+            header: 'Ảnh nền',
+            title: '',
+            name: 'Tải lên ảnh',
+            type: 'code',
+            url: '',
+            info: 'Kích thước đề xuất: 750px * 400px',
+          },
+        };
+      }
+      if (!config.borderConfig) {
+        config.borderConfig = {
+          title: 'Cài đặt viền',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0,
+          styleConfig: {
+            title: 'Kiểu viền',
+            tabVal: 0,
+            tabList: [
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
+            ],
+          },
+          widthConfig: {
+            title: 'Độ dày viền',
+            val: 1,
+            min: 1,
+            max: 20,
+          },
+          colorConfig: {
+            title: 'Màu viền',
+            default: [{ item: '#e5e5e5' }],
+            color: [{ item: '#e5e5e5' }],
+          },
+        };
+      }
+      if (!config.shadowConfig) {
+        config.shadowConfig = {
+          title: 'Cài đặt đổ bóng',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0,
+          colorConfig: {
+            title: 'Màu đổ bóng',
+            default: [{ item: 'rgba(0,0,0,0.1)' }],
+            color: [{ item: 'rgba(0,0,0,0.1)' }],
+          },
+          xConfig: {
+            title: 'Độ lệch trục X',
+            val: 0,
+            min: -50,
+            max: 50,
+          },
+          yConfig: {
+            title: 'Độ lệch trục Y',
+            val: 0,
+            min: -50,
+            max: 50,
+          },
+          blurConfig: {
+            title: 'Bán kính làm mờ',
+            val: 10,
+            min: 0,
+            max: 50,
+          },
+          spreadConfig: {
+            title: 'Bán kính lan tỏa',
+            val: 0,
+            min: -50,
+            max: 50,
+          },
+        };
+      }
+      if (!config.c_common_style) {
+        config.c_common_style = {
+          color: 'rgba(255,255,255,1)',
+          color2: 'rgba(255,255,255,1)',
+          lr: 0,
+          type: 0,
+        };
+      }
+      return config;
+    },
     getRComContent(arr) {
-      console.log('11', this.type2);
       if (this.type == 1) {
         // this.rCom = [...arr, ...this.oneContent, ...this.threeContent];
         this.rCom = [...arr, ...this.oneContent, ...this.threeContent, ...this.oneContentFix];
@@ -260,7 +357,6 @@ export default {
       }
     },
     getRComStyle(arr) {
-      console.log('222');
       if (this.type == 0) {
         if (this.type2 == 2) {
           this.rCom = [...arr, ...this.oneStyle, ...this.twoStyle, ...this.currencyStyle];

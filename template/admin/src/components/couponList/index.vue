@@ -118,6 +118,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    status: {
+      type: Number,
+      default: null,
+    },
+    receiveType: {
+      type: [Number, String],
+      default: 3,
+    },
   },
   data() {
     return {
@@ -149,6 +157,12 @@ export default {
     updateName: function (newVal) {
       this.selectedNames = newVal;
       this.multipleSelection = newVal;
+    },
+    isTemplate(n) {
+      if (n) {
+        this.tableFrom.page = 1;
+        this.tableList();
+      }
     },
   },
   created() {},
@@ -197,6 +211,10 @@ export default {
     },
     tableList() {
       this.loading = true;
+      this.tableFrom.receive_type = this.receiveType === 'all' ? '' : this.receiveType;
+      if (this.status !== null) {
+        this.tableFrom.status = this.status;
+      }
       releasedListApi(this.tableFrom).then((res) => {
         let data = res.data;
         this.couponList = data.list;
@@ -215,6 +233,8 @@ export default {
       this.couponList.forEach((row) => {
         if (ids.includes(row.id)) {
           this.$refs.couponTable.toggleRowSelection(row, true);
+        } else {
+          this.$refs.couponTable.toggleRowSelection(row, false);
         }
       });
     },

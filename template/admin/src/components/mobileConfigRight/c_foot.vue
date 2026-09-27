@@ -46,7 +46,7 @@
     </draggable>
     <el-button class="add-btn" @click="addMenu" v-if="footConfig.length < 5">+ Thêm khối</el-button>
     <div>
-      <el-dialog :visible.sync="modalPic" width="960px" title="Tải lên menu dưới cùng" :mask-closable="false" :z-index="1">
+      <el-dialog :visible.sync="modalPic" width="960px" title="Tải lên menu dưới cùng" :mask-closable="false">
         <uploadPictures
           :isChoice="isChoice"
           @getPic="getPic"

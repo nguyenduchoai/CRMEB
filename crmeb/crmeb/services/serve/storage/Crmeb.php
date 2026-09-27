@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -63,7 +63,7 @@ class Crmeb extends BaseStorage
     {
         $typeContent = [1 => 'sms', 2 => 'expr_dump', 3 => 'expr_query', 4 => 'copy'];
         if (!isset($typeContent[$type])) {
-            throw new AdminException(100100);
+            throw new AdminException('Tham số không hợp lệ');
         }
         $data = ['page' => $page, 'limit' => $limit, 'type' => $typeContent[$type]];
         if ($type == 1 && $status != '') {

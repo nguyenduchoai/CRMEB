@@ -1,5 +1,13 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 namespace app\services\system\lang;
 
 use app\dao\system\lang\LangCountryDao;
@@ -99,7 +107,7 @@ class LangCountryServices extends BaseServices
         } else {
             $res = $this->dao->save($data);
         }
-        if (!$res) throw new AdminException(100007);
+        if (!$res) throw new AdminException('Sửa thất bại');
         CacheService::clear();
         return true;
     }
@@ -112,7 +120,7 @@ class LangCountryServices extends BaseServices
     public function langCountryDel($id)
     {
         $res = $this->dao->delete($id);
-        if (!$res) throw new AdminException(100008);
+        if (!$res) throw new AdminException('Xóa thất bại');
         CacheService::clear();
         return true;
     }

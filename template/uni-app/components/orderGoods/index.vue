@@ -220,7 +220,7 @@
 					if (item.type == 0) {
 						url = `/pages/goods_details/index?id=${item.product_id}`
 					} else if (item.type == 1) {
-						url = `/pages/activity/goods_seckill_details/index?id=${item.seckill_id}`
+						url = `/pages/activity/goods_seckill_details/index?id=${item.seckill_id}&time_id=${item.productInfo.time_id}`
 					} else if (item.type == 2) {
 						url = `/pages/activity/goods_bargain_details/index?id=${item.bargain_id}&bargain=${this.uid}`
 					} else if (item.type == 3) {

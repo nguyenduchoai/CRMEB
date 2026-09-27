@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -16,10 +16,12 @@ use app\services\BaseServices;
 use app\services\order\StoreOrderServices;
 use app\services\product\product\StoreProductReplyServices;
 use app\services\product\product\StoreProductServices;
+use app\services\system\log\SystemFileServices;
 use app\services\user\UserExtractServices;
 use crmeb\exceptions\AdminException;
 use app\dao\system\admin\SystemAdminDao;
 use app\services\system\SystemMenusServices;
+use app\services\other\CacheServices;
 use crmeb\services\CacheService;
 use crmeb\services\FormBuilder;
 use crmeb\services\workerman\ChannelService;
@@ -67,7 +69,7 @@ class SystemAdminServices extends BaseServices
         $adminInfo = $this->dao->accountByAdmin($account);
         if (!$adminInfo || !password_verify($password, $adminInfo->pwd)) return false;
         if (!$adminInfo->status) {
-            throw new AdminException(400595);
+            throw new AdminException('Bạn đã bị cấm đăng nhập');
         }
         $adminInfo->last_time = time();
         $adminInfo->last_ip = app('request')->ip();
@@ -90,13 +92,13 @@ class SystemAdminServices extends BaseServices
     {
         $adminInfo = $this->dao->accountByAdmin($account);
         if (!$adminInfo) {
-            throw new AdminException(400594);
+            throw new AdminException('Quản trị viên không tồn tại');
         }
         if (!$adminInfo->status) {
-            throw new AdminException(400595);
+            throw new AdminException('Bạn đã bị cấm đăng nhập');
         }
         if (!password_verify($password, $adminInfo->file_pwd)) {
-            throw new AdminException(400140);
+            throw new AdminException('Tài khoản hoặc mật khẩu không đúng');
         }
         $adminInfo->last_time = time();
         $adminInfo->last_ip = app('request')->ip();
@@ -169,18 +171,29 @@ class SystemAdminServices extends BaseServices
     public function getLoginInfo()
     {
         $key = uniqid();
-        CheckQueueJob::dispatch([$key]);
+        CheckQueueJob::dispatchSecs(1, [$key]);
         $data = [
             'slide' => sys_data('admin_login_slide') ?? [],
-            'logo_square' => sys_config('site_logo_square'),//Trong suốt
-            'logo_rectangle' => sys_config('site_logo'),//Hình vuông
-            'login_logo' => sys_config('login_logo'),//Đăng nhập
+            'logo_square' => sys_config('site_logo_square'), //Trong suốt
+            'logo_rectangle' => sys_config('site_logo'), //Hình vuông
+            'login_logo' => sys_config('login_logo'), //Đăng nhập
             'site_name' => sys_config('site_name'),
             'copyright' => sys_config('nncnL_crmeb_copyright', ''),
             'version' => get_crmeb_version(),
             'key' => $key,
             'login_captcha' => 0
         ];
+
+        try {
+            $cacheServices = app()->make(CacheServices::class);
+            if (!$cacheServices->checkDbCache('write_md5', get_crmeb_version_vode())) {
+                // Thực hiện ghi dữ liệu
+                app()->make(SystemFileServices::class)->writeMd5();
+                $cacheServices->setDbCache('write_md5', get_crmeb_version_vode());
+            }
+        } catch (\ReflectionException $e) {
+        }
+
         if (CacheService::get('login_captcha', 1) > 1) {
             $data['login_captcha'] = 1;
         }
@@ -270,16 +283,16 @@ class SystemAdminServices extends BaseServices
     public function create(array $data)
     {
         if ($data['conf_pwd'] != $data['pwd']) {
-            throw new AdminException(400264);
+            throw new AdminException('Hai mật khẩu đã nhập không khớp');
         }
         unset($data['conf_pwd']);
 
         if (strlen(trim($data['pwd'])) < 6 || strlen(trim($data['pwd'])) > 32) {
-            throw new AdminException(400762);
+            throw new AdminException('Tài khoản và mật khẩu phải dài từ 6 đến 32 ký tự');
         }
 
         if ($this->dao->count(['account' => $data['account'], 'is_del' => 0])) {
-            throw new AdminException(400596);
+            throw new AdminException('Tài khoản quản trị viên đã tồn tại');
         }
 
         $data['pwd'] = $this->passwordHash($data['pwd']);
@@ -291,7 +304,7 @@ class SystemAdminServices extends BaseServices
             if ($this->dao->save($data)) {
                 return true;
             } else {
-                throw new AdminException(100022);
+                throw new AdminException('Thêm thất bại');
             }
         });
     }
@@ -307,10 +320,10 @@ class SystemAdminServices extends BaseServices
     {
         $adminInfo = $this->dao->get($id);
         if (!$adminInfo) {
-            throw new AdminException(400594);
+            throw new AdminException('Quản trị viên không tồn tại');
         }
         if ($adminInfo->is_del) {
-            throw new AdminException(400452);
+            throw new AdminException('Quản trị viên đã bị xóa');
         }
         return create_form('Sửa quản trị viên', $this->createAdminForm($level, $adminInfo->toArray()), $this->url('/setting/admin/' . $id), 'PUT');
     }
@@ -324,31 +337,31 @@ class SystemAdminServices extends BaseServices
     public function save(int $id, array $data)
     {
         if (!$adminInfo = $this->dao->get($id)) {
-            throw new AdminException(400594);
+            throw new AdminException('Quản trị viên không tồn tại');
         }
         if ($adminInfo->is_del) {
-            throw new AdminException(400452);
+            throw new AdminException('Quản trị viên đã bị xóa');
         }
         //Đổi mật khẩu
         if ($data['pwd']) {
 
             if (!$data['conf_pwd']) {
-                throw new AdminException(400263);
+                throw new AdminException('Vui lòng nhập mật khẩu xác nhận');
             }
 
             if ($data['conf_pwd'] != $data['pwd']) {
-                throw new AdminException(400264);
+                throw new AdminException('Hai mật khẩu đã nhập không khớp');
             }
 
             if (strlen(trim($data['pwd'])) < 6 || strlen(trim($data['pwd'])) > 32) {
-                throw new AdminException(400762);
+                throw new AdminException('Tài khoản và mật khẩu phải dài từ 6 đến 32 ký tự');
             }
 
             $adminInfo->pwd = $this->passwordHash($data['pwd']);
         }
         //Sửa tài khoản
         if (isset($data['account']) && $data['account'] != $adminInfo->account && $this->dao->isAccountUsable($data['account'], $id)) {
-            throw new AdminException(400596);
+            throw new AdminException('Tài khoản quản trị viên đã tồn tại');
         }
         if (isset($data['roles'])) {
             $adminInfo->roles = implode(',', $data['roles']);
@@ -373,21 +386,21 @@ class SystemAdminServices extends BaseServices
     {
         $adminInfo = $this->dao->get($id);
         if (!$adminInfo)
-            throw new AdminException(400451);
+            throw new AdminException('Không tìm thấy thông tin quản trị viên');
         if ($adminInfo->is_del) {
-            throw new AdminException(400452);
+            throw new AdminException('Quản trị viên đã bị xóa');
         }
         if (!$data['real_name'])
-            throw new AdminException(400453);
+            throw new AdminException('Họ tên quản trị viên không được để trống');
         if ($data['pwd']) {
             if (!password_verify($data['pwd'], $adminInfo['pwd']))
-                throw new AdminException(400597);
+                throw new AdminException('Mật khẩu cũ không đúng');
             if (!$data['new_pwd'])
-                throw new AdminException(400598);
+                throw new AdminException('Vui lòng nhập mật khẩu mới');
             if (!$data['conf_pwd'])
-                throw new AdminException(400263);
+                throw new AdminException('Vui lòng nhập mật khẩu xác nhận');
             if ($data['new_pwd'] != $data['conf_pwd'])
-                throw new AdminException(400264);
+                throw new AdminException('Hai mật khẩu đã nhập không khớp');
             $adminInfo->pwd = $this->passwordHash($data['new_pwd']);
         }
 
@@ -411,16 +424,16 @@ class SystemAdminServices extends BaseServices
     {
         $adminInfo = $this->dao->get($id);
         if (!$adminInfo)
-            throw new AdminException(400451);
+            throw new AdminException('Không tìm thấy thông tin quản trị viên');
         if ($adminInfo->is_del) {
-            throw new AdminException(400452);
+            throw new AdminException('Quản trị viên đã bị xóa');
         }
         if ($data['file_pwd']) {
-            if ($adminInfo->level != 0) throw new AdminException(400611);
+            if ($adminInfo->level != 0) throw new AdminException('Không có quyền');
             if (!$data['conf_file_pwd'])
-                throw new AdminException(400263);
+                throw new AdminException('Vui lòng nhập mật khẩu xác nhận');
             if ($data['file_pwd'] != $data['conf_file_pwd'])
-                throw new AdminException(400264);
+                throw new AdminException('Hai mật khẩu đã nhập không khớp');
             $adminInfo->file_pwd = $this->passwordHash($data['file_pwd']);
         }
         if ($adminInfo->save())
@@ -447,7 +460,7 @@ class SystemAdminServices extends BaseServices
             $data['commentnum'] = $replyServices->count(['is_reply' => 0]);
             /** @var UserExtractServices $extractServices */
             $extractServices = app()->make(UserExtractServices::class);
-            $data['reflectnum'] = $extractServices->getCount(['status' => 0]);//Rút tiền
+            $data['reflectnum'] = $extractServices->getCount(['status' => 0]); //Rút tiền
             $data['msgcount'] = intval($data['ordernum']) + intval($data['inventory']) + intval($data['commentnum']) + intval($data['reflectnum']);
             ChannelService::instance()->send('ADMIN_NEW_PUSH', $data);
         } catch (\Exception $e) {

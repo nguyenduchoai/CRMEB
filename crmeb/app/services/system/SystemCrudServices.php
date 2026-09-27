@@ -1,15 +1,13 @@
 <?php
-/**
- *  +----------------------------------------------------------------------
- *  | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
- *  +----------------------------------------------------------------------
- *  | Copyright (c) 2016~2022 https://www.crmeb.com All rights reserved.
- *  +----------------------------------------------------------------------
- *  | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
- *  +----------------------------------------------------------------------
- *  | Author: CRMEB Team <admin@crmeb.com>
- *  +----------------------------------------------------------------------
- */
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 
 namespace app\services\system;
 
@@ -288,7 +286,7 @@ class SystemCrudServices extends BaseServices
     {
 
         if (!in_array($type, $this->getTabelRule()['types'])) {
-            throw new AdminException(500044);
+            throw new AdminException('Kiểu trường không tồn tại');
         }
 
         return $this->getTabelRule()['rule'][$type] ?? $type;
@@ -686,7 +684,7 @@ class SystemCrudServices extends BaseServices
 
         //Kiểm tra có phải bảng hệ thống không
         if (in_array($tableName, self::NOT_CRUD_TABANAME)) {
-            throw new AdminException(500041);
+            throw new AdminException('Bảng dữ liệu hệ thống, không thể tạo');
         }
 
         $data['softDelete'] = false;

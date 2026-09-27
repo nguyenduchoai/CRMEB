@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -53,13 +53,13 @@ class OutAccountServices extends BaseServices
     {
         $autInfo = $this->dao->get(['appid' => $appid, 'is_del' => 0]);
         if (!$autInfo) {
-            throw new AuthException(410141);
+            throw new AuthException('Không có người dùng này');
         }
         if ($appsecret && !password_verify($appsecret, $autInfo->appsecret)) {
-            throw new AuthException(400744);
+            throw new AuthException('Sai appid hoặc appsecret');
         }
         if ($autInfo->status == 0) {
-            throw new AuthException(400595);
+            throw new AuthException('Bạn đã bị cấm đăng nhập');
         }
         $token = $this->createToken($autInfo->id, 'out');
         $data['last_time'] = time();
@@ -184,14 +184,14 @@ class OutAccountServices extends BaseServices
             if (!request()->isCli()) {
                 $cacheService->delete($md5Token);
             }
-            throw new AuthException(110003);
+            throw new AuthException('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại');
         }
 
         if ($authInfo->status == 2) {
             if (!request()->isCli()) {
                 $cacheService->delete($md5Token);
             }
-            throw new AuthException(400595);
+            throw new AuthException('Bạn đã bị cấm đăng nhập');
         }
         return true;
     }
@@ -207,19 +207,19 @@ class OutAccountServices extends BaseServices
     protected function verifyToken(string $token, JwtAuth $jwtAuth, CacheService $cacheService): array
     {
         if (!$token || $token === 'undefined') {
-            throw new AuthException(400172);
+            throw new AuthException('Đăng nhập thất bại');
         }
 
         $md5Token = md5($token);
 
         if (!$cacheService->has($md5Token) || !($cacheToken = $cacheService->get($md5Token, '', NULL, 'out'))) {
-            throw new AuthException(110006);
+            throw new AuthException('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại');
         }
 
         //Phân tích token
         [$id, $type] = $jwtAuth->parseToken($token);
         if (!$id || $type != 'out') {
-            throw new AuthException(400172);
+            throw new AuthException('Đăng nhập thất bại');
         }
 
         try {
@@ -228,7 +228,7 @@ class OutAccountServices extends BaseServices
             if (!request()->isCli()) {
                 $cacheService->delete($md5Token);
             }
-            throw new AuthException(400172);
+            throw new AuthException('Đăng nhập thất bại');
         }
 
         return [$md5Token, $id, $type];
@@ -252,12 +252,12 @@ class OutAccountServices extends BaseServices
      */
     public function textOutUrl($data)
     {
-        if (!$data['push_account'] || !$data['push_password'] || !$data['push_token_url']) throw new AdminException(100100);
+        if (!$data['push_account'] || !$data['push_password'] || !$data['push_token_url']) throw new AdminException('Tham số không hợp lệ');
         $param = ['push_account' => $data['push_account'], 'push_password' => $data['push_password']];
         $res = HttpService::getRequest($data['push_token_url'], $param);
         $res = $res ? json_decode($res, true) : ['status' => 400];
         if (!isset($res['status']) && $res['status'] != 200) {
-            throw new AdminException(100015);
+            throw new AdminException('Cài đặt thất bại');
         } else {
             return $res['data'];
         }

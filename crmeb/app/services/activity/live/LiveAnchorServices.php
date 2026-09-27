@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -100,26 +100,26 @@ class LiveAnchorServices extends BaseServices
     {
         $liveAnchor = $this->dao->get(['wechat' => $data['wechat'], 'is_del' => 0]);
         if (!MiniProgramService::getRoleList(2, 0, 30, $data['wechat'])) {
-            throw new AdminException(400426);
+            throw new AdminException('Vui lòng xác thực streamer trên Mini Program trước');
         }
         if ($id) {
             if ($liveAnchor && $id != $liveAnchor['id']) {
-                throw new AdminException(400425);
+                throw new AdminException('Streamer này đã tồn tại');
             }
             if ($this->dao->update($id, $data)) {
                 return true;
             } else {
-                throw new AdminException(100007);
+                throw new AdminException('Sửa thất bại');
             }
         } else {
             unset($data['id']);
             if ($liveAnchor) {
-                throw new AdminException(400425);
+                throw new AdminException('Streamer này đã tồn tại');
             }
             if ($this->dao->save($data)) {
                 return true;
             } else {
-                throw new AdminException(100022);
+                throw new AdminException('Thêm thất bại');
             }
         }
     }
@@ -133,7 +133,7 @@ class LiveAnchorServices extends BaseServices
     {
         if ($anchor = $this->getLiveAnchor($id)) {
             if (!$this->dao->update($id, ['is_del' => 1])) {
-                throw new AdminException(100008);
+                throw new AdminException('Xóa thất bại');
             }
             /** @var LiveRoomServices $liveRoom */
             $liveRoom = app()->make(LiveRoomServices::class);
@@ -154,11 +154,11 @@ class LiveAnchorServices extends BaseServices
     public function setShow(int $id, $is_show)
     {
         if (!$this->getLiveAnchor($id))
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         if ($this->dao->update($id, ['is_show' => $is_show])) {
             return true;
         } else {
-            throw new AdminException(100015);
+            throw new AdminException('Cài đặt thất bại');
         }
     }
 

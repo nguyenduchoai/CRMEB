@@ -129,6 +129,31 @@
                 </li>
               </ul>
             </div>
+            <div class="section">
+              <div class="title">Thông tin trả hoa hồng (số tiền | UID người dùng)</div>
+              <ul class="list">
+                <li class="item">
+                  <div>Hoa hồng cấp 1:</div>
+                  <div class="value">{{ orderDatalist.orderInfo.one_brokerage }} | {{ orderDatalist.orderInfo.spread_uid }}</div>
+                </li>
+                <li class="item">
+                  <div>Hoa hồng cấp 2:</div>
+                  <div class="value">{{ orderDatalist.orderInfo.two_brokerage }} | {{ orderDatalist.orderInfo.spread_two_uid }}</div>
+                </li>
+                <li class="item">
+                  <div>Hoa hồng nhân viên:</div>
+                  <div class="value">{{ orderDatalist.orderInfo.staff_brokerage }} | {{ orderDatalist.orderInfo.staff_id }}</div>
+                </li>
+                <li class="item">
+                  <div>Hoa hồng đại lý:</div>
+                  <div class="value">{{ orderDatalist.orderInfo.agent_brokerage }} | {{ orderDatalist.orderInfo.agent_id }}</div>
+                </li>
+                <li class="item">
+                  <div>Hoa hồng đại lý khu vực:</div>
+                  <div class="value">{{ orderDatalist.orderInfo.division_brokerage }} | {{ orderDatalist.orderInfo.division_id }}</div>
+                </li>
+              </ul>
+            </div>
             <div class="section" v-if="orderDatalist.orderInfo.delivery_name">
               <div class="title">
                 {{ orderDatalist.orderInfo.delivery_type == 'express' ? 'Thông tin vận chuyển' : 'Thông tin người giao hàng' }}
@@ -411,7 +436,7 @@ export default {
         alipay: 'Thanh toán Alipay',
         offline: 'Thanh toán ngoại tuyến',
       };
-      return obj[val];
+      return obj[val] ?? 'Phương thức khác';
     },
   },
   methods: {

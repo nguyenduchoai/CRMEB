@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -120,30 +120,30 @@ class UserLabelServices extends BaseServices
     public function save(int $id, array $data)
     {
         if (!$data['label_cate']) {
-            throw new AdminException(400669);
+            throw new AdminException('Vui lòng chọn danh mục nhãn');
         }
         $levelName = $this->dao->getOne(['label_name' => $data['label_name'], 'label_cate' => $data['label_cate']]);
         if ($id) {
             if (!$this->getLable($id)) {
-                throw new AdminException(100026);
+                throw new AdminException('Dữ liệu không tồn tại');
             }
             if ($levelName && $id != $levelName['id']) {
-                throw new AdminException(400670);
+                throw new AdminException('Nhãn này đã tồn tại');
             }
             if ($this->dao->update($id, $data)) {
                 return true;
             } else {
-                throw new AdminException(100007);
+                throw new AdminException('Sửa thất bại');
             }
         } else {
             unset($data['id']);
             if ($levelName) {
-                throw new AdminException(400670);
+                throw new AdminException('Nhãn này đã tồn tại');
             }
             if ($this->dao->save($data)) {
                 return true;
             } else {
-                throw new AdminException(100022);
+                throw new AdminException('Thêm thất bại');
             }
         }
     }
@@ -160,7 +160,7 @@ class UserLabelServices extends BaseServices
     {
         if ($this->getLable($id)) {
             if (!$this->dao->delete($id)) {
-                throw new AdminException(100008);
+                throw new AdminException('Xóa thất bại');
             }
         }
         return true;

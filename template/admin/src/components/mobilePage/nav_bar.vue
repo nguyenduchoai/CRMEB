@@ -1,15 +1,5 @@
 <template>
-  <div
-    class="mobile-page"
-    :style="{
-      background: bottomBgColor,
-      marginTop: cSlider + 'px',
-      paddingTop: topConfig + 'px',
-      paddingBottom: bottomConfig + 'px',
-      paddingLeft: prConfig + 'px',
-      paddingRight: prConfig + 'px',
-    }"
-  >
+  <common_wrapper :config="configObj">
     <div
       class="menusCon"
       :style="{
@@ -58,12 +48,12 @@
         >
           Trang chủ
         </div>
-        <div class="item" v-for="(item, index) in navList" :key="index" v-if="index < 20">
+        <div class="item" v-for="(item, index) in navList.slice(0, 20)" :key="index">
           {{ item.text.val }}
         </div>
       </div>
     </div>
-  </div>
+  </common_wrapper>
 </template>
 
 <script>
@@ -118,6 +108,7 @@ export default {
       // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         cname: 'Tab',
+        desc: 'Giới thiệu tab',
         name: 'tabNav',
         timestamp: this.num,
         isHide: false,
@@ -131,7 +122,17 @@ export default {
         styleConfig: {
           title: 'Chọn phong cách',
           tabVal: 0,
-          type: 'navBar',
+          tabList: [
+            {
+              name: 'Phong cách 1',
+            },
+            {
+              name: 'Phong cách 2',
+            },
+            {
+              name: 'Phong cách 3',
+            },
+          ],
         },
         stickyConfig: {
           title: 'Ghim đầu trang khi cuộn',
@@ -378,25 +379,20 @@ export default {
             },
           ],
         },
-        topConfig: {
-          title: 'Lề trên',
+        paddingConfig: {
+          title: 'Lề trong',
+          isAll: false,
           val: 0,
           min: 0,
+
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
-        bottomConfig: {
-          title: 'Lề dưới',
+        marginConfig: {
+          title: 'Lề ngoài',
+          isAll: false,
           val: 0,
           min: 0,
-        },
-        prConfig: {
-          title: 'Lề trái phải',
-          val: 0,
-          min: 0,
-        },
-        mbConfig: {
-          title: 'Lề trang',
-          val: 0,
-          min: 0,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         fillet: {
           title: 'Bo góc nền',
@@ -416,7 +412,85 @@ export default {
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
+        zIndexConfig: {
+          title: 'Thứ tự lớp thành phần',
+          val: 0,
+          min: 0,
+        },
+        borderConfig: {
+          title: 'Cài đặt viền',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0,
+          styleConfig: {
+            title: 'Kiểu viền',
+            tabVal: 0,
+            tabList: [
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
+            ],
+          },
+          widthConfig: {
+            title: 'Độ dày viền',
+            val: 1,
+            min: 1,
+          },
+          colorConfig: {
+            title: 'Màu viền',
+            default: [{ item: '#e5e5e5' }],
+            color: [{ item: '#e5e5e5' }],
+          },
+        },
+
+        shadowConfig: {
+          title: 'Cài đặt đổ bóng',
+          tabVal: 0,
+          tabList: [
+            {
+              name: 'Ẩn',
+            },
+            {
+              name: 'Hiện',
+            },
+          ],
+          val: 0,
+          colorConfig: {
+            title: 'Màu đổ bóng',
+            default: [
+              {
+                item: 'rgba(0,0,0,0.1)',
+              },
+            ],
+            color: [
+              {
+                item: 'rgba(0,0,0,0.1)',
+              },
+            ],
+          },
+          xConfig: {
+            title: 'Độ lệch trục X',
+            val: 0,
+            min: -50,
+          },
+          yConfig: {
+            title: 'Độ lệch trục Y',
+            val: 0,
+            min: -50,
+          },
+          blurConfig: {
+            title: 'Bán kính làm mờ',
+            val: 10,
+            min: 0,
+          },
+          spreadConfig: {
+            title: 'Bán kính lan tỏa',
+            val: 0,
+            min: -50,
+          },
+        },
       },
+      configObj: null,
       pageData: {},
       navList: [],
       toneConfig: 0,
@@ -447,31 +521,61 @@ export default {
   methods: {
     setConfig(data) {
       if (!data) return;
-      if (data.mbConfig) {
-        this.navList = data.tabListConfig.list;
-        this.toneConfig = data.toneConfig.tabVal;
-        this.decorateColorLeft = data.decorateColor.color[0].item;
-        this.decorateColorRight = data.decorateColor.color[1].item;
-        this.decorateColor = data.decorateColor2.color[0].item;
-        this.textColor = data.textColor.color[0].item;
-        this.textColor2 = data.textColor2.color[0].item;
-        this.textColor3 = data.textColor3.color[0].item;
-        this.bgColorLeft = data.moduleColor.color[0].item;
-        this.bgColorRight = data.moduleColor.color[1].item;
-        this.themeColor = `linear-gradient(90deg,${this.colorStyle.theme} 0%,${this.colorStyle.gradient} 100%)`;
-        this.bottomBgColor = data.bottomBgColor.color[0].item;
-        this.topConfig = data.topConfig.val;
-        this.bottomConfig = data.bottomConfig.val;
-        this.prConfig = data.prConfig.val;
-        this.cSlider = data.mbConfig.val;
-        this.styleConfig = data.styleConfig.tabVal;
-        let fillet = data.fillet.type;
-        let filletVal = data.fillet.val;
-        let valList = data.fillet.valList;
-        this.bgRadius = fillet
-          ? valList[0].val + 'px ' + valList[1].val + 'px ' + valList[3].val + 'px ' + valList[2].val + 'px'
-          : filletVal + 'px';
+      this.configObj = data;
+      for (let key in this.defaultConfig) {
+        if (data[key] === undefined) {
+          this.$set(data, key, this.defaultConfig[key]);
+        }
       }
+
+      if (!data.paddingConfig) {
+        let paddingConfig = {
+          title: 'Lề trong',
+          val: 0,
+          min: 0,
+          isAll: false,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        };
+        if (data.topConfig) paddingConfig.valList[0].val = data.topConfig.val;
+        if (data.prConfig) {
+          paddingConfig.valList[1].val = data.prConfig.val;
+          paddingConfig.valList[3].val = data.prConfig.val;
+        }
+        if (data.bottomConfig) paddingConfig.valList[2].val = data.bottomConfig.val;
+        this.$set(this.configObj, 'paddingConfig', paddingConfig);
+      }
+
+      if (!data.marginConfig) {
+        let marginConfig = {
+          title: 'Lề ngoài',
+          val: 0,
+          min: 0,
+          isAll: false,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        };
+        if (data.mbConfig) marginConfig.valList[0].val = data.mbConfig.val;
+        this.$set(this.configObj, 'marginConfig', marginConfig);
+      }
+
+      this.navList = data.tabListConfig.list;
+      this.toneConfig = data.toneConfig.tabVal;
+      this.decorateColorLeft = data.decorateColor.color[0].item;
+      this.decorateColorRight = data.decorateColor.color[1].item;
+      this.decorateColor = data.decorateColor2.color[0].item;
+      this.textColor = data.textColor.color[0].item;
+      this.textColor2 = data.textColor2.color[0].item;
+      this.textColor3 = data.textColor3.color[0].item;
+      this.bgColorLeft = data.moduleColor.color[0].item;
+      this.bgColorRight = data.moduleColor.color[1].item;
+      this.themeColor = `linear-gradient(90deg,${this.colorStyle.theme} 0%,${this.colorStyle.gradient} 100%)`;
+      this.bottomBgColor = data.bottomBgColor.color[0].item;
+      this.styleConfig = data.styleConfig.tabVal;
+      let fillet = data.fillet.type;
+      let filletVal = data.fillet.val;
+      let valList = data.fillet.valList;
+      this.bgRadius = fillet
+        ? valList[0].val + 'px ' + valList[1].val + 'px ' + valList[3].val + 'px ' + valList[2].val + 'px'
+        : filletVal + 'px';
     },
   },
 };

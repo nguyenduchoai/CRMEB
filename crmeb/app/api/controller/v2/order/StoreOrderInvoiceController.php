@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -74,9 +74,9 @@ class StoreOrderInvoiceController
      */
     public function detail(StoreOrderServices $services, Request $request, $uni)
     {
-        if (!strlen(trim($uni))) return app('json')->fail(100100);
+        if (!strlen(trim($uni))) return app('json')->fail('Tham số không hợp lệ');
         $order = $services->getUserOrderDetail($uni, (int)$request->uid(), []);
-        if (!$order) return app('json')->fail(410173);
+        if (!$order) return app('json')->fail('Đơn hàng không tồn tại');
         $order = $order->toArray();
         $orderInvoice = $this->services->getOne(['order_id' => $order['id']]);
         $order['invoice'] = $orderInvoice;

@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Tài khoản của tôi",
+  "navigationBarTitleText": "我的账户",
   "usingComponents": {
     "recommend": "/components/recommend/index",
     "authorize": "/components/Authorize",

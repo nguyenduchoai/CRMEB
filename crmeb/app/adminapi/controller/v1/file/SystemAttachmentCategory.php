@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -83,10 +83,10 @@ class SystemAttachmentCategory extends AuthController
         ]);
         if (is_array($data['pid'])) $data['pid'] = end($data['pid']);
         if (!$data['name']) {
-            return app('json')->fail(400100);
+            return app('json')->fail('Vui lòng điền tên danh mục');
         }
         $this->service->save($data);
-        return app('json')->success(100021);
+        return app('json')->success('Thêm thành công');
     }
 
     /**
@@ -113,16 +113,16 @@ class SystemAttachmentCategory extends AuthController
         ]);
         if (is_array($data['pid'])) $data['pid'] = end($data['pid']);
         if (!$data['name']) {
-            return app('json')->fail(400100);
+            return app('json')->fail('Vui lòng điền tên danh mục');
         }
         if ($data['pid'] == $id) {
             return app('json')->fail('Danh mục cha không thể là chính nó');
         }
         $info = $this->service->get($id);
         $count = $this->service->count(['pid' => $id]);
-        if ($count && $info['pid'] != $data['pid']) return app('json')->fail(400105);
+        if ($count && $info['pid'] != $data['pid']) return app('json')->fail('Danh mục này có danh mục con, không thể thay đổi danh mục cha');
         $this->service->update($id, $data);
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**
@@ -133,6 +133,6 @@ class SystemAttachmentCategory extends AuthController
     public function delete($id)
     {
         $this->service->del($id);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 }

@@ -117,7 +117,11 @@
 						})
 					});
 			},
-			getBargainUserCancel: function(bargainId) {
+			/**
+		 * Hủy chương trình săn giảm giá
+		 * @param {number} bargainId - ID chương trình săn giảm giá
+		 */
+		getBargainUserCancel: function(bargainId) {
 				var that = this;
 				getBargainUserCancel({
 						bargainId: bargainId

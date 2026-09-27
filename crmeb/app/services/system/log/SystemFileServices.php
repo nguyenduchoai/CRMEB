@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -57,7 +57,7 @@ class SystemFileServices extends BaseServices
     public function Login(string $password, string $type)
     {
         if (config('filesystem.password') !== $password) {
-            throw new AdminException(400140);
+            throw new AdminException('Tài khoản hoặc mật khẩu không đúng');
         }
         $md5Password = md5($password);
         /** @var JwtAuth $jwtAuth */
@@ -83,7 +83,7 @@ class SystemFileServices extends BaseServices
         $cacheService = app()->make(CacheService::class);
 
         if (!$token || $token === 'undefined') {
-            throw new AuthException(110008);
+            throw new AuthException('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại', [], 403);
         }
 
         /** @var JwtAuth $jwtAuth */
@@ -94,7 +94,7 @@ class SystemFileServices extends BaseServices
         //Kiểm tra token có hết hạn không
         $md5Token = md5($token);
         if (!$cacheService->has($md5Token) || !($cacheService->get($md5Token))) {
-            throw new AuthException(110008);
+            throw new AuthException('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại', [], 403);
         }
 
         //Xác thực token
@@ -104,15 +104,15 @@ class SystemFileServices extends BaseServices
             if (!request()->isCli()) {
                 $cacheService->delete($md5Token);
             }
-            throw new AuthException(110008);
+            throw new AuthException('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại', [], 403);
         }
 
         if ($id !== md5(config('filesystem.password'))) {
-            throw new AuthException(110008);
+            throw new AuthException('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại', [], 403);
         }
 
         if ($pwd !== md5(config('filesystem.password'))) {
-            throw new AuthException(110008);
+            throw new AuthException('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại', [], 403);
         }
 
         return true;
@@ -490,7 +490,40 @@ class SystemFileServices extends BaseServices
     {
         $res = app()->make(SystemFileInfoServices::class)->update(['full_path' => $full_path], ['mark' => $mark]);
         if (!$res) {
-            throw new AdminException(100006);
+            throw new AdminException('Lưu thất bại');
         }
+    }
+
+    /**
+     * Ghi md5 của file
+     * @return bool
+     * @author wuhaotian
+     * @email 442384644@qq.com
+     * @date 2026/2/25
+     */
+    public function writeMd5(){
+        $rootPath = app()->getRootPath();
+        $files = array_merge(
+            $this->getDir($rootPath . 'app'),
+            $this->getDir($rootPath . 'crmeb')
+        );
+        // Chỉ tìm file .php
+        $files = array_filter($files, function ($path) {
+            return pathinfo($path, PATHINFO_EXTENSION) === 'php';
+        });
+        $len = strlen($rootPath);
+        $list = [];
+        foreach ($files as $path) {
+            $list[] = [
+                'filename' => substr($path, $len),
+                'md5' => md5_file($path),
+            ];
+        }
+
+        $systemFileMd5Services = app()->make(SystemFileMd5Services::class);
+        $systemFileMd5Services->clearMd5List();
+        $systemFileMd5Services->saveMd5List($list);
+
+        return true;
     }
 }

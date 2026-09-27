@@ -1,5 +1,13 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 namespace app\services\out;
 
 use app\dao\out\OutInterfaceDao;
@@ -39,7 +47,7 @@ class OutInterfaceServices extends BaseServices
         if (in_array($rule, $rolesAuth[$method])) {
             return true;
         } else {
-            throw new AuthException(110000);
+            throw new AuthException('Bạn tạm thời không có quyền truy cập');
         }
     }
 
@@ -85,7 +93,7 @@ class OutInterfaceServices extends BaseServices
         } else {
             $res = $this->dao->save($data);
         }
-        if (!$res) throw new AdminException(100006);
+        if (!$res) throw new AdminException('Lưu thất bại');
         return true;
     }
 
@@ -99,9 +107,9 @@ class OutInterfaceServices extends BaseServices
      */
     public function interfaceInfo($id)
     {
-        if (!$id) throw new AdminException(100100);
+        if (!$id) throw new AdminException('Tham số không hợp lệ');
         $info = $this->dao->get($id);
-        if (!$info) throw new AdminException(100026);
+        if (!$info) throw new AdminException('Dữ liệu không tồn tại');
         $info = $info->toArray();
         $info['request_params'] = json_decode($info['request_params']);
         $info['return_params'] = json_decode($info['return_params']);
@@ -117,7 +125,7 @@ class OutInterfaceServices extends BaseServices
     public function editInterfaceName($data)
     {
         $res = $this->dao->update($data['id'], ['name' => $data['name']]);
-        if (!$res) throw new AdminException(100007);
+        if (!$res) throw new AdminException('Sửa thất bại');
         return true;
     }
 
@@ -129,7 +137,7 @@ class OutInterfaceServices extends BaseServices
     public function delInterface($id)
     {
         $res = $this->dao->update($id, ['is_del' => 1]);
-        if (!$res) throw new AdminException(100008);
+        if (!$res) throw new AdminException('Xóa thất bại');
         return true;
     }
 }

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -65,7 +65,7 @@ Route::group(function () {
     ->option(['mark' => 'base', 'mark_name' => 'API cơ bản']);
 
 
-//Lớp thao tác đơn hàng của quản trị viên
+//Quản lý cửa hàng trên di động
 Route::group(function () {
     Route::get('admin/order/statistics', 'v1.admin.StoreOrderController/statistics')->name('adminOrderStatistics')->option(['real_name' => 'Thống kê dữ liệu đơn hàng']);//Thống kê dữ liệu đơn hàng
     Route::get('admin/order/data', 'v1.admin.StoreOrderController/data')->name('adminOrderData')->option(['real_name' => 'Dữ liệu thống kê đơn hàng hằng tháng']);//Dữ liệu thống kê đơn hàng hằng tháng
@@ -88,6 +88,30 @@ Route::group(function () {
     Route::get('admin/order/export_temp', 'v1.admin.StoreOrderController/getExportTemp')->name('getExportTemp')->option(['real_name' => 'Lấy mẫu vận đơn điện tử']);//Lấy mẫu vận đơn điện tử
     Route::get('admin/order/export_all', 'v1.admin.StoreOrderController/getExportAll')->name('getExportAll')->option(['real_name' => 'Lấy đơn vị vận chuyển']);//Lấy đơn vị vận chuyển
     Route::get('admin/order/express/:uni/[:type]', 'v1.admin.StoreOrderController/express')->name('orderExpress')->option(['real_name' => 'Xem vận chuyển của đơn hàng']); //Xem vận chuyển của đơn hàng
+
+    // Trang chủ quản lý cửa hàng
+    Route::get('admin/manage/statistics', 'v1.admin.StoreManageController/statistics');
+    // Quản lý cửa hàng - quản lý sản phẩm
+    Route::get('admin/manage/product', 'v1.admin.StoreManageController/product');
+    Route::post('admin/manage/product/set_show', 'v1.admin.StoreManageController/productShow');
+    Route::get('admin/manage/product/label', 'v1.admin.StoreManageController/productLabel');
+    Route::post('admin/manage/product/save_label', 'v1.admin.StoreManageController/saveProductLabel');
+    Route::get('admin/manage/product/cate', 'v1.admin.StoreManageController/productCate');
+    Route::post('admin/manage/product/save_cate', 'v1.admin.StoreManageController/saveProductCate');
+    Route::get('admin/manage/product/attr/:id', 'v1.admin.StoreManageController/productAttr');
+    Route::post('admin/manage/product/save_attr/:id', 'v1.admin.StoreManageController/saveProductAttr');
+    Route::get('admin/manage/product/shipping_temp', 'v1.admin.StoreManageController/shippingTemp');
+    Route::post('admin/manage/product/create', 'v1.admin.StoreManageController/createProduct');
+    // Quản lý cửa hàng - quản lý người dùng
+    Route::get('admin/manage/user', 'v1.admin.StoreManageController/user');
+    Route::get('admin/manage/user/group', 'v1.admin.StoreManageController/userGroup');
+    Route::get('admin/manage/user/level', 'v1.admin.StoreManageController/userLevel');
+    Route::get('admin/manage/user/label/[:uid]', 'v1.admin.StoreManageController/userLabel');
+    Route::get('admin/manage/user/coupon', 'v1.admin.StoreManageController/userCoupon');
+    Route::post('admin/manage/user/update/:uid', 'v1.admin.StoreManageController/userUpdate');
+    Route::get('admin/manage/user/info/:uid', 'v1.admin.StoreManageController/userInfo');
+
+
 })->middleware(\app\http\middleware\AllowOriginMiddleware::class)
     ->middleware(\app\api\middleware\StationOpenMiddleware::class)
     ->middleware(\app\api\middleware\AuthTokenMiddleware::class, true)
@@ -360,6 +384,15 @@ Route::group(function () {
         //API DIY
         Route::get('diy/get_diy/[:id]', 'v1.PublicController/getDiy');
         Route::get('home/products', 'v1.PublicController/home_products_list')->name('homeProductsList')->option(['real_name' => 'Lấy ảnh trình chiếu và sản phẩm của các loại sản phẩm đề xuất trên trang chủ']);//Lấy ảnh trình chiếu và sản phẩm của các loại sản phẩm đề xuất trên trang chủ
+
+        Route::get('theme_info/:type', 'v1.PublicController/themeInfo')->name('themeInfo')->option(['real_name' => 'Chi tiết chủ đề']);
+        Route::get('theme_version', 'v1.PublicController/themeVersion')->name('themeVersion')->option(['real_name' => 'Phiên bản chủ đề']);
+        Route::get('theme/user', 'v1.PublicController/themeUser')->name('themeUser')->option(['real_name' => 'Thành phần tùy chỉnh - người dùng']);
+        Route::get('theme/article', 'v1.PublicController/themeArticle')->name('themeArticle')->option(['real_name' => 'Thành phần tùy chỉnh - bài viết']);
+        Route::get('theme/coupon', 'v1.PublicController/themeCoupon')->name('themeCoupon')->option(['real_name' => 'Thành phần tùy chỉnh - phiếu giảm giá']);
+        Route::get('theme/product', 'v1.PublicController/themeProduct')->name('themeProduct')->option(['real_name' => 'Thành phần tùy chỉnh - sản phẩm']);
+        Route::get('theme/navigation', 'v1.PublicController/themeNavigation')->name('themeNavigation')->option(['real_name' => 'Điều hướng']);
+
     })->option(['mark' => 'index', 'mark_name' => 'API trang chủ']);
 
     Route::group(function () {

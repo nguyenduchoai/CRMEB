@@ -288,7 +288,8 @@ export default {
     },
     'configObj.styleConfig.tabVal': {
       handler() {
-        this.count = this.defaults.styleConfig.count;
+        if (!this.configData.picList) return;
+        this.count = this.defaults.styleConfig?.count;
         this.picArrayConcat(this.count);
         this.configData.picList.splice(this.count);
         this.currentIndex = 0;
@@ -345,7 +346,7 @@ export default {
     },
     picArrayConcat(count) {
       for (let i = this.configData.picList.length; i < count; i++) {
-        this.configData.picList.push(this.arrayObj);
+        this.configData.picList.push(JSON.parse(JSON.stringify(this.arrayObj)));
       }
     },
     // Xóa vùng nóng chỉ định
@@ -482,7 +483,6 @@ export default {
             chúng ta có thể vẽ khung tương ứng, nếu không thì chỉ có thể vẽ khung theo một hướng, nghĩa là vẽ khung về phía dưới bên phải của điểm nhấn.
             */
       if (this.select) {
-        console.log(event.layerX, event.layerY, event);
         window.requestAnimationFrame(() => {
           // Lấy vị trí tọa độ khi di chuyển chuột
           this.mouseX2 = event.layerX - 5;

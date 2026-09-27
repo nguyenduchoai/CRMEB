@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -81,12 +81,12 @@ class StoreServiceSpeechcraft extends AuthController
         $data['add_time'] = time();
         $data['kefu_id'] = 0;
         if ($this->services->count(['message' => $data['message']])) {
-            return app('json')->fail(400269);
+            return app('json')->fail('Không thể thêm trùng câu trả lời mẫu');
         }
         if ($this->services->save($data)) {
-            return app('json')->success(400270);
+            return app('json')->success('Tạo câu trả lời mẫu thành công');
         } else {
-            return app('json')->fail(400271);
+            return app('json')->fail('Tạo câu trả lời mẫu thất bại');
         }
     }
 
@@ -99,7 +99,7 @@ class StoreServiceSpeechcraft extends AuthController
     {
         $info = $this->services->get($id);
         if (!$info) {
-            return app('json')->fail(100026);
+            return app('json')->fail('Dữ liệu không tồn tại');
         }
         return app('json')->success($info);
     }
@@ -136,12 +136,12 @@ class StoreServiceSpeechcraft extends AuthController
         $this->validate($data, StoreServiceSpeechcraftValidata::class);
         $message = $this->services->get(['message' => $data['message']]);
         if ($message && $message['id'] != $id) {
-            return app('json')->fail(400269);
+            return app('json')->fail('Không thể thêm trùng câu trả lời mẫu');
         }
         if ($this->services->update($id, $data)) {
-            return app('json')->success(100001);
+            return app('json')->success('Sửa thành công');
         } else {
-            return app('json')->fail(100007);
+            return app('json')->fail('Sửa thất bại');
         }
 
     }
@@ -154,12 +154,12 @@ class StoreServiceSpeechcraft extends AuthController
     public function delete($id)
     {
         if (!$id || !($info = $this->services->get($id))) {
-            return app('json')->fail(400272);
+            return app('json')->fail('Câu trả lời mẫu cần xóa không tồn tại');
         }
         if ($info->delete()) {
-            return app('json')->success(100002);
+            return app('json')->success('Xóa thành công');
         } else {
-            return app('json')->fail(100008);
+            return app('json')->fail('Xóa thất bại');
         }
     }
 }

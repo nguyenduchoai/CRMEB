@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -74,7 +74,7 @@ class StoreIntegral extends AuthController
         if ($id) {
             $integral = $this->services->get((int)$id);
             if (!$integral) {
-                return app('json')->fail(100026);
+                return app('json')->fail('Dữ liệu không tồn tại');
             }
         }
         if ($data['copy'] == 1) {
@@ -82,7 +82,7 @@ class StoreIntegral extends AuthController
             unset($data['copy']);
         }
         $this->services->saveData($id, $data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -96,7 +96,7 @@ class StoreIntegral extends AuthController
             [['is_show', 'd'], 0]
         ]);
         $this->services->saveBatchData($data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -119,7 +119,7 @@ class StoreIntegral extends AuthController
     public function set_show($id, $is_show)
     {
         $this->services->update($id, ['is_show' => $is_show]);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
@@ -130,9 +130,9 @@ class StoreIntegral extends AuthController
      */
     public function delete($id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $this->services->update($id, ['is_del' => 1]);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
 }

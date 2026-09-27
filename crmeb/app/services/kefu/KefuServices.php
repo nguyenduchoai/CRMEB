@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -87,7 +87,7 @@ class KefuServices extends BaseServices
     public function setTransfer(int $kfuUid, int $uid, int $kfuToUid)
     {
         if ($uid === $kfuToUid) {
-            throw new ApiException(410139);
+            throw new ApiException('Không thể chuyển tiếp cho chính mình');
         }
         /** @var StoreServiceAuxiliaryServices $auxiliaryServices */
         $auxiliaryServices = app()->make(StoreServiceAuxiliaryServices::class);
@@ -123,7 +123,7 @@ class KefuServices extends BaseServices
             $record = $serviceRecord->saveRecord($uid, $kfuToUid, $messageData['msn'] ?? '', $info['type'] ?? 1, $messageData['message_type'] ?? 1, $num, $info['is_tourist'] ?? 0, $info['nickname'] ?? "", $info['avatar'] ?? '');
             $res = $res && $auxiliaryServices->saveAuxliary(['binding_id' => $kfuUid, 'relation_id' => $uid]);
             if (!$res && !$record) {
-                throw new ApiException(410140);
+                throw new ApiException('Chuyển tiếp CSKH thất bại');
             }
             return $record;
         });

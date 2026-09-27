@@ -1,5 +1,13 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 namespace app\api\controller\v1\order;
 
 use app\Request;
@@ -65,13 +73,13 @@ class StoreOrderRefundController
      */
     public function cancelApply(Request $request, $uni)
     {
-        if (!strlen(trim($uni))) return app('json')->fail(100100);
+        if (!strlen(trim($uni))) return app('json')->fail('Tham số không hợp lệ');
         $orderRefund = $this->services->get(['order_id' => $uni, 'is_cancel' => 0]);
         if (!$orderRefund || $orderRefund['uid'] != $request->uid()) {
-            return app('json')->fail(410173);
+            return app('json')->fail('Đơn hàng không tồn tại');
         }
         if (!in_array($orderRefund['refund_type'], [1, 2, 4, 5])) {
-            return app('json')->fail(410224);
+            return app('json')->fail('Trạng thái hiện tại không thể hủy yêu cầu');
         }
         $this->services->update($orderRefund['id'], ['is_cancel' => 1]);
         $this->services->cancelOrderRefundCartInfo((int)$orderRefund['id'], (int)$orderRefund['store_order_id'], $orderRefund);
@@ -87,7 +95,7 @@ class StoreOrderRefundController
             'cancel_time' => date('Y-m-d H:i:s'),
         ]]);
 
-        return app('json')->success(100019);
+        return app('json')->success('Hủy thành công');
     }
 
     /**
@@ -105,12 +113,12 @@ class StoreOrderRefundController
             ['refund_img', ''],
             ['refund_explain', ''],
         ]);
-        if ($data['id'] == '') return app('json')->fail(100100);
+        if ($data['id'] == '') return app('json')->fail('Tham số không hợp lệ');
         $res = $this->services->editRefundExpress($data);
         if ($res)
-            return app('json')->success(100017);
+            return app('json')->success('Gửi thành công');
         else
-            return app('json')->fail(100018);
+            return app('json')->fail('Gửi thất bại');
     }
 
     /**
@@ -127,8 +135,8 @@ class StoreOrderRefundController
         $orderServices = app()->make(StoreOrderServices::class);
         $orderServices->update($oid, ['is_del' => 1], 'id');
         if ($res)
-            return app('json')->success(100002);
+            return app('json')->success('Xóa thành công');
         else
-            return app('json')->fail(100008);
+            return app('json')->fail('Xóa thất bại');
     }
 }

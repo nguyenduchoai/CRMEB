@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -95,7 +95,7 @@ abstract class BaseServices
         /** @var JwtAuth $jwtAuth */
         $jwtAuth = app()->make(JwtAuth::class);
         if ($type == 'api' && !app()->make(UserServices::class)->value(['uid' => $id], 'status')) {
-            throw new ApiException(410027);
+            throw new ApiException('Bạn đã bị cấm đăng nhập, vui lòng liên hệ quản trị viên');
         }
         if ($type == 'api') {
             $user = app()->make(UserServices::class)->get($id);
@@ -152,5 +152,40 @@ abstract class BaseServices
     {
         // TODO: Implement __call() method.
         return call_user_func_array([$this->dao, $name], $arguments);
+    }
+
+    /**
+     * Xử lý dữ liệu thành phố
+     * @param $address
+     * @return array
+     */
+    public function addressHandle($address)
+    {
+        if ($address) {
+            try {
+                preg_match('/(.*?(省|自治区|北京市|天津市|上海市|重庆市|澳门特别行政区|香港特别行政区))/', $address, $matches);
+                if (count($matches) > 1) {
+                    $province = $matches[count($matches) - 2];
+                    $address = preg_replace('/(.*?(省|自治区|北京市|天津市|上海市|重庆市|澳门特别行政区|香港特别行政区))/', '', $address, 1);
+                }
+                preg_match('/(.*?(市|自治州|地区|区划|县))/', $address, $matches);
+                if (count($matches) > 1) {
+                    $city = $matches[count($matches) - 2];
+                    $address = str_replace($city, '', $address);
+                }
+                preg_match('/(.*?(区|县|镇|乡|街道))/', $address, $matches);
+                if (count($matches) > 1) {
+                    $area = $matches[count($matches) - 2];
+                    $address = str_replace($area, '', $address);
+                }
+            } catch (\Throwable $e) {
+            }
+        }
+        return [
+            'province' => $province ?? '',
+            'city' => $city ?? '',
+            'district' => $area ?? '',
+            "address" => $address
+        ];
     }
 }

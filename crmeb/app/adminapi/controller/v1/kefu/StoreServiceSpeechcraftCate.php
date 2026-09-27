@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -74,18 +74,18 @@ class StoreServiceSpeechcraftCate extends AuthController
         ]);
 
         if (!$data['name']) {
-            return app('json')->fail(400100);
+            return app('json')->fail('Vui lòng điền tên danh mục');
         }
 
         if ($this->services->count(['name' => $data['name'], 'type' => 1, 'owner_id' => 0])) {
-            return app('json')->fail(400101);
+            return app('json')->fail('Danh mục này đã tồn tại');
         }
 
         $data['add_time'] = time();
         $data['type'] = 1;
 
         $this->services->save($data);
-        return app('json')->success(100021);
+        return app('json')->success('Thêm thành công');
     }
 
     /**
@@ -115,17 +115,17 @@ class StoreServiceSpeechcraftCate extends AuthController
             [['sort', 'd'], 0],
         ]);
         if (!$data['name']) {
-            return app('json')->fail(400100);
+            return app('json')->fail('Vui lòng điền tên danh mục');
         }
 
         $cateInfo = $this->services->get($id);
         if (!$cateInfo) {
-            return app('json')->fail(400103);
+            return app('json')->fail('Danh mục không tồn tại');
         }
         $cateInfo->name = $data['name'];
         $cateInfo->sort = $data['sort'];
         $cateInfo->save();
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**
@@ -135,12 +135,12 @@ class StoreServiceSpeechcraftCate extends AuthController
      */
     public function delete($id)
     {
-        if ($id == 0) return app('json')->fail(400273);
+        if ($id == 0) return app('json')->fail('Không thể xóa danh mục hệ thống');
         $cateInfo = $this->services->get($id);
         if (!$cateInfo) {
-            return app('json')->fail(400103);
+            return app('json')->fail('Danh mục không tồn tại');
         }
         $cateInfo->delete();
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 }

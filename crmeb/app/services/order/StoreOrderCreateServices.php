@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -150,7 +150,7 @@ class StoreOrderCreateServices extends BaseServices
         $bargainServices = app()->make(StoreBargainServices::class);
         $cartGroup = $storeOrderServices->getCacheOrderInfo($uid, $key);
         if (!$cartGroup) {
-            throw new ApiException(410208);
+            throw new ApiException('Đơn hàng đã hết hạn, vui lòng tải lại trang hiện tại');
         }
         //Kiểm tra săn giảm giá trước khi đặt hàng
         if ($bargainId) {
@@ -162,9 +162,9 @@ class StoreOrderCreateServices extends BaseServices
             /** @var StorePinkServices $pinkServices */
             $pinkServices = app()->make(StorePinkServices::class);
             if ($pinkServices->isPink($pinkId, $uid))
-                throw new ApiStatusException('ORDER_EXIST', 410210, ['orderId' => $storeOrderServices->getStoreIdPink($pinkId, $uid)]);
+                throw new ApiStatusException('ORDER_EXIST', 'Tạo đơn hàng thất bại, bạn đã ở trong nhóm mua chung này, không thể tham gia lại', ['orderId' => $storeOrderServices->getStoreIdPink($pinkId, $uid)]);
             if ($storeOrderServices->getIsOrderPink($pinkId, $uid))
-                throw new ApiStatusException('ORDER_EXIST', 410211, ['orderId' => $storeOrderServices->getStoreIdPink($pinkId, $uid)]);
+                throw new ApiStatusException('ORDER_EXIST', 'Tạo đơn hàng thất bại, bạn đã tham gia nhóm mua chung này, vui lòng thanh toán đơn hàng trước', ['orderId' => $storeOrderServices->getStoreIdPink($pinkId, $uid)]);
         }
         $virtual_type = $cartGroup['cartInfo'][0]['productInfo']['virtual_type'] ?? 0;
 
@@ -183,14 +183,14 @@ class StoreOrderCreateServices extends BaseServices
         if ($is_gift == 0) {
             if ($shippingType == 1 && $virtual_type == 0) {
                 if (!$addressId) {
-                    throw new ApiException(410045);
+                    throw new ApiException('Vui lòng chọn địa chỉ nhận hàng');
                 }
                 if (!$addressInfo = $addressServices->getOne(['uid' => $uid, 'id' => $addressId, 'is_del' => 0]))
-                    throw new ApiException(410046);
+                    throw new ApiException('Địa chỉ đã chọn không hợp lệ');
                 $addressInfo = $addressInfo->toArray();
             } else {
                 if ((!$real_name || !$phone) && $virtual_type == 0) {
-                    throw new ApiException(410245);
+                    throw new ApiException('Vui lòng nhập họ tên và số điện thoại');
                 }
                 $addressInfo['real_name'] = $real_name;
                 $addressInfo['phone'] = $phone;
@@ -289,7 +289,7 @@ class StoreOrderCreateServices extends BaseServices
             $storeServices = app()->make(SystemStoreServices::class);
             $orderInfo['store_id'] = $storeServices->getStoreDispose($storeId, 'id');
             if (!$orderInfo['store_id']) {
-                throw new ApiException(410247);
+                throw new ApiException('Chưa có cửa hàng, không thể chọn nhận tại cửa hàng');
             }
         }
         /** @var StoreOrderCartInfoServices $cartServices */
@@ -299,7 +299,7 @@ class StoreOrderCreateServices extends BaseServices
             //Tạo đơn hàng
             $order = $this->dao->save($orderInfo);
             if (!$order) {
-                throw new ApiException(410200);
+                throw new ApiException('Tạo đơn hàng thất bại');
             }
             //Ghi lại số điện thoại và họ tên người nhận tại cửa hàng
             /** @var UserServices $userService */
@@ -377,7 +377,7 @@ class StoreOrderCreateServices extends BaseServices
             $res2 = $res2 && false != $res3;
         }
         if (!$res2) {
-            throw new ApiException(410227);
+            throw new ApiException('Dùng điểm thưởng để khấu trừ thất bại');
         }
     }
 
@@ -411,10 +411,10 @@ class StoreOrderCreateServices extends BaseServices
                 else $res5 = $res5 && $services->decProductStock((int)$cart['cart_num'], (int)$cart['productInfo']['id'], isset($cart['productInfo']['attrInfo']) ? $cart['productInfo']['attrInfo']['unique'] : '');
             }
             if (!$res5) {
-                throw new ApiException(410238);
+                throw new ApiException('Phân loại đã chọn không đủ tồn kho');
             }
         } catch (\Throwable $e) {
-            throw new ApiException(410238);
+            throw new ApiException('Phân loại đã chọn không đủ tồn kho');
         }
     }
 
@@ -530,7 +530,7 @@ class StoreOrderCreateServices extends BaseServices
             $cartInfo = $this->computeOrderProductIntegral($cartInfo, $priceData);
         } catch (\Throwable $e) {
             Log::error('Thanh toán sản phẩm trong đơn hàng thất bại, File:' . $e->getFile() . ',Line：' . $e->getLine() . ',Message：' . $e->getMessage());
-            throw new ApiException(410248);
+            throw new ApiException('Thanh toán sản phẩm trong đơn hàng thất bại');
         }
         //truePice đơn giá thanh toán thực tế (nếu có)
         //Tổng ưu đãi của nhiều sản phẩm và số tiền khấu trừ điểm thưởng
@@ -554,7 +554,7 @@ class StoreOrderCreateServices extends BaseServices
             [$cartInfo, $spread_ids] = $this->computeOrderProductBrokerage($uid, $cartInfo);
         } catch (\Throwable $e) {
             Log::error('Thanh toán sản phẩm trong đơn hàng thất bại, File:' . $e->getFile() . ',Line：' . $e->getLine() . ',Message：' . $e->getMessage());
-            throw new ApiException(410248);
+            throw new ApiException('Thanh toán sản phẩm trong đơn hàng thất bại');
         }
         return [$cartInfo, $spread_ids];
     }

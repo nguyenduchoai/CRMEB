@@ -1,15 +1,5 @@
 <template>
-  <div
-    class="mobile-page"
-    :style="{
-      background: bottomBgColor,
-      marginTop: mTop + 'px',
-      paddingTop: topConfig + 'px',
-      paddingBottom: bottomConfig + 'px',
-      paddingLeft: prConfig + 'px',
-      paddingRight: prConfig + 'px',
-    }"
-  >
+  <common_wrapper :config="configObj">
     <div
       class="pointsMall"
       :style="{
@@ -173,7 +163,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </common_wrapper>
 </template>
 
 <script>
@@ -228,6 +218,7 @@ export default {
   data() {
     return {
       // Dữ liệu khởi tạo mặc định, không được sửa
+      configObj: null,
       defaultConfig: {
         cname: 'Cửa hàng đổi điểm',
         name: 'pointsMall',
@@ -597,6 +588,101 @@ export default {
             },
           ],
         },
+        componentBgConfig: {
+          title: 'Nền thành phần',
+          tabVal: 0,
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
+          colorConfig: {
+            title: 'Màu nền',
+            default: [{ item: '#f5f5f5' }, { item: '#f5f5f5' }],
+            color: [{ item: '#f5f5f5' }, { item: '#f5f5f5' }],
+          },
+          colorDirection: {
+            title: 'Hướng chuyển màu',
+            tabVal: 0,
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
+          },
+          imageConfig: {
+            header: 'Ảnh nền',
+            title: '',
+            name: 'Tải lên ảnh',
+            type: 'code',
+            url: '',
+            info: 'Kích thước đề xuất: 750px * 400px',
+          },
+        },
+        borderConfig: {
+          title: 'Cài đặt viền',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0, // 0: Hide, 1: Show
+          styleConfig: {
+            title: 'Kiểu viền',
+            tabVal: 0,
+            tabList: [
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
+            ],
+          },
+          widthConfig: {
+            title: 'Độ dày viền',
+            val: 1,
+            min: 1,
+          },
+          colorConfig: {
+            title: 'Màu viền',
+            default: [{ item: '#e5e5e5' }],
+            color: [{ item: '#e5e5e5' }],
+          },
+        },
+        shadowConfig: {
+          title: 'Cài đặt đổ bóng',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0, // 0: Off, 1: On
+          colorConfig: {
+            title: 'Màu đổ bóng',
+            default: [{ item: 'rgba(0,0,0,0.1)' }],
+            color: [{ item: 'rgba(0,0,0,0.1)' }],
+          },
+          xConfig: {
+            title: 'Độ lệch trục X',
+            val: 0,
+            min: -50,
+          },
+          yConfig: {
+            title: 'Độ lệch trục Y',
+            val: 0,
+            min: -50,
+          },
+          blurConfig: {
+            title: 'Bán kính làm mờ',
+            val: 10,
+            min: 0,
+          },
+          spreadConfig: {
+            title: 'Bán kính lan tỏa',
+            val: 0,
+            min: -50,
+          },
+        },
+        paddingConfig: {
+          title: 'Lề trong',
+          val: 0,
+          min: 0,
+          max: 100,
+          isAll: false,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        },
+        marginConfig: {
+          title: 'Lề ngoài',
+          val: 0,
+          min: 0,
+          max: 100,
+          isAll: false,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        },
         topConfig: {
           title: 'Lề trên',
           val: 0,
@@ -614,6 +700,11 @@ export default {
         },
         mbConfig: {
           title: 'Lề trên trang',
+          val: 0,
+          min: 0,
+        },
+        zIndexConfig: {
+          title: 'Thứ tự lớp thành phần',
           val: 0,
           min: 0,
         },
@@ -638,6 +729,22 @@ export default {
       },
       pageData: {},
       bottomBgColor: '',
+      paddingConfig: {
+        title: 'Lề trong',
+        val: 0,
+        min: 0,
+        max: 100,
+        isAll: false,
+        valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+      },
+      marginConfig: {
+        title: 'Lề ngoài',
+        val: 0,
+        min: 0,
+        max: 100,
+        isAll: false,
+        valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+      },
       topConfig: 0,
       bottomConfig: 0,
       prConfig: 0,
@@ -675,6 +782,7 @@ export default {
       goodsUnitPriceColor: '',
       goodsUnitPriceColor2: '',
       themeColor: '',
+      zIndexConfig: 0,
     };
   },
   mounted() {
@@ -686,63 +794,85 @@ export default {
   methods: {
     setConfig(data) {
       if (!data) return;
-      if (data.mbConfig) {
-        this.styleConfig = data.styleConfig.tabVal;
-        this.imgBgUrl = data.imgBgConfig.url;
-        this.headerBgColorLeft = data.headerBgColor.color[0].item;
-        this.headerBgColorRight = data.headerBgColor.color[1].item;
-        this.titleConfig = data.titleConfig.tabVal;
-        this.imgUrl = data.imgConfig.url;
-        this.imgColorUrl = data.imgConfig2.url;
-        this.headerBntColor = data.headerBntColor.color[0].item;
-        this.headerBntColor2 = data.headerBntColor2.color[0].item;
-        this.bntNumber = data.bntNumber.val;
-        let tabVal = data.titleText.tabVal;
-        this.titleTabVal = tabVal;
-        this.titleText = data.titleText.tabList[tabVal].style;
-        this.titleColor = data.titleColor.color[0].item;
-        this.titleNumber = data.titleNumber.val;
-        this.titleTxtConfig = data.titleTxtConfig.value;
-        this.rightBntTxt = data.rightBntConfig.value;
-        this.numberConfig = data.numberConfig.val;
-        this.goodStyleConfig = data.goodStyleConfig.tabVal;
-        let filletImg = data.filletImg.type;
-        let filletValImg = data.filletImg.val;
-        let valListImg = data.filletImg.valList;
-        this.imgRadius = filletImg
-          ? valListImg[0].val + 'px ' + valListImg[1].val + 'px ' + valListImg[3].val + 'px ' + valListImg[2].val + 'px'
-          : filletValImg + 'px';
-        this.toneConfig = data.toneConfig.tabVal;
-        this.goodsPriceColor = data.goodsPriceColor.color[0].item;
-        this.goodsPriceColor2 = data.goodsPriceColor2.color[0].item;
-        this.priceBgColorLeft = data.priceBgColor.color[0].item;
-        this.priceBgColorRight = data.priceBgColor.color[1].item;
-        let bgColorLeft = data.moduleColor.color[0].item;
-        let bgColorRight = data.moduleColor.color[1].item;
-        this.bgColor = `linear-gradient(90deg,${bgColorRight} 0%,${bgColorLeft} 100%)`;
-        let bgColorLeft2 = data.moduleColor2.color[0].item;
-        let bgColorRight2 = data.moduleColor2.color[1].item;
-        this.bgColor2 = `linear-gradient(90deg,${bgColorRight2} 0%,${bgColorLeft2} 100%)`;
-        this.bottomBgColor = data.bottomBgColor.color[0].item;
-        this.mTop = data.mbConfig.val;
-        this.topConfig = data.topConfig.val;
-        this.bottomConfig = data.bottomConfig.val;
-        this.prConfig = data.prConfig.val;
-        let fillet = data.fillet.type;
-        let filletVal = data.fillet.val;
-        let valList = data.fillet.valList;
-        this.bgRadius = fillet
-          ? valList[0].val + 'px ' + valList[1].val + 'px 0 0'
-          : filletVal + 'px ' + filletVal + 'px 0 0';
-        this.bgRadius2 = fillet
-          ? '0 0 ' + valList[3].val + 'px ' + valList[2].val + 'px'
-          : '0 0 ' + filletVal + 'px ' + filletVal + 'px';
-        this.goodsNameColor = data.goodsNameColor.color[0].item;
-        this.goodsNameColor2 = data.goodsNameColor2.color[0].item;
-        this.goodsUnitPriceColor = data.goodsUnitPriceColor.color[0].item;
-        this.goodsUnitPriceColor2 = data.goodsUnitPriceColor2.color[0].item;
-        this.themeColor = `linear-gradient(90deg,${this.colorStyle.theme} 0%,${this.colorStyle.gradient} 100%)`;
+      let dataClone = JSON.parse(JSON.stringify(data));
+      for (let key in this.defaultConfig) {
+        if (dataClone[key] == undefined) {
+          this.$set(dataClone, key, JSON.parse(JSON.stringify(this.defaultConfig[key])));
+        }
       }
+
+      if (!data.componentBgConfig && data.bottomBgColor) {
+        dataClone.componentBgConfig.colorConfig.color[0].item = data.bottomBgColor.color[0].item;
+        dataClone.componentBgConfig.colorConfig.color[1].item = data.bottomBgColor.color[0].item;
+      }
+
+      if (!data.paddingConfig) {
+        if (dataClone.topConfig) dataClone.paddingConfig.valList[0].val = dataClone.topConfig.val;
+        if (dataClone.bottomConfig) dataClone.paddingConfig.valList[2].val = dataClone.bottomConfig.val;
+        if (dataClone.prConfig) {
+          dataClone.paddingConfig.valList[1].val = dataClone.prConfig.val;
+          dataClone.paddingConfig.valList[3].val = dataClone.prConfig.val;
+        }
+      }
+      if (!data.marginConfig) {
+        if (dataClone.mbConfig) dataClone.marginConfig.valList[0].val = dataClone.mbConfig.val;
+      }
+      this.paddingConfig = dataClone.paddingConfig;
+      this.marginConfig = dataClone.marginConfig;
+      this.zIndexConfig = dataClone.zIndexConfig.val;
+      this.configObj = dataClone;
+
+      this.styleConfig = dataClone.styleConfig.tabVal;
+      this.imgBgUrl = dataClone.imgBgConfig.url;
+      this.headerBgColorLeft = dataClone.headerBgColor.color[0].item;
+      this.headerBgColorRight = dataClone.headerBgColor.color[1].item;
+      this.titleConfig = dataClone.titleConfig.tabVal;
+      this.imgUrl = dataClone.imgConfig.url;
+      this.imgColorUrl = dataClone.imgConfig2.url;
+      this.headerBntColor = dataClone.headerBntColor.color[0].item;
+      this.headerBntColor2 = dataClone.headerBntColor2.color[0].item;
+      this.bntNumber = dataClone.bntNumber.val;
+      let tabVal = dataClone.titleText.tabVal;
+      this.titleTabVal = tabVal;
+      this.titleText = dataClone.titleText.tabList[tabVal].style;
+      this.titleColor = dataClone.titleColor.color[0].item;
+      this.titleNumber = dataClone.titleNumber.val;
+      this.titleTxtConfig = dataClone.titleTxtConfig.value;
+      this.rightBntTxt = dataClone.rightBntConfig.value;
+      this.numberConfig = dataClone.numberConfig.val;
+      this.goodStyleConfig = dataClone.goodStyleConfig.tabVal;
+      let filletImg = dataClone.filletImg.type;
+      let filletValImg = dataClone.filletImg.val;
+      let valListImg = dataClone.filletImg.valList;
+      this.imgRadius = filletImg
+        ? valListImg[0].val + 'px ' + valListImg[1].val + 'px ' + valListImg[3].val + 'px ' + valListImg[2].val + 'px'
+        : filletValImg + 'px';
+      this.toneConfig = dataClone.toneConfig.tabVal;
+      this.goodsPriceColor = dataClone.goodsPriceColor.color[0].item;
+      this.goodsPriceColor2 = dataClone.goodsPriceColor2.color[0].item;
+      this.priceBgColorLeft = dataClone.priceBgColor.color[0].item;
+      this.priceBgColorRight = dataClone.priceBgColor.color[1].item;
+      let bgColorLeft = dataClone.moduleColor.color[0].item;
+      let bgColorRight = dataClone.moduleColor.color[1].item;
+      this.bgColor = `linear-gradient(90deg,${bgColorRight} 0%,${bgColorLeft} 100%)`;
+      let bgColorLeft2 = dataClone.moduleColor2.color[0].item;
+      let bgColorRight2 = dataClone.moduleColor2.color[1].item;
+      this.bgColor2 = `linear-gradient(90deg,${bgColorRight2} 0%,${bgColorLeft2} 100%)`;
+      this.bottomBgColor = dataClone.bottomBgColor.color[0].item;
+      let fillet = dataClone.fillet.type;
+      let filletVal = dataClone.fillet.val;
+      let valList = dataClone.fillet.valList;
+      this.bgRadius = fillet
+        ? valList[0].val + 'px ' + valList[1].val + 'px 0 0'
+        : filletVal + 'px ' + filletVal + 'px 0 0';
+      this.bgRadius2 = fillet
+        ? '0 0 ' + valList[3].val + 'px ' + valList[2].val + 'px'
+        : '0 0 ' + filletVal + 'px ' + filletVal + 'px';
+      this.goodsNameColor = dataClone.goodsNameColor.color[0].item;
+      this.goodsNameColor2 = dataClone.goodsNameColor2.color[0].item;
+      this.goodsUnitPriceColor = dataClone.goodsUnitPriceColor.color[0].item;
+      this.goodsUnitPriceColor2 = dataClone.goodsUnitPriceColor2.color[0].item;
+      this.themeColor = `linear-gradient(90deg,${this.colorStyle.theme} 0%,${this.colorStyle.gradient} 100%)`;
     },
   },
 };

@@ -1,98 +1,89 @@
 <template>
-  <div
-    class="news-box"
-    :style="{
-      background: bottomBgColor,
-      marginTop: slider + 'px',
-      paddingTop: topConfig + 'px',
-      paddingBottom: bottomConfig + 'px',
-      paddingLeft: prConfig + 'px',
-      paddingRight: prConfig + 'px',
-    }"
-    v-if="list.length"
-  >
-    <div
-      class="item"
-      :style="{
-        background: `linear-gradient(90deg,${bgColorLeft} 0%,${bgColorRight} 100%)`,
-        borderRadius: bgRadius,
-      }"
-      v-if="styleConfig == 0"
-    >
-      <div class="img-box" v-if="titleConfig == 0"><img :src="imgUrl" alt="" /></div>
+  <common_wrapper :config="configObj" v-if="list.length">
+    <div class="news-box">
       <div
-        class="top"
-        v-else
+        class="item"
         :style="{
-          color: toneConfig ? titleColor : '#fff',
-          background: toneConfig
-            ? `linear-gradient(90deg,${titleBgColorLeft} 0%,${titleBgColorRight} 100%)`
-            : colorStyle.theme,
+          background: `linear-gradient(90deg,${bgColorLeft} 0%,${bgColorRight} 100%)`,
+          borderRadius: bgRadius,
         }"
+        v-if="styleConfig == 0"
       >
-        {{ titleTxtConfig || 'Tin nổi bật' }}
-      </div>
-      <div
-        class="right-box"
-        :style="{
-          color: newsColor,
-        }"
-      >
-        {{ list[0].chiild[0].val }}
-      </div>
-      <span
-        class="iconfont iconjinru"
-        :style="{
-          color: bntColor,
-        }"
-        v-if="!buttonConfig"
-      ></span>
-    </div>
-    <div
-      class="list"
-      v-else
-      :style="{
-        background: `linear-gradient(90deg,${bgColorLeft} 0%,${bgColorRight} 100%)`,
-        borderRadius: bgRadius,
-      }"
-    >
-      <div class="title acea-row row-between-wrapper">
-        <div class="pictrue" v-if="titleConfig == 0">
-          <img :src="imgUrl" alt="" />
-        </div>
+        <div class="img-box" v-if="titleConfig == 0"><img :src="imgUrl" alt="" /></div>
         <div
-        class="top"
-        v-else
-        :style="{
-          color: !toneConfig ? titleColor : colorStyle.theme,
-        }"
+          class="top"
+          v-else
+          :style="{
+            color: toneConfig ? titleColor : '#fff',
+            background: toneConfig
+              ? `linear-gradient(90deg,${titleBgColorLeft} 0%,${titleBgColorRight} 100%)`
+              : colorStyle.theme,
+          }"
         >
           {{ titleTxtConfig || 'Tin nổi bật' }}
         </div>
         <div
-          v-if="!buttonConfig"
+          class="right-box"
+          :style="{
+            color: newsColor,
+          }"
+        >
+          {{ list[0].chiild[0].val }}
+        </div>
+        <span
+          class="iconfont iconjinru"
           :style="{
             color: bntColor,
           }"
-        >
-          {{ textConfig }}<span class="iconfont iconjinru"></span>
-        </div>
+          v-if="!buttonConfig"
+        ></span>
       </div>
       <div
-        class="text line1"
-        v-for="(item, index) in list"
-        :key="index"
+        class="list"
+        v-else
         :style="{
-          color: newsColor,
+          background: `linear-gradient(90deg,${bgColorLeft} 0%,${bgColorRight} 100%)`,
+          borderRadius: bgRadius,
         }"
       >
-        <span class="num" :class="index == 0 ? 'on' : index == 1 ? 'on2' : index == 2 ? 'on3' : ''">{{
-          index + 1
-        }}</span
-        >{{ item.chiild[0].val }}
+        <div class="title acea-row row-between-wrapper">
+          <div class="pictrue" v-if="titleConfig == 0">
+            <img :src="imgUrl" alt="" />
+          </div>
+          <div
+            class="top"
+            v-else
+            :style="{
+              color: !toneConfig ? titleColor : colorStyle.theme,
+            }"
+          >
+            {{ titleTxtConfig || 'Tin nổi bật' }}
+          </div>
+          <div
+            v-if="!buttonConfig"
+            :style="{
+              color: bntColor,
+            }"
+          >
+            {{ textConfig }}<span class="iconfont iconjinru"></span>
+          </div>
+        </div>
+        <div
+          class="text line1"
+          v-for="(item, index) in list"
+          :key="index"
+          :style="{
+            color: newsColor,
+          }"
+        >
+          <span class="num" :class="index == 0 ? 'on' : index == 1 ? 'on2' : index == 2 ? 'on3' : ''">{{
+            index + 1
+          }}</span
+          >{{ item.chiild[0].val }}
+        </div>
       </div>
     </div>
-  </div>
+  </common_wrapper>
 </template>
 
 <script>
@@ -147,6 +138,7 @@ export default {
       // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         cname: 'Thông báo tin tức',
+        desc: 'Thông báo tin tức',
         name: 'news',
         timestamp: this.num,
         isHide: false,
@@ -357,25 +349,105 @@ export default {
             },
           ],
         },
-        topConfig: {
-          title: 'Lề trên',
+        paddingConfig: {
+          title: 'Lề trong',
+          val: 0,
+          min: 0,
+          max: 100,
+          isAll: false,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        },
+        marginConfig: {
+          title: 'Lề ngoài',
+          val: 0,
+          min: 0,
+          max: 100,
+          isAll: false,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        },
+        zIndexConfig: {
+          title: 'Thứ tự lớp thành phần',
           val: 0,
           min: 0,
         },
-        bottomConfig: {
-          title: 'Lề dưới',
-          val: 0,
-          min: 0,
+        borderConfig: {
+          title: 'Cài đặt viền',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0, // 0: Hide, 1: Show
+          styleConfig: {
+            title: 'Kiểu viền',
+            tabVal: 0,
+            tabList: [
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
+            ],
+          },
+          widthConfig: {
+            title: 'Độ dày viền',
+            val: 1,
+            min: 1,
+          },
+          colorConfig: {
+            title: 'Màu viền',
+            default: [{ item: '#e5e5e5' }],
+            color: [{ item: '#e5e5e5' }],
+          },
         },
-        prConfig: {
-          title: 'Lề trái phải',
-          val: 0,
-          min: 0,
+        shadowConfig: {
+          title: 'Cài đặt đổ bóng',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0, // 0: Off, 1: On
+          colorConfig: {
+            title: 'Màu đổ bóng',
+            default: [{ item: 'rgba(0,0,0,0.1)' }],
+            color: [{ item: 'rgba(0,0,0,0.1)' }],
+          },
+          xConfig: {
+            title: 'Độ lệch trục X',
+            val: 0,
+            min: -50,
+          },
+          yConfig: {
+            title: 'Độ lệch trục Y',
+            val: 0,
+            min: -50,
+          },
+          blurConfig: {
+            title: 'Bán kính làm mờ',
+            val: 10,
+            min: 0,
+          },
+          spreadConfig: {
+            title: 'Bán kính lan tỏa',
+            val: 0,
+            min: -50,
+          },
         },
-        mbConfig: {
-          title: 'Lề trên trang',
-          val: 0,
-          min: 0,
+        componentBgConfig: {
+          title: 'Nền thành phần',
+          tabVal: 0,
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
+          colorConfig: {
+            title: 'Màu nền',
+            default: [{ item: '#fff' }, { item: '#fff' }],
+            color: [{ item: '#fff' }, { item: '#fff' }],
+          },
+          colorDirection: {
+            title: 'Hướng chuyển màu',
+            tabVal: 0,
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
+          },
+          imageConfig: {
+            header: 'Ảnh nền',
+            title: '',
+            name: 'Tải lên ảnh',
+            type: 'code',
+            url: '',
+            info: 'Kích thước đề xuất: 750px * 400px',
+          },
         },
         fillet: {
           title: 'Bo góc nền',
@@ -405,7 +477,7 @@ export default {
       rollStyle: '',
       txtPosition: '',
       pageData: {},
-
+      configObj: {},
       list: [],
       slider: 0,
       styleConfig: 0,
@@ -417,10 +489,6 @@ export default {
       bntColor: '',
       bgColorLeft: '',
       bgColorRight: '',
-      bottomBgColor: '',
-      topConfig: 0,
-      bottomConfig: 0,
-      prConfig: 0,
       bgRadius: 0,
       titleConfig: 0,
       titleBgColorLeft: '',
@@ -438,42 +506,74 @@ export default {
   methods: {
     setConfig(data) {
       if (!data) return;
-      if (data.mbConfig) {
-        this.slider = data.mbConfig.val;
-        this.styleConfig = data.styleConfig.tabVal;
-        this.imgUrl = data.imgConfig.url;
-        this.buttonConfig = data.buttonConfig.tabVal;
-        this.textConfig = data.textConfig.value;
-        let lists = data.listConfig.list;
-        let list = [];
-        lists.forEach((item) => {
-          if (item.show) {
-            list.push(item);
-          }
+      this.configObj = data;
+      if (!this.configObj.paddingConfig) {
+        this.$set(this.configObj, 'paddingConfig', {
+          title: 'Lề trong',
+          isAll: false,
+          val: 0,
+          min: 0,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         });
-        console.log(data.titleColor,'data.titleColor')
-        this.list = list;
-        this.toneConfig = data.toneConfig.tabVal;
-        this.newsColor = data.newsColor.color[0].item;
-        this.bntColor = data.bntColor.color[0].item;
-        this.bgColorLeft = data.moduleColor.color[0].item;
-        this.bgColorRight = data.moduleColor.color[1].item;
-        this.bottomBgColor = data.bottomBgColor.color[0].item;
-        this.prConfig = data.prConfig.val;
-        this.topConfig = data.topConfig.val;
-        this.bottomConfig = data.bottomConfig.val;
-        this.titleConfig = data.titleConfig.tabVal;
-        this.titleBgColorLeft = data.titleBgColor.color[0].item;
-        this.titleBgColorRight = data.titleBgColor.color[1].item;
-        this.titleColor = data.titleColor.color[0].item;
-        this.titleTxtConfig = data.titleTxtConfig.value;
-        let fillet = data.fillet.type;
-        let filletVal = data.fillet.val;
-        let valList = data.fillet.valList;
-        this.bgRadius = fillet
-          ? valList[0].val + 'px ' + valList[1].val + 'px ' + valList[3].val + 'px ' + valList[2].val + 'px'
-          : filletVal + 'px';
+        if (data.topConfig) this.configObj.paddingConfig.valList[0].val = data.topConfig.val;
+        if (data.bottomConfig) this.configObj.paddingConfig.valList[2].val = data.bottomConfig.val;
+        if (data.prConfig) {
+          this.configObj.paddingConfig.valList[1].val = data.prConfig.val;
+          this.configObj.paddingConfig.valList[3].val = data.prConfig.val;
+        }
       }
+      if (!this.configObj.marginConfig) {
+        this.$set(this.configObj, 'marginConfig', {
+          title: 'Lề ngoài',
+          isAll: false,
+          val: 0,
+          min: 0,
+          max: 100,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        });
+        if (data.mbConfig) {
+          this.configObj.marginConfig.valList[0].val = data.mbConfig.val;
+        }
+      }
+      for (let key in this.defaultConfig) {
+        if (this.configObj[key] === undefined) {
+          this.$set(this.configObj, key, this.defaultConfig[key]);
+        }
+      }
+      this.rollStyle = data.rollConfig.tabVal;
+      this.txtPosition = data.textConfig.tabVal;
+      // this.slider = this.marginConfig.valList[0].val;
+      this.styleConfig = data.styleConfig.tabVal;
+      this.imgUrl = data.imgConfig.url;
+      this.buttonConfig = data.buttonConfig.tabVal;
+      this.textConfig = data.textConfig.value;
+      let lists = data.listConfig.list;
+      let list = [];
+      lists.forEach((item) => {
+        if (item.show) {
+          list.push(item);
+        }
+      });
+      this.list = list;
+      this.toneConfig = data.toneConfig.tabVal;
+      this.newsColor = data.newsColor.color[0].item;
+      this.bntColor = data.bntColor.color[0].item;
+      this.bgColorLeft = data.moduleColor.color[0].item;
+      this.bgColorRight = data.moduleColor.color[1].item;
+      // this.prConfig = this.paddingConfig.valList[1].val;
+      // this.topConfig = this.paddingConfig.valList[0].val;
+      // this.bottomConfig = this.paddingConfig.valList[2].val;
+      this.titleConfig = data.titleConfig.tabVal;
+      this.titleBgColorLeft = data.titleBgColor.color[0].item;
+      this.titleBgColorRight = data.titleBgColor.color[1].item;
+      this.titleColor = data.titleColor.color[0].item;
+      this.titleTxtConfig = data.titleTxtConfig.value;
+      let fillet = data.fillet.type;
+      let filletVal = data.fillet.val;
+      let valList = data.fillet.valList;
+      this.bgRadius = fillet
+        ? valList[0].val + 'px ' + valList[1].val + 'px ' + valList[3].val + 'px ' + valList[2].val + 'px'
+        : filletVal + 'px';
     },
   },
 };
@@ -484,6 +584,8 @@ export default {
   border-radius: 6px !important;
 }
 .news-box {
+  display: inline-block;
+  width: -webkit-fill-available;
   .list {
     padding: 0 12px 16px 12px;
     .title {

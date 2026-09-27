@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -120,12 +120,12 @@ class AccessTokenServeService extends HttpService
         $response = $this->postRequest($this->get(self::USER_LOGIN), $params);
         $response = json_decode($response, true);
         if (!$response) {
-            throw new ApiException(410085, ['msg' => '']);
+            throw new ApiException('Lấy token thất bại{:msg}', ['msg' => '']);
         }
         if ($response['status'] === 200) {
             return $response['data'];
         } else {
-            throw new ApiException(410085, ['msg' => ':' . $response['msg']]);
+            throw new ApiException('Lấy token thất bại{:msg}', ['msg' => ':' . $response['msg']]);
         }
     }
 
@@ -142,14 +142,14 @@ class AccessTokenServeService extends HttpService
         if ($isHeader) {
             $this->getToken();
             if (!$this->accessToken) {
-                throw new ApiException(410086);
+                throw new ApiException('Cấu hình đã thay đổi hoặc token đã hết hạn');
             }
             $header = array_merge($header, ['Authorization:Bearer-' . $this->accessToken]);
         }
 
         $res = $this->request($this->get($url), $method, $data, $header);
         if (!$res) {
-            throw new ApiException(410087);
+            throw new ApiException('Lỗi nền tảng: đã xảy ra sự cố, vui lòng thử lại sau');
 
         }
         $result = json_decode($res, true) ?: false;

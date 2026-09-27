@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -154,12 +154,12 @@ class StoreBargainController
             ['bargainId', 0],
             ['bargainUserUid', 0],
         ], true);
-        if (!$bargainId || !$bargainUserUid) return app('json')->fail(100100);
+        if (!$bargainId || !$bargainUserUid) return app('json')->fail('Tham số không hợp lệ');
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
         $userInfo = $userServices->getUserInfo((int)$bargainUserUid);
         if (!$userInfo) {
-            return app('json')->fail(410044);
+            return app('json')->fail('Lấy thông tin người dùng thất bại');
         }
         return app('json')->success(['nickname' => $userInfo['nickname'], 'avatar' => $userInfo['avatar']]);
     }
@@ -188,12 +188,12 @@ class StoreBargainController
     public function user_cancel(Request $request)
     {
         list($bargainId) = $request->postMore([['bargainId', 0]], true);
-        if (!$bargainId) return app('json')->fail(100100);
+        if (!$bargainId) return app('json')->fail('Tham số không hợp lệ');
         /** @var StoreBargainUserServices $bargainUser */
         $bargainUser = app()->make(StoreBargainUserServices::class);
         $res = $bargainUser->cancelBargain($bargainId, $request->uid());
-        if ($res) return app('json')->success(100019);
-        else return app('json')->success(100020);
+        if ($res) return app('json')->success('Hủy thành công');
+        else return app('json')->success('Hủy thất bại');
     }
 
     /**
@@ -214,7 +214,7 @@ class StoreBargainController
         if ($posterUrl) {
             return app('json')->success(['url' => $posterUrl]);
         } else {
-            return app('json')->fail(410172);
+            return app('json')->fail('Tạo poster thất bại');
         }
     }
 

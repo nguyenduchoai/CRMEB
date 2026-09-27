@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -75,7 +75,7 @@ class SystemClearData extends AuthController
             case 'user':
                 return $this->userRelevantData();
             default:
-                return app('json')->fail(100100);
+                return app('json')->fail('Tham số không hợp lệ');
         }
     }
 
@@ -93,7 +93,7 @@ class SystemClearData extends AuthController
         }
         $services->delete(2, 'module_type');
         $this->services->clearData(['qrcode'], true);
-        return app('json')->success(100046);
+        return app('json')->success('Xóa dữ liệu thành công');
     }
 
     /**
@@ -154,7 +154,7 @@ class SystemClearData extends AuthController
             return true;
         } else {
             $services->delete(1, 'is_del');
-            return app('json')->success(100046);
+            return app('json')->success('Xóa dữ liệu thành công');
         }
     }
 
@@ -223,7 +223,7 @@ class SystemClearData extends AuthController
             'wechat_user',
         ], true);
         $this->services->delDirAndFile('./public/uploads/store/comment');
-        return app('json')->success(100046);
+        return app('json')->success('Xóa dữ liệu thành công');
     }
 
     /**
@@ -335,7 +335,7 @@ class SystemClearData extends AuthController
             'wechat_reply',
             'wechat_user',
         ], true);
-        return app('json')->success(100046);
+        return app('json')->success('Xóa dữ liệu thành công');
     }
 
     /**
@@ -345,7 +345,7 @@ class SystemClearData extends AuthController
     public function categoryData()
     {
         $this->services->clearData(['store_category'], true);
-        return app('json')->success(100046);
+        return app('json')->success('Xóa dữ liệu thành công');
     }
 
     /**
@@ -368,7 +368,7 @@ class SystemClearData extends AuthController
             'store_order_status',
             'store_pink',
         ], true);
-        return app('json')->success(100046);
+        return app('json')->success('Xóa dữ liệu thành công');
     }
 
     /**
@@ -385,7 +385,7 @@ class SystemClearData extends AuthController
             'store_service_speechcraft'
         ], true);
         $this->services->delDirAndFile('./public/uploads/store/service');
-        return app('json')->success(100046);
+        return app('json')->success('Xóa dữ liệu thành công');
     }
 
     /**
@@ -406,7 +406,7 @@ class SystemClearData extends AuthController
             'wechat_reply'
         ], true);
         $this->services->delDirAndFile('./public/uploads/wechat');
-        return app('json')->success(100046);
+        return app('json')->success('Xóa dữ liệu thành công');
     }
 
     /**
@@ -420,7 +420,7 @@ class SystemClearData extends AuthController
             'system_attachment_category'
         ], true);
         $this->services->delDirAndFile('./public/uploads/');
-        return app('json')->success(100046);
+        return app('json')->success('Xóa dữ liệu thành công');
     }
 
     //Xóa danh mục nội dung
@@ -431,7 +431,7 @@ class SystemClearData extends AuthController
             'article',
             'article_content'
         ], true);
-        return app('json')->success(100046);
+        return app('json')->success('Xóa dữ liệu thành công');
     }
 
     //Xóa bản ghi hệ thống
@@ -441,7 +441,7 @@ class SystemClearData extends AuthController
             'system_notice_admin',
             'system_log'
         ], true);
-        return app('json')->success(100046);
+        return app('json')->success('Xóa dữ liệu thành công');
     }
 
     /**
@@ -454,10 +454,10 @@ class SystemClearData extends AuthController
             ['url', '']
         ], true);
         if (!$url)
-            return app('json')->fail(400304);
+            return app('json')->fail('Vui lòng nhập tên miền cần thay thế');
         if (!verify_domain($url))
-            return app('json')->fail(400305);
+            return app('json')->fail('Tên miền không hợp lệ');
         $this->services->replaceSiteUrl($url);
-        return app('json')->success(400306);
+        return app('json')->success('Thay thế thành công');
     }
 }

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -48,13 +48,13 @@ class UserAuthServices extends BaseServices
         $md5Token = is_null($token) ? '' : md5($token);
 
         if ($token === 'undefined') {
-            throw new AuthException(110002);
+            throw new AuthException('Vui lòng đăng nhập', [], 401);
         }
         if (!$token || !$tokenData = CacheService::get($md5Token))
-            throw new AuthException(110002);
+            throw new AuthException('Vui lòng đăng nhập', [], 401);
 
         if (!is_array($tokenData) || empty($tokenData) || !isset($tokenData['uid'])) {
-            throw new AuthException(110002);
+            throw new AuthException('Vui lòng đăng nhập', [], 401);
         }
 
         /** @var JwtAuth $jwtAuth */
@@ -67,14 +67,14 @@ class UserAuthServices extends BaseServices
             $jwtAuth->verifyToken();
         } catch (\Throwable $e) {
             if (!request()->isCli()) CacheService::delete($md5Token);
-            throw new AuthException(110003);
+            throw new AuthException('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại', [], 401);
         }
 
         $user = $this->dao->get(['uid' => $id, 'is_del' => 0, 'status' => 1]);
 
         if (!$user || $user->uid != $tokenData['uid']) {
             if (!request()->isCli()) CacheService::delete($md5Token);
-            throw new AuthException(110004);
+            throw new AuthException('Trạng thái đăng nhập không hợp lệ, vui lòng đăng nhập lại', [], 401);
         }
 
         $this->dao->update(['uid' => $id], ['last_time' => time()]);

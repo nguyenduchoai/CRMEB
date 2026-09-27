@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -52,7 +52,7 @@ class RoutineTemplate extends AuthController
     public function syncSubscribe()
     {
         if (!sys_config('routine_appId') || !sys_config('routine_appsecret')) {
-            throw new AdminException(400236);
+            throw new AdminException('Vui lòng cấu hình appid, appSecret và các tham số khác của Mini Program trước');
         }
 
         $list = MiniProgramService::getSubscribeTemplateList();
@@ -65,7 +65,7 @@ class RoutineTemplate extends AuthController
             SyncMessageJob::dispatch('SyncSubscribe', [$key, $content]);
         }
 
-        return app('json')->success(100038);
+        return app('json')->success('Đồng bộ thành công');
     }
 
     /**
@@ -78,7 +78,7 @@ class RoutineTemplate extends AuthController
             ['name', ''],
             ['is_live', 0]
         ], true);
-        if (sys_config('routine_appId', '') == '') throw new AdminException(400236);
+        if (sys_config('routine_appId', '') == '') throw new AdminException('Vui lòng cấu hình appid, appSecret và các tham số khác của Mini Program trước');
         try {
             @unlink(public_path() . 'statics/download/routine.zip');
             //Sao chép file gốc
@@ -183,7 +183,7 @@ class RoutineTemplate extends AuthController
                 } else {
                     $res = false;
                 }
-                if (!$res) throw new ValidateException(400237);
+                if (!$res) throw new ValidateException('Tạo mã QR thất bại');
                 $upload = UploadService::init(1);
                 if ($upload->to('routine/code')->setAuthThumb(false)->stream((string)$res['res'], $name) === false) {
                     return $upload->getError();

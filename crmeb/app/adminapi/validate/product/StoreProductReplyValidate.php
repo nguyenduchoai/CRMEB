@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -25,14 +25,14 @@ class StoreProductReplyValidate extends Validate
          * @var array
          */
         $this->message = [
-            'product_id.require' => '400337',
-            'avatar.require' => '400000',
-            'nickname.require' => '400001',
-            'comment.require' => '400002',
-            'product_score.require' => '400003',
-            'service_score.require' => '400004',
-            'product_score.In' => '400005',
-            'service_score.In' => '400006',
+            'product_id.require' => 'Vui lòng chọn sản phẩm',
+            'avatar.require' => 'Vui lòng chọn ảnh đại diện',
+            'nickname.require' => 'Vui lòng điền biệt danh',
+            'comment.require' => 'Vui lòng điền nội dung đánh giá',
+            'product_score.require' => 'Vui lòng chọn điểm sản phẩm',
+            'service_score.require' => 'Vui lòng chọn điểm dịch vụ',
+            'product_score.In' => 'Điểm sản phẩm phải là số nguyên từ 1-5',
+            'service_score.In' => 'Điểm dịch vụ phải là số nguyên từ 1-5',
         ];
     }
 

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -118,14 +118,23 @@ if (!function_exists('attr_format')) {
         $title = array_column($arr, 'value');
         $result = [];
 
+        // Khi mảng thuộc tính không rỗng, tiến hành định dạng và tổ hợp
         if ($len > 0) {
+            // Khi số loại thuộc tính lớn hơn 1, cần tổ hợp theo tích Descartes
             if ($len > 1) {
+                // Lấy chi tiết thuộc tính của nhóm đầu tiên làm kết quả ban đầu
                 $result = $arr[0]['detail'];
+                // Lần lượt tổ hợp từng cặp với chi tiết thuộc tính của mỗi nhóm tiếp theo
                 for ($i = 0; $i < $len - 1; $i++) {
+                    // Lưu tập kết quả hiện tại để dùng cho vòng lặp tiếp theo
                     $temp = $result;
+                    // Xóa kết quả, chuẩn bị thu thập lại các tổ hợp mới
                     $result = [];
+                    // Duyệt tất cả các tổ hợp thu được ở vòng trước
                     foreach ($temp as $item) {
+                        // Ghép lần lượt tổ hợp hiện tại với từng chi tiết thuộc tính của nhóm tiếp theo
                         foreach ($arr[$i + 1]['detail'] as $datum) {
+                            // Nếu phần tử là mảng thì lấy giá trị value để ghép; nếu không thì ghép trực tiếp
                             if (is_array($item)) {
                                 $result[] = trim($item['value']) . ',' . trim($datum['value']);
                             } else {
@@ -135,7 +144,9 @@ if (!function_exists('attr_format')) {
                     }
                 }
             } else {
+                // Khi chỉ có một loại thuộc tính, lấy trực tiếp tất cả giá trị thuộc tính của nhóm đó
                 foreach ($arr[0]['detail'] as $item) {
+                    // Tương tự, phân biệt mảng và không phải mảng, thống nhất lấy value hoặc lấy giá trị trực tiếp
                     if (is_array($item)) {
                         $result[] = trim($item['value']);
                     } else {
@@ -144,6 +155,7 @@ if (!function_exists('attr_format')) {
                 }
             }
         }
+        // Trả về danh sách giá trị thuộc tính sau khi tổ hợp và danh sách tên thuộc tính
         return [$result, $title];
     }
 }

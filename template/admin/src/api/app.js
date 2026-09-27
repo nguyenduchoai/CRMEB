@@ -174,6 +174,74 @@ export function routineInfo() {
   });
 }
 
+// ==================== Tự động tải lên Mini Program qua CI ====================
+
+/**
+ * @description Lấy trạng thái môi trường chạy CI của Mini Program
+ */
+export function routineCIEnvironment() {
+  return request({
+    url: 'app/routine/ci/environment',
+    method: 'get',
+  });
+}
+
+/**
+ * @description Lấy hướng dẫn cài đặt môi trường
+ */
+export function routineCIGuide() {
+  return request({
+    url: 'app/routine/ci/guide',
+    method: 'get',
+  });
+}
+
+/**
+ * @description Lấy cấu hình tải lên Mini Program
+ */
+export function routineCIConfig() {
+  return request({
+    url: 'app/routine/ci/config',
+    method: 'get',
+  });
+}
+
+/**
+ * @description Lưu khóa tải lên Mini Program
+ * @param {Object} data { key_content: nội dung khóa }
+ */
+export function routineCISaveKey(data) {
+  return request({
+    url: 'app/routine/ci/private_key',
+    method: 'post',
+    data,
+  });
+}
+
+/**
+ * @description Tải lên mã nguồn Mini Program
+ * @param {Object} data { version: số phiên bản, desc: mô tả, is_live: có bật livestream không }
+ */
+export function routineCIUpload(data) {
+  return request({
+    url: 'app/routine/ci/upload',
+    method: 'post',
+    data,
+  });
+}
+
+/**
+ * @description Lấy mã QR xem trước Mini Program
+ * @param {Object} data { page_path: đường dẫn trang xem trước }
+ */
+export function routineCIPreview(data) {
+  return request({
+    url: 'app/routine/ci/preview',
+    method: 'post',
+    data,
+  });
+}
+
 /**
  * @description  Tự động trả lời -- Từ khóa, danh sách
  * @param {Object} param data {Object} Tham số truyền giá trị

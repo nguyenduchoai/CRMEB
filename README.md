@@ -1,14 +1,14 @@
-> **Bản Việt hóa CRMEB (v5.6.3)**
+> **Bản Việt hóa CRMEB (v6.0.0)**
 >
 > - Giao diện quản trị, H5/App, trình cài đặt, thông báo API, dữ liệu mẫu SQL, chú thích code và tài liệu đã được dịch sang **tiếng Việt**.
 >   - Ngôn ngữ mặc định: **vi-VN**. Múi giờ: **Asia/Ho_Chi_Minh**.
 >   - Các gói ngôn ngữ khác vẫn còn và có thể bật lại trong trang quản trị.
+>   - README tiếng Anh gốc: [`README_EN.md`](README_EN.md).
 > - Đánh giá khả năng dùng CRMEB làm nền tảng TMĐT tại Việt Nam: [`PHAN_TICH_CRMEB_VIETNAM.md`](PHAN_TICH_CRMEB_VIETNAM.md).
 > - Mã nguồn gốc thuộc bản quyền CRMEB (Xi'an Zhongbang). Văn bản license gốc giữ nguyên; bản dịch tham khảo nằm ở `crmeb/LICENSE.vi.txt`.
 > - Build lại frontend:
 >   - Admin: `cd template/admin && npm ci && NODE_OPTIONS=--openssl-legacy-provider npm run build`, sau đó chép `dist/` vào `crmeb/public/admin/`.
->   - UniApp: dùng HBuilderX như trước, hoặc build bằng uni-app CLI (Vue 2). Nếu dùng dart-sass, đổi `/deep/` thành `::v-deep`.
-
+>   - UniApp: dùng HBuilderX như trước, hoặc build bằng uni-app CLI (Vue 2). Với H5, project CLI cần template `public/index.html` chuẩn của uni-app (có dòng nạp `static/index.<hash>.css`), nếu không trang sẽ thiếu CSS toàn cục.
 
 <div align="center" >
     <img src="https://www.crmeb.com/static/images/dark_logo.png" />
@@ -16,7 +16,23 @@
 
 <div align="center" style="font-size: 15px;">
 
-Hệ thống thương mại điện tử mã nguồn mở CRMEB (phiên bản PHP)  
+Hệ thống thương mại điện tử mã nguồn mở chất lượng cao CRMEB (phiên bản PHP) 
+
+</div>
+
+<div align="center" >
+    <a href='https://gitee.com/ZhongBangKeJi/CRMEB/stargazers'>
+       <img src='https://gitee.com/ZhongBangKeJi/CRMEB/badge/star.svg?theme=gvp' alt='star'></img>
+    </a>
+    <a href="http://www.crmeb.com/?from=giteephp">
+        <img src="https://img.shields.io/badge/Licence-apache2.0-green.svg?style=flat" />
+    </a>
+    <a href="http://www.crmeb.com">
+        <img src="https://img.shields.io/badge/Edition-6.0.0-blue.svg" />
+    </a>
+     <a href="https://gitee.com/ZhongBangKeJi/CRMEB/repository/archive/master.zip">
+        <img src="https://img.shields.io/badge/Download-240m-red.svg" />
+    </a>
 
 </div>
 
@@ -24,20 +40,34 @@ Hệ thống thương mại điện tử mã nguồn mở CRMEB (phiên bản PH
   Chúng tôi tận tâm làm mã nguồn mở và rất cần sự khích lệ của bạn! Star🌟 ở góc trên bên phải đang chờ bạn thắp sáng
 </div>
 
-
 ####
-
 
 <div align="center">
 
+Tiếng Việt | [English](./README_EN.md) 
 
-[Website chính thức](https://www.crmeb.com/) |
-[Trải nghiệm trực tuyến](http://v4.crmeb.net/admin/) |
+</div>
+
+
+####
+
+<div align="center">
+
+[![zread](https://img.shields.io/badge/Ask_Zread-_.svg?style=flat&color=00b0aa&labelColor=000000&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQuOTYxNTYgMS42MDAxSDIuMjQxNTZDMS44ODgxIDEuNjAwMSAxLjYwMTU2IDEuODg2NjQgMS42MDE1NiAyLjI0MDFWNC45NjAxQzEuNjAxNTYgNS4zMTM1NiAxLjg4ODEgNS42MDAxIDIuMjQxNTYgNS42MDAxSDQuOTYxNTZDNS4zMTUwMiA1LjYwMDEgNS42MDE1NiA1LjMxMzU2IDUuNjAxNTYgNC45NjAxVjIuMjQwMUM1LjYwMTU2IDEuODg2NjQgNS4zMTUwMiAxLjYwMDEgNC45NjE1NiAxLjYwMDFaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00Ljk2MTU2IDEwLjM5OTlIMi4yNDE1NkMxLjg4ODEgMTAuMzk5OSAxLjYwMTU2IDEwLjY4NjQgMS42MDE1NiAxMS4wMzk5VjEzLjc1OTlDMS42MDE1NiAxNC4xMTM0IDEuODg4MSAxNC4zOTk5IDIuMjQxNTYgMTQuMzk5OUg0Ljk2MTU2QzUuMzE1MDIgMTQuMzk5OSA1LjYwMTU2IDE0LjExMzQgNS42MDE1NiAxMy43NTk5VjExLjAzOTlDNS42MDE1NiAxMC42ODY0IDUuMzE1MDIgMTAuMzk5OSA0Ljk2MTU2IDEwLjM5OTlaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik0xMy43NTg0IDEuNjAwMUgxMS4wMzg0QzEwLjY4NSAxLjYwMDEgMTAuMzk4NCAxLjg4NjY0IDEwLjM5ODQgMi4yNDAxVjQuOTYwMUMxMC4zOTg0IDUuMzEzNTYgMTAuNjg1IDUuNjAwMSAxMS4wMzg0IDUuNjAwMUgxMy43NTg0QzE0LjExMTkgNS42MDAxIDE0LjM5ODQgNS4zMTM1NiAxNC4zOTg0IDQuOTYwMVYyLjI0MDFDMTQuMzk4NCAxLjg4NjY0IDE0LjExMTkgMS42MDAxIDEzLjc1ODQgMS42MDAxWiIgZmlsbD0iI2ZmZiIvPgo8cGF0aCBkPSJNNCAxMkwxMiA0TDQgMTJaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00IDEyTDEyIDQiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K&logoColor=ffffff)](https://zread.ai/crmeb/CRMEB)
+![star](https://gitcode.com/xazbkj/CRMEB/star/badge.svg)
+![star](https://img.shields.io/github/stars/crmeb/crmeb)
+
+</div>
+
+<div align="center">
+
+[Website chính thức](https://www.crmeb.com/?from=giteephp) |
+[Trải nghiệm trực tuyến](http://v6.crmeb.net/admin/) |
 [Tài liệu hướng dẫn](https://doc.crmeb.com/single_open) |
-[Chợ ứng dụng](https://www.crmeb.com/market/) |
-[Cộng đồng kỹ thuật](https://www.crmeb.com/ask/thread/list/147)
-
-
+[Chợ ứng dụng](https://www.crmeb.com/market?from=giteephp) |
+[Cộng đồng kỹ thuật](https://www.crmeb.com/ask/thread/list/147) |
+[Kho giao diện](https://www.crmeb.com/theme) |
+[Xem màn hình rộng](https://gitee.com/ZhongBangKeJi/CRMEB/blob/master/README.md)
 
 
 </div>
@@ -68,14 +98,53 @@ Tích hợp sẵn **20+ module marketing cốt lõi** (mua chung, săn giảm gi
 
 **Kế hoạch cùng xây dựng cộng đồng**
 
-Chúng tôi cam kết xây dựng hệ sinh thái thân thiện với lập trình viên, công khai mã nguồn, liên tục cập nhật các module tính năng, đồng thời hoan nghênh lập trình viên gửi đề xuất tối ưu hoặc đóng góp mã nguồn. Thông qua việc chia sẻ thành quả kỹ thuật, chúng tôi góp phần giảm chi phí “phát minh lại bánh xe” trong ngành, thúc đẩy sự phát triển bền vững của các hệ thống thương mại điện tử mã nguồn mở.
+Chúng tôi cam kết xây dựng hệ sinh thái thân thiện với lập trình viên: công khai mã nguồn, liên tục cập nhật các module tính năng, đồng thời bổ sung Kho giao diện, cho phép người bán áp dụng các giao diện cửa hàng đẹp mắt chỉ với một cú nhấp để nhanh chóng thiết kế cửa hàng; lập trình viên và nhà thiết kế có thể đăng bán giao diện do mình sáng tạo để người dùng tải về sử dụng, qua đó chia sẻ sáng tạo và biến giá trị thành thu nhập. Đồng thời, chúng tôi hoan nghênh lập trình viên gửi đề xuất tối ưu hoặc đóng góp mã nguồn. Thông qua việc chia sẻ thành quả kỹ thuật, chúng tôi góp phần giảm chi phí “phát minh lại bánh xe” trong ngành, thúc đẩy sự phát triển bền vững của các hệ thống thương mại điện tử mã nguồn mở.
+
+---
+
+### 📝 **Kho giao diện**
+
+**Tải xuống miễn phí**
+
+Hãy đến Kho giao diện CRMEB để thỏa sức khám phá kho mẫu tuyển chọn khổng lồ, xây dựng cửa hàng mang dấu ấn riêng mà không tốn chi phí. Không cần năng lực thiết kế chuyên nghiệp, vô số mẫu miễn phí có thể tải về dùng ngay, phong cách giao diện đa dạng đáp ứng chính xác nhu cầu của từng ngành hàng, nhanh chóng nâng tầm hình ảnh cửa hàng và trải nghiệm người dùng, giúp cửa hàng của bạn chiếm ưu thế về thị giác ngay từ vạch xuất phát.
+
+**Nhập bằng một cú nhấp**
+
+Đơn giản hóa mọi thao tác, làm mới giao diện cửa hàng với tốc độ cực nhanh. Tạm biệt hoàn toàn quy trình cấu hình DIY thủ công rườm rà trước đây: chỉ cần nhập gói giao diện bằng một cú nhấp là toàn bộ giao diện (bao gồm bố cục trang và bảng màu toàn cục) sẽ được tích hợp liền mạch vào hệ thống của bạn. Hệ thống tự động khớp thành phần và gắn dữ liệu, không cần viết bất kỳ dòng mã nào, xem trước và áp dụng ngay lập tức. Việc thay đổi, nâng cấp giao diện cửa hàng trở nên dễ dàng như thay hình nền điện thoại, giúp tiết kiệm đáng kể thời gian và chi phí cho cả vận hành lẫn phát triển.
+
+**Đăng bán trên Kho giao diện**
+
+Không chỉ dùng thoải mái mà còn kiếm tiền dễ dàng. Bạn có thể tận dụng tính năng DIY mạnh mẽ của hệ thống, tự do kết hợp bảng màu, bố cục và thành phần dựa trên các module sẵn có để tạo ra giao diện độc quyền mang bản sắc riêng, rồi đăng bán trực tiếp trên Kho giao diện. Khi người dùng khác trả phí tải xuống tác phẩm của bạn, bạn sẽ nhận được phần chia sẻ doanh thu tương ứng. Điều này không chỉ mang lại kênh kiếm tiền trực tiếp từ năng lực thiết kế và kinh nghiệm kỹ thuật tích lũy của bạn, mà còn góp phần cùng xây dựng một hệ sinh thái cửa hàng trực tuyến mã nguồn mở thịnh vượng, tạo nên thành công kép cho cả sáng tạo lẫn giá trị.
+
+Kho giao diện: <a href="https://www.crmeb.com/theme" target="_blank">Kho giao diện</a>
 
 
-🔗 <a href="https://doc.crmeb.com/single_open/open_v54/19855" target="_blank">Danh sách tính năng</a> | 📩 <a href="https://github.com/crmeb/CRMEB/issues" target="_blank">Gửi phản hồi</a> | 📩 <a href="https://github.com/crmeb/CRMEB/pulls" target="_blank">Đóng góp mã nguồn</a>
+![Mô tả hình ảnh](help/resource/pic/kho-giao-dien.png)
+
+
+
+🔗 <a href="https://doc.crmeb.com/single_open/open_v60/39233" target="_blank">Danh sách tính năng</a> | 📩 <a href="https://gitee.com/ZhongBangKeJi/CRMEB/issues" target="_blank">Gửi phản hồi</a> | 📩 <a href="https://gitee.com/ZhongBangKeJi/CRMEB/pulls" target="_blank">Đóng góp mã nguồn</a> | 🔗 <a href="https://www.crmeb.com/theme" target="_blank">Kho giao diện</a>
 
 
 
 ---
+
+### Trải nghiệm bằng docker chỉ với một lệnh
+```
+# Pull và chạy image Docker của CRMEB
+docker run -d --name crmeb -p 8080:80 ccr.ccs.tencentyun.com/crmebky_php/crmebky:latest
+```
+
+#### Truy cập dịch vụ
+- **Website**: http://localhost:8080 
+- **Trang quản trị**: http://localhost:8080/admin (tài khoản: admin, mật khẩu: crmeb.com)
+- **MySQL**: localhost:3306 (tài khoản: root, mật khẩu: 123456)
+- **Redis**: localhost:6379
+> Xem hướng dẫn chi tiết tại [Tài liệu hướng dẫn](/help/docker/docker.md).
+---
+
+![Mô tả hình ảnh](help/resource/pic/banner-ma-nguon-mo-php.jpg)
+
 
 ### 🫧 Đặc điểm kỹ thuật
 
@@ -104,43 +173,44 @@ Hiệu năng và khả năng mở rộng:
 
 ---
 
-###  📖 Tính năng hệ thống
+### 📖 Tính năng hệ thống
 
-![Mô tả hình ảnh](readme/pic/tinh-nang-cot-loi.jpg)
-
----
-
-###  📖 Minh họa giao diện UI
-
-![Mô tả hình ảnh](readme/pic/PHP_06.jpg)
-
-
+![Mô tả hình ảnh](help/resource/pic/tinh-nang-cot-loi.jpg)
 
 ---
 
-###  📖 Minh họa giao diện trang quản trị
+### 📖 Minh họa giao diện UI
 
-![Mô tả hình ảnh](readme/pic/PHP_05.jpg)
+![Mô tả hình ảnh](help/resource/pic/PHP_06.jpg)
+
 
 
 ---
 
+### 📖 Minh họa giao diện trang quản trị
 
-###  📱 Demo hệ thống
+![Mô tả hình ảnh](help/resource/pic/PHP_05.jpg)
 
-![Mô tả hình ảnh](readme/pic/contact.jpg)
 
-Trang quản trị: http://v5.crmeb.net/admin
+---
+
+
+### 📱 Demo hệ thống
+![Mô tả hình ảnh](help/resource/pic/contact2.jpg)
+
+Trang quản trị: http://v6.crmeb.net/admin
 
 Tài khoản: demo Mật khẩu: crmeb.com
 
-Bản H5: http://v5.crmeb.net/ (mở trên thiết bị di động)
+Bản H5: http://v6.crmeb.net/ (mở trên thiết bị di động)
 
-Bản PC: http://v5.crmeb.net/ (mở trên máy tính)
+Bản PC: http://v6.crmeb.net/ (mở trên máy tính)
 
 Tải APP: http://app.crmeb.cn/bzv (với iPhone, tìm CRMEB trực tiếp trên APP Store để tải về)
 
-> Nghe nói cao thủ như bạn muốn xem toàn bộ khung kiến trúc của dự án mã nguồn mở CRMEB? <a href="https://doc.crmeb.com/single/v5/7712" target="_blank">Nhấn vào đây để nhận ngay!</a>
+Giao diện: https://www.crmeb.com/theme (mở trên máy tính)
+
+> Nghe nói cao thủ như bạn muốn xem toàn bộ khung kiến trúc của dự án mã nguồn mở CRMEB? <a href="https://doc.crmeb.com/single_open/open_v60/39235" target="_blank">Nhấn vào đây để nhận ngay!</a>
 
 
 
@@ -152,7 +222,7 @@ Tải APP: http://app.crmeb.cn/bzv (với iPhone, tìm CRMEB trực tiếp trên
 
 
 
-###  🔐 **Môi trường vận hành**
+### 🔐 **Môi trường vận hành**
 
 
 | **Môi trường vận hành**         | **Yêu cầu**                                                                 |
@@ -174,7 +244,7 @@ Tải APP: http://app.crmeb.cn/bzv (với iPhone, tìm CRMEB trực tiếp trên
 > Lưu ý: không hỗ trợ hosting ảo, khuyên dùng BT Panel (Baota), về máy chủ khuyên dùng máy chủ JD Cloud: <a href="https://partner.jdcloud.com/partner/notice/b06c3232b6394fdfa496923b8e00b286" target="_blank">Đăng ký là được hưởng ưu đãi độc quyền giảm 35%, nhấn vào đây để nhận!</a>
 
 ---
-###  📺 **Môi trường phát triển và công nghệ sử dụng**
+### 📺 **Môi trường phát triển và công nghệ sử dụng**
 
 ### **Môi trường phát triển:**
 | Công cụ          | Phiên bản               | Liên kết tải xuống                                                                 |
@@ -265,23 +335,33 @@ Cộng đồng kỹ thuật: https://www.crmeb.com/ask/thread/list/147
 ---
 
 ###  📞 Tương tác cùng CRMEB
-#### Nhóm trao đổi kỹ thuật mã nguồn mở CRMEB (quét mã để vào nhóm và nhận tài liệu API bản mã nguồn mở, danh sách tính năng sản phẩm, bản thiết kế UI độ nét cao, sơ đồ tư duy!)
-![Mô tả hình ảnh](readme/pic/nhom-ma-nguon-mo.jpg)
-#### Cộng đồng kỹ thuật! Tìm giải pháp, báo bug, xem tin tức chính thức, nhận giải thưởng lớn cho thành viên tích cực! <a href="https://www.crmeb.com/ask" target="_blank">Cộng đồng kỹ thuật CRMEB</a> có đầy đủ tất cả
+#### Nhóm trao đổi kỹ thuật mã nguồn mở CRMEB (quét mã để vào nhóm và nhận tài liệu API bản mã nguồn mở, danh sách tính năng sản phẩm, sơ đồ tư duy!)
+![Mô tả hình ảnh](help/resource/pic/nhom-ma-nguon-mo-php.jpg)
+#### Cộng đồng kỹ thuật! Tìm giải pháp, báo bug, xem tin tức chính thức, nhận giải thưởng lớn cho thành viên tích cực! <a href="https://www.crmeb.com/ask/?from=giteephp" target="_blank">Cộng đồng kỹ thuật CRMEB</a> có đầy đủ tất cả
 
 
 
 
 ---
 
-###  📕 CRMEB bản PRO
+❤️ Lấy thương mại làm bệ đỡ, bảo vệ trái tim mã nguồn mở
 
-[![Mô tả hình ảnh](readme/pic/ban-pro-1.jpg)](https://www.crmeb.com/index/pro)
+### 📕 Dựng nhanh cửa hàng Mini Program của bạn trong 2 giờ
+
+[![Mô tả hình ảnh](help/resource/pic/java-saas.jpg)](https://shop.crmeb.com)
+
+### 📕 Hệ thống thương mại điện tử thành viên chuyên nghiệp cho tệp khách hàng riêng
+
+[![Mô tả hình ảnh](help/resource/pic/ban-pro-2.jpg)](https://www.crmeb.com/index/pro?from=giteephp)
 
 
 
-###  📕 CRMEB bản đa người bán
+### 📕 Xây dựng sàn thương mại? Khuyên dùng hệ thống đa người bán tối ưu chi phí
 
-[![Mô tả hình ảnh](readme/pic/duoshanghu.jpg)](https://www.crmeb.com/index/merchant)
+[![Mô tả hình ảnh](help/resource/pic/duoshanghu2.jpg)](https://www.crmeb.com/index/merchant?from=giteephp)
 
+---
+
+
+[Về đầu trang :fa-arrow-circle-up: ](https://gitee.com/ZhongBangKeJi/CRMEB#%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D)
 

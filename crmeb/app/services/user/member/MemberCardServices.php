@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -23,6 +23,11 @@ use crmeb\services\SystemConfigService;
 
 class MemberCardServices extends BaseServices
 {
+    /**
+     * @var MemberCardDao
+     */
+    protected $dao;
+
     /** Khởi tạo, lấy handle tầng dao
      * MemberCardServices constructor.
      * @param MemberCardDao $memberCardDao
@@ -70,10 +75,10 @@ class MemberCardServices extends BaseServices
     public function addCard(array $data)
     {
         if (!isset($data['card_batch_id']) || !$data['card_batch_id'] || $data['card_batch_id'] == 0 || !isset($data['total_num']) || !$data['total_num'] || $data['total_num'] == 0) {
-            throw new AdminException(100100);
+            throw new AdminException('Tham số không hợp lệ');
         }
         try {
-            if (!isset($data['total_num'])) throw new AdminException(100100);
+            if (!isset($data['total_num'])) throw new AdminException('Tham số không hợp lệ');
             $num = $data['total_num'];
             unset($data['total_num']);
             $res = [];
@@ -91,7 +96,7 @@ class MemberCardServices extends BaseServices
             }
             return true;
         } catch (\Exception $exception) {
-            throw new AdminException(400620);
+            throw new AdminException('Tạo thẻ thất bại');
         }
     }
 
@@ -126,32 +131,32 @@ class MemberCardServices extends BaseServices
      */
     public function drawMemberCard(array $data, int $uid)
     {
-        if (!$uid || !$data) throw new ApiException(100100);
+        if (!$uid || !$data) throw new ApiException('Tham số không hợp lệ');
         $isOpenMember = $this->isOpenMemberCard();
-        if (!$isOpenMember) throw new ApiException(400621);
-        if (!isset($data['member_card_code']) || !$data['member_card_code']) throw new ApiException(400622);
-        if (!isset($data['member_card_code']) || !$data['member_card_pwd']) throw new ApiException(400623);
+        if (!$isOpenMember) throw new ApiException('Tính năng thành viên chưa được bật');
+        if (!isset($data['member_card_code']) || !$data['member_card_code']) throw new ApiException('Vui lòng nhập số thẻ thành viên');
+        if (!isset($data['member_card_code']) || !$data['member_card_pwd']) throw new ApiException('Vui lòng nhập mật khẩu thẻ để nhận');
         $card_info = $this->dao->getOneByWhere(['card_number' => trim($data['member_card_code'])]);
-        if (!$card_info) throw new ApiException(400624);
+        if (!$card_info) throw new ApiException('Thẻ thành viên không tồn tại');
         /** @var MemberCardBatchServices $memberBatchServices */
         $memberBatchServices = app()->make(MemberCardBatchServices::class);
         $batch_info = $memberBatchServices->getOne($card_info['card_batch_id']);
-        if (!$batch_info) throw new ApiException(400625);
-        if ($batch_info->status != 1) throw new ApiException(400625);
-        if ($card_info['status'] == 0) throw new ApiException(400625);
-        if ($card_info['card_password'] != trim($data['member_card_pwd'])) throw new ApiException(400626);
-        if ($card_info['use_uid'] && $card_info['use_time']) throw new ApiException(400627);
+        if (!$batch_info) throw new ApiException('Thẻ thành viên chưa được kích hoạt, tạm thời không thể sử dụng');
+        if ($batch_info->status != 1) throw new ApiException('Thẻ thành viên chưa được kích hoạt, tạm thời không thể sử dụng');
+        if ($card_info['status'] == 0) throw new ApiException('Thẻ thành viên chưa được kích hoạt, tạm thời không thể sử dụng');
+        if ($card_info['card_password'] != trim($data['member_card_pwd'])) throw new ApiException('Mật khẩu thẻ thành viên không đúng');
+        if ($card_info['use_uid'] && $card_info['use_time']) throw new ApiException('Thẻ thành viên đã được sử dụng');
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
         $user_info = $userServices->getUserInfo($uid);
-        if (!$user_info) throw new ApiException(400214);
-        if ($user_info->is_money_level > 0 && $user_info->is_ever_level == 1) throw new ApiException(400628);
+        if (!$user_info) throw new ApiException('Người dùng không tồn tại');
+        if ($user_info->is_money_level > 0 && $user_info->is_ever_level == 1) throw new ApiException('Bạn đã là thành viên vĩnh viễn, không cần nhận thêm, có thể tặng thẻ này cho người thân, bạn bè để cùng hưởng ưu đãi');
 
 
         /**
          * Thời hạn sử dụng cụ thể của lô thẻ, khi nghiệp vụ cần thì mở lên, không xóa.
          */
-        if ($card_info->status != 1) throw new ApiException(400625);
+        if ($card_info->status != 1) throw new ApiException('Thẻ thành viên chưa được kích hoạt, tạm thời không thể sử dụng');
         $this->transaction(function () use ($card_info, $user_info, $batch_info, $memberBatchServices, $userServices, $data) {
             $res1 = $this->dao->update($card_info->id, ['use_uid' => $user_info->uid, 'use_time' => time(), 'update_time' => time()], 'id');
             if ($res1) {
@@ -203,7 +208,7 @@ class MemberCardServices extends BaseServices
     public function checkmemberType(string $member_type)
     {
         $member_type_arr = $this->getMemberTypeInfo();
-        if (!array_key_exists($member_type, $member_type_arr)) throw new ApiException(400629);
+        if (!array_key_exists($member_type, $member_type_arr)) throw new ApiException('Chưa có loại thẻ thành viên này');
         return true;
     }
 
@@ -220,7 +225,10 @@ class MemberCardServices extends BaseServices
                 $v['title'] = $v['show_title'];
                 $v['pic'] = $v['image'];
                 $v['right'] = $v['explain'];
-//                $v['number'] = $v['number'];
+                if ($v['right_type'] == 'offline') $v['explain'] = 'Thanh toán ngoại tuyến chỉ trả ' . floatval(bcdiv((string)$v['number'], '10', 1)) . '/10 giá';
+                if ($v['right_type'] == 'sign') $v['explain'] = 'Điểm danh nhận gấp ' . (int)$v['number'] . ' lần điểm thưởng';
+                if ($v['right_type'] == 'express') $v['explain'] = 'Phí vận chuyển chỉ tính ' . floatval(bcdiv((string)$v['number'], '10', 1)) . '/10 giá';
+                if ($v['right_type'] == 'integral') $v['explain'] = 'Mua sắm nhận gấp ' . (int)$v['number'] . ' lần điểm thưởng';
             }
         }
 
@@ -359,6 +367,11 @@ class MemberCardServices extends BaseServices
      */
     public function setStatus($id, $status)
     {
+        $card_batch_id = $this->dao->value(['id' => $id], 'card_batch_id');
+        $card_batch_status = app()->make(MemberCardBatchServices::class)->value(['id' => $card_batch_id], 'status');
+        if ($card_batch_status == 0) {
+            throw new AdminException('Lô thẻ chưa được kích hoạt, tạm thời không thể sử dụng');
+        }
         $res = $this->dao->update($id, ['status' => $status]);
         if ($res) return true;
         return false;

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -116,7 +116,7 @@ class OutStoreOrderServices extends BaseServices
         }
 
         if (!$orderInfo = $this->dao->get($where, $field, ['invoice'])) {
-            throw new ApiException(400118);
+            throw new ApiException('Đơn hàng không tồn tại');
         }
 
         if (!$orderInfo['invoice']) {
@@ -292,7 +292,7 @@ class OutStoreOrderServices extends BaseServices
     {
         $order = $this->dao->get(['order_id' => $orderId]);
         if (!$order) {
-            throw new ApiException(400118);
+            throw new ApiException('Đơn hàng không tồn tại');
         }
 
         $list = [];
@@ -317,27 +317,27 @@ class OutStoreOrderServices extends BaseServices
     {
         $order = $this->dao->get(['order_id' => $orderId]);
         if (!$order) {
-            throw new ApiException(400118);
+            throw new ApiException('Đơn hàng không tồn tại');
         }
 
         if ($order['status'] == 2) {
-            throw new ApiException(400114);
+            throw new ApiException('Không thể xác nhận nhận hàng nhiều lần');
         }
 
         if (($order['paid'] == 1 && $order['status'] == 1) || $order['pay_type'] == 'offline') {
             $data['status'] = 2;
         } else {
-            throw new ApiException(400115);
+            throw new ApiException('Vui lòng giao hàng hoặc giao tận nơi trước');
         }
 
         if (!$this->dao->update($order['id'], $data)) {
-            throw new ApiException(400116);
+            throw new ApiException('Xác nhận nhận hàng thất bại, vui lòng thử lại sau');
         }
 
         /** @var StoreOrderTakeServices $takeServices */
         $takeServices = app()->make(StoreOrderTakeServices::class);
         if (!$takeServices->storeProductOrderUserTakeDelivery($order)) {
-            throw new ApiException(400116);
+            throw new ApiException('Xác nhận nhận hàng thất bại, vui lòng thử lại sau');
         }
         return true;
     }
@@ -355,7 +355,7 @@ class OutStoreOrderServices extends BaseServices
     {
         $orderInfo = $this->dao->get(['order_id' => $orderId]);
         if (!$orderInfo) {
-            throw new ApiException(400470);
+            throw new ApiException('Không tìm thấy đơn hàng, không thể giao hàng');
         }
 
         /** @var StoreOrderDeliveryServices $deliveryServices */
@@ -376,7 +376,7 @@ class OutStoreOrderServices extends BaseServices
     {
         $orderInfo = $this->dao->get(['order_id' => $orderId]);
         if (!$orderInfo) {
-            throw new ApiException(400470);
+            throw new ApiException('Không tìm thấy đơn hàng, không thể giao hàng');
         }
 
         /** @var StoreOrderDeliveryServices $deliveryServices */
@@ -397,11 +397,11 @@ class OutStoreOrderServices extends BaseServices
     {
         $orderInfo = $this->dao->get(['order_id' => $orderId], ['id'], ['invoice']);
         if (!$orderInfo) {
-            throw new AdminException(400118);
+            throw new AdminException('Đơn hàng không tồn tại');
         }
 
         if (!$orderInfo->invoice || !$invoiceId = $orderInfo->invoice->id) {
-            throw new ApiException(100026);
+            throw new ApiException('Dữ liệu không tồn tại');
         }
 
         /** @var StoreOrderInvoiceServices $invoiceServices */
@@ -419,7 +419,7 @@ class OutStoreOrderServices extends BaseServices
     {
         $orderInfo = $this->dao->get(['order_id' => $orderId]);
         if (!$orderInfo) {
-            throw new AdminException(400118);
+            throw new AdminException('Đơn hàng không tồn tại');
         }
 
         /** @var StoreOrderDeliveryServices $deliveryServices */

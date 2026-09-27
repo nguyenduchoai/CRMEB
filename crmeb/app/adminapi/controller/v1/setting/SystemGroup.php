@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -74,10 +74,10 @@ class SystemGroup extends AuthController
 
         //Kiểm tra tên nhóm dữ liệu
         if (!$params['name']) {
-            return app('json')->fail(400187);
+            return app('json')->fail('Vui lòng nhập tên');
         }
         if (!$params['config_name']) {
-            return app('json')->fail(400274);
+            return app('json')->fail('Vui lòng nhập tên cấu hình');
         }
         $data["name"] = $params['name'];
         $data["config_name"] = $params['config_name'];
@@ -85,7 +85,7 @@ class SystemGroup extends AuthController
         $data["cate_id"] = $params['cate_id'];
         //Kiểm tra thông tin trường
         if (!count($params['typelist']))
-            return app('json')->fail(400294);
+            return app('json')->fail('Phải có ít nhất một trường');
         else {
             $validate = ["name", "type", "title", "description"];
             foreach ($params["typelist"] as $key => $value) {
@@ -100,7 +100,7 @@ class SystemGroup extends AuthController
         $data["fields"] = json_encode($data["fields"]);
         $this->services->save($data);
         \crmeb\services\CacheService::clear();
-        return app('json')->success(400295);
+        return app('json')->success('Thêm nhóm dữ liệu thành công');
     }
 
     /**
@@ -153,12 +153,12 @@ class SystemGroup extends AuthController
         ]);
 
         //Kiểm tra tên nhóm dữ liệu
-        if (!$params['name']) return app('json')->fail(400187);
-        if (!$params['config_name']) return app('json')->fail(400274);
+        if (!$params['name']) return app('json')->fail('Vui lòng nhập tên');
+        if (!$params['config_name']) return app('json')->fail('Vui lòng nhập tên cấu hình');
         //Kiểm tra ID có tồn tại không, tồn tại thì là sửa, không tồn tại thì là thêm
         if (!$id) {
             if ($this->services->count(['config_name' => $params['config_name']])) {
-                return app('json')->fail(400296);
+                return app('json')->fail('Từ khóa dữ liệu đã tồn tại');
             }
         }
         $data["name"] = $params['name'];
@@ -167,13 +167,13 @@ class SystemGroup extends AuthController
         $data["cate_id"] = $params['cate_id'];
         //Kiểm tra thông tin trường
         if (!count($params['typelist']))
-            return app('json')->fail(400294);
+            return app('json')->fail('Phải có ít nhất một trường');
         else {
             $validate = ["name", "type", "title", "description"];
             foreach ($params["typelist"] as $key => $value) {
                 foreach ($value as $name => $field) {
                     if (empty($field["value"]) && in_array($name, $validate))
-                        return app('json')->fail(400297);
+                        return app('json')->fail('Trường không được để trống');
                     else
                         $data["fields"][$key][$name] = $field["value"];
                 }
@@ -182,7 +182,7 @@ class SystemGroup extends AuthController
         $data["fields"] = json_encode($data["fields"]);
         $this->services->update($id, $data);
         \crmeb\services\CacheService::clear();
-        return app('json')->success(400295);
+        return app('json')->success('Thêm nhóm dữ liệu thành công');
     }
 
     /**
@@ -194,10 +194,10 @@ class SystemGroup extends AuthController
     public function delete($id, SystemGroupDataServices $services)
     {
         if (!$this->services->delete($id))
-            return app('json')->fail(100008);
+            return app('json')->fail('Xóa thất bại');
         else {
             $services->delete($id, 'gid');
-            return app('json')->success(100002);
+            return app('json')->success('Xóa thành công');
         }
     }
 

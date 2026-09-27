@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -38,14 +38,14 @@ class ShippingTemplatesValidate extends Validate
      * @var array
      */
     protected $message = [
-        'name.require' => '400025',
-        'region_info.array' => '400026',
-        'appoint_info.array' => '400027',
-        'no_delivery_info.array' => '400028',
-        'type.number' => '400029',
-        'appoint.number' => '400030',
-        'no_delivery.number' => '400031',
-        'sort.number' => '400032',
+        'name.require' => 'Vui lòng điền tên mẫu phí vận chuyển',
+        'region_info.array' => 'Thông tin phí vận chuyển phải là mảng',
+        'appoint_info.array' => 'Thông tin miễn phí vận chuyển phải là mảng',
+        'no_delivery_info.array' => 'Thông tin khu vực không giao hàng phải là mảng',
+        'type.number' => 'Dữ liệu type sai định dạng, phải là 1, 2 hoặc 3',
+        'appoint.number' => 'Dữ liệu appoint sai định dạng, phải là 0 hoặc 1',
+        'no_delivery.number' => 'Dữ liệu no_delivery sai định dạng, phải là 0 hoặc 1',
+        'sort.number' => 'Dữ liệu sort sai định dạng, phải là số nguyên',
     ];
 
     protected $scene = [

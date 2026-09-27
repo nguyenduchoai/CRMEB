@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -58,7 +58,7 @@ class MessageSystemController
     public function detail(Request $request, $id)
     {
         if (!$id) {
-            app('json')->fail(100100);
+            app('json')->fail('Tham số không hợp lệ');
         }
         $uid = (int)$request->uid();
         $where['uid'] = $uid;
@@ -85,6 +85,6 @@ class MessageSystemController
         } else {
             $this->services->update($data['id'], [$data['key'] => $data['value']]);
         }
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 }

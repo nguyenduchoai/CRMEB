@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -130,9 +130,10 @@ Route::group('order', function () {
     Route::get('expr/temp', 'v1.order.StoreOrder/expr_temp')->option(['real_name' => 'Danh sách mẫu vận đơn điện tử']);
     //In phiếu giao hàng
     Route::get('print/shipping/:order_id', 'v1.order.StoreOrder/printShipping')->option(['real_name' => 'In phiếu giao hàng']);
-
     //Thao tác khác: in vận đơn điện tử
     Route::get('order_dump/:order_id', 'v1.order.StoreOrder/order_dump')->option(['real_name' => 'Thao tác khác: in vận đơn điện tử']);
+    //Sửa địa chỉ giao hàng của đơn hàng chưa giao
+    Route::post('edit_address/:id', 'v1.order.StoreOrder/editAddress')->option(['real_name' => 'Sửa địa chỉ giao hàng của đơn hàng chưa giao']);
 })->middleware([
     \app\http\middleware\AllowOriginMiddleware::class,
     \app\adminapi\middleware\AdminAuthTokenMiddleware::class,

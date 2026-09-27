@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -141,6 +141,11 @@ class SystemClearServices extends BaseServices
             "UPDATE `{$prefix}user_extract` SET `qrcode_url` = replace(qrcode_url ,'{$siteUrl}','{$url}')",
             "UPDATE `{$prefix}wechat_qrcode` SET `image` = replace(image ,'{$siteUrl}','{$url}')",
             "UPDATE `{$prefix}wechat_user` SET `headimgurl` = replace(headimgurl ,'{$siteUrl}','{$url}')",
+            "UPDATE `{$prefix}theme` SET `home_data` = replace(home_data ,'{$siteUrlJson}','{$urlJson}'),`detail_data` = replace(detail_data ,'{$siteUrlJson}','{$urlJson}'),`user_data` = replace(user_data ,'{$siteUrlJson}','{$urlJson}')",
+            "UPDATE `{$prefix}theme` SET `home_default_data` = replace(home_default_data ,'{$siteUrlJson}','{$urlJson}'),`detail_default_data` = replace(detail_default_data ,'{$siteUrlJson}','{$urlJson}'),`user_default_data` = replace(user_default_data ,'{$siteUrlJson}','{$urlJson}')",
+            "UPDATE `{$prefix}theme` SET `home_data` = replace(home_data ,'{$siteUrl}','{$url}'),`detail_data` = replace(detail_data ,'{$siteUrl}','{$url}'),`user_data` = replace(user_data ,'{$siteUrl}','{$url}')",
+            "UPDATE `{$prefix}theme` SET `home_default_data` = replace(home_default_data ,'{$siteUrl}','{$url}'),`detail_default_data` = replace(detail_default_data ,'{$siteUrl}','{$url}'),`user_default_data` = replace(user_default_data ,'{$siteUrl}','{$url}')",
+            "UPDATE `{$prefix}theme` SET `home_image` = replace(home_image ,'{$siteUrl}','{$url}'),`category_image` = replace(category_image ,'{$siteUrl}','{$url}'),`detail_image` = replace(detail_image ,'{$siteUrl}','{$url}'),`user_image` = replace(user_image ,'{$siteUrl}','{$url}'),`home_default_image` = replace(home_default_image ,'{$siteUrl}','{$url}'),`category_default_image` = replace(category_default_image ,'{$siteUrl}','{$url}'),`detail_default_image` = replace(detail_default_image ,'{$siteUrl}','{$url}'),`user_default_image` = replace(user_default_image ,'{$siteUrl}','{$url}')",
         ];
 
         // Thực thi câu lệnh SQL
@@ -150,7 +155,7 @@ class SystemClearServices extends BaseServices
                     Db::execute($item);
                 }
             } catch (\Throwable $e) {
-                throw new AdminException(400612, ['msg' => $e->getMessage()]);
+                throw new AdminException('Thay thế thất bại, lý do: {:msg}', ['msg' => $e->getMessage()]);
             }
         });
     }

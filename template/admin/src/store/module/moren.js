@@ -19,6 +19,399 @@ export default {
   state: {
     activeName: {},
     defaultConfig: {
+      customComponent: {
+        defaultVal: {
+          customComponent: {
+            setUp: {
+              tabVal: 0,
+            },
+            selectType: {
+              title: 'Chọn thông tin',
+              activeValue: 'user',
+              list: [
+                { activeValue: 'user', title: 'Người dùng' },
+                { activeValue: 'article', title: 'Bài viết' },
+                { activeValue: 'coupon', title: 'Phiếu giảm giá' },
+                { activeValue: 'goods', title: 'Sản phẩm' },
+              ],
+            },
+            // Article Config
+            articleDisplayMode: {
+              title: 'Cách hiển thị',
+              tabVal: 0,
+              tabList: [{ name: 'Xếp dọc' }, { name: 'Vuốt ngang' }],
+            },
+            articleColumnStyle: {
+              title: 'Cách sắp xếp',
+              tabVal: 0,
+              tabList: [{ name: '1 cột' }, { name: '2 cột' }, { name: '3 cột' }, { name: '4 cột' }],
+            },
+            articleDataSource: {
+              title: 'Chọn dữ liệu',
+              tabVal: 0,
+              tabList: [{ name: 'Dữ liệu chỉ định' }, { name: 'Dữ liệu theo bộ lọc' }],
+            },
+            articleList: {
+              list: [],
+            },
+            articleClass: {
+              title: 'Danh mục bài viết',
+              activeValue: '',
+              list: [],
+            },
+            articleNum: {
+              title: 'Số lượng hiển thị',
+              val: 1,
+              min: 1,
+            },
+            articleSort: {
+              title: 'Loại sắp xếp',
+              tabVal: 0,
+              tabList: [{ name: 'Tổng hợp' }, { name: 'Lượt xem' }, { name: 'Thời gian đăng' }],
+            },
+            articleSortRule: {
+              title: 'Quy tắc sắp xếp',
+              tabVal: 0,
+              tabList: [{ name: 'Tăng dần' }, { name: 'Giảm dần' }],
+            },
+
+            // Coupon Config
+            couponDisplayMode: {
+              title: 'Cách hiển thị',
+              tabVal: 0,
+              tabList: [{ name: 'Xếp dọc' }, { name: 'Vuốt ngang' }],
+            },
+            couponColumnStyle: {
+              title: 'Cách sắp xếp',
+              tabVal: 0,
+              tabList: [{ name: '1 cột' }, { name: '2 cột' }, { name: '3 cột' }, { name: '4 cột' }],
+            },
+            couponDataSource: {
+              title: 'Chọn dữ liệu',
+              tabVal: 0,
+              tabList: [{ name: 'Dữ liệu chỉ định' }, { name: 'Dữ liệu theo bộ lọc' }],
+            },
+            couponList: {
+              list: [],
+            },
+            couponType: {
+              title: 'Loại phiếu giảm giá',
+              activeValue: '',
+              list: [
+                { activeValue: '', title: 'Tất cả' },
+                { activeValue: '0', title: 'Phiếu toàn cửa hàng' },
+                { activeValue: '1', title: 'Phiếu theo danh mục' },
+                { activeValue: '2', title: 'Phiếu theo sản phẩm' },
+              ],
+            },
+            couponSendType: {
+              title: 'Hình thức phát hành',
+              activeValue: '',
+              list: [
+                { activeValue: '', title: 'Tất cả' },
+                { activeValue: '1', title: 'Tự nhận' },
+                { activeValue: '3', title: 'Phiếu tặng kèm' },
+              ],
+            },
+            couponUserType: {
+              title: 'Loại người dùng',
+              activeValue: '',
+              list: [
+                { activeValue: '', title: 'Tất cả' },
+                { activeValue: '1', title: 'Người dùng thường' },
+                { activeValue: '2', title: 'Người dùng thành viên' },
+              ],
+            },
+            couponThreshold: {
+              title: 'Điều kiện sử dụng',
+              tabVal: 0,
+              tabList: [{ name: 'Không điều kiện' }, { name: 'Có điều kiện' }],
+            },
+            couponThresholdValue: {
+              title: 'Giá trị đơn tối thiểu',
+              val: 0,
+              min: 0,
+              max: 100000,
+            },
+            couponTime: {
+              title: 'Thời gian nhận',
+              val: [],
+            },
+            couponSort: {
+              title: 'Loại sắp xếp',
+              tabVal: 0,
+              tabList: [{ name: 'Mệnh giá' }, { name: 'Thời gian đăng' }],
+            },
+            couponSortRule: {
+              title: 'Quy tắc sắp xếp',
+              tabVal: 0,
+              tabList: [{ name: 'Tăng dần' }, { name: 'Giảm dần' }],
+            },
+            couponNum: {
+              title: 'Số lượng hiển thị',
+              val: 1,
+              min: 1,
+            },
+
+            // Goods Config
+            goodsDisplayMode: {
+              title: 'Cách hiển thị',
+              tabVal: 0,
+              tabList: [{ name: 'Xếp dọc' }, { name: 'Vuốt ngang' }],
+            },
+            goodsColumnStyle: {
+              title: 'Cách sắp xếp',
+              tabVal: 0,
+              tabList: [{ name: '1 cột' }, { name: '2 cột' }, { name: '3 cột' }, { name: '4 cột' }],
+            },
+            goodsDataSource: {
+              title: 'Chọn dữ liệu',
+              tabVal: 0,
+              tabList: [{ name: 'Dữ liệu chỉ định' }, { name: 'Danh mục chỉ định' }],
+            },
+            goodsList: {
+              title: 'Danh sách sản phẩm',
+              max: 20,
+              list: [],
+            },
+            goodsClass: {
+              title: 'Danh mục sản phẩm',
+              activeValue: '',
+              list: [],
+            },
+            goodsNum: {
+              title: 'Số lượng hiển thị',
+              val: 6,
+              min: 1,
+            },
+            goodsSort: {
+              title: 'Sắp xếp sản phẩm',
+              name: 'goodsSort',
+              type: 0,
+              list: [
+                {
+                  val: 'Tổng hợp',
+                  icon: 'iconComm_whole',
+                },
+                {
+                  val: 'Lượt bán',
+                  icon: 'iconComm_number',
+                },
+                {
+                  val: 'Giá',
+                  icon: 'iconjiage',
+                },
+              ],
+            },
+
+            // Common Styles
+            paddingConfig: {
+              isAll: false,
+              title: 'Lề trong',
+              val: 0,
+              min: 0,
+              max: 100,
+              valList: [{ val: 10 }, { val: 10 }, { val: 10 }, { val: 10 }],
+            },
+            marginConfig: {
+              isAll: false,
+              title: 'Lề ngoài',
+              val: 0,
+              min: 0,
+              max: 100,
+              valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+            },
+            c_common_style: {
+              color: 'rgba(255,255,255,1)',
+              color2: 'rgba(255,255,255,1)',
+              lr: 0,
+              type: 0,
+            },
+          },
+        },
+        default: {
+          customComponent: {
+            setUp: {
+              tabVal: 0,
+            },
+            selectType: {
+              title: 'Chọn thông tin',
+              activeValue: 'user',
+              list: [
+                { activeValue: 'user', title: 'Người dùng' },
+                { activeValue: 'article', title: 'Bài viết' },
+                { activeValue: 'coupon', title: 'Phiếu giảm giá' },
+                { activeValue: 'goods', title: 'Sản phẩm' },
+              ],
+            },
+            // Article Config
+            articleDisplayMode: {
+              title: 'Cách hiển thị',
+              tabVal: 0,
+              tabList: [{ name: 'Xếp dọc' }, { name: 'Vuốt ngang' }],
+            },
+            articleColumnStyle: {
+              title: 'Cách sắp xếp',
+              tabVal: 0,
+              tabList: [{ name: '1 cột' }, { name: '2 cột' }, { name: '3 cột' }, { name: '4 cột' }],
+            },
+            articleDataSource: {
+              title: 'Chọn dữ liệu',
+              tabVal: 0,
+              tabList: [{ name: 'Dữ liệu chỉ định' }, { name: 'Dữ liệu động' }],
+            },
+            articleNum: {
+              title: 'Số lượng hiển thị',
+              val: 1,
+              min: 1,
+            },
+
+            // Coupon Config
+            couponDisplayMode: {
+              title: 'Cách hiển thị',
+              tabVal: 0,
+              tabList: [{ name: 'Xếp dọc' }, { name: 'Vuốt ngang' }],
+            },
+            couponColumnStyle: {
+              title: 'Cách sắp xếp',
+              tabVal: 0,
+              tabList: [{ name: '1 cột' }, { name: '2 cột' }, { name: '3 cột' }, { name: '4 cột' }],
+            },
+            couponDataSource: {
+              title: 'Chọn dữ liệu',
+              tabVal: 0,
+              tabList: [{ name: 'Dữ liệu chỉ định' }, { name: 'Dữ liệu theo bộ lọc' }],
+            },
+            couponList: {
+              list: [],
+            },
+            couponType: {
+              title: 'Loại phiếu giảm giá',
+              activeValue: '',
+              list: [
+                { activeValue: '', title: 'Tất cả' },
+                { activeValue: '0', title: 'Phiếu toàn cửa hàng' },
+                { activeValue: '1', title: 'Phiếu theo danh mục' },
+                { activeValue: '2', title: 'Phiếu theo sản phẩm' },
+              ],
+            },
+            couponSendType: {
+              title: 'Hình thức phát hành',
+              activeValue: '',
+              list: [
+                { activeValue: '', title: 'Tất cả' },
+                { activeValue: '1', title: 'Tự nhận' },
+                { activeValue: '3', title: 'Phiếu tặng kèm' },
+              ],
+            },
+            couponUserType: {
+              title: 'Loại người dùng',
+              activeValue: '',
+              list: [
+                { activeValue: '', title: 'Tất cả' },
+                { activeValue: '1', title: 'Người dùng thường' },
+                { activeValue: '2', title: 'Người dùng thành viên' },
+              ],
+            },
+            couponThreshold: {
+              title: 'Điều kiện sử dụng',
+              tabVal: 0,
+              tabList: [{ name: 'Không điều kiện' }, { name: 'Có điều kiện' }],
+            },
+            couponThresholdValue: {
+              title: 'Giá trị đơn tối thiểu',
+              val: 0,
+              min: 0,
+              max: 100000,
+            },
+            couponTime: {
+              title: 'Thời gian nhận',
+              val: [],
+            },
+            couponSort: {
+              title: 'Loại sắp xếp',
+              tabVal: 0,
+              tabList: [{ name: 'Mệnh giá' }, { name: 'Thời gian đăng' }],
+            },
+            couponSortRule: {
+              title: 'Quy tắc sắp xếp',
+              tabVal: 0,
+              tabList: [{ name: 'Tăng dần' }, { name: 'Giảm dần' }],
+            },
+            couponNum: {
+              title: 'Số lượng hiển thị',
+              val: 1,
+              min: 1,
+            },
+
+            // Goods Config
+            goodsDisplayMode: {
+              title: 'Cách hiển thị',
+              tabVal: 0,
+              tabList: [{ name: 'Xếp dọc' }, { name: 'Vuốt ngang' }],
+            },
+            goodsColumnStyle: {
+              title: 'Cách sắp xếp',
+              tabVal: 0,
+              tabList: [{ name: '1 cột' }, { name: '2 cột' }, { name: '3 cột' }, { name: '4 cột' }],
+            },
+            goodsDataSource: {
+              title: 'Chọn dữ liệu',
+              tabVal: 0,
+              tabList: [{ name: 'Dữ liệu chỉ định' }, { name: 'Danh mục chỉ định' }],
+            },
+            goodsList: {
+              title: 'Danh sách sản phẩm',
+              max: 20,
+              list: [],
+            },
+            goodsClass: {
+              title: 'Danh mục sản phẩm',
+              activeValue: '',
+              list: [],
+            },
+            goodsNum: {
+              title: 'Số lượng hiển thị',
+              val: 6,
+              min: 1,
+            },
+            goodsSort: {
+              title: 'Sắp xếp sản phẩm',
+              tabVal: 0,
+              tabList: [{ name: 'Tổng hợp' }, { name: 'Lượt bán' }, { name: 'Giá' }],
+            },
+            goodsSortRule: {
+              title: 'Quy tắc sắp xếp',
+              tabVal: 0,
+              tabList: [{ name: 'Giảm dần' }, { name: 'Tăng dần' }],
+            },
+
+            // Common Styles
+            paddingConfig: {
+              isAll: false,
+              title: 'Lề trong',
+              val: 0,
+              min: 0,
+              max: 100,
+              valList: [{ val: 10 }, { val: 10 }, { val: 10 }, { val: 10 }],
+            },
+            marginConfig: {
+              isAll: false,
+              title: 'Lề ngoài',
+              val: 0,
+              min: 0,
+              max: 100,
+              valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+            },
+            c_common_style: {
+              color: 'rgba(255,255,255,1)',
+              color2: 'rgba(255,255,255,1)',
+              lr: 0,
+              type: 0,
+            },
+          },
+        },
+      },
       headerSerch: {
         defaultVal: {
           isShow: {
@@ -1819,6 +2212,14 @@ export default {
     },
 
     component: {
+      customComponent: {
+        list: [
+          {
+            components: toolCom.c_custom_component,
+            configNme: 'customComponent',
+          },
+        ],
+      },
       headerSerch: {
         list: [
           {

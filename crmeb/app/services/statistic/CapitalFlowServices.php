@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -118,7 +118,7 @@ class CapitalFlowServices extends BaseServices
         foreach ($list as &$item) {
             $item['add_time'] = date('Y-m-d H:i:s', $item['add_time']);
             $item['trading_type'] = $status[$item['trading_type']];
-            $item['pay_type_name'] = PayServices::PAY_TYPE[$item['pay_type'] != 'routine' ? $item['pay_type'] : 'weixin'];
+            $item['pay_type_name'] = PayServices::PAY_TYPE[$item['pay_type'] != 'routine' ? $item['pay_type'] : 'weixin'] ?? 'Phương thức khác';
         }
         $count = $this->dao->count($where);
         if ($export) {
@@ -143,7 +143,7 @@ class CapitalFlowServices extends BaseServices
         if ($res) {
             return true;
         } else {
-            throw new AdminException(100025);
+            throw new AdminException('Ghi chú thất bại');
         }
     }
 

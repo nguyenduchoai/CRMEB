@@ -1,182 +1,303 @@
 <template>
   <div>
-    <div
-      class="seckill-box"
-      :style="{
-        background: bottomBgColor,
-        marginTop: mTop + 'px',
-        paddingTop: topConfig + 'px',
-        paddingBottom: bottomConfig + 'px',
-        paddingLeft: prConfig + 'px',
-        paddingRight: prConfig + 'px',
-      }"
-    >
-      <div
-        class="hd"
-        :style="
-          (styleConfig
-            ? 'backgroundImage:url(' + imgBgUrl + ')'
-            : `background:linear-gradient(90deg,${headerBgColorLeft} 0%,${headerBgColorRight} 100%)`) +
-          ';borderRadius:' +
-          bgRadius
-        "
-      >
-        <div class="left acea-row row-middle">
-          <div
-            class="text"
-            v-if="titleConfig"
-            :style="
-              (titleTabVal == 2 ? 'fontStyle:' : 'fontWeight:') +
-              titleText +
-              ';color:' +
-              titleColor +
-              ';fontSize:' +
-              titleNumber +
-              'px;'
-            "
-          >
-            {{ titleTxtConfig }}
+    <common_wrapper :config="configObj">
+      <div class="seckill-box">
+        <div
+          class="hd"
+          :style="
+            (styleConfig
+              ? 'backgroundImage:url(' + imgBgUrl + ')'
+              : `background:linear-gradient(90deg,${headerBgColorLeft} 0%,${headerBgColorRight} 100%)`) +
+            ';borderRadius:' +
+            bgRadius
+          "
+        >
+          <div class="left acea-row row-middle">
+            <div
+              class="text"
+              v-if="titleConfig"
+              :style="
+                (titleTabVal == 2 ? 'fontStyle:' : 'fontWeight:') +
+                titleText +
+                ';color:' +
+                titleColor +
+                ';fontSize:' +
+                titleNumber +
+                'px;'
+              "
+            >
+              {{ titleTxtConfig }}
+            </div>
+            <img v-else :src="styleConfig ? imgUrl : imgColorUrl" alt="" />
+            <div
+              class="tips"
+              :style="{
+                color: styleConfig ? tipsColor : tipsColor2,
+              }"
+            >
+              Kết thúc sau
+            </div>
+            <div class="time">
+              <span
+                :style="{
+                  background: styleConfig ? numberBgColor : numberBgColor2,
+                  color: styleConfig ? numberColor : numberColor2,
+                }"
+                >17</span
+              >
+              <em
+                :style="{
+                  color: styleConfig ? numberBgColorLeft : numberBgColorLeft2,
+                }"
+                >:</em
+              >
+              <span
+                :style="{
+                  background: styleConfig ? numberBgColor : numberBgColor2,
+                  color: styleConfig ? numberColor : numberColor2,
+                }"
+                >32</span
+              >
+              <em
+                :style="{
+                  color: styleConfig ? numberBgColorLeft : numberBgColorLeft2,
+                }"
+                >:</em
+              >
+              <span
+                :style="{
+                  background: styleConfig ? numberBgColor : numberBgColor2,
+                  color: styleConfig ? numberColor : numberColor2,
+                }"
+                >45</span
+              >
+            </div>
           </div>
-          <img v-else :src="styleConfig ? imgUrl : imgColorUrl" alt="" />
           <div
-            class="tips"
+            class="right"
             :style="{
-              color: styleConfig ? tipsColor : tipsColor2,
+              color: styleConfig ? headerBntColor : headerBntColor2,
+              fontSize: bntNumber + 'px',
             }"
           >
-            Kết thúc sau
-          </div>
-          <div class="time">
-            <span
+            {{ rightBntTxt
+            }}<span
+              class="iconfont iconjinru"
               :style="{
-                background: styleConfig ? numberBgColor : numberBgColor2,
-                color: styleConfig ? numberColor : numberColor2,
+                fontSize: bntNumber + 'px',
               }"
-              >17</span
-            >
-            <em
-              :style="{
-                color: styleConfig ? numberBgColorLeft : numberBgColorLeft2,
-              }"
-              >:</em
-            >
-            <span
-              :style="{
-                background: styleConfig ? numberBgColor : numberBgColor2,
-                color: styleConfig ? numberColor : numberColor2,
-              }"
-              >32</span
-            >
-            <em
-              :style="{
-                color: styleConfig ? numberBgColorLeft : numberBgColorLeft2,
-              }"
-              >:</em
-            >
-            <span
-              :style="{
-                background: styleConfig ? numberBgColor : numberBgColor2,
-                color: styleConfig ? numberColor : numberColor2,
-              }"
-              >45</span
-            >
+            ></span>
           </div>
         </div>
         <div
-          class="right"
+          class="list-wrapper"
+          :class="
+            goodStyleConfig == 0
+              ? 'on'
+              : goodStyleConfig == 1 || goodStyleConfig == 2
+              ? 'on2'
+              : goodStyleConfig == 3
+              ? 'on3'
+              : ''
+          "
           :style="{
-            color: styleConfig ? headerBntColor : headerBntColor2,
-            fontSize: bntNumber + 'px',
+            background: bgColor,
+            borderRadius: bgRadius2,
           }"
         >
-          {{ rightBntTxt
-          }}<span
-            class="iconfont iconjinru"
-            :style="{
-              fontSize: bntNumber + 'px',
-            }"
-          ></span>
-        </div>
-      </div>
-      <div
-        class="list-wrapper"
-        :class="
-          goodStyleConfig == 0
-            ? 'on'
-            : goodStyleConfig == 1 || goodStyleConfig == 2
-            ? 'on2'
-            : goodStyleConfig == 3
-            ? 'on3'
-            : ''
-        "
-        :style="{
-          background: bgColor,
-          borderRadius: bgRadius2,
-        }"
-      >
-        <div v-if="goodStyleConfig == 0" class="itemOne acea-row" v-for="(item, index) in numberConfig" :key="index">
-          <div
-            class="empty-box"
-            :style="{
-              borderRadius: imgRadius,
-            }"
-          >
-            <img src="../../assets/images/shan.png" />
-          </div>
-          <div class="text">
-            <div class="top">
+          <template v-if="goodStyleConfig == 0">
+            <div class="itemOne acea-row" v-for="(_item, index) in numberConfig" :key="index">
               <div
-                class="name line2"
+                class="empty-box"
+                :style="{
+                  borderRadius: imgRadius,
+                }"
+              >
+                <img src="../../assets/images/shan.png" />
+              </div>
+              <div class="text">
+                <div class="top">
+                  <div
+                    class="name line2"
+                    v-if="checkboxInfo.indexOf(0) != -1"
+                    :style="{
+                      fontWeight: goodsName,
+                      color: goodsNameColor,
+                    }"
+                  >
+                    Cam hạng sang nhãn đen New Knight vụ muộn, thứ bạn muốn sở hữu nhất
+                  </div>
+                  <div
+                    class="progressBg"
+                    v-if="checkboxInfo.indexOf(1) != -1"
+                    :style="{
+                      background: toneConfig
+                        ? `linear-gradient(45deg,${progressColorLeft} 0%,${progressColorRight} 100%)`
+                        : themeColor2,
+                    }"
+                  >
+                    <div class="progressBar">
+                      <div
+                        class="progress"
+                        :style="{
+                          background: toneConfig
+                            ? `linear-gradient(45deg,${progressColorLeft} 0%,${progressColorRight} 100%)`
+                            : themeColor2,
+                        }"
+                      ></div>
+                      <img src="../../assets/images/dian2.png" />
+                    </div>
+                    <div
+                      class="progressTxt"
+                      :style="{
+                        color: toneConfig ? progressTxtColor : colorStyle.theme,
+                      }"
+                    >
+                      Đã bán 33%
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="bottom"
+                  :class="checkboxInfo.indexOf(2) != -1 && checkboxInfo.indexOf(3) != -1 ? '' : 'acea-row row-bottom'"
+                >
+                  <div
+                    class="price"
+                    v-if="checkboxInfo.indexOf(2) != -1"
+                    :style="{
+                      color: toneConfig ? seckillPriceColor : colorStyle.theme,
+                    }"
+                  >
+                    Giá flash sale<span class="label">¥</span><span class="num">3200.00</span>
+                  </div>
+                  <div
+                    class="yprice"
+                    v-if="checkboxInfo.indexOf(3) != -1"
+                    :style="{
+                      color: goodsPriceColor,
+                    }"
+                  >
+                    ¥1233.00
+                  </div>
+                </div>
+                <div
+                  class="bnt"
+                  v-if="!seckillConfig"
+                  :style="{
+                    color: toneConfig ? goodsBntTxtColor : '#fff',
+                    background: toneConfig
+                      ? `linear-gradient(90deg,${goodsBntColorRight} 0%,${goodsBntColorLeft} 100%)`
+                      : themeColor,
+                  }"
+                >
+                  Mua ngay
+                </div>
+              </div>
+            </div>
+          </template>
+          <template v-if="goodStyleConfig == 1">
+            <div class="itemTwo" v-for="(_item2, index2) in numberConfig" :key="index2">
+              <div
+                class="empty-box"
+                :style="{
+                  borderRadius: imgRadius,
+                }"
+              >
+                <img src="../../assets/images/shan.png" />
+              </div>
+              <div
+                :class="
+                  (checkboxInfo.indexOf(0) != -1 && checkboxInfo.length == 1 && !seckillConfig) ||
+                  (checkboxInfo.indexOf(0) != -1 &&
+                    checkboxInfo.indexOf(1) != -1 &&
+                    checkboxInfo.length == 2 &&
+                    !seckillConfig)
+                    ? 'item'
+                    : (!checkboxInfo.length || (checkboxInfo.indexOf(1) != -1 && checkboxInfo.length == 1)) &&
+                      !seckillConfig
+                    ? 'item2'
+                    : ''
+                "
+              >
+                <div
+                  class="title line1"
+                  v-if="checkboxInfo.indexOf(0) != -1"
+                  :style="{
+                    fontWeight: goodsName,
+                    color: goodsNameColor,
+                  }"
+                >
+                  Cam hạng sang nhãn đen New Knight...
+                </div>
+                <div
+                  class="price"
+                  :class="checkboxInfo.indexOf(3) == -1 && !seckillConfig ? 'on' : ''"
+                  v-if="checkboxInfo.indexOf(2) != -1"
+                  :style="{
+                    color: toneConfig ? seckillPriceColor : colorStyle.theme,
+                  }"
+                >
+                  ¥<span class="num">3200.00</span>
+                </div>
+                <div
+                  class="yprice"
+                  :class="checkboxInfo.indexOf(2) == -1 && !seckillConfig ? 'on' : ''"
+                  v-if="checkboxInfo.indexOf(3) != -1"
+                  :style="{
+                    color: goodsPriceColor,
+                  }"
+                >
+                  ¥3699.00
+                </div>
+                <div
+                  class="bnt"
+                  :class="checkboxInfo.indexOf(2) == -1 && !seckillConfig ? 'on' : ''"
+                  v-if="!seckillConfig"
+                  :style="{
+                    color: toneConfig ? goodsBntTxtColor : '#fff',
+                    background: toneConfig
+                      ? `linear-gradient(90deg,${goodsBntColorRight} 0%,${goodsBntColorLeft} 100%)`
+                      : themeColor,
+                  }"
+                >
+                  Mua ngay
+                </div>
+              </div>
+            </div>
+          </template>
+          <template v-if="goodStyleConfig == 2">
+            <div class="list-item" v-for="(_item, index) in numberConfig" :key="index">
+              <div class="img-box">
+                <div
+                  class="empty-box"
+                  :style="{
+                    borderRadius: imgRadius,
+                  }"
+                >
+                  <img src="../../assets/images/shan.png" />
+                </div>
+              </div>
+              <div
+                class="title line1"
                 v-if="checkboxInfo.indexOf(0) != -1"
                 :style="{
                   fontWeight: goodsName,
                   color: goodsNameColor,
                 }"
               >
-                Cam hạng sang nhãn đen New Knight vụ muộn, thứ bạn muốn sở hữu nhất
+                Cam hạng sang nhãn đen...
               </div>
-              <div
-                class="progressBg"
-                v-if="checkboxInfo.indexOf(1) != -1"
-                :style="{
-                  background: toneConfig
-                    ? `linear-gradient(45deg,${progressColorLeft} 0%,${progressColorRight} 100%)`
-                    : themeColor2,
-                }"
-              >
-                <div class="progressBar">
-                  <div
-                    class="progress"
-                    :style="{
-                      background: toneConfig
-                        ? `linear-gradient(45deg,${progressColorLeft} 0%,${progressColorRight} 100%)`
-                        : themeColor2,
-                    }"
-                  ></div>
-                  <img src="../../assets/images/dian2.png" />
-                </div>
-                <div
-                  class="progressTxt"
-                  :style="{
-                    color: toneConfig ? progressTxtColor : colorStyle.theme,
-                  }"
-                >
-                  Đã bán 33%
-                </div>
-              </div>
-            </div>
-            <div
-              class="bottom"
-              :class="checkboxInfo.indexOf(2) != -1 && checkboxInfo.indexOf(3) != -1 ? '' : 'acea-row row-bottom'"
-            >
               <div
                 class="price"
                 v-if="checkboxInfo.indexOf(2) != -1"
                 :style="{
-                  color: toneConfig ? seckillPriceColor : colorStyle.theme,
+                  color: toneConfig ? seckillPriceColor2 : '#fff',
+                  background: toneConfig
+                    ? `linear-gradient(90deg,${goodsBntColorLeft} 0%,${goodsBntColorRight} 100%)`
+                    : themeColor2,
                 }"
               >
-                Giá flash sale<span class="label">¥</span><span class="num">3200.00</span>
+                <img src="../../assets/images/dian.png" /><span>¥</span>350.00
               </div>
               <div
                 class="yprice"
@@ -185,212 +306,91 @@
                   color: goodsPriceColor,
                 }"
               >
-                ¥1233.00
+                ¥3699.00
               </div>
             </div>
-            <div
-              class="bnt"
-              v-if="!seckillConfig"
-              :style="{
-                color: toneConfig ? goodsBntTxtColor : '#fff',
-                background: toneConfig
-                  ? `linear-gradient(90deg,${goodsBntColorRight} 0%,${goodsBntColorLeft} 100%)`
-                  : themeColor,
-              }"
-            >
-              Mua ngay
-            </div>
-          </div>
-        </div>
-        <div class="itemTwo" v-if="goodStyleConfig == 1" v-for="(item2, index2) in numberConfig" :key="index2">
-          <div
-            class="empty-box"
-            :style="{
-              borderRadius: imgRadius,
-            }"
-          >
-            <img src="../../assets/images/shan.png" />
-          </div>
-          <div
-            :class="
-              (checkboxInfo.indexOf(0) != -1 && checkboxInfo.length == 1 && !seckillConfig) ||
-              (checkboxInfo.indexOf(0) != -1 &&
-                checkboxInfo.indexOf(1) != -1 &&
-                checkboxInfo.length == 2 &&
-                !seckillConfig)
-                ? 'item'
-                : (!checkboxInfo.length || (checkboxInfo.indexOf(1) != -1 && checkboxInfo.length == 1)) &&
-                  !seckillConfig
-                ? 'item2'
-                : ''
-            "
-          >
-            <div
-              class="title line1"
-              v-if="checkboxInfo.indexOf(0) != -1"
-              :style="{
-                fontWeight: goodsName,
-                color: goodsNameColor,
-              }"
-            >
-              Cam hạng sang nhãn đen New Knight...
-            </div>
-            <div
-              class="price"
-              :class="checkboxInfo.indexOf(3) == -1 && !seckillConfig ? 'on' : ''"
-              v-if="checkboxInfo.indexOf(2) != -1"
-              :style="{
-                color: toneConfig ? seckillPriceColor : colorStyle.theme,
-              }"
-            >
-              ¥<span class="num">3200.00</span>
-            </div>
-            <div
-              class="yprice"
-              :class="checkboxInfo.indexOf(2) == -1 && !seckillConfig ? 'on' : ''"
-              v-if="checkboxInfo.indexOf(3) != -1"
-              :style="{
-                color: goodsPriceColor,
-              }"
-            >
-              ¥3699.00
-            </div>
-            <div
-              class="bnt"
-              :class="checkboxInfo.indexOf(2) == -1 && !seckillConfig ? 'on' : ''"
-              v-if="!seckillConfig"
-              :style="{
-                color: toneConfig ? goodsBntTxtColor : '#fff',
-                background: toneConfig
-                  ? `linear-gradient(90deg,${goodsBntColorRight} 0%,${goodsBntColorLeft} 100%)`
-                  : themeColor,
-              }"
-            >
-              Mua ngay
-            </div>
-          </div>
-        </div>
-        <div v-if="goodStyleConfig == 2" class="list-item" v-for="(item, index) in numberConfig" :key="index">
-          <div class="img-box">
-            <div
-              class="empty-box"
-              :style="{
-                borderRadius: imgRadius,
-              }"
-            >
-              <img src="../../assets/images/shan.png" />
-            </div>
-          </div>
-          <div
-            class="title line1"
-            v-if="checkboxInfo.indexOf(0) != -1"
-            :style="{
-              fontWeight: goodsName,
-              color: goodsNameColor,
-            }"
-          >
-            Cam hạng sang nhãn đen...
-          </div>
-          <div
-            class="price"
-            v-if="checkboxInfo.indexOf(2) != -1"
-            :style="{
-              color: toneConfig ? seckillPriceColor2 : '#fff',
-              background: toneConfig
-                ? `linear-gradient(90deg,${goodsBntColorLeft} 0%,${goodsBntColorRight} 100%)`
-                : themeColor2,
-            }"
-          >
-            <img src="../../assets/images/dian.png" /><span>¥</span>350.00
-          </div>
-          <div
-            class="yprice"
-            v-if="checkboxInfo.indexOf(3) != -1"
-            :style="{
-              color: goodsPriceColor,
-            }"
-          >
-            ¥3699.00
-          </div>
-        </div>
-        <div class="itemThree" v-if="goodStyleConfig == 3" v-for="(item2, index2) in numberConfig" :key="index2">
-          <div
-            class="empty-box"
-            :style="{
-              borderRadius: imgRadius,
-            }"
-          >
-            <img src="../../assets/images/shan.png" />
-          </div>
-          <div
-            :class="
-              (checkboxInfo.indexOf(0) != -1 && checkboxInfo.length == 1 && !seckillConfig) ||
-              (checkboxInfo.indexOf(0) != -1 &&
-                checkboxInfo.indexOf(1) != -1 &&
-                checkboxInfo.length == 2 &&
-                !seckillConfig)
-                ? 'item'
-                : (!checkboxInfo.length || (checkboxInfo.indexOf(1) != -1 && checkboxInfo.length == 1)) &&
-                  !seckillConfig
-                ? 'item2'
-                : ''
-            "
-          >
-            <div
-              class="title line1"
-              v-if="checkboxInfo.indexOf(0) != -1"
-              :style="{
-                fontWeight: goodsName,
-                color: goodsNameColor,
-              }"
-            >
-              Cam hạng sang nhãn đen New Knight...
-            </div>
-            <div
-              class="price"
-              :class="checkboxInfo.indexOf(3) == -1 && !seckillConfig ? 'on' : ''"
-              v-if="checkboxInfo.indexOf(2) != -1"
-              :style="{
-                color: toneConfig ? seckillPriceColor : colorStyle.theme,
-              }"
-            >
-              ¥<span class="num">3200.00</span>
-            </div>
-            <div
-              class="yprice"
-              :class="checkboxInfo.indexOf(2) == -1 && !seckillConfig ? 'on' : ''"
-              v-if="checkboxInfo.indexOf(3) != -1"
-              :style="{
-                color: goodsPriceColor,
-              }"
-            >
-              ¥3699.00
-            </div>
-            <div
-              class="bnt"
-              :class="checkboxInfo.indexOf(3) == -1 && !seckillConfig ? 'on2' : ''"
-              v-if="!seckillConfig"
-              :style="{
-                color: toneConfig ? goodsBntTxtColor : '#fff',
-                background: toneConfig
-                  ? `linear-gradient(90deg,${goodsBntColorRight} 0%,${goodsBntColorLeft} 100%)`
-                  : themeColor,
-              }"
-            >
-              <div class="bntCon">
-                Mua
-                <img src="../../assets/images/dian.png" />
+          </template>
+          <template v-if="goodStyleConfig == 3">
+            <div class="itemThree" v-for="(_item2, index2) in numberConfig" :key="index2">
+              <div
+                class="empty-box"
+                :style="{
+                  borderRadius: imgRadius,
+                }"
+              >
+                <img src="../../assets/images/shan.png" />
+              </div>
+              <div
+                :class="
+                  (checkboxInfo.indexOf(0) != -1 && checkboxInfo.length == 1 && !seckillConfig) ||
+                  (checkboxInfo.indexOf(0) != -1 &&
+                    checkboxInfo.indexOf(1) != -1 &&
+                    checkboxInfo.length == 2 &&
+                    !seckillConfig)
+                    ? 'item'
+                    : (!checkboxInfo.length || (checkboxInfo.indexOf(1) != -1 && checkboxInfo.length == 1)) &&
+                      !seckillConfig
+                    ? 'item2'
+                    : ''
+                "
+              >
+                <div
+                  class="title line1"
+                  v-if="checkboxInfo.indexOf(0) != -1"
+                  :style="{
+                    fontWeight: goodsName,
+                    color: goodsNameColor,
+                  }"
+                >
+                  Cam hạng sang nhãn đen New Knight...
+                </div>
+                <div
+                  class="price"
+                  :class="checkboxInfo.indexOf(3) == -1 && !seckillConfig ? 'on' : ''"
+                  v-if="checkboxInfo.indexOf(2) != -1"
+                  :style="{
+                    color: toneConfig ? seckillPriceColor : colorStyle.theme,
+                  }"
+                >
+                  ¥<span class="num">3200.00</span>
+                </div>
+                <div
+                  class="yprice"
+                  :class="checkboxInfo.indexOf(2) == -1 && !seckillConfig ? 'on' : ''"
+                  v-if="checkboxInfo.indexOf(3) != -1"
+                  :style="{
+                    color: goodsPriceColor,
+                  }"
+                >
+                  ¥3699.00
+                </div>
+                <div
+                  class="bnt"
+                  :class="checkboxInfo.indexOf(3) == -1 && !seckillConfig ? 'on2' : ''"
+                  v-if="!seckillConfig"
+                  :style="{
+                    color: toneConfig ? goodsBntTxtColor : '#fff',
+                    background: toneConfig
+                      ? `linear-gradient(90deg,${goodsBntColorRight} 0%,${goodsBntColorLeft} 100%)`
+                      : themeColor,
+                  }"
+                >
+                  <div class="bntCon">
+                    Mua
+                    <img src="../../assets/images/dian.png" />
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
+          </template>
         </div>
       </div>
-    </div>
+    </common_wrapper>
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapState } from 'vuex';
 // import theme from "@/mixins/theme";
 import Setting from '@/setting';
 export default {
@@ -417,20 +417,20 @@ export default {
 
   watch: {
     pageData: {
-      handler(nVal, oVal) {
+      handler(nVal) {
         this.setConfig(nVal);
       },
       deep: true,
     },
     num: {
-      handler(nVal, oVal) {
+      handler(nVal) {
         let data = this.$store.state.mobildConfig.defaultArray[nVal];
         this.setConfig(data);
       },
       deep: true,
     },
     defaultArray: {
-      handler(nVal, oVal) {
+      handler() {
         let data = this.$store.state.mobildConfig.defaultArray[this.num];
         this.setConfig(data);
       },
@@ -440,14 +440,116 @@ export default {
   // mixins: [theme],
   data() {
     return {
+      configObj: null,
       // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         cname: 'Flash sale',
         name: 'seckill',
+        desc: 'Giới thiệu flash sale',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
+        },
+        zIndexConfig: {
+          title: 'Thứ tự lớp thành phần',
+          val: 0,
+          min: 0,
+        },
+        borderConfig: {
+          title: 'Cài đặt viền',
+          tabVal: 0,
+          tabList: [
+            {
+              name: 'Ẩn',
+            },
+            {
+              name: 'Hiện',
+            },
+          ],
+          val: 0,
+          styleConfig: {
+            title: 'Kiểu viền',
+            tabVal: 0,
+            tabList: [
+              {
+                name: 'Nét liền',
+                style: 'solid',
+              },
+              {
+                name: 'Nét đứt',
+                style: 'dashed',
+              },
+              {
+                name: 'Nét chấm',
+                style: 'dotted',
+              },
+            ],
+          },
+          widthConfig: {
+            title: 'Độ dày viền',
+            val: 1,
+            min: 1,
+          },
+          colorConfig: {
+            title: 'Màu viền',
+            default: [
+              {
+                item: '#e5e5e5',
+              },
+            ],
+            color: [
+              {
+                item: '#e5e5e5',
+              },
+            ],
+          },
+        },
+        shadowConfig: {
+          title: 'Cài đặt đổ bóng',
+          tabVal: 0,
+          tabList: [
+            {
+              name: 'Ẩn',
+            },
+            {
+              name: 'Hiện',
+            },
+          ],
+          val: 0,
+          colorConfig: {
+            title: 'Màu đổ bóng',
+            default: [
+              {
+                item: 'rgba(0,0,0,0.1)',
+              },
+            ],
+            color: [
+              {
+                item: 'rgba(0,0,0,0.1)',
+              },
+            ],
+          },
+          xConfig: {
+            title: 'Độ lệch trục X',
+            val: 0,
+            min: -50,
+          },
+          yConfig: {
+            title: 'Độ lệch trục Y',
+            val: 0,
+            min: -50,
+          },
+          blurConfig: {
+            title: 'Bán kính làm mờ',
+            val: 10,
+            min: 0,
+          },
+          spreadConfig: {
+            title: 'Bán kính lan tỏa',
+            val: 0,
+            min: -50,
+          },
         },
         titleLeft: 'Cài đặt phần đầu',
         titleGoodsList: 'Danh sách sản phẩm',
@@ -520,13 +622,13 @@ export default {
               name: 'Hiển thị một cột',
             },
             {
-              name: 'Hiển thị hai cột (dọc)',
+              name: 'Hai cột dọc',
             },
             {
               name: 'Hiển thị ba cột',
             },
             {
-              name: 'Hiển thị vuốt ngang',
+              name: 'Vuốt ngang',
             },
           ],
         },
@@ -943,6 +1045,29 @@ export default {
             },
           ],
         },
+        componentBgConfig: {
+          title: 'Cài đặt nền',
+          tabVal: 0,
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
+          colorConfig: {
+            title: 'Màu nền',
+            default: [{ item: '#F5F5F5' }, { item: '#F5F5F5' }],
+            color: [{ item: '#F5F5F5' }, { item: '#F5F5F5' }],
+          },
+          colorDirection: {
+            title: 'Hướng chuyển màu',
+            tabVal: 0,
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
+          },
+          imageConfig: {
+            header: 'Ảnh nền',
+            title: '',
+            name: 'Tải lên ảnh',
+            type: 'code',
+            url: '',
+            info: 'Kích thước đề xuất: 750px * 400px',
+          },
+        },
         bottomBgColor: {
           title: 'Nền phía dưới',
           default: [
@@ -956,25 +1081,19 @@ export default {
             },
           ],
         },
-        topConfig: {
-          title: 'Lề trên',
+        paddingConfig: {
+          title: 'Lề trong',
+          isAll: false,
           val: 0,
           min: 0,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
-        bottomConfig: {
-          title: 'Lề dưới',
+        marginConfig: {
+          title: 'Lề ngoài',
+          isAll: false,
           val: 0,
           min: 0,
-        },
-        prConfig: {
-          title: 'Lề trái phải',
-          val: 10,
-          min: 0,
-        },
-        mbConfig: {
-          title: 'Lề trên trang',
-          val: 0,
-          min: 0,
+          valList: [{ val: 0 }, { val: 10 }, { val: 0 }, { val: 10 }],
         },
         fillet: {
           title: 'Bo góc nền',
@@ -1018,10 +1137,18 @@ export default {
       titleTxtConfig: '',
       bgColor: '',
       bottomBgColor: '',
-      mTop: 0,
-      topConfig: 0,
-      bottomConfig: 0,
-      prConfig: 0,
+      paddingConfig: {
+        title: 'Lề trong',
+        val: 0,
+        isAll: false,
+        valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+      },
+      marginConfig: {
+        title: 'Lề ngoài',
+        val: 0,
+        isAll: false,
+        valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+      },
       titleText: '',
       titleTabVal: 0,
       checkboxInfo: [],
@@ -1058,7 +1185,29 @@ export default {
   methods: {
     setConfig(data) {
       if (!data) return;
-      if (data.mbConfig) {
+      this.configObj = data;
+      let isLegacyPadding = !data.paddingConfig;
+      let isLegacyMargin = !data.marginConfig;
+
+      for (let key in this.defaultConfig) {
+        if (data[key] == undefined) {
+          this.$set(data, key, JSON.parse(JSON.stringify(this.defaultConfig[key])));
+        }
+      }
+
+      if (isLegacyPadding) {
+        if (data.topConfig) data.paddingConfig.valList[0].val = data.topConfig.val;
+        if (data.prConfig) {
+          data.paddingConfig.valList[1].val = data.prConfig.val;
+          data.paddingConfig.valList[3].val = data.prConfig.val;
+        }
+        if (data.bottomConfig) data.paddingConfig.valList[2].val = data.bottomConfig.val;
+      }
+      if (isLegacyMargin) {
+        if (data.mbConfig) data.marginConfig.valList[0].val = data.mbConfig.val;
+      }
+
+      if (data.mbConfig || data.marginConfig) {
         this.imgUrl = data.imgConfig.url;
         this.imgBgUrl = data.imgBgConfig.url;
         this.imgColorUrl = data.imgColorConfig.url;
@@ -1086,11 +1235,7 @@ export default {
         let bgColorLeft = data.moduleColor.color[0].item;
         let bgColorRight = data.moduleColor.color[1].item;
         this.bgColor = `linear-gradient(90deg,${bgColorLeft} 0%,${bgColorRight} 100%)`;
-        this.bottomBgColor = data.bottomBgColor.color[0].item;
-        this.mTop = data.mbConfig.val;
-        this.topConfig = data.topConfig.val;
-        this.bottomConfig = data.bottomConfig.val;
-        this.prConfig = data.prConfig.val;
+
         let tabVal = data.titleText.tabVal;
         this.titleTabVal = tabVal;
         this.titleText = data.titleText.tabList[tabVal].style;
@@ -1138,8 +1283,8 @@ export default {
 
 <style scoped lang="scss">
 .seckill-box {
-  background: #fff;
-
+  display: inline-block;
+  width: -webkit-fill-available;
   .hd {
     display: flex;
     justify-content: space-between;

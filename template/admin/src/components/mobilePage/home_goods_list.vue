@@ -1,16 +1,6 @@
 <template>
   <div>
-    <div
-      class="mobile-page paddingBox"
-      :style="{
-        background: bottomBgColor,
-        marginTop: mTop + 'px',
-        paddingTop: topConfig + 'px',
-        paddingBottom: bottomConfig + 'px',
-        paddingLeft: prConfig + 'px',
-        paddingRight: prConfig + 'px',
-      }"
-    >
+    <common_wrapper :config="configObj">
       <div class="home_product">
         <!-- Một cột -->
         <template v-if="styleConfig == 0">
@@ -18,8 +8,10 @@
             <div
               class="item"
               v-for="(item, index) in list"
+              :key="index"
               :index="index"
               :style="{
+                background: bgColor,
                 borderRadius: bgRadius,
               }"
             >
@@ -120,7 +112,16 @@
         <!-- Hai cột -->
         <template v-else-if="styleConfig == 1">
           <div class="list-wrapper itemC">
-            <div class="item" v-for="(item, index) in list" :index="index">
+            <div
+              class="item"
+              v-for="(item, index) in list"
+              :key="index"
+              :index="index"
+              :style="{
+                background: bgColor,
+                borderRadius: bgRadius,
+              }"
+            >
               <div class="img-box">
                 <img
                   class="img"
@@ -214,6 +215,7 @@
               v-for="(item, index) in list"
               :key="index"
               :style="{
+                background: bgColor,
                 borderRadius: bgRadius,
               }"
             >
@@ -319,7 +321,7 @@
               borderRadius: bgRadius,
             }"
           >
-            <div class="item acea-row row-middle" v-for="(item, index) in list" :index="index">
+            <div class="item acea-row row-middle" v-for="(item, index) in list" :key="index" :index="index">
               <div
                 class="pictrue acea-row row-center-wrapper"
                 :style="{
@@ -373,7 +375,7 @@
             }"
           >
             <div class="list">
-              <div class="item" v-for="(item, index) in list" :index="index">
+              <div class="item" v-for="(item, index) in list" :key="index" :index="index">
                 <div class="img-box">
                   <img
                     class="img"
@@ -444,7 +446,7 @@
           </div>
         </template>
       </div>
-    </div>
+    </common_wrapper>
   </div>
 </template>
 
@@ -456,7 +458,7 @@ export default {
   cname: 'Danh sách sản phẩm',
   configName: 'c_home_goods_list',
   icon: '#iconzujian-shangpinliebiao',
-  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ 3 thành phần sản phẩm 4 thành phần trang cá nhân
   defaultName: 'goodList', // Tên khớp bên ngoài
   props: {
     index: {
@@ -500,18 +502,79 @@ export default {
       // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         cname: 'Danh sách sản phẩm',
+        desc: 'Giới thiệu danh sách sản phẩm',
         name: 'goodList',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
         },
+        zIndexConfig: {
+          title: 'Thứ tự lớp thành phần',
+          val: 0,
+          min: 0,
+        },
+        borderConfig: {
+          title: 'Cài đặt viền',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0,
+          styleConfig: {
+            title: 'Kiểu viền',
+            tabVal: 0,
+            tabList: [
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
+            ],
+          },
+          widthConfig: {
+            title: 'Độ dày viền',
+            val: 1,
+            min: 1,
+          },
+          colorConfig: {
+            title: 'Màu viền',
+            default: [{ item: '#e5e5e5' }],
+            color: [{ item: '#e5e5e5' }],
+          },
+        },
+        shadowConfig: {
+          title: 'Cài đặt đổ bóng',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0,
+          colorConfig: {
+            title: 'Màu đổ bóng',
+            default: [{ item: 'rgba(0,0,0,0.1)' }],
+            color: [{ item: 'rgba(0,0,0,0.1)' }],
+          },
+          xConfig: {
+            title: 'Độ lệch trục X',
+            val: 0,
+            min: -50,
+          },
+          yConfig: {
+            title: 'Độ lệch trục Y',
+            val: 0,
+            min: -50,
+          },
+          blurConfig: {
+            title: 'Bán kính làm mờ',
+            val: 10,
+            min: 0,
+          },
+          spreadConfig: {
+            title: 'Bán kính lan tỏa',
+            val: 0,
+            min: -50,
+          },
+        },
         titleLeft: 'Cài đặt danh sách',
         titleGoods: 'Cài đặt sản phẩm',
         titleContents: 'Nội dung hiển thị',
         titleCart: 'Nút giỏ hàng',
         titleRight: 'Kiểu sản phẩm',
-        titleCart: 'Nút giỏ hàng',
         titleCurrency: 'Kiểu chung',
         styleConfig: {
           title: 'Chọn phong cách',
@@ -521,19 +584,19 @@ export default {
               name: 'Hiển thị một cột',
             },
             {
-              name: 'Hiển thị hai cột (dọc)',
+              name: 'Hiển thị hai cột',
             },
             {
               name: 'Hiển thị ba cột',
             },
             {
-              name: 'Hiển thị hai cột (ngang)',
+              name: 'Hiển thị hai cột',
             },
             {
               name: 'Hiển thị ảnh lớn',
             },
             {
-              name: 'Hiển thị vuốt ngang',
+              name: 'Vuốt ngang',
             },
           ],
         },
@@ -806,25 +869,19 @@ export default {
             },
           ],
         },
-        topConfig: {
-          title: 'Lề trên',
+        paddingConfig: {
+          title: 'Lề trong',
+          isAll: false,
           val: 0,
           min: 0,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
-        bottomConfig: {
-          title: 'Lề dưới',
+        marginConfig: {
+          title: 'Lề ngoài',
+          isAll: false,
           val: 0,
           min: 0,
-        },
-        prConfig: {
-          title: 'Lề trái phải',
-          val: 10,
-          min: 0,
-        },
-        mbConfig: {
-          title: 'Lề trên trang',
-          val: 0,
-          min: 0,
+          valList: [{ val: 0 }, { val: 10 }, { val: 0 }, { val: 10 }],
         },
         fillet: {
           title: 'Bo góc nền',
@@ -843,6 +900,90 @@ export default {
           val: 8,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        },
+        componentBgConfig: {
+          title: 'Cài đặt nền',
+          tabVal: 0,
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
+          colorConfig: {
+            title: 'Màu nền',
+            default: [{ item: '#FFFFFF' }, { item: '#FFFFFF' }],
+            color: [{ item: '#FFFFFF' }, { item: '#FFFFFF' }],
+          },
+          colorDirection: {
+            title: 'Hướng chuyển màu',
+            tabVal: 0,
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
+          },
+          imageConfig: {
+            header: 'Ảnh nền',
+            title: '',
+            name: 'Tải lên ảnh',
+            type: 'code',
+            url: '',
+            info: 'Kích thước đề xuất: 750px * 400px',
+          },
+        },
+        zIndexConfig: {
+          title: 'Thứ tự lớp thành phần',
+          val: 0,
+          min: 0,
+        },
+        borderConfig: {
+          title: 'Cài đặt viền',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0, // 0: Hide, 1: Show
+          styleConfig: {
+            title: 'Kiểu viền',
+            tabVal: 0,
+            tabList: [
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
+            ],
+          },
+          widthConfig: {
+            title: 'Độ dày viền',
+            val: 1,
+            min: 1,
+          },
+          colorConfig: {
+            title: 'Màu viền',
+            default: [{ item: '#e5e5e5' }],
+            color: [{ item: '#e5e5e5' }],
+          },
+        },
+        shadowConfig: {
+          title: 'Cài đặt đổ bóng',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0, // 0: Off, 1: On
+          colorConfig: {
+            title: 'Màu đổ bóng',
+            default: [{ item: 'rgba(0,0,0,0.1)' }],
+            color: [{ item: 'rgba(0,0,0,0.1)' }],
+          },
+          xConfig: {
+            title: 'Độ lệch trục X',
+            val: 0,
+            min: -50,
+          },
+          yConfig: {
+            title: 'Độ lệch trục Y',
+            val: 0,
+            min: -50,
+          },
+          blurConfig: {
+            title: 'Bán kính làm mờ',
+            val: 10,
+            min: 0,
+          },
+          spreadConfig: {
+            title: 'Bán kính lan tỏa',
+            val: 0,
+            min: -50,
+          },
         },
         goodsLabel: {
           title: 'Nhãn sản phẩm',
@@ -873,10 +1014,7 @@ export default {
       bntBgColorLeft: '',
       bgColor: '',
       bottomBgColor: '',
-      mTop: 0,
-      topConfig: 0,
-      bottomConfig: 0,
-      prConfig: 0,
+      configObj: null,
       bgRadius: 0,
       bgRadius2: 0,
       themeColor: '',
@@ -891,61 +1029,108 @@ export default {
   methods: {
     setConfig(data) {
       if (!data) return;
-      if (data.mbConfig) {
-        this.styleConfig = data.styleConfig.tabVal;
-        this.checkboxInfo = data.checkboxInfo.type;
-        this.cartConfig = data.cartConfig.tabVal;
-        this.bntStyleConfig = data.bntStyleConfig.tabVal;
-        let filletImg = data.filletImg.type;
-        let filletValImg = data.filletImg.val;
-        let valListImg = data.filletImg.valList;
-        this.imgRadius = filletImg
-          ? valListImg[0].val + 'px ' + valListImg[1].val + 'px ' + valListImg[3].val + 'px ' + valListImg[2].val + 'px'
-          : filletValImg + 'px';
-        this.imgRadius2 = filletImg
-          ? valListImg[0].val + 'px ' + valListImg[1].val + 'px 0 0'
-          : filletValImg + 'px ' + filletValImg + 'px 0 0';
-        let goodsTabVal = data.goodsName.tabVal;
-        this.goodsName = data.goodsName.tabList[goodsTabVal].style;
-        this.toneConfig = data.toneConfig.tabVal;
-        this.goodsNameColor = data.goodsNameColor.color[0].item;
-        this.goodsPriceColor = data.goodsPriceColor.color[0].item;
-        this.soldNumColor = data.soldNumColor.color[0].item;
-        this.scoreColor = data.scoreColor.color[0].item;
-        this.toneCartConfig = data.toneCartConfig.tabVal;
-        let bntBgColorLeft = data.bntBgColor.color[0].item;
-        let bntBgColorRight = data.bntBgColor.color[1].item;
-        this.bntBgColorLeft = bntBgColorLeft;
-        this.bntBgColor = `linear-gradient(90deg,${bntBgColorLeft} 0%,${bntBgColorRight} 100%)`;
-        let bgColorLeft = data.moduleColor.color[0].item;
-        let bgColorRight = data.moduleColor.color[1].item;
-        this.bgColor = `linear-gradient(90deg,${bgColorLeft} 0%,${bgColorRight} 100%)`;
-        this.bottomBgColor = data.bottomBgColor.color[0].item;
-        this.themeColor = `linear-gradient(90deg,${this.colorStyle.theme} 0%,${this.colorStyle.gradient} 100%)`;
-        this.mTop = data.mbConfig.val;
-        this.topConfig = data.topConfig.val;
-        this.bottomConfig = data.bottomConfig.val;
-        this.prConfig = data.prConfig.val;
-        let fillet = data.fillet.type;
-        let filletVal = data.fillet.val;
-        let valList = data.fillet.valList;
-        this.bgRadius = fillet
-          ? valList[0].val + 'px ' + valList[1].val + 'px ' + valList[3].val + 'px ' + valList[2].val + 'px'
-          : filletVal + 'px';
-        this.bgRadius2 = fillet
-          ? '0 0 ' + valList[3].val + 'px ' + valList[2].val + 'px'
-          : '0 0 ' + filletVal + 'px ' + filletVal + 'px';
-        if (data.typeConfig.activeValue == 1) {
-          this.list = data.goodsList.list.length ? data.goodsList.list : 4;
-        } else {
-          this.list = data.productList.list.length ? data.productList.list : 4;
+      for (let key in this.defaultConfig) {
+        if (data[key] == undefined) {
+          this.$set(data, key, this.defaultConfig[key]);
         }
+      }
+      this.styleConfig = data.styleConfig.tabVal;
+      this.checkboxInfo = data.checkboxInfo.type;
+      this.cartConfig = data.cartConfig.tabVal;
+      this.bntStyleConfig = data.bntStyleConfig.tabVal;
+      let filletImg = data.filletImg.type;
+      let filletValImg = data.filletImg.val;
+      let valListImg = data.filletImg.valList;
+      this.imgRadius = filletImg
+        ? valListImg[0].val + 'px ' + valListImg[1].val + 'px ' + valListImg[3].val + 'px ' + valListImg[2].val + 'px'
+        : filletValImg + 'px';
+      this.imgRadius2 = filletImg
+        ? valListImg[0].val + 'px ' + valListImg[1].val + 'px 0 0'
+        : filletValImg + 'px ' + filletValImg + 'px 0 0';
+      let goodsTabVal = data.goodsName.tabVal;
+      this.goodsName = data.goodsName.tabList[goodsTabVal].style;
+      this.toneConfig = data.toneConfig.tabVal;
+      this.goodsNameColor = data.goodsNameColor.color[0].item;
+      this.goodsPriceColor = data.goodsPriceColor.color[0].item;
+      this.soldNumColor = data.soldNumColor.color[0].item;
+      this.scoreColor = data.scoreColor.color[0].item;
+      this.toneCartConfig = data.toneCartConfig.tabVal;
+      let bntBgColorLeft = data.bntBgColor.color[0].item;
+      let bntBgColorRight = data.bntBgColor.color[1].item;
+      this.bntBgColorLeft = bntBgColorLeft;
+      this.bntBgColor = `linear-gradient(90deg,${bntBgColorLeft} 0%,${bntBgColorRight} 100%)`;
+      let bgColorLeft = data.moduleColor.color[0].item;
+      let bgColorRight = data.moduleColor.color[1].item;
+      this.bgColor = `linear-gradient(90deg,${bgColorLeft} 0%,${bgColorRight} 100%)`;
+      this.themeColor = `linear-gradient(90deg,${this.colorStyle.theme} 0%,${this.colorStyle.gradient} 100%)`;
+      // Tương thích dữ liệu cũ
+      if (!data.paddingConfig) {
+        let paddingConfig = {
+          title: 'Lề trong',
+          isAll: false,
+          val: 0,
+          min: 0,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        };
+        if (data.topConfig) paddingConfig.valList[0].val = data.topConfig.val;
+        if (data.prConfig) {
+          paddingConfig.valList[1].val = data.prConfig.val;
+          paddingConfig.valList[3].val = data.prConfig.val;
+        }
+        if (data.bottomConfig) paddingConfig.valList[2].val = data.bottomConfig.val;
+        this.$set(data, 'paddingConfig', paddingConfig);
+      }
+
+      if (!data.marginConfig) {
+        let marginConfig = {
+          title: 'Lề ngoài',
+          isAll: false,
+          val: 0,
+          min: 0,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        };
+        if (data.mbConfig) marginConfig.valList[0].val = data.mbConfig.val;
+        this.$set(data, 'marginConfig', marginConfig);
+      }
+
+      if (!data.bottomBgColor) {
+        this.$set(data, 'bottomBgColor', {
+          title: 'Nền phía dưới',
+          default: [{ item: '#f5f5f5' }],
+          color: [{ item: '#f5f5f5' }],
+        });
+      }
+
+      for (let key in this.defaultConfig) {
+        if (data[key] === undefined) {
+          this.$set(data, key, this.defaultConfig[key]);
+        }
+      }
+
+      this.configObj = data;
+      let fillet = data.fillet.type;
+      let filletVal = data.fillet.val;
+      let valList = data.fillet.valList;
+      this.bgRadius = fillet
+        ? valList[0].val + 'px ' + valList[1].val + 'px ' + valList[3].val + 'px ' + valList[2].val + 'px'
+        : filletVal + 'px';
+      this.bgRadius2 = fillet
+        ? '0 0 ' + valList[3].val + 'px ' + valList[2].val + 'px'
+        : '0 0 ' + filletVal + 'px ' + filletVal + 'px';
+      if (data.typeConfig.activeValue == 1) {
+        this.list = data.goodsList.list.length ? data.goodsList.list : 4;
+      } else {
+        this.list = data.productList.list.length ? data.productList.list : 4;
       }
     },
   },
 };
 </script>
 <style scoped lang="scss">
+.mobile-page {
+  display: inline-block;
+  width: -webkit-fill-available;
+}
 .itemOn {
   border-radius: 0 !important;
   img,
@@ -1138,9 +1323,6 @@ export default {
       }
     }
   }
-}
-.paddingBox {
-  padding-bottom: 0;
 }
 .home_product {
   overflow: hidden;
@@ -1353,6 +1535,7 @@ export default {
   .list {
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
   }
 
   .item {
@@ -1403,6 +1586,7 @@ export default {
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;
+    width: auto;
   }
   .item {
     width: 100px;

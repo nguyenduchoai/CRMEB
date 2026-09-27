@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -58,14 +58,14 @@ class AuthController
         $token = $this->services->mp_auth($code, $cache_key, $login_type, $spread_spid, $spread_code, $iv, $encryptedData);
         if ($token) {
             if (isset($token['key']) && $token['key']) {
-                return app('json')->success(410022, $token);
+                return app('json')->success('Ủy quyền thành công, vui lòng liên kết số điện thoại', $token);
             } else {
-                return app('json')->success(410001, [
+                return app('json')->success('Đăng nhập thành công', [
                     'userInfo' => $token['userInfo']
                 ]);
             }
         } else
-            return app('json')->fail(410019);
+            return app('json')->fail('Đăng nhập thất bại');
     }
 
     /**

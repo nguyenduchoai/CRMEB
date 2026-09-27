@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -106,25 +106,25 @@ class UserGroupServices extends BaseServices
         $groupName = $this->dao->getOne(['group_name' => $data['group_name']]);
         if ($id) {
             if (!$this->getGroup($id)) {
-                throw new AdminException(100026);
+                throw new AdminException('Dữ liệu không tồn tại');
             }
             if ($groupName && $id != $groupName['id']) {
-                throw new AdminException(400666);
+                throw new AdminException('Nhóm này đã tồn tại');
             }
             if ($this->dao->update($id, $data)) {
                 return true;
             } else {
-                throw new AdminException(100007);
+                throw new AdminException('Sửa thất bại');
             }
         } else {
             unset($data['id']);
             if ($groupName) {
-                throw new AdminException(400666);
+                throw new AdminException('Nhóm này đã tồn tại');
             }
             if ($this->dao->save($data)) {
                 return true;
             } else {
-                throw new AdminException(100022);
+                throw new AdminException('Thêm thất bại');
             }
         }
     }
@@ -138,7 +138,7 @@ class UserGroupServices extends BaseServices
     {
         if ($this->getGroup($id)) {
             if (!$this->dao->delete($id)) {
-                throw new AdminException(100008);
+                throw new AdminException('Xóa thất bại');
             }
         }
         return 'Xóa thành công!';

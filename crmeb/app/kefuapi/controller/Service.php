@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -90,14 +90,14 @@ class Service extends AuthController
         ]);
 
         if (!$data['name']) {
-            return app('json')->fail(410095);
+            return app('json')->fail('Tên danh mục không được để trống');
         }
         $data['add_time'] = time();
         $data['owner_id'] = $this->kefuId;
         $data['type'] = 1;
 
         $services->save($data);
-        return app('json')->success(100021);
+        return app('json')->success('Thêm thành công');
     }
 
     /**
@@ -115,20 +115,20 @@ class Service extends AuthController
         ]);
 
         if (!$data['name']) {
-            return app('json')->fail(410095);
+            return app('json')->fail('Tên danh mục không được để trống');
         }
 
         $cateInfo = $services->get($id);
         if (!$cateInfo) {
-            return app('json')->fail(100026);
+            return app('json')->fail('Dữ liệu không tồn tại');
         }
         $cateInfo->name = $data['name'];
         $cateInfo->sort = $data['sort'];
 
         if ($cateInfo->save()) {
-            return app('json')->success(100001);
+            return app('json')->success('Sửa thành công');
         } else {
-            return app('json')->fail(100007);
+            return app('json')->fail('Sửa thất bại');
         }
     }
 
@@ -142,13 +142,13 @@ class Service extends AuthController
     {
         $cateInfo = $services->get($id);
         if (!$cateInfo) {
-            return app('json')->fail(410096);
+            return app('json')->fail('Danh mục không tồn tại');
         }
 
         if ($cateInfo->delete()) {
-            return app('json')->success(100002);
+            return app('json')->success('Xóa thành công');
         } else {
-            return app('json')->fail(100008);
+            return app('json')->fail('Xóa thất bại');
         }
     }
 
@@ -183,19 +183,19 @@ class Service extends AuthController
         validate(SpeechcraftValidate::class)->check($data);
 
         if (!$categoryServices->count(['owner_id' => $this->kefuId, 'type' => 1, 'id' => $data['cate_id']])) {
-            return app('json')->fail(410096);
+            return app('json')->fail('Danh mục không tồn tại');
         }
         if ($services->count(['message' => $data['message']])) {
-            return app('json')->fail(410097);
+            return app('json')->fail('Nội dung thêm vào bị trùng lặp');
         }
         $data['add_time'] = time();
         $data['kefu_id'] = $this->kefuId;
 
         $res = $services->save($data);
         if ($res) {
-            return app('json')->success(100021, null, $res->toArray());
+            return app('json')->success('Thêm thành công', null, $res->toArray());
         } else {
-            return app('json')->fail(100022);
+            return app('json')->fail('Thêm thất bại');
         }
     }
 
@@ -215,17 +215,17 @@ class Service extends AuthController
         ]);
 
         if (!$data['message']) {
-            return app('json')->fail(410102);
+            return app('json')->fail('Tiêu đề và nội dung câu trả lời mẫu không được để trống');
         }
         if (!$categoryServices->count(['owner_id' => $this->kefuId, 'type' => 1, 'id' => $data['cate_id']])) {
-            return app('json')->fail(100026);
+            return app('json')->fail('Dữ liệu không tồn tại');
         }
         $speechcraft = $services->get($id);
         if (!$speechcraft) {
-            return app('json')->fail(100026);
+            return app('json')->fail('Dữ liệu không tồn tại');
         }
         if (!$speechcraft->kefu_id) {
-            return app('json')->fail(410101);
+            return app('json')->fail('Không thể chỉnh sửa câu trả lời mẫu chung');
         }
         $speechcraft->title = $data['title'];
         if ($data['cate_id']) {
@@ -234,9 +234,9 @@ class Service extends AuthController
         $speechcraft->message = $data['message'];
 
         if ($speechcraft->save()) {
-            return app('json')->success(100001);
+            return app('json')->success('Sửa thành công');
         } else {
-            return app('json')->fail(100007);
+            return app('json')->fail('Sửa thất bại');
         }
     }
 
@@ -250,12 +250,12 @@ class Service extends AuthController
     {
         $speechcraft = $services->get($id);
         if (!$speechcraft) {
-            return app('json')->fail(410100);
+            return app('json')->fail('Không tìm thấy câu trả lời mẫu');
         }
         if ($speechcraft->delete()) {
-            return app('json')->success(100002);
+            return app('json')->success('Xóa thành công');
         } else {
-            return app('json')->fail(100008);
+            return app('json')->fail('Xóa thất bại');
         }
     }
 
@@ -275,7 +275,7 @@ class Service extends AuthController
             ['is_tourist', 0],
         ], true);
         if (!$uid) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         return app('json')->success($this->services->getChatList($this->kefuInfo['uid'], $uid, (int)$upperId, $is_tourist));
     }
@@ -301,9 +301,9 @@ class Service extends AuthController
             ['uid', 0]
         ], true);
         if (!$kefuToUid || !$uid) {
-            return app('json')->fail(410098);
+            return app('json')->fail('Thiếu id người nhận chuyển tiếp');
         }
         $this->services->setTransfer($this->kefuInfo['uid'], (int)$uid, (int)$kefuToUid);
-        return app('json')->success(410099);
+        return app('json')->success('Chuyển tiếp thành công');
     }
 }

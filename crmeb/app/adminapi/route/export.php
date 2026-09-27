@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -40,6 +40,8 @@ Route::group('export', function () {
     Route::get('userPoint', 'v1.export.ExportExcel/userPoint')->option(['real_name' => 'Xuất điểm thưởng người dùng']);
     //Nạp tiền người dùng
     Route::get('userRecharge', 'v1.export.ExportExcel/userRecharge')->option(['real_name' => 'Xuất lịch sử nạp tiền người dùng']);
+    //Đơn hàng xác nhận sử dụng
+    Route::get('verify_order', 'v1.export.ExportExcel/verifyOrder')->option(['real_name' => 'Đơn hàng xác nhận sử dụng']);
 })->middleware([
     \app\http\middleware\AllowOriginMiddleware::class,
     \app\adminapi\middleware\AdminAuthTokenMiddleware::class,

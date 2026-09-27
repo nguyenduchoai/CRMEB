@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -38,7 +38,7 @@ class StoreCartController
             ['product_id', 0]
         ], true);
         $this->services->resetCart($id, $request->uid(), $product_id, $unique, $num);
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**
@@ -72,7 +72,7 @@ class StoreCartController
         ], true);
         /** @var StoreCartServices $cartService */
         $cartService = app()->make(StoreCartServices::class);
-        if (!$product_id || !is_numeric($product_id)) return app('json')->fail(100100);
+        if (!$product_id || !is_numeric($product_id)) return app('json')->fail('Tham số không hợp lệ');
         $res = $cartService->setCartNum($request->uid(), $product_id, $num, $unique, $type);
         if ($res) return app('json')->success('Thêm vào giỏ hàng thành công!');
         return app('json')->fail('Thêm vào giỏ hàng thất bại!');

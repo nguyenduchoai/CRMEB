@@ -1,23 +1,6 @@
 <template>
-  <div
-    class="mobile-page"
-    :style="{
-      background: bottomBgColor,
-      marginTop: mTop + 'px',
-      paddingTop: topConfig + 'px',
-      paddingBottom: bottomConfig + 'px',
-      paddingLeft: prConfig + 'px',
-      paddingRight: prConfig + 'px',
-    }"
-  >
-    <div
-      class="live-broadcast"
-      :class="styleConfig == 2 ? 'on' : ''"
-      :style="{
-        background: bgColor,
-        borderRadius: bgRadius,
-      }"
-    >
+  <common_wrapper :config="configObj">
+    <div class="live-broadcast" :class="styleConfig == 2 ? 'on' : ''">
       <div class="live-wrapper-c" v-if="styleConfig == 0">
         <div
           class="live-item-a"
@@ -41,7 +24,7 @@
               <span class="msg">08/08 20:00</span>
             </div>
             <div class="label bggary" v-if="item.type == 0">Xem lại</div>
-            <div class="label bgred" v-if="item.type == 2"><span class="iconfont-diy iconzhibozhong"></span>Đang livestream</div>
+            <div class="label bgred" v-if="item.type == 2"><span class="iconfont iconzhibozhong"></span>Đang livestream</div>
           </div>
           <div class="info">
             <div class="title" v-if="checkboxInfo.indexOf(0) != -1">Đây là tiêu đề livestream đây là tiêu đề livestream đây là tiêu đề livestream...</div>
@@ -102,7 +85,7 @@
               }"
               v-if="item.type == 2"
             >
-              <span class="iconfont-diy iconzhibozhong"></span>Đang livestream
+              <span class="iconfont iconzhibozhong"></span>Đang livestream
             </div>
           </div>
           <div class="info">
@@ -137,7 +120,7 @@
               <span class="msg">08/08 20:00</span>
             </div>
             <div class="label bggary" v-if="item.type == 0">Xem lại</div>
-            <div class="label bgred" v-if="item.type == 2"><span class="iconfont-diy iconzhibozhong"></span>Đang livestream</div>
+            <div class="label bgred" v-if="item.type == 2"><span class="iconfont iconzhibozhong"></span>Đang livestream</div>
           </div>
           <div class="info">
             <div class="left">
@@ -167,9 +150,7 @@
               <div class="empty-box">
                 <img src="../../assets/images/shan.png" />
               </div>
-              <div class="label bgred" v-if="item.type == 2">
-                <span class="iconfont-diy iconzhibozhong"></span>Đang livestream
-              </div>
+              <div class="label bgred" v-if="item.type == 2"><span class="iconfont iconzhibozhong"></span>Đang livestream</div>
               <div
                 class="info"
                 v-if="checkboxInfo.indexOf(0) != -1 || checkboxInfo.indexOf(1) != -1"
@@ -211,7 +192,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </common_wrapper>
 </template>
 
 <script>
@@ -333,57 +314,53 @@ export default {
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
-        moduleColor: {
+        zIndexConfig: {
+          title: 'Thứ tự lớp thành phần',
+          val: 0,
+          min: 0,
+        },
+        componentBgConfig: {
           title: 'Nền thành phần',
-          default: [
-            {
-              item: '#fff',
-            },
-            {
-              item: '#fff',
-            },
-          ],
-          color: [
-            {
-              item: '#fff',
-            },
-            {
-              item: '#fff',
-            },
-          ],
+          tabVal: 0,
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
+          colorConfig: {
+            title: 'Màu nền',
+            default: [{ item: '#fff' }, { item: '#fff' }],
+            color: [{ item: '#fff' }, { item: '#fff' }],
+          },
+          colorDirection: {
+            title: 'Hướng chuyển màu',
+            tabVal: 0,
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
+          },
+          imageConfig: {
+            header: 'Ảnh nền',
+            title: '',
+            name: 'Tải lên ảnh',
+            type: 'code',
+            url: '',
+            info: 'Kích thước đề xuất: 750px * 400px',
+          },
         },
         bottomBgColor: {
           title: 'Nền phía dưới',
-          default: [
-            {
-              item: '#f5f5f5',
-            },
-          ],
-          color: [
-            {
-              item: '#f5f5f5',
-            },
-          ],
+          name: 'bgColor',
+          default: [{ item: '#f5f5f5' }],
+          color: [{ item: '#f5f5f5' }],
         },
-        topConfig: {
-          title: 'Lề trên',
-          val: 0,
-          min: 0,
-        },
-        bottomConfig: {
-          title: 'Lề dưới',
-          val: 0,
-          min: 0,
-        },
-        prConfig: {
-          title: 'Lề trái phải',
+        paddingConfig: {
+          title: 'Lề trong',
           val: 10,
           min: 0,
+          max: 100,
+          valList: [{ val: 10 }, { val: 10 }, { val: 10 }, { val: 10 }],
         },
-        mbConfig: {
-          title: 'Lề trên trang',
+        marginConfig: {
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
+          max: 100,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         fillet: {
           title: 'Bo góc nền',
@@ -402,6 +379,62 @@ export default {
           val: 8,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        },
+        borderConfig: {
+          title: 'Cài đặt viền',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0,
+          styleConfig: {
+            title: 'Kiểu viền',
+            tabVal: 0,
+            tabList: [
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
+            ],
+          },
+          widthConfig: {
+            title: 'Độ dày viền',
+            val: 1,
+            min: 1,
+          },
+          colorConfig: {
+            title: 'Màu viền',
+            default: [{ item: '#e5e5e5' }],
+            color: [{ item: '#e5e5e5' }],
+          },
+        },
+        shadowConfig: {
+          title: 'Cài đặt đổ bóng',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0,
+          colorConfig: {
+            title: 'Màu đổ bóng',
+            default: [{ item: 'rgba(0,0,0,0.1)' }],
+            color: [{ item: 'rgba(0,0,0,0.1)' }],
+          },
+          xConfig: {
+            title: 'Độ lệch trục X',
+            val: 0,
+            min: -50,
+          },
+          yConfig: {
+            title: 'Độ lệch trục Y',
+            val: 0,
+            min: -50,
+          },
+          blurConfig: {
+            title: 'Bán kính làm mờ',
+            val: 10,
+            min: 0,
+          },
+          spreadConfig: {
+            title: 'Bán kính lan tỏa',
+            val: 0,
+            min: -50,
+          },
         },
       },
       live: [
@@ -465,6 +498,12 @@ export default {
       imgRadius: 0,
       bgColor: '',
       bottomBgColor: '',
+      paddingConfig: {
+        valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+      },
+      marginConfig: {
+        valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+      },
       mTop: 0,
       topConfig: 0,
       bottomConfig: 0,
@@ -483,52 +522,55 @@ export default {
   methods: {
     setConfig(data) {
       if (!data) return;
-      if (data.mbConfig) {
-        this.styleConfig = data.styleConfig.tabVal;
-        this.checkboxInfo = data.checkboxInfo.type;
-        this.liveConfig = data.liveConfig.val;
-        let filletImg = data.filletImg.type;
-        let filletValImg = data.filletImg.val;
-        let valListImg = data.filletImg.valList;
-        this.imgRadius = filletImg
-          ? valListImg[0].val + 'px ' + valListImg[1].val + 'px ' + valListImg[3].val + 'px ' + valListImg[2].val + 'px'
-          : filletValImg + 'px';
-        this.imgRadius2 = filletImg ? valListImg[0].val + 'px 0 10px 0' : filletValImg + 'px 0 10px 0';
-        this.imgRadius3 = filletImg
-          ? '0 0 ' + valListImg[3].val + 'px ' + valListImg[2].val + 'px'
-          : '0 0 ' + filletValImg + 'px ' + filletValImg + 'px';
-        let bgColorLeft = data.moduleColor.color[0].item;
-        let bgColorRight = data.moduleColor.color[1].item;
-        this.bgColor = `linear-gradient(90deg,${bgColorLeft} 0%,${bgColorRight} 100%)`;
-        this.bottomBgColor = data.bottomBgColor.color[0].item;
-        this.mTop = data.mbConfig.val;
-        this.topConfig = data.topConfig.val;
-        this.bottomConfig = data.bottomConfig.val;
-        this.prConfig = data.prConfig.val;
-        let fillet = data.fillet.type;
-        let filletVal = data.fillet.val;
-        let valList = data.fillet.valList;
-        this.bgRadius = fillet
-          ? valList[0].val + 'px ' + valList[1].val + 'px ' + +valList[3].val + 'px ' + valList[2].val + 'px'
-          : filletVal + 'px';
+      let dataClone = JSON.parse(JSON.stringify(data));
+      for (let key in this.defaultConfig) {
+        if (dataClone[key] == undefined) {
+          this.$set(dataClone, key, JSON.parse(JSON.stringify(this.defaultConfig[key])));
+        }
       }
+
+      if (!data.componentBgConfig && data.moduleColor) {
+        dataClone.componentBgConfig.colorConfig.color[0].item = data.moduleColor.color[0].item;
+        dataClone.componentBgConfig.colorConfig.color[1].item = data.moduleColor.color[1].item;
+      }
+
+      if (!data.paddingConfig) {
+        if (dataClone.topConfig) dataClone.paddingConfig.valList[0].val = dataClone.topConfig.val;
+        if (dataClone.bottomConfig) dataClone.paddingConfig.valList[2].val = dataClone.bottomConfig.val;
+        if (dataClone.prConfig) {
+          dataClone.paddingConfig.valList[1].val = dataClone.prConfig.val;
+          dataClone.paddingConfig.valList[3].val = dataClone.prConfig.val;
+        }
+      }
+      if (!data.marginConfig) {
+        if (dataClone.mbConfig) dataClone.marginConfig.valList[0].val = dataClone.mbConfig.val;
+      }
+
+      this.configObj = dataClone;
+
+      this.styleConfig = dataClone.styleConfig.tabVal;
+      this.checkboxInfo = dataClone.checkboxInfo.type;
+      this.liveConfig = dataClone.liveConfig.val;
+      let filletImg = dataClone.filletImg.type;
+      let filletValImg = dataClone.filletImg.val;
+      let valListImg = dataClone.filletImg.valList;
+      this.imgRadius = filletImg
+        ? valListImg[0].val + 'px ' + valListImg[1].val + 'px ' + valListImg[3].val + 'px ' + valListImg[2].val + 'px'
+        : filletValImg + 'px';
+      this.imgRadius2 = filletImg ? valListImg[0].val + 'px 0 10px 0' : filletValImg + 'px 0 10px 0';
+      this.imgRadius3 = filletImg
+        ? '0 0 ' + valListImg[3].val + 'px ' + valListImg[2].val + 'px'
+        : '0 0 ' + filletValImg + 'px ' + filletValImg + 'px';
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
-.mobile-page {
-  background: #f5f5f5;
-  font-size: 12px;
-
-  .live-broadcast {
-    padding: 10px;
-    background-color: #fff;
-
-    &.on {
-      padding-right: 0;
-    }
+.live-broadcast {
+  width: 100%;
+  &.on {
+    padding-right: 0;
   }
 }
 
@@ -918,7 +960,7 @@ export default {
   color: #fff;
   font-size: 11px;
 
-  .iconfont-diy {
+  .iconfont {
     font-size: 12px;
     margin-right: 5px;
   }

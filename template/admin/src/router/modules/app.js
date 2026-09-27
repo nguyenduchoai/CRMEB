@@ -129,6 +129,15 @@ export default {
       component: () => import('@/pages/app/routine/download/index'),
     },
     {
+      path: 'routine/ci_upload',
+      name: `${pre}routineCIUpload`,
+      meta: {
+        auth: ['routine-ci-upload'],
+        title: 'Tải lên Mini Program',
+      },
+      component: () => import('@/pages/app/routine/ciUpload/index'),
+    },
+    {
       path: 'routine/link',
       name: `${pre}routineLink`,
       meta: {

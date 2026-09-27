@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Đánh giá đơn hàng",
+  "navigationBarTitleText": "订单评价",
   "usingComponents": {
     "authorize": "/components/Authorize",
     "grids-lottery": "/pages/goods/components/lottery/index",

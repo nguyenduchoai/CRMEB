@@ -1,15 +1,13 @@
 <?php
-/**
- *  +----------------------------------------------------------------------
- *  | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
- *  +----------------------------------------------------------------------
- *  | Copyright (c) 2016~2022 https://www.crmeb.com All rights reserved.
- *  +----------------------------------------------------------------------
- *  | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
- *  +----------------------------------------------------------------------
- *  | Author: CRMEB Team <admin@crmeb.com>
- *  +----------------------------------------------------------------------
- */
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 
 namespace crmeb\services\crud;
 
@@ -153,7 +151,7 @@ CONTENT;
                         $contentVue[] = <<<CONTENT
 $tab<el-table-column label="$item[name]">
 $tab3<template slot-scope="scope">
-$tab4<<el-switch  :active-value="1" :inactive-value="0" v-model="scope.row.{$fieldValue}" :value="scope.row.{$fieldValue}" size="large" @change="updateStatus(scope.row,'{$fieldValue}')" />
+$tab4<el-switch  :active-value="1" :inactive-value="0" v-model="scope.row.{$fieldValue}" :value="scope.row.{$fieldValue}" size="large" @change="updateStatus(scope.row,'{$fieldValue}')" />
 $tab3</template>
 $tab</el-table-column>
 CONTENT;
@@ -293,11 +291,11 @@ CONTENT;
 
             if (FormTypeEnum::FRAME_IMAGES === $item['from_type']) {
                 $descriptionContent .= <<<CONTENT
-$tab<el-descriptions-item label="$item[comment]"><el-image v-for="item in info.$fieldValue" :src="item" :preview-src-list="info.$fieldValue"></el-descriptions-item>\n
+$tab<el-descriptions-item label="$item[comment]"><el-image v-for="item in info.$fieldValue" :src="item" :preview-src-list="info.$fieldValue" /></el-descriptions-item>\n
 CONTENT;
             } else if (FormTypeEnum::FRAME_IMAGE_ONE === $item['from_type']) {
                 $descriptionContent .= <<<CONTENT
-$tab<el-descriptions-item label="$item[comment]"><el-image :src="info.$fieldValue" :preview-src-list="info.$fieldValue"></el-descriptions-item>\n
+$tab<el-descriptions-item label="$item[comment]"><el-image :src="info.$fieldValue" :preview-src-list="[info.$fieldValue]" /></el-descriptions-item>\n
 CONTENT;
             } else {
                 $descriptionContent .= <<<CONTENT

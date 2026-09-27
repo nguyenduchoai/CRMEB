@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -65,10 +65,10 @@ class UserGroup extends AuthController
             ['group_name', ''],
         ]);
         if (!$data['group_name']) {
-            return app('json')->fail(400321);
+            return app('json')->fail('Vui lòng nhập tên nhóm');
         }
         $this->services->save((int)$data['id'], $data);
-        return app('json')->success(100017);
+        return app('json')->success('Gửi thành công');
     }
 
     /**
@@ -81,7 +81,7 @@ class UserGroup extends AuthController
         $data = $this->request->getMore([
             ['id', 0],
         ]);
-        if (!$data['id']) return app('json')->fail(100100);
+        if (!$data['id']) return app('json')->fail('Tham số không hợp lệ');
         return app('json')->success($this->services->delGroup((int)$data['id']));
     }
 }

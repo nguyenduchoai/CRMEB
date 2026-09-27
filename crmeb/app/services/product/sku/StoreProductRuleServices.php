@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -74,7 +74,7 @@ class StoreProductRuleServices extends BaseServices
         } else {
             $res = $this->dao->save($data);
         }
-        if (!$res) throw new AdminException(100006);
+        if (!$res) throw new AdminException('Lưu thất bại');
     }
 
     /**
@@ -95,7 +95,7 @@ class StoreProductRuleServices extends BaseServices
      */
     public function del(string $ids)
     {
-        if ($ids == '') throw new AdminException(100100);
+        if ($ids == '') throw new AdminException('Tham số không hợp lệ');
         $this->dao->del($ids);
     }
 }

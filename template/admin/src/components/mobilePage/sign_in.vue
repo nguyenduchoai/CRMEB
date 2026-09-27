@@ -1,21 +1,9 @@
 <template>
-  <div
-    class="mobile-page"
-    :style="{
-      background: bottomBgColor,
-      paddingTop: topConfig + 'px',
-      paddingBottom: bottomConfig + 'px',
-      paddingLeft: prConfig + 'px',
-      paddingRight: prConfig + 'px',
-      marginTop: mbConfig + 'px',
-    }"
-  >
+  <common_wrapper :config="configObj">
     <div
       class="signIn"
       :style="{
-        background: styleConfig
-          ? `linear-gradient(90deg,${bgColorRight} 0%,${bgColorLeft} 100%)`
-          : `linear-gradient(90deg,${bgColorRight2} 0%,${bgColorLeft2} 100%)`,
+        background: ``,
         borderRadius: bgRadius,
       }"
     >
@@ -98,7 +86,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </common_wrapper>
 </template>
 
 <script>
@@ -242,46 +230,6 @@ export default {
             },
           ],
         },
-        moduleColor: {
-          title: 'Nền thành phần',
-          name: 'moduleColor',
-          default: [
-            {
-              item: '#FF7931',
-            },
-            {
-              item: '#E93323',
-            },
-          ],
-          color: [
-            {
-              item: '#FF7931',
-            },
-            {
-              item: '#E93323',
-            },
-          ],
-        },
-        moduleColor2: {
-          title: 'Nền thành phần',
-          name: 'moduleColor2',
-          default: [
-            {
-              item: '#FFF',
-            },
-            {
-              item: '#FFF',
-            },
-          ],
-          color: [
-            {
-              item: '#FFF',
-            },
-            {
-              item: '#FFF',
-            },
-          ],
-        },
         bottomBgColor: {
           title: 'Nền phía dưới',
           name: 'bgColor',
@@ -296,25 +244,21 @@ export default {
             },
           ],
         },
-        topConfig: {
-          title: 'Lề trên',
-          val: 0,
+        paddingConfig: {
+          title: 'Lề trong',
+          val: 12,
           min: 0,
+          isAll: false,
+          max: 100,
+          valList: [{ val: 12 }, { val: 12 }, { val: 12 }, { val: 12 }],
         },
-        bottomConfig: {
-          title: 'Lề dưới',
+        marginConfig: {
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
-        },
-        prConfig: {
-          title: 'Lề trái phải',
-          val: 0,
-          min: 0,
-        },
-        mbConfig: {
-          title: 'Lề trên trang',
-          val: 0,
-          min: 0,
+          isAll: false,
+          max: 100,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         fillet: {
           title: 'Bo góc nền',
@@ -334,12 +278,94 @@ export default {
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
+        zIndexConfig: {
+          title: 'Thứ tự lớp thành phần',
+          val: 0,
+          min: 0,
+        },
+        componentBgConfig: {
+          title: 'Cài đặt nền',
+          tabVal: 0,
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
+          colorConfig: {
+            title: 'Màu nền',
+            default: [{ item: '#fff' }, { item: '#fff' }],
+            color: [{ item: '#fff' }, { item: '#fff' }],
+          },
+          colorDirection: {
+            title: 'Hướng chuyển màu',
+            tabVal: 0,
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
+          },
+          imageConfig: {
+            header: 'Ảnh nền',
+            title: '',
+            name: 'Tải lên ảnh',
+            type: 'code',
+            url: '',
+            info: 'Kích thước đề xuất: 750px * 400px',
+          },
+        },
+        borderConfig: {
+          title: 'Cài đặt viền',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0, // 0: Hide, 1: Show
+          styleConfig: {
+            title: 'Kiểu viền',
+            tabVal: 0,
+            tabList: [
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
+            ],
+          },
+          widthConfig: {
+            title: 'Độ dày viền',
+            val: 1,
+            min: 1,
+          },
+          colorConfig: {
+            title: 'Màu viền',
+            default: [{ item: '#e5e5e5' }],
+            color: [{ item: '#e5e5e5' }],
+          },
+        },
+        shadowConfig: {
+          title: 'Cài đặt đổ bóng',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0, // 0: Off, 1: On
+          colorConfig: {
+            title: 'Màu đổ bóng',
+            default: [{ item: 'rgba(0,0,0,0.1)' }],
+            color: [{ item: 'rgba(0,0,0,0.1)' }],
+          },
+          xConfig: {
+            title: 'Độ lệch trục X',
+            val: 0,
+            min: -50,
+          },
+          yConfig: {
+            title: 'Độ lệch trục Y',
+            val: 0,
+            min: -50,
+          },
+          blurConfig: {
+            title: 'Bán kính làm mờ',
+            val: 10,
+            min: 0,
+          },
+          spreadConfig: {
+            title: 'Bán kính lan tỏa',
+            val: 0,
+            min: -50,
+          },
+        },
       },
       pageData: {},
-      bottomBgColor: '',
-      topConfig: '',
+      configObj: null,
       bottomConfig: '',
-      prConfig: 0,
       styleConfig: 0,
       toneConfig: 0,
       bntBgColorLeft: '',
@@ -354,6 +380,10 @@ export default {
       mbConfig: 0,
       bgRadius: 0,
       themeColor: '',
+      zIndexConfig: null,
+      componentBgConfig: null,
+      borderConfig: null,
+      shadowConfig: null,
     };
   },
   mounted() {
@@ -365,31 +395,63 @@ export default {
   methods: {
     setConfig(data) {
       if (!data) return;
-      if (data.mbConfig) {
-        this.styleConfig = data.styleConfig.tabVal;
-        this.toneConfig = data.toneConfig.tabVal;
-        this.bntBgColorLeft = data.bntBgColor.color[0].item;
-        this.bntBgColorRight = data.bntBgColor.color[1].item;
-        this.bntTxtColor = data.bntTxtColor.color[0].item;
-        this.labelBgColor = data.labelBgColor.color[0].item;
-        this.labelTxtColor = data.labelTxtColor.color[0].item;
-        this.themeColor = `linear-gradient(90deg,${this.colorStyle.theme} 0%,${this.colorStyle.gradient} 100%)`;
-        this.bgColorLeft = data.moduleColor.color[0].item;
-        this.bgColorRight = data.moduleColor.color[1].item;
-        this.bgColorLeft2 = data.moduleColor2.color[0].item;
-        this.bgColorRight2 = data.moduleColor2.color[1].item;
-        this.bottomBgColor = data.bottomBgColor.color[0].item;
-        this.topConfig = data.topConfig.val;
-        this.bottomConfig = data.bottomConfig.val;
-        this.prConfig = data.prConfig.val;
-        this.mbConfig = data.mbConfig.val;
-        let fillet = data.fillet.type;
-        let filletVal = data.fillet.val;
-        let valList = data.fillet.valList;
-        this.bgRadius = fillet
-          ? valList[0].val + 'px ' + valList[1].val + 'px ' + valList[3].val + 'px ' + valList[2].val + 'px'
-          : filletVal + 'px';
+      let dataClone = JSON.parse(JSON.stringify(data));
+      for (let key in this.defaultConfig) {
+        if (dataClone[key] == undefined) {
+          this.$set(dataClone, key, JSON.parse(JSON.stringify(this.defaultConfig[key])));
+        }
       }
+
+      if (!dataClone.paddingConfig) {
+        dataClone.paddingConfig = {
+          title: 'Lề trong',
+          val: 0,
+          min: 0,
+          max: 100,
+          isAll: false,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        };
+        if (dataClone.topConfig) dataClone.paddingConfig.valList[0].val = dataClone.topConfig.val;
+        if (dataClone.prConfig) {
+          dataClone.paddingConfig.valList[1].val = dataClone.prConfig.val;
+          dataClone.paddingConfig.valList[3].val = dataClone.prConfig.val;
+        }
+        if (dataClone.bottomConfig) dataClone.paddingConfig.valList[2].val = dataClone.bottomConfig.val;
+      }
+
+      if (!dataClone.marginConfig) {
+        dataClone.marginConfig = {
+          title: 'Lề ngoài',
+          val: 0,
+          min: 0,
+          max: 100,
+          isAll: false,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        };
+        if (dataClone.mbConfig) dataClone.marginConfig.valList[0].val = dataClone.mbConfig.val;
+      }
+
+      this.configObj = dataClone;
+      this.zIndexConfig = dataClone.zIndexConfig.val;
+      this.componentBgConfig = dataClone.componentBgConfig;
+      this.borderConfig = dataClone.borderConfig;
+      this.shadowConfig = dataClone.shadowConfig;
+
+      this.styleConfig = dataClone.styleConfig.tabVal;
+      this.toneConfig = dataClone.toneConfig.tabVal;
+      this.bntBgColorLeft = dataClone.bntBgColor.color[0].item;
+      this.bntBgColorRight = dataClone.bntBgColor.color[1].item;
+      this.bntTxtColor = dataClone.bntTxtColor.color[0].item;
+      this.labelBgColor = dataClone.labelBgColor.color[0].item;
+      this.labelTxtColor = dataClone.labelTxtColor.color[0].item;
+      this.themeColor = `linear-gradient(90deg,${this.colorStyle.theme} 0%,${this.colorStyle.gradient} 100%)`;
+      // this.bottomBgColor = data.bottomBgColor.color[0].item;
+      let fillet = dataClone.fillet.type;
+      let filletVal = dataClone.fillet.val;
+      let valList = dataClone.fillet.valList;
+      this.bgRadius = fillet
+        ? valList[0].val + 'px ' + valList[1].val + 'px ' + valList[3].val + 'px ' + valList[2].val + 'px'
+        : filletVal + 'px';
     },
   },
 };
@@ -398,14 +460,13 @@ export default {
 <style scoped lang="scss">
 .signIn {
   width: 100%;
-  padding: 12px;
-  background: linear-gradient(90deg, #e93323 0%, #ff7931 100%);
+  // background: linear-gradient(90deg, #e93323 0%, #ff7931 100%);
 
   .signInBg {
     width: 100%;
     height: 70px;
     border-radius: 8px;
-    background: linear-gradient(90deg, #ffe8f5 0%, #f1fbfd 100%);
+    // background: linear-gradient(90deg, #ffe8f5 0%, #f1fbfd 100%);
     padding: 0 3px;
     .item {
       text-align: center;

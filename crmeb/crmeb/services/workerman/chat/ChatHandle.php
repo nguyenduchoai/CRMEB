@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -231,13 +231,13 @@ class ChatHandle
                 $_userInfo = $userService->getUserInfo($data['uid'], 'nickname,avatar');
             }
             $data['nickname'] = $_userInfo['nickname'];
-            $data['avatar'] = $_userInfo['avatar'];
+            $data['avatar'] = set_file_url($_userInfo['avatar']);
         } else {
             $avatar = sys_config('tourist_avatar');
             $_userInfo['avatar'] = $tourist_avatar ?: Arr::getArrayRandKey(is_array($avatar) ? $avatar : []);
             $_userInfo['nickname'] = 'Khách' . $uid;
             $data['nickname'] = $_userInfo['nickname'];
-            $data['avatar'] = $_userInfo['avatar'];
+            $data['avatar'] = set_file_url($_userInfo['avatar']);
         }
 
         //Loại tin nhắn sản phẩm
@@ -277,12 +277,7 @@ class ChatHandle
             //Người dùng đang online nhưng không chat với người dùng hiện tại, gửi số lượng tin chưa đọc cho người dùng hiện tại
             if (isset($connections[$to_uid])) {
                 $data['recored']['nickname'] = $_userInfo['nickname'];
-                if (!preg_match('/^https?:\/\//i', $_userInfo['avatar'])) {
-                    // Nếu không bắt đầu bằng http/https thì nối thêm domain của site
-                    $data['recored']['avatar'] = sys_config('site_url') . $_userInfo['avatar'];
-                } else {
-                    $data['recored']['avatar'] = $_userInfo['avatar'];
-                }
+                $data['recored']['avatar'] = set_file_url($_userInfo['avatar']);
                 $response->connection($this->service->user()[$to_uid])->send('mssage_num', [
                     'uid' => $uid,
                     'num' => $unMessagesCount,

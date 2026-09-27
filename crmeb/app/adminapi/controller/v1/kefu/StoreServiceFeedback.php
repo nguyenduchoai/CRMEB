@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -64,7 +64,7 @@ class StoreServiceFeedback extends AuthController
     public function edit($id)
     {
         if (!$id) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         return app('json')->success($this->services->editForm((int)$id));
     }
@@ -81,14 +81,14 @@ class StoreServiceFeedback extends AuthController
             ['status', 0],
         ]);
         if (!$id || !($feedInfo = $this->services->get($id))) {
-            return app('json')->fail(400268);
+            return app('json')->fail('Nội dung phản hồi không tồn tại');
         }
         $feedInfo->make = $data['make'];
         if ($data['status']) {
             $feedInfo->status = $data['status'];
         }
         $feedInfo->save();
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**
@@ -100,12 +100,12 @@ class StoreServiceFeedback extends AuthController
     public function delete($id)
     {
         if (!$id) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         if ($this->services->delete($id)) {
-            return app('json')->success(100002);
+            return app('json')->success('Xóa thành công');
         } else {
-            return app('json')->fail(100008);
+            return app('json')->fail('Xóa thất bại');
         }
     }
 }

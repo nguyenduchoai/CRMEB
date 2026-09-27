@@ -1,29 +1,51 @@
-Vai trò chính của thư mục crmeb/public trong dự án CRMEB là:
+# Mô tả cấu trúc thư mục public
 
-- Là thư mục điểm vào để truy cập từ front-end website hoặc thiết bị di động
+## Cấu trúc thư mục
 
-- Lưu trữ các tài nguyên tĩnh được truy cập từ bên ngoài của dự án, như các tệp css, js, hình ảnh, v.v.
+```
+:.
+├── .htaccess               # Cấu hình rewrite URL (giả tĩnh) cho Apache
+├── admin/                  # Tài nguyên tĩnh của trang quản trị
+├── assets/                 # Tài nguyên tĩnh dùng chung
+├── favicon.ico             # Biểu tượng website
+├── index.html              # Điểm vào HTML tĩnh
+├── index.php              # Tệp điểm vào PHP
+├── install/                # Thư mục trình hướng dẫn cài đặt
+├── mobile.html             # HTML điểm vào cho thiết bị di động
+├── nginx.htaccess          # Cấu hình rewrite URL (giả tĩnh) cho Nginx
+├── pages/                  # Thư mục mẫu trang
+├── product_migration.xlsx  # Mẫu Excel di chuyển sản phẩm
+├── robots.txt              # Tệp robots cho công cụ tìm kiếm
+├── router.php              # Tệp điểm vào định tuyến
+├── service_pay_result.html # Trang kết quả thanh toán
+├── static/                 # Thư mục tệp tĩnh
+├── statics/                # Thư mục tài nguyên tĩnh (style, script)
+├── upgrade/                # Thư mục trình hướng dẫn nâng cấp
+├── uploads/                # Thư mục tệp tải lên
+└── README.md              # Tệp mô tả thư mục
+```
 
-- Chứa tệp điểm vào index.php, dùng để định tuyến đến controller cụ thể
+## Mô tả thư mục
 
-- Phân giải quy tắc URL giả tĩnh (rewrite) thông qua .htaccess
+- **admin/** - Tài nguyên tĩnh của trang quản trị (CSS, JS, hình ảnh)
+- **assets/** - Tài nguyên tĩnh dùng chung của dự án
+- **index.php** - Tệp điểm vào chính của dự án
+- **install/** - Trình hướng dẫn cài đặt hệ thống
+- **static/statics** - Thư mục tài nguyên tĩnh của frontend
+- **uploads/** - Thư mục tệp do người dùng tải lên
+- **pages/** - Mẫu trang cho thiết bị di động
 
-Cụ thể:
+## Mô tả chức năng
 
-- Người dùng dù truy cập qua trình duyệt hay APP đều truy cập các tệp trong thư mục public
+Thư mục public là thư mục điểm vào của website:
 
-- Các tệp trong thư mục không chứa bất kỳ mã nguồn lõi nào của dự án
+- **Vai trò điểm vào** - Điểm truy cập duy nhất từ bên ngoài vào dự án
+- **Tài nguyên tĩnh** - Chứa các tệp tĩnh như CSS, JS, hình ảnh, v.v.
+- **Cách ly bảo mật** - Định tuyến qua tệp điểm vào, ẩn cấu trúc bên trong của dự án
+- **Giả tĩnh** - Thực hiện rewrite URL thông qua .htaccess
 
-- Sau khi phân tích định tuyến, yêu cầu được chuyển đến controller thực tế để xử lý
+## Lưu ý bảo mật
 
-- Các tệp tài nguyên có thể được lưu trữ và phân phối qua CDN hoặc các cách khác
-
-Ưu điểm của cách thiết kế thư mục này:
-
-- Ẩn cấu trúc tệp nội bộ thực tế của dự án
-
-- Tăng tính bảo mật, bên ngoài không thể truy cập trực tiếp mã nguồn
-
-- Tối ưu việc phân phối tài nguyên tĩnh
-
-Vì vậy, nó đóng vai trò “lớp vỏ” đối ngoại của dự án, đảm nhận chức năng điểm vào của dự án và lưu trữ tài nguyên.
+- Không nên lưu tệp nhạy cảm trong thư mục này
+- Thư mục tải lên cần giới hạn loại tệp
+- Định kỳ dọn dẹp các tệp tải lên tạm thời

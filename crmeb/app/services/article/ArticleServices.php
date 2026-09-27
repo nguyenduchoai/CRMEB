@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -68,7 +68,7 @@ class ArticleServices extends BaseServices
     {
         /** @var ArticleContentServices $articleContentService */
         $articleContentService = app()->make(ArticleContentServices::class);
-        $content['content'] = $data['content'];
+        $content['content'] = htmlspecialchars($data['content']);
         $id = $data['id'];
         unset($data['content'], $data['id']);
         $info = $this->transaction(function () use ($id, $data, $articleContentService, $content) {
@@ -84,7 +84,7 @@ class ArticleServices extends BaseServices
                 $res = $info && $articleContentService->save($content);
             }
             if (!$res) {
-                throw new AdminException(100006);
+                throw new AdminException('Lưu thất bại');
             } else {
                 return $info;
             }
@@ -105,6 +105,7 @@ class ArticleServices extends BaseServices
     {
         $info = $this->dao->read($id);
         $info['cid'] = (int)$info['cid'];
+        $info['content'] = htmlspecialchars_decode($info['content']);
         return compact('info');
     }
 
@@ -120,7 +121,7 @@ class ArticleServices extends BaseServices
             $res = $this->dao->delete($id);
             $res = $res && $articleContentService->del($id);
             if (!$res) {
-                throw new AdminException(100008);
+                throw new AdminException('Xóa thất bại');
             }
         });
     }
@@ -161,11 +162,12 @@ class ArticleServices extends BaseServices
         $info = $this->dao->read($id);
         $info->visit = intval($info['visit']) + 1;
         if (!$info->save())
-            throw new AdminException(400456);
+            throw new AdminException('Vui lòng xem lại sau');
         if ($info) {
             $info = $info->toArray();
             $info['visit'] = (int)$info['visit'];
             $info['add_time'] = date('Y-m-d', $info['add_time']);
+            $info['content'] = htmlspecialchars_decode($info['content']);
         }
         return $info;
     }
@@ -194,5 +196,65 @@ class ArticleServices extends BaseServices
     public function articlesList($new_id)
     {
         return $this->dao->articleContentList($new_id);
+    }
+
+    /**
+     * Thành phần tùy chỉnh - bài viết
+     * @param $where
+     * @return array
+     * @throws \ReflectionException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @author wuhaotian
+     * @email 442384644@qq.com
+     * @date 2026/1/12
+     */
+    public function getThemeArticle($where)
+    {
+        $sort = $where['sort'] ? 'desc' : 'asc';
+        switch ($where['order']) {
+            case 0:
+                $order = 'visit ' . $sort;
+                break;
+            case 1:
+                $order = 'add_time ' . $sort;
+                break;
+            default:
+                $order = 'sort desc';
+                break;
+        }
+        if ($where['ids'] != '') {
+            $where['in_ids'] = explode(',', $where['ids']);
+            $where['limit'] = 1000;
+        } else {
+            $where['in_ids'] = [];
+        }
+        $limit = (int)$where['limit'];
+        unset($where['order'], $where['sort'], $where['limit'], $where['ids']);
+        $list = $this->dao->getList($where, 1, $limit, $order);
+        $data = [];
+        foreach ($list as &$item) {
+            $data[] = [
+                'title' => $item['title'],
+                'id' => $item['id'],
+                'image' => $item['image_input'][0],
+                'cid_name' => $item['catename'],
+                'synopsis' => $item['synopsis'],
+                'visit' => $item['visit'],
+                'add_time' => date('Y-m-d H:i:s', $item['add_time']),
+            ];
+        }
+        if (empty($where['in_ids'])) return $data;
+        // Chuyển $list thành mảng lấy id làm khóa
+        $list = array_column($data, null, 'id');
+        $data = [];
+        // Duyệt qua ids trong where, lấy ra bài viết tương ứng theo thứ tự
+        foreach ($where['in_ids'] as $id) {
+            if (isset($list[$id])) {
+                $data[] = $list[$id];
+            }
+        }
+        return $data;
     }
 }

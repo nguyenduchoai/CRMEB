@@ -30,8 +30,8 @@
                   <i class="el-icon-more el-icon--right"></i>
                   <template slot="dropdown">
                     <el-dropdown-menu>
-                      <el-dropdown-item command="1">Sửa danh mục</el-dropdown-item>
-                      <el-dropdown-item v-if="data.id" command="2">Xóa danh mục</el-dropdown-item>
+                      <el-dropdown-item command="1">Sửa nhóm</el-dropdown-item>
+                      <el-dropdown-item v-if="data.id" command="2">Xóa nhóm</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
@@ -386,6 +386,7 @@ export default {
         }
         this.labelSort = res.data;
       });
+      this.getList();
     },
     // Hiển thị menu nhỏ nhãn
     showMenu(item) {
@@ -418,7 +419,7 @@ export default {
     cancel() {
       this.form = {
         id: 0,
-        cate_id: '',
+        cate_id: this.labelFrom.cate_id,
         name: '',
         type: 1, //Loại kiểu 1 tùy chỉnh 2 hình ảnh
         font_color: '#e93323',

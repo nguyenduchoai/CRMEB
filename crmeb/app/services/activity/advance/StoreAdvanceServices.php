@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -94,7 +94,7 @@ class StoreAdvanceServices extends BaseServices
         /** @var StoreProductServices $storeProductServices */
         $storeProductServices = app()->make(StoreProductServices::class);
         if ($data['quota'] > $storeProductServices->value(['id' => $data['product_id']], 'stock')) {
-            throw new AdminException(400090);
+            throw new AdminException('Số lượng giới hạn không được vượt quá tồn kho sản phẩm');
         }
         $this->transaction(function () use ($id, $data, $description, $detail, $items, $storeDescriptionServices, $storeProductAttrServices, $storeProductServices) {
             if ($id) {
@@ -102,10 +102,10 @@ class StoreAdvanceServices extends BaseServices
                 $storeDescriptionServices->saveDescription((int)$id, $description, 6);
                 $skuList = $storeProductServices->validateProductAttr($items, $detail, (int)$id, 6);
                 $valueGroup = $storeProductAttrServices->saveProductAttr($skuList, (int)$id, 6);
-                if (!$res) throw new AdminException(100007);
+                if (!$res) throw new AdminException('Sửa thất bại');
             } else {
                 if (!$storeProductServices->getOne(['is_show' => 1, 'is_del' => 0, 'id' => $data['product_id']])) {
-                    throw new AdminException(400091);
+                    throw new AdminException('Sản phẩm đã ngừng bán hoặc đã chuyển vào thùng rác');
                 }
                 $data['add_time'] = time();
                 $res = $this->dao->save($data);
@@ -113,7 +113,7 @@ class StoreAdvanceServices extends BaseServices
                 $storeDescriptionServices->saveDescription((int)$res->id, $description, 6);
                 $skuList = $storeProductServices->validateProductAttr($items, $detail, (int)$res->id, 6, 1, true);
                 $valueGroup = $storeProductAttrServices->saveProductAttr($skuList, (int)$res->id, 6);
-                if (!$res) throw new AdminException(100022);
+                if (!$res) throw new AdminException('Thêm thất bại');
             }
         });
     }
@@ -251,7 +251,7 @@ class StoreAdvanceServices extends BaseServices
         $uid = (int)$request->uid();
         $storeInfo = $this->dao->getOne(['id' => $id], '*', ['description']);
         if (!$storeInfo) {
-            throw new ApiException(410294);
+            throw new ApiException('Sản phẩm không tồn tại');
         } else {
             $storeInfo = $storeInfo->toArray();
         }
@@ -398,7 +398,7 @@ class StoreAdvanceServices extends BaseServices
     public function checkAdvanceStock(int $uid, int $advanceId, int $cartNum = 1, string $unique = '')
     {
         $productInfo = $this->dao->getOne(['id' => $advanceId, 'status' => 1, 'is_del' => 0], '*,title as store_name');
-        if (!$productInfo) throw new ApiException(400093);
+        if (!$productInfo) throw new ApiException('Sản phẩm đã ngừng bán hoặc đã bị xóa');
         /** @var StoreProductAttrValueServices $attrValueServices */
         $attrValueServices = app()->make(StoreProductAttrValueServices::class);
         if ($unique == '') {
@@ -406,18 +406,18 @@ class StoreAdvanceServices extends BaseServices
         }
         $attrInfo = $attrValueServices->getOne(['product_id' => $advanceId, 'unique' => $unique, 'type' => 6]);
         if (!$attrInfo || $attrInfo['product_id'] != $advanceId) {
-            throw new ApiException(400094);
+            throw new ApiException('Vui lòng chọn thuộc tính sản phẩm hợp lệ');
         }
         /** @var StoreOrderServices $orderServices */
         $orderServices = app()->make(StoreOrderServices::class);
         $userBuyCount = $orderServices->getBuyCount($uid, 'advance_id', $advanceId);
         if ($productInfo['num'] < ($userBuyCount + $cartNum)) {
-            throw new ApiException(410298, ['num' => $productInfo['num']]);
+            throw new ApiException('Mỗi người chỉ được mua tổng cộng tối đa {:num} sản phẩm', ['num' => $productInfo['num']]);
         }
-        if ($productInfo['start_time'] > time()) throw new ApiException(410321);
-        if ($productInfo['stop_time'] < time()) throw new ApiException(410322);
+        if ($productInfo['start_time'] > time()) throw new ApiException('Chương trình chưa bắt đầu');
+        if ($productInfo['stop_time'] < time()) throw new ApiException('Chương trình đã kết thúc');
         if ($cartNum > $attrInfo['quota']) {
-            throw new ApiException(410297, ['num' => $cartNum]);
+            throw new ApiException('Tồn kho sản phẩm này không đủ {:num}', ['num' => $cartNum]);
         }
         return [$attrInfo, $unique, $productInfo];
     }

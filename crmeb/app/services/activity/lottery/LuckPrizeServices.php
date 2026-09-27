@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -83,16 +83,16 @@ class LuckPrizeServices extends BaseServices
     {
         $data = array_merge($this->prize, array_intersect_key($data, $this->prize));
         if (!isset($data['name']) || !$data['name']) {
-            throw new AdminException(400538);
+            throw new AdminException('Vui lòng điền tên giải thưởng');
         }
         if (!isset($data['image']) || !$data['image']) {
-            throw new AdminException(400539);
+            throw new AdminException('Vui lòng chọn hình ảnh giải thưởng');
         }
         if (!isset($data['percent']) || !$data['percent']) {
             throw new AdminException('Vui lòng nhập xác suất trúng thưởng của phần thưởng');
         }
         if (!isset($data['type']) || !isset($this->prize_type[$data['type']])) {
-            throw new AdminException(400541);
+            throw new AdminException('Vui lòng chọn loại giải thưởng');
         }
         if (in_array($data['type'], [2, 3, 4]) && (!isset($data['num']) || !$data['num'])) {
             $msg = '';
@@ -107,13 +107,13 @@ class LuckPrizeServices extends BaseServices
                     $msg = 'Lì xì';
                     break;
             }
-            throw new AdminException(400542, ['type' => $msg]);
+            throw new AdminException('Vui lòng điền số {:type} tặng kèm của giải thưởng', ['type' => $msg]);
         }
         if ($data['type'] == 5 && (!isset($data['coupon_id']) || !$data['coupon_id'])) {
-            throw new AdminException(400543);
+            throw new AdminException('Vui lòng chọn phiếu giảm giá');
         }
         if ($data['type'] == 6 && (!isset($data['product_id']) || !$data['product_id'])) {
-            throw new AdminException(400337);
+            throw new AdminException('Vui lòng chọn sản phẩm');
         }
         return $data;
     }
@@ -178,13 +178,13 @@ class LuckPrizeServices extends BaseServices
             $prize = $this->dao->get($id);
         }
         if (!$prize) {
-            throw new ApiException(410048);
+            throw new ApiException('Giải thưởng không tồn tại');
         }
         //Không phải giải không trúng thưởng thì giảm số lượng giải thưởng
         if ($prize['type'] != 1 && $prize['total'] >= 1) {
             $total = $prize['total'] - 1;
             if (!$this->dao->update($id, ['total' => $total], 'id')) {
-                throw new ApiException(410070);
+                throw new ApiException('Giảm tổng số phần thưởng khi quay thưởng thất bại');
             }
         }
         return true;

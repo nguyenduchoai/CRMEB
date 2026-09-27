@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -66,9 +66,9 @@ class User extends AuthController
         ]);
         $uid = $this->services->saveUser(0, $data);
         if (!$uid) {
-            return app('json')->fail(100022);
+            return app('json')->fail('Thêm thất bại');
         }
-        return app('json')->success(100021, ['uid' => $uid]);
+        return app('json')->success('Thêm thành công', ['uid' => $uid]);
     }
 
     /**
@@ -88,9 +88,9 @@ class User extends AuthController
             ['is_promoter', 0],
             ['status', 1]
         ]);
-        if (!$uid) return app('json')->fail(100100);
+        if (!$uid) return app('json')->fail('Tham số không hợp lệ');
         $this->services->saveUser((int)$uid, $data);
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**
@@ -112,11 +112,11 @@ class User extends AuthController
             ['days', 0],
             ['coupon', 0]
         ]);
-        if (!$uid) return app('json')->fail(100100);
+        if (!$uid) return app('json')->fail('Tham số không hợp lệ');
         if (!$this->services->otherGive((int)$uid, $data)) {
-            return app('json')->fail(100005);
+            return app('json')->fail('Thao tác thất bại');
         }
-        return app('json')->success(100010);
+        return app('json')->success('Thao tác thành công');
     }
 
     /**
@@ -129,7 +129,7 @@ class User extends AuthController
      */
     public function info($uid)
     {
-        if (!$uid) return app('json')->fail(100100);
+        if (!$uid) return app('json')->fail('Tham số không hợp lệ');
         $data = $this->services->userInfo($uid);
         return app('json')->success(compact('data'));
     }
@@ -153,11 +153,11 @@ class User extends AuthController
             ['days', 0],
             ['coupon', 0]
         ]);
-        if (!$uid) return app('json')->fail(100100);
+        if (!$uid) return app('json')->fail('Tham số không hợp lệ');
         if (!$this->services->otherGive((int)$uid, $data)) {
-            return app('json')->fail(100005);
+            return app('json')->fail('Thao tác thất bại');
         }
-        return app('json')->success(100010);
+        return app('json')->success('Thao tác thành công');
     }
 
     /**
@@ -179,11 +179,11 @@ class User extends AuthController
             ['days', 0],
             ['coupon', 0]
         ]);
-        if (!$uid) return app('json')->fail(100100);
+        if (!$uid) return app('json')->fail('Tham số không hợp lệ');
         if (!$this->services->otherGive((int)$uid, $data)) {
-            return app('json')->fail(100005);
+            return app('json')->fail('Thao tác thất bại');
         }
-        return app('json')->success(100010);
+        return app('json')->success('Thao tác thành công');
     }
 
     /**
@@ -199,7 +199,7 @@ class User extends AuthController
         [$money] = $this->request->postMore([
             ['money', 0],
         ], true);
-        if (!$uid) return app('json')->fail(100100);
+        if (!$uid) return app('json')->fail('Tham số không hợp lệ');
         $this->services->changeUserData((int)$uid, $money, 'now_money');
         return app('json')->success('Sửa thành công');
     }
@@ -217,7 +217,7 @@ class User extends AuthController
         [$integral] = $this->request->postMore([
             ['integral', 0],
         ], true);
-        if (!$uid) return app('json')->fail(100100);
+        if (!$uid) return app('json')->fail('Tham số không hợp lệ');
         $this->services->changeUserData((int)$uid, $integral, 'integral');
         return app('json')->success('Sửa thành công');
     }

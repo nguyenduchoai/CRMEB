@@ -1,15 +1,13 @@
 <?php
-/**
- *  +----------------------------------------------------------------------
- *  | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
- *  +----------------------------------------------------------------------
- *  | Copyright (c) 2016~2022 https://www.crmeb.com All rights reserved.
- *  +----------------------------------------------------------------------
- *  | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
- *  +----------------------------------------------------------------------
- *  | Author: CRMEB Team <admin@crmeb.com>
- *  +----------------------------------------------------------------------
- */
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 
 namespace app\adminapi\controller\v1\setting;
 
@@ -80,7 +78,7 @@ class SystemRouteCate extends AuthController
         ]);
 
         if (!$data['name']) {
-            return app('json')->fail(500037);
+            return app('json')->fail('Tên danh mục API không được để trống');
         }
 
         $data['add_time'] = time();
@@ -88,7 +86,7 @@ class SystemRouteCate extends AuthController
         $this->services->save($data);
 
 
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
 
     }
 
@@ -122,13 +120,13 @@ class SystemRouteCate extends AuthController
         ]);
 
         if (!$data['name']) {
-            return app('json')->fail(500037);
+            return app('json')->fail('Tên danh mục API không được để trống');
         }
 
         $data['pid'] = $data['path'][count($data['path']) - 1] ?? 0;
         $this->services->update($id, $data);
 
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**
@@ -142,15 +140,15 @@ class SystemRouteCate extends AuthController
     public function delete(SystemRouteServices $service, $id)
     {
         if (!$id) {
-            return app('json')->fail(500035);
+            return app('json')->fail('API không tồn tại');
         }
 
         if ($service->count(['cate_id' => $id])) {
-            return app('json')->fail(500038);
+            return app('json')->fail('Danh mục này có API, không thể xóa');
         }
 
         $this->services->delete($id);
 
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 }

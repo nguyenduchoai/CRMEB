@@ -1,5 +1,13 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 namespace app\services\system\lang;
 
 use app\dao\system\lang\LangCodeDao;
@@ -60,7 +68,7 @@ class LangCodeServices extends BaseServices
      */
     public function langCodeInfo($code)
     {
-        if (!$code) throw new AdminException(100026);
+        if (!$code) throw new AdminException('Dữ liệu không tồn tại');
         /** @var LangTypeServices $langTypeServices */
         $langTypeServices = app()->make(LangTypeServices::class);
         $typeList = $langTypeServices->getColumn([['status', '=', 1], ['is_del', '=', 0]], 'language_name,file_name,id', 'id');
@@ -83,8 +91,8 @@ class LangCodeServices extends BaseServices
         if ($data['edit'] == 0) {
             if ($data['is_admin'] == 1) {
                 $code = $this->dao->getMax(['is_admin' => 1], 'code');
-                if ($code < 500000) {
-                    $code = 500000;
+                if ($code < 'Gửi yêu cầu tra cứu hoàn tiền thất bại') {
+                    $code = 'Gửi yêu cầu tra cứu hoàn tiền thất bại';
                 } else {
                     $code = $code + 1;
                 }
@@ -123,7 +131,7 @@ class LangCodeServices extends BaseServices
         $res = $this->dao->delete(['code' => $code]);
         $this->clearLangCache();
         if ($res) return true;
-        throw new AdminException(100008);
+        throw new AdminException('Xóa thất bại');
     }
 
     /**

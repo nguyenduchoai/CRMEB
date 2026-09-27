@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -51,8 +51,8 @@ class Menus extends AuthController
     {
         $buttons = request()->post('button/a', []);
         if(strlen($buttons[0]['name']) > 15) return app('json')->fail('Tên menu không được vượt quá 5 ký tự');
-        if (!count($buttons)) return app('json')->fail(400238);
+        if (!count($buttons)) return app('json')->fail('Vui lòng thêm ít nhất một nút');
         $this->services->saveMenu($buttons);
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 }

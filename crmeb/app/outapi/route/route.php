@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -93,6 +93,11 @@ Route::group(function () {
         })->option(['mark' => 'user', 'mark_name' => 'Người dùng']);
 
     })->middleware(AuthTokenMiddleware::class);
+
+    // API MCP (hỗ trợ xác thực appid + appsecret, không đi qua middleware Token)
+    Route::group(function () {
+        Route::post('mcp', 'Mcp/index')->option(['real_name' => 'API MCP']);
+    })->option(['mark' => 'mcp', 'mark_name' => 'API MCP']);
 
 })->middleware(AllowOriginMiddleware::class);
 

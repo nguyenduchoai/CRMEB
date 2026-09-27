@@ -1,101 +1,25 @@
 <template>
-  <div
-    class="mobile-page"
-    :style="{
-      background: bottomBgColor,
-      marginTop: mTop + 'px',
-      paddingTop: topConfig + 'px',
-      paddingBottom: bottomConfig + 'px',
-      paddingLeft: prConfig + 'px',
-      paddingRight: prConfig + 'px',
-    }"
-  >
-    <div class="advert" :style="style === 10 ? 'height:100%' : 'height:' + (379 - prConfig * 2) + 'px'">
-      <div class="advertItem07" v-if="style === 0">
-        <div
-          class="item"
-          v-for="(item, index) in picList"
-          :key="index"
-          :style="{ border: imgConfig + 'px solid ' + bottomBgColor }"
-        >
-          <img
-            class="img"
-            :src="item.image"
-            v-if="item.image"
-            :style="{
-              borderRadius: imgRadius,
-            }"
-          />
+  <common_wrapper :config="configObj">
+    <div class="mobile-page">
+      <div
+        class="advert"
+        :style="
+          style === 10
+            ? 'height:100%'
+            : 'height:' + (379 - paddingConfig.valList[1].val - paddingConfig.valList[3].val) + 'px'
+        "
+      >
+        <div class="advertItem07" v-if="style === 0">
           <div
-            class="empty-box"
-            v-else
-            :style="{
-              borderRadius: imgRadius,
-            }"
+            class="item"
+            v-for="(item, index) in picList"
+            :key="index"
+            :style="{ border: imgConfig + 'px solid ' + bottomBgColor }"
           >
-            <img src="../../assets/images/shan.png" />
-          </div>
-        </div>
-      </div>
-      <div class="advertItem02 acea-row" v-if="style === 1">
-        <div
-          class="item"
-          v-for="(item, index) in picList"
-          :key="index"
-          :style="{ border: imgConfig + 'px solid ' + bottomBgColor }"
-        >
-          <img
-            class="img"
-            :src="item.image"
-            v-if="item.image"
-            :style="{
-              borderRadius: imgRadius,
-            }"
-          />
-          <div
-            class="empty-box"
-            v-else
-            :style="{
-              borderRadius: imgRadius,
-            }"
-          >
-            <img src="../../assets/images/shan.png" />
-          </div>
-        </div>
-      </div>
-      <div class="advertItem02 advertItem03 acea-row" v-if="style === 2">
-        <div
-          class="item"
-          v-for="(item, index) in picList"
-          :key="index"
-          :style="{ border: imgConfig + 'px solid ' + bottomBgColor }"
-        >
-          <img
-            class="img"
-            :src="item.image"
-            v-if="item.image"
-            :style="{
-              borderRadius: imgRadius,
-            }"
-          />
-          <div
-            class="empty-box"
-            v-else
-            :style="{
-              borderRadius: imgRadius,
-            }"
-          >
-            <img src="../../assets/images/shan.png" />
-          </div>
-        </div>
-      </div>
-      <div class="advertItem07 advertItem08" v-if="style === 3">
-        <div class="item acea-row">
-          <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
             <img
               class="img"
-              :src="picList[0].image"
-              v-if="picList[0].image"
+              :src="item.image"
+              v-if="item.image"
               :style="{
                 borderRadius: imgRadius,
               }"
@@ -110,207 +34,282 @@
               <img src="../../assets/images/shan.png" />
             </div>
           </div>
-          <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+        </div>
+        <div class="advertItem02 acea-row" v-if="style === 1">
+          <div
+            class="item"
+            v-for="(item, index) in picList"
+            :key="index"
+            :style="{ border: imgConfig + 'px solid ' + bottomBgColor }"
+          >
             <img
               class="img"
-              :src="picList[1].image"
-              v-if="picList[1].image"
+              :src="item.image"
+              v-if="item.image"
               :style="{
                 borderRadius: imgRadius,
               }"
             />
-            <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+            <div
+              class="empty-box"
+              v-else
+              :style="{
+                borderRadius: imgRadius,
+              }"
+            >
               <img src="../../assets/images/shan.png" />
             </div>
           </div>
         </div>
-        <div class="item" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
-          <img class="img" :src="picList[2].image" v-if="picList[2].image" :style="{ borderRadius: imgRadius }" />
-          <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
-            <img src="../../assets/images/shan.png" />
-          </div>
-        </div>
-      </div>
-      <div class="advertItem07 advertItem08" v-if="style === 4">
-        <div class="item" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
-          <img class="img" :src="picList[0].image" v-if="picList[0].image" :style="{ borderRadius: imgRadius }" />
-          <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
-            <img src="../../assets/images/shan.png" />
-          </div>
-        </div>
-        <div class="item acea-row">
-          <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
-            <img class="img" :src="picList[1].image" v-if="picList[1].image" :style="{ borderRadius: imgRadius }" />
-            <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+        <div class="advertItem02 advertItem03 acea-row" v-if="style === 2">
+          <div
+            class="item"
+            v-for="(item, index) in picList"
+            :key="index"
+            :style="{ border: imgConfig + 'px solid ' + bottomBgColor }"
+          >
+            <img
+              class="img"
+              :src="item.image"
+              v-if="item.image"
+              :style="{
+                borderRadius: imgRadius,
+              }"
+            />
+            <div
+              class="empty-box"
+              v-else
+              :style="{
+                borderRadius: imgRadius,
+              }"
+            >
               <img src="../../assets/images/shan.png" />
             </div>
           </div>
-          <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+        </div>
+        <div class="advertItem07 advertItem08" v-if="style === 3">
+          <div class="item acea-row">
+            <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+              <img
+                class="img"
+                :src="picList[0].image"
+                v-if="picList[0].image"
+                :style="{
+                  borderRadius: imgRadius,
+                }"
+              />
+              <div
+                class="empty-box"
+                v-else
+                :style="{
+                  borderRadius: imgRadius,
+                }"
+              >
+                <img src="../../assets/images/shan.png" />
+              </div>
+            </div>
+            <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+              <img
+                class="img"
+                :src="picList[1].image"
+                v-if="picList[1].image"
+                :style="{
+                  borderRadius: imgRadius,
+                }"
+              />
+              <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+                <img src="../../assets/images/shan.png" />
+              </div>
+            </div>
+          </div>
+          <div class="item" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
             <img class="img" :src="picList[2].image" v-if="picList[2].image" :style="{ borderRadius: imgRadius }" />
             <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
               <img src="../../assets/images/shan.png" />
             </div>
           </div>
         </div>
-      </div>
-      <div class="advertItem04 acea-row" v-if="style === 5">
-        <div class="item" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
-          <img class="img" :src="picList[0].image" v-if="picList[0].image" :style="{ borderRadius: imgRadius }" />
-          <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
-            <img src="../../assets/images/shan.png" />
-          </div>
-        </div>
-        <div class="item">
-          <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
-            <img class="img" :src="picList[1].image" v-if="picList[1].image" :style="{ borderRadius: imgRadius }" />
-            <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
-              <img src="../../assets/images/shan.png" />
-            </div>
-          </div>
-          <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
-            <img class="img" :src="picList[2].image" v-if="picList[2].image" :style="{ borderRadius: imgRadius }" />
-            <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
-              <img src="../../assets/images/shan.png" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="advertItem04 acea-row" v-if="style === 6">
-        <div class="item">
-          <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+        <div class="advertItem07 advertItem08" v-if="style === 4">
+          <div class="item" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
             <img class="img" :src="picList[0].image" v-if="picList[0].image" :style="{ borderRadius: imgRadius }" />
             <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
               <img src="../../assets/images/shan.png" />
             </div>
           </div>
-          <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
-            <img class="img" :src="picList[1].image" v-if="picList[1].image" :style="{ borderRadius: imgRadius }" />
-            <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
-              <img src="../../assets/images/shan.png" />
+          <div class="item acea-row">
+            <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+              <img class="img" :src="picList[1].image" v-if="picList[1].image" :style="{ borderRadius: imgRadius }" />
+              <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+                <img src="../../assets/images/shan.png" />
+              </div>
             </div>
-          </div>
-        </div>
-        <div class="item" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
-          <img class="img" :src="picList[2].image" v-if="picList[2].image" :style="{ borderRadius: imgRadius }" />
-          <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
-            <img src="../../assets/images/shan.png" />
-          </div>
-        </div>
-      </div>
-      <div class="advertItem06 acea-row" v-if="style === 7">
-        <div
-          class="item"
-          v-for="(item, index) in picList"
-          :key="index"
-          :style="{ border: imgConfig + 'px solid ' + bottomBgColor }"
-        >
-          <img class="img" :src="item.image" v-if="item.image" :style="{ borderRadius: imgRadius }" />
-          <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
-            <img src="../../assets/images/shan.png" />
-          </div>
-        </div>
-      </div>
-      <div class="advertItem07 advertItem08" v-if="style === 8">
-        <div class="item acea-row">
-          <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
-            <img class="img" :src="picList[0].image" v-if="picList[0].image" :style="{ borderRadius: imgRadius }" />
-            <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
-              <img src="../../assets/images/shan.png" />
-            </div>
-          </div>
-          <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
-            <img class="img" :src="picList[1].image" v-if="picList[1].image" :style="{ borderRadius: imgRadius }" />
-            <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
-              <img src="../../assets/images/shan.png" />
-            </div>
-          </div>
-        </div>
-        <div class="items acea-row">
-          <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
-            <img class="img" :src="picList[2].image" v-if="picList[2].image" :style="{ borderRadius: imgRadius }" />
-            <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
-              <img src="../../assets/images/shan.png" />
-            </div>
-          </div>
-          <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
-            <img class="img" :src="picList[3].image" v-if="picList[3].image" :style="{ borderRadius: imgRadius }" />
-            <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
-              <img src="../../assets/images/shan.png" />
-            </div>
-          </div>
-          <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
-            <img class="img" :src="picList[4].image" v-if="picList[4].image" :style="{ borderRadius: imgRadius }" />
-            <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
-              <img src="../../assets/images/shan.png" />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="advertItem04 acea-row" v-if="style === 9">
-        <div class="item" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
-          <img class="img" :src="picList[0].image" v-if="picList[0].image" :style="{ borderRadius: imgRadius }" />
-          <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
-            <img src="../../assets/images/shan.png" />
-          </div>
-        </div>
-        <div class="item">
-          <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
-            <img class="img" :src="picList[1].image" v-if="picList[1].image" :style="{ borderRadius: imgRadius }" />
-            <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
-              <img src="../../assets/images/shan.png" />
-            </div>
-          </div>
-          <div class="pic acea-row">
-            <div class="picItem" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+            <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
               <img class="img" :src="picList[2].image" v-if="picList[2].image" :style="{ borderRadius: imgRadius }" />
               <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
                 <img src="../../assets/images/shan.png" />
               </div>
             </div>
-            <div class="picItem" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
-              <img class="img" :src="picList[3].image" v-if="picList[3].image" :style="{ borderRadius: imgRadius }" />
+          </div>
+        </div>
+        <div class="advertItem04 acea-row" v-if="style === 5">
+          <div class="item" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+            <img class="img" :src="picList[0].image" v-if="picList[0].image" :style="{ borderRadius: imgRadius }" />
+            <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+              <img src="../../assets/images/shan.png" />
+            </div>
+          </div>
+          <div class="item">
+            <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+              <img class="img" :src="picList[1].image" v-if="picList[1].image" :style="{ borderRadius: imgRadius }" />
+              <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+                <img src="../../assets/images/shan.png" />
+              </div>
+            </div>
+            <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+              <img class="img" :src="picList[2].image" v-if="picList[2].image" :style="{ borderRadius: imgRadius }" />
               <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
                 <img src="../../assets/images/shan.png" />
               </div>
             </div>
           </div>
         </div>
-      </div>
+        <div class="advertItem04 acea-row" v-if="style === 6">
+          <div class="item">
+            <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+              <img class="img" :src="picList[0].image" v-if="picList[0].image" :style="{ borderRadius: imgRadius }" />
+              <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+                <img src="../../assets/images/shan.png" />
+              </div>
+            </div>
+            <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+              <img class="img" :src="picList[1].image" v-if="picList[1].image" :style="{ borderRadius: imgRadius }" />
+              <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+                <img src="../../assets/images/shan.png" />
+              </div>
+            </div>
+          </div>
+          <div class="item" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+            <img class="img" :src="picList[2].image" v-if="picList[2].image" :style="{ borderRadius: imgRadius }" />
+            <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+              <img src="../../assets/images/shan.png" />
+            </div>
+          </div>
+        </div>
+        <div class="advertItem06 acea-row" v-if="style === 7">
+          <div
+            class="item"
+            v-for="(item, index) in picList"
+            :key="index"
+            :style="{ border: imgConfig + 'px solid ' + bottomBgColor }"
+          >
+            <img class="img" :src="item.image" v-if="item.image" :style="{ borderRadius: imgRadius }" />
+            <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+              <img src="../../assets/images/shan.png" />
+            </div>
+          </div>
+        </div>
+        <div class="advertItem07 advertItem08" v-if="style === 8">
+          <div class="item acea-row">
+            <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+              <img class="img" :src="picList[0].image" v-if="picList[0].image" :style="{ borderRadius: imgRadius }" />
+              <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+                <img src="../../assets/images/shan.png" />
+              </div>
+            </div>
+            <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+              <img class="img" :src="picList[1].image" v-if="picList[1].image" :style="{ borderRadius: imgRadius }" />
+              <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+                <img src="../../assets/images/shan.png" />
+              </div>
+            </div>
+          </div>
+          <div class="items acea-row">
+            <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+              <img class="img" :src="picList[2].image" v-if="picList[2].image" :style="{ borderRadius: imgRadius }" />
+              <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+                <img src="../../assets/images/shan.png" />
+              </div>
+            </div>
+            <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+              <img class="img" :src="picList[3].image" v-if="picList[3].image" :style="{ borderRadius: imgRadius }" />
+              <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+                <img src="../../assets/images/shan.png" />
+              </div>
+            </div>
+            <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+              <img class="img" :src="picList[4].image" v-if="picList[4].image" :style="{ borderRadius: imgRadius }" />
+              <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+                <img src="../../assets/images/shan.png" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="advertItem04 acea-row" v-if="style === 9">
+          <div class="item" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+            <img class="img" :src="picList[0].image" v-if="picList[0].image" :style="{ borderRadius: imgRadius }" />
+            <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+              <img src="../../assets/images/shan.png" />
+            </div>
+          </div>
+          <div class="item">
+            <div class="pic" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+              <img class="img" :src="picList[1].image" v-if="picList[1].image" :style="{ borderRadius: imgRadius }" />
+              <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+                <img src="../../assets/images/shan.png" />
+              </div>
+            </div>
+            <div class="pic acea-row">
+              <div class="picItem" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+                <img class="img" :src="picList[2].image" v-if="picList[2].image" :style="{ borderRadius: imgRadius }" />
+                <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+                  <img src="../../assets/images/shan.png" />
+                </div>
+              </div>
+              <div class="picItem" :style="{ border: imgConfig + 'px solid ' + bottomBgColor }">
+                <img class="img" :src="picList[3].image" v-if="picList[3].image" :style="{ borderRadius: imgRadius }" />
+                <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+                  <img src="../../assets/images/shan.png" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-      <template v-if="style === 10">
-        <div
-          class="advertItem01 acea-row"
-          v-for="(item, index) in picList"
-          :key="index"
-          :style="{ border: imgConfig + 'px solid ' + bottomBgColor }"
-        >
-          <img class="img" :src="item.image" v-if="item.image" :style="{ borderRadius: imgRadius }" />
-          <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
-            <img src="../../assets/images/shan.png" />
+        <template v-if="style === 10">
+          <div
+            class="advertItem01 acea-row"
+            v-for="(item, index) in picList"
+            :key="index"
+            :style="{ border: imgConfig + 'px solid ' + bottomBgColor }"
+          >
+            <img class="img" :src="item.image" v-if="item.image" :style="{ borderRadius: imgRadius }" />
+            <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+              <img src="../../assets/images/shan.png" />
+            </div>
           </div>
-        </div>
-      </template>
-      <template v-if="style === 11">
-        <div
-          class="advertItem11 acea-row"
-          v-for="(item, index) in docPicList"
-          :key="index"
-          :style="{
-            border: imgConfig + 'px solid ' + bottomBgColor,
-            width: (item.doc.w / 375) * 100 + '%',
-            height: (item.doc.h / 375) * 100 + '%',
-            left: (item.doc.startX / 375) * 100 + '%',
-            top: (item.doc.startY / 375) * 100 + '%',
-          }"
-        >
-          <img class="img" :src="item.img" v-if="item.img" :style="{ borderRadius: imgRadius }" />
-          <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
-            <img src="../../assets/images/shan.png" />
+        </template>
+        <template v-if="style === 11">
+          <div
+            class="advertItem11 acea-row"
+            v-for="(item, index) in docPicList"
+            :key="index"
+            :style="{
+              border: imgConfig + 'px solid ' + bottomBgColor,
+              width: (item.doc.w / 375) * 100 + '%',
+              height: (item.doc.h / 375) * 100 + '%',
+              left: (item.doc.startX / 375) * 100 + '%',
+              top: (item.doc.startY / 375) * 100 + '%',
+            }"
+          >
+            <img class="img" :src="item.img" v-if="item.img" :style="{ borderRadius: imgRadius }" />
+            <div class="empty-box" v-else :style="{ borderRadius: imgRadius }">
+              <img src="../../assets/images/shan.png" />
+            </div>
           </div>
-        </div>
-      </template>
+        </template>
+      </div>
     </div>
-  </div>
+  </common_wrapper>
 </template>
 
 <script>
@@ -387,6 +386,7 @@ export default {
           title: '',
           maxList: 1,
           isCube: 1,
+          listStyle: -1,
           list: [
             {
               img: '',
@@ -400,6 +400,78 @@ export default {
               ],
             },
           ],
+        },
+        zIndexConfig: {
+          title: 'Thứ tự lớp thành phần',
+          val: 0,
+          min: 0,
+        },
+        borderConfig: {
+          title: 'Cài đặt viền',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0, // 0: Hide, 1: Show
+          styleConfig: {
+            title: 'Kiểu viền',
+            tabVal: 0,
+            tabList: [
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
+            ],
+          },
+          widthConfig: {
+            title: 'Độ dày viền',
+            val: 1,
+            min: 1,
+          },
+          colorConfig: {
+            title: 'Màu viền',
+            default: [{ item: '#e5e5e5' }],
+            color: [{ item: '#e5e5e5' }],
+          },
+        },
+        shadowConfig: {
+          title: 'Cài đặt đổ bóng',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0, // 0: Hide, 1: Show
+          colorConfig: {
+            title: 'Màu đổ bóng',
+            default: [{ item: 'rgba(0,0,0,0.1)' }],
+            color: [{ item: 'rgba(0,0,0,0.1)' }],
+          },
+          xConfig: {
+            title: 'Độ lệch trục X',
+            val: 0,
+            min: -50,
+          },
+          yConfig: {
+            title: 'Độ lệch trục Y',
+            val: 0,
+            min: -50,
+          },
+          blurConfig: {
+            title: 'Bán kính làm mờ',
+            val: 10,
+            min: 0,
+          },
+          spreadConfig: {
+            title: 'Bán kính lan tỏa',
+            val: 0,
+            min: -50,
+          },
+        },
+        componentBgConfig: {
+          title: 'Nền thành phần',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0, // 0: Hide, 1: Show
+          colorConfig: {
+            title: 'Màu nền',
+            default: [{ item: '#fff' }],
+            color: [{ item: '#fff' }],
+          },
         },
         imgConfig: {
           title: 'Khoảng cách ảnh',
@@ -437,38 +509,40 @@ export default {
             },
           ],
         },
-        topConfig: {
-          title: 'Lề trên',
+        fillet: {
+          title: 'Bo góc nền',
+          type: 0,
+          list: [
+            {
+              val: 'Tất cả',
+              icon: 'iconcaozuo-zhengti',
+            },
+            {
+              val: 'Từng góc',
+              icon: 'iconcaozuo-bianjiao',
+            },
+          ],
+          valName: 'Giá trị bo góc',
           val: 0,
           min: 0,
-        },
-        bottomConfig: {
-          title: 'Lề dưới',
-          val: 0,
-          min: 0,
-        },
-        prConfig: {
-          title: 'Lề trái phải',
-          val: 0,
-          min: 0,
-        },
-        mbConfig: {
-          title: 'Lề trên trang',
-          val: 0,
-          min: 0,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
       },
       pageData: {},
       style: 0,
-      picList: [],
-      docPicList: [],
-      bottomBgColor: [],
-      mTop: 0,
-      topConfig: 0,
-      bottomConfig: 0,
-      prConfig: 0,
-      imgRadius: 0,
       imgConfig: 0,
+      picList: [],
+      configObj: null,
+      bottomBgColor: '',
+      paddingConfig: {
+        title: 'Lề trong',
+        val: 0,
+        min: 0,
+        max: 100,
+        isAll: false,
+        valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+      },
+      imgRadius: 0,
     };
   },
   mounted() {
@@ -480,38 +554,68 @@ export default {
   methods: {
     setConfig(data) {
       if (!data) return;
-      if (data.mbConfig) {
-        this.style = data.styleConfig.tabVal;
-        this.bottomBgColor = data.bottomBgColor.color[0].item;
-        this.prConfig = data.prConfig.val;
-        this.mTop = data.mbConfig.val;
-        this.topConfig = data.topConfig.val;
-        this.bottomConfig = data.bottomConfig.val;
-        let filletImg = data.filletImg.type;
-        let filletValImg = data.filletImg.val;
-        let valListImg = data.filletImg.valList;
-        this.imgRadius = filletImg
-          ? valListImg[0].val + 'px ' + valListImg[1].val + 'px ' + valListImg[3].val + 'px ' + valListImg[2].val + 'px'
-          : filletValImg + 'px';
-        this.imgConfig = data.imgConfig.val;
-        if (data.styleConfig.tabVal !== 11) {
-          if (!data.picStyle.picList.length) {
-            this.picList = [
-              {
-                image: '',
-                link: '',
-              },
-            ];
-          } else {
-            this.picList = data.picStyle.picList;
-          }
-        } else {
-          data.picStyle.docPicList.map((e, i) => {
-            data.picStyle.docPicList[i].img = data.picStyle.picList[i].image;
-            data.picStyle.docPicList[i].link = data.picStyle.picList[i].link;
-          });
-          this.$set(this, 'docPicList', data.picStyle.docPicList);
+      let dataClone = JSON.parse(JSON.stringify(data));
+      for (let key in this.defaultConfig) {
+        if (dataClone[key] == undefined) {
+          this.$set(dataClone, key, JSON.parse(JSON.stringify(this.defaultConfig[key])));
         }
+      }
+      this.configObj = dataClone;
+
+      let isLegacyPadding = !dataClone.paddingConfig;
+      let isLegacyMargin = !dataClone.marginConfig;
+
+      if (isLegacyPadding) {
+        dataClone.paddingConfig = {
+          title: 'Cài đặt lề',
+          val: 0,
+          min: 0,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        };
+        if (dataClone.topConfig) dataClone.paddingConfig.valList[0].val = dataClone.topConfig.val;
+        if (dataClone.bottomConfig) dataClone.paddingConfig.valList[2].val = dataClone.bottomConfig.val;
+        if (dataClone.prConfig) {
+          dataClone.paddingConfig.valList[1].val = dataClone.prConfig.val;
+          dataClone.paddingConfig.valList[3].val = dataClone.prConfig.val;
+        }
+      }
+      if (isLegacyMargin) {
+        dataClone.marginConfig = {
+          title: 'Cài đặt khoảng cách',
+          val: 0,
+          min: 0,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        };
+        if (dataClone.mbConfig) dataClone.marginConfig.valList[0].val = dataClone.mbConfig.val;
+      }
+      this.paddingConfig = dataClone.paddingConfig;
+
+      this.style = dataClone.styleConfig.tabVal;
+      this.bottomBgColor = dataClone.bottomBgColor.color[0].item;
+      let filletImg = dataClone.filletImg.type;
+      let filletValImg = dataClone.filletImg.val;
+      let valListImg = dataClone.filletImg.valList;
+      this.imgRadius = filletImg
+        ? valListImg[0].val + 'px ' + valListImg[1].val + 'px ' + valListImg[3].val + 'px ' + valListImg[2].val + 'px'
+        : filletValImg + 'px';
+      this.imgConfig = dataClone.imgConfig.val;
+      if (dataClone.styleConfig.tabVal !== 11) {
+        if (!dataClone.picStyle.picList.length) {
+          this.picList = [
+            {
+              image: '',
+              link: '',
+            },
+          ];
+        } else {
+          this.picList = dataClone.picStyle.picList;
+        }
+      } else {
+        dataClone.picStyle.docPicList.map((e, i) => {
+          dataClone.picStyle.docPicList[i].img = dataClone.picStyle.picList[i].image;
+          dataClone.picStyle.docPicList[i].link = dataClone.picStyle.picList[i].link;
+        });
+        this.$set(this, 'docPicList', dataClone.picStyle.docPicList);
       }
     },
   },
@@ -562,6 +666,8 @@ export default {
 }
 
 .mobile-page {
+  display: inline-block;
+  width: -webkit-fill-available;
   .advert {
     position: relative;
 
@@ -575,7 +681,7 @@ export default {
 
       .empty-box {
         width: 100%;
-        height: 379px;
+        height: 375px;
 
         .icontupian {
           font-size: 50px;

@@ -1,7 +1,31 @@
-Thư mục chương trình backend CRMEB v5
+Thư mục chương trình backend CRMEB-KY v6.0.0
 ===============
 
-> Môi trường chạy yêu cầu PHP7.1-7.4.
+## Chạy bằng một cú nhấp với docker
+
+### Khởi động nhanh
+
+```bash
+# Tải image về
+docker pull ccr.ccs.tencentyun.com/crmebky_php/crmebky:latest
+
+# Chạy container
+docker run -d --name crmeb \
+  -p 8080:80 \
+  -p 3306:3306 \
+  -p 6379:6379 \
+  ccr.ccs.tencentyun.com/crmebky_php/crmebky:latest
+```
+
+### Truy cập dịch vụ
+- **Website**: http://localhost:8080 
+- **Trang quản trị**: http://localhost:8080/admin (tài khoản: admin, mật khẩu: crmeb.com)
+- **MySQL**: localhost:3306 (tài khoản: root, mật khẩu: 123456)
+- **Redis**: localhost:6379
+> Xem hướng dẫn chi tiết tại [tài liệu trợ giúp](https://gitee.com/ZhongBangKeJi/CRMEB/blob/master/help/docker/README.md).
+
+
+> Môi trường chạy yêu cầu PHP7.1-7.4. 
 
 ## Cài đặt
 
@@ -48,7 +72,7 @@ default_lang = zh-cn
 
 [CACHE]
 DRIVER = file #Loại bộ nhớ đệm, redis/file
-CACHE_PREFIX = cache_xxxx: #Tiền tố bộ nhớ đệm
+CACHE_PREFIX = cache_xxxx: #Tiền tố cache
 CACHE_TAG_PREFIX = cache_tag_xxxx: #Tiền tố loại bộ nhớ đệm
 
 [REDIS]
@@ -68,11 +92,6 @@ QUEUE_NAME = xxxx #Tiền tố hàng đợi
 http://ten-mien-cua-ban/admin
 Tài khoản mặc định: admin Mật khẩu: crmeb.com
 
-
-## Hàng đợi tin nhắn
-```sh
-php think queue:listen --queue
-```
 
 ## Tác vụ định kỳ
 Được sử dụng trong các chức năng như tự động xác nhận đã nhận hàng, cảnh báo tồn kho, v.v.
@@ -225,7 +244,7 @@ Lưu ý: vui lòng hiểu rõ và cố gắng tuân thủ các quy tắc đặt 
     ~~~
     <?php
 
-        throw new AuthException('Thông báo lỗi',400);
+        throw new AuthException('Thông tin lỗi',400);
     ~~~
  4. Mã lỗi và thông báo lỗi nên được quản lý tập trung để thuận tiện chuyển đổi đa ngôn ngữ
  5. Thao tác cơ sở dữ liệu dùng lớp model, không được dùng Db::table()
@@ -277,7 +296,7 @@ Vui lòng tham khảo [CRMEB](https://github.com/crmeb/CRMEB).
 
 Thông tin bản quyền của mã nguồn và tệp nhị phân của bên thứ ba có trong dự án này được ghi chú riêng.
 
-Bản quyền Copyright © 2017-2023 by CRMEB (http://www.crmeb.com)
+Bản quyền Copyright © 2017-2026 by CRMEB (http://www.crmeb.com)
 
 All rights reserved。
 

@@ -165,7 +165,7 @@
             <el-input v-model="taskData.keyword" placeholder="Vui lòng nhập tên nhiệm vụ" clearable class="form_content_width" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="searchTask">Tìm kiếm</el-button>
+            <el-button type="primary" v-db-click @click="searchTask">Tra cứu</el-button>
           </el-form-item>
         </el-form>
         <div>

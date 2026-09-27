@@ -27,11 +27,13 @@ import skeleton from './components/skeleton/index.vue'
 import easyLoadimage from '@/components/easy-loadimage/easy-loadimage.vue'
 import BaseMoney from './components/BaseMoney.vue';
 import BaseTag from './components/BaseTag.vue';
+import BaseDrawer from '@/components/tuiDrawer/tui-drawer.vue'
 Vue.component('skeleton', skeleton)
 Vue.component('pageLoading', pageLoading)
 Vue.component('easyLoadimage', easyLoadimage)
 Vue.component('BaseMoney', BaseMoney)
 Vue.component('BaseTag', BaseTag)
+Vue.component('baseDrawer', BaseDrawer)
 import ActivePermission from './libs/permission.js';
 Vue.prototype.$permission = ActivePermission;
 import {
@@ -85,8 +87,11 @@ if (typeof window.entryUrl === 'undefined' || window.entryUrl === '') {
 	window.entryUrl = location.href
 }
 
-//Route guard toàn cục (before)
+
+// Đã gỡ script thống kê của bên thứ ba (cdn.oss.9gt.net) vốn được nhúng vào mọi trang.
+// Hệ thống không cần script này để chạy; gỡ để không gửi dữ liệu người dùng ra ngoài (Luật BVDLCN 2025).
 // #endif
+
 
 App.mpType = 'app'
 

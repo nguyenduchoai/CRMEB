@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -42,9 +42,12 @@ class ArticleDao extends BaseDao
      */
     public function search(array $where = [], bool $search = false)
     {
-        return parent::search($where, $search)->when(isset($where['ids']) && count($where['ids']), function ($query) use ($where) {
-            $query->whereNotIn('id', $where['ids']);
-        });
+        return parent::search($where, $search)
+            ->when(isset($where['ids']) && count($where['ids']), function ($query) use ($where) {
+                $query->whereNotIn('id', $where['ids']);
+            })->when(isset($where['in_ids']) && count($where['in_ids']), function ($query) use ($where) {
+                $query->whereIn('id', $where['in_ids']);
+            });
     }
 
     /**
@@ -52,15 +55,16 @@ class ArticleDao extends BaseDao
      * @param array $where
      * @param int $page
      * @param int $limit
+     * @param string $order
      * @return mixed
      * @throws \ReflectionException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function getList(array $where, int $page, int $limit)
+    public function getList(array $where, int $page, int $limit, string $order = 'sort desc,id desc')
     {
-        return $this->search($where)->with(['content', 'storeInfo', 'cateName'])->page($page, $limit)->order('sort desc,id desc')->select()->toArray();
+        return $this->search($where)->with(['content', 'storeInfo', 'cateName'])->page($page, $limit)->order($order)->select()->toArray();
     }
 
     /**

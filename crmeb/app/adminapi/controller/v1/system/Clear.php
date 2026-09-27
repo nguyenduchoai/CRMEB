@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -34,7 +34,7 @@ class Clear extends AuthController
     public function refresh_cache()
     {
         $this->services->refresCache();
-        return app('json')->success(400302);
+        return app('json')->success('Làm mới bộ nhớ đệm dữ liệu thành công');
     }
 
 
@@ -44,7 +44,7 @@ class Clear extends AuthController
     public function delete_log()
     {
         $this->services->deleteLog();
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 }
 

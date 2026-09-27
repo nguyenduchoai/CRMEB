@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -46,7 +46,7 @@ class UserInvoiceController
     public function invoice($id)
     {
         if (!$id) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         return app('json')->success($this->services->getInvoice((int)$id));
     }
@@ -74,10 +74,10 @@ class UserInvoiceController
     public function setDefaultInvoice(Request $request)
     {
         list($id) = $request->getMore([['id', 0]], true);
-        if (!$id || !is_numeric($id)) return app('json')->fail(100100);
+        if (!$id || !is_numeric($id)) return app('json')->fail('Tham số không hợp lệ');
         $uid = (int)$request->uid();
         $this->services->setDefaultInvoice($uid, (int)$id);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
@@ -118,37 +118,37 @@ class UserInvoiceController
             ['card_number', ''],
             ['is_default', 0]
         ]);
-        if (!$data['drawer_phone']) return app('json')->fail(410144);
-        if (!check_phone($data['drawer_phone'])) return app('json')->fail(410018);
-        if (!$data['name']) return app('json')->fail(410145);
+        if (!$data['drawer_phone']) return app('json')->fail('Vui lòng nhập số điện thoại nhận hóa đơn');
+        if (!check_phone($data['drawer_phone'])) return app('json')->fail('Số điện thoại không đúng định dạng');
+        if (!$data['name']) return app('json')->fail('Vui lòng nhập tiêu đề hóa đơn (tên doanh nghiệp được xuất hóa đơn)');
         if (!in_array($data['header_type'], [1, 2])) {
             $data['header_type'] = empty($data['duty_number']) ? 1 : 2;
         }
         if ($data['header_type'] == 1 && !preg_match('/^[\x80-\xff]{2,60}$/', $data['name'])) {
-            return app('json')->fail(410146);
+            return app('json')->fail('Vui lòng nhập đúng tiêu đề hóa đơn (tên doanh nghiệp được xuất hóa đơn)');
         }
         if ($data['header_type'] == 2 && !preg_match('/^[0-9a-zA-Z&\(\)\（\）\x80-\xff]{2,150}$/', $data['name'])) {
-            return app('json')->fail(410146);
+            return app('json')->fail('Vui lòng nhập đúng tiêu đề hóa đơn (tên doanh nghiệp được xuất hóa đơn)');
         }
         if ($data['header_type'] == 2 && !$data['duty_number']) {
-            return app('json')->fail(410147);
+            return app('json')->fail('Vui lòng nhập mã số thuế trên hóa đơn');
         }
         if ($data['header_type'] == 2 && !preg_match('/^[A-Z0-9]{15}$|^[A-Z0-9]{17}$|^[A-Z0-9]{18}$|^[A-Z0-9]{20}$/', $data['duty_number'])) {
-            return app('json')->fail(410148);
+            return app('json')->fail('Vui lòng nhập đúng mã số thuế trên hóa đơn');
         }
         if ($data['card_number'] && !preg_match('/^[1-9]\d{11,19}$/', $data['card_number'])) {
-            return app('json')->fail(410149);
+            return app('json')->fail('Vui lòng nhập đúng số thẻ ngân hàng');
         }
         $uid = (int)$request->uid();
         $re = $this->services->saveInvoice($uid, $data);
         if ($re) {
             if ($re['type'] == 'edit') {
-                return app('json')->success(100001);
+                return app('json')->success('Sửa thành công');
             } else {
-                return app('json')->success(100021, $re['data']);
+                return app('json')->success('Thêm thành công', $re['data']);
             }
         } else {
-            return app('json')->fail(100005);
+            return app('json')->fail('Thao tác thất bại');
         }
 
     }
@@ -161,12 +161,12 @@ class UserInvoiceController
     public function delInvoice(Request $request)
     {
         [$id] = $request->postMore([['id', 0]], true);
-        if (!$id || !is_numeric($id)) return app('json')->fail(100100);
+        if (!$id || !is_numeric($id)) return app('json')->fail('Tham số không hợp lệ');
         $uid = (int)$request->uid();
         $re = $this->services->delInvoice($uid, (int)$id);
         if ($re)
-            return app('json')->success(100002);
+            return app('json')->success('Xóa thành công');
         else
-            return app('json')->fail(100008);
+            return app('json')->fail('Xóa thất bại');
     }
 }

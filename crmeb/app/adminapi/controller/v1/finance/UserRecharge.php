@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -52,8 +52,8 @@ class UserRecharge extends AuthController
      */
     public function delete($id)
     {
-        if (!$id) return app('json')->fail(100100);
-        return app('json')->success($this->services->delRecharge((int)$id) ? 100002 : 100008);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
+        return app('json')->success($this->services->delRecharge((int)$id) ? 'Xóa thành công' : 'Xóa thất bại');
     }
 
     /**
@@ -77,7 +77,7 @@ class UserRecharge extends AuthController
      */
     public function refund_edit($id)
     {
-        if (!$id) return app('json')->fail(100026);
+        if (!$id) return app('json')->fail('Dữ liệu không tồn tại');
         return app('json')->success($this->services->refund_edit((int)$id));
     }
 
@@ -91,7 +91,7 @@ class UserRecharge extends AuthController
         $data = $this->request->postMore([
             'refund_price',
         ]);
-        if (!$id) return app('json')->fail(100026);
-        return app('json')->success($this->services->refund_update((int)$id, $data['refund_price']) ? 100036 : 100037);
+        if (!$id) return app('json')->fail('Dữ liệu không tồn tại');
+        return app('json')->success($this->services->refund_update((int)$id, $data['refund_price']) ? 'Hoàn tiền thành công' : 'Hoàn tiền thất bại');
     }
 }

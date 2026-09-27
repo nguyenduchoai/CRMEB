@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Đăng nhập",
+  "navigationBarTitleText": "登录",
   "usingComponents": {
     "verify": "/pages/users/components/verify/index"
   }

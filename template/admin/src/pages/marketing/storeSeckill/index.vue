@@ -5,10 +5,10 @@
         <el-form ref="tableFrom" :model="tableFrom" :label-width="labelWidth" label-position="right"
           @submit.native.prevent inline>
           <el-form-item label="Tìm kiếm sản phẩm:" label-for="store_name">
-            <el-input placeholder="Vui lòng nhập tên sản phẩm, ID" v-model="tableFrom.store_name" class="form_content_width" />
+            <el-input placeholder="Vui lòng nhập tên sản phẩm, ID" v-model="tableFrom.store_name" clearable class="form_content_width" />
           </el-form-item>
           <el-form-item label="Tìm kiếm chương trình:" label-for="store_name">
-            <el-input placeholder="Vui lòng nhập tên chương trình" v-model="tableFrom.activity_name" class="form_content_width" />
+            <el-input placeholder="Vui lòng nhập tên chương trình" v-model="tableFrom.activity_name" clearable class="form_content_width" />
           </el-form-item>
           <el-form-item label="Trạng thái chương trình:">
             <el-select placeholder="Vui lòng chọn" clearable v-model="tableFrom.status" @change="userSearchs"
@@ -120,9 +120,9 @@
             <!-- <a v-if="scope.row.stop_status === 0" v-db-click @click="edit(scope.row)">Sửa</a>
             <el-divider direction="vertical" v-if="scope.row.stop_status === 0" />
             <a v-db-click @click="copy(scope.row)">Sao chép</a>
-            <el-divider direction="vertical"></el-divider> -->
-            <a v-db-click @click="del(scope.row, 'Xóa sản phẩm flash sale', scope.$index)">Xóa</a>
             <el-divider direction="vertical"></el-divider>
+            <a v-db-click @click="del(scope.row, 'Xóa sản phẩm flash sale', scope.$index)">Xóa</a>
+            <el-divider direction="vertical"></el-divider> -->
             <a v-db-click @click="viewInfo(scope.row)">Thống kê</a>
           </template>
         </el-table-column>

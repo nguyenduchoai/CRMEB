@@ -496,6 +496,7 @@ export default {
         limit_type: 0,
         limit_num: 0,
         vip_product: false, //Công tắc dành riêng cho thành viên trả phí
+        vip_product_type: 0, // 0 chỉ thành viên trả phí mới xem được 1 chỉ thành viên trả phí mới mua được
         custom_form: [], //Lời nhắn tùy chỉnh
         store_name: '',
         cate_id: [],
@@ -1693,7 +1694,6 @@ export default {
     generateAttr(data, val) {
       this.generateHeader(data);
       const combinations = this.generateCombinations(data);
-      console.log('Tổng số tổ hợp phân loại:' + combinations.length);
       const virtualType = this.formValidate.virtual_type;
       // Nếu số lượng combinations vượt quá 500 thì tạo thuộc tính theo từng lô
       let rows = [];

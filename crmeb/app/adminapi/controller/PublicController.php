@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -16,7 +16,6 @@ use app\Request;
 use app\services\system\attachment\SystemAttachmentServices;
 use app\services\system\SystemRouteServices;
 use crmeb\services\CacheService;
-use think\facade\Env;
 use think\Response;
 use think\facade\Db;
 
@@ -74,20 +73,20 @@ class PublicController
         ], true);
         $service = app()->make(SystemAttachmentServices::class);
         if (CacheService::get('scan_upload') != $uploadToken) {
-            return app('json')->fail(410086);
+            return app('json')->fail('Cấu hình đã thay đổi hoặc token đã hết hạn');
         }
         $service->upload((int)$pid, $file, $upload_type, $type, '', $uploadToken);
-        return app('json')->success(100032);
+        return app('json')->success('Tải lên thành công');
     }
 
     public function import(Request $request)
     {
         $filePath = $request->param('file_path', '');
         if (empty($filePath)) {
-            return app('json')->fail(12894);
+            return app('json')->fail('Tệp không tồn tại');
         }
         app()->make(SystemRouteServices::class)->import($filePath);
-        return app('json')->success(100010);
+        return app('json')->success('Thao tác thành công');
     }
 
     /**
@@ -125,23 +124,58 @@ class PublicController
             ['name' => '.version', 'require' => 'Đọc/ghi', 'value' => is_readable(root_path() . '.version') && is_writable(root_path() . '.version')],
             ['name' => '.constant', 'require' => 'Đọc/ghi', 'value' => is_readable(root_path() . '.constant') && is_writable(root_path() . '.constant')],
         ];
+
         if (function_exists('exec')) {
             $workermanOutput = $timerOutput = $queueOutput = [];
-            exec("ps aux | grep 'php think workerman' | grep -v grep", $workermanOutput);
-            exec("ps aux | grep 'php think timer' | grep -v grep", $timerOutput);
-            exec("ps aux | grep 'php think queue' | grep -v grep", $queueOutput);
+            // exec("ps aux | grep 'php think workerman' | grep -v grep", $workermanOutput);
+            $targetPort = config('workerman.chat.port');
+            $thinkPath = root_path(); // Đường dẫn tuyệt đối của file think
+            $checkService = function($service) {
+                if($service === 'queue'){
+                    $command = 'queue:listen'; 
+                    // Chạy lệnh ps để tìm tiến trình hàng đợi
+                    exec("ps aux | grep '{$command}' | grep -v grep", $output);
+                    
+                    // Nếu output không rỗng, nghĩa là tiến trình đang tồn tại
+                    return !empty($output);
+                } else {
+                    $pidFile = root_path('runtime') . $service . '.pid';
+                    // Ưu tiên kiểm tra file PID
+                    if (!file_exists($pidFile)) {
+                        return false;
+                    }
+                    
+                    // Nếu file PID tồn tại, thử lấy trạng thái tiến trình
+                    $pid = trim(file_get_contents($pidFile));
+                    if ($pid && is_numeric($pid)) {
+                        if (function_exists('posix_kill') && posix_kill($pid, 0)) {
+                            return true;
+                        }
+                        // Cách kiểm tra dự phòng
+                        if (function_exists('exec')) {
+                            $output = [];
+                            exec("ps -ef | grep " . escapeshellarg($pid) . " | grep -v grep", $output);
+                            // Kiểm tra có output của tiến trình không phải grep hay không
+                            return !empty($output);
+                        }
+                    }
+                }
+            };
+        
             $info['process'] = [
-                ['name' => 'Kết nối liên tục', 'require' => 'Bật', 'value' => count($workermanOutput) > 0],
-                ['name' => 'Tác vụ định kỳ', 'require' => 'Bật', 'value' => count($timerOutput) > 0],
-                ['name' => 'Hàng đợi tin nhắn', 'require' => 'Bật', 'value' => count($queueOutput) > 0],
+                ['name' => 'Kết nối liên tục', 'require' => 'Bật', 'value' => $checkService('workerman')],
+                ['name' => 'Tác vụ định kỳ', 'require' => 'Bật', 'value' => $checkService('timer')],
+                ['name' => 'Hàng đợi tin nhắn', 'require' => 'Bật', 'value' => $checkService('queue')],
             ];
+            
         } else {
             $info['process'] = [
                 ['name' => 'Kết nối liên tục', 'require' => 'Bật', 'value' => file_exists(root_path('runtime') . 'workerman.pid')],
-                ['name' => 'Tác vụ định kỳ', 'require' => 'Bật', 'value' => file_exists(root_path('runtime') . '.timer')],
+                ['name' => 'Tác vụ định kỳ', 'require' => 'Bật', 'value' => file_exists(root_path('runtime') . 'timer.pid')],
                 ['name' => 'Hàng đợi tin nhắn', 'require' => 'Bật', 'value' => file_exists(root_path('runtime') . '.queue')],
             ];
         }
+
         return app('json')->success($info);
     }
 

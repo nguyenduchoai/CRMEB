@@ -687,6 +687,24 @@ export function upgradeStatusApi() {
 }
 
 /**
+ * @description Tiến độ tải xuống
+ */
+export function downloadProgressApi(data) {
+  return request({
+    url: `/system/upgrade_download/progress`,
+    method: 'get',
+    params: data,
+  });
+}
+
+export function upgradeIgnoreFileApi() {
+  return request({
+    url: `/system/upgrade/ignore_file`,
+    method: 'get',
+  });
+}
+
+/**
  * @description Gói nâng cấp -- Lịch sử nâng cấp
  * @param data
  */
@@ -714,7 +732,7 @@ export function upgradeExportApi(id) {
  */
 export function downloadApi(params) {
   return request({
-    url: '/system/upgrade_download/' + params,
+    url: '/system/package_download/' + params,
     method: 'POST',
   });
 }
@@ -891,5 +909,110 @@ export function eventTask() {
 export function copyrightList() {
   return request({
     url: `system/info`,
+  });
+}
+
+// ==================== API nâng cấp vượt phiên bản ====================
+
+/**
+ * Kiểm tra nâng cấp vượt phiên bản
+ * @returns
+ */
+export function checkCrossVersionUpgradeApi() {
+  return request({
+    url: 'system/cross_version/check',
+    method: 'get',
+  });
+}
+
+/**
+ * Lấy danh sách SQL nâng cấp đang chờ thực thi
+ * @returns
+ */
+export function pendingSqlListApi() {
+  return request({
+    url: 'system/cross_version/pending_sql',
+    method: 'get',
+  });
+}
+
+/**
+ * Thực hiện nâng cấp vượt phiên bản (từng bước)
+ * @param {Number} step Chỉ số bước
+ * @returns
+ */
+export function executeCrossVersionApi(step) {
+  return request({
+    url: 'system/cross_version/execute',
+    method: 'post',
+    data: { step },
+  });
+}
+
+/**
+ * Thực thi toàn bộ nâng cấp vượt phiên bản bằng một cú nhấp
+ * @returns
+ */
+export function executeAllCrossVersionApi() {
+  return request({
+    url: 'system/cross_version/execute_all',
+    method: 'post',
+  });
+}
+
+/**
+ * Lấy tiến trình nâng cấp vượt phiên bản
+ * @returns
+ */
+export function crossVersionUpgradeProgressApi() {
+  return request({
+    url: 'system/cross_version/progress',
+    method: 'get',
+  });
+}
+
+/**
+ * Lấy trạng thái sao lưu
+ * @returns
+ */
+export function backupStatusApi() {
+  return request({
+    url: 'system/cross_version/backup_status',
+    method: 'get',
+  });
+}
+
+/**
+ * Lấy danh sách phiên bản có thể quay lại (rollback)
+ * @returns
+ */
+export function rollbackVersionsApi() {
+  return request({
+    url: 'system/rollback/versions',
+    method: 'get',
+  });
+}
+/**
+ * Thực hiện lại nâng cấp
+ * @returns
+ */
+export function reExecuteUpgradeApi(data) {
+  return request({
+    url: 'system/upgrade/reExecute',
+    method: 'get',
+    params: data,
+  });
+}
+
+/**
+ * Thực hiện quay lại phiên bản
+ * @param {Number} logId ID nhật ký nâng cấp
+ * @returns
+ */
+export function executeRollbackApi(logId) {
+  return request({
+    url: 'system/rollback/execute',
+    method: 'post',
+    data: { log_id: logId },
   });
 }

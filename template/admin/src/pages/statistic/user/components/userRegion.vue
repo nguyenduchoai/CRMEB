@@ -115,27 +115,33 @@ export default {
   methods: {
     regionConfigure() {
       // Dùng biểu đồ cột Top tỉnh/thành thay cho bản đồ: bản đồ Trung Quốc của ECharts thể hiện yêu sách "đường 9 đoạn"
-      let myChart = echarts.init(this.$refs.myEchart);
-      window.onresize = myChart.resize;
-      const top = this.resdata
-        .slice()
-        .sort((a, b) => b.value - a.value)
-        .slice(0, 10)
-        .reverse();
-      myChart.setOption({
-        backgroundColor: '#fff',
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: { type: 'shadow' },
-          formatter: function (params) {
-            const d = params[0].data;
-            return `Khu vực: ${params[0].name}</br>Người dùng tích lũy: ${d.value}</br>Người dùng mới: ${d.newNum}</br>Khách truy cập: ${d.visitNum}</br>Số tiền thanh toán: ${d.payPrice}`;
+      if (this.chart) {
+        this.chart.dispose();
+      }
+      this.$nextTick(() => {
+        let myChart = echarts.init(this.$refs.myEchart);
+        this.chart = myChart;
+        window.onresize = myChart.resize;
+        const top = this.resdata
+          .slice()
+          .sort((a, b) => b.value - a.value)
+          .slice(0, 10)
+          .reverse();
+        myChart.setOption({
+          backgroundColor: '#fff',
+          tooltip: {
+            trigger: 'axis',
+            axisPointer: { type: 'shadow' },
+            formatter: function (params) {
+              const d = params[0].data;
+              return `Khu vực: ${params[0].name}</br>Người dùng tích lũy: ${d.value}</br>Người dùng mới: ${d.newNum}</br>Khách truy cập: ${d.visitNum}</br>Số tiền thanh toán: ${d.payPrice}`;
+            },
           },
-        },
-        grid: { left: 10, right: 30, top: 10, bottom: 10, containLabel: true },
-        xAxis: { type: 'value', minInterval: 1 },
-        yAxis: { type: 'category', data: top.map((item) => item.name) },
-        series: [{ type: 'bar', data: top, barMaxWidth: 20, itemStyle: { color: '#1890ff' } }],
+          grid: { left: 10, right: 30, top: 10, bottom: 10, containLabel: true },
+          xAxis: { type: 'value', minInterval: 1 },
+          yAxis: { type: 'category', data: top.map((item) => item.name) },
+          series: [{ type: 'bar', data: top, barMaxWidth: 20, itemStyle: { color: '#1890ff' } }],
+        });
       });
     },
     // Biểu đồ thống kê
@@ -155,7 +161,7 @@ export default {
           this.regionConfigure();
         })
         .catch((res) => {
-          this.$message.error(res.msg);
+          this.$message.error(res);
         });
     },
     //Giới tính
@@ -225,7 +231,7 @@ export default {
           };
         })
         .catch((res) => {
-          this.$message.error(res.msg);
+          this.$message.error(res);
         });
     },
   },

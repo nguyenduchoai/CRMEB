@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -56,31 +56,31 @@ class MemberRightServices extends BaseServices
      */
     public function save(int $id, array $data)
     {
-        if (!$data['right_type']) throw new AdminException(400630);
-        if (!$id) throw new AdminException(100100);
-        if (!$data['title'] || !$data['show_title']) throw new AdminException(400631);
-        if (!$data['image']) throw new AdminException(400632);
-        if (mb_strlen($data['show_title']) > 6) throw new AdminException(400755);
-        if (mb_strlen($data['explain']) > 8) throw new AdminException(400752);
+        if (!$data['right_type']) throw new AdminException('Thiếu loại quyền lợi thành viên');
+        if (!$id) throw new AdminException('Tham số không hợp lệ');
+        if (!$data['title'] || !$data['show_title']) throw new AdminException('Vui lòng thiết lập tên quyền lợi');
+        if (!$data['image']) throw new AdminException('Vui lòng tải lên biểu tượng quyền lợi thành viên');
+        if (mb_strlen($data['show_title']) > 6) throw new AdminException('Tên hiển thị không được quá 6 ký tự');
+        if (mb_strlen($data['explain']) > 8) throw new AdminException('Mô tả ngắn quyền lợi không được quá 8 ký tự');
         switch ($data['right_type']) {
             case "integral":
-                if (!$data['number']) throw new AdminException(400633);
-                if ($data['number'] < 0) throw new AdminException(400634);
+                if (!$data['number']) throw new AdminException('Vui lòng thiết lập hệ số nhân điểm thưởng hoàn lại');
+                if ($data['number'] < 0) throw new AdminException('Hệ số nhân điểm thưởng hoàn lại không được là số âm');
                 $save['number'] = abs($data['number']);
                 break;
             case "express" :
-                if (!$data['number']) throw new AdminException(400635);
-                if ($data['number'] < 0) throw new AdminException(400636);
+                if (!$data['number']) throw new AdminException('Vui lòng thiết lập chiết khấu phí vận chuyển');
+                if ($data['number'] < 0) throw new AdminException('Chiết khấu phí vận chuyển không được là số âm');
                 $save['number'] = abs($data['number']);
                 break;
             case "sign" :
-                if (!$data['number']) throw new AdminException(400637);
-                if ($data['number'] < 0) throw new AdminException(400638);
+                if (!$data['number']) throw new AdminException('Vui lòng thiết lập hệ số nhân điểm thưởng điểm danh');
+                if ($data['number'] < 0) throw new AdminException('Hệ số nhân điểm thưởng điểm danh không được là số âm');
                 $save['number'] = abs($data['number']);
                 break;
             case "offline" :
-                if (!$data['number']) throw new AdminException(400639);
-                if ($data['number'] < 0) throw new AdminException(400640);
+                if (!$data['number']) throw new AdminException('Vui lòng thiết lập chiết khấu thanh toán ngoại tuyến');
+                if ($data['number'] < 0) throw new AdminException('Chiết khấu thanh toán ngoại tuyến không được là số âm');
                 $save['number'] = abs($data['number']);
         }
         $save['show_title'] = $data['show_title'];

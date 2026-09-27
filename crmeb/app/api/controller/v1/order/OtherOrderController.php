@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -50,7 +50,7 @@ class OtherOrderController
     {
         list($pay_price) = $request->getMore([['pay_price', 0]], true);
         $old_price = $pay_price;
-        if (!$pay_price || !is_numeric($pay_price)) return app('json')->fail(410190);
+        if (!$pay_price || !is_numeric($pay_price)) return app('json')->fail('Vui lòng nhập số tiền thanh toán');
         $uid = $request->uid();
         /** @var UserServices $userService */
         $userService = app()->make(UserServices::class);
@@ -95,20 +95,20 @@ class OtherOrderController
             ['quitUrl', ''],
             ['mc_id', 0]
         ], true);
-        if ($money <= 0.00) return app('json')->fail(410191);
+        if ($money <= 0.00) return app('json')->fail('Số tiền thanh toán không được là 0đ');
         $payType = strtolower($payType);
         if (in_array($type, [1, 2])) {
             /** @var MemberCardServices $memberCardService */
             $memberCardService = app()->make(MemberCardServices::class);
             $isOpenMember = $memberCardService->isOpenMemberCard();
-            if (!$isOpenMember) return app('json')->fail(410192);
+            if (!$isOpenMember) return app('json')->fail('Tính năng thành viên trả phí chưa được bật');
         }
         $channelType = $userServices->getUserInfo($uid)['user_type'];
         $order = $OtherOrderServices->createOrder($uid, $channelType, $memberType, $price, $payType, $type, $money, $mcId);
-        if ($order === false) return app('json')->fail(410193);
+        if ($order === false) return app('json')->fail('Tạo dữ liệu thanh toán thất bại');
         $order_id = $order['order_id'];
         $orderInfo = $OtherOrderServices->getOne(['order_id' => $order_id]);
-        if (!$orderInfo) return app('json')->fail(410194);
+        if (!$orderInfo) return app('json')->fail('Đơn thanh toán không tồn tại');
         $orderInfo = $orderInfo->toArray();
 
         $info = compact('order_id');
@@ -120,7 +120,7 @@ class OtherOrderController
             //Tạo đơn hàng thanh toán jspay
             $payPriceStatus = $OtherOrderServices->zeroYuanPayment($orderInfo);
             if ($payPriceStatus)//Thanh toán 0đ thành công
-                return app('json')->status('success', 410217, $info);
+                return app('json')->status('success', 'Thanh toán thành công', $info);
             else
                 return app('json')->status('pay_error');
         }
@@ -132,7 +132,7 @@ class OtherOrderController
                     $yueServices = app()->make(YuePayServices::class);
                     $pay = $yueServices->yueOrderPay($orderInfo, $uid);
                     if ($pay['status'] === true)
-                        return app('json')->status('success', 410197, $info);
+                        return app('json')->status('success', 'Thanh toán bằng số dư thành công', $info);
                     else {
                         if (is_array($pay))
                             return app('json')->status($pay['status'], $pay['msg'], $info);
@@ -140,13 +140,13 @@ class OtherOrderController
                             return app('json')->status('pay_error', $pay);
                     }
                 case PayServices::OFFLINE_PAY:
-                    return app('json')->status('success', 410196, $info);
+                    return app('json')->status('success', 'Đi đến thanh toán', $info);
                 default:
                     $payServices = app()->make(OrderPayServices::class);
                     $payInfo = $payServices->beforePay($order->toArray(), $payType, ['quitUrl' => $quitUrl]);
                     return app('json')->status($payInfo['status'], $payInfo['payInfo']);
             }
-        } else return app('json')->fail(410200);
+        } else return app('json')->fail('Tạo đơn hàng thất bại');
     }
 
     /**

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -86,23 +86,23 @@ class StoreAdvance extends AuthController
             $storeSeckillService = app()->make(StoreSeckillServices::class);
             $res1 = $storeSeckillService->count(['product_id' => $data['product_id'], 'is_del' => 0, 'status' => 1, 'seckill_time' => 1]);
             if ($res1) {
-                throw new AdminException(400506);
+                throw new AdminException('Sản phẩm đang tham gia chương trình khác, không thể bật đặt trước');
             }
             /** @var StoreBargainServices $storeBargainService */
             $storeBargainService = app()->make(StoreBargainServices::class);
             $res2 = $storeBargainService->count(['product_id' => $data['product_id'], 'is_del' => 0, 'status' => 1, 'bargain_time' => 1]);
             if ($res2) {
-                throw new AdminException(400506);
+                throw new AdminException('Sản phẩm đang tham gia chương trình khác, không thể bật đặt trước');
             }
             /** @var StoreCombinationServices $storeCombinationService */
             $storeCombinationService = app()->make(StoreCombinationServices::class);
             $res3 = $storeCombinationService->count(['product_id' => $data['product_id'], 'is_del' => 0, 'is_show' => 1, 'pinkIngTime' => 1]);
             if ($res3) {
-                throw new AdminException(400506);
+                throw new AdminException('Sản phẩm đang tham gia chương trình khác, không thể bật đặt trước');
             }
         }
         $this->services->saveData($id, $data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -125,9 +125,9 @@ class StoreAdvance extends AuthController
     {
         $res = $this->services->update($id, ['is_del' => 1]);
         if ($res) {
-            return app('json')->success(100002);
+            return app('json')->success('Xóa thành công');
         } else {
-            return app('json')->fail(100008);
+            return app('json')->fail('Xóa thất bại');
         }
     }
 
@@ -141,9 +141,9 @@ class StoreAdvance extends AuthController
     {
         $res = $this->services->update($id, ['status' => $status]);
         if ($res) {
-            return app('json')->success(100014);
+            return app('json')->success('Cài đặt thành công');
         } else {
-            return app('json')->fail(100015);
+            return app('json')->fail('Cài đặt thất bại');
         }
     }
 }

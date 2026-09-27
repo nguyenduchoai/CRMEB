@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -33,12 +33,12 @@ class SystemAuthServices extends BaseServices
     {
         $res = HttpService::postRequest('http://authorize.crmeb.net/api/auth_apply', $data);
         if ($res === false) {
-            throw new AdminException(100028);
+            throw new AdminException('Gửi yêu cầu thất bại');
         }
         $res = json_decode($res, true);
         if (isset($res['status'])) {
             if ($res['status'] == 400) {
-                throw new AdminException(100028);
+                throw new AdminException('Gửi yêu cầu thất bại');
             } else {
                 return true;
             }

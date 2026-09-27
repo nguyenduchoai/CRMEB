@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -257,28 +257,28 @@ class Express extends BaseExpress
     {
         $param = $data;
         $param['com'] = $data['com'] ?? '';
-        if (!$param['com']) throw new AdminException(400713);
+        if (!$param['com']) throw new AdminException('Thiếu mã đơn vị vận chuyển');
         $param['to_name'] = $data['to_name'] ?? '';
         $param['to_tel'] = $data['to_tel'] ?? '';
         $param['order_id'] = $data['order_id'] ?? '';
         $param['to_addr'] = $data['to_addr'] ?? '';
-        if (!$param['to_addr'] || !$param['to_tel'] || !$param['to_name']) throw new AdminException(400714);
+        if (!$param['to_addr'] || !$param['to_tel'] || !$param['to_name']) throw new AdminException('Thiếu thông tin người gửi');
         $param['from_name'] = $data['from_name'] ?? '';
         $param['from_tel'] = $data['from_tel'] ?? '';
         $param['from_addr'] = $data['from_addr'] ?? '';
-        if (!$param['from_name'] || !$param['from_tel'] || !$param['from_addr']) throw new AdminException(400715);
+        if (!$param['from_name'] || !$param['from_tel'] || !$param['from_addr']) throw new AdminException('Thiếu thông tin người nhận');
         $param['temp_id'] = $data['temp_id'] ?? '';
         if (!$param['temp_id']) {
-            throw new AdminException(400712);
+            throw new AdminException('Thiếu ID mẫu vận đơn điện tử');
         }
         $param['siid'] = sys_config('config_export_siid');
 //        if (!$param['siid']) {
-//            throw new AdminException(400716);
+//            throw new AdminException('Thiếu mã máy in đám mây');
 //        }
         $param['count'] = $data['count'] ?? '';
         $param['cargo'] = $data['cargo'] ?? '';
         if (!$param['count']) {
-            throw new AdminException(400717);
+            throw new AdminException('Thiếu số lượng sản phẩm');
         }
         /** @var ExpressServices $expressServices */
         $expressServices = app()->make(ExpressServices::class);

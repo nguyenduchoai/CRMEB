@@ -1,21 +1,31 @@
 <template>
   <div class="label-wrapper">
     <div v-if="!labelList[0]" class="nonefont">Chưa có nhãn</div>
-    <div v-else class="label-box" v-for="(item, index) in labelList" :key="index">
-      <div class="title">{{ item.name }}</div>
-      <div class="list">
-        <div
-          class="label-item"
-          :class="{ on: label.disabled }"
-          v-for="(label, j) in item.label"
-          :key="j"
-          v-db-click
-          @click="selectLabel(label)"
-        >
-          {{ label.label_name }}
+    <template v-else>
+      <div v-if="is_batch" class="flex flex-y-center mb20">
+        <div class="title mr10">Kiểu thiết lập</div>
+        <el-radio-group v-model="label_type">
+          <el-radio :label="0">Thiết lập đồng loạt</el-radio>
+          <el-radio :label="1">Tăng</el-radio>
+          <el-radio :label="2">Giảm</el-radio>
+        </el-radio-group>
+      </div>
+      <div class="label-box" v-for="(item, index) in labelList" :key="index">
+        <div class="title">{{ item.name }}</div>
+        <div class="list">
+          <div
+            class="label-item"
+            :class="{ on: label.disabled }"
+            v-for="(label, j) in item.label"
+            :key="j"
+            v-db-click
+            @click="selectLabel(label)"
+          >
+            {{ label.label_name }}
+          </div>
         </div>
       </div>
-    </div>
+    </template>
     <div class="acea-row row-right mt20">
       <el-button v-db-click @click="cancel">Hủy</el-button>
       <el-button type="primary" v-db-click @click="subBtn">Xác nhận</el-button>
@@ -41,12 +51,19 @@ export default {
         [];
       },
     },
+    // Có hỗ trợ thiết lập hàng loạt không
+    is_batch: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
       labelList: [],
       activeIds: [],
       unLaberids: [],
+      // Thiết lập nhãn hàng loạt label_type: đặt đồng loạt, thêm, bớt
+      label_type: 0,
     };
   },
   watch: {
@@ -57,6 +74,11 @@ export default {
         }
       },
       deep: true,
+    },
+    is_batch: {
+      handler(nVal, oVal) {},
+      deep: true,
+      immediate: true,
     },
   },
   mounted() {
@@ -107,7 +129,7 @@ export default {
             }
           });
         });
-        this.$emit('activeData', unLaberids);
+        this.$emit('activeData', unLaberids, this.label_type);
         return;
       }
       this.labelList.map((item) => {
@@ -120,7 +142,7 @@ export default {
       this.unLaberids = unLaberids;
       putUserLabel(this.uid, {
         label_ids: this.activeIds,
-        un_label_ids: this.unLaberids,
+        un_label_ids: this.unLaberids
       })
         .then((res) => {
           this.$emit('onceGetList');

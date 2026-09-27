@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -71,7 +71,7 @@ class DeliveryService extends AuthController
         ]);
 
         $this->services->saveDeliveryService($data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -100,7 +100,7 @@ class DeliveryService extends AuthController
         ]);
 
         $this->services->updateDeliveryService((int)$id, $data);
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**
@@ -111,9 +111,9 @@ class DeliveryService extends AuthController
     public function delete($id)
     {
         if (!$this->services->delete($id))
-            return app('json')->fail(100008);
+            return app('json')->fail('Xóa thất bại');
         else
-            return app('json')->success(100002);
+            return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -124,9 +124,9 @@ class DeliveryService extends AuthController
      */
     public function set_status($id, $status)
     {
-        if ($status == '' || $id == 0) return app('json')->fail(100100);
+        if ($status == '' || $id == 0) return app('json')->fail('Tham số không hợp lệ');
         $this->services->update($id, ['status' => $status]);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**

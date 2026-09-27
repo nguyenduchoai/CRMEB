@@ -590,7 +590,7 @@ export default {
           // type: 1,
           num: 1,
           deposit: 1,
-          description: row.description, // Không lấy trong sản phẩm
+          description: '', // Không lấy trong sản phẩm
           id: 0,
           num: 1,
           status: 1,

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -98,16 +98,16 @@ class StoreCouponIssueServices extends BaseServices
                 'receive_limit' => $data['receive_limit'],
                 'status' => $data['status'],
             ]);
-            if (!$res) throw new AdminException(100007);
+            if (!$res) throw new AdminException('Sửa thất bại');
             return (int)$data['id'];
         }
 
         if (empty($data['coupon_title'])) {
-            throw new AdminException(400759);
+            throw new AdminException('Vui lòng nhập tên phiếu giảm giá');
         }
 
         if (!in_array((int)$data['receive_type'], [1, 2, 3, 4])) {
-            throw new AdminException(400758);
+            throw new AdminException('Vui lòng kiểm tra lại cách nhận');
         }
 
         if ($data['user_type'] == 2) {
@@ -120,7 +120,7 @@ class StoreCouponIssueServices extends BaseServices
         }
 
         if (!in_array((int)$data['is_permanent'], [0, 1])) {
-            throw new AdminException(400758);
+            throw new AdminException('Vui lòng kiểm tra lại cách nhận');
         }
 
         $data['start_use_time'] = strtotime((string)$data['start_use_time']);
@@ -137,7 +137,7 @@ class StoreCouponIssueServices extends BaseServices
                 throw new AdminException('Thời gian bắt đầu sử dụng không được sớm hơn thời gian hiện tại');
             }
             if ($data['start_use_time'] < $data['start_time']) {
-                throw new AdminException(400513);
+                throw new AdminException('Thời gian bắt đầu sử dụng không được trước thời gian bắt đầu nhận');
             }
         }
 
@@ -178,7 +178,7 @@ class StoreCouponIssueServices extends BaseServices
             $storeCouponProductService = app()->make(StoreCouponProductServices::class);
             $storeCouponProductService->saveAll($couponData);
         }
-        if (!$res) throw new AdminException(100022);
+        if (!$res) throw new AdminException('Thêm thất bại');
         return (int)$res->id;
     }
 
@@ -192,7 +192,7 @@ class StoreCouponIssueServices extends BaseServices
     public function createForm(int $id)
     {
         $issueInfo = $this->dao->get($id);
-        if (-1 == $issueInfo['status'] || 1 == $issueInfo['is_del']) throw new AdminException(100007);
+        if (-1 == $issueInfo['status'] || 1 == $issueInfo['is_del']) throw new AdminException('Sửa thất bại');
         $f = [FormBuilder::radio('status', 'Bật', $issueInfo['status'])->options([['label' => 'Bật', 'value' => 1], ['label' => 'Tắt', 'value' => 0]])];
         return create_form('Chỉnh sửa trạng thái', $f, $this->url('/marketing/coupon/released/status/' . $id), 'PUT');
     }
@@ -206,7 +206,7 @@ class StoreCouponIssueServices extends BaseServices
     {
         $coupon = $this->dao->get($id);
         if (!$coupon) {
-            throw new AdminException(400515);
+            throw new AdminException('Phiếu giảm giá không tồn tại');
         }
         if ($coupon['receive_type'] != 4) {
             /** @var StoreCouponIssueUserServices $storeCouponIssueUserService */
@@ -313,12 +313,12 @@ class StoreCouponIssueServices extends BaseServices
                 /** @var StoreCouponUserServices $storeCouponUser */
                 $storeCouponUser = app()->make(StoreCouponUserServices::class);
                 if (!$storeCouponUser->saveAll($couponData)) {
-                    throw new AdminException(100030);
+                    throw new AdminException('Gửi thành công');
                 }
             }
             if ($issueUserData) {
                 if (!$issueUser->saveAll($issueUserData)) {
-                    throw new AdminException(100031);
+                    throw new AdminException('Gửi thất bại');
                 }
             }
         }
@@ -398,7 +398,7 @@ class StoreCouponIssueServices extends BaseServices
     public function issueUserCoupon($id, $user, bool $is_receive = false)
     {
         $issueCouponInfo = $this->dao->getInfo((int)$id);
-        if (!$issueCouponInfo) throw new ApiException(400516);
+        if (!$issueCouponInfo) throw new ApiException('Phiếu giảm giá đã được nhận hết hoặc đã hết hạn');
         if ($user->is_money_level <= 0 && $issueCouponInfo['receive_type'] == 4) {
             throw new ApiException('Vui lòng đăng ký thành viên trả phí trước để nhận phiếu thành viên');
         }
@@ -468,7 +468,7 @@ class StoreCouponIssueServices extends BaseServices
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
         if (!$userServices->getUserInfo($uid)) {
-            throw new ApiException(100100);
+            throw new ApiException('Tham số không hợp lệ');
         }
         /** @var StoreCouponUserServices $storeConponUser */
         $storeConponUser = app()->make(StoreCouponUserServices::class);
@@ -510,10 +510,10 @@ class StoreCouponIssueServices extends BaseServices
         }
         if (!empty($data)) {
             if (!$storeCouponUser->saveAll($data)) {
-                throw new AdminException(100030);
+                throw new AdminException('Gửi thành công');
             }
             if (!$storeCouponIssueUser->saveAll($issueData)) {
-                throw new AdminException(100031);
+                throw new AdminException('Gửi thất bại');
             }
             return true;
         }
@@ -551,7 +551,7 @@ class StoreCouponIssueServices extends BaseServices
      */
     public function getOne(array $where)
     {
-        if (!$where) throw new AdminException(100100);
+        if (!$where) throw new AdminException('Tham số không hợp lệ');
         return $this->dao->getOne($where);
 
     }
@@ -695,5 +695,47 @@ class StoreCouponIssueServices extends BaseServices
         $list = $this->dao->getList($where, $page, $limit, $field);
         $count = $this->dao->count($where);
         return compact('list', 'count');
+    }
+
+    /**
+     * Thành phần tùy chỉnh - phiếu giảm giá
+     * @param $where
+     * @return array
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @author wuhaotian
+     * @email 442384644@qq.com
+     * @date 2026/1/13
+     */
+    public function getThemeCoupon($where)
+    {
+        $sort = $where['sort'] ? 'desc' : 'asc';
+        $order = 'id desc';
+        switch ($where['order']) {
+            case 0:
+                $order = 'coupon_price ' . $sort;
+                break;
+            case 1:
+                $order = 'add_time ' . $sort;
+                break;
+        }
+        $limit = $where['ids'] == '' ? (int)$where['limit'] : 1000;
+        $where['receive_type'] = $where['send_type'];
+        if ($where['is_min_price'] == 0) $where['min_price'] = 0;
+        unset($where['order'], $where['sort'], $where['limit'], $where['is_min_price'], $where['send_type']);
+        $where['is_del'] = 0;
+        $list = $this->dao->getThemeCoupon($where, $order, $limit);
+        if ($where['ids'] == '') return $list;
+        // Chuyển $list thành mảng lấy id làm khóa
+        $list = array_column($list, null, 'id');
+        $data = [];
+        // Duyệt qua ids trong where, lấy ra sản phẩm tương ứng theo thứ tự
+        foreach (explode(',', $where['ids']) as $id) {
+            if (isset($list[$id])) {
+                $data[] = $list[$id];
+            }
+        }
+        return $data;
     }
 }

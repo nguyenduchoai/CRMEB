@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -120,17 +120,17 @@ class OutUserServices extends BaseServices
     public function saveUser(int $uid, array $data): int
     {
         if (empty($data['real_name'])) {
-            throw new ApiException(400760);
+            throw new ApiException('Vui lòng nhập họ tên');
         }
         if (empty($data['phone'])) {
-            throw new ApiException(400132);
+            throw new ApiException('Vui lòng điền số điện thoại');
         }
 
         if (!check_phone($data['phone'])) {
-            throw new ApiException(400252);
+            throw new ApiException('Số điện thoại sai định dạng');
         }
         if ($uid < 1 && $this->count(['phone' => $data['phone'], 'is_del' => 0])) {
-            throw new ApiException(400314);
+            throw new ApiException('Số điện thoại đã tồn tại');
         }
 
         if ($data['pwd']) {
@@ -159,7 +159,7 @@ class OutUserServices extends BaseServices
                 $uid = (int)$userInfo->uid;
             }
             if (!$userInfo) {
-                throw new ApiException(100006);
+                throw new ApiException('Lưu thất bại');
             }
 
             /** @var UserServices $userServices */
@@ -168,7 +168,7 @@ class OutUserServices extends BaseServices
             $level = (int)$data['level'];
             if ($level) {
                 if (!$userServices->saveGiveLevel($uid, (int)$data['level'])) {
-                    throw new ApiException(400219);
+                    throw new ApiException('Tặng thất bại');
                 }
             }
             return $uid;
@@ -203,7 +203,7 @@ class OutUserServices extends BaseServices
                 $issueService = app()->make(StoreCouponIssueServices::class);
                 $coupon = $issueService->get($data['id']);
                 if (!$coupon) {
-                    throw new ApiException(100026);
+                    throw new ApiException('Dữ liệu không tồn tại');
                 } else {
                     $coupon = $coupon->toArray();
                 }

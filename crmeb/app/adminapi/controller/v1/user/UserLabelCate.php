@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -76,14 +76,14 @@ class UserLabelCate extends AuthController
         $this->validate($data, UserLabeCateValidata::class);
 
         if ($this->services->count(['name' => $data['name']])) {
-            return app('json')->fail(400101);
+            return app('json')->fail('Danh mục này đã tồn tại');
         }
         $data['type'] = 0;
         if ($this->services->save($data)) {
             $this->services->deleteCateCache();
-            return app('json')->success(100000);
+            return app('json')->success('Lưu thành công');
         } else {
-            return app('json')->fail(100006);
+            return app('json')->fail('Lưu thất bại');
         }
     }
 
@@ -96,11 +96,11 @@ class UserLabelCate extends AuthController
     public function read($id)
     {
         if (!$id) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         $info = $this->services->get($id);
         if (!$info) {
-            return app('json')->fail(100026);
+            return app('json')->fail('Dữ liệu không tồn tại');
         }
         return app('json')->success($info->toArray());
     }
@@ -134,9 +134,9 @@ class UserLabelCate extends AuthController
 
         if ($this->services->update($id, $data)) {
             $this->services->deleteCateCache();
-            return app('json')->success(100001);
+            return app('json')->success('Sửa thành công');
         } else {
-            return app('json')->fail(100007);
+            return app('json')->fail('Sửa thất bại');
         }
     }
 
@@ -149,17 +149,17 @@ class UserLabelCate extends AuthController
     public function delete($id)
     {
         if (!$id || !($info = $this->services->get($id))) {
-            return app('json')->fail(100026);
+            return app('json')->fail('Dữ liệu không tồn tại');
         }
         /** @var $labelService $labelservice */
         $labelService = app()->make(UserLabelServices::class);
         $count = $labelService->getCount(['label_cate' => $id]);
-        if($count) return app('json')->fail(400323);
+        if($count) return app('json')->fail('Danh mục này có nhãn, vui lòng xóa nhãn trước');
         if ($info->delete()) {
             $this->services->deleteCateCache();
-            return app('json')->success(100002);
+            return app('json')->success('Xóa thành công');
         } else {
-            return app('json')->fail(100008);
+            return app('json')->fail('Xóa thất bại');
         }
     }
 

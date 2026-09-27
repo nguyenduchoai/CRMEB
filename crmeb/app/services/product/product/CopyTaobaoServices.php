@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -68,7 +68,7 @@ class CopyTaobaoServices extends BaseServices
                 break;
             case 2://99API
                 $apikey = sys_config('copy_product_apikey');
-                if (!$apikey) throw new AdminException(400554);
+                if (!$apikey) throw new AdminException('Vui lòng cấu hình khóa API trước');
                 /** @var ServeServices $services */
                 $services = app()->make(ServeServices::class);
                 $result = $services->copy('copy99api')->goods($url, [
@@ -118,9 +118,7 @@ class CopyTaobaoServices extends BaseServices
             $productInfo['is_postage'] = 0;
             $productInfo['is_seckill'] = 0;
             $productInfo['is_show'] = 0;
-            $productInfo['is_show'] = 0;
             $productInfo['is_sub'] = [];
-            $productInfo['is_vip'] = 0;
             $productInfo['is_vip'] = 0;
             $productInfo['label_id'] = [];
             $productInfo['mer_id'] = 0;
@@ -137,9 +135,9 @@ class CopyTaobaoServices extends BaseServices
             $productInfo['freight'] = 3;
             $productInfo['recommend'] = [];
             $productInfo['logistics'] = ['1', '2'];
-$productInfo['params_list'] = [];
-$productInfo['label_list'] = [];
-$productInfo['protection_list'] = [];
+            $productInfo['params_list'] = [];
+            $productInfo['label_list'] = [];
+            $productInfo['protection_list'] = [];
             foreach ($productInfo['items'] as &$items) {
                 $details = [];
                 foreach ($items['detail'] as $detail) {
@@ -178,12 +176,12 @@ $productInfo['protection_list'] = [];
         //Tạo thư mục tệp đính kèm
         try {
             if (make_path('attach', 3, true) === '')
-                throw new AdminException(400555);
+                throw new AdminException('Không thể tạo thư mục, vui lòng kiểm tra quyền của thư mục tải lên');
         } catch (\Exception $e) {
-            throw new AdminException(400555);
+            throw new AdminException('Không thể tạo thư mục, vui lòng kiểm tra quyền của thư mục tải lên');
         }
         $description = $storeDescriptionServices->getDescription(['product_id ' => $id, 'type' => 0]);
-        if (!$description) throw new AdminException(400556);
+        if (!$description) throw new AdminException('Tham số sản phẩm không hợp lệ');
         //Thay thế và tải ảnh trong chi tiết, mặc định tải toàn bộ ảnh
         $description = preg_replace('#<style>.*?</style>#is', '', $description);
         $description = $this->uploadImage([], $description, 1, $AttachmentCategory['id']);
@@ -281,7 +279,7 @@ $productInfo['protection_list'] = [];
                 return $html;
                 break;
             default:
-                throw new AdminException(400557);
+                throw new AdminException('Phương thức tải lên không hợp lệ');
                 break;
         }
         return $uploadImage;
@@ -294,11 +292,23 @@ $productInfo['protection_list'] = [];
      * @param int $timeout
      * @param int $w
      * @param int $h
-     * @return string
+     * @return array|string
      */
     public function downloadImage($url = '', $name = '', $type = 0, $timeout = 30, $w = 0, $h = 0)
     {
         if (!strlen(trim($url))) return '';
+
+        // Tự động xác định link ảnh hiện tại có thuộc nền tảng cần dùng curl để tải xuống không (Taobao, JD, Tmall, 1688)
+        if ($type == 0 && strlen(trim($url))) {
+            $antiHotlinkingPlatforms = ['alicdn.com', 'taobao.com', 'tmall.com', 'jd.com', 'jdstatic.com', '1688.com'];
+            foreach ($antiHotlinkingPlatforms as $platform) {
+                if (stripos($url, $platform) !== false) {
+                    $type = 1;
+                    break;
+                }
+            }
+        }
+
         if (!strlen(trim($name))) {
             //TODO lấy tên file cần tải xuống
             $downloadImageInfo = $this->getImageExtname($url);
@@ -309,7 +319,7 @@ $productInfo['protection_list'] = [];
             $ext = $this->getImageExtname($name)['ext_name'];
         }
         if (!in_array($ext, Config::get('upload.fileExt'))) {
-            throw new AdminException(400558);
+            throw new AdminException('Sai định dạng');
         }
         //TODO lấy phương thức dùng để tải file từ xa
         if ($type) {
@@ -319,7 +329,9 @@ $productInfo['protection_list'] = [];
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); //TODO bỏ qua kiểm tra chứng chỉ
             if (stripos($url, "https://") !== FALSE) curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);  //TODO kiểm tra trong chứng chỉ xem có thuật toán mã hóa SSL không
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('user-agent:' . $_SERVER['HTTP_USER_AGENT']));
+            // Nhận diện nền tảng theo URL và lấy headers chống hotlink tương ứng
+            $headers = $this->getAntiHotlinkingHeaders($url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
             if (ini_get('open_basedir') == '' && ini_get('safe_mode') == 'Off') curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);//TODO có thu thập trang sau khi chuyển hướng 301, 302 không
             $content = curl_exec($ch);
             curl_close($ch);
@@ -329,7 +341,7 @@ $productInfo['protection_list'] = [];
                 if (substr($url, 0, 2) == '//') {
                     $url = "https:" . $url;
                 }
-                readfile($url);
+                @readfile($url);
                 $content = ob_get_contents();
                 ob_end_clean();
             } catch (\Exception $e) {
@@ -337,7 +349,7 @@ $productInfo['protection_list'] = [];
             }
         }
         $size = strlen(trim($content));
-        if (!$content || $size <= 2) throw new AdminException(400559);
+        if (!$content || $size <= 2) throw new AdminException('Lấy luồng dữ liệu hình ảnh thất bại');
         $date_dir = date('Y') . '/' . date('m') . '/' . date('d');
         $upload_type = sys_config('upload_type', 1);
         $upload = UploadService::init($upload_type);
@@ -403,7 +415,7 @@ $productInfo['protection_list'] = [];
 
         //Tạo thư mục tệp đính kèm
         if (make_path('attach', 3, true) === '') {
-            throw new AdminException(400555);
+            throw new AdminException('Không thể tạo thư mục, vui lòng kiểm tra quyền của thư mục tải lên');
         }
 
         //Tải lên ảnh
@@ -436,5 +448,58 @@ $productInfo['protection_list'] = [];
             return $imagePath;
         }
         return false;
+    }
+
+    /**
+     * Nhận diện nền tảng theo URL và lấy headers chống hotlink tương ứng
+     * @param string $url URL ảnh
+     * @return array Trả về HTTP headers tương ứng
+     */
+    public function getAntiHotlinkingHeaders(string $url): array
+    {
+        // Headers cơ bản
+        $baseHeaders = [
+            'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            'Accept: image/webp,image/apng,image/*,*/*;q=0.8',
+            'Accept-Language: zh-CN,zh;q=0.9,en;q=0.8',
+            'Accept-Encoding: gzip, deflate, br',
+            'Connection: keep-alive',
+        ];
+
+        // Nhận diện nền tảng theo URL
+        if (stripos($url, 'alicdn.com') !== false || stripos($url, 'taobao.com') !== false) {
+            // Ảnh của Taobao/Tmall/1688 (thường nằm dưới domain alicdn.com)
+            return array_merge($baseHeaders, [
+                'Referer: https://buyer.taobao.com/',  // Trung tâm người mua Taobao
+            ]);
+        } elseif (stripos($url, 'tmall.com') !== false) {
+            // Ảnh của Tmall
+            return array_merge($baseHeaders, [
+                'Referer: https://www.tmall.com/',  // Trang chủ Tmall
+            ]);
+        } elseif (stripos($url, 'jd.com') !== false || stripos($url, 'jdstatic.com') !== false) {
+            // Ảnh của JD
+            return array_merge($baseHeaders, [
+                'Referer: https://www.jd.com/',  // Trang chủ JD
+            ]);
+        } elseif (stripos($url, '1688.com') !== false) {
+            // Ảnh của 1688
+            return array_merge($baseHeaders, [
+                'Referer: https://www.1688.com/',  // Trang chủ 1688
+            ]);
+        } elseif (stripos($url, 'baidu.com') !== false) {
+            // Ảnh Baidu
+            return array_merge($baseHeaders, [
+                'Referer: https://image.baidu.com/',  // Ảnh Baidu
+            ]);
+        } elseif (stripos($url, 'sinaimg.cn') !== false) {
+            // Ảnh Sina
+            return array_merge($baseHeaders, [
+                'Referer: https://weibo.com/',  // Sina Weibo
+            ]);
+        } else {
+            // Headers mặc định, không đặt Referer
+            return $baseHeaders;
+        }
     }
 }

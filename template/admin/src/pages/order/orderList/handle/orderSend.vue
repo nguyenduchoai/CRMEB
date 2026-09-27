@@ -9,10 +9,17 @@
   >
     <el-alert class="mb10" type="warning" :closable="false">
       <template slot="title">
-        <p>Họ tên người dùng: {{ userSendmsg.real_name }}</p>
-        <p>Số điện thoại người dùng: {{ userSendmsg.user_phone }}</p>
-        <p>Địa chỉ người dùng: {{ userSendmsg.user_address }}</p>
+        <div class="title-box">
+          <div>
+            <p>Họ tên người dùng: {{ userSendmsg.real_name }}</p>
+            <p>Số điện thoại người dùng: {{ userSendmsg.user_phone }}</p>
+            <p>Địa chỉ người dùng: {{ userSendmsg.user_address }}</p>
+          </div>
+        </div>
       </template>
+      <div class="copy-box">
+        <span class="copy-btn" @click="onCopyAll">Sao chép</span>
+      </div>
     </el-alert>
     <el-form
       v-if="modals"
@@ -662,11 +669,29 @@ export default {
       this.$refs.viewer.$viewer.show();
       // this.$viewer.show();
     },
+    onCopyAll() {
+      let code = `Họ tên: ${this.userSendmsg.real_name}\nSố điện thoại: ${this.userSendmsg.user_phone}\nĐịa chỉ: ${this.userSendmsg.user_address}`;
+      this.onCopy(code);
+    },
+    onCopy(copyData) {
+      this.$copyText(copyData)
+        .then((message) => {
+          this.$message.success('Sao chép thành công');
+        })
+        .catch((err) => {
+          this.$message.error('Sao chép thất bại');
+        });
+    },
   },
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.copy-btn {
+  color: #57a3f3;
+  cursor: pointer;
+  margin-left: 10px;
+}
 .express_temp_id {
   position: relative;
 }
@@ -717,5 +742,16 @@ export default {
 }
 .coumped {
   font-size: 12px;
+}
+.title-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+.copy-box {
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 </style>

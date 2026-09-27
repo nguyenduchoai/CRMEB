@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -57,6 +57,20 @@ Route::group('app', function () {
         Route::get('routine/info', 'v1.application.routine.RoutineTemplate/getDownloadInfo')->option(['real_name' => 'Tải xuống dữ liệu trang Mini Program']);
         //Tải xuống mẫu Mini Program
         Route::post('routine/download', 'v1.application.routine.RoutineTemplate/downloadTemp')->option(['real_name' => 'Tải xuống mẫu Mini Program']);
+
+        // ==================== Tự động tải lên Mini Program qua CI ====================
+        //Lấy trạng thái môi trường chạy
+        Route::get('routine/ci/environment', 'v1.application.routine.RoutineCI/environment')->option(['real_name' => 'Lấy môi trường chạy CI của Mini Program']);
+        //Lấy hướng dẫn cài đặt
+        Route::get('routine/ci/guide', 'v1.application.routine.RoutineCI/installGuide')->option(['real_name' => 'Lấy hướng dẫn cài đặt môi trường']);
+        //Lấy cấu hình tải lên
+        Route::get('routine/ci/config', 'v1.application.routine.RoutineCI/uploadConfig')->option(['real_name' => 'Lấy cấu hình tải lên Mini Program']);
+        //Lưu khóa tải lên
+        Route::post('routine/ci/private_key', 'v1.application.routine.RoutineCI/savePrivateKey')->option(['real_name' => 'Lưu khóa tải lên Mini Program']);
+        //Tải lên mã nguồn Mini Program
+        Route::post('routine/ci/upload', 'v1.application.routine.RoutineCI/upload')->option(['real_name' => 'Tải lên mã nguồn Mini Program']);
+        //Lấy mã QR xem trước
+        Route::post('routine/ci/preview', 'v1.application.routine.RoutineCI/preview')->option(['real_name' => 'Lấy mã QR xem trước Mini Program']);
 
         Route::get('routine/scheme_list', 'v1.application.routine.RoutineScheme/schemeList')->name('schemeList')->option(['real_name' => 'Danh sách liên kết ngoài Mini Program']);
         Route::get('routine/scheme_form/:id', 'v1.application.routine.RoutineScheme/schemeForm')->name('schemeForm')->option(['real_name' => 'Biểu mẫu thêm/sửa liên kết ngoài Mini Program']);

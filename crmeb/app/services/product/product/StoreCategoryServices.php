@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -123,7 +123,7 @@ class StoreCategoryServices extends BaseServices
         $res = $res && $this->dao->update($id, ['is_show' => $is_show], 'pid');
         CacheService::clear();
         if (!$res) {
-            throw new AdminException(100005);
+            throw new AdminException('Thao tác thất bại');
         }
     }
 
@@ -198,21 +198,21 @@ class StoreCategoryServices extends BaseServices
     public function createData($data)
     {
         if (!$data['cate_name']) {
-            throw new AdminException(400100);
+            throw new AdminException('Vui lòng điền tên danh mục');
         }
 
         if ($this->dao->getOne(['cate_name' => $data['cate_name'], 'pid' => $data['pid']])) {
-            throw new AdminException(400101);
+            throw new AdminException('Danh mục này đã tồn tại');
         }
 
         $parent = $this->dao->getOne(['id' => $data['pid']]);
         if ($data['pid'] && (!$parent || $parent['pid'] > 0)) {
-            throw new AdminException(400740);
+            throw new AdminException('Chỉ hỗ trợ danh mục hai cấp');
         }
 
         $data['add_time'] = time();
         $res = $this->dao->save($data);
-        if (!$res) throw new AdminException(100006);
+        if (!$res) throw new AdminException('Lưu thất bại');
 
         CacheService::clear();
 
@@ -233,24 +233,24 @@ class StoreCategoryServices extends BaseServices
     public function editData($id, $data)
     {
         if (!$data['cate_name']) {
-            throw new AdminException(400100);
+            throw new AdminException('Vui lòng điền tên danh mục');
         }
 
         $parent = $this->dao->getOne(['id' => $data['pid']]);
         if ($parent && $parent['pid'] > 0) {
-            throw new AdminException(400740);
+            throw new AdminException('Chỉ hỗ trợ danh mục hai cấp');
         }
 
         $cate = $this->dao->getOne(['cate_name' => $data['cate_name'], 'pid' => $data['pid']]);
         if ($cate && $cate['id'] != $id) {
-            throw new AdminException(400101);
+            throw new AdminException('Danh mục này đã tồn tại');
         }
         $this->transaction(function () use ($id, $data) {
             $res = $this->dao->update($id, $data);
             /** @var StoreProductCateServices $productCate */
             $productCate = app()->make(StoreProductCateServices::class);
             $res = $res && $productCate->update(['cate_id' => $id], ['cate_pid' => $data['pid']]);
-            if (!$res) throw new AdminException(100007);
+            if (!$res) throw new AdminException('Sửa thất bại');
         });
 
         CacheService::clear();
@@ -263,10 +263,10 @@ class StoreCategoryServices extends BaseServices
     public function del(int $id)
     {
         if ($this->dao->count(['pid' => $id])) {
-            throw new AdminException(400102);
+            throw new AdminException('Vui lòng xóa danh mục con trước');
         }
         $res = $this->dao->delete($id);
-        if (!$res) throw new AdminException(100008);
+        if (!$res) throw new AdminException('Xóa thất bại');
 
         CacheService::clear();
     }

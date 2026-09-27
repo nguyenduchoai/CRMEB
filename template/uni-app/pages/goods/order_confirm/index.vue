@@ -551,7 +551,7 @@
 		/**
 		 * Hàm lifecycle -- theo dõi khi trang hiển thị
 		 */
-		onShow: function() {
+		onShow() {
 			let _this = this
 
 			uni.$on("handClick", res => {
@@ -562,8 +562,48 @@
 				uni.$off('handClick');
 			})
 
+			// Nếu đang ở chế độ nhận tại cửa hàng thì lấy lại vị trí để đảm bảo danh sách cửa hàng chính xác
+			if (this.shippingType == 1 && !this.system_store.name) {
+				this.refreshLocationAndStores();
+			}
+
 		},
 		methods: {
+			/**
+			 * Làm mới vị trí và cập nhật danh sách cửa hàng
+			 */
+			refreshLocationAndStores() {
+				let that = this;
+				// #ifdef H5
+				if (that.$wechat.isWeixin()) {
+					that.$wechat.location().then(res => {
+						uni.setStorageSync('user_latitude', res.latitude);
+						uni.setStorageSync('user_longitude', res.longitude);
+						this.getList()
+					}).catch(err => {
+						// Nếu lấy vị trí thất bại, vẫn thử dùng vị trí trong bộ nhớ đệm để lấy danh sách cửa hàng
+						this.getList()
+					})
+				} else {
+					// #endif
+					uni.getLocation({
+						type: 'wgs84',
+						success: (res) => {
+							uni.setStorageSync('user_latitude', res.latitude);
+							uni.setStorageSync('user_longitude', res.longitude);
+						},
+						fail: (err) => {
+							// Xử lý khi lấy vị trí thất bại, vẫn dùng vị trí trong bộ nhớ đệm
+							console.log('Lấy vị trí thất bại:', err);
+						},
+						complete: () => {
+							this.getList()
+						}
+					})
+					// #ifdef H5
+				}
+				// #endif
+			},
 			checkShipping() {
 				let that = this;
 				checkShipping(that.cartId, that.news).then(res => {
@@ -869,7 +909,6 @@
 				getGiftOrderDetail(this.orderId).then(res => {
 					this.giftData = res.data
 					this.$set(this, 'cartInfo', res.data.cartInfo);
-					this.virtual_type = res.data.type
 					this.store_self_mention = res.data.store_self_mention
 					if (res.data.type == 0) {
 						this.is_shipping = true;
@@ -1260,7 +1299,8 @@
 					})
 				}).catch(err => {
 					uni.showToast({
-						title: err.msg
+						icon: 'none',
+						title: err
 					})
 				})
 			},
@@ -1343,7 +1383,7 @@
 </script>
 
 <style lang="scss" scoped>
-	/deep/uni-checkbox[disabled] .uni-checkbox-input {
+	::v-deep uni-checkbox[disabled] .uni-checkbox-input {
 		background-color: #eee;
 	}
 

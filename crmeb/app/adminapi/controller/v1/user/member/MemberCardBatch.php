@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -24,6 +24,11 @@ use think\facade\App;
  */
 class MemberCardBatch extends AuthController
 {
+    /**
+     * @var MemberCardBatchServices
+     */
+    protected $services;
+
     /**
      * MemberCardBatch constructor.
      * @param App $app
@@ -63,7 +68,7 @@ class MemberCardBatch extends AuthController
             ['remark', '']
         ]);
         $this->services->save((int)$id, $data);
-        return app('json')->success(400313);
+        return app('json')->success('Tạo thẻ thành công');
     }
 
     /**
@@ -79,7 +84,7 @@ class MemberCardBatch extends AuthController
             ['field', ''],
         ]);
         $this->services->setValue($id, $data);
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**Mã QR thành viên, thẻ đổi

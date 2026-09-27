@@ -18,6 +18,7 @@ export function getUserInfo() {
 	return request.get('user');
 }
 
+
 /**
  * Đặt chia sẻ người dùng
  * 

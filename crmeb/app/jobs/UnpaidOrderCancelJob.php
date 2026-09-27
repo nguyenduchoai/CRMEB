@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -45,6 +45,9 @@ class UnpaidOrderCancelJob extends BaseJobs
             return true;
         }
         if ($orderInfo->pay_type == 'offline') {
+            return true;
+        }
+        if ($orderInfo->is_cancel == 1) {
             return true;
         }
         /** @var StoreOrderCartInfoServices $cartServices */

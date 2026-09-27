@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -204,7 +204,7 @@ class Yihaotong extends BaseSms
     public function send(string $phone, string $templateId, array $data = [])
     {
         if (!$phone) {
-            throw new AdminException(400719);
+            throw new AdminException('Số điện thoại không được để trống');
         }
         $param = [
             'phone' => $phone,
@@ -212,7 +212,7 @@ class Yihaotong extends BaseSms
         ];
         $param['temp_id'] = $templateId;
         if (is_null($param['temp_id'])) {
-            throw new AdminException(400720);
+            throw new AdminException('ID mẫu không tồn tại');
         }
         $param['param'] = json_encode($data);
         return $this->accessToken->httpRequest(self::SMS_SEND, $param, 'post');

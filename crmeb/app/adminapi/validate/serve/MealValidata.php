@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -36,12 +36,12 @@ class MealValidata extends Validate
      * @var array
      */
     protected $message = [
-        'meal_id.require' => '400013',
-        'meal_id.number' => '400014',
-        'price.require' => '400015',
-        'num.require' => '400016',
-        'num.number' => '400017',
-        'type.require' => '400018'
+        'meal_id.require' => 'Vui lòng truyền vào ID gói dịch vụ',
+        'meal_id.number' => 'ID gói dịch vụ phải là số',
+        'price.require' => 'Vui lòng điền số tiền gói dịch vụ',
+        'num.require' => 'Vui lòng điền số lượng mua',
+        'num.number' => 'Số lượng mua phải là số',
+        'type.require' => 'Vui lòng điền loại gói dịch vụ cần mua'
     ];
 
 }

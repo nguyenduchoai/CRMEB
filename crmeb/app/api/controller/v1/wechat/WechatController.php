@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -92,25 +92,25 @@ class WechatController
         ], true);
         if ($phone) {
             if (!$captcha) {
-                return app('json')->fail(410004);
+                return app('json')->fail('Vui lòng nhập mã xác thực');
             }
             //Xác thực mã xác thực
             $verifyCode = CacheService::get('code_' . $phone);
             if (!$verifyCode)
-                return app('json')->fail(410009);
+                return app('json')->fail('Vui lòng lấy mã xác thực trước');
             $verifyCode = substr($verifyCode, 0, 6);
             if ($verifyCode != $captcha) {
                 CacheService::delete('code_' . $phone);
-                return app('json')->fail(410010);
+                return app('json')->fail('Mã xác thực không đúng');
             }
         }
         $token = $this->services->appAuth($userInfo, $phone);
         if ($token) {
-            return app('json')->success(410001, $token);
+            return app('json')->success('Đăng nhập thành công', $token);
         } else if ($token === false) {
-            return app('json')->success(410001, ['isbind' => true]);
+            return app('json')->success('Đăng nhập thành công', ['isbind' => true]);
         } else {
-            return app('json')->fail(410019);
+            return app('json')->fail('Đăng nhập thất bại');
         }
     }
 
@@ -125,7 +125,7 @@ class WechatController
         if ($data) {
             return app('json')->success($data);
         } else {
-            return app('json')->fail(100016);
+            return app('json')->fail('Lấy dữ liệu thất bại');
         }
 
     }

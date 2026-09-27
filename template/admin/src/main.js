@@ -34,6 +34,7 @@ import { directive as clickOutside } from 'v-click-outside-x';
 import installPlugin from '@/plugin';
 import Pagination from '@/components/Pagination';
 import pagesHeader from '@/components/pagesHeader';
+import common_wrapper from '@/components/mobilePage/common_wrapper.vue';
 import imgModal from './components/uploadPictures/model';
 import videoModal from './components/uploadVideo2/model';
 
@@ -65,14 +66,12 @@ import { authLapse } from '@/utils/authLapse';
 
 // File style
 import './assets/fonts/font.css';
-import '@/assets/icons/iconfont.css';
-import '@/assets/iconfont/iconfont.css';
-import '@/assets/iconfont/iconfont.js';
 import '@/theme/index.scss';
 import './assets/iconfontYI/iconfontYI.css';
 import './plugin/emoji-awesome/css/google.min.css';
 import 'v-org-tree/dist/v-org-tree.css';
 import './styles/index.scss';
+import './styles/font/iconfont.js';
 import 'swiper/css/swiper.css';
 import 'viewerjs/dist/viewer.css';
 import 'codemirror/lib/codemirror.css';
@@ -90,6 +89,7 @@ Vue.prototype.bus = new Vue();
 // Đăng ký thành phần toàn cục
 Vue.component('Pagination', Pagination);
 Vue.component('pagesHeader', pagesHeader);
+Vue.component('common_wrapper', common_wrapper);
 
 // Cấu hình thư viện bên thứ ba
 moment.locale('zh-cn');
@@ -133,21 +133,22 @@ Vue.use(Viewer, {
 });
 
 // Tùy chỉnh Element Message
-const messages = ['success', 'warning', 'info', 'error'];
-messages.forEach((type) => {
-  Element.Message[type] = (options) => {
-    if (typeof options === 'string') {
-      options = {
-        message: options,
-      };
-      // Cấu hình mặc định
-      options.duration = 2000;
-      options.showClose = false;
-    }
-    options.type = type || 'info';
-    return Element.Message(options);
-  };
-});
+// const messages = ['success', 'warning', 'info', 'error'];
+// messages.forEach((type) => {
+//   Element.Message[type] = (options) => {
+//     if (typeof options === 'string') {
+//       options = {
+//         message: options,
+//       };
+//       // Cấu hình mặc định
+//       options.duration = 2000;
+//       options.showClose = false;
+//     }
+//     console.log(options);
+//     // options.type = type || 'info';
+//     return Element.Message(options);
+//   };
+// });
 
 /**
  * @description Đăng ký plugin tích hợp sẵn của admin
@@ -191,13 +192,8 @@ Object.keys(filters).forEach((key) => {
   Vue.filter(key, filters[key]);
 });
 
-// Thêm script thống kê
-(function () {
-  var hm = document.createElement('script');
-  hm.src = 'https://cdn.oss.9gt.net/js/es.js?version=bzv5.6.1';
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(hm, s);
-})();
+// Đã gỡ script thống kê của bên thứ ba (cdn.oss.9gt.net) vốn được nhúng vào mọi trang.
+// Hệ thống không cần script này để chạy; gỡ để không gửi dữ liệu người dùng ra ngoài (Luật BVDLCN 2025).
 
 // Thêm thống kê crmeb chat
 fetch(`${settings.apiBaseURL}/custom_admin_js`)

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -54,19 +54,19 @@ class StoreOrderDeliveryServices extends BaseServices
     {
         $orderInfo = $this->dao->get($id, ['*'], ['pink']);
         if (!$orderInfo) {
-            throw new AdminException(400470);
+            throw new AdminException('Không tìm thấy đơn hàng, không thể giao hàng');
         }
         if ($orderInfo->is_del) {
-            throw new AdminException(400471);
+            throw new AdminException('Đơn hàng đã bị xóa, không thể giao hàng');
         }
         if ($orderInfo->status) {
-            throw new AdminException(400472);
+            throw new AdminException('Đơn hàng đã giao, vui lòng không thao tác lại');
         }
         if ($orderInfo->shipping_type == 2) {
-            throw new AdminException(400473);
+            throw new AdminException('Đơn hàng xác nhận sử dụng không thể giao hàng');
         }
         if (isset($orderInfo['pinkStatus']) && $orderInfo['pinkStatus'] != 2) {
-            throw new AdminException(400474);
+            throw new AdminException('Mua chung chưa hoàn tất, tạm thời chưa thể giao hàng');
         }
 
         if ($data['type'] == 1) {
@@ -74,14 +74,14 @@ class StoreOrderDeliveryServices extends BaseServices
             /** @var ExpressServices $expressServices */
             $expressServices = app()->make(ExpressServices::class);
             if (!$expressServices->be(['code' => $data['delivery_code']])) {
-                throw new AdminException(410324);
+                throw new AdminException('Vui lòng kiểm tra lại mã đơn vị vận chuyển');
             }
         }
 
         /** @var StoreOrderRefundServices $storeOrderRefundServices */
         $storeOrderRefundServices = app()->make(StoreOrderRefundServices::class);
         if ($storeOrderRefundServices->count(['store_order_id' => $id, 'refund_type' => [1, 2, 4, 5], 'is_cancel' => 0, 'is_del' => 0])) {
-            throw new AdminException(400475);
+            throw new AdminException('Đơn hàng có yêu cầu đổi trả, vui lòng xử lý trước');
         }
         return $this->doDelivery($id, $orderInfo, $data);
     }
@@ -96,24 +96,24 @@ class StoreOrderDeliveryServices extends BaseServices
         /** @var StoreOrderCartInfoServices $orderInfoServices */
         $orderInfoServices = app()->make(StoreOrderCartInfoServices::class);
         if (!$data['delivery_name']) {
-            throw new AdminException(400007);
+            throw new AdminException('Vui lòng chọn đơn vị vận chuyển');
         }
         $data['delivery_type'] = 'express';
         if ($data['express_record_type'] == 2) {//Vận đơn điện tử
             if (!$data['delivery_code']) {
-                throw new AdminException(400476);
+                throw new AdminException('Thiếu mã đơn vị vận chuyển');
             }
             if (!$data['express_temp_id']) {
-                throw new AdminException(400527);
+                throw new AdminException('Vui lòng chọn mẫu vận đơn điện tử');
             }
             if (!$data['to_name']) {
-                throw new AdminException(400008);
+                throw new AdminException('Vui lòng điền họ tên người gửi');
             }
             if (!$data['to_tel']) {
-                throw new AdminException(400477);
+                throw new AdminException('Vui lòng điền số điện thoại người gửi');
             }
             if (!$data['to_addr']) {
-                throw new AdminException(400478);
+                throw new AdminException('Vui lòng điền địa chỉ người gửi');
             }
             /** @var ServeServices $expressService */
             $expressService = app()->make(ServeServices::class);
@@ -130,7 +130,7 @@ class StoreOrderDeliveryServices extends BaseServices
             $expData['cargo'] = $orderInfoServices->getCarIdByProductTitle((int)$orderInfo->id, true);
             $expData['order_id'] = $orderInfo->order_id;
             if (!sys_config('config_export_open', 0)) {
-                throw new AdminException(400528);
+                throw new AdminException('Vận đơn điện tử đã tắt, vui lòng chọn phương thức giao hàng khác');
             }
             $dump = $expressService->express()->dump($expData);
             $orderInfo->delivery_id = $dump['kuaidinum'];
@@ -145,7 +145,7 @@ class StoreOrderDeliveryServices extends BaseServices
             $data['delivery_id'] = $dump['kuaidinum'];
         } else {
             if (!$data['delivery_id']) {
-                throw new AdminException(400531);
+                throw new AdminException('Vui lòng nhập mã vận đơn');
             }
             $orderInfo->delivery_id = $data['delivery_id'];
         }
@@ -164,7 +164,7 @@ class StoreOrderDeliveryServices extends BaseServices
                     'change_message' => 'Đã giao hàng. Đơn vị vận chuyển:' . $data['delivery_name'] . ' Mã vận đơn:' . $data['delivery_id']
                 ]);
             if (!$res) {
-                throw new AdminException(400529);
+                throw new AdminException('Giao hàng thất bại');
             }
         });
         return true;
@@ -189,16 +189,16 @@ class StoreOrderDeliveryServices extends BaseServices
         $data['verify_code'] = $storeOrderCreateService->getStoreCode();
         unset($data['sh_delivery_name'], $data['sh_delivery_id'], $data['sh_delivery_uid']);
         if (!$data['delivery_name']) {
-            throw new AdminException(400523);
+            throw new AdminException('Vui lòng nhập họ tên người giao hàng');
         }
         if (!$data['delivery_id']) {
-            throw new AdminException(400524);
+            throw new AdminException('Vui lòng nhập số điện thoại người giao hàng');
         }
         if (!$data['delivery_uid']) {
-            throw new AdminException(400525);
+            throw new AdminException('Vui lòng nhập thông tin người giao hàng');
         }
         if (!preg_match("/^1[3456789]{1}\d{9}$/", $data['delivery_id'])) {
-            throw new AdminException(400526);
+            throw new AdminException('Vui lòng nhập đúng số điện thoại người giao hàng');
         }
         $data['status'] = 1;
         $orderInfo->delivery_type = $data['delivery_type'];
@@ -253,7 +253,7 @@ class StoreOrderDeliveryServices extends BaseServices
     public function distributionForm(int $id)
     {
         if (!$orderInfo = $this->dao->get($id))
-            throw new AdminException(400118);
+            throw new AdminException('Đơn hàng không tồn tại');
 
         $f[] = Form::input('order_id', 'Mã đơn hàng', $orderInfo->getData('order_id'))->disabled(1);
 
@@ -281,23 +281,23 @@ class StoreOrderDeliveryServices extends BaseServices
     {
         $order = $this->dao->get($id);
         if (!$order) {
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         switch ($order['delivery_type']) {
             case 'send':
                 if (!$data['delivery_name']) {
-                    throw new AdminException(400523);
+                    throw new AdminException('Vui lòng nhập họ tên người giao hàng');
                 }
                 if (!$data['delivery_id']) {
-                    throw new AdminException(400524);
+                    throw new AdminException('Vui lòng nhập số điện thoại người giao hàng');
                 }
                 if (!preg_match("/^1[3456789]{1}\d{9}$/", $data['delivery_id'])) {
-                    throw new AdminException(400526);
+                    throw new AdminException('Vui lòng nhập đúng số điện thoại người giao hàng');
                 }
                 break;
             case 'express':
                 if (!$data['delivery_id']) {
-                    throw new AdminException(400531);
+                    throw new AdminException('Vui lòng nhập mã vận đơn');
                 }
                 // Kiểm tra mã đơn vị vận chuyển
                 /** @var ExpressServices $expressServices */
@@ -305,14 +305,14 @@ class StoreOrderDeliveryServices extends BaseServices
                 if ($name = $expressServices->value(['code' => $data['delivery_code']], 'name')) {
                     $data['delivery_name'] = $name;
                 } else {
-                    throw new AdminException(410324);
+                    throw new AdminException('Vui lòng kiểm tra lại mã đơn vị vận chuyển');
                 }
                 break;
             case 'fictitious':
-                throw new AdminException(400479);
+                throw new AdminException('Giao hàng ảo, không cần sửa thông tin giao hàng');
                 break;
             default:
-                throw new AdminException(400480);
+                throw new AdminException('Chưa giao hàng, vui lòng giao hàng trước rồi mới sửa thông tin vận chuyển');
                 break;
         }
         /** @var StoreOrderStatusServices $statusService */
@@ -332,24 +332,24 @@ class StoreOrderDeliveryServices extends BaseServices
      */
     public function orderDump($orderId, $type = 'order')
     {
-        if (!$orderId) throw new AdminException(10100);
+        if (!$orderId) throw new AdminException('Đơn hàng không tồn tại');
 //        /** @var StoreOrderServices $orderService */
 //        $orderService = app()->make(StoreOrderServices::class);
 //        $orderInfo = $orderService->getOne(['id' => $orderId]);
-if ($type == 'order') {
-    /** @var StoreOrderServices $orderService */
-    $orderService = app()->make(StoreOrderServices::class);
-    $orderInfo = $orderService->getOne(['id' => $orderId]);
-} else {
-    /** @var StoreIntegralOrderServices $integralOrderService */
-    $integralOrderService = app()->make(StoreIntegralOrderServices::class);
-    $orderInfo = $integralOrderService->getOne(['id' => $orderId]);
-}
-        if (!$orderInfo) throw new AdminException(400118);
-        if ($orderInfo->shipping_type != 1) throw new AdminException(400481);
-        if (!$orderInfo->express_dump) throw new AdminException(400482);
+        if ($type == 'order') {
+            /** @var StoreOrderServices $orderService */
+            $orderService = app()->make(StoreOrderServices::class);
+            $orderInfo = $orderService->getOne(['id' => $orderId]);
+        } else {
+            /** @var StoreIntegralOrderServices $integralOrderService */
+            $integralOrderService = app()->make(StoreIntegralOrderServices::class);
+            $orderInfo = $integralOrderService->getOne(['id' => $orderId]);
+        }
+        if (!$orderInfo) throw new AdminException('Đơn hàng không tồn tại');
+        if ($orderInfo->shipping_type != 1) throw new AdminException('Đơn nhận tại cửa hàng không thể in');
+        if (!$orderInfo->express_dump) throw new AdminException('Vui lòng giao hàng trước');
         if (!sys_config('config_export_open', 0)) {
-            throw new AdminException(400483);
+            throw new AdminException('Vui lòng bật in vận đơn điện tử trong cài đặt hệ thống trước');
         }
         $dumpInfo = json_decode($orderInfo->express_dump, true);
         /** @var ServeServices $expressService */
@@ -375,7 +375,6 @@ if ($type == 'order') {
      * Tách đơn hàng để giao hàng
      * @param int $id
      * @param array $data
-     * @return bool
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
@@ -387,21 +386,21 @@ if ($type == 'order') {
     {
         $orderInfo = $this->dao->get($id, ['*'], ['pink']);
         if (!$orderInfo) {
-            throw new AdminException(400470);
+            throw new AdminException('Không tìm thấy đơn hàng, không thể giao hàng');
         }
         if ($orderInfo->is_del) {
-            throw new AdminException(400471);
+            throw new AdminException('Đơn hàng đã bị xóa, không thể giao hàng');
         }
         if ($orderInfo->shipping_type == 2) {
-            throw new AdminException(400473);
+            throw new AdminException('Đơn hàng xác nhận sử dụng không thể giao hàng');
         }
         if (isset($orderInfo['pinkStatus']) && $orderInfo['pinkStatus'] != 2) {
-            throw new AdminException(400474);
+            throw new AdminException('Mua chung chưa hoàn tất, tạm thời chưa thể giao hàng');
         }
         /** @var StoreOrderRefundServices $storeOrderRefundServices */
         $storeOrderRefundServices = app()->make(StoreOrderRefundServices::class);
         if ($storeOrderRefundServices->count(['store_order_id' => $id, 'refund_type' => [1, 2, 4, 5], 'is_cancel' => 0, 'is_del' => 0])) {
-            throw new AdminException(400475);
+            throw new AdminException('Đơn hàng có yêu cầu đổi trả, vui lòng xử lý trước');
         }
 
         if ($data['type'] == 1 && $delivery_code) {
@@ -409,13 +408,13 @@ if ($type == 'order') {
             /** @var ExpressServices $expressServices */
             $expressServices = app()->make(ExpressServices::class);
             if (!$expressServices->be(['code' => $data['delivery_code']])) {
-                throw new AdminException(410324);
+                throw new AdminException('Vui lòng kiểm tra lại mã đơn vị vận chuyển');
             }
         }
 
         $cart_ids = $data['cart_ids'];
         unset($data['cart_ids']);
-        $this->transaction(function () use ($id, $cart_ids, $orderInfo, $data) {
+        return $this->transaction(function () use ($id, $cart_ids, $orderInfo, $data) {
             /** @var StoreOrderSplitServices $storeOrderSplitServices */
             $storeOrderSplitServices = app()->make(StoreOrderSplitServices::class);
             //Tách đơn hàng
@@ -423,7 +422,7 @@ if ($type == 'order') {
             if ($splitOrderInfo) {
                 $splitOrderInfo['refund_status'] = 0;
                 //Thực hiện giao hàng cho đơn hàng đã tách
-                $this->doDelivery((int)$splitOrderInfo->id, $splitOrderInfo, $data);
+                $res = $this->doDelivery((int)$splitOrderInfo->id, $splitOrderInfo, $data);
                 /** @var StoreOrderStatusServices $services */
                 $services = app()->make(StoreOrderStatusServices::class);
                 //Ghi lại trạng thái đơn hàng gốc
@@ -432,10 +431,10 @@ if ($type == 'order') {
                 $status_data['change_message'] = 'Đã tách đơn và giao hàng';
                 $services->save($status_data);
             } else {
-                $this->doDelivery($id, $orderInfo, $data);
+                $res = $this->doDelivery($id, $orderInfo, $data);
             }
+            return $res;
         });
-        return true;
     }
 
     /**
@@ -493,7 +492,7 @@ if ($type == 'order') {
                 $this->orderVirtualDelivery($id, $data, $orderInfo, $storeName);
                 break;
             default:
-                throw new AdminException(400522);
+                throw new AdminException('Tạm thời chưa hỗ trợ hình thức giao hàng khác');
         }
         if (!$data['delivery_id'] && !empty($res['kuaidinum'])) {
             $data['delivery_id'] = $res['kuaidinum'];
@@ -502,7 +501,7 @@ if ($type == 'order') {
             $data['delivery_id'] = uniqid();
         }
         // Quản lý đơn hàng Mini Program
-        event('OrderShippingListener', ['product', $orderInfo, $type, $data['delivery_id'], $data['delivery_code']]);
+        event('OrderShippingListener', ['product', $orderInfo, $type, $data['delivery_id'], $data['delivery_name']]);
         //Tự động xác nhận nhận hàng khi hết hạn
         event('OrderDeliveryListener', [$orderInfo, $storeName, $data, $type]);
 
@@ -531,25 +530,25 @@ if ($type == 'order') {
         /** @var StoreOrderCartInfoServices $orderInfoServices */
         $orderInfoServices = app()->make(StoreOrderCartInfoServices::class);
         if (!$data['delivery_name']) {
-            throw new AdminException(400007);
+            throw new AdminException('Vui lòng chọn đơn vị vận chuyển');
         }
         $dump = [];
         $data['delivery_type'] = 'express';
         if ($data['express_record_type'] == 2) {//Vận đơn điện tử
             if (!$data['delivery_code']) {
-                throw new AdminException(400476);
+                throw new AdminException('Thiếu mã đơn vị vận chuyển');
             }
             if (!$data['express_temp_id']) {
-                throw new AdminException(400527);
+                throw new AdminException('Vui lòng chọn mẫu vận đơn điện tử');
             }
             if (!$data['to_name']) {
-                throw new AdminException(400008);
+                throw new AdminException('Vui lòng điền họ tên người gửi');
             }
             if (!$data['to_tel']) {
-                throw new AdminException(400477);
+                throw new AdminException('Vui lòng điền số điện thoại người gửi');
             }
             if (!$data['to_addr']) {
-                throw new AdminException(400478);
+                throw new AdminException('Vui lòng điền địa chỉ người gửi');
             }
             /** @var ServeServices $expressService */
             $expressService = app()->make(ServeServices::class);
@@ -567,7 +566,7 @@ if ($type == 'order') {
             $expData['cargo'] = $orderInfoServices->getCarIdByProductTitle((int)$orderInfo->id, true);
             $expData['order_id'] = $orderInfo->order_id;
             if (!sys_config('config_export_open', 0)) {
-                throw new AdminException(400528);
+                throw new AdminException('Vận đơn điện tử đã tắt, vui lòng chọn phương thức giao hàng khác');
             }
             $dump = $expressService->express()->dump($expData);
             $orderInfo->delivery_id = $dump['kuaidinum'];
@@ -586,19 +585,19 @@ if ($type == 'order') {
         } else if ($data['express_record_type'] == 3) {
             //Người bán gửi hàng
             if (!$data['delivery_code']) {
-                throw new AdminException(400476);
+                throw new AdminException('Thiếu mã đơn vị vận chuyển');
             }
             if (!$data['express_temp_id']) {
-                throw new AdminException(400527);
+                throw new AdminException('Vui lòng chọn mẫu vận đơn điện tử');
             }
             if (!$data['to_name']) {
-                throw new AdminException(400008);
+                throw new AdminException('Vui lòng điền họ tên người gửi');
             }
             if (!$data['to_tel']) {
-                throw new AdminException(400477);
+                throw new AdminException('Vui lòng điền số điện thoại người gửi');
             }
             if (!$data['to_addr']) {
-                throw new AdminException(400478);
+                throw new AdminException('Vui lòng điền địa chỉ người gửi');
             }
             /** @var ServeServices $expressService */
             $expressService = app()->make(ServeServices::class);
@@ -635,7 +634,7 @@ if ($type == 'order') {
             $data['kuaidi_order_id'] = $dump['order_id'] ?? '';
         } else {
             if (!$data['delivery_id']) {
-                throw new AdminException(400531);
+                throw new AdminException('Vui lòng nhập mã vận đơn');
             }
             $orderInfo->delivery_id = $data['delivery_id'];
         }
@@ -655,7 +654,7 @@ if ($type == 'order') {
                         'change_message' => 'Đã giao hàng. Đơn vị vận chuyển:' . $data['delivery_name'] . ' Mã vận đơn:' . $data['delivery_id']
                     ]);
                 if (!$res) {
-                    throw new AdminException(400529);
+                    throw new AdminException('Giao hàng thất bại');
                 }
             });
         } else {
@@ -683,7 +682,7 @@ if ($type == 'order') {
                         'change_message' => 'Đang chuẩn bị hàng, đơn vị vận chuyển:' . $data['delivery_name'] . ' Mã vận đơn:' . $data['delivery_id']
                     ]);
                 if (!$res) {
-                    throw new AdminException(400529);
+                    throw new AdminException('Giao hàng thất bại');
                 }
             });
         }
@@ -754,7 +753,7 @@ if ($type == 'order') {
                 /** @var StoreProductVirtualServices $virtualService */
                 $virtualService = app()->make(StoreProductVirtualServices::class);
                 $virtual = $virtualService->get(['attr_unique' => $unique, 'uid' => 0]);
-                if (!$virtual) throw new ApiException(100026);
+                if (!$virtual) throw new ApiException('Dữ liệu không tồn tại');
                 $virtual->order_id = $orderInfo['order_id'];
                 $virtual->uid = $orderInfo['uid'];
                 $virtual->save();
@@ -794,7 +793,7 @@ if ($type == 'order') {
                     'content' => 'Phiếu giảm giá bạn mua đã thanh toán thành công, số tiền thanh toán' . $orderInfo['pay_price'] . 'đ, mã đơn hàng' . $orderInfo['order_id'] . 'vui lòng xem trong mục Phiếu giảm giá ở trang cá nhân, cảm ơn bạn đã mua hàng!'
                 ]);
             } else {
-                throw new ApiException(410323);
+                throw new ApiException('Bạn đã có phiếu giảm giá này, vui lòng không mua lại');
             }
             $statusService->save([
                 'oid' => $orderInfo['id'],

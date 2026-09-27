@@ -1,15 +1,13 @@
 <?php
-/**
- *  +----------------------------------------------------------------------
- *  | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
- *  +----------------------------------------------------------------------
- *  | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
- *  +----------------------------------------------------------------------
- *  | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
- *  +----------------------------------------------------------------------
- *  | Author: CRMEB Team <admin@crmeb.com>
- *  +----------------------------------------------------------------------
- */
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 
 namespace crmeb\services\easywechat\v3pay;
 
@@ -360,7 +358,7 @@ class PayClient extends BaseClient
         $res = $this->request($this->getApiUrl(self::API_TRANSFER_QUERY_URL, ['out_bill_no'], [$outBillNo]), 'GET');
 
         if (!$res) {
-            throw new PayException(500000);
+            throw new PayException('Gửi yêu cầu tra cứu hoàn tiền thất bại');
         }
 
         return $res;
@@ -375,7 +373,7 @@ class PayClient extends BaseClient
     public function refund(string $outTradeNo, array $options = [])
     {
         if (!isset($options['pay_price'])) {
-            throw new PayException(400730);
+            throw new PayException('Thiếu pay_price');
         }
         $totalFee = floatval(bcmul($options['pay_price'], 100, 0));
         $refundFee = isset($options['refund_price']) ? floatval(bcmul($options['refund_price'], 100, 0)) : null;
@@ -431,7 +429,7 @@ class PayClient extends BaseClient
         $res = $this->request($this->getApiUrl(self::API_REFUND_QUERY_URL, ['out_refund_no'], [$outRefundNo]), 'GET');
 
         if (!$res) {
-            throw new PayException(500000);
+            throw new PayException('Gửi yêu cầu tra cứu hoàn tiền thất bại');
         }
 
         if (isset($res['code']) && isset($res['message'])) {

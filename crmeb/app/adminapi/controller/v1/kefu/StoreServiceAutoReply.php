@@ -1,4 +1,13 @@
 <?php
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 /**
  * @author: Wu Xi
  * @email: 442384644@qq.com
@@ -63,7 +72,7 @@ class StoreServiceAutoReply extends AuthController
             ['status', 1],
         ]);
         app()->make(WechatReplyServices::class)->autoReplySave($id, $data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -77,6 +86,6 @@ class StoreServiceAutoReply extends AuthController
     public function autoReplyDel($id)
     {
         app()->make(WechatReplyServices::class)->autoReplyDel($id);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 }

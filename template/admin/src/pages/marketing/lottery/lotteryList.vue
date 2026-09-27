@@ -22,7 +22,6 @@
             end-placeholder="Ngày kết thúc"
             :picker-options="pickerOptions"
             style="width: 250px"
-            class="mr20"
           ></el-date-picker>
         </el-form-item>
         <el-form-item label="Trạng thái chương trình:">
@@ -63,7 +62,7 @@
           >
             <el-option label="Tất cả" value="" />
             <el-option label="Bật" :value="1" />
-            <el-option label="Tắt" :value="0" />
+            <el-option label="Tắt" :value="2" />
           </el-select>
         </el-form-item>
 
@@ -73,9 +72,10 @@
             placeholder="Vui lòng nhập tên chương trình"
             v-model="tableFrom.keyword"
             @change="userSearchs"
+            clearable
           />
         </el-form-item>
-        <el-button type="primary" v-db-click @click="userSearchs()">Tìm kiếm</el-button>
+        <el-button type="primary" v-db-click @click="userSearchs()">Tra cứu</el-button>
       </el-form>
     </el-card>
     <el-card class="mt-20" :bordered="false" shadow="never">
@@ -297,7 +297,6 @@ export default {
     this.$nextTick(function () {
       const clipboard = new ClipboardJS('.copy-data');
       clipboard.on('success', () => {
-        console.log('11');
         this.$message.success('Sao chép thành công');
       });
     });
@@ -306,7 +305,6 @@ export default {
   methods: {
     // Thao tác
     changeMenu(row, name, index) {
-      console.log(row, name, index);
       switch (name) {
         case '1':
           this.customer(row);
@@ -340,7 +338,6 @@ export default {
     },
     // Chọn người dùng
     selectCustomer(e) {
-      console.log(e);
       this.customerShow = false;
       this.formInline.uid = e.uid;
       this.formInline.image = e.image;

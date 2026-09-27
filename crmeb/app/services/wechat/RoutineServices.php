@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -56,7 +56,7 @@ class RoutineServices extends BaseServices
         $agent_id = 0;
         $userInfoConfig = app()->make(OAuth::class, ['mini_program'])->oauth($code, ['silence' => true]);
         if (!isset($userInfoConfig['openid'])) {
-            throw new ApiException(410078);
+            throw new ApiException('Ủy quyền ngầm thất bại');
         }
         $routineInfo = ['unionid' => $userInfoConfig['unionid'] ?? ''];
         $info = app()->make(QrcodeServices::class)->getOne(['id' => $spread, 'status' => 1]);
@@ -108,7 +108,7 @@ class RoutineServices extends BaseServices
                 'bindName' => (int)sys_config('get_avatar') && $user['avatar'] == sys_config('h5_avatar'),
             ];
         } else {
-            throw new ApiException(410019);
+            throw new ApiException('Đăng nhập thất bại');
         }
     }
 
@@ -142,7 +142,7 @@ class RoutineServices extends BaseServices
         ]);
         $session_key = $userInfoCong['session_key'];
         if (!$userInfo || !isset($userInfo['purePhoneNumber'])) {
-            throw new ApiException(410079);
+            throw new ApiException('Lấy thông tin người dùng thất bại');
         }
 
         $spreadId = $spid ?? 0;
@@ -171,7 +171,7 @@ class RoutineServices extends BaseServices
                 'bindName' => (int)sys_config('get_avatar') && $user['avatar'] == sys_config('h5_avatar'),
             ];
         } else {
-            throw new ApiException(410019);
+            throw new ApiException('Đăng nhập thất bại');
         }
     }
 
@@ -200,7 +200,7 @@ class RoutineServices extends BaseServices
         } else {
             $userInfoConfig = app()->make(OAuth::class, ['mini_program'])->oauth($code, ['silence' => true]);
             if (!isset($userInfoConfig['openid'])) {
-                throw new ApiException(410078);
+                throw new ApiException('Ủy quyền ngầm thất bại');
             }
             $routineInfo = ['unionid' => $userInfoConfig['unionid'] ?? ''];
             $info = app()->make(QrcodeServices::class)->getOne(['id' => $spread, 'status' => 1]);
@@ -227,7 +227,7 @@ class RoutineServices extends BaseServices
                 'bindName' => (int)sys_config('get_avatar') && $user['avatar'] == sys_config('h5_avatar'),
             ];
         } else {
-            throw new ApiException(410019);
+            throw new ApiException('Đăng nhập thất bại');
         }
     }
 
@@ -248,16 +248,16 @@ class RoutineServices extends BaseServices
             'encryptedData' => $encryptedData
         ]);
         if (!$userInfo || !isset($userInfo['purePhoneNumber'])) {
-            throw new ApiException(410079);
+            throw new ApiException('Lấy thông tin người dùng thất bại');
         }
         $uid = app()->make(WechatUserServices::class)->openidToUid($userInfoCong['openid']);
         $userServices = app()->make(UserServices::class);
         if ($userServices->count(['phone' => $userInfo['purePhoneNumber'], 'is_del' => 0])) {
-            throw new ApiException(410028);
+            throw new ApiException('Số điện thoại đã được đăng ký');
         }
         $res = $userServices->update(['uid' => $uid], ['phone' => $userInfo['purePhoneNumber']]);
         if ($res) return true;
-        throw new ApiException(410017);
+        throw new ApiException('Liên kết thất bại');
     }
 
     /**
@@ -345,7 +345,7 @@ class RoutineServices extends BaseServices
         $userServices = app()->make(UserServices::class);
         $user = $userServices->getUserInfo($uid);
         if (!$user) {
-            throw new ApiException(100026);
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         $userInfo = [];
         $userInfo['nickname'] = filter_emoji($data['nickName'] ?? '');//Họ tên
@@ -361,7 +361,7 @@ class RoutineServices extends BaseServices
         $loginService->updateUserInfo($userInfo, $user);
         //Cập nhật thông tin người dùng
         if (!$this->dao->update(['uid' => $user['uid'], 'user_type' => 'routine'], $userInfo)) {
-            throw new ApiException(100013);
+            throw new ApiException('Cập nhật thất bại');
         }
         return true;
     }

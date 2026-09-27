@@ -14,6 +14,13 @@
           >
           </el-switch>
         </el-form-item>
+        <el-form-item v-if="formData.vip_product">
+          <!-- 0 chỉ thành viên trả phí mới xem được 1 chỉ thành viên trả phí mới mua được -->
+          <el-radio-group v-model="formData.vip_product_type">
+            <el-radio :label="0">Chỉ thành viên trả phí được xem</el-radio>
+            <el-radio :label="1">Chỉ thành viên trả phí được mua</el-radio>
+          </el-radio-group>
+        </el-form-item>
         <el-form-item label="Giá thành viên trả phí:">
           <el-switch
             v-model="formData.is_vip"
@@ -103,6 +110,7 @@ export default {
       formData: {
         is_vip: 0,
         vip_product: 1,
+        vip_product_type: 0,
       },
       brokerage: '',
       brokerage_two: '',
@@ -172,7 +180,6 @@ export default {
         });
     },
     closeVipSet(i) {
-      console.log(this.$refs['vipSetPopover'].doClose);
       this.vipSetPopoverPopver = false;
       this.$refs.vipSetPopover.doClose();
       this.vipSetType = 0;
@@ -240,6 +247,7 @@ export default {
       productBrokerage(this.productId, 2).then((res) => {
         this.formData.is_vip = res.data.storeInfo.is_vip;
         this.formData.vip_product = res.data.storeInfo.vip_product;
+        this.formData.vip_product_type = res.data.storeInfo.vip_product_type;
         this.attrData = Object.values(res.data.attrValue);
         // this.levelList = res.data.level_list;
         // if (res.data.level_list.length) {

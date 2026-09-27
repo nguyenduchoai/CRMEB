@@ -1,5 +1,13 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 namespace app\adminapi\controller\v1\system;
 
 use app\adminapi\controller\AuthController;
@@ -85,7 +93,7 @@ class SystemCrontab extends AuthController
             if (!$this->isSafePhpCode($data['customCode'])) return app('json')->fail('Nội dung tùy chỉnh chứa mã nguy hiểm, vui lòng kiểm tra lại mã');
         }
         $this->services->saveTimer($data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -96,7 +104,7 @@ class SystemCrontab extends AuthController
     public function delTimer($id)
     {
         $this->services->delTimer($id);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -108,7 +116,7 @@ class SystemCrontab extends AuthController
     public function setTimerStatus($id, $is_open)
     {
         $this->services->setTimerStatus($id, $is_open);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**

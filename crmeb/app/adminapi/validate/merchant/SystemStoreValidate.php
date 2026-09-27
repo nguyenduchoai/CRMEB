@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -38,15 +38,15 @@ class SystemStoreValidate extends Validate
      * @var array
      */
     protected $message = [
-        'name.require' => '400378',
-        'introduction.require' => '400379',
-        'phone.require' => '400380',
-        'image.require' => '400381',
-        'oblong_image.require' => '400382',
-        'address.require' => '400383',
-        'detailed_address.require' => '400384',
-        'latlng.require' => '400385',
-        'day_time.require' => '400386',
+        'name.require' => 'Vui lòng điền tên cửa hàng',
+        'introduction.require' => 'Vui lòng điền giới thiệu cửa hàng',
+        'phone.require' => 'Vui lòng điền số điện thoại cửa hàng',
+        'image.require' => 'Vui lòng chọn logo điểm nhận hàng',
+        'oblong_image.require' => 'Vui lòng chọn ảnh lớn của điểm nhận hàng',
+        'address.require' => 'Vui lòng chọn địa chỉ',
+        'detailed_address.require' => 'Vui lòng điền địa chỉ chi tiết',
+        'latlng.require' => 'Vui lòng chọn kinh độ và vĩ độ',
+        'day_time.require' => 'Vui lòng chọn giờ hoạt động',
     ];
 
     protected $scene = [

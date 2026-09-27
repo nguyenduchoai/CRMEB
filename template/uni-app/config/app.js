@@ -31,5 +31,5 @@ module.exports = {
 	//Số dòng hiển thị tối đa khi phân trang
 	LIMIT: 10,
 	// Giới hạn timeout request, mặc định 10 giây
-	TIMEOUT: 10000
+	TIMEOUT: 100000
 }

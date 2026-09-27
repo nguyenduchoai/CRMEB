@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -120,7 +120,7 @@ class WechatServices extends BaseServices
         if (!isset($wechatInfo['nickname'])) {
             $wechatInfo = $oauth->getUserInfo($wechatInfo['openid']);
             if (!isset($wechatInfo['nickname']))
-                throw new ApiException(410131);
+                throw new ApiException('Ủy quyền thất bại');
             if (isset($wechatInfo['tagid_list']))
                 $wechatInfo['tagid_list'] = implode(',', $wechatInfo['tagid_list']);
         } else {
@@ -150,7 +150,7 @@ class WechatServices extends BaseServices
                 'bindPhone' => false
             ];
         } else {
-            throw new ApiException(410019);
+            throw new ApiException('Đăng nhập thất bại');
         }
     }
 
@@ -182,7 +182,7 @@ class WechatServices extends BaseServices
                 'bindName' => false
             ];
         } else {
-            throw new ApiException(410019);
+            throw new ApiException('Đăng nhập thất bại');
         }
     }
 
@@ -205,7 +205,7 @@ class WechatServices extends BaseServices
             $wechatQrcode = substr($wechatQrcode, $strlen);
         }
         if (!$wechatQrcode)
-            throw new ApiException(410081);
+            throw new ApiException('Vui lòng tải lên mã QR');
         $canvas->setImageUrl($wechatQrcode)->setImageHeight(344)->setImageWidth(344)->setImageLeft(76)->setImageTop(76)->pushImageValue();
         $image = $canvas->setFileName($name)->setImageType($imageType)->setPath($path)->setBackgroundWidth(500)->setBackgroundHeight(720)->starDrawChart();
         return ['path' => $image ? $siteUrl . '/' . $image : ''];
@@ -287,6 +287,6 @@ class WechatServices extends BaseServices
                 'isbind' => false
             ];
         } else
-            throw new ApiException(410019);
+            throw new ApiException('Đăng nhập thất bại');
     }
 }

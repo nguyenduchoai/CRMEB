@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -44,21 +44,21 @@ class StoreBargainValidate extends Validate
      * @var array
      */
     protected $message = [
-        'product_id.require' => '400337',
-        'title.require' => '400338',
-        'info.require' => '400347',
-        'unit_name.require' => '400348',
-        'images.require' => '400349',
-        'section_time.require' => '400353',
-        'num.require' => '400354',
-        'num.gt' => '400355',
-        'bargain_num.require' => '400356',
-        'bargain_num.gt' => '400357',
-        'people_num.require' => '400358',
-        'people_num.gt' => '400359',
-        'temp_id.require' => '400360',
-        'description.require' => '400361',
-        'attrs.require' => '400362',
+        'product_id.require' => 'Vui lòng chọn sản phẩm',
+        'title.require' => 'Vui lòng nhập tên sản phẩm',
+        'info.require' => 'Vui lòng điền giới thiệu chương trình',
+        'unit_name.require' => 'Vui lòng điền đơn vị tính',
+        'images.require' => 'Vui lòng chọn ảnh trình chiếu sản phẩm',
+        'section_time.require' => 'Vui lòng chọn khung giờ chương trình',
+        'num.require' => 'Vui lòng điền giới hạn số lượng mua',
+        'num.gt' => 'Giới hạn số lượng mua phải lớn hơn 0',
+        'bargain_num.require' => 'Vui lòng điền số lần giúp săn giảm giá',
+        'bargain_num.gt' => 'Số lần giúp săn giảm giá phải lớn hơn 0',
+        'people_num.require' => 'Vui lòng điền số người săn giảm giá',
+        'people_num.gt' => 'Số người săn giảm giá phải lớn hơn 1',
+        'temp_id.require' => 'Vui lòng chọn mẫu phí vận chuyển',
+        'description.require' => 'Vui lòng điền chi tiết sản phẩm',
+        'attrs.require' => 'Vui lòng chọn quy cách',
     ];
 
     protected $scene = [

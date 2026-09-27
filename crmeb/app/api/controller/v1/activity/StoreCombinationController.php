@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -75,11 +75,11 @@ class StoreCombinationController
             ['id', 0],
             ['cid', 0],
         ], true);
-        if (!$id || !$cid) return app('json')->fail(100100);
+        if (!$id || !$cid) return app('json')->fail('Tham số không hợp lệ');
         /** @var StorePinkServices $pinkService */
         $pinkService = app()->make(StorePinkServices::class);
         $pinkService->removePink($request->uid(), $cid, $id);
-        return app('json')->success(100010);
+        return app('json')->success('Thao tác thành công');
     }
 
 
@@ -94,7 +94,7 @@ class StoreCombinationController
             ['id', 0],
             ['from', 'wechat']
         ], true);
-        if (!$pinkId) return app('json')->fail(100100);
+        if (!$pinkId) return app('json')->fail('Tham số không hợp lệ');
         $user = $request->user();
         /** @var StorePinkServices $pinkService */
         $pinkService = app()->make(StorePinkServices::class);

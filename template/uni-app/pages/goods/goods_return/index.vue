@@ -4,7 +4,7 @@
 			<view class='apply-return'>
 				<view class='goodsStyle acea-row row-between' v-for="(item,index) in refundCartInfo" :key="index">
 					<view class='pictrue'>
-						<image :src='item.productInfo.attrInfo?item.productInfo.attrInfo.image:item.productInfo.image'>
+						<image :src='item.productInfo.attrInfo ? item.productInfo.attrInfo.image : item.productInfo.image'>
 						</image>
 					</view>
 					<view class='text acea-row row-between'>
@@ -372,7 +372,7 @@
 		align-self: flex-start;
 	}
 
-	.list /deep/ .uni-input-input {
+	.list ::v-deep .uni-input-input {
 		text-align: right;
 	}
 

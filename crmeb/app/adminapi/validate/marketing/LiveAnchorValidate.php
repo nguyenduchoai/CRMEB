@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -34,10 +34,10 @@ class LiveAnchorValidate extends Validate
      * @var array
      */
     protected $message = [
-        'name.require' => '400107',
-        'wechat.require' => '400110',
-        'phone.require' => '400333',
-        'phone.checkPhone' => '400252',
+        'name.require' => 'Vui lòng nhập họ tên',
+        'wechat.require' => 'Vui lòng nhập tài khoản WeChat',
+        'phone.require' => 'Vui lòng điền số điện thoại',
+        'phone.checkPhone' => 'Số điện thoại sai định dạng',
     ];
 
     protected function checkPhone($value): bool

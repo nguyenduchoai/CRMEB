@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -52,12 +52,12 @@ class LoginController
             'account', 'password', 'spread', ['agent_id', 0]
         ], true);
         if (!$account || !$password) {
-            return app('json')->fail(410000);
+            return app('json')->fail('Vui lòng nhập tài khoản và mật khẩu');
         }
         if (strlen(trim($password)) < 6 || strlen(trim($password)) > 32) {
-            return app('json')->fail(400762);
+            return app('json')->fail('Tài khoản và mật khẩu phải dài từ 6 đến 32 ký tự');
         }
-        return app('json')->success(410001, $this->services->login($account, $password, $spread, $agent_id));
+        return app('json')->success('Đăng nhập thành công', $this->services->login($account, $password, $spread, $agent_id));
     }
 
     /**
@@ -69,7 +69,7 @@ class LoginController
     {
         $key = trim(ltrim($request->header(Config::get('cookie.token_name')), 'Bearer'));
         CacheService::delete(md5($key));
-        return app('json')->success(410002);
+        return app('json')->success('Đăng xuất thành công');
     }
 
     /**
@@ -140,7 +140,7 @@ class LoginController
         ], true);
 
         $keyName = 'sms.key.' . $key;
-        if (!CacheService::has($keyName)) return app('json')->fail(410003);
+        if (!CacheService::has($keyName)) return app('json')->fail('Gửi mã xác thực thất bại, vui lòng tải lại trang để lấy lại mã');
 
         // Giới hạn xác thực
         // Giới hạn số lần gửi mã xác thực mỗi phút
@@ -167,7 +167,7 @@ class LoginController
         $maxIpCountKey = 'sms.ip.' . app()->request->ip() . '.' . date('Ymd');
         $ipCount = 0;
         if (CacheService::has($maxIpCountKey)) {
-            $ipCount = CacheService::get($maxPhoneCountKey) ?? 0;
+            $ipCount = CacheService::get($maxIpCountKey) ?? 0;
             $maxIpCount = Config::get('sms.maxIpCount', 50);
             if ($ipCount > $maxIpCount) return app('json')->fail('Mỗi ngày, một IP chỉ được gửi tối đa' . $maxIpCount . 'tin nhắn');
 
@@ -177,13 +177,13 @@ class LoginController
         try {
             aj_captcha_check_two($captchaType, $captchaVerification);
         } catch (\Throwable $e) {
-            return app('json')->fail($e->getError());
+            return app('json')->fail($e->getMessage());
         }
 
         try {
             validate(RegisterValidates::class)->scene('code')->check(['phone' => $phone]);
         } catch (ValidateException $e) {
-            return app('json')->fail($e->getError());
+            return app('json')->fail($e->getMessage());
         }
         $time = sys_config('verify_expire_time', 1);
         $smsCode = $this->services->verify($services, $phone, $type, $time);
@@ -192,9 +192,9 @@ class LoginController
             CacheService::set($maxMinuteCountKey, (int)$minuteCount + 1, 61);
             CacheService::set($maxPhoneCountKey, (int)$phoneCount + 1, 86401);
             CacheService::set($maxIpCountKey, (int)$ipCount + 1, 86401);
-            return app('json')->success(410007);
+            return app('json')->success('Gửi mã xác thực thành công');
         } else {
-            return app('json')->fail(410008);
+            return app('json')->fail('Gửi mã xác thực thất bại');
         }
 
     }
@@ -216,21 +216,21 @@ class LoginController
             return app('json')->fail($e->getError());
         }
         if (strlen(trim($password)) < 6 || strlen(trim($password)) > 32) {
-            return app('json')->fail(400762);
+            return app('json')->fail('Tài khoản và mật khẩu phải dài từ 6 đến 32 ký tự');
         }
         $verifyCode = CacheService::get('code_' . $account);
         if (!$verifyCode)
-            return app('json')->fail(410009);
+            return app('json')->fail('Vui lòng lấy mã xác thực trước');
         $verifyCode = substr($verifyCode, 0, 6);
         if ($verifyCode != $captcha)
-            return app('json')->fail(410010);
-        if (md5($password) == md5('123456')) return app('json')->fail(410012);
+            return app('json')->fail('Mã xác thực không đúng');
+        if (md5($password) == md5('123456')) return app('json')->fail('Mật khẩu quá đơn giản, vui lòng nhập mật khẩu phức tạp hơn');
 
         $registerStatus = $this->services->register($account, $password, $spread, 'h5');
         if ($registerStatus) {
-            return app('json')->success(410013);
+            return app('json')->success('Đăng ký thành công');
         }
-        return app('json')->fail(410014);
+        return app('json')->fail('Đăng ký thất bại');
     }
 
     /**
@@ -250,19 +250,19 @@ class LoginController
             return app('json')->fail($e->getError());
         }
         if (strlen(trim($password)) < 6 || strlen(trim($password)) > 32) {
-            return app('json')->fail(400762);
+            return app('json')->fail('Tài khoản và mật khẩu phải dài từ 6 đến 32 ký tự');
         }
         $verifyCode = CacheService::get('code_' . $account);
         if (!$verifyCode)
-            return app('json')->fail(410009);
+            return app('json')->fail('Vui lòng lấy mã xác thực trước');
         $verifyCode = substr($verifyCode, 0, 6);
         if ($verifyCode != $captcha) {
-            return app('json')->fail(410010);
+            return app('json')->fail('Mã xác thực không đúng');
         }
-        if ($password == '123456') return app('json')->fail(410012);
+        if ($password == '123456') return app('json')->fail('Mật khẩu quá đơn giản, vui lòng nhập mật khẩu phức tạp hơn');
         $resetStatus = $this->services->reset($account, $password);
-        if ($resetStatus) return app('json')->success(100001);
-        return app('json')->fail(100007);
+        if ($resetStatus) return app('json')->success('Sửa thành công');
+        return app('json')->fail('Sửa thất bại');
     }
 
     /**
@@ -287,18 +287,18 @@ class LoginController
         //Xác thực mã xác thực
         $verifyCode = CacheService::get('code_' . $phone);
         if (!$verifyCode)
-            return app('json')->fail(410009);
+            return app('json')->fail('Vui lòng lấy mã xác thực trước');
         $verifyCode = substr($verifyCode, 0, 6);
         if ($verifyCode != $captcha) {
-            return app('json')->fail(410010);
+            return app('json')->fail('Mã xác thực không đúng');
         }
         $user_type = $request->getFromType() ? $request->getFromType() : 'h5';
         $token = $this->services->mobile($phone, $spread, $user_type, $agent_id);
         if ($token) {
             CacheService::delete('code_' . $phone);
-            return app('json')->success(410001, $token);
+            return app('json')->success('Đăng nhập thành công', $token);
         } else {
-            return app('json')->fail(410002);
+            return app('json')->fail('Đăng xuất thành công');
         }
     }
 
@@ -317,9 +317,9 @@ class LoginController
         $token = $this->services->switchAccount($user, $from);
         if ($token) {
             $token['userInfo'] = $user;
-            return app('json')->success(410001, $token);
+            return app('json')->success('Đăng nhập thành công', $token);
         } else
-            return app('json')->fail(410002);
+            return app('json')->fail('Đăng xuất thành công');
     }
 
     /**
@@ -344,25 +344,25 @@ class LoginController
             return app('json')->fail($e->getError());
         }
         if (!$key) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         if (!$phone) {
-            return app('json')->fail(410015);
+            return app('json')->fail('Vui lòng nhập số điện thoại');
         }
         //Xác thực mã xác thực
         $verifyCode = CacheService::get('code_' . $phone);
         if (!$verifyCode)
-            return app('json')->fail(410009);
+            return app('json')->fail('Vui lòng lấy mã xác thực trước');
         $verifyCode = substr($verifyCode, 0, 6);
         if ($verifyCode != $captcha) {
-            return app('json')->fail(410010);
+            return app('json')->fail('Mã xác thực không đúng');
         }
         $re = $this->services->bindind_phone($phone, $key);
         if ($re) {
             CacheService::delete('code_' . $phone);
-            return app('json')->success(410016, $re);
+            return app('json')->success('Liên kết thành công', $re);
         } else
-            return app('json')->fail(410017);
+            return app('json')->fail('Liên kết thất bại');
     }
 
     /**
@@ -391,18 +391,18 @@ class LoginController
             //Xác thực mã xác thực
             $verifyCode = CacheService::get('code_' . $phone);
             if (!$verifyCode)
-                return app('json')->fail(410009);
+                return app('json')->fail('Vui lòng lấy mã xác thực trước');
             $verifyCode = substr($verifyCode, 0, 6);
             if ($verifyCode != $captcha)
-                return app('json')->fail(410010);
+                return app('json')->fail('Mã xác thực không đúng');
         }
         $uid = (int)$request->uid();
         $re = $this->services->userBindindPhone($uid, $phone, $step);
         if ($re) {
             CacheService::delete('code_' . $phone);
-            return app('json')->success($re['msg'] ?? 410016, $re['data'] ?? []);
+            return app('json')->success($re['msg'] ?? 'Liên kết thành công', $re['data'] ?? []);
         } else
-            return app('json')->fail(410017);
+            return app('json')->fail('Liên kết thất bại');
     }
 
     public function update_binding_phone(Request $request)
@@ -421,17 +421,17 @@ class LoginController
         //Xác thực mã xác thực
         $verifyCode = CacheService::get('code_' . $phone);
         if (!$verifyCode)
-            return app('json')->fail(410009);
+            return app('json')->fail('Vui lòng lấy mã xác thực trước');
         $verifyCode = substr($verifyCode, 0, 6);
         if ($verifyCode != $captcha)
-            return app('json')->fail(410010);
+            return app('json')->fail('Mã xác thực không đúng');
         $uid = (int)$request->uid();
         $re = $this->services->updateBindindPhone($uid, $phone);
         if ($re) {
             CacheService::delete('code_' . $phone);
-            return app('json')->success($re['msg'] ?? 100001, $re['data'] ?? []);
+            return app('json')->success($re['msg'] ?? 'Sửa thành công', $re['data'] ?? []);
         } else
-            return app('json')->fail(100007);
+            return app('json')->fail('Sửa thất bại');
     }
 
     /**
@@ -442,11 +442,11 @@ class LoginController
     public function setLoginKey(string $code)
     {
         if (!$code) {
-            return app('json')->fail(410020);
+            return app('json')->fail('Quét mã thất bại, vui lòng quét lại');
         }
         $cacheCode = CacheService::get($code);
         if ($cacheCode === false || $cacheCode === null) {
-            return app('json')->fail(410021);
+            return app('json')->fail('Mã QR đã hết hạn, vui lòng quét lại');
         }
         CacheService::set($code, '0', 600);
         return app('json')->success();
@@ -471,16 +471,20 @@ class LoginController
         ], true);
         if ($phone) {
             if (!$captcha) {
-                return app('json')->fail(410004);
+                return app('json')->fail('Vui lòng nhập mã xác thực');
             }
             //Xác thực mã xác thực
             $verifyCode = CacheService::get('code_' . $phone);
             if (!$verifyCode)
-                return app('json')->fail(410009);
+                return app('json')->fail('Vui lòng lấy mã xác thực trước');
             $verifyCode = substr($verifyCode, 0, 6);
             if ($verifyCode != $captcha) {
                 CacheService::delete('code_' . $phone);
-                return app('json')->fail(410010);
+                return app('json')->fail('Mã xác thực không đúng');
+            }
+        } else {
+            if (!$openId) {
+                return app('json')->fail('Tham số không hợp lệ');
             }
         }
         if ($email == '') $email = substr(md5($openId), 0, 12);
@@ -492,11 +496,11 @@ class LoginController
         ];
         $token = $services->appAuth($userInfo, $phone, 'apple');
         if ($token) {
-            return app('json')->success(410001, $token);
+            return app('json')->success('Đăng nhập thành công', $token);
         } else if ($token === false) {
-            return app('json')->success(410001, ['isbind' => true]);
+            return app('json')->success('Đăng nhập thành công', ['isbind' => true]);
         } else {
-            return app('json')->fail(410019);
+            return app('json')->fail('Đăng nhập thất bại');
         }
 
     }
@@ -526,7 +530,7 @@ class LoginController
             aj_captcha_check_one($captchaType, $token, $pointJson);
             return app('json')->success();
         } catch (\Throwable $e) {
-            return app('json')->fail(400336);
+            return app('json')->fail('Mã xác thực không đúng');
         }
     }
 

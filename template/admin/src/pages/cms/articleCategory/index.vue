@@ -47,6 +47,7 @@
             <div class="tabBox_img" v-viewer v-if="row.image">
               <img v-lazy="row.image" />
             </div>
+            <div v-else>--</div>
           </template>
         </vxe-table-column>
         <vxe-table-column field="status" title="Trạng thái" min-width="120">

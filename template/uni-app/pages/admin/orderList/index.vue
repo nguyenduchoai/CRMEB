@@ -1,114 +1,152 @@
 <template>
-	<view class="pos-order-list" ref="container">
-		<view class='search acea-row row-between-wrapper'>
-			<view class='input acea-row row-between-wrapper'>
-				<text class='iconfont icon-sousuo'></text>
-				<input type='text' v-model='where.keywords' @confirm="inputConfirm" :focus='focus'
-					:placeholder='$t(`Tìm tên người dùng/mã đơn hàng/số điện thoại`)' placeholder-class='placeholder' @input="setValue"></input>
+	<view class="pos-order-list pb-safe" ref="container">
+		<!-- Thanh tìm kiếm và thanh điều hướng cố định ở trên cùng -->
+		<view class="fixed-header">
+			<view class="searchCon acea-row">
+				<view class="search acea-row row-middle">
+					<text class="iconfont icon-ic_search"></text>
+					<input class="inputs" placeholder='Vui lòng nhập số điện thoại/biệt danh khách hàng/mã đơn hàng/tên sản phẩm' placeholder-class='placeholder' confirm-type='search' name="search" v-model="where.keyword" @confirm="searchSubmit"></input>
+				</view>
+				<view class="btn" @click="filterShow = true">
+					<text class="iconfont icon-a-icon_filter1x"></text>
+				</view>
 			</view>
-			<view class='bnt' @tap='searchBut'>{{$t(`Tìm kiếm`)}}</view>
+			<view class="nav acea-row row-around row-middle" id="nav">
+				<view class="item" :class="state == -1 ? 'on' : ''" @click="changeStatus(-1)">
+					Tất cả
+					<image src="../static/adorn.png" v-if="state == -1"></image>
+				</view>
+				<view class="item" :class="state == 0 ? 'on' : ''" @click="changeStatus(0)">
+					Chờ thanh toán
+					<image src="../static/adorn.png" v-if="state == 0"></image>
+				</view>
+				<view class="item" :class="state == 1 ? 'on' : ''" @click="changeStatus(1)">
+					Chờ giao hàng/xác nhận sử dụng
+					<image src="../static/adorn.png" v-if="state == 1"></image>
+				</view>
+				<view class="item" :class="state == 2 ? 'on' : ''" @click="changeStatus(2)">
+					Chờ nhận hàng
+					<image src="../static/adorn.png" v-if="state == 2"></image>
+				</view>
+				<view class="item" :class="state == 3 ? 'on' : ''" @click="changeStatus(3)">
+					Chờ đánh giá
+					<image src="../static/adorn.png" v-if="state == 3"></image>
+				</view>
+			</view>
 		</view>
-		<view class="nav acea-row row-around row-middle">
-			<view class="item" :class="where.status == 0 ? 'on' : ''" @click="changeStatus(0)">
-				{{$t(`Chờ thanh toán`)}}
-			</view>
-			<view class="item" :class="where.status == 1 ? 'on' : ''" @click="changeStatus(1)">
-				{{$t(`Chờ giao hàng`)}}
-			</view>
-			<view class="item" :class="where.status == 2 ? 'on' : ''" @click="changeStatus(2)">
-				{{$t(`Chờ nhận hàng`)}}
-			</view>
-			<view class="item" :class="where.status == 3 ? 'on' : ''" @click="changeStatus(3)">
-				{{$t(`Chờ đánh giá`)}}
-			</view>
-			<view class="item" :class="where.status == 4 ? 'on' : ''" @click="changeStatus(4)">
-				{{$t(`Đã hoàn thành`)}}
-			</view>
-			<view class="item" :class="where.status == -3 ? 'on' : ''" @click="changeStatus(-3)">
-				{{$t(`Hoàn tiền`)}}
-			</view>
-		</view>
-		<view class="list" v-if="list.length">
-			<view class="item" v-for="(item, index) in list" :key="index">
+		<!-- Vùng danh sách có thể cuộn -->
+		<scroll-view class="list-scroll" scroll-y @scrolltolower="getIndex">
+			<view class="list" v-if="list.length">
+				<view class="item" v-for="(item, index) in list" :key="index">
 				<view class="order-num acea-row row-between-wrapper" @click="toDetail(item)">
 					<view>
-						<view>{{$t(`Mã đơn hàng`)}}：{{ item.order_id }}</view>
-						<view class="time">{{$t(`Thời gian đặt hàng`)}}：{{ item.add_time }}</view>
+						<!-- <countDown v-if="item.status == 0 && item.paid == 0 && item.pay_type != 'offline'" tipText="Còn lại:" dayText=" " hourText="giờ" minuteText="phút" secondText=" " dotColor="#FF7E00"
+							colors="#FF7E00" :datatime="item.stop_time" :isSecond="false">
+						</countDown> -->
+						<view>Mã đơn hàng: {{ item.order_id }}</view>
 					</view>
-					<view class="state"
-						:class="(item.refund_status==0 && where.status != 0 && item.refund.length)?'on':''">
-						{{item.refund_status==1?$t(`Đang hoàn tiền`):item.refund_status==2?$t(`Đã hoàn tiền`):item.refund_status==3?$t(`Từ chối hoàn tiền`):$t(item.status_name.status_name)}}
-						<text
-							v-if="item.refund_status==0 && where.status != 0 && item.refund.length">{{item.is_all_refund?$t(`Đang hoàn tiền`):$t(`Đang hoàn tiền một phần`)}}</text>
+					<view class="state" :class="(item.refund_status==0 && where.status != 0 && item.refund.length)?'on':''">
+						{{item.refund_status==1?'Đang hoàn tiền':item.refund_status==2?'Đã hoàn tiền':item.refund_status==3?'Từ chối hoàn tiền':item.status_name.status_name}}
+						<text v-if="item.refund_status==0 && where.status != 0 && item.refund.length">{{item.is_all_refund?', đang hoàn tiền':', đang hoàn tiền một phần'}}</text>
 					</view>
 				</view>
-				<view class="pos-order-goods" v-for="(val, key) in item._info" :key="key">
-					<view class="goods acea-row row-between row-top" @click="toDetail(item)">
-						<view class="picTxt acea-row row-between-wrapper">
-							<view class="pictrue">
-								<image
-									:src="val.cart_info.productInfo.attrInfo?val.cart_info.productInfo.attrInfo.image:val.cart_info.productInfo.image" />
+				<view class="pos-order-goods">
+					<view class="goods acea-row" @click="toDetail(item)">
+						<scroll-view class="picTxt scroll-view" scroll-x="true" v-if="item.cart_id.length > 1">
+							<view class="pictrue" v-for="(val, key) in item._info" :key="key">
+								<image :src="val.cart_info.productInfo.attrInfo?val.cart_info.productInfo.attrInfo.image:val.cart_info.productInfo.image" />
 							</view>
-							<view class="text acea-row row-between row-column">
-								<view class="info line2">
-									{{ val.cart_info.productInfo.store_name }}
+						</scroll-view>
+						<view class="picTxt" v-else>
+							<view class="acea-row" v-for="(val, key) in item._info" :key="key">
+								<view class="pictrue">
+									<image :src="val.cart_info.productInfo.attrInfo?val.cart_info.productInfo.attrInfo.image:val.cart_info.productInfo.image" />
 								</view>
-								<view class="attr" v-if="val.cart_info.productInfo.attrInfo">
-									{{ val.cart_info.productInfo.attrInfo.suk }}
+								<view class="text">
+									<view class="info line2">
+										<!-- <text v-if="val.cart_info.is_gift == 1" class="label">[Quà tặng]</text> -->
+										{{ val.cart_info.productInfo.store_name }}
+									</view>
+									<view class="attr" v-if="val.cart_info.productInfo.attrInfo">
+										{{ val.cart_info.productInfo.attrInfo.suk }}
+									</view>
 								</view>
 							</view>
 						</view>
 						<view class="money">
-							<view class="x-money">
-								{{$t(`￥`)}}{{ val.cart_info.productInfo.attrInfo?val.cart_info.productInfo.attrInfo.price:val.cart_info.productInfo.price }}
-							</view>
-							<view class="num">x{{ val.cart_info.cart_num }}</view>
-							<view class="info" v-if="val.cart_info.refund_num && item._status._type !=-2">
-								{{val.cart_info.refund_num}}{{$t(`sản phẩm đang hoàn tiền`)}}
-							</view>
+							<!-- <view class="x-money">￥{{ item.pay_price }}</view> -->
+							<BaseMoney :money="item.pay_price" symbolSize="20" integerSize="32" decimalSize="20"></BaseMoney>
+							<view class="num">Tổng {{ item.total_num }} sản phẩm</view>
 						</view>
 					</view>
 				</view>
-				<view class="public-total">
-					{{$t(`Tổng`)}}{{ item.total_num }}{{$t(`sản phẩm, thực thanh toán`)}}
-					<span class="money">{{$t(`￥`)}}{{ item.pay_price }}</span> ( {{$t(`Phí vận chuyển`)}} {{$t(`￥`)}}{{
-	            item.pay_postage
-	          }}
-					)
-				</view>
 				<view class="operation acea-row row-between-wrapper">
+					<view class="more">
+					</view>
 					<view class="acea-row row-middle">
-						<view class="bnt" @click="modify(item, 0)" v-if="where.status == 0">
-							{{$t(`Sửa giá nhanh`)}}
+						<view class="bnt" @click="modify(item, 1)">Ghi chú đơn hàng</view>
+						<view class="bnt" :class="openErp?'on':''" @click="modify(item, 0)" v-if="item._status == 1 && item.is_cancel == 0">
+							Sửa giá nhanh
 						</view>
-						<view class="bnt" @click="modify(item, 1)">{{$t(`Ghi chú đơn hàng`)}}</view>
-						<view class="bnt" @click="modify(item, 2)"
-							v-if="(item.refund_type == 0 || item.refund_type == 1 || item.refund_type == 5 ) && where.status == -3 && parseFloat(item.pay_price) > 0">
-							{{$t(`Hoàn tiền ngay`)}}
+						<view class="bnt primary" :class="openErp?'on':''" v-if="item.status == 0 && item.paid == 0 && item.is_cancel == 0" @click="confirmPay(item)">
+							Xác nhận thanh toán
 						</view>
-						<view class="bnt" @click="agreeExpress(item)"
-							v-if="where.status == -3 && item.refund_type == 2">{{$t(`Đồng ý trả hàng`)}}</view>
-						<view class="wait" v-if="where.status == -3 && item.refund_type == 4">{{$t(`Chờ khách gửi trả hàng`)}}</view>
-						<view class="bnt cancel" v-if="item.pay_type === 'offline' && item.paid === 0"
-							@click="offlinePay(item)">
-							{{$t(`Xác nhận thanh toán`)}}
+						<view class="bnt primary" :class="openErp?'on':''"
+							v-if="item._status == 2 && item.shipping_type == 1 && (item.pink_id == 0 || (item.pink_id > 0 && item.pinkStatus == 2))"
+							@click="goDelivery(item)">Giao hàng
 						</view>
-						<navigator class="bnt"
-							v-if="where.status == 1 && item.shipping_type === 1 && (item.pinkStatus === null || item.pinkStatus === 2) && !item.refund.length"
-							:url="'/pages/admin/delivery/index?id='+item.order_id+'&listId='+item.id+'&totalNum='+item.total_num+'&orderStatus='+item._status+'&comeType=1'+'&virtualType='+item.virtual_type">
-							{{$t(`Giao hàng`)}}
+						<navigator class="bnt primary" :url="'/pages/admin/logistics/index?orderId='+item.order_id" 
+							v-if="item._status == 4 && item.delivery_type == 'express'">Xem vận chuyển
 						</navigator>
+						<view class="bnt primary" v-if="item.shipping_type == 2 &&
+                (item.status == 0 || item.status == 5) &&
+                item.paid == 1 &&
+                item.refund_status === 0" @click="verify(item)">Xác nhận sử dụng đơn hàng</view>
+					</view>
+				</view>
+				</view>
+			</view>
+			<view v-else class="px-20 mt-20 empty-wrapper">
+				<emptyPage title="Chưa có đơn hàng~" src="/statics/images/noOrder.gif"></emptyPage>
+			</view>
+		</scroll-view>
+		<Loading :loaded="loaded" :loading="loading"></Loading>
+		<PriceChange :change="change" :orderInfo="orderInfo" :isRefund="isRefund" v-on:statusChange="statusChange($event)" v-on:closechange="changeclose($event)" v-on:savePrice="savePrice"
+			:status="status"></PriceChange>
+		<view class="mask" v-if="filterShow" @click="filterShow = false"></view>
+		<view class="filter-popup" :class="{ on: filterShow }">
+			<view class="search-box">
+				<view class="search acea-row row-middle">
+					<text class="iconfont icon-ic_search"></text>
+					<input class="input" placeholder='Vui lòng nhập đơn hàng cần tra cứu' placeholder-class='placeholder' confirm-type='search' name="search" v-model="where.keyword" @confirm="searchSubmit"></input>
+				</view>
+			</view>
+			<view class="content">
+				<view class="item">
+					<view class="title">Theo thời gian đặt hàng</view>
+					<view class="acea-row list">
+						<view class="cell" v-for="(item, index) in dateList" :key="index" :class="{ on: item.val == dateSelected }" @click="dateChange(item.val)">{{ item.label }}</view>
+					</view>
+				</view>
+				<view class="item">
+					<view class="title">Theo phương thức thanh toán</view>
+					<view class="acea-row list">
+						<view class="cell" v-for="(item, index) in payList" :key="index" :class="{ on: item.val == where.pay_type }" @click="payChange(item.val)">{{ item.label }}</view>
 					</view>
 				</view>
 			</view>
 		</view>
-		<view v-else class="nothing">
-			<image v-if="!loading" :src="imgHost + '/statics/images/no-thing.png'" alt="">
-				<view v-if="!loading">{{$t(`Chưa có bản ghi`)}}</view>
+		<view v-if="confirmShow" class="mask"></view>
+		<view v-if="confirmShow" class="confirm-popup">
+			<view class="title">Xác nhận thanh toán</view>
+			<view class="info">Xác nhận khách hàng đã thanh toán đơn hàng này</view>
+			<view class="acea-row btn-box">
+				<view class="btn" @click="confirmShow = false">Hủy</view>
+				<view class="btn primary" @click="offlinePay">Xác nhận</view>
+			</view>
 		</view>
-		<Loading :loaded="loaded" :loading="loading"></Loading>
-		<PriceChange :change="change" :orderInfo="orderInfo" :isRefund="isRefund" v-on:closechange="changeclose($event)"
-			v-on:savePrice="savePrice" :status="status"></PriceChange>
+		<view class="footerH"></view>
+		<footerPage></footerPage>
 	</view>
 </template>
 
@@ -120,90 +158,211 @@
 		setAdminRefundRemark,
 		setOfflinePay,
 		setOrderRefund,
-		agreeExpress,
-		orderRefund_order
+		orderRefundAgree,
+		adminRefundList,
+		orderVerific
 	} from "@/api/admin";
+	// import {
+	// 	erpConfig
+	// } from "@/api/esp.js";
 	import Loading from '@/components/Loading/index'
 	import PriceChange from '../components/PriceChange/index.vue'
-	import {
-		HTTP_REQUEST_URL
-	} from '@/config/app'
+	import footerPage from '../components/footerPage/index.vue'
+	import countDown from '@/components/countDown/index.vue'
+	import emptyPage from '@/components/emptyPage.vue'
+	// #ifdef MP || APP-PLUS
+	import NavBar from '@/components/NavBar.vue';
+	// #endif
 	import {
 		isMoney
-	} from '@/utils/validate.js'
+	} from '@/utils/validate.js';
+	import {
+		HTTP_REQUEST_URL
+	} from '@/config/app';
 	export default {
 		name: "AdminOrderList",
 		components: {
 			Loading,
-			PriceChange
+			PriceChange,
+			footerPage,
+			countDown,
+			emptyPage,
+			// #ifdef MP || APP-PLUS
+			NavBar,
+			// #endif
 		},
 		data() {
 			return {
-				imgHost: HTTP_REQUEST_URL,
+				getHeight: this.$util.getWXStatusHeight(),
+				iconColor: '#333333',
+				isScrolling: false,
+				top: 0,
+				navHeight: 0,
+				isFixed: false,
+				filterShow: false,
+				openErp: false,
 				current: "",
 				change: false,
 				types: 0,
 				where: {
-					keywords: '',
 					page: 1,
 					limit: 10,
-					status: 0
+					status: '',
+					keyword: '',
+					data: '', // Lọc theo thời gian
+					type: '', // Loại đơn hàng
+					pay_type: '', // Phương thức thanh toán
 				},
 				list: [],
 				loaded: false,
 				loading: false,
-				focus: false,
 				orderInfo: {},
 				status: "",
-				isRefund: 0 //1 là chỉ hoàn tiền; 0 là trả hàng hoàn tiền
+				state: -1,
+				isRefund: 0, //1 là chỉ hoàn tiền; 0 là trả hàng hoàn tiền
+				imgHost: HTTP_REQUEST_URL,
+				dateSelected: '',
+				dateList: [{
+						label: 'Tất cả',
+						val: '',
+					},
+					{
+						label: 'Trong 3 ngày',
+						val: '1',
+					},
+					{
+						label: 'Trong 1 tháng',
+						val: '2',
+					},
+					{
+						label: 'Trong 3 tháng',
+						val: '3',
+					},
+					{
+						label: 'Trong 6 tháng',
+						val: '4',
+					},
+				],
+				payList: [{
+						label: 'Tất cả',
+						val: '',
+					},
+					{
+						label: 'WeChat Pay',
+						val: '1'
+					},
+					{
+						label: 'Thanh toán Alipay',
+						val: '4'
+					},
+					{
+						label: 'Thanh toán bằng số dư',
+						val: '2'
+					},
+					{
+						label: 'Thanh toán ngoại tuyến',
+						val: '3'
+					},
+				],
+				confirmOrder: {},
+				confirmShow: false,
 			};
 		},
 		onLoad(option) {
 			let type = option.types;
-			this.where.status = type;
+			this.where.status = type || '';
+			this.state = type || -1;
+			// this.getErpConfig();
 		},
 		onShow() {
 			this.init();
 		},
+		onPageScroll(option) {
+			if (this.top - (this.getHeight.barTop + this.getHeight.barHeight) >= option.scrollTop) {
+				this.isFixed = false;
+			} else {
+				this.isFixed = true;
+			}
+			// #ifdef MP
+			if (option.scrollTop > 50) {
+				this.isScrolling = true;
+			} else if (option.scrollTop < 50) {
+				this.isScrolling = false;
+			}
+			// #endif
+		},
+		mounted() {
+			const query = uni.createSelectorQuery().in(this);
+			query.select("#nav").boundingClientRect((data) => {
+				this.top = data.top;
+				this.navHeight = data.height;
+			}).exec();
+		},
 		methods: {
-			setValue(event) {
-				this.$set(this.where, 'keywords', event.detail.value);
-			},
-			inputConfirm(event) {
-				if (event.detail.value) {
-					uni.hideKeyboard();
-					this.getIndex();
-				}
-			},
-			searchBut() {
-				let that = this;
-				that.focus = false;
-				that.where.page = 1;
-				that.loading = false;
-				that.loaded = false;
-				that.$set(that, 'list', []);
-				uni.showLoading({
-					title: that.$t(`Đang tìm kiếm`)
+			verify(item) {
+				uni.showModal({
+					title: 'Thông báo thao tác',
+					content: 'Bạn có chắc muốn xác nhận sử dụng đơn hàng này không?',
+					success: (res) => {
+						if (res.confirm) {
+							orderVerific(item.verify_code, 1, 1)
+								.then((res) => {
+									item.status = 2;
+									this.$util.Tips({
+										title: res.msg
+									});
+								})
+								.catch((res) => {
+									// this.verify_code = '';
+									return this.$util.Tips({
+										title: res
+									});
+								});
+						}
+					}
 				});
-				that.getIndex();
+			},
+			searchSubmit() {
+
+			},
+			statusChange(e) {
+				this.status = e;
+			},
+			goDelivery(item) {
+				if (this.openErp) return
+				uni.navigateTo({
+					url: '/pages/admin/delivery/index?id=' + item.order_id + '&listId=' + item.id + '&totalNum=' + item.total_num + '&orderStatus=' + item._status + '&comeType=1&productType=' +
+						item.product_type
+				})
+			},
+			getErpConfig() {
+				erpConfig().then(res => {
+					this.openErp = res.data.open_erp;
+				}).catch(err => {
+					this.$util.Tips({
+						title: err
+					})
+				})
 			},
 			// Lấy dữ liệu
-			getIndex() {
+			getIndex: function() {
 				let that = this;
 				if (that.loading || that.loaded) return;
 				that.loading = true;
-				let fn
-				that.where.status == -3 ? fn = orderRefund_order : fn = getAdminOrderList
-				fn(that.where).then(
+				let obj = '';
+				if (this.where.status == -3) {
+					obj = adminRefundList(that.where);
+				} else {
+					obj = getAdminOrderList(that.where);
+				}
+				obj.then(
 					res => {
 						that.loading = false;
 						that.loaded = res.data.length < that.where.limit;
 						that.list.push.apply(that.list, res.data);
 						that.where.page = that.where.page + 1;
-						uni.hideLoading();
 					},
 					err => {
-						uni.hideLoading();
 						that.$util.Tips({
 							title: err
 						})
@@ -211,7 +370,7 @@
 				);
 			},
 			// Khởi tạo
-			init() {
+			init: function() {
 				this.list = [];
 				this.where.page = 1;
 				this.loaded = false;
@@ -219,24 +378,47 @@
 				this.getIndex();
 				this.current = "";
 			},
+			searchSubmit() {
+				this.init();
+			},
 			// Chuyển tab điều hướng
 			changeStatus(val) {
-				if (this.where.status != val) {
-					this.where.status = val;
+				if (this.state != val) {
+					this.state = val;
+					this.where.status = val == -1 ? '' : val;
 					this.init();
 				}
 			},
 			// Thao tác sản phẩm
-			modify(item, status) {
+			modify: function(item, status, type) {
+				if (this.openErp && status != 1) return
 				this.change = true;
 				this.status = status.toString();
 				this.orderInfo = item;
 				if (status == 2) {
-					this.isRefund = 1
+					this.isRefund = type
 				}
 			},
-			changeclose(msg) {
+			changeclose: function(msg) {
 				this.change = msg;
+			},
+			objOrderRefund(data) {
+				let that = this;
+				setOrderRefund(data).then(
+					res => {
+						that.change = false;
+						that.$util.Tips({
+							title: res.msg
+						});
+						that.init();
+					},
+					err => {
+						that.change = false;
+						that.$util.Tips({
+							title: err
+						});
+					}
+				);
 			},
 			async savePrice(opt) {
 				let that = this,
@@ -249,7 +431,7 @@
 				if (that.status == 0) {
 					if (!isMoney(price)) {
 						return that.$util.Tips({
-							title: that.$t(`Vui lòng nhập số tiền hợp lệ`)
+							title: 'Vui lòng nhập số tiền hợp lệ'
 						});
 					}
 					data.price = price;
@@ -257,7 +439,7 @@
 						res => {
 							that.change = false;
 							that.$util.Tips({
-								title: that.$t(`Đổi giá thành công`),
+								title: 'Đổi giá thành công',
 								icon: 'success'
 							})
 							that.init();
@@ -265,38 +447,61 @@
 						err => {
 							that.change = false;
 							that.$util.Tips({
-								title: that.$t(`Đổi giá thất bại`),
+								title: 'Đổi giá thất bại',
 								icon: 'none'
 							})
 						}
 					);
 				} else if (that.status == 2) {
-					if (!isMoney(refund_price)) {
-						return that.$util.Tips({
-							title: that.$t(`Vui lòng nhập số tiền hợp lệ`)
-						});
-					}
-					data.price = refund_price;
-					data.type = opt.type;
-					setOrderRefund(data).then(
-						res => {
-							that.change = false;
-							that.$util.Tips({
-								title: res.msg
-							});
-							that.init();
-						},
-						err => {
-							that.change = false;
-							that.$util.Tips({
-								title: err
+					if (this.isRefund) {
+						if (!isMoney(refund_price)) {
+							return that.$util.Tips({
+								title: 'Vui lòng nhập số tiền hợp lệ'
 							});
 						}
-					);
+						data.price = refund_price;
+						data.type = opt.type;
+						this.objOrderRefund(data);
+						// setOrderRefund(data).then(
+						// 	res => {
+						// 		that.change = false;
+						// 		that.$util.Tips({title: res.msg});
+						// 		that.init();
+						// 	},
+						// 	err => {
+						// 		that.change = false;
+						// 		that.$util.Tips({title: err});
+						// 	}
+						// );
+					} else {
+						if (opt.type == 1) {
+							orderRefundAgree(this.orderInfo.id).then(res => {
+								that.change = false;
+								that.$util.Tips({
+									title: res.msg
+								});
+								that.init();
+							}).catch(err => {
+								that.change = false;
+								that.$util.Tips({
+									title: err
+								});
+							})
+						}
+						// else{
+						// 	data.type = opt.type;
+						// 	data.refuse_reason = opt.refuse_reason;
+						// 	this.objOrderRefund(data);
+						// }
+					}
+				} else if (that.status == 8) {
+					data.type = opt.type;
+					data.refuse_reason = opt.refuse_reason;
+					this.objOrderRefund(data);
 				} else {
 					if (!remark) {
 						return this.$util.Tips({
-							title: that.$t(`Vui lòng nhập ghi chú`)
+							title: 'Vui lòng nhập ghi chú'
 						})
 					}
 					data.remark = remark;
@@ -324,31 +529,18 @@
 					);
 				}
 			},
-			agreeExpress(item) {
-				let that = this;
-				agreeExpress({
-					id: item.id
-				}).then(res => {
-					that.$util.Tips({
-						title: res.msg
-					});
-					that.init();
-				}).catch(err => {
-					that.$util.Tips({
-						title: err
-					});
-				})
-			},
 			toDetail(item) {
 				uni.navigateTo({
 					url: `/pages/admin/orderDetail/index?id=${item.order_id}&types=${this.where.status}`
 				})
 			},
-			offlinePay(item) {
+			offlinePay: function() {
+				if (this.openErp) return
 				setOfflinePay({
-					order_id: item.order_id
+					order_id: this.confirmOrder.order_id
 				}).then(
 					res => {
+						this.confirmShow = false;
 						this.$util.Tips({
 							title: res.msg,
 							icon: "success"
@@ -359,7 +551,41 @@
 						this.$util.Tips(error);
 					}
 				);
-			}
+			},
+			confirmPay(item) {
+				this.confirmOrder = item;
+				this.confirmShow = true;
+			},
+			dateChange(value) {
+				const date = new Date();
+				const end = date.toLocaleString();
+				let start = '';
+				if (value == 1) {
+					date.setDate(date.getDate() - 2)
+					date.setHours(0, 0, 0, 0);
+				} else if (value == 2) {
+					date.setDate(1)
+					date.setHours(0, 0, 0, 0);
+				} else if (value == 3) {
+					date.setMonth(date.getMonth() - 2)
+					date.setDate(1)
+					date.setHours(0, 0, 0, 0);
+				} else if (value == 4) {
+					date.setMonth(date.getMonth() - 5)
+					date.setDate(1)
+					date.setHours(0, 0, 0, 0);
+				}
+				start = date.toLocaleString();
+				this.dateSelected = value;
+				this.filterShow = false;
+				this.where.data = start == end ? '' : `${start}-${end}`;
+				this.init();
+			},
+			payChange(val) {
+				this.filterShow = false;
+				this.where.pay_type = val;
+				this.init();
+			},
 		},
 		onReachBottom() {
 			this.getIndex()
@@ -369,104 +595,140 @@
 
 <style lang="scss" scoped>
 	.pos-order-list {
-		padding-top: 96rpx;
+		::v-deep.navbar {
+			.content {
+				background: #F5F5F5 !important;
+			}
+		}
+	}
+
+	.fixed-header {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		z-index: 99;
+		background: #F5F5F5;
+	}
+
+	.list-scroll {
+		height: calc(100vh - 180rpx);
+		margin-top: 180rpx;
+	}
+
+	.empty-wrapper {
+		padding-top: 200rpx;
+	}
+
+	.searchCon {
+		padding: 10rpx 20rpx;
 
 		.search {
-			padding-left: 30rpx;
-			padding-top: 30rpx;
-			background-color: #fff;
-			position: fixed;
-			top: 0;
-			left: 0;
-			z-index: 99;
+			flex: 1;
+			height: 72rpx;
+			padding: 0 32rpx;
+			border-radius: 36rpx;
+			background: #FFFFFF;
 
-			.input {
-				width: 598rpx;
-				background-color: #f7f7f7;
-				border-radius: 33rpx;
-				padding: 0 35rpx;
-				box-sizing: border-box;
-				height: 66rpx;
+			.iconfont {
+				margin-right: 16rpx;
+				font-size: 32rpx;
+				color: #999999;
 			}
 
-			.input input {
-				width: 472rpx;
+			.inputs {
+				flex: 1;
 				font-size: 28rpx;
+				color: #333;
 			}
 
-			.input .placeholder {
-				color: #999;
+			.placeholder {
+				font-size: 26rpx;
+				color: #ccc;
 			}
+		}
 
-			.input .iconfont {
-				color: #555;
-				font-size: 35rpx;
-			}
+		.btn {
+			width: 72rpx;
+			height: 72rpx;
+			border-radius: 50%;
+			margin-left: 20rpx;
+			background: #FFFFFF;
+			text-align: center;
 
-			.bnt {
-				width: 120rpx;
-				text-align: center;
-				height: 66rpx;
-				line-height: 66rpx;
-				font-size: 30rpx;
-				color: #282828;
+			.iconfont {
+				font-size: 32rpx;
+				line-height: 72rpx;
+				color: #666666;
 			}
 		}
 	}
 
 	.pos-order-list .nav {
-		width: 100%;
-		height: 96upx;
-		background-color: #fff;
-		font-size: 28rpx;
-		color: #282828;
-		position: fixed;
-		top: 96rpx;
-		left: 0;
-		z-index: 99;
+		font-size: 26rpx;
+		line-height: 42rpx;
+		color: #333333;
+
+		.item {
+			position: relative;
+			padding: 28rpx 0;
+
+			image {
+				width: 14rpx;
+				height: 14rpx;
+				display: block;
+				position: absolute;
+				bottom: 20rpx;
+				right: -4rpx;
+			}
+		}
 	}
 
 	.pos-order-list .nav .item.on {
-		color: #2291f8;
+		font-weight: 500;
+		font-size: 30rpx;
+		color: $primary-admin;
 	}
 
 	.pos-order-list .list {
-		margin-top: 120upx;
+		padding: 0 20rpx;
 	}
 
 	.pos-order-list .nothing {
-		margin-top: 220upx;
+		margin-top: 120upx;
 		text-align: center;
 		color: #cfcfcf;
 	}
 
 	.pos-order-list .list .item {
+		padding: 32rpx 24rpx;
+		border-radius: 24rpx;
 		background-color: #fff;
-		width: 100%;
+
+		::v-deep.time {
+			.title {
+				color: #FF7E00;
+			}
+		}
 	}
 
 	.pos-order-list .list .item~.item {
-		margin-top: 24upx;
+		margin-top: 20rpx;
 	}
 
 	.pos-order-list .list .item .order-num {
-		height: 124upx;
-		border-bottom: 1px solid #eee;
-		font-size: 30upx;
-		font-weight: bold;
-		color: #282828;
-		padding: 0 30upx;
+		font-size: 28rpx;
+		line-height: 40rpx;
+		color: #333333;
 	}
 
 	.pos-order-list .list .item .order-num .state {
-		color: #2291f8;
-		font-weight: normal;
-		font-size: 24rpx;
+		color: #FF7E00;
 	}
 
 	.pos-order-list .list .item .order-num .state.on {
 		font-size: 24rpx;
-		width: 150rpx;
+		width: 180rpx;
 		text-align: right;
 	}
 
@@ -476,12 +738,7 @@
 		color: #999;
 	}
 
-	.pos-order-list .list .item .operation {
-		padding: 20upx 30upx;
-		margin-top: 3upx;
-		display: flex;
-		justify-content: right;
-	}
+	.pos-order-list .list .item .operation {}
 
 	.pos-order-list .list .item .operation .more {
 		position: relative;
@@ -536,32 +793,32 @@
 	}
 
 	.pos-order-list .list .item .operation .bnt {
-		font-size: 28upx;
-		color: #5c5c5c;
-		width: 170upx;
-		height: 60upx;
-		border-radius: 30upx;
-		border: 1px solid #bbb;
+		width: 144rpx;
+		height: 56rpx;
+		border-radius: 28rpx;
+		border: 1rpx solid #CCCCCC;
 		text-align: center;
-		line-height: 60upx;
+		font-size: 24rpx;
+		line-height: 54rpx;
+		color: #333333;
+
+		&.primary {
+			color: #FFFFFF !important;
+			background-color: $primary-admin !important;
+			border-color: $primary-admin !important;
+		}
 	}
 
 	.pos-order-list .list .item .operation .bnt~.bnt {
-		margin-left: 14upx;
+		margin-left: 16rpx;
 	}
 
 	.pos-order-list .list .item .operation .wait {
 		margin-left: 30rpx;
-		color: orangered;
-	}
-
-	.pos-order-goods {
-		padding: 0 30upx;
-		background-color: #fff;
 	}
 
 	.pos-order-goods .goods {
-		padding: 28rpx 0;
+		padding: 26rpx 0;
 	}
 
 	.pos-order-goods .goods~.goods {
@@ -569,42 +826,62 @@
 	}
 
 	.pos-order-goods .goods .picTxt {
-		width: 515upx;
+		flex: 1;
+		min-width: 0;
+	}
+
+	.pos-order-goods .goods .scroll-view {
+		box-sizing: border-box;
+		white-space: nowrap;
+
+		.pictrue {
+			display: inline-block;
+
+			+.pictrue {
+				margin-left: 16rpx;
+			}
+		}
 	}
 
 	.pos-order-goods .goods .picTxt .pictrue {
-		width: 130upx;
-		height: 130upx;
+		width: 136rpx;
+		height: 136rpx;
 	}
 
 	.pos-order-goods .goods .picTxt .pictrue image {
 		width: 100%;
 		height: 100%;
-		border-radius: 6upx;
+		border-radius: 16rpx;
 	}
 
 	.pos-order-goods .goods .picTxt .text {
-		width: 365upx;
-		height: 130upx;
+		flex: 1;
+		min-width: 0;
+		padding-left: 20rpx;
 	}
 
 	.pos-order-goods .goods .picTxt .text .info {
-		width: 100%;
-		font-size: 28upx;
-		color: #282828;
+		font-size: 28rpx;
+		line-height: 40rpx;
+		color: #333333;
+	}
+
+	.pos-order-goods .goods .picTxt .text .info .label {
+		color: #ff4c3c;
 	}
 
 	.pos-order-goods .goods .picTxt .text .attr {
-		width: 100%;
+		margin-top: 12rpx;
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
-		font-size: 24upx;
-		color: #999;
+		font-size: 24rpx;
+		line-height: 34rpx;
+		color: #999999;
 	}
 
 	.pos-order-goods .goods .money {
-		width: 164upx;
+		padding-left: 16rpx;
 		text-align: right;
 		font-size: 28upx;
 	}
@@ -619,8 +896,10 @@
 	}
 
 	.pos-order-goods .goods .money .num {
-		color: #ff9600;
-		margin: 5upx 0;
+		margin-top: 10rpx;
+		font-size: 24rpx;
+		line-height: 34rpx;
+		color: #999999;
 	}
 
 	.pos-order-goods .goods .money .y-money {
@@ -641,5 +920,146 @@
 
 	.public-total .money {
 		color: #ff4c3c;
+	}
+
+	.filter-popup {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 100;
+		width: 100%;
+		border-radius: 0 0 32rpx 32rpx;
+		background: #FFFFFF;
+		transform: translateY(-120%);
+		transition: transform 0.3s;
+
+		&.on {
+			padding-top: 20rpx;
+			transform: translateY(0);
+		}
+
+		.search-box {
+			padding: 10rpx 32rpx;
+		}
+
+		.search {
+			height: 58rpx;
+			padding: 0 32rpx;
+			border-radius: 29rpx;
+			background: #F5F5F5;
+		}
+
+		.iconfont {
+			font-size: 28rpx;
+			color: #999999;
+		}
+
+		.input {
+			flex: 1;
+			height: 58rpx;
+			padding-left: 16rpx;
+			font-size: 24rpx;
+		}
+
+		.content {
+			padding: 32rpx 30rpx 58rpx;
+		}
+
+		.item {
+			margin-top: 36rpx;
+
+			&:first-child {
+				margin-top: 0;
+			}
+		}
+
+		.title {
+			font-size: 28rpx;
+			line-height: 40rpx;
+			color: #333333;
+		}
+
+		.list {
+			padding: 0;
+			margin-right: -24rpx;
+		}
+
+		.cell {
+			width: 154rpx;
+			height: 56rpx;
+			border: 1rpx solid #F5F5F5;
+			border-radius: 28rpx;
+			margin: 24rpx 24rpx 0 0;
+			background: #F5F5F5;
+			text-align: center;
+			font-size: 24rpx;
+			line-height: 54rpx;
+			color: #333333;
+
+			&.on {
+				border-color: $primary-admin;
+				background: $light-primary-admin;
+				color: $primary-admin;
+			}
+		}
+	}
+
+	.footerH {
+		height: 110rpx;
+		height: calc(110rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+		height: calc(110rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
+	}
+
+	.mask {
+		z-index: 21;
+	}
+
+	.confirm-popup {
+		position: fixed;
+		top: 50%;
+		right: 75rpx;
+		left: 75rpx;
+		z-index: 21;
+		transform: translateY(-50%);
+		border-radius: 32rpx;
+		background: #FFFFFF;
+		text-align: center;
+
+		.title {
+			padding: 40rpx 32rpx 0;
+			font-weight: 500;
+			font-size: 32rpx;
+			line-height: 52rpx;
+			color: #333333;
+		}
+
+		.info {
+			padding: 24rpx 40rpx 0;
+			font-size: 30rpx;
+			line-height: 42rpx;
+			color: #666666;
+		}
+
+		.btn-box {
+			padding: 40rpx;
+		}
+
+		.btn {
+			flex: 1;
+			height: 72rpx;
+			border: 1rpx solid $primary-admin;
+			border-radius: 36rpx;
+			margin-left: 32rpx;
+			font-weight: 500;
+			font-size: 26rpx;
+			line-height: 70rpx;
+			color: $primary-admin;
+			transform: rotateZ(360deg);
+
+			&.primary {
+				background: $primary-admin;
+				color: #FFFFFF;
+			}
+		}
 	}
 </style>

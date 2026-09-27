@@ -18,31 +18,38 @@
 				</view>
 			</view>
 			<view class="sign-record">
-				<block v-for="(item, index) in recordList" :key="index" v-if="recordList.length > 0">
-					<view class="list">
+				<block v-if="recordList.length > 0">
+					<view class="list" v-for="(item, index) in recordList" :key="index">
 						<view class="item">
 							<view class="data">{{ item.time }}</view>
 							<view class="listn">
 								<block v-for="(child, indexn) in item.child" :key="indexn">
 									<view class="itemn acea-row row-between-wrapper">
 										<view class="title">
-											<view class="name line1">{{ type == 1 ? $t(child.mark) : $t(child.title) }}</view>
+											<view class="name acea-row line1">
+												<view
+													v-if="child.pm != 1 && child.type == 'extract'"
+													class="extract-tag"
+													:class="{ 'bg-success': child.extract_status == 1, 'bg-ing': child.extract_status == 0, 'bg-fail': child.extract_status == -1 }"
+												>
+													{{ child.extract_status == 1 ? 'Thành công' : child.extract_status == 0 ? 'Đang rút tiền' : 'Thất bại' }}
+												</view>
+												<view v-if="type == 2 && child.is_frozen == 1" class="extract-tag bg-ing">Đang đóng băng</view>
+												{{ type == 1 ? $t(child.mark) : $t(child.title) }}
+											</view>
 											<view>{{ child.add_time }}</view>
 											<view class="fail-msg" v-if="child.fail_msg">{{ $t(`Lý do`) }}：{{ child.fail_msg }}</view>
-											<!-- <view class="fail-msg" v-else-if="child.extract_type">
-												{{$t(`Phương thức rút tiền`)}}:{{child.extract_type}}
-											</view> -->
+											<view class="fail-msg" v-if="type == 2 && child.is_frozen == 1">Hoa hồng đang bị đóng băng, thời gian hết đóng băng: {{ child.frozen_time }}</view>
 										</view>
-
 										<view class="acea-row row-column items-end">
 											<view class="num font-color" v-if="child.pm == 1">+{{ child.number }}</view>
-											<view class="num" v-else>-{{ child.number }}</view>
+											<view class="num flex-y-center" v-else>-{{ child.number }}</view>
 											<template v-if="child.state == 'WAIT_USER_CONFIRM'">
 												<view
-													class="w-154 h-56 rd-30rpx flex-center mt-16 bg-color fs-24 text--w111-fff"
+													class="w-100 h-48 rd-30rpx flex-center mt-16 bg-color fs-26 text--w111-fff"
 													@tap="jumpPath('/pages/users/user_spread_money/receiving?type=1&id=' + child.wechat_order_id)"
 												>
-													Nhận tiền ngay
+													Thu tiền
 												</view>
 											</template>
 										</view>
@@ -129,7 +136,7 @@ export default {
 		this.isWeixin = this.$wechat.isWeixin();
 		//#endif
 		let type = this.type;
-		this.loadend = false
+		this.loadend = false;
 		this.page = 1;
 		this.times = [];
 		this.recordList = [];
@@ -241,6 +248,22 @@ export default {
 
 .commission-details .promoterHeader .headerCon .money .num {
 	font-family: 'Guildford Pro';
+}
+.extract-tag {
+	font-size: 24rpx;
+	border-radius: 12rpx;
+	padding: 4rpx 8rpx;
+	background-color: #16ac57;
+	color: #fff;
+	margin-right: 8rpx;
+	&.bg-ing {
+		background-color: #ffd600;
+		color: #000;
+	}
+	&.bg-fail {
+		background-color: #ff4d4f;
+		color: #fff;
+	}
 }
 .sign-record .list .item .listn .itemn .name {
 	width: 100%;

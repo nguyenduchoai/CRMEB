@@ -153,6 +153,10 @@ export default {
           label: 'Miễn phí',
         },
         {
+          val: 'yue',
+          label: 'Số dư',
+        },
+        {
           val: 'weixin',
           label: 'WeChat',
         },

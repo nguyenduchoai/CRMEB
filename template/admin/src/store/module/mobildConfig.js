@@ -10,6 +10,254 @@
 /**
  * Component tùy chỉnh diy
  * */
+
+const bottomMenu = {
+  cname: 'Menu dưới cùng',
+  name: 'bottomMenu',
+  isHide: false,
+  setUp: {
+    tabVal: 0,
+  },
+  entryConfig: {
+    title: 'Nội dung lối vào',
+    tabVal: 0,
+    tabList: [{ name: 'Mặc định' }, { name: 'Tùy chỉnh' }],
+  },
+  styleTitle: 'Cài đặt kiểu',
+
+  iconColor: {
+    title: 'Màu biểu tượng',
+    default: [{ item: '#333' }],
+    color: [{ item: '#333' }],
+  },
+  iconSize: {
+    title: 'Kích thước biểu tượng',
+    val: 20,
+    min: 10,
+    max: 50,
+  },
+  iconRotate: {
+    title: 'Góc xoay',
+    val: 0,
+    min: 0,
+    max: 360,
+  },
+  padding: {
+    title: 'Lề trong',
+    val: 0,
+    min: 0,
+    max: 50,
+  },
+  contentConfigTitle: 'Cài đặt nội dung',
+  showContent: {
+    title: 'Nội dung hiển thị',
+    name: 'showContent',
+    type: [3, 1, 2],
+    list: [
+      { id: 3, name: 'Trang chủ', icon: 'icon-shouye6' },
+      { id: 1, name: 'Yêu thích', icon: 'icon-shoucang4' },
+      { id: 2, name: 'Giỏ hàng', icon: 'icon-gouwuche' },
+      { id: 0, name: 'CSKH', icon: 'icon-kefu' },
+      { id: 4, name: 'Chia sẻ', icon: 'icon-fenxiang4' },
+    ],
+  },
+  cartButton: {
+    title: 'Nút giỏ hàng',
+    tabVal: 0,
+    tabList: [{ name: 'Hiện' }, { name: 'Ẩn' }],
+  },
+  menuConfig: {
+    title: 'Có thể thêm tối đa 1 ảnh, kích thước đề xuất 90 * 90px',
+    bnt: 'Thêm',
+    type: 1,
+    listStyle: 0,
+    maxList: 100,
+    list: [
+      {
+        img: '',
+        type: 0,
+        show: true,
+        icon: '',
+        info: [
+          {
+            title: 'Tiêu đề',
+            value: 'Tiêu đề',
+            tips: 'Không bắt buộc, tối đa 4 ký tự',
+            max: 4,
+          },
+          {
+            title: 'Liên kết',
+            value: '',
+            tips: 'Vui lòng nhập liên kết',
+            max: 100,
+          },
+        ],
+      },
+    ],
+  },
+  buttonStyleTitle: 'Cài đặt nút',
+  toneConfig: {
+    title: 'Tông màu nút',
+    tabVal: 0, // 0: Follow Theme, 1: Custom
+    tabList: [{ name: 'Theo phong cách chủ đề' }, { name: 'Tùy chỉnh' }],
+  },
+  cartColor: {
+    title: 'Nút giỏ hàng',
+    default: [{ item: '#FAAD14' }, { item: '#FAAD14' }],
+    color: [{ item: '#FAAD14' }, { item: '#FAAD14' }],
+  },
+  buyColor: {
+    title: 'Nút mua',
+    default: [{ item: '#E93323' }, { item: '#E93323' }],
+    color: [{ item: '#E93323' }, { item: '#E93323' }],
+  },
+  generalStyleTitle: 'Kiểu chung',
+  moduleColor: {
+    title: 'Nền thành phần',
+    default: [{ item: '#fff' }, { item: '#fff' }],
+    color: [{ item: '#fff' }, { item: '#fff' }],
+  },
+  bottomBgColor: {
+    title: 'Nền phía dưới',
+    default: [{ item: '#F5F5F5' }],
+    color: [{ item: '#F5F5F5' }],
+  },
+  componentBgConfig: {
+    title: 'Cài đặt nền',
+    tabVal: 0,
+    tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
+    colorConfig: {
+      title: 'Màu nền',
+      default: [{ item: '#fff' }, { item: '#fff' }],
+      color: [{ item: '#fff' }, { item: '#fff' }],
+    },
+    colorDirection: {
+      title: 'Hướng chuyển màu',
+      tabVal: 0,
+      tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
+    },
+    imageConfig: {
+      header: 'Ảnh nền',
+      title: '',
+      name: 'Tải lên ảnh',
+      type: 'code',
+      url: '',
+      info: 'Kích thước đề xuất: 750px * 400px',
+    },
+  },
+  zIndexConfig: {
+    title: 'Thứ tự lớp thành phần',
+    val: 0,
+    min: 0,
+  },
+  borderConfig: {
+    title: 'Cài đặt viền',
+    tabVal: 0,
+    tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+    val: 0, // 0: Hide, 1: Show
+    styleConfig: {
+      title: 'Kiểu viền',
+      tabVal: 0,
+      tabList: [
+        { name: 'Nét liền', style: 'solid' },
+        { name: 'Nét đứt', style: 'dashed' },
+        { name: 'Nét chấm', style: 'dotted' },
+      ],
+    },
+    widthConfig: {
+      title: 'Độ dày viền',
+      val: 1,
+      min: 1,
+    },
+    colorConfig: {
+      title: 'Màu viền',
+      default: [{ item: '#e5e5e5' }],
+      color: [{ item: '#e5e5e5' }],
+    },
+  },
+  shadowConfig: {
+    title: 'Cài đặt đổ bóng',
+    tabVal: 0,
+    tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+    val: 0, // 0: Off, 1: On
+    colorConfig: {
+      title: 'Màu đổ bóng',
+      default: [{ item: 'rgba(0,0,0,0.1)' }],
+      color: [{ item: 'rgba(0,0,0,0.1)' }],
+    },
+    xConfig: {
+      title: 'Độ lệch trục X',
+      val: 0,
+      min: -50,
+    },
+    yConfig: {
+      title: 'Độ lệch trục Y',
+      val: 0,
+      min: -50,
+    },
+    blurConfig: {
+      title: 'Bán kính làm mờ',
+      val: 10,
+      min: 0,
+    },
+    spreadConfig: {
+      title: 'Bán kính lan tỏa',
+      val: 0,
+      min: -50,
+    },
+  },
+  paddingConfig: {
+    title: 'Lề trong',
+    isAll: false,
+    val: 0,
+    min: 0,
+    valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+  },
+  marginConfig: {
+    title: 'Lề ngoài',
+    isAll: false,
+    val: 0,
+    min: 0,
+    valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+  },
+  fillet: {
+    title: 'Bo góc nền',
+    type: 0,
+    list: [
+      {
+        val: 'Tất cả',
+        icon: 'iconcaozuo-zhengti',
+      },
+      {
+        val: 'Từng góc',
+        icon: 'iconcaozuo-bianjiao',
+      },
+    ],
+    valName: 'Giá trị bo góc',
+    val: 0,
+    min: 0,
+    valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+  },
+  menuPcFillet: {
+    title: 'Cài đặt bo góc',
+    type: 0,
+    list: [
+      {
+        val: 'Tất cả',
+        icon: 'iconcaozuo-zhengti',
+      },
+      {
+        val: 'Từng góc',
+        icon: 'iconcaozuo-bianjiao',
+      },
+    ],
+    valName: 'Giá trị bo góc',
+    val: 0,
+    min: 0,
+    valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+  },
+};
+
 export default {
   namespaced: true,
   state: {
@@ -24,6 +272,7 @@ export default {
     pagePicUrl: '',
     // Mảng dữ liệu mặc định của danh sách component đã biết
     defaultArray: {},
+    bottomMenu: JSON.parse(JSON.stringify(bottomMenu)),
     pageFooter: {
       cname: 'Điều hướng dưới cùng',
       name: 'pageFoot',
@@ -183,6 +432,9 @@ export default {
       // state.pageFooter.status.title = data.title;
       state.pageFooter.menuList[2] = data.name;
     },
+    UPBOTTOMMENU(state, data) {
+      state.bottomMenu = data;
+    },
     /**
      * @description Push cấu hình mặc định vào mảng
      * @param {Object} state vuex state
@@ -336,6 +588,17 @@ export default {
      */
     footPageUpdata(state, data) {
       state.pageFooter = data;
+    },
+    /**
+     * @description Cập nhật cấu hình bottomMenu
+     * @param {Object} state vuex state
+     * @param {string} data
+     */
+    bottomMenuUpdata(state, data) {
+      state.bottomMenu = data;
+    },
+    RESET_BOTTOM_MENU(state) {
+      state.bottomMenu = JSON.parse(JSON.stringify(bottomMenu));
     },
     /**
      * @description Cập nhật cấu hình title

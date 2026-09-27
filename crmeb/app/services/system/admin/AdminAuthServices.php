@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -40,19 +40,19 @@ class AdminAuthServices extends BaseServices
     /**
      * Lấy thông tin ủy quyền Admin
      * @param string $token
-     * @param int $code
+     * @param string $msg
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
      */
-    public function parseToken(string $token, int $code = 110003): array
+    public function parseToken(string $token, string $msg = 'Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại'): array
     {
         /** @var CacheService $cacheService */
         $cacheService = app()->make(CacheService::class);
 
         if (!$token || $token === 'undefined') {
-            throw new AuthException($code);
+            throw new AuthException($msg, [], 401);
         }
         /** @var JwtAuth $jwtAuth */
         $jwtAuth = app()->make(JwtAuth::class);
@@ -63,7 +63,7 @@ class AdminAuthServices extends BaseServices
         $md5Token = md5($token);
         if (!$cacheService->has($md5Token) || !$cacheService->get($md5Token, '', NULL, 'admin')) {
             $this->authFailAfter($id, $type);
-            throw new AuthException($code);
+            throw new AuthException($msg, [], 401);
         }
 
         //Xác thực token
@@ -74,7 +74,7 @@ class AdminAuthServices extends BaseServices
                 $cacheService->delete($md5Token);
             }
             $this->authFailAfter($id, $type);
-            throw new AuthException($code);
+            throw new AuthException($msg, [], 401);
         }
 
         //Lấy thông tin quản trị viên
@@ -84,10 +84,10 @@ class AdminAuthServices extends BaseServices
                 $cacheService->delete($md5Token);
             }
             $this->authFailAfter($id, $type);
-            throw new AuthException($code);
+            throw new AuthException($msg, [], 401);
         }
         if ($pwd !== '' && $pwd !== md5($adminInfo->pwd)) {
-            throw new AuthException($code);
+            throw new AuthException($msg, [], 401);
         }
 
         $adminInfo->type = $type;

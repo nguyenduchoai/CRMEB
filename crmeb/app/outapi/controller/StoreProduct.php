@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -67,9 +67,9 @@ class StoreProduct extends AuthController
      */
     public function set_show($id = '', $is_show = '')
     {
-        if ($id == '' || $is_show == '') return app('json')->fail(100100);
+        if ($id == '' || $is_show == '') return app('json')->fail('Tham số không hợp lệ');
         $this->services->setShow((int)$id, (int)$is_show);
-        return app('json')->success($is_show == 1 ? 100003 : 100004);
+        return app('json')->success($is_show == 1 ? 'Hiển thị thành công' : 'Ẩn thành công');
     }
 
     /**
@@ -129,7 +129,7 @@ class StoreProduct extends AuthController
             ['limit_num', 0]//Số lượng giới hạn mua
         ]);
         $id = $this->services->save(0, $data);
-        return app('json')->success(100000, ['id' => $id]);
+        return app('json')->success('Lưu thành công', ['id' => $id]);
     }
 
     /**
@@ -177,7 +177,7 @@ class StoreProduct extends AuthController
             ['limit_num', 0]//Số lượng giới hạn mua
         ]);
         $this->services->save((int)$id, $data);
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**
@@ -206,15 +206,15 @@ class StoreProduct extends AuthController
 
         foreach ($items as $item) {
             if (!isset($item['bar_code']) || !isset($item['bar_code_number']) || !isset($item['qty'])) {
-                return app('json')->fail(400742);
+                return app('json')->fail('Vui lòng kiểm tra mã thuộc tính hoặc số lượng tồn kho');
             }
         }
 
         if (count($items) > 100) {
-            return app('json')->fail(400743);
+            return app('json')->fail('Số bản ghi đồng bộ không được vượt quá 100');
         }
 
         $this->services->syncStock($items);
-        return app('json')->success(100010);
+        return app('json')->success('Thao tác thành công');
     }
 }

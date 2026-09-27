@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -137,25 +137,57 @@ class Workerman extends Command
         }
     }
 
+    /**
+     * Gắn các callback sự kiện của Workerman
+     *
+     * Phương thức này chịu trách nhiệm gắn “dịch vụ kết nối liên tục của trang quản trị” và “dịch vụ kết nối liên tục của phòng chat” lần lượt với các lớp xử lý nghiệp vụ tương ứng,
+     * để khi client kết nối, gửi tin nhắn, tiến trình khởi động hoặc ngắt kết nối thì có thể tự động gọi logic nghiệp vụ tương ứng.
+     *
+     * 1. Nếu đã tạo dịch vụ admin ($this->workerServer khác null):
+     *    - Khởi tạo WorkermanService, truyền vào instance worker hiện tại và instance dịch vụ channel
+     *    - Gắn bốn sự kiện onConnect / onMessage / onWorkerStart / onClose vào các phương thức cùng tên của WorkermanService
+     *
+     * 2. Nếu đã tạo dịch vụ chat ($this->chatWorkerServer khác null):
+     *    - Khởi tạo ChatService, truyền vào instance chat worker hiện tại và instance dịch vụ channel
+     *    - Tương tự, gắn bốn sự kiện trên vào các phương thức cùng tên của ChatService
+     *
+     * Bằng cách này, mã nghiệp vụ được tách rời khỏi lõi Workerman, thuận tiện cho việc bảo trì và mở rộng về sau.
+     */
     protected function bindHandle()
     {
+        // Gắn sự kiện cho dịch vụ admin
+        // Chỉ gắn khi instance dịch vụ kết nối liên tục admin đã được tạo ($this->workerServer khác null)
         if (!is_null($this->workerServer)) {
+            // Khởi tạo WorkermanService, truyền vào instance admin worker hiện tại và instance dịch vụ channel
+            // WorkermanService chịu trách nhiệm xử lý logic nghiệp vụ liên quan đến trang quản trị
             $server = new WorkermanService($this->workerServer, $this->channelServer);
-            // Callback khi kết nối
+            
+            // Gắn bốn sự kiện cốt lõi của Workerman vào các phương thức cùng tên của WorkermanService
+            // Kích hoạt khi client kết nối thành công
             $this->workerServer->onConnect = [$server, 'onConnect'];
-            // Callback khi nhận thông tin từ client
+            // Kích hoạt khi nhận được tin nhắn từ client
             $this->workerServer->onMessage = [$server, 'onMessage'];
-            // Callback sau khi process khởi động
+            // Kích hoạt khi tiến trình worker khởi động (chỉ một lần trong vòng đời của mỗi tiến trình)
             $this->workerServer->onWorkerStart = [$server, 'onWorkerStart'];
-            // Callback được kích hoạt khi ngắt kết nối
+            // Kích hoạt khi client ngắt kết nối
             $this->workerServer->onClose = [$server, 'onClose'];
         }
 
+        // Gắn sự kiện cho dịch vụ chat
+        // Chỉ gắn khi instance dịch vụ kết nối liên tục chat đã được tạo ($this->chatWorkerServer khác null)
         if (!is_null($this->chatWorkerServer)) {
+            // Khởi tạo ChatService, truyền vào instance chat worker hiện tại và instance dịch vụ channel
+            // ChatService chịu trách nhiệm xử lý logic nghiệp vụ liên quan đến phòng chat
             $chatServer = new ChatService($this->chatWorkerServer, $this->channelServer);
+            
+            // Gắn bốn sự kiện cốt lõi của Workerman vào các phương thức cùng tên của ChatService
+            // Kích hoạt khi client kết nối thành công
             $this->chatWorkerServer->onConnect = [$chatServer, 'onConnect'];
+            // Kích hoạt khi nhận được tin nhắn từ client
             $this->chatWorkerServer->onMessage = [$chatServer, 'onMessage'];
+            // Kích hoạt khi tiến trình worker khởi động (chỉ một lần trong vòng đời của mỗi tiến trình)
             $this->chatWorkerServer->onWorkerStart = [$chatServer, 'onWorkerStart'];
+            // Kích hoạt khi client ngắt kết nối
             $this->chatWorkerServer->onClose = [$chatServer, 'onClose'];
         }
     }

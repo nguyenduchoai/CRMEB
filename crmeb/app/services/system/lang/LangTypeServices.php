@@ -1,5 +1,13 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 namespace app\services\system\lang;
 
 use app\dao\system\lang\LangTypeDao;
@@ -84,7 +92,7 @@ class LangTypeServices extends BaseServices
                 $codeServices->BatchTranslation($res->id, $data['file_name']);
                 app()->make(LangCountryServices::class)->update(['code' => $data['file_name']], ['type_id' => $res->id]);
             } else {
-                throw new AdminException(100006);
+                throw new AdminException('Lưu thất bại');
             }
             $id = $res->id;
         }
@@ -115,7 +123,7 @@ class LangTypeServices extends BaseServices
     public function langTypeStatus($id, $status)
     {
         $res = $this->dao->update(['id' => $id], ['status' => $status]);
-        if (!$res) throw new AdminException(100015);
+        if (!$res) throw new AdminException('Cài đặt thất bại');
         $this->setDefaultLangName();
         return true;
     }

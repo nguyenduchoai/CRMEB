@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -55,7 +55,7 @@ class FlowStatistic extends AuthController
             ['mark', '']
         ]);
         $this->services->setMark($id, $data);
-        return app('json')->success(100024);
+        return app('json')->success('Ghi chú thành công');
     }
 
     /**
@@ -68,6 +68,12 @@ class FlowStatistic extends AuthController
             ['type', 'day'],
             ['time', '']
         ]);
+
+        // Khi $where['time'] không rỗng và định dạng không phải 2025/12/01-2025/12/15 thì đặt lại $where['time'] thành rỗng
+        if ($where['time'] != '' && !preg_match('/^\d{4}\/\d{2}\/\d{2}-\d{4}\/\d{2}\/\d{2}$/', $where['time'])) {
+            $where['time'] = '';
+        }
+
         $data = $this->services->getFlowRecord($where);
         return app('json')->success($data);
     }

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -78,7 +78,7 @@ class UserSignController
         }
         $uid = (int)$request->uid();
         $integral = $this->services->sign($uid);
-        return app('json')->success(410127, ['integral' => $integral], ['integral' => $integral]);
+        return app('json')->success('Điểm danh nhận được {:integral} điểm thưởng', ['integral' => $integral], ['integral' => $integral]);
     }
 
     /**
@@ -121,7 +121,7 @@ class UserSignController
     {
         $uid = (int)$request->uid();
         $this->services->setSignRemind($uid, $status);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
 }

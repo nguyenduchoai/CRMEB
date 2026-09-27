@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -32,13 +32,13 @@ class AddressValidate extends Validate
     ];
 
     protected $message = [
-        'real_name.require' => '410155',
-        'real_name.max' => '410156',
-        'phone.require' => '410157',
-        'phone.regex' => '410158',
-        'province.require' => '410159',
-        'city.require' => '410160',
-        'district.require' => '410161',
-        'detail.require' => '410162',
+        'real_name.require' => 'Tên là bắt buộc',
+        'real_name.max' => 'Tên không được vượt quá 25 ký tự',
+        'phone.require' => 'Số điện thoại là bắt buộc',
+        'phone.regex' => 'Số điện thoại sai định dạng',
+        'province.require' => 'Tỉnh là bắt buộc',
+        'city.require' => 'Thành phố là bắt buộc',
+        'district.require' => 'Quận/huyện là bắt buộc',
+        'detail.require' => 'Địa chỉ chi tiết là bắt buộc',
     ];
 }

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -63,7 +63,7 @@ class Common extends BaseController
     {
         $serviceInfoList = $services->getServiceList(['status' => 1, 'online' => 1]);
         if (!count($serviceInfoList['list'])) {
-            return app('json')->fail(410136);
+            return app('json')->fail('Hiện không có nhân viên CSKH trực tuyến, vui lòng liên hệ lại sau');
         }
         $uids = array_column($serviceInfoList['list'], 'uid');
         $toUid = $tourist_uid = $uid = 0;
@@ -103,7 +103,7 @@ class Common extends BaseController
             $userInfo['is_tourist'] = (bool)$tourist_uid;
             return app('json')->success($userInfo->toArray());
         } else {
-            return app('json')->fail(410136);
+            return app('json')->fail('Hiện không có nhân viên CSKH trực tuyến, vui lòng liên hệ lại sau');
         }
     }
 
@@ -126,7 +126,7 @@ class Common extends BaseController
         $data['content'] = htmlspecialchars($data['content']);
         $data['add_time'] = time();
         $services->save($data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -150,17 +150,17 @@ class Common extends BaseController
             ['upperId', 0],
         ], true);
         if (!$uid) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         if (!$token) {
-            return app('json')->fail(410038);
+            return app('json')->fail('Lấy token truy cập của người dùng thất bại');
         }
         try {
             /** @var UserAuthServices $service */
             $service = app()->make(UserAuthServices::class);
             $authInfo = $service->parseToken($token);
         } catch (AuthException $e) {
-            return app('json')->fail(410090);
+            return app('json')->fail('Token không hợp lệ, không thể tìm thấy lịch sử trò chuyện của người dùng');
         }
 
         return app('json')->success($services->getChatList($authInfo['user']['uid'], $uid, (int)$upperId));
@@ -194,10 +194,10 @@ class Common extends BaseController
             $service = app()->make(UserAuthServices::class);
             $authInfo = $service->parseToken($token);
             if (!isset($authInfo['user']['uid'])) {
-                return app('json')->fail(100101);
+                return app('json')->fail('Thao tác không hợp lệ');
             }
         } catch (AuthException $e) {
-            return app('json')->fail(410090);
+            return app('json')->fail('Token không hợp lệ, không thể tìm thấy lịch sử trò chuyện của người dùng');
         }
         return app('json')->success($services->tidyOrder($services->getUserOrderDetail($order_id, $authInfo['user']['uid'])->toArray(), true));
     }
@@ -218,13 +218,13 @@ class Common extends BaseController
             $service = app()->make(UserAuthServices::class);
             $authInfo = $service->parseToken($this->request->post('token'));
             if (!isset($authInfo['user']['uid'])) {
-                return app('json')->fail(100101);
+                return app('json')->fail('Thao tác không hợp lệ');
             }
         } catch (AuthException $e) {
-            return app('json')->fail(410090);
+            return app('json')->fail('Token không hợp lệ, không thể tìm thấy lịch sử trò chuyện của người dùng');
         }
         $uid = $authInfo['user']['uid'];
-        if (!$data['filename']) return app('json')->fail(100100);
+        if (!$data['filename']) return app('json')->fail('Tham số không hợp lệ');
         if (CacheService::has('start_uploads_' . $uid) && CacheService::get('start_uploads_' . $uid) >= 100) return app('json')->fail('Thao tác không hợp lệ');
         $upload = UploadService::init();
         $info = $upload->to('store/comment')->validate()->move($data['filename']);
@@ -241,6 +241,6 @@ class Common extends BaseController
         CacheService::set('start_uploads_' . $uid, $start_uploads, 86400);
         $res['dir'] = path_to_url($res['dir']);
         if (strpos($res['dir'], 'http') === false) $res['dir'] = $request->domain() . $res['dir'];
-        return app('json')->success(410091, ['name' => $res['name'], 'url' => $res['dir']]);
+        return app('json')->success('Tải ảnh lên thành công', ['name' => $res['name'], 'url' => $res['dir']]);
     }
 }

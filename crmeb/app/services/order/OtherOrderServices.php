@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -34,6 +34,10 @@ use app\jobs\OtherOrderJob;
  */
 class OtherOrderServices extends BaseServices
 {
+    /**
+     * @var OtherOrderDao
+     */
+    protected $dao;
 
     /**
      * Khởi tạo, lấy handle tầng dao
@@ -52,7 +56,7 @@ class OtherOrderServices extends BaseServices
      */
     public function addOtherOrderData(array $data)
     {
-        if (!$data) throw new ApiException(100026);
+        if (!$data) throw new ApiException('Dữ liệu không tồn tại');
         $add = [
             'uid' => $data['uid'],
             'type' => $data['type'] ?? 1,
@@ -105,7 +109,6 @@ class OtherOrderServices extends BaseServices
             $record = $this->dao->getOneByWhere(['uid' => $uid, 'is_free' => 1]);
             if ($record) {
                 $freeConfig['is_record'] = 1;
-
             }
         }
         $registerTime = $this->TimeConvert(['start_time' => date('Y-m-d H:i:s', $userInfo['add_time']), 'end_time' => date('Y-m-d H:i:s', time())]);
@@ -124,39 +127,39 @@ class OtherOrderServices extends BaseServices
     public function TimeConvert($timeKey, $isNum = false)
     {
         switch ($timeKey) {
-            case "today" :
+            case "today":
                 $data['start_time'] = date('Y-m-d 00:00:00', time());
                 $data['end_time'] = date('Y-m-d 23:59:59', time());
                 $data['days'] = 1;
                 break;
-            case "yestoday" :
+            case "yestoday":
                 $data['start_time'] = date('Y-m-d 00:00:00', strtotime('-1 day'));
                 $data['end_time'] = date('Y-m-d 23:59:59', strtotime('-1 day'));
                 $data['days'] = 1;
                 break;
-            case "last_month" :
+            case "last_month":
                 $data['start_time'] = date('Y-m-01 00:00:00', strtotime('-1 month'));
                 $data['end_time'] = date('Y-m-t 23:59:59', strtotime('-1 month'));
                 $data['days'] = 30;
                 break;
-            case "month" :
+            case "month":
                 $data['start_time'] = $month_start_time = date('Y-m-01 00:00:00', strtotime(date("Y-m-d")));
                 $data['end_time'] = date('Y-m-d 23:59:59', strtotime("$month_start_time +1 month -1 day"));
                 $data['days'] = 30;
                 break;
-            case "year" :
+            case "year":
                 $data['start_time'] = date('Y-01-01 00:00:00', time());
                 $data['end_time'] = date('Y-12-t 23:59:59', time());
                 $data['days'] = 365;
                 break;
-            case "last_year" :
+            case "last_year":
                 $data['start_time'] = date('Y-01-01 00:00:00', strtotime('-1 year'));
                 $data['end_time'] = date('Y-12-t 23:59:59', strtotime('-1 year'));
                 $data['days'] = 365;
                 break;
-            case 30 :
-            case 15 :
-            case 7 :
+            case 30:
+            case 15:
+            case 7:
                 if (!$isNum) {
                     $data['start_time'] = date("Y-m-d 00:00:00", strtotime("-$timeKey day"));
                     $data['end_time'] = date('Y-m-d 23:59:59', time());
@@ -182,7 +185,6 @@ class OtherOrderServices extends BaseServices
                     $data['end_time'] = $timeKey['start_time'];
                     $data['days'] = $days;
                 }
-
         }
         return $data;
     }
@@ -225,7 +227,7 @@ class OtherOrderServices extends BaseServices
             'member_code' => "",
         ];
         if ($type != 3) { //Phân biệt 0: nhận thành viên miễn phí 1: mua thành viên 2: dùng mã thẻ để nhận thành viên 3: thanh toán ngoại tuyến
-            if (!$memberType) throw new ApiException(410228);
+            if (!$memberType) throw new ApiException('Loại thành viên không tồn tại');
             list($memberPrice, $isFree, $isPermanent, $overdueTime, $type, $newMemberRight) = $this->checkPayMemberType($memberType, $payPrice, $type, $uid, $mcId);
             $orderInfo['member_price'] = $memberPrice;
             $orderInfo['money'] = $memberPrice;
@@ -244,7 +246,7 @@ class OtherOrderServices extends BaseServices
         }
         $memberOrder = $this->addOtherOrderData($orderInfo);
         if (!$memberOrder) {
-            throw new ApiException(410200);
+            throw new ApiException('Tạo đơn hàng thất bại');
         }
         /** @var OtherOrderStatusServices $statusService */
         $statusService = app()->make(OtherOrderStatusServices::class);
@@ -266,14 +268,13 @@ class OtherOrderServices extends BaseServices
     public function zeroYuanPayment($orderInfo)
     {
         if ($orderInfo['paid']) {
-            throw new ApiException(410174);
+            throw new ApiException('Đơn hàng đã được thanh toán');
         }
         if ($orderInfo['member_type'] != 'free') {
-            throw new ApiException(410216);
+            throw new ApiException('Thanh toán thất bại');
         }
-        $res = $this->paySuccess($orderInfo, 'yue');//Thanh toán bằng số dư thành công
+        $res = $this->paySuccess($orderInfo, 'yue'); //Thanh toán bằng số dư thành công
         return $res;
-
     }
 
     /**
@@ -293,9 +294,9 @@ class OtherOrderServices extends BaseServices
         $type = 'pay_member';
         $res1 = true;
         switch ($orderInfo['type']) {
-            case 0 :
-            case 1 :
-            case 2 :
+            case 0:
+            case 1:
+            case 2:
                 $type = "pay_member";
                 $res1 = $userServices->setMemberOverdueTime($orderInfo['vip_day'], $orderInfo['uid'], 1, $orderInfo['member_type']);
                 break;
@@ -348,7 +349,7 @@ class OtherOrderServices extends BaseServices
 
         $orderInfo['pay_type'] = $paytype;
         // Service đơn hàng Mini Program
-        event('OrderShippingListener', ['member', $orderInfo, 3, '', '']);
+        event('OrderShippingListener', [$type == 'pay_member' ? 'member' : 'offline_scan', $orderInfo, 3, '', '']);
         return false !== $res;
     }
 
@@ -414,19 +415,19 @@ class OtherOrderServices extends BaseServices
         /** @var UserServices $userService */
         $userService = app()->make(UserServices::class);
         $userInfo = $userService->get($uid);
-        if ($userInfo['is_money_level'] > 0 && $userInfo['is_ever_level'] > 0) throw new ApiException(410229);
+        if ($userInfo['is_money_level'] > 0 && $userInfo['is_ever_level'] > 0) throw new ApiException('Bạn đã là thành viên vĩnh viễn, không cần mua thêm');
         $newMemberRight = $memberCardService->getMemberTypeValue();
-        if (!array_key_exists($mcId, $newMemberRight)) throw new ApiException(410230);
+        if (!array_key_exists($mcId, $newMemberRight)) throw new ApiException('Thẻ thành viên này tạm thời không thể mua');
         $price = $newMemberRight[$mcId]['pre_price'];
-        if ($payPrice != $price || ($memberType != 'free' && $payPrice <= 0)) throw new ApiException(100100);
-        if ($memberType == 'free' && $newMemberRight[$mcId]['vip_day'] <= 0) throw new ApiException(100100);
+        if ($payPrice != $price || ($memberType != 'free' && $payPrice <= 0)) throw new ApiException('Tham số không hợp lệ');
+        if ($memberType == 'free' && $newMemberRight[$mcId]['vip_day'] <= 0) throw new ApiException('Tham số không hợp lệ');
         switch ($memberType) {
-            case "free"://Thành viên miễn phí
+            case "free": //Thành viên miễn phí
                 $isCanGetFree = $this->isCanGetFree($uid);
-                if ($isCanGetFree['is_record'] == 1) throw new ApiException(410231);
+                if ($isCanGetFree['is_record'] == 1) throw new ApiException('Bạn đã nhận thành viên miễn phí rồi');
                 $memberPrice = 0.00; //Giá thẻ thành viên
-                $isFree = 1;//Đại diện cho miễn phí
-                $isPermanent = 0;//Đại diện cho không vĩnh viễn
+                $isFree = 1; //Đại diện cho miễn phí
+                $isPermanent = 0; //Đại diện cho không vĩnh viễn
                 $overdueTime = bcadd(bcmul(abs($newMemberRight[$mcId]['vip_day']), "86400", 0), time(), 0);
                 break;
             case "month":
@@ -442,10 +443,10 @@ class OtherOrderServices extends BaseServices
                 $memberPrice = $price;
                 $isFree = 0;
                 $isPermanent = 1;
-                $overdueTime = -1;
+                $overdueTime = 0;
                 break;
             default:
-                throw new ApiException(410232);
+                throw new ApiException('Loại thẻ thành viên này chưa mở bán');
         }
         //return compact('member_price', 'is_free', 'is_permanent', 'overdue_time', 'type');
         return [$memberPrice, $isFree, $isPermanent, $overdueTime, $type, $newMemberRight];
@@ -459,9 +460,9 @@ class OtherOrderServices extends BaseServices
     public function getMemberMoneyByWhere(array $where, string $sumField, string $selectType, string $group = "")
     {
         switch ($selectType) {
-            case "sum" :
+            case "sum":
                 return $this->dao->getWhereSumField($where, $sumField);
-            case "group" :
+            case "group":
                 return $this->dao->getGroupField($where, $sumField, $group);
         }
     }
@@ -504,13 +505,13 @@ class OtherOrderServices extends BaseServices
                 $v['phone'] = $userInfo[$v['uid']]['phone'] ?? '';
                 $v['nickname'] = $userInfo[$v['uid']]['nickname'] ?? '';
                 switch ($v['pay_type']) {
-                    case "yue" :
+                    case "yue":
                         $v['pay_type'] = "Số dư";
                         break;
-                    case "weixin" :
+                    case "weixin":
                         $v['pay_type'] = "WeChat";
                         break;
-                    case "alipay" :
+                    case "alipay":
                         $v['pay_type'] = "Alipay";
                         break;
                 }
@@ -551,24 +552,24 @@ class OtherOrderServices extends BaseServices
             $shipInfo = array_column($shipInfo, 'title', 'type');
             $shipInfo['owner'] = 'Tùy chỉnh';
             foreach ($list as &$v) {
-                $v['member_type'] = $v['member_type'] ? $shipInfo[$v['member_type']] : 'Khác';
+                $v['member_type'] = $v['member_type'] ? $shipInfo[$v['member_type']] ?? 'Khác' : 'Khác';
                 $v['pay_time'] = date('Y-m-d H:i:s', $v['pay_time']);
                 $v['add_time'] = date('Y-m-d H:i:s', $v['add_time']);
                 $v['overdue_time'] = date('Y-m-d H:i:s', $v['overdue_time']);
                 switch ($v['pay_type']) {
-                    case "yue" :
+                    case "yue":
                         $v['pay_type'] = "Số dư";
                         break;
-                    case "weixin" :
+                    case "weixin":
                         $v['pay_type'] = "WeChat";
                         break;
-                    case "alipay" :
+                    case "alipay":
                         $v['pay_type'] = "Alipay";
                         break;
                     case 'allinpay':
                         $v['pay_type'] = "Allinpay";
                         break;
-                    case "admin" :
+                    case "admin":
                         $v['pay_type'] = "Tặng từ trang quản trị";
                         break;
                 }
@@ -584,5 +585,4 @@ class OtherOrderServices extends BaseServices
         $count = $this->dao->count($where);
         return compact('list', 'count');
     }
-
 }

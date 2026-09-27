@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -60,7 +60,7 @@ class StoreOrderSplitServices extends BaseServices
         $ids = array_unique(array_column($cart_ids, 'cart_id'));
         if (!$cart_ids || !$ids) return false;
         if (!$orderInfo) $orderInfo = $this->dao->get($id, ['*']);
-        if (!$orderInfo) throw new AdminException(400118);
+        if (!$orderInfo) throw new AdminException('Đơn hàng không tồn tại');
         $old_order = $orderInfo;
         $orderInfo = $orderInfoOld = is_object($orderInfo) ? $orderInfo->toArray() : $orderInfo;
         foreach ($this->order_data as $field) {
@@ -100,7 +100,7 @@ class StoreOrderSplitServices extends BaseServices
                     $order_data['unique'] = $storeOrderCreateServices->getNewOrderId('');
                     $new_order = $this->dao->save($order_data);
                     if (!$new_order) {
-                        throw new AdminException(400544);
+                        throw new AdminException('Tạo đơn hàng mới thất bại');
                     }
                     $new_id = (int)$new_order->id;
                     $allData = [];
@@ -206,7 +206,7 @@ class StoreOrderSplitServices extends BaseServices
             $orderInfo = $this->dao->get($id, ['*']);
         }
         if (!$orderInfo) {
-            throw new AdminException(400118);
+            throw new AdminException('Đơn hàng không tồn tại');
         }
         /** @var StoreOrderCreateServices $storeOrderCreateServices */
         $storeOrderCreateServices = app()->make(StoreOrderCreateServices::class);
@@ -223,7 +223,7 @@ class StoreOrderSplitServices extends BaseServices
         $order_data['add_time'] = time();
         $new_order = $this->dao->save($order_data);
         if (!$new_order) {
-            throw new AdminException(400544);
+            throw new AdminException('Tạo đơn hàng mới thất bại');
         }
         $new_id = (int)$new_order->id;
         /** @var StoreOrderStatusServices $statusService */
@@ -263,12 +263,12 @@ class StoreOrderSplitServices extends BaseServices
 
             //Sửa thông tin sản phẩm đơn hàng gốc
             if (false === $storeOrderCartInfoServices->update(['oid' => $id, 'cart_id' => $cart['cart_id']], $update_data)) {
-                throw new AdminException(400545);
+                throw new AdminException('Cập nhật trạng thái tách sản phẩm của đơn hàng gốc thất bại');
             }
             $cart_data_all[] = $cart_data;
         }
         if (!$storeOrderCartInfoServices->saveAll($cart_data_all)) {
-            throw new AdminException(400546);
+            throw new AdminException('Thêm thông tin sản phẩm của đơn hàng tách thất bại');
         }
         $new_order = $this->dao->get($new_id);
         $this->splitComputeOrder($new_id, $cart_data_all, $new_order);
@@ -325,7 +325,7 @@ class StoreOrderSplitServices extends BaseServices
         $order_update['agent_brokerage'] = $agentBrokerage;
         $order_update['division_brokerage'] = $divisionBrokerage;
         if (false === $this->dao->update($id, $order_update, 'id')) {
-            throw new AdminException(400547);
+            throw new AdminException('Lưu thông tin sản phẩm của đơn hàng mới thất bại');
         }
         return true;
     }
@@ -390,7 +390,7 @@ class StoreOrderSplitServices extends BaseServices
             $orderInfo = $this->dao->get($id, ['*']);
         }
         if (!$orderInfo) {
-            throw new AdminException(400118);
+            throw new AdminException('Đơn hàng không tồn tại');
         }
         /** @var StoreOrderCartInfoServices $storeOrderCartInfoServices */
         $storeOrderCartInfoServices = app()->make(StoreOrderCartInfoServices::class);

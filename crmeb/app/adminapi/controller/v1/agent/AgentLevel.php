@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -23,6 +23,11 @@ use think\facade\App;
 class AgentLevel extends AuthController
 {
     /**
+     * @var AgentLevelServices
+     */
+    protected $services;
+
+    /**
      * AgentLevel constructor.
      * @param App $app
      * @param AgentLevelServices $services
@@ -42,10 +47,12 @@ class AgentLevel extends AuthController
      */
     public function index()
     {
+        // Lấy tham số yêu cầu, gồm trạng thái và từ khóa
         $where = $this->request->getMore([
             ['status', ''],
             ['keyword', '']
         ]);
+        // Gọi tầng service để lấy danh sách cấp độ
         return app('json')->success($this->services->getLevelList($where));
     }
 
@@ -56,6 +63,7 @@ class AgentLevel extends AuthController
      */
     public function create()
     {
+        // Gọi tầng service để tạo form thêm mới
         return app('json')->success($this->services->createForm());
     }
 
@@ -65,6 +73,7 @@ class AgentLevel extends AuthController
      */
     public function save()
     {
+        // Lấy và xác thực dữ liệu yêu cầu
         $data = $this->request->postMore([
             ['name', ''],
             ['grade', 0],
@@ -72,19 +81,22 @@ class AgentLevel extends AuthController
             ['one_brokerage_percent', 0],
             ['two_brokerage_percent', 0],
             ['status', 0]]);
-        if (!$data['name']) return app('json')->fail(400200);
-        if (!$data['grade']) return app('json')->fail(400201);
-        if (!$data['image']) return app('json')->fail(400202);
+        if (!$data['name']) return app('json')->fail('Vui lòng nhập tên cấp độ');
+        if (!$data['grade']) return app('json')->fail('Vui lòng nhập cấp độ');
+        if (!$data['image']) return app('json')->fail('Vui lòng chọn biểu tượng cấp độ');
+        // Kiểm tra tỷ lệ trả hoa hồng cấp 2 có lớn hơn cấp 1 không
         if ($data['two_brokerage_percent'] > $data['one_brokerage_percent']) {
-            return app('json')->fail(400203);
+            return app('json')->fail('Tỷ lệ trả hoa hồng cấp 2 không được lớn hơn cấp 1');
         }
+        // Kiểm tra cấp độ đã tồn tại chưa
         $grade = $this->services->get(['grade' => $data['grade'], 'is_del' => 0]);
         if ($grade) {
-            return app('json')->fail(400204);
+            return app('json')->fail('Cấp độ này đã tồn tại');
         }
         $data['add_time'] = time();
+        // Lưu dữ liệu
         $this->services->save($data);
-        return app('json')->success(400205);
+        return app('json')->success('Thêm cấp độ thành công');
     }
 
     /**
@@ -104,6 +116,7 @@ class AgentLevel extends AuthController
      */
     public function edit($id)
     {
+        // Gọi tầng service để tạo form chỉnh sửa
         return app('json')->success($this->services->editForm((int)$id));
     }
 
@@ -117,6 +130,7 @@ class AgentLevel extends AuthController
      */
     public function update($id)
     {
+        // Lấy và xác thực dữ liệu yêu cầu
         $data = $this->request->postMore([
             ['name', ''],
             ['grade', 0],
@@ -124,18 +138,22 @@ class AgentLevel extends AuthController
             ['one_brokerage_percent', 0],
             ['two_brokerage_percent', 0],
             ['status', 0]]);
-        if (!$data['name']) return app('json')->fail(400200);
-        if (!$data['grade']) return app('json')->fail(400201);
-        if (!$data['image']) return app('json')->fail(400202);
+        if (!$data['name']) return app('json')->fail('Vui lòng nhập tên cấp độ');
+        if (!$data['grade']) return app('json')->fail('Vui lòng nhập cấp độ');
+        if (!$data['image']) return app('json')->fail('Vui lòng chọn biểu tượng cấp độ');
+        // Kiểm tra tỷ lệ trả hoa hồng cấp 2 có lớn hơn cấp 1 không
         if ($data['two_brokerage_percent'] > $data['one_brokerage_percent']) {
-            return app('json')->fail(400203);
+            return app('json')->fail('Tỷ lệ trả hoa hồng cấp 2 không được lớn hơn cấp 1');
         }
-        if (!$levelInfo = $this->services->getLevelInfo((int)$id)) return app('json')->fail(400206);
+        // Kiểm tra cấp độ cần chỉnh sửa có tồn tại không
+        if (!$levelInfo = $this->services->getLevelInfo((int)$id)) return app('json')->fail('Cấp độ cần sửa không tồn tại');
+        // Kiểm tra cấp độ có bị trùng không
         $grade = $this->services->get(['grade' => $data['grade'], 'is_del' => 0]);
         if ($grade && $grade['id'] != $id) {
-            return app('json')->fail(400204);
+            return app('json')->fail('Cấp độ này đã tồn tại');
         }
 
+        // Cập nhật thông tin cấp độ
         $levelInfo->name = $data['name'];
         $levelInfo->grade = $data['grade'];
         $levelInfo->image = $data['image'];
@@ -143,7 +161,7 @@ class AgentLevel extends AuthController
         $levelInfo->two_brokerage_percent = $data['two_brokerage_percent'];
         $levelInfo->status = $data['status'];
         $levelInfo->save();
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**
@@ -156,20 +174,20 @@ class AgentLevel extends AuthController
      */
     public function delete($id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         //Kiểm tra dữ liệu hạng CTV có tồn tại không
         $levelInfo = $this->services->getLevelInfo((int)$id);
         if ($levelInfo) {
             //Cập nhật dữ liệu thành đã xóa
             $res = $this->services->update($id, ['is_del' => 1]);
             if (!$res)
-                return app('json')->fail(100008);
+                return app('json')->fail('Xóa thất bại');
             //Xóa (đánh dấu đã xóa) các nhiệm vụ của hạng này
             /** @var AgentLevelTaskServices $agentLevelTaskServices */
             $agentLevelTaskServices = app()->make(AgentLevelTaskServices::class);
             $agentLevelTaskServices->update(['level_id' => $id], ['is_del' => 1]);
         }
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -180,9 +198,10 @@ class AgentLevel extends AuthController
      */
     public function set_status($id = 0, $status = '')
     {
-        if ($status == '' || $id == 0) return app('json')->fail(100100);
+        if ($status == '' || $id == 0) return app('json')->fail('Tham số không hợp lệ');
+        // Cập nhật trạng thái
         $this->services->update($id, ['status' => $status]);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
@@ -193,7 +212,7 @@ class AgentLevel extends AuthController
     public function getTaskNumForm($id)
     {
         // Kiểm tra ID nhiệm vụ có bằng 0 không, nếu bằng 0 thì trả về thông báo lỗi
-        if ($id == 0) return app('json')->fail(100100);
+        if ($id == 0) return app('json')->fail('Tham số không hợp lệ');
         // Gọi tầng service để lấy số lượng form nhiệm vụ
         $result = $this->services->getTaskNumForm($id);
         // Trả về thông báo thành công và số lượng form nhiệm vụ
@@ -213,6 +232,6 @@ class AgentLevel extends AuthController
         ]);
         // Gọi tầng service để thiết lập số lượng nhiệm vụ
         $res = $this->services->setTaskNum($id, $data);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 }

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -42,10 +42,10 @@ class UserAddressController
     {
         $uid = (int)$request->uid();
         if (!$id) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         $info = $this->services->address((int)$id);
-        if ($info['uid'] != $uid) return app('json')->fail(100026);
+        if ($info['uid'] != $uid) return app('json')->fail('Dữ liệu không tồn tại');
         return app('json')->success($info);
     }
 
@@ -68,15 +68,15 @@ class UserAddressController
     public function address_default_set(Request $request)
     {
         list($id) = $request->getMore([['id', 0]], true);
-        if (!$id || !is_numeric($id)) return app('json')->fail(100100);
+        if (!$id || !is_numeric($id)) return app('json')->fail('Tham số không hợp lệ');
         $uid = (int)$request->uid();
         $res = $this->services->setDefault($uid, (int)$id);
         $province = $this->services->value(['id' => $id], 'province');
         app()->make(WechatUserServices::class)->update(['uid' => $uid], ['province' => $province]);
         if (!$res)
-            return app('json')->fail(410150);
+            return app('json')->fail('Địa chỉ không tồn tại');
         else
-            return app('json')->success(100014);
+            return app('json')->success('Cài đặt thành công');
     }
 
     /**
@@ -112,18 +112,18 @@ class UserAddressController
             [['id', 'd'], 0],
             [['type', 'd'], 0]
         ]);
-        if (!isset($addressInfo['address']['province']) || !$addressInfo['address']['province'] || $addressInfo['address']['province'] == 'Tỉnh') return app('json')->fail(410151);
-        if (!isset($addressInfo['address']['city']) || !$addressInfo['address']['city'] || $addressInfo['address']['city'] == 'Thành phố') return app('json')->fail(410152);
-        if (!isset($addressInfo['address']['district']) || !$addressInfo['address']['district'] || $addressInfo['address']['district'] == 'Quận/Huyện') return app('json')->fail(410152);
-        if (!isset($addressInfo['address']['city_id']) && $addressInfo['type'] == 0) return app('json')->fail(410153);
-        if (!$addressInfo['detail']) return app('json')->fail(410154);
+        if (!isset($addressInfo['address']['province']) || !$addressInfo['address']['province'] || $addressInfo['address']['province'] == 'Tỉnh') return app('json')->fail('Địa chỉ nhận hàng sai định dạng');
+        if (!isset($addressInfo['address']['city']) || !$addressInfo['address']['city'] || $addressInfo['address']['city'] == 'Thành phố') return app('json')->fail('Địa chỉ nhận hàng sai định dạng hoặc hệ thống chưa cập nhật đầy đủ địa chỉ này');
+        if (!isset($addressInfo['address']['district']) || !$addressInfo['address']['district'] || $addressInfo['address']['district'] == 'Quận/Huyện') return app('json')->fail('Địa chỉ nhận hàng sai định dạng hoặc hệ thống chưa cập nhật đầy đủ địa chỉ này');
+        if (!isset($addressInfo['address']['city_id']) && $addressInfo['type'] == 0) return app('json')->fail('Địa chỉ nhận hàng sai định dạng, vui lòng chọn lại');
+        if (!$addressInfo['detail']) return app('json')->fail('Vui lòng điền địa chỉ chi tiết');
         $uid = (int)$request->uid();
         $res = $this->services->editAddress($uid, $addressInfo);
         if ($res) {
             app()->make(WechatUserServices::class)->update(['uid' => $uid], ['province' => $addressInfo['address']['province']]);
-            return app('json')->success($res['type'] == 'edit' ? 100001 : $res['data']);
+            return app('json')->success($res['type'] == 'edit' ? 'Sửa thành công' : $res['data']);
         } else {
-            return app('json')->fail(100007);
+            return app('json')->fail('Sửa thất bại');
         }
 
     }
@@ -136,12 +136,12 @@ class UserAddressController
     public function address_del(Request $request)
     {
         list($id) = $request->postMore([['id', 0]], true);
-        if (!$id || !is_numeric($id)) return app('json')->fail(100100);
+        if (!$id || !is_numeric($id)) return app('json')->fail('Tham số không hợp lệ');
         $uid = (int)$request->uid();
         $re = $this->services->delAddress($uid, (int)$id);
         if ($re)
-            return app('json')->success(100002);
+            return app('json')->success('Xóa thành công');
         else
-            return app('json')->fail(100008);
+            return app('json')->fail('Xóa thất bại');
     }
 }

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -93,10 +93,10 @@ class StoreProductReplyServices extends BaseServices
         $data['status'] = 1;
         unset($data['image']);
         if ($data['add_time'] > $time) {
-            throw new AdminException(400567);
+            throw new AdminException('Thời gian đánh giá phải trước thời điểm hiện tại');
         }
         $res = $this->dao->save($data);
-        if (!$res) throw new AdminException(400568);
+        if (!$res) throw new AdminException('Thêm đánh giá ảo thất bại');
     }
 
     /**
@@ -106,12 +106,12 @@ class StoreProductReplyServices extends BaseServices
      */
     public function setReply(int $id, string $content)
     {
-        if ($content == '') throw new AdminException(400234);
+        if ($content == '') throw new AdminException('Vui lòng nhập nội dung trả lời');
         $save['merchant_reply_content'] = $content;
         $save['merchant_reply_time'] = time();
         $save['is_reply'] = 1;
         $res = $this->dao->update($id, $save);
-        if (!$res) throw new AdminException(400569);
+        if (!$res) throw new AdminException('Trả lời thất bại');
     }
 
     /**
@@ -121,7 +121,7 @@ class StoreProductReplyServices extends BaseServices
     public function del(int $id)
     {
         $res = $this->dao->update($id, ['is_del' => 1]);
-        if (!$res) throw new AdminException(100008);
+        if (!$res) throw new AdminException('Xóa thất bại');
     }
 
     /**

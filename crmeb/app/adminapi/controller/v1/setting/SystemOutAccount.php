@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -57,9 +57,9 @@ class SystemOutAccount extends AuthController
      */
     public function set_status($id = '', $status = '')
     {
-        if ($status == '' || $id == '') return app('json')->fail(100100);
+        if ($status == '' || $id == '') return app('json')->fail('Tham số không hợp lệ');
         $this->services->update($id, ['status' => $status]);
-        return app('json')->success($status == 1 ? 100012 : 100013);
+        return app('json')->success($status == 1 ? 'Cập nhật thành công' : 'Cập nhật thất bại');
     }
 
     /**
@@ -69,9 +69,9 @@ class SystemOutAccount extends AuthController
      */
     public function delete($id)
     {
-        if ($id == '') return app('json')->fail(100100);
+        if ($id == '') return app('json')->fail('Tham số không hợp lệ');
         $this->services->update($id, ['is_del' => 1]);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -96,9 +96,9 @@ class SystemOutAccount extends AuthController
         $data['add_time'] = time();
         $data['rules'] = implode(',', $data['rules']);
         if (!$this->services->save($data)) {
-            return app('json')->fail(100006);
+            return app('json')->fail('Lưu thất bại');
         } else {
-            return app('json')->success(100000);
+            return app('json')->success('Lưu thành công');
         }
     }
 
@@ -125,9 +125,9 @@ class SystemOutAccount extends AuthController
         $data['rules'] = implode(',', $data['rules']);
         $res = $this->services->update($id, $data);
         if (!$res) {
-            return app('json')->fail(100006);
+            return app('json')->fail('Lưu thất bại');
         } else {
-            return app('json')->success(100000);
+            return app('json')->success('Lưu thành công');
         }
     }
 
@@ -150,7 +150,7 @@ class SystemOutAccount extends AuthController
             ['refund_cancel_push', ''],
         ]);
         $this->services->outSetUpSave($id, $data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -188,7 +188,7 @@ class SystemOutAccount extends AuthController
             ['error_code', []] //Mã lỗi
         ]);
         $service->saveInterface((int)$id, $data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -217,10 +217,10 @@ class SystemOutAccount extends AuthController
             ['name', ''], //Tên
         ]);
         if (!$data['id'] || !$data['name']) {
-            return app('json')->success(100100);
+            return app('json')->success('Tham số không hợp lệ');
         }
         $service->editInterfaceName($data);
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**
@@ -231,9 +231,9 @@ class SystemOutAccount extends AuthController
      */
     public function delInterface($id, OutInterfaceServices $service)
     {
-        if (!$id) return app('json')->success(100100);
+        if (!$id) return app('json')->success('Tham số không hợp lệ');
         $service->delInterface($id);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -250,6 +250,6 @@ class SystemOutAccount extends AuthController
             ['push_password', 0],
             ['push_token_url', '']
         ]);
-        return app('json')->success('100014', $this->services->textOutUrl($data));
+        return app('json')->success('Cài đặt thành công', $this->services->textOutUrl($data));
     }
 }

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -110,10 +110,10 @@ class SystemStoreStaff extends AuthController
         ]);
         if (!$id) {
             if ($data['image'] == '') {
-                return app('json')->fail(400250);
+                return app('json')->fail('Vui lòng chọn người dùng');
             }
             if ($this->services->count(['uid' => $data['image']['uid']])) {
-                return app('json')->fail(400126);
+                return app('json')->fail('Người dùng được thêm làm nhân viên xác nhận đã tồn tại');
             }
             $data['uid'] = $data['image']['uid'];
             $data['avatar'] = $data['image']['image'];
@@ -121,32 +121,32 @@ class SystemStoreStaff extends AuthController
             $data['avatar'] = $data['image'];
         }
         if ($data['uid'] == 0) {
-            return app('json')->fail(400250);
+            return app('json')->fail('Vui lòng chọn người dùng');
         }
         if ($data['store_id'] == '') {
-            return app('json')->fail(400127);
+            return app('json')->fail('Vui lòng chọn điểm nhận hàng trực thuộc');
         }
         if ($data['staff_name'] == ''){
-            return app('json')->fail(400128);
+            return app('json')->fail('Vui lòng điền tên nhân viên xác nhận');
         }
         if ($data['phone'] == ''){
-            return app('json')->fail(400129);
+            return app('json')->fail('Vui lòng điền số điện thoại nhân viên xác nhận');
         }
         unset($data['image']);
         if ($id) {
             $res = $this->services->update($id, $data);
             if ($res) {
-                return app('json')->success(100001);
+                return app('json')->success('Sửa thành công');
             } else {
-                return app('json')->fail(100007);
+                return app('json')->fail('Sửa thất bại');
             }
         } else {
             $data['add_time'] = time();
             $res = $this->services->save($data);
             if ($res) {
-                return app('json')->success(400130);
+                return app('json')->success('Thêm nhân viên xác nhận thành công');
             } else {
-                return app('json')->fail(400131);
+                return app('json')->fail('Thêm nhân viên xác nhận thất bại');
             }
         }
     }
@@ -160,13 +160,13 @@ class SystemStoreStaff extends AuthController
     public function set_show($is_show = '', $id = '')
     {
         if ($is_show == '' || $id == '') {
-            app('json')->fail(100100);
+            app('json')->fail('Tham số không hợp lệ');
         }
         $res = $this->services->update($id, ['status' => (int)$is_show]);
         if ($res) {
-            return app('json')->success(100014);
+            return app('json')->success('Cài đặt thành công');
         } else {
-            return app('json')->fail(100015);
+            return app('json')->fail('Cài đặt thất bại');
         }
     }
 
@@ -177,10 +177,10 @@ class SystemStoreStaff extends AuthController
      */
     public function delete($id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         if (!$this->services->delete($id))
-            return app('json')->fail(100008);
+            return app('json')->fail('Xóa thất bại');
         else
-            return app('json')->success(100002);
+            return app('json')->success('Xóa thành công');
     }
 }

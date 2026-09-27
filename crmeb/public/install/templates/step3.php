@@ -29,21 +29,21 @@
 
                     <tr>
                         <td class="tar">Tên người dùng cơ sở dữ liệu:</td>
-                        <td><input type="text" name="dbuser" id="dbuser" value="root" class="input"></td>
+                        <td><input type="text" name="dbuser" id="dbuser" value="<?php echo $MYSQL_USER; ?>" class="input"></td>
                         <td>
                             <div id="J_install_tip_dbuser"></div>
                         </td>
                     </tr>
                     <tr>
                         <td class="tar">Mật khẩu cơ sở dữ liệu:</td>
-                        <td><input type="password" name="dbpw" id="dbpw" value="" class="input" autoComplete="off"></td>
+                        <td><input type="password" name="dbpw" id="dbpw" value="<?php echo $MYSQL_PASSWORD; ?>" class="input" autoComplete="off"></td>
                         <td>
                             <div id="J_install_tip_dbpw"></div>
                         </td>
                     </tr>
                     <tr>
                         <td class="tar">Tên cơ sở dữ liệu:</td>
-                        <td><input type="text" name="dbname" id="dbname" value="crmeb" class="input"></td>
+                        <td><input type="text" name="dbname" id="dbname" value="<?php echo $MYSQL_DATABASE; ?>" class="input"></td>
                         <td>
                             <div id="J_install_tip_dbname"></div>
                         </td>
@@ -62,14 +62,14 @@
                     </tr>
                     <tr v-show="value">
                         <td class="tar">Máy chủ cơ sở dữ liệu:</td>
-                        <td><input type="text" name="dbhost" id="dbhost" value="127.0.0.1" class="input"></td>
+                        <td><input type="text" name="dbhost" id="dbhost" value="<?php echo $MYSQL_HOST_IP; ?>" class="input"></td>
                         <td>
                             <div id="J_install_tip_dbhost"></div>
                         </td>
                     </tr>
                     <tr v-show="value">
                         <td class="tar">Cổng cơ sở dữ liệu:</td>
-                        <td><input type="text" name="dbport" id="dbport" value="3306" class="input"
+                        <td><input type="text" name="dbport" id="dbport" value="<?php echo $MYSQL_PORT; ?>" class="input"
                                    onBlur="mysqlDbPwd(0)"></td>
                         <td>
                             <div id="J_install_tip_dbport"></div>
@@ -81,11 +81,7 @@
                         <td><input type="text" name="dbprefix" id="dbprefix" value="eb_" class="input"></td>
                         <td></td>
                     </tr>
-                    <tr v-show="value">
-                        <td class="tar">Dữ liệu mẫu:</td>
-                        <td colspan="2"><input style="width:14px;height:14px;" type="checkbox" id="demo" name="demo"
-                                               value="demo" checked></td>
-                    </tr>
+
                 </table>
                 <table width="100%">
                     <tr>
@@ -104,7 +100,7 @@
                     <tr>
                         <td class="tar">Mật khẩu quản trị viên:</td>
                         <td><input type="password" name="manager_pwd" id="manager_pwd" class="input" autoComplete="off"
-                                placeholder="Vui lòng nhập mật khẩu (ít nhất 6 ký tự)"  placeholder-class="pl-style" onblur="checkForm()">
+                                   placeholder="Vui lòng nhập mật khẩu (ít nhất 6 ký tự)"  placeholder-class="pl-style" onblur="checkForm()">
                         </td>
                         <td>
                             <div id="J_install_tip_manager_pwd"><span class="gray">Vui lòng nhập mật khẩu có ít nhất 6 ký tự</span></div>
@@ -117,6 +113,11 @@
                         <td>
                             <div id="J_install_tip_manager_ckpwd"></div>
                         </td>
+                    </tr>
+                    <tr>
+                        <td class="tar">Dữ liệu mẫu:</td>
+                        <td colspan="2"><input style="width:14px;height:14px;" type="checkbox" id="demo" name="demo"
+                                               value="demo" checked></td>
                     </tr>
 
                 </table>
@@ -136,14 +137,14 @@
                     </tr>
                     <tr v-show="radio == 1">
                         <td class="tar">Địa chỉ máy chủ:</td>
-                        <td><input type="text" name="rbhost" id="rbhost" value="127.0.0.1" class="input"></td>
+                        <td><input type="text" name="rbhost" id="rbhost" value="<?php echo $REDIS_HOST_IP; ?>" class="input"></td>
                         <td>
                             <div id="J_install_redis_host"><span class="gray">Địa chỉ máy chủ redis, thường là 127.0.0.1</span></div>
                         </td>
                     </tr>
                     <tr v-show="radio == 1">
                         <td class="tar">Số cổng:</td>
-                        <td><input type="text" name="rbport" id="rbport" value="6379" class="input" autoComplete="off">
+                        <td><input type="text" name="rbport" id="rbport" value="<?php echo $REDIS_PORT; ?>" class="input" autoComplete="off">
                         </td>
                         <td>
                             <div id="J_install_redis_port"><span class="gray">Cổng redis, mặc định là 6379</span></div>
@@ -151,7 +152,7 @@
                     </tr>
                     <tr v-show="radio == 1">
                         <td class="tar">Cơ sở dữ liệu:</td>
-                        <td><input type="text" name="rbselect" id="rbselect" value="0" class="input" autoComplete="off">
+                        <td><input type="text" name="rbselect" id="rbselect" value="<?php echo $REDIS_DATABASE; ?>" class="input" autoComplete="off">
                         </td>
                         <td>
                             <div id="J_install_redis_select"><span class="gray">Cơ sở dữ liệu redis, mặc định là 0, thường không cần thay đổi</span></div>
@@ -159,7 +160,7 @@
                     </tr>
                     <tr v-show="radio == 1" id="scrollBtn">
                         <td class="tar">Mật khẩu cơ sở dữ liệu:</td>
-                        <td><input type="text" name="rbpw" id="rbpw" value="" class="input" autoComplete="off"></td>
+                        <td><input type="text" name="rbpw" id="rbpw" value="<?php echo $REDIS_PASSWORD; ?>" class="input" autoComplete="off"></td>
                         <td>
                             <div id="J_install_redis_dbpw"><span class="gray">Mật khẩu cơ sở dữ liệu redis</span></div>
                         </td>
@@ -273,7 +274,7 @@
 
 
                 jumpButton(){
-                   this.$refs.mianscroll.scrollTop = this.$refs.mianscroll.clientHeight
+                    this.$refs.mianscroll.scrollTop = this.$refs.mianscroll.clientHeight
                 },
                 submitForm() {
                     this.mysqlDbPwd().then(res => {

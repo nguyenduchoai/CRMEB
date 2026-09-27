@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Hoạt động quay thưởng",
+  "navigationBarTitleText": "抽奖活动",
   "usingComponents": {
     "grids-lottery": "/pages/goods/components/lottery/index",
     "show-box": "/pages/goods/lottery/components/showbox",

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -89,9 +89,9 @@ class StoreCategory extends AuthController
      */
     public function set_show($is_show = '', $id = '')
     {
-        if ($is_show == '' || $id == '') return app('json')->fail(100100);
+        if ($is_show == '' || $id == '') return app('json')->fail('Tham số không hợp lệ');
         $this->service->setShow($id, $is_show);
-        return app('json')->success($is_show == 1 ? 100003 : 100004);
+        return app('json')->success($is_show == 1 ? 'Hiển thị thành công' : 'Ẩn thành công');
     }
 
     /**
@@ -122,7 +122,7 @@ class StoreCategory extends AuthController
             ['is_show', 0]
         ]);
         $this->service->createData($data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -156,7 +156,7 @@ class StoreCategory extends AuthController
         ]);
 
         $this->service->editData($id, $data);
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**
@@ -167,6 +167,6 @@ class StoreCategory extends AuthController
     public function delete($id)
     {
         $this->service->del((int)$id);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 }

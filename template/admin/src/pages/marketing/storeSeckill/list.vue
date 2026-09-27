@@ -11,7 +11,7 @@
           inline
         >
           <el-form-item label="Tìm kiếm chương trình:" label-for="title">
-            <el-input placeholder="Vui lòng nhập tên chương trình, ID" v-model="tableFrom.title" class="form_content_width" />
+            <el-input placeholder="Vui lòng nhập tên chương trình, ID" v-model="tableFrom.title" clearable class="form_content_width" />
           </el-form-item>
           <el-form-item label="Trạng thái chương trình:">
             <el-select

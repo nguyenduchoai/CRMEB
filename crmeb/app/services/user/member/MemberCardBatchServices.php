@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -58,12 +58,12 @@ class MemberCardBatchServices extends BaseServices
      */
     public function save(int $id, array $data)
     {
-        if (!$data['title']) throw new AdminException(400614);
-        if (!$data['total_num']) throw new AdminException(400615);
-        if (!is_numeric($data['total_num']) || $data['total_num'] < 0) throw new AdminException(400616);
-        if ($data['total_num'] > 6000) throw new AdminException(400617);
-        if (!$data['use_day'] || !is_numeric($data['use_day'])) throw new AdminException(400618);
-        if ($data['use_day'] < 0) throw new AdminException(400619);
+        if (!$data['title']) throw new AdminException('Vui lòng điền tên lô');
+        if (!$data['total_num']) throw new AdminException('Vui lòng điền số lượng thẻ cần tạo');
+        if (!is_numeric($data['total_num']) || $data['total_num'] < 0) throw new AdminException('Số lượng thẻ chỉ được là số nguyên dương');
+        if ($data['total_num'] > 6000) throw new AdminException('Số lượng thẻ tạo mỗi lần không được vượt quá 6000 thẻ');
+        if (!$data['use_day'] || !is_numeric($data['use_day'])) throw new AdminException('Vui lòng điền số ngày dùng miễn phí');
+        if ($data['use_day'] < 0) throw new AdminException('Số ngày dùng miễn phí chỉ được là số nguyên dương');
         /**
          * Dùng thử trong khoảng thời gian cụ thể, khi cần cho nghiệp vụ thì mở lên
          */
@@ -111,8 +111,8 @@ class MemberCardBatchServices extends BaseServices
      */
     public function setValue(int $id, array $data)
     {
-        if (!is_numeric($id) || !$id) throw new AdminException(100100);
-        if (!isset($data['field']) || !isset($data['value']) || !$data['field']) throw new AdminException(100100);
+        if (!is_numeric($id) || !$id) throw new AdminException('Tham số không hợp lệ');
+        if (!isset($data['field']) || !isset($data['value']) || !$data['field']) throw new AdminException('Tham số không hợp lệ');
         $this->dao->update($id, [$data['field'] => $data['value']]);
         app()->make(MemberCardServices::class)->update(['card_batch_id' => $id], ['status' => $data['value']]);
     }

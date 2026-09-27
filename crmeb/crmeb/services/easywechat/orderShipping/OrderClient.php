@@ -1,5 +1,13 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 namespace crmeb\services\easywechat\orderShipping;
 
 use crmeb\exceptions\AdminException;
@@ -75,18 +83,40 @@ class OrderClient extends BaseOrder
             $params['is_all_delivered'] = $is_all_delivered;
         }
 
-        foreach ($shipping_list as $shipping) {
-            $contact = $this->handleContact($shipping['contact'] ?? []);
-            $params['shipping_list'][] = [
-                'tracking_no' => $shipping['tracking_no'] ?? '',
-                'express_company' => isset($shipping['express_company']) ? $this->getDelivery($shipping['express_company']) : '',
-                'item_desc' => $shipping['item_desc'],
-                'contact' => $contact
-            ];
+        if ($logistics_type == 1) {
+            foreach ($shipping_list as $shipping) {
+                $contact = $this->handleContact($shipping['contact'] ?? []);
+                $params['shipping_list'][] = [
+                    'tracking_no' => $shipping['tracking_no'] ?? '',
+                    'express_company' => $shipping['express_company'],
+                    'item_desc' => $shipping['item_desc'],
+                    'contact' => $contact
+                ];
+            }
+        } else {
+            $params['shipping_list'] = $shipping_list;
         }
+
         // Đường dẫn chuyển hướng
         $this->setMesJumpPath($path);
         return $this->shipping($params);
+    }
+
+    /**
+     * Tra cứu danh sách đơn hàng
+     * @param $params
+     * @return array
+     * @throws HttpException
+     * @author wuhaotian
+     * @email 442384644@qq.com
+     * @date 2025/8/14
+     */
+    public function shippingOrderList($params)
+    {
+        if (!$this->checkManaged()) {
+            throw new AdminException('Vui lòng kích hoạt dịch vụ quản lý đơn hàng Mini Program rồi thử lại');
+        }
+        return $this->orderList($params);
     }
 
 
@@ -236,11 +266,11 @@ class OrderClient extends BaseOrder
         $list = $this->getDeliveryList();
         if ($list) {
             $key = self::cache_prefix . '_delivery_list';
-            $date = array_column($list['delivery_list'], 'delivery_id', 'delivery_name');
+            $data = array_column($list['delivery_list'], 'delivery_id', 'delivery_name');
             // Tạo cache
-            CacheService::set($key, json_encode($date));
+            CacheService::set($key, json_encode($data));
 
-            return $date;
+            return $data;
         } else {
             throw new AdminException('Danh sách đơn vị vận chuyển bị lỗi');
         }

@@ -56,7 +56,7 @@
         </el-table-column>
         <el-table-column label="Loại trả lời" min-width="130">
           <template slot-scope="scope">
-            <span>{{ scope.row.type }}</span>
+            <span>{{ scope.row.typeName }}</span>
           </template>
         </el-table-column>
         <el-table-column label="Hiển thị" min-width="130">

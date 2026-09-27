@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -33,8 +33,20 @@ class Request extends \think\Request
      * Tên biến không lọc
      * @var array
      */
-    protected $except = ['menu_path', 'api_url', 'unique_auth',
-        'description', 'custom_form', 'params_list', 'content', 'tableField', 'url', 'customCode', 'value', 'refund_reason_wap_img'];
+    protected $except = [
+        'menu_path',
+        'api_url',
+        'unique_auth',
+        'description',
+        'custom_form',
+        'params_list',
+        'content',
+        'tableField',
+        'url',
+        'customCode',
+        'value',
+        'refund_reason_wap_img'
+    ];
 
     /**
      * Lấy dữ liệu của request
@@ -47,6 +59,7 @@ class Request extends \think\Request
     {
         $p = [];
         $i = 0;
+        $this->filterArrayValues($this->param);
         foreach ($params as $param) {
             if (!is_array($param)) {
                 $p[$suffix == true ? $i++ : $param] = $this->param($param);
@@ -92,7 +105,6 @@ class Request extends \think\Request
                     // Nếu giá trị là chuỗi, lọc ký tự đặc biệt
                     $result[$key] = filter_str($value);
                 }
-
             }
         }
         return $result;

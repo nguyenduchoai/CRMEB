@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -42,11 +42,11 @@ class OrderOfflineServices extends BaseServices
         $orderSerives = app()->make(StoreOrderServices::class);
         $orderInfo = $orderSerives->get($id);
         if (!$orderInfo) {
-            throw new ApiException(410173);
+            throw new ApiException('Đơn hàng không tồn tại');
         }
 
         if ($orderInfo->paid) {
-            throw new ApiException(410174);
+            throw new ApiException('Đơn hàng đã được thanh toán');
         }
         $orderInfo->paid = 1;
         $orderInfo->pay_time = time();

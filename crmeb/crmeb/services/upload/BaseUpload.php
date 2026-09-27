@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -305,12 +305,22 @@ abstract class BaseUpload extends BaseStorage
     public function getUploadInfo()
     {
         if (isset($this->fileInfo->filePath)) {
-            if (strstr($this->fileInfo->filePath, 'http') === false) {
-                $url = request()->domain() . $this->fileInfo->filePath;
+            // Nếu phần mở rộng của tệp là pem hoặc crt thì dùng getFileHeaders để lấy kích thước và loại tệp
+            $fileExt = pathinfo($this->fileInfo->filePath, PATHINFO_EXTENSION);
+            if ($fileExt === 'pem' || $fileExt === 'crt') {
+                $headers = $this->getFileHeaders(sys_config('site_url') . $this->fileInfo->filePath);
             } else {
-                $url = $this->fileInfo->filePath;
+                if (strstr($this->fileInfo->filePath, 'http') === false) {
+                    $filePath = app()->getRootPath() . 'public' . $this->fileInfo->filePath;
+                    $headers = [
+                        'size' => filesize($filePath),
+                        'type' => function_exists('mime_content_type') ? mime_content_type($filePath) : 'image/jpeg'
+                    ];
+                } else {
+                    $url = $this->fileInfo->filePath;
+                    $headers = $this->getFileHeaders($url);
+                }
             }
-            $headers = $this->getFileHeaders($url);
             return [
                 'name' => $this->fileInfo->fileName,
                 'real_name' => $this->fileInfo->realName ?? '',
@@ -336,12 +346,22 @@ abstract class BaseUpload extends BaseStorage
     public function getDownloadInfo()
     {
         if (isset($this->downFileInfo->downloadFilePath)) {
-            if (strstr($this->downFileInfo->downloadFilePath, 'http') === false) {
-                $url = request()->domain() . $this->downFileInfo->downloadFilePath;
+            // Nếu phần mở rộng của tệp là pem hoặc crt thì dùng getFileHeaders để lấy kích thước và loại tệp
+            $fileExt = pathinfo($this->downFileInfo->downloadFilePath, PATHINFO_EXTENSION);
+            if ($fileExt === 'pem' || $fileExt === 'crt') {
+                $headers = $this->getFileHeaders(sys_config('site_url') . $this->downFileInfo->downloadFilePath);
             } else {
-                $url = $this->downFileInfo->downloadFilePath;
+                if (strstr($this->downFileInfo->downloadFilePath, 'http') === false) {
+                    $filePath = app()->getRootPath() . 'public' . $this->downFileInfo->downloadFilePath;
+                    $headers = [
+                        'size' => filesize($filePath),
+                        'type' => function_exists('mime_content_type') ? mime_content_type($filePath) : 'image/jpeg'
+                    ];
+                } else {
+                    $url = $this->downFileInfo->downloadFilePath;
+                    $headers = $this->getFileHeaders($url);
+                }
             }
-            $headers = $this->getFileHeaders($url);
             return [
                 'name' => $this->downFileInfo->downloadFileName,
                 'real_name' => $this->downFileInfo->downloadRealName ?? '',

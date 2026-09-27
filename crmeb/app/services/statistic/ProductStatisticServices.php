@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -114,7 +114,7 @@ class ProductStatisticServices extends BaseServices
     public function getTrend($where, $excel = false)
     {
         $time = explode('-', $where['time']);
-        if (count($time) != 2) throw new AdminException(100100);
+        if (count($time) != 2) throw new AdminException('Tham số không hợp lệ');
         $dayCount = bcadd(bcdiv(bcsub(strtotime($time[1]), strtotime($time[0])), '86400'), '1');
         $data = [];
         if ($dayCount == 1) {

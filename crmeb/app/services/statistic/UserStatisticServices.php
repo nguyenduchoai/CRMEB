@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -93,7 +93,7 @@ class UserStatisticServices extends BaseServices
     {
         $time = explode('-', $where['time']);
         $channelType = $where['channel_type'];
-        if (count($time) != 2) throw new AdminException(100100);
+        if (count($time) != 2) throw new AdminException('Tham số không hợp lệ');
         $dayCount = bcadd(bcdiv(bcsub(strtotime($time[1]), strtotime($time[0])), '86400'), '1');
         $data = [];
         if ($dayCount == 1) {
@@ -197,7 +197,7 @@ class UserStatisticServices extends BaseServices
     public function getWechat($where)
     {
         $time = explode('-', $where['time']);
-        if (count($time) != 2) throw new AdminException(100100);
+        if (count($time) != 2) throw new AdminException('Tham số không hợp lệ');
         /** @var WechatUserServices $user */
         $user = app()->make(WechatUserServices::class);
 
@@ -266,7 +266,7 @@ class UserStatisticServices extends BaseServices
     public function getWechatTrend($where)
     {
         $time = explode('-', $where['time']);
-        if (count($time) != 2) throw new AdminException(100100);
+        if (count($time) != 2) throw new AdminException('Tham số không hợp lệ');
         $dayCount = bcadd(bcdiv(bcsub(strtotime($time[1]), strtotime($time[0])), '86400'), '1');
         $data = [];
         if ($dayCount == 1) {
@@ -370,7 +370,7 @@ class UserStatisticServices extends BaseServices
     {
         $time = explode('-', $where['time']);
         $channelType = $where['channel_type'];
-        if (count($time) != 2) throw new AdminException(100100);
+        if (count($time) != 2) throw new AdminException('Tham số không hợp lệ');
 
         /** @var UserVisitServices $userVisit */
         $userVisit = app()->make(UserVisitServices::class);
@@ -438,7 +438,7 @@ class UserStatisticServices extends BaseServices
     {
         $time = explode('-', $where['time']);
         $channelType = $where['channel_type'];
-        if (count($time) != 2) throw new AdminException(100100);
+        if (count($time) != 2) throw new AdminException('Tham số không hợp lệ');
 
         /** @var UserWechatuserServices $user */
         $wechatUser = app()->make(UserWechatuserServices::class);

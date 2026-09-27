@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -68,13 +68,13 @@ class LoginServices extends BaseServices
 
         $userInfo = $user->get(['account' => $account]);
         if (!$userInfo) {
-            throw new ApiException(410141);
+            throw new ApiException('Không có người dùng này');
         }
         if ($password && !password_verify($password, $userInfo->password)) {
-            throw new ApiException(410025);
+            throw new ApiException('Tài khoản hoặc mật khẩu không đúng');
         }
         if (!$userInfo->status) {
-            throw new ApiException(410027);
+            throw new ApiException('Bạn đã bị cấm đăng nhập, vui lòng liên hệ quản trị viên');
         }
         $token = $this->createToken($userInfo->id, 'api');
         $userInfo->update_time = time();
@@ -101,16 +101,16 @@ class LoginServices extends BaseServices
         $info = $oauth->oauth(null, ['open' => true]);
 
         if (!$info) {
-            throw new ApiException(410131);
+            throw new ApiException('Ủy quyền thất bại');
         }
         $wechatInfo = $info->getOriginal();
         if (!isset($wechatInfo['unionid'])) {
-            throw new ApiException(410132);
+            throw new ApiException('unionid không tồn tại');
         }
         if (!isset($wechatInfo['nickname'])) {
             $wechatInfo = $oauth->getUserInfo($wechatInfo['openid']);
             if (!isset($wechatInfo['nickname']))
-                throw new ApiException(410131);
+                throw new ApiException('Ủy quyền thất bại');
             if (isset($wechatInfo['tagid_list']))
                 $wechatInfo['tagid_list'] = implode(',', $wechatInfo['tagid_list']);
         } else {

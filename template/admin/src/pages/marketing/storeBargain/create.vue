@@ -127,7 +127,7 @@
                   </el-checkbox-group>
                 </el-form-item>
               </el-col>
-              <el-col :span="24" v-if="formValidate.virtual_type == 0">
+              <el-col :span="24" v-if="formValidate.virtual_type == 0 && formValidate.logistics.includes('1')">
                 <el-form-item label="Cài đặt phí vận chuyển:" :prop="formValidate.freight != 1 ? 'freight' : ''">
                   <el-radio-group v-model="formValidate.freight">
                     <el-radio :label="2">Phí vận chuyển cố định</el-radio>
@@ -137,7 +137,7 @@
               </el-col>
               <el-col
                 :span="24"
-                v-if="formValidate.freight != 3 && formValidate.freight != 1 && formValidate.virtual_type == 0"
+                v-if="formValidate.freight != 3 && formValidate.freight != 1 && formValidate.virtual_type == 0 && formValidate.logistics.includes('1')"
               >
                 <el-form-item label="">
                   <div class="acea-row">
@@ -710,7 +710,7 @@ export default {
           is_hot: row.is_hot,
           status: 0,
           section_time: [],
-          description: row.description, // Không lấy trong sản phẩm
+          description: '', // Không lấy trong sản phẩm
           rule: '',
           id: 0,
           product_id: row.id,
@@ -721,6 +721,7 @@ export default {
           custom_form: row.custom_form, //Dữ liệu biểu mẫu tùy chỉnh
           virtual_type: row.virtual_type, //Loại sản phẩm ảo
           is_commission: row.is_commission,
+          description: row.description,
         };
         this.productAttrs(row);
       }, 500);
@@ -830,9 +831,9 @@ export default {
               }
             }
             this.current += 1;
-            setTimeout((e) => {
-              this.formValidate.description += ' ';
-            }, 0);
+            // setTimeout((e) => {
+            //   this.formValidate.description += ' ';
+            // }, 0);
           } else {
             return this.$message.warning('Vui lòng hoàn thiện thông tin của bạn');
           }

@@ -1,1 +1,0 @@
-<view hidden="{{!(!isSortType)}}" style="{{$root.s0}}" class="data-v-0936eb10"><view class="video-box data-v-0936eb10" style="{{$root.s1}}" id="myVideo"><video class="video data-v-0936eb10" object-fit="cover" src="{{dataConfig.videoConfig.url}}" poster="{{dataConfig.imgConfig.url}}" controls="{{true}}"></video></view></view>

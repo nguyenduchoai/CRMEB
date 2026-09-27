@@ -204,6 +204,15 @@ export default {
       component: () => import('@/pages/system/onlineUpgrade/index'),
     },
     {
+      path: 'crossVersionUpgrade/index',
+      name: `${pre}crossVersionUpgrade`,
+      meta: {
+        auth: ['system-crossVersionUpgrade-index'],
+        title: 'Nâng cấp vượt phiên bản',
+      },
+      component: () => import('@/pages/system/crossVersionUpgrade/index'),
+    },
+    {
       path: 'crontab',
       name: `${pre}crontab`,
       meta: {

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -36,13 +36,13 @@ class ServeValidata extends Validate
      * @var array
      */
     protected $message = [
-        'phone.require' => '400333',
-        'phone.number' => '400019',
-        'phone.mobile' => '400252',
-        'password.require' => '400020',
-        'verify_code.require' => '400137',
-        'verify_code.number' => '400021',
-        'account.require' => '400133',
+        'phone.require' => 'Vui lòng điền số điện thoại',
+        'phone.number' => 'Số điện thoại bạn nhập phải là số',
+        'phone.mobile' => 'Số điện thoại sai định dạng',
+        'password.require' => 'Mật khẩu là bắt buộc',
+        'verify_code.require' => 'Vui lòng điền mã xác thực',
+        'verify_code.number' => 'Mã xác thực SMS phải là số',
+        'account.require' => 'Vui lòng điền tài khoản',
     ];
 
     protected $scene = [

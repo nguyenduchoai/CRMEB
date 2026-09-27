@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Đặt hàng",
+  "navigationBarTitleText": "提交订单",
   "usingComponents": {
     "payment": "/components/payment/index",
     "invoice-picker": "/pages/goods/components/invoicePicker/index",

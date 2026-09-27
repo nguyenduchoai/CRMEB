@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -56,20 +56,20 @@ class StoreCouponUser extends AuthController
             ['id', 0],
             ['uid', '']
         ]);
-        if (!$data['id']) return app('json')->fail(100100);
+        if (!$data['id']) return app('json')->fail('Tham số không hợp lệ');
         /** @var StoreCouponIssueServices $issueService */
         $issueService = app()->make(StoreCouponIssueServices::class);
         $coupon = $issueService->get($data['id']);
         if (!$coupon) {
-            return app('json')->fail(100026);
+            return app('json')->fail('Dữ liệu không tồn tại');
         } else {
             $coupon = $coupon->toArray();
         }
         $user = explode(',', $data['uid']);
         if (!$issueService->setCoupon($coupon, $user))
-            return app('json')->fail(100031);
+            return app('json')->fail('Gửi thất bại');
         else
-            return app('json')->success(100030);
+            return app('json')->success('Gửi thành công');
 
     }
 }

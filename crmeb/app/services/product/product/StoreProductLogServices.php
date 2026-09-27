@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -43,10 +43,10 @@ class StoreProductLogServices extends BaseServices
     public function createLog(string $type, array $data)
     {
         if (!in_array($type, ['order', 'pay', 'refund']) && (!isset($data['product_id']) || !$data['product_id'])) {
-            throw new AdminException(400562);
+            throw new AdminException('Thiếu ID sản phẩm');
         }
         if ($type != 'visit' && (!isset($data['uid']) || !$data['uid'])) {
-            throw new AdminException(400563);
+            throw new AdminException('Thiếu UID người dùng');
         }
         $log_data = $log_data_all = [];
         $log_data['type'] = $type;
@@ -65,7 +65,7 @@ class StoreProductLogServices extends BaseServices
                 break;
             case 'order'://Đặt hàng
                 if (!isset($data['order_id']) || !$data['order_id']) {
-                    throw new AdminException(400564);
+                    throw new AdminException('Thiếu ID đơn hàng');
                 }
                 /** @var StoreOrderCartInfoServices $cartInfoServices */
                 $cartInfoServices = app()->make(StoreOrderCartInfoServices::class);
@@ -79,7 +79,7 @@ class StoreProductLogServices extends BaseServices
                 break;
             case 'pay'://Thanh toán
                 if (!isset($data['order_id']) || !$data['order_id']) {
-                    throw new AdminException(400564);
+                    throw new AdminException('Thiếu ID đơn hàng');
                 }
                 /** @var StoreOrderCartInfoServices $cartInfoServices */
                 $cartInfoServices = app()->make(StoreOrderCartInfoServices::class);
@@ -96,7 +96,7 @@ class StoreProductLogServices extends BaseServices
                 break;
             case 'refund'://Hoàn tiền
                 if (!isset($data['order_id']) || !$data['order_id']) {
-                    throw new AdminException(400564);
+                    throw new AdminException('Thiếu ID đơn hàng');
                 }
                 /** @var StoreOrderCartInfoServices $cartInfoServices */
                 $cartInfoServices = app()->make(StoreOrderCartInfoServices::class);
@@ -112,7 +112,7 @@ class StoreProductLogServices extends BaseServices
                 }
                 break;
             default:
-                throw new AdminException(400565);
+                throw new AdminException('Tạm thời chưa hỗ trợ loại bản ghi này');
         }
         if ($log_data_all) {
             $res = $this->dao->saveAll($log_data_all);
@@ -120,7 +120,7 @@ class StoreProductLogServices extends BaseServices
             $res = $this->dao->save($log_data);
         }
         if (!$res) {
-            throw new AdminException(400566);
+            throw new AdminException('Thêm bản ghi sản phẩm thất bại');
         }
         return true;
     }

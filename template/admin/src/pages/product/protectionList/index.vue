@@ -11,7 +11,13 @@
           inline
         >
           <el-form-item label="Tên đảm bảo:">
-            <el-input clearable placeholder="Vui lòng nhập tên đảm bảo" v-model="formValidate.title" class="form_content_width" @change="userSearchs" />
+            <el-input
+              clearable
+              placeholder="Vui lòng nhập tên đảm bảo"
+              v-model="formValidate.title"
+              class="form_content_width"
+              @change="userSearchs"
+            />
           </el-form-item>
           <el-form-item>
             <el-button type="primary" v-db-click @click="userSearchs">Tra cứu</el-button>
@@ -21,49 +27,62 @@
     </el-card>
     <el-card :bordered="false" shadow="never">
       <el-button v-auth="['cms-category-create']" type="primary" v-db-click @click="add">Thêm đảm bảo</el-button>
-      <vxe-table
-        class="vxeTable mt14"
-        highlight-hover-row
-        :loading="loading"
-        header-row-class-name="false"
-        :tree-config="{ children: 'children' }"
+
+      <el-table
         :data="categoryList"
+        ref="table"
+        class="mt14"
+        v-loading="loading"
+        highlight-current-row
+        row-key="id"
+        :tree-props="{ children: 'children' }"
       >
-        <vxe-table-column field="id" title="ID" tooltip width="80"></vxe-table-column>
-        <vxe-table-column field="title" tree-node title="Tên đảm bảo" min-width="130"></vxe-table-column>
-        <vxe-table-column field="image" title="Hình ảnh đảm bảo" min-width="130">
-          <template v-slot="{ row }">
-            <div class="tabBox_img" v-viewer v-if="row.image">
-              <img v-lazy="row.image" />
+        <el-table-column label="ID" prop="id" width="80">
+          <template slot-scope="scope">
+            <span>{{ scope.row.id }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="Tên đảm bảo" prop="title" min-width="130">
+          <template slot-scope="scope">
+            <span>{{ scope.row.title }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="Hình ảnh đảm bảo" prop="image" min-width="130">
+          <template slot-scope="scope">
+            <div class="tabBox_img" v-viewer v-if="scope.row.image">
+              <img v-lazy="scope.row.image" />
             </div>
           </template>
-        </vxe-table-column>
-        <vxe-table-column field="status" title="Trạng thái" min-width="120">
-          <template v-slot="{ row }">
+        </el-table-column>
+        <el-table-column label="Trạng thái" prop="status" min-width="120">
+          <template slot-scope="scope">
             <el-switch
               class="defineSwitch"
               :active-value="1"
               :inactive-value="0"
-              v-model="row.status"
-              :value="row.status"
-              @change="onchangeIsShow(row)"
+              v-model="scope.row.status"
+              :value="scope.row.status"
+              @change="onchangeIsShow(scope.row)"
               size="large"
               active-text="Bật"
               inactive-text="Tắt"
             >
             </el-switch>
           </template>
-        </vxe-table-column>
-        <vxe-table-column field="sort" title="Thứ tự sắp xếp" min-width="130"></vxe-table-column>
-
-        <vxe-table-column field="date" title="Thao tác" width="120" fixed="right">
-          <template v-slot="{ row }">
-            <a v-db-click @click="edit(row)">Sửa</a>
-            <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(row, 'Xóa đảm bảo')">Xóa</a>
+        </el-table-column>
+        <el-table-column label="Thứ tự sắp xếp" prop="sort" min-width="130">
+          <template slot-scope="scope">
+            <span>{{ scope.row.sort }}</span>
           </template>
-        </vxe-table-column>
-      </vxe-table>
+        </el-table-column>
+        <el-table-column label="Thao tác" width="120" fixed="right">
+          <template slot-scope="scope">
+            <a v-db-click @click="edit(scope.row)">Sửa</a>
+            <el-divider direction="vertical"></el-divider>
+            <a v-db-click @click="del(scope.row, 'Xóa đảm bảo')">Xóa</a>
+          </template>
+        </el-table-column>
+      </el-table>
       <div class="acea-row row-right page">
         <pagination
           v-if="total"

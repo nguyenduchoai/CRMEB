@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -96,7 +96,7 @@ class WechatPay extends BasePay implements PayInterface
      */
     public function refund(string $outTradeNo, array $opt = [])
     {
-        if (!isset($opt['pay_price'])) throw new PayException(400730);
+        if (!isset($opt['pay_price'])) throw new PayException('Thiếu pay_price');
         $totalFee = floatval(bcmul($opt['pay_price'], 100, 0));
         $refundFee = isset($opt['refund_price']) ? floatval(bcmul($opt['refund_price'], 100, 0)) : null;
         $refundReason = $opt['desc'] ?? '';

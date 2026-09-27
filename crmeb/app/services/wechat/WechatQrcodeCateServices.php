@@ -1,6 +1,13 @@
 <?php
-
-
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 namespace app\services\wechat;
 
 
@@ -58,7 +65,7 @@ class WechatQrcodeCateServices extends BaseServices
         } else {
             $res = $this->dao->save($data);
         }
-        if (!$res) throw new AdminException(100006);
+        if (!$res) throw new AdminException('Lưu thất bại');
         return true;
     }
 
@@ -70,10 +77,10 @@ class WechatQrcodeCateServices extends BaseServices
     public function delCate($id = 0)
     {
         $count = app()->make(WechatQrcodeServices::class)->count(['cate_id' => $id]);
-        if ($count) throw new AdminException(400454);
-        if (!$id) throw new AdminException(100100);
+        if ($count) throw new AdminException('Danh mục này có danh mục con, không thể xóa');
+        if (!$id) throw new AdminException('Tham số không hợp lệ');
         $res = $this->dao->update($id, ['is_del' => 1]);
-        if (!$res) throw new AdminException(100008);
+        if (!$res) throw new AdminException('Xóa thất bại');
         return true;
     }
 

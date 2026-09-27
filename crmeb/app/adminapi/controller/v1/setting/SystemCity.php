@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -90,12 +90,12 @@ class SystemCity extends AuthController
             $data['level'] = $data['level'] + 1;
             $data['city_id'] = intval($this->services->getCityIdMax() + 1);
             $this->services->save($data);
-            return app('json')->success(100000);
+            return app('json')->success('Lưu thành công');
         } else {
             unset($data['level']);
             unset($data['parent_id']);
             $this->services->update($data['id'], $data);
-            return app('json')->success(100001);
+            return app('json')->success('Sửa thành công');
         }
     }
 
@@ -124,7 +124,7 @@ class SystemCity extends AuthController
             [['city_id', 'd'], 0]
         ], true);
         $this->services->deleteCity($id);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -135,7 +135,7 @@ class SystemCity extends AuthController
     {
         CacheService::delete('CITY_LIST');
         CacheService::delete('CITY_FULL_LIST');
-        return app('json')->success(400185);
+        return app('json')->success('Xóa thành công');
     }
 
     /**

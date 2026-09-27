@@ -299,6 +299,10 @@ export default {
 					// #ifdef H5
 					if (this.is_gift) this.setOpenShare();
 					// #endif
+					// Không phải quà tặng thì tắt chia sẻ
+					if (!this.is_gift) {
+						uni.hideShareMenu();
+					}
 					this.getOrderCoupon();
 				})
 				.catch((err) => {

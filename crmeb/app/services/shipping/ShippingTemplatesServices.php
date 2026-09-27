@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -65,7 +65,7 @@ class ShippingTemplatesServices extends BaseServices
     {
         $templates = $this->dao->get($id);
         if (!$templates) {
-            throw new AdminException(400592);
+            throw new AdminException('Mẫu cần sửa không tồn tại');
         }
         /** @var ShippingTemplatesFreeServices $freeServices */
         $freeServices = app()->make(ShippingTemplatesFreeServices::class);
@@ -113,7 +113,7 @@ class ShippingTemplatesServices extends BaseServices
             //Đặt khu vực giao hàng
             $res = $res && $regionServices->saveRegion($data['region_info'], (int)$data['type'], (int)$id);
             if (!$res) {
-                throw new AdminException(400593);
+                throw new AdminException('Thêm phí vận chuyển cho khu vực chỉ định thất bại');
             }
             //Đặt miễn phí vận chuyển chỉ định
             if ($data['appoint']) {
@@ -132,7 +132,7 @@ class ShippingTemplatesServices extends BaseServices
             if ($res) {
                 return true;
             } else {
-                throw new AdminException(100006);
+                throw new AdminException('Lưu thất bại');
             }
         });
     }

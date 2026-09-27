@@ -1,15 +1,5 @@
 <template>
-  <div
-    class="mobile-page"
-    :style="{
-      background: bottomBgColor,
-      paddingTop: topConfig + 'px',
-      paddingBottom: bottomConfig + 'px',
-      paddingLeft: edge + 'px',
-      paddingRight: edge + 'px',
-      marginTop: udEdge + 'px',
-    }"
-  >
+  <common_wrapper :config="configObj">
     <div
       class="box"
       :style="{
@@ -20,7 +10,7 @@
       }"
       v-html="richText"
     ></div>
-  </div>
+  </common_wrapper>
 </template>
 
 <script>
@@ -77,6 +67,67 @@ export default {
         setUp: {
           tabVal: 0,
         },
+        zIndexConfig: {
+          title: 'Thứ tự lớp thành phần',
+          val: 0,
+          min: 0,
+        },
+        borderConfig: {
+          title: 'Cài đặt viền',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0, // 0: Hide, 1: Show
+          styleConfig: {
+            title: 'Kiểu viền',
+            tabVal: 0,
+            tabList: [
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
+            ],
+          },
+          widthConfig: {
+            title: 'Độ dày viền',
+            val: 1,
+            min: 1,
+          },
+          colorConfig: {
+            title: 'Màu viền',
+            default: [{ item: '#e5e5e5' }],
+            color: [{ item: '#e5e5e5' }],
+          },
+        },
+        shadowConfig: {
+          title: 'Cài đặt đổ bóng',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0,
+          colorConfig: {
+            title: 'Màu đổ bóng',
+            default: [{ item: '#e5e5e5' }],
+            color: [{ item: '#e5e5e5' }],
+          },
+          xConfig: {
+            title: 'Độ lệch trục X',
+            val: 0,
+            min: -50,
+          },
+          yConfig: {
+            title: 'Độ lệch trục Y',
+            val: 0,
+            min: -50,
+          },
+          blurConfig: {
+            title: 'Bán kính làm mờ',
+            val: 10,
+            min: 0,
+          },
+          spreadConfig: {
+            title: 'Bán kính lan tỏa',
+            val: 0,
+            min: -50,
+          },
+        },
         titleLeft: 'Nội dung văn bản định dạng',
         titleRight: 'Kiểu chung',
         bgColor: {
@@ -107,25 +158,21 @@ export default {
             },
           ],
         },
-        topConfig: {
-          title: 'Lề trên',
+        paddingConfig: {
+          title: 'Lề trong',
           val: 0,
           min: 0,
+          max: 100,
+          isAll: false,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
-        bottomConfig: {
-          title: 'Lề dưới',
+        marginConfig: {
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
-        },
-        lrConfig: {
-          title: 'Lề trái phải',
-          val: 0,
-          min: 0,
-        },
-        udConfig: {
-          title: 'Lề trên trang',
-          val: 0,
-          min: 0,
+          max: 100,
+          isAll: false,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         richText: {
           val: '',
@@ -150,18 +197,21 @@ export default {
         },
       },
       cSlider: '',
+      configObj: null,
       bgColor: '',
       confObj: {},
       pageData: {},
-      edge: '',
-      udEdge: '',
       richText: '',
       bottomBgColor: '',
-      topConfig: '',
-      bottomConfig: '',
       fillet: 0,
       filletVal: 0,
       valList: [],
+      paddingConfig: {
+        valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+      },
+      marginConfig: {
+        valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+      },
     };
   },
   mounted() {
@@ -173,25 +223,40 @@ export default {
   methods: {
     setConfig(data) {
       if (!data) return;
-      if (data.lrConfig) {
-        this.bgColor = data.bgColor.color[0].item;
-        this.bottomBgColor = data.bottomBgColor.color[0].item;
-        this.topConfig = data.topConfig.val;
-        this.bottomConfig = data.bottomConfig.val;
-        this.edge = data.lrConfig.val;
-        this.udEdge = data.udConfig.val;
-        this.richText = data.richText.val;
-        this.fillet = data.fillet.type;
-        this.filletVal = data.fillet.val;
-        this.valList = data.fillet.valList;
+      this.configObj = data;
+      for (let key in this.defaultConfig) {
+        if (data[key] == undefined) {
+          this.$set(data, key, this.defaultConfig[key]);
+        }
       }
+      this.bgColor = data.bgColor.color[0].item;
+      this.bottomBgColor = data.bottomBgColor.color[0].item;
+      this.richText = data.richText.val;
+      this.fillet = data.fillet.type;
+      this.filletVal = data.fillet.val;
+      this.valList = data.fillet.valList;
+      this.paddingConfig = data.paddingConfig || {
+        valList: [
+          { val: data.topConfig ? data.topConfig.val : 0 },
+          { val: data.lrConfig ? data.lrConfig.val : 0 },
+          { val: data.bottomConfig ? data.bottomConfig.val : 0 },
+          { val: data.lrConfig ? data.lrConfig.val : 0 },
+        ],
+      };
+      this.marginConfig = data.marginConfig || {
+        valList: [{ val: data.udConfig ? data.udConfig.val : 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+      };
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
-.mobile-page ::v-deepvideo {
+.mobile-page {
+  display: inline-block;
+  width: -webkit-fill-available;
+}
+.mobile-page ::v-deep video {
   width: 100% !important;
 }
 .box {

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -61,7 +61,7 @@ class SystemAttachment extends AuthController
             ['ids', '']
         ], true);
         $this->service->del($ids);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -78,7 +78,7 @@ class SystemAttachment extends AuthController
             ['menu_name', '']
         ], true);
         $res = $this->service->upload((int)$pid, $file, $upload_type, $type, $menuName);
-        return app('json')->success(100032, ['src' => $res]);
+        return app('json')->success('Tải lên thành công', ['src' => $res]);
     }
 
     /**
@@ -92,7 +92,7 @@ class SystemAttachment extends AuthController
             ['images', '']
         ]);
         $this->service->move($data);
-        return app('json')->success(100034);
+        return app('json')->success('Di chuyển thành công');
     }
 
     /**
@@ -104,10 +104,10 @@ class SystemAttachment extends AuthController
     {
         $realName = $this->request->post('real_name', '');
         if (!$realName) {
-            return app('json')->fail(400104);
+            return app('json')->fail('Tên tệp không được để trống');
         }
         $this->service->update($id, ['real_name' => $realName]);
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**
@@ -198,7 +198,7 @@ class SystemAttachment extends AuthController
             ['images', []]
         ]);
         $this->service->onlineUpload($data);
-        return app('json')->success(100032);
+        return app('json')->success('Tải lên thành công');
     }
 
     public function videoDataSave()
@@ -221,6 +221,6 @@ class SystemAttachment extends AuthController
             1,
             $data['video_name']
         );;
-        return app('json')->success(100032);
+        return app('json')->success('Tải lên thành công');
     }
 }

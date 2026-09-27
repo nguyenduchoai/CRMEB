@@ -2,7 +2,7 @@
   <div class="layout-navbars-breadcrumb-user-news">
     <div class="head-box">
       <div class="head-box-title">Thông báo hệ thống</div>
-      <div class="head-box-btn" v-if="newsList.length > 0" v-db-click @click="onAllReadClick">Đánh dấu tất cả đã đọc</div>
+      <!-- <div class="head-box-btn" v-if="newsList.length > 0" v-db-click @click="onAllReadClick">Đánh dấu tất cả đã đọc</div> -->
     </div>
     <div class="content-box">
       <template v-if="newsList.length > 0">
@@ -35,6 +35,7 @@ import { adminSocket } from '@/libs/socket';
 import { getCookies, removeCookies, setCookies } from '@/libs/util';
 export default {
   name: 'layoutBreadcrumbUserNews',
+  props: {},
   data() {
     return {
       newsList: [],
@@ -169,9 +170,20 @@ export default {
         .catch(() => {});
     },
     jumpUrl(path) {
-      this.$router.push({
-        path,
-      });
+      if (!path) return;
+      // Liên kết ngoài thì mở trực tiếp trong cửa sổ mới
+      if (/^https?:\/\//.test(path)) {
+        window.open(path, '_blank');
+        return;
+      }
+      // Tương thích trường hợp this.$router có thể là undefined trong môi trường render đặc biệt như lớp popup
+      const router = this.$router || (this.$root && this.$root.$router);
+      if (router && typeof router.push === 'function') {
+        router.push({ path });
+      } else {
+        // Phương án dự phòng: chuyển hướng trực tiếp
+        window.location.href = path;
+      }
     },
     icon(type) {
       return require(`@/assets/images/news-${type}.png`);

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -30,11 +30,11 @@ class StoreOutAccountValidate extends Validate
      * @var string[]
      */
     protected $message = [
-        'appid.require' => '400133',
-        'appid.account' => '400255',
-        'appsecret.min' => '410011',
-        'appsecret.max' => '410011',
-        'title.max' => '400761',
+        'appid.require' => 'Vui lòng điền tài khoản',
+        'appid.account' => 'Tài khoản phải gồm 4-30 ký tự chữ số hoặc chữ cái',
+        'appsecret.min' => 'Mật khẩu phải dài từ 6 đến 16 ký tự',
+        'appsecret.max' => 'Mật khẩu phải dài từ 6 đến 16 ký tự',
+        'title.max' => 'Nội dung mô tả không được vượt quá 120 ký tự',
     ];
 
     protected $scene = [

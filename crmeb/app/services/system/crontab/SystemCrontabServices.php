@@ -1,5 +1,13 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 namespace app\services\system\crontab;
 
 use app\dao\system\crontab\SystemCrontabDao;
@@ -48,7 +56,7 @@ class SystemCrontabServices extends BaseServices
     {
         $info = $this->dao->get($id);
         $info['customCode'] = "<?php\n\n" . json_decode($info['customCode']);
-        if (!$info) throw new AdminException(100026);
+        if (!$info) throw new AdminException('Dữ liệu không tồn tại');
         return $info->toArray();
     }
 
@@ -94,7 +102,7 @@ class SystemCrontabServices extends BaseServices
             $data['update_time'] = time();
             $res = $this->dao->update(['id' => $data['id']], $data);
         }
-        if (!$res) throw new AdminException(100006);
+        if (!$res) throw new AdminException('Lưu thất bại');
         Cache::delete('crontabCache');
         Cache::set('crontabCache', $this->dao->selectList(['is_open' => 1, 'is_del' => 0])->toArray());
         return true;
@@ -114,7 +122,7 @@ class SystemCrontabServices extends BaseServices
         $data['update_time'] = time();
         $data['is_del'] = 1;
         $res = $this->dao->update(['id' => $id], $data);
-        if (!$res) throw new AdminException(100008);
+        if (!$res) throw new AdminException('Xóa thất bại');
         Cache::delete('crontabCache');
         Cache::set('crontabCache', $this->dao->selectList(['is_open' => 1, 'is_del' => 0])->toArray());
         return true;
@@ -135,7 +143,7 @@ class SystemCrontabServices extends BaseServices
         $data['update_time'] = time();
         $data['is_open'] = $is_open;
         $res = $this->dao->update(['id' => $id], $data);
-        if (!$res) throw new AdminException(100014);
+        if (!$res) throw new AdminException('Cài đặt thành công');
         Cache::delete('crontabCache');
         Cache::set('crontabCache', $this->dao->selectList(['is_open' => 1, 'is_del' => 0])->toArray());
         return true;

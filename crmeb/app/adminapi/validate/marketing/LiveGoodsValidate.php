@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -35,11 +35,11 @@ class LiveGoodsValidate extends Validate
      * @var array
      */
     protected $message = [
-        'id.require' => '400337',
-        'store_name.require' => '400338',
-        'image.require' => '400339',
-        'price.require' => '400340',
-        'price.gt' => '400341',
+        'id.require' => 'Vui lòng chọn sản phẩm',
+        'store_name.require' => 'Vui lòng nhập tên sản phẩm',
+        'image.require' => 'Vui lòng chọn ảnh nền',
+        'price.require' => 'Vui lòng nhập giá livestream',
+        'price.gt' => 'Giá livestream phải lớn hơn 0',
     ];
 
     protected $scene = [

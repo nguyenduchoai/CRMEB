@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -68,11 +68,11 @@ class WechatController
         //Xác thực mã xác thực
         $verifyCode = CacheService::get('code_' . $phone);
         if (!$verifyCode)
-            return app('json')->fail(410009);
+            return app('json')->fail('Vui lòng lấy mã xác thực trước');
         $verifyCode = substr($verifyCode, 0, 6);
         if ($verifyCode != $captcha) {
             CacheService::delete('code_' . $phone);
-            return app('json')->fail(410010);
+            return app('json')->fail('Mã xác thực không đúng');
         }
         CacheService::delete('code_' . $phone);
         $data = $this->services->authBindingPhone($key, $phone);

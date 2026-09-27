@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -59,7 +59,7 @@ class QrcodeServices extends BaseServices
             $this->createTemporaryQrcode($id, $type, $res['id']);
             $res = $this->getTemporaryQrcode($type, $id);
         }
-        if (!$res['ticket']) throw new AdminException(400552);
+        if (!$res['ticket']) throw new AdminException('Lỗi khi lấy mã QR tạm thời');
         return $res;
     }
 
@@ -105,7 +105,7 @@ class QrcodeServices extends BaseServices
             $this->createForeverQrcode($id, $type);
             $res = $this->getForeverQrcode($type, $id);
         }
-        if (!$res['ticket']) throw new AdminException(400553);
+        if (!$res['ticket']) throw new AdminException('Lỗi khi lấy mã QR vĩnh viễn');
         return $res;
     }
 
@@ -357,7 +357,7 @@ class QrcodeServices extends BaseServices
         $data['url_time'] = '';
         $data['qrcode_url'] = $qrCodeLink;
         if (!$re = $this->dao->save($data)) {
-            throw new AdminException(400237);
+            throw new AdminException('Tạo mã QR thất bại');
         }
         return $re;
     }
@@ -372,10 +372,10 @@ class QrcodeServices extends BaseServices
     {
         if (!$id) return false;
         if (!$this->dao->get((int)$id)) {
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         if (!$re = $this->dao->update($id, $data, 'id')) {
-            throw new AdminException(100007);
+            throw new AdminException('Sửa thất bại');
         }
         return $re;
     }

@@ -1,23 +1,14 @@
 <template>
-  <div
-    class="mobile-page"
-    :style="{
-      marginTop: udEdge + 'px',
-      backgroundColor: bgColor,
-      paddingTop: topConfig + 'px',
-      paddingBottom: bottomConfig + 'px',
-      paddingLeft: edge + 'px',
-      paddingRight: edge + 'px',
-    }"
-  >
+  <common_wrapper :config="configObj">
     <div
       class="box"
       :style="{
         borderBottomColor: lineColor,
         borderBottomStyle: style,
+        borderBottomWidth: `${configObj && configObj.heightConfig.val}px`,
       }"
     ></div>
-  </div>
+  </common_wrapper>
 </template>
 
 <script>
@@ -77,6 +68,11 @@ export default {
         titleLeft: 'Cài đặt hiển thị',
         titleRight: 'Kiểu đường kẻ',
         titleCurrent: 'Kiểu chung',
+        zIndexConfig: {
+          title: 'Thứ tự lớp thành phần',
+          val: 0,
+          min: 0,
+        },
         lineColor: {
           title: 'Màu đường kẻ',
           default: [
@@ -121,27 +117,106 @@ export default {
             },
           ],
         },
-        topConfig: {
-          title: 'Lề trên',
-          val: 6,
-          min: 0,
-        },
-        bottomConfig: {
-          title: 'Lề dưới',
-          val: 6,
-          min: 0,
-        },
-        lrEdge: {
-          title: 'Lề trái phải',
+        paddingConfig: {
+          title: 'Lề trong',
           val: 0,
           min: 0,
+          max: 100,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
-        mbConfig: {
-          title: 'Lề trang',
+        borderConfig: {
+          title: 'Cài đặt viền',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0, // 0: Hide, 1: Show
+          styleConfig: {
+            title: 'Kiểu viền',
+            tabVal: 0,
+            tabList: [
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
+            ],
+          },
+          widthConfig: {
+            title: 'Độ dày viền',
+            val: 1,
+            min: 1,
+          },
+          colorConfig: {
+            title: 'Màu viền',
+            default: [{ item: '#e5e5e5' }],
+            color: [{ item: '#e5e5e5' }],
+          },
+        },
+        heightConfig: {
+          title: 'Chiều cao đường kẻ',
+          val: 10,
+          min: 1,
+        },
+        shadowConfig: {
+          title: 'Cài đặt đổ bóng',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0,
+          colorConfig: {
+            title: 'Màu đổ bóng',
+            default: [{ item: 'rgba(0,0,0,0.1)' }],
+            color: [{ item: 'rgba(0,0,0,0.1)' }],
+          },
+          xConfig: {
+            title: 'Độ lệch trục X',
+            val: 0,
+            min: -50,
+          },
+          yConfig: {
+            title: 'Độ lệch trục Y',
+            val: 0,
+            min: -50,
+          },
+          blurConfig: {
+            title: 'Bán kính làm mờ',
+            val: 10,
+            min: 0,
+          },
+          spreadConfig: {
+            title: 'Bán kính lan tỏa',
+            val: 0,
+            min: -50,
+          },
+        },
+        componentBgConfig: {
+          title: 'Cài đặt nền',
+          tabVal: 0,
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
+          colorConfig: {
+            title: 'Màu nền',
+            default: [{ item: '#F5F5F5' }, { item: '#F5F5F5' }],
+            color: [{ item: '#F5F5F5' }, { item: '#F5F5F5' }],
+          },
+          colorDirection: {
+            title: 'Hướng chuyển màu',
+            tabVal: 0,
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
+          },
+          imageConfig: {
+            header: 'Ảnh nền',
+            title: '',
+            name: 'Tải lên ảnh',
+            type: 'code',
+            url: '',
+            info: 'Kích thước đề xuất: 750px * 400px',
+          },
+        },
+        marginConfig: {
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
+          max: 100,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
       },
+      configObj: null,
       bgColor: '',
       confObj: {},
       pageData: {},
@@ -151,6 +226,20 @@ export default {
       bottomConfig: '',
       style: '',
       lineColor: '',
+      paddingConfig: {
+        title: 'Lề trong',
+        val: 0,
+        min: 0,
+        max: 100,
+        valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+      },
+      marginConfig: {
+        title: 'Lề ngoài',
+        val: 0,
+        min: 0,
+        max: 100,
+        valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+      },
     };
   },
   mounted() {
@@ -162,15 +251,36 @@ export default {
   methods: {
     setConfig(data) {
       if (!data) return;
-      if (data.mbConfig) {
-        let styleType = data.lineStyle.tabVal;
-        this.bgColor = data.lineBgColor.color[0].item;
-        this.lineColor = data.lineColor.color[0].item;
-        this.edge = data.lrEdge.val;
-        this.udEdge = data.mbConfig.val;
-        this.topConfig = data.topConfig.val;
-        this.bottomConfig = data.bottomConfig.val;
-        this.style = data.lineStyle.tabList[styleType].style;
+      this.configObj = data;
+      this.$set(this.configObj, 'bottomBgColor', data.lineBgColor);
+      let styleType = data.lineStyle.tabVal;
+      this.bgColor = data.lineBgColor.color[0].item;
+      this.lineColor = data.lineColor.color[0].item;
+      this.style = data.lineStyle.tabList[styleType].style;
+
+      for (let key in this.defaultConfig) {
+        if (this.configObj[key] === undefined) {
+          this.$set(this.configObj, key, this.defaultConfig[key]);
+        }
+      }
+
+      if (!data.paddingConfig) {
+        data.paddingConfig = {
+          isAll: false,
+          valList: [
+            { val: data.topConfig ? data.topConfig.val : 0 },
+            { val: data.lrEdge ? data.lrEdge.val : 0 },
+            { val: data.bottomConfig ? data.bottomConfig.val : 0 },
+            { val: data.lrEdge ? data.lrEdge.val : 0 },
+          ],
+        };
+      }
+
+      if (!data.marginConfig) {
+        data.marginConfig = {
+          isAll: false,
+          valList: [{ val: 0 }, { val: 0 }, { val: data.mbConfig ? data.mbConfig.val : 0 }, { val: 0 }],
+        };
       }
     },
   },
@@ -180,8 +290,7 @@ export default {
 <style scoped lang="scss">
 .mobile-page {
   padding: 7px 0;
-}
-.box {
-  border-bottom-width: 1px;
+  display: inline-block;
+  width: -webkit-fill-available;
 }
 </style>

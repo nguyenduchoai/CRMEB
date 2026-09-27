@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -69,7 +69,7 @@ class AppVersionServices extends BaseServices
         ]);
         $field[] = Form::radio('is_force', 'Bắt buộc cập nhật', $info['is_force'] ?? 1)->options([['label' => 'Bật', 'value' => 1], ['label' => 'Tắt', 'value' => 0]]);
         $field[] = Form::radio('is_new', 'Bản mới nhất', $info['is_new'] ?? 1)->options([['label' => 'Có', 'value' => 1], ['label' => 'Không', 'value' => 0]]);
-        return create_form('Thêm thông tin phiên bản', $field, Url::buildUrl('/system/version_save'), 'POST');
+        return create_form('Thông tin phiên bản', $field, Url::buildUrl('/system/version_save'), 'POST');
 
     }
 

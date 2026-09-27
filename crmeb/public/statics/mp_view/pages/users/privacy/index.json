@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Chính sách bảo mật",
+  "navigationBarTitleText": "隐私协议",
   "usingComponents": {
     "jyf-parser": "/components/jyf-parser/jyf-parser"
   }

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -127,8 +127,8 @@ class StoreOrderInvoiceServices extends BaseServices
      */
     public function makeUp(int $uid, $order_id, int $invoice_id)
     {
-        if (!$order_id) throw new AdminException(100100);
-        if (!$invoice_id) throw new AdminException(410325);
+        if (!$order_id) throw new AdminException('Tham số không hợp lệ');
+        if (!$invoice_id) throw new AdminException('Vui lòng chọn hóa đơn');
 
         /** @var StoreOrderServices $storeOrderServices */
         $storeOrderServices = app()->make(StoreOrderServices::class);
@@ -136,19 +136,19 @@ class StoreOrderInvoiceServices extends BaseServices
         $userInvoiceServices = app()->make(UserInvoiceServices::class);
         $order = $storeOrderServices->getOne(['order_id|id' => $order_id, 'is_del' => 0]);
         if (!$order) {
-            throw new AdminException(410173);
+            throw new AdminException('Đơn hàng không tồn tại');
         }
         //Kiểm tra kèm truy vấn
         $invoice = $userInvoiceServices->checkInvoice($invoice_id, $uid);
 
         if ($this->dao->getOne(['order_id' => $order['id'], 'uid' => $uid])) {
-            throw new AdminException(410249);
+            throw new AdminException('Đã yêu cầu xuất hóa đơn');
         }
         if ($order['refund_status'] == 2) {
-            throw new AdminException(410226);
+            throw new AdminException('Đơn hàng đã được hoàn tiền');
         }
         if ($order['refund_status'] == 1) {
-            throw new AdminException(410250);
+            throw new AdminException('Đang yêu cầu hoàn tiền');
         }
         unset($invoice['id'], $invoice['add_time']);
         $data = [];
@@ -159,7 +159,7 @@ class StoreOrderInvoiceServices extends BaseServices
         $data['is_pay'] = $order['paid'] == 1 ? 1 : 0;
         $data = array_merge($data, $invoice);
         if (!$re = $this->dao->save($data)) {
-            throw new AdminException(410251);
+            throw new AdminException('Gửi yêu cầu thất bại');
         }
         if (sys_config('elec_invoice', 1) == 1 && sys_config('auto_invoice', 1) == 1 && $data['is_pay'] == 1) {
             //Tự động xuất hóa đơn
@@ -182,13 +182,13 @@ class StoreOrderInvoiceServices extends BaseServices
     {
         $orderInvoice = $this->dao->get($id);
         if (!$orderInvoice) {
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         if ($data['is_invoice'] == 1) {
             $data['invoice_time'] = time();
         }
         if (!$this->dao->update($id, $data, 'id')) {
-            throw new AdminException(100015);
+            throw new AdminException('Cài đặt thất bại');
         }
         return true;
     }
@@ -207,7 +207,7 @@ class StoreOrderInvoiceServices extends BaseServices
         $storeOrderServices = app()->make(StoreOrderServices::class);
         $orderInfo = $storeOrderServices->getOne(['id' => $oid, 'is_del' => 0]);
         if (!$orderInfo) {
-            throw new AdminException(410173);
+            throw new AdminException('Đơn hàng không tồn tại');
         }
         $pid = $orderInfo['pid'] > 0 ? $orderInfo['pid'] : $orderInfo['id'];
         //Truy vấn bản ghi xuất hóa đơn

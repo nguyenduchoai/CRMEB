@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -59,7 +59,7 @@ class ShippingTemplatesFreeServices extends BaseServices
                     if (isset($value['children']) && is_array($value['children'])) {
                         foreach ($value['children'] as $vv) {
                             if (!isset($vv['city_id'])) {
-                                throw new AdminException(400591);
+                                throw new AdminException('Thiếu ID thành phố, không thể lưu');
                             }
                             $placeList [] = [
                                 'temp_id' => $tempId,

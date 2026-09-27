@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Mua chung",
+  "navigationBarTitleText": "拼团",
   "usingComponents": {
     "count-down": "/components/countDown/index",
     "product-window": "/components/productWindow/index",

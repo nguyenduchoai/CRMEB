@@ -1,5 +1,13 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 namespace app\services\activity\integral;
 
 use app\dao\user\UserBillDao;
@@ -75,12 +83,12 @@ class StorePointRecordServices extends BaseServices
      */
     public function recordRemark($id, $mark)
     {
-        if (!$id) throw new AdminException(100100);
-        if ($mark === '') throw new AdminException(400106);
+        if (!$id) throw new AdminException('Tham số không hợp lệ');
+        if ($mark === '') throw new AdminException('Ghi chú không được để trống');
         if ($this->dao->update($id, ['mark' => $mark])) {
             return true;
         } else {
-            throw new AdminException(100025);
+            throw new AdminException('Ghi chú thất bại');
         }
     }
 

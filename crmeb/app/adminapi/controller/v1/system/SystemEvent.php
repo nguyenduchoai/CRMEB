@@ -1,5 +1,13 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 namespace app\adminapi\controller\v1\system;
 
 use app\adminapi\controller\AuthController;
@@ -88,7 +96,7 @@ class SystemEvent extends AuthController
         if ($adminInfo['level'] != 0) return app('json')->fail('Chỉ quản trị viên cấp cao nhất mới được thao tác tác vụ định kỳ');
         if (!$this->isSafePhpCode($data['customCode'])) return app('json')->fail('Nội dung tùy chỉnh chứa mã nguy hiểm, vui lòng kiểm tra lại mã');
         $this->services->saveEvent($data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -134,7 +142,7 @@ class SystemEvent extends AuthController
     public function setEventStatus($id, $is_open)
     {
         $this->services->setEventStatus($id, $is_open);
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
@@ -152,6 +160,6 @@ class SystemEvent extends AuthController
     {
         if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $this->services->eventDel($id);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 }

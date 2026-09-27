@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -101,19 +101,19 @@ class User extends AuthController
     public function setUserGroup(UserGroupServices $services, UserServices $userServices, $uid, $id)
     {
         if (!$services->count(['id' => $id])) {
-            return app('json')->fail(100026);
+            return app('json')->fail('Dữ liệu không tồn tại');
         }
         if (!($userInfo = $userServices->get($uid))) {
-            return app('json')->fail(410113);
+            return app('json')->fail('Người dùng không tồn tại');
         }
         if ($userInfo->group_id == $id) {
-            return app('json')->fail(410103);
+            return app('json')->fail('Đã có nhóm này');
         }
         $userInfo->group_id = $id;
         if ($userInfo->save()) {
-            return app('json')->success(100014);
+            return app('json')->success('Cài đặt thành công');
         } else {
-            return app('json')->fail(100015);
+            return app('json')->fail('Cài đặt thất bại');
         }
     }
 
@@ -130,12 +130,12 @@ class User extends AuthController
             ['un_label_ids', []]
         ], true);
         if (!count($labels) && !count($unLabelIds)) {
-            return app('json')->fail(410104);
+            return app('json')->fail('Thiếu id nhãn');
         }
-        if ($services->setUserLable($uid, $labels) && $services->unUserLabel($uid, $unLabelIds)) {
-            return app('json')->success(100014);
+        if ($services->setUserLabel($uid, $labels) && $services->unUserLabel($uid, $unLabelIds)) {
+            return app('json')->success('Cài đặt thành công');
         } else {
-            return app('json')->fail(100015);
+            return app('json')->fail('Cài đặt thất bại');
         }
     }
 
@@ -161,7 +161,7 @@ class User extends AuthController
         $data = $request->postMore([
             ['filename', 'file'],
         ]);
-        if (!$data['filename']) return app('json')->fail(100100);
+        if (!$data['filename']) return app('json')->fail('Tham số không hợp lệ');
         if (CacheService::has('start_uploads_' . $request->kefuId()) && CacheService::get('start_uploads_' . $request->kefuId()) >= 100) return app('json')->fail('Thao tác không hợp lệ');
         $upload = UploadService::init();
         $info = $upload->to('store/comment')->validate()->move($data['filename']);
@@ -178,7 +178,7 @@ class User extends AuthController
         CacheService::set('start_uploads_' . $request->kefuId(), $start_uploads, 86400);
         $res['dir'] = path_to_url($res['dir']);
         if (strpos($res['dir'], 'http') === false) $res['dir'] = $request->domain() . $res['dir'];
-        return app('json')->success(410091, ['name' => $res['name'], 'url' => $res['dir']]);
+        return app('json')->success('Tải ảnh lên thành công', ['name' => $res['name'], 'url' => $res['dir']]);
     }
 
 }

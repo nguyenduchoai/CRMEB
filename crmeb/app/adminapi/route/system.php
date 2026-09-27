@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -109,16 +109,42 @@ Route::group('system', function () {
         Route::get('upgradeable/list', 'UpgradeController/upgradeableList')->option(['real_name' => 'Danh sách gói có thể nâng cấp']);
         //Thỏa thuận nâng cấp
         Route::get('upgrade/agreement', 'UpgradeController/agreement')->option(['real_name' => 'Thỏa thuận nâng cấp']);
-        //Tải xuống gói nâng cấp
-        Route::post('upgrade_download/:package_key', 'UpgradeController/download')->option(['real_name' => 'Tải xuống gói nâng cấp']);
-        //Tiến trình nâng cấp
-        Route::get('upgrade_progress', 'UpgradeController/progress')->option(['real_name' => 'Tiến trình nâng cấp']);
         //Lịch sử nâng cấp
         Route::get('upgrade_log/list', 'UpgradeController/upgradeLogList')->option(['real_name' => 'Lịch sử nâng cấp']);
+        //Kiểm tra tệp
+        Route::get('upgrade/check_file', 'UpgradeController/checkFile')->option(['real_name' => 'Kiểm tra tệp']);
+        //Thực thi lại
+        Route::get('upgrade/reExecute', 'UpgradeController/reExecute')->option(['real_name' => 'Thực thi lại']);
+        //Tải xuống gói nâng cấp
+        Route::post('package_download/:package_key', 'UpgradeController/packageDownload')->option(['real_name' => 'Tải xuống gói nâng cấp']);
+        //Tiến độ tải xuống gói nâng cấp
+        Route::get('upgrade_download/progress', 'UpgradeController/downloadProgress')->option(['real_name' => 'Tiến độ tải xuống gói nâng cấp']);
+        //Tiến trình nâng cấp
+        Route::get('upgrade_progress', 'UpgradeController/progress')->option(['real_name' => 'Tiến trình nâng cấp']);
         //Xuất dự án backup
         Route::get('upgrade_export/:id/:type', 'UpgradeController/export')->option(['real_name' => 'Xuất bản sao lưu']);
-        //Đăng nhập quản lý tệp
-        Route::post('file/login', 'v1.system.SystemFile/login')->option(['real_name' => 'Đăng nhập quản lý tệp']);
+
+        // API nâng cấp vượt phiên bản
+        //Lấy tổng quan nâng cấp vượt phiên bản
+        Route::get('cross_version/overview', 'UpgradeController/crossVersionOverview')->option(['real_name' => 'Tổng quan nâng cấp vượt phiên bản']);
+        //Lấy danh sách phiên bản chờ nâng cấp
+        Route::get('cross_version/pending', 'UpgradeController/pendingVersions')->option(['real_name' => 'Danh sách phiên bản chờ nâng cấp']);
+        //Lấy SQL nâng cấp chờ thực thi
+        Route::get('cross_version/pending_sql', 'UpgradeController/pendingUpgradeSql')->option(['real_name' => 'Danh sách SQL chờ thực thi']);
+        //Thực hiện nâng cấp vượt phiên bản (từng bước)
+        Route::post('cross_version/execute', 'UpgradeController/executeCrossVersionUpgrade')->option(['real_name' => 'Thực hiện nâng cấp vượt phiên bản']);
+        //Thực thi toàn bộ nâng cấp vượt phiên bản bằng một cú nhấp
+        Route::post('cross_version/execute_all', 'UpgradeController/executeAllCrossVersionUpgrade')->option(['real_name' => 'Nâng cấp bằng một cú nhấp']);
+        //Kiểm tra có cần nâng cấp vượt phiên bản không
+        Route::get('cross_version/check', 'UpgradeController/checkCrossVersionUpgrade')->option(['real_name' => 'Kiểm tra nâng cấp vượt phiên bản']);
+        //Lấy trạng thái sao lưu
+        Route::get('cross_version/backup_status', 'UpgradeController/backupStatus')->option(['real_name' => 'Trạng thái sao lưu']);
+        //Lấy tiến độ nâng cấp
+        Route::get('cross_version/progress', 'UpgradeController/upgradeProgress')->option(['real_name' => 'Tiến trình nâng cấp']);
+        //Lấy danh sách phiên bản có thể rollback
+        Route::get('rollback/versions', 'UpgradeController/rollbackVersions')->option(['real_name' => 'Danh sách phiên bản có thể quay lại']);
+        //Thực hiện quay lại phiên bản
+        Route::post('rollback/execute', 'UpgradeController/executeRollback')->option(['real_name' => 'Thực hiện quay lại phiên bản']);
     })->option(['parent' => 'system', 'cate_name' => 'Nâng cấp trực tuyến']);
 
     /** Tác vụ định kỳ */
@@ -242,6 +268,14 @@ Route::group('system', function () {
         Route::get('ticket/content/:id', 'v1.system.SystemTicket/ticketContent')->option(['real_name' => 'Lấy chi tiết in biên lai']);
         Route::post('ticket/save_content/:id', 'v1.system.SystemTicket/ticketContentSave')->option(['real_name' => 'Lưu chi tiết in biên lai']);
     })->option(['parent' => 'system', 'cate_name' => 'In biên lai']);
+
+    /** Quản lý tệp */
+    Route::group(function () {
+        //Đăng nhập quản lý tệp
+        Route::post('file/login', 'v1.system.SystemFile/login')->option(['real_name' => 'Đăng nhập quản lý tệp']);
+        //Thực hiện ghi giá trị md5 của tất cả file trong hai thư mục app, crmeb vào cơ sở dữ liệu
+        Route::get('write_md5', 'v1.system.SystemFile/writeMd5')->option(['real_name' => 'Thực hiện ghi giá trị md5']);
+    })->option(['parent' => 'system', 'cate_name' => 'Quản lý tệp']);
 
 })->middleware([
     \app\http\middleware\AllowOriginMiddleware::class,

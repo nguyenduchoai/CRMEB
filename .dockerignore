@@ -1,0 +1,177 @@
+# ===========================================
+# File cấu hình lọc khi build image Docker
+# Tác dụng: loại trừ các file không cần thiết khi chạy docker build, giảm kích thước build context
+# ===========================================
+
+# ===========================================
+# 1. Quản lý phiên bản và các mục liên quan đến Git
+# ===========================================
+.git
+.gitignore
+.gitattributes
+.gitmodules
+
+# ===========================================
+# 2. File liên quan đến Docker (dùng khi build, không cần đưa vào image)
+# ===========================================
+Dockerfile
+.dockerignore
+docker-compose*.yml
+docker-compose*.yaml
+.docker
+Dockerfile.*
+*.mdc
+
+# ===========================================
+# 3. Cấu hình IDE và trình soạn thảo
+# ===========================================
+.idea/
+.vscode/
+.vs/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ===========================================
+# 4. Thư mục phụ trợ của dự án
+# ===========================================
+help/
+template/
+docs/
+doc/
+*.md
+LICENSE
+README*
+CHANGELOG*
+CHANGE*
+HISTORY*
+CONTRIBUTING*
+
+# ===========================================
+# 5. Cache và file tạm
+# ===========================================
+.runtime/
+runtime/
+*.log
+*.tmp
+*.temp
+*.cache
+*.bak
+*.backup
+*_backup
+*.old
+*.swp
+*.swo
+*~
+.DS_Store
+
+# ===========================================
+# 6. Liên quan đến Node.js (phụ thuộc frontend, không cần sau khi build)
+# ===========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn/
+.browserslistrc
+.eslintcache
+.node_repl_history
+
+# ===========================================
+# 7. Phụ thuộc PHP Composer (dọn dẹp khi không dùng)
+# ===========================================
+# Lưu ý: nếu cần thư mục vendor thì đừng loại trừ khi đưa vào image
+# Nếu build bằng composer install thì có thể loại trừ
+# vendor/test/
+# vendor/tests/
+# vendor/docs/
+# vendor/*.txt
+# vendor/*.md
+
+# ===========================================
+# 8. File font dung lượng lớn (tài nguyên không cần thiết)
+# ===========================================
+# simsun.ttc
+# WenQuanZhengHei.ttf
+crmeb/vendor/dh2y/think-qrcode/src/simsun.ttc
+crmeb/vendor/fastknife/ajcaptcha/resources/fonts/WenQuanZhengHei.ttf
+
+# ===========================================
+# 9. File cơ sở dữ liệu và file cài đặt (được tạo lại khi chạy image)
+# ===========================================
+*.sql
+*.sql.gz
+*.sql.bak
+
+# ===========================================
+# 10. File kiểm thử và phát triển
+# ===========================================
+phpunit.xml
+phpunit.xml.dist
+tests/
+test/
+Benchmark/
+coverage/
+.phpunit.result.cache
+.php_cs
+.php-cs-fixer.cache
+.styleci.yml
+codesniffer.ruleset.xml
+
+# ===========================================
+# 11. File cấu hình môi trường (thông tin nhạy cảm, mount khi chạy)
+# ===========================================
+.env
+.env.*
+!.env.example
+.secret
+.secrets
+*.key
+*.pem
+*.crt
+*.csr
+
+# ===========================================
+# 12. File sao lưu và file lịch sử
+# ===========================================
+*backup*
+*_backup*
+*_bak*
+*.backup
+*.bak
+*~
+*.orig
+*.rej
+*_COPYING_*
+*_TRASH_*
+
+# ===========================================
+# 13. File hỗ trợ phát triển
+# ===========================================
+.trae/
+.codebuddy/
+.scribe/
+.phpunit.result.cache
+php_errors.log
+*.log
+
+# ===========================================
+# 14. Các file lớn hoặc không cần thiết khác
+# ===========================================
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+*.iso
+*.img
+*.dmg
+*.pdf
+*.exe
+*.msi

@@ -507,10 +507,11 @@ export default {
           is_postage: row.is_postage,
           is_host: 0,
           is_show: 1,
-          description: row.description,
+          description: '',
           id: 0,
           product_id: row.id,
           temp_id: row.temp_id,
+          description: row.description,
         };
         this.productAttrs(row);
         this.$refs.goodslist.productRow = null;

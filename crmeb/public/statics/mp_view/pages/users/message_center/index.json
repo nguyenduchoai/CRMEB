@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Trung tâm tin nhắn",
+  "navigationBarTitleText": "消息中心",
   "enablePullDownRefresh": true,
   "usingComponents": {
     "home": "/components/home/index",

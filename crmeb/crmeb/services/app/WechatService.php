@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -365,10 +365,10 @@ class WechatService
     {
         $options = self::options();
         if (!isset($options['payment']['cert_path'])) {
-            throw new ApiException(410088);
+            throw new ApiException('Thanh toán doanh nghiệp vào ví WeChat (Change) cần có chứng chỉ thanh toán, hệ thống phát hiện bạn chưa tải lên');
         }
         if (!$options['payment']['cert_path']) {
-            throw new ApiException(410088);
+            throw new ApiException('Thanh toán doanh nghiệp vào ví WeChat (Change) cần có chứng chỉ thanh toán, hệ thống phát hiện bạn chưa tải lên');
         }
         $merchantPayData = [
             'partner_trade_no' => $orderId, //Chuỗi ngẫu nhiên dùng làm mã đơn hàng, cùng khái niệm như lì xì (hongbao) và thanh toán.
@@ -382,7 +382,7 @@ class WechatService
         if ($result->return_code == 'SUCCESS' && $result->result_code != 'FAIL') {
             return true;
         } else {
-            throw new ApiException($result->err_code_des ?? 400658);
+            throw new ApiException($result->err_code_des ?? 'Chuyển tiền doanh nghiệp vào ví WeChat thất bại, vui lòng thử lại sau');
         }
     }
 
@@ -584,7 +584,7 @@ class WechatService
 
     public static function payOrderRefund($orderNo, array $opt)
     {
-        if (!isset($opt['pay_price'])) throw new AdminException(400730);
+        if (!isset($opt['pay_price'])) throw new AdminException('Thiếu pay_price');
         $totalFee = floatval(bcmul($opt['pay_price'], 100, 0));
         $refundFee = isset($opt['refund_price']) ? floatval(bcmul($opt['refund_price'], 100, 0)) : null;
         $refundReason = $opt['desc'] ?? '';
@@ -597,8 +597,8 @@ class WechatService
         $refundAccount = $opt['refund_account'] ?? 'REFUND_SOURCE_UNSETTLED_FUNDS';
         try {
             $res = (self::refund($orderNo, $refundNo, $totalFee, $refundFee, $opUserId, $refundReason, $type, $refundAccount));
-            if ($res->return_code == 'FAIL') throw new AdminException(400731, ['msg' => $res->return_msg]);
-            if (isset($res->err_code)) throw new AdminException(400731, ['msg' => $res->err_code_des]);
+            if ($res->return_code == 'FAIL') throw new AdminException('Hoàn tiền thất bại: {:msg}', ['msg' => $res->return_msg]);
+            if (isset($res->err_code)) throw new AdminException('Hoàn tiền thất bại: {:msg}', ['msg' => $res->err_code_des]);
         } catch (\Exception $e) {
             throw new AdminException($e->getMessage());
         }
@@ -784,7 +784,7 @@ class WechatService
                 if (isset($res['user_info_list'])) {
                     $userInfo = $res['user_info_list'];
                 } else {
-                    throw new AdminException(400732);
+                    throw new AdminException('Lấy thông tin người theo dõi WeChat thất bại');
                 }
             } else {
                 $userInfo = $userService->get($openid);

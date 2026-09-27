@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -100,53 +100,53 @@ class StoreService extends AuthController
             ['nickname', ''],
             ['status', 1],
         ]);
-        if ($data['image'] == '') return app('json')->fail(400250);
+        if ($data['image'] == '') return app('json')->fail('Vui lòng chọn người dùng');
         $data['uid'] = $data['image']['uid'];
         /** @var UserServices $userService */
         $userService = app()->make(UserServices::class);
         $userInfo = $userService->get($data['uid']);
         if ($data['phone'] == '') {
             if (!$userInfo['phone']) {
-                throw new AdminException(400251);
+                throw new AdminException('Người dùng này chưa liên kết số điện thoại, vui lòng điền thủ công');
             } else {
                 $data['phone'] = $userInfo['phone'];
             }
         } else {
             if (!check_phone($data['phone'])) {
-                throw new AdminException(400252);
+                throw new AdminException('Số điện thoại sai định dạng');
             }
         }
         if ($data['nickname'] == '') $data['nickname'] = $userInfo['nickname'];
         $data['avatar'] = $data['image']['image'];
         if ($this->services->count(['uid' => $data['uid']])) {
-            return app('json')->fail(400253);
+            return app('json')->fail('Nhân viên CSKH đã tồn tại');
         }
         unset($data['image']);
         $data['add_time'] = time();
         if (!$data['account']) {
-            return app('json')->fail(400254);
+            return app('json')->fail('Vui lòng nhập tài khoản');
         }
         if (!preg_match('/^[a-zA-Z0-9]{4,30}$/', $data['account'])) {
-            return app('json')->fail(400255);
+            return app('json')->fail('Tài khoản phải gồm 4-30 ký tự chữ số hoặc chữ cái');
         }
         if (!$data['password']) {
-            return app('json')->fail(400256);
+            return app('json')->fail('Vui lòng nhập mật khẩu');
         }
         if (!preg_match('/^[0-9a-z_$]{6,20}$/i', $data['password'])) {
-            return app('json')->fail(400257);
+            return app('json')->fail('Mật khẩu phải gồm 6-20 ký tự chữ số hoặc chữ cái');
         }
         if ($this->services->count(['phone' => $data['phone']])) {
-            return app('json')->fail(400258);
+            return app('json')->fail('Nhân viên CSKH có số điện thoại này đã tồn tại');
         }
         if ($this->services->count(['account' => $data['account']])) {
-            return app('json')->fail(400259);
+            return app('json')->fail('Tài khoản CSKH này đã tồn tại');
         }
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         $res = $this->services->save($data);
         if ($res) {
-            return app('json')->success(400260);
+            return app('json')->success('Thêm nhân viên CSKH thành công');
         } else {
-            return app('json')->fail(400261);
+            return app('json')->fail('Thêm nhân viên CSKH thất bại');
         }
     }
 
@@ -181,33 +181,33 @@ class StoreService extends AuthController
         ]);
         $customer = $this->services->get((int)$id);
         if (!$customer) {
-            return app('json')->fail(100026);
+            return app('json')->fail('Dữ liệu không tồn tại');
         }
         if ($data["nickname"] == '') {
-            return app('json')->fail(400262);
+            return app('json')->fail('Tên nhân viên CSKH không được để trống');
         }
         if (!check_phone($data['phone'])) {
-            return app('json')->fail(400252);
+            return app('json')->fail('Số điện thoại sai định dạng');
         }
         if ($customer['phone'] != $data['phone'] && $this->services->count(['phone' => $data['phone']])) {
-            return app('json')->fail(400258);
+            return app('json')->fail('Nhân viên CSKH có số điện thoại này đã tồn tại');
         }
         if ($data['password']) {
             if (!preg_match('/^[0-9a-z_$]{6,16}$/i', $data['password'])) {
-                return app('json')->fail(400257);
+                return app('json')->fail('Mật khẩu phải gồm 6-20 ký tự chữ số hoặc chữ cái');
             }
             if (!$data['true_password']) {
-                return app('json')->fail(400263);
+                return app('json')->fail('Vui lòng nhập mật khẩu xác nhận');
             }
             if ($data['password'] != $data['true_password']) {
-                return app('json')->fail(400264);
+                return app('json')->fail('Hai mật khẩu đã nhập không khớp');
             }
             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         } else {
             unset($data['password']);
         }
         $this->services->update($id, $data);
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**
@@ -218,9 +218,9 @@ class StoreService extends AuthController
     public function delete($id)
     {
         if (!$this->services->delete($id))
-            return app('json')->fail(100008);
+            return app('json')->fail('Xóa thất bại');
         else
-            return app('json')->success(100002);
+            return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -232,16 +232,16 @@ class StoreService extends AuthController
      */
     public function set_status(UserServices $services, $id, $status)
     {
-        if ($status == '' || $id == 0) return app('json')->fail(100100);
+        if ($status == '' || $id == 0) return app('json')->fail('Tham số không hợp lệ');
         $info = $this->services->get($id, ['status', 'uid']);
         if (!$services->count(['uid' => $info['uid']])) {
             $info->status = 1;
             $info->save();
-            return app('json')->fail(400265);
+            return app('json')->fail('Người dùng không tồn tại, nhân viên CSKH sẽ bị cấm đăng nhập');
         }
         $info->status = $status;
         $info->save();
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
@@ -256,7 +256,7 @@ class StoreService extends AuthController
     {
         $uid = $this->services->value(['id' => $id], 'uid');
         if (!$uid) {
-            return app('json')->fail(100026);
+            return app('json')->fail('Dữ liệu không tồn tại');
         }
         return app('json')->success($this->services->getChatUser((int)$uid));
     }
@@ -305,10 +305,10 @@ class StoreService extends AuthController
     {
         $serviceInfo = $services->get($id);
         if (!$serviceInfo) {
-            return app('json')->fail(400266);
+            return app('json')->fail('Nhân viên CSKH đăng nhập không tồn tại');
         }
         if (!$serviceInfo->account || !$serviceInfo->password) {
-            return app('json')->fail(400267);
+            return app('json')->fail('Vui lòng điền tài khoản và mật khẩu CSKH trước khi vào nền tảng CSKH');
         }
         return app('json')->success($services->authLogin($serviceInfo->account));
     }

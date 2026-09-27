@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -51,9 +51,9 @@ class SmsConfig extends AuthController
         $this->validate(['sms_account' => $account, 'sms_token' => $token], \app\adminapi\validate\notification\SmsConfigValidate::class);
 
         if ($this->services->login($account, $token)) {
-            return app('json')->success(400139);
+            return app('json')->success('Đăng nhập thành công');
         } else {
-            return app('json')->fail(400140);
+            return app('json')->fail('Tài khoản hoặc mật khẩu không đúng');
         }
     }
 
@@ -108,7 +108,7 @@ class SmsConfig extends AuthController
         CacheService::delete('sms_account');
         $this->services->updateSmsConfig('', '');
         CacheService::clear();
-        return app('json')->success(100042);
+        return app('json')->success('Đăng xuất thành công');
     }
 
     /**

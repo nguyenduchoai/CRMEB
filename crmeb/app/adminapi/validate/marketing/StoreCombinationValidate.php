@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -46,26 +46,26 @@ class StoreCombinationValidate extends Validate
      * @var array
      */
     protected $message = [
-        'product_id.require' => '400337',
-        'title.require' => '400338',
-        'info.require' => '400347',
-        'unit_name.require' => '400348',
-        'images.require' => '400349',
-        'section_time.require' => '400353',
-        'num.require' => '400354',
-        'num.gt' => '400355',
-        'virtual.require' => '400363',
-        'virtual.gt' => '400364',
-        'virtual.elt' => '400365',
-        'once_num.require' => '400366',
-        'once_num.gt' => '400367',
-        'temp_id.require' => '400360',
-        'description.require' => '400361',
-        'attrs.require' => '400362',
-        'people.require' => '400368',
-        'people.gt' => '400369',
-        'effective_time.require' => '400370',
-        'effective_time.gt' => '400371',
+        'product_id.require' => 'Vui lòng chọn sản phẩm',
+        'title.require' => 'Vui lòng nhập tên sản phẩm',
+        'info.require' => 'Vui lòng điền giới thiệu chương trình',
+        'unit_name.require' => 'Vui lòng điền đơn vị tính',
+        'images.require' => 'Vui lòng chọn ảnh trình chiếu sản phẩm',
+        'section_time.require' => 'Vui lòng chọn khung giờ chương trình',
+        'num.require' => 'Vui lòng điền giới hạn số lượng mua',
+        'num.gt' => 'Giới hạn số lượng mua phải lớn hơn 0',
+        'virtual.require' => 'Vui lòng điền tỷ lệ mua chung ảo',
+        'virtual.gt' => 'Số người tham gia ảo không được lớn hơn số người cần để thành nhóm',
+        'virtual.elt' => 'Số người tham gia ảo không được lớn hơn số người cần để thành nhóm',
+        'once_num.require' => 'Vui lòng điền số lượng mua mỗi lần',
+        'once_num.gt' => 'Số lượng mua mỗi lần phải lớn hơn 0',
+        'temp_id.require' => 'Vui lòng chọn mẫu phí vận chuyển',
+        'description.require' => 'Vui lòng điền chi tiết sản phẩm',
+        'attrs.require' => 'Vui lòng chọn quy cách',
+        'people.require' => 'Vui lòng điền số người cần để thành nhóm',
+        'people.gt' => 'Số người mua chung không được ít hơn 2 người',
+        'effective_time.require' => 'Vui lòng điền thời hạn thành nhóm',
+        'effective_time.gt' => 'Thời hạn thành nhóm phải lớn hơn 0',
     ];
 
     protected $scene = [

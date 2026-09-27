@@ -1,20 +1,6 @@
 <template>
-  <div
-    :style="{
-      background: bottomBgColor,
-      paddingTop: topConfig + 'px',
-      paddingBottom: bottomConfig + 'px',
-      paddingLeft: prConfig + 'px',
-      paddingRight: prConfig + 'px',
-    }"
-  >
-    <div
-      class="search-box"
-      :style="{
-        background: `linear-gradient(90deg,${bgColorLeft} 0%,${bgColorRight} 100%)`,
-        borderRadius: bgRadius,
-      }"
-    >
+  <common_wrapper :config="configObj">
+    <div class="search-box" :style="[searchBoxStyle]">
       <div class="search acea-row row-middle" :style="[txtPosition]">
         <img :src="logoUrl" alt="" v-if="logoUrl && styleConfig == 0 && styleTypeConfig == 1" />
         <div
@@ -49,7 +35,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </common_wrapper>
 </template>
 
 <script>
@@ -104,6 +90,13 @@ export default {
         background: this.searchBoxColor,
       };
     },
+    searchBoxStyle() {
+      if (this.configObj && this.configObj.moduleColor) {
+        return {
+          background: `linear-gradient(90deg, ${this.configObj.moduleColor.color[0].item} 0%, ${this.configObj.moduleColor.color[1].item} 100%)`,
+        };
+      }
+    },
   },
   watch: {
     pageData: {
@@ -145,6 +138,11 @@ export default {
         titleRight: 'Ô tìm kiếm',
         titleCurrency: 'Kiểu chung',
         titleTxt: 'Cài đặt chữ',
+        zIndexConfig: {
+          title: 'Thứ tự lớp thành phần',
+          val: 0,
+          min: 0,
+        },
         styleConfig: {
           title: 'Chọn phong cách',
           tabVal: 0,
@@ -330,21 +328,6 @@ export default {
             },
           ],
         },
-        topConfig: {
-          title: 'Lề trên',
-          val: 0,
-          min: 0,
-        },
-        bottomConfig: {
-          title: 'Lề dưới',
-          val: 0,
-          min: 0,
-        },
-        prConfig: {
-          title: 'Lề trái phải',
-          val: 0,
-          min: 0,
-        },
         fillet: {
           title: 'Bo góc nền',
           type: 0,
@@ -363,17 +346,105 @@ export default {
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
+        paddingConfig: {
+          title: 'Lề trong',
+          val: 0,
+          min: 0,
+          max: 100,
+          isAll: false,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        },
+        marginConfig: {
+          title: 'Lề ngoài',
+          val: 0,
+          min: 0,
+          max: 100,
+          isAll: false,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
+        },
+        componentBgConfig: {
+          title: 'Cài đặt nền',
+          tabVal: 0,
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
+          colorConfig: {
+            title: 'Màu nền',
+            default: [{ item: '#F5F5F5' }, { item: '#F5F5F5' }],
+            color: [{ item: '#F5F5F5' }, { item: '#F5F5F5' }],
+          },
+          colorDirection: {
+            title: 'Hướng chuyển màu',
+            tabVal: 0,
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
+          },
+          imageConfig: {
+            header: 'Ảnh nền',
+            title: '',
+            name: 'Tải lên ảnh',
+            type: 'code',
+            url: '',
+            info: 'Kích thước đề xuất: 750px * 400px',
+          },
+        },
+        borderConfig: {
+          title: 'Cài đặt viền',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0, // 0: Hide, 1: Show
+          styleConfig: {
+            title: 'Kiểu viền',
+            tabVal: 0,
+            tabList: [
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
+            ],
+          },
+          widthConfig: {
+            title: 'Độ dày viền',
+            val: 1,
+            min: 1,
+          },
+          colorConfig: {
+            title: 'Màu viền',
+            default: [{ item: '#e5e5e5' }],
+            color: [{ item: '#e5e5e5' }],
+          },
+        },
+        shadowConfig: {
+          title: 'Cài đặt đổ bóng',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0,
+          colorConfig: {
+            title: 'Màu đổ bóng',
+            default: [{ item: 'rgba(0,0,0,0.1)' }],
+            color: [{ item: 'rgba(0,0,0,0.1)' }],
+          },
+          xConfig: {
+            title: 'Độ lệch trục X',
+            val: 0,
+            min: -50,
+          },
+          yConfig: {
+            title: 'Độ lệch trục Y',
+            val: 0,
+            min: -50,
+          },
+          blurConfig: {
+            title: 'Bán kính làm mờ',
+            val: 10,
+            min: 0,
+          },
+          spreadConfig: {
+            title: 'Bán kính lan tỏa',
+            val: 0,
+            min: -50,
+          },
+        },
       },
       pageData: {},
       logoUrl: '',
       styleConfig: 0,
-      bottomBgColor: '',
-      bgColorLeft: '',
-      bgColorRight: '',
-      topConfig: 0,
-      bottomConfig: 0,
-      prConfig: 0,
-      bgRadius: 0,
       titleConfig: '',
       searchBoxColor: '',
       tipConfig: '',
@@ -386,6 +457,12 @@ export default {
       txtColor: '',
       txtStyleConfig: '',
       txtSize: 0,
+      paddingConfig: null,
+      marginConfig: null,
+      borderConfig: null,
+      shadowConfig: null,
+      componentBgConfig: null,
+      configObj: null,
     };
   },
   mounted() {
@@ -397,40 +474,43 @@ export default {
   methods: {
     setConfig(data) {
       if (!data) return;
-      if (data.prConfig) {
-        this.logoUrl = data.logoConfig.url;
-        this.styleConfig = data.styleConfig.tabVal;
-        this.styleTypeConfig = data.styleTypeConfig.tabVal;
-        // this.fixConfig = data.fixConfig.tabVal || 0;
-        this.txtFixConfig = data.txtFixConfig.tabVal;
-        this.txtStyleConfig = data.txtStyleConfig.tabList[data.txtStyleConfig.tabVal].style;
-        this.txtSize = data.txtSize.val;
-        this.txtColor = data.txtColor.color[0].item;
-        this.bottomBgColor = data.bottomBgColor.color[0].item;
-        this.bgColorLeft = data.moduleColor.color[0].item;
-        this.bgColorRight = data.moduleColor.color[1].item;
-        this.topConfig = data.topConfig.val;
-        this.bottomConfig = data.bottomConfig.val;
-        this.prConfig = data.prConfig.val;
-        this.titleConfig = data.titleConfig.value;
-        this.searchBoxColor = data.searchBoxColor.color[0].item;
-        this.tipConfig = data.tipConfig.value;
-        this.hotWords = data.hotWords.list.length ? data.hotWords.list[0].val : '';
-        this.tipColor = data.tipColor.color[0].item;
-        this.hotWordsColor = data.hotWordsColor.color[0].item;
-        let fillet = data.fillet.type;
-        let filletVal = data.fillet.val;
-        let valList = data.fillet.valList;
-        this.bgRadius = fillet
-          ? valList[0].val + 'px ' + valList[1].val + 'px ' + valList[3].val + 'px ' + valList[2].val + 'px'
-          : filletVal + 'px';
+      let dataClone = JSON.parse(JSON.stringify(data));
+      for (let key in this.defaultConfig) {
+        if (dataClone[key] === undefined) {
+          this.$set(dataClone, key, JSON.parse(JSON.stringify(this.defaultConfig[key])));
+        }
       }
+      this.configObj = dataClone;
+
+      this.paddingConfig = dataClone.paddingConfig;
+      this.marginConfig = dataClone.marginConfig;
+      this.borderConfig = dataClone.borderConfig;
+      this.shadowConfig = dataClone.shadowConfig;
+      this.componentBgConfig = dataClone.componentBgConfig;
+
+      this.logoUrl = dataClone.logoConfig.url;
+      this.styleConfig = dataClone.styleConfig.tabVal;
+      this.styleTypeConfig = dataClone.styleTypeConfig.tabVal;
+      this.txtFixConfig = dataClone.txtFixConfig.tabVal;
+      this.txtStyleConfig = dataClone.txtStyleConfig.tabList[dataClone.txtStyleConfig.tabVal].style;
+      this.txtSize = dataClone.txtSize.val;
+      this.txtColor = dataClone.txtColor.color[0].item;
+      this.titleConfig = dataClone.titleConfig.value;
+      this.searchBoxColor = dataClone.searchBoxColor.color[0].item;
+      this.tipConfig = dataClone.tipConfig.value;
+      this.hotWords = dataClone.hotWords.list.length ? dataClone.hotWords.list[0].val : '';
+      this.tipColor = dataClone.tipColor.color[0].item;
+      this.hotWordsColor = dataClone.hotWordsColor.color[0].item;
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
+.mobile-page {
+  display: inline-block;
+  width: -webkit-fill-available;
+}
 .search-box {
   display: flex;
   align-items: center;

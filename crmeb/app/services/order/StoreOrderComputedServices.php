@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -87,7 +87,7 @@ class StoreOrderComputedServices extends BaseServices
             $userServices = app()->make(UserServices::class);
             $userInfo = $userServices->getUserInfo($uid);
             if (!$userInfo) {
-                throw new ApiException(410032);
+                throw new ApiException('Người dùng không tồn tại');
             }
         }
         $cartInfo = $cartGroup['cartInfo'];
@@ -157,7 +157,7 @@ class StoreOrderComputedServices extends BaseServices
             $couponServices = app()->make(StoreCouponUserServices::class);
             $couponInfo = $couponServices->getOne([['id', '=', $couponId], ['uid', '=', $uid], ['is_fail', '=', 0], ['status', '=', 0], ['start_time', '<', time()], ['end_time', '>', time()]], '*', ['issue']);
             if (!$couponInfo) {
-                throw new ApiException(410242);
+                throw new ApiException('Phiếu giảm giá đã chọn không hợp lệ');
             }
             $type = $couponInfo['applicable_type'] ?? 0;
             $flag = false;
@@ -199,7 +199,7 @@ class StoreOrderComputedServices extends BaseServices
                 $flag = true;
             }
             if (!$flag) {
-                throw new ApiException(410243);
+                throw new ApiException('Không đáp ứng điều kiện sử dụng phiếu giảm giá');
             }
             if ($isCreate) {
                 $res1 = $couponServices->useCoupon($couponId);
@@ -210,7 +210,7 @@ class StoreOrderComputedServices extends BaseServices
             $couponPrice = 0;
         }
         if (!$res1) {
-            throw new ApiException(410244);
+            throw new ApiException('Sử dụng phiếu giảm giá thất bại');
         }
         return [$payPrice, $couponPrice];
     }

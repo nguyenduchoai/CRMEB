@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Đổi mật khẩu",
+  "navigationBarTitleText": "修改密码",
   "usingComponents": {
     "authorize": "/components/Authorize",
     "verify": "/pages/users/components/verify/index"

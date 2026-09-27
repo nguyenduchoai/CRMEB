@@ -7,7 +7,7 @@
           <!-- v-model="configData.tabCur" -->
           <div class="acea-row">
             <div class="move-icon">
-              <span class="iconfont-diy iconxingzhuangjiehe"></span>
+              <span class="iconfont iconxingzhuangjiehe"></span>
             </div>
             <div class="content">
               <div class="con-item" v-for="(list, key) in item.chiild" :key="key" v-if="key < (tabIndex == 0 ? 2 : 1)">
@@ -33,9 +33,9 @@
                 </div>
               </div>
               <div class="c_row-item">
-                <el-col class="c_label"> Cách chọn </el-col>
-                <el-col class="color-box">
-                  <el-select v-model="item.tabVal" placeholder="Vui lòng chọn" @change="tabChange">
+                <div class="title">Cách chọn</div>
+                <div class="flex-1">
+                  <el-select v-model="item.tabVal" placeholder="Vui lòng chọn" @change="tabChange" style="width: 100%">
                     <el-option
                       v-for="(itemn, indexn) in typeList"
                       :value="itemn.activeValue"
@@ -43,7 +43,7 @@
                       :label="itemn.title"
                     ></el-option>
                   </el-select>
-                </el-col>
+                </div>
               </div>
               <div class="goods-box acea-row" v-if="item.tabVal == 1">
                 <div class="title">Chọn sản phẩm</div>
@@ -56,10 +56,10 @@
                       v-if="item.goodsList.list.length"
                     >
                       <img :src="goods.image" alt="" />
-                      <span class="iconfont-diy icondel_1" @click.stop="bindGoodDelete(gIndex)"></span>
+                      <span class="iconfont icondel_1" @click.stop="bindGoodDelete(gIndex)"></span>
                     </div>
                     <div class="add-item items" @click="openGoods(index)">
-                      <span class="iconfont-diy iconaddto"></span>
+                      <span class="iconfont iconaddto"></span>
                     </div>
                   </draggable>
                 </div>
@@ -136,8 +136,10 @@
                   </el-col>
                 </div>
                 <div class="c_row-item">
-                  <el-col class="c_label"> Sắp xếp sản phẩm </el-col>
-                  <el-col class="color-box">
+                  <el-col class="label" :span="5">
+                    <span>Sắp xếp sản phẩm</span>
+                  </el-col>
+                  <el-col class="color-box" :span="19" style="margin-top: 15px">
                     <el-radio-group v-model="item.goodsSort" @input="radioChange()">
                       <el-radio :label="0">
                         <span>Tổng hợp</span>
@@ -522,7 +524,7 @@ export default {
     justify-content: center;
     margin-bottom: 10px;
 
-    .iconfont-diy {
+    .iconfont {
       font-size: 25px;
       color: #d8d8d8;
     }
@@ -597,7 +599,14 @@ export default {
       padding-left: 10px;
     }
   }
-
+  .title {
+    color: #999999;
+    font-size: 12px;
+    width: 67px;
+  }
+  .flex-1{
+    flex: 1;
+  }
   .label {
     color: #999999;
     font-size: 12px;

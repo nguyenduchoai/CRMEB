@@ -41,7 +41,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="Tên WeChat" min-width="130">
+        <el-table-column label="Tên người dùng" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.nickname }}</span>
           </template>

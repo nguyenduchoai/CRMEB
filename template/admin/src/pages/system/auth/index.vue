@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-card v-for="(value, key, index) in tableList" :key="index" :bordered="false" shadow="never" class="ivu-mt mt16">
+    <el-card v-for="(value, key, index) in tableList" :key="index" :bordered="false" shadow="never" class="ivu-mt mb16">
       <div class="head acea-row row-between-wrapper">{{ key | headText }}</div>
       <el-table ref="table" :data="tableList[key]" empty-text="Chưa có dữ liệu">
         <el-table-column :label="key == 'permissions' ? 'Tệp/Thư mục' : 'Môi trường'" minWidth="180">
@@ -99,6 +99,7 @@ export default {
       disabled: false,
       isShow: false, // Modal mã xác thực có xuất hiện hay không
       active: 0,
+      spread_uid: 0,
       timer: null,
       version: '',
       label: '',
@@ -186,6 +187,7 @@ export default {
       getVersion().then((res) => {
         this.version = res.data.version;
         this.label = res.data.label;
+        this.spread_uid = res.data.spread_uid || 0;
       });
     },
     getCrmebCopyRight() {
@@ -289,7 +291,7 @@ export default {
         host = host.replace('www.', '');
       }
       this.iframeUrl =
-        this.baseUrl + '?url=' + host + '&product=' + product + '&version=' + this.version + '&label=' + this.label;
+        this.baseUrl + '?url=' + host + '&product=' + product + '&version=' + this.version + '&label=' + this.label + '&spread_uid=' + this.label;
       this.isTemplate = true;
     },
     // Khi người dùng nhấp vào lớp phủ, nên đóng modal

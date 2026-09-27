@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -105,7 +105,7 @@ class StoreSeckillServices extends BaseServices
         if ($data['section_time']) {
             [$start_time, $end_time] = $data['section_time'];
             if (strtotime($end_time) + 86400 < time()) {
-                throw new AdminException(400507);
+                throw new AdminException('Thời gian kết thúc chương trình không được trước thời điểm hiện tại');
             }
         }
 
@@ -113,17 +113,17 @@ class StoreSeckillServices extends BaseServices
         if ($id) {
             $seckill = $this->get((int)$id);
             if (!$seckill) {
-                throw new AdminException(100026);
+                throw new AdminException('Dữ liệu không tồn tại');
             }
         }
         //Hạn chế sửa
 //        if ($data['copy'] == 0 && $seckill) {
 //            if ($seckill['stop_time'] + 86400 < time()) {
-//                throw new AdminException(400508);
+//                throw new AdminException('Chương trình đã kết thúc, vui lòng thêm mới hoặc sao chép');
 //            }
 //        }
         if ($data['num'] < $data['once_num']) {
-            throw new AdminException(400500);
+            throw new AdminException('Giới hạn số lượng mua mỗi lần không được lớn hơn tổng số lượng mua');
         }
         if ($data['copy'] == 1) {
             $id = 0;
@@ -151,7 +151,7 @@ class StoreSeckillServices extends BaseServices
         /** @var StoreProductServices $storeProductServices */
         $storeProductServices = app()->make(StoreProductServices::class);
         if ($data['quota'] > $storeProductServices->value(['id' => $data['product_id']], 'stock')) {
-            throw new AdminException(400090);
+            throw new AdminException('Số lượng giới hạn không được vượt quá tồn kho sản phẩm');
         }
         $this->transaction(function () use ($id, $data, $description, $detail, $items, $storeDescriptionServices, $storeProductAttrServices, $storeProductServices) {
             if ($id) {
@@ -159,7 +159,7 @@ class StoreSeckillServices extends BaseServices
                 $storeDescriptionServices->saveDescription((int)$id, $description, 1);
                 $skuList = $storeProductServices->validateProductAttr($items, $detail, (int)$id, 1);
                 $valueGroup = $storeProductAttrServices->saveProductAttr($skuList, (int)$id, 1);
-                if (!$res) throw new AdminException(100007);
+                if (!$res) throw new AdminException('Sửa thất bại');
             } else {
                 if (!$storeProductServices->getOne(['is_del' => 0, 'id' => $data['product_id']])) {
                     throw new AdminException('Không thể thêm sản phẩm trong thùng rác');
@@ -169,7 +169,7 @@ class StoreSeckillServices extends BaseServices
                 $storeDescriptionServices->saveDescription((int)$res->id, $description, 1);
                 $skuList = $storeProductServices->validateProductAttr($items, $detail, (int)$res->id, 1, 1, true);
                 $valueGroup = $storeProductAttrServices->saveProductAttr($skuList, (int)$res->id, 1);
-                if (!$res) throw new AdminException(100022);
+                if (!$res) throw new AdminException('Thêm thất bại');
             }
         });
     }
@@ -452,7 +452,7 @@ class StoreSeckillServices extends BaseServices
         $uid = (int)$request->uid();
         $storeInfo = $this->dao->getOne(['id' => $id], '*', ['description', 'product']);
         if (!$storeInfo) {
-            throw new ApiException(410294);
+            throw new ApiException('Sản phẩm không tồn tại');
         } else {
             $storeInfo = $storeInfo->toArray();
         }
@@ -502,7 +502,7 @@ class StoreSeckillServices extends BaseServices
                 $seckillTime = array_column($systemGroupDataService->getConfigNameValue('routine_seckill_time'), null, 'id');
                 $config = $seckillTime[$time_id] ?? false;
                 if (!$config) {
-                    throw new ApiException(410322);
+                    throw new ApiException('Chương trình đã kết thúc');
                 }
                 $now_hour = date('H', time());
                 $start_hour = $config['time'];
@@ -602,23 +602,23 @@ class StoreSeckillServices extends BaseServices
         //Kiểm tra trạng thái chương trình của sản phẩm
         $StoreSeckillinfo = $this->getSeckillCount($seckillId, '*,title as store_name');
         if ($StoreSeckillinfo['once_num'] < $cartNum) {
-            throw new ApiException(410313, ['num' => $StoreSeckillinfo['once_num']]);
+            throw new ApiException('Mỗi đơn hàng chỉ được mua tối đa {:num} sản phẩm', ['num' => $StoreSeckillinfo['once_num']]);
         }
         /** @var StoreOrderServices $orderServices */
         $orderServices = app()->make(StoreOrderServices::class);
         $userBuyCount = $orderServices->getBuyCount($uid, 'seckill_id', $seckillId);
         if ($StoreSeckillinfo['num'] < ($userBuyCount + $cartNum)) {
-            throw new ApiException(410298, ['num' => $StoreSeckillinfo['num']]);
+            throw new ApiException('Mỗi người chỉ được mua tổng cộng tối đa {:num} sản phẩm', ['num' => $StoreSeckillinfo['num']]);
         }
         if ($StoreSeckillinfo['num'] < $cartNum) {
-            throw new ApiException(410317, ['num' => $StoreSeckillinfo['num']]);
+            throw new ApiException('Mỗi người chỉ được mua tối đa {:num} sản phẩm', ['num' => $StoreSeckillinfo['num']]);
         }
         $attrInfo = $attrValueServices->getOne(['product_id' => $seckillId, 'unique' => $unique, 'type' => 1]);
         if (!$attrInfo || $attrInfo['product_id'] != $seckillId) {
-            throw new ApiException(410305);
+            throw new ApiException('Vui lòng chọn thuộc tính sản phẩm hợp lệ');
         }
         if ($cartNum > $attrInfo['quota']) {
-            throw new ApiException(410296);
+            throw new ApiException('Sản phẩm này không đủ tồn kho');
         }
         return [$attrInfo, $unique, $StoreSeckillinfo];
     }

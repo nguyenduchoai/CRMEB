@@ -1,15 +1,5 @@
 <template>
-  <div
-    class="mobile-page"
-    :style="{
-      background: bottomBgColor,
-      marginTop: mTop + 'px',
-      paddingTop: topConfig + 'px',
-      paddingBottom: bottomConfig + 'px',
-      paddingLeft: prConfig + 'px',
-      paddingRight: prConfig + 'px',
-    }"
-  >
+  <common_wrapper :config="configObj">
     <div
       class="pictrue acea-row row-center-wrapper"
       :class="scaleConfig == 1 ? 'on' : scaleConfig == 2 ? 'on2' : ''"
@@ -19,7 +9,7 @@
         <img src="../../assets/images/ic_right2.png" />
       </div>
     </div>
-  </div>
+  </common_wrapper>
 </template>
 
 <script>
@@ -76,6 +66,67 @@ export default {
         setUp: {
           tabVal: 0,
         },
+        zIndexConfig: {
+          title: 'Thứ tự lớp thành phần',
+          val: 0,
+          min: 0,
+        },
+        borderConfig: {
+          title: 'Cài đặt viền',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0,
+          styleConfig: {
+            title: 'Kiểu viền',
+            tabVal: 0,
+            tabList: [
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
+            ],
+          },
+          widthConfig: {
+            title: 'Độ dày viền',
+            val: 1,
+            min: 1,
+          },
+          colorConfig: {
+            title: 'Màu viền',
+            default: [{ item: '#e5e5e5' }],
+            color: [{ item: '#e5e5e5' }],
+          },
+        },
+        shadowConfig: {
+          title: 'Cài đặt đổ bóng',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0,
+          colorConfig: {
+            title: 'Màu đổ bóng',
+            default: [{ item: 'rgba(0,0,0,0.1)' }],
+            color: [{ item: 'rgba(0,0,0,0.1)' }],
+          },
+          xConfig: {
+            title: 'Độ lệch trục X',
+            val: 0,
+            min: -50,
+          },
+          yConfig: {
+            title: 'Độ lệch trục Y',
+            val: 0,
+            min: -50,
+          },
+          blurConfig: {
+            title: 'Bán kính làm mờ',
+            val: 10,
+            min: 0,
+          },
+          spreadConfig: {
+            title: 'Bán kính lan tỏa',
+            val: 0,
+            min: -50,
+          },
+        },
         titleLeft: 'Cài đặt nội dung',
         titleRight: 'Kiểu chung',
         imgConfig: {
@@ -105,6 +156,29 @@ export default {
               name: '1:1',
             },
           ],
+        },
+        componentBgConfig: {
+          title: 'Cài đặt nền',
+          tabVal: 0,
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
+          colorConfig: {
+            title: 'Màu nền',
+            default: [{ item: '#F5F5F5' }, { item: '#F5F5F5' }],
+            color: [{ item: '#F5F5F5' }, { item: '#F5F5F5' }],
+          },
+          colorDirection: {
+            title: 'Hướng chuyển màu',
+            tabVal: 0,
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
+          },
+          imageConfig: {
+            header: 'Ảnh nền',
+            title: '',
+            name: 'Tải lên ảnh',
+            type: 'code',
+            url: '',
+            info: 'Kích thước đề xuất: 750px * 400px',
+          },
         },
         bottomBgColor: {
           title: 'Nền phía dưới',
@@ -160,7 +234,6 @@ export default {
         },
       },
       imgBgUrl: require('@/assets/images/videoBg.png'),
-      bottomBgColor: '',
       confObj: {},
       pageData: {},
       topConfig: '',
@@ -170,6 +243,7 @@ export default {
       imgUrl: '',
       scaleConfig: 0,
       mTop: 0,
+      configObj: null,
     };
   },
   mounted() {
@@ -181,21 +255,20 @@ export default {
   methods: {
     setConfig(data) {
       if (!data) return;
-      if (data.mbConfig) {
-        this.imgUrl = data.imgConfig.url;
-        this.scaleConfig = data.scaleConfig.tabVal;
-        this.bottomBgColor = data.bottomBgColor.color[0].item;
-        this.topConfig = data.topConfig.val;
-        this.bottomConfig = data.bottomConfig.val;
-        this.prConfig = data.prConfig.val;
-        this.mTop = data.mbConfig.val;
-        let fillet = data.fillet.type;
-        let filletVal = data.fillet.val;
-        let valList = data.fillet.valList;
-        this.bgRadius = fillet
-          ? valList[0].val + 'px ' + valList[1].val + 'px ' + valList[3].val + 'px ' + valList[2].val + 'px'
-          : filletVal + 'px';
+      this.configObj = data;
+      for (let key in this.defaultConfig) {
+        if (data[key] == undefined) {
+          this.$set(data, key, this.defaultConfig[key]);
+        }
       }
+      this.scaleConfig = data.scaleConfig.tabVal;
+      this.imgUrl = data.imgConfig.url;
+      let fillet = data.fillet.type;
+      let filletVal = data.fillet.val;
+      let valList = data.fillet.valList;
+      this.bgRadius = fillet
+        ? valList[0].val + 'px ' + valList[1].val + 'px ' + valList[3].val + 'px ' + valList[2].val + 'px'
+        : filletVal + 'px';
     },
   },
 };
@@ -212,7 +285,7 @@ export default {
     height: 284px;
   }
   &.on2 {
-    height: 379px;
+    height: 375px;
   }
   .image {
     width: 44px;
@@ -227,7 +300,7 @@ export default {
   }
   .empty-box {
     width: 100%;
-    height: 379px;
+    height: 375px;
     border-radius: 0;
     background: #f3f9ff;
 

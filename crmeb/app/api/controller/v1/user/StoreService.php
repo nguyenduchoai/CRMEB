@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -71,14 +71,14 @@ class StoreService
             ['uidTo', 0]
         ], true);
         $serviceInfoList = $services->getServiceList(['status' => 1]);
-        if (!count($serviceInfoList)) return app('json')->fail(410136);
+        if (!count($serviceInfoList)) return app('json')->fail('Hiện không có nhân viên CSKH trực tuyến, vui lòng liên hệ lại sau');
         $uid = $request->uid();
         $uids = array_column($serviceInfoList['list'], 'uid');
         if (!$uidTo) {
             //Chính là nhân viên chăm sóc khách hàng
             if (in_array($uid, $uids)) {
                 $uids = array_merge(array_diff($uids, [$uid]));
-                if (!$uids) return app('json')->fail(410137);
+                if (!$uids) return app('json')->fail('Không thể trò chuyện với chính mình');
             }
         } else {
             if (in_array($uid, $uids)) {
@@ -86,7 +86,7 @@ class StoreService
             }
         }
         if (!$uids) {
-            return app('json')->fail(410136);
+            return app('json')->fail('Hiện không có nhân viên CSKH trực tuyến, vui lòng liên hệ lại sau');
         }
         //Ưu tiên trò chuyện với nhân viên CSKH đã chat lần trước
         $toUid = $recordServices->value(['user_id' => $uid], 'to_uid');
@@ -97,7 +97,7 @@ class StoreService
             $toUid = $uids[array_rand($uids)] ?? 0;
         }
 
-        if (!$toUid) return app('json')->fail(410136);
+        if (!$toUid) return app('json')->fail('Hiện không có nhân viên CSKH trực tuyến, vui lòng liên hệ lại sau');
         $result = ['serviceList' => [], 'uid' => $toUid];
         $serviceLogList = $this->services->getChatList(['uid' => $uid], $uid);
         if (!$serviceLogList) return app('json')->success($result);
@@ -139,7 +139,7 @@ class StoreService
         $data['add_time'] = time();
         $data['uid'] = $request->uid();
         $services->save($data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -161,20 +161,20 @@ class StoreService
     public function setLoginCode(Request $request, StoreServiceServices $services, string $code)
     {
         if (!$code) {
-            return app('json')->fail(410020);
+            return app('json')->fail('Quét mã thất bại, vui lòng quét lại');
         }
         $cacheCode = CacheService::get($code);
         if ($cacheCode === false || $cacheCode === null) {
-            return app('json')->fail(410021);
+            return app('json')->fail('Mã QR đã hết hạn, vui lòng quét lại');
         }
         $userInfo = $services->get(['uid' => $request->uid()]);
         if (!$userInfo) {
-            return app('json')->fail(410138);
+            return app('json')->fail('Bạn không phải nhân viên CSKH, không thể đăng nhập');
         }
         $userInfo->uniqid = $code;
         $userInfo->save();
         CacheService::set($code, '0', 600);
-        return app('json')->success(410001);
+        return app('json')->success('Đăng nhập thành công');
     }
 
     /**

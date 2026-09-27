@@ -58,14 +58,14 @@ utils: các tệp js tiện ích tùy chỉnh được đặt tên riêng, thư�
 ├─ application Quản lý chức năng các mô-đun ứng dụng: OA WeChat, Mini Program, Alipay, Mini Program Baidu, Mini Program Toutiao
 ├─ system Nhật ký cập nhật hệ thống, quản lý cơ sở dữ liệu
 ├─ finance  Quản lý tài chính
-├─ agent Quản lý tiếp thị liên kết (affiliate)
+├─ agent Quản lý tiếp thị liên kết
 ├─ marketing Phiếu giảm giá (coupon), điểm thưởng, mua chung, săn giảm giá (bargain), flash sale
 ├─ echarts Thống kê và phân tích dữ liệu
 ├─ notification  Quản lý thông báo, tin nhắn mẫu (danh sách, thông báo, thêm, sửa), SMS
 ├─ file Quản lý tệp đính kèm
 ├─ freight Quản lý mẫu phí vận chuyển, đơn vị vận chuyển
-├─ merchant Quản lý người bán (merchant)
-├─ widget Thành phần (component), tiện ích nhỏ
+├─ merchant Quản lý cửa hàng (merchant)
+├─ widget Thành phần, tiện ích nhỏ
 └─ cms Quản lý bài viết
 ~~~
 ## Cấu trúc thư mục
@@ -73,7 +73,7 @@ Cấu trúc thư mục chính và mô tả:
 ~~~
 ├── public                      # Tài nguyên tĩnh
 │   ├── favicon.ico            # Biểu tượng favicon
-│   └── index.html             # Mẫu (template) html
+│   └── index.html             # html Mẫu
 ├── src                         # Mã nguồn
 │   ├── api                    # Tất cả các yêu cầu (request)
 │   │    └──account.js        # API liên quan đến đăng nhập
@@ -110,12 +110,12 @@ Cấu trúc thư mục chính và mô tả:
 │   │    └──quill             # Trình soạn thảo (không sử dụng)
 │   │    └──referrerInfo      # Thông tin người giới thiệu
 │   │    └──searchFrom        # Tìm kiếm trên trang đơn hàng
-│   │    └──sendCoupons       # Gửi phiếu giảm giá (coupon)
+│   │    └──sendCoupons       # Gửi phiếu giảm giá
 │   │    └──systemStore       # Thêm điểm nhận hàng
-│   │    └──uploadPictures    # Tải lên hình ảnh
+│   │    └──uploadPictures    # Tải lên ảnh
 │   │    └──uploadVideo       # Tải lên video (dùng trong trình soạn thảo sản phẩm)
 │   ├── i18n                   # Đa ngôn ngữ
-│   ├── layouts                # Bố cục
+│   ├── layouts                # Bố cục (layout)
 │   │    └──header-breadcrumb # Kiểu breadcrumb ở đầu trang
 │   │    └──header-collapse   # Biểu tượng ở đầu trang để thu gọn/mở rộng panel
 │   │    └──header-fullscreen # Biểu tượng ở đầu trang để bật/tắt toàn màn hình
@@ -131,7 +131,7 @@ Cấu trúc thư mục chính và mô tả:
 │   │    └──menu-side         # Thanh điều hướng bên cạnh
 │   │    └──tabs              # Các tab điều hướng ngang ở đầu trang
 │   │    └──mixins            # Một tệp js dùng để lấy title khi cuộn ngang
-│   ├── libs                   # Hàm dùng chung
+│   ├── libs                   # Phương thức dùng chung
 │   ├── menu                   # Cấu hình menu
 │   ├── mixins                 # Mixin dùng chung
 │   ├── mock                   # Dữ liệu giả lập (mock)
@@ -139,14 +139,14 @@ Cấu trúc thư mục chính và mô tả:
 │   │    └──account           # Liên quan đến trang đăng nhập
 │   │         └──login        # Đăng nhập
 │   │         └──register     # Đăng ký
-│   │    └──agent             # Tiếp thị liên kết (affiliate)
-│   │         └──agentManage  # Quản lý cộng tác viên (CTV)
+│   │    └──agent             # Tiếp thị liên kết
+│   │         └──agentManage  # Quản lý cộng tác viên
 │   │    └──app               # Ứng dụng
 │   │         └──routine      # Tin nhắn mẫu Mini Program
 │   │         └──wechat       # OA WeChat
 │   │              └──menus   # Menu WeChat
-│   │              └──newsCategory   # Quản lý tin bài (hình ảnh và văn bản)
-│   │                   └──save      # Thêm tin bài (hình ảnh và văn bản)
+│   │              └──newsCategory   # Quản lý tin bài
+│   │                   └──save      # Thêm tin bài
 │   │              └──reply          # Trả lời tự động
 │   │                   └──follow    # Trả lời khi theo dõi WeChat/trả lời từ khóa không hợp lệ
 │   │                   └──keyword   # Trả lời theo từ khóa
@@ -173,7 +173,7 @@ Cấu trúc thư mục chính và mô tả:
 │   │              └──index          # Sản phẩm mua chung
 │   │         └──storeCoupon         # Tạo phiếu giảm giá
 │   │         └──storeCouponIssue    # Danh sách phiếu giảm giá
-│   │         └──storeCouponUser     # Lịch sử nhận phiếu giảm giá của thành viên
+│   │         └──storeCouponUser     # Lịch sử nhận của thành viên
 │   │         └──storeSeckill        # Quản lý flash sale
 │   │              └──index          # Sản phẩm flash sale
 │   │              └──create         # Thêm sản phẩm flash sale
@@ -191,7 +191,7 @@ Cấu trúc thư mục chính và mô tả:
 │   │         └──productReply        # Quản lý đánh giá sản phẩm
 │   │    └──setting                  # Cài đặt
 │   │         └──cityDada            # Dữ liệu thành phố
-│   │         └──clerkList           # Quản lý nhân viên xác nhận
+│   │         └──clerkList           # Quản lý nhân viên xác nhận sử dụng
 │   │         └──freight             # Đơn vị vận chuyển
 │   │         └──setSystem           # Cài đặt hệ thống
 │   │         └──shippingTemplates   # Mẫu phí vận chuyển
@@ -226,9 +226,9 @@ Cấu trúc thư mục chính và mô tả:
 │   │         └──level                   # Hạng thành viên
 │   │         └──list                    # Quản lý thành viên
 │   ├── plugins                           # Plugin
-│   ├── router                            # Cấu hình định tuyến
+│   ├── router                            # Cấu hình route
 │   │    └──modules                      # Module định tuyến của các trang
-│   │         └──agent.js                     # Liên quan đến tiếp thị liên kết
+│   │         └──agent.js                     # Liên quan đến tiếp thị liên kết (affiliate)
 │   │         └──app.js                       # Liên quan đến ứng dụng (Mini Program, OA WeChat)
 │   │         └──cms.js                       # Liên quan đến nội dung (quản lý bài viết, danh mục bài viết)
 │   │         └──echarts.js                   # Liên quan đến thống kê
@@ -242,7 +242,7 @@ Cấu trúc thư mục chính và mô tả:
 │   │         └──user.js                      # Liên quan đến thành viên
 │   │    └──index.js                          # Xuất định tuyến và xử lý chặn (interceptor)
 │   │    └──routes.js                         # Tổng hợp định tuyến
-│   ├── store                                  # Quản lý trạng thái Vuex
+│   ├── store                                  # Vuex Quản lý trạng thái
 │   ├── utils                                  # Công cụ js
 │   │    └──authLapse.js                      # Hộp thoại thông báo ủy quyền
 │   │    └──modalForm.js                      # Hộp thoại biểu mẫu (modal)
@@ -256,10 +256,10 @@ Cấu trúc thư mục chính và mô tả:
 │   └── App.vue           # Trang điểm vào
 ├── tests                  # Quản lý kiểm thử
 ├── alias.config.js        # Bí danh (alias), chỉ dùng để cấu hình cho WebStorm nhận diện alias, không có tác dụng thực tế
-├── babel.config.js        # Cấu hình babel
-├── jest.config.js         # Cấu hình jest
+├── babel.config.js        # babel Cấu hình
+├── jest.config.js         # jest Cấu hình
 ├── package.json           # package.json
-└── vue.config.js          # Cấu hình Vue CLI 3
+└── vue.config.js          # Vue CLI 3 Cấu hình
 ~~~
 ## Phát triển và đóng gói dự án
 ~~~

@@ -1,13 +1,13 @@
-# Phân tích CRMEB (v5.6.3) cho mục tiêu Platform TMĐT tại Việt Nam
+# Phân tích CRMEB (v6.0.0) cho mục tiêu Platform TMĐT tại Việt Nam
 
-> Người đọc: Founder và đội kỹ thuật Bizino.ai · Phạm vi: toàn bộ repo `nguyenduchoai/CRMEB` (nhánh `master`, bản CRMEB-KY v5.6.3)
+> Người đọc: Founder và đội kỹ thuật Bizino.ai · Phạm vi: toàn bộ repo `nguyenduchoai/CRMEB` (nhánh `master`, bản CRMEB-KY v6.0.0; bản phân tích đầu tiên làm trên v5.6.3)
 
 ## Kết luận nhanh
 
 | Mục tiêu | Có nên dựa trên CRMEB? | Lý do chính |
 |---|---|---|
 | Triển khai **web/app bán hàng cho từng SME** (mỗi khách hàng một instance) | **Được**, nếu làm đủ phần bản địa hóa và có license thương mại | Tính năng bán lẻ và marketing rất đầy đủ, giao diện DIY, loyalty mạnh. Chạy được ngay sau khi Việt hóa và thay các tích hợp Trung Quốc. |
-| Xây **"Bizino Platform"**: SaaS nhiều khách hàng dùng chung hoặc sàn nhiều người bán | **Không nên build trực tiếp lên CRMEB** | (1) Rủi ro license: điều 2.3 cấm kinh doanh dịch vụ cùng loại. (2) Kiến trúc single-tenant. (3) Stack đã hết vòng đời (PHP 7.1–7.4, Vue 2). (4) Gắn chặt hệ sinh thái WeChat/Alipay. |
+| Xây **"Bizino Platform"**: SaaS nhiều khách hàng dùng chung hoặc sàn nhiều người bán | **Không nên build trực tiếp lên CRMEB** | (1) Rủi ro license: điều 2.3 cấm kinh doanh dịch vụ cùng loại. (2) Kiến trúc single-tenant. (3) Stack đã hết vòng đời (PHP 7.1–7.4, Vue 2); bản v6.0.0 vẫn không đổi. (4) Gắn chặt hệ sinh thái WeChat/Alipay. |
 
 **Khuyến nghị: đi theo hướng "Hybrid" (mục 5).**
 - Dùng CRMEB đã Việt hóa để chạy thử nhanh với 1–3 khách hàng, kiểm chứng nhu cầu.
@@ -19,10 +19,16 @@
 
 | Thành phần | Công nghệ | Quy mô |
 |---|---|---|
-| Backend API | PHP 7.1–7.4, ThinkPHP 6.1, MySQL 5.7/8.0, Redis, Workerman (websocket, timer), think-queue | ~177 nghìn dòng PHP (chưa kể `vendor/`), 154 bảng DB |
-| Trang quản trị | Vue 2 + Element UI 2 + vxe-table + form-create, build bằng vue-cli 3/webpack 4 | ~207 nghìn dòng, 659 file có chữ Trung |
-| App bán hàng | UniApp (Vue 2), build ra H5, WeChat Mini Program, App (Android/iOS) | ~124 nghìn dòng |
+| Backend API | PHP 7.1–7.4 (bộ cài v6.0.0 vẫn từ chối PHP 8), ThinkPHP 6.1, MySQL 5.7/8.0, Redis, Workerman (websocket, timer), think-queue | ~187 nghìn dòng PHP (chưa kể `vendor/`), 157 bảng DB |
+| Trang quản trị | Vue 2 + Element UI 2 + vxe-table + form-create, build bằng vue-cli 3/webpack 4 | ~238 nghìn dòng |
+| App bán hàng | UniApp (Vue 2), build ra H5, WeChat Mini Program, App (Android/iOS) | ~150 nghìn dòng |
 | Kiến trúc | Controller → Service → DAO → Model; driver pattern cho thanh toán, SMS, lưu trữ, vận chuyển, in hóa đơn | Tách lớp rõ ràng, dễ đọc |
+
+**Điểm mới của v6.0.0** (so với v5.6.3)
+- **Nâng cấp trực tuyến xuyên phiên bản:** tải gói nâng cấp từ `upgrade.crmeb.net`, tự sao lưu DB/code rồi chạy SQL nâng cấp (`crmeb/config/upgrade.php`, `crmeb/upgrade/`).
+- **Kho giao diện (theme):** nhập gói giao diện dựng sẵn (bố cục + màu) từ crmeb.com, hoặc đăng bán giao diện tự làm.
+- **Tài liệu cho lập trình viên** (`help/dev-docs`) và **bộ skill cho trợ lý AI lập trình** (`.trae/`, `.codebuddy/`). Đội Bizino có thể dùng ngay khi cho AI đọc/sửa code. Đã Việt hóa trong PR này.
+- Nền tảng công nghệ **không đổi** (PHP 7.1–7.4, Vue 2), nên các nhận định ở mục 3.3 vẫn giữ nguyên.
 
 **Module nghiệp vụ có sẵn**
 - **Sản phẩm:** SKU, thuộc tính, nhãn, tham số, cam kết dịch vụ, đánh giá, sao chép sản phẩm từ Taobao/JD.
@@ -91,18 +97,20 @@ Các điều khoản đáng chú ý trong thỏa thuận bổ sung:
 - [CVE-2025-25763](https://cvefeed.io/vuln/detail/CVE-2025-25763) (≤ v5.4.0)
 - [CVE-2025-15442](https://secalerts.co/vulnerability/CVE-2025-15442) (≤ v5.6.1)
 
-→ Bắt buộc audit bảo mật trước khi chạy production.
+→ Các CVE trên công bố cho bản 5.x. v6.0.0 mới phát hành (09/2026) và chưa có thông tin đã vá hết hay chưa. **Bắt buộc audit bảo mật trước khi chạy production.**
 
-**Phát hiện trong repo**
+**Phát hiện trong repo (v6.0.0)**
 
 | Mức | Vấn đề | Vị trí | Khuyến nghị |
 |---|---|---|---|
-| Cao | Bộ cài không sinh `APP_KEY`, nên JWT ký bằng khóa mặc định `'default'`. Rủi ro được giảm nhờ token phải có trong cache, nhưng vẫn là cấu hình yếu. | `crmeb/utils/JwtAuth.php`, `public/install/.env` | Sinh `APP_KEY` ngẫu nhiên khi cài |
-| Cao | Trình sửa file online và bộ sinh CRUD có thể ghi file lên server | `adminapi/controller/v1/system/SystemFile.php`, `SystemCrud.php` | Tắt trên production. Giữ `filesystem.password` rỗng. Đặt `crud_make=false`. |
-| Trung bình | Tự nâng cấp từ server CRMEB (`.version` chứa `app_id`/`app_key`) | `UpgradeController.php`, `UpgradeServices.php` | Tắt. Chỉ nâng cấp qua Git/CI của Bizino. |
-| Trung bình | Lockfile trỏ tới mirror npm Trung Quốc (`registry.npmmirror.com`), bị chặn hoặc chậm từ nhiều mạng | `template/admin/package-lock.json` | Đổi sang `registry.npmjs.org` khi build |
-| Thấp | Composer dùng mirror Aliyun | `crmeb/composer.json` | Đổi sang packagist.org |
+| Cao | Bộ cài v6.0.0 ghi cứng `APP_KEY = crmeb` (v5.6.3 không ghi, JWT rơi về khóa `'default'`). Mọi bản cài dùng chung một khóa ký JWT mà ai cũng biết. Rủi ro được giảm nhờ token phải có trong cache, nhưng vẫn là cấu hình yếu. | `crmeb/crmeb/utils/JwtAuth.php`, `crmeb/public/install/.env` | Sinh `APP_KEY` ngẫu nhiên khi cài |
+| Cao | Trình sửa file online và bộ sinh CRUD có thể ghi file lên server | `adminapi/controller/v1/system/SystemFile.php`, `adminapi/controller/v1/setting/SystemCrud.php` | Tắt trên production. Giữ `filesystem.password` rỗng. Đặt `crud_make=false` (`config/app.php`). |
+| Trung bình | Nâng cấp trực tuyến từ server CRMEB. v6.0.0 thêm nâng cấp xuyên phiên bản: tải và chạy gói nâng cấp từ `upgrade.crmeb.net`; `app_id`/`app_key` ghi sẵn trong `.version` và `config/upgrade.php`. | `adminapi/controller/UpgradeController.php`, `services/system/UpgradeServices.php`, `crmeb/upgrade/` | Tắt trên production. Chỉ nâng cấp qua Git/CI của Bizino. |
+| Trung bình | Admin và H5 **tự nhúng script "thống kê" từ CDN Trung Quốc** (`cdn.oss.9gt.net/js/es.js`) vào mọi trang. Script bên thứ ba chạy với toàn quyền của trang (đọc được token đăng nhập, dữ liệu khách hàng hiển thị trên trang). Có từ v5.6.3. | `template/admin/src/main.js`, `template/uni-app/main.js` | **Đã gỡ trong PR này** |
+| Trung bình | Lockfile trỏ tới mirror npm Trung Quốc (`registry.npmmirror.com`), bị chặn hoặc chậm từ nhiều mạng | `template/admin/package-lock.json` | **Đã đổi sang `registry.npmjs.org` trong PR này** |
 | Trung bình | Bản uni-app CLI mới **mặc định bật "uni Statistics" (uni-stat)**: gửi dữ liệu thống kê người dùng về máy chủ DCloud (Trung Quốc), có rủi ro theo Luật BVDLCN | `template/uni-app/manifest.json` | **Đã tắt trong PR này** (`uniStatistics.enable = false`) |
+
+Ghi chú: mirror Composer Aliyun (có ở v5.6.3) đã được CRMEB bỏ ở v6.0.0.
 
 ### 3.4 Gắn chặt hệ sinh thái Trung Quốc: phải thay khi làm ở Việt Nam
 
@@ -161,28 +169,42 @@ Các điều khoản đáng chú ý trong thỏa thuận bổ sung:
 
 Nếu cần ra thị trường nhanh hơn mà vẫn muốn mô hình sàn/đa cửa hàng: cân nhắc **mua bản thương mại đa thương nhân của CRMEB** và đàm phán quyền white-label. Hướng này vẫn giữ nguyên nợ kỹ thuật PHP/Vue 2.
 
-## 6. Đã làm trong PR này: Việt hóa 100%
+## 6. Đã làm trong PR này: Việt hóa 100% (bản v6.0.0)
 
-**Cách làm:** trích xuất theo cấu trúc mã (PHP tokenizer, Babel cho JS, bộ phân tích template Vue/HTML, bộ phân tích SQL/JSON), dịch khoảng 31.000 chuỗi duy nhất theo bảng thuật ngữ TMĐT thống nhất, rồi thay đúng vị trí. Cách này giữ nguyên cú pháp code, placeholder và khóa i18n.
+**Cách làm**
+- Trích xuất theo cấu trúc mã (PHP tokenizer, Babel cho JS, bộ phân tích template Vue/HTML, bộ phân tích SQL/JSON, Markdown), dịch theo bảng thuật ngữ TMĐT thống nhất, rồi thay đúng vị trí. Cách này giữ nguyên cú pháp code, placeholder và khóa i18n.
+- Bản đầu làm trên v5.6.3 (khoảng 31.000 chuỗi). Khi `master` lên v6.0.0, pipeline được chạy lại trên mã v6: dùng lại từ điển cũ, dịch thêm khoảng 13.800 chuỗi mới (chủ yếu là tài liệu dev và skill AI), rồi áp lại các chỉnh sửa thủ công. Tổng cộng khoảng 45.000 chuỗi duy nhất.
 
 **Phạm vi đã dịch**
-- Backend PHP: thông báo, form, chú thích.
+- Backend PHP: thông báo, form, chú thích, và SQL nâng cấp nhúng trong `UpgradeController.php` (gồm cả dữ liệu giao diện mặc định).
 - Admin Vue và app UniApp.
 - Trình cài đặt.
 - `crmeb.sql`: menu, cấu hình, dữ liệu mẫu, thỏa thuận, tài liệu API, chú thích bảng/cột.
-- README, tài liệu cài đặt (.md và .docx), file mẫu Excel nhập sản phẩm.
+- Tài liệu:
+  - `README.md` bằng tiếng Việt; README tiếng Anh gốc chuyển sang `README_EN.md`.
+  - Hướng dẫn cài đặt (.md và .docx), tài liệu phát triển `help/dev-docs`.
+  - Bộ skill cho trợ lý AI lập trình (`.trae/`, `.codebuddy/`).
+  - File Excel mẫu nhập sản phẩm.
+- 47 file tên tiếng Trung đổi sang tên không dấu; mọi liên kết đã cập nhật.
 - Chuỗi hiển thị của `form-builder`, captcha và ThinkPHP trong `vendor/`.
 
 **Ngôn ngữ, múi giờ**
 - `vi-VN` là mặc định cho: API (bảng `eb_lang_*`), ThinkPHP (`app/lang/vi_vn.php`), admin (Element UI, vxe-table), uni-app (kể cả nút có sẵn của framework qua `locale/uni-app.vi.json`).
 - Chỉ bật Tiếng Việt và English.
-- Múi giờ `Asia/Ho_Chi_Minh` trong code, bộ cài và Docker.
+- Múi giờ `Asia/Ho_Chi_Minh` trong code, bộ cài và Docker (`help/docker`).
 
 **Tính nhất quán dữ liệu**
 - Khóa `$t()` của uni-app và bảng `eb_lang_code` dùng cùng một bản dịch.
 - Chuỗi SKU mẫu được dịch theo từng token, file Excel mẫu khớp với code import sản phẩm.
+- Đã sửa một lỗi dịch trùng: hai thuộc tính SKU mẫu khác nhau (“phiên bản” và “model”) từng cùng được dịch là “Phiên bản”, làm trùng khóa và mất dữ liệu trong 124 bản ghi JSON mẫu. Nay thuộc tính “model” được dịch là “Mẫu mã”. Đã kiểm tra lại: không còn khóa JSON trùng.
 - Các cột varchar bị ngắn (kể cả lỗi cắt dữ liệu có sẵn của CRMEB) đã được nới.
-- Đã kiểm tra: import SQL vào MariaDB, `php -l` 1.099 file PHP, build admin/H5/Mini Program đều thành công.
+
+**Đã kiểm tra**
+- `php -l` 1.147 file PHP đã đổi: không có lỗi mới.
+- Babel/vue-template-compiler 995 file JS/Vue: 14 lỗi, trùng đúng với 14 lỗi có sẵn trong bản gốc (cú pháp biên dịch điều kiện của UniApp).
+- JSON: không có lỗi mới.
+- Import `crmeb.sql` vào MariaDB 10.11 (strict mode): tập lỗi giống hệt bản gốc; số dòng mọi bảng khớp, trừ các thay đổi có chủ đích (13 hãng vận chuyển, bỏ 7 dòng Hoàng Sa/Trường Sa).
+- Build admin, H5 và WeChat Mini Program thành công.
 
 **Bản địa hóa thêm**
 - 13 hãng vận chuyển Việt Nam thay 1.101 hãng Trung Quốc.
@@ -191,15 +213,16 @@ Nếu cần ra thị trường nhanh hơn mà vẫn muốn mô hình sàn/đa c�
 
 **Chủ quyền, quyền riêng tư**
 - Đã xóa dữ liệu xếp Hoàng Sa/Trường Sa vào Trung Quốc.
-- Đã bỏ bản đồ Trung Quốc ("đường 9 đoạn") ở trang thống kê, thay bằng biểu đồ cột Top tỉnh/thành.
+- Đã bỏ bản đồ Trung Quốc (“đường 9 đoạn”) ở trang thống kê, thay bằng biểu đồ cột Top tỉnh/thành.
 - Đã tắt uni-app statistics.
+- Đã gỡ script thống kê bên thứ ba (`cdn.oss.9gt.net`) khỏi admin và H5.
 
 **Cố ý giữ nguyên**
 - Gói ngôn ngữ zh-CN/zh-TW/ja-JP (ngôn ngữ tùy chọn).
 - Văn bản license gốc (đã thêm bản dịch tham khảo `LICENSE.vi.txt`).
-- Dữ liệu tỉnh/thành Trung Quốc trong `eb_system_city`: cần thay bằng dữ liệu 2 cấp của Việt Nam (mục 3.4).
+- Dữ liệu tỉnh/thành Trung Quốc trong `eb_system_city` và regex tách địa chỉ Trung Quốc trong `BaseServices.php`: cần thay bằng dữ liệu và logic địa chỉ 2 cấp của Việt Nam (mục 3.4).
 - Bộ ký tự captcha chữ Hán, tên font dịch vụ ảnh của cloud Trung Quốc, regex kiểm tra định dạng Trung Quốc.
-- Dữ liệu locale nội bộ của thư viện bên thứ 3 trong bundle.
-- Ảnh quảng cáo có chữ Trung trong `readme/pic` (tên file đã đổi).
+- Dữ liệu locale nội bộ của thư viện bên thứ 3 (trong bundle và `public/statics/js/layui.js`, chỉ dùng ở trang nâng cấp cũ `public/upgrade`).
+- Ảnh quảng cáo có chữ Trung trong `help/resource/pic` (tên file đã đổi).
 
 **Việc nên làm tiếp:** địa chỉ 2 cấp Việt Nam, hiển thị VND không số lẻ, cổng thanh toán và vận chuyển Việt Nam, vá bảo mật (mục 3.3), bản đồ không phải của Trung Quốc.

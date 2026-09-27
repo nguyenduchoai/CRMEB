@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -173,10 +173,10 @@ class SystemAttachmentCategoryServices extends BaseServices
     public function save(array $data)
     {
         if ($this->dao->getOne(['name' => $data['name']])) {
-            throw new AdminException(400101);
+            throw new AdminException('Danh mục này đã tồn tại');
         }
         $res = $this->dao->save($data);
-        if (!$res) throw new AdminException(100022);
+        if (!$res) throw new AdminException('Thêm thất bại');
         return $res;
     }
 
@@ -189,10 +189,10 @@ class SystemAttachmentCategoryServices extends BaseServices
     {
         $attachment = $this->dao->getOne(['name' => $data['name']]);
         if ($attachment && $attachment['id'] != $id) {
-            throw new AdminException(400101);
+            throw new AdminException('Danh mục này đã tồn tại');
         }
         $res = $this->dao->update($id, $data);
-        if (!$res) throw new AdminException(100007);
+        if (!$res) throw new AdminException('Sửa thất bại');
     }
 
     /**
@@ -203,10 +203,10 @@ class SystemAttachmentCategoryServices extends BaseServices
     {
         $count = $this->dao->getCount(['pid' => $id]);
         if ($count) {
-            throw new AdminException(400102);
+            throw new AdminException('Vui lòng xóa danh mục con trước');
         } else {
             $res = $this->dao->delete($id);
-            if (!$res) throw new AdminException(400102);
+            if (!$res) throw new AdminException('Vui lòng xóa danh mục con trước');
         }
     }
 

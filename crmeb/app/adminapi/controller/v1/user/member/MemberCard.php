@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -23,6 +23,10 @@ use think\facade\App;
  */
 class MemberCard extends AuthController
 {
+    /**
+     * @var MemberCardServices
+     */
+    protected $services;
 
     /**
      * Khởi tạo handle tầng service
@@ -86,7 +90,7 @@ class MemberCard extends AuthController
             ['sort', ''],
         ]);
         $memberShipServices->save((int)$id, $data);
-        return app('json')->success($id ? 100001 : 100021);
+        return app('json')->success($id ? 'Sửa thành công' : 'Thêm thành công');
     }
 
     /**
@@ -97,9 +101,9 @@ class MemberCard extends AuthController
      */
     public function delete($id,MemberShipServices $memberShipServices)
     {
-        if (!$id) return app('json')->fail(100026);
+        if (!$id) return app('json')->fail('Dữ liệu không tồn tại');
         $res = $memberShipServices->delete((int)$id);
-        return app('json')->success($res ? 100002 : 100008);
+        return app('json')->success($res ? 'Xóa thành công' : 'Xóa thất bại');
     }
 
     /**
@@ -151,7 +155,7 @@ class MemberCard extends AuthController
             ['status', ''],
         ]);
         $memberRightServices->save((int)$id, $data);
-        return app('json')->success(400312);
+        return app('json')->success('Sửa quyền lợi thành công');
     }
 
     /**
@@ -165,8 +169,8 @@ class MemberCard extends AuthController
             ['status', 0],
         ], true);
         $res = $this->services->setStatus($card_id, $status);
-        if ($res) return app('json')->success(100010);
-        return app('json')->success(100005);
+        if ($res) return app('json')->success('Thao tác thành công');
+        return app('json')->fail('Thao tác thất bại');
     }
 
     /**
@@ -182,7 +186,7 @@ class MemberCard extends AuthController
         /** @var MemberShipServices $memberShipService */
         $memberShipService = app()->make(MemberShipServices::class);
         $res = $memberShipService->setStatus($id, $is_del);
-        if ($res) return app('json')->success(100010);
-        return app('json')->success(100005);
+        if ($res) return app('json')->success('Thao tác thành công');
+        return app('json')->success('Thao tác thất bại');
     }
 }

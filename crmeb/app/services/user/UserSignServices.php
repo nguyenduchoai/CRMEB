@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -89,7 +89,7 @@ class UserSignServices extends BaseServices
         $data['balance'] = $integral_balance + $number;
         $data['add_time'] = time();
         if (!$this->dao->save($data)) {
-            throw new ApiException(410290);
+            throw new ApiException('Thêm dữ liệu điểm danh thất bại');
         }
         /** @var UserBillServices $userBill */
         $userBill = app()->make(UserBillServices::class);
@@ -105,7 +105,7 @@ class UserSignServices extends BaseServices
             $data['pm'] = 1;
             $data['status'] = 1;
             if (!$userBill->save($data)) {
-                throw new ApiException(410291);
+                throw new ApiException('Tặng điểm kinh nghiệm thất bại');
             }
             //Kiểm tra hạng thành viên
             try {
@@ -156,14 +156,14 @@ class UserSignServices extends BaseServices
         //Kiểm tra người dùng có tồn tại không
         $user = $userServices->getUserInfo($uid);
         if (!$user) {
-            throw new ApiException(410032);
+            throw new ApiException('Người dùng không tồn tại');
         }
 
         $userServices->offMemberLevel($uid);
 
         //Kiểm tra hôm nay đã điểm danh chưa
         if ($this->getIsSign($uid, 'today')) {
-            throw new ApiException(410293);
+            throw new ApiException('Đã điểm danh');
         }
         $title = 'Phần thưởng điểm danh';
         //Kiểm tra hôm qua có điểm danh không, nếu không thì số lần điểm danh liên tục về 0
@@ -218,7 +218,7 @@ class UserSignServices extends BaseServices
             $user->integral = (int)$user->integral + (int)$sign_point;
             if ($sign_exp) $user->exp = bcadd((string)$user->exp, (string)$sign_exp, 2);
             if (!$user->save()) {
-                throw new ApiException(410287);
+                throw new ApiException('Chỉnh sửa thông tin người dùng thất bại');
             }
         });
 
@@ -253,7 +253,7 @@ class UserSignServices extends BaseServices
         $userServices = app()->make(UserServices::class);
         $user = $userServices->getUserInfo($uid);
         if (!$user) {
-            throw new ApiException(100026);
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         //Có thống kê điểm danh không
         if ($sign || $all) {

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -34,8 +34,8 @@ class StoreServiceSpeechcraftValidata extends Validate
      * @var array
      */
     protected $message = [
-        'message.require' => '400022',
-        'sort.require' => '400023',
-        'sort.number' => '400024',
+        'message.require' => 'Vui lòng điền nội dung câu trả lời mẫu',
+        'sort.require' => 'Vui lòng điền số thứ tự sắp xếp',
+        'sort.number' => 'Vui lòng điền số thứ tự sắp xếp',
     ];
 }

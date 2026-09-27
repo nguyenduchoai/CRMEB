@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -59,11 +59,11 @@ class RefundOrder extends AuthController
      */
     public function remark(string $order_id)
     {
-        if (!$order_id) return app('json')->fail(100100);
+        if (!$order_id) return app('json')->fail('Tham số không hợp lệ');
         [$remark] = $this->request->postMore([['remark', '']], true);
 
         $this->services->remark($order_id, $remark);
-        return app('json')->success(100024);
+        return app('json')->success('Ghi chú thành công');
     }
 
     /**
@@ -73,9 +73,9 @@ class RefundOrder extends AuthController
      */
     public function agree(string $order_id)
     {
-        if (!$order_id) return app('json')->fail(100100);
+        if (!$order_id) return app('json')->fail('Tham số không hợp lệ');
        $this->services->agree($order_id);
-        return app('json')->success(100010);
+        return app('json')->success('Thao tác thành công');
     }
 
     /**
@@ -88,11 +88,11 @@ class RefundOrder extends AuthController
      */
     public function refuse(string $order_id)
     {
-        if (!$order_id) return app('json')->fail(100100);
+        if (!$order_id) return app('json')->fail('Tham số không hợp lệ');
         [$refund_reason] = $this->request->postMore([['refund_reason', '']], true);
 
         $this->services->refuse($order_id, $refund_reason);
-        return app('json')->success(100010);
+        return app('json')->success('Thao tác thành công');
     }
 
     /**
@@ -102,7 +102,7 @@ class RefundOrder extends AuthController
      */
     public function read(string $order_id)
     {
-        if (!$order_id) return app('json')->fail(100100);
+        if (!$order_id) return app('json')->fail('Tham số không hợp lệ');
         $data = $this->services->getInfo($order_id);
         return app('json')->success($data);
     }
@@ -118,10 +118,10 @@ class RefundOrder extends AuthController
      */
     public function refundPrice(string $order_id, Request $request)
     {
-        if (!$order_id) return app('json')->fail(100100);
+        if (!$order_id) return app('json')->fail('Tham số không hợp lệ');
         [$refund_price] = $request->postMore([['refund_price', '']], true);
         $this->services->refundPrice($order_id, $refund_price);
-        return app('json')->success(400149);
+        return app('json')->success('Hoàn tiền thành công');
     }
 
 }

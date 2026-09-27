@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Đơn hàng của tôi",
+  "navigationBarTitleText": "我的订单",
   "usingComponents": {
     "easy-loadimage": "/components/easy-loadimage/easy-loadimage",
     "home": "/components/home/index",

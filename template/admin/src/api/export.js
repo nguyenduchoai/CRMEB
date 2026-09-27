@@ -116,3 +116,14 @@ export function exportmberCardList(id) {
     method: 'get',
   });
 }
+
+/**
+ * @description Xuất đơn hàng xác nhận sử dụng;
+ */
+export function exportverifyOrderApi(data) {
+  return request({
+    url: `export/verify_order`,
+    method: 'get',
+    params: data,
+  });
+}

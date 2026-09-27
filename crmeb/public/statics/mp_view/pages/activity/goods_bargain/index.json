@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Danh sách săn giảm giá",
+  "navigationBarTitleText": "砍价列表",
   "usingComponents": {
     "home": "/components/home/index",
     "authorize": "/components/Authorize"

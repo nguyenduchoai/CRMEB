@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -56,6 +56,8 @@ class AgentManageServices extends BaseServices
             $item['spread_name'] = $item['spreadUser']['nickname'] ?? '';
             if ($item['spread_name']) {
                 $item['spread_name'] .= '/' . $item['spread_uid'];
+            } else {
+                $item['spread_name'] = '--';
             }
             $item['spread_count'] = $item['spreadCount'][0]['spread_count'] ?? 0;
             $item['order_price'] = $item['order'][0]['order_price'] ?? 0;
@@ -73,7 +75,10 @@ class AgentManageServices extends BaseServices
             if (strpos($item['headimgurl'], '/statics/system_images/') !== false) {
                 $item['headimgurl'] = set_file_url($item['headimgurl']);
             }
-            $item['spread_order'] = $orderServices->get(['spread_uid' => $item['uid'], 'paid' => 1, 'refund_status' => 0, 'pid' => 0], ['sum(pay_price) as order_price', 'count(id) as order_count']);
+            $item['spread_order'] = $orderServices->get(
+                [['spread_uid', '=', $item['uid']], ['paid', '=', 1], ['refund_status', '=', 0], ['pid', '>=', 0]],
+                ['sum(pay_price) as order_price', 'count(id) as order_count']
+            );
         }
         return $data;
     }
@@ -281,7 +286,7 @@ class AgentManageServices extends BaseServices
         /** @var QrcodeServices $qrcode */
         $qrcode = app()->make(QrcodeServices::class);
         $code = $qrcode->getForeverQrcode('spread', $uid);
-        if (!$code['ticket']) throw new AdminException(410072);
+        if (!$code['ticket']) throw new AdminException('Lỗi khi lấy mã QR vĩnh viễn');
         return $code;
     }
 
@@ -292,11 +297,11 @@ class AgentManageServices extends BaseServices
     public function lookXcxCode(int $uid)
     {
         if (!sys_config('routine_appId') || !sys_config('routine_appsecret')) {
-            throw new AdminException(400236);
+            throw new AdminException('Vui lòng cấu hình appid, appSecret và các tham số khác của Mini Program trước');
         }
         $userInfo = app()->make(UserServices::class)->getUserInfo($uid);
         if (!$userInfo) {
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         $name = $userInfo['uid'] . '_' . $userInfo['is_promoter'] . '_user.jpg';
         /** @var SystemAttachmentServices $systemAttachmentModel */
@@ -312,7 +317,7 @@ class AgentManageServices extends BaseServices
             } else {
                 $res = false;
             }
-            if (!$res) throw new AdminException(400237);
+            if (!$res) throw new AdminException('Tạo mã QR thất bại');
             $upload = UploadService::init();
             if ($upload->to('routine/spread/code')->setAuthThumb(false)->stream((string)$res['res'], $name) === false) {
                 return $upload->getError();
@@ -335,7 +340,7 @@ class AgentManageServices extends BaseServices
     {
         $userInfo = app()->make(UserServices::class)->getUserInfo($uid);
         if (!$userInfo) {
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         $name = $userInfo['uid'] . '_h5_' . $userInfo['is_promoter'] . '_user.jpg';
         /** @var SystemAttachmentServices $systemAttachmentModel */
@@ -359,7 +364,7 @@ class AgentManageServices extends BaseServices
         $userServices = app()->make(UserServices::class);
         $userInfo = $userServices->getUserInfo($uid);
         if (!$userInfo) {
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         $spreadInfo = $userServices->get($userInfo['spread_uid']);
         $spreadInfo->spread_count = $spreadInfo->spread_count - 1;
@@ -367,7 +372,7 @@ class AgentManageServices extends BaseServices
         if ($userServices->update($uid, ['spread_uid' => 0, 'spread_time' => 0]) !== false) {
             return true;
         } else {
-            throw new AdminException(400447);
+            throw new AdminException('Hủy liên kết thất bại');
         }
     }
 
@@ -381,12 +386,12 @@ class AgentManageServices extends BaseServices
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
         if (!$userServices->getUserInfo($uid, 'uid')) {
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         if ($userServices->update($uid, ['spread_open' => 0]) !== false)
             return true;
         else
-            throw new AdminException(100020);
+            throw new AdminException('Hủy thất bại');
     }
 
     /**

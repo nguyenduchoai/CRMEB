@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -50,13 +50,13 @@ class LoginServices extends BaseServices
     {
         $kefuInfo = $this->dao->get(['account' => $account]);
         if (!$kefuInfo) {
-            throw new AuthException(410141);
+            throw new AuthException('Không có người dùng này');
         }
         if ($password && !password_verify($password, $kefuInfo->password)) {
-            throw new AuthException(410025);
+            throw new AuthException('Tài khoản hoặc mật khẩu không đúng');
         }
         if (!$kefuInfo->status) {
-            throw new AuthException(410027);
+            throw new AuthException('Bạn đã bị cấm đăng nhập, vui lòng liên hệ quản trị viên');
         }
         $token = $this->createToken($kefuInfo->id, 'kefu');
         $kefuInfo->update_time = time();
@@ -85,10 +85,10 @@ class LoginServices extends BaseServices
         //Kiểm tra token có hết hạn không
         $md5Token = md5($token);
         if (!$token || !CacheService::has($md5Token) || !(CacheService::get($md5Token, '', NULL, 'kefu'))) {
-            throw new AuthException(110005);
+            throw new AuthException('Vui lòng đăng nhập', [], 402);
         }
         if ($token === 'undefined') {
-            throw new AuthException(110005);
+            throw new AuthException('Vui lòng đăng nhập', [], 402);
         }
 
         /** @var JwtAuth $jwtAuth */
@@ -101,14 +101,14 @@ class LoginServices extends BaseServices
             $jwtAuth->verifyToken();
         } catch (\Throwable $e) {
             $noCli && CacheService::delete($md5Token);
-            throw new AuthException(110006);
+            throw new AuthException('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại', [], 402);
         }
 
         //Lấy thông tin quản trị viên
         $adminInfo = $this->dao->get($id);
         if (!$adminInfo || !$adminInfo->id) {
             $noCli && CacheService::delete($md5Token);
-            throw new AuthException(110007);
+            throw new AuthException('Trạng thái đăng nhập không hợp lệ, vui lòng đăng nhập lại', [], 402);
         }
 
         $adminInfo->type = $type;
@@ -127,20 +127,20 @@ class LoginServices extends BaseServices
         $oauth = app()->make(OAuth::class);
         $original = $oauth->oauth(null, ['open' => true]);
         if (!isset($original['unionid'])) {
-            throw new AuthException(410132);
+            throw new AuthException('unionid không tồn tại');
         }
         /** @var WechatUserServices $userService */
         $userService = app()->make(WechatUserServices::class);
         $uid = $userService->value(['unionid' => $original['unionid']], 'uid');
         if (!$uid) {
-            throw new AuthException(410133);
+            throw new AuthException('Lấy UID người dùng thất bại');
         }
         $kefuInfo = $this->dao->get(['uid' => $uid]);
         if (!$kefuInfo) {
-            throw new AuthException(410142);
+            throw new AuthException('Nhân viên CSKH không tồn tại');
         }
         if (!$kefuInfo->status) {
-            throw new AuthException(410027);
+            throw new AuthException('Bạn đã bị cấm đăng nhập, vui lòng liên hệ quản trị viên');
         }
         $token = $this->createToken($kefuInfo->id, 'kefu');
         $kefuInfo->update_time = time();

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -147,7 +147,7 @@ class AccessToken extends HttpService
         }, 86400);
         if (!$this->accessToken[$this->name]){
             CacheService::delete('YLY_access_token');
-            throw new AdminException(400718);
+            throw new AdminException('Lấy access_token thất bại');
         }
         return $this->accessToken[$this->name];
     }

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -82,13 +82,13 @@ class ArticleCategory extends AuthController
             ['status', 0]
         ]);
         if (!$data['title']) {
-            return app('json')->fail(400100);
+            return app('json')->fail('Vui lòng điền tên danh mục');
         }
         $data['add_time'] = time();
         $this->service->save($data);
         CacheService::delete('ARTICLE_CATEGORY');
         CacheService::delete('ARTICLE_CATEGORY_PC');
-        return app('json')->success(100021);
+        return app('json')->success('Thêm thành công');
     }
 
     /**
@@ -99,7 +99,7 @@ class ArticleCategory extends AuthController
      */
     public function edit($id = 0)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         return app('json')->success($this->service->createForm($id));
     }
 
@@ -123,7 +123,7 @@ class ArticleCategory extends AuthController
         $this->service->update($data);
         CacheService::delete('ARTICLE_CATEGORY');
         CacheService::delete('ARTICLE_CATEGORY_PC');
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**
@@ -134,11 +134,11 @@ class ArticleCategory extends AuthController
      */
     public function delete($id)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $this->service->del($id);
         CacheService::delete('ARTICLE_CATEGORY');
         CacheService::delete('ARTICLE_CATEGORY_PC');
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -150,11 +150,11 @@ class ArticleCategory extends AuthController
      */
     public function set_status($id, $status)
     {
-        if ($status == '' || $id == 0) return app('json')->fail(100100);
+        if ($status == '' || $id == 0) return app('json')->fail('Tham số không hợp lệ');
         $this->service->setStatus($id, $status);
         CacheService::delete('ARTICLE_CATEGORY');
         CacheService::delete('ARTICLE_CATEGORY_PC');
-        return app('json')->success(100014);
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**

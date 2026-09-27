@@ -72,6 +72,13 @@
                     <el-option label="Có" value="1" />
                   </el-select>
                 </el-form-item>
+                <el-form-item label="Là quà tặng:">
+                  <el-select v-model="artFrom.is_gift" clearable placeholder="Tất cả" class="form_content_width">
+                    <el-option label="Tất cả" value="" />
+                    <el-option label="Không" value="0" />
+                    <el-option label="Có" value="1" />
+                  </el-select>
+                </el-form-item>
 
                 <el-form-item label="Thời gian thêm:">
                   <el-date-picker
@@ -488,6 +495,33 @@
               </el-checkbox-group>
             </el-form-item>
           </el-col>
+          <el-col :span="24" v-if="batchType == 10">
+            <el-form-item label="Bật tặng quà:">
+              <el-switch
+                v-model="batchFormData.is_gift"
+                class="defineSwitch"
+                active-text="Bật"
+                inactive-text="Tắt"
+                :active-value="1"
+                :inactive-value="0"
+                size="large"
+              >
+              </el-switch>
+              <div class="tips-info">Sau khi bật tặng quà, menu dưới cùng của trang chi tiết sản phẩm trên di động sẽ hiển thị nút tặng quà</div>
+            </el-form-item>
+            <el-form-item v-if="batchFormData.is_gift" label="Phụ phí quà tặng:">
+              <el-input-number
+                :controls="false"
+                :min="0"
+                :max="100000"
+                v-model="batchFormData.gift_price"
+                placeholder="Phụ phí quà tặng"
+                class="input-number-unit-class"
+                class-unit="đ"
+              />
+              <div class="tips-info">Khi đặt hàng để tặng quà, đơn hàng mặc định không tính phí vận chuyển, khoản phí này có thể dùng để chi trả phí vận chuyển sản phẩm, bao bì sản phẩm và các chi phí phụ khác</div>
+            </el-form-item>
+          </el-col>
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -884,7 +918,6 @@ export default {
     },
     // Chọn nhãn sản phẩm
     activeGoodsLabel(data) {
-      console.log(data, 'data');
       this.tagShow = false;
       this.batchFormData.label_list = Array.from(new Set(data));
       this.batchSub();

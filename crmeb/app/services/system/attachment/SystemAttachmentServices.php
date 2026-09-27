@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -83,7 +83,7 @@ class SystemAttachmentServices extends BaseServices
     public function del(string $ids)
     {
         $ids = explode(',', $ids);
-        if (empty($ids)) throw new AdminException(400599);
+        if (empty($ids)) throw new AdminException('Vui lòng chọn hình ảnh cần xóa');
         foreach ($ids as $v) {
             $attinfo = $this->dao->get((int)$v);
             if ($attinfo) {
@@ -125,7 +125,7 @@ class SystemAttachmentServices extends BaseServices
         try {
             $path = make_path('attach', 2, true);
             if ($path === '') {
-                throw new AdminException(400555);
+                throw new AdminException('Không thể tạo thư mục, vui lòng kiểm tra quyền của thư mục tải lên');
             }
             $upload = UploadService::init($upload_type);
             $res = $upload->to($path)->validate()->move($file, $realName);
@@ -199,7 +199,7 @@ class SystemAttachmentServices extends BaseServices
         $data['type'] = $type;
         $data['real_name'] = $real_name != '' ? $real_name : $name;
         if (!$this->dao->save($data)) {
-            throw new ApiException(100022);
+            throw new ApiException('Thêm thất bại');
         }
         return true;
     }
@@ -256,7 +256,7 @@ class SystemAttachmentServices extends BaseServices
     {
         $pathinfo = pathinfo($data['filename']);
         if (isset($pathinfo['extension']) && !in_array($pathinfo['extension'], ['avi', 'mp4', 'wmv', 'rm', 'mpg', 'mpeg', 'mov', 'flv', 'swf'])) {
-            throw new AdminException(400558);
+            throw new AdminException('Sai định dạng');
         }
         $data['chunkNumber'] = (int)$data['chunkNumber'];
         $public_dir = app()->getRootPath() . 'public';
@@ -305,7 +305,7 @@ class SystemAttachmentServices extends BaseServices
     {
         //Tạo thư mục tệp đính kèm
         if (make_path('attach', 3, true) === '') {
-            throw new AdminException(400555);
+            throw new AdminException('Không thể tạo thư mục, vui lòng kiểm tra quyền của thư mục tải lên');
         }
 
         //Tải lên ảnh

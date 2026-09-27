@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -36,6 +36,36 @@ if (!function_exists('crmebLog')) {
     function crmebLog($msg)
     {
         Log::write($msg, 'crmeb');
+    }
+}
+
+if (!function_exists('success')) {
+    /**
+     * Hàm helper tạo phản hồi
+     * @param mixed $msg Thông điệp phản hồi
+     * @param array|null $data Dữ liệu phản hồi
+     * @param array|null $replace Mảng thay thế cho thông điệp
+     * @return \think\Response
+     * @see \crmeb\utils\Json::success()
+     */
+    function success($msg = 'success', ?array $data = null, ?array $replace = [])
+    {
+        return app('json')->success($msg, $data, $replace);
+    }
+}
+
+if (!function_exists('fail')) {
+    /**
+     * Hàm helper tạo phản hồi thất bại
+     * @param mixed $msg Thông điệp phản hồi
+     * @param array|null $data Dữ liệu phản hồi
+     * @param array|null $replace Mảng thay thế cho thông điệp
+     * @return \think\Response
+     * @see \crmeb\utils\Json::fail()
+     */
+    function fail($msg = 'fail', ?array $data = null, ?array $replace = [])
+    {
+        return app('json')->fail($msg, $data, $replace);
     }
 }
 
@@ -283,18 +313,32 @@ if (!function_exists('set_file_url')) {
 if (!function_exists('set_http_type')) {
     /**
      * Sửa https và http
-     * @param $url $url Tên miền
+     * @param string $url Tên miền
      * @param int $type 0 Trả về https, 1 thì trả về http
      * @return string
      */
     function set_http_type($url, $type = 0)
     {
-        $domainTop = substr($url, 0, 5);
-        if ($type) {
-            if ($domainTop == 'https') $url = 'http' . substr($url, 5, strlen($url));
-        } else {
-            if ($domainTop != 'https') $url = 'https:' . substr($url, 5, strlen($url));
+
+        // Kiểm tra cơ bản
+        if (empty($url)) {
+            return $url;
         }
+        
+        // Kiểm tra có phải URL đầy đủ không
+        $is_full_url = (strpos($url, '://') !== false);
+        
+        if ($is_full_url) {
+            // Xử lý URL đầy đủ
+            if ($type) {
+                // Chuyển sang HTTP
+                $url = preg_replace('/^https:/i', 'http:', $url);
+            } else {
+                // Chuyển sang HTTPS
+                $url = preg_replace('/^http:/i', 'https:', $url);
+            }
+        }
+        
         return $url;
     }
 
@@ -710,6 +754,23 @@ if (!function_exists('get_crmeb_version')) {
     }
 }
 
+if (!function_exists('get_crmeb_version_vode')) {
+    /**
+     * Lấy số phiên bản hệ thống CRMEB
+     * @param string $default
+     * @return string
+     */
+    function get_crmeb_version_vode($default = '0')
+    {
+        try {
+            $version = parse_ini_file(app()->getRootPath() . '.version');
+            return $version['version_code'] ?? $default;
+        } catch (\Throwable $e) {
+            return $default;
+        }
+    }
+}
+
 if (!function_exists('get_file_link')) {
     /**
      * Lấy đường dẫn đầy đủ của file kèm tên miền
@@ -986,16 +1047,39 @@ if (!function_exists('get_thumb_water')) {
 
 if (!function_exists('getLang')) {
     /**
-     * Đa ngôn ngữ
-     * @param $code
-     * @param array $replace
-     * @return array|string|string[]
+     * Hàm dịch đa ngôn ngữ: dựa vào ngôn ngữ hiện tại để dịch “định danh ngôn ngữ tiếng Trung” truyền vào thành văn bản của ngôn ngữ tương ứng, có hỗ trợ thay thế biến
+     *
+     * Quy trình thực thi:
+     * 1. Bắt ngoại lệ: toàn bộ logic được bọc trong try-catch, bất kỳ khâu nào lỗi đều trả về ngay định danh gốc, tránh hệ thống bị gián đoạn do lỗi ở module ngôn ngữ
+     * 2. Dependency injection: lấy cùng lúc ba instance service cốt lõi
+     *    - LangCountryServices: phụ trách ánh xạ giữa quốc gia/khu vực và loại ngôn ngữ
+     *    - LangTypeServices: phụ trách metadata của loại ngôn ngữ (như zh-CN, en-US)
+     *    - LangCodeServices: phụ trách đọc bảng mã ngôn ngữ (code => văn bản dịch)
+     * 3. Thứ tự ưu tiên khi xác định phạm vi ngôn ngữ (range):
+     *    ① Ưu tiên đọc header yêu cầu cb-lang (do frontend/API chủ động chỉ định)
+     *    ② Nếu không có, đọc ngôn ngữ mặc định của hệ thống (LangTypeServices.is_default = 1)
+     *    ③ Nếu hệ thống chưa cấu hình ngôn ngữ mặc định, đọc thẻ ngôn ngữ đầu tiên trong Accept-Language của trình duyệt
+     *    ④ Nếu vẫn rỗng, bắt buộc fallback về zh-CN để bảo đảm logic phía sau luôn có giá trị để dùng
+     * 4. Tăng tốc bằng cache: mọi dữ liệu “ghi một lần, hiếm khi thay đổi” đều dùng CacheService::remember() để cache 3600 giây, giảm tải cho cơ sở dữ liệu
+     *    - sys_lang_source_map: ánh xạ remarks tiếng Trung => code, dùng để chuyển “định danh tiếng Trung” truyền vào thành code nội bộ
+     *    - type_id_{range}: tra ngược type_id tương ứng theo mã ngôn ngữ rút gọn (như zh-CN)
+     *    - lang_type_data: bảng ánh xạ id => file_name của tất cả loại ngôn ngữ đang bật, dùng để kiểm tra ngôn ngữ có hợp lệ không
+     *    - lang_{file_name}: mảng đầy đủ code => văn bản dịch của từng gói ngôn ngữ cụ thể
+     * 5. Quá trình dịch:
+     *    - Nếu loại ngôn ngữ không tồn tại, trả về ngay định danh gốc
+     *    - Nếu “định danh tiếng Trung” có trong bảng ánh xạ và code tương ứng có trong gói ngôn ngữ thì lấy văn bản dịch; nếu không thì trả về định danh gốc
+     * 6. Thay thế biến: hỗ trợ cú pháp {:tên_biến}, thay hàng loạt placeholder trong văn bản dịch bằng giá trị trong mảng $replace
+     * 7. Dự phòng khi có ngoại lệ: trong catch ghi log lỗi chi tiết (tên file/số dòng/thông tin ngoại lệ), vẫn trả về định danh gốc để bảo đảm nghiệp vụ tiếp tục
+     *
+     * @param string $msg   Định danh ngôn ngữ tiếng Trung (remarks), ví dụ “Tên người dùng không được để trống”
+     * @param array  $replace Ánh xạ biến tùy chọn, ví dụ ['name' => 'Số điện thoại'], sẽ thay {:name} trong văn bản thành “Số điện thoại”
+     * @return string       Văn bản dịch cuối cùng; trả về định danh gốc khi có bất kỳ ngoại lệ nào hoặc không tìm thấy bản dịch
      */
-    function getLang($code, array $replace = [])
+    function getLang($msg, array $replace = [])
     {
-        //Đảm bảo không báo lỗi khi lấy ngôn ngữ
+        /* Toàn bộ quá trình dịch hễ có lỗi thì trả về ngay định danh gốc, tránh gián đoạn nghiệp vụ */
         try {
-
+            /* --------------- 1. Dependency injection: lấy các service liên quan đến ngôn ngữ --------------- */
             /** @var LangCountryServices $langCountryServices */
             $langCountryServices = app()->make(LangCountryServices::class);
             /** @var LangTypeServices $langTypeServices */
@@ -1003,61 +1087,79 @@ if (!function_exists('getLang')) {
             /** @var LangCodeServices $langCodeServices */
             $langCodeServices = app()->make(LangCodeServices::class);
 
+            /* --------------- 2. Xác định phạm vi ngôn ngữ hiện tại (range) --------------- */
             $request = app()->request;
-            //Lấy loại ngôn ngữ truyền vào API
-            if (!$range = $request->header('cb-lang')) {
-                //Nếu không truyền vào thì hiển thị theo ngôn ngữ mặc định của hệ thống
+            // Ưu tiên lấy ngôn ngữ do frontend/API chỉ định
+            $range = $request->header('cb-lang');
+            if (!$range) {
+                // Khi chưa chỉ định, đọc ngôn ngữ mặc định của hệ thống
                 $range = CacheService::remember('range_name', function () use ($langTypeServices) {
                     return $langTypeServices->value(['is_default' => 1], 'file_name');
                 });
                 if (!$range) {
-                    //Nếu hệ thống chưa cài đặt ngôn ngữ mặc định thì hiển thị theo ngôn ngữ của trình duyệt, nếu không tìm thấy ngôn ngữ của trình duyệt trong thư viện thì dùng tiếng Trung giản thể
+                    // Hệ thống cũng chưa cấu hình ngôn ngữ mặc định thì thử dùng Accept-Language của trình duyệt
                     if ($request->header('accept-language') !== null) {
                         $range = explode(',', $request->header('accept-language'))[0];
                     } else {
+                        // Phương án dự phòng cuối cùng: tiếng Trung giản thể
                         $range = 'zh-CN';
                     }
                 }
             }
 
-            // Lấy type_id
+            /* --------------- 3. Đọc các loại dữ liệu ánh xạ (có cache) --------------- */
+            // Bảng ánh xạ remarks tiếng Trung => code, dùng để chuyển “định danh tiếng Trung” truyền vào thành code nội bộ
+            $langZhCn = CacheService::remember('sys_lang_source_map', function () use ($langCodeServices) {
+                return $langCodeServices->getColumn(['type_id' => 1], 'code', 'remarks');
+            }, 3600);
+
+            // Tra ngược type_id tương ứng theo mã ngôn ngữ rút gọn (như zh-CN)
             $typeId = CacheService::remember('type_id_' . $range, function () use ($langCountryServices, $range) {
                 return $langCountryServices->value(['code' => $range], 'type_id') ?: 1;
             }, 3600);
 
-            // Lấy loại
+            // Bảng ánh xạ id => file_name của tất cả loại ngôn ngữ đang bật
             $langData = CacheService::remember('lang_type_data', function () use ($langTypeServices) {
                 return $langTypeServices->getColumn(['status' => 1, 'is_del' => 0], 'file_name', 'id');
             }, 3600);
 
-            // Lấy key cache
-            $langStr = 'lang_' . str_replace('-', '_', $langData[$typeId]);
+            /* --------------- 4. Kiểm tra loại ngôn ngữ có hợp lệ không --------------- */
+            if (!isset($langData[$typeId])) {
+                return $msg;
+            }
 
-            //Đọc gói ngôn ngữ của ngôn ngữ hiện tại
-            $lang = CacheService::remember($langStr, function () use ($typeId, $range, $langCodeServices) {
-                return $langCodeServices->getColumn(['type_id' => $typeId, 'is_admin' => 1], 'lang_explain', 'code');
+            /* --------------- 5. Đọc gói ngôn ngữ hiện tại (code => văn bản dịch) --------------- */
+            $langStr = 'lang_' . str_replace('-', '_', $langData[$typeId]); // Tạo key cache
+            $lang = CacheService::remember($langStr, function () use ($typeId, $langCodeServices) {
+                return $langCodeServices->getColumn(['type_id' => $typeId], 'lang_explain', 'code');
             }, 3600);
-            //Lấy chữ trả về
-            $message = (string)($lang[$code] ?? 'Code Error');
 
-            //Thay thế biến
+            /* --------------- 6. Lấy văn bản dịch --------------- */
+            if (isset($langZhCn[$msg]) && isset($lang[$langZhCn[$msg]])) {
+                // Có trong bảng ánh xạ và gói ngôn ngữ có code tương ứng thì dùng văn bản dịch
+                $message = (string)$lang[$langZhCn[$msg]];
+            } else {
+                // Không tìm thấy bản dịch, trả về định danh gốc
+                $message = $msg;
+            }
+
+            /* --------------- 7. Thay thế biến (hỗ trợ cú pháp {:tên_biến}) --------------- */
             if (!empty($replace) && is_array($replace)) {
-                // Phân giải chỉ mục liên kết
-                $key = array_keys($replace);
-                foreach ($key as &$v) {
-                    $v = "{:{$v}}";
-                }
-                $message = str_replace($key, $replace, $message);
+                // Tạo mảng placeholder, ví dụ ['name'] -> ['{:name}']
+                $key = array_map(function ($v) { return "{:{$v}}"; }, array_keys($replace));
+                // Thay thế hàng loạt
+                $message = str_replace($key, array_values($replace), $message);
             }
 
             return $message;
         } catch (\Throwable $e) {
-            Log::error('Lấy code ngôn ngữ:' . $code . 'xảy ra lỗi, nguyên nhân lỗi là:' . json_encode([
-                    'file' => $e->getFile(),
+            /* Ghi log lỗi chi tiết, vẫn trả về định danh gốc để bảo đảm nghiệp vụ tiếp tục */
+            Log::error('Khi lấy msg ngôn ngữ:' . $msg . ' đã xảy ra lỗi, nguyên nhân lỗi:' . json_encode([
+                    'file'  => $e->getFile(),
                     'message' => $e->getMessage(),
-                    'line' => $e->getLine()
+                    'line'  => $e->getLine()
                 ]));
-            return $code;
+            return $msg;
         }
     }
 }
@@ -1172,7 +1274,7 @@ if (!function_exists('toIntArray')) {
      */
     function toIntArray($data, string $separator = ',')
     {
-        if (!is_string($data)) {
+        if (!is_string($data) && !is_int($data)) {
             return array_unique(array_diff(array_map('intval', $data), [0]));
         } else {
             return !empty($data) ? array_unique(array_diff(array_map('intval', explode($separator, $data)), [0])) : [];

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -95,20 +95,20 @@ class StoreBargain extends AuthController
         if ($data['section_time']) {
             [$start_time, $end_time] = $data['section_time'];
             if (strtotime($end_time) < time()) {
-                return app('json')->fail(400507);
+                return app('json')->fail('Thời gian kết thúc chương trình không được trước thời điểm hiện tại');
             }
         }
         $bragain = [];
         if ($id) {
             $bragain = $this->services->get((int)$id);
             if (!$bragain) {
-                return app('json')->fail(100026);
+                return app('json')->fail('Dữ liệu không tồn tại');
             }
         }
         //Hạn chế sửa
         if ($data['copy'] == 0 && $bragain) {
             if ($bragain['stop_time'] < time()) {
-                return app('json')->fail(400508);
+                return app('json')->fail('Chương trình đã kết thúc, vui lòng thêm mới hoặc sao chép');
             }
         }
         if ($data['copy'] == 1) {
@@ -116,7 +116,7 @@ class StoreBargain extends AuthController
             unset($data['copy']);
         }
         $this->services->saveData($id, $data);
-        return app('json')->success(100000);
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -141,7 +141,7 @@ class StoreBargain extends AuthController
         /** @var StoreBargainUserServices $bargainUserService */
         $bargainUserService = app()->make(StoreBargainUserServices::class);
         $bargainUserService->userBargainStatusFail($id, true);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**
@@ -163,7 +163,7 @@ class StoreBargain extends AuthController
             }
         }
         $this->services->update($id, ['status' => $status]);
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -36,15 +36,15 @@ class StoreCategoryValidate extends Validate
      * @var array
      */
     protected $message = [
-        'pid.number' => '400745',
-        'pid.egt' => '400745',
-        'cate_name.require' => '410095',
-        'cate_name.max' => '400746',
-        'pic.max' => '400747',
-        'big_pic.max' => '400748',
-        'sort.number' => '400749',
-        'sort.egt' => '400750',
-        'is_show.in' => '400751',
+        'pid.number' => 'Tham số ID cha sai kiểu dữ liệu',
+        'pid.egt' => 'Tham số ID cha sai kiểu dữ liệu',
+        'cate_name.require' => 'Tên danh mục không được để trống',
+        'cate_name.max' => 'Tên danh mục không được vượt quá 25 ký tự',
+        'pic.max' => 'Biểu tượng danh mục không được vượt quá 128 ký tự',
+        'big_pic.max' => 'Ảnh lớn danh mục không được vượt quá 200 ký tự',
+        'sort.number' => 'Tham số thứ tự sắp xếp sai kiểu dữ liệu',
+        'sort.egt' => 'Thứ tự sắp xếp không được nhỏ hơn 0',
+        'is_show.in' => 'Trạng thái phải là số nguyên trong khoảng 0-1',
     ];
 
     protected $scene = [

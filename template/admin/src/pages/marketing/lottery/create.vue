@@ -12,7 +12,7 @@
           >Quay lại</el-button
         >
         <el-divider direction="vertical"></el-divider>
-        <span class="ivu-page-header-title">{{ $route.meta.title }}</span>
+        <span class="ivu-page-header-title">{{ $route.query.lottery_id ? 'Sửa' : 'Thêm mới' }} chương trình quay thưởng</span>
       </div>
     </div>
     <el-card :bordered="false" shadow="never" class="ivu-mt" :body-style="{ padding: '0 20px 20px' }">
@@ -629,7 +629,7 @@ export default {
         attends_user: 1, //Người dùng tham gia: 1: tất cả 2: một phần
         user_level: [], //Hạng người dùng tham gia
         user_label: [], //Nhãn người dùng tham gia
-        is_svip: '-1', //Người dùng tham gia có phải thành viên trả phí không
+        is_svip: '', //Người dùng tham gia có phải thành viên trả phí không
         prize_num: 0, //Số lượng giải thưởng
         period: [], //Thời gian chương trình
         prize: [], //Mảng giải thưởng
@@ -999,7 +999,6 @@ export default {
       this.editIndex = null;
     },
     changeChance(e, index) {
-      console.log(e, index);
       let value = e.target.value;
       this.$set(this.specsData[index], 'percent', value);
     },

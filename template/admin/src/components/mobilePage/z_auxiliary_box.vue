@@ -1,14 +1,5 @@
 <template>
-  <div
-    class="mobile-page"
-    :style="{
-      background: bottomBgColor,
-      paddingTop: topConfig + 'px',
-      paddingBottom: bottomConfig + 'px',
-      paddingLeft: lrEdge + 'px',
-      paddingRight: lrEdge + 'px',
-    }"
-  >
+  <common_wrapper :config="configObj">
     <div
       class="box"
       :style="{
@@ -19,7 +10,7 @@
           : filletVal + 'px',
       }"
     ></div>
-  </div>
+  </common_wrapper>
 </template>
 
 <script>
@@ -76,6 +67,67 @@ export default {
         setUp: {
           tabVal: 0,
         },
+        zIndexConfig: {
+          title: 'Thứ tự lớp thành phần',
+          val: 0,
+          min: 0,
+        },
+        borderConfig: {
+          title: 'Cài đặt viền',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0, // 0: Hide, 1: Show
+          styleConfig: {
+            title: 'Kiểu viền',
+            tabVal: 0,
+            tabList: [
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
+            ],
+          },
+          widthConfig: {
+            title: 'Độ dày viền',
+            val: 1,
+            min: 1,
+          },
+          colorConfig: {
+            title: 'Màu viền',
+            default: [{ item: '#e5e5e5' }],
+            color: [{ item: '#e5e5e5' }],
+          },
+        },
+        shadowConfig: {
+          title: 'Cài đặt đổ bóng',
+          tabVal: 0,
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
+          val: 0,
+          colorConfig: {
+            title: 'Màu đổ bóng',
+            default: [{ item: 'rgba(0,0,0,0.1)' }],
+            color: [{ item: 'rgba(0,0,0,0.1)' }],
+          },
+          xConfig: {
+            title: 'Độ lệch trục X',
+            val: 0,
+            min: -50,
+          },
+          yConfig: {
+            title: 'Độ lệch trục Y',
+            val: 0,
+            min: -50,
+          },
+          blurConfig: {
+            title: 'Bán kính làm mờ',
+            val: 10,
+            min: 0,
+          },
+          spreadConfig: {
+            title: 'Bán kính lan tỏa',
+            val: 0,
+            min: -50,
+          },
+        },
         titleLeft: 'Cài đặt chiều cao',
         titleRight: 'Kiểu chung',
         bgColor: {
@@ -111,20 +163,20 @@ export default {
           val: 10,
           min: 1,
         },
-        topConfig: {
-          title: 'Lề trên',
+        paddingConfig: {
+          title: 'Lề trong',
           val: 0,
           min: 0,
+          max: 100,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
-        bottomConfig: {
-          title: 'Lề dưới',
+        marginConfig: {
+          title: 'Lề ngoài',
+          isAll: false,
           val: 0,
           min: 0,
-        },
-        lrEdge: {
-          title: 'Lề trái phải',
-          val: 0,
-          min: 0,
+          max: 100,
+          valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         fillet: {
           title: 'Bo góc nền',
@@ -147,12 +199,9 @@ export default {
       },
       cSlider: '',
       bgColor: '',
-      bottomBgColor: '',
       confObj: {},
       pageData: {},
-      topConfig: '',
-      bottomConfig: '',
-      lrEdge: '',
+      configObj: null,
       fillet: 0,
       filletVal: 0,
       valList: [],
@@ -167,23 +216,27 @@ export default {
   methods: {
     setConfig(data) {
       if (!data) return;
-      if (data.heightConfig) {
-        this.cSlider = data.heightConfig.val;
-        this.bgColor = data.bgColor.color[0].item;
-        this.bottomBgColor = data.bottomBgColor.color[0].item;
-        this.topConfig = data.topConfig.val;
-        this.bottomConfig = data.bottomConfig.val;
-        this.lrEdge = data.lrEdge.val;
-        this.fillet = data.fillet.type;
-        this.filletVal = data.fillet.val;
-        this.valList = data.fillet.valList;
+      this.configObj = data;
+      for (let key in this.defaultConfig) {
+        if (data[key] == undefined) {
+          this.$set(data, key, JSON.parse(JSON.stringify(this.defaultConfig[key])));
+        }
       }
+      this.cSlider = data.heightConfig.val;
+      this.bgColor = data.bgColor.color[0].item;
+      this.fillet = data.fillet.type;
+      this.filletVal = data.fillet.val;
+      this.valList = data.fillet.valList;
     },
   },
 };
 </script>
 
 <style scoped lang="scss">
+.mobile-page {
+  display: inline-block;
+  width: -webkit-fill-available;
+}
 .box {
   height: 20px;
   background: #f5f5f5;

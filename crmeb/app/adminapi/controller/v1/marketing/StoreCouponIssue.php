@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -77,7 +77,7 @@ class StoreCouponIssue extends AuthController
             ['user_type', 1],
         ]);
         $res = $this->services->saveCoupon($data);
-        if ($res) return app('json')->success(100000);
+        if ($res) return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -89,7 +89,7 @@ class StoreCouponIssue extends AuthController
     public function status($id, $status)
     {
         $this->services->update($id, ['status' => $status]);
-        return app('json')->success(100001);
+        return app('json')->success('Sửa thành công');
     }
 
     /**
@@ -99,7 +99,7 @@ class StoreCouponIssue extends AuthController
      */
     public function copy($id = 0)
     {
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $info = $this->services->get($id);
         if ($info) $info = $info->toArray();
         if ($info['receive_type'] == 1 || $info['receive_type'] == 3) {
@@ -142,7 +142,7 @@ class StoreCouponIssue extends AuthController
         $storeProductService = app()->make(StoreProductCouponServices::class);
         //Xóa liên kết sản phẩm với phiếu giảm giá này
         $storeProductService->delete(['issue_coupon_id' => $id]);
-        return app('json')->success(100002);
+        return app('json')->success('Xóa thành công');
     }
 
     /**

@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -77,12 +77,12 @@ class DownloadImage
             $downloadImageInfo = $this->getImageExtname($url);
             $ext = $downloadImageInfo['ext_name'];
             $name = $downloadImageInfo['file_name'];
-            if (!$name) throw new AdminException(400725);
+            if (!$name) throw new AdminException('Hình ảnh tải lên không tồn tại');
         } else {
             $ext = $this->getImageExtname($name)['ext_name'];
         }
         if (!in_array($ext, Config::get('upload.fileExt'))) {
-            throw new AdminException(400558);
+            throw new AdminException('Sai định dạng');
         }
         if (strstr($url, 'http://') === false && strstr($url, 'https://') === false) {
             $url = 'http:' . $url;
@@ -101,9 +101,9 @@ class DownloadImage
             $content = ob_get_contents();
             ob_end_clean();
             $size = strlen(trim($content));
-            if (!$content || $size <= 2) throw new AdminException(400726);
+            if (!$content || $size <= 2) throw new AdminException('Lấy luồng dữ liệu hình ảnh thất bại');
             if ($upload->to($to_path)->down($content, $name) === false) {
-                throw new AdminException(400727);
+                throw new AdminException('Tải xuống hình ảnh thất bại');
             }
             $imageInfo = $upload->getDownloadInfo();
             $path = $imageInfo['dir'];

@@ -1,5 +1,13 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 namespace app\adminapi\controller\v1\diy;
 
 use app\adminapi\controller\AuthController;
@@ -102,14 +110,15 @@ class DiyPro extends AuthController
     public function getProduct()
     {
         $where = $this->request->getMore([
-            ['cate_id', []],//Tìm kiếm danh mục
-            ['salesOrder', ''],//Sắp xếp theo lượt bán
-            ['priceOrder', ''],//Sắp xếp theo giá
-            ['store_label_id', []],//ID nhãn
-            ['ids', []],//ID sản phẩm
+            ['cate_id', []], //Tìm kiếm danh mục
+            ['salesOrder', ''], //Sắp xếp theo lượt bán
+            ['priceOrder', ''], //Sắp xếp theo giá
+            ['store_label_id', []], //ID nhãn
+            ['ids', ''], //ID sản phẩm
         ]);
         $where['is_show'] = 1;
         $where['is_del'] = 0;
+        if (is_string($where['ids']) && $where['ids'] != '') $where['ids'] = explode(',', $where['ids']);
         [$page, $limit] = $this->services->getPageValue();
         $list = app()->make(StoreProductServices::class)->getSearchList($where, $page, $limit, ['id,store_name,cate_id,image,IFNULL(sales, 0) + IFNULL(ficti, 0) as sales,price,stock,activity,ot_price,spec_type,recommend_image,unit_name,is_vip,vip_price']);
         return app('json')->success($list);
@@ -147,5 +156,66 @@ class DiyPro extends AuthController
         // Lưu nội dung
         $this->services->importDIYData($content);
         return app('json')->success('Nhập thành công');
+    }
+
+    public function textField()
+    {
+        $user = [
+            ['label' => 'Tên người dùng', 'value' => 'nickname'],
+            ['label' => 'id người dùng', 'value' => 'uid'],
+            ['label' => 'Ảnh đại diện người dùng', 'value' => 'image'],
+            ['label' => 'Sản phẩm yêu thích', 'value' => 'collection_num'],
+            ['label' => 'Thêm vào giỏ hàng', 'value' => 'cart_num'],
+            ['label' => 'Tổng số đơn hàng', 'value' => 'order_num'],
+            ['label' => 'Điểm thưởng của tôi', 'value' => 'integral'],
+            ['label' => 'Số dư của tôi', 'value' => 'now_money'],
+            ['label' => 'Hoa hồng của tôi', 'value' => 'brokerage_price'],
+            ['label' => 'Tin nhắn chưa đọc', 'value' => 'unread_msg_num'],
+        ];
+
+        $article = [
+            ['label' => 'Tiêu đề bài viết', 'value' => 'title'],
+            ['label' => 'ID bài viết', 'value' => 'id'],
+            ['label' => 'Ảnh bìa bài viết', 'value' => 'image'],
+            ['label' => 'Danh mục bài viết', 'value' => 'cid_name'],
+            ['label' => 'Mô tả ngắn bài viết', 'value' => 'synopsis'],
+            ['label' => 'Lượt xem bài viết', 'value' => 'visit'],
+            ['label' => 'Thời gian thêm', 'value' => 'add_time'],
+        ];
+
+        $coupon = [
+            ['label' => 'Tên phiếu giảm giá', 'value' => 'coupon_title'],
+            ['label' => 'ID phiếu giảm giá', 'value' => 'id'],
+            ['label' => 'Loại phiếu giảm giá', 'value' => 'type'],
+            ['label' => 'Mệnh giá phiếu giảm giá', 'value' => 'coupon_price'],
+            ['label' => 'Trạng thái phiếu giảm giá', 'value' => 'status'],
+            ['label' => 'Thời gian nhận', 'value' => 'receive_time'],
+            ['label' => 'Thời gian sử dụng', 'value' => 'use_time'],
+            ['label' => 'Điều kiện sử dụng', 'value' => 'use_min_price'],
+            ['label' => 'Số lượng phát hành', 'value' => 'receive_count'],
+            ['label' => 'Thời gian thêm', 'value' => 'add_time'],
+        ];
+
+        $product = [
+            ['label' => 'Tên sản phẩm', 'value' => 'store_name'],
+            ['label' => 'id sản phẩm', 'value' => 'id'],
+            ['label' => 'Hình ảnh sản phẩm', 'value' => 'image'],
+            ['label' => 'Mô tả ngắn sản phẩm', 'value' => 'store_info'],
+            ['label' => 'Đơn vị tính', 'value' => 'unit_name'],
+            ['label' => 'Danh mục sản phẩm', 'value' => 'cate_name'],
+            ['label' => 'Tồn kho sản phẩm', 'value' => 'stock'],
+            ['label' => 'Giá bán sản phẩm', 'value' => 'price'],
+            ['label' => 'Giá bán cao nhất của sản phẩm', 'value' => 'max_price'],
+            ['label' => 'Giá bán thấp nhất của sản phẩm', 'value' => 'min_price'],
+            ['label' => 'Giá gốc sản phẩm', 'value' => 'ot_price'],
+            ['label' => 'Giá gốc cao nhất của sản phẩm', 'value' => 'max_ot_price'],
+            ['label' => 'Giá gốc thấp nhất của sản phẩm', 'value' => 'min_ot_price'],
+            ['label' => 'Số lượng mua tối thiểu của sản phẩm', 'value' => 'min_qty'],
+            ['label' => 'Lượt bán sản phẩm', 'value' => 'sales'],
+            ['label' => 'Lượt truy cập sản phẩm', 'value' => 'browse'],
+            ['label' => 'Thời gian thêm sản phẩm', 'value' => 'add_time'],
+        ];
+
+        return app('json')->success(compact('user', 'article', 'coupon', 'product'));
     }
 }

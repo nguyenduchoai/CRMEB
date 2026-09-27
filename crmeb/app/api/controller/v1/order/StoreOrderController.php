@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -100,7 +100,7 @@ class StoreOrderController
     public function confirm(Request $request, ShippingTemplatesServices $services)
     {
         if (!$services->get(1, ['id'])) {
-            return app('json')->fail(410207);
+            return app('json')->fail('Chưa cấu hình mẫu phí vận chuyển mặc định, không thể đặt hàng');
         }
         [$cartId, $new, $addressId, $shipping_type, $is_gift] = $request->postMore([
             'cartId',
@@ -110,7 +110,7 @@ class StoreOrderController
             ['is_gift', 0],
         ], true);
         if (!is_string($cartId) || !$cartId) {
-            return app('json')->fail(410201);
+            return app('json')->fail('Vui lòng chọn sản phẩm cần mua');
         }
         $user = $request->user()->toArray();
         return app('json')->success($this->services->getOrderConfirmData($user, $cartId, !!$new, $addressId, (int)$shipping_type, (int)$is_gift));
@@ -125,10 +125,10 @@ class StoreOrderController
      */
     public function computedOrder(Request $request, StoreOrderComputedServices $computedServices, $key)
     {
-        if (!$key) return app('json')->fail(100100);
+        if (!$key) return app('json')->fail('Tham số không hợp lệ');
         $uid = $request->uid();
         if ($this->services->be(['order_id|unique' => $key, 'uid' => $uid, 'is_del' => 0]))
-            return app('json')->status('extend_order', 410173, ['orderId' => $key, 'key' => $key]);
+            return app('json')->status('extend_order', 'Đơn hàng không tồn tại', ['orderId' => $key, 'key' => $key]);
         list($addressId, $couponId, $payType, $useIntegral, $mark, $combinationId, $pinkId, $seckill_id, $bargainId, $shipping_type, $is_gift) = $request->postMore([
             'addressId',
             'couponId',
@@ -144,7 +144,7 @@ class StoreOrderController
         ], true);
         $payType = strtolower($payType);
         $cartGroup = $this->services->getCacheOrderInfo($uid, $key);
-        if (!$cartGroup) return app('json')->fail(410208);
+        if (!$cartGroup) return app('json')->fail('Đơn hàng đã hết hạn, vui lòng tải lại trang hiện tại');
         $priceGroup = $computedServices->setParamData([
             'combinationId' => $combinationId,
             'pinkId' => $pinkId,
@@ -152,9 +152,9 @@ class StoreOrderController
             'bargainId' => $bargainId,
         ])->computedOrder($request->uid(), $request->user()->toArray(), $cartGroup, $addressId, $payType, !!$useIntegral, (int)$couponId, false, (int)$shipping_type, $is_gift);
         if ($priceGroup)
-            return app('json')->status('NONE', 100010, $priceGroup);
+            return app('json')->status('NONE', 'Thao tác thành công', $priceGroup);
         else
-            return app('json')->fail(100016);
+            return app('json')->fail('Lấy dữ liệu thất bại');
     }
 
     /**
@@ -169,10 +169,10 @@ class StoreOrderController
      */
     public function create(Request $request, StoreOrderCreateServices $createServices, $key)
     {
-        if (!$key) return app('json')->fail(100100);
+        if (!$key) return app('json')->fail('Tham số không hợp lệ');
         $userInfo = $request->user()->toArray();
         if ($checkOrder = $this->services->getOne(['order_id|unique' => $key, 'uid' => $userInfo['uid'], 'is_del' => 0]))
-            return app('json')->status('extend_order', 410209, ['orderId' => $checkOrder['order_id'], 'key' => $key]);
+            return app('json')->status('extend_order', 'Đơn hàng đã được tạo, vui lòng nhấn xem để hoàn tất thanh toán', ['orderId' => $checkOrder['order_id'], 'key' => $key]);
         [$addressId, $couponId, $payType, $useIntegral, $mark, $combinationId, $pinkId, $seckillId, $bargainId, $shipping_type, $real_name, $phone, $storeId, $news, $invoice_id, $advanceId, $customForm, $is_gift, $gift_mark] = $request->postMore([
             [['addressId', 'd'], 0],
             [['couponId', 'd'], 0],
@@ -199,7 +199,7 @@ class StoreOrderController
             return $createServices->createOrder($userInfo['uid'], $key, $userInfo, $addressId, $payType, !!$useIntegral, $couponId, $mark, $combinationId, $pinkId, $seckillId, $bargainId, $shipping_type, $real_name, $phone, $storeId, !!$news, $advanceId, $customForm, $invoice_id, $is_gift, $gift_mark);
         });
         $orderId = $order['order_id'];
-        return app('json')->status('success', 410203, compact('orderId', 'key'));
+        return app('json')->status('success', 'Tạo đơn hàng thành công', compact('orderId', 'key'));
     }
 
     /**
@@ -232,7 +232,7 @@ class StoreOrderController
     public function cashier(Request $request, $orderId, $type = 'order')
     {
         if (!$orderId) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         return app('json')->success($this->services->getCashierInfo((int)$request->uid(), $orderId, $type));
     }
@@ -256,9 +256,9 @@ class StoreOrderController
         $payLock = CacheService::get('PAY_LOCK_' . $uni);
         if ($payLock) return app('json')->fail('Đơn hàng đang được thanh toán, vui lòng không thanh toán lại');
         CacheService::set('PAY_LOCK_' . $uni, 'PAY_LOCK', 2);
-        if (!$uni) return app('json')->fail(100100);
+        if (!$uni) return app('json')->fail('Tham số không hợp lệ');
         $orderInfo = $this->services->get(['order_id' => $uni]);
-        if ($orderInfo->is_del == 1 || $orderInfo->is_system_del == 1) return app('json')->fail('Đơn hàng đã quá thời hạn thanh toán của hệ thống, không thể thanh toán, vui lòng đặt hàng lại');
+        if ($orderInfo->is_cancel == 1 || $orderInfo->is_del == 1 || $orderInfo->is_system_del == 1) return app('json')->fail('Đơn hàng đã quá thời hạn thanh toán của hệ thống, không thể thanh toán, vui lòng đặt hàng lại');
         $uid = $type == 1 ? (int)$request->uid() : $orderInfo->uid;
         $orderInfo->is_channel = $this->getChennel[$request->getFromType()] ?? ($request->isApp() ? 0 : 1);
         $orderInfo->order_id = $uid != $orderInfo->pay_uid ? app()->make(StoreOrderCreateServices::class)->getNewOrderId('cp') : $uni;
@@ -267,11 +267,11 @@ class StoreOrderController
         $orderInfo = $orderInfo->toArray();
         $order = $this->services->get(['order_id' => $orderInfo['order_id']]);
         if (!$order)
-            return app('json')->fail(410173);
+            return app('json')->fail('Đơn hàng không tồn tại');
         if ($order['paid'])
-            return app('json')->fail(410174);
+            return app('json')->fail('Đơn hàng đã được thanh toán');
         if ($order['pink_id'] && $services->isPinkStatus($order['pink_id'])) {
-            return app('json')->fail(410215);
+            return app('json')->fail('Đơn hàng này đã hết hiệu lực');
         }
 
         //Thanh toán 0đ
@@ -283,14 +283,14 @@ class StoreOrderController
             if ($payPriceStatus)//Thanh toán 0đ thành công
                 return app('json')->status('success', 'Thanh toán thành công', ['order_id' => $orderInfo['order_id'], 'key' => $orderInfo['unique']]);
             else
-                return app('json')->status('pay_error', 410216);
+                return app('json')->status('pay_error', 'Thanh toán thất bại');
         }
 
         switch ($paytype) {
             case PayServices::YUE_PAY:
                 $pay = $yuePayServices->yueOrderPay($order->toArray(), $request->uid());
                 if ($pay['status'] === true)
-                    return app('json')->status('success', 410197);
+                    return app('json')->status('success', 'Thanh toán bằng số dư thành công');
                 else {
                     if (is_array($pay))
                         return app('json')->status($pay['status'], $pay['msg']);
@@ -300,9 +300,9 @@ class StoreOrderController
             case PayServices::OFFLINE_PAY:
                 if ($this->services->setOrderTypePayOffline($order['order_id'])) {
                     event('NoticeListener', [$order->toArray(), 'admin_pay_success_code']);
-                    return app('json')->status('success', 410203);
+                    return app('json')->status('success', 'Tạo đơn hàng thành công');
                 } else {
-                    return app('json')->status('success', 410216);
+                    return app('json')->status('success', 'Thanh toán thất bại');
                 }
             default:
                 $payInfo = $payServices->beforePay($order->toArray(), $paytype, ['quitUrl' => $quitUrl]);
@@ -349,7 +349,7 @@ class StoreOrderController
      */
     public function detail(Request $request, StoreOrderEconomizeServices $services, $uni)
     {
-        if (!strlen(trim($uni))) return app('json')->fail(100100);
+        if (!strlen(trim($uni))) return app('json')->fail('Tham số không hợp lệ');
         $orderData = $this->services->getUserOrderByKey($services, $uni, (int)$request->uid());
         return app('json')->success($orderData);
     }
@@ -381,11 +381,11 @@ class StoreOrderController
      */
     public function refund_detail(Request $request, $uni, $cartId = '')
     {
-        if (!strlen(trim($uni))) return app('json')->fail(100100);
+        if (!strlen(trim($uni))) return app('json')->fail('Tham số không hợp lệ');
         /** @var StoreOrderCartInfoServices $storeOrderCartInfoServices */
         $storeOrderCartInfoServices = app()->make(StoreOrderCartInfoServices::class);
         $order = $this->services->getUserOrderDetail($uni, (int)$request->uid(), ['split', 'invoice']);
-        if (!$order) return app('json')->fail(410173);
+        if (!$order) return app('json')->fail('Đơn hàng không tồn tại');
         $order = $order->toArray();
         $orderData = $this->services->tidyOrder($order, true, true);
         $splitNum = $storeOrderCartInfoServices->getSplitCartNum($order['cart_id']);
@@ -430,12 +430,12 @@ class StoreOrderController
         [$uni] = $request->postMore([
             ['uni', ''],
         ], true);
-        if (!$uni) return app('json')->fail(100100);
+        if (!$uni) return app('json')->fail('Tham số không hợp lệ');
         $res = $this->services->removeOrder($uni, (int)$request->uid());
         if ($res) {
-            return app('json')->success(100002);
+            return app('json')->success('Xóa thành công');
         } else {
-            return app('json')->fail(100008);
+            return app('json')->fail('Xóa thất bại');
         }
     }
 
@@ -451,12 +451,12 @@ class StoreOrderController
         list($uni) = $request->postMore([
             ['uni', ''],
         ], true);
-        if (!$uni) return app('json')->fail(100100);
+        if (!$uni) return app('json')->fail('Tham số không hợp lệ');
         $order = $services->takeOrder($uni, (int)$request->uid());
         if ($order) {
-            return app('json')->success(410204);
+            return app('json')->success('Xác nhận nhận hàng thành công');
         } else
-            return app('json')->fail(410205);
+            return app('json')->fail('Nhận hàng thất bại');
     }
 
 
@@ -493,13 +493,23 @@ class StoreOrderController
                 array_push($info, $cartNew);
                 unset($cart);
             }
+            $orderInfos = $this->services->get($order['store_order_id']);
             $orderInfo['cartInfo'] = $info;
+            $orderInfo['send_address'] = $orderInfos['user_address'];
+            $orderInfo['send_city'] = $services->addressHandle($orderInfos['user_address'])['city'] ?? '';
             $orderInfo['delivery_id'] = $express;
             $orderInfo['delivery_name'] = $order['refund_express_name'];
             $orderInfo['delivery_code'] = '';
+            $orderInfo['delivery_type'] = $order['delivery_type'] ?? 1;
+            $orderInfo['user_address'] = $order['user_address'] ?? '';
+            $address = explode(' ', $orderInfos['user_address']);
+            $orderInfo['user_city'] = isset($address[0]) && in_array($address[0], ['Beijing', 'Shanghai', 'Tianjin', 'Chongqing', 'Hong Kong', 'Macau', 'Taiwan']) ? $address[0] : ($address[1] ?? '');
+            $orderInfo['user_mark'] = $order['mark'] ?? '';
+            $orderInfo['user_phone'] = $orderInfos['user_phone'] ?? '';
+            $orderInfo['user_name'] = $orderInfos['real_name'] ?? '';
         } else {
-            if (!$uni || !($order = $this->services->getUserOrderDetail($uni, $request->uid(), []))) return app('json')->fail(410173);
-            if ($type != 'refund' && ($order['delivery_type'] != 'express' || !$order['delivery_id'])) return app('json')->fail(410206);
+            if (!$uni || !($order = $this->services->getUserOrderDetail($uni, $request->uid(), []))) return app('json')->fail('Đơn hàng không tồn tại');
+            if ($type != 'refund' && ($order['delivery_type'] != 'express' || !$order['delivery_id'])) return app('json')->fail('Mã vận đơn không tồn tại');
             $express = $type == 'refund' ? $order['refund_express'] : $order['delivery_id'];
             $cacheName = $uni . $express;
             $orderInfo = [];
@@ -524,6 +534,14 @@ class StoreOrderController
             $orderInfo['user_address'] = $order['user_address'];
             $orderInfo['user_mark'] = $order['mark'];
             $orderInfo['cartInfo'] = $info;
+            $orderInfo['user_name'] = $order['real_name'];
+            $orderInfo['user_phone'] = $order['user_phone'];
+            $orderInfo['send_address'] = $order['user_address'];
+            $orderInfo['send_city'] = $services->addressHandle($order['user_address'])['city'] ?? '';
+            $orderInfo['delivery_type'] = $order['delivery_type'] ?? 1;
+            $address = explode(' ', $order['user_address']);
+            $orderInfo['user_city'] = isset($address[0]) && in_array($address[0], ['Beijing', 'Shanghai', 'Tianjin', 'Chongqing', 'Hong Kong', 'Macau', 'Taiwan']) ? $address[0] : ($address[1] ?? '');
+            $orderInfo['user_mark'] = $order['mark'] ?? '';
         }
         return app('json')->success([
             'order' => $orderInfo,
@@ -550,7 +568,7 @@ class StoreOrderController
         ]);
         $unique = $group['unique'];
         unset($group['unique']);
-        if (!$unique) return app('json')->fail(100100);
+        if (!$unique) return app('json')->fail('Tham số không hợp lệ');
         $cartInfo = $cartInfoServices->getOne(['unique' => $unique]);
         $uid = $request->uid();
         $user_info = $request->user();
@@ -561,10 +579,10 @@ class StoreOrderController
         if (!$orderInfo) return app('json')->fail('Đơn hàng không tồn tại');
         if ($uid != $orderInfo['uid'] && $uid != $orderInfo['gift_uid']) return app('json')->fail('Đây không phải đơn hàng của bạn, không thể đánh giá');
         if ($replyServices->be(['oid' => $cartInfo['oid'], 'unique' => $unique]))
-            return app('json')->fail(410219);
+            return app('json')->fail('Sản phẩm trong đơn hàng đã được đánh giá');
         $group['comment'] = htmlspecialchars(trim($group['comment']));
-        if ($group['product_score'] < 1) return app('json')->fail(410220);
-        else if ($group['service_score'] < 1) return app('json')->fail(410221);
+        if ($group['product_score'] < 1) return app('json')->fail('Vui lòng chấm điểm sản phẩm');
+        else if ($group['service_score'] < 1) return app('json')->fail('Vui lòng chấm điểm dịch vụ của cửa hàng');
         if ($cartInfo['cart_info']['combination_id']) $productId = $cartInfo['cart_info']['product_id'];
         else if ($cartInfo['cart_info']['seckill_id']) $productId = $cartInfo['cart_info']['product_id'];
         else if ($cartInfo['cart_info']['bargain_id']) $productId = $cartInfo['cart_info']['product_id'];
@@ -584,7 +602,7 @@ class StoreOrderController
 
         $res = $replyServices->save($group);
         if (!$res) {
-            return app('json')->fail(410222);
+            return app('json')->fail('Đánh giá thất bại');
         }
 
         //Event tùy chỉnh - Đánh giá đơn hàng
@@ -600,7 +618,7 @@ class StoreOrderController
         try {
             $this->services->checkOrderOver($replyServices, $cartInfoServices->getCartColunm(['oid' => $cartInfo['oid']], 'unique', ''), $cartInfo['oid']);
         } catch (\Exception $e) {
-            return app('json')->fail(410222);
+            return app('json')->fail('Đánh giá thất bại');
         }
         //Cache số lần quay thưởng
         /** @var LuckLotteryServices $luckLotteryServices */
@@ -658,7 +676,7 @@ class StoreOrderController
     public function refundCartInfo(Request $request, StoreOrderCartInfoServices $services, $id)
     {
         if (!$id) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         [$cart_ids] = $request->postMore([
             ['cart_ids', []]
@@ -667,7 +685,7 @@ class StoreOrderController
         if ($cart_ids) {
             foreach ($cart_ids as $cart) {
                 if (!isset($cart['cart_id']) || !$cart['cart_id'] || !isset($cart['cart_num']) || !$cart['cart_num'] || $cart['cart_num'] <= 0) {
-                    return app('json')->fail(410223);
+                    return app('json')->fail('Vui lòng chọn lại sản phẩm hoặc số lượng cần hoàn tiền');
                 }
             }
             $cart_ids = array_combine(array_column($cart_ids, 'cart_id'), $cart_ids);
@@ -693,7 +711,7 @@ class StoreOrderController
             ['id', 0],
         ], true);
         if (!$id) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         return app('json')->success($this->services->refundCartInfoList((array)$cart_ids, (int)$id));
     }
@@ -713,7 +731,7 @@ class StoreOrderController
     public function applyRefund(Request $request, StoreOrderRefundServices $services, StoreOrderServices $storeOrderServices, $id)
     {
         if (!$id) {
-            return app('json')->fail(100100);
+            return app('json')->fail('Tham số không hợp lệ');
         }
         $data = $request->postMore([
             ['text', ''],
@@ -723,11 +741,11 @@ class StoreOrderController
             ['refund_price', 0.00],
             ['cart_ids', []]
         ]);
-        if ($data['text'] == '') return app('json')->fail(100100);
+        if ($data['text'] == '') return app('json')->fail('Tham số không hợp lệ');
         if ($data['cart_ids']) {
             foreach ($data['cart_ids'] as $cart) {
                 if (!isset($cart['cart_id']) || !$cart['cart_id'] || !isset($cart['cart_num']) || !$cart['cart_num']) {
-                    return app('json')->fail(410223);
+                    return app('json')->fail('Vui lòng chọn lại sản phẩm hoặc số lượng cần hoàn tiền');
                 }
             }
         }
@@ -735,7 +753,7 @@ class StoreOrderController
         $order = $storeOrderServices->get($id);
         $uid = (int)$request->uid();
         if (!$order || $uid != $order['uid']) {
-            return app('json')->fail(410173);
+            return app('json')->fail('Đơn hàng không tồn tại');
         }
         if ($order['pid'] == -1) return app('json')->fail('Đơn hàng chính đã được tách, vui lòng tải lại trang');
         $refundData = [
@@ -745,9 +763,9 @@ class StoreOrderController
         ];
         $res = $services->applyRefund((int)$id, $uid, $order, $data['cart_ids'], (int)$data['refund_type'], (float)$data['refund_price'], $refundData);
         if ($res)
-            return app('json')->success(100027);
+            return app('json')->success('Gửi yêu cầu thành công');
         else
-            return app('json')->fail(100028);
+            return app('json')->fail('Gửi yêu cầu thất bại');
     }
 
     /**
@@ -762,12 +780,12 @@ class StoreOrderController
             ['id', ''],
             ['express_id', '']
         ], true);
-        if ($id == '' || $express_id == '') return app('json')->fail(100100);
+        if ($id == '' || $express_id == '') return app('json')->fail('Tham số không hợp lệ');
         $res = $services->editRefundExpress($id, $express_id);
         if ($res)
-            return app('json')->success(100017);
+            return app('json')->success('Gửi thành công');
         else
-            return app('json')->fail(100018);
+            return app('json')->fail('Gửi thất bại');
     }
 
     /**
@@ -781,10 +799,10 @@ class StoreOrderController
     public function cancel(Request $request)
     {
         list($id) = $request->postMore([['id', 0]], true);
-        if (!$id) return app('json')->fail(100100);
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         if ($this->services->cancelOrder($id, (int)$request->uid()))
-            return app('json')->success(100019);
-        return app('json')->fail(100020);
+            return app('json')->success('Hủy thành công');
+        return app('json')->fail('Hủy thất bại');
     }
 
     /**
@@ -796,7 +814,7 @@ class StoreOrderController
     public function product(Request $request, StoreOrderCartInfoServices $services)
     {
         list($unique) = $request->postMore([['unique', '']], true);
-        if (!$unique || !($cartInfo = $services->getOne(['unique' => $unique]))) return app('json')->fail(410294);
+        if (!$unique || !($cartInfo = $services->getOne(['unique' => $unique]))) return app('json')->fail('Sản phẩm không tồn tại');
         $cartInfo = $cartInfo->toArray();
         $cartProduct = [];
         $cartProduct['cart_num'] = $cartInfo['cart_info']['cart_num'];

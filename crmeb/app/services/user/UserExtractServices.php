@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -138,9 +138,9 @@ class UserExtractServices extends BaseServices
             $now_brokerage = bcadd((string)$user['brokerage_price'], (string)$extract_number, 2);
             $userBrokerageServices->income('extract_fail', $uid, $extract_number, $now_brokerage, $id);
             if (!$userServices->update($uid, ['brokerage_price' => bcadd((string)$user['brokerage_price'], (string)$extract_number, 2)], 'uid'))
-                throw new AdminException(400657);
+                throw new AdminException('Cộng hoa hồng cho người dùng thất bại');
             if (!$this->dao->update($id, ['fail_time' => $fail_time, 'fail_msg' => $message, 'status' => $status])) {
-                throw new AdminException(100007);
+                throw new AdminException('Sửa thất bại');
             }
         });
 
@@ -265,7 +265,7 @@ class UserExtractServices extends BaseServices
             }
 
             if (!$res) {
-                throw new ApiException(400658);
+                throw new ApiException('Chuyển tiền doanh nghiệp vào ví WeChat thất bại, vui lòng thử lại sau');
             }
         }
         if (sys_config('alipay_extract_type', 0) && $userExtract['extract_type'] == 'alipay') {
@@ -321,7 +321,7 @@ class UserExtractServices extends BaseServices
         ], 'extract');
 
         if (!$this->dao->update($id, ['status' => 1])) {
-            throw new AdminException(100007);
+            throw new AdminException('Sửa thất bại');
         }
         event('NoticeListener', [['uid' => $userExtract['uid'], 'userType' => strtolower($userType), 'extractNumber' => $extractNumber, 'nickname' => $nickname], 'user_extract']);
 
@@ -385,7 +385,7 @@ class UserExtractServices extends BaseServices
     {
         $UserExtract = $this->getExtract($id);
         if (!$UserExtract) {
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         $f = array();
         $f[] = Form::input('real_name', 'Họ tên', $UserExtract['real_name']);
@@ -406,7 +406,7 @@ class UserExtractServices extends BaseServices
     public function update(int $id, array $data)
     {
         if (!$this->dao->update($id, $data))
-            throw new AdminException(100007);
+            throw new AdminException('Sửa thất bại');
         else
             return true;
     }
@@ -420,19 +420,19 @@ class UserExtractServices extends BaseServices
     {
         $extract = $this->getExtract($id);
         if (!$extract) {
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         if ($extract->status == 1) {
-            throw new AdminException(400659);
+            throw new AdminException('Đã rút tiền');
         }
         if ($extract->status == -1) {
-            throw new AdminException(400660);
+            throw new AdminException('Yêu cầu rút tiền của bạn đã bị từ chối');
         }
         $res = $this->changeFail($id, $extract, $message);
         if ($res) {
             return true;
         } else {
-            throw new AdminException(100005);
+            throw new AdminException('Thao tác thất bại');
         }
     }
 
@@ -447,19 +447,19 @@ class UserExtractServices extends BaseServices
     {
         $extract = $this->getExtract($id);
         if (!$extract) {
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         if ($extract->status == 1) {
-            throw new AdminException(400659);
+            throw new AdminException('Đã rút tiền');
         }
         if ($extract->status == -1) {
-            throw new AdminException(400660);
+            throw new AdminException('Yêu cầu rút tiền của bạn đã bị từ chối');
         }
         $res = $this->changeSuccess($id, $extract);
         if ($res) {
             return $res;
         } else {
-            throw new AdminException(100005);
+            throw new AdminException('Thao tác thất bại');
         }
     }
 
@@ -482,7 +482,7 @@ class UserExtractServices extends BaseServices
         $userService = app()->make(UserServices::class);
         $user = $userService->getUserInfo($uid, 'brokerage_price,uid');
         if (!$user) {
-            throw new ApiException(100026);
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         /** @var UserBrokerageServices $services */
         $services = app()->make(UserBrokerageServices::class);
@@ -513,11 +513,11 @@ class UserExtractServices extends BaseServices
         $userService = app()->make(UserServices::class);
         $user = $userService->getUserInfo($uid);
         if (!$user) {
-            throw new ApiException(100026);
+            throw new ApiException('Dữ liệu không tồn tại');
         }
 
         if ($data['extract_type'] == 'weixin' && !sys_config('weixin_extract_type', 0) && !$data['weixin']) {
-            throw new ApiException(400110);
+            throw new ApiException('Vui lòng nhập tài khoản WeChat');
         }
 
         if ($data['extract_type'] == 'weixin' && bccomp($data['money'], '0.1', 2) < 0) {
@@ -530,7 +530,7 @@ class UserExtractServices extends BaseServices
         if (!$openid) $openid = $wechatServices->uidToOpenid($uid, 'routine');
 
         if ($data['extract_type'] == 'weixin' && sys_config('weixin_extract_type', 0) && !$openid) {
-            throw new ApiException(410024);
+            throw new ApiException('Vui lòng theo dõi OA WeChat trước');
         }
 
         /** @var UserBrokerageServices $services */
@@ -542,22 +542,22 @@ class UserExtractServices extends BaseServices
         //Hoa hồng có thể rút
         $commissionCount = bcsub((string)$data['brokerage_price'], (string)$data['broken_commission'], 2);
         if ($data['money'] > $commissionCount) {
-            throw new ApiException(400661);
+            throw new ApiException('Hoa hồng có thể rút không đủ');
         }
 
         $extractPrice = $user['brokerage_price'];
         $userExtractMinPrice = sys_config('user_extract_min_price');
         if ($data['money'] < $userExtractMinPrice) {
-            throw new ApiException(400662, ['money' => $userExtractMinPrice]);
+            throw new ApiException('Số tiền rút không được nhỏ hơn {:money}đ', ['money' => $userExtractMinPrice]);
         }
         if ($extractPrice < 0) {
-            throw new ApiException(400663, ['money' => $data['money']]);
+            throw new ApiException('Hoa hồng không đủ để rút {:money}đ', ['money' => $data['money']]);
         }
         if ($data['money'] > $extractPrice) {
-            throw new ApiException(400663, ['money' => $data['money']]);
+            throw new ApiException('Hoa hồng không đủ để rút {:money}đ', ['money' => $data['money']]);
         }
         if ($data['money'] <= 0) {
-            throw new ApiException(400664);
+            throw new ApiException('Hoa hồng rút phải lớn hơn 0');
         }
         $data['extract_price'] = bcmul($data['money'], '1', 2);
         $insertData = [
@@ -596,17 +596,17 @@ class UserExtractServices extends BaseServices
             $mark = 'Rút tiền qua WeChat' . $insertData['extract_price'] . 'đ' . $feeMark;
             if (sys_config('weixin_extract_type', 0) && $openid) {
                 if ($data['extract_price'] < 0.1) {
-                    throw new ApiException(400665);
+                    throw new ApiException('Số tiền tối thiểu khi chuyển tiền doanh nghiệp vào ví WeChat là 1đ');
                 }
             }
         }
         $res1 = $this->transaction(function () use ($insertData, $data, $uid, $userService, $user, $mark) {
             if (!$res1 = $this->dao->save($insertData)) {
-                throw new ApiException(410121);
+                throw new ApiException('Gửi yêu cầu rút tiền thất bại');
             }
             $balance = bcsub((string)$user['brokerage_price'], $data['extract_price'], 2) ?? 0;
             if (!$userService->update($uid, ['brokerage_price' => $balance], 'uid')) {
-                throw new ApiException(410121);
+                throw new ApiException('Gửi yêu cầu rút tiền thất bại');
             }
 
             //Lưu bản ghi hoa hồng

@@ -7,7 +7,15 @@
           <span slot="open">Bật</span>
           <span slot="close">Tắt</span>
         </el-switch>
-        <div class="tips-info">Khi bật, chỉ thành viên trả phí mới có thể xem và mua sản phẩm này</div>
+      </el-form-item>
+    </el-col>
+    <el-col :span="24" v-if="formValidate.vip_product">
+      <el-form-item>
+        <!-- 0 chỉ thành viên trả phí mới xem được 1 chỉ thành viên trả phí mới mua được -->
+        <el-radio-group v-model="formValidate.vip_product_type">
+          <el-radio :label="0">Chỉ thành viên trả phí được xem</el-radio>
+          <el-radio :label="1">Chỉ thành viên trả phí được mua</el-radio>
+        </el-radio-group>
       </el-form-item>
     </el-col>
     <el-col :span="24">

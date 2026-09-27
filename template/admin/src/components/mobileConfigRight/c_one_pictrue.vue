@@ -20,11 +20,7 @@
     </div>
     <div class="bnt" @click="openFloorModal">+ Sửa vùng nóng</div>
     <div>
-      <el-dialog
-        :visible.sync="modalPic"
-        width="960px"
-        :title="'Tải lên ảnh'"
-      >
+      <el-dialog :visible.sync="modalPic" width="960px" :title="'Tải lên ảnh'">
         <uploadPictures
           :isChoice="isChoice"
           @getPic="getPic"
@@ -127,7 +123,6 @@ export default {
     handleAreaData(areaData) {
       // In dữ liệu đã lưu
       this.configData.list = areaData;
-      console.log('Dữ liệu đã lưu', areaData);
     },
   },
 };

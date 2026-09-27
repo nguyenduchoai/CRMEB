@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -180,6 +180,10 @@ class FileService
             $i = 0;
             $j = 0;
             while (false !== ($file = readdir($handle))) {
+                // Bỏ qua thư mục . và .., tránh lỗi giới hạn open_basedir
+                if ($file == '.' || $file == '..') {
+                    continue;
+                }
                 if (is_dir($dir . $file)) { //Kiểm tra có phải thư mục không
                     $dirArray ['dir'] [$i] = $file;
                     $i++;
@@ -956,7 +960,7 @@ class FileService
     {
         if (!$filePath) return false;
         $pathInfo = pathinfo($filePath, PATHINFO_EXTENSION);
-        if (!$pathInfo || ($pathInfo != "xlsx" && $pathInfo != "xls")) throw new AdminException(400728);
+        if (!$pathInfo || ($pathInfo != "xlsx" && $pathInfo != "xls")) throw new AdminException('Phải tải lên tệp định dạng xlsx');
         //Nạp model đọc
         $readModel = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($suffix);
         // Tạo thao tác đọc
@@ -969,7 +973,7 @@ class FileService
             $highestRow = $sheet->getHighestRow();
             $lines = $highestRow - 1;
             if ($lines <= 0) {
-                throw new AdminException(400729);
+                throw new AdminException('Dữ liệu không được để trống');
             }
             // Dùng để lưu dữ liệu bảng
             $data = [];

@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "Danh mục sản phẩm",
+  "navigationBarTitleText": "商品分类",
   "usingComponents": {
     "goods-cate1": "/pages/goods_cate/goods_cate1",
     "goods-cate2": "/pages/goods_cate/goods_cate2",

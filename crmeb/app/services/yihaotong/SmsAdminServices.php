@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -67,7 +67,7 @@ class SmsAdminServices extends BaseServices
         $sms = app()->make(Sms::class, ['yihaotong']);
         $status = $sms->register($account, md5(trim($password)), $url, $phone, $code, $sign);
         if ($status['status'] == 400) {
-            throw new AdminException(400462, ['msg' => $status['msg']]);
+            throw new AdminException('Nền tảng SMS: {:msg}', ['msg' => $status['msg']]);
         }
         $this->updateSmsConfig($account, $password);
         return $status;
@@ -85,7 +85,7 @@ class SmsAdminServices extends BaseServices
         //TODO
         $res = json_decode(HttpService::getRequest($sms->getSmsUrl(), compact('phone')), true);
         if (!isset($res['status']) && $res['status'] !== 200) {
-            throw new AdminException(400462, ['msg' => $res['data']['message'] ?? $res['msg']]);
+            throw new AdminException('Nền tảng SMS: {:msg}', ['msg' => $res['data']['message'] ?? $res['msg']]);
         }
         return $res['data']['message'] ?? $res['msg'];
     }

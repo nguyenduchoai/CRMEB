@@ -62,7 +62,7 @@
 
 <script>
 	const app = getApp();
-	let statusBarHeight = uni.getSystemInfoSync().statusBarHeight + 'px';
+	let statusBarHeight = uni.getWindowInfo().statusBarHeight + 'px';
 	import sendVerifyCode from "@/mixins/SendVerifyCode";
 	import colors from '@/mixins/color.js';
 	import editUserModal from '@/components/eidtUserModal/index.vue'
@@ -489,32 +489,32 @@
 		}
 	}
 
-	/deep/ uni-checkbox .uni-checkbox-input {
+	::v-deep uni-checkbox .uni-checkbox-input {
 		width: 28rpx;
 		height: 28rpx;
 	}
 
-	/deep/ uni-checkbox .uni-checkbox-input.uni-checkbox-input-checked::before {
+	::v-deep uni-checkbox .uni-checkbox-input.uni-checkbox-input-checked::before {
 		font-size: 24rpx;
 	}
 
-	/deep/ uni-checkbox .uni-checkbox-wrapper {
+	::v-deep uni-checkbox .uni-checkbox-wrapper {
 		margin-bottom: 1px;
 	}
 
 	/*Kích thước ô checkbox  */
-	/deep/ checkbox .wx-checkbox-input {
+	::v-deep checkbox .wx-checkbox-input {
 		width: 28rpx;
 		height: 28rpx;
 	}
 
 	/*Style checkbox sau khi chọn  */
-	/deep/ checkbox .wx-checkbox-input.wx-checkbox-input-checked {
+	::v-deep checkbox .wx-checkbox-input.wx-checkbox-input-checked {
 		background: white;
 	}
 
 	/*Style icon checkbox sau khi chọn  */
-	/deep/ checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
+	::v-deep checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
 		width: 28rpx;
 		height: 28rpx;
 		line-height: 28rpx;

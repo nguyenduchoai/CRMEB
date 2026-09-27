@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -521,7 +521,7 @@ class UserBillServices extends BaseServices
         $data['status'] = 1;
         $data['add_time'] = time();
         if (!$this->dao->save($data))
-            throw new AdminException(400655);
+            throw new AdminException('Thêm bản ghi thất bại');
         return true;
     }
 
@@ -542,7 +542,7 @@ class UserBillServices extends BaseServices
         $data['status'] = 1;
         $data['add_time'] = time();
         if (!$this->dao->save($data))
-            throw new AdminException(400655);
+            throw new AdminException('Thêm bản ghi thất bại');
         return true;
     }
 
@@ -563,7 +563,7 @@ class UserBillServices extends BaseServices
         $data['status'] = 1;
         $data['add_time'] = time();
         if (!$this->dao->save($data))
-            throw new AdminException(400655);
+            throw new AdminException('Thêm bản ghi thất bại');
         return true;
     }
 
@@ -584,7 +584,7 @@ class UserBillServices extends BaseServices
         $data['status'] = 1;
         $data['add_time'] = time();
         if (!$this->dao->save($data))
-            throw new AdminException(400655);
+            throw new AdminException('Thêm bản ghi thất bại');
         return true;
     }
 
@@ -793,7 +793,7 @@ class UserBillServices extends BaseServices
         $user = app()->make(UserServices::class);
         $user_info = $user->getUserInfo($uid, 'nickname,spread_uid,now_money,add_time,brokerage_price');
         if (!$user_info) {
-            throw new AdminException(400119);
+            throw new AdminException('Thông tin người dùng không tồn tại');
         }
         $user_info = $user_info->toArray();
         $user_info['number'] = $user_info['brokerage_price'];
@@ -814,7 +814,7 @@ class UserBillServices extends BaseServices
         $userServices = app()->make(UserServices::class);
         $user = $userServices->getUserInfo($uid);
         if (!$user) {
-            throw new AdminException(400119);
+            throw new AdminException('Thông tin người dùng không tồn tại');
         }
         $cachename = 'Share_' . $uid;
         if (CacheService::get($cachename)) {
@@ -822,7 +822,7 @@ class UserBillServices extends BaseServices
         }
         $data = ['title' => 'Lịch sử chia sẻ của người dùng', 'uid' => $uid, 'category' => 'share', 'type' => 'share', 'number' => 0, 'link_id' => 0, 'balance' => 0, 'mark' => date('Y-m-d H:i:s', time()) . ': người dùng chia sẻ'];
         if (!$this->dao->save($data)) {
-            throw new AdminException(400656);
+            throw new AdminException('Ghi nhận lượt chia sẻ thất bại');
         }
         CacheService::set($cachename, 1, $cd);
         return true;
@@ -1052,7 +1052,7 @@ class UserBillServices extends BaseServices
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
         if (!$userServices->getUserInfo($uid)) {
-            throw new ApiException(100026);
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         /** @var UserExtractServices $userExtract */
         $userExtract = app()->make(UserExtractServices::class);
@@ -1083,7 +1083,7 @@ class UserBillServices extends BaseServices
         /** @var UserServices $userService */
         $userService = app()->make(UserServices::class);
         if (!$userService->getUserInfo($uid)) {
-            throw new ApiException(100026);
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         return [
             'rank' => $this->brokerageRankList($type),
@@ -1160,7 +1160,7 @@ class UserBillServices extends BaseServices
         /** @var UserServices $userService */
         $userService = app()->make(UserServices::class);
         if (!$userService->getUserInfo($uid)) {
-            throw new ApiException(100026);
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         $count = 0;
         if ($type == 3) {
@@ -1185,15 +1185,15 @@ class UserBillServices extends BaseServices
         /** @var UserServices $userService */
         $userService = app()->make(UserServices::class);
         if (!$userService->getUserInfo($uid, 'uid')) {
-            throw new ApiException(100026);
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         $result = ['list' => [], 'time' => [], 'count' => 0];
         /** @var StoreOrderServices $storeOrderServices */
         $storeOrderServices = app()->make(StoreOrderServices::class);
         [$page, $limit] = $this->getPageValue();
         $time = [];
-        $where = ['paid' => 1, 'type' => 6, 'spread_or_uid' => $uid, 'pid' => 0, 'refund_status' => 0];
-        $list = $storeOrderServices->getlist($where, ['id,order_id,uid,add_time,spread_uid,status,spread_two_uid,one_brokerage,two_brokerage,pay_price,pid'], $page, $limit, ['split']);
+        $where = ['paid' => 1, 'type' => 6, 'all_spread' => $uid, 'pid' => 0, 'refund_status' => 0];
+        $list = $storeOrderServices->getlist($where, ['id,order_id,uid,add_time,spread_uid,status,spread_two_uid,one_brokerage,two_brokerage,pay_price,pid,staff_id,agent_id,division_id,staff_brokerage,agent_brokerage,division_brokerage'], $page, $limit, ['split']);
         $result['count'] = $storeOrderServices->count($where);
         $time_data = [];
         if ($list) {
@@ -1202,7 +1202,15 @@ class UserBillServices extends BaseServices
             foreach ($list as &$item) {
                 $item['avatar'] = $userInfos[$item['uid']]['avatar'] ?? '';
                 $item['nickname'] = $userInfos[$item['uid']]['nickname'] ?? '';
-                $item['number'] = $item['spread_uid'] == $uid ? $item['one_brokerage'] : $item['two_brokerage'];
+                if ($item['division_id'] == $uid) {
+                    $item['number'] = $item['division_brokerage'];
+                } elseif ($item['agent_id'] == $uid) {
+                    $item['number'] = $item['agent_brokerage'];
+                } elseif ($item['staff_id'] == $uid) {
+                    $item['number'] = $item['staff_brokerage'];
+                } else {
+                    $item['number'] = $item['spread_uid'] == $uid ? $item['one_brokerage'] : $item['two_brokerage'];
+                }
                 $item['time'] = $item['add_time'] ? date('Y-m-d H:i', $item['add_time']) : '';
                 $item['time_key'] = $item['add_time'] ? date('Y-m', $item['add_time']) : '';
                 $item['type'] = in_array($item['status'], [2, 3]) ? 'brokerage' : 'number';
@@ -1257,7 +1265,7 @@ class UserBillServices extends BaseServices
         $storeOrderServices = app()->make(StoreOrderServices::class);
         $userInfo = $userService->getUserInfo($uid);
         if (!$userInfo) {
-            throw new ApiException(100026);
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         $division_type = $userInfo['division_type'];
         [$page, $limit] = $this->getPageValue();

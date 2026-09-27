@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -49,11 +49,11 @@ class UserServices extends BaseServices
         /** @var StoreServiceRecordServices $kefuService */
         $kefuService = app()->make(StoreServiceRecordServices::class);
         if (!$kefuService->count(['to_uid' => $uid])) {
-            throw new ApiException(410032);
+            throw new ApiException('Người dùng không tồn tại');
         }
         $userInfo = $this->dao->get($uid, ['nickname', 'avatar', 'spread_uid', 'is_promoter', 'birthday', 'now_money', 'user_type', 'level', 'group_id', 'phone', 'is_money_level'], ['userGroup']);
         if (!$userInfo) {
-            throw new ApiException(410032);
+            throw new ApiException('Người dùng không tồn tại');
         }
         /** @var UserLabelRelationServices $labalServices */
         $labalServices = app()->make(UserLabelRelationServices::class);

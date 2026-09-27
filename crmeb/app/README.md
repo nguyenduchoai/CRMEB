@@ -11,6 +11,32 @@ Chúng tôi sẽ tối ưu phần giới thiệu thư mục qua các bước sau
 
 #### 3. Giới thiệu thư mục sau khi tối ưu
 
+## Cấu trúc thư mục
+
+```
+.
+├── adminapi/                 # API cho trang quản trị (admin)
+├── api/                      # API cho thiết bị di động
+├── dao/                      # Tầng DAO (đối tượng truy cập dữ liệu)
+├── http/                     # Middleware HTTP
+├── jobs/                     # Tác vụ hàng đợi
+├── kefuapi/                  # API cho phía chăm sóc khách hàng (CSKH)
+├── lang/                     # Gói ngôn ngữ
+├── listener/                 # Thư mục trình lắng nghe sự kiện (listener)
+├── model/                    # Tầng Model
+├── services/                 # Tầng Services
+├── subscribes/               # Đăng ký nhận sự kiện (event subscriber)
+├── AppService.php           # Lớp dịch vụ của ứng dụng
+├── ExceptionHandle.php      # Trình xử lý ngoại lệ
+├── Request.php              # Lớp Request được đóng gói lại
+├── build.php                # Cấu hình build
+├── common.php               # Phương thức dùng chung
+├── event.php                # Cấu hình sự kiện
+├── middleware.php           # Cấu hình middleware
+├── provider.php             # File định nghĩa Provider của container
+└── service.php              # Cấu hình dịch vụ
+```
+
 ##### app/
 - **Thư mục cốt lõi**: Chứa mã nguồn và tài nguyên cốt lõi của ứng dụng.
 - **Nội dung bao gồm**: Logic nghiệp vụ, controller, model, view, v.v.

@@ -685,3 +685,12 @@ export function invoiceConfig() {
     method: 'get',
   });
 }
+
+// Sửa địa chỉ giao hàng
+export function editAddress(data) {
+  return request({
+    url: `/order/edit_address/${data.id}`,
+    method: 'post',
+    data,
+  });
+}

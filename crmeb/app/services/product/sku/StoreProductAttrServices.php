@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -60,7 +60,7 @@ class StoreProductAttrServices extends BaseServices
         if (isset($data['valueGroup']) && $data['valueGroup']) {
             $detailTemp = array_column($data['valueGroup'], 'vip_price');
             if ($detailTemp) {
-                if ($is_vip && in_array(0, $detailTemp)) throw new AdminException(400588);
+                if ($is_vip && in_array(0, $detailTemp)) throw new AdminException('Giá thành viên không được bằng 0');
                 $detailTemp = array_diff($detailTemp, [0]);
                 if ($detailTemp) {
                     $productVipPrice = min($detailTemp);
@@ -72,7 +72,7 @@ class StoreProductAttrServices extends BaseServices
         }
         if ($is_virtual == 0 || $is_virtual == 2) {
             if ($is_virtual == 2 && in_array(0, array_column($data['valueGroup'], 'coupon_id'))) {
-                throw new AdminException(400589);
+                throw new AdminException('Sản phẩm phiếu giảm giá ảo, vui lòng chọn phiếu giảm giá');
             }
             return $storeProductAttrValueServices->saveAll($data['valueGroup']);
         } else {
@@ -81,24 +81,26 @@ class StoreProductAttrServices extends BaseServices
             $cardStock = 0;
             foreach ($data['valueGroup'] as &$item) {
                 $res = $storeProductAttrValueServices->save($item);
-                if ($item['is_virtual'] && count($item['virtual_list']) && !$item['coupon_id'] && $item['disk_info'] == '') {
+                if ($item['is_virtual'] && !$item['coupon_id'] && $item['disk_info'] == '') {
                     $productVirtual->delete(['product_id' => $id, 'attr_unique' => $item['unique'], 'uid' => 0]);
-                    $sales = $productVirtual->count(['product_id' => $id, 'attr_unique' => $item['unique']]);
-                    foreach ($item['virtual_list'] as &$items) {
-                        $data = [
-                            'product_id' => $id,
-                            'attr_unique' => $res->unique,
-                            'card_no' => $items['key'],
-                            'card_pwd' => $items['value'],
-                            'card_unique' => md5($res->unique . ',' . $items['key'] . ',' . $items['value'])
-                        ];
-                        if (!$productVirtual->count(['card_no' => $items['key'], 'card_pwd' => $items['value']])) {
-                            $productVirtual->save($data);
+                    if (count($item['virtual_list'])) {
+                        $sales = $productVirtual->count(['product_id' => $id, 'attr_unique' => $item['unique']]);
+                        foreach ($item['virtual_list'] as &$items) {
+                            $data = [
+                                'product_id' => $id,
+                                'attr_unique' => $res->unique,
+                                'card_no' => $items['key'],
+                                'card_pwd' => $items['value'],
+                                'card_unique' => md5($res->unique . ',' . $items['key'] . ',' . $items['value'])
+                            ];
+                            if (!$productVirtual->count(['card_no' => $items['key'], 'card_pwd' => $items['value']])) {
+                                $productVirtual->save($data);
+                            }
                         }
+                        $allStock = $productVirtual->count(['product_id' => $id, 'attr_unique' => $res->unique]);
+                        $storeProductAttrValueServices->update(['id' => $res['id']], ['stock' => $allStock - $sales, 'sales' => $sales]);
+                        $cardStock = $cardStock + ($allStock - $sales);
                     }
-                    $allStock = $productVirtual->count(['product_id' => $id, 'attr_unique' => $res->unique]);
-                    $storeProductAttrValueServices->update(['id' => $res['id']], ['stock' => $allStock - $sales, 'sales' => $sales]);
-                    $cardStock = $cardStock + ($allStock - $sales);
                 }
             }
             if ($cardStock > 0) $storeProductService->update($id, ['stock' => $cardStock]);
@@ -193,5 +195,4 @@ class StoreProductAttrServices extends BaseServices
         }
         return [$attrDetail, $values];
     }
-
 }

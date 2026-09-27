@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -35,10 +35,10 @@ class UserValidata extends Validate
      * @var array
      */
     protected $message = [
-        'account.require' => '400254',
-        'account.alphaNum' => '400089',
-        'pwd.require' => '400134',
-        'true_pwd.require' => '400263',
-        'nickname.number' => '400187'
+        'account.require' => 'Vui lòng nhập tài khoản',
+        'account.alphaNum' => 'Tài khoản chỉ được gồm chữ số và chữ cái',
+        'pwd.require' => 'Vui lòng điền mật khẩu',
+        'true_pwd.require' => 'Vui lòng nhập mật khẩu xác nhận',
+        'nickname.number' => 'Vui lòng nhập tên'
     ];
 }

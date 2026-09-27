@@ -1,5 +1,13 @@
 <?php
-
+// +----------------------------------------------------------------------
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
+// +----------------------------------------------------------------------
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
+// +----------------------------------------------------------------------
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
+// +----------------------------------------------------------------------
+// | Author: CRMEB Team <admin@crmeb.com>
+// +----------------------------------------------------------------------
 namespace app\services\system;
 
 use app\dao\system\SystemTicketDao;
@@ -89,7 +97,8 @@ class SystemTicketServices extends BaseServices
 
     public function startPrint($order, $product, $print_type = 1)
     {
-        $list = $this->dao->ticketList(['status' => 1, 'print_type' => $print_type]);
+        $where = $print_type === true ? ['status' => 1] : ['status' => 1, 'print_type' => $print_type];
+        $list = $this->dao->ticketList($where);
         foreach ($list as $item) {
             if ($item['type'] == 1) { //Yilianyun
                 $name = 'yi_lian_yun';

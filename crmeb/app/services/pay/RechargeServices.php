@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -39,10 +39,10 @@ class RechargeServices
     public function recharge(UserRecharge $recharge)
     {
         if (!$recharge) {
-            throw new ApiException(410173);
+            throw new ApiException('Đơn hàng không tồn tại');
         }
         if ($recharge['paid'] == 1) {
-            throw new ApiException(410174);
+            throw new ApiException('Đơn hàng đã được thanh toán');
         }
         $payType = '';
         switch ($recharge['recharge_type']) {
@@ -59,7 +59,7 @@ class RechargeServices
         $payType = app()->make(OrderPayServices::class)->getPayType($payType);
 
         if (!$payType) {
-            throw new ApiException(410278);
+            throw new ApiException('Không hỗ trợ phương thức này');
         }
 
         if ($recharge['recharge_type'] == PayServices::WEIXIN_PAY && !request()->isH5() && !request()->isApp()) {
@@ -73,13 +73,13 @@ class RechargeServices
             } else if (request()->isWechat()) {
                 $userType = 'wechat';
             } else {
-                throw new ApiException(410275);
+                throw new ApiException('Lấy openid người dùng thất bại, không thể thanh toán');
             }
 
             $openid = $wechatUser->uidToOpenid((int)$recharge['uid'], $userType);
 
             if (!$openid) {
-                throw new ApiException(410275);
+                throw new ApiException('Lấy openid người dùng thất bại, không thể thanh toán');
             }
         } else {
             $openid = '';

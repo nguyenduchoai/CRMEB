@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -22,6 +22,11 @@ use app\services\system\admin\SystemAdminServices;
  */
 class Login extends AuthController
 {
+
+    /**
+     * @var SystemAdminServices
+     */
+    protected $services;
 
     /**
      * Login constructor.
@@ -72,7 +77,7 @@ class Login extends AuthController
             aj_captcha_check_one($captchaType, $token, $pointJson);
             return app('json')->success();
         } catch (\Throwable $e) {
-            return app('json')->fail(400336);
+            return app('json')->fail('Mã xác thực không đúng');
         }
     }
 
@@ -97,12 +102,12 @@ class Login extends AuthController
             try {
                 aj_captcha_check_two($captchaType, $captchaVerification);
             } catch (\Throwable $e) {
-                return app('json')->fail(400336);
+                return app('json')->fail('Mã xác thực không đúng');
             }
         }
 
         if (strlen(trim($password)) < 6 || strlen(trim($password)) > 32) {
-            return app('json')->fail(400762);
+            return app('json')->fail('Tài khoản và mật khẩu phải dài từ 6 đến 32 ký tự');
         }
 
         $this->validate(['account' => $account, 'pwd' => $password], \app\adminapi\validate\setting\SystemAdminValidata::class, 'get');
@@ -110,10 +115,10 @@ class Login extends AuthController
         if (!$result) {
             $num = CacheService::get('login_captcha', 1);
             if ($num > 1) {
-                return app('json')->fail(400140, ['login_captcha' => 1]);
+                return app('json')->fail('Tài khoản hoặc mật khẩu không đúng', ['login_captcha' => 1]);
             }
             CacheService::set('login_captcha', $num + 1, 60);
-            return app('json')->fail(400140, ['login_captcha' => 0]);
+            return app('json')->fail('Tài khoản hoặc mật khẩu không đúng', ['login_captcha' => 0]);
         }
         CacheService::delete('login_captcha');
         return app('json')->success($result);

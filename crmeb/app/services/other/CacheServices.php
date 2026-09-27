@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -56,7 +56,6 @@ class CacheServices extends BaseServices
             }
             return null;
         }
-
     }
 
     /**
@@ -100,4 +99,24 @@ class CacheServices extends BaseServices
             return false;
     }
 
+    /**
+     * Kiểm tra cache có tồn tại không
+     * @param string $key
+     * @param $result
+     * @return bool
+     * @throws \ReflectionException
+     */
+    public function checkDbCache(string $key = '', $result = ''): bool
+    {
+        // Kiểm tra cache có tồn tại không, nếu $value tồn tại thì kiểm tra giá trị cache có khớp không
+        if ($key) {
+            if ($result) {
+                return $this->dao->count(['key' => $key, 'result' => json_encode($result)]) > 0;
+            } else {
+                return $this->dao->count(['key' => $key]) > 0;
+            }
+        } else {
+            return false;
+        }
+    }
 }

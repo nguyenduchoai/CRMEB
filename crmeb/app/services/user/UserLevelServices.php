@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -77,7 +77,7 @@ class UserLevelServices extends BaseServices
             $re = $this->dao->update($uids, ['is_del' => 1, 'status' => 0], 'uid');
         }
         if (!$re)
-            throw new AdminException(400671);
+            throw new AdminException('Sửa thông tin hạng người dùng thất bại');
         $where[] = ['category', 'IN', ['exp']];
         /** @var UserBillServices $userbillServices */
         $userbillServices = app()->make(UserBillServices::class);
@@ -124,7 +124,7 @@ class UserLevelServices extends BaseServices
         if (!$vipinfo) {
             $vipinfo = $systemLevelServices->getLevel($level_id);
             if (!$vipinfo) {
-                throw new AdminException(400672);
+                throw new AdminException('Hạng người dùng không tồn tại');
             }
         }
         /** @var  $user */
@@ -140,7 +140,7 @@ class UserLevelServices extends BaseServices
             $data['status'] = 1;
             $data['is_del'] = 0;
             if (!$this->dao->update(['id' => $uservipinfo['id']], $data))
-                throw new AdminException(400671);
+                throw new AdminException('Sửa thông tin hạng người dùng thất bại');
         } else {
             $data = array_merge($data, [
                 'is_forever' => $vipinfo->is_forever,
@@ -152,7 +152,7 @@ class UserLevelServices extends BaseServices
                 'discount' => $vipinfo->discount,
             ]);
             $data['valid_time'] = 0;
-            if (!$this->dao->save($data)) throw new AdminException(100006);
+            if (!$this->dao->save($data)) throw new AdminException('Lưu thất bại');
         }
         if ($level_id > $userinfo['level']) {
             $change_exp = $vipinfo['exp_num'] - $userinfo['exp'];
@@ -179,8 +179,8 @@ class UserLevelServices extends BaseServices
         $bill_data['add_time'] = time();
         /** @var UserBillServices $userBillService */
         $userBillService = app()->make(UserBillServices::class);
-        if (!$userBillService->save($bill_data)) throw new AdminException(100006);
-        if (!$user->update(['uid' => $uid], ['level' => $level_id, 'exp' => $vipinfo['exp_num']])) throw new AdminException(100007);
+        if (!$userBillService->save($bill_data)) throw new AdminException('Lưu thất bại');
+        if (!$user->update(['uid' => $uid], ['level' => $level_id, 'exp' => $vipinfo['exp_num']])) throw new AdminException('Sửa thất bại');
         return true;
     }
 
@@ -210,7 +210,7 @@ class UserLevelServices extends BaseServices
             $vipInfo->image = set_file_url($vipInfo->image);
             $vipInfo->icon = set_file_url($vipInfo->icon);
             if (!$vipInfo) {
-                throw new AdminException(100026);
+                throw new AdminException('Dữ liệu không tồn tại');
             }
             $field[] = Form::hidden('id', $id);
             $msg = 'Sửa hạng người dùng';
@@ -242,34 +242,34 @@ class UserLevelServices extends BaseServices
         $levelPre = $systemUserLevel->getPreLevel($data['grade']);
         $levelNext = $systemUserLevel->getNextLevel($data['grade']);
         if ($levelPre && $data['exp_num'] <= $levelPre['exp_num']) {
-            throw new AdminException(400673);
+            throw new AdminException('Điểm kinh nghiệm của hạng người dùng phải lớn hơn mức của hạng trước');
         }
         if ($levelNext && $data['exp_num'] >= $levelNext['exp_num']) {
-            throw new AdminException(400674);
+            throw new AdminException('Điểm kinh nghiệm của hạng người dùng phải nhỏ hơn mức của hạng sau');
         }
         //Sửa
         if ($id) {
             if (($levelOne && $levelOne['id'] != $id) || ($levelThree && $levelThree['id'] != $id)) {
-                throw new AdminException(400675);
+                throw new AdminException('Phát hiện hạng người dùng bạn đã thiết lập trước đó, hạng này không được trùng lặp');
             }
             if ($levelTwo && $levelTwo['id'] != $id) {
-                throw new AdminException(400676);
+                throw new AdminException('Phát hiện bạn đã thiết lập điểm kinh nghiệm này cho hạng người dùng, điểm kinh nghiệm không được trùng lặp');
             }
             if (!$systemUserLevel->update($id, $data)) {
-                throw new AdminException(100007);
+                throw new AdminException('Sửa thất bại');
             }
             return true;
         } else {
             if ($levelOne || $levelThree) {
-                throw new AdminException(400675);
+                throw new AdminException('Phát hiện hạng người dùng bạn đã thiết lập trước đó, hạng này không được trùng lặp');
             }
             if ($levelTwo) {
-                throw new AdminException(400676);
+                throw new AdminException('Phát hiện bạn đã thiết lập điểm kinh nghiệm này cho hạng người dùng, điểm kinh nghiệm không được trùng lặp');
             }
             //Thêm mới
             $data['add_time'] = time();
             if (!$systemUserLevel->save($data)) {
-                throw new AdminException(100022);
+                throw new AdminException('Thêm thất bại');
             }
             return true;
         }
@@ -287,9 +287,9 @@ class UserLevelServices extends BaseServices
         $level = $systemUserLevel->getWhereLevel(['id' => $id]);
         if ($level && $level['is_del'] != 1) {
             if (!$systemUserLevel->update($id, ['is_del' => 1]))
-                throw new AdminException(100008);
+                throw new AdminException('Xóa thất bại');
         }
-        return 100002;
+        return 'Xóa thành công';
     }
 
     /**
@@ -303,11 +303,11 @@ class UserLevelServices extends BaseServices
         /** @var SystemUserLevelServices $systemUserLevel */
         $systemUserLevel = app()->make(SystemUserLevelServices::class);
         if (!$systemUserLevel->getWhereLevel(['id' => $id]))
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         if ($systemUserLevel->update($id, ['is_show' => $is_show])) {
-            return 100014;
+            return 'Cài đặt thành công';
         } else {
-            throw new AdminException(100015);
+            throw new AdminException('Cài đặt thất bại');
         }
     }
 
@@ -322,11 +322,11 @@ class UserLevelServices extends BaseServices
         /** @var SystemUserLevelServices $systemUserLevel */
         $systemUserLevel = app()->make(SystemUserLevelServices::class);
         if (!$systemUserLevel->getWhereLevel(['id' => $id]))
-            throw new AdminException(100026);
+            throw new AdminException('Dữ liệu không tồn tại');
         if ($systemUserLevel->update($id, [$data['field'] => $data['value']])) {
             return true;
         } else {
-            throw new AdminException(100006);
+            throw new AdminException('Lưu thất bại');
         }
     }
 
@@ -345,7 +345,7 @@ class UserLevelServices extends BaseServices
         $userServices = app()->make(UserServices::class);
         $user = $userServices->getUserInfo($uid);
         if (!$user) {
-            throw new ApiException(410284);
+            throw new ApiException('Không có người dùng này, không thể kiểm tra nâng hạng thành viên');
         }
         /** @var SystemUserLevelServices $systemUserLevel */
         $systemUserLevel = app()->make(SystemUserLevelServices::class);
@@ -367,7 +367,7 @@ class UserLevelServices extends BaseServices
                 $data['status'] = 1;
                 $data['is_del'] = 0;
                 if (!$this->dao->update($uservip['id'], $data, 'id')) {
-                    throw new ApiException(410285);
+                    throw new ApiException('Kiểm tra nâng hạng thất bại');
                 }
             } else {
                 $data = array_merge($data, [
@@ -380,13 +380,13 @@ class UserLevelServices extends BaseServices
                     'discount' => $vipinfo['discount'],
                 ]);
                 if (!$this->dao->save($data)) {
-                    throw new ApiException(410285);
+                    throw new ApiException('Kiểm tra nâng hạng thất bại');
                 }
             }
             $data['add_time'] += 1;
         }
         if (!$userServices->update($uid, ['level' => end($userAllLevel)['id']], 'uid')) {
-            throw new ApiException(410285);
+            throw new ApiException('Kiểm tra nâng hạng thất bại');
         }
         return true;
     }
@@ -405,7 +405,7 @@ class UserLevelServices extends BaseServices
         $userServices = app()->make(UserServices::class);
         $user = $userServices->getUserInfo($uid);
         if (!$user) {
-            throw new ApiException(410284);
+            throw new ApiException('Không có người dùng này, không thể kiểm tra nâng hạng thành viên');
         }
         $userLevelInfo = $this->getUerLevelInfoByUid($uid);
         if (empty($userLevelInfo)) {
@@ -434,7 +434,7 @@ class UserLevelServices extends BaseServices
         $userServices = app()->make(UserServices::class);
         $user = $userServices->getUserInfo($uid);
         if (!$user) {
-            throw new ApiException(410032);
+            throw new ApiException('Người dùng không tồn tại');
         }
         $data['user'] = $user;
         /** @var SystemUserLevelServices $systemUserLevel */
@@ -475,7 +475,7 @@ class UserLevelServices extends BaseServices
         $userServices = app()->make(UserServices::class);
         $user = $userServices->getUserInfo($uid);
         if (!$user) {
-            throw new ApiException(410032);
+            throw new ApiException('Người dùng không tồn tại');
         }
         /** @var UserBillServices $userBill */
         $userBill = app()->make(UserBillServices::class);

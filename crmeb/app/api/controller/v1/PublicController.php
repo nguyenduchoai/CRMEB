@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -12,15 +12,22 @@ namespace app\api\controller\v1;
 
 
 use app\services\activity\combination\StorePinkServices;
+use app\services\activity\coupon\StoreCouponIssueServices;
 use app\services\activity\lottery\LuckLotteryRecordServices;
+use app\services\article\ArticleServices;
 use app\services\diy\DiyServices;
+use app\services\diy\ThemeServices;
 use app\services\kefu\service\StoreServiceServices;
+use app\services\message\MessageSystemServices;
 use app\services\order\DeliveryServiceServices;
+use app\services\order\StoreCartServices;
 use app\services\order\StoreOrderCartInfoServices;
+use app\services\order\StoreOrderRefundServices;
 use app\services\order\StoreOrderServices;
 use app\services\other\AgreementServices;
 use app\services\other\CacheServices;
 use app\services\product\product\StoreCategoryServices;
+use app\services\product\product\StoreProductRelationServices;
 use app\services\product\product\StoreProductServices;
 use app\services\shipping\ExpressServices;
 use app\services\shipping\SystemCityServices;
@@ -59,18 +66,18 @@ class PublicController
      */
     public function index(Request $request)
     {
-        $banner = sys_data('routine_home_banner') ?: [];//TODO Ảnh banner trang chủ
-        $menus = sys_data('routine_home_menus') ?: [];//TODO Nút trang chủ
-        $roll = sys_data('routine_home_roll_news') ?: [];//TODO Tin tức chạy trang chủ
-        $activity = sys_data('routine_home_activity', 3) ?: [];//TODO Ảnh khu vực hoạt động trang chủ
-        $explosive_money = sys_data('index_categy_images') ?: [];//TODO Sản phẩm hot giá tốt trang chủ
+        $banner = sys_data('routine_home_banner') ?: []; //TODO Ảnh banner trang chủ
+        $menus = sys_data('routine_home_menus') ?: []; //TODO Nút trang chủ
+        $roll = sys_data('routine_home_roll_news') ?: []; //TODO Tin tức chạy trang chủ
+        $activity = sys_data('routine_home_activity', 3) ?: []; //TODO Ảnh khu vực hoạt động trang chủ
+        $explosive_money = sys_data('index_categy_images') ?: []; //TODO Sản phẩm hot giá tốt trang chủ
         $site_name = sys_config('site_name');
         $routine_index_page = sys_data('routine_index_page');
-        $info['fastInfo'] = $routine_index_page[0]['fast_info'] ?? '';//TODO Giới thiệu chọn nhanh
-        $info['bastInfo'] = $routine_index_page[0]['bast_info'] ?? '';//TODO Giới thiệu đề xuất sản phẩm chất lượng
-        $info['firstInfo'] = $routine_index_page[0]['first_info'] ?? '';//TODO Giới thiệu sản phẩm mới ra mắt
-        $info['salesInfo'] = $routine_index_page[0]['sales_info'] ?? '';//TODO Giới thiệu sản phẩm khuyến mãi
-        $logoUrl = sys_config('routine_index_logo');//TODO Giới thiệu sản phẩm khuyến mãi
+        $info['fastInfo'] = $routine_index_page[0]['fast_info'] ?? ''; //TODO Giới thiệu chọn nhanh
+        $info['bastInfo'] = $routine_index_page[0]['bast_info'] ?? ''; //TODO Giới thiệu đề xuất sản phẩm chất lượng
+        $info['firstInfo'] = $routine_index_page[0]['first_info'] ?? ''; //TODO Giới thiệu sản phẩm mới ra mắt
+        $info['salesInfo'] = $routine_index_page[0]['sales_info'] ?? ''; //TODO Giới thiệu sản phẩm khuyến mãi
+        $logoUrl = sys_config('routine_index_logo'); //TODO Giới thiệu sản phẩm khuyến mãi
         if (strstr($logoUrl, 'http') === false && $logoUrl) {
             $logoUrl = sys_config('site_url') . $logoUrl;
         }
@@ -84,10 +91,10 @@ class PublicController
         $storeProductServices = app()->make(StoreProductServices::class);
         //Lấy sản phẩm đề xuất
         [$baseList, $firstList, $benefit, $likeInfo, $vipList] = $storeProductServices->getRecommendProductArr((int)$request->uid(), ['is_best', 'is_new', 'is_benefit', 'is_hot']);
-        $info['bastList'] = $baseList;//TODO Số lượng đề xuất sản phẩm chất lượng
-        $info['firstList'] = $firstList;//TODO Số lượng sản phẩm mới ra mắt
-        $info['bastBanner'] = sys_data('routine_home_bast_banner') ?? [];//TODO Ảnh đề xuất sản phẩm chất lượng trang chủ
-        $lovely = sys_data('routine_home_new_banner') ?: [];//TODO Ảnh đầu trang sản phẩm mới ra mắt
+        $info['bastList'] = $baseList; //TODO Số lượng đề xuất sản phẩm chất lượng
+        $info['firstList'] = $firstList; //TODO Số lượng sản phẩm mới ra mắt
+        $info['bastBanner'] = sys_data('routine_home_bast_banner') ?? []; //TODO Ảnh đề xuất sản phẩm chất lượng trang chủ
+        $lovely = sys_data('routine_home_new_banner') ?: []; //TODO Ảnh đầu trang sản phẩm mới ra mắt
         if ($request->uid()) {
             /** @var WechatUserServices $wechatUserService */
             $wechatUserService = app()->make(WechatUserServices::class);
@@ -175,12 +182,16 @@ class PublicController
         $auth['/pages/users/user_spread_user/index'] = $brokerageFuncStatus && $isUserPromoter;
         $auth['/pages/annex/settled/index'] = $brokerageFuncStatus && sys_config('store_brokerage_statu') == 1 && !$isUserPromoter;
         $auth['/pages/users/user_money/index'] = $balanceFuncStatus;
-        $auth['/pages/admin/order/index'] = $userOrder;
+        $auth['/pages/admin/order/index'] = $auth['/pages/admin/manage/index'] = $userOrder;
         $auth['/pages/admin/order_cancellation/index'] = $userVerifyStatus || $deliveryUser;
         $auth['/pages/users/user_invoice_list/index'] = $invoiceStatus;
         $auth['/pages/annex/vip_paid/index'] = $svipOpen;
         $auth['/kefu/mobile_list'] = $userService;
         foreach ($menusInfo as $key => &$value) {
+            if (isset($value['is_show']) && $value['is_show'] == 0) {
+                unset($menusInfo[$key]);
+                continue;
+            }
             if ($value['url'] == '/pages/users/user_spread_user/index' && $auth['/pages/annex/settled/index']) {
                 $value['name'] = 'Đăng ký CTV';
                 $value['url'] = '/pages/annex/settled/index';
@@ -239,8 +250,8 @@ class PublicController
         $data = $request->postMore([
             ['filename', 'file'],
         ]);
-        if (!$data['filename']) return app('json')->fail(100100);
-        if (CacheService::has('start_uploads_' . $request->uid()) && CacheService::get('start_uploads_' . $request->uid()) >= 100) return app('json')->fail(100101);
+        if (!$data['filename']) return app('json')->fail('Tham số không hợp lệ');
+        if (CacheService::has('start_uploads_' . $request->uid()) && CacheService::get('start_uploads_' . $request->uid()) >= 100) return app('json')->fail('Thao tác không hợp lệ');
         $upload = UploadService::init();
         $info = $upload->to('store/comment')->validate()->move($data['filename']);
         if ($info === false) {
@@ -256,7 +267,7 @@ class PublicController
         CacheService::set('start_uploads_' . $request->uid(), $start_uploads, 86400);
         $res['dir'] = path_to_url($res['dir']);
         if (strpos($res['dir'], 'http') === false) $res['dir'] = $request->domain() . $res['dir'];
-        return app('json')->success(100009, ['name' => $res['name'], 'url' => $res['dir']]);
+        return app('json')->success('Tải ảnh lên thành công', ['name' => $res['name'], 'url' => $res['dir']]);
     }
 
     /**
@@ -290,9 +301,9 @@ class PublicController
                 ChannelService::instance()->send('PAY_SMS_SUCCESS', ['price' => $price, 'number' => $num], [$attach]);
             } catch (\Throwable $e) {
             }
-            return app('json')->success(100010);
+            return app('json')->success('Thao tác thành công');
         }
-        return app('json')->fail(100005);
+        return app('json')->fail('Thao tác thất bại');
     }
 
     /**
@@ -305,7 +316,7 @@ class PublicController
     {
         $uid = (int)$request->uid();
         $services->setUserShare($uid);
-        return app('json')->success(100012);
+        return app('json')->success('Cập nhật thành công');
     }
 
     /**
@@ -368,7 +379,7 @@ class PublicController
             });
             return app('json')->success(compact('code', 'image'));
         } catch (\Exception $e) {
-            return app('json')->fail(100005);
+            return app('json')->fail('Thao tác thất bại');
         }
     }
 
@@ -492,7 +503,7 @@ class PublicController
         $where['productId'] = '';
         if ($data['selectType'] == 1) {
             if (!$data['ids']) {
-                return app('json')->success(100011);
+                return app('json')->success('Chưa có dữ liệu');
             }
             $where['ids'] = $data['ids'] ? explode(',', $data['ids']) : [];
             if ($data['type'] != 2 && $data['type'] != 3 && $data['type'] != 8) {
@@ -714,29 +725,29 @@ class PublicController
      */
     public function getMallBasicConfig()
     {
-        $data['site_name'] = sys_config('site_name');//Tên website
-        $data['site_url'] = sys_config('site_url');//Địa chỉ website
-        $data['wap_login_logo'] = sys_config('wap_login_logo');//Logo đăng nhập trên di động
-        $data['record_No'] = sys_config('record_No');//Số đăng ký website
-        $data['icp_url'] = sys_config('icp_url');//Liên kết mã đăng ký ICP
-        $data['network_security'] = sys_config('network_security');//Đăng ký an ninh mạng
-        $data['network_security_url'] = sys_config('network_security_url');//Liên kết đăng ký an ninh mạng
-        $data['store_self_mention'] = sys_config('store_self_mention');//Có mở nhận tại cửa hàng không
-        $data['invoice_func_status'] = sys_config('invoice_func_status');//Bật chức năng hóa đơn
-        $data['special_invoice_status'] = sys_config('special_invoice_status');//Bật hóa đơn chuyên dụng (VAT)
-        $data['member_func_status'] = sys_config('member_func_status');//Bật hạng người dùng
-        $data['balance_func_status'] = sys_config('balance_func_status');//Bật chức năng số dư
-        $data['recharge_switch'] = sys_config('recharge_switch');//Bật/tắt nạp tiền trên Mini Program
-        $data['member_card_status'] = sys_config('member_card_status');//Có mở thành viên trả phí không
-        $data['member_price_status'] = sys_config('member_price_status');//Bật hiển thị giá chiết khấu thành viên của sản phẩm
-        $data['ali_pay_status'] = sys_config('ali_pay_status') != '0';//Alipay có được bật không
-        $data['pay_weixin_open'] = sys_config('pay_weixin_open') != '0';//WeChat có được bật không
-        $data['yue_pay_status'] = sys_config('yue_pay_status') == 1 && sys_config('balance_func_status') != 0;//Số dư có được bật không
-        $data['offline_pay_status'] = sys_config('offline_pay_status') == 1;//Thanh toán ngoại tuyến có được bật không
-        $data['friend_pay_status'] = sys_config('friend_pay_status') == 1;//Bạn bè có được bật không
-        $data['wechat_auth_switch'] = (int)in_array(1, sys_config('routine_auth_type'));//Bật/tắt đăng nhập WeChat
-        $data['phone_auth_switch'] = (int)in_array(2, sys_config('routine_auth_type'));//Bật/tắt đăng nhập bằng số điện thoại
-        $data['wechat_status'] = sys_config('wechat_appid') != '' && sys_config('wechat_appsecret') != '';//OA WeChat có được cấu hình không
+        $data['site_name'] = sys_config('site_name'); //Tên website
+        $data['site_url'] = sys_config('site_url'); //Địa chỉ website
+        $data['wap_login_logo'] = sys_config('wap_login_logo'); //Logo đăng nhập trên di động
+        $data['record_No'] = sys_config('record_No'); //Số đăng ký website
+        $data['icp_url'] = sys_config('icp_url'); //Liên kết mã đăng ký ICP
+        $data['network_security'] = sys_config('network_security'); //Đăng ký an ninh mạng
+        $data['network_security_url'] = sys_config('network_security_url'); //Liên kết đăng ký an ninh mạng
+        $data['store_self_mention'] = sys_config('store_self_mention'); //Có mở nhận tại cửa hàng không
+        $data['invoice_func_status'] = sys_config('invoice_func_status'); //Bật chức năng hóa đơn
+        $data['special_invoice_status'] = sys_config('special_invoice_status'); //Bật hóa đơn chuyên dụng (VAT)
+        $data['member_func_status'] = sys_config('member_func_status'); //Bật hạng người dùng
+        $data['balance_func_status'] = sys_config('balance_func_status'); //Bật chức năng số dư
+        $data['recharge_switch'] = sys_config('recharge_switch'); //Bật/tắt nạp tiền trên Mini Program
+        $data['member_card_status'] = sys_config('member_card_status'); //Có mở thành viên trả phí không
+        $data['member_price_status'] = sys_config('member_price_status'); //Bật hiển thị giá chiết khấu thành viên của sản phẩm
+        $data['ali_pay_status'] = sys_config('ali_pay_status') != '0'; //Alipay có được bật không
+        $data['pay_weixin_open'] = sys_config('pay_weixin_open') != '0'; //WeChat có được bật không
+        $data['yue_pay_status'] = sys_config('yue_pay_status') == 1 && sys_config('balance_func_status') != 0; //Số dư có được bật không
+        $data['offline_pay_status'] = sys_config('offline_pay_status') == 1; //Thanh toán ngoại tuyến có được bật không
+        $data['friend_pay_status'] = sys_config('friend_pay_status') == 1; //Bạn bè có được bật không
+        $data['wechat_auth_switch'] = (int)in_array(1, sys_config('routine_auth_type')); //Bật/tắt đăng nhập WeChat
+        $data['phone_auth_switch'] = (int)in_array(2, sys_config('routine_auth_type')); //Bật/tắt đăng nhập bằng số điện thoại
+        $data['wechat_status'] = sys_config('wechat_appid') != '' && sys_config('wechat_appsecret') != ''; //OA WeChat có được cấu hình không
         $data['site_func'] = sys_config('model_checkbox', ['seckill', 'bargain', 'combination']);
         return app('json')->success($data);
     }
@@ -776,9 +787,9 @@ class PublicController
             ['out_trade_no', ''],
             ['check_code', ''],
         ], true);
-        $data['site_name'] = sys_config('site_name');//Tên website
-        $data['site_url'] = sys_config('site_url');//Địa chỉ website
-        $data['site_logo'] = sys_config('wap_login_logo');//Logo đăng nhập trên di động
+        $data['site_name'] = sys_config('site_name'); //Tên website
+        $data['site_url'] = sys_config('site_url'); //Địa chỉ website
+        $data['site_logo'] = sys_config('wap_login_logo'); //Logo đăng nhập trên di động
         $order = app()->make(StoreOrderServices::class)->getOne(['order_id' => $out_trade_no]);
         $data['goods_name'] = app()->make(StoreOrderCartInfoServices::class)->getCarIdByProductTitle((int)$order['id']);
         $data['pay_price'] = $order['pay_price'];
@@ -824,5 +835,273 @@ class PublicController
         }
         $info['mchid'] = sys_config('pay_weixin_mchid');
         return app('json')->success($info);
+    }
+
+    /**
+     * Lấy thông tin chủ đề
+     * @param string $type Loại chủ đề, khi là 'user' sẽ kèm thêm thông tin quyền người dùng và thống kê đơn hàng
+     * @return \think\Response
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @author wuhaotian
+     * @email 442384644@qq.com
+     * @date 2025/12/25
+     */
+    public function themeInfo(Request $request, $type = '')
+    {
+        // Lấy tham số ID chủ đề
+        [$theme_id] = $request->getMore([
+            ['theme_id', 0],
+        ], true);
+        $themeInfo = app()->make(ThemeServices::class)->getThemeInfo($theme_id, $type);
+
+        if (in_array($type, ['home', 'detail', 'user']) && $themeInfo) {
+            foreach ($themeInfo['value'] as &$userDataItem) {
+                if ($userDataItem['name'] == 'customerService') {
+                    $userDataItem['routine_contact_type'] = (int)sys_config('routine_contact_type');
+                }
+            }
+        }
+
+        // Khi loại là 'user', xử lý cấu hình quyền và menu liên quan đến người dùng
+        if ($type == 'user') {
+            // Khởi tạo thông tin người dùng
+            $uid = 0;
+            $userInfo = [];
+            if ($request->hasMacro('uid')) $uid = $request->uid();
+            if ($request->hasMacro('user')) $userInfo = $request->user();
+
+            // Lấy cấu hình bật/tắt chức năng hệ thống
+            //Bật/tắt hạng người dùng
+            $levelOpen = (bool)sys_config('member_func_status');
+            //Bật/tắt tính năng CTV
+            $brokerageOpen = (bool)sys_config('brokerage_func_status');
+            //Bật/tắt tính năng số dư
+            $balanceOpen = (bool)sys_config('balance_func_status');
+            //Bật/tắt thành viên trả phí
+            $sVipOpen = (bool)sys_config('member_card_status');
+            //Chức năng hóa đơn
+            $invoiceOpen = (bool)sys_config('invoice_func_status');
+
+            // Khởi tạo cờ đánh dấu vai trò người dùng
+            $userIsService = $userIsOrder = $userIsVerify = $userIsDelivery = $userIsPromoter = false;
+
+            if ($uid && $userInfo) {
+                /** @var StoreServiceServices $storeService */
+                $storeService = app()->make(StoreServiceServices::class);
+                /** @var StoreOrderServices $orderServices */
+                $orderServices = app()->make(StoreOrderServices::class);
+                /** @var StoreOrderRefundServices $storeOrderRefundServices */
+                $orderRefundServices = app()->make(StoreOrderRefundServices::class);
+
+                // Kiểm tra quyền theo vai trò người dùng
+                //Có phải là nhân viên chăm sóc khách hàng không
+                $userIsService = (bool)$storeService->checkoutIsService(['uid' => $uid, 'status' => 1]);
+                //Có phải là quản lý đơn hàng không
+                $userIsOrder = (bool)$storeService->checkoutIsService(['uid' => $uid, 'status' => 1, 'customer' => 1]);
+                //Có phải là nhân viên xác nhận sử dụng không
+                $userIsVerify = (bool)app()->make(SystemStoreStaffServices::class)->verifyStatus($uid);
+                //Có phải là người giao hàng không
+                $userIsDelivery = (bool)app()->make(DeliveryServiceServices::class)->checkoutIsService($uid);
+                //Có phải là cộng tác viên không
+                $userIsPromoter = (bool)app()->make(UserServices::class)->checkUserPromoter($uid, $userInfo);
+
+                // Thống kê số lượng đơn hàng theo từng trạng thái, dùng để hiển thị badge trên menu
+                $orderAuth = [];
+                $countWhere = ['is_del' => 0, 'is_system_del' => 0, 'uid' => $uid];
+                $orderAuth['/pages/goods/order_list/index'] = (int)$orderServices->count($countWhere + ['refund_status' => [0, 3], 'pid' => 0]);
+                $orderAuth['/pages/goods/order_list/index?status=0'] = (int)$orderServices->count($countWhere + ['status' => 0]);
+                $orderAuth['/pages/goods/order_list/index?status=1'] = (int)$orderServices->count($countWhere + ['status' => 1, 'pid' => 0]);
+                $orderAuth['/pages/goods/order_list/index?status=2'] = (int)$orderServices->count($countWhere + ['status' => 2, 'pid' => 0]);
+                $orderAuth['/pages/goods/order_list/index?status=3'] = (int)$orderServices->count($countWhere + ['status' => 3, 'pid' => 0]);
+                $orderAuth['/pages/goods/order_list/index?status=4'] = (int)$orderServices->count($countWhere + ['status' => 4, 'pid' => 0]);
+                $orderAuth['/pages/users/user_return_list/index'] = (int)$orderRefundServices->count(['uid' => $uid, 'is_cancel' => 0, 'is_del' => 0, 'refund_type' => [1, 2, 4, 5]]);
+            }
+
+            // Cấu hình quyền truy cập của các trang
+            $auth = [];
+            $auth['/pages/users/user_vip/index'] = $levelOpen;
+            $auth['/pages/users/user_spread_user/index'] = $brokerageOpen && $userIsPromoter;
+            $auth['/pages/annex/settled/index'] = $brokerageOpen && sys_config('store_brokerage_statu') == 1 && !$userIsPromoter;
+            $auth['/pages/users/user_money/index'] = $balanceOpen;
+            $auth['/pages/admin/order/index'] = $auth['/pages/admin/manage/index'] = $userIsOrder;
+            $auth['/pages/admin/order_cancellation/index'] = $userIsVerify || $userIsDelivery;
+            $auth['/pages/users/user_invoice_list/index'] = $invoiceOpen;
+            $auth['/pages/annex/vip_paid/index'] = $sVipOpen;
+            $auth['/kefu/mobile_list'] = $userIsService;
+
+            // Xử lý cấu hình menu của chủ đề
+            if ($themeInfo) {
+                foreach ($themeInfo['value'] as &$userDataItem) {
+                    if ($userDataItem['name'] == 'menus') {
+                        foreach ($userDataItem['menuConfig']['list'] as &$menuDataItem) {
+                            // Thiết lập quyền hiển thị menu và số trên badge
+                            $menuDataItem['show'] = ($auth[$menuDataItem['info'][1]['value']] ?? true) && $menuDataItem['show'];
+                            $menuDataItem['num'] = $orderAuth[$menuDataItem['info'][1]['value']] ?? 0;
+
+                            // Xử lý liên kết CSKH, ghép thành URL đầy đủ
+                            if ($menuDataItem['info'][1]['value'] == '/kefu/mobile_list') {
+                                $menuDataItem['info'][1]['value'] = sys_config('site_url') . $menuDataItem['info'][1]['value'];
+                                // Môi trường Mini Program bắt buộc dùng https
+                                if ($request->isRoutine()) {
+                                    $menuDataItem['info'][1]['value'] = str_replace('http://', 'https://', $menuDataItem['info'][1]['value']);
+                                }
+                            }
+
+                            // Xử lý trang chat CSKH, thêm cấu hình loại phương thức liên hệ
+                            if ($menuDataItem['info'][1]['value'] == '/pages/extension/customer_list/chat') {
+                                if ($request->isRoutine()) {
+                                    $menuDataItem['routine_contact_type'] = (int)sys_config('routine_contact_type', 0);
+                                }
+                            }
+
+                            if ($menuDataItem['info'][1]['value'] == '/pages/users/user_spread_user/index' && $brokerageOpen && sys_config('store_brokerage_statu') == 1 && !$userIsPromoter) {
+                                $menuDataItem['info'][0]['value'] = 'Đăng ký CTV';
+                                $menuDataItem['info'][1]['value'] = '/pages/annex/settled/index';
+                                $menuDataItem['show'] = true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return app('json')->success($themeInfo);
+    }
+
+    /**
+     * Lấy thông tin phiên bản chủ đề
+     * @return \think\Response
+     * @author wuhaotian
+     * @email 442384644@qq.com
+     * @date 2025/12/25
+     */
+    public function themeVersion(Request $request)
+    {
+        [$theme_id] = $request->getMore([
+            ['theme_id', 0],
+        ], true);
+        $themeVersion = app()->make(ThemeServices::class)->getThemeVersion($theme_id);
+        return app('json')->success(['version' => $themeVersion]);
+    }
+
+    /**
+     * Thành phần tùy chỉnh - người dùng
+     * @param Request $request
+     * @return \think\Response
+     * @author wuhaotian
+     * @email 442384644@qq.com
+     * @date 2026/1/12
+     */
+    public function themeUser(Request $request)
+    {
+        $userInfo = $request->uid() ? $request->user() : [];
+        if (!$userInfo) return app('json')->fail('Chưa có dữ liệu');
+        $user = [
+            'nickname' => $userInfo['nickname'],
+            'uid' => $userInfo['uid'],
+            'image' => $userInfo['avatar'],
+            'collection_num' => app()->make(StoreProductRelationServices::class)->count(['uid' => $userInfo['uid']]),
+            'cart_num' => app()->make(StoreCartServices::class)->count(['uid' => $userInfo['uid']]),
+            'order_num' => $userInfo['pay_count'],
+            'integral' => $userInfo['integral'],
+            'now_money' => $userInfo['now_money'],
+            'brokerage_price' => $userInfo['brokerage_price'],
+            'unread_msg_num' => app()->make(MessageSystemServices::class)->count(['uid' => $userInfo['uid'], 'look' => 0]),
+        ];
+        return app('json')->success($user);
+    }
+
+    /**
+     * Thành phần tùy chỉnh - bài viết
+     * @param Request $request
+     * @return \think\Response
+     * @throws \ReflectionException
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @author wuhaotian
+     * @email 442384644@qq.com
+     * @date 2026/1/12
+     */
+    public function themeArticle(Request $request)
+    {
+        $where = $request->getMore([
+            ['ids', ''],
+            ['cid', ''],
+            ['order', 0],
+            ['sort', 0],
+            ['limit', 10],
+        ]);
+        $data = app()->make(ArticleServices::class)->getThemeArticle($where);
+        return app('json')->success($data);
+    }
+
+    /**
+     * Thành phần tùy chỉnh - phiếu giảm giá
+     * @param Request $request
+     * @return \think\Response
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @author wuhaotian
+     * @email 442384644@qq.com
+     * @date 2026/1/14
+     */
+    public function themeCoupon(Request $request)
+    {
+        $where = $request->getMore([
+            ['ids', ''],
+            ['type', ''],
+            ['user_type', ''],
+            ['send_type', ''],
+            ['is_min_price', 0],
+            ['min_price', 0],
+            ['start_time', ''],
+            ['end_time', ''],
+            ['order', 0],
+            ['sort', 0],
+            ['limit', 10],
+        ]);
+        $data = app()->make(StoreCouponIssueServices::class)->getThemeCoupon($where);
+        return app('json')->success($data);
+    }
+
+    /**
+     * Thành phần tùy chỉnh - sản phẩm
+     * @param Request $request
+     * @return \think\Response
+     * @throws \think\db\exception\DataNotFoundException
+     * @throws \think\db\exception\DbException
+     * @throws \think\db\exception\ModelNotFoundException
+     * @author wuhaotian
+     * @email 442384644@qq.com
+     * @date 2026/1/14
+     */
+    public function themeProduct(Request $request)
+    {
+        $where = $request->getMore([
+            ['ids', ''],
+            ['cate_ids', ''],
+            ['order', 0],
+            ['sort', 0],
+            ['limit', 10],
+        ]);
+        $data = app()->make(StoreProductServices::class)->getThemeProduct($where);
+        return app('json')->success($data);
+    }
+
+    /**
+     * Lấy dữ liệu điều hướng của chủ đề
+     * Gọi phương thức themeNavigation trong ThemeServices để lấy cấu hình điều hướng và trả về phản hồi JSON
+     * @return mixed
+     */
+    public function themeNavigation()
+    {
+        // Khởi tạo instance ThemeServices và gọi phương thức themeNavigation để lấy dữ liệu điều hướng
+        $data = app()->make(ThemeServices::class)->themeNavigation();
+        // Trả về phản hồi thành công, kèm dữ liệu điều hướng
+        return app('json')->success($data);
     }
 }

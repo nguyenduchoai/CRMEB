@@ -2,7 +2,7 @@
 // +----------------------------------------------------------------------
 // | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
+// | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
 // | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
@@ -85,7 +85,7 @@ class StoreOrderTakeServices extends BaseServices
     {
         $order = $this->dao->getUserOrderDetail($uni, $uid);
         if (!$order) {
-            throw new ApiException(410173);
+            throw new ApiException('Đơn hàng không tồn tại');
         }
         $refundServices = app()->make(StoreOrderRefundServices::class);
         $orderIsRefund = $refundServices->orderIsRefund((int)$order['id']);
@@ -96,16 +96,16 @@ class StoreOrderTakeServices extends BaseServices
         $orderServices = app()->make(StoreOrderServices::class);
         $order = $orderServices->tidyOrder($order);
         if ($order['_status']['_type'] != 2) {
-            throw new ApiException(410266);
+            throw new ApiException('Trạng thái đơn hàng không hợp lệ');
         }
         //Có giao hàng theo tách đơn thì cần nhận hàng riêng
         if ($this->dao->count(['pid' => $order['id']])) {
-            throw new ApiException(410266);
+            throw new ApiException('Trạng thái đơn hàng không hợp lệ');
         }
         $order->status = 2;
         $res = $order->save() && $this->storeProductOrderUserTakeDelivery($order);
         if (!$res) {
-            throw new ApiException(410205);
+            throw new ApiException('Nhận hàng thất bại');
         }
         return $order;
     }
@@ -136,7 +136,7 @@ class StoreOrderTakeServices extends BaseServices
             //Đại lý khu vực
             $res4 = $this->divisionBrokerage($order, $userInfo);
             if (!($res1 && $res2 && $res3 && $res4)) {
-                throw new ApiException(410205);
+                throw new ApiException('Nhận hàng thất bại');
             }
             return true;
         }, $isTran);
@@ -431,9 +431,10 @@ class StoreOrderTakeServices extends BaseServices
             return $this->backOrderBrokerageTwo($orderInfo, $userInfo, $isSelfBrokerage);
         }
         $brokeragePrice = $orderInfo['one_brokerage'] ?? 0;
-        // Số tiền trả hoa hồng nhỏ hơn hoặc bằng 0 thì trả về ngay, không trả hoa hồng
+        // Số tiền trả hoa hồng cấp 1 nhỏ hơn hoặc bằng 0 thì chuyển thẳng sang logic trả hoa hồng cấp 2
         if ($brokeragePrice <= 0) {
-            return true;
+            $frozen_time = time() + intval(sys_config('extract_time')) * 86400;
+            return $this->backOrderBrokerageTwo($orderInfo, $userInfo, $isSelfBrokerage, $frozen_time);
         }
         // Lấy thông tin người giới thiệu cấp trên
         $spreadPrice = $userServices->value(['uid' => $one_spread_uid], 'brokerage_price');
@@ -460,8 +461,7 @@ class StoreOrderTakeServices extends BaseServices
             $this->sendBackOrderBrokerage($orderInfo, $one_spread_uid, $brokeragePrice);
         }
         // Trả hoa hồng cấp 1 thành công thì chuyển sang trả hoa hồng cấp 2
-        $res = $res1 && $this->backOrderBrokerageTwo($orderInfo, $userInfo, $isSelfBrokerage, $frozen_time);
-        return $res;
+        return $res1 && $this->backOrderBrokerageTwo($orderInfo, $userInfo, $isSelfBrokerage, $frozen_time);
     }
 
 
