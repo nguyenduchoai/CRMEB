@@ -163,15 +163,43 @@ Nếu cần ra thị trường nhanh hơn mà vẫn muốn mô hình sàn/đa c�
 
 ## 6. Đã làm trong PR này: Việt hóa 100%
 
-Chi tiết xem mục "Việt hóa" trong `README.md` và mô tả PR.
-- Dịch toàn bộ chuỗi giao diện, thông báo API, dữ liệu mẫu SQL, chú thích code, tài liệu từ tiếng Trung sang tiếng Việt, dùng công cụ trích xuất theo AST nên không làm hỏng code.
-- Đặt **tiếng Việt (vi-VN) làm ngôn ngữ mặc định**. Chỉ bật Tiếng Việt và English; các ngôn ngữ khác vẫn còn nhưng tắt, có thể bật lại trong trang quản trị.
-- Đổi múi giờ sang `Asia/Ho_Chi_Minh`.
-- Build lại trang quản trị và H5 từ mã nguồn đã dịch.
+**Cách làm:** trích xuất theo cấu trúc mã (PHP tokenizer, Babel cho JS, bộ phân tích template Vue/HTML, bộ phân tích SQL/JSON), dịch khoảng 31.000 chuỗi duy nhất theo bảng thuật ngữ TMĐT thống nhất, rồi thay đúng vị trí. Cách này giữ nguyên cú pháp code, placeholder và khóa i18n.
+
+**Phạm vi đã dịch**
+- Backend PHP: thông báo, form, chú thích.
+- Admin Vue và app UniApp.
+- Trình cài đặt.
+- `crmeb.sql`: menu, cấu hình, dữ liệu mẫu, thỏa thuận, tài liệu API, chú thích bảng/cột.
+- README, tài liệu cài đặt (.md và .docx), file mẫu Excel nhập sản phẩm.
+- Chuỗi hiển thị của `form-builder`, captcha và ThinkPHP trong `vendor/`.
+
+**Ngôn ngữ, múi giờ**
+- `vi-VN` là mặc định cho: API (bảng `eb_lang_*`), ThinkPHP (`app/lang/vi_vn.php`), admin (Element UI, vxe-table), uni-app (kể cả nút có sẵn của framework qua `locale/uni-app.vi.json`).
+- Chỉ bật Tiếng Việt và English.
+- Múi giờ `Asia/Ho_Chi_Minh` trong code, bộ cài và Docker.
+
+**Tính nhất quán dữ liệu**
+- Khóa `$t()` của uni-app và bảng `eb_lang_code` dùng cùng một bản dịch.
+- Chuỗi SKU mẫu được dịch theo từng token, file Excel mẫu khớp với code import sản phẩm.
+- Các cột varchar bị ngắn (kể cả lỗi cắt dữ liệu có sẵn của CRMEB) đã được nới.
+- Đã kiểm tra: import SQL vào MariaDB, `php -l` 1.099 file PHP, build admin/H5/Mini Program đều thành công.
+
+**Bản địa hóa thêm**
+- 13 hãng vận chuyển Việt Nam thay 1.101 hãng Trung Quốc.
+- Lịch âm theo cách gọi Việt Nam (Can Chi, Tháng Giêng/Chạp, Mùng 1, năm Mèo).
+- Hàm đọc số tiền bằng chữ tiếng Việt (VND).
+
+**Chủ quyền, quyền riêng tư**
+- Đã xóa dữ liệu xếp Hoàng Sa/Trường Sa vào Trung Quốc.
+- Đã bỏ bản đồ Trung Quốc ("đường 9 đoạn") ở trang thống kê, thay bằng biểu đồ cột Top tỉnh/thành.
+- Đã tắt uni-app statistics.
 
 **Cố ý giữ nguyên**
-- Gói ngôn ngữ zh-CN/zh-TW (ngôn ngữ tùy chọn).
-- Văn bản license gốc: đã thêm bản dịch tham khảo `LICENSE.vi.txt`.
-- Dữ liệu tỉnh/thành Trung Quốc trong `eb_system_city`: **đã xóa các mục Hoàng Sa/Trường Sa**, phần còn lại cần thay bằng dữ liệu 2 cấp của Việt Nam (mục 3.4).
-- Danh sách hãng vận chuyển trong `eb_express`: đã thay bằng các hãng Việt Nam.
-- Ảnh quảng cáo có chữ Trung trong `readme/pic`.
+- Gói ngôn ngữ zh-CN/zh-TW/ja-JP (ngôn ngữ tùy chọn).
+- Văn bản license gốc (đã thêm bản dịch tham khảo `LICENSE.vi.txt`).
+- Dữ liệu tỉnh/thành Trung Quốc trong `eb_system_city`: cần thay bằng dữ liệu 2 cấp của Việt Nam (mục 3.4).
+- Bộ ký tự captcha chữ Hán, tên font dịch vụ ảnh của cloud Trung Quốc, regex kiểm tra định dạng Trung Quốc.
+- Dữ liệu locale nội bộ của thư viện bên thứ 3 trong bundle.
+- Ảnh quảng cáo có chữ Trung trong `readme/pic` (tên file đã đổi).
+
+**Việc nên làm tiếp:** địa chỉ 2 cấp Việt Nam, hiển thị VND không số lẻ, cổng thanh toán và vận chuyển Việt Nam, vá bảo mật (mục 3.3), bản đồ không phải của Trung Quốc.
