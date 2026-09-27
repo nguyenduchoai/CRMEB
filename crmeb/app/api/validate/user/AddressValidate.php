@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -13,13 +13,13 @@ namespace app\api\validate\user;
 use think\Validate;
 
 /**
- * 用户地址验证类
+ * Lớp xác thực địa chỉ người dùng
  * Class AddressValidate
  * @package app\http\validates\user
  */
 class AddressValidate extends Validate
 {
-    //移动
+    //Di chuyển
     protected $regex = ['phone' => '/^1[3456789]\d{9}|([0-9]{3,4}-)?[0-9]{7,8}$/'];
 
     protected $rule = [
@@ -32,13 +32,13 @@ class AddressValidate extends Validate
     ];
 
     protected $message = [
-        'real_name.require' => '名称必须填写',
-        'real_name.max' => '名称最多不能超过25个字符',
-        'phone.require' => '手机号必须填写',
-        'phone.regex' => '手机号格式错误',
-        'province.require' => '省必须填写',
-        'city.require' => '市必须填写',
-        'district.require' => '区/县必须填写',
-        'detail.require' => '详细地址必须填写',
+        'real_name.require' => 'Tên là bắt buộc',
+        'real_name.max' => 'Tên không được vượt quá 25 ký tự',
+        'phone.require' => 'Số điện thoại là bắt buộc',
+        'phone.regex' => 'Số điện thoại sai định dạng',
+        'province.require' => 'Tỉnh là bắt buộc',
+        'city.require' => 'Thành phố là bắt buộc',
+        'district.require' => 'Quận/huyện là bắt buộc',
+        'detail.require' => 'Địa chỉ chi tiết là bắt buộc',
     ];
 }

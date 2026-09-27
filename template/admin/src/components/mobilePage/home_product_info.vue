@@ -39,11 +39,11 @@
                   color: index === 0 ? specSelectedTextColor : specUnselectedTextColor,
                 }"
               >
-                <div class="name">蓝色云朵蕾丝花边</div>
+                <div class="name">Viền ren mây xanh</div>
               </div>
             </div>
             <div class="total-count" :style="{ color: specTextColor }">
-              6款<br />可选<span class="iconfont iconyou"></span>
+              6 phân loại<br />có sẵn<span class="iconfont iconyou"></span>
             </div>
           </div>
         </div>
@@ -57,7 +57,7 @@
               <img :src="item.image" :style="{ borderColor: index === 0 ? specSelectedBorderColor : '#eee' }" />
             </div>
             <div class="total-count" style="margin-left: auto" :style="{ color: specTextColor }">
-              6款<br />可选<span class="iconfont iconyou"></span>
+              6 phân loại<br />có sẵn<span class="iconfont iconyou"></span>
             </div>
           </div>
           <div class="spec-list-text" v-if="specStyle === 1">
@@ -67,14 +67,14 @@
               :style="{ background: specSelectedBgColor, borderColor: specSelectedBorderColor }"
             >
               <img :src="mockSpecList[0].image" />
-              <span class="name" :style="{ color: specSelectedTextColor }">家庭时光-32P 彩色磁力积木</span>
+              <span class="name" :style="{ color: specSelectedTextColor }">Khoảnh khắc gia đình - 32P bộ xếp hình nam châm nhiều màu</span>
             </div>
             <div class="spec-item">
               <img :src="mockSpecList[1].image" />
-              <span class="name">家庭时光-64P 彩色</span>
+              <span class="name">Khoảnh khắc gia đình - 64P nhiều màu</span>
             </div>
             <div class="total-count" style="margin-left: auto" :style="{ color: specTextColor }">
-              共6款<span class="iconfont iconyou"></span>
+              Có 6 phân loại<span class="iconfont iconyou"></span>
             </div>
           </div>
         </div>
@@ -84,11 +84,11 @@
           <div v-if="item.name === 'price' && item.show" class="price-section">
             <div class="price-row">
               <div v-if="item.checkList.includes(0)" class="main-price-wrap" :style="{ color: finalPriceColor }">
-                <span class="label">到手价</span>
+                <span class="label">Giá cuối cùng</span>
                 <span class="price" :style="{ fontSize: priceFontSize + 'px' }">¥199.00</span>
               </div>
               <div v-if="item.checkList.includes(1)" class="ot-price-wrap" :style="{ color: sellingPriceColor }">
-                <span class="label">售价</span>
+                <span class="label">Giá bán</span>
                 <span class="price">¥299.00</span>
               </div>
               <div v-if="item.checkList.includes(2)" class="vip-price-wrap">
@@ -101,21 +101,21 @@
           <!-- Name Section -->
           <div v-if="item.name === 'name' && item.show" class="name-section">
             <div class="title" :style="{ color: titleColor, fontSize: titleFontSize + 'px' }">
-              美的（Midea）电热水壶家用烧水壶小容量 0涂层 食品级304不锈钢 双层防烫 全钢无缝
+              Ấm siêu tốc gia đình Midea dung tích nhỏ, không lớp phủ, thép không gỉ 304 cấp thực phẩm, hai lớp chống bỏng, thân thép liền mạch
             </div>
           </div>
 
           <!-- Data Section -->
           <div v-if="item.name === 'data' && item.show" class="data-section">
-            <span v-if="item.checkList.includes(0)" :style="{ color: originalPriceColor }">原价: ¥299</span>
-            <span v-if="item.checkList.includes(1)" :style="{ color: stockColor }">库存: 1000</span>
-            <span v-if="item.checkList.includes(2)" :style="{ color: salesColor }">销量: 1000+</span>
+            <span v-if="item.checkList.includes(0)" :style="{ color: originalPriceColor }">Giá gốc: ₫299</span>
+            <span v-if="item.checkList.includes(1)" :style="{ color: stockColor }">Tồn kho: 1000</span>
+            <span v-if="item.checkList.includes(2)" :style="{ color: salesColor }">Lượt bán: 1000+</span>
           </div>
 
           <!-- Tags Section -->
           <div v-if="item.name === 'tags' && item.show" class="tags-section">
-            <span class="tag">活动标签</span>
-            <span class="tag">商品标签</span>
+            <span class="tag">Nhãn chương trình</span>
+            <span class="tag">Nhãn sản phẩm</span>
           </div>
         </div>
 
@@ -125,14 +125,14 @@
             <div class="spec-item selected" :style="{ borderColor: specSelectedBorderColor }">
               <img :src="mockSpecList[0].image" />
               <div class="name" :style="{ color: specSelectedTextColor, background: specSelectedBgColor }">
-                蓝色云朵
+                Mây xanh
               </div>
             </div>
             <div class="spec-item" v-for="(item, index) in mockSpecList.slice(1)" :key="index">
               <img :src="item.image" />
-              <div class="name" :style="{ color: specUnselectedTextColor }">黄色小鸭</div>
+              <div class="name" :style="{ color: specUnselectedTextColor }">Vịt vàng</div>
             </div>
-            <div class="total-count" style="margin-left: auto">6款<br />可选<span class="iconfont iconyou"></span></div>
+            <div class="total-count" style="margin-left: auto">6 phân loại<br />có sẵn<span class="iconfont iconyou"></span></div>
           </div>
         </div>
       </div>
@@ -145,8 +145,8 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'home_product_info',
-  cname: '商品信息',
-  desc: '商品信息组件',
+  cname: 'Thông tin sản phẩm',
+  desc: 'Thành phần thông tin sản phẩm',
   configName: 'c_product_info',
   icon: '#iconzujian-shangpinxinxi',
   type: 3, // Product Component
@@ -314,146 +314,146 @@ export default {
   data() {
     return {
       defaultConfig: {
-        cname: '商品信息',
-        desc: '商品信息组件',
+        cname: 'Thông tin sản phẩm',
+        desc: 'Thành phần thông tin sản phẩm',
         name: 'productInfo',
-        titleCurrency: '通用样式',
+        titleCurrency: 'Kiểu chung',
         timestamp: this.num,
         setUp: {
           tabVal: 0,
         },
         indicatorConfig: {
-          title: '指示器设置',
+          title: 'Cài đặt chỉ báo',
           tabVal: 1, // 0: Line, 1: Dot-Line, 2: Number
-          tabList: [{ name: '线段样式' }, { name: '点线样式' }, { name: '数字样式' }],
+          tabList: [{ name: 'Kiểu gạch' }, { name: 'Kiểu chấm' }, { name: 'Style số' }],
           positionVal: 1, // 0: Left, 1: Center, 2: Right
-          positionList: [{ name: '左对齐' }, { name: '居中对齐' }, { name: '右对齐' }],
+          positionList: [{ name: 'Căn trái' }, { name: 'Căn giữa' }, { name: 'Căn phải' }],
           selectColor: {
-            title: '选中样式',
+            title: 'Kiểu khi được chọn',
             name: 'selectColor',
             default: [{ item: '#E93323' }],
             color: [{ item: '#E93323' }],
           },
           defaultColor: {
-            title: '默认样式',
+            title: 'Kiểu mặc định',
             name: 'defaultColor',
             default: [{ item: '#CCCCCC' }],
             color: [{ item: '#CCCCCC' }],
           },
         },
         titleConfig: {
-          title: '标题设置',
+          title: 'Cài đặt tiêu đề',
           tabVal: 0,
           tabList: [
-            { name: '跟随主题风格', val: 0 },
-            { name: '自定义', val: 1 },
+            { name: 'Theo phong cách chủ đề', val: 0 },
+            { name: 'Tùy chỉnh', val: 1 },
           ],
           color: {
-            title: '标题颜色',
+            title: 'Màu tiêu đề',
             default: [{ item: '#333333' }],
             color: [{ item: '#333333' }],
           },
           fontSize: {
-            title: '字体大小',
+            title: 'Cỡ chữ',
             val: 16,
             min: 12,
           },
         },
         specStyle: {
-          title: '规格样式',
+          title: 'Kiểu phân loại',
           tabVal: 0,
-          tabList: [{ name: '样式一' }, { name: '样式二' }, { name: '样式三' }, { name: '样式四' }],
+          tabList: [{ name: 'Kiểu 1' }, { name: 'Kiểu 2' }, { name: 'Kiểu 3' }, { name: 'Kiểu 4' }],
         },
         specSettings: {
-          title: '规格设置',
+          title: 'Thiết lập quy cách',
           colorTone: {
-            title: '色调',
+            title: 'Tông màu',
             tabVal: 0, // 0: Follow Theme, 1: Custom
             tabList: [
-              { name: '跟随主题风格', val: 0 },
-              { name: '自定义', val: 1 },
+              { name: 'Theo phong cách chủ đề', val: 0 },
+              { name: 'Tùy chỉnh', val: 1 },
             ],
           },
           textColor: {
-            title: '按钮颜色',
+            title: 'Màu nút',
             name: 'textColor',
             default: [{ item: '#666' }],
             color: [{ item: '#666' }],
           },
           selectedBorderColor: {
-            title: '选中边框',
+            title: 'Viền khi được chọn',
             name: 'selectedBorderColor',
             default: [{ item: '#E93323' }],
             color: [{ item: '#E93323' }],
           },
           selectedTextColor: {
-            title: '选中文字',
+            title: 'Chữ khi được chọn',
             name: 'selectedTextColor',
             default: [{ item: '#E93323' }],
             color: [{ item: '#E93323' }],
           },
           selectedBgColor: {
-            title: '选中背景',
+            title: 'Nền khi được chọn',
             name: 'selectedBgColor',
             default: [{ item: '#FDEBEB' }],
             color: [{ item: '#FDEBEB' }],
           },
           unselectedTextColor: {
-            title: '未选中文字',
+            title: 'Chữ khi chưa chọn',
             name: 'unselectedTextColor',
             default: [{ item: '#333333' }],
             color: [{ item: '#333333' }],
           },
         },
         sortList: {
-          title: '信息设置',
-          tips: '鼠标拖拽板块可调整信息展示顺序',
+          title: 'Cài đặt thông tin',
+          tips: 'Kéo thả khối để điều chỉnh thứ tự hiển thị thông tin',
           list: [
             {
               name: 'price',
-              cname: '商品价格',
+              cname: 'Giá sản phẩm',
               type: 'radio',
               show: true,
               checkList: [0, 1, 2],
               checkBoxList: [
-                { name: '售价', value: 0 },
-                { name: '划线价', value: 1 },
-                { name: '会员价', value: 2 },
+                { name: 'Giá bán', value: 0 },
+                { name: 'Giá gốc', value: 1 },
+                { name: 'Giá thành viên', value: 2 },
               ],
             },
             {
               name: 'name',
-              cname: '商品名称',
+              cname: 'Tên sản phẩm',
               type: 'radio',
               show: true,
             },
             {
               name: 'data',
-              cname: '商品数据',
+              cname: 'Dữ liệu sản phẩm',
               type: 'radio',
               show: true,
               checkList: [0, 1, 2],
               checkBoxList: [
-                { name: '原价', value: 0 },
-                { name: '库存', value: 1 },
-                { name: '销量', value: 2 },
+                { name: 'Giá gốc', value: 0 },
+                { name: 'Tồn kho', value: 1 },
+                { name: 'Lượt bán', value: 2 },
               ],
             },
             {
               name: 'tags',
-              cname: '商品标签',
+              cname: 'Nhãn sản phẩm',
               type: 'radio',
               show: true,
             },
           ],
         },
         bottomBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           default: [{ item: '#fff' }],
           color: [{ item: '#fff' }],
         },
         paddingConfig: {
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           max: 100,
@@ -461,7 +461,7 @@ export default {
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         marginConfig: {
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,
@@ -469,103 +469,103 @@ export default {
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         zIndexConfig: {
-          title: '组件上浮',
+          title: 'Thứ tự lớp thành phần',
           val: 0,
           min: 0,
         },
         borderConfig: {
-          title: '边框设置',
+          title: 'Cài đặt viền',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0, // 0: Hide, 1: Show
           styleConfig: {
-            title: '边框样式',
+            title: 'Kiểu viền',
             tabVal: 0,
             tabList: [
-              { name: '实线', style: 'solid' },
-              { name: '虚线', style: 'dashed' },
-              { name: '点状', style: 'dotted' },
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
             ],
           },
           widthConfig: {
-            title: '边框粗细',
+            title: 'Độ dày viền',
             val: 1,
             min: 1,
           },
           colorConfig: {
-            title: '边框颜色',
+            title: 'Màu viền',
             default: [{ item: '#e5e5e5' }],
             color: [{ item: '#e5e5e5' }],
           },
         },
         shadowConfig: {
-          title: '阴影设置',
+          title: 'Cài đặt đổ bóng',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0, // 0: Off, 1: On
           colorConfig: {
-            title: '阴影颜色',
+            title: 'Màu đổ bóng',
             default: [{ item: 'rgba(0,0,0,0.1)' }],
             color: [{ item: 'rgba(0,0,0,0.1)' }],
           },
           xConfig: {
-            title: 'X轴偏移',
+            title: 'Độ lệch trục X',
             val: 0,
             min: -50,
           },
           yConfig: {
-            title: 'Y轴偏移',
+            title: 'Độ lệch trục Y',
             val: 0,
             min: -50,
           },
           blurConfig: {
-            title: '模糊半径',
+            title: 'Bán kính làm mờ',
             val: 10,
             min: 0,
           },
           spreadConfig: {
-            title: '扩展半径',
+            title: 'Bán kính lan tỏa',
             val: 0,
             min: -50,
           },
         },
         componentBgConfig: {
-          title: '背景设置',
+          title: 'Cài đặt nền',
           tabVal: 0,
-          tabList: [{ name: '颜色' }, { name: '图片' }],
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
           colorConfig: {
-            title: '背景颜色',
+            title: 'Màu nền',
             default: [{ item: '#fff' }, { item: '#fff' }],
             color: [{ item: '#fff' }, { item: '#fff' }],
           },
           colorDirection: {
-            title: '渐变方向',
+            title: 'Hướng chuyển màu',
             tabVal: 0,
-            tabList: [{ name: '横向' }, { name: '纵向' }, { name: '左斜' }, { name: '右斜' }],
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
           },
           imageConfig: {
-            header: '背景图片',
+            header: 'Ảnh nền',
             title: '',
-            name: '上传图片',
+            name: 'Tải lên ảnh',
             type: 'code',
             url: '',
-            info: '建议尺寸：750px * 400px',
+            info: 'Kích thước đề xuất: 750px * 400px',
           },
         },
         fillet: {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 8,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
@@ -574,12 +574,12 @@ export default {
       configObj: {},
       pageData: {},
       mockSpecList: [
-        { image: require('@/assets/images/product-diy.png'), name: '规格1' },
-        { image: require('@/assets/images/product-diy.png'), name: '规格2' },
-        { image: require('@/assets/images/product-diy.png'), name: '规格3' },
-        { image: require('@/assets/images/product-diy.png'), name: '规格4' },
-        { image: require('@/assets/images/product-diy.png'), name: '规格5' },
-        { image: require('@/assets/images/product-diy.png'), name: '规格6' },
+        { image: require('@/assets/images/product-diy.png'), name: 'Phân loại 1' },
+        { image: require('@/assets/images/product-diy.png'), name: 'Phân loại 2' },
+        { image: require('@/assets/images/product-diy.png'), name: 'Phân loại 3' },
+        { image: require('@/assets/images/product-diy.png'), name: 'Phân loại 4' },
+        { image: require('@/assets/images/product-diy.png'), name: 'Phân loại 5' },
+        { image: require('@/assets/images/product-diy.png'), name: 'Phân loại 6' },
       ],
     };
   },

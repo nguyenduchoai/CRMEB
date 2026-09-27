@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,7 +24,7 @@ class UserSignDao extends BaseDao
 {
 
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -33,7 +33,7 @@ class UserSignDao extends BaseDao
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @param array $where
      * @param string $field
      * @param int $page
@@ -50,7 +50,7 @@ class UserSignDao extends BaseDao
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @param array $where
      * @param string $field
      * @param int $page
@@ -65,11 +65,11 @@ class UserSignDao extends BaseDao
     }
 
     /**
-     * 获取周或者月的累积签到次数
+     * Lấy số lần điểm danh lũy kế theo tuần hoặc tháng
      * @param $type
      * @param $uid
      * @return int
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/1
      */
@@ -85,14 +85,14 @@ class UserSignDao extends BaseDao
     }
 
     /**
-     * 获取本周或者本月的签到列表
+     * Lấy danh sách điểm danh của tuần này hoặc tháng này
      * @param $type
      * @param $uid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/8
      */

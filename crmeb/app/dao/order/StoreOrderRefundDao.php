@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use app\model\order\StoreOrderRefund;
 class StoreOrderRefundDao extends BaseDao
 {
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -25,7 +25,7 @@ class StoreOrderRefundDao extends BaseDao
     }
 
     /**
-     * 搜索器
+     * Bộ lọc tìm kiếm
      * @param array $where
      * @param bool $search
      * @return \crmeb\basic\BaseModel|mixed|\think\Model
@@ -85,7 +85,7 @@ class StoreOrderRefundDao extends BaseDao
     }
 
     /**
-     * 退款订单列表
+     * Danh sách đơn hoàn tiền
      * @param $where
      * @param int $page
      * @param int $limit
@@ -104,12 +104,12 @@ class StoreOrderRefundDao extends BaseDao
     }
 
     /**
-     * 退款订单数量
+     * Số lượng đơn hoàn tiền
      * @param array $where
      * @param bool $search
      * @return int
      * @throws \ReflectionException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/06/19
      */
@@ -119,7 +119,7 @@ class StoreOrderRefundDao extends BaseDao
     }
 
     /**
-     * 根据时间获取
+     * Lấy theo thời gian
      * @param array $where
      * @param string $sum_field
      * @param string $selectType
@@ -137,7 +137,7 @@ class StoreOrderRefundDao extends BaseDao
     }
 
     /**
-     * 按照支付时间统计支付金额
+     * Thống kê số tiền thanh toán theo thời gian thanh toán
      * @param array $where
      * @param string $sumField
      * @return mixed
@@ -152,7 +152,7 @@ class StoreOrderRefundDao extends BaseDao
     }
 
     /**
-     * 时间分组订单付款金额统计
+     * Thống kê số tiền thanh toán đơn hàng theo nhóm thời gian
      * @param array $where
      * @param string $sumField
      * @return mixed
@@ -185,7 +185,7 @@ class StoreOrderRefundDao extends BaseDao
      * @param $field
      * @param $str
      * @return mixed
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/03/06
      */

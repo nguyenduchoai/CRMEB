@@ -6,16 +6,16 @@
 				<image v-else class="goods-img" src="../static/receive_gifts_success.png" mode=""></image>
 			</view>
 			<view class="title">
-				{{ $t(status ? '礼物领取成功' : '领取失败，礼物已失效') }}
+				{{ $t(status ? 'Nhận quà thành công' : 'Nhận quà thất bại, quà đã hết hiệu lực') }}
 			</view>
 			<view v-if="status" class="btn" @click="goPage(0)">
-				{{ $t('查看礼物详情') }}
+				{{ $t('Xem chi tiết quà tặng') }}
 			</view>
 			<view v-if="status" class="btn-clear" @click="goPage(1)">
-				{{ $t('返回商城首页') }}
+				{{ $t('Về trang chủ cửa hàng') }}
 			</view>
 			<view v-if="!status" class="btn" @click="goPage(1)">
-				{{ $t('返回商城首页') }}
+				{{ $t('Về trang chủ cửa hàng') }}
 			</view>
 		</view>
 	</view>

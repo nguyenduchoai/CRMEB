@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,72 +21,72 @@
 use think\facade\Env;
 
 return [
-    // 默认使用的数据库连接配置
+    // Cấu hình kết nối cơ sở dữ liệu dùng theo mặc định
     'default'         => Env::get('database.driver', 'mysql'),
 
-    // 数据库连接配置信息
+    // Thông tin cấu hình kết nối cơ sở dữ liệu
     'connections'     => [
         'mysql' => [
-            // 数据库类型
+            // Loại cơ sở dữ liệu
             'type'            => Env::get('database.type', 'mysql'),
-            // 服务器地址
+            // Địa chỉ server
             'hostname'        => Env::get('database.hostname', '127.0.0.1'),
-            // 数据库名
+            // Tên cơ sở dữ liệu
             'database'        => Env::get('database.database', 'crmeb31'),
-            // 用户名
+            // Tên người dùng
             'username'        => Env::get('database.username', 'root'),
-            // 密码
+            // Mật khẩu
             'password'        => Env::get('database.password', 'root'),
-            // 端口
+            // Cổng (port)
             'hostport'        => Env::get('database.hostport', '3306'),
-            // 连接dsn
+            // DSN kết nối
             'dsn'             => '',
-            // 数据库连接参数
+            // Tham số kết nối cơ sở dữ liệu
             'params'          => [],
-            // 数据库编码默认采用utf8
+            // Bảng mã cơ sở dữ liệu mặc định dùng utf8
             'charset'         => Env::get('database.charset', 'utf8'),
-            // 数据库表前缀
+            // Tiền tố bảng cơ sở dữ liệu
             'prefix'          => Env::get('database.prefix', 'eb_'),
-            // 数据库调试模式
+            // Chế độ debug cơ sở dữ liệu
             'debug'           => Env::get('database.debug', true),
-            // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)
+            // Cách triển khai cơ sở dữ liệu: 0 tập trung (một server), 1 phân tán (server chính-phụ)
             'deploy'          => 0,
-            // 数据库读写是否分离 主从式有效
+            // Cơ sở dữ liệu có tách đọc/ghi không, chỉ có hiệu lực ở chế độ chính-phụ
             'rw_separate'     => false,
-            // 读写分离后 主服务器数量
+            // Số server chính sau khi tách đọc/ghi
             'master_num'      => 1,
-            // 指定从服务器序号
+            // Chỉ định số thứ tự server phụ
             'slave_no'        => '',
-            // 是否严格检查字段是否存在
+            // Có kiểm tra nghiêm ngặt trường có tồn tại không
             'fields_strict'   => true,
-            // 是否需要进行SQL性能分析
+            // Có cần phân tích hiệu năng SQL không
             'sql_explain'     => false,
-            // Builder类
+            // Class Builder
             'builder'         => '',
-            // Query类
+            // Class Query
             'query'           => '',
-            // 是否需要断线重连
+            // Có cần tự kết nối lại khi mất kết nối không
             'break_reconnect' => true,
         ],
 
-        // 更多的数据库配置信息
+        // Các thông tin cấu hình cơ sở dữ liệu khác
     ],
 
-    // 自定义时间查询规则
+    // Quy tắc truy vấn thời gian tùy chỉnh
     'time_query_rule' => [],
-    // 自动写入时间戳字段
+    // Tự động ghi trường timestamp
     'auto_timestamp'  => 'timestamp',
-    // 时间字段取出后的默认时间格式
+    // Định dạng thời gian mặc định sau khi lấy trường thời gian ra
     'datetime_format' => 'Y-m-d H:i:s',
-    //数据分页配置
+    //Cấu hình phân trang dữ liệu
     'page' => [
-        //页码key
+        //Key số trang
         'pageKey' => 'page',
-        //每页截取key
+        //Key số lượng lấy mỗi trang
         'limitKey' => 'limit',
-        //每页截取最大值
+        //Giá trị tối đa lấy mỗi trang
         'limitMax' => 100,
-        //默认条数
+        //Số dòng mặc định
         'defaultLimit' => 10,
     ]
 ];

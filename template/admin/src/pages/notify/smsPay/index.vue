@@ -3,7 +3,7 @@
     <div class="i-layout-page-header header_top">
       <div class="i-layout-page-header fl_header">
         <router-link :to="{ path: $routeProStr + '/setting/sms/sms_config/index' }"
-          ><el-button size="small" type="text">返回</el-button></router-link
+          ><el-button size="small" type="text">Quay lại</el-button></router-link
         >
         <el-divider direction="vertical"></el-divider>
         <span class="ivu-page-header-title mr20" style="padding: 0">{{ $route.meta.title }}</span>
@@ -11,15 +11,15 @@
     </div>
     <el-card :bordered="false" shadow="never" class="ivu-mt">
       <el-tabs v-model="isChecked" @tab-click="onChangeType">
-        <el-tab-pane label="短信" name="sms"></el-tab-pane>
-        <el-tab-pane label="商品采集" name="copy"></el-tab-pane>
-        <el-tab-pane label="物流查询" name="expr_query"></el-tab-pane>
-        <el-tab-pane label="电子面单打印" name="expr_dump"></el-tab-pane>
+        <el-tab-pane label="SMS" name="sms"></el-tab-pane>
+        <el-tab-pane label="Thu thập sản phẩm" name="copy"></el-tab-pane>
+        <el-tab-pane label="Tra cứu vận chuyển" name="expr_query"></el-tab-pane>
+        <el-tab-pane label="In vận đơn điện tử" name="expr_dump"></el-tab-pane>
       </el-tabs>
       <el-row :gutter="16" class="mt50">
         <el-col :span="24" class="ivu-text-left mb20">
           <el-col :xs="12" :sm="6" :md="4" :lg="2" class="mr20">
-            <span class="ivu-text-right ivu-block">当前剩余条数：</span>
+            <span class="ivu-text-right ivu-block">Số lượt còn lại hiện tại:</span>
           </el-col>
           <el-col :xs="11" :sm="13" :md="19" :lg="20">
             <span>{{ numbers }}</span>
@@ -27,7 +27,7 @@
         </el-col>
         <el-col :span="24" class="ivu-text-left mb20">
           <el-col :xs="12" :sm="6" :md="4" :lg="2" class="mr20">
-            <span class="ivu-text-right ivu-block">选择套餐：</span>
+            <span class="ivu-text-right ivu-block">Chọn gói:</span>
           </el-col>
           <el-col :xs="11" :sm="13" :md="19" :lg="20">
             <el-row :gutter="20">
@@ -42,7 +42,7 @@
                     ¥ <i>{{ item.price }}</i>
                   </div>
                   <div class="list-goods-list-item-price" :class="{ active: index === current }">
-                    <span>{{ all[isChecked] }}条数: {{ item.num }}</span>
+                    <span>Số lượt {{ all[isChecked] }}: {{ item.num }}</span>
                   </div>
                 </div>
               </el-col>
@@ -51,7 +51,7 @@
         </el-col>
         <el-col :span="24" class="ivu-text-left mb20" v-if="checkList">
           <el-col :xs="12" :sm="6" :md="4" :lg="2" class="mr20">
-            <span class="ivu-text-right ivu-block">充值条数：</span>
+            <span class="ivu-text-right ivu-block">Số lượt nạp:</span>
           </el-col>
           <el-col :xs="11" :sm="13" :md="19" :lg="20">
             <span>{{ checkList.num }}</span>
@@ -59,7 +59,7 @@
         </el-col>
         <el-col :span="24" class="ivu-text-left mb20" v-if="checkList">
           <el-col :xs="12" :sm="6" :md="4" :lg="2" class="mr20">
-            <span class="ivu-text-right ivu-block">支付金额：</span>
+            <span class="ivu-text-right ivu-block">Số tiền thanh toán:</span>
           </el-col>
           <el-col :xs="11" :sm="13" :md="19" :lg="20">
             <span class="list-goods-list-item-number">￥{{ checkList.price }}</span>
@@ -67,11 +67,11 @@
         </el-col>
         <el-col :span="24" class="ivu-text-left mb20">
           <el-col :xs="12" :sm="6" :md="4" :lg="2" class="mr20">
-            <span class="ivu-text-right ivu-block">付款方式：</span>
+            <span class="ivu-text-right ivu-block">Phương thức thanh toán:</span>
           </el-col>
           <el-col :xs="11" :sm="13" :md="19" :lg="20">
             <span class="list-goods-list-item-pay"
-              >微信支付<i v-if="code.invalid">{{ '  （ 支付码过期时间：' + code.invalid + ' ）' }}</i></span
+              >WeChat Pay<i v-if="code.invalid">{{ '  ( Thời gian hết hạn mã thanh toán:' + code.invalid + ' ）' }}</i></span
             >
           </el-col>
         </el-col>
@@ -92,7 +92,7 @@ export default {
   name: 'smsPay',
   data() {
     return {
-      all: { sms: '短信', copy: '商品采集', expr_query: '物流查询', expr_dump: '电子面单打印' },
+      all: { sms: 'SMS', copy: 'Thu thập sản phẩm', expr_query: 'Tra cứu vận chuyển', expr_dump: 'In vận đơn điện tử' },
       isChecked: 'sms',
       numbers: '',
       account: '',
@@ -108,14 +108,14 @@ export default {
     this.onIsLogin();
   },
   methods: {
-    // 查看是否登录
+    // Kiểm tra đã đăng nhập chưa
     onIsLogin() {
       this.spinShow = true;
       isLoginApi()
         .then(async (res) => {
           let data = res.data;
           if (!data.status) {
-            this.$message.warning('请先登录');
+            this.$message.warning('Vui lòng đăng nhập trước');
             this.$router.push({
               path: this.$routeProStr + '/setting/sms/sms_config/index?url=' + this.$route.path,
               query: {
@@ -131,7 +131,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 平台用户信息
+    // Thông tin người dùng nền tảng
     getServeInfo() {
       serveInfoApi()
         .then(async (res) => {
@@ -160,7 +160,7 @@ export default {
       this.getPrice();
       this.getServeInfo();
     },
-    // 支付套餐
+    // Gói thanh toán
     getPrice() {
       this.spinShow = true;
       smsPriceApi({ type: this.isChecked })
@@ -179,7 +179,7 @@ export default {
           this.list = [];
         });
     },
-    // 选中
+    // Đã chọn
     check(item, index) {
       this.spinShow = true;
       this.current = index;
@@ -189,7 +189,7 @@ export default {
         this.spinShow = false;
       }, 800);
     },
-    // 支付码
+    // Mã thanh toán
     getCode(item) {
       let data = {
         pay_type: 'weixin',

@@ -2,7 +2,7 @@
   <div>
     <el-dialog
       :visible.sync="isTemplate"
-      title="运费模版"
+      title="Mẫu phí vận chuyển"
       width="1000px"
       if="isTemplate"
       @on-cancel="cancel"
@@ -12,71 +12,71 @@
         <el-form class="form" ref="formData" label-width="120px" label-position="right">
           <el-row :gutter="24">
             <el-col :xl="18" :lg="18" :md="18" :sm="24" :xs="24">
-              <el-form-item label="模板名称：" prop="name">
-                <el-input type="text" placeholder="请输入模板名称" :maxlength="20" v-model="formData.name" />
+              <el-form-item label="Tên mẫu:" prop="name">
+                <el-input type="text" placeholder="Vui lòng nhập tên mẫu" :maxlength="20" v-model="formData.name" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row :gutter="24">
             <el-col :xl="18" :lg="18" :md="18" :sm="24" :xs="24">
-              <el-form-item label="计费方式：" props="state" label-for="state">
+              <el-form-item label="Cách tính phí:" props="state" label-for="state">
                 <el-radio-group class="radio" v-model="formData.type" @input="changeRadio" element-id="state">
-                  <el-radio :label="1">按件数</el-radio>
-                  <el-radio :label="2">按重量</el-radio>
-                  <el-radio :label="3">按体积</el-radio>
+                  <el-radio :label="1">Theo số lượng</el-radio>
+                  <el-radio :label="2">Theo trọng lượng</el-radio>
+                  <el-radio :label="3">Theo thể tích</el-radio>
                 </el-radio-group>
               </el-form-item>
             </el-col>
           </el-row>
           <el-row :gutter="24">
             <el-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
-              <el-form-item class="label" label="配送区域及运费：" props="state" label-for="state">
-                <el-table ref="table" :data="templateList" class="ivu-mt" empty-text="暂无数据" border>
-                  <el-table-column label="可配送区域" minWidth="100">
+              <el-form-item class="label" label="Khu vực giao hàng và phí vận chuyển:" props="state" label-for="state">
+                <el-table ref="table" :data="templateList" class="ivu-mt" empty-text="Chưa có dữ liệu" border>
+                  <el-table-column label="Khu vực giao hàng" minWidth="100">
                     <template slot-scope="scope">
                       <el-input v-model="templateList[scope.$index].regionName" />
                     </template>
                   </el-table-column>
                   <el-table-column
-                    :label="formData.type === 2 ? '首件重量(KG)' : formData.type === 3 ? '首件体积(m³)' : '首件'"
+                    :label="formData.type === 2 ? 'Khối lượng đầu (KG)' : formData.type === 3 ? 'Thể tích đầu (m³)' : 'Số lượng đầu'"
                     minWidth="100"
                   >
                     <template slot-scope="scope">
                       <el-input type="number" v-model="templateList[scope.$index].first" />
                     </template>
                   </el-table-column>
-                  <el-table-column label="运费（元）" minWidth="100">
+                  <el-table-column label="Phí vận chuyển (đ)" minWidth="100">
                     <template slot-scope="scope">
                       <el-input type="number" v-model="templateList[scope.$index].price" />
                     </template>
                   </el-table-column>
                   <el-table-column
-                    :label="formData.type === 2 ? '续件重量(KG)' : formData.type === 3 ? '续件体积(m³)' : '续件'"
+                    :label="formData.type === 2 ? 'Khối lượng tiếp theo (KG)' : formData.type === 3 ? 'Thể tích tiếp theo (m³)' : 'Số lượng tiếp theo'"
                     minWidth="100"
                   >
                     <template slot-scope="scope">
                       <el-input type="number" v-model="templateList[scope.$index].continue" />
                     </template>
                   </el-table-column>
-                  <el-table-column label="续费（元）" minWidth="100">
+                  <el-table-column label="Phí cộng thêm (đ)" minWidth="100">
                     <template slot-scope="scope">
                       <el-input type="number" v-model="templateList[scope.$index].continue_price" />
                     </template>
                   </el-table-column>
-                  <el-table-column label="操作" fixed="right" width="100">
+                  <el-table-column label="Thao tác" fixed="right" width="100">
                     <template slot-scope="scope">
                       <a
-                        v-if="scope.row.regionName !== '默认全国'"
+                        v-if="scope.row.regionName !== 'Mặc định toàn quốc'"
                         v-db-click
-                        @click="delCity(scope.row, '配送区域', scope.$index, 1)"
-                        >删除</a
+                        @click="delCity(scope.row, 'Khu vực giao hàng', scope.$index, 1)"
+                        >Xóa</a
                       >
                     </template>
                   </el-table-column>
                 </el-table>
                 <el-row class="addTop">
                   <el-col>
-                    <el-button type="primary" icon="md-add" v-db-click @click="addCity(1)">添加配送区域</el-button>
+                    <el-button type="primary" icon="md-add" v-db-click @click="addCity(1)">Thêm khu vực giao hàng</el-button>
                   </el-col>
                 </el-row>
               </el-form-item>
@@ -84,54 +84,54 @@
           </el-row>
           <el-row :gutter="24">
             <el-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
-              <el-form-item label="指定包邮：" prop="store_name" label-for="store_name">
+              <el-form-item label="Miễn phí vận chuyển theo khu vực:" prop="store_name" label-for="store_name">
                 <el-radio-group class="radio" v-model="formData.appoint_check">
-                  <el-radio :label="1">开启</el-radio>
-                  <el-radio :label="0">关闭</el-radio>
+                  <el-radio :label="1">Bật</el-radio>
+                  <el-radio :label="0">Tắt</el-radio>
                 </el-radio-group>
                 <el-table
                   ref="table"
                   :data="appointList"
                   class="addTop mt10"
-                  empty-text="暂无数据"
+                  empty-text="Chưa có dữ liệu"
                   border
                   v-if="formData.appoint_check === 1"
                 >
-                  <el-table-column label="选择区域" minWidth="100">
+                  <el-table-column label="Chọn khu vực" minWidth="100">
                     <template slot-scope="scope">
                       <el-input v-model="appointList[scope.$index].placeName" />
                     </template>
                   </el-table-column>
                   <el-table-column
-                    :label="formData.type === 2 ? '包邮重量' : formData.type === 3 ? '包邮体积(m³)' : '包邮件数'"
+                    :label="formData.type === 2 ? 'Khối lượng miễn phí vận chuyển' : formData.type === 3 ? 'Thể tích miễn phí vận chuyển (m³)' : 'Số lượng miễn phí vận chuyển'"
                     minWidth="100"
                   >
                     <template slot-scope="scope">
                       <el-input type="number" v-model="appointList[scope.$index].a_num" />
                     </template>
                   </el-table-column>
-                  <el-table-column label="包邮金额（元）" minWidth="100">
+                  <el-table-column label="Giá trị đơn miễn phí vận chuyển (đ)" minWidth="100">
                     <template slot-scope="scope">
                       <el-input type="number" v-model="appointList[scope.$index].a_price" />
                     </template>
                   </el-table-column>
-                  <el-table-column label="操作" fixed="right" width="100">
+                  <el-table-column label="Thao tác" fixed="right" width="100">
                     <template slot-scope="scope">
                       <a
-                        v-if="scope.row.regionName !== '默认全国'"
+                        v-if="scope.row.regionName !== 'Mặc định toàn quốc'"
                         v-db-click
-                        @click="delCity(scope.row, '配送区域', scope.$index, 2)"
-                        >删除</a
+                        @click="delCity(scope.row, 'Khu vực giao hàng', scope.$index, 2)"
+                        >Xóa</a
                       >
                     </template>
                   </el-table-column>
                 </el-table>
                 <div v-if="formData.appoint_check === 1" class="free_tips">
-                  指定地区需同时满足包邮（件数/重量/体积）和包邮金额的条件，才可实现包邮
+                  Khu vực được chỉ định chỉ được miễn phí vận chuyển khi đáp ứng đồng thời điều kiện (số lượng/khối lượng/thể tích) và điều kiện giá trị đơn
                 </div>
                 <el-row class="addTop mt5" v-if="formData.appoint_check === 1">
                   <el-col>
-                    <el-button type="primary" icon="md-add" v-db-click @click="addCity(2)">添加包邮区域</el-button>
+                    <el-button type="primary" icon="md-add" v-db-click @click="addCity(2)">Thêm khu vực miễn phí vận chuyển</el-button>
                   </el-col>
                 </el-row>
               </el-form-item>
@@ -139,38 +139,38 @@
           </el-row>
           <el-row :gutter="24">
             <el-col :xl="24" :lg="24" :md="24" :sm="24" :xs="24">
-              <el-form-item label="指定不送达：" prop="store_name" label-for="store_name">
+              <el-form-item label="Khu vực không giao hàng:" prop="store_name" label-for="store_name">
                 <el-radio-group class="radio" v-model="formData.no_delivery_check">
-                  <el-radio :label="1">开启</el-radio>
-                  <el-radio :label="0">关闭</el-radio>
+                  <el-radio :label="1">Bật</el-radio>
+                  <el-radio :label="0">Tắt</el-radio>
                 </el-radio-group>
                 <el-table
                   ref="table"
                   :data="noDeliveryList"
                   class="addTop mt10"
-                  empty-text="暂无数据"
+                  empty-text="Chưa có dữ liệu"
                   border
                   v-if="formData.no_delivery_check === 1"
                 >
-                  <el-table-column label="选择区域" minWidth="100">
+                  <el-table-column label="Chọn khu vực" minWidth="100">
                     <template slot-scope="scope">
                       <el-input v-model="noDeliveryList[scope.$index].placeName" />
                     </template>
                   </el-table-column>
-                  <el-table-column label="操作" fixed="right" width="100">
+                  <el-table-column label="Thao tác" fixed="right" width="100">
                     <template slot-scope="scope">
                       <a
-                        v-if="scope.row.regionName !== '默认全国'"
+                        v-if="scope.row.regionName !== 'Mặc định toàn quốc'"
                         v-db-click
-                        @click="delCity(scope.row, '配送区域', scope.$index, 3)"
-                        >删除</a
+                        @click="delCity(scope.row, 'Khu vực giao hàng', scope.$index, 3)"
+                        >Xóa</a
                       >
                     </template>
                   </el-table-column>
                 </el-table>
                 <el-row class="addTop" v-if="formData.no_delivery_check === 1">
                   <el-col>
-                    <el-button type="primary" icon="md-add" v-db-click @click="addCity(3)">添加不送达区域</el-button>
+                    <el-button type="primary" icon="md-add" v-db-click @click="addCity(3)">Thêm khu vực không giao hàng</el-button>
                   </el-col>
                 </el-row>
               </el-form-item>
@@ -178,11 +178,11 @@
           </el-row>
           <el-row :gutter="24">
             <el-col :xl="18" :lg="18" :md="18" :sm="24" :xs="24">
-              <el-form-item label="排序：" prop="store_name" label-for="store_name">
+              <el-form-item label="Thứ tự sắp xếp:" prop="store_name" label-for="store_name">
                 <el-input-number
                   :controls="false"
                   :min="0"
-                  placeholder="输入值越大越靠前"
+                  placeholder="Giá trị càng lớn càng hiển thị trước"
                   v-model="formData.sort"
                 ></el-input-number>
               </el-form-item>
@@ -192,7 +192,7 @@
             <el-col>
               <el-form-item prop="store_name" label-for="store_name">
                 <el-button type="primary" v-db-click @click="handleSubmit">{{
-                  id ? '立即修改' : '立即提交'
+                  id ? 'Lưu chỉnh sửa' : 'Gửi ngay'
                 }}</el-button>
               </el-form-item>
             </el-col>
@@ -221,11 +221,11 @@ export default {
         {
           region: [
             {
-              name: '默认全国',
+              name: 'Mặc định toàn quốc',
               city_id: 0,
             },
           ],
-          regionName: '默认全国',
+          regionName: 'Mặc định toàn quốc',
           first: 1,
           price: 0,
           continue: 1,
@@ -253,10 +253,10 @@ export default {
       index: -1,
       displayData: '',
       currentProvince: '',
-      selectArr: [], // 传递选中的城市
-      noShippingArr: [], // 不包邮选择的城市数据
-      yesShippingArr: [], // 包邮选择的城市数据
-      noDeliveryArr: [], // 不送达选择的城市数据
+      selectArr: [], // Truyền thành phố đã chọn
+      noShippingArr: [], // Dữ liệu thành phố chọn không miễn phí vận chuyển
+      yesShippingArr: [], // Dữ liệu thành phố chọn miễn phí vận chuyển
+      noDeliveryArr: [], // Dữ liệu thành phố chọn không giao đến
     };
   },
   computed: {},
@@ -317,7 +317,7 @@ export default {
           break;
       }
     },
-    // 单独添加配送区域
+    // Thêm riêng khu vực giao hàng
     addCity(type) {
       this.selectArr = type == 1 ? this.noShippingArr : type == 2 ? this.yesShippingArr : this.noDeliveryArr;
       this.type = type;
@@ -325,33 +325,33 @@ export default {
       this.$refs.city.addressModal = true;
     },
     changeRadio() {},
-    // 提交
+    // Gửi
     handleSubmit: function () {
       let that = this;
       if (!that.formData.name.trim().length) {
-        return that.$message.error('请填写模板名称');
+        return that.$message.error('Vui lòng nhập tên mẫu');
       }
       for (let i = 0; i < that.templateList.length; i++) {
         if (that.templateList[i].first <= 0) {
-          return that.$message.error('首件/重量/体积应大于0');
+          return that.$message.error('Số lượng đầu/khối lượng/thể tích phải lớn hơn 0');
         }
         if (that.templateList[i].price < 0) {
-          return that.$message.error('运费应大于等于0');
+          return that.$message.error('Phí vận chuyển phải lớn hơn hoặc bằng 0');
         }
         if (that.templateList[i].continue <= 0) {
-          return that.$message.error('续件/重量/体积应大于0');
+          return that.$message.error('Số lượng tiếp theo/khối lượng/thể tích phải lớn hơn 0');
         }
         if (that.templateList[i].continue_price < 0) {
-          return that.$message.error('续费应大于等于0');
+          return that.$message.error('Phí cộng thêm phải lớn hơn hoặc bằng 0');
         }
       }
       if (that.formData.appoint_check === 1) {
         for (let i = 0; i < that.appointList.length; i++) {
           if (that.appointList[i].a_num <= 0) {
-            return that.$message.error('包邮件数应大于0');
+            return that.$message.error('Số lượng miễn phí vận chuyển phải lớn hơn 0');
           }
           if (that.appointList[i].a_price < 0) {
-            return that.$message.error('包邮金额应大于等于0');
+            return that.$message.error('Giá trị đơn miễn phí vận chuyển phải lớn hơn hoặc bằng 0');
           }
         }
       }
@@ -382,11 +382,11 @@ export default {
           {
             region: [
               {
-                name: '默认全国',
+                name: 'Mặc định toàn quốc',
                 city_id: 0,
               },
             ],
-            regionName: '默认全国',
+            regionName: 'Mặc định toàn quốc',
             first: 1,
             price: 0,
             continue: 1,
@@ -397,7 +397,7 @@ export default {
         this.$message.success(res.msg);
       });
     },
-    // 删除
+    // Xóa
     delCity(row, tit, num, type) {
       if (type === 1) {
         this.templateList.splice(num, 1);
@@ -421,7 +421,7 @@ export default {
       //       this.$message.error(res.msg);
       //     });
     },
-    // 关闭
+    // Tắt
     cancel() {
       this.noShippingArr = [];
       this.noDeliveryArr = [];
@@ -441,11 +441,11 @@ export default {
         {
           region: [
             {
-              name: '默认全国',
+              name: 'Mặc định toàn quốc',
               city_id: 0,
             },
           ],
-          regionName: '默认全国',
+          regionName: 'Mặc định toàn quốc',
           first: 0,
           price: 0,
           continue: 0,

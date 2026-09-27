@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="item">
-      <span>直播间名称：</span>
+      <span>Tên phòng livestream:</span>
       {{ datas.name }}
     </div>
     <div class="item">
-      <span>直播间ID：</span>
+      <span>ID phòng livestream:</span>
       {{ datas.id }}
     </div>
     <div class="item box">
@@ -17,8 +17,8 @@
         <i class="el-icon-picture-outline" style="font-size: 24px"></i>
       </div>
     </div>
-    <el-button type="primary" style="width: 100%" v-db-click @click="bindSub">提交</el-button>
-    <el-dialog :visible.sync="modals" title="商品列表" class="paymentFooter" width="1000px">
+    <el-button type="primary" style="width: 100%" v-db-click @click="bindSub">Gửi</el-button>
+    <el-dialog :visible.sync="modals" title="Danh sách sản phẩm" class="paymentFooter" width="1000px">
       <goods-list
         ref="goodslist"
         @getProductId="getProductId"

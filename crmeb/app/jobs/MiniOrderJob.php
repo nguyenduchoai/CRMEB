@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -30,13 +30,13 @@ class MiniOrderJob extends BaseJobs
             MiniOrderService::shippingByTradeNo($out_trade_no, $logistics_type, $shipping_list, $payer_openid, $path, $delivery_mode, $is_all_delivered);
             return true;
         } catch (HttpException $e) {
-            // 订单异常处理
+            // Xử lý đơn hàng bất thường
             throw new HttpException($e);
         }
     }
 
     /**
-     * 同步商城发货但是小程序未发货的订单
+     * Đồng bộ các đơn hàng đã giao hàng trên cửa hàng nhưng chưa giao hàng trên Mini Program
      * @return bool
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -58,18 +58,18 @@ class MiniOrderJob extends BaseJobs
                 if ($res['errcode'] == 0 && isset($res['order_list']) && count($res['order_list']) > 0) {
                     foreach ($res['order_list'] as $item) {
                         $shipping_list = [
-                            ['item_desc' => '未知']
+                            ['item_desc' => 'Không xác định']
                         ];
                         $path = '/pages/index/index';
                         if (strpos($item['merchant_trade_no'], 'hy') !== false) {
                             $shipping_list = [
-                                ['item_desc' => '用户购买付费会员']
+                                ['item_desc' => 'Người dùng mua thành viên trả phí']
                             ];
                             $path = '/pages/annex/vip_paid/index';
                         }
                         if (strpos($item['merchant_trade_no'], 'cz') !== false) {
                             $shipping_list = [
-                                ['item_desc' => '用户充值']
+                                ['item_desc' => 'Nạp tiền người dùng']
                             ];
                             $path = '/pages/users/user_bill/index?type=2';
                         }
@@ -77,7 +77,7 @@ class MiniOrderJob extends BaseJobs
                             $is_shipping = app()->make(StoreOrderServices::class)->value(['order_id' => $item['merchant_trade_no']], 'status');
                             if ((int)$is_shipping === 0) continue;
                             $shipping_list = [
-                                ['item_desc' => '购买商品']
+                                ['item_desc' => 'Mua sản phẩm']
                             ];
                             $path = 'pages/goods/order_details/index?order_id=' . $item['merchant_trade_no'];
                         }

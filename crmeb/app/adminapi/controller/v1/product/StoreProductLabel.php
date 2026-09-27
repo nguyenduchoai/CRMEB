@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -48,13 +48,13 @@ class StoreProductLabel extends AuthController
             ['sort', 0],
         ]);
         $this->labelCateServices->labelCateSave($id, $data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     public function labelCateDel($id)
     {
         $this->labelCateServices->labelCateDel($id);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 
 
@@ -92,25 +92,25 @@ class StoreProductLabel extends AuthController
             ['is_show', 1],
         ]);
         $this->labelServices->labelSave($data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     public function labelDel($id)
     {
         $this->labelServices->labelDel($id);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 
     public function labelIsShow($id, $is_show)
     {
         $this->labelServices->labelIsShow($id, $is_show);
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
     public function labelStatus($id, $status)
     {
         $this->labelServices->labelStatus($id, $status);
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
     public function labelUseList()

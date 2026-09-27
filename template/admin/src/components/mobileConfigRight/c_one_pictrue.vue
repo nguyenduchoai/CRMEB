@@ -1,14 +1,14 @@
 <template>
   <div class="onePictrue">
-    <div class="info">建议：请先选择图片，图片宽度750px，高度不限</div>
+    <div class="info">Đề xuất: vui lòng chọn ảnh trước, chiều rộng ảnh 750px, chiều cao không giới hạn</div>
     <div class="pictrues">
       <img :src="configData.url" v-if="configData.url" />
-      <div class="emptyBox" v-else>750*高度不限</div>
+      <div class="emptyBox" v-else>750*chiều cao không giới hạn</div>
     </div>
     <div class="uploadImg">
-      <div class="name">图片</div>
+      <div class="name">Hình ảnh</div>
       <div class="picTxt">
-        <div class="box" @click="modalPicTap('单选')">
+        <div class="box" @click="modalPicTap('Chọn một')">
           <div class="pictrue acea-row row-center-wrapper" v-if="configData.url">
             <img :src="configData.url" alt="" />
             <div class="iconfont icondel_1" @click.stop="bindDelete"></div>
@@ -18,9 +18,9 @@
         <div class="tip">{{ configData.info }}</div>
       </div>
     </div>
-    <div class="bnt" @click="openFloorModal">+ 编辑热区</div>
+    <div class="bnt" @click="openFloorModal">+ Sửa vùng nóng</div>
     <div>
-      <el-dialog :visible.sync="modalPic" width="960px" :title="'上传图片'">
+      <el-dialog :visible.sync="modalPic" width="960px" :title="'Tải lên ảnh'">
         <uploadPictures
           :isChoice="isChoice"
           @getPic="getPic"
@@ -76,8 +76,8 @@ export default {
         xs: 12,
       },
       modalPic: false,
-      isChoice: '单选',
-      imgAreaData: [], //热区数据
+      isChoice: 'Chọn một',
+      imgAreaData: [], //Dữ liệu vùng nóng (hotspot)
     };
   },
   watch: {
@@ -101,11 +101,11 @@ export default {
     bindDelete() {
       this.configData.url = '';
     },
-    // 点击图文封面
+    // Click vào ảnh bìa bài viết ảnh-văn
     modalPicTap(title) {
       this.modalPic = true;
     },
-    // 获取图片信息
+    // Lấy thông tin ảnh
     getPic(pc) {
       this.$nextTick(() => {
         this.configData.url = pc.att_dir;
@@ -113,15 +113,15 @@ export default {
       });
     },
     openFloorModal() {
-      // 如果配置数据中有url，则显示热点图对话框
+      // Nếu trong dữ liệu cấu hình có url thì hiển thị hộp thoại ảnh điểm nóng (hotspot)
       if (this.configData.url) this.$refs.hotpot.dialogVisible = true;
     },
     /**
-     * 处理区域数据
-     * @param {Object} areaData - 区域数据对象
+     * Xử lý dữ liệu vùng
+     * @param {Object} areaData - Đối tượng dữ liệu vùng
      */
     handleAreaData(areaData) {
-      // 打印保存的数据
+      // In dữ liệu đã lưu
       this.configData.list = areaData;
     },
   },

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,7 +17,7 @@ use crmeb\traits\ModelTrait;
 use think\Model;
 
 /**
- * 店员模型
+ * Model nhân viên cửa hàng
  * Class SystemStoreStaff
  * @package app\model\system\store
  */
@@ -26,13 +26,13 @@ class SystemStoreStaff extends BaseModel
     use ModelTrait;
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'system_store_staff';
 
     /**
-     * user用户表一对一关联
+     * Liên kết một-một với bảng người dùng user
      * @return \think\model\relation\HasOne
      */
     public function user()
@@ -43,7 +43,7 @@ class SystemStoreStaff extends BaseModel
     }
 
     /**
-     * 门店表一对一关联
+     * Liên kết một-một với bảng cửa hàng
      * @return \think\model\relation\HasOne
      */
     public function store()
@@ -54,7 +54,7 @@ class SystemStoreStaff extends BaseModel
     }
 
     /**
-     * 时间戳获取器转日期
+     * Getter timestamp chuyển thành ngày
      * @param $value
      * @return false|string
      */
@@ -64,9 +64,9 @@ class SystemStoreStaff extends BaseModel
     }
 
     /**
-     * 是否有核销权限搜索器
+     * Bộ lọc có quyền xác nhận sử dụng hay không
      * @param Model $query
-     * @param $value 用户uid
+     * @param $value uid người dùng
      */
     public function searchIsStatusAttr($query, $value)
     {
@@ -74,7 +74,7 @@ class SystemStoreStaff extends BaseModel
     }
 
     /**
-     * uid搜索器
+     * Bộ lọc uid
      * @param Model $query
      * @param $value
      */
@@ -84,7 +84,7 @@ class SystemStoreStaff extends BaseModel
     }
 
     /**
-     * 门店id搜索器
+     * Bộ lọc id cửa hàng
      * @param Model $query
      * @param $value
      */

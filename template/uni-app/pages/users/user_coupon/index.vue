@@ -1,10 +1,10 @@
 <template>
 	<view :style="colorStyle">
 		<view class="navbar acea-row row-around">
-			<view class="item acea-row row-center-wrapper" :class="{ on: navOn === 1 }" @click="onNav(1)">{{$t(`未使用`)}}
+			<view class="item acea-row row-center-wrapper" :class="{ on: navOn === 1 }" @click="onNav(1)">{{$t(`Chưa sử dụng`)}}
 			</view>
 			<view class="item acea-row row-center-wrapper" :class="{ on: navOn === 2 }" @click="onNav(2)">
-				{{$t(`已使用/过期`)}}
+				{{$t(`Đã dùng/Hết hạn`)}}
 			</view>
 		</view>
 		<view class='coupon-list' v-if="couponsList.length">
@@ -14,20 +14,20 @@
 					<view class='money' :class='item._type == 0 ? "moneyGray" : ""'>
 						<view>{{$t(`￥`)}}<text class='num'>{{item.coupon_price}}</text></view>
 						<view class="pic-num" v-if="item.use_min_price > 0">
-							{{$t(`满`)}}{{item.use_min_price}}{{$t(`元可用`)}}
+							{{$t(`Đơn từ`)}}{{item.use_min_price}}{{$t(`đ có thể dùng`)}}
 						</view>
-						<view class="pic-num" v-else>{{$t(`无门槛券`)}}</view>
+						<view class="pic-num" v-else>{{$t(`Phiếu không điều kiện`)}}</view>
 					</view>
 				</view>
 				<view class='text'>
 					<view class='condition'>
 						<view class="name line2">
 							<view class="line-title" :class="item._type === 0 ? 'bg-color-huic' : 'bg-color-check'"
-								v-if="item.applicable_type === 0">{{$t(`通用劵`)}}</view>
+								v-if="item.applicable_type === 0">{{$t(`Phiếu toàn cửa hàng`)}}</view>
 							<view class="line-title" :class="item._type === 0 ? 'bg-color-huic' : 'bg-color-check'"
-								v-else-if="item.applicable_type === 1">{{$t(`品类券`)}}</view>
+								v-else-if="item.applicable_type === 1">{{$t(`Phiếu theo danh mục`)}}</view>
 							<view class="line-title" :class="item._type === 0 ? 'bg-color-huic' : 'bg-color-check'"
-								v-else>{{$t(`商品券`)}}</view>
+								v-else>{{$t(`Phiếu theo sản phẩm`)}}</view>
 							<image src="../../../static/images/fvip.png" class="pic" v-if="item.receive_type===4">
 							</image>
 							{{$t(item.coupon_title)}}
@@ -86,8 +86,8 @@
 				imgHost: HTTP_REQUEST_URL,
 				couponsList: [],
 				loading: false,
-				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false, //是否隐藏授权
+				isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+				isShowAuth: false, //Có ẩn ủy quyền hay không
 				navOn: 1,
 				page: 1,
 				limit: 15,
@@ -127,7 +127,7 @@
 				if (this.navOn == 2) return
 				let url = '';
 				if (item.category_id == 0 && item.product_id == '') {
-					url = '/pages/goods/goods_list/index?title=默认'
+					url = '/pages/goods/goods_list/index?title=Mặc định'
 				}
 				if (item.category_id != 0) {
 					url = `/pages/goods/goods_list/index?title=${item.coupon_title}&coupon_category_id=${item.category_id}`
@@ -138,7 +138,7 @@
 					if (num == 1) {
 						url = '/pages/goods_details/index?id=' + item.product_id
 					} else {
-						url = '/pages/goods/goods_list/index?productId=' + item.product_id + '&title=默认'
+						url = '/pages/goods/goods_list/index?productId=' + item.product_id + '&title=Mặc định'
 					}
 				}
 				uni.navigateTo({
@@ -146,17 +146,17 @@
 				});
 			},
 			/**
-			 * 授权回调
+			 * Callback ủy quyền
 			 */
 			onLoadFun: function() {
 				this.getUseCoupons();
 			},
-			// 授权关闭
+			// Đóng ủy quyền
 			authColse: function(e) {
 				this.isShowAuth = e
 			},
 			/**
-			 * 获取领取优惠券列表
+			 * Lấy danh sách phiếu giảm giá đã nhận
 			 */
 			getUseCoupons: function() {
 				let that = this;
@@ -165,7 +165,7 @@
 				}
 				that.loading = true;
 				uni.showLoading({
-					title: that.$t(`正在加载…`)
+					title: that.$t(`Đang tải...`)
 				});
 				getUserCoupons(this.navOn, {
 					page: this.page,

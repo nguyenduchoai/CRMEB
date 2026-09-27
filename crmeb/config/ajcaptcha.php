@@ -1,24 +1,24 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 declare(strict_types=1);
 
 return [
-    'font_file' => '', //自定义字体包路径， 不填使用默认值
-    //文字验证码
+    'font_file' => '', //Đường dẫn gói font tùy chỉnh, để trống thì dùng giá trị mặc định
+    //Mã xác thực dạng chữ
     'click_world' => [
         'backgrounds' => []
     ],
-    //滑动验证码
+    //Mã xác thực dạng trượt
     'block_puzzle' => [
-        /*背景图片路径， 不填使用默认值， 支持string与array两种数据结构。string为默认图片的目录，array索引数组则为具体图片的地址*/
+        /*Đường dẫn ảnh nền, để trống thì dùng giá trị mặc định, hỗ trợ 2 kiểu dữ liệu string và array. string là thư mục ảnh mặc định, array là mảng chỉ số chứa địa chỉ ảnh cụ thể*/
         'backgrounds' => [
             public_path().'statics/images/check1.jpg',
             public_path().'statics/images/check2.jpg',
@@ -26,39 +26,39 @@ return [
             public_path().'statics/images/check4.jpg',
         ],
 
-        /*模板图,格式同上支持string与array*/
+        /*Ảnh mẫu, định dạng như trên, hỗ trợ string và array*/
         'templates' => [],
 
-        'offset' => 10, //容错偏移量
+        'offset' => 10, //Độ lệch cho phép sai số
 
-        'is_cache_pixel' => true, //是否开启缓存图片像素值，开启后能提升服务端响应性能（但要注意更换图片时，需要清除缓存）
+        'is_cache_pixel' => true, //Có mở cache giá trị pixel ảnh không, mở lên sẽ tăng hiệu năng phản hồi phía server (nhưng khi đổi ảnh cần xóa cache)
 
-        'is_interfere' => true, //开启干扰图
+        'is_interfere' => true, //Mở ảnh gây nhiễu
     ],
-    //水印
+    //Watermark
     'watermark' => [
         'fontsize' => 12,
         'color' => '#FFFFFF',
         'text' => 'CRMEB'
     ],
     'cache' => [
-        //若您使用了框架，并且想使用类似于redis这样的缓存驱动，则应换成框架的中的缓存驱动
+        //Nếu bạn dùng framework và muốn dùng driver cache kiểu như redis, thì nên đổi sang driver cache của framework
         'constructor' => app()->make(\think\Cache::class),
         'method' => [
-            //遵守PSR-16规范不需要设置此项（tp6, laravel,hyperf）。如tp5就不支持（tp5缓存方法是rm,所以要配置为"delete" => "rm"）
+            //Tuân theo chuẩn PSR-16 thì không cần đặt mục này (tp6, laravel, hyperf). Còn tp5 thì không hỗ trợ (phương thức cache của tp5 là rm, nên phải cấu hình là "delete" => "rm")
             /**
-             * 'get' => 'get', //获取
-             * 'set' => 'set', //设置
-             * 'delete' => 'delete',//删除
-             * 'has' => 'has' //key是否存在
+             * 'get' => 'get', //Lấy
+             * 'set' => 'set', //Đặt
+             * 'delete' => 'delete',//Xóa
+             * 'has' => 'has' //Kiểm tra key có tồn tại không
              */
         ],
         'options' => [
-            //如果您依然使用\Fastknife\Utils\CacheUtils做为您的缓存驱动，那么您可以自定义缓存配置。
-            'expire' => 300,//缓存有效期 （默认为0 表示永久缓存）
-            'prefix' => '', //缓存前缀
-            'path' => '', //缓存目录
-            'serialize' => [], //缓存序列化和反序列化方法
+            //Nếu bạn vẫn dùng \Fastknife\Utils\CacheUtils làm driver cache của mình, thì có thể tự tùy chỉnh cấu hình cache.
+            'expire' => 300,//Thời hạn cache (mặc định là 0, nghĩa là cache vĩnh viễn)
+            'prefix' => '', //Tiền tố cache
+            'path' => '', //Thư mục bộ nhớ đệm (cache)
+            'serialize' => [], //Phương thức serialize và deserialize cache
         ]
     ]
 ];

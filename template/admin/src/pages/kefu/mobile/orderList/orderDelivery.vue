@@ -2,7 +2,7 @@
   <div class="deliver-goods" v-if="delivery">
     <header>
       <div class="order-num acea-row row-between-wrapper">
-        <div class="num line1">订单号：{{ orderId }}</div>
+        <div class="num line1">Mã đơn hàng: {{ orderId }}</div>
         <div class="name line1">
           <span class="iconfontYI icon-yonghu2"></span>{{ delivery.userInfo ? delivery.userInfo.nickname : '' }}
         </div>
@@ -17,7 +17,7 @@
     </header>
     <div class="wrapper">
       <div class="item acea-row row-between-wrapper">
-        <div>发货方式</div>
+        <div>Hình thức giao hàng</div>
         <div class="mode acea-row row-middle row-right">
           <div
             class="goods"
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="item acea-row row-between-wrapper" v-if="active === 0">
-        <div>发货类型</div>
+        <div>Hình thức giao hàng</div>
         <div class="mode acea-row row-middle row-right">
           <div
             class="goods"
@@ -48,9 +48,11 @@
       </div>
       <div class="list" v-if="active === 0">
         <div class="item acea-row row-between-wrapper">
-          <div>快递公司</div>
+          <div>Đơn vị vận chuyển</div>
           <span class="checkName" v-text="expFrom.delivery_name" v-db-click @click="show"></span>
           <vue-pickers
+            cancelText="Hủy"
+            confirmText="Xác nhận"
             :data="pickData"
             :showToolbar="true"
             :maskClick="true"
@@ -61,20 +63,22 @@
           ></vue-pickers>
         </div>
         <div class="item acea-row row-between-wrapper" v-if="expFrom.express_record_type === 1">
-          <div>快递单号</div>
-          <input type="text" placeholder="填写快递单号" v-model="expFrom.delivery_id" class="mode input-input" />
+          <div>Mã vận đơn</div>
+          <input type="text" placeholder="Điền mã vận đơn" v-model="expFrom.delivery_id" class="mode input-input" />
         </div>
         <div class="item acea-row row-between-wrapper" v-if="expFrom.express_record_type === 1">
-          <div class="tip">顺丰请输入单号：收件人或寄件人手机号后四位,</div>
-          <div class="tip">例如：SF000000000000:3941</div>
+          <div class="tip">Với SF Express, vui lòng nhập mã vận đơn: 4 số cuối số điện thoại người nhận hoặc người gửi,</div>
+          <div class="tip">Ví dụ: SF000000000000:3941</div>
         </div>
       </div>
       <div class="list" v-if="expTemp.length && active === 0">
         <div class="item acea-row row-between-wrapper">
-          <div>电子面单</div>
+          <div>Vận đơn điện tử</div>
           <div class="acea-row">
             <span class="checkName" v-text="expFrom.delivery_name" v-db-click @click="showExpTemp"></span>
             <vue-pickers
+              cancelText="Hủy"
+              confirmText="Xác nhận"
               :data="expTempData"
               :showToolbar="true"
               :maskClick="true"
@@ -83,7 +87,7 @@
               :visible.sync="pickerVisibleExpTemp"
             ></vue-pickers>
             <div class="look">
-              <span>预览</span>
+              <span>Xem trước</span>
               <viewer class="viewer" ref="viewer">
                 <img v-lazy="tempImg" class="image" />
               </viewer>
@@ -93,23 +97,25 @@
       </div>
       <div class="list" v-if="expFrom.express_record_type === 2 && active === 0">
         <div class="item acea-row row-between-wrapper">
-          <div>寄件人姓名</div>
-          <input type="text" placeholder="填写寄件人姓名" v-model="expFrom.to_name" class="mode input-input" />
+          <div>Họ tên người gửi</div>
+          <input type="text" placeholder="Điền họ tên người gửi" v-model="expFrom.to_name" class="mode input-input" />
         </div>
         <div class="item acea-row row-between-wrapper">
-          <div>寄件人电话</div>
-          <input type="text" placeholder="填写寄件人电话" v-model="expFrom.to_tel" class="mode input-input" />
+          <div>Số điện thoại người gửi</div>
+          <input type="text" placeholder="Điền số điện thoại người gửi" v-model="expFrom.to_tel" class="mode input-input" />
         </div>
         <div class="item acea-row row-between-wrapper">
-          <div>寄件人地址</div>
-          <input type="text" placeholder="填写寄件人地址" v-model="expFrom.to_addr" class="mode input-input" />
+          <div>Địa chỉ người gửi</div>
+          <input type="text" placeholder="Điền địa chỉ người gửi" v-model="expFrom.to_addr" class="mode input-input" />
         </div>
       </div>
       <div class="list" v-if="active === 1">
         <div class="item acea-row row-between-wrapper">
-          <div>送货人</div>
+          <div>Người giao hàng</div>
           <span class="checkName" v-text="expFrom.sh_delivery_name" v-db-click @click="showName"></span>
           <vue-pickers
+            cancelText="Hủy"
+            confirmText="Xác nhận"
             :data="deliveryList"
             :showToolbar="true"
             :maskClick="true"
@@ -119,20 +125,20 @@
           ></vue-pickers>
         </div>
         <div class="item acea-row row-between-wrapper">
-          <div>送货人电话</div>
-          <input type="text" placeholder="填写送货人电话" v-model="expFrom.sh_delivery_id" class="mode input-input" />
+          <div>Số điện thoại người giao hàng</div>
+          <input type="text" placeholder="Điền số điện thoại người giao hàng" v-model="expFrom.sh_delivery_id" class="mode input-input" />
         </div>
       </div>
       <textarea
         v-if="active === 2"
         v-model="expFrom.fictitious_content"
         class="textarea"
-        placeholder="备注"
+        placeholder="Ghi chú"
         :maxlength="500"
       ></textarea>
     </div>
     <div style="height: 1.2rem"></div>
-    <div class="confirm" v-db-click @click="saveInfo">确认提交</div>
+    <div class="confirm" v-db-click @click="saveInfo">Xác nhận gửi</div>
   </div>
 </template>
 <script>
@@ -147,28 +153,28 @@ export default {
   props: {},
   data: function () {
     return {
-      pickerVisible: false, // 快递公司选择
+      pickerVisible: false, // Chọn đơn vị vận chuyển
       types: [
         {
           type: 1,
-          title: '发货',
+          title: 'Giao hàng',
         },
         {
           type: 2,
-          title: '送货',
+          title: 'Cửa hàng tự giao',
         },
         {
           type: 3,
-          title: '无需发货',
+          title: 'Không cần giao hàng',
         },
       ],
       expressType: [
         {
-          title: '手动填写',
+          title: 'Điền thủ công',
           key: 1,
         },
         {
-          title: '电子面单打印',
+          title: 'In vận đơn điện tử',
           key: 2,
         },
       ],
@@ -180,12 +186,12 @@ export default {
       type: '1',
       result: {},
       expFrom: {
-        type: 1, // 发货方式
-        delivery_name: '', //快递公司
-        delivery_id: '', //快递单号
-        delivery_code: '', //快递公司编码
-        express_record_type: 1, // 发货类型
-        express_temp_id: '', // 电子面单模板
+        type: 1, // Hình thức giao hàng
+        delivery_name: '', //Đơn vị vận chuyển
+        delivery_id: '', //Mã vận đơn
+        delivery_code: '', //Mã đơn vị vận chuyển
+        express_record_type: 1, // Hình thức giao hàng
+        express_temp_id: '', // Mẫu vận đơn điện tử
         to_name: '',
         to_tel: '',
         to_addr: '',
@@ -195,12 +201,12 @@ export default {
         fictitious_content: '',
       },
       expTemp: [],
-      pickerVisibleName: false, // 送货人选择
-      pickerVisibleExpTemp: false, //电子面单选择
-      expTempData: [], // 面单数据
-      tempName: '', // 面单名称
-      tempImg: '', //面单图片
-      deliveryList: [], // 送货人数据
+      pickerVisibleName: false, // Chọn người giao hàng
+      pickerVisibleExpTemp: false, //Chọn vận đơn điện tử
+      expTempData: [], // Dữ liệu vận đơn
+      tempName: '', // Tên vận đơn
+      tempImg: '', //Ảnh vận đơn
+      deliveryList: [], // Dữ liệu người giao hàng
     };
   },
   watch: {
@@ -221,11 +227,11 @@ export default {
     this.getLogistics();
   },
   methods: {
-    // 显示送货人
+    // Hiển thị người giao hàng
     showName() {
       this.pickerVisibleName = true;
     },
-    // 获取配送人
+    // Lấy người giao hàng
     getDelivery() {
       orderDeliveryAll().then((res) => {
         let tdata = [];
@@ -243,13 +249,13 @@ export default {
         if (this.expFrom.express_record_type === 2) this.getTemp();
       });
     },
-    // 选择送货人
+    // Chọn người giao hàng
     confirmName(res) {
       this.expFrom.sh_delivery_name = res[0].label;
       this.expFrom.sh_delivery_id = res[0].phone;
       this.expFrom.sh_delivery_uid = res[0].value;
     },
-    // 获取订单打印默认配置
+    // Lấy cấu hình in đơn hàng mặc định
     orderDeliveryInfo() {
       getSender().then((res) => {
         this.expFrom.to_name = res.data.to_name;
@@ -260,7 +266,7 @@ export default {
     cancel() {
       // this.result = 'click cancel result: null'
     },
-    // 选择发货类型
+    // Chọn loại giao hàng
     changeExpTpe(item, index) {
       this.expFrom.express_record_type = item.key;
       this.activeExpTpe = index;
@@ -271,7 +277,7 @@ export default {
         this.expTemp = [];
       }
     },
-    // 快递模板
+    // Mẫu vận đơn
     getTemp() {
       orderTemp({
         com: this.expFrom.delivery_code,
@@ -295,13 +301,13 @@ export default {
         }
       });
     },
-    // 选择电子面单模板
+    // Chọn mẫu vận đơn điện tử
     confirmExpTemp(res) {
       this.expFrom.express_temp_id = res[0].value;
       this.tempName = res[0].label;
       this.tempImg = res[0].pic;
     },
-    // 选择快递公司
+    // Chọn đơn vị vận chuyển
     confirm(res) {
       this.expFrom.delivery_name = res[0].label;
       this.expFrom.delivery_code = res[0].value;
@@ -313,7 +319,7 @@ export default {
     showExpTemp() {
       this.pickerVisibleExpTemp = true;
     },
-    // 发货方式
+    // Hình thức giao hàng
     changeType: function (item, index) {
       this.active = index;
       this.expFrom.type = item.type;
@@ -354,18 +360,18 @@ export default {
       // save.type = that.expFrom.type;
       switch (type) {
         case '1':
-          if (this.expFrom.type === 1 && !that.expFrom.delivery_name) return that.$dialog.error('请输入快递公司');
+          if (this.expFrom.type === 1 && !that.expFrom.delivery_name) return that.$dialog.error('Vui lòng nhập đơn vị vận chuyển');
           if (this.expFrom.type === 1 && this.expFrom.express_record_type === 1 && !that.expFrom.delivery_id)
-            return that.$dialog.error('请输入快递单号');
+            return that.$dialog.error('Vui lòng nhập mã vận đơn');
           if (this.expFrom.type === 1 && !that.expFrom.express_temp_id && this.expFrom.express_record_type === 2)
-            return that.$dialog.error('请选择电子面单');
+            return that.$dialog.error('Vui lòng chọn vận đơn điện tử');
           that.setInfo(that.expFrom);
           break;
         case '2':
           try {
             await this.$validator({
-              expressId: [required(required.message('发货人姓名'))],
-              expressCode: [required(required.message('发货人电话'))],
+              expressId: [required(required.message('Họ tên người gửi hàng'))],
+              expressCode: [required(required.message('Số điện thoại người gửi hàng'))],
             }).validate({ expressId, expressCode });
           } catch (e) {
             return validatorDefaultCatch(e);
@@ -383,7 +389,7 @@ export default {
       let that = this;
       orderDelivery(that.$route.params.id, item).then(
         (res) => {
-          that.$dialog.success('发送货成功');
+          that.$dialog.success('Giao hàng thành công');
           that.$router.go(-1);
         },
         (error) => {

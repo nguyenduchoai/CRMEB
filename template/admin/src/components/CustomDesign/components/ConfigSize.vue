@@ -1,8 +1,8 @@
 <template>
   <div>
-    <!-- <div class="section-title">容器设置</div> -->
+    <!-- <div class="section-title">Cài đặt container</div> -->
     <div class="size-container">
-      <el-form-item :label="labelPrefix + '宽度'" class="size-item">
+      <el-form-item :label="labelPrefix + 'Chiều rộng'" class="size-item">
         <div class="row">
           <el-slider
             v-model="curComponent.style.width"
@@ -23,11 +23,11 @@
       </el-form-item>
       <div class="lock-wrapper">
         <div class="lock-line"></div>
-        <div class="lock-btn" @click="toggleLock" :class="{ active: isLocked }" title="锁定宽高">
+        <div class="lock-btn" @click="toggleLock" :class="{ active: isLocked }" title="Khóa tỷ lệ rộng/cao">
           <span class="iconfont iconsuodingbili"></span>
         </div>
       </div>
-      <el-form-item :label="labelPrefix + '高度'" class="size-item">
+      <el-form-item :label="labelPrefix + 'Chiều cao'" class="size-item">
         <div class="row">
           <el-slider
             v-model="curComponent.style.height"
@@ -68,7 +68,7 @@ export default {
     },
     labelPrefix: {
       type: String,
-      default: '容器',
+      default: 'Vùng chứa',
     },
   },
   data() {

@@ -1,71 +1,71 @@
-# 管理端前端代码规范文档
+# Tài liệu quy chuẩn code frontend trang quản trị
 
-## 1. 概述
+## 1. Tổng quan
 
-本文档描述了 CRMEB 项目中管理端前端的代码规范，包括命名规范、代码风格、文件结构、组件开发等方面的规范，旨在统一代码风格，提高代码质量和可维护性。
+Tài liệu này mô tả quy chuẩn code frontend trang quản trị trong dự án CRMEB, bao gồm các quy chuẩn về đặt tên, phong cách code, cấu trúc file, phát triển component, v.v., nhằm thống nhất phong cách code, nâng cao chất lượng và khả năng bảo trì của code.
 
-## 2. 命名规范
+## 2. Quy tắc đặt tên
 
-### 2.1 目录命名
-- **目录名**: 小写字母，单词之间用连字符分隔
-  - **示例**: `components/common/`、`pages/user-management/`、`utils/`
-- **规范**: 简洁明了，反映目录的功能
+### 2.1 Đặt tên thư mục
+- **Tên thư mục**: Chữ thường, các từ phân tách bằng dấu gạch ngang
+  - **Ví dụ**: `components/common/`, `pages/user-management/`, `utils/`
+- **Quy tắc**: Ngắn gọn, rõ ràng, phản ánh chức năng của thư mục
 
-### 2.2 文件命名
-- **组件文件**: 大写字母开头的 PascalCase 命名风格
-  - **示例**: `Button.vue`、`UserList.vue`、`Navbar.vue`
-- **页面文件**: 小写字母，单词之间用连字符分隔
-  - **示例**: `login.vue`、`user-list.vue`、`dashboard.vue`
-- **JS 文件**: 小写字母，单词之间用连字符分隔
-  - **示例**: `api.js`、`request.js`、`util.js`
-- **CSS/SCSS 文件**: 小写字母，单词之间用连字符分隔
-  - **示例**: `common.scss`、`theme.scss`、`variables.scss`
+### 2.2 Đặt tên file
+- **File component**: Kiểu đặt tên PascalCase, bắt đầu bằng chữ in hoa
+  - **Ví dụ**: `Button.vue`, `UserList.vue`, `Navbar.vue`
+- **File trang**: Chữ thường, các từ phân tách bằng dấu gạch ngang
+  - **Ví dụ**: `login.vue`, `user-list.vue`, `dashboard.vue`
+- **File JS**: Chữ thường, các từ phân tách bằng dấu gạch ngang
+  - **Ví dụ**: `api.js`, `request.js`, `util.js`
+- **File CSS/SCSS**: Chữ thường, các từ phân tách bằng dấu gạch ngang
+  - **Ví dụ**: `common.scss`, `theme.scss`, `variables.scss`
 
-### 2.3 变量命名
-- **普通变量**: 驼峰命名法
-  - **示例**: `userInfo`、`goodsList`、`isLoading`
-- **常量**: 全大写，单词之间用下划线分隔
-  - **示例**: `BASE_URL`、`MAX_COUNT`、`DEFAULT_PAGE_SIZE`
-- **布尔变量**: 以 `is` 开头的驼峰命名法
-  - **示例**: `isShow`、`isLoading`、`isLogin`
-- **数组变量**: 以复数形式命名
-  - **示例**: `users`、`goods`、`orders`
-- **对象变量**: 以单数形式命名
-  - **示例**: `user`、`good`、`order`
+### 2.3 Đặt tên biến
+- **Biến thông thường**: Đặt tên kiểu camelCase
+  - **Ví dụ**: `userInfo`, `goodsList`, `isLoading`
+- **Hằng số**: Viết hoa toàn bộ, các từ phân tách bằng dấu gạch dưới
+  - **Ví dụ**: `BASE_URL`, `MAX_COUNT`, `DEFAULT_PAGE_SIZE`
+- **Biến boolean**: Đặt tên kiểu camelCase, bắt đầu bằng `is`
+  - **Ví dụ**: `isShow`, `isLoading`, `isLogin`
+- **Biến mảng**: Đặt tên ở dạng số nhiều
+  - **Ví dụ**: `users`, `goods`, `orders`
+- **Biến đối tượng**: Đặt tên ở dạng số ít
+  - **Ví dụ**: `user`, `good`, `order`
 
-### 2.4 函数命名
-- **函数名**: 驼峰命名法，动词开头
-  - **示例**: `getUserInfo`、`submitForm`、`handleClick`
-- **方法名**: 驼峰命名法
-  - **示例**: `data`、`methods`、`computed`、`watch`
-- **生命周期函数**: 按照 Vue 规范命名
-  - **示例**: `created`、`mounted`、`beforeDestroy`
-- **事件处理函数**: 以 `handle` 开头
-  - **示例**: `handleSubmit`、`handleClick`、`handleChange`
+### 2.4 Đặt tên hàm
+- **Tên hàm**: Đặt tên kiểu camelCase, bắt đầu bằng động từ
+  - **Ví dụ**: `getUserInfo`, `submitForm`, `handleClick`
+- **Tên phương thức**: Đặt tên kiểu camelCase
+  - **Ví dụ**: `data`, `methods`, `computed`, `watch`
+- **Hàm vòng đời**: Đặt tên theo quy chuẩn của Vue
+  - **Ví dụ**: `created`, `mounted`, `beforeDestroy`
+- **Hàm xử lý sự kiện**: Bắt đầu bằng `handle`
+  - **Ví dụ**: `handleSubmit`, `handleClick`, `handleChange`
 
-### 2.5 组件命名
-- **组件名**: PascalCase 命名风格
-  - **示例**: `Button`、`UserList`、`Navbar`
-- **组件标签**: 小写字母，单词之间用连字符分隔
-  - **示例**: `<el-button>`、`<user-list>`、`<nav-bar>`
-- **组件文件名**: 与组件名一致，PascalCase 命名
-  - **示例**: `Button.vue`、`UserList.vue`、`Navbar.vue`
+### 2.5 Đặt tên component
+- **Tên component**: Kiểu đặt tên PascalCase
+  - **Ví dụ**: `Button`, `UserList`, `Navbar`
+- **Thẻ component**: Chữ thường, các từ phân tách bằng dấu gạch ngang
+  - **Ví dụ**: `<el-button>`, `<user-list>`, `<nav-bar>`
+- **Tên file component**: Trùng với tên component, đặt tên kiểu PascalCase
+  - **Ví dụ**: `Button.vue`, `UserList.vue`, `Navbar.vue`
 
-### 2.6 其他命名
-- **路由命名**: 小写字母，单词之间用连字符分隔
-  - **示例**: `/login`、`/user/list`、`/dashboard`
-- **CSS 类名**: 小写字母，单词之间用连字符分隔
-  - **示例**: `.user-info`、`.goods-list`、`.btn-primary`
-- **ID 命名**: 小写字母，单词之间用连字符分隔
-  - **示例**: `#app`、`#header`、`#footer`
-- **Vuex 模块命名**: 小写字母，单词之间用连字符分隔
-  - **示例**: `user`、`goods`、`orders`
+### 2.6 Quy tắc đặt tên khác
+- **Đặt tên route**: Chữ thường, các từ phân tách bằng dấu gạch ngang
+  - **Ví dụ**: `/login`, `/user/list`, `/dashboard`
+- **Tên class CSS**: Chữ thường, các từ phân tách bằng dấu gạch ngang
+  - **Ví dụ**: `.user-info`, `.goods-list`, `.btn-primary`
+- **Đặt tên ID**: Chữ thường, các từ phân tách bằng dấu gạch ngang
+  - **Ví dụ**: `#app`, `#header`, `#footer`
+- **Đặt tên module Vuex**: Chữ thường, các từ phân tách bằng dấu gạch ngang
+  - **Ví dụ**: `user`, `goods`, `orders`
 
-## 3. 代码风格
+## 3. Phong cách code
 
-### 3.1 缩进
-- **缩进方式**: 4 个空格
-- **示例**:
+### 3.1 Thụt lề
+- **Cách thụt lề**: 4 dấu cách
+- **Ví dụ**:
   ```vue
   <template>
       <div class="container">
@@ -74,127 +74,127 @@
   </template>
   ```
 
-### 3.2 换行
-- **标签换行**: 多个属性的标签应该换行
-- **示例**:
+### 3.2 Xuống dòng
+- **Xuống dòng cho thẻ**: Thẻ có nhiều thuộc tính nên xuống dòng
+- **Ví dụ**:
   ```vue
   <el-button
       type="primary"
       size="medium"
       @click="handleSubmit"
   >
-      提交
+      Gửi
   </el-button>
   ```
-- **代码块换行**: 逻辑代码块应该换行
-- **示例**:
+- **Xuống dòng cho khối code**: Các khối code logic nên được xuống dòng
+- **Ví dụ**:
   ```javascript
   if (condition) {
-      // 代码块
+      // Khối code
   } else {
-      // 代码块
+      // Khối code
   }
   ```
 
-### 3.3 空格
-- **运算符空格**: 运算符两侧应该有空格
-  - **示例**: `a + b`、`x = y`、`i < 10`
-- **逗号空格**: 逗号后面应该有空格
-  - **示例**: `[1, 2, 3]`、`{ name: '张三', age: 18 }`
-- **括号空格**: 括号内侧不应该有空格
-  - **示例**: `if (condition)`、`function (param)`
-- **冒号空格**: 对象字面量中冒号后面应该有空格
-  - **示例**: `{ name: '张三', age: 18 }`
+### 3.3 Dấu cách
+- **Dấu cách quanh toán tử**: Hai bên toán tử nên có dấu cách
+  - **Ví dụ**: `a + b`, `x = y`, `i < 10`
+- **Dấu cách sau dấu phẩy**: Sau dấu phẩy nên có dấu cách
+  - **Ví dụ**: `[1, 2, 3]`, `{ name: 'Nguyễn Văn A', age: 18 }`
+- **Dấu cách trong ngoặc**: Không nên có dấu cách ở phía trong dấu ngoặc
+  - **Ví dụ**: `if (condition)`, `function (param)`
+- **Dấu cách sau dấu hai chấm**: Trong object literal, sau dấu hai chấm nên có dấu cách
+  - **Ví dụ**: `{ name: 'Nguyễn Văn A', age: 18 }`
 
-### 3.4 注释
-- **单行注释**: 使用 `//` 注释
-  - **示例**: `// 这是单行注释`
-- **多行注释**: 使用 `/* */` 注释
-  - **示例**:
+### 3.4 Chú thích
+- **Chú thích một dòng**: Dùng chú thích `//`
+  - **Ví dụ**: `// Đây là chú thích một dòng`
+- **Chú thích nhiều dòng**: Dùng chú thích `/* */`
+  - **Ví dụ**:
     ```javascript
     /*
-     * 这是多行注释
-     * 第二行
+     * Đây là chú thích nhiều dòng
+     * Dòng thứ hai
      */
     ```
-- **文档注释**: 使用 JSDoc 风格的注释
-  - **示例**:
+- **Chú thích tài liệu**: Dùng chú thích theo phong cách JSDoc
+  - **Ví dụ**:
     ```javascript
     /**
-     * 获取用户信息
-     * @param {number} id - 用户ID
-     * @returns {Promise} 用户信息
+     * Lấy thông tin người dùng
+     * @param {number} id - ID người dùng
+     * @returns {Promise} Thông tin người dùng
      */
     async function getUserInfo(id) {
-        // 代码
+        // Code
     }
     ```
-- **组件注释**: 组件使用文档注释
-  - **示例**:
+- **Chú thích component**: Component dùng chú thích tài liệu
+  - **Ví dụ**:
     ```vue
     /**
-     * 用户列表组件
-     * @props {Array} users - 用户列表数据
-     * @props {Boolean} loading - 是否加载中
-     * @events {Function} select - 选择用户时触发
+     * Thành phần danh sách người dùng
+     * @props {Array} users - Dữ liệu danh sách người dùng
+     * @props {Boolean} loading - Có đang tải hay không
+     * @events {Function} select - Kích hoạt khi chọn người dùng
      */
     ```
 
-### 3.5 引号
-- **字符串**: 使用单引号 `''`
-  - **示例**: `const name = '张三'`、`<span>Hello</span>`
-- **模板字符串**: 使用反引号 `` ` ``
-  - **示例**: `` const url = `${baseUrl}/api/user` ``
-- **HTML 属性**: 使用双引号 `""`
-  - **示例**: `<div class="container">`、`<img src="https://example.com/img.jpg">`
+### 3.5 Dấu nháy
+- **Chuỗi**: Dùng dấu nháy đơn `''`
+  - **Ví dụ**: `const name = 'Nguyễn Văn A'`, `<span>Hello</span>`
+- **Chuỗi template**: Dùng dấu backtick `` ` ``
+  - **Ví dụ**: `` const url = `${baseUrl}/api/user` ``
+- **Thuộc tính HTML**: Dùng dấu nháy kép `""`
+  - **Ví dụ**: `<div class="container">`, `<img src="https://example.com/img.jpg">`
 
-### 3.6 分号
-- **语句结束**: 每个语句结束都应该加分号
-  - **示例**: `const name = '张三';`、`function() {};`
+### 3.6 Dấu chấm phẩy
+- **Kết thúc câu lệnh**: Mỗi câu lệnh nên kết thúc bằng dấu chấm phẩy
+  - **Ví dụ**: `const name = 'Nguyễn Văn A';`, `function() {};`
 
-### 3.7 空行
-- **代码块之间**: 代码块之间应该有空行
-  - **示例**:
+### 3.7 Dòng trống
+- **Giữa các khối code**: Giữa các khối code nên có dòng trống
+  - **Ví dụ**:
     ```javascript
     function first() {
-        // 代码
+        // Code
     }
 
     function second() {
-        // 代码
+        // Code
     }
     ```
-- **逻辑块之间**: 逻辑块之间应该有空行
-  - **示例**:
+- **Giữa các khối logic**: Giữa các khối logic nên có dòng trống
+  - **Ví dụ**:
     ```javascript
     if (condition) {
-        // 代码
+        // Code
     }
 
     while (loop) {
-        // 代码
+        // Code
     }
     ```
 
-## 4. 文件结构
+## 4. Cấu trúc file
 
-### 4.1 组件文件结构
+### 4.1 Cấu trúc file component
 ```vue
 <template>
-    <!-- 模板内容 -->
+    <!-- Nội dung mẫu -->
 </template>
 
 <script>
-// 导入依赖
+// Import các phụ thuộc
 import { mapState, mapActions } from 'vuex';
 import UserApi from '@/api/user';
 
-// 导出组件
+// Export thành phần
 export default {
-    // 组件名称
+    // Tên thành phần
     name: 'UserList',
     
-    // 组件属性
+    // Thuộc tính của thành phần
     props: {
         pageSize: {
             type: Number,
@@ -202,7 +202,7 @@ export default {
         }
     },
     
-    // 数据
+    // Dữ liệu
     data() {
         return {
             users: [],
@@ -212,17 +212,17 @@ export default {
         };
     },
     
-    // 计算属性
+    // Thuộc tính computed
     computed: {
         ...mapState('user', ['userInfo']),
         
-        // 计算总页数
+        // Tính tổng số trang
         totalPages() {
             return Math.ceil(this.total / this.pageSize);
         }
     },
     
-    // 监听
+    // Theo dõi (listener)
     watch: {
         currentPage: {
             handler(newPage) {
@@ -231,17 +231,17 @@ export default {
         }
     },
     
-    // 生命周期函数
+    // Hàm vòng đời
     created() {
         this.getUserList();
     },
     
-    // 方法
+    // Phương thức
     methods: {
-        // 从 Vuex 映射的方法
+        // Phương thức được ánh xạ từ Vuex
         ...mapActions('user', ['setUserInfo']),
         
-        // 获取用户列表
+        // Lấy danh sách người dùng
         async getUserList(page = 1) {
             try {
                 this.loading = true;
@@ -252,13 +252,13 @@ export default {
                 this.users = res.data;
                 this.total = res.total;
             } catch (error) {
-                console.error('获取用户列表失败:', error);
+                console.error('Lấy danh sách người dùng thất bại:', error);
             } finally {
                 this.loading = false;
             }
         },
         
-        // 选择用户
+        // Chọn người dùng
         handleSelect(user) {
             this.$emit('select', user);
         }
@@ -290,37 +290,37 @@ export default {
 </style>
 ```
 
-### 4.2 页面文件结构
+### 4.2 Cấu trúc file trang
 ```vue
 <template>
     <div class="user-management">
         <el-card>
             <template slot="header">
                 <div class="card-header">
-                    <span>用户管理</span>
-                    <el-button type="primary" @click="handleAdd">添加用户</el-button>
+                    <span>Quản lý người dùng</span>
+                    <el-button type="primary" @click="handleAdd">Thêm người dùng</el-button>
                 </div>
             </template>
             
             <el-form :inline="true" :model="searchForm" class="search-form">
-                <el-form-item label="用户名">
-                    <el-input v-model="searchForm.username" placeholder="请输入用户名"></el-input>
+                <el-form-item label="Tên người dùng">
+                    <el-input v-model="searchForm.username" placeholder="Vui lòng nhập tên đăng nhập"></el-input>
                 </el-form-item>
                 <el-form-item>
-                    <el-button type="primary" @click="handleSearch">搜索</el-button>
-                    <el-button @click="resetForm">重置</el-button>
+                    <el-button type="primary" @click="handleSearch">Tìm kiếm</el-button>
+                    <el-button @click="resetForm">Đặt lại</el-button>
                 </el-form-item>
             </el-form>
             
             <el-table :data="users" style="width: 100%">
                 <el-table-column prop="id" label="ID" width="80"></el-table-column>
-                <el-table-column prop="username" label="用户名"></el-table-column>
-                <el-table-column prop="email" label="邮箱"></el-table-column>
-                <el-table-column prop="created_at" label="创建时间"></el-table-column>
-                <el-table-column label="操作" width="150">
+                <el-table-column prop="username" label="Tên người dùng"></el-table-column>
+                <el-table-column prop="email" label="Email"></el-table-column>
+                <el-table-column prop="created_at" label="Thời gian tạo"></el-table-column>
+                <el-table-column label="Thao tác" width="150">
                     <template slot-scope="scope">
-                        <el-button size="small" @click="handleEdit(scope.row)">编辑</el-button>
-                        <el-button size="small" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
+                        <el-button size="small" @click="handleEdit(scope.row)">Sửa</el-button>
+                        <el-button size="small" type="danger" @click="handleDelete(scope.row.id)">Xóa</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -337,26 +337,26 @@ export default {
             </div>
         </el-card>
         
-        <!-- 添加/编辑对话框 -->
+        <!-- Hộp thoại thêm/sửa -->
         <el-dialog
             :title="dialogTitle"
             :visible.sync="dialogVisible"
             width="500px"
         >
             <el-form :model="form" :rules="rules" ref="form">
-                <el-form-item label="用户名" prop="username">
+                <el-form-item label="Tên người dùng" prop="username">
                     <el-input v-model="form.username"></el-input>
                 </el-form-item>
-                <el-form-item label="邮箱" prop="email">
+                <el-form-item label="Email" prop="email">
                     <el-input v-model="form.email"></el-input>
                 </el-form-item>
-                <el-form-item label="密码" v-if="!form.id">
+                <el-form-item label="Mật khẩu" v-if="!form.id">
                     <el-input v-model="form.password" type="password"></el-input>
                 </el-form-item>
             </el-form>
             <span slot="footer" class="dialog-footer">
-                <el-button @click="dialogVisible = false">取消</el-button>
-                <el-button type="primary" @click="handleSubmit">确定</el-button>
+                <el-button @click="dialogVisible = false">Hủy</el-button>
+                <el-button type="primary" @click="handleSubmit">Xác nhận</el-button>
             </span>
         </el-dialog>
     </div>
@@ -370,28 +370,28 @@ export default {
     
     data() {
         return {
-            // 搜索表单
+            // Form tìm kiếm
             searchForm: {
                 username: ''
             },
-            // 用户列表
+            // Danh sách người dùng
             users: [],
-            // 分页信息
+            // Thông tin phân trang
             currentPage: 1,
             pageSize: 10,
             total: 0,
-            // 对话框
+            // Hộp thoại
             dialogVisible: false,
             dialogTitle: '',
             form: {},
-            // 表单验证规则
+            // Quy tắc xác thực form
             rules: {
                 username: [
-                    { required: true, message: '请输入用户名', trigger: 'blur' }
+                    { required: true, message: 'Vui lòng nhập tên đăng nhập', trigger: 'blur' }
                 ],
                 email: [
-                    { required: true, message: '请输入邮箱', trigger: 'blur' },
-                    { type: 'email', message: '请输入正确的邮箱格式', trigger: 'blur' }
+                    { required: true, message: 'Vui lòng nhập email', trigger: 'blur' },
+                    { type: 'email', message: 'Vui lòng nhập email đúng định dạng', trigger: 'blur' }
                 ]
             }
         };
@@ -402,7 +402,7 @@ export default {
     },
     
     methods: {
-        // 获取用户列表
+        // Lấy danh sách người dùng
         async getUserList() {
             try {
                 const res = await UserApi.getList({
@@ -413,17 +413,17 @@ export default {
                 this.users = res.data;
                 this.total = res.total;
             } catch (error) {
-                console.error('获取用户列表失败:', error);
+                console.error('Lấy danh sách người dùng thất bại:', error);
             }
         },
         
-        // 搜索
+        // Tìm kiếm
         handleSearch() {
             this.currentPage = 1;
             this.getUserList();
         },
         
-        // 重置表单
+        // Đặt lại form
         resetForm() {
             this.searchForm = {
                 username: ''
@@ -432,75 +432,75 @@ export default {
             this.getUserList();
         },
         
-        // 分页大小变化
+        // Thay đổi số mục mỗi trang
         handleSizeChange(size) {
             this.pageSize = size;
             this.getUserList();
         },
         
-        // 当前页变化
+        // Thay đổi trang hiện tại
         handleCurrentChange(current) {
             this.currentPage = current;
             this.getUserList();
         },
         
-        // 添加用户
+        // Thêm người dùng
         handleAdd() {
-            this.dialogTitle = '添加用户';
+            this.dialogTitle = 'Thêm người dùng';
             this.form = {};
             this.dialogVisible = true;
         },
         
-        // 编辑用户
+        // Sửa người dùng
         handleEdit(user) {
-            this.dialogTitle = '编辑用户';
+            this.dialogTitle = 'Sửa người dùng';
             this.form = { ...user };
             this.dialogVisible = true;
         },
         
-        // 删除用户
+        // Xóa người dùng
         handleDelete(id) {
-            this.$confirm('确定要删除这个用户吗？', '提示', {
-                confirmButtonText: '确定',
-                cancelButtonText: '取消',
+            this.$confirm('Bạn có chắc muốn xóa người dùng này không?', 'Thông báo', {
+                confirmButtonText: 'Xác nhận',
+                cancelButtonText: 'Hủy',
                 type: 'warning'
             }).then(async () => {
                 try {
                     await UserApi.delete(id);
                     this.$message({
                         type: 'success',
-                        message: '删除成功'
+                        message: 'Xóa thành công'
                     });
                     this.getUserList();
                 } catch (error) {
-                    console.error('删除用户失败:', error);
+                    console.error('Xóa người dùng thất bại:', error);
                 }
             });
         },
         
-        // 提交表单
+        // Gửi biểu mẫu
         async handleSubmit() {
             try {
                 await this.$refs.form.validate();
                 if (this.form.id) {
-                    // 编辑
+                    // Sửa
                     await UserApi.update(this.form.id, this.form);
                     this.$message({
                         type: 'success',
-                        message: '更新成功'
+                        message: 'Cập nhật thành công'
                     });
                 } else {
-                    // 添加
+                    // Thêm
                     await UserApi.create(this.form);
                     this.$message({
                         type: 'success',
-                        message: '添加成功'
+                        message: 'Thêm thành công'
                     });
                 }
                 this.dialogVisible = false;
                 this.getUserList();
             } catch (error) {
-                console.error('提交失败:', error);
+                console.error('Gửi thất bại:', error);
             }
         }
     }
@@ -530,26 +530,26 @@ export default {
 </style>
 ```
 
-### 4.3 JS 文件结构
+### 4.3 Cấu trúc file JS
 ```javascript
-// 导入依赖
+// Import các phụ thuộc
 import axios from 'axios';
 import { Message } from 'element-ui';
 
-// 常量定义
+// Định nghĩa hằng số
 const BASE_URL = process.env.VUE_APP_API_BASE_URL;
 const TIMEOUT = 10000;
 
-// 创建 axios 实例
+// Tạo instance axios
 const service = axios.create({
     baseURL: BASE_URL,
     timeout: TIMEOUT
 });
 
-// 请求拦截器
+// Interceptor cho request
 service.interceptors.request.use(
     config => {
-        // 添加 token
+        // Thêm token
         const token = localStorage.getItem('token');
         if (token) {
             config.headers['Authorization'] = `Bearer ${token}`;
@@ -557,29 +557,29 @@ service.interceptors.request.use(
         return config;
     },
     error => {
-        console.error('请求错误:', error);
+        console.error('Lỗi request:', error);
         return Promise.reject(error);
     }
 );
 
-// 响应拦截器
+// Interceptor cho response
 service.interceptors.response.use(
     response => {
         const { data } = response;
         if (data.code !== 200) {
-            Message.error(data.message || '请求失败');
+            Message.error(data.message || 'Yêu cầu thất bại');
             return Promise.reject(data);
         }
         return data;
     },
     error => {
-        console.error('响应错误:', error);
-        Message.error('网络错误，请稍后重试');
+        console.error('Lỗi response:', error);
+        Message.error('Lỗi mạng, vui lòng thử lại sau');
         return Promise.reject(error);
     }
 );
 
-// 工具函数
+// Hàm tiện ích (utility)
 function formatDate(date) {
     const d = new Date(date);
     return d.toLocaleString();
@@ -589,159 +589,159 @@ function deepClone(obj) {
     return JSON.parse(JSON.stringify(obj));
 }
 
-// 导出
+// Xuất
 export {
     service,
     formatDate,
     deepClone
 };
 
-// 默认导出
+// Export mặc định
 export default service;
 ```
 
-## 5. 组件开发规范
+## 5. Quy chuẩn phát triển component
 
-### 5.1 组件设计
-- **单一职责**: 每个组件只负责一个功能
-- **可复用性**: 设计通用的、可复用的组件
-- **可配置性**: 通过 props 提供配置选项
-- **事件通信**: 通过事件与父组件通信
-- **插槽支持**: 提供插槽，增强组件灵活性
+### 5.1 Thiết kế component
+- **Trách nhiệm đơn nhất**: Mỗi component chỉ đảm nhận một chức năng
+- **Khả năng tái sử dụng**: Thiết kế component dùng chung, có thể tái sử dụng
+- **Khả năng cấu hình**: Cung cấp tùy chọn cấu hình qua props
+- **Giao tiếp qua sự kiện**: Giao tiếp với component cha thông qua sự kiện
+- **Hỗ trợ slot**: Cung cấp slot để tăng tính linh hoạt cho component
 
-### 5.2 组件使用
-- **组件导入**: 使用 import 导入组件
-  - **示例**: `import Button from '@/components/Button.vue'`
-- **组件注册**: 在 components 中注册组件
-  - **示例**: 
+### 5.2 Sử dụng component
+- **Import component**: Dùng import để nhập component
+  - **Ví dụ**: `import Button from '@/components/Button.vue'`
+- **Đăng ký component**: Đăng ký component trong components
+  - **Ví dụ**: 
     ```javascript
     components: {
         Button
     }
     ```
-- **组件使用**: 使用组件标签
-  - **示例**: `<Button type="primary">点击</Button>`
-- **组件传值**: 通过 props 传递数据
-  - **示例**: `<UserList :users="userList" :loading="loading" />`
-- **事件监听**: 监听组件事件
-  - **示例**: `<UserList @select="handleSelect" />`
+- **Sử dụng component**: Dùng thẻ component
+  - **Ví dụ**: `<Button type="primary">Nhấn</Button>`
+- **Truyền dữ liệu cho component**: Truyền dữ liệu qua props
+  - **Ví dụ**: `<UserList :users="userList" :loading="loading" />`
+- **Lắng nghe sự kiện**: Lắng nghe sự kiện của component
+  - **Ví dụ**: `<UserList @select="handleSelect" />`
 
-### 5.3 组件通信
-- **props 向下传递**: 父组件通过 props 向子组件传递数据
-- **events 向上传递**: 子组件通过 events 向父组件传递事件
-- **refs 引用**: 通过 refs 引用子组件实例
-- **provide/inject**: 祖先组件向后代组件传递数据
-- **Vuex 全局状态**: 使用 Vuex 管理全局状态
-- **EventBus**: 组件间事件总线
+### 5.3 Giao tiếp giữa các component
+- **props truyền xuống**: Component cha truyền dữ liệu cho component con qua props
+- **events truyền lên**: Component con truyền sự kiện lên component cha qua events
+- **Tham chiếu qua refs**: Tham chiếu tới instance của component con qua refs
+- **provide/inject**: Component tổ tiên truyền dữ liệu cho component hậu duệ
+- **Trạng thái toàn cục với Vuex**: Dùng Vuex để quản lý trạng thái toàn cục
+- **EventBus**: Event bus dùng giữa các component
 
-### 5.4 组件生命周期
-- **created**: 初始化数据，发送请求
-- **mounted**: 操作 DOM，初始化第三方库
-- **beforeUpdate**: 更新前的准备工作
-- **updated**: 数据更新后的操作
-- **beforeDestroy**: 清理定时器，取消订阅
-- **destroyed**: 组件销毁后的清理工作
+### 5.4 Vòng đời component
+- **created**: Khởi tạo dữ liệu, gửi request
+- **mounted**: Thao tác DOM, khởi tạo thư viện bên thứ ba
+- **beforeUpdate**: Công việc chuẩn bị trước khi cập nhật
+- **updated**: Thao tác sau khi dữ liệu được cập nhật
+- **beforeDestroy**: Dọn dẹp timer, hủy đăng ký (unsubscribe)
+- **destroyed**: Công việc dọn dẹp sau khi component bị hủy
 
-### 5.5 组件命名规范
-- **组件名**: PascalCase 命名风格
-- **组件文件名**: 与组件名一致
-- **组件目录**: 按功能分类存放
-- **组件前缀**: 通用组件使用统一前缀
+### 5.5 Quy tắc đặt tên component
+- **Tên component**: Kiểu đặt tên PascalCase
+- **Tên file component**: Trùng với tên component
+- **Thư mục component**: Lưu theo phân loại chức năng
+- **Tiền tố component**: Component dùng chung sử dụng tiền tố thống nhất
 
-## 6. 页面开发规范
+## 6. Quy chuẩn phát triển trang
 
-### 6.1 页面结构
-- **模板结构**: 清晰明了，层次分明
-- **脚本结构**: 按照 Vue 规范组织代码
-- **样式结构**: 模块化，可维护
-- **布局规范**: 遵循统一的布局规范
+### 6.1 Cấu trúc trang
+- **Cấu trúc template**: Rõ ràng, phân cấp mạch lạc
+- **Cấu trúc script**: Tổ chức code theo quy chuẩn của Vue
+- **Cấu trúc style**: Module hóa, dễ bảo trì
+- **Quy chuẩn bố cục**: Tuân thủ quy chuẩn bố cục thống nhất
 
-### 6.2 数据管理
-- **本地数据**: 使用 data 管理组件内部数据
-- **计算数据**: 使用 computed 计算衍生数据
-- **监听数据**: 使用 watch 监听数据变化
-- **全局数据**: 使用 Vuex 管理全局数据
+### 6.2 Quản lý dữ liệu
+- **Dữ liệu cục bộ**: Dùng data để quản lý dữ liệu nội bộ của component
+- **Dữ liệu tính toán**: Dùng computed để tính dữ liệu dẫn xuất
+- **Theo dõi dữ liệu**: Dùng watch để theo dõi thay đổi của dữ liệu
+- **Dữ liệu toàn cục**: Dùng Vuex để quản lý dữ liệu toàn cục
 
-### 6.3 路由管理
-- **路由配置**: 在 router 目录中配置路由
-- **路由跳转**: 使用 router.push、router.replace 等方法
-- **路由参数**: 通过 $route.params 获取路由参数
-- **路由守卫**: 使用全局/局部路由守卫
+### 6.3 Quản lý định tuyến
+- **Cấu hình route**: Cấu hình route trong thư mục router
+- **Điều hướng route**: Dùng các phương thức như router.push, router.replace
+- **Tham số route**: Lấy tham số route qua $route.params
+- **Route guard**: Dùng route guard toàn cục/cục bộ
 
-### 6.4 API 调用
-- **API 封装**: 统一封装 API 调用
-- **异步处理**: 使用 async/await 处理异步请求
-- **错误处理**: 使用 try/catch 捕获错误
-- **加载状态**: 显示加载状态，提升用户体验
+### 6.4 Gọi API
+- **Đóng gói API**: Đóng gói thống nhất các lệnh gọi API
+- **Xử lý bất đồng bộ**: Dùng async/await để xử lý request bất đồng bộ
+- **Xử lý lỗi**: Dùng try/catch để bắt lỗi
+- **Trạng thái tải**: Hiển thị trạng thái đang tải, nâng cao trải nghiệm người dùng
 
-### 6.5 用户体验
-- **响应式设计**: 适配不同屏幕尺寸
-- **加载状态**: 显示加载中提示
-- **错误提示**: 显示错误信息
-- **成功提示**: 显示操作成功提示
-- **表单验证**: 实时表单验证
-- **防抖节流**: 优化频繁触发的事件
+### 6.5 Trải nghiệm người dùng
+- **Thiết kế responsive**: Tương thích với các kích thước màn hình khác nhau
+- **Trạng thái tải**: Hiển thị thông báo đang tải
+- **Thông báo lỗi**: Hiển thị thông tin lỗi
+- **Thông báo thành công**: Hiển thị thông báo thao tác thành công
+- **Kiểm tra biểu mẫu**: Kiểm tra dữ liệu biểu mẫu theo thời gian thực
+- **Debounce và throttle**: Tối ưu các sự kiện được kích hoạt thường xuyên
 
-## 7. 性能优化
+## 7. Tối ưu hiệu năng
 
-### 7.1 代码优化
-- **减少冗余代码**: 避免重复的代码
-- **使用计算属性**: 对于复杂的计算，使用 computed
-- **使用 v-if 和 v-show 合理**: 根据场景选择合适的指令
-- **使用 key**: 在 v-for 中使用 key，提高渲染性能
-- **避免频繁更新**: 使用防抖和节流
+### 7.1 Tối ưu code
+- **Giảm code dư thừa**: Tránh code lặp lại
+- **Dùng thuộc tính computed**: Với các phép tính phức tạp, hãy dùng computed
+- **Dùng v-if và v-show hợp lý**: Chọn directive phù hợp với từng tình huống
+- **Dùng key**: Dùng key trong v-for để tăng hiệu năng render
+- **Tránh cập nhật quá thường xuyên**: Dùng debounce và throttle
 
-### 7.2 网络优化
-- **合理使用缓存**: 缓存不经常变化的数据
-- **减少请求次数**: 合并请求，批量操作
-- **使用 CDN**: 静态资源使用 CDN
-- **压缩传输**: 使用 gzip 压缩传输数据
+### 7.2 Tối ưu mạng
+- **Dùng cache hợp lý**: Cache những dữ liệu ít thay đổi
+- **Giảm số lượng request**: Gộp request, thao tác theo lô
+- **Dùng CDN**: Dùng CDN cho tài nguyên tĩnh
+- **Nén khi truyền tải**: Dùng gzip để nén dữ liệu truyền tải
 
-### 7.3 构建优化
-- **Tree Shaking**: 移除未使用的代码
-- **代码分割**: 按路由分割代码
-- **懒加载**: 路由懒加载，组件懒加载
-- **预加载**: 预加载关键资源
+### 7.3 Tối ưu build
+- **Tree Shaking**: Loại bỏ code không sử dụng
+- **Tách code (code splitting)**: Tách code theo route
+- **Lazy load**: Lazy load route, lazy load component
+- **Tải trước (preload)**: Tải trước các tài nguyên quan trọng
 
-### 7.4 其他优化
-- **减少 DOM 节点**: 简化 DOM 结构
-- **优化图片**: 使用合适的图片格式和大小
-- **使用虚拟列表**: 对于长列表，使用虚拟列表
-- **避免内存泄漏**: 及时清理定时器、事件监听器等
+### 7.4 Tối ưu khác
+- **Giảm số node DOM**: Đơn giản hóa cấu trúc DOM
+- **Tối ưu hình ảnh**: Dùng định dạng và kích thước ảnh phù hợp
+- **Dùng danh sách ảo**: Với danh sách dài, hãy dùng danh sách ảo (virtual list)
+- **Tránh rò rỉ bộ nhớ**: Kịp thời dọn dẹp timer, event listener, v.v.
 
-## 8. 常见问题
+## 8. Sự cố thường gặp
 
-### 8.1 代码风格问题
-- **问题**: 代码风格不一致
-- **解决方案**: 使用 ESLint 和 Prettier 统一代码风格
+### 8.1 Vấn đề về phong cách code
+- **Vấn đề**: Phong cách code không thống nhất
+- **Giải pháp**: Dùng ESLint và Prettier để thống nhất phong cách code
 
-### 8.2 性能问题
-- **问题**: 页面加载慢，卡顿
-- **解决方案**: 优化代码，减少 DOM 操作，使用虚拟列表等
+### 8.2 Vấn đề hiệu năng
+- **Vấn đề**: Trang tải chậm, giật lag
+- **Giải pháp**: Tối ưu code, giảm thao tác DOM, dùng danh sách ảo, v.v.
 
-### 8.3 兼容性问题
-- **问题**: 在不同浏览器上表现不一致
-- **解决方案**: 遵循 Web 标准，使用 polyfill
+### 8.3 Vấn đề tương thích
+- **Vấn đề**: Hiển thị không nhất quán trên các trình duyệt khác nhau
+- **Giải pháp**: Tuân thủ tiêu chuẩn Web, dùng polyfill
 
-### 8.4 维护性问题
-- **问题**: 代码难以维护
-- **解决方案**: 模块化开发，添加注释，遵循代码规范
+### 8.4 Vấn đề bảo trì
+- **Vấn đề**: Code khó bảo trì
+- **Giải pháp**: Phát triển theo module, thêm chú thích, tuân thủ quy chuẩn code
 
-### 8.5 命名冲突问题
-- **问题**: 命名冲突
-- **解决方案**: 使用命名空间，避免全局变量
+### 8.5 Vấn đề xung đột tên
+- **Vấn đề**: Xung đột tên
+- **Giải pháp**: Dùng namespace, tránh biến toàn cục
 
-## 9. 参考资源
+## 9. Tài liệu tham khảo
 
-- [Vue 官方风格指南](https://v2.vuejs.org/v2/style-guide/)
-- [Element UI 官方文档](https://element.eleme.io/#/zh-CN)
-- [ESLint 官方文档](https://eslint.org/docs/user-guide/)
-- [Prettier 官方文档](https://prettier.io/docs/en/)
-- [JavaScript 代码规范](https://github.com/airbnb/javascript)
-- [CSS 代码规范](https://github.com/airbnb/css)
+- [Hướng dẫn phong cách chính thức của Vue](https://v2.vuejs.org/v2/style-guide/)
+- [Tài liệu chính thức Element UI](https://element.eleme.io/#/zh-CN)
+- [Tài liệu chính thức ESLint](https://eslint.org/docs/user-guide/)
+- [Tài liệu chính thức Prettier](https://prettier.io/docs/en/)
+- [Quy chuẩn code JavaScript](https://github.com/airbnb/javascript)
+- [Quy chuẩn code CSS](https://github.com/airbnb/css)
 
-## 10. 总结
+## 10. Tổng kết
 
-本文档描述了 CRMEB 项目中管理端前端的代码规范，包括命名规范、代码风格、文件结构、组件开发等方面的规范。遵循本文档的规范，可以提高代码的可读性、可维护性和可扩展性，确保项目的质量和稳定性。
+Tài liệu này mô tả quy chuẩn code của frontend trang quản trị trong dự án CRMEB, bao gồm các quy chuẩn về quy tắc đặt tên, phong cách code, cấu trúc tệp, phát triển thành phần (component), v.v. Tuân thủ các quy chuẩn trong tài liệu này giúp nâng cao khả năng đọc hiểu, khả năng bảo trì và khả năng mở rộng của code, đảm bảo chất lượng và sự ổn định của dự án.
 
-代码规范是团队协作的基础，建议开发团队成员严格遵循本文档的规范，共同维护一个高质量的代码库。
+Quy chuẩn code là nền tảng của việc làm việc nhóm; các thành viên trong đội phát triển nên tuân thủ nghiêm ngặt các quy chuẩn trong tài liệu này để cùng duy trì một codebase chất lượng cao.

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use think\exception\ValidateException;
 
 /**
  * Class Rsa
- * @author 等风来
+ * @author Deng Fenglai
  * @email 136327134@qq.com
  * @date 2023/5/16
  * @package crmeb\utils
@@ -38,7 +38,7 @@ class Rsa
     protected $basePath;
 
     /**
-     * 获取证书文件
+     * Lấy file chứng chỉ (certificate)
      * @param $publicKey
      * @param $privateKey
      */
@@ -58,7 +58,7 @@ class Rsa
 
     /**
      * @return false|string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/16
      */
@@ -72,7 +72,7 @@ class Rsa
     }
 
     /**
-     * 生成证书
+     * Tạo chứng chỉ
      * @return bool
      */
     public function exportOpenSSLFile($passwork = null)
@@ -88,29 +88,29 @@ class Rsa
             touch($dir . '/' . $conf);
         }
 
-        //参数设置
+        //Thiết lập tham số
         $config = [
             "digest_alg" => "sha256",
-            //字节数    512 1024  2048   4096 等
+            //Số byte 512 1024 2048 4096 v.v.
             "private_key_bits" => 1024,
             "config" => $dir . '/' . $conf,
-            //加密类型
+            //Loại mã hóa
             "private_key_type" => OPENSSL_KEYTYPE_RSA,
         ];
 
-        //创建私钥和公钥
+        //Tạo private key và public key
         $res = openssl_pkey_new($config);
         if ($res == false) {
-            //创建失败,请检查openssl.cnf文件是否存在
+            //Tạo thất bại, vui lòng kiểm tra file openssl.cnf có tồn tại không
             return false;
         }
 
-        //将密钥导出为PEM编码的字符串，并输出（通过引用传递）。
+        //Xuất khóa thành chuỗi mã hóa PEM, rồi trả ra (truyền qua tham chiếu).
         openssl_pkey_export($res, $privateKey, $passwork, $config);
         $publicKey = openssl_pkey_get_details($res);
         $publicKey = $publicKey["key"];
 
-        //生成证书
+        //Tạo chứng chỉ
         $createPublicFileRet = file_put_contents($this->publicKey, $publicKey);
         $createPrivateFileRet = file_put_contents($this->privateKey, $privateKey);
         if (!($createPublicFileRet || $createPrivateFileRet)) {
@@ -122,48 +122,48 @@ class Rsa
     }
 
     /**
-     * 数据加密
+     * Mã hóa dữ liệu
      * @param string $data
      * @param string|null $passwork
      * @return false|string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/16
      */
     function privateEncrypt(string $data, string $passwork = null)
     {
         $encrypted = '';
-        $pi_key = openssl_pkey_get_private(file_get_contents($this->privateKey), $passwork);//这个函数可用来判断私钥是否是可用的，可用返回资源id Resource id
-        //最大允许加密长度为117，得分段加密
-        $plainData = str_split($data, 100);//生成密钥位数 1024 bit key
+        $pi_key = openssl_pkey_get_private(file_get_contents($this->privateKey), $passwork);//Hàm này dùng để kiểm tra private key có dùng được không, nếu dùng được thì trả về resource id
+        //Độ dài mã hóa tối đa cho phép là 117, phải mã hóa theo từng đoạn
+        $plainData = str_split($data, 100);//Số bit của khóa được tạo, khóa 1024 bit
         foreach ($plainData as $chunk) {
             $partialEncrypted = '';
-            $encryptionOk = openssl_private_encrypt($chunk, $partialEncrypted, $pi_key);//私钥加密
+            $encryptionOk = openssl_private_encrypt($chunk, $partialEncrypted, $pi_key);//Mã hóa bằng private key
             if ($encryptionOk === false) {
                 return false;
             }
             $encrypted .= $partialEncrypted;
         }
 
-        $encrypted = base64_encode($encrypted);//加密后的内容通常含有特殊字符，需要编码转换下，在网络间通过url传输时要注意base64编码是否是url安全的
+        $encrypted = base64_encode($encrypted);//Nội dung sau khi mã hóa thường có ký tự đặc biệt, cần chuyển đổi bảng mã, khi truyền qua url giữa các mạng cần chú ý base64 encode có an toàn cho url không
         return $encrypted;
     }
 
     /**
-     * RSA公钥解密(私钥加密的内容通过公钥可以解密出来)
-     * @param string $public_key 公钥
-     * @param string $data 私钥加密后的字符串
-     * @return string $decrypted 返回解密后的字符串
+     * Giải mã bằng public key RSA (nội dung mã hóa bằng private key có thể giải mã bằng public key)
+     * @param string $public_key Public key
+     * @param string $data Chuỗi đã mã hóa bằng private key
+     * @return string $decrypted Trả về chuỗi sau khi giải mã
      * @author mosishu
      */
     function publicDecrypt(string $data)
     {
         $decrypted = '';
-        $pu_key = openssl_pkey_get_public(file_get_contents($this->publicKey));//这个函数可用来判断公钥是否是可用的
-        $plainData = str_split(base64_decode($data), 128);//生成密钥位数 1024 bit key
+        $pu_key = openssl_pkey_get_public(file_get_contents($this->publicKey));//Hàm này dùng để kiểm tra public key có dùng được không
+        $plainData = str_split(base64_decode($data), 128);//Số bit của khóa được tạo, khóa 1024 bit
         foreach ($plainData as $chunk) {
             $str = '';
-            $decryptionOk = openssl_public_decrypt($chunk, $str, $pu_key);//公钥解密
+            $decryptionOk = openssl_public_decrypt($chunk, $str, $pu_key);//Giải mã bằng public key
             if ($decryptionOk === false) {
                 return false;
             }
@@ -173,10 +173,10 @@ class Rsa
     }
 
     /**
-     * 私钥解密
+     * Giải mã bằng private key
      * @param string $data
      * @return mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/16
      */
@@ -189,7 +189,7 @@ class Rsa
         $res = openssl_private_decrypt(base64_decode($data), $decryptedData, file_get_contents($this->privateKey));
 
         if (false === $res) {
-            throw new ValidateException('RSA:解密失败');
+            throw new ValidateException('RSA: giải mã thất bại');
         }
 
         return $decryptedData;

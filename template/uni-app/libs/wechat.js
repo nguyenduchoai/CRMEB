@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2024 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -33,9 +33,9 @@ import Cache from '@/utils/cache';
 class AuthWechat {
 
 	constructor() {
-		//微信实例化对象
+		//Đối tượng khởi tạo (instance) WeChat
 		this.instance = WechatJSSDK;
-		//是否实例化
+		//Có khởi tạo (instantiate) hay không
 		this.status = false;
 
 		this.initConfig = {};
@@ -55,7 +55,7 @@ class AuthWechat {
 	}
 
 	/**
-	 * 初始化wechat(分享配置)
+	 * Khởi tạo wechat (cấu hình chia sẻ)
 	 */
 	wechat() {
 		return new Promise((resolve, reject) => {
@@ -76,7 +76,7 @@ class AuthWechat {
 	}
 
 	/**
-	 * 验证是否初始化
+	 * Kiểm tra đã khởi tạo hay chưa
 	 */
 	verifyInstance() {
 		let that = this;
@@ -92,7 +92,7 @@ class AuthWechat {
 			}
 		})
 	}
-	// 微信公众号的共享地址
+	// Địa chỉ chia sẻ của OA WeChat
 	openAddress() {
 		return new Promise((resolve, reject) => {
 			this.wechat().then(wx => {
@@ -107,7 +107,7 @@ class AuthWechat {
 		});
 	}
 
-	// 获取经纬度；
+	// Lấy kinh độ vĩ độ;
 	location() {
 		return new Promise((resolve, reject) => {
 			this.wechat().then(wx => {
@@ -124,7 +124,7 @@ class AuthWechat {
 		});
 	}
 
-	// 使用微信内置地图查看位置接口；
+	// Dùng API bản đồ tích hợp trong WeChat để xem vị trí;
 	seeLocation(config) {
 		return new Promise((resolve, reject) => {
 			this.wechat().then(wx => {
@@ -140,7 +140,7 @@ class AuthWechat {
 	}
 
 	/**
-	 * 微信支付
+	 * WeChat Pay
 	 * @param {Object} config
 	 */
 	pay(config) {
@@ -178,7 +178,7 @@ class AuthWechat {
 	}
 
 	/**
-	 * 自动去授权
+	 * Tự động đi ủy quyền
 	 */
 	oAuth(snsapiBase, url) {
 		// if (uni.getStorageSync('authIng')) return
@@ -213,7 +213,7 @@ class AuthWechat {
 	}
 
 	/**
-	 * 授权登录获取token
+	 * Đăng nhập ủy quyền để lấy token
 	 * @param {Object} code
 	 */
 	auth(code) {
@@ -237,7 +237,7 @@ class AuthWechat {
 	}
 
 	/**
-	 * 获取跳转授权后的地址
+	 * Lấy địa chỉ sau khi chuyển hướng ủy quyền
 	 * @param {Object} appId
 	 */
 	getAuthUrl(appId, snsapiBase, backUrl) {
@@ -270,7 +270,7 @@ class AuthWechat {
 	}
 
 	/**
-	 * 跳转自动登录
+	 * Chuyển hướng tự động đăng nhập
 	 */
 	toAuth(snsapiBase, backUrl) {
 		let that = this;
@@ -280,9 +280,9 @@ class AuthWechat {
 	}
 
 	/**
-	 * 绑定事件
-	 * @param {Object} name 事件名
-	 * @param {Object} config 参数
+	 * Gắn sự kiện
+	 * @param {Object} name Tên sự kiện
+	 * @param {Object} config Tham số
 	 */
 	wechatEvevt(name, config) {
 		let that = this;

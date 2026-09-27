@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,7 +17,7 @@ use crmeb\traits\QueueTrait;
 use think\facade\Log;
 
 /**
- * 升级包
+ * Gói nâng cấp
  * Class UpgradeJob
  * @package app\jobs
  */
@@ -26,7 +26,7 @@ class UpgradeJob extends BaseJobs
     use QueueTrait;
 
     /**
-     * 下载
+     * Tải xuống
      * @param $seq
      * @param $url
      * @param $filePath
@@ -41,13 +41,13 @@ class UpgradeJob extends BaseJobs
             $services = app()->make(UpgradeServices::class);
             $services->download($seq, $url, $filePath, $filename, $timeout);
         } catch (\Exception $e) {
-            Log::error('升级包下载失败,失败原因:' . $e->getMessage());
+            Log::error('Tải xuống gói nâng cấp thất bại, nguyên nhân:' . $e->getMessage());
         }
         return true;
     }
 
     /**
-     * 数据库备份
+     * Sao lưu cơ sở dữ liệu
      * @param $token
      * @return bool
      */
@@ -58,13 +58,13 @@ class UpgradeJob extends BaseJobs
             $services = app()->make(UpgradeServices::class);
             $services->databaseBackup($token);
         } catch (\Exception $e) {
-            Log::error('数据库备份失败,失败原因:' . $e->getMessage());
+            Log::error('Sao lưu cơ sở dữ liệu thất bại, nguyên nhân:' . $e->getMessage());
         }
         return true;
     }
 
     /**
-     * 项目备份
+     * Sao lưu dự án
      * @param $token
      * @return bool
      */
@@ -75,13 +75,13 @@ class UpgradeJob extends BaseJobs
             $services = app()->make(UpgradeServices::class);
             $services->projectBackup($token);
         } catch (\Exception $e) {
-            Log::error('项目备份失败,失败原因:' . $e->getMessage());
+            Log::error('Sao lưu dự án thất bại, nguyên nhân:' . $e->getMessage());
         }
         return true;
     }
 
     /**
-     * 覆盖项目文件
+     * Ghi đè file dự án
      * @param $token
      * @return bool
      */
@@ -92,17 +92,17 @@ class UpgradeJob extends BaseJobs
             $services = app()->make(UpgradeServices::class);
             $services->coverageProject($token);
         } catch (\Exception $e) {
-            Log::error('覆盖项目失败,失败原因:' . $e->getMessage());
-            // 失败时也要设置状态，避免无限循环
+            Log::error('Ghi đè dự án thất bại, nguyên nhân:' . $e->getMessage());
+            // Khi thất bại cũng phải thiết lập trạng thái, tránh vòng lặp vô hạn
             \crmeb\services\CacheService::set($token . '_coverage_project', -1, 86400);
             \crmeb\services\CacheService::set($token . 'upgrade_status', -1, 86400);
-            \crmeb\services\CacheService::set($token . 'upgrade_status_tip', '覆盖项目失败: ' . $e->getMessage(), 86400);
+            \crmeb\services\CacheService::set($token . 'upgrade_status_tip', 'Ghi đè dự án thất bại: ' . $e->getMessage(), 86400);
         }
         return true;
     }
 
     /**
-     * 检查文件MD5
+     * Kiểm tra MD5 của file
      * @param $token
      * @return bool
      * @author wuhaotian
@@ -118,7 +118,7 @@ class UpgradeJob extends BaseJobs
             \crmeb\services\CacheService::set($token . '_check_md5_file', $data, 86400);
             \crmeb\services\CacheService::set($token . '_check_md5_status', empty($data) ? 2 : 1, 86400);
         } catch (\Exception $e) {
-            Log::error('检查文件MD5失败,失败原因:' . $e->getMessage());
+            Log::error('Kiểm tra MD5 của tệp thất bại, nguyên nhân:' . $e->getMessage());
         }
         return true;
     }

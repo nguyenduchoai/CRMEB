@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,14 +18,14 @@ use app\services\system\config\SystemGroupDataServices;
 use app\services\system\config\SystemGroupServices;
 
 /**
- * 数据管理
+ * Quản lý dữ liệu
  * Class SystemGroupData
  * @package app\adminapi\controller\v1\setting
  */
 class SystemGroupData extends AuthController
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * SystemGroupData constructor.
      * @param App $app
      * @param SystemGroupDataServices $services
@@ -37,7 +37,7 @@ class SystemGroupData extends AuthController
     }
 
     /**
-     * 获取数据列表头
+     * Lấy phần đầu danh sách dữ liệu
      * @return mixed
      */
     public function header(SystemGroupServices $services)
@@ -46,7 +46,7 @@ class SystemGroupData extends AuthController
             ['gid', 0],
             ['config_name', '']
         ], true);
-        if (!$gid && !$config_name) return app('json')->fail('参数错误');
+        if (!$gid && !$config_name) return app('json')->fail('Tham số không hợp lệ');
         if (!$gid) {
             $gid = $services->value(['config_name' => $config_name], 'id');
         }
@@ -54,7 +54,7 @@ class SystemGroupData extends AuthController
     }
 
     /**
-     * 显示资源列表
+     * Hiển thị danh sách resource
      *
      * @return \think\Response
      */
@@ -65,7 +65,7 @@ class SystemGroupData extends AuthController
             ['status', ''],
             ['config_name', '']
         ]);
-        if (!$where['gid'] && !$where['config_name']) return app('json')->fail('参数错误');
+        if (!$where['gid'] && !$where['config_name']) return app('json')->fail('Tham số không hợp lệ');
         if (!$where['gid']) {
             $where['gid'] = $group->value(['config_name' => $where['config_name']], 'id');
         }
@@ -74,7 +74,7 @@ class SystemGroupData extends AuthController
     }
 
     /**
-     * 显示创建资源表单页.
+     * Hiển thị trang form tạo resource.
      *
      * @return \think\Response
      */
@@ -82,16 +82,16 @@ class SystemGroupData extends AuthController
     {
         $gid = $this->request->param('gid/d');
         if ($this->services->isGroupGidSave($gid, 4, 'index_categy_images')) {
-            return app('json')->fail('不能大于四个');
+            return app('json')->fail('Không được nhiều hơn bốn');
         }
         if ($this->services->isGroupGidSave($gid, 7, 'sign_day_num')) {
-            return app('json')->fail('签到天数配置不能大于7天');
+            return app('json')->fail('Số ngày điểm danh không được cấu hình quá 7 ngày');
         }
         return app('json')->success($this->services->createForm($gid));
     }
 
     /**
-     * 保存新建的资源
+     * Lưu resource mới tạo
      *
      * @return \think\Response
      */
@@ -105,13 +105,13 @@ class SystemGroupData extends AuthController
             foreach ($groupDatas as $groupData) {
                 $groupData = json_decode($groupData, true);
                 if (isset($groupData['order_status']['value']) && $groupData['order_status']['value'] == $params['order_status']) {
-                    return app('json')->fail('请不要重复添加');
+                    return app('json')->fail('Vui lòng không thêm trùng lặp');
                 }
             }
         }
         if ($group && $group['config_name'] == 'user_recharge_quota') {
-            if ($params['price'] <= 0) return app('json')->fail('售价必须大于0');
-            if ($params['give_money'] < 0) return app('json')->fail('赠送不能小于0');
+            if ($params['price'] <= 0) return app('json')->fail('Giá bán phải lớn hơn 0');
+            if ($params['give_money'] < 0) return app('json')->fail('Số tiền tặng không được nhỏ hơn 0');
         }
         $this->services->checkSeckillTime($services, $gid, $params);
         $this->checkSign($services, $gid, $params);
@@ -121,7 +121,7 @@ class SystemGroupData extends AuthController
             foreach ($fields as $index => $field) {
                 if ($key == $field["title"]) {
                     if ($param == "")
-                        return app('json')->fail('字段不能为空');
+                        return app('json')->fail('Trường không được để trống');
                     else {
                         $value[$key]["type"] = $field["type"];
                         $value[$key]["value"] = $param;
@@ -138,11 +138,11 @@ class SystemGroupData extends AuthController
         ];
         $this->services->save($data);
         \crmeb\services\CacheService::clear();
-        return app('json')->success('添加数据成功');
+        return app('json')->success('Thêm dữ liệu thành công');
     }
 
     /**
-     * 显示指定的资源
+     * Hiển thị resource được chỉ định
      *
      * @param int $id
      * @return \think\Response
@@ -153,7 +153,7 @@ class SystemGroupData extends AuthController
     }
 
     /**
-     * 显示编辑资源表单页.
+     * Hiển thị trang form sửa resource.
      *
      * @param int $id
      * @return \think\Response
@@ -162,13 +162,13 @@ class SystemGroupData extends AuthController
     {
         $gid = $this->request->param('gid/d');
         if (!$gid) {
-            return app('json')->fail('参数错误');
+            return app('json')->fail('Tham số không hợp lệ');
         }
         return app('json')->success($this->services->updateForm((int)$gid, (int)$id));
     }
 
     /**
-     * 保存更新的资源
+     * Lưu resource đã cập nhật
      *
      * @param \think\Request $request
      * @param int $id
@@ -181,8 +181,8 @@ class SystemGroupData extends AuthController
         $params = request()->post();
         $group = $services->getOne(['id' => $params['gid']], 'id,config_name,fields');
         if ($group && $group['config_name'] == 'user_recharge_quota') {
-            if ($params['price'] <= 0) return app('json')->fail('售价必须大于0');
-            if ($params['give_money'] < 0) return app('json')->fail('赠送不能小于0');
+            if ($params['price'] <= 0) return app('json')->fail('Giá bán phải lớn hơn 0');
+            if ($params['give_money'] < 0) return app('json')->fail('Số tiền tặng không được nhỏ hơn 0');
         }
         $this->services->checkSeckillTime($services, $groupData["gid"], $params, $id);
         $this->checkSign($services, $groupData["gid"], $params);
@@ -191,7 +191,7 @@ class SystemGroupData extends AuthController
             foreach ($fields as $index => $field) {
                 if ($key == $field["title"]) {
                     if ($param == '')
-                        return app('json')->fail('字段不能为空');
+                        return app('json')->fail('Trường không được để trống');
                     else {
                         $value[$key]["type"] = $field["type"];
                         $value[$key]["value"] = $param;
@@ -206,11 +206,11 @@ class SystemGroupData extends AuthController
         ];
         $this->services->update($id, $data);
         \crmeb\services\CacheService::clear();
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
     /**
-     * 删除指定资源
+     * Xóa resource được chỉ định
      *
      * @param int $id
      * @return \think\Response
@@ -218,30 +218,30 @@ class SystemGroupData extends AuthController
     public function delete($id)
     {
         if (!$this->services->delete($id))
-            return app('json')->fail('删除失败');
+            return app('json')->fail('Xóa thất bại');
         else {
             \crmeb\services\CacheService::clear();
-            return app('json')->success('删除成功');
+            return app('json')->success('Xóa thành công');
         }
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param $id
      * @param $status
      * @return mixed
      */
     public function set_status($id, $status)
     {
-        if ($status == '' || $id == 0) return app('json')->fail('参数错误');
+        if ($status == '' || $id == 0) return app('json')->fail('Tham số không hợp lệ');
         $this->services->update($id, ['status' => $status]);
         \crmeb\services\CacheService::clear();
-        return app('json')->success('设置成功');
+        return app('json')->success('Cài đặt thành công');
     }
 
 
     /**
-     * 检查签到配置
+     * Kiểm tra cấu hình điểm danh
      * @param SystemGroupServices $services
      * @param $gid
      * @param $params
@@ -253,16 +253,16 @@ class SystemGroupData extends AuthController
         $name = $services->value(['id' => $gid], 'config_name');
         if ($name == 'sign_day_num') {
             if (!$params['sign_num']) {
-                throw new AdminException('请输入签到赠送积分');
+                throw new AdminException('Vui lòng nhập điểm thưởng tặng khi điểm danh');
             }
             if (!preg_match('/^\+?[1-9]\d*$/', $params['sign_num'])) {
-                throw new AdminException('请输入大于等于0的整数');
+                throw new AdminException('Vui lòng nhập số nguyên lớn hơn hoặc bằng 0');
             }
         }
     }
 
     /**
-     * 获取客服页面广告内容
+     * Lấy nội dung quảng cáo trang chăm sóc khách hàng
      * @return mixed
      */
     public function getKfAdv()
@@ -274,7 +274,7 @@ class SystemGroupData extends AuthController
     }
 
     /**
-     * 设置客服页面广告内容
+     * Thiết lập nội dung quảng cáo trang chăm sóc khách hàng
      * @return mixed
      */
     public function setKfAdv()
@@ -283,22 +283,22 @@ class SystemGroupData extends AuthController
         /** @var CacheServices $cache */
         $cache = app()->make(CacheServices::class);
         $cache->setDbCache('kf_adv', $content);
-        return app('json')->success('设置成功');
+        return app('json')->success('Cài đặt thành công');
     }
 
     public function saveAll()
     {
         $params = request()->post();
         if (!isset($params['config_name']) || !isset($params['data'])) {
-            return app('json')->fail('参数错误');
+            return app('json')->fail('Tham số không hợp lệ');
         }
         $this->services->saveAllData($params['data'], $params['config_name']);
-        return app('json')->success('添加数据组成功');
+        return app('json')->success('Thêm nhóm dữ liệu thành công');
     }
 
 
     /**
-     * 获取用户协议内容
+     * Lấy nội dung thỏa thuận người dùng
      * @return mixed
      */
     public function getUserAgreement()
@@ -310,7 +310,7 @@ class SystemGroupData extends AuthController
     }
 
     /**
-     * 设置用户协议内容
+     * Thiết lập nội dung thỏa thuận người dùng
      * @return mixed
      */
     public function setUserAgreement()
@@ -319,6 +319,6 @@ class SystemGroupData extends AuthController
         /** @var CacheServices $cache */
         $cache = app()->make(CacheServices::class);
         $cache->setDbCache('user_agreement', $content);
-        return app('json')->success('设置成功');
+        return app('json')->success('Cài đặt thành công');
     }
 }

@@ -2,7 +2,7 @@
     <base-drawer mode="bottom" :visible="visible" background-color="transparent" mask maskClosable @close="closeDrawer">
         <view class="classify rd-t-40rpx">
             <view class="title">
-                修改分类
+                Sửa danh mục
                 <view class="close acea-row row-center-wrapper" @tap="closeDrawer">
                     <text class="iconfont icon-iconfontguanbi"></text>
                 </view>
@@ -10,7 +10,7 @@
             <checkbox-group @change="checkboxChange($event)" v-if="categoryList.length">
                 <view class="list acea-row">
                     <view class="item">
-                        <view class="tips">一级分类</view>
+                        <view class="tips">Danh mục cấp 1</view>
                         <scroll-view scroll-y="true" class="scroll-Y">
                             <view
                                 class="itemn line1"
@@ -41,7 +41,7 @@
                         </scroll-view>
                     </view>
                     <view class="item on" :class="!categoryList[currentOne].children.length ? 'on3' : ''" v-if="categoryList[currentOne]">
-                        <view class="tips">二级分类</view>
+                        <view class="tips">Danh mục cấp 2</view>
                         <scroll-view scroll-y="true" class="scroll-Y">
                             <view
                                 class="itemn line1"
@@ -74,11 +74,11 @@
                 </view>
             </checkbox-group>
             <view class="empty-box" v-else>
-                <emptyPage title="暂无分类～" src="/statics/images/empty-box.png"></emptyPage>
+                <emptyPage title="Chưa có danh mục~" src="/statics/images/empty-box.png"></emptyPage>
             </view>
             <view class="footer acea-row row-between-wrapper">
-                <view class="bnt acea-row row-center-wrapper" @tap="reset">重置</view>
-                <view class="bnt on acea-row row-center-wrapper" @tap="define">确定</view>
+                <view class="bnt acea-row row-center-wrapper" @tap="reset">Đặt lại</view>
+                <view class="bnt on acea-row row-center-wrapper" @tap="define">Xác nhận</view>
             </view>
         </view>
     </base-drawer>
@@ -109,7 +109,7 @@ export default {
             currentOne: 0,
             currentTwo: 0,
             checkedIds: [],
-            ids: null //父级商品id
+            ids: null //ID sản phẩm cấp cha
         };
     },
     mounted() {},
@@ -149,7 +149,7 @@ export default {
         define() {
             if (!this.checkedIds.length) {
                 this.$util.Tips({
-                    title: '请选择分类'
+                    title: 'Vui lòng chọn danh mục'
                 });
                 return;
             }
@@ -274,10 +274,10 @@ export default {
         position: fixed;
         bottom: 0;
         z-index: 30;
-        height: calc(112rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-        height: calc(112rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
-        padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
-        padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
+        height: calc(112rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+        height: calc(112rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
+        padding-bottom: constant(safe-area-inset-bottom); ///Tương thích IOS<11.2/
+        padding-bottom: env(safe-area-inset-bottom); ///Tương thích IOS>11.2/
         left: 0;
 
         .bnt {

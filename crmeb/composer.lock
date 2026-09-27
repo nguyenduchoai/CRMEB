@@ -667,7 +667,7 @@
                     "email": "junying.wjy@antfin.com"
                 }
             ],
-            "description": "支付宝官方 Alipay Easy SDK",
+            "description": "Alipay Easy SDK chính thức của Alipay",
             "time": "2020-07-07T09:28:36+00:00"
         },
         {
@@ -858,7 +858,7 @@
                     "email": "442384644@qq.com"
                 }
             ],
-            "description": "easypay 包含银联商务、支付宝、微信等支付",
+            "description": "easypay bao gồm các phương thức thanh toán China UMS, Alipay, WeChat, v.v.",
             "support": {
                 "issues": "https://github.com/crmeb/easypay/issues",
                 "source": "https://github.com/crmeb/easypay/tree/v1.0.1"
@@ -2295,7 +2295,7 @@
                     "email": "1018595261@qq.com"
                 }
             ],
-            "description": "国密sm3",
+            "description": "Chuẩn mật mã quốc gia (Guomi) sm3",
             "keywords": [
                 "php",
                 "sm3"
@@ -2981,7 +2981,7 @@
                     "email": "anzhengchao@gmail.com"
                 }
             ],
-            "description": "微信SDK",
+            "description": "SDK WeChat",
             "keywords": [
                 "sdk",
                 "wechat",
@@ -5470,7 +5470,7 @@
                     "email": "xaboy2005@qq.com"
                 }
             ],
-            "description": "PHP表单生成器，快速生成现代化的form表单。包含复选框、单选框、输入框、下拉选择框等元素以及,省市区三级联动,时间选择,日期选择,颜色选择,文件/图片上传等功能。",
+            "description": "Trình tạo biểu mẫu PHP, tạo nhanh các biểu mẫu form hiện đại. Bao gồm các phần tử như hộp kiểm (checkbox), nút chọn (radio), ô nhập liệu, hộp chọn thả xuống, v.v., cùng các chức năng như liên kết ba cấp tỉnh/thành phố/quận/huyện, chọn thời gian, chọn ngày, chọn màu, tải lên tệp/hình ảnh, v.v.",
             "homepage": "https://github.com/xaboy/form-builder",
             "keywords": [
                 "dynamic-form",
@@ -5513,11 +5513,11 @@
             ],
             "authors": [
                 {
-                    "name": "晋",
+                    "name": "Jin",
                     "email": "657306123@qq.com"
                 }
             ],
-            "description": "严格基于PSR11规范实现基础的容器和依赖注入",
+            "description": "Triển khai container và tiêm phụ thuộc (dependency injection) cơ bản, tuân thủ nghiêm ngặt chuẩn PSR11",
             "time": "2019-10-21T03:51:25+00:00"
         },
         {
@@ -5549,11 +5549,11 @@
             ],
             "authors": [
                 {
-                    "name": "晋",
+                    "name": "Jin",
                     "email": "1540175452@qq.com"
                 }
             ],
-            "description": "PHP项目日常开发必备基础库，数组工具类、字符串工具类、数字工具类、函数工具类、服务器工具类、加密工具类",
+            "description": "Thư viện cơ sở thiết yếu cho phát triển dự án PHP hằng ngày, gồm lớp tiện ích mảng, lớp tiện ích chuỗi, lớp tiện ích số, lớp tiện ích hàm, lớp tiện ích máy chủ, lớp tiện ích mã hóa",
             "time": "2019-06-22T08:28:23+00:00"
         }
     ],

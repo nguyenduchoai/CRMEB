@@ -1,7 +1,7 @@
 <template>
   <div class="goods-box" v-if="defaults.couponList">
     <div class="acea-row">
-      <div class="title">选择优惠券</div>
+      <div class="title">Chọn phiếu giảm giá</div>
       <div class="wrapper">
         <draggable class="dragArea list-group" :list="defaults.couponList.list" group="coupons" handle=".move-icon">
           <div class="item" v-for="(item, index) in defaults.couponList.list" :key="index">
@@ -15,7 +15,7 @@
           </div>
         </draggable>
         <div class="add-item" @click="openModal">
-          <el-button class="btn"><span class="iconfont iconaddto"></span>添加</el-button>
+          <el-button class="btn"><span class="iconfont iconaddto"></span>Thêm</el-button>
         </div>
       </div>
     </div>
@@ -63,7 +63,7 @@ export default {
     openModal() {
       this.$refs.couponList.isTemplate = true;
     },
-    //对象数组去重；
+    //Loại bỏ trùng lặp trong mảng object;
     unique(arr) {
       const res = new Map();
       return arr.filter((arr) => !res.has(arr.id) && res.set(arr.id, 1));

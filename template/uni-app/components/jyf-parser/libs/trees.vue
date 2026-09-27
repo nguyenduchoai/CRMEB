@@ -1,7 +1,7 @@
 <template>
 	<view class="interlayer">
 		<block v-for="(n, index) in nodes" v-bind:key="index">
-			<!--图片-->
+			<!--Hình ảnh-->
 			<!--#ifdef MP-WEIXIN || MP-QQ || MP-ALIPAY || APP-PLUS-->
 			<rich-text v-if="n.name=='img'" :id="n.attrs.id" class="_img" :style="''+handler.getStyle(n.attrs.style)" :nodes="handler.getNode(n,!lazyLoad||imgLoad)"
 			 :data-attrs="n.attrs" @tap="imgtap" @longpress="imglongtap" />
@@ -10,13 +10,13 @@
 			<rich-text v-if="n.name=='img'" :id="n.attrs.id" class="_img" :style="n.attrs.contain" :nodes='[n]' :data-attrs="n.attrs"
 			 @tap="imgtap" @longpress="imglongtap" />
 			<!--#endif-->
-			<!--文本-->
+			<!--văn bản-->
 			<!--#ifdef MP-WEIXIN || MP-QQ || APP-PLUS-->
 			<rich-text v-else-if="n.decode" class="_entity" :nodes="[n]"></rich-text>
 			<!--#endif-->
 			<text v-else-if="n.type=='text'" decode>{{n.text}}</text>
 			<text v-else-if="n.name=='br'">\n</text>
-			<!--视频-->
+			<!--Video-->
 			<view v-else-if="n.name=='video'">
 				<view v-if="(!loadVideo||n.lazyLoad)&&!(controls[n.attrs.id]&&controls[n.attrs.id].play)" :id="n.attrs.id" :class="'_video '+(n.attrs.class||'')"
 				 :style="n.attrs.style" @tap="_loadVideo" />
@@ -24,16 +24,16 @@
 				 :controls="n.attrs.controls" :loop="n.attrs.loop" :muted="n.attrs.muted" :poster="n.attrs.poster" :src="n.attrs.source[(controls[n.attrs.id]&&controls[n.attrs.id].index)||0]"
 				 :unit-id="n.attrs['unit-id']" :data-id="n.attrs.id" data-from="video" data-source="source" @error="error" @play="play" />
 			</view>
-			<!--音频-->
+			<!--âm thanh-->
 			<audio v-else-if="n.name=='audio'" :class="n.attrs.class" :style="n.attrs.style" :author="n.attrs.author" :autoplay="n.attrs.autoplay"
 			 :controls="n.attrs.controls" :loop="n.attrs.loop" :name="n.attrs.name" :poster="n.attrs.poster" :src="n.attrs.source[(controls[n.attrs.id]&&controls[n.attrs.id].index)||0]"
 			 :data-id="n.attrs.id" data-from="audio" data-source="source" @error="error" @play="play" />
-			<!--链接-->
+			<!--Liên kết-->
 			<view v-else-if="n.name=='a'" :class="'_a '+(n.attrs.class||'')" hover-class="_hover" :style="n.attrs.style"
 			 :data-attrs="n.attrs" @tap="linkpress">
 				<trees class="_span" :nodes="n.children" />
 			</view>
-			<!--广告（按需打开注释）-->
+			<!--Quảng cáo (mở comment khi cần)-->
 			<!--#ifdef MP-WEIXIN || MP-QQ || MP-TOUTIAO-->
 			<!--<ad v-else-if="n.name=='ad'" :class="n.attrs.class" :style="n.attrs.style" :unit-id="n.attrs['unit-id']"
 			 data-from="ad" @error="error" />-->
@@ -46,7 +46,7 @@
 			<!--<ad v-else-if="n.name=='ad'" :class="n.attrs.class" :style="n.attrs.style" :adpid="n.attrs.adpid"
 			 data-from="ad" @error="error" />-->
 			<!--#endif-->
-			<!--列表-->
+			<!--Danh sách-->
 			<view v-else-if="n.name=='li'" :id="n.attrs.id" :class="n.attrs.class" :style="(n.attrs.style||'')+';display:flex'">
 				<view v-if="n.type=='ol'" class="_ol-bef">{{n.num}}</view>
 				<view v-else class="_ul-bef">
@@ -63,7 +63,7 @@
 				<trees class="_li" :nodes="n.children" :lazyLoad="lazyLoad" :loadVideo="loadVideo" />
 				<!--#endif-->
 			</view>
-			<!--表格-->
+			<!--bảng-->
 			<view v-else-if="n.name=='table'&&n.c" :id="n.attrs.id" :class="n.attrs.class" :style="(n.attrs.style||'')+';display:table'">
 				<view v-for="(tbody, i) in n.children" v-bind:key="i" :class="tbody.attrs.class" :style="(tbody.attrs.style||'')+(tbody.name[0]=='t'?';display:table-'+(tbody.name=='tr'?'row':'row-group'):'')">
 					<view v-for="(tr, j) in tbody.children" v-bind:key="j" :class="tr.attrs.class" :style="(tr.attrs.style||'')+(tr.name[0]=='t'?';display:table-'+(tr.name=='tr'?'row':'cell'):'')">
@@ -87,7 +87,7 @@
 			 :width="n.attrs.width" :height="n.attrs.height" :src="n.attrs.src" />
 			<embed v-else-if="n.name=='embed'" :style="n.attrs.style" :width="n.attrs.width" :height="n.attrs.height" :src="n.attrs.src" />
 			<!--#endif-->
-			<!--富文本-->
+			<!--Văn bản định dạng-->
 			<!--#ifdef MP-WEIXIN || MP-QQ || MP-ALIPAY || APP-PLUS-->
 			<rich-text v-else-if="handler.useRichText(n)" :id="n.attrs.id" :class="'_p __'+n.name" :nodes="[n]" />
 			<!--#endif-->
@@ -137,7 +137,7 @@
 			// #endif
 		},
 		mounted() {
-			// 获取顶层组件
+			// Lấy component cấp cao nhất
 			this.top = this.$parent;
 			while (this.top.$options.name != 'parser') {
 				if (this.top.top) {
@@ -220,7 +220,7 @@
 								data: attrs.href,
 								success: () =>
 									uni.showToast({
-										title: '链接已复制'
+										title: 'Đã sao chép liên kết'
 									})
 							})
 							// #endif
@@ -235,7 +235,7 @@
 				var context, target = e.currentTarget,
 					source = target.dataset.from;
 				if (source == 'video' || source == 'audio') {
-					// 加载其他 source
+					// Tải các source khác
 					var index = this.controls[target.id] ? this.controls[target.id].index + 1 : 1;
 					if (index < target.dataset.source.length)
 						this.$set(this.controls, target.id + '.index', index);
@@ -260,9 +260,9 @@
 </script>
 
 <style>
-	/* 在这里引入自定义样式 */
+	/* Import style tùy chỉnh ở đây */
 
-	/* 链接和图片效果 */
+	/* Hiệu ứng link và hình ảnh */
 	._a {
 		display: inline;
 		color: #366092;

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,9 +21,9 @@ use EasyWeChat\Payment\Order;
 use think\facade\Event;
 
 /**
- * 通联支付
+ * Allinpay
  * Class AllinPay
- * @author 等风来
+ * @author Deng Fenglai
  * @email 136327134@qq.com
  * @date 2023/2/1
  * @package crmeb\services\pay\storage
@@ -39,7 +39,7 @@ class AllinPay extends BasePay implements PayInterface
     /**
      * @param array $config
      * @return mixed|void
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/1/15
      */
@@ -56,7 +56,7 @@ class AllinPay extends BasePay implements PayInterface
     }
 
     /**
-     * 创建支付
+     * Tạo thanh toán
      * @param string $orderId
      * @param string $totalFee
      * @param string $attach
@@ -64,7 +64,7 @@ class AllinPay extends BasePay implements PayInterface
      * @param string $detail
      * @param array $options
      * @return array|mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/1/15
      */
@@ -94,21 +94,21 @@ class AllinPay extends BasePay implements PayInterface
             case Order::NATIVE:
                 return $this->pay->pcPay($totalFee, $orderId, $body, $attach, !empty($options['wechat']));
             default:
-                throw new PayException('通联支付:支付类型错误或者暂不支持此环境下支付');
+                throw new PayException('Allinpay: loại thanh toán không hợp lệ hoặc chưa hỗ trợ thanh toán trong môi trường này');
         }
     }
 
     public function merchantPay(string $openid, string $orderId, string $amount, array $options = [])
     {
-        throw new PayException('通联支付:暂不支持商家转账');
+        throw new PayException('Allinpay: chưa hỗ trợ chuyển khoản từ người bán');
     }
 
     /**
-     * 发起退款
+     * Khởi tạo hoàn tiền
      * @param string $outTradeNo
      * @param array $options
      * @return array|mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/1/15
      */
@@ -124,9 +124,9 @@ class AllinPay extends BasePay implements PayInterface
     }
 
     /**
-     * 异步回调
+     * Callback bất đồng bộ
      * @return mixed|string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/1/15
      */

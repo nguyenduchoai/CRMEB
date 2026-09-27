@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,7 +24,7 @@ class StoreCouponUserDao extends BaseDao
 {
 
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -33,7 +33,7 @@ class StoreCouponUserDao extends BaseDao
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -48,7 +48,7 @@ class StoreCouponUserDao extends BaseDao
     }
 
     /**
-     * 使用优惠券修改优惠券状态
+     * Sử dụng phiếu giảm giá và cập nhật trạng thái phiếu giảm giá
      * @param $id
      * @return \think\Model|null
      */
@@ -58,7 +58,7 @@ class StoreCouponUserDao extends BaseDao
     }
 
     /**
-     * 获取指定商品id下的优惠卷
+     * Lấy phiếu giảm giá theo id sản phẩm chỉ định
      * @param array $productIds
      * @param int $uid
      * @param string $price
@@ -79,7 +79,7 @@ class StoreCouponUserDao extends BaseDao
     }
 
     /**
-     * 根据商品id获取
+     * Lấy theo id sản phẩm
      * @param array $cateIds
      * @param int $uid
      * @param string $price
@@ -98,7 +98,7 @@ class StoreCouponUserDao extends BaseDao
     }
 
     /**
-     * 获取当前用户可用的优惠卷
+     * Lấy phiếu giảm giá khả dụng của người dùng hiện tại
      * @param array $ids
      * @param int $uid
      * @param string $price
@@ -119,7 +119,7 @@ class StoreCouponUserDao extends BaseDao
     }
 
     /**
-     * 获取当前用户所有可用的优惠卷
+     * Lấy tất cả phiếu giảm giá khả dụng của người dùng hiện tại
      * @param int $uid
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -134,7 +134,7 @@ class StoreCouponUserDao extends BaseDao
     }
 
     /**
-     * 获取列表带排序
+     * Lấy danh sách kèm sắp xếp
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -163,7 +163,7 @@ class StoreCouponUserDao extends BaseDao
     }
 
     /**
-     * 根据月份查询用户获得的优惠券
+     * Tra cứu phiếu giảm giá người dùng nhận được theo tháng
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -181,7 +181,7 @@ class StoreCouponUserDao extends BaseDao
     }
 
     /**
-     * 根据时间查询
+     * Tra cứu theo thời gian
      * @param array $where
      * @param string $field
      * @return array
@@ -195,7 +195,7 @@ class StoreCouponUserDao extends BaseDao
     }
 
     /**
-     * 获取本月领取的优惠券
+     * Lấy phiếu giảm giá đã nhận trong tháng này
      * @param $uid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -208,7 +208,7 @@ class StoreCouponUserDao extends BaseDao
     }
 
     /**
-     * 删除用户获得的优惠券
+     * Xóa phiếu giảm giá người dùng đã nhận
      * @param $where
      * @return bool
      */
@@ -218,7 +218,7 @@ class StoreCouponUserDao extends BaseDao
     }
 
     /**
-     * 判断用户是否还能领取或者已经领取未使用
+     * Kiểm tra người dùng còn có thể nhận hay đã nhận nhưng chưa sử dụng
      * @param $uid
      * @param $coupon_id
      * @param $receive_limit
@@ -239,7 +239,7 @@ class StoreCouponUserDao extends BaseDao
         }
         $noUserCount = 0;
         foreach ($list as $item) {
-            if ($item['status'] == '未使用') {
+            if ($item['status'] == 'Chưa sử dụng') {
                 $noUserCount++;
             }
         }

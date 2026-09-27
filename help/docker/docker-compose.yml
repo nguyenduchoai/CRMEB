@@ -1,12 +1,12 @@
 services:
-  # mysql 容器
+  # Container mysql
   mysql:
     container_name: crmeb_mysql
     image: ccr.ccs.tencentyun.com/crmebky_php/mysql:v8.0.45
     ports:
       - "33061:3306"
     environment:
-      TZ: Asia/Shanghai
+      TZ: Asia/Ho_Chi_Minh
       MYSQL_ROOT_PASSWORD: 123456
       MYSQL_USER: crmeb
       MYSQL_PASSWORD: 123456
@@ -17,25 +17,25 @@ services:
     networks:
       app_net:
         ipv4_address: 192.168.10.11
-  # redis 容器
+  # Container redis
   redis:
     container_name: crmeb_redis
     image: ccr.ccs.tencentyun.com/crmebky_php/redis:v8.6.1
     ports:
       - "63791:6379"
     environment:
-      TZ: Asia/Shanghai
+      TZ: Asia/Ho_Chi_Minh
       REDIS_PASSWORD: 123456
     networks:
       app_net:
         ipv4_address: 192.168.10.10
-  # php 容器
+  # Container php
   phpfpm:
     container_name: crmeb_php
     image: ccr.ccs.tencentyun.com/crmebky_php/php:v7.4
     restart: always
     environment:
-      TZ: Asia/Shanghai
+      TZ: Asia/Ho_Chi_Minh
       MYSQL_HOST_IP: crmeb_mysql
       MYSQL_PORT: "3306"
       MYSQL_USER: crmeb
@@ -46,7 +46,7 @@ services:
       REDIS_DATABASE: "0"
       REDIS_PASSWORD: 123456
       APP_DEBUG: true
-      DEFAULT_TIMEZONE: Asia/Shanghai
+      DEFAULT_TIMEZONE: Asia/Ho_Chi_Minh
     ports:
       - "9000:9000"
       - "40001:40001"
@@ -58,7 +58,7 @@ services:
     networks:
       app_net:
         ipv4_address: 192.168.10.90
-  # nginx 容器
+  # Container nginx
   nginx:
     container_name: crmeb_nginx
     image: ccr.ccs.tencentyun.com/crmebky_php/nginx:v1.29.6
@@ -68,7 +68,7 @@ services:
     depends_on:
       - phpfpm
     environment:
-      TZ: Asia/Shanghai
+      TZ: Asia/Ho_Chi_Minh
     working_dir: /var/www
     volumes_from:
       - phpfpm

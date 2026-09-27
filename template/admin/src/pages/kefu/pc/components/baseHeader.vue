@@ -5,7 +5,7 @@
         v-model="value"
         class="search_box"
         prefix="ios-search"
-        placeholder="搜索用户名称"
+        placeholder="Tìm kiếm tên người dùng"
         @change="bindSearch"
       />
       <div class="user_info">
@@ -14,20 +14,20 @@
         <div class="status-box">
           <div class="status" :class="online ? 'on' : 'off'" v-db-click @click.stop="setOnline">
             <span class="dot"></span>
-            {{ online ? '在线' : '下线' }}
+            {{ online ? 'Trực tuyến' : 'Ngoại tuyến' }}
           </div>
 
           <div class="online-down" v-show="isOnline">
             <div class="item" v-db-click @click.stop="changeOnline(1)">
-              <span class="iconfont iconduihao" v-if="online"></span><i class="green"></i>在线
+              <span class="iconfont iconduihao" v-if="online"></span><i class="green"></i>Trực tuyến
             </div>
             <div class="item" v-db-click @click.stop="changeOnline(0)">
-              <span class="iconfont iconduihao" v-if="!online"></span><i></i>下线
+              <span class="iconfont iconduihao" v-if="!online"></span><i></i>Ngoại tuyến
             </div>
           </div>
         </div>
       </div>
-      <div class="out-btn" v-db-click @click.stop="outLogin">退出登录</div>
+      <div class="out-btn" v-db-click @click.stop="outLogin">Đăng xuất</div>
     </div>
     <div class="right-menu">
       <div
@@ -67,15 +67,15 @@ export default {
       menuList: [
         {
           key: 0,
-          title: '客户信息',
+          title: 'Thông tin khách hàng',
         },
         {
           key: 1,
-          title: '交易订单',
+          title: 'Đơn hàng giao dịch',
         },
         {
           key: 2,
-          title: '商品信息',
+          title: 'Thông tin sản phẩm',
         },
       ],
       curIndex: 0,
@@ -101,15 +101,15 @@ export default {
       this.$emit('setOnline', type);
       this.isOnline = false;
     },
-    // 退出登录
+    // Đăng xuất
     outLogin() {
       let self = this;
       this.$msgbox({
-        title: '退出登录确认',
-        message: '您确定退出登录当前账户吗？打开的标签页和个人设置将会保存。',
+        title: 'Xác nhận đăng xuất',
+        message: 'Bạn có chắc muốn đăng xuất khỏi tài khoản hiện tại? Các tab đang mở và cài đặt cá nhân sẽ được lưu lại.',
         showCancelButton: true,
-        cancelButtonText: '取消',
-        confirmButtonText: '确认',
+        cancelButtonText: 'Hủy',
+        confirmButtonText: 'Xác nhận',
         iconClass: 'el-icon-warning',
         confirmButtonClass: 'btn-custom-cancel',
       })
@@ -121,7 +121,7 @@ export default {
         })
         .catch(() => {});
     },
-    // 搜索
+    // Tìm kiếm
     bindSearch(e) {
       this.$emit('search', e);
     },

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -42,7 +42,7 @@ class OtherOrderController
     }
 
     /**
-     * 计算会员线下付款金额
+     * Tính số tiền thành viên thanh toán ngoại tuyến
      * @param Request $request
      * @return mixed
      */
@@ -50,14 +50,14 @@ class OtherOrderController
     {
         list($pay_price) = $request->getMore([['pay_price', 0]], true);
         $old_price = $pay_price;
-        if (!$pay_price || !is_numeric($pay_price)) return app('json')->fail('请输入付款金额');
+        if (!$pay_price || !is_numeric($pay_price)) return app('json')->fail('Vui lòng nhập số tiền thanh toán');
         $uid = $request->uid();
         /** @var UserServices $userService */
         $userService = app()->make(UserServices::class);
         $user_info = $userService->get($uid, ['is_money_level']);
-        //会员线下享受折扣
+        //Thành viên được chiết khấu khi thanh toán ngoại tuyến
         if ($user_info->is_money_level > 0) {
-            //看是否开启线下享受折扣
+            //Kiểm tra có mở chiết khấu khi thanh toán ngoại tuyến không
             /** @var MemberCardServices $memberCardService */
             $memberCardService = app()->make(MemberCardServices::class);
             $offline_rule_number = $memberCardService->isOpenMemberCard('offline');
@@ -95,32 +95,32 @@ class OtherOrderController
             ['quitUrl', ''],
             ['mc_id', 0]
         ], true);
-        if ($money <= 0.00) return app('json')->fail('支付金额不能为0元');
+        if ($money <= 0.00) return app('json')->fail('Số tiền thanh toán không được là 0đ');
         $payType = strtolower($payType);
         if (in_array($type, [1, 2])) {
             /** @var MemberCardServices $memberCardService */
             $memberCardService = app()->make(MemberCardServices::class);
             $isOpenMember = $memberCardService->isOpenMemberCard();
-            if (!$isOpenMember) return app('json')->fail('付费会员功能暂未开启');
+            if (!$isOpenMember) return app('json')->fail('Tính năng thành viên trả phí chưa được bật');
         }
         $channelType = $userServices->getUserInfo($uid)['user_type'];
         $order = $OtherOrderServices->createOrder($uid, $channelType, $memberType, $price, $payType, $type, $money, $mcId);
-        if ($order === false) return app('json')->fail('支付数据生成失败');
+        if ($order === false) return app('json')->fail('Tạo dữ liệu thanh toán thất bại');
         $order_id = $order['order_id'];
         $orderInfo = $OtherOrderServices->getOne(['order_id' => $order_id]);
-        if (!$orderInfo) return app('json')->fail('支付订单不存在');
+        if (!$orderInfo) return app('json')->fail('Đơn thanh toán không tồn tại');
         $orderInfo = $orderInfo->toArray();
 
         $info = compact('order_id');
 
         $payType = app()->make(OrderPayServices::class)->getPayType($payType);
 
-        //支付金额为0
+        //Số tiền thanh toán bằng 0
         if (bcsub((string)$orderInfo['pay_price'], '0', 2) <= 0) {
-            //创建订单jspay支付
+            //Tạo đơn hàng thanh toán jspay
             $payPriceStatus = $OtherOrderServices->zeroYuanPayment($orderInfo);
-            if ($payPriceStatus)//0元支付成功
-                return app('json')->status('success', '支付成功', $info);
+            if ($payPriceStatus)//Thanh toán 0đ thành công
+                return app('json')->status('success', 'Thanh toán thành công', $info);
             else
                 return app('json')->status('pay_error');
         }
@@ -132,7 +132,7 @@ class OtherOrderController
                     $yueServices = app()->make(YuePayServices::class);
                     $pay = $yueServices->yueOrderPay($orderInfo, $uid);
                     if ($pay['status'] === true)
-                        return app('json')->status('success', '余额支付成功', $info);
+                        return app('json')->status('success', 'Thanh toán bằng số dư thành công', $info);
                     else {
                         if (is_array($pay))
                             return app('json')->status($pay['status'], $pay['msg'], $info);
@@ -140,17 +140,17 @@ class OtherOrderController
                             return app('json')->status('pay_error', $pay);
                     }
                 case PayServices::OFFLINE_PAY:
-                    return app('json')->status('success', '前往支付', $info);
+                    return app('json')->status('success', 'Đi đến thanh toán', $info);
                 default:
                     $payServices = app()->make(OrderPayServices::class);
                     $payInfo = $payServices->beforePay($order->toArray(), $payType, ['quitUrl' => $quitUrl]);
                     return app('json')->status($payInfo['status'], $payInfo['payInfo']);
             }
-        } else return app('json')->fail('订单生成失败');
+        } else return app('json')->fail('Tạo đơn hàng thất bại');
     }
 
     /**
-     * 线下支付方式
+     * Phương thức thanh toán ngoại tuyến
      * @return mixed
      */
     public function pay_type(Request $request)
@@ -160,7 +160,7 @@ class OtherOrderController
         $payType['site_name'] = sys_config('site_name');
         $payType['now_money'] = $request->user('now_money');
         $payType['offline_pay_status'] = true;
-        $payType['yue_pay_status'] = (int)sys_config('balance_func_status') && (int)sys_config('yue_pay_status') == 1 ? 1 : 0;//余额支付 1 开启 2 关闭
+        $payType['yue_pay_status'] = (int)sys_config('balance_func_status') && (int)sys_config('yue_pay_status') == 1 ? 1 : 0;//Thanh toán bằng số dư: 1 là bật, 2 là tắt
         return app('json')->success($payType);
     }
 }

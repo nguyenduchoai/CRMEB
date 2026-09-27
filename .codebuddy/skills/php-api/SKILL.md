@@ -1,161 +1,161 @@
 ---
-name: PHP后端开发说明
-description: PHP后端开发skill说明
+name: Hướng dẫn phát triển backend PHP
+description: Mô tả skill phát triển backend PHP
 ---
 
-# PHP后端开发说明
+# Hướng dẫn phát triển backend PHP
 
-## 0. 自动触发说明
+## 0. Mô tả cơ chế tự động kích hoạt
 
-### 0.1 触发条件
+### 0.1 Điều kiện kích hoạt
 
-#### 0.1.1 操作触发
-- **文件浏览时**: 当浏览 PHP 后端相关目录时自动调用
-  - 打开 `app/` 目录时触发
-  - 打开 `crmeb/` 核心库目录时触发
-  - 浏览控制器、模型、服务目录时触发
-  - 查看配置文件目录时触发
-- **文件操作时**: 当对 PHP 后端文件进行操作时自动调用
-  - 创建新 PHP 文件时触发
-  - 修改后端代码时触发
-  - 删除 PHP 文件时触发
-- **目录操作时**: 当对 PHP 后端目录进行操作时自动调用
-  - 创建新后端目录时触发
-  - 重命名后端目录时触发
-  - 删除后端目录时触发
+#### 0.1.1 Kích hoạt theo thao tác
+- **Khi duyệt file**: Tự động được gọi khi duyệt các thư mục liên quan đến backend PHP
+  - Kích hoạt khi mở thư mục `app/`
+  - Kích hoạt khi mở thư mục thư viện lõi `crmeb/`
+  - Kích hoạt khi duyệt thư mục controller, model, service
+  - Kích hoạt khi xem thư mục chứa file cấu hình
+- **Khi thao tác file**: Tự động được gọi khi thao tác trên các file backend PHP
+  - Kích hoạt khi tạo file PHP mới
+  - Kích hoạt khi sửa code backend
+  - Kích hoạt khi xóa file PHP
+- **Khi thao tác thư mục**: Tự động được gọi khi thao tác trên các thư mục backend PHP
+  - Kích hoạt khi tạo thư mục backend mới
+  - Kích hoạt khi đổi tên thư mục backend
+  - Kích hoạt khi xóa thư mục backend
 
-#### 0.1.2 内容触发
-- **关键词触发**: 当文件内容包含以下关键词时自动调用
-  - 后端关键词: `后端`、`PHP`、`服务器`、`API`、`接口`
-  - 框架关键词: `ThinkPHP`、`TP6`、`框架`、`路由`、`控制器`
-  - 功能关键词: `登录`、`注册`、`支付`、`订单`、`用户`
-- **代码触发**: 当查看特定类型 PHP 代码时自动调用
-  - 控制器代码 (`Controller`)
-  - 模型代码 (`Model`)
-  - 服务代码 (`Service`)
-  - 配置代码 (`Config`)
-  - 路由代码 (`Route`)
+#### 0.1.2 Kích hoạt theo nội dung
+- **Kích hoạt theo từ khóa**: Tự động được gọi khi nội dung tệp chứa các từ khóa sau
+  - Từ khóa backend: `backend`, `PHP`, `máy chủ`, `API`, `API`
+  - Từ khóa framework: `ThinkPHP`, `TP6`, `framework`, `route`, `controller`
+  - Từ khóa chức năng: `đăng nhập`, `đăng ký`, `thanh toán`, `đơn hàng`, `người dùng`
+- **Kích hoạt theo code**: Tự động được gọi khi xem code PHP thuộc các loại cụ thể
+  - Code controller (`Controller`)
+  - Code model (`Model`)
+  - Code service (`Service`)
+  - Code cấu hình (`Config`)
+  - Code route (`Route`)
 
-#### 0.1.3 命令触发
-- **终端命令触发**: 当执行以下命令时自动调用
-  - `php think` (ThinkPHP 命令)
-  - `composer` (依赖管理命令)
-  - `php` (PHP 执行命令)
-  - `artisan` (Laravel 命令，如需)
+#### 0.1.3 Kích hoạt theo lệnh
+- **Kích hoạt bằng lệnh terminal**: Tự động được gọi khi thực thi các lệnh sau
+  - `php think` (lệnh ThinkPHP)
+  - `composer` (lệnh quản lý dependency)
+  - `php` (lệnh thực thi PHP)
+  - `artisan` (lệnh Laravel, nếu cần)
 
-### 0.2 适用场景
+### 0.2 Tình huống áp dụng
 
-#### 0.2.1 核心场景
-- **后端开发**: 开发 PHP 后端功能时
-- **API 开发**: 开发 RESTful API 接口时
-- **业务逻辑实现**: 实现核心业务逻辑时
-- **数据操作**: 进行数据库操作时
+#### 0.2.1 Tình huống cốt lõi
+- **Phát triển backend**: Khi phát triển tính năng backend PHP
+- **Phát triển API**: Khi phát triển RESTful API
+- **Triển khai logic nghiệp vụ**: Khi xây dựng logic nghiệp vụ cốt lõi
+- **Thao tác dữ liệu**: Khi thực hiện các thao tác cơ sở dữ liệu
 
-#### 0.2.2 辅助场景
-- **代码调试**: 调试 PHP 后端代码时
-- **性能优化**: 优化后端性能时
-- **安全加固**: 增强后端安全性时
-- **架构设计**: 设计后端架构时
+#### 0.2.2 Tình huống hỗ trợ
+- **Gỡ lỗi code**: Khi gỡ lỗi code backend PHP
+- **Tối ưu hiệu năng**: Khi tối ưu hiệu năng backend
+- **Tăng cường bảo mật**: Khi nâng cao tính bảo mật của backend
+- **Thiết kế kiến trúc**: Khi thiết kế kiến trúc backend
 
-### 0.3 触发机制
+### 0.3 Cơ chế kích hoạt
 
-#### 0.3.1 调用时机
-- **实时触发**: PHP 文件操作时立即触发
-- **延迟触发**: 复杂目录操作时延迟1秒触发
-- **批量触发**: 批量文件操作时合并触发
+#### 0.3.1 Thời điểm gọi
+- **Kích hoạt tức thời**: Kích hoạt ngay khi thao tác với file PHP
+- **Kích hoạt trễ**: Kích hoạt sau 1 giây khi thao tác thư mục phức tạp
+- **Kích hoạt hàng loạt**: Gộp thành một lần kích hoạt khi thao tác file hàng loạt
 
-#### 0.3.2 调用频率
-- 文件浏览: 最多每10秒触发一次
-- 文件操作: 最多每5秒触发一次
-- 命令执行: 最多每3秒触发一次
+#### 0.3.2 Tần suất gọi
+- Duyệt tệp: kích hoạt tối đa một lần mỗi 10 giây
+- Thao tác tệp: kích hoạt tối đa một lần mỗi 5 giây
+- Thực thi lệnh: kích hoạt tối đa một lần mỗi 3 giây
 
-#### 0.3.3 调用优先级
-- **优先级等级**: 中等优先级 (3/5)
-- **竞争处理**: 当多个技能同时触发时
-  - 最高优先级: 系统核心技能
-  - 高优先级: 代码结构技能
-  - 中等优先级: PHP 后端技能、前端技能、移动端技能
-  - 低优先级: 辅助工具技能
-- **触发限制**: 仅在 PHP 后端相关操作时被触发，不影响其他技能的正常使用
+#### 0.3.3 Mức ưu tiên gọi
+- **Mức ưu tiên**: Ưu tiên trung bình (3/5)
+- **Xử lý tranh chấp**: Khi nhiều skill được kích hoạt cùng lúc
+  - Ưu tiên cao nhất: skill cốt lõi của hệ thống
+  - Ưu tiên cao: skill cấu trúc mã nguồn
+  - Ưu tiên trung bình: Skill backend PHP, skill frontend, skill di động
+  - Ưu tiên thấp: skill công cụ hỗ trợ
+- **Giới hạn kích hoạt**: Chỉ được kích hoạt khi có thao tác liên quan đến backend PHP, không ảnh hưởng đến việc sử dụng bình thường của các skill khác
 
-### 0.4 触发后行为
+### 0.4 Hành vi sau khi kích hoạt
 
-#### 0.4.1 自动分析
-- **代码分析**: 分析 PHP 代码结构和质量
-- **依赖分析**: 分析代码依赖关系
-- **性能分析**: 分析代码性能瓶颈
-- **安全分析**: 分析代码安全隐患
+#### 0.4.1 Tự động phân tích
+- **Phân tích code**: Phân tích cấu trúc và chất lượng code PHP
+- **Phân tích phụ thuộc**: Phân tích quan hệ phụ thuộc của code
+- **Phân tích hiệu năng**: Phân tích điểm nghẽn hiệu năng của code
+- **Phân tích bảo mật**: Phân tích các nguy cơ bảo mật tiềm ẩn trong code
 
-#### 0.4.2 自动展示
-- **目录结构**: 展示 PHP 后端目录结构
-- **代码说明**: 展示核心代码功能说明
-- **技术栈**: 展示后端技术栈
-- **开发规范**: 展示 PHP 开发规范
+#### 0.4.2 Tự động hiển thị
+- **Cấu trúc thư mục**: Trình bày cấu trúc thư mục backend PHP
+- **Giải thích code**: Trình bày mô tả chức năng của code cốt lõi
+- **Bộ công nghệ**: Trình bày bộ công nghệ backend
+- **Quy chuẩn phát triển**: Trình bày quy chuẩn phát triển PHP
 
-#### 0.4.3 自动建议
-- **开发建议**: 提供 PHP 后端开发建议
-- **优化建议**: 提供性能优化建议
-- **规范建议**: 提供代码规范遵循建议
-- **安全建议**: 提供安全防护建议
+#### 0.4.3 Tự động đề xuất
+- **Gợi ý phát triển**: Đưa ra gợi ý phát triển backend PHP
+- **Gợi ý tối ưu**: Đưa ra gợi ý tối ưu hiệu năng
+- **Đề xuất quy chuẩn**: Đưa ra đề xuất về việc tuân thủ quy chuẩn mã nguồn
+- **Gợi ý bảo mật**: Đưa ra gợi ý phòng vệ bảo mật
 
-## 1. PHP 后端架构
+## 1. Kiến trúc backend PHP
 
-### 1.1 整体架构
-- **框架**: ThinkPHP 6.x
-- **架构模式**: MVC + Service + DAO 分层架构
-- **设计模式**: 单例、工厂、依赖注入等
-- **数据库**: MySQL 5.7~8.0
-- **缓存**: Redis (推荐)
-- **队列**: ThinkPHP 内置队列
+### 1.1 Kiến trúc tổng thể
+- **Framework**: ThinkPHP 6.x
+- **Mô hình kiến trúc**: Kiến trúc phân tầng MVC + Service + DAO
+- **Mẫu thiết kế**: Singleton, Factory, Dependency Injection, v.v.
+- **Cơ sở dữ liệu**: MySQL 5.7~8.0
+- **Bộ nhớ đệm (cache)**: Redis (khuyến nghị)
+- **Hàng đợi**: Hàng đợi tích hợp sẵn của ThinkPHP
 
-### 1.2 技术栈
+### 1.2 Bộ công nghệ
 - **PHP**: 7.1~7.4
 - **ThinkPHP**: 6.x
 - **MySQL**: 5.7+
 - **Redis**: 5.0+
-- **Composer**: 依赖管理
-- **Workerman**: 长连接服务
+- **Composer**: Quản lý phụ thuộc
+- **Workerman**: Dịch vụ kết nối liên tục (long connection)
 
-### 1.3 目录结构
+### 1.3 Cấu trúc thư mục
 
-#### 1.3.1 核心目录
+#### 1.3.1 Thư mục cốt lõi
 ```
 app/
-├── api/              # API 接口层
-├── controller/       # 控制器层
-├── dao/              # 数据访问层
-├── model/            # 模型层
-├── services/         # 业务逻辑层
-├── event/            # 事件处理层
-├── middleware/       # 中间件层
-└── validate/         # 数据验证层
+├── api/              # API tầng giao tiếp
+├── controller/       # Tầng controller
+├── dao/              # Tầng truy cập dữ liệu
+├── model/            # Tầng model
+├── services/         # Tầng logic nghiệp vụ
+├── event/            # Tầng xử lý sự kiện
+├── middleware/       # Tầng middleware
+└── validate/         # Tầng xác thực dữ liệu
 ```
 
-#### 1.3.2 配置目录
+#### 1.3.2 Thư mục cấu hình
 ```
 config/
-├── app.php           # 应用配置
-├── database.php      # 数据库配置
-├── route.php         # 路由配置
-├── cache.php         # 缓存配置
-└── queue.php         # 队列配置
+├── app.php           # Cấu hình ứng dụng
+├── database.php      # Cấu hình cơ sở dữ liệu
+├── route.php         # Cấu hình route
+├── cache.php         # Cấu hình bộ nhớ đệm
+└── queue.php         # Cấu hình hàng đợi
 ```
 
-#### 1.3.3 核心库目录
+#### 1.3.3 Thư mục thư viện lõi
 ```
 crmeb/
-├── basic/            # 基础类库
-├── exception/        # 异常处理
-└── services/         # 核心服务
+├── basic/            # Thư viện lớp cơ sở
+├── exception/        # Xử lý ngoại lệ
+└── services/         # Service cốt lõi
 ```
 
-## 2. 核心模块
+## 2. Các mô-đun cốt lõi
 
-### 2.1 控制器模块
-- **功能**: 处理 HTTP 请求，路由分发，响应客户端
-- **特点**: RESTful 风格，分层清晰，参数验证
-- **关键文件**: `BaseController.php` (控制器基类)
-- **示例代码**:
+### 2.1 Module controller
+- **Chức năng**: Xử lý request HTTP, điều phối route, phản hồi client
+- **Đặc điểm**: Phong cách RESTful, phân tầng rõ ràng, kiểm tra tham số
+- **File chính**: `BaseController.php` (lớp cơ sở của controller)
+- **Code mẫu**:
   ```php
   <?php
   namespace app\controller;
@@ -166,16 +166,16 @@ crmeb/
   {
       public function index()
       {
-          return $this->success('获取用户列表成功', $data);
+          return $this->success('Lấy danh sách người dùng thành công', $data);
       }
   }
   ```
 
-### 2.2 服务模块
-- **功能**: 实现核心业务逻辑，封装业务规则
-- **特点**: 业务逻辑集中，可复用性高，易于测试
-- **关键文件**: 各业务服务类
-- **示例代码**:
+### 2.2 Module service
+- **Chức năng**: Hiện thực logic nghiệp vụ cốt lõi, đóng gói các quy tắc nghiệp vụ
+- **Đặc điểm**: Logic nghiệp vụ tập trung, khả năng tái sử dụng cao, dễ kiểm thử
+- **File chính**: Các lớp service nghiệp vụ
+- **Code mẫu**:
   ```php
   <?php
   namespace app\services;
@@ -186,17 +186,17 @@ crmeb/
   {
       public function createUser($data)
       {
-          // 业务逻辑实现
+          // Triển khai logic nghiệp vụ
           return $userId;
       }
   }
   ```
 
-### 2.3 数据访问模块
-- **功能**: 封装数据库操作，提供数据访问方法
-- **特点**: SQL 集中管理，防止 SQL 注入，提高安全性
-- **关键文件**: 各数据访问对象类
-- **示例代码**:
+### 2.3 Module truy cập dữ liệu
+- **Chức năng**: Đóng gói các thao tác cơ sở dữ liệu, cung cấp các phương thức truy cập dữ liệu
+- **Đặc điểm**: Quản lý SQL tập trung, chống SQL injection, tăng cường bảo mật
+- **File chính**: Các lớp đối tượng truy cập dữ liệu (DAO)
+- **Code mẫu**:
   ```php
   <?php
   namespace app\dao;
@@ -212,11 +212,11 @@ crmeb/
   }
   ```
 
-### 2.4 模型模块
-- **功能**: 定义数据模型，处理数据关系
-- **特点**: ORM 映射，自动表结构，关联查询
-- **关键文件**: `BaseModel.php` (模型基类)
-- **示例代码**:
+### 2.4 Module model
+- **Chức năng**: Định nghĩa model dữ liệu, xử lý quan hệ dữ liệu
+- **Đặc điểm**: Ánh xạ ORM, tự động nhận cấu trúc bảng, truy vấn liên kết
+- **File chính**: `BaseModel.php` (lớp cơ sở của model)
+- **Code mẫu**:
   ```php
   <?php
   namespace app\model;
@@ -230,11 +230,11 @@ crmeb/
   }
   ```
 
-### 2.5 路由模块
-- **功能**: 定义 URL 路由规则，分发请求
-- **特点**: RESTful 风格，路由分组，中间件支持
-- **关键文件**: `route/api.php`、`route/app.php`
-- **示例代码**:
+### 2.5 Module route
+- **Chức năng**: Định nghĩa quy tắc route cho URL, điều phối request
+- **Đặc điểm**: Phong cách RESTful, nhóm route, hỗ trợ middleware
+- **File chính**: `route/api.php`, `route/app.php`
+- **Code mẫu**:
   ```php
   <?php
   use think\facade\Route;
@@ -245,136 +245,136 @@ crmeb/
   Route::delete('user/:id', 'User/delete');
   ```
 
-## 3. 开发规范
+## 3. Quy chuẩn phát triển
 
-### 3.1 代码规范
-- **PHP 规范**: 遵循 PSR-2 命名规范
-- **命名规范**:
-  - 类名: PascalCase
-  - 方法/变量: camelCase
-  - 常量: 全大写，下划线分隔
-  - 文件名: 与类名一致，PascalCase
-- **代码缩进**: 4空格缩进，禁止制表符
-- **注释规范**: 方法注释、类注释、关键逻辑注释
+### 3.1 Quy chuẩn code
+- **Quy chuẩn PHP**: Tuân theo quy chuẩn đặt tên PSR-2
+- **Quy tắc đặt tên**:
+  - Tên lớp: PascalCase
+  - Phương thức/biến: camelCase
+  - Hằng số: Viết hoa toàn bộ, phân tách bằng dấu gạch dưới
+  - Tên file: Trùng với tên lớp, PascalCase
+- **Thụt lề code**: Thụt lề 4 dấu cách, không được dùng ký tự tab
+- **Quy chuẩn chú thích**: Chú thích phương thức, chú thích lớp, chú thích logic quan trọng
 
-### 3.2 目录规范
-- **按功能模块组织**: 相同功能的代码放在同一目录
-- **目录层次清晰**: 避免过深的目录嵌套
-- **命名语义化**: 目录名应反映其功能
+### 3.2 Quy chuẩn thư mục
+- **Tổ chức theo module chức năng**: Code cùng chức năng đặt trong cùng một thư mục
+- **Phân cấp thư mục rõ ràng**: Tránh lồng thư mục quá sâu
+- **Đặt tên có ngữ nghĩa**: Tên thư mục cần phản ánh chức năng của nó
 
-### 3.3 数据库规范
-- **表名**: 小写下划线分隔
-- **主键**: 统一命名为 `id`
-- **外键**: 格式 `表名_id`
-- **时间字段**: `create_time`/`update_time`
-- **状态字段**: `status`，默认值 0
+### 3.3 Quy chuẩn cơ sở dữ liệu
+- **Tên bảng**: Chữ thường, phân tách bằng dấu gạch dưới
+- **Khóa chính**: Thống nhất đặt tên là `id`
+- **Khóa ngoại**: Định dạng `{tên_bảng}_id`
+- **Trường thời gian**: `create_time`/`update_time`
+- **Trường trạng thái**: `status`, giá trị mặc định 0
 
-### 3.4 API 规范
-- **RESTful 风格**: 使用标准 HTTP 方法
-- **响应格式**: 统一 JSON 格式
-- **错误处理**: 使用统一的错误码和错误信息
-- **参数验证**: 严格的参数验证
+### 3.4 Quy chuẩn API
+- **Phong cách RESTful**: Sử dụng các phương thức HTTP chuẩn
+- **Định dạng phản hồi**: Định dạng JSON thống nhất
+- **Xử lý lỗi**: Sử dụng mã lỗi và thông báo lỗi thống nhất
+- **Kiểm tra tham số**: Kiểm tra tham số nghiêm ngặt
 
-## 4. 最佳实践
+## 4. Thực tiễn tốt nhất
 
-### 4.1 开发流程
-1. **需求分析**: 明确功能需求和技术方案
-2. **架构设计**: 设计模块结构和数据库结构
-3. **代码实现**: 遵循开发规范编码
-4. **测试验证**: 单元测试和功能测试
-5. **代码审查**: 代码质量检查
-6. **部署上线**: 构建和部署
+### 4.1 Quy trình phát triển
+1. **Phân tích yêu cầu**: Làm rõ yêu cầu chức năng và phương án kỹ thuật
+2. **Thiết kế kiến trúc**: Thiết kế cấu trúc module và cấu trúc cơ sở dữ liệu
+3. **Viết code**: Lập trình tuân theo quy chuẩn phát triển
+4. **Kiểm thử và xác minh**: Unit test và kiểm thử chức năng
+5. **Rà soát code (code review)**: Kiểm tra chất lượng code
+6. **Triển khai và phát hành**: Build và triển khai
 
-### 4.2 性能优化
-- **数据库优化**: 索引优化，SQL 优化
-- **缓存策略**: 合理使用 Redis 缓存
-- **代码优化**: 减少循环嵌套，优化算法
-- **请求优化**: 合并请求，减少 HTTP 调用
+### 4.2 Tối ưu hiệu năng
+- **Tối ưu cơ sở dữ liệu**: Tối ưu index, tối ưu SQL
+- **Chiến lược cache**: Sử dụng cache Redis hợp lý
+- **Tối ưu code**: Giảm vòng lặp lồng nhau, tối ưu thuật toán
+- **Tối ưu request**: Gộp request, giảm số lần gọi HTTP
 
-### 4.3 安全防护
-- **SQL 注入防护**: 使用参数绑定，避免直接拼接 SQL
-- **XSS 防护**: 输入验证和输出编码
-- **CSRF 防护**: 使用 Token 验证
-- **权限控制**: 严格的权限验证机制
-- **敏感信息保护**: 加密存储敏感信息
+### 4.3 Phòng vệ bảo mật
+- **Chống SQL injection**: Dùng parameter binding, tránh nối chuỗi SQL trực tiếp
+- **Chống XSS**: Kiểm tra dữ liệu đầu vào và mã hóa (encode) dữ liệu đầu ra
+- **Chống CSRF**: Sử dụng xác thực bằng Token
+- **Kiểm soát quyền**: Cơ chế kiểm tra quyền nghiêm ngặt
+- **Bảo vệ thông tin nhạy cảm**: Mã hóa thông tin nhạy cảm khi lưu trữ
 
-### 4.4 代码复用
-- **抽象公共逻辑**: 将公共逻辑抽象为服务或工具类
-- **使用 Traits**: 复用代码片段
-- **继承基类**: 继承基础类获得通用功能
-- **依赖注入**: 提高代码可测试性和可维护性
+### 4.4 Tái sử dụng code
+- **Trừu tượng hóa logic dùng chung**: Tách logic dùng chung thành service hoặc lớp tiện ích
+- **Sử dụng Traits**: Tái sử dụng các đoạn code
+- **Kế thừa lớp cơ sở**: Kế thừa lớp cơ sở để có các chức năng dùng chung
+- **Dependency Injection**: Nâng cao khả năng kiểm thử và khả năng bảo trì của code
 
-## 5. 常见问题
+## 5. Sự cố thường gặp
 
-### 5.1 性能问题
-- **数据库查询慢**: 检查索引，优化 SQL
-- **内存占用高**: 检查大数组，优化内存使用
-- **响应时间长**: 检查业务逻辑，使用缓存
+### 5.1 Vấn đề hiệu năng
+- **Truy vấn cơ sở dữ liệu chậm**: Kiểm tra index, tối ưu SQL
+- **Chiếm dụng bộ nhớ cao**: Kiểm tra các mảng lớn, tối ưu việc sử dụng bộ nhớ
+- **Thời gian phản hồi lâu**: Kiểm tra logic nghiệp vụ, sử dụng cache
 
-### 5.2 安全问题
-- **SQL 注入**: 使用参数绑定，避免直接拼接 SQL
-- **XSS 攻击**: 对输入进行验证和过滤
-- **CSRF 攻击**: 实现 CSRF Token 验证
-- **权限绕过**: 严格检查权限，避免逻辑漏洞
+### 5.2 Vấn đề bảo mật
+- **SQL injection**: Dùng parameter binding, tránh nối chuỗi SQL trực tiếp
+- **Tấn công XSS**: Kiểm tra và lọc dữ liệu đầu vào
+- **Tấn công CSRF**: Hiện thực xác thực CSRF Token
+- **Vượt quyền**: Kiểm tra quyền nghiêm ngặt, tránh lỗ hổng logic
 
-### 5.3 部署问题
-- **环境配置**: 确保生产环境配置正确
-- **依赖管理**: 使用 Composer 管理依赖
-- **缓存清理**: 部署后清理缓存
-- **日志管理**: 配置合理的日志级别
+### 5.3 Vấn đề triển khai
+- **Cấu hình môi trường**: Đảm bảo cấu hình môi trường production chính xác
+- **Quản lý phụ thuộc**: Sử dụng Composer để quản lý phụ thuộc
+- **Xóa cache**: Xóa cache sau khi triển khai
+- **Quản lý log**: Cấu hình mức log hợp lý
 
-### 5.4 代码问题
-- **命名不规范**: 遵循命名规范
-- **注释不足**: 添加必要的注释
-- **逻辑混乱**: 重构代码，提高可读性
-- **重复代码**: 抽象公共逻辑，减少重复
+### 5.4 Vấn đề về code
+- **Đặt tên không chuẩn**: Tuân theo quy chuẩn đặt tên
+- **Thiếu chú thích**: Thêm các chú thích cần thiết
+- **Logic rối rắm**: Refactor code, nâng cao tính dễ đọc
+- **Code trùng lặp**: Trừu tượng hóa logic dùng chung, giảm trùng lặp
 
-## 6. 开发工具推荐
+## 6. Công cụ phát triển khuyên dùng
 
-### 6.1 IDE 推荐
-- **PHPStorm**: 专业的 PHP IDE，功能强大
-- **VS Code**: 轻量级编辑器，丰富的插件
-- **Sublime Text**: 快速的代码编辑器
+### 6.1 IDE khuyên dùng
+- **PHPStorm**: IDE chuyên nghiệp cho PHP, tính năng mạnh mẽ
+- **VS Code**: Trình soạn thảo nhẹ, kho plugin phong phú
+- **Sublime Text**: Trình soạn thảo code tốc độ cao
 
-### 6.2 插件推荐
-- **PHP Inspections**: PHP 代码检查插件
-- **Laravel Idea**: Laravel 开发插件 (如需)
-- **GitLens**: Git 增强插件
-- **Debugger for Chrome**: 浏览器调试插件
+### 6.2 Plugin khuyên dùng
+- **PHP Inspections**: Plugin kiểm tra code PHP
+- **Laravel Idea**: Plugin phát triển Laravel (nếu cần)
+- **GitLens**: Plugin mở rộng tính năng Git
+- **Debugger for Chrome**: Plugin gỡ lỗi trên trình duyệt
 
-### 6.3 工具推荐
-- **Composer**: PHP 依赖管理工具
-- **PHPUnit**: PHP 单元测试框架
-- **Postman**: API 测试工具
-- **MySQL Workbench**: 数据库设计工具
-- **Redis Desktop Manager**: Redis 管理工具
+### 6.3 Công cụ khuyên dùng
+- **Composer**: Công cụ quản lý phụ thuộc cho PHP
+- **PHPUnit**: Framework unit test cho PHP
+- **Postman**: Công cụ kiểm thử API
+- **MySQL Workbench**: Công cụ thiết kế cơ sở dữ liệu
+- **Redis Desktop Manager**: Công cụ quản lý Redis
 
-## 7. 参考资源
+## 7. Tài liệu tham khảo
 
-### 7.1 官方文档
-- [ThinkPHP 6 官方文档](https://www.kancloud.cn/manual/thinkphp6_0)
-- [PHP 官方文档](https://www.php.net/docs.php)
-- [MySQL 官方文档](https://dev.mysql.com/doc/)
-- [Redis 官方文档](https://redis.io/documentation)
+### 7.1 Tài liệu chính thức
+- [Tài liệu chính thức ThinkPHP 6](https://www.kancloud.cn/manual/thinkphp6_0)
+- [Tài liệu chính thức PHP](https://www.php.net/docs.php)
+- [Tài liệu chính thức MySQL](https://dev.mysql.com/doc/)
+- [Tài liệu chính thức Redis](https://redis.io/documentation)
 
-### 7.2 学习资源
-- [Laravel 学院](https://learnku.com/laravel)
-- [PHP 中文网](https://www.php.cn/)
-- [ThinkPHP 社区](https://www.thinkphp.cn/)
+### 7.2 Tài nguyên học tập
+- [Laravel Academy](https://learnku.com/laravel)
+- [PHP Chinese Website](https://www.php.cn/)
+- [Cộng đồng ThinkPHP](https://www.thinkphp.cn/)
 - [Stack Overflow](https://stackoverflow.com/)
 
-### 7.3 代码规范
-- [PSR 标准](https://www.php-fig.org/psr/)
-- [ThinkPHP 代码规范](https://www.thinkphp.cn/doc)
-- [PHP 最佳实践](https://phpbestpractices.org/)
+### 7.3 Quy chuẩn code
+- [Chuẩn PSR](https://www.php-fig.org/psr/)
+- [Quy chuẩn code ThinkPHP](https://www.thinkphp.cn/doc)
+- [Thực tiễn tốt nhất cho PHP](https://phpbestpractices.org/)
 
-### 7.4 其他资源
-- 接口开发流程文档 ./references/api_create.md
-- 代码规范文档 ./references/code_style.md
-- 数据库设计文档 ./references/db_design.md
-- 项目部署文档 ./references/deploy.md
-- 目录结构文档 ./references/directory_structure.md
-- 错误码文档 ./references/error_code.md
-- 系统配置文档 ./references/system_config.md
-- 接口请求流程文档 ./references/api_flow.md
+### 7.4 Tài nguyên khác
+- Tài liệu quy trình phát triển API ./references/api_create.md
+- Tài liệu quy chuẩn code ./references/code_style.md
+- Tài liệu thiết kế cơ sở dữ liệu ./references/db_design.md
+- Tài liệu triển khai dự án ./references/deploy.md
+- Tài liệu cấu trúc thư mục ./references/directory_structure.md
+- Tài liệu mã lỗi ./references/error_code.md
+- Tài liệu cấu hình hệ thống ./references/system_config.md
+- Tài liệu quy trình request API ./references/api_flow.md
 

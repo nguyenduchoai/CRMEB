@@ -3,13 +3,13 @@
 		<view class="mobile-bg" @click="close"></view>
 		<view class="mobile-mask animated" :class="{slideInUp:isUp}">
 			<view class="input-item">
-				<input type="text" v-model="account" :placeholder="$t(`输入手机号`)" maxlength="11" />
+				<input type="text" v-model="account" :placeholder="$t(`Nhập số điện thoại`)" maxlength="11" />
 			</view>
 			<view class="input-item">
-				<input type="text" v-model="codeNum" :placeholder="$t(`输入验证码`)" maxlength="6" />
+				<input type="text" v-model="codeNum" :placeholder="$t(`Nhập mã xác thực`)" maxlength="6" />
 				<button class="code" :disabled="disabled" @click="code">{{text}}</button>
 			</view>
-			<view class="sub_btn" @click="loginBtn">{{$t(`立即登录`)}}</view>
+			<view class="sub_btn" @click="loginBtn">{{$t(`Đăng nhập ngay`)}}</view>
 		</view>
 
 		<Verify @success="success" :captchaType="captchaType" :imgSize="{ width: '330px', height: '155px' }"
@@ -89,18 +89,18 @@
 					})
 				})
 			},
-			// 获取验证码
+			// Lấy mã xác thực
 			code() {
 				let that = this;
 				if (!that.account) return that.$util.Tips({
-					title: that.$t(`请填写手机号码`)
+					title: that.$t(`Vui lòng điền số điện thoại`)
 				});
 				if (!/^1(3|4|5|7|8|9|6)\d{9}$/i.test(that.account)) return that.$util.Tips({
-					title: that.$t(`请输入正确的手机号码`)
+					title: that.$t(`Vui lòng nhập đúng số điện thoại`)
 				});
 				this.$refs.verify.show();
 			},
-			// 获取验证码api
+			// API lấy mã xác thực (OTP)
 			getCode() {
 				let that = this
 				getCodeApi().then(res => {
@@ -116,24 +116,24 @@
 					this.$emit('close', new_user)
 				}
 			},
-			// 登录
+			// Đăng nhập
 			loginBtn() {
 				let that = this
 				// #ifdef MP
 				if (!that.account) return that.$util.Tips({
-					title: that.$t(`请填写手机号码`)
+					title: that.$t(`Vui lòng điền số điện thoại`)
 				});
 				if (!/^1(3|4|5|7|8|9|6)\d{9}$/i.test(that.account)) return that.$util.Tips({
-					title: that.$t(`请输入正确的手机号码`)
+					title: that.$t(`Vui lòng nhập đúng số điện thoại`)
 				});
 				if (!that.codeNum) return that.$util.Tips({
-					title: that.$t(`请填写验证码`)
+					title: that.$t(`Vui lòng điền mã xác thực`)
 				});
 				if (!/^[\w\d]+$/i.test(that.codeNum)) return that.$util.Tips({
-					title: that.$t(`请输入正确的验证码`)
+					title: that.$t(`Vui lòng nhập đúng mã xác thực`)
 				});
 				uni.showLoading({
-					title: that.$t(`正在登录中`)
+					title: that.$t(`Đang đăng nhập`)
 				});
 				Routine.getCode()
 					.then(code => {
@@ -145,19 +145,19 @@
 				// #endif
 				// #ifdef H5
 				if (!that.account) return that.$util.Tips({
-					title: that.$t(`请填写手机号码`)
+					title: that.$t(`Vui lòng điền số điện thoại`)
 				});
 				if (!/^1(3|4|5|7|8|9|6)\d{9}$/i.test(that.account)) return that.$util.Tips({
-					title: that.$t(`请输入正确的手机号码`)
+					title: that.$t(`Vui lòng nhập đúng số điện thoại`)
 				});
 				if (!that.codeNum) return that.$util.Tips({
-					title: that.$t(`请填写验证码`)
+					title: that.$t(`Vui lòng điền mã xác thực`)
 				});
 				if (!/^[\w\d]+$/i.test(that.codeNum)) return that.$util.Tips({
-					title: that.$t(`请输入正确的验证码`)
+					title: that.$t(`Vui lòng nhập đúng mã xác thực`)
 				});
 				uni.showLoading({
-					title: that.$t(`正在登录中`)
+					title: that.$t(`Đang đăng nhập`)
 				});
 				if (!this.authKey) {
 					let key = this.$Cache.get('snsapiKey');
@@ -212,7 +212,7 @@
 			},
 			// #endif
 			/**
-			 * 获取个人用户信息
+			 * Lấy thông tin người dùng cá nhân
 			 */
 			getUserInfo: function(new_user) {
 				let that = this;
@@ -224,14 +224,14 @@
 					// #ifdef MP
 					if (!new_user) {
 						that.$util.Tips({
-							title: that.$t(`登录成功`),
+							title: that.$t(`Đăng nhập thành công`),
 							icon: 'success'
 						}, {
 							tab: 3
 						})
 					} else {
 						that.$util.Tips({
-							title: that.$t(`登录成功`),
+							title: that.$t(`Đăng nhập thành công`),
 							icon: 'success'
 						})
 					}

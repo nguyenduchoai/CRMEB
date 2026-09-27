@@ -11,7 +11,7 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="留言时间：">
+          <el-form-item label="Thời gian gửi lời nhắn:">
             <el-date-picker
               clearable
               v-model="timeVal"
@@ -20,64 +20,64 @@
               @change="onchangeTime"
               format="yyyy/MM/dd"
               value-format="yyyy/MM/dd"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              start-placeholder="Ngày bắt đầu"
+              end-placeholder="Ngày kết thúc"
               :picker-options="pickerOptions"
               style="width: 250px"
               class="mr20"
             ></el-date-picker>
           </el-form-item>
-          <el-form-item label="留言信息：">
+          <el-form-item label="Nội dung lời nhắn:">
             <el-input
               clearable
-              placeholder="请输入用户昵称/电话/留言内容搜索"
+              placeholder="Vui lòng nhập biệt danh/số điện thoại/nội dung lời nhắn để tìm kiếm"
               v-model="formValidate.title"
               class="form_content_width"
             />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="selChange">查询</el-button>
+            <el-button type="primary" v-db-click @click="selChange">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
     <el-card :bordered="false" shadow="never" class="ivu-mt mt16">
-      <el-table :data="list" v-loading="loading" no-userFrom-text="暂无数据" no-filtered-userFrom-text="暂无筛选结果">
+      <el-table :data="list" v-loading="loading" no-userFrom-text="Chưa có dữ liệu" no-filtered-userFrom-text="Không có kết quả phù hợp">
         <el-table-column label="ID" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="昵称" min-width="130">
+        <el-table-column label="Biệt danh" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.rela_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="电话" min-width="130">
+        <el-table-column label="Điện thoại" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.phone }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="内容" min-width="130">
+        <el-table-column label="Nội dung" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.content }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="状态" min-width="130">
+        <el-table-column label="Trạng thái" min-width="130">
           <template slot-scope="scope">
-            <div>{{ scope.row.status === 1 ? '已处理' : '未处理' }}</div>
+            <div>{{ scope.row.status === 1 ? 'Đã xử lý' : 'Chưa xử lý' }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="时间" min-width="130">
+        <el-table-column label="Thời gian" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.add_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="170">
+        <el-table-column label="Thao tác" fixed="right" width="170">
           <template slot-scope="scope">
-            <a v-db-click @click="remarks(scope.row.id)">{{ scope.row.status === 1 ? '备注' : '处理' }}</a>
+            <a v-db-click @click="remarks(scope.row.id)">{{ scope.row.status === 1 ? 'Ghi chú' : 'Xử lý' }}</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除反馈', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa phản hồi', scope.$index)">Xóa</a>
           </template>
         </el-table-column>
       </el-table>
@@ -121,23 +121,23 @@ export default {
     this.getList();
   },
   methods: {
-    //备注；
+    //Ghi chú;
     remarks(id) {
       this.$modalForm(kefuFeedBackEdit(id)).then(() => this.getList());
     },
-    // 选择
+    // Chọn
     selChange() {
       this.page = 1;
       this.getList();
     },
-    // 选择时间
+    // Chọn giờ
     selectChange(tab) {
       this.formValidate.time = tab;
       this.timeVal = [];
       this.page = 1;
       this.getList();
     },
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e;
       this.formValidate.time = this.timeVal ? this.timeVal.join('-') : '';
@@ -155,7 +155,7 @@ export default {
         this.total = res.data.count;
       });
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,

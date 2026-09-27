@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,7 +17,7 @@ use think\helper\Str;
 
 /**
  * Class Model
- * @author 等风来
+ * @author Deng Fenglai
  * @email 136327134@qq.com
  * @date 2023/3/13
  * @package crmeb\command\crud
@@ -25,14 +25,14 @@ use think\helper\Str;
 class Model extends Make
 {
     /**
-     * 当前命令名称
+     * Tên lệnh hiện tại
      * @var string
      */
     protected $name = "model";
 
     /**
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/4
      */
@@ -45,7 +45,7 @@ class Model extends Make
      * @param string $name
      * @param array $options
      * @return Model
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/12
      */
@@ -67,9 +67,9 @@ class Model extends Make
     }
 
     /**
-     * 设置命令空间
+     * Đặt namespace
      * @return $this
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
@@ -84,10 +84,10 @@ class Model extends Make
     }
 
     /**
-     * 设置获取字段方法内容
+     * Đặt nội dung phương thức lấy trường
      * @param array $field
      * @return $this
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
@@ -110,10 +110,10 @@ class Model extends Make
     }
 
     /**
-     * 设置hasone方法内容
+     * Đặt nội dung phương thức hasOne
      * @param array $hasOneFields
      * @return $this
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
@@ -128,11 +128,11 @@ class Model extends Make
     }
 
     /**
-     * 转JSON数据获取器
+     * Getter chuyển dữ liệu thành JSON
      * @param string $key
      * @param string $name
      * @return array|false|string|string[]
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/9/5
      */
@@ -164,12 +164,12 @@ CONTENT;
     }
 
     /**
-     * Checkbox代码获取
+     * Lấy code Checkbox
      * @param string $key
      * @param string $comment
      * @param array $options
      * @return array|false|string|string[]
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/9
      */
@@ -228,12 +228,12 @@ CONTENT;
     }
 
     /**
-     * 获取获取器的方法内容
+     * Lấy nội dung phương thức của getter
      * @param string $key
      * @param string $comment
      * @param array $options
      * @return array|false|string|string[]
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/11
      */
@@ -259,10 +259,10 @@ CONTENT;
     }
 
     /**
-     * 获取开关和下拉框获取器内容
+     * Lấy nội dung getter của switch và dropdown
      * @param array $options
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/11
      */
@@ -288,10 +288,10 @@ CONTENT;
     }
 
     /**
-     * 获取关联数据模板
+     * Lấy mẫu dữ liệu liên kết
      * @param array $fields
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/4
      */
@@ -337,7 +337,7 @@ CONTENT;
      * @param string $path
      * @param string $name
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/12
      */
@@ -349,10 +349,10 @@ CONTENT;
     }
 
     /**
-     * 模板文件
+     * Tệp mẫu
      * @param string $type
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/13
      */
@@ -371,10 +371,10 @@ CONTENT;
     }
 
     /**
-     * 获取模型命令空间
+     * Lấy namespace của model
      * @param string $modelName
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/8
      */
@@ -391,11 +391,11 @@ CONTENT;
     }
 
     /**
-     * 搜索文件内容包含某个字符串，返回包含的文件路径
+     * Tìm file có nội dung chứa một chuỗi nào đó, trả về đường dẫn file chứa nó
      * @param string $dir
      * @param string $searchString
      * @return array
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/8
      */
@@ -426,10 +426,10 @@ CONTENT;
     }
 
     /**
-     * 获取文件的命名空间
+     * Lấy namespace của file
      * @param string $filePath
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/8
      */

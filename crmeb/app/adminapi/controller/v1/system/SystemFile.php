@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\adminapi\controller\AuthController;
 use app\services\system\log\SystemFileServices;
 
 /**
- * 文件校验控制器
+ * Controller kiểm tra file
  * Class SystemFile
  * @package app\admin\controller\system
  *
@@ -28,7 +28,7 @@ class SystemFile extends AuthController
     protected $services;
 
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * SystemFile constructor.
      * @param App $app
      * @param SystemFileServices $services
@@ -40,7 +40,7 @@ class SystemFile extends AuthController
     }
 
     /**
-     * 文件校验记录
+     * Lịch sử kiểm tra file
      * @return mixed
      */
     public function index()
@@ -64,14 +64,14 @@ class SystemFile extends AuthController
         ], true);
 
         $adminInfo = $this->request->adminInfo();
-        if (!$adminInfo) return app('json')->fail('非法操作');
-        if ($adminInfo['level'] != 0) return app('json')->fail('非法操作');
-        if ($password === '') return app('json')->fail('请输入密码');
+        if (!$adminInfo) return app('json')->fail('Thao tác không hợp lệ');
+        if ($adminInfo['level'] != 0) return app('json')->fail('Thao tác không hợp lệ');
+        if ($password === '') return app('json')->fail('Vui lòng nhập mật khẩu');
 
         return app('json')->success($this->services->login($password, 'file_edit'));
     }
 
-    //打开目录
+    //Mở thư mục
     public function opendir()
     {
         [$dir, $fileDir, $superior] = $this->request->getMore([
@@ -82,18 +82,18 @@ class SystemFile extends AuthController
         return app('json')->success($this->services->opendir($dir, $fileDir, $superior));
     }
 
-    //文件备注
+    //Ghi chú tệp
     public function fileMark()
     {
         [$path, $fileToken] = $this->request->postMore([
             ['path', ''],
             ['fileToken', ''],
         ], true);
-        if ($path == '') return app('json')->fail('参数错误');
+        if ($path == '') return app('json')->fail('Tham số không hợp lệ');
         return app('json')->success($this->services->markForm($path, $fileToken));
     }
 
-    //文件备注保存
+    //Lưu ghi chú file
     public function fileMarkSave()
     {
         [$full_path, $mark] = $this->request->postMore([
@@ -101,37 +101,37 @@ class SystemFile extends AuthController
             ['mark', ''],
         ], true);
         $full_path = $this->request->param('full_path');
-        if ($full_path == '') return app('json')->fail('参数错误');
+        if ($full_path == '') return app('json')->fail('Tham số không hợp lệ');
         $this->services->fileMarkSave($full_path, $mark);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
-    //读取文件
+    //Đọc tệp
     public function openfile()
     {
         $file = $this->request->param('filepath');
-        if (empty($file)) return app('json')->fail('平台错误：发生异常，请稍后重试');
+        if (empty($file)) return app('json')->fail('Lỗi nền tảng: đã xảy ra sự cố, vui lòng thử lại sau');
         return app('json')->success($this->services->openfile($file));
     }
 
-    //保存文件
+    //Lưu tệp
     public function savefile()
     {
         $comment = $this->request->param('comment');
         $filepath = $this->request->param('filepath');
         if (empty($filepath)) {
-            return app('json')->fail('文件路径不存在');
+            return app('json')->fail('Đường dẫn tệp không tồn tại');
         }
         $res = $this->services->savefile($filepath, $comment);
         if ($res) {
-            return app('json')->success('保存成功');
+            return app('json')->success('Lưu thành công');
         } else {
-            return app('json')->fail('保存失败');
+            return app('json')->fail('Lưu thất bại');
         }
     }
 
     /**
-     * 创建文件夹
+     * Tạo thư mục
      * @return mixed
      *
      * @date 2022/09/17
@@ -144,7 +144,7 @@ class SystemFile extends AuthController
             ['name', '']
         ], true);
         if (empty($path) || empty($name)) {
-            return app('json')->fail('平台错误：发生异常，请稍后重试');
+            return app('json')->fail('Lỗi nền tảng: đã xảy ra sự cố, vui lòng thử lại sau');
         }
         $data = [];
         try {
@@ -160,7 +160,7 @@ class SystemFile extends AuthController
                     'title' => $name,
                 ];
             } else {
-                return app('json')->fail('操作失败');
+                return app('json')->fail('Thao tác thất bại');
             }
         } catch (\Exception $e) {
             return app('json')->fail($e->getMessage());
@@ -169,7 +169,7 @@ class SystemFile extends AuthController
     }
 
     /**
-     * 创建文件
+     * Tạo tệp
      * @return mixed
      *
      * @date 2022/09/17
@@ -182,7 +182,7 @@ class SystemFile extends AuthController
             ['name', '']
         ], true);
         if (empty($path) || empty($name)) {
-            return app('json')->fail('平台错误：发生异常，请稍后重试');
+            return app('json')->fail('Lỗi nền tảng: đã xảy ra sự cố, vui lòng thử lại sau');
         }
         $data = [];
         try {
@@ -198,7 +198,7 @@ class SystemFile extends AuthController
                     'title' => $name,
                 ];
             } else {
-                return app('json')->fail('操作失败');
+                return app('json')->fail('Thao tác thất bại');
             }
         } catch (\Exception $e) {
             return app('json')->fail($e->getMessage());
@@ -207,7 +207,7 @@ class SystemFile extends AuthController
     }
 
     /**
-     * 删除文件或文件夹
+     * Xóa file hoặc thư mục
      * @return mixed
      *
      * @date 2022/09/17
@@ -219,18 +219,18 @@ class SystemFile extends AuthController
             ['path', '']
         ], true);
         if (empty($path)) {
-            return app('json')->fail('平台错误：发生异常，请稍后重试');
+            return app('json')->fail('Lỗi nền tảng: đã xảy ra sự cố, vui lòng thử lại sau');
         }
         try {
             $this->services->delFolder($path);
         } catch (\Exception $e) {
             return app('json')->fail($e->getMessage());
         }
-        return app('json')->success('操作成功');
+        return app('json')->success('Thao tác thành công');
     }
 
     /**
-     * 文件重命名
+     * Đổi tên file
      * @return mixed
      *
      * @date 2022/09/28
@@ -243,14 +243,14 @@ class SystemFile extends AuthController
             ['oldname', '']
         ], true);
         if (empty($newname) || empty($oldname)) {
-            return app('json')->fail('平台错误：发生异常，请稍后重试');
+            return app('json')->fail('Lỗi nền tảng: đã xảy ra sự cố, vui lòng thử lại sau');
         }
         try {
             $this->services->rename($newname, $oldname);
         } catch (\Exception $e) {
             return app('json')->fail($e->getMessage());
         }
-        return app('json')->success('操作成功');
+        return app('json')->success('Thao tác thành công');
 
     }
 
@@ -262,7 +262,7 @@ class SystemFile extends AuthController
             ['toDir', '']
         ], true);
         if (empty($surDir) || empty($toDir)) {
-            return app('json')->fail('平台错误：发生异常，请稍后重试');
+            return app('json')->fail('Lỗi nền tảng: đã xảy ra sự cố, vui lòng thử lại sau');
         }
         try {
             return app('json')->success($this->services->copyFolder($surDir, $toDir));
@@ -272,7 +272,7 @@ class SystemFile extends AuthController
     }
 
     /**
-     * 写入文件md5
+     * Ghi md5 của file
      * @return \think\Response
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -285,6 +285,6 @@ class SystemFile extends AuthController
         } catch (\Exception $e) {
             return app('json')->fail($e->getMessage());
         }
-        return app('json')->success('操作成功');
+        return app('json')->success('Thao tác thành công');
     }
 }

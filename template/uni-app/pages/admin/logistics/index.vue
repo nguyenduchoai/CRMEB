@@ -4,12 +4,12 @@
 			<view class="w-full abs-lb white_jianbian"></view>
 		</view>
 		<!-- #ifdef MP -->
-		<NavBar titleText="物流查询" :iconColor="iconColor" :textColor="iconColor" :isScrolling="isScrolling" showBack></NavBar>
+		<NavBar titleText="Tra cứu vận chuyển" :iconColor="iconColor" :textColor="iconColor" :isScrolling="isScrolling" showBack></NavBar>
 		<!-- #endif -->
 		<view class="relative px-20 z-20 express_box">
 			<view class="h-66 rd-t-24rpx light px-24 flex-between-center fs-20">
 				<text>{{orderInfo.delivery_name}} {{orderInfo.delivery_id}}</text>
-				<text class="inline-block copy_btn fs-22 text--w111-333" @tap="copyOrderId">复制单号</text>
+				<text class="inline-block copy_btn fs-22 text--w111-333" @tap="copyOrderId">Sao chép mã vận đơn</text>
 			</view>
 			<view class="rd-b-24rpx bg--w111-fff flex-between-center">
 				<view class="w-316 h-142 flex-col flex-center">
@@ -27,7 +27,7 @@
 			<view class="bg--w111-fff rd-16rpx pt-32 pr-24 pl-24 pb-32">
 				<view class="flex-between-center">
 					<view class="fs-32 fw-500 text--w111-333">
-						<text>物流详情</text>
+						<text>Chi tiết vận chuyển</text>
 					</view>
 				</view>
 				<view class="logisticsCon mt-50 relative" v-if="expressList.length">
@@ -41,11 +41,11 @@
 						</view>
 					</view>
 					<view class="more-text fs-24" @tap="checkShowMore">
-						<text>{{showMore ? '收起' : '查看更多物流信息'}}</text>
+						<text>{{showMore ? 'Thu gọn' : 'Xem thêm thông tin vận chuyển'}}</text>
 						<text class="iconfont fs-24 pl-8" :class="showMore ? 'icon-ic_uparrow' : 'icon-ic_downarrow'"></text>
 					</view>
 				</view>
-				<emptyPage title="暂无物流信息" src="/statics/images/noExpress.gif" v-else></emptyPage>
+				<emptyPage title="Chưa có thông tin vận chuyển" src="/statics/images/noExpress.gif" v-else></emptyPage>
 			</view>
 			<view class="safe-area-inset-bottom"></view>
 		</view>
@@ -124,7 +124,7 @@
 		},
 		onLoad: function(options) {
 			if (!options.orderId) return this.$util.Tips({
-				title: '缺少订单号'
+				title: 'Thiếu mã đơn hàng'
 			});
 			if (typeof(options.type) == 'undefined') {
 				this.type = ''
@@ -161,12 +161,12 @@
 			}
 		},
 		methods: {
-			// 授权关闭
+			// Đóng ủy quyền
 			authColse: function(e) {
 				this.isShowAuth = e
 			},
 			/**
-			 * 授权回调
+			 * Callback ủy quyền
 			 */
 			onLoadFun: function() {
 				this.getExpress();
@@ -191,7 +191,7 @@
 				});
 			},
 			/**
-			 * 获取我的推荐
+			 * Lấy gợi ý của tôi
 			 */
 			get_host_product: function() {
 				let that = this;

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use app\services\agent\AgentLevelTaskServices;
 use think\facade\App;
 
 /**
- * 分销等级控制器
+ * Controller cấp độ CTV
  * Class AgentLevel
  * @package app\controller\admin\v1\agent
  */
@@ -39,7 +39,7 @@ class AgentLevel extends AuthController
     }
 
     /**
-     * 后台分销等级列表
+     * Danh sách hạng CTV ở quản trị
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -47,33 +47,33 @@ class AgentLevel extends AuthController
      */
     public function index()
     {
-        // 获取请求参数，包括状态和关键词
+        // Lấy tham số yêu cầu, gồm trạng thái và từ khóa
         $where = $this->request->getMore([
             ['status', ''],
             ['keyword', '']
         ]);
-        // 调用服务层获取等级列表
+        // Gọi tầng service để lấy danh sách cấp độ
         return app('json')->success($this->services->getLevelList($where));
     }
 
     /**
-     * 添加分销等级表单
+     * Form thêm hạng CTV
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
     public function create()
     {
-        // 调用服务层创建添加表单
+        // Gọi tầng service để tạo form thêm mới
         return app('json')->success($this->services->createForm());
     }
 
     /**
-     * 保存分销等级
+     * Lưu hạng CTV
      * @return mixed
      */
     public function save()
     {
-        // 获取并验证请求数据
+        // Lấy và xác thực dữ liệu yêu cầu
         $data = $this->request->postMore([
             ['name', ''],
             ['grade', 0],
@@ -81,26 +81,26 @@ class AgentLevel extends AuthController
             ['one_brokerage_percent', 0],
             ['two_brokerage_percent', 0],
             ['status', 0]]);
-        if (!$data['name']) return app('json')->fail('请输入等级名称');
-        if (!$data['grade']) return app('json')->fail('请输入等级');
-        if (!$data['image']) return app('json')->fail('请选择等级图标');
-        // 验证二级返佣比例是否大于一级
+        if (!$data['name']) return app('json')->fail('Vui lòng nhập tên cấp độ');
+        if (!$data['grade']) return app('json')->fail('Vui lòng nhập cấp độ');
+        if (!$data['image']) return app('json')->fail('Vui lòng chọn biểu tượng cấp độ');
+        // Kiểm tra tỷ lệ trả hoa hồng cấp 2 có lớn hơn cấp 1 không
         if ($data['two_brokerage_percent'] > $data['one_brokerage_percent']) {
-            return app('json')->fail('二级返佣比例不能大于一级');
+            return app('json')->fail('Tỷ lệ trả hoa hồng cấp 2 không được lớn hơn cấp 1');
         }
-        // 检查等级是否已存在
+        // Kiểm tra cấp độ đã tồn tại chưa
         $grade = $this->services->get(['grade' => $data['grade'], 'is_del' => 0]);
         if ($grade) {
-            return app('json')->fail('当前等级已存在');
+            return app('json')->fail('Cấp độ này đã tồn tại');
         }
         $data['add_time'] = time();
-        // 保存数据
+        // Lưu dữ liệu
         $this->services->save($data);
-        return app('json')->success('添加等级成功');
+        return app('json')->success('Thêm cấp độ thành công');
     }
 
     /**
-     * 显示指定的资源
+     * Hiển thị resource được chỉ định
      * @param $id
      */
     public function read($id)
@@ -109,19 +109,19 @@ class AgentLevel extends AuthController
     }
 
     /**
-     * 编辑分销等级表单
+     * Form sửa hạng CTV
      * @param $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
     public function edit($id)
     {
-        // 调用服务层创建编辑表单
+        // Gọi tầng service để tạo form chỉnh sửa
         return app('json')->success($this->services->editForm((int)$id));
     }
 
     /**
-     * 修改分销等级
+     * Sửa cấp độ CTV
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -130,7 +130,7 @@ class AgentLevel extends AuthController
      */
     public function update($id)
     {
-        // 获取并验证请求数据
+        // Lấy và xác thực dữ liệu yêu cầu
         $data = $this->request->postMore([
             ['name', ''],
             ['grade', 0],
@@ -138,22 +138,22 @@ class AgentLevel extends AuthController
             ['one_brokerage_percent', 0],
             ['two_brokerage_percent', 0],
             ['status', 0]]);
-        if (!$data['name']) return app('json')->fail('请输入等级名称');
-        if (!$data['grade']) return app('json')->fail('请输入等级');
-        if (!$data['image']) return app('json')->fail('请选择等级图标');
-        // 验证二级返佣比例是否大于一级
+        if (!$data['name']) return app('json')->fail('Vui lòng nhập tên cấp độ');
+        if (!$data['grade']) return app('json')->fail('Vui lòng nhập cấp độ');
+        if (!$data['image']) return app('json')->fail('Vui lòng chọn biểu tượng cấp độ');
+        // Kiểm tra tỷ lệ trả hoa hồng cấp 2 có lớn hơn cấp 1 không
         if ($data['two_brokerage_percent'] > $data['one_brokerage_percent']) {
-            return app('json')->fail('二级返佣比例不能大于一级');
+            return app('json')->fail('Tỷ lệ trả hoa hồng cấp 2 không được lớn hơn cấp 1');
         }
-        // 检查编辑的等级是否存在
-        if (!$levelInfo = $this->services->getLevelInfo((int)$id)) return app('json')->fail('编辑的等级不存在');
-        // 检查等级是否重复
+        // Kiểm tra cấp độ cần chỉnh sửa có tồn tại không
+        if (!$levelInfo = $this->services->getLevelInfo((int)$id)) return app('json')->fail('Cấp độ cần sửa không tồn tại');
+        // Kiểm tra cấp độ có bị trùng không
         $grade = $this->services->get(['grade' => $data['grade'], 'is_del' => 0]);
         if ($grade && $grade['id'] != $id) {
-            return app('json')->fail('当前等级已存在');
+            return app('json')->fail('Cấp độ này đã tồn tại');
         }
 
-        // 更新等级信息
+        // Cập nhật thông tin cấp độ
         $levelInfo->name = $data['name'];
         $levelInfo->grade = $data['grade'];
         $levelInfo->image = $data['image'];
@@ -161,11 +161,11 @@ class AgentLevel extends AuthController
         $levelInfo->two_brokerage_percent = $data['two_brokerage_percent'];
         $levelInfo->status = $data['status'];
         $levelInfo->save();
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
     /**
-     * 删除分销等级
+     * Xóa cấp độ CTV
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -174,64 +174,64 @@ class AgentLevel extends AuthController
      */
     public function delete($id)
     {
-        if (!$id) return app('json')->fail('参数错误');
-        //检查分销等级数据是否存在
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
+        //Kiểm tra dữ liệu hạng CTV có tồn tại không
         $levelInfo = $this->services->getLevelInfo((int)$id);
         if ($levelInfo) {
-            //更新数据为已删除
+            //Cập nhật dữ liệu thành đã xóa
             $res = $this->services->update($id, ['is_del' => 1]);
             if (!$res)
-                return app('json')->fail('删除失败');
-            //删除该等级的任务为已删除
+                return app('json')->fail('Xóa thất bại');
+            //Xóa (đánh dấu đã xóa) các nhiệm vụ của hạng này
             /** @var AgentLevelTaskServices $agentLevelTaskServices */
             $agentLevelTaskServices = app()->make(AgentLevelTaskServices::class);
             $agentLevelTaskServices->update(['level_id' => $id], ['is_del' => 1]);
         }
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param int $id
      * @param string $status
      * @return mixed
      */
     public function set_status($id = 0, $status = '')
     {
-        if ($status == '' || $id == 0) return app('json')->fail('参数错误');
-        // 更新状态
+        if ($status == '' || $id == 0) return app('json')->fail('Tham số không hợp lệ');
+        // Cập nhật trạng thái
         $this->services->update($id, ['status' => $status]);
-        return app('json')->success('设置成功');
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
-     * 获取任务表单数量
-     * @param int $id 任务ID
+     * Lấy số lượng form nhiệm vụ
+     * @param int $id ID nhiệm vụ
      * @return \think\response\Json
      */
     public function getTaskNumForm($id)
     {
-        // 判断任务ID是否为0，若为0则返回错误信息
-        if ($id == 0) return app('json')->fail('参数错误');
-        // 调用服务层获取任务表单数量
+        // Kiểm tra ID nhiệm vụ có bằng 0 không, nếu bằng 0 thì trả về thông báo lỗi
+        if ($id == 0) return app('json')->fail('Tham số không hợp lệ');
+        // Gọi tầng service để lấy số lượng form nhiệm vụ
         $result = $this->services->getTaskNumForm($id);
-        // 返回成功信息和任务表单数量
+        // Trả về thông báo thành công và số lượng form nhiệm vụ
         return app('json')->success($result);
     }
 
     /**
-     * 设置任务数量
-     * @param int $id 任务ID
+     * Thiết lập số lượng nhiệm vụ
+     * @param int $id ID nhiệm vụ
      * @return \think\response\Json
      */
     public function setTaskNum($id)
     {
-        // 从请求中获取任务数量
+        // Lấy số lượng nhiệm vụ từ request
         $data = $this->request->postMore([
             ['task_num', 0]
         ]);
-        // 调用服务层设置任务数量
+        // Gọi tầng service để thiết lập số lượng nhiệm vụ
         $res = $this->services->setTaskNum($id, $data);
-        return app('json')->success('设置成功');
+        return app('json')->success('Cài đặt thành công');
     }
 }

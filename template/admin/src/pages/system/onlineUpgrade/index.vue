@@ -2,15 +2,15 @@
 <div class="upgrade">
     <el-card :bordered="false" shadow="never" class="ivu-mt">
       <div class="header">
-        <div>当前版本<span class="v"></span><span class="num">{{$store.state.userInfo.version}}</span></div>
+        <div>Phiên bản hiện tại<span class="v"></span><span class="num">{{$store.state.userInfo.version}}</span></div>
         <div class="info title">
-          更新说明：
-          <span v-if="upgradeStatus.status != 1">已升级至最新版本，无需更新</span>
+          Nội dung cập nhật:
+          <span v-if="upgradeStatus.status != 1">Đã nâng cấp lên phiên bản mới nhất, không cần cập nhật</span>
         <ul v-if="upgradeStatus.status == 1">
           <li>{{upgradeStatus.title}}</li>
         </ul>
         </div>
-        <el-button v-if="currentTab == 1 && upgradeStatus.status == 1" type="primary" class="primary btn update" v-db-click @click="update()">立即更新</el-button>
+        <el-button v-if="currentTab == 1 && upgradeStatus.status == 1" type="primary" class="primary btn update" v-db-click @click="update()">Cập nhật ngay</el-button>
       </div>
     </el-card>
     <el-card :bordered="false" shadow="never" class="ivu-mt">
@@ -36,8 +36,8 @@
                           </el-collapse-item>
                       </el-collapse>
                   </el-timeline-item>
-                  <el-button v-if="item.client_package_link" type="success"  class="primary btn" v-db-click @click="downloadFile(item.client_package_link)">移动端源码</el-button>
-                  <el-button v-if="item.pc_package_link" type="primary" class="primary btn1" v-db-click @click="downloadFile(item.pc_package_link)">PC端源码</el-button>
+                  <el-button v-if="item.client_package_link" type="success"  class="primary btn" v-db-click @click="downloadFile(item.client_package_link)">Mã nguồn di động</el-button>
+                  <el-button v-if="item.pc_package_link" type="primary" class="primary btn1" v-db-click @click="downloadFile(item.pc_package_link)">Mã nguồn PC</el-button>
               </el-timeline>
           </div>
         </div>
@@ -45,7 +45,7 @@
           <div class="contentTime" >
               <div class="acea-row row-top off" @mouseenter="quearyEvear(item.id,index)" v-for="(item,index) in upgradeLogList" :key="index" :class="{active:index==dynamic}">
                   <div class="time">
-                      <div v-if="index == 0">最近更新</div>
+                      <div v-if="index == 0">Cập nhật gần đây</div>
                       <div>{{item.upgrade_time}}</div>
                     </div>
                   <el-timeline class="list">
@@ -69,7 +69,7 @@
           </div>
         </div>
     </el-card>
-    <!-- 免责声明 -->
+    <!-- Tuyên bố miễn trừ trách nhiệm -->
     <el-dialog :visible.sync="declaration"
       width="470px"
       custom-clas="vertical-center-modal"
@@ -83,15 +83,15 @@
           <p v-html="upgradeAgreement.content"></p>
         </div>
          <span slot="footer" class="dialog-footer">
-          <el-button v-db-click @click="reject">拒 绝</el-button>
-          <el-button type="primary" v-db-click @click="agree">同 意</el-button>
+          <el-button v-db-click @click="reject">Từ chối</el-button>
+          <el-button type="primary" v-db-click @click="agree">Đồng ý</el-button>
       </span>
     </el-dialog>
-    <!-- 升级 -->
+    <!-- Nâng cấp -->
     <el-dialog v-model="updateModal" width="470px"  custom-clas="vertical-center-modal" :show-close="true"
       :close-on-click-modal="false">
         <p slot="header" class="header-modal2">
-          <span >升级至v{{forceVersion}}</span>
+          <span >Nâng cấp lên v{{forceVersion}}</span>
         </p>
         <div class="describe" v-if="upgradeProgress.speed != '100.0' || this.downloadStatus !='200'">
           <i-circle
@@ -102,26 +102,26 @@
             stroke-linecap="square"
             stroke-color="#43a3fb">
             <div class="demo-i-circle-custom">
-                <p>{{upgradeProgress.tip || '升级中'}}</p>
+                <p>{{upgradeProgress.tip || 'Đang nâng cấp'}}</p>
             </div>
           </i-circle>
           <div class="proportion">{{!upgradeProgress.speed?'':upgradeProgress.speed+'%'}}</div>
-          <div class="wait">正在更新，请耐心等候～</div>
+          <div class="wait">Đang cập nhật, vui lòng kiên nhẫn chờ đợi~</div>
         </div>
         <div slot="footer">
-          <!-- <div v-if="upgradeProgress.speed == '100.0'"><el-button class="back" type="primary" shape="circle" v-db-click @click="updateModal = false">确认</el-button></div> -->
+          <!-- <div v-if="upgradeProgress.speed == '100.0'"><el-button class="back" type="primary" shape="circle" v-db-click @click="updateModal = false">Xác nhận</el-button></div> -->
         </div>
         <div v-if="upgradeProgress.speed == '100.0'" class="describe">
           <el-progress type="circle" :percentage="100" status="success"></el-progress>
-          <div class="success">升级成功</div>
+          <div class="success">Nâng cấp thành công</div>
         </div>
         <div v-if="upgradeProgress.speed == '100.0'" slot="footer" class="footer2">
-          <el-button class="confirm" type="primary" shape="circle" v-db-click @click="back()">确认</el-button>
-          <!-- <div><el-button class="back" shape="circle" v-db-click @click="backSure()">返回</el-button></div> -->
+          <el-button class="confirm" type="primary" shape="circle" v-db-click @click="back()">Xác nhận</el-button>
+          <!-- <div><el-button class="back" shape="circle" v-db-click @click="backSure()">Quay lại</el-button></div> -->
         </div>
         <span v-if="upgradeProgress.speed == '100.0'" slot="footer" class="dialog-footer">
-          <el-button v-db-click @click="cancel">取 消</el-button>
-          <el-button type="primary" v-db-click @click="back">确 认</el-button>
+          <el-button v-db-click @click="cancel">Hủy</el-button>
+          <el-button type="primary" v-db-click @click="back">Xác nhận</el-button>
         </span>
     </el-dialog>
 </div>
@@ -160,11 +160,11 @@ export default {
       forceVersion: '',
       headerList: [
         {
-          label: '系统升级',
+          label: 'Nâng cấp hệ thống',
           value: 1,
         },
         {
-          label: '升级记录',
+          label: 'Lịch sử nâng cấp',
           value: 2,
         },
       ],
@@ -179,7 +179,7 @@ export default {
       downloadStatus: null,
       page: 1,
       limit: 15,
-      // 定时器
+      // Bộ đếm thời gian (timer)
       timer: null,
       params_key: undefined,
       newKey: null,
@@ -226,7 +226,7 @@ export default {
   methods: {
     handleReachBottom(){
       if(this.count === this.upgradeLogList.length) {
-        this.$message.warning('暂无更多升级记录')
+        this.$message.warning('Không còn lịch sử nâng cấp nào khác')
       } else {
         this.getUpgradeLogList();
       }
@@ -240,7 +240,7 @@ export default {
         this.getUpgradeLogList();
       }
     },
-    // 升级列表
+    // Danh sách nâng cấp
     async getUpgradeList() {
       let data = {
         page: this.page,
@@ -250,7 +250,7 @@ export default {
       this.upgradeList = res.data.list;
       this.upgradeList = res.data.list;
     },
-    // 升级记录
+    // Lịch sử nâng cấp
     getUpgradeLogList() {
       let data = {
         page: this.page,
@@ -264,7 +264,7 @@ export default {
             this.page++
           }
           if(this.count === this.upgradeLogList.length) {
-        this.$message.warning('暂无更多升级记录')
+        this.$message.warning('Không còn lịch sử nâng cấp nào khác')
       } else {
         this.getUpgradeLogList();
       }
@@ -274,7 +274,7 @@ export default {
         });
     },
 
-    // 可升级列表
+    // Danh sách có thể nâng cấp
     async getupgradeableList() {
       let res = await upgradeableListApi();
       this.upgradeableList = res.data;
@@ -301,7 +301,7 @@ export default {
       // arr.map((ele) => {
       //   data.push(ele.servion);
       // });
-      // // 版本号排序
+      // // Sắp xếp theo số phiên bản
       // function sortVersion(list) {
       //   return list.sort((version1, version2) => {
       //     const arr1 = version1.split('.').map((e) => e * 1);
@@ -321,7 +321,7 @@ export default {
       //   }
       // });
     },
-    // 下载升级包
+    // Tải gói nâng cấp
     getdownload() {
       if (this.$store.state.upgrade.toggleStatus || this.upgradeStatus.force_reminder) {
         this.params_key = this.newKey;
@@ -346,7 +346,7 @@ export default {
         })
         .catch((err) => {
           clearInterval(this.timer);
-          this.$message.error('下载终止');
+          this.$message.error('Đã dừng tải xuống');
           this.updateModal = false;
         });
     },
@@ -354,7 +354,7 @@ export default {
       window.open(url, '_blank');
     },
 
-    // 升级进度
+    // Tiến trình nâng cấp
     getUpgradeProgress() {
       upgradeProgressApi()
         .then((res) => {
@@ -366,7 +366,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 升级协议
+    // Thỏa thuận nâng cấp
     getUpgradeAgreement() {
       upgradeAgreementApi()
         .then((res) => {
@@ -377,7 +377,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 升级状态
+    // Trạng thái nâng cấp
     getUpgradeStatus() {
       upgradeStatusApi()
         .then((res) => {
@@ -391,7 +391,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 立即更新
+    // Cập nhật ngay
     update(item) {
       this.declaration = true;
       if (item && this.$store.state.upgrade.toggleStatus == false) {
@@ -400,7 +400,7 @@ export default {
       // this.version = item.first_version + "." + item.second_version + "." + item.third_version + "." + item.fourth_version;
       this.getUpgradeAgreement();
     },
-    // 比较相同版本号
+    // So sánh số phiên bản giống nhau
     compare() {
       this.upgradeList.map((ele, i) => {
         this.$set(
@@ -423,7 +423,7 @@ export default {
         }
       });
     },
-    // 同意
+    // Đồng ý
     agree() {
       this.declaration = false;
       this.updateModal = true;
@@ -440,7 +440,7 @@ export default {
       clearInterval(this.timer);
       AccountLogout()
         .then((res) => {
-          this.$message.success('您已成功退出');
+          this.$message.success('Bạn đã đăng xuất thành công');
           this.$router.replace(this.$routeProStr + '/login');
           localStorage.clear();
           removeCookies('token');
@@ -458,7 +458,7 @@ export default {
       this.updateModal = false;
       clearInterval(this.timer);
     },
-    // 导出备份文件
+    // Xuất file sao lưu
     exports(item) {
       let name =
         item.title +
@@ -485,16 +485,16 @@ export default {
           type: 'application/octet-stream;charset=UTF-8',
         });
         var downloadElement = document.createElement('a');
-        // 下载的文件名
+        // Tên file tải xuống
         downloadElement.download = `${name}.zip`;
-        // 创建下载的链接
+        // Tạo liên kết tải xuống
         downloadElement.href = window.URL.createObjectURL(blob);
-        // 点击下载
+        // Click để tải xuống
         downloadElement.click();
         document.body.appendChild(downloadElement);
-        // 下载完成移除元素
+        // Tải xuống xong thì xóa phần tử
         document.body.removeChild(downloadElement);
-        // 释放掉blob对象
+        // Giải phóng đối tượng blob
         window.URL.revokeObjectURL(downloadElement.href);
       });
     },
@@ -524,16 +524,16 @@ export default {
           type: 'application/octet-stream;charset=UTF-8',
         });
         var downloadElement = document.createElement('a');
-        // 下载的文件名
+        // Tên file tải xuống
         downloadElement.download = `${name}.gz`;
-        // 创建下载的链接
+        // Tạo liên kết tải xuống
         downloadElement.href = window.URL.createObjectURL(blob);
-        // 点击下载
+        // Click để tải xuống
         downloadElement.click();
         document.body.appendChild(downloadElement);
-        // 下载完成移除元素
+        // Tải xuống xong thì xóa phần tử
         document.body.removeChild(downloadElement);
-        // 释放掉blob对象
+        // Giải phóng đối tượng blob
         window.URL.revokeObjectURL(downloadElement.href);
       });
     },
@@ -542,7 +542,7 @@ export default {
     },
   },
   destroyed() {
-    //销毁
+    //Hủy
     clearInterval(this.timer);
   },
 };

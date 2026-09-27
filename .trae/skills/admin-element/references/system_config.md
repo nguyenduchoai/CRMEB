@@ -1,82 +1,82 @@
-# Admin-Element 系统配置文档
+# Tài liệu cấu hình hệ thống Admin-Element
 
-## 1 环境变量配置
+## 1 Cấu hình biến môi trường
 
-### 1.1 环境变量文件
+### 1.1 File biến môi trường
 
-Admin-Element 项目使用 `.env` 文件管理环境变量：
+Dự án Admin-Element dùng file `.env` để quản lý biến môi trường:
 
 ```
 template/admin-element/
-├── .env                # 基础环境变量文件
-├── .env.development    # 开发环境变量
-├── .env.production     # 生产环境变量
-└── .env.staging        # 测试环境变量
+├── .env                # File biến môi trường cơ sở
+├── .env.development    # Biến môi trường phát triển
+├── .env.production     # Biến môi trường production
+└── .env.staging        # Biến môi trường kiểm thử
 ```
 
-### 1.2 环境变量配置示例
+### 1.2 Ví dụ cấu hình biến môi trường
 
-在 `.env.development` 中配置开发环境变量：
+Cấu hình biến môi trường cho môi trường phát triển trong `.env.development`:
 
 ```dotenv
-# 基础 API 路径
+# Đường dẫn API cơ sở
 VUE_APP_BASE_API = 'http://localhost:8080/api'
 
-# 项目标题
-VUE_APP_TITLE = 'CRMEB 管理端'
+# Tiêu đề dự án
+VUE_APP_TITLE = 'CRMEB Trang quản trị'
 
-# 开发环境
+# Môi trường phát triển
 NODE_ENV = 'development'
 
-# 端口
+# Cổng (port)
 VUE_APP_PORT = '9527'
 
-# 构建输出目录
+# Thư mục đầu ra build
 VUE_APP_OUTPUT_DIR = 'dist'
 
-# 是否启用代码压缩
+# Có bật nén code không
 VUE_APP_COMPRESS = 'false'
 
-# 是否启用 source map
+# Trạng thái kích hoạt source map
 VUE_APP_SOURCE_MAP = 'true'
 ```
 
-在 `.env.production` 中配置生产环境变量：
+Cấu hình biến môi trường cho môi trường production trong `.env.production`:
 
 ```dotenv
-# 基础 API 路径
+# Đường dẫn API cơ sở
 VUE_APP_BASE_API = 'https://api.example.com'
 
-# 项目标题
-VUE_APP_TITLE = 'CRMEB 管理端'
+# Tiêu đề dự án
+VUE_APP_TITLE = 'CRMEB Trang quản trị'
 
-# 生产环境
+# Môi trường production
 NODE_ENV = 'production'
 
-# 端口
+# Cổng (port)
 VUE_APP_PORT = '80'
 
-# 构建输出目录
+# Thư mục đầu ra build
 VUE_APP_OUTPUT_DIR = 'dist'
 
-# 是否启用代码压缩
+# Có bật nén code không
 VUE_APP_COMPRESS = 'true'
 
-# 是否启用 source map
+# Trạng thái kích hoạt source map
 VUE_APP_SOURCE_MAP = 'false'
 ```
 
-## 2 项目基本配置
+## 2 Cấu hình cơ bản của dự án
 
-### 2.1 package.json 配置
+### 2.1 Cấu hình package.json
 
-在 `package.json` 文件中配置项目基本信息和依赖：
+Cấu hình thông tin cơ bản và các dependency của dự án trong file `package.json`:
 
 ```json
 {
   "name": "admin-element",
   "version": "1.0.0",
-  "description": "CRMEB 管理端前端项目",
+  "description": "CRMEB Dự án frontend trang quản trị",
   "author": "CRMEB Team",
   "private": true,
   "scripts": {
@@ -106,28 +106,28 @@ VUE_APP_SOURCE_MAP = 'false'
 }
 ```
 
-### 2.2 vue.config.js 配置
+### 2.2 Cấu hình vue.config.js
 
-在 `vue.config.js` 文件中配置 Vue CLI 相关选项：
+Cấu hình các tùy chọn liên quan đến Vue CLI trong file `vue.config.js`:
 
 ```javascript
 const { defineConfig } = require('@vue/cli-service')
 const path = require('path')
 
 module.exports = defineConfig({
-  // 部署应用包的基本 URL
+  // Gói ứng dụng được triển khai tại base URL
   publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
   
-  // 构建输出目录
+  // Thư mục đầu ra build
   outputDir: process.env.VUE_APP_OUTPUT_DIR || 'dist',
   
-  // 静态资源目录
+  // Thư mục tài nguyên tĩnh
   assetsDir: 'static',
   
-  // 生产环境是否生成 source map
+  // Môi trường production có tạo source map
   productionSourceMap: process.env.VUE_APP_SOURCE_MAP === 'true',
   
-  // 开发服务器配置
+  // Cấu hình máy chủ phát triển
   devServer: {
     port: process.env.VUE_APP_PORT || 9527,
     open: true,
@@ -136,7 +136,7 @@ module.exports = defineConfig({
       errors: true
     },
     proxy: {
-      // API 代理配置
+      // API Cấu hình proxy
       '/api': {
         target: 'http://localhost:8080',
         changeOrigin: true,
@@ -147,13 +147,13 @@ module.exports = defineConfig({
     }
   },
   
-  // 构建配置
+  // Cấu hình build
   configureWebpack: {
-    // 提供 webpack 全局变量
+    // Cung cấp biến toàn cục cho webpack
     plugins: [
-      // 其他插件配置
+      // Cấu hình plugin khác
     ],
-    // 解析配置
+    // Cấu hình resolve
     resolve: {
       alias: {
         '@': path.resolve(__dirname, 'src'),
@@ -165,17 +165,17 @@ module.exports = defineConfig({
     }
   },
   
-  // 链式配置
+  // Cấu hình dạng chain
   chainWebpack: config => {
-    // 配置别名
+    // Cấu hình alias
     config.resolve.alias
       .set('@', path.resolve(__dirname, 'src'))
     
-    // 配置构建优化
+    // Cấu hình tối ưu build
     if (process.env.NODE_ENV === 'production') {
-      // 生产环境配置
+      // Cấu hình môi trường production
       config.optimization.minimizer('terser').tap(args => {
-        // 配置 terser 选项
+        // Cấu hình tùy chọn terser
         return args
       })
     }
@@ -183,24 +183,24 @@ module.exports = defineConfig({
 })
 ```
 
-## 3 路由配置
+## 3 Cấu hình route
 
-### 3.1 路由配置文件
+### 3.1 File cấu hình route
 
-路由配置文件位于 `src/router/` 目录：
+File cấu hình route nằm trong thư mục `src/router/`:
 
 ```
 src/router/
-├── index.js          # 路由配置主文件
-└── modules/          # 按模块组织的路由配置
-    ├── user.js       # 用户模块路由
-    ├── goods.js      # 商品模块路由
-    └── order.js      # 订单模块路由
+├── index.js          # File cấu hình route chính
+└── modules/          # Cấu hình route tổ chức theo module
+    ├── user.js       # Route module người dùng
+    ├── goods.js      # Route module sản phẩm
+    └── order.js      # Route module đơn hàng
 ```
 
-### 3.2 路由配置示例
+### 3.2 Ví dụ cấu hình route
 
-在 `src/router/index.js` 中配置主路由：
+Cấu hình route chính trong `src/router/index.js`:
 
 ```javascript
 import Vue from 'vue'
@@ -209,7 +209,7 @@ import Layout from '@/layout'
 
 Vue.use(Router)
 
-// 静态路由
+// Route tĩnh
 export const constantRoutes = [
   {
     path: '/login',
@@ -229,43 +229,43 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '控制台', icon: 'dashboard', affix: true }
+      meta: { title: 'Bảng điều khiển', icon: 'dashboard', affix: true }
     }]
   }
 ]
 
-// 动态路由
+// Route động
 export const asyncRoutes = [
-  // 用户管理
+  // Quản lý người dùng
   {
     path: '/user',
     component: Layout,
     redirect: '/user/list',
     name: 'User',
-    meta: { title: '用户管理', icon: 'user', roles: ['admin'] },
+    meta: { title: 'Quản lý người dùng', icon: 'user', roles: ['admin'] },
     children: [
       {
         path: 'list',
         name: 'UserList',
         component: () => import('@/views/user/list'),
-        meta: { title: '用户列表', roles: ['admin'] }
+        meta: { title: 'Danh sách người dùng', roles: ['admin'] }
       },
       {
         path: 'add',
         name: 'UserAdd',
         component: () => import('@/views/user/add'),
-        meta: { title: '添加用户', roles: ['admin'] }
+        meta: { title: 'Thêm người dùng', roles: ['admin'] }
       },
       {
         path: 'edit/:id',
         name: 'UserEdit',
         component: () => import('@/views/user/edit'),
-        meta: { title: '编辑用户', roles: ['admin'] },
+        meta: { title: 'Sửa người dùng', roles: ['admin'] },
         hidden: true
       }
     ]
   },
-  // 404 页面必须放在最后
+  // 404 page phải đặt ở cuối cùng
   { path: '*', redirect: '/404', hidden: true }
 ]
 
@@ -285,17 +285,17 @@ export function resetRouter() {
 export default router
 ```
 
-## 4 菜单配置
+## 4 Cấu hình menu
 
-### 4.1 菜单配置文件
+### 4.1 File cấu hình menu
 
-菜单配置文件位于 `src/config/menu.config.js`：
+File cấu hình menu nằm tại `src/config/menu.config.js`:
 
 ```javascript
 export default [
   {
     path: '/dashboard',
-    title: '控制台',
+    title: 'Bảng điều khiển',
     icon: 'dashboard',
     component: 'dashboard/index',
     meta: {
@@ -304,7 +304,7 @@ export default [
   },
   {
     path: '/user',
-    title: '用户管理',
+    title: 'Quản lý người dùng',
     icon: 'user',
     component: 'layout',
     redirect: '/user/list',
@@ -314,7 +314,7 @@ export default [
     children: [
       {
         path: 'list',
-        title: '用户列表',
+        title: 'Danh sách người dùng',
         component: 'user/list',
         meta: {
           roles: ['admin']
@@ -322,7 +322,7 @@ export default [
       },
       {
         path: 'add',
-        title: '添加用户',
+        title: 'Thêm người dùng',
         component: 'user/add',
         meta: {
           roles: ['admin']
@@ -332,7 +332,7 @@ export default [
   },
   {
     path: '/goods',
-    title: '商品管理',
+    title: 'Quản lý sản phẩm',
     icon: 'shopping',
     component: 'layout',
     redirect: '/goods/list',
@@ -342,7 +342,7 @@ export default [
     children: [
       {
         path: 'list',
-        title: '商品列表',
+        title: 'Danh sách sản phẩm',
         component: 'goods/list',
         meta: {
           roles: ['admin', 'editor']
@@ -350,7 +350,7 @@ export default [
       },
       {
         path: 'category',
-        title: '商品分类',
+        title: 'Danh mục sản phẩm',
         component: 'goods/category',
         meta: {
           roles: ['admin']
@@ -361,63 +361,63 @@ export default [
 ]
 ```
 
-## 5 主题配置
+## 5 Cấu hình chủ đề (theme)
 
-### 5.1 主题配置文件
+### 5.1 File cấu hình chủ đề
 
-主题配置文件位于 `src/config/theme.config.js`：
+File cấu hình chủ đề nằm tại `src/config/theme.config.js`:
 
 ```javascript
 export default {
-  // 主题颜色
+  // Màu chủ đề
   primaryColor: '#409EFF',
   
-  // 成功颜色
+  // Màu thành công
   successColor: '#67C23A',
   
-  // 警告颜色
+  // Màu cảnh báo
   warningColor: '#E6A23C',
   
-  // 错误颜色
+  // Màu lỗi
   errorColor: '#F56C6C',
   
-  // 信息颜色
+  // Màu thông tin
   infoColor: '#909399',
   
-  // 菜单主题
+  // Chủ đề menu
   menuTheme: 'dark', // dark, light
   
-  // 顶部导航栏主题
+  // Chủ đề thanh điều hướng trên cùng
   navbarTheme: 'light', // dark, light
   
-  // 布局模式
+  // Chế độ bố cục
   layoutMode: 'side', // side, top
   
-  // 是否固定顶部导航栏
+  // Có cố định thanh điều hướng trên cùng không
   fixedNavbar: true,
   
-  // 是否固定侧边栏
+  // Có cố định thanh bên không
   fixedSidebar: true,
   
-  // 是否显示标签栏
+  // Có hiện thanh tab không
   showTagsView: true,
   
-  // 是否显示logo
+  // Có hiện logo không
   showLogo: true,
   
-  // 是否显示面包屑
+  // Có hiện breadcrumb không
   showBreadcrumb: true,
   
-  // 是否启用响应式布局
+  // Có bật bố cục responsive không
   responsiveLayout: true
 }
 ```
 
-## 6 API 配置
+## 6 Cấu hình API
 
-### 6.1 API 基础配置
+### 6.1 Cấu hình cơ bản của API
 
-在 `src/utils/request.js` 中配置 API 请求基础设置：
+Cấu hình các thiết lập cơ bản cho request API trong `src/utils/request.js`:
 
 ```javascript
 import axios from 'axios'
@@ -430,21 +430,21 @@ const service = axios.create({
   }
 })
 
-// 其他配置...
+// Cấu hình khác...
 
 export default service
 ```
 
-### 6.2 API 模块配置
+### 6.2 Cấu hình module API
 
-在 `src/api/` 目录下按模块配置 API 接口：
+Cấu hình API theo từng module trong thư mục `src/api/`:
 
 ```javascript
 // src/api/user.js
 import request from '@/utils/request'
 
 export default {
-  // 登录
+  // Đăng nhập
   login(data) {
     return request({
       url: '/admin/login',
@@ -453,7 +453,7 @@ export default {
     })
   },
   
-  // 获取用户信息
+  // Lấy thông tin người dùng
   getUserInfo() {
     return request({
       url: '/admin/user/info',
@@ -463,15 +463,15 @@ export default {
 }
 ```
 
-## 7 权限配置
+## 7 Cấu hình quyền
 
-### 7.1 权限配置文件
+### 7.1 File cấu hình quyền
 
-权限配置文件位于 `src/config/permission.config.js`：
+File cấu hình quyền nằm tại `src/config/permission.config.js`:
 
 ```javascript
 export default {
-  // 路由权限配置
+  // Cấu hình quyền route
   routePermissions: {
     '/user': ['admin'],
     '/goods': ['admin', 'editor'],
@@ -480,7 +480,7 @@ export default {
     '/system': ['admin']
   },
   
-  // 按钮权限配置
+  // Cấu hình quyền nút
   buttonPermissions: {
     'user:add': ['admin'],
     'user:edit': ['admin'],
@@ -492,23 +492,23 @@ export default {
     'order:delete': ['admin']
   },
   
-  // 角色配置
+  // Cấu hình vai trò
   roles: {
     admin: {
-      name: '管理员',
+      name: 'Quản trị viên',
       permissions: ['user:add', 'user:edit', 'user:delete', 'goods:add', 'goods:edit', 'goods:delete', 'order:edit', 'order:delete']
     },
     editor: {
-      name: '编辑',
+      name: 'Sửa',
       permissions: ['goods:add', 'goods:edit', 'order:edit']
     }
   }
 }
 ```
 
-### 7.2 权限指令
+### 7.2 Directive phân quyền
 
-在 `src/directive/permission.js` 中配置权限指令：
+Cấu hình directive phân quyền trong `src/directive/permission.js`:
 
 ```javascript
 import permission from '@/config/permission.config'
@@ -527,63 +527,63 @@ export default {
         el.parentNode && el.parentNode.removeChild(el)
       }
     } else {
-      throw new Error('权限指令必须指定权限值')
+      throw new Error('Directive phân quyền phải chỉ định giá trị quyền')
     }
   }
 }
 ```
 
-## 8 国际化配置
+## 8 Cấu hình đa ngôn ngữ (i18n)
 
-### 8.1 国际化配置文件
+### 8.1 File cấu hình đa ngôn ngữ
 
-国际化配置文件位于 `src/lang/` 目录：
+File cấu hình đa ngôn ngữ nằm trong thư mục `src/lang/`:
 
 ```
 src/lang/
-├── index.js          # 国际化入口文件
-├── zh-CN.js          # 中文语言包
-└── en-US.js          # 英文语言包
+├── index.js          # File điểm vào đa ngôn ngữ (i18n)
+├── zh-CN.js          # Gói ngôn ngữ tiếng Trung
+└── en-US.js          # Gói ngôn ngữ tiếng Anh
 ```
 
-在 `src/lang/zh-CN.js` 中配置中文语言包：
+Cấu hình gói ngôn ngữ tiếng Trung trong `src/lang/zh-CN.js`:
 
 ```javascript
 export default {
   login: {
-    title: '登录',
-    username: '用户名',
-    password: '密码',
-    loginBtn: '登录',
-    forgetPassword: '忘记密码',
-    register: '注册'
+    title: 'Đăng nhập',
+    username: 'Tên người dùng',
+    password: 'Mật khẩu',
+    loginBtn: 'Đăng nhập',
+    forgetPassword: 'Quên mật khẩu',
+    register: 'Đăng ký'
   },
   dashboard: {
-    title: '控制台',
-    welcome: '欢迎回来',
-    todayStats: '今日统计',
-    totalStats: '总统计'
+    title: 'Bảng điều khiển',
+    welcome: 'Chào mừng quay lại',
+    todayStats: 'Thống kê hôm nay',
+    totalStats: 'Thống kê tổng'
   },
   user: {
-    title: '用户管理',
-    list: '用户列表',
-    add: '添加用户',
-    edit: '编辑用户',
-    delete: '删除用户',
-    username: '用户名',
-    nickname: '昵称',
-    email: '邮箱',
-    phone: '手机号',
-    status: '状态'
+    title: 'Quản lý người dùng',
+    list: 'Danh sách người dùng',
+    add: 'Thêm người dùng',
+    edit: 'Sửa người dùng',
+    delete: 'Xóa người dùng',
+    username: 'Tên người dùng',
+    nickname: 'Biệt danh',
+    email: 'Email',
+    phone: 'Số điện thoại',
+    status: 'Trạng thái'
   }
 }
 ```
 
-## 9 构建配置
+## 9 Cấu hình build
 
-### 9.1 构建脚本配置
+### 9.1 Cấu hình script build
 
-在 `package.json` 中配置构建脚本：
+Cấu hình script build trong `package.json`:
 
 ```json
 {
@@ -597,26 +597,26 @@ export default {
 }
 ```
 
-### 9.2 构建优化配置
+### 9.2 Cấu hình tối ưu build
 
-在 `vue.config.js` 中配置构建优化：
+Cấu hình tối ưu build trong `vue.config.js`:
 
 ```javascript
 module.exports = {
   configureWebpack: {
     optimization: {
-      // 分割代码块
+      // Tách các chunk code
       splitChunks: {
         chunks: 'all',
         cacheGroups: {
-          // 第三方库
+          // Thư viện bên thứ ba
           vendor: {
             name: 'chunk-vendors',
             test: /[\\/]node_modules[\\/]/,
             priority: 10,
             chunks: 'initial'
           },
-          // 公共组件
+          // Thành phần (component) dùng chung
           common: {
             name: 'chunk-common',
             minChunks: 2,
@@ -631,28 +631,28 @@ module.exports = {
 }
 ```
 
-## 10 开发配置
+## 10 Cấu hình phát triển
 
-### 10.1 开发服务器配置
+### 10.1 Cấu hình máy chủ phát triển (dev server)
 
-在 `vue.config.js` 中配置开发服务器：
+Cấu hình máy chủ phát triển trong `vue.config.js`:
 
 ```javascript
 module.exports = {
   devServer: {
-    // 端口
+    // Cổng (port)
     port: 9527,
     
-    // 自动打开浏览器
+    // Tự động mở trình duyệt
     open: true,
     
-    // 错误和警告显示
+    // Hiển thị lỗi và cảnh báo
     overlay: {
       warnings: false,
       errors: true
     },
     
-    // 代理配置
+    // Cấu hình proxy
     proxy: {
       '/api': {
         target: 'http://localhost:8080',
@@ -663,10 +663,10 @@ module.exports = {
       }
     },
     
-    // 热更新
+    // Cập nhật nóng (hot reload)
     hot: true,
     
-    // 静态资源目录
+    // Thư mục tài nguyên tĩnh
     static: {
       directory: path.join(__dirname, 'public')
     }
@@ -674,9 +674,9 @@ module.exports = {
 }
 ```
 
-### 10.2 ESLint 配置
+### 10.2 Cấu hình ESLint
 
-ESLint 配置文件位于 `template/admin-element/.eslintrc.js`：
+File cấu hình ESLint nằm tại `template/admin-element/.eslintrc.js`:
 
 ```javascript
 module.exports = {
@@ -702,17 +702,17 @@ module.exports = {
 }
 ```
 
-## 11 部署配置
+## 11 Cấu hình triển khai
 
-### 11.1 部署配置文件
+### 11.1 File cấu hình triển khai
 
-部署配置文件位于 `src/config/deploy.config.js`：
+File cấu hình triển khai nằm tại `src/config/deploy.config.js`:
 
 ```javascript
 export default {
-  // 部署环境
+  // Môi trường triển khai
   environments: {
-    // 测试环境
+    // Môi trường kiểm thử
     staging: {
       host: 'staging.example.com',
       port: 22,
@@ -724,7 +724,7 @@ export default {
       to: '/var/www/html/admin-staging',
       timeout: 60000
     },
-    // 生产环境
+    // Môi trường production
     production: {
       host: 'production.example.com',
       port: 22,
@@ -740,9 +740,9 @@ export default {
 }
 ```
 
-### 11.2 Nginx 配置
+### 11.2 Cấu hình Nginx
 
-在服务器上配置 Nginx：
+Cấu hình Nginx trên máy chủ:
 
 ```nginx
 server {
@@ -764,13 +764,13 @@ server {
     proxy_set_header X-Forwarded-Proto $scheme;
   }
   
-  # 静态资源缓存
+  # Cache tài nguyên tĩnh
   location ~* \.(css|js|jpg|jpeg|png|gif|ico|svg)$ {
     expires 7d;
     add_header Cache-Control "public, max-age=604800";
   }
   
-  # 错误页面
+  # Trang lỗi
   error_page 404 /index.html;
   error_page 500 502 503 504 /50x.html;
   location = /50x.html {
@@ -779,16 +779,16 @@ server {
 }
 ```
 
-## 12 性能配置
+## 12 Cấu hình hiệu năng
 
-### 12.1 性能优化配置
+### 12.1 Cấu hình tối ưu hiệu năng
 
-在 `vue.config.js` 中配置性能优化：
+Cấu hình tối ưu hiệu năng trong `vue.config.js`:
 
 ```javascript
 module.exports = {
   configureWebpack: {
-    // 性能配置
+    // Cấu hình hiệu năng
     performance: {
       maxAssetSize: 300000, // 300kb
       maxEntrypointSize: 300000, // 300kb
@@ -796,9 +796,9 @@ module.exports = {
     }
   },
   
-  // 构建优化
+  // Tối ưu build
   chainWebpack: config => {
-    // 配置图片压缩
+    // Cấu hình nén ảnh
     config.module
       .rule('images')
       .use('image-webpack-loader')
@@ -820,7 +820,7 @@ module.exports = {
         }
       })
     
-    // 配置代码分割
+    // Cấu hình tách code
     config.optimization
       .splitChunks({
         chunks: 'all',
@@ -844,27 +844,27 @@ module.exports = {
 }
 ```
 
-## 13 安全配置
+## 13 Cấu hình bảo mật
 
-### 13.1 安全配置文件
+### 13.1 File cấu hình bảo mật
 
-安全配置文件位于 `src/config/security.config.js`：
+File cấu hình bảo mật nằm tại `src/config/security.config.js`:
 
 ```javascript
 export default {
-  // 是否启用 CSRF 保护
+  // Có bật bảo vệ CSRF không
   enableCsrf: true,
   
-  // CSRF Token 名称
+  // CSRF Token Tên
   csrfTokenName: 'X-CSRF-Token',
   
-  // 是否启用 XSS 防护
+  // Có bật chống XSS không
   enableXss: true,
   
-  // 是否启用 CSP (Content Security Policy)
+  // Trạng thái kích hoạt CSP (Content Security Policy)
   enableCsp: true,
   
-  // CSP 配置
+  // CSP Cấu hình
   csp: {
     defaultSrc: "'self'",
     scriptSrc: "'self' 'unsafe-inline' 'unsafe-eval'",
@@ -878,73 +878,73 @@ export default {
     formAction: "'self'"
   },
   
-  // 是否启用 HTTP Strict Transport Security
+  // Trạng thái kích hoạt HTTP Strict Transport Security
   enableHsts: true,
   
-  // HSTS 配置
+  // HSTS Cấu hình
   hsts: {
     maxAge: 31536000,
     includeSubDomains: true,
     preload: true
   },
   
-  // 是否启用 X-Content-Type-Options
+  // Trạng thái kích hoạt X-Content-Type-Options
   enableXContentTypeOptions: true,
   
-  // 是否启用 X-Frame-Options
+  // Trạng thái kích hoạt X-Frame-Options
   enableXFrameOptions: true,
   
-  // X-Frame-Options 配置
+  // X-Frame-Options Cấu hình
   xFrameOptions: 'DENY', // DENY, SAMEORIGIN, ALLOW-FROM
   
-  // 是否启用 X-XSS-Protection
+  // Trạng thái kích hoạt X-XSS-Protection
   enableXXssProtection: true
 }
 ```
 
-## 14 最佳实践
+## 14 Thực tiễn tốt nhất
 
-### 14.1 配置管理最佳实践
+### 14.1 Thực tiễn tốt nhất về quản lý cấu hình
 
-1. **环境变量管理**
-   - 使用 `.env` 文件管理不同环境的配置
-   - 敏感信息不要硬编码在代码中
-   - 不同环境使用不同的配置文件
+1. **Quản lý biến môi trường**
+   - Dùng file `.env` để quản lý cấu hình của từng môi trường
+   - Không hard-code thông tin nhạy cảm trong code
+   - Mỗi môi trường dùng một file cấu hình riêng
 
-2. **配置文件组织**
-   - 按功能模块组织配置文件
-   - 使用统一的配置管理方式
-   - 配置文件应该有清晰的注释
+2. **Tổ chức file cấu hình**
+   - Tổ chức file cấu hình theo module chức năng
+   - Dùng một cách quản lý cấu hình thống nhất
+   - File cấu hình cần có chú thích rõ ràng
 
-3. **配置加载顺序**
-   - 环境变量 > 配置文件 > 默认配置
-   - 确保配置加载的一致性
+3. **Thứ tự nạp cấu hình**
+   - Biến môi trường > File cấu hình > Cấu hình mặc định
+   - Đảm bảo tính nhất quán khi nạp cấu hình
 
-4. **配置验证**
-   - 对配置项进行验证
-   - 提供默认值和错误处理
+4. **Kiểm tra tính hợp lệ của cấu hình**
+   - Kiểm tra tính hợp lệ của các mục cấu hình
+   - Cung cấp giá trị mặc định và xử lý lỗi
 
-5. **配置监控**
-   - 监控配置的变化
-   - 记录配置变更日志
+5. **Giám sát cấu hình**
+   - Giám sát các thay đổi của cấu hình
+   - Ghi log thay đổi cấu hình
 
-6. **配置安全性**
-   - 敏感配置加密存储
-   - 配置文件权限控制
-   - 避免在日志中输出敏感配置
+6. **Bảo mật cấu hình**
+   - Mã hóa khi lưu trữ các cấu hình nhạy cảm
+   - Kiểm soát quyền truy cập file cấu hình
+   - Tránh ghi cấu hình nhạy cảm ra log
 
-7. **配置可维护性**
-   - 使用结构化的配置格式
-   - 配置项命名规范
-   - 定期清理无用的配置
+7. **Khả năng bảo trì cấu hình**
+   - Dùng định dạng cấu hình có cấu trúc
+   - Quy tắc đặt tên cho các mục cấu hình
+   - Định kỳ dọn dẹp các cấu hình không còn dùng
 
-8. **配置扩展性**
-   - 设计可扩展的配置结构
-   - 支持动态配置更新
-   - 配置项应该有合理的默认值
+8. **Khả năng mở rộng cấu hình**
+   - Thiết kế cấu trúc cấu hình có khả năng mở rộng
+   - Hỗ trợ cập nhật cấu hình động
+   - Các mục cấu hình cần có giá trị mặc định hợp lý
 
-## 15 总结
+## 15 Tổng kết
 
-Admin-Element 项目的系统配置涵盖了环境变量、路由、菜单、主题、API、权限、国际化、构建、开发、部署、性能和安全等多个方面。合理的配置管理可以提高项目的可维护性、可扩展性和安全性，同时提升开发效率和用户体验。
+Cấu hình hệ thống của dự án Admin-Element bao gồm nhiều khía cạnh như biến môi trường, route, menu, chủ đề, API, quyền, đa ngôn ngữ, build, phát triển, triển khai, hiệu năng và bảo mật. Quản lý cấu hình hợp lý giúp nâng cao khả năng bảo trì, khả năng mở rộng và tính bảo mật của dự án, đồng thời cải thiện hiệu suất phát triển và trải nghiệm người dùng.
 
-开发者应遵循配置管理的最佳实践，根据项目需求和环境特点，合理配置各项参数，确保项目的稳定运行和持续演进。
+Lập trình viên nên tuân thủ các thực tiễn tốt nhất về quản lý cấu hình, căn cứ vào yêu cầu của dự án và đặc điểm của từng môi trường để cấu hình hợp lý các tham số, đảm bảo dự án vận hành ổn định và liên tục phát triển.

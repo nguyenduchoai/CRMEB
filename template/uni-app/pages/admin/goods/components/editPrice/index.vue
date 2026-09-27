@@ -9,44 +9,44 @@
   >
     <view class="edit-price rd-t-40rpx" v-if="goodsInfo.attr_value">
       <view class="title"
-        >修改价格/库存
+        >Sửa giá/tồn kho
         <view class="close acea-row row-center-wrapper" @tap="closeDrawer">
           <text class="iconfont icon-iconfontguanbi"></text>
         </view>
       </view>
       <view class="list">
         <view class="item acea-row row-between-wrapper">
-          <view>售价</view>
+          <view>Giá bán</view>
           <input
             type="digit"
-            :placeholder="'请填写售价' + tips"
+            :placeholder="'Vui lòng điền giá bán' + tips"
             placeholder-class="placeholder"
             v-model="goodsInfo.attr_value.price"
           />
         </view>
         <view class="item acea-row row-between-wrapper">
-          <view>成本价</view>
+          <view>Giá vốn</view>
           <input
             type="digit"
-            :placeholder="'请填写成本价' + tips"
+            :placeholder="'Vui lòng điền giá vốn' + tips"
             placeholder-class="placeholder"
             v-model="goodsInfo.attr_value.cost"
           />
         </view>
         <view class="item acea-row row-between-wrapper">
-          <view>划线</view>
+          <view>Giá gốc</view>
           <input
             type="digit"
-            :placeholder="'请填写划线' + tips"
+            :placeholder="'Vui lòng điền giá gốc' + tips"
             placeholder-class="placeholder"
             v-model="goodsInfo.attr_value.ot_price"
           />
         </view>
         <view class="item acea-row row-between-wrapper">
-          <view>库存</view>
+          <view>Tồn kho</view>
           <input
             type="number"
-            :placeholder="'请填写库存' + tips"
+            :placeholder="'Vui lòng điền tồn kho' + tips"
             placeholder-class="placeholder"
             v-model="goodsInfo.attr_value.stock"
           />
@@ -56,10 +56,10 @@
         v-if="goodsInfo.spec_type"
         class="bnt acea-row row-center-wrapper"
         @tap="defineSpec"
-        >确定</view
+        >Xác nhận</view
       >
       <view v-else class="bnt acea-row row-center-wrapper" @tap="define"
-        >保存</view
+        >Lưu</view
       >
     </view>
   </base-drawer>
@@ -88,7 +88,7 @@ export default {
     };
   },
   mounted() {
-    this.tips = this.goodsInfo.spec_type ? "(可为空)" : "";
+    this.tips = this.goodsInfo.spec_type ? "(có thể để trống)" : "";
   },
   methods: {
     defineSpec() {
@@ -97,7 +97,7 @@ export default {
         this.$emit("successChange", info);
       } else {
         this.$util.Tips({
-          title: "修改内容至少填写一项",
+          title: "Vui lòng điền ít nhất một mục cần sửa",
         });
       }
     },

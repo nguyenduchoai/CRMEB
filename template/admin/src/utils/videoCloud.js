@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -14,9 +14,9 @@ import axios from 'axios';
 import { upload, ossUpload } from '@/api/upload';
 
 const sign = (method, publicKey, privateKey, md5, contentType, date, bucketName, fileName) => {
-  const CryptoJS = require('crypto-js'); // 这里使用了crypto-js加密算法库，安装方法会在后面说明
+  const CryptoJS = require('crypto-js'); // Ở đây dùng thư viện thuật toán mã hóa crypto-js, cách cài đặt sẽ nói ở phần sau
   const CanonicalizedResource = `/${bucketName}/${fileName}`;
-  const StringToSign = method + '\n' + md5 + '\n' + contentType + '\n' + date + '\n' + CanonicalizedResource; // 此处的md5以及date是可选的，contentType对于PUT请求是可选的，对于POST请求则是必须的
+  const StringToSign = method + '\n' + md5 + '\n' + contentType + '\n' + date + '\n' + CanonicalizedResource; // Ở đây md5 và date là tùy chọn, contentType đối với request PUT là tùy chọn, còn đối với request POST là bắt buộc
   let Signature = CryptoJS.HmacSHA1(StringToSign, privateKey);
   Signature = CryptoJS.enc.Base64.stringify(Signature);
   return 'UCloud' + ' ' + publicKey + ':' + Signature;
@@ -56,10 +56,10 @@ export default {
     let cos = new Cos({
       getAuthorization(options, callback) {
         callback({
-          TmpSecretId: config.credentials.tmpSecretId, // 临时密钥的 tmpSecretId
-          TmpSecretKey: config.credentials.tmpSecretKey, // 临时密钥的 tmpSecretKey
-          XCosSecurityToken: config.credentials.sessionToken, // 临时密钥的 sessionToken
-          ExpiredTime: config.expiredTime, // 临时密钥失效时间戳，是申请临时密钥时，时间戳加 durationSeconds
+          TmpSecretId: config.credentials.tmpSecretId, // tmpSecretId của khóa tạm thời
+          TmpSecretKey: config.credentials.tmpSecretKey, // tmpSecretKey của khóa tạm thời
+          XCosSecurityToken: config.credentials.sessionToken, // sessionToken của khóa tạm thời
+          ExpiredTime: config.expiredTime, // Timestamp hết hạn của khóa tạm thời, là timestamp lúc xin khóa tạm thời cộng thêm durationSeconds
         });
       },
     });
@@ -74,10 +74,10 @@ export default {
     return new Promise((resolve, reject) => {
       cos.sliceUploadFile(
         {
-          Bucket: config.bucket /* 必须 */,
-          Region: config.region /* 必须 */,
-          Key: filename /* 必须 */,
-          Body: fileObject, // 上传文件对象
+          Bucket: config.bucket /* Bắt buộc */,
+          Region: config.region /* Bắt buộc */,
+          Key: filename /* Bắt buộc */,
+          Body: fileObject, // Đối tượng file upload
           onProgress: function (progressData) {
             uploading(progressData);
           },
@@ -93,8 +93,8 @@ export default {
     });
   },
   cosHttp(evfile, res, videoIng) {
-    // 腾讯云
-    // 对更多字符编码的 url encode 格式
+    // Tencent Cloud
+    // Định dạng url encode cho nhiều ký tự hơn
     let camSafeUrlEncode = function (str) {
       return encodeURIComponent(str)
         .replace(/!/g, '%21')
@@ -128,11 +128,11 @@ export default {
           videoIng(false, 0);
           resolve({ url: url, ETag: ETag });
         } else {
-          reject({ msg: '文件 ' + filename + ' 上传失败，状态码：' + xhr.statu });
+          reject({ msg: 'Tệp ' + filename + ' tải lên thất bại, mã trạng thái:' + xhr.statu });
         }
       };
       xhr.onerror = function () {
-        reject({ msg: '文件 ' + filename + '上传失败，请检查是否没配置 CORS 跨域规' });
+        reject({ msg: 'Tệp ' + filename + 'tải lên thất bại, vui lòng kiểm tra xem đã cấu hình quy tắc CORS (truy cập chéo nguồn) chưa' });
       };
       xhr.send(fileObject);
       xhr.onreadystatechange = function () {};
@@ -150,14 +150,14 @@ export default {
     let filename = this.getVideoName(suffix);
     let formData = new FormData();
     let data = res.data;
-    // 注意formData里append添加的键的大小写
-    formData.append('key', filename); // 存储在oss的文件路径
+    // Chú ý chữ hoa/thường của key khi append vào formData
+    formData.append('key', filename); // Đường dẫn file lưu trên oss
     formData.append('OSSAccessKeyId', data.accessid); // accessKeyId
     formData.append('policy', data.policy); // policy
-    formData.append('Signature', data.signature); // 签名
-    // 如果是base64文件，那么直接把base64字符串转成blob对象进行上传就可以了
+    formData.append('Signature', data.signature); // Chữ ký
+    // Nếu là file base64 thì chỉ cần chuyển chuỗi base64 thành đối tượng blob rồi upload
     formData.append('file', fileObject);
-    formData.append('success_action_status', 200); // 成功后返回的操作码
+    formData.append('success_action_status', 200); // Mã thao tác trả về sau khi thành công
     let url = data.host;
     let fileUrl = url + '/' + filename;
     videoIng(true, 100);
@@ -186,7 +186,7 @@ export default {
     const filename = this.getVideoName(suffix);
     const formData = new FormData();
     const data = res.data;
-    // 注意formData里append添加的键的大小写
+    // Chú ý chữ hoa/thường của key khi append vào formData
     formData.append('key', filename);
     formData.append('AccessKeyId', data.accessid);
     formData.append('policy', data.policy);
@@ -242,8 +242,8 @@ export default {
   },
   qiniuHttp(evfile, res, videoIng) {
     const uptoken = res.data.token;
-    const file = evfile.target.files[0]; // Blob 对象，上传的文件
-    const Key = file.name; // 上传后文件资源名以设置的 key 为主，如果 key 为 null 或者 undefined，则文件资源名会以 hash 值作为资源名。
+    const file = evfile.target.files[0]; // Đối tượng Blob, file được upload
+    const Key = file.name; // Sau khi upload, tên resource của file sẽ theo key đã đặt, nếu key là null hoặc undefined thì tên resource sẽ dùng giá trị hash làm tên.
     const pos = Key.lastIndexOf('.');
     let suffix = '';
     if (pos !== -1) {
@@ -255,9 +255,9 @@ export default {
       useCdnDomain: true,
     };
     const putExtra = {
-      fname: '', // 文件原文件名
-      params: {}, // 用来放置自定义变量
-      mimeType: null, // 用来限制上传文件类型，为 null 时表示不对文件类型限制；限制类型放到数组里： ["image/png", "image/jpeg", "image/gif"]
+      fname: '', // Tên file gốc
+      params: {}, // Dùng để đặt biến tùy chỉnh
+      mimeType: null, // Dùng để giới hạn loại file upload, khi là null nghĩa là không giới hạn loại file; các loại giới hạn đặt trong mảng: ["image/png", "image/jpeg", "image/gif"]
     };
     const observable = qiniu.upload(file, filename, uptoken, putExtra, config);
 
@@ -266,23 +266,23 @@ export default {
         next: (result) => {
           const progress = Math.round(result.total.loaded / result.total.size);
           videoIng(true, progress);
-          // 主要用来展示进度
+          // Chủ yếu dùng để hiển thị tiến trình
         },
         error: (errResult) => {
-          // 失败报错信息
+          // Thông tin lỗi khi thất bại
           reject({ msg: errResult });
         },
         complete: (result) => {
-          // 接收成功后返回的信息
+          // Thông tin trả về sau khi nhận thành công
           videoIng(false, 0);
           resolve({ url: res.data.cdn ? res.data.cdn + '/' + filename : fileUrl });
         },
       });
     });
   },
-  // 京东云上传
+  // Tải lên JD Cloud
   jdHttp(evfile, r, videoIng) {
-    const fileObject = evfile.target.files[0]; // 获取的文件对象
+    const fileObject = evfile.target.files[0]; // Đối tượng file lấy được
     const formData = new FormData();
     formData.append('file', fileObject);
     return new Promise((resolve, reject) => {
@@ -296,15 +296,15 @@ export default {
         });
     });
   },
-  // 本地上传
+  // Tải lên từ máy
   uploadMp4ToLocal(evfile, res, videoIng) {
-    const fileObject = evfile.target.files[0]; // 获取的文件对象
+    const fileObject = evfile.target.files[0]; // Đối tượng file lấy được
     const formData = new FormData();
     formData.append('file', fileObject);
     videoIng(true, 100);
     return upload(formData);
   },
-  // 获取上传云存储视频名称
+  // Lấy tên video đã upload lên lưu trữ cloud
   getVideoName(suffix) {
     const now = new Date();
     const year = now.getFullYear();

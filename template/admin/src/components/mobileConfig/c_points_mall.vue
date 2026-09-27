@@ -23,7 +23,7 @@ import { mapMutations } from 'vuex';
 export default {
   name: 'c_points_mall',
   componentsName: 'points_mall',
-  cname: '积分商城',
+  cname: 'Cửa hàng đổi điểm',
   props: {
     activeIndex: {
       type: null,
@@ -41,11 +41,11 @@ export default {
   },
   data() {
     return {
-      // 组件参数配置
+      // Cấu hình tham số thành phần
       option: {
         submitBtn: false,
       },
-      configObj: {}, // 配置对象
+      configObj: {}, // Đối tượng cấu hình
       rCom: [
         {
           components: toolCom.c_card_select,
@@ -55,7 +55,7 @@ export default {
           components: toolCom.c_set_up,
           configNme: 'setUp',
         },
-      ], // 当前页面组件
+      ], // Thành phần (component) của trang hiện tại
       oneContent: [
         {
           components: toolCom.c_title,
@@ -366,7 +366,7 @@ export default {
       if (!data) return data;
       if (!data.paddingConfig) {
         this.$set(data, 'paddingConfig', {
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           max: 100,
@@ -382,7 +382,7 @@ export default {
       }
       if (!data.marginConfig) {
         this.$set(data, 'marginConfig', {
-          title: '外边距',
+          title: 'Lề ngoài',
           isAll: false,
           val: 0,
           min: 0,
@@ -393,11 +393,11 @@ export default {
       }
       if (!data.componentBgConfig) {
         this.$set(data, 'componentBgConfig', {
-          title: '背景设置',
+          title: 'Cài đặt nền',
           tabVal: 0,
-          tabList: [{ name: '颜色' }, { name: '图片' }],
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
           colorConfig: {
-            title: '背景颜色',
+            title: 'Màu nền',
             default: [
               {
                 item: '#F5F5F5',
@@ -416,24 +416,24 @@ export default {
             ],
           },
           imgBgConfig: {
-            info: '建议：750px * 100 ~ 200px',
+            info: 'Đề xuất: 750px * 100 ~ 200px',
             url: '',
             type: 'code',
             delType: 0,
-            name: '背景图片',
+            name: 'Ảnh nền',
           },
         });
       }
       if (!data.zIndexConfig) {
         this.$set(data, 'zIndexConfig', {
-          title: '组件上浮',
+          title: 'Thứ tự lớp thành phần',
           val: 0,
           min: 0,
         });
       }
       if (!data.borderConfig) {
         this.$set(data, 'borderConfig', {
-          title: '组件边框',
+          title: 'Viền thành phần',
           show: false,
           color: {
             item: '#E5E5E5',
@@ -446,7 +446,7 @@ export default {
       }
       if (!data.shadowConfig) {
         this.$set(data, 'shadowConfig', {
-          title: '组件阴影',
+          title: 'Đổ bóng thành phần',
           show: false,
           color: {
             item: '#E5E5E5',

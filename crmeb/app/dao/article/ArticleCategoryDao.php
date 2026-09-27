@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,14 +16,14 @@ use app\dao\BaseDao;
 use app\model\article\ArticleCategory;
 
 /**
- * 文章分类
+ * Danh mục bài viết
  * Class ArticleCategoryDao
  * @package app\dao\article
  */
 class ArticleCategoryDao extends BaseDao
 {
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -32,7 +32,7 @@ class ArticleCategoryDao extends BaseDao
     }
 
     /**
-     * 获取文章分类列表
+     * Lấy danh sách danh mục bài viết
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -50,7 +50,7 @@ class ArticleCategoryDao extends BaseDao
     }
 
     /**
-     * 前台获取文章分类
+     * Lấy danh mục bài viết ở phía người dùng
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -65,7 +65,7 @@ class ArticleCategoryDao extends BaseDao
     }
 
     /**
-     * 二级文章分类
+     * Danh mục bài viết cấp 2
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -83,7 +83,7 @@ class ArticleCategoryDao extends BaseDao
     }
 
     /**
-     * 添加修改选择上级分类列表
+     * Danh sách chọn danh mục cấp trên khi thêm/sửa
      * @param array $where
      * @return array
      * @throws \ReflectionException
@@ -94,7 +94,7 @@ class ArticleCategoryDao extends BaseDao
     }
 
     /**
-     * 树形列表
+     * Danh sách dạng cây
      * @param array $where
      * @param array $field
      * @return array
@@ -102,7 +102,7 @@ class ArticleCategoryDao extends BaseDao
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/9/7
      */

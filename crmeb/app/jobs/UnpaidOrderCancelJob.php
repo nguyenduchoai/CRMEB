@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,7 +21,7 @@ use crmeb\traits\QueueTrait;
 use think\facade\Log;
 
 /**
- * 未支付订单到期取消
+ * Đơn hàng chưa thanh toán tự hủy khi hết hạn
  * Class UnpaidOrderCancelJob
  * @package crmeb\jobs
  */
@@ -58,20 +58,20 @@ class UnpaidOrderCancelJob extends BaseJobs
 
         try {
             $res = $refundServices->transaction(function () use ($orderInfo, $refundServices) {
-                //回退积分和优惠卷
+                //Hoàn trả điểm thưởng và phiếu giảm giá
                 $refundServices->integralAndCouponBack($orderInfo, 'cancel');
-                //回退库存和销量
+                //Hoàn trả tồn kho và lượt bán
                 $refundServices->regressionStock($orderInfo);
                 return true;
             });
             if ($res) {
                 $orderInfo->is_cancel = 1;
-                $orderInfo->mark = '订单未支付已超过系统预设时间';
+                $orderInfo->mark = 'Đơn hàng chưa thanh toán đã quá thời gian hệ thống quy định';
                 $orderInfo->save();
             }
             return $res;
         } catch (\Throwable $e) {
-            Log::error('自动取消订单失败,失败原因:' . $e->getMessage());
+            Log::error('Tự động hủy đơn hàng thất bại, nguyên nhân:' . $e->getMessage());
             return false;
         }
     }

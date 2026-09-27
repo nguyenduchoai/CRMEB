@@ -6,7 +6,7 @@
   position: relative;
   box-sizing: border-box;
 }
-/* 页面宽度小于1200px
+/* Chiều rộng trang nhỏ hơn 1200px
 ------------------------------- */
 @media screen and (max-width: $lg) {
   .home-recommend-row {
@@ -25,7 +25,7 @@
   }
 }
 
-/* 页面宽度小于992px
+/* Chiều rộng trang nhỏ hơn 992px
 ------------------------------- */
 @media screen and (max-width: $md) {
   .home-recommend-row {

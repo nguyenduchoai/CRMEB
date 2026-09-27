@@ -38,7 +38,7 @@
           <!-- Text -->
           <div v-if="item.component === 'Text'" :style="getTextBg(item.propValue)">
             <div :style="getTextStyle(item.propValue)">
-              {{ getDisplayText(item) || '请填写或选择信息' }}
+              {{ getDisplayText(item) || 'Vui lòng nhập hoặc chọn thông tin' }}
             </div>
           </div>
 
@@ -685,7 +685,7 @@ export default {
     handleEnd() {
       this.guideline.showV = false;
       this.guideline.showH = false;
-      this.$emit('record', '调整组件');
+      this.$emit('record', 'Điều chỉnh thành phần');
     },
     handleDelete(index) {
       this.$emit('delete', index);

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -14,27 +14,27 @@ use think\facade\Db;
 use think\Request;
 
 /**
- * MCP (Model Context Protocol) 控制器
- * 提供 AI 助手调用 CRMEB API 的标准接口
+ * Controller MCP (Model Context Protocol)
+ * Cung cấp giao diện chuẩn để trợ lý AI gọi API của CRMEB
  *
- * 认证方式：account + password
- * 通过请求头传递账号和密码进行认证
+ * Phương thức xác thực: account + password
+ * Xác thực bằng cách truyền tài khoản và mật khẩu qua header yêu cầu
  */
 class Mcp extends AuthController
 {
     /**
-     * 初始化
-     * MCP 接口不走 Token 中间件，直接使用 appid + appsecret 认证
+     * Khởi tạo
+     * API MCP không đi qua middleware Token, xác thực trực tiếp bằng appid + appsecret
      */
     protected function initialize()
     {
-        // 不调用父类 initialize，因为 MCP 不走 Token 中间件
+        // Không gọi initialize của lớp cha vì MCP không đi qua middleware Token
         $this->authByAppSecret();
     }
 
     /**
-     * 通过 appid + appsecret 认证
-     * 参考 AuthTokenMiddleware 的验证流程
+     * Xác thực bằng appid + appsecret
+     * Tham khảo quy trình xác thực của AuthTokenMiddleware
      */
     private function authByAppSecret()
     {
@@ -42,60 +42,60 @@ class Mcp extends AuthController
         $password = $this->request->header('password', '');
 
         if (empty($account) || empty($password)) {
-            $this->authFail('认证失败：缺少 account 或 password');
+            $this->authFail('Xác thực thất bại: thiếu account hoặc password');
             return;
         }
 
         try {
-            // 查询账号信息
+            // Truy vấn thông tin tài khoản
             $accountInfo = Db::name('out_account')
                 ->where('appid', $account)
                 ->where('is_del', 0)
                 ->find();
 
-            // 账号不存在
+            // Tài khoản không tồn tại
             if (!$accountInfo) {
-                $this->authFail('账号不存在');
+                $this->authFail('Tài khoản không tồn tại');
                 return;
             }
 
-            // 验证密码
+            // Xác thực mật khẩu
             if (!password_verify($password, $accountInfo['appsecret'])) {
-                $this->authFail('密码验证失败');
+                $this->authFail('Xác minh mật khẩu thất bại');
                 return;
             }
 
-            // 检查账号状态（status=0 或 status=2 表示禁用）
+            // Kiểm tra trạng thái tài khoản (status=0 hoặc status=2 nghĩa là đã bị vô hiệu hóa)
             if ($accountInfo['status'] == 0 || $accountInfo['status'] == 2) {
-                $this->authFail('账号已被禁用');
+                $this->authFail('Tài khoản đã bị vô hiệu hóa');
                 return;
             }
 
-            // 认证成功，设置账号信息
+            // Xác thực thành công, thiết lập thông tin tài khoản
             $this->outId = (int)$accountInfo['id'];
             $this->outInfo = $accountInfo;
 
-            // 验证接口权限（参考 AuthTokenMiddleware）
+            // Xác thực quyền truy cập API (tham khảo AuthTokenMiddleware)
             // $this->verifyAuth();
 
         } catch (\crmeb\exceptions\AuthException $e) {
-            // AuthException 转换为友好错误
-            $this->authFail('您暂时没有访问权限');
+            // Chuyển AuthException thành thông báo lỗi thân thiện
+            $this->authFail('Bạn tạm thời không có quyền truy cập');
         } catch (\Exception $e) {
-            // 不暴露具体错误信息
-            $this->authFail('认证失败');
+            // Không để lộ thông tin lỗi cụ thể
+            $this->authFail('Xác thực thất bại');
         }
     }
 
     /**
-     * 验证接口权限
-     * 参考 AuthTokenMiddleware 的 verifyAuth 逻辑
-     * MCP 接口需要进行路由权限检查
+     * Xác thực quyền truy cập API
+     * Tham khảo logic verifyAuth của AuthTokenMiddleware
+     * API MCP cần kiểm tra quyền theo route
      */
     private function verifyAuth()
     {
         try {
-            // 注入 outId 和 outInfo 到 request（模拟中间件的行为）
+            // Đưa outId và outInfo vào request (mô phỏng hành vi của middleware)
             $outInfo = $this->outInfo;
             $this->request->macro('outId', function () use (&$outInfo) {
                 return (int)$outInfo['id'];
@@ -104,22 +104,22 @@ class Mcp extends AuthController
                 return $outInfo;
             });
 
-            // 调用接口权限验证服务
+            // Gọi service xác thực quyền truy cập API
             $outInterfaceServices = app()->make(\app\services\out\OutInterfaceServices::class);
             $outInterfaceServices->verifyAuth($this->request);
 
         } catch (\crmeb\exceptions\AuthException $e) {
-            // 权限验证失败，抛出友好的错误信息
-            throw new \crmeb\exceptions\AuthException(110000); // 无权限访问
+            // Xác thực quyền thất bại, ném ra thông báo lỗi thân thiện
+            throw new \crmeb\exceptions\AuthException(110000); // Không có quyền truy cập
         } catch (\Exception $e) {
-            // 其他异常，统一返回无权限
+            // Các ngoại lệ khác đều trả về không có quyền
             throw new \crmeb\exceptions\AuthException(110000);
         }
     }
 
     /**
-     * 认证失败处理
-     * 设置错误标识，在 index 方法中返回错误响应
+     * Xử lý khi xác thực thất bại
+     * Đặt cờ lỗi, phản hồi lỗi sẽ được trả về trong phương thức index
      */
     private function authFail(string $message)
     {
@@ -128,159 +128,159 @@ class Mcp extends AuthController
     }
 
     /**
-     * 获取MCP工具定义列表
-     * 定义所有可供AI助手调用的工具及其参数结构
+     * Lấy danh sách định nghĩa công cụ MCP
+     * Định nghĩa tất cả công cụ mà trợ lý AI có thể gọi cùng cấu trúc tham số của chúng
      *
-     * @return array 工具定义数组
+     * @return array Mảng định nghĩa công cụ
      */
     private function getTools(): array
     {
         return [
-            // 分类管理
+            // Quản lý danh mục
             [
                 'name' => 'crmeb_category_list',
-                'description' => '获取商品分类列表，支持树形结构展示',
+                'description' => 'Lấy danh sách danh mục sản phẩm, hỗ trợ hiển thị dạng cây',
                 'inputSchema' => [
                     'type' => 'object',
                     'properties' => [
-                        'page' => ['type' => 'number', 'description' => '页码（非树形模式时有效）'],
-                        'limit' => ['type' => 'number', 'description' => '每页数量（非树形模式时有效）'],
-                        'tree' => ['type' => 'boolean', 'description' => '是否返回树形结构，默认为true'],
-                        'pid' => ['type' => 'number', 'description' => '父级ID，指定则只返回该父级下的分类'],
+                        'page' => ['type' => 'number', 'description' => 'Số trang (có hiệu lực khi không ở chế độ cây)'],
+                        'limit' => ['type' => 'number', 'description' => 'Số lượng mỗi trang (có hiệu lực khi không ở chế độ cây)'],
+                        'tree' => ['type' => 'boolean', 'description' => 'Có trả về cấu trúc cây hay không, mặc định là true'],
+                        'pid' => ['type' => 'number', 'description' => 'ID cấp cha, nếu chỉ định thì chỉ trả về các danh mục thuộc cấp cha đó'],
                     ],
                 ],
             ],
             [
                 'name' => 'crmeb_category_detail',
-                'description' => '获取分类详情',
+                'description' => 'Lấy chi tiết danh mục',
                 'inputSchema' => [
                     'type' => 'object',
                     'properties' => [
-                        'id' => ['type' => 'number', 'description' => '分类ID'],
+                        'id' => ['type' => 'number', 'description' => 'ID danh mục'],
                     ],
                     'required' => ['id'],
                 ],
             ],
 
-            // 商品管理
+            // Quản lý sản phẩm
             [
                 'name' => 'crmeb_product_list',
-                'description' => '获取商品列表',
+                'description' => 'Lấy danh sách sản phẩm',
                 'inputSchema' => [
                     'type' => 'object',
                     'properties' => [
-                        'page' => ['type' => 'number', 'description' => '页码'],
-                        'limit' => ['type' => 'number', 'description' => '每页数量'],
-                        'cate_id' => ['type' => 'number', 'description' => '分类ID'],
-                        'keyword' => ['type' => 'string', 'description' => '搜索关键词'],
-                        'stock_min' => ['type' => 'number', 'description' => '最小库存'],
-                        'stock_max' => ['type' => 'number', 'description' => '最大库存'],
+                        'page' => ['type' => 'number', 'description' => 'Số trang'],
+                        'limit' => ['type' => 'number', 'description' => 'Số lượng mỗi trang'],
+                        'cate_id' => ['type' => 'number', 'description' => 'ID danh mục'],
+                        'keyword' => ['type' => 'string', 'description' => 'Từ khóa tìm kiếm'],
+                        'stock_min' => ['type' => 'number', 'description' => 'Tồn kho tối thiểu'],
+                        'stock_max' => ['type' => 'number', 'description' => 'Tồn kho tối đa'],
                     ],
                 ],
             ],
             [
                 'name' => 'crmeb_product_detail',
-                'description' => '获取商品详情',
+                'description' => 'Lấy chi tiết sản phẩm',
                 'inputSchema' => [
                     'type' => 'object',
                     'properties' => [
-                        'id' => ['type' => 'number', 'description' => '商品ID'],
+                        'id' => ['type' => 'number', 'description' => 'ID sản phẩm'],
                     ],
                     'required' => ['id'],
                 ],
             ],
 
-            // 订单管理
+            // Quản lý đơn hàng
             [
                 'name' => 'crmeb_order_list',
-                'description' => '获取订单列表',
+                'description' => 'Lấy danh sách đơn hàng',
                 'inputSchema' => [
                     'type' => 'object',
                     'properties' => [
-                        'page' => ['type' => 'number', 'description' => '页码'],
-                        'limit' => ['type' => 'number', 'description' => '每页数量'],
-                        'status' => ['type' => 'number', 'description' => '订单状态'],
-                        'keyword' => ['type' => 'string', 'description' => '搜索关键词'],
+                        'page' => ['type' => 'number', 'description' => 'Số trang'],
+                        'limit' => ['type' => 'number', 'description' => 'Số lượng mỗi trang'],
+                        'status' => ['type' => 'number', 'description' => 'Trạng thái đơn hàng'],
+                        'keyword' => ['type' => 'string', 'description' => 'Từ khóa tìm kiếm'],
                     ],
                 ],
             ],
             [
                 'name' => 'crmeb_order_detail',
-                'description' => '获取订单详情',
+                'description' => 'Lấy chi tiết đơn hàng',
                 'inputSchema' => [
                     'type' => 'object',
                     'properties' => [
-                        'order_id' => ['type' => 'string', 'description' => '订单号'],
+                        'order_id' => ['type' => 'string', 'description' => 'Mã đơn hàng'],
                     ],
                     'required' => ['order_id'],
                 ],
             ],
             [
                 'name' => 'crmeb_order_express_list',
-                'description' => '获取物流公司列表',
+                'description' => 'Lấy danh sách đơn vị vận chuyển',
                 'inputSchema' => [
                     'type' => 'object',
                     'properties' => new \stdClass(),
                 ],
             ],
 
-            // 售后管理
+            // Quản lý hậu mãi
             [
                 'name' => 'crmeb_refund_list',
-                'description' => '获取售后订单列表',
+                'description' => 'Lấy danh sách đơn hậu mãi',
                 'inputSchema' => [
                     'type' => 'object',
                     'properties' => [
-                        'page' => ['type' => 'number', 'description' => '页码'],
-                        'limit' => ['type' => 'number', 'description' => '每页数量'],
+                        'page' => ['type' => 'number', 'description' => 'Số trang'],
+                        'limit' => ['type' => 'number', 'description' => 'Số lượng mỗi trang'],
                     ],
                 ],
             ],
             [
                 'name' => 'crmeb_refund_detail',
-                'description' => '获取售后订单详情',
+                'description' => 'Lấy chi tiết đơn đổi trả',
                 'inputSchema' => [
                     'type' => 'object',
                     'properties' => [
-                        'order_id' => ['type' => 'string', 'description' => '售后订单号'],
+                        'order_id' => ['type' => 'string', 'description' => 'Mã đơn đổi trả'],
                     ],
                     'required' => ['order_id'],
                 ],
             ],
 
-            // 优惠券管理
+            // Quản lý phiếu giảm giá
             [
                 'name' => 'crmeb_coupon_list',
-                'description' => '获取优惠券列表',
+                'description' => 'Lấy danh sách phiếu giảm giá',
                 'inputSchema' => [
                     'type' => 'object',
                     'properties' => [
-                        'page' => ['type' => 'number', 'description' => '页码'],
-                        'limit' => ['type' => 'number', 'description' => '每页数量'],
+                        'page' => ['type' => 'number', 'description' => 'Số trang'],
+                        'limit' => ['type' => 'number', 'description' => 'Số lượng mỗi trang'],
                     ],
                 ],
             ],
 
-            // 用户管理
+            // Quản lý người dùng
             [
                 'name' => 'crmeb_user_list',
-                'description' => '获取用户列表',
+                'description' => 'Lấy danh sách người dùng',
                 'inputSchema' => [
                     'type' => 'object',
                     'properties' => [
-                        'page' => ['type' => 'number', 'description' => '页码'],
-                        'limit' => ['type' => 'number', 'description' => '每页数量'],
-                        'keyword' => ['type' => 'string', 'description' => '搜索关键词'],
+                        'page' => ['type' => 'number', 'description' => 'Số trang'],
+                        'limit' => ['type' => 'number', 'description' => 'Số lượng mỗi trang'],
+                        'keyword' => ['type' => 'string', 'description' => 'Từ khóa tìm kiếm'],
                     ],
                 ],
             ],
             [
                 'name' => 'crmeb_user_detail',
-                'description' => '获取用户详情',
+                'description' => 'Lấy chi tiết người dùng',
                 'inputSchema' => [
                     'type' => 'object',
                     'properties' => [
-                        'uid' => ['type' => 'number', 'description' => '用户ID'],
+                        'uid' => ['type' => 'number', 'description' => 'ID người dùng'],
                     ],
                     'required' => ['uid'],
                 ],
@@ -289,101 +289,101 @@ class Mcp extends AuthController
     }
 
     /**
-     * 处理工具调用
-     * 根据工具名称分发到对应的处理方法
+     * Xử lý lời gọi công cụ
+     * Phân phối đến phương thức xử lý tương ứng theo tên công cụ
      *
-     * @param string $name 工具名称
-     * @param array $args 工具参数
-     * @return array 处理结果
-     * @throws \Exception 未知工具或参数错误时抛出异常
+     * @param string $name Tên công cụ
+     * @param array $args Tham số công cụ
+     * @return array Kết quả xử lý
+     * @throws \Exception Ném ngoại lệ khi công cụ không xác định hoặc tham số sai
      */
     private function handleToolCall(string $name, array $args = [])
     {
         switch ($name) {
-            // 分类管理
+            // Quản lý danh mục
             case 'crmeb_category_list':
                 return $this->categoryList($args);
             case 'crmeb_category_detail':
                 if (!isset($args['id']) || !is_numeric($args['id'])) {
-                    throw new \Exception('参数错误：缺少 id 或格式不正确');
+                    throw new \Exception('Tham số không hợp lệ: thiếu id hoặc sai định dạng');
                 }
                 return $this->categoryDetail((int)$args['id']);
 
-            // 商品管理
+            // Quản lý sản phẩm
             case 'crmeb_product_list':
                 return $this->productList($args);
             case 'crmeb_product_detail':
                 if (!isset($args['id']) || !is_numeric($args['id'])) {
-                    throw new \Exception('参数错误：缺少 id 或格式不正确');
+                    throw new \Exception('Tham số không hợp lệ: thiếu id hoặc sai định dạng');
                 }
                 return $this->productDetail((int)$args['id']);
 
-            // 订单管理
+            // Quản lý đơn hàng
             case 'crmeb_order_list':
                 return $this->orderList($args);
             case 'crmeb_order_detail':
                 if (empty($args['order_id'])) {
-                    throw new \Exception('参数错误：缺少 order_id');
+                    throw new \Exception('Tham số không hợp lệ: thiếu order_id');
                 }
                 return $this->orderDetail($args['order_id']);
             case 'crmeb_order_express_list':
                 return $this->orderExpressList();
 
-            // 售后管理
+            // Quản lý hậu mãi
             case 'crmeb_refund_list':
                 return $this->refundList($args);
             case 'crmeb_refund_detail':
                 if (empty($args['order_id'])) {
-                    throw new \Exception('参数错误：缺少 order_id');
+                    throw new \Exception('Tham số không hợp lệ: thiếu order_id');
                 }
                 return $this->refundDetail($args['order_id']);
 
-            // 优惠券管理
+            // Quản lý phiếu giảm giá
             case 'crmeb_coupon_list':
                 return $this->couponList($args);
 
-            // 用户管理
+            // Quản lý người dùng
             case 'crmeb_user_list':
                 return $this->userList($args);
             case 'crmeb_user_detail':
                 if (!isset($args['uid']) || !is_numeric($args['uid'])) {
-                    throw new \Exception('参数错误：缺少 uid 或格式不正确');
+                    throw new \Exception('Tham số không hợp lệ: thiếu uid hoặc sai định dạng');
                 }
                 return $this->userDetail((int)$args['uid']);
 
             default:
-                throw new \Exception("未知工具: {$name}");
+                throw new \Exception("Công cụ không xác định: {$name}");
         }
     }
 
-    // ==================== 分类管理 ====================
+    // ==================== Quản lý danh mục ====================
 
     /**
-     * 获取商品分类列表
+     * Lấy danh sách danh mục sản phẩm
      *
-     * @param array $args 查询参数
-     *   - page: 页码，默认1（非树形模式时有效）
-     *   - limit: 每页数量，默认10，最大100（非树形模式时有效）
-     *   - tree: 是否返回树形结构，默认false
-     *   - pid: 父级ID，指定则只返回该父级下的分类
-     * @return array 分类列表和总数
+     * @param array $args Tham số truy vấn
+     *   - page: số trang, mặc định 1 (có hiệu lực khi không ở chế độ cây)
+     *   - limit: số lượng mỗi trang, mặc định 10, tối đa 100 (có hiệu lực khi không ở chế độ cây)
+     *   - tree: có trả về cấu trúc cây không, mặc định false
+     *   - pid: ID cấp cha, nếu chỉ định thì chỉ trả về các danh mục thuộc cấp cha đó
+     * @return array Danh sách danh mục và tổng số
      */
     private function categoryList(array $args): array
     {
         $page = max(1, (int)($args['page'] ?? 1));
-        $limit = min(100, max(1, (int)($args['limit'] ?? 10))); // 限制最大100
+        $limit = min(100, max(1, (int)($args['limit'] ?? 10))); // Giới hạn tối đa 100
         $isTree = $args['tree'] ?? true;
         $pid = $args['pid'] ?? null;
 
-        // 构建基础查询
+        // Xây dựng truy vấn cơ bản
         $query = Db::name('store_category')->where('is_show', 1);
 
-        // 如果指定了父级ID
+        // Nếu đã chỉ định ID cấp cha
         if ($pid !== null) {
             $query = $query->where('pid', $pid);
         }
 
-        // 树形模式：获取所有分类并构建树
+        // Chế độ cây: lấy tất cả danh mục và dựng cây
         if ($isTree) {
             $allList = Db::name('store_category')
                 ->where('is_show', 1)
@@ -391,18 +391,18 @@ class Mcp extends AuthController
                 ->select()
                 ->toArray();
 
-            // 如果有指定pid，从该节点开始构建树
+            // Nếu có chỉ định pid thì dựng cây bắt đầu từ node đó
             if ($pid !== null) {
                 $tree = $this->buildCategoryTree($allList, $pid);
                 return ['list' => $tree, 'count' => count($tree)];
             }
 
-            // 否则构建完整树（从根节点pid=0开始）
+            // Nếu không thì dựng cây đầy đủ (bắt đầu từ node gốc pid=0)
             $tree = $this->buildCategoryTree($allList, 0);
             return ['list' => $tree, 'count' => count($tree)];
         }
 
-        // 普通列表模式
+        // Chế độ danh sách thông thường
         $list = $query
             ->order('sort desc, id desc')
             ->page($page, $limit)
@@ -415,11 +415,11 @@ class Mcp extends AuthController
     }
 
     /**
-     * 构建分类树形结构
+     * Xây dựng cấu trúc cây danh mục
      *
-     * @param array $list 所有分类数据
-     * @param int $pid 父级ID
-     * @return array 树形结构
+     * @param array $list Toàn bộ dữ liệu danh mục
+     * @param int $pid ID cấp cha
+     * @return array Cấu trúc cây
      */
     private function buildCategoryTree(array $list, int $pid): array
     {
@@ -437,52 +437,52 @@ class Mcp extends AuthController
     }
 
     /**
-     * 获取分类详情
+     * Lấy chi tiết danh mục
      *
-     * @param int $id 分类ID
-     * @return array 分类详细信息
-     * @throws \Exception 分类不存在时抛出异常
+     * @param int $id ID danh mục
+     * @return array Thông tin chi tiết danh mục
+     * @throws \Exception Ném ngoại lệ khi danh mục không tồn tại
      */
     private function categoryDetail(int $id): array
     {
         $info = Db::name('store_category')->where('id', $id)->find();
         if (!$info) {
-            throw new \Exception('分类不存在');
+            throw new \Exception('Danh mục không tồn tại');
         }
         return $info;
     }
 
-    // ==================== 商品管理 ====================
+    // ==================== Quản lý sản phẩm ====================
 
     /**
-     * 获取商品列表
-     * 支持按分类、关键词、库存范围筛选
+     * Lấy danh sách sản phẩm
+     * Hỗ trợ lọc theo danh mục, từ khóa, khoảng tồn kho
      *
-     * @param array $args 查询参数
-     *   - page: 页码，默认1
-     *   - limit: 每页数量，默认10，最大100
-     *   - cate_id: 分类ID（可选）
-     *   - keyword: 搜索关键词（可选）
-     *   - stock_min: 最小库存（可选）
-     *   - stock_max: 最大库存（可选）
-     * @return array 商品列表和总数
+     * @param array $args Tham số truy vấn
+     *   - page: số trang, mặc định 1
+     *   - limit: số lượng mỗi trang, mặc định 10, tối đa 100
+     *   - cate_id: ID danh mục (tùy chọn)
+     *   - keyword: từ khóa tìm kiếm (tùy chọn)
+     *   - stock_min: tồn kho tối thiểu (tùy chọn)
+     *   - stock_max: tồn kho tối đa (tùy chọn)
+     * @return array Danh sách sản phẩm và tổng số
      */
     private function productList(array $args): array
     {
         $page = max(1, (int)($args['page'] ?? 1));
-        $limit = min(100, max(1, (int)($args['limit'] ?? 10))); // 限制最大100
+        $limit = min(100, max(1, (int)($args['limit'] ?? 10))); // Giới hạn tối đa 100
 
         $where = [['is_show', '=', 1]];
 
-        // 分类筛选：通过关联表查询
+        // Lọc theo danh mục: truy vấn qua bảng liên kết
         if (!empty($args['cate_id'])) {
             $cateId = (int)$args['cate_id'];
-            // 验证分类是否存在
+            // Kiểm tra danh mục có tồn tại không
             $categoryExists = Db::name('store_category')->where('id', $cateId)->where('is_show', 1)->count();
             if (!$categoryExists) {
-                throw new \Exception('分类不存在');
+                throw new \Exception('Danh mục không tồn tại');
             }
-            // 通过关联表查询商品ID
+            // Truy vấn ID sản phẩm qua bảng liên kết
             $productIds = Db::name('store_product_cate')
                 ->where('cate_id', $cateId)
                 ->column('product_id');
@@ -492,7 +492,7 @@ class Mcp extends AuthController
             $where[] = ['id', 'in', $productIds];
         }
 
-        // 关键词搜索：转义通配符防止注入
+        // Tìm kiếm theo từ khóa: escape ký tự đại diện để chống injection
         if (!empty($args['keyword'])) {
             $keyword = addcslashes($args['keyword'], '%_');
             $where[] = ['store_name', 'like', '%' . $keyword . '%'];
@@ -519,20 +519,20 @@ class Mcp extends AuthController
     }
 
     /**
-     * 获取商品详情
+     * Lấy chi tiết sản phẩm
      *
-     * @param int $id 商品ID
-     * @return array 商品详细信息（已过滤敏感字段）
-     * @throws \Exception 商品不存在时抛出异常
+     * @param int $id ID sản phẩm
+     * @return array Thông tin chi tiết sản phẩm (đã lọc các trường nhạy cảm)
+     * @throws \Exception Ném ngoại lệ khi sản phẩm không tồn tại
      */
     private function productDetail(int $id): array
     {
         $info = Db::name('store_product')->where('id', $id)->find();
         if (!$info) {
-            throw new \Exception('商品不存在');
+            throw new \Exception('Sản phẩm không tồn tại');
         }
 
-        // 过滤敏感字段，只返回必要信息
+        // Lọc các trường nhạy cảm, chỉ trả về thông tin cần thiết
         return [
             'id' => $info['id'],
             'store_name' => $info['store_name'] ?? '',
@@ -548,29 +548,29 @@ class Mcp extends AuthController
         ];
     }
 
-    // ==================== 订单管理 ====================
+    // ==================== Quản lý đơn hàng ====================
 
     /**
-     * 获取订单列表
-     * 支持按状态和关键词筛选
+     * Lấy danh sách đơn hàng
+     * Hỗ trợ lọc theo trạng thái và từ khóa
      *
-     * @param array $args 查询参数
-     *   - page: 页码，默认1
-     *   - limit: 每页数量，默认10，最大100
-     *   - status: 订单状态（可选）
-     *   - keyword: 搜索关键词，匹配订单号/姓名/手机号（可选）
-     * @return array 订单列表和总数
+     * @param array $args Tham số truy vấn
+     *   - page: số trang, mặc định 1
+     *   - limit: số lượng mỗi trang, mặc định 10, tối đa 100
+     *   - status: trạng thái đơn hàng (tùy chọn)
+     *   - keyword: từ khóa tìm kiếm, khớp theo mã đơn hàng/họ tên/số điện thoại (tùy chọn)
+     * @return array Danh sách đơn hàng và tổng số
      */
     private function orderList(array $args): array
     {
         $page = max(1, (int)($args['page'] ?? 1));
-        $limit = min(100, max(1, (int)($args['limit'] ?? 10))); // 限制最大100
+        $limit = min(100, max(1, (int)($args['limit'] ?? 10))); // Giới hạn tối đa 100
 
         $where = [['is_del', '=', 0]];
         if (isset($args['status'])) {
             $where[] = ['status', '=', (int)$args['status']];
         }
-        // 关键词搜索：转义通配符防止注入
+        // Tìm kiếm theo từ khóa: escape ký tự đại diện để chống injection
         if (!empty($args['keyword'])) {
             $keyword = addcslashes($args['keyword'], '%_');
             $where[] = ['order_id|real_name|user_phone', 'like', '%' . $keyword . '%'];
@@ -590,20 +590,20 @@ class Mcp extends AuthController
     }
 
     /**
-     * 获取订单详情
+     * Lấy chi tiết đơn hàng
      *
-     * @param string $orderId 订单号
-     * @return array 订单详细信息（已过滤敏感字段）
-     * @throws \Exception 订单不存在时抛出异常
+     * @param string $orderId Mã đơn hàng
+     * @return array Thông tin chi tiết đơn hàng (đã lọc các trường nhạy cảm)
+     * @throws \Exception Ném ngoại lệ khi đơn hàng không tồn tại
      */
     private function orderDetail(string $orderId): array
     {
         $info = Db::name('store_order')->where('order_id', $orderId)->find();
         if (!$info) {
-            throw new \Exception('订单不存在');
+            throw new \Exception('Đơn hàng không tồn tại');
         }
 
-        // 过滤敏感字段，只返回必要信息
+        // Lọc các trường nhạy cảm, chỉ trả về thông tin cần thiết
         return [
             'id' => $info['id'],
             'order_id' => $info['order_id'],
@@ -625,10 +625,10 @@ class Mcp extends AuthController
     }
 
     /**
-     * 获取物流公司列表
-     * 返回所有启用的快递公司信息
+     * Lấy danh sách đơn vị vận chuyển
+     * Trả về thông tin tất cả đơn vị vận chuyển đang bật
      *
-     * @return array 物流公司列表
+     * @return array Danh sách đơn vị vận chuyển
      */
     private function orderExpressList(): array
     {
@@ -636,21 +636,21 @@ class Mcp extends AuthController
         return ['list' => $list];
     }
 
-    // ==================== 售后管理 ====================
+    // ==================== Quản lý hậu mãi ====================
 
     /**
-     * 获取售后订单列表
-     * 返回所有有退款状态的订单
+     * Lấy danh sách đơn hậu mãi
+     * Trả về tất cả đơn hàng có trạng thái hoàn tiền
      *
-     * @param array $args 查询参数
-     *   - page: 页码，默认1
-     *   - limit: 每页数量，默认10，最大100
-     * @return array 售后订单列表和总数
+     * @param array $args Tham số truy vấn
+     *   - page: số trang, mặc định 1
+     *   - limit: số lượng mỗi trang, mặc định 10, tối đa 100
+     * @return array Danh sách đơn hàng hậu mãi và tổng số
      */
     private function refundList(array $args): array
     {
         $page = max(1, (int)($args['page'] ?? 1));
-        $limit = min(100, max(1, (int)($args['limit'] ?? 10))); // 限制最大100
+        $limit = min(100, max(1, (int)($args['limit'] ?? 10))); // Giới hạn tối đa 100
 
         $list = Db::name('store_order')
             ->where('refund_status', '>', 0)
@@ -666,11 +666,11 @@ class Mcp extends AuthController
     }
 
     /**
-     * 获取售后订单详情
+     * Lấy chi tiết đơn đổi trả
      *
-     * @param string $orderId 售后订单号
-     * @return array 售后订单详细信息（已过滤敏感字段）
-     * @throws \Exception 售后订单不存在时抛出异常
+     * @param string $orderId Mã đơn đổi trả
+     * @return array Thông tin chi tiết đơn hàng hậu mãi (đã lọc các trường nhạy cảm)
+     * @throws \Exception Ném ngoại lệ khi đơn hàng hậu mãi không tồn tại
      */
     private function refundDetail(string $orderId): array
     {
@@ -679,10 +679,10 @@ class Mcp extends AuthController
             ->where('refund_status', '>', 0)
             ->find();
         if (!$info) {
-            throw new \Exception('售后订单不存在');
+            throw new \Exception('Đơn đổi trả không tồn tại');
         }
 
-        // 过滤敏感字段，只返回必要信息
+        // Lọc các trường nhạy cảm, chỉ trả về thông tin cần thiết
         return [
             'id' => $info['id'],
             'order_id' => $info['order_id'],
@@ -698,20 +698,20 @@ class Mcp extends AuthController
         ];
     }
 
-    // ==================== 优惠券管理 ====================
+    // ==================== Quản lý phiếu giảm giá ====================
 
     /**
-     * 获取优惠券列表
+     * Lấy danh sách phiếu giảm giá
      *
-     * @param array $args 查询参数
-     *   - page: 页码，默认1
-     *   - limit: 每页数量，默认10，最大100
-     * @return array 优惠券列表和总数
+     * @param array $args Tham số truy vấn
+     *   - page: số trang, mặc định 1
+     *   - limit: số lượng mỗi trang, mặc định 10, tối đa 100
+     * @return array Danh sách phiếu giảm giá và tổng số
      */
     private function couponList(array $args): array
     {
         $page = max(1, (int)($args['page'] ?? 1));
-        $limit = min(100, max(1, (int)($args['limit'] ?? 10))); // 限制最大100
+        $limit = min(100, max(1, (int)($args['limit'] ?? 10))); // Giới hạn tối đa 100
 
         $list = Db::name('store_coupon_issue')
             ->where('is_del', 0)
@@ -726,25 +726,25 @@ class Mcp extends AuthController
         return ['list' => $list, 'count' => $count];
     }
 
-    // ==================== 用户管理 ====================
+    // ==================== Quản lý người dùng ====================
 
     /**
-     * 获取用户列表
-     * 支持按昵称或手机号搜索
+     * Lấy danh sách người dùng
+     * Hỗ trợ tìm kiếm theo biệt danh hoặc số điện thoại
      *
-     * @param array $args 查询参数
-     *   - page: 页码，默认1
-     *   - limit: 每页数量，默认10，最大100
-     *   - keyword: 搜索关键词，匹配昵称/手机号（可选）
-     * @return array 用户列表和总数
+     * @param array $args Tham số truy vấn
+     *   - page: số trang, mặc định 1
+     *   - limit: số lượng mỗi trang, mặc định 10, tối đa 100
+     *   - keyword: từ khóa tìm kiếm, khớp theo biệt danh/số điện thoại (tùy chọn)
+     * @return array Danh sách người dùng và tổng số
      */
     private function userList(array $args): array
     {
         $page = max(1, (int)($args['page'] ?? 1));
-        $limit = min(100, max(1, (int)($args['limit'] ?? 10))); // 限制最大100
+        $limit = min(100, max(1, (int)($args['limit'] ?? 10))); // Giới hạn tối đa 100
 
         $where = [];
-        // 关键词搜索：转义通配符防止注入
+        // Tìm kiếm theo từ khóa: escape ký tự đại diện để chống injection
         if (!empty($args['keyword'])) {
             $keyword = addcslashes($args['keyword'], '%_');
             $where[] = ['nickname|phone', 'like', '%' . $keyword . '%'];
@@ -764,20 +764,20 @@ class Mcp extends AuthController
     }
 
     /**
-     * 获取用户详情
+     * Lấy chi tiết người dùng
      *
-     * @param int $uid 用户ID
-     * @return array 用户详细信息（已过滤敏感字段）
-     * @throws \Exception 用户不存在时抛出异常
+     * @param int $uid ID người dùng
+     * @return array Thông tin chi tiết người dùng (đã lọc các trường nhạy cảm)
+     * @throws \Exception Ném ngoại lệ khi người dùng không tồn tại
      */
     private function userDetail(int $uid): array
     {
         $info = Db::name('user')->where('uid', $uid)->find();
         if (!$info) {
-            throw new \Exception('用户不存在');
+            throw new \Exception('Người dùng không tồn tại');
         }
 
-        // 过滤敏感字段，只返回必要信息
+        // Lọc các trường nhạy cảm, chỉ trả về thông tin cần thiết
         return [
             'uid' => $info['uid'],
             'nickname' => $info['nickname'] ?? '',
@@ -791,17 +791,17 @@ class Mcp extends AuthController
         ];
     }
 
-    // ==================== MCP 接口 ====================
+    // ==================== API MCP ====================
 
     /**
-     * MCP 服务入口方法
-     * 处理所有 MCP 协议请求，包括：
-     * - initialize: 初始化连接，返回服务信息和能力
-     * - tools/list: 获取可用工具列表
-     * - tools/call: 调用指定工具执行操作
+     * Phương thức điểm vào của service MCP
+     * Xử lý tất cả request giao thức MCP, bao gồm:
+     * - initialize: Khởi tạo kết nối, trả về thông tin và capabilities của service
+     * - tools/list: Lấy danh sách công cụ khả dụng
+     * - tools/call: Gọi công cụ chỉ định để thực hiện thao tác
      *
-     * @param Request $request HTTP请求对象
-     * @return \think\response\Json JSON-RPC 2.0 格式响应
+     * @param Request $request Đối tượng HTTP request
+     * @return \think\response\Json JSON-RPC 2.0 phản hồi theo định dạng
      */
     public function index(Request $request)
     {
@@ -813,9 +813,9 @@ class Mcp extends AuthController
             return json(['jsonrpc' => '2.0', 'error' => ['code' => -32700, 'message' => 'Parse error'], 'id' => null]);
         }
 
-        // 认证检查
+        // Kiểm tra xác thực
         if (empty($this->outId)) {
-            $errorMsg = $this->outInfo['error'] ?? '认证失败';
+            $errorMsg = $this->outInfo['error'] ?? 'Xác thực thất bại';
             return json([
                 'jsonrpc' => '2.0',
                 'id' => $id,
@@ -876,13 +876,13 @@ class Mcp extends AuthController
                     ]);
             }
         } catch (\Exception $e) {
-            // 生产环境返回通用错误信息，避免泄露内部细节
+            // Môi trường production trả về thông báo lỗi chung, tránh lộ chi tiết nội bộ
             $errorMessage = $e->getMessage();
-            // 对于业务异常（如"商品不存在"），返回具体错误
-            // 对于系统异常（如SQL错误），返回通用错误
-            $safeErrors = ['商品不存在', '订单不存在', '售后订单不存在', '用户不存在', '分类不存在', '父分类不存在',
-                          '同级分类下已存在同名分类', '分类名称不能超过50个字符',
-                          '参数错误', '未知工具'];
+            // Với ngoại lệ nghiệp vụ (như "Sản phẩm không tồn tại"), trả về lỗi cụ thể
+            // Với ngoại lệ hệ thống (như lỗi SQL), trả về lỗi chung
+            $safeErrors = ['Sản phẩm không tồn tại', 'Đơn hàng không tồn tại', 'Đơn đổi trả không tồn tại', 'Người dùng không tồn tại', 'Danh mục không tồn tại', 'Danh mục cha không tồn tại',
+                          'Đã tồn tại danh mục cùng tên trong cùng cấp', 'Tên danh mục không được vượt quá 50 ký tự',
+                          'Tham số không hợp lệ', 'Công cụ không xác định'];
             $isSafeError = false;
             foreach ($safeErrors as $safeError) {
                 if (strpos($errorMessage, $safeError) !== false) {
@@ -894,7 +894,7 @@ class Mcp extends AuthController
             return json([
                 'jsonrpc' => '2.0',
                 'id' => $id,
-                'error' => ['code' => -32603, 'message' => $isSafeError ? $errorMessage : '服务器内部错误'],
+                'error' => ['code' => -32603, 'message' => $isSafeError ? $errorMessage : 'Lỗi máy chủ nội bộ'],
             ]);
         }
     }

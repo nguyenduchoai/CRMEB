@@ -1,33 +1,33 @@
 # CRMEB MCP Server
 
-基于 Model Context Protocol (MCP) 的 CRMEB API 工具服务器，已集成到 CRMEB outapi 模块中，允许 AI 助手通过标准协议调用 CRMEB 对外开放接口。
+Máy chủ công cụ CRMEB API dựa trên Model Context Protocol (MCP), đã được tích hợp vào mô-đun outapi của CRMEB, cho phép trợ lý AI gọi các API mở của CRMEB thông qua giao thức chuẩn.
 
-## 功能特性
+## Tính năng
 
-- 🔗 集成到 CRMEB outapi 模块，无需额外部署
-- 📦 商品管理（列表、详情、创建）
-- 📂 分类管理（列表、详情、创建）
-- 🛒 订单管理（列表、详情、发货）
-- 💰 售后管理（列表、详情、同意/拒绝退款）
-- 🎫 优惠券管理
-- 👥 用户管理（列表、详情、赠送余额/积分）
+- 🔗 Tích hợp vào mô-đun outapi của CRMEB, không cần triển khai thêm
+- 📦 Quản lý sản phẩm (danh sách, chi tiết, tạo mới)
+- 📂 Quản lý danh mục (danh sách, chi tiết, tạo mới)
+- 🛒 Quản lý đơn hàng (danh sách, chi tiết, giao hàng)
+- 💰 Quản lý hậu mãi (danh sách, chi tiết, đồng ý/từ chối hoàn tiền)
+- 🎫 Quản lý phiếu giảm giá
+- 👥 Quản lý người dùng (danh sách, chi tiết, tặng số dư/điểm thưởng)
 
-## 环境要求
+## Yêu cầu môi trường
 
-- CRMEB 系统
+- Hệ thống CRMEB
 - PHP >= 7.4
 
-## 快速开始
+## Bắt đầu nhanh
 
-### 1. 创建开放接口账号
+### 1. Tạo tài khoản API mở
 
-1. 登录 CRMEB 管理后台
-2. 进入 **设置** -> **系统设置** -> **开放接口**
-3. 创建应用获取账号和密码
+1. Đăng nhập trang quản trị CRMEB
+2. Vào **Cài đặt** -> **Cài đặt hệ thống** -> **API mở**
+3. Tạo ứng dụng để lấy tài khoản và mật khẩu
 
-### 2. 配置到 Claude Desktop
+### 2. Cấu hình trong Claude Desktop
 
-编辑配置文件：
+Chỉnh sửa tệp cấu hình:
 
 **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
 **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
@@ -48,7 +48,7 @@
 }
 ```
 
-**配置示例（演示环境）：**
+**Ví dụ cấu hình (môi trường demo):**
 ```json
 {
   "mcpServers": {
@@ -65,9 +65,9 @@
 }
 ```
 
-### 3. 配置到 Cursor
+### 3. Cấu hình trong Cursor
 
-在 Cursor 设置中添加：
+Thêm vào phần cài đặt của Cursor:
 
 ```json
 {
@@ -85,31 +85,31 @@
 }
 ```
 
-**参数说明：**
+**Mô tả tham số:**
 
-| 参数 | 说明 | 获取方式 |
+| Tham số | Mô tả | Cách nhận |
 |------|------|---------|
-| `url` | CRMEB MCP 接口地址 | 固定值：`http://域名/outapi/mcp` |
-| `account` | 开放接口账号 | CRMEB 后台 -> 设置 -> 开放接口 |
-| `password` | 开放接口密码 | CRMEB 后台 -> 设置 -> 开放接口 |
-| `disabled` | 是否禁用该服务 | 可选，默认为 false |
+| `url` | Địa chỉ API MCP của CRMEB | Giá trị cố định: `http://ten-mien-cua-ban/outapi/mcp` |
+| `account` | Tài khoản API mở | Trang quản trị CRMEB -> Cài đặt -> API mở |
+| `password` | Mật khẩu API mở | Trang quản trị CRMEB -> Cài đặt -> API mở |
+| `disabled` | Có vô hiệu hóa dịch vụ này hay không | Tùy chọn, mặc định là false |
 
-> 注意：直接配置 account 和 password 即可，系统会自动完成认证
+> Lưu ý: chỉ cần cấu hình trực tiếp account và password, hệ thống sẽ tự động hoàn tất xác thực
 
-## 支持的 MCP 客户端应用
+## Các ứng dụng MCP client được hỗ trợ
 
-以下是目前主流的支持 MCP 协议的应用程序，您可以在这些应用中配置和使用 CRMEB MCP 服务。
+Dưới đây là các ứng dụng phổ biến hiện nay có hỗ trợ giao thức MCP, bạn có thể cấu hình và sử dụng dịch vụ CRMEB MCP trong các ứng dụng này.
 
 ### 1. Claude Desktop
 
-Anthropic 官方桌面应用，首个原生支持 MCP 的客户端。
+Ứng dụng desktop chính thức của Anthropic, client đầu tiên hỗ trợ MCP một cách nguyên bản (native).
 
-**配置步骤：**
-1. 下载并安装 [Claude Desktop](https://claude.ai/download)
-2. 找到配置文件：
+**Các bước cấu hình:**
+1. Tải xuống và cài đặt [Claude Desktop](https://claude.ai/download)
+2. Tìm tệp cấu hình:
    - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
    - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
-3. 添加 CRMEB MCP 配置：
+3. Thêm cấu hình CRMEB MCP:
 ```json
 {
   "mcpServers": {
@@ -125,22 +125,22 @@ Anthropic 官方桌面应用，首个原生支持 MCP 的客户端。
   }
 }
 ```
-4. 重启 Claude Desktop
+4. Khởi động lại Claude Desktop
 
-**使用方法：**
-在对话中直接询问，例如：
+**Cách sử dụng:**
+Hỏi trực tiếp trong cuộc trò chuyện, ví dụ:
 ```
-帮我查询 CRMEB 中的商品分类列表
+Giúp tôi tra cứu danh sách danh mục sản phẩm trong CRMEB
 ```
 
 ### 2. Cursor
 
-AI 驱动的代码编辑器，内置 MCP 支持。
+Trình soạn thảo mã nguồn vận hành bằng AI, tích hợp sẵn hỗ trợ MCP.
 
-**配置步骤：**
-1. 下载并安装 [Cursor](https://cursor.sh/)
-2. 打开设置（Settings -> Features -> Model Context Protocol）
-3. 添加 MCP 服务器配置：
+**Các bước cấu hình:**
+1. Tải xuống và cài đặt [Cursor](https://cursor.sh/)
+2. Mở phần cài đặt (Settings -> Features -> Model Context Protocol)
+3. Thêm cấu hình máy chủ MCP:
 ```json
 {
   "mcp.servers": {
@@ -156,25 +156,25 @@ AI 驱动的代码编辑器，内置 MCP 支持。
   }
 }
 ```
-4. 或者直接编辑配置文件：
+4. Hoặc chỉnh sửa trực tiếp tệp cấu hình:
    - **macOS/Linux**: `~/.cursor/mcp.json`
    - **Windows**: `%APPDATA%\Cursor\mcp.json`
 
-**使用方法：**
-在 Cursor 的 AI 聊天窗口中直接使用：
+**Cách sử dụng:**
+Sử dụng trực tiếp trong cửa sổ chat AI của Cursor:
 ```
-查询 CRMEB 中的订单列表
+Tra cứu danh sách đơn hàng trong CRMEB
 ```
 
-### 3. Cline (VS Code 扩展)
+### 3. Cline (tiện ích mở rộng VS Code)
 
-VS Code 中的自主 AI 编程助手扩展。
+Tiện ích mở rộng trợ lý lập trình AI tự hành (autonomous) trong VS Code.
 
-**配置步骤：**
-1. 在 VS Code 中安装 [Cline 扩展](https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev)
-2. 打开 VS Code 设置
-3. 搜索 "Cline MCP" 或在 Cline 面板中找到 MCP 配置
-4. 添加 MCP 服务器：
+**Các bước cấu hình:**
+1. Trong VS Code, cài đặt [tiện ích mở rộng Cline](https://marketplace.visualstudio.com/items?itemName=saoudrizwan.claude-dev)
+2. Mở phần cài đặt VS Code
+3. Tìm kiếm "Cline MCP" hoặc tìm phần cấu hình MCP trong bảng điều khiển Cline
+4. Thêm máy chủ MCP:
 ```json
 {
   "mcpServers": {
@@ -191,20 +191,20 @@ VS Code 中的自主 AI 编程助手扩展。
 }
 ```
 
-**使用方法：**
-在 Cline 面板中输入指令：
+**Cách sử dụng:**
+Nhập lệnh trong bảng điều khiển Cline:
 ```
-获取 CRMEB 商品 ID 为 1 的详情
+Lấy chi tiết sản phẩm CRMEB có ID là 1
 ```
 
 ### 4. Windsurf
 
-Codeium 推出的 AI 原生 IDE。
+IDE thuần AI (AI-native) do Codeium ra mắt.
 
-**配置步骤：**
-1. 下载并安装 [Windsurf](https://codeium.com/windsurf)
-2. 打开设置 -> Developer Settings -> MCP Servers
-3. 添加配置：
+**Các bước cấu hình:**
+1. Tải xuống và cài đặt [Windsurf](https://codeium.com/windsurf)
+2. Mở phần cài đặt -> Developer Settings -> MCP Servers
+3. Thêm cấu hình:
 ```json
 {
   "mcpServers": {
@@ -220,16 +220,16 @@ Codeium 推出的 AI 原生 IDE。
 }
 ```
 
-### 5. Continue (VS Code/JetBrains 扩展)
+### 5. Continue (tiện ích mở rộng VS Code/JetBrains)
 
-开源的 AI 代码助手扩展。
+Tiện ích mở rộng trợ lý viết mã AI mã nguồn mở.
 
-**配置步骤：**
-1. 安装 Continue 扩展
+**Các bước cấu hình:**
+1. Cài đặt tiện ích mở rộng Continue
    - [VS Code](https://marketplace.visualstudio.com/items?itemName=Continue.continue)
    - [JetBrains](https://plugins.jetbrains.com/plugin/22707-continue)
-2. 打开 Continue 配置文件（`~/.continue/config.json`）
-3. 添加 MCP 配置：
+2. Mở tệp cấu hình của Continue (`~/.continue/config.json`)
+3. Thêm cấu hình MCP:
 ```json
 {
   "models": [...],
@@ -248,12 +248,12 @@ Codeium 推出的 AI 原生 IDE。
 
 ### 6. Zed
 
-高性能代码编辑器，支持 MCP 协议。
+Trình soạn thảo mã hiệu năng cao, hỗ trợ giao thức MCP.
 
-**配置步骤：**
-1. 下载并安装 [Zed](https://zed.dev/)
-2. 打开配置文件（`~/.zed/settings.json`）
-3. 添加 MCP 服务器配置：
+**Các bước cấu hình:**
+1. Tải xuống và cài đặt [Zed](https://zed.dev/)
+2. Mở tệp cấu hình (`~/.zed/settings.json`)
+3. Thêm cấu hình máy chủ MCP:
 ```json
 {
   "mcp_servers": {
@@ -269,126 +269,126 @@ Codeium 推出的 AI 原生 IDE。
 }
 ```
 
-### 7. 其他支持 MCP 的应用
+### 7. Các ứng dụng khác hỗ trợ MCP
 
-以下应用也在逐步支持 MCP 协议：
+Các ứng dụng sau cũng đang dần hỗ trợ giao thức MCP:
 
-- **Codeium**：AI 代码补全工具
-- **Tabnine**：AI 代码助手
-- **Sourcegraph Cody**：代码智能助手
+- **Codeium**: Công cụ tự động hoàn thành mã bằng AI
+- **Tabnine**: Trợ lý viết mã AI
+- **Sourcegraph Cody**: Trợ lý mã nguồn thông minh
 
-> 💡 **提示**：MCP 是一个开放协议，越来越多的 AI 应用正在支持。如果您的应用支持 MCP，通常可以在设置中找到 MCP 或 Model Context Protocol 相关配置项。
+> 💡 **Mẹo**: MCP là một giao thức mở, ngày càng có nhiều ứng dụng AI hỗ trợ. Nếu ứng dụng của bạn hỗ trợ MCP, thông thường bạn có thể tìm thấy các mục cấu hình liên quan đến MCP hoặc Model Context Protocol trong phần cài đặt.
 
-## 可用工具
+## Công cụ khả dụng
 
-### 分类管理
+### Quản lý danh mục
 
-| 工具名称 | 描述 | 必需参数 | 可选参数 |
+| Tên công cụ | Mô tả | Tham số bắt buộc | Tham số tùy chọn |
 |---------|------|---------|---------|
-| `crmeb_category_list` | 获取分类列表 | - | page, limit |
-| `crmeb_category_detail` | 获取分类详情 | id | - |
-| `crmeb_category_create` | 创建分类 | name | pid, sort |
+| `crmeb_category_list` | Lấy danh sách danh mục | - | page, limit |
+| `crmeb_category_detail` | Lấy chi tiết danh mục | id | - |
+| `crmeb_category_create` | Tạo danh mục | name | pid, sort |
 
-### 商品管理
+### Quản lý sản phẩm
 
-| 工具名称 | 描述 | 必需参数 | 可选参数 |
+| Tên công cụ | Mô tả | Tham số bắt buộc | Tham số tùy chọn |
 |---------|------|---------|---------|
-| `crmeb_product_list` | 获取商品列表 | - | page, limit, cate_id, keyword, stock_min, stock_max |
-| `crmeb_product_detail` | 获取商品详情 | id | - |
-| `crmeb_product_create` | 创建商品 | name, cate_id, price, stock | image, unit |
+| `crmeb_product_list` | Lấy danh sách sản phẩm | - | page, limit, cate_id, keyword, stock_min, stock_max |
+| `crmeb_product_detail` | Lấy chi tiết sản phẩm | id | - |
+| `crmeb_product_create` | Tạo sản phẩm | name, cate_id, price, stock | image, unit |
 
-### 订单管理
+### Quản lý đơn hàng
 
-| 工具名称 | 描述 | 必需参数 | 可选参数 |
+| Tên công cụ | Mô tả | Tham số bắt buộc | Tham số tùy chọn |
 |---------|------|---------|---------|
-| `crmeb_order_list` | 获取订单列表 | - | page, limit, status, keyword |
-| `crmeb_order_detail` | 获取订单详情 | order_id | - |
-| `crmeb_order_delivery` | 订单发货 | order_id, delivery_type | delivery_name, delivery_id |
-| `crmeb_order_express_list` | 获取物流公司列表 | - | - |
+| `crmeb_order_list` | Lấy danh sách đơn hàng | - | page, limit, status, keyword |
+| `crmeb_order_detail` | Lấy chi tiết đơn hàng | order_id | - |
+| `crmeb_order_delivery` | Giao đơn hàng | order_id, delivery_type | delivery_name, delivery_id |
+| `crmeb_order_express_list` | Lấy danh sách đơn vị vận chuyển | - | - |
 
-### 售后管理
+### Quản lý hậu mãi
 
-| 工具名称 | 描述 | 必需参数 | 可选参数 |
+| Tên công cụ | Mô tả | Tham số bắt buộc | Tham số tùy chọn |
 |---------|------|---------|---------|
-| `crmeb_refund_list` | 获取售后列表 | - | page, limit |
-| `crmeb_refund_detail` | 获取售后详情 | order_id | - |
-| `crmeb_refund_agree` | 同意退款 | order_id | - |
-| `crmeb_refund_refuse` | 拒绝退款 | order_id, refuse_reason | - |
+| `crmeb_refund_list` | Lấy danh sách đơn hậu mãi | - | page, limit |
+| `crmeb_refund_detail` | Lấy chi tiết đơn hậu mãi | order_id | - |
+| `crmeb_refund_agree` | Đồng ý hoàn tiền | order_id | - |
+| `crmeb_refund_refuse` | Từ chối hoàn tiền | order_id, refuse_reason | - |
 
-### 优惠券管理
+### Quản lý phiếu giảm giá
 
-| 工具名称 | 描述 | 必需参数 | 可选参数 |
+| Tên công cụ | Mô tả | Tham số bắt buộc | Tham số tùy chọn |
 |---------|------|---------|---------|
-| `crmeb_coupon_list` | 获取优惠券列表 | - | page, limit |
+| `crmeb_coupon_list` | Lấy danh sách phiếu giảm giá | - | page, limit |
 
-### 用户管理
+### Quản lý người dùng
 
-| 工具名称 | 描述 | 必需参数 | 可选参数 |
+| Tên công cụ | Mô tả | Tham số bắt buộc | Tham số tùy chọn |
 |---------|------|---------|---------|
-| `crmeb_user_list` | 获取用户列表 | - | page, limit, keyword |
-| `crmeb_user_detail` | 获取用户详情 | uid | - |
-| `crmeb_user_give_balance` | 赠送余额 | uid, balance | title |
-| `crmeb_user_give_point` | 赠送积分 | uid, point | title |
+| `crmeb_user_list` | Lấy danh sách người dùng | - | page, limit, keyword |
+| `crmeb_user_detail` | Lấy chi tiết người dùng | uid | - |
+| `crmeb_user_give_balance` | Tặng số dư | uid, balance | title |
+| `crmeb_user_give_point` | Tặng điểm thưởng | uid, point | title |
 
-## 使用示例
+## Ví dụ sử dụng
 
-在 Claude 或 Cursor 中，您可以这样使用：
-
-```
-帮我查询 CRMEB 中的商品列表
-```
+Trong Claude hoặc Cursor, bạn có thể sử dụng như sau:
 
 ```
-创建一个新商品：名称"测试商品"，分类ID 1，价格 99.00，库存 100
+Giúp tôi tra cứu danh sách sản phẩm trong CRMEB
 ```
 
 ```
-查询订单号 202403130001 的详情
+Tạo một sản phẩm mới: tên"Sản phẩm thử nghiệm"，ID danh mục 1, giá 99.00, tồn kho 100
 ```
 
 ```
-给用户 ID 为 1 的用户赠送 100 积分
+Tra cứu chi tiết mã đơn hàng 202403130001
 ```
 
-## 接口测试
+```
+Tặng 100 điểm thưởng cho người dùng có ID là 1
+```
+
+## Kiểm thử API
 
 ```bash
-# 测试 MCP 初始化
+# Kiểm thử khởi tạo MCP
 curl -X POST "http://localhost:8011/outapi/mcp" \
   -H "Content-Type: application/json" \
   -H "account: your_account" \
   -H "password: your_password" \
   -d '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{}}'
 
-# 获取工具列表
+# Lấy danh sách công cụ
 curl -X POST "http://localhost:8011/outapi/mcp" \
   -H "Content-Type: application/json" \
   -H "account: your_account" \
   -H "password: your_password" \
   -d '{"jsonrpc":"2.0","id":2,"method":"tools/list","params":{}}'
 
-# 调用工具 - 获取商品列表
+# Gọi công cụ - Lấy danh sách sản phẩm
 curl -X POST "http://localhost:8011/outapi/mcp" \
   -H "Content-Type: application/json" \
   -H "account: your_account" \
   -H "password: your_password" \
   -d '{"jsonrpc":"2.0","id":3,"method":"tools/call","params":{"name":"crmeb_product_list","arguments":{"page":1,"limit":10}}}'
 
-# 调用工具 - 创建分类
+# Gọi công cụ - Tạo danh mục
 curl -X POST "http://localhost:8011/outapi/mcp" \
   -H "Content-Type: application/json" \
   -H "account: your_account" \
   -H "password: your_password" \
-  -d '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"crmeb_category_create","arguments":{"name":"新分类","sort":100}}}'
+  -d '{"jsonrpc":"2.0","id":4,"method":"tools/call","params":{"name":"crmeb_category_create","arguments":{"name":"Danh mục mới","sort":100}}}'
 
-# 调用工具 - 查询库存大于500的商品
+# Gọi công cụ - Tra cứu sản phẩm có tồn kho lớn hơn 500
 curl -X POST "http://localhost:8011/outapi/mcp" \
   -H "Content-Type: application/json" \
   -H "account: your_account" \
   -H "password: your_password" \
   -d '{"jsonrpc":"2.0","id":5,"method":"tools/call","params":{"name":"crmeb_product_list","arguments":{"stock_min":500}}}'
 
-# 使用演示环境测试
+# Kiểm thử bằng môi trường demo
 curl -X POST "https://v5.crmeb.net/outapi/mcp" \
   -H "Content-Type: application/json" \
   -H "account: ceshi" \
@@ -396,50 +396,50 @@ curl -X POST "https://v5.crmeb.net/outapi/mcp" \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"crmeb_category_list","arguments":{}}}'
 ```
 
-## 项目结构
+## Cấu trúc dự án
 
 ```
 crmeb/app/outapi/
 ├── controller/
-│   ├── Mcp.php              # MCP 控制器
-│   ├── Login.php            # 认证控制器
-│   ├── StoreProduct.php     # 商品控制器
-│   ├── StoreCategory.php    # 分类控制器
-│   ├── StoreOrder.php       # 订单控制器
-│   ├── RefundOrder.php      # 售后控制器
-│   ├── StoreCoupon.php      # 优惠券控制器
-│   ├── User.php             # 用户控制器
+│   ├── Mcp.php              # MCP Controller
+│   ├── Login.php            # Controller xác thực
+│   ├── StoreProduct.php     # Controller sản phẩm
+│   ├── StoreCategory.php    # Controller danh mục
+│   ├── StoreOrder.php       # Controller đơn hàng
+│   ├── RefundOrder.php      # Controller đổi trả
+│   ├── StoreCoupon.php      # Controller phiếu giảm giá
+│   ├── User.php             # Controller người dùng
 │   └── ...
 ├── route/
-│   └── route.php            # 路由配置
+│   └── route.php            # Cấu hình route
 ├── middleware/
 │   └── AuthTokenMiddleware.php
-├── mcp.md                   # 本文档
-└── README.md                # outapi 模块说明
+├── mcp.md                   # Tài liệu này
+└── README.md                # outapi mô tả module
 ```
 
-## 协议说明
+## Mô tả giao thức
 
-### MCP 协议版本
+### Phiên bản giao thức MCP
 
-- 支持版本：`2024-11-05`
+- Phiên bản hỗ trợ: `2024-11-05`
 
-### JSON-RPC 2.0 格式
+### Định dạng JSON-RPC 2.0
 
-**请求格式：**
+**Định dạng yêu cầu:**
 ```json
 {
   "jsonrpc": "2.0",
   "id": 1,
   "method": "tools/call",
   "params": {
-    "name": "工具名称",
-    "arguments": { "参数": "值" }
+    "name": "Tên công cụ",
+    "arguments": { "Tham số": "Giá trị" }
   }
 }
 ```
 
-**成功响应：**
+**Phản hồi thành công:**
 ```json
 {
   "jsonrpc": "2.0",
@@ -448,35 +448,35 @@ crmeb/app/outapi/
     "content": [
       {
         "type": "text",
-        "text": "{...结果数据...}"
+        "text": "{...Dữ liệu kết quả...}"
       }
     ]
   }
 }
 ```
 
-**错误响应：**
+**Phản hồi lỗi:**
 ```json
 {
   "jsonrpc": "2.0",
   "id": 1,
   "error": {
     "code": -32603,
-    "message": "错误信息"
+    "message": "Thông tin lỗi"
   }
 }
 ```
 
-## 错误码说明
+## Mô tả mã lỗi
 
-| 错误码 | 说明 |
+| Mã lỗi | Mô tả |
 |-------|------|
-| -32700 | JSON 解析错误 |
-| -32600 | 请求无效（认证失败等） |
-| -32601 | 方法不存在 |
-| -32603 | 内部错误 |
+| -32700 | Lỗi phân tích JSON |
+| -32600 | Yêu cầu không hợp lệ (xác thực thất bại, v.v.) |
+| -32601 | phương thức không tồn tại |
+| -32603 | Lỗi nội bộ |
 
-## 相关链接
+## Liên kết liên quan
 
-- [Model Context Protocol 文档](https://modelcontextprotocol.io/)
-- [CRMEB 开放接口](./README.md)
+- [Tài liệu Model Context Protocol](https://modelcontextprotocol.io/)
+- [API mở của CRMEB](./README.md)

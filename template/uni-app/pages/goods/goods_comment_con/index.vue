@@ -22,10 +22,10 @@
 								class='iconfont'
 								:class="item.index >= indexn? 'icon-shitixing font-num':'icon-kongxinxing'"></text>
 						</view>
-						<text class='evaluate'>{{item.index === -1 ? "" : item.index + 1 + $t(`星`)}}</text>
+						<text class='evaluate'>{{item.index === -1 ? "" : item.index + 1 + $t(`sao`)}}</text>
 					</view>
 					<view class='textarea'>
-						<textarea :placeholder='$t(`商品满足你的期待么？说说你的想法，分享给想买的他们吧`)' name="comment"
+						<textarea :placeholder='$t(`Sản phẩm có đáp ứng mong đợi của bạn không? Hãy chia sẻ cảm nhận của bạn cho những người đang muốn mua nhé`)' name="comment"
 							placeholder-class='placeholder'></textarea>
 						<view class='list acea-row row-middle'>
 							<view class='pictrue' v-for="(item,index) in pics" :key="index">
@@ -35,11 +35,11 @@
 							<view class='pictrue acea-row row-center-wrapper row-column' @click='uploadpic'
 								v-if="pics.length < 8">
 								<text class='iconfont icon-icon25201'></text>
-								<view>{{$t(`上传图片`)}}</view>
+								<view>{{$t(`Tải lên ảnh`)}}</view>
 							</view>
 						</view>
 					</view>
-					<button class='evaluateBnt bg-color' formType="submit">{{$t(`立即评价`)}}</button>
+					<button class='evaluateBnt bg-color' formType="submit">{{$t(`Đánh giá ngay`)}}</button>
 				</view>
 			</view>
 		</form>
@@ -77,12 +77,12 @@
 			return {
 				pics: [],
 				scoreList: [{
-						name: this.$t(`商品质量`),
+						name: this.$t(`Chất lượng sản phẩm`),
 						stars: ["", "", "", "", ""],
 						index: -1
 					},
 					{
-						name: this.$t(`服务态度`),
+						name: this.$t(`Thái độ phục vụ`),
 						stars: ["", "", "", "", ""],
 						index: -1
 					}
@@ -91,8 +91,8 @@
 				unique: '',
 				productInfo: {},
 				cart_num: 0,
-				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false, //是否隐藏授权
+				isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+				isShowAuth: false, //Có ẩn ủy quyền hay không
 				canvasWidth: "",
 				canvasHeight: "",
 				canvasStatus: false
@@ -111,7 +111,7 @@
 		},
 		onLoad(options) {
 			if (!options.unique || !options.uni) return this.$util.Tips({
-				title: this.$t(`缺少参数`)
+				title: this.$t(`Thiếu tham số`)
 			}, {
 				tab: 3,
 				url: 1
@@ -128,12 +128,12 @@
 			onLoadFun() {
 				this.getOrderProduct();
 			},
-			// 授权关闭
+			// Đóng ủy quyền
 			authColse: function(e) {
 				this.isShowAuth = e
 			},
 			/**
-			 * 获取某个产品详情
+			 * Lấy chi tiết một sản phẩm nào đó
 			 * 
 			 */
 			getOrderProduct: function() {
@@ -147,7 +147,7 @@
 				this.scoreList[indexw].index = indexn;
 			},
 			/**
-			 * 删除图片
+			 * Xóa ảnh
 			 * 
 			 */
 			DelPic: function(index) {
@@ -158,7 +158,7 @@
 			},
 
 			/**
-			 * 上传文件
+			 * Tải lên file
 			 * 
 			 */
 			uploadpic: function() {
@@ -175,7 +175,7 @@
 			},
 
 			/**
-			 * 立即评价
+			 * Đánh giá ngay
 			 */
 			formSubmit(e) {
 				let formId = e.detail.formId,
@@ -184,14 +184,14 @@
 					product_score = that.scoreList[0].index + 1 === 0 ? "" : that.scoreList[0].index + 1,
 					service_score = that.scoreList[1].index + 1 === 0 ? "" : that.scoreList[1].index + 1;
 				if (!value.comment) return that.$util.Tips({
-					title: that.$t(`请填写你对宝贝的心得`)
+					title: that.$t(`Vui lòng nhập cảm nhận của bạn về sản phẩm`)
 				});
 				value.product_score = product_score;
 				value.service_score = service_score;
 				value.pics = that.pics;
 				value.unique = that.unique;
 				uni.showLoading({
-					title: that.$t(`正在发布评论`)
+					title: that.$t(`Đang đăng đánh giá`)
 				});
 				orderComment(value).then(res => {
 					uni.hideLoading();
@@ -199,12 +199,12 @@
 						let jumpPath = '/pages/goods/goods_comment_con/lottery_comment?type=4&order_id=' + that
 							.orderId + '&date=' + Date.parse(new Date())
 						that.$util.Tips({
-							title: that.$t(`感谢您的评价`),
+							title: that.$t(`Cảm ơn bạn đã đánh giá`),
 							icon: 'success'
 						}, jumpPath);
 					} else {
 						that.$util.Tips({
-							title: that.$t(`感谢您的评价`),
+							title: that.$t(`Cảm ơn bạn đã đánh giá`),
 							icon: 'success'
 						})
 						setTimeout(e => {

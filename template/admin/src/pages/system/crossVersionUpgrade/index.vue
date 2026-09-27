@@ -1,31 +1,31 @@
 <template>
   <div class="cross-version-upgrade">
-    <!-- 功能 Tabs -->
+    <!-- Tabs chức năng -->
     <el-card :bordered="false" shadow="never" class="ivu-mt">
       <el-tabs v-model="currentTab" @tab-click="handleTabClick">
-        <el-tab-pane label="系统升级" name="upgrade"></el-tab-pane>
-        <el-tab-pane label="升级记录" name="logs"></el-tab-pane>
+        <el-tab-pane label="Nâng cấp hệ thống" name="upgrade"></el-tab-pane>
+        <el-tab-pane label="Lịch sử nâng cấp" name="logs"></el-tab-pane>
       </el-tabs>
 
-      <!-- 系统升级 Tab -->
+      <!-- Tab nâng cấp hệ thống -->
       <div v-if="currentTab === 'upgrade'">
         <div v-if="showUpgradeComplete" class="new-version-summary">
           <div class="summary-header">
             <span class="summary-icon-wrap">
               <img src="@/assets/images/new.png" class="summary-icon-img" alt="upgrade" />
             </span>
-            <div class="summary-title">版本升级完成</div>
+            <div class="summary-title">Nâng cấp phiên bản hoàn tất</div>
             <div class="summary-sub">
-              请上传小程序代码至微信服务器，完成后需在小程序后台发布，
-              <a href="https://mp.weixin.qq.com" target="_blank" style="color: #409eff">点击发布</a>
+              Vui lòng tải mã Mini Program lên máy chủ WeChat, sau khi hoàn tất cần phát hành trong trang quản trị Mini Program,
+              <a href="https://mp.weixin.qq.com" target="_blank" style="color: #409eff">Nhấn để phát hành</a>
             </div>
             <div class="summary-actions">
-              <el-button type="primary" @click="handleUploadMini" :loading="uploadingMini">上传小程序</el-button>
-              <el-button class="ml8" @click="handleRefreshStatus">暂不上传</el-button>
+              <el-button type="primary" @click="handleUploadMini" :loading="uploadingMini">Tải lên Mini Program</el-button>
+              <el-button class="ml8" @click="handleRefreshStatus">Tạm thời chưa tải lên</el-button>
             </div>
           </div>
         </div>
-        <!-- 发现新版本摘要（status = 1） -->
+        <!-- Tóm tắt phát hiện phiên bản mới (status = 1) -->
         <div
           v-if="remoteStatus.status === 1 && downloadStage === 'idle' && !showUpgradeComplete"
           class="new-version-summary"
@@ -35,31 +35,30 @@
               <img src="@/assets/images/upgrade.png" class="summary-icon-img" alt="upgrade" />
             </span>
             <div class="summary-title">
-              发现新版本
+              Có phiên bản mới
               <span v-if="upgradeablePackage">
                 v{{ upgradeablePackage.first_version }}.{{ upgradeablePackage.second_version }}.{{
                   upgradeablePackage.third_version
                 }}
               </span>
             </div>
-            <div class="summary-sub">发现可升级的新版本，点击立即升级</div>
+            <div class="summary-sub">Phát hiện phiên bản mới có thể nâng cấp, nhấn để nâng cấp ngay</div>
             <div class="summary-actions">
               <el-button type="primary" @click="startDownload" :disabled="startingDownload" :loading="startingDownload"
-                >立即升级</el-button
+                >Nâng cấp ngay</el-button
               >
               <el-button class="ml8 check-update-btn" @click="checkRemoteUpdate" :loading="checkingRemote"
-                >检测更新</el-button
+                >Kiểm tra cập nhật</el-button
               >
             </div>
           </div>
           <div v-if="upgradeablePackage" class="summary-content">
             <div class="content-title">
-              V{{ upgradeablePackage.first_version }}.{{ upgradeablePackage.second_version }}.{{
+              Nội dung cập nhật V{{ upgradeablePackage.first_version }}.{{ upgradeablePackage.second_version }}.{{
                 upgradeablePackage.third_version
               }}
-              更新说明
               <span class="release-time" v-if="upgradeablePackage.release_time"
-                >更新日期：{{ upgradeablePackage.release_time }}</span
+                >Ngày cập nhật: {{ upgradeablePackage.release_time }}</span
               >
             </div>
             <div class="content-desc" v-html="upgradeablePackage.content"></div>
@@ -74,25 +73,25 @@
             <span class="summary-icon-wrap">
               <img src="@/assets/images/new.png" class="summary-icon-img" alt="upgrade" />
             </span>
-            <div class="summary-title">当前版本 {{ versionInfo.current_version_main || '-' }}</div>
-            <div class="summary-sub">当前版本号为 {{ versionInfo.current_version || '-' }}</div>
+            <div class="summary-title">Phiên bản hiện tại {{ versionInfo.current_version_main || '-' }}</div>
+            <div class="summary-sub">Số phiên bản hiện tại là {{ versionInfo.current_version || '-' }}</div>
             <div class="summary-actions">
               <el-button class="check-update-btn" @click="checkRemoteUpdate" :loading="checkingRemote"
-                >检测更新</el-button
+                >Kiểm tra cập nhật</el-button
               >
             </div>
           </div>
         </div>
 
-        <!-- 升级进度展示 -->
+        <!-- Hiển thị tiến trình nâng cấp -->
         <div v-if="downloadStage !== 'idle' && !this.showUpgradeComplete" class="upgrade-section">
           <div class="section-title">
-            升级进度
-            <el-button type="text" class="ml8" @click="handleRefreshStatus">刷新状态</el-button>
+            Tiến trình nâng cấp
+            <el-button type="text" class="ml8" @click="handleRefreshStatus">Làm mới trạng thái</el-button>
           </div>
-          <!-- 顶部进度条（加粗蓝色） -->
+          <!-- Thanh tiến trình trên cùng (màu xanh dương, nét dày) -->
           <el-progress :percentage="downloadProgress" :show-text="false" :stroke-width="10" class="progress-line" />
-          <!-- 分段状态行 -->
+          <!-- Hàng trạng thái theo từng giai đoạn -->
           <div class="progress-status-row">
             <div class="status-item">
               <i
@@ -112,7 +111,7 @@
                     ? 'status-ok'
                     : 'status-muted'
                 "
-                >检测</span
+                >Kiểm tra</span
               >
             </div>
             <div class="status-item">
@@ -133,7 +132,7 @@
                     ? 'status-ok'
                     : 'status-muted'
                 "
-                >备份</span
+                >Sao lưu</span
               >
             </div>
             <div class="status-item">
@@ -154,7 +153,7 @@
                     ? 'status-ok'
                     : 'status-muted'
                 "
-                >下载</span
+                >Tải xuống</span
               >
             </div>
             <div class="status-item">
@@ -175,94 +174,94 @@
                     ? 'status-ok'
                     : 'status-muted'
                 "
-                >{{ downloadType === 4 ? '完成' : '更新中' }}</span
+                >{{ downloadType === 4 ? 'Hoàn thành' : 'Đang cập nhật' }}</span
               >
             </div>
             <!-- <div class="status-item">
               <span
                 :class="downloadType === 4 ? 'status-ok' : downloadStage === 'error' ? 'status-error' : 'status-muted'"
-                >{{ downloadType === 4 ? '完成' : '更新中' }}</span
+                >{{ downloadType === 4 ? 'Hoàn thành' : 'Đang cập nhật' }}</span
               >
             </div> -->
           </div>
           <div class="mt10 download-msg">{{ downloadMessage }}</div>
         </div>
-        <!-- 文件校验失败提示 -->
+        <!-- Thông báo kiểm tra tệp thất bại -->
         <div class="upgrade-section" v-if="downloadType >= 0 && downloadSteps[0].status !== 'loading' && !this.showUpgradeComplete">
           <div class="section-title">
             <span class="step-num">1</span>
-            <span>检测</span>
+            <span>Kiểm tra</span>
           </div>
           <template v-if="downloadSteps[0].status === 'error'">
             <div class="check-error-box mt16">
               <div class="check-error-desc">
-                {{ downloadSteps[0].message || '您的系统功能做了修改，导致升级失败' }}
+                {{ downloadSteps[0].message || 'Chức năng hệ thống của bạn đã bị chỉnh sửa, dẫn đến nâng cấp thất bại' }}
               </div>
             </div>
-            <!-- 变更文件列表 -->
+            <!-- Danh sách tệp thay đổi -->
             <div v-if="normalizedCheckErrorFiles.length && downloadType === 0" class="mt16">
               <div class="error-files-table-wrap">
                 <el-table :data="normalizedCheckErrorFiles" size="small" class="error-files-table" :max-height="325">
-                  <el-table-column type="index" label="序号" width="120"></el-table-column>
-                  <el-table-column prop="path" label="文件路径" min-width="360" show-overflow-tooltip></el-table-column>
+                  <el-table-column type="index" label="STT" width="120"></el-table-column>
+                  <el-table-column prop="path" label="Đường dẫn tệp" min-width="360" show-overflow-tooltip></el-table-column>
                 </el-table>
               </div>
             </div>
             <div class="check-error-actions mt10" v-if="downloadType === 0">
-              <el-button size="small" type="primary" @click="cancelUpgrade">取消升级</el-button>
-              <el-button size="small" class="ml8" @click="ignoreAndProceed(0)">忽略并执行</el-button>
+              <el-button size="small" type="primary" @click="cancelUpgrade">Hủy nâng cấp</el-button>
+              <el-button size="small" class="ml8" @click="ignoreAndProceed(0)">Bỏ qua và tiếp tục</el-button>
             </div>
           </template>
-          <div v-else class="check-success-box mt16">{{ downloadSteps[0].message || '检测完成' }}</div>
+          <div v-else class="check-success-box mt16">{{ downloadSteps[0].message || 'Kiểm tra hoàn tất' }}</div>
         </div>
-        <!-- 步骤2: 备份 -->
+        <!-- Bước 2: sao lưu -->
         <div class="upgrade-section" v-if="downloadType >= 1 && downloadSteps[1].status !== 'loading' && !this.showUpgradeComplete">
           <div class="section-title">
             <span class="step-num">2</span>
-            <span>备份</span>
+            <span>Sao lưu</span>
           </div>
           <div v-if="downloadSteps[1].status === 'success'" class="check-success-box mt16">
-            {{ downloadSteps[1].message || '数据库备份完成' }}
+            {{ downloadSteps[1].message || 'Sao lưu cơ sở dữ liệu hoàn tất' }}
           </div>
           <template v-else>
             <div class="check-error-box mt16">
               <div class="check-error-desc">
-                {{ downloadSteps[1].message || '数据库备份失败' }}
+                {{ downloadSteps[1].message || 'Sao lưu cơ sở dữ liệu thất bại' }}
               </div>
             </div>
             <div class="check-error-actions mt10">
-              <el-button size="small" type="primary" @click="cancelUpgrade">取消升级</el-button>
-              <el-button size="small" class="ml8" @click="ignoreAndProceed(1)">忽略并执行</el-button>
-              <el-button size="small" class="ml8" @click="reExecuteUpgrade">重新备份</el-button>
+              <el-button size="small" type="primary" @click="cancelUpgrade">Hủy nâng cấp</el-button>
+              <el-button size="small" class="ml8" @click="ignoreAndProceed(1)">Bỏ qua và tiếp tục</el-button>
+              <el-button size="small" class="ml8" @click="reExecuteUpgrade">Sao lưu lại</el-button>
             </div>
           </template>
         </div>
-        <!-- 步骤3: 执行数据库升级 -->
+        <!-- Bước 3: thực thi nâng cấp cơ sở dữ liệu -->
         <div class="upgrade-section" v-if="downloadType >= 2 && downloadSteps[2].status !== 'loading' && !this.showUpgradeComplete">
           <div class="section-title">
             <span class="step-num">3</span>
-            <span>下载更新</span>
+            <span>Tải bản cập nhật</span>
           </div>
-          <div class="check-success-box mt16">{{ downloadSteps[2].message || '更新文件下载完成' }}</div>
+          <div class="check-success-box mt16">{{ downloadSteps[2].message || 'Đã tải xong tệp cập nhật' }}</div>
         </div>
         <div
           class="upgrade-section"
           v-if="sqlExecutionLogs.length > 0 && downloadType >= 3 && downloadSteps[3].status !== 'loading' && !this.showUpgradeComplete"
         >
-          <!-- 升级进度详情 -->
+          <!-- Chi tiết tiến trình nâng cấp -->
           <template>
             <div class="section-title">
               <span class="step-num">4</span>
-              <span>执行数据库升级</span>
+              <span>Thực hiện nâng cấp cơ sở dữ liệu</span>
             </div>
             <div class="upgrade-progress-detail">
-              <!-- SQL执行详情 -->
+              <!-- Chi tiết thực thi SQL -->
               <div class="sql-execution-logs">
                 <div class="logs-header">
-                  <span>SQL执行详情</span>
-                  <el-tag size="mini" type="success">成功: {{ sqlSuccessCount }}</el-tag>
-                  <el-tag size="mini" type="danger" v-if="sqlFailedCount > 0">失败: {{ sqlFailedCount }}</el-tag>
-                  <el-tag size="mini" type="info" v-if="sqlSkippedCount > 0">跳过: {{ sqlSkippedCount }}</el-tag>
+                  <span>Chi tiết thực thi SQL</span>
+                  <el-tag size="mini" type="success">Thành công: {{ sqlSuccessCount }}</el-tag>
+                  <el-tag size="mini" type="danger" v-if="sqlFailedCount > 0">Thất bại: {{ sqlFailedCount }}</el-tag>
+                  <el-tag size="mini" type="info" v-if="sqlSkippedCount > 0">Bỏ qua: {{ sqlSkippedCount }}</el-tag>
                 </div>
                 <div class="logs-content">
                   <div
@@ -284,25 +283,25 @@
                       size="mini"
                       :type="log.status === 'success' ? 'success' : log.status === 'failed' ? 'danger' : 'info'"
                     >
-                      {{ log.status === 'success' ? '成功' : log.status === 'failed' ? '失败' : '跳过' }}
+                      {{ log.status === 'success' ? 'Thành công' : log.status === 'failed' ? 'Thất bại' : 'Bỏ qua' }}
                     </el-tag>
                     <span v-if="log.message" class="log-message">{{ log.message }}</span>
                   </div>
                 </div>
               </div>
 
-              <!-- 升级结果 -->
+              <!-- Kết quả nâng cấp -->
               <div class="upgrade-result">
                 <el-alert
-                  :title="sqlFailedCount === 0 ? '升级成功' : '升级完成(有失败项)'"
+                  :title="sqlFailedCount === 0 ? 'Nâng cấp thành công' : 'Nâng cấp hoàn tất (có mục thất bại)'"
                   :type="sqlFailedCount === 0 ? 'success' : 'warning'"
                   :closable="false"
                   show-icon
                 >
                   <template slot="default">
-                    <span>执行成功: {{ sqlSuccessCount }} 条；</span>
-                    <span v-if="sqlFailedCount > 0"> 执行失败: {{ sqlFailedCount }} 条；</span>
-                    <span v-if="sqlSkippedCount > 0"> 跳过: {{ sqlSkippedCount }} 条；</span>
+                    <span>Thực thi thành công: {{ sqlSuccessCount }} câu lệnh;</span>
+                    <span v-if="sqlFailedCount > 0"> Thực thi thất bại: {{ sqlFailedCount }} câu lệnh;</span>
+                    <span v-if="sqlSkippedCount > 0"> Bỏ qua: {{ sqlSkippedCount }} câu lệnh;</span>
                   </template>
                 </el-alert>
               </div>
@@ -311,34 +310,34 @@
         </div>
       </div>
 
-      <!-- 升级记录 Tab -->
+      <!-- Tab lịch sử nâng cấp -->
       <div v-if="currentTab === 'logs'" class="upgrade-logs">
         <el-table :data="upgradeLogList" style="width: 100%" v-loading="loadingLogs">
-          <el-table-column prop="title" label="升级标题" min-width="120" show-overflow-tooltip />
-          <el-table-column label="版本" width="100">
+          <el-table-column prop="title" label="Tiêu đề nâng cấp" min-width="120" show-overflow-tooltip />
+          <el-table-column label="Phiên bản" width="100">
             <template slot-scope="scope">
               v{{ scope.row.first_version }}.{{ scope.row.second_version }}.{{ scope.row.third_version }}
             </template>
           </el-table-column>
-          <el-table-column prop="upgrade_time" label="升级时间" width="200" />
-          <el-table-column label="备份状态" min-width="150">
+          <el-table-column prop="upgrade_time" label="Thời gian nâng cấp" width="200" />
+          <el-table-column label="Trạng thái sao lưu" min-width="150">
             <template slot-scope="scope">
               <el-tag size="mini" :type="scope.row.file_status ? 'success' : 'danger'">
-                项目: {{ scope.row.file_status ? scope.row.package_link : '无' }}
+                Dự án: {{ scope.row.file_status ? scope.row.package_link : 'Không có' }}
               </el-tag><br/>
               <el-tag size="mini" :type="scope.row.data_status ? 'success' : 'danger'">
-                数据库: {{ scope.row.data_status ? scope.row.data_link : '无' }}
+                Cơ sở dữ liệu: {{ scope.row.data_status ? scope.row.data_link : 'Không có' }}
               </el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="content" label="更新内容" min-width="200" show-overflow-tooltip>
+          <el-table-column prop="content" label="Nội dung cập nhật" min-width="200" show-overflow-tooltip>
             <template slot-scope="scope">
               <span v-html="scope.row.content"></span>
             </template>
           </el-table-column>
         </el-table>
 
-        <!-- 分页 -->
+        <!-- Phân trang -->
         <div class="pagination-wrap" v-if="logsTotal > 0">
           <el-pagination
             @current-change="handleLogsPageChange"
@@ -352,10 +351,10 @@
       </div>
     </el-card>
 
-    <!-- 升级协议弹窗 -->
+    <!-- Hộp thoại thỏa thuận nâng cấp -->
     <el-dialog
       :visible.sync="agreementVisible"
-      title="系统升级协议"
+      title="Thỏa thuận nâng cấp hệ thống"
       width="800px"
       destroy-on-close
       :close-on-click-modal="false"
@@ -366,14 +365,14 @@
         <div v-html="agreementContent"></div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="agreementVisible = false">不同意</el-button>
-        <el-button type="primary" @click="doStartDownload" :loading="startingDownload">同意并升级</el-button>
+        <el-button @click="agreementVisible = false">Không đồng ý</el-button>
+        <el-button type="primary" @click="doStartDownload" :loading="startingDownload">Đồng ý và nâng cấp</el-button>
       </span>
     </el-dialog>
-    <!-- 页面本地蒙层，仅在本页显示 -->
+    <!-- Lớp phủ cục bộ của trang, chỉ hiển thị trên trang này -->
     <div v-if="agreementVisible" class="local-mask"></div>
 
-    <!-- 上传成功弹窗 -->
+    <!-- Hộp thoại tải lên thành công -->
     <el-dialog
       :visible.sync="uploadSuccessVisible"
       width="400px"
@@ -383,14 +382,14 @@
     >
       <div class="upload-success-content">
         <i class="el-icon-circle-check" style="font-size: 48px; color: #67c23a; margin-bottom: 16px"></i>
-        <div class="success-title">上传成功</div>
+        <div class="success-title">Tải lên thành công</div>
         <div class="success-desc">
-          已上传小程序代码至微信服务器，<a href="https://mp.weixin.qq.com" target="_blank" style="color: #409eff"
-            >点击发布</a
+          Đã tải mã Mini Program lên máy chủ WeChat,<a href="https://mp.weixin.qq.com" target="_blank" style="color: #409eff"
+            >Nhấn để phát hành</a
           >
         </div>
         <el-button type="primary" @click="handleUploadSuccessClose" style="margin-top: 24px; width: 120px"
-          >我知道了</el-button
+          >Tôi đã hiểu</el-button
         >
       </div>
     </el-dialog>
@@ -417,33 +416,33 @@ export default {
     return {
       currentTab: 'upgrade',
       versionInfo: {},
-      // 远程检测
+      // Kiểm tra từ xa
       checkingRemote: false,
       remoteStatus: {
-        status: -1, // -1未检测, 0无更新, 1有更新
+        status: -1, // -1 chưa kiểm tra, 0 không có bản cập nhật, 1 có bản cập nhật
         title: '',
         force_reminder: 0,
       },
-      upgradeablePackage: null, // 可升级包信息
-      // 下载状态
+      upgradeablePackage: null, // Thông tin gói có thể nâng cấp
+      // Trạng thái tải xuống
       startingDownload: false,
       downloadStage: 'idle', // idle，loading，error，success, complete
-      downloadType: -1, // 0:检测，1:备份，2:下载，3:更新
+      downloadType: -1, // 0: kiểm tra, 1: sao lưu, 2: tải xuống, 3: cập nhật
       downloadSteps: [
-        { status: 'loading', progress: 0, message: '', errorFiles: [] }, // 检测
-        { status: 'loading', progress: 0, message: '', errorFiles: [] }, // 备份
-        { status: 'loading', progress: 0, message: '', errorFiles: [] }, // 下载
-        { status: 'loading', progress: 0, message: '', errorFiles: [] }, // 升级
+        { status: 'loading', progress: 0, message: '', errorFiles: [] }, // Kiểm tra
+        { status: 'loading', progress: 0, message: '', errorFiles: [] }, // Sao lưu
+        { status: 'loading', progress: 0, message: '', errorFiles: [] }, // Tải xuống
+        { status: 'loading', progress: 0, message: '', errorFiles: [] }, // Nâng cấp
       ],
       downloadProgress: 0,
       downloadMessage: '',
       downloadTimer: null,
       checkErrorFiles: [],
-      mpVersionData: null, // 小程序版本数据
-      // 本地版本检测
+      mpVersionData: null, // Dữ liệu phiên bản Mini Program
+      // Kiểm tra phiên bản cục bộ
       localCheckResult: null,
       pendingSqlList: [],
-      // 数据库升级
+      // Nâng cấp cơ sở dữ liệu
       upgrading: false,
       upgradeProgress: 0,
       upgradeProgressStatus: '',
@@ -451,13 +450,13 @@ export default {
       sqlSuccessCount: 0,
       sqlFailedCount: 0,
       sqlSkippedCount: 0,
-      // 升级记录
+      // Lịch sử nâng cấp
       upgradeLogList: [],
       loadingLogs: false,
       logsPage: 1,
       logsLimit: 15,
       logsTotal: 0,
-      // 升级协议
+      // Thỏa thuận nâng cấp
       agreementVisible: false,
       agreementLoading: false,
       agreementContent: '',
@@ -490,20 +489,20 @@ export default {
     },
   },
   methods: {
-    // Tab 切换
+    // Chuyển Tab
     handleTabClick() {
       if (this.currentTab === 'logs') {
         this.loadUpgradeLogs();
       }
     },
 
-    // 页面初始化
+    // Khởi tạo trang
     async initPage() {
-      // 同时检测远程更新和本地版本
+      // Đồng thời kiểm tra bản cập nhật từ xa và phiên bản cục bộ
       await Promise.all([this.checkLocalVersion()]);
     },
 
-    // 检测远程更新
+    // Kiểm tra bản cập nhật từ xa
     async checkRemoteUpdate() {
       this.checkingRemote = true;
       try {
@@ -514,31 +513,31 @@ export default {
           force_reminder: res.data.force_reminder || 0,
         };
 
-        // 如果有更新，获取可升级包列表
+        // Nếu có bản cập nhật thì lấy danh sách gói có thể nâng cấp
         if (res.data.status === 1) {
           await this.loadUpgradeableList();
         }
       } catch (err) {
-        this.$message.error(err.msg || '检测远程更新失败');
+        this.$message.error(err.msg || 'Kiểm tra cập nhật từ xa thất bại');
       } finally {
         this.checkingRemote = false;
       }
     },
 
-    // 获取可升级包列表
+    // Lấy danh sách gói có thể nâng cấp
     async loadUpgradeableList() {
       try {
         const res = await upgradeableListApi();
         const list = res.data?.list || res.data || [];
         if (list.length > 0) {
-          this.upgradeablePackage = list[0]; // 取第一个
+          this.upgradeablePackage = list[0]; // Lấy mục đầu tiên
         }
       } catch (err) {
-        console.error('获取可升级包列表失败', err);
+        console.error('Lấy danh sách gói nâng cấp thất bại', err);
       }
     },
 
-    // 检测本地版本
+    // Kiểm tra phiên bản cục bộ
     async checkLocalVersion() {
       try {
         const res = await checkCrossVersionUpgradeApi();
@@ -549,13 +548,13 @@ export default {
           current_code: res.data.current_code,
         };
       } catch (err) {
-        console.error('检测本地版本失败', err);
+        console.error('Kiểm tra phiên bản cục bộ thất bại', err);
       }
     },
 
-    // 开始下载更新包
+    // Bắt đầu tải gói cập nhật
     async startDownload() {
-      // 打开协议弹窗
+      // Mở hộp thoại thỏa thuận
       await this.openAgreement();
     },
 
@@ -566,7 +565,7 @@ export default {
         this.agreementContent = res.data?.content || res.data || '';
         this.agreementVisible = true;
       } catch (err) {
-        this.$message.error(err.msg || '获取升级协议失败');
+        this.$message.error(err.msg || 'Lấy thỏa thuận nâng cấp thất bại');
       } finally {
         this.agreementLoading = false;
       }
@@ -574,11 +573,11 @@ export default {
 
     async doStartDownload() {
       if (!this.upgradeablePackage?.package_key) {
-        this.$message.error('未获取到升级包信息，请重新检测更新');
+        this.$message.error('Không lấy được thông tin gói nâng cấp, vui lòng kiểm tra cập nhật lại');
         return;
       }
 
-      // 先关闭协议弹窗，显示页面内容
+      // Đóng hộp thoại thỏa thuận trước, hiển thị nội dung trang
       this.agreementVisible = false;
       this.downloadStage = 'loading';
 
@@ -588,15 +587,15 @@ export default {
         this.downloadType = 0;
         this.startDownloadProgressPolling();
       } catch (err) {
-        this.$message.error(err.msg || '开始下载失败');
+        this.$message.error(err.msg || 'Bắt đầu tải xuống thất bại');
         this.downloadStage = 'error';
-        this.downloadMessage = err.msg || '开始下载失败';
+        this.downloadMessage = err.msg || 'Bắt đầu tải xuống thất bại';
       } finally {
         this.startingDownload = false;
       }
     },
 
-    // 轮询下载进度
+    // Polling tiến trình tải xuống
     startDownloadProgressPolling() {
       this.downloadTimer = setInterval(async () => {
         try {
@@ -612,7 +611,7 @@ export default {
             this.downloadMessage = currentMessage;
             this.checkErrorFiles = currentErrorFiles;
 
-            // 更新当前步骤状态
+            // Cập nhật trạng thái bước hiện tại
             if (this.downloadType >= 0 && this.downloadType < this.downloadSteps.length) {
               this.$set(this.downloadSteps, this.downloadType, {
                 status: currentStage,
@@ -627,7 +626,7 @@ export default {
               this.sqlSkippedCount = res.data.data.skipped || 0;
               this.sqlFailedCount = res.data.data.failed || 0;
             }
-            // 完成时停止轮询并自动刷新页面
+            // Khi hoàn tất thì dừng polling và tự động làm mới trang
             if (res.data.stage === 'complete' && this.downloadType === 4) {
               this.mpVersionData = res.data.routine_upload_data;
               this.clearDownloadTimer();
@@ -635,13 +634,13 @@ export default {
               this.showUpgradeComplete = true;
             }
 
-            // 失败时停止轮询
+            // Dừng polling khi thất bại
             if (['error'].includes(res.data.stage)) {
               this.clearDownloadTimer();
             }
             if (['success'].includes(res.data.stage) && this.downloadType !== 4) {
               this.clearDownloadTimer();
-              // 标记当前步骤完成
+              // Đánh dấu bước hiện tại đã hoàn thành
               if (this.downloadType >= 0 && this.downloadType < this.downloadSteps.length) {
                 this.$set(this.downloadSteps[this.downloadType], 'status', 'success');
               }
@@ -650,7 +649,7 @@ export default {
             }
           }
         } catch (err) {
-          console.error('获取下载进度失败', err);
+          console.error('Lấy tiến trình tải xuống thất bại', err);
         }
       }, 2000);
     },
@@ -662,18 +661,18 @@ export default {
       }
     },
 
-    // 重试下载
+    // Thử tải xuống lại
     retryDownload() {
       this.downloadStage = 'idle';
       this.downloadProgress = 0;
       this.downloadMessage = '';
     },
 
-    // 刷新页面
+    // Làm mới trang
     refreshPage() {
       window.location.reload();
     },
-    // 取消升级，返回初始状态
+    // Hủy nâng cấp, quay về trạng thái ban đầu
     cancelUpgrade() {
       this.clearDownloadTimer();
       this.downloadStage = 'idle';
@@ -682,27 +681,27 @@ export default {
       this.checkErrorFiles = [];
       this.remoteStatus.status = -1;
     },
-    // 忽略并执行（尝试继续）
+    // Bỏ qua và thực thi (thử tiếp tục)
     async ignoreAndProceed(type) {
       if (type === 0) {
         this.normalizedCheckErrorFiles = [];
-        this.downloadSteps[0].message = '忽略并执行!';
+        this.downloadSteps[0].message = 'Bỏ qua và tiếp tục!';
         this.downloadSteps[0].status = 'success';
-        this.downloadMessage = '忽略并执行...';
+        this.downloadMessage = 'Bỏ qua và tiếp tục...';
       }
       this.downloadType += 1;
       this.startDownloadProgressPolling();
     },
-    // 重新执行升级
+    // Thực hiện lại nâng cấp
     async reExecuteUpgrade() {
       try {
         await reExecuteUpgradeApi();
         this.startDownloadProgressPolling();
       } catch (err) {
-        this.$message.error(err.msg || '重新执行升级失败');
+        this.$message.error(err.msg || 'Thực hiện lại nâng cấp thất bại');
       }
     },
-    // 判断阶段是否完成
+    // Kiểm tra giai đoạn đã hoàn thành chưa
     isStageComplete(stage) {
       const stageOrder = ['idle', 'error', 'loading', 'complete', 'success'];
       const currentIndex = stageOrder.indexOf(this.downloadStage);
@@ -710,18 +709,18 @@ export default {
       return currentIndex > checkIndex;
     },
 
-    // 获取步骤图标
+    // Lấy biểu tượng bước
     getStepIcon(stage) {
       if (this.isStageComplete(stage)) return 'el-icon-success';
       if (this.downloadStage === stage) return 'el-icon-loading';
       return 'el-icon-time';
     },
-    // 刷新状态
+    // Làm mới trạng thái
     handleRefreshStatus() {
       location.reload();
     },
 
-    // 加载升级记录
+    // Tải lịch sử nâng cấp
     async loadUpgradeLogs() {
       this.loadingLogs = true;
       try {
@@ -729,7 +728,7 @@ export default {
         this.upgradeLogList = res.data.list || [];
         this.logsTotal = res.data.count || 0;
       } catch (err) {
-        this.$message.error(err.msg || '加载升级记录失败');
+        this.$message.error(err.msg || 'Tải lịch sử nâng cấp thất bại');
       } finally {
         this.loadingLogs = false;
       }
@@ -740,20 +739,20 @@ export default {
       this.loadUpgradeLogs();
     },
 
-    // SQL类型名称
+    // Tên loại SQL
     getTypeName(type) {
       const typeMap = {
-        1: '建表',
-        2: '删表',
-        3: '添加字段',
-        4: '修改字段',
-        5: '删除字段',
-        6: '添加数据',
-        7: '修改数据',
-        8: '删除数据',
-        '-1': '执行SQL',
+        1: 'Tạo bảng',
+        2: 'Xóa bảng',
+        3: 'Thêm trường',
+        4: 'Trường được sửa',
+        5: 'Xóa trường',
+        6: 'Thêm dữ liệu',
+        7: 'Dữ liệu cần chỉnh sửa',
+        8: 'Xóa dữ liệu',
+        '-1': 'Thực thi SQL',
       };
-      return typeMap[type] || '未知';
+      return typeMap[type] || 'Không xác định';
     },
 
     getTypeTagType(type) {
@@ -771,7 +770,7 @@ export default {
       return typeColorMap[type] || 'info';
     },
 
-    // 上传小程序
+    // Tải lên Mini Program
     async handleUploadMini() {
       this.uploadingMini = true;
       try {
@@ -782,7 +781,7 @@ export default {
         });
         this.uploadSuccessVisible = true;
       } catch (err) {
-        this.$message.error(err.msg || '上传小程序失败');
+        this.$message.error(err.msg || 'Tải lên Mini Program thất bại');
         this.$router.push({ path: `${setting.routePre}/app/routine/ci_upload` });
       } finally {
         this.uploadingMini = false;
@@ -1230,7 +1229,7 @@ export default {
   }
 }
 
-/* 错误文件列表：每行高度 30px */
+/* Danh sách tệp lỗi: mỗi hàng cao 30px */
 .error-files-table-wrap {
   max-height: none;
   overflow: visible;

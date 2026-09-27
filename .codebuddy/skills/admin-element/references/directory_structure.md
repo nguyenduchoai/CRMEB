@@ -1,188 +1,188 @@
-# Admin-Element 目录结构文档
+# Tài liệu cấu trúc thư mục Admin-Element
 
-## 1 项目根目录结构
+## 1 Cấu trúc thư mục gốc của dự án
 
 ```
-template/       # 前端项目目录
-├── admin-element/    # 管理端前端项目
-│   ├── public/        # 静态资源目录
-│   │   ├── favicon.ico    # 网站图标
-│   │   ├── index.html     # 入口HTML文件
-│   │   └── static/        # 静态资源文件
-│   ├── src/           # 源代码目录
-│   │   ├── api/        # API接口定义
-│   │   ├── assets/     # 静态资源
-│   │   ├── components/ # 通用组件
-│   │   ├── config/     # 配置文件
-│   │   ├── directive/  # 自定义指令
-│   │   ├── filters/    # 过滤器
-│   │   ├── layout/     # 布局组件
-│   │   ├── router/     # 路由配置
-│   │   ├── store/      # 状态管理
-│   │   ├── styles/     # 样式文件
-│   │   ├── utils/      # 工具函数
-│   │   ├── views/      # 页面组件
-│   │   ├── App.vue     # 根组件
-│   │   └── main.js     # 入口文件
-│   ├── tests/          # 测试文件
-│   ├── .env.*          # 环境变量配置
-│   ├── babel.config.js # Babel配置
-│   ├── package.json    # 项目依赖
-│   ├── vue.config.js   # Vue配置
-│   └── README.md       # 项目说明
+template/       # Thư mục dự án frontend
+├── admin-element/    # Dự án frontend trang quản trị
+│   ├── public/        # Thư mục tài nguyên tĩnh
+│   │   ├── favicon.ico    # Biểu tượng website
+│   │   ├── index.html     # File HTML điểm vào
+│   │   └── static/        # File tài nguyên tĩnh
+│   ├── src/           # Thư mục mã nguồn
+│   │   ├── api/        # Định nghĩa API
+│   │   ├── assets/     # Tài nguyên tĩnh
+│   │   ├── components/ # Thành phần dùng chung
+│   │   ├── config/     # Tệp cấu hình
+│   │   ├── directive/  # Directive tùy chỉnh
+│   │   ├── filters/    # Filter
+│   │   ├── layout/     # Thành phần layout
+│   │   ├── router/     # Cấu hình route
+│   │   ├── store/      # Quản lý trạng thái
+│   │   ├── styles/     # File style
+│   │   ├── utils/      # Hàm tiện ích (utility)
+│   │   ├── views/      # Thành phần trang
+│   │   ├── App.vue     # Thành phần gốc
+│   │   └── main.js     # File điểm vào
+│   ├── tests/          # File kiểm thử
+│   ├── .env.*          # Cấu hình biến môi trường
+│   ├── babel.config.js # Cấu hình Babel
+│   ├── package.json    # Phụ thuộc của dự án
+│   ├── vue.config.js   # Cấu hình Vue
+│   └── README.md       # Giới thiệu dự án
 ```
 
-## 2 主要目录说明
+## 2 Mô tả các thư mục chính
 
-### 2.1 public/ 目录
-- **favicon.ico**: 网站图标文件
-- **index.html**: 应用入口HTML文件，Vue应用将挂载到这个文件中
-- **static/**: 静态资源目录，存放不需要经过webpack处理的静态文件
+### 2.1 Thư mục public/
+- **favicon.ico**: Tệp biểu tượng website
+- **index.html**: Tệp HTML điểm vào của ứng dụng, ứng dụng Vue sẽ được mount vào tệp này
+- **static/**: Thư mục tài nguyên tĩnh, chứa các tệp tĩnh không cần qua xử lý của webpack
 
-### 2.2 src/ 目录
+### 2.2 Thư mục src/
 
-#### 2.2.1 api/ 目录
-- 定义所有API接口请求
-- 按模块组织API文件
-- 包含接口调用方法和参数配置
+#### 2.2.1 Thư mục api/
+- Định nghĩa tất cả request API
+- Tổ chức các tệp API theo mô-đun
+- Bao gồm các phương thức gọi API và cấu hình tham số
 
-#### 2.2.2 assets/ 目录
-- **images/**: 图片资源
-- **icons/**: 图标资源
-- **styles/**: 全局样式文件
-- 其他静态资源文件
+#### 2.2.2 Thư mục assets/
+- **images/**: Tài nguyên hình ảnh
+- **icons/**: Tài nguyên biểu tượng (icon)
+- **styles/**: Tệp style toàn cục
+- Các tệp tài nguyên tĩnh khác
 
-#### 2.2.3 components/ 目录
-- **base/**: 基础组件
-- **business/**: 业务组件
-- **common/**: 通用组件
-- 可复用的Vue组件
+#### 2.2.3 Thư mục components/
+- **base/**: Thành phần cơ sở
+- **business/**: Thành phần nghiệp vụ
+- **common/**: Thành phần dùng chung
+- Các thành phần Vue có thể tái sử dụng
 
-#### 2.2.4 config/ 目录
-- **index.js**: 主配置文件
-- **router.config.js**: 路由配置
-- **menu.config.js**: 菜单配置
-- **theme.config.js**: 主题配置
-- 其他系统配置文件
+#### 2.2.4 Thư mục config/
+- **index.js**: Tệp cấu hình chính
+- **router.config.js**: Cấu hình route
+- **menu.config.js**: Cấu hình menu
+- **theme.config.js**: Cấu hình giao diện (theme)
+- Các tệp cấu hình hệ thống khác
 
-#### 2.2.5 directive/ 目录
-- 自定义Vue指令
-- 如权限控制、表单验证等指令
+#### 2.2.5 Thư mục directive/
+- Directive Vue tùy chỉnh
+- Chẳng hạn directive kiểm soát quyền, xác thực biểu mẫu, v.v.
 
-#### 2.2.6 filters/ 目录
-- 自定义Vue过滤器
-- 如日期格式化、数字格式化等
+#### 2.2.6 Thư mục filters/
+- Filter Vue tùy chỉnh
+- Chẳng hạn định dạng ngày tháng, định dạng số, v.v.
 
-#### 2.2.7 layout/ 目录
-- **components/**: 布局组件
-- **index.vue**: 主布局文件
-- **AppMain.vue**: 内容区域组件
-- **Navbar.vue**: 导航栏组件
-- **Sidebar.vue**: 侧边栏组件
+#### 2.2.7 Thư mục layout/
+- **components/**: Thành phần bố cục (layout)
+- **index.vue**: Tệp bố cục chính
+- **AppMain.vue**: Thành phần vùng nội dung
+- **Navbar.vue**: Thành phần thanh điều hướng
+- **Sidebar.vue**: Thành phần thanh bên (sidebar)
 
-#### 2.2.8 router/ 目录
-- **index.js**: 路由配置主文件
-- **modules/**: 按模块组织的路由配置
-- 路由守卫配置
+#### 2.2.8 Thư mục router/
+- **index.js**: Tệp cấu hình route chính
+- **modules/**: Cấu hình route được tổ chức theo mô-đun
+- Cấu hình route guard
 
-#### 2.2.9 store/ 目录
-- **index.js**: 状态管理主文件
-- **modules/**: 按模块组织的状态管理
-- **getters.js**: 全局计算属性
+#### 2.2.9 Thư mục store/
+- **index.js**: Tệp quản lý trạng thái chính
+- **modules/**: Quản lý trạng thái được tổ chức theo mô-đun
+- **getters.js**: Thuộc tính tính toán (computed) toàn cục
 
-#### 2.2.10 styles/ 目录
-- **index.scss**: 全局样式入口
-- **variables.scss**: 全局变量
-- **mixins.scss**: 混合器
-- **reset.scss**: 重置样式
+#### 2.2.10 Thư mục styles/
+- **index.scss**: Điểm vào style toàn cục
+- **variables.scss**: Biến toàn cục
+- **mixins.scss**: Mixin
+- **reset.scss**: Đặt lại style mặc định (reset)
 
-#### 2.2.11 utils/ 目录
-- **request.js**: 网络请求封装
-- **auth.js**: 认证相关工具
-- **tools.js**: 通用工具函数
-- **storage.js**: 存储工具
+#### 2.2.11 Thư mục utils/
+- **request.js**: Đóng gói request mạng
+- **auth.js**: Tiện ích liên quan đến xác thực
+- **tools.js**: Hàm tiện ích dùng chung
+- **storage.js**: Tiện ích lưu trữ
 
-#### 2.2.12 views/ 目录
-- 按业务模块组织页面组件
-- 每个模块一个目录
-- 包含页面组件和相关子组件
+#### 2.2.12 Thư mục views/
+- Tổ chức các thành phần trang theo mô-đun nghiệp vụ
+- Mỗi mô-đun một thư mục
+- Bao gồm thành phần trang và các thành phần con liên quan
 
 #### 2.2.13 App.vue
-- 应用根组件
-- 包含全局布局结构
+- Thành phần gốc của ứng dụng
+- Chứa cấu trúc bố cục toàn cục
 
 #### 2.2.14 main.js
-- 应用入口文件
-- 初始化Vue实例
-- 加载插件和全局配置
+- Tệp điểm vào của ứng dụng
+- Khởi tạo instance Vue
+- Tải plugin và cấu hình toàn cục
 
-### 2.3 配置文件
+### 2.3 Tệp cấu hình
 
 #### 2.3.1 package.json
-- 项目依赖配置
-- 脚本命令配置
-- 项目信息配置
+- Cấu hình phụ thuộc của dự án
+- Cấu hình lệnh script
+- Cấu hình thông tin dự án
 
 #### 2.3.2 vue.config.js
-- Vue CLI配置
-- 构建配置
-- 代理配置
+- Cấu hình Vue CLI
+- Cấu hình build
+- Cấu hình proxy
 
 #### 2.3.3 babel.config.js
-- Babel转译配置
+- Cấu hình chuyển mã (transpile) của Babel
 
 #### 2.3.4 .env.*
-- 环境变量配置文件
-- **.env.development**: 开发环境
-- **.env.production**: 生产环境
-- **.env.staging**: 测试环境
+- Tệp cấu hình biến môi trường
+- **.env.development**: Môi trường phát triển
+- **.env.production**: Môi trường production
+- **.env.staging**: Môi trường kiểm thử
 
-## 3 目录规范
+## 3 Quy chuẩn thư mục
 
-### 3.1 命名规范
-- 目录名使用小写字母，多单词用连字符(-)分隔
-- 文件名使用小写字母，多单词用连字符(-)分隔
-- 组件名使用 PascalCase 命名法
+### 3.1 Quy tắc đặt tên
+- Tên thư mục dùng chữ thường, nhiều từ thì phân tách bằng dấu gạch nối (-)
+- Tên tệp dùng chữ thường, nhiều từ thì phân tách bằng dấu gạch nối (-)
+- Tên thành phần dùng kiểu đặt tên PascalCase
 
-### 3.2 目录组织原则
-1. **按功能模块组织**: 相关功能的文件放在同一目录
-2. **模块化**: 每个模块保持相对独立
-3. **可扩展性**: 目录结构应易于扩展和维护
-4. **一致性**: 保持目录结构的一致性
+### 3.2 Nguyên tắc tổ chức thư mục
+1. **Tổ chức theo mô-đun chức năng**: Đặt các tệp có chức năng liên quan trong cùng một thư mục
+2. **Mô-đun hóa**: Mỗi mô-đun giữ tính độc lập tương đối
+3. **Khả năng mở rộng**: Cấu trúc thư mục cần dễ mở rộng và bảo trì
+4. **Tính nhất quán**: Giữ cấu trúc thư mục nhất quán
 
-### 3.3 特殊目录处理
-- **components/**: 只存放可复用组件
-- **views/**: 存放页面级组件
-- **api/**: 按模块组织API接口
-- **store/modules/**: 按模块组织状态管理
+### 3.3 Xử lý thư mục đặc biệt
+- **components/**: Chỉ chứa các thành phần có thể tái sử dụng
+- **views/**: Chứa các thành phần cấp trang
+- **api/**: Tổ chức API theo module
+- **store/modules/**: Tổ chức quản lý trạng thái (state) theo module
 
-## 4 最佳实践
+## 4 Thực tiễn tốt nhất
 
-### 4.1 目录使用建议
-- 新增业务模块时，在 views/ 下创建对应的目录
-- 新增可复用组件时，放在 components/ 下的对应子目录
-- 新增API接口时，在 api/ 下按模块组织
-- 新增状态管理时，在 store/modules/ 下创建对应模块
+### 4.1 Gợi ý sử dụng thư mục
+- Khi thêm module nghiệp vụ mới, tạo thư mục tương ứng trong views/
+- Khi thêm component có thể tái sử dụng, đặt vào thư mục con tương ứng trong components/
+- Khi thêm API mới, tổ chức theo module trong api/
+- Khi thêm quản lý trạng thái mới, tạo module tương ứng trong store/modules/
 
-### 4.2 目录结构维护
-- 定期清理无用文件和目录
-- 保持目录结构的清晰和整洁
-- 遵循统一的命名规范
-- 文档及时更新，反映目录结构的变化
+### 4.2 Duy trì cấu trúc thư mục
+- Định kỳ dọn dẹp các file và thư mục không còn dùng
+- Giữ cấu trúc thư mục rõ ràng và gọn gàng
+- Tuân thủ quy tắc đặt tên thống nhất
+- Cập nhật tài liệu kịp thời để phản ánh các thay đổi của cấu trúc thư mục
 
-## 5 常见问题
+## 5 Vấn đề thường gặp
 
-### 5.1 目录权限问题
-- 确保目录权限正确，避免构建时出现权限错误
+### 5.1 Vấn đề quyền thư mục
+- Đảm bảo quyền thư mục được thiết lập đúng, tránh lỗi quyền truy cập khi build
 
-### 5.2 路径引用问题
-- 使用相对路径或别名路径引用文件
-- 避免使用绝对路径
+### 5.2 Vấn đề tham chiếu đường dẫn
+- Dùng đường dẫn tương đối hoặc đường dẫn alias để tham chiếu file
+- Tránh dùng đường dẫn tuyệt đối
 
-### 5.3 目录结构优化
-- 随着项目规模增大，适时调整目录结构
-- 保持目录层级合理，避免过深的嵌套
+### 5.3 Tối ưu cấu trúc thư mục
+- Khi quy mô dự án tăng lên, kịp thời điều chỉnh cấu trúc thư mục
+- Giữ phân cấp thư mục hợp lý, tránh lồng nhau quá sâu
 
-## 6 总结
+## 6 Tổng kết
 
-Admin-Element 项目采用标准的 Vue + ElementUI 项目结构，通过清晰的目录组织和命名规范，提高了代码的可维护性和可扩展性。开发者应遵循目录结构规范，合理组织代码，确保项目的长期可维护性。
+Dự án Admin-Element áp dụng cấu trúc dự án Vue + ElementUI tiêu chuẩn, nhờ cách tổ chức thư mục rõ ràng và quy tắc đặt tên thống nhất mà nâng cao được khả năng bảo trì và khả năng mở rộng của code. Lập trình viên nên tuân thủ quy chuẩn cấu trúc thư mục, tổ chức code hợp lý để đảm bảo khả năng bảo trì lâu dài của dự án.

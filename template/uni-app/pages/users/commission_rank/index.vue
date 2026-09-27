@@ -2,8 +2,8 @@
 	<view>
 		<view class="CommissionRank" :style="colorStyle">
 			<view class="header">
-				<view class="rank" v-if="position">{{$t(`您目前的排名`)}}<text class="num">{{ position }}</text></view>
-				<view class="rank" v-else>{{$t(`您目前暂无排名`)}}</view>
+				<view class="rank" v-if="position">{{$t(`Thứ hạng hiện tại của bạn`)}}<text class="num">{{ position }}</text></view>
+				<view class="rank" v-else>{{$t(`Bạn hiện chưa có thứ hạng`)}}</view>
 			</view>
 			<view class="wrapper">
 				<view class="nav acea-row row-around">
@@ -31,7 +31,7 @@
 				</view>
 			</view>
 			<view v-if="rankList.length == 0">
-				<emptyPage v-if="!loading" :title="$t(`暂无排名~`)"></emptyPage>
+				<emptyPage v-if="!loading" :title="$t(`Chưa có bảng xếp hạng~`)"></emptyPage>
 				<view class="loadingicon acea-row row-center-wrapper">
 					<text class="loading iconfont icon-jiazai" :hidden="loading == false"></text>
 				</view>
@@ -68,18 +68,18 @@
 		mixins: [colors],
 		data() {
 			return {
-				navList: [this.$t(`周排行`), this.$t(`月排行`)],
+				navList: [this.$t(`Xếp hạng tuần`), this.$t(`Xếp hạng tháng`)],
 				active: 0,
 				rankList: [],
 				page: 1,
 				limit: 20,
 				loadend: false,
 				loading: false,
-				loadTitle: this.$t(`加载更多`),
+				loadTitle: this.$t(`Tải thêm`),
 				type: 'week',
 				position: 0,
-				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false //是否隐藏授权
+				isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+				isShowAuth: false //Có ẩn ủy quyền hay không
 			};
 		},
 		computed: mapGetters(['isLogin']),
@@ -104,7 +104,7 @@
 			onLoadFun: function() {
 				this.getBrokerageRankList();
 			},
-			// 授权关闭
+			// Đóng ủy quyền
 			authColse: function(e) {
 				this.isShowAuth = e
 			},
@@ -131,13 +131,13 @@
 					this.rankList.push.apply(this.rankList, list);
 					this.loading = false;
 					this.loadend = loadend;
-					this.loadTitle = loadend ? this.$t(`我也是有底线的`) : this.$t(`加载更多`);
+					this.loadTitle = loadend ? this.$t(`Đã đến cuối danh sách`) : this.$t(`Tải thêm`);
 					this.$set(this, 'rankList', this.rankList);
 					this.position = res.data.position;
 					this.page += 1
 				}).catch(err => {
 					this.loading = false;
-					this.loadTitle = this.$t(`加载更多`);
+					this.loadTitle = this.$t(`Tải thêm`);
 				})
 			}
 		},

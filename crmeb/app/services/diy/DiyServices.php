@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -45,7 +45,7 @@ class DiyServices extends BaseServices
     }
 
     /**
-     * 获取DIY列表
+     * Lấy danh sách DIY
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -59,14 +59,14 @@ class DiyServices extends BaseServices
         if ($where['type'] == 2) $limit = 1000;
         $list = $this->dao->getDiyList($where, $page, $limit, ['id', 'name', 'type', 'add_time', 'update_time', 'is_diy', 'status']);
         foreach ($list as &$item) {
-            $item['type_name'] = $item['type'] == 0 ? '可视化' : '专题页';
+            $item['type_name'] = $item['type'] == 0 ? 'Thiết kế trực quan' : 'Trang chủ đề';
         }
         $count = $this->dao->count($where);
         return compact('list', 'count');
     }
 
     /**
-     * 保存资源
+     * Lưu tài nguyên
      * @param int $id
      * @param array $data
      */
@@ -75,12 +75,12 @@ class DiyServices extends BaseServices
         if ($id) {
             $data['update_time'] = time();
             $res = $this->dao->update($id, $data);
-            if (!$res) throw new AdminException('修改失败');
+            if (!$res) throw new AdminException('Sửa thất bại');
         } else {
             $data['add_time'] = time();
             $data['update_time'] = time();
             $res = $this->dao->save($data);
-            if (!$res) throw new AdminException('保存失败');
+            if (!$res) throw new AdminException('Lưu thất bại');
             $id = $res->id;
         }
 
@@ -88,22 +88,22 @@ class DiyServices extends BaseServices
     }
 
     /**
-     * 删除DIY模板
+     * Xóa mẫu DIY
      * @param int $id
      */
     public function del(int $id)
     {
-        if ($id == 1) throw new AdminException('默认模板不能删除');
+        if ($id == 1) throw new AdminException('Không thể xóa mẫu mặc định');
         $count = $this->dao->getCount(['id' => $id, 'status' => 1]);
-        if ($count) throw new AdminException('该模板使用中，无法删除');
+        if ($count) throw new AdminException('Mẫu này đang được sử dụng, không thể xóa');
         $res = $this->dao->update($id, ['is_del' => 1]);
-        if (!$res) throw new AdminException('删除失败');
+        if (!$res) throw new AdminException('Xóa thất bại');
 
         CacheService::clear();
     }
 
     /**
-     * 设置模板使用
+     * Đặt sử dụng mẫu
      * @param int $id
      */
     public function setStatus(int $id)
@@ -119,7 +119,7 @@ class DiyServices extends BaseServices
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/05/08
      */
@@ -139,7 +139,7 @@ class DiyServices extends BaseServices
     }
 
     /**
-     * 获取页面数据
+     * Lấy dữ liệu trang
      * @param int $id
      * @return array|mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -183,20 +183,20 @@ class DiyServices extends BaseServices
     }
 
     /**
-     * 添加表单
+     * Biểu mẫu thêm
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
      */
     public function createForm()
     {
         $field = array();
-        $title = '添加模板';
-        $field[] = Form::input('name', '页面名称', '')->required();
+        $title = 'Thêm mẫu';
+        $field[] = Form::input('name', 'Tên trang', '')->required();
         return create_form($title, $field, Url::buildUrl('/diy/create'), 'POST');
     }
 
     /**
-     * 获取商品数据
+     * Lấy dữ liệu sản phẩm
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -220,11 +220,11 @@ class DiyServices extends BaseServices
             case 0:
                 $data = $StoreProductServices->searchList($where);
                 break;
-            //秒杀
+            //Flash sale
             case 2:
                 $data = $StoreSeckillServices->getDiySeckillList($where);
                 break;
-            //拼团
+            //Mua chung
             case 3:
                 $data = $StoreCombinationServices->getDiyCombinationList($where);
                 break;
@@ -244,7 +244,7 @@ class DiyServices extends BaseServices
                 $where['is_best'] = 1;
                 $data = $StoreProductServices->searchList($where);
                 break;
-            //砍价
+            //Săn giảm giá
             case 8:
                 $data = $StoreBargainServices->getDiyBargainList($where);
                 break;
@@ -253,7 +253,7 @@ class DiyServices extends BaseServices
     }
 
     /**
-     * 前台获取首页数据接口
+     * API lấy dữ liệu trang chủ ở phía người dùng
      * @param array $where
      */
     public function homeProductList(array $where, int $uid)
@@ -273,11 +273,11 @@ class DiyServices extends BaseServices
                 $where['type'] = $where['isType'] ?? 0;
                 $data['list'] = $StoreProductServices->getGoodsList($where, $uid);
                 break;
-            //秒杀
+            //Flash sale
             case 2:
                 $data = $StoreSeckillServices->getHomeSeckillList($where);
                 break;
-            //拼团
+            //Mua chung
             case 3:
                 $data = $StoreCombinationServices->getHomeList($where);
                 break;
@@ -301,7 +301,7 @@ class DiyServices extends BaseServices
                 $where['type'] = $where['isType'] ?? 0;
                 $data['list'] = $StoreProductServices->getGoodsList($where, $uid);
                 break;
-            //砍价
+            //Săn giảm giá
             case 8:
                 $data = $StoreBargainServices->getHomeList($where);
                 break;
@@ -313,7 +313,7 @@ class DiyServices extends BaseServices
     }
 
     /**
-     * 分类、个人中心、一键换色
+     * Danh mục, trang cá nhân, đổi màu nhanh
      * @param string $name
      * @return mixed
      */
@@ -351,7 +351,7 @@ class DiyServices extends BaseServices
     }
 
     /**
-     * 保存个人中心数据配置
+     * Lưu cấu hình dữ liệu trang cá nhân
      * @param array $data
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
@@ -362,7 +362,7 @@ class DiyServices extends BaseServices
     {
         /** @var SystemGroupDataServices $systemGroupDataServices */
         $systemGroupDataServices = app()->make(SystemGroupDataServices::class);
-        if (!$data['status']) throw new AdminException('参数错误');
+        if (!$data['status']) throw new AdminException('Tham số không hợp lệ');
         $info = $this->dao->get(['template_name' => 'member', 'type' => 1]);
         if ($info) {
             $info->my_banner_status = $data['my_banner_status'];
@@ -373,7 +373,7 @@ class DiyServices extends BaseServices
             $info->update_time = time();
             $res = $info->save();
         } else {
-            throw new AdminException('个人中心模板不存在');
+            throw new AdminException('Mẫu trang cá nhân không tồn tại');
         }
         $systemGroupDataServices->saveAllData($data['routine_my_banner'], 'routine_my_banner');
         $systemGroupDataServices->saveAllData($data['routine_my_menus'], 'routine_my_menus');
@@ -381,7 +381,7 @@ class DiyServices extends BaseServices
     }
 
     /**
-     * 获取底部导航
+     * Lấy thanh điều hướng dưới cùng
      * @param string $template_name
      * @return array|mixed
      */
@@ -406,7 +406,7 @@ class DiyServices extends BaseServices
     }
 
     /**
-     * 取单个diy小程序预览二维码
+     * Lấy mã QR xem trước DIY Mini Program cho một mục
      * @param int $id
      * @return string
      * @throws \think\db\exception\DataNotFoundException
@@ -417,7 +417,7 @@ class DiyServices extends BaseServices
     {
         $diy = $this->dao->getOne(['id' => $id, 'is_del' => 0]);
         if (!$diy) {
-            throw new AdminException('数据不存在');
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         /** @var QrcodeServices $QrcodeService */
         $QrcodeService = app()->make(QrcodeServices::class);

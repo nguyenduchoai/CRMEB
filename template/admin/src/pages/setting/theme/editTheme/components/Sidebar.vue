@@ -2,7 +2,7 @@
   <div class="sidebar-container" :class="{ collapsed }">
     <div class="back-btn" @click="goBack">
       <i class="el-icon-arrow-left"></i>
-      <span v-if="!collapsed">返回</span>
+      <span v-if="!collapsed">Quay lại</span>
     </div>
 
     <div class="menu-list">
@@ -46,11 +46,11 @@ export default {
   data() {
     return {
       menuList: [
-        { key: 'home', name: '商城首页', icon: 'iconic_home' },
-        { key: 'category', name: '商品分类', icon: 'icona-ic_Picturearrangement' },
-        { key: 'detail', name: '商品详情', icon: 'iconic_commodity' },
-        { key: 'user', name: '个人中心', icon: 'icona-ic_user1' },
-        { key: 'theme', name: '商城风格', icon: 'iconic_zhuti' },
+        { key: 'home', name: 'Trang chủ cửa hàng', icon: 'iconic_home' },
+        { key: 'category', name: 'Danh mục sản phẩm', icon: 'icona-ic_Picturearrangement' },
+        { key: 'detail', name: 'Chi tiết sản phẩm', icon: 'iconic_commodity' },
+        { key: 'user', name: 'Trang cá nhân', icon: 'icona-ic_user1' },
+        { key: 'theme', name: 'Phong cách cửa hàng', icon: 'iconic_zhuti' },
       ],
     };
   },
@@ -59,9 +59,9 @@ export default {
       if (this.activeMenu === key) return;
       let type = this.$route.query.type;
       if (this.unsaved) {
-        this.$confirm('确定离开此页面？系统可能不会保存您所做的更改。', '提示', {
-          confirmButtonText: '保存',
-          cancelButtonText: '不保存',
+        this.$confirm('Bạn có chắc muốn rời trang này? Hệ thống có thể sẽ không lưu các thay đổi bạn đã thực hiện.', 'Thông báo', {
+          confirmButtonText: 'Lưu',
+          cancelButtonText: 'Không lưu',
           type: 'warning',
           distinguishCancelAndClose: true,
           showClose: false,
@@ -82,9 +82,9 @@ export default {
     },
     goBack() {
       let type = this.$route.query.type;
-      this.$confirm('确定离开此页面？系统可能不会保存您所做的更改。', '提示', {
-        confirmButtonText: '保存',
-        cancelButtonText: '退出',
+      this.$confirm('Bạn có chắc muốn rời trang này? Hệ thống có thể sẽ không lưu các thay đổi bạn đã thực hiện.', 'Thông báo', {
+        confirmButtonText: 'Lưu',
+        cancelButtonText: 'Thoát',
         type: 'warning',
         distinguishCancelAndClose: true,
       })

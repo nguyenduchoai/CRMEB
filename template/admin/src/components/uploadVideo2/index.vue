@@ -5,7 +5,7 @@
         <div class="trees-coadd">
           <div v-if="isPage" class="tree_tit" v-db-click @click="addSort">
             <i class="el-icon-circle-plus"></i>
-            添加分类
+            Thêm danh mục
           </div>
           <div class="scollhide">
             <div :class="isPage ? 'tree' : 'isTree'">
@@ -40,9 +40,9 @@
                       <i class="el-icon-more el-icon--right"></i>
                       <template slot="dropdown">
                         <el-dropdown-menu>
-                          <el-dropdown-item command="1">新增分类</el-dropdown-item>
-                          <el-dropdown-item v-if="data.id" command="2">编辑分类</el-dropdown-item>
-                          <el-dropdown-item v-if="data.id" command="3">删除</el-dropdown-item>
+                          <el-dropdown-item command="1">Thêm danh mục</el-dropdown-item>
+                          <el-dropdown-item v-if="data.id" command="2">Sửa danh mục</el-dropdown-item>
+                          <el-dropdown-item v-if="data.id" command="3">Xóa</el-dropdown-item>
                         </el-dropdown-menu>
                       </template>
                     </el-dropdown>
@@ -64,9 +64,9 @@
               @click="checkPics"
               size="small"
               v-if="isShow !== 0"
-              >使用选中视频</el-button
+              >Dùng video đã chọn</el-button
             >
-            <!-- <el-button size="small" type="primary" v-db-click @click="uploadModal">上传视频</el-button> -->
+            <!-- <el-button size="small" type="primary" v-db-click @click="uploadModal">Tải video lên</el-button> -->
             <el-button
               class="mr8"
               v-if="upload_type !== '1'"
@@ -74,7 +74,7 @@
               size="small"
               v-db-click
               @click="zh_uploadFile"
-              >上传视频</el-button
+              >Tải lên video</el-button
             >
             <el-upload
               v-if="upload_type === '1'"
@@ -87,9 +87,9 @@
               style="display: inline-block"
               accept=".mp4"
             >
-              <el-button class="mr8" size="small" type="primary">上传视频</el-button>
+              <el-button class="mr8" size="small" type="primary">Tải lên video</el-button>
             </el-upload>
-            <!-- 输入链接 -->
+            <!-- Nhập liên kết -->
             <el-button class="mr8" size="small" type="primary" icon="el-icon-link" @click="openInputModal"></el-button>
             <el-button
               class="mr8"
@@ -97,11 +97,11 @@
               :disabled="!checkPicList.length && !ids.length"
               v-db-click
               @click.stop="editPicList()"
-              >删除视频</el-button
+              >Xóa video</el-button
             >
             <el-cascader
               v-model="pids"
-              placeholder="视频移动至"
+              placeholder="Chuyển video đến"
               style="width: 150px"
               class="treeSel"
               :options="treeData2"
@@ -115,7 +115,7 @@
             <el-input
               class="mr8"
               v-model="fileData.real_name"
-              placeholder="请输入视频名"
+              placeholder="Vui lòng nhập tên video"
               size="small"
               style="width: 150px"
               @change="searchFile"
@@ -137,7 +137,7 @@
           <div v-if="lietStyle == 'list'" style="width: 100%">
             <div v-show="isShowPic" class="imagesNo">
               <i class="el-icon-picture" style="color: #dbdbdb; font-size: 60px"></i>
-              <span class="imagesNo_sp">视频库为空</span>
+              <span class="imagesNo_sp">Thư viện video trống</span>
             </div>
             <div ref="imgListBox" class="acea-row mb10">
               <div
@@ -169,12 +169,12 @@
                   <el-input size="small" type="text" v-model="item.real_name" v-else @blur="bindTxt(item)" />
                   <div class="operate-height">
                     <span class="operate mr10" v-db-click @click="editPicList(item.att_id)" v-if="item.isShowEdit"
-                      >删除</span
+                      >Xóa</span
                     >
                     <span class="operate mr10" v-db-click @click="item.isEdit = !item.isEdit" v-if="item.isShowEdit"
-                      >改名</span
+                      >Đổi tên</span
                     >
-                    <span class="operate" v-db-click @click="lookImg(item)" v-if="item.isShowEdit">查看</span>
+                    <span class="operate" v-db-click @click="lookImg(item)" v-if="item.isShowEdit">Xem</span>
                   </div>
                 </div>
               </div>
@@ -188,11 +188,11 @@
             highlight-row
             :row-key="getRowKey"
             @selection-change="handleSelectRow"
-            no-data-text="暂无数据"
-            no-filtered-data-text="暂无筛选结果"
+            no-data-text="Chưa có dữ liệu"
+            no-filtered-data-text="Không có kết quả phù hợp"
           >
             <el-table-column type="selection" width="60" :reserve-selection="true"> </el-table-column>
-            <el-table-column label="视频名称" min-width="190">
+            <el-table-column label="Tên video" min-width="190">
               <template slot-scope="scope">
                 <div class="df-aic">
                   <div class="tabBox_img mr10">
@@ -210,20 +210,20 @@
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="上传时间" min-width="100">
+            <el-table-column label="Thời gian tải lên" min-width="100">
               <template slot-scope="scope">
                 <span>{{ scope.row.time }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="操作" fixed="right" width="170">
+            <el-table-column label="Thao tác" fixed="right" width="170">
               <template slot-scope="scope">
-                <a v-db-click @click="editPicList(scope.row)">删除</a>
+                <a v-db-click @click="editPicList(scope.row)">Xóa</a>
                 <el-divider direction="vertical"></el-divider>
                 <a v-db-click @click="scope.row.isEdit = !scope.row.isEdit">{{
-                  scope.row.isEdit ? '确定' : '重命名'
+                  scope.row.isEdit ? 'Xác nhận' : 'Đổi tên'
                 }}</a>
                 <el-divider direction="vertical"></el-divider>
-                <a v-db-click @click="lookImg(scope.row)">查看</a>
+                <a v-db-click @click="lookImg(scope.row)">Xem</a>
               </template>
             </el-table-column>
           </el-table>
@@ -249,15 +249,15 @@
       :categoryList="treeData"
       @uploadSuccess="uploadSuccess"
     ></uploadImg>
-    <el-dialog title="查看视频" append-to-body :visible.sync="videoModal" width="1024px">
+    <el-dialog title="Xem video" append-to-body :visible.sync="videoModal" width="1024px">
       <video :src="imageUrl" controls />
     </el-dialog>
     <input type="file" ref="refid" style="display: none" @change="zh_uploadFile_change" />
-    <!-- 输入链接弹窗 -->
-    <el-dialog title="输入视频链接" append-to-body :visible.sync="inputModal" width="400px">
+    <!-- Hộp thoại nhập liên kết -->
+    <el-dialog title="Nhập liên kết video" append-to-body :visible.sync="inputModal" width="400px">
       <div class="flex">
-        <el-input class="mr-20" v-model="inputUrl" placeholder="请输入视频链接" />
-        <el-button type="primary" @click="uploadByUrl">使用</el-button>
+        <el-input class="mr-20" v-model="inputUrl" placeholder="Vui lòng nhập liên kết video" />
+        <el-button type="primary" @click="uploadByUrl">Đã sử dụng</el-button>
       </div>
     </el-dialog>
   </div>
@@ -274,7 +274,7 @@ import {
   videoCloudUpload,
 } from '@/api/uploadPictures';
 import { productGetTempKeysApi, uploadType } from '@/api/product';
-import { uploadByPieces } from '@/utils/upload'; //引入uploadByPieces方法
+import { uploadByPieces } from '@/utils/upload'; //Import phương thức uploadByPieces
 
 import Setting from '@/setting';
 import { getCookies } from '@/libs/util';
@@ -322,7 +322,7 @@ export default {
       treeData: [],
       treeData2: [],
       pictrueList: [],
-      uploadData: {}, // 上传参数
+      uploadData: {}, // Tham số tải lên
       checkPicList: [],
       uploadName: {
         name: '',
@@ -350,27 +350,27 @@ export default {
       modalTitleSs: '',
       isShowPic: false,
       header: {},
-      ids: [], // 选中附件的id集合
+      ids: [], // Tập hợp id của các tệp đính kèm đã chọn
       lietStyle: 'list',
       imageUrl: '',
       loading: false,
       multipleSelection: [],
-      picmargin: '5px', //默认距离右边距离
+      picmargin: '5px', //Khoảng cách mặc định tới bên phải
       videoModal: false,
       upload_type: '',
       upload: {
-        videoIng: false, // 是否显示进度条；
+        videoIng: false, // Có hiển thị thanh tiến trình không;
       },
-      inputModal: false, // 输入链接弹窗
-      inputUrl: '', // 输入的视频链接
+      inputModal: false, // Hộp thoại nhập liên kết
+      inputUrl: '', // Liên kết video đã nhập
     };
   },
   mounted() {
     if (this.isPage) {
-      let hang = parseInt((document.body.clientHeight - this.$refs.imgListBox.clientHeight - 325) / 180); //计算行数
-      let col = parseInt(this.$refs.imgListBox.clientWidth / 156); //计算列数
-      this.fileData.limit = col * hang; //计算分页数量
-      this.picmargin = parseInt(this.$refs.imgListBox.clientWidth - col * 146) / (2 * col) + 'px'; //平均分布计算margin距离
+      let hang = parseInt((document.body.clientHeight - this.$refs.imgListBox.clientHeight - 325) / 180); //Tính số dòng
+      let col = parseInt(this.$refs.imgListBox.clientWidth / 156); //Tính số cột
+      this.fileData.limit = col * hang; //Tính số lượng phân trang
+      this.picmargin = parseInt(this.$refs.imgListBox.clientWidth - col * 146) / (2 * col) + 'px'; //Tính khoảng cách margin phân bố đều
     }
     this.getToken();
     this.uploadType();
@@ -378,11 +378,11 @@ export default {
     this.getFileList();
   },
   methods: {
-    // 打开输入链接弹窗
+    // Mở hộp thoại nhập liên kết
     openInputModal() {
       this.inputModal = true;
     },
-    //获取视频上传类型
+    //Lấy loại tải lên video
     uploadType() {
       uploadType().then((res) => {
         this.upload_type = res.data.upload_type;
@@ -403,7 +403,7 @@ export default {
     zh_uploadFile_change(evfile) {
       let that = this;
       if (evfile.target.files[0].type !== 'video/mp4') {
-        return that.$message.error('只能上传mp4文件');
+        return that.$message.error('Chỉ được tải lên tệp mp4');
       }
       debugger;
       let types = {
@@ -437,8 +437,8 @@ export default {
     videoSaveToUrl(file) {
       if (isVideoUpload(file))
         uploadByPieces({
-          file: file, // 视频实体
-          pieceSize: 3, // 分片大小
+          file: file, // Đối tượng video
+          pieceSize: 3, // Kích thước từng phần
           success: (data) => {
             this.progress = 100;
             videoCloudUpload({
@@ -447,7 +447,7 @@ export default {
               video_name: file.name,
             }).then((res) => {
               this.getFileList();
-              this.$message.success('视频上传成功');
+              this.$message.success('Tải lên video thành công');
             });
           },
           error: (e) => {
@@ -471,11 +471,11 @@ export default {
     onDel(node) {
       let method = node.cate_id ? routeDel : routeCateDel;
       this.$msgbox({
-        title: '提示',
-        message: '是否确定删除该菜单',
+        title: 'Thông báo',
+        message: 'Bạn có chắc chắn muốn xóa menu này không',
         showCancelButton: true,
-        cancelButtonText: '取消',
-        confirmButtonText: '删除',
+        cancelButtonText: 'Hủy',
+        confirmButtonText: 'Xóa',
         iconClass: 'el-icon-warning',
         confirmButtonClass: 'btn-custom-cancel',
       })
@@ -507,18 +507,18 @@ export default {
           });
       }
     },
-    // 添加分类
+    // Thêm danh mục
     addSort() {
       this.append({ id: this.treeId || 0 });
     },
-    // 点击菜单
+    // Bấm vào menu
     clickMenu(data, name) {
       if (name == 1) {
         this.append(data);
       } else if (name == 2) {
         this.editPic(data);
       } else if (name == 3) {
-        this.remove(data, '分类');
+        this.remove(data, 'Danh mục');
       }
     },
     uploadSuccess() {
@@ -535,7 +535,7 @@ export default {
     enterLeave(item) {
       item.isShowEdit = !item.isShowEdit;
     },
-    // 上传头部token
+    // Token trong header khi tải lên
     getToken() {
       this.header['Authori-zation'] = 'Bearer ' + getCookies('token');
     },
@@ -544,13 +544,13 @@ export default {
         this.getMove();
       } else {
         if (!this.ids.toString()) {
-          this.$message.warning('请先选择视频');
+          this.$message.warning('Vui lòng chọn video trước');
           return;
         }
       }
     },
     searchImg() {},
-    // 移动分类
+    // Di chuyển danh mục
     getMove() {
       let data = {
         pid: this.pids,
@@ -574,7 +574,7 @@ export default {
         ids: id,
       };
       let delfromData = {
-        title: '删除选中视频',
+        title: 'Xóa video đã chọn',
         url: `file/file/delete`,
         method: 'POST',
         ids: ids,
@@ -589,13 +589,13 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 删除视频
+    // Xóa video
     editPicList(id) {
       let ids = {
         ids: id || this.ids.toString(),
       };
       let delfromData = {
-        title: '删除选中视频',
+        title: 'Xóa video đã chọn',
         url: `file/file/delete`,
         method: 'POST',
         ids: ids,
@@ -615,7 +615,7 @@ export default {
       this.ids = [];
       this.multipleSelection = [];
     },
-    // 鼠标移入 移出
+    // Chuột di vào / di ra
     onMouseOver(root, node, data) {
       event.preventDefault();
       data.flag = !data.flag;
@@ -623,22 +623,22 @@ export default {
         data.flag2 = false;
       }
     },
-    // 点击树
+    // Bấm vào cây (tree)
     appendBtn(data) {
       this.treeId = data.id;
       this.fileData.page = 1;
       this.getFileList();
     },
-    // 点击添加
+    // nhấn để thêm
     append(data) {
       this.treeId = data.id;
       this.getFrom();
     },
-    // 删除分类
+    // Xóa danh mục
     remove(data, tit) {
       this.tits = tit;
       let delfromData = {
-        title: '删除 [ ' + data.title + ' ] ' + '分类',
+        title: 'xóa [ ' + data.title + ' ] ' + 'Danh mục',
         url: `file/category/${data.id}`,
         method: 'DELETE',
         ids: '',
@@ -653,18 +653,18 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 编辑树表单
+    // Form sửa cây (tree)
     editPic(data) {
       this.$modalForm(categoryEditApi(data.id)).then(() => this.getList());
     },
-    // 搜索分类
+    // Tìm kiếm danh mục
     changePage() {
       this.getList('search');
     },
-    // 分类列表树
+    // Cây danh sách danh mục
     getList(type) {
       let data = {
-        title: '全部视频',
+        title: 'Tất cả video',
         id: '',
         pid: 0,
       };
@@ -697,7 +697,7 @@ export default {
         item.children && this.addFlag(item.children);
       });
     },
-    // 新建分类
+    // Tạo danh mục mới
     add() {
       this.treeId = 0;
       this.getFrom();
@@ -706,7 +706,7 @@ export default {
       this.fileData.page = 1;
       this.getFileList();
     },
-    // 文件列表
+    // Danh sách tệp
     getFileList() {
       this.fileData.pid = this.treeId;
       fileListApi(this.fileData)
@@ -728,7 +728,7 @@ export default {
           }
           this.total = res.data.count;
           this.$nextTick(() => {
-            //确保dom加载完毕
+            //Đảm bảo dom đã tải xong
             // this.showSelectData();
           });
         })
@@ -738,13 +738,13 @@ export default {
     },
     showSelectData() {
       if (this.multipleSelection.length > 0) {
-        // 判断是否存在勾选过的数据
+        // Kiểm tra có dữ liệu đã tick chọn không
         this.pictrueList.forEach((row) => {
-          // 获取数据列表接口请求到的数据
+          // Dữ liệu lấy được từ API danh sách dữ liệu
           this.multipleSelection.forEach((item) => {
-            // 勾选到的数据
+            // Dữ liệu đã tick chọn
             if (row.att_id === item.att_id) {
-              // this.$refs.table.toggleRowSelection(item, true); // 若有重合，则回显该条数据
+              // this.$refs.table.toggleRowSelection(item, true); // Nếu có trùng khớp thì hiển thị lại dòng dữ liệu này
             }
           });
         });
@@ -753,7 +753,7 @@ export default {
     getRowKey(row) {
       return row.att_id;
     },
-    //对象数组去重；
+    //Loại bỏ trùng lặp trong mảng object;
     unique(arr) {
       let result = arr.reduce((acc, curr) => {
         const x = acc.find((item) => item.att_id === curr.att_id);
@@ -765,7 +765,7 @@ export default {
       }, []);
       return result;
     },
-    //  选中某一行
+    //  Chọn một dòng
     handleSelectRow(selection) {
       let arr = this.unique(selection);
       const uniqueArr = [];
@@ -785,19 +785,19 @@ export default {
       this.getFileList();
       this.checkPicList = [];
     },
-    // 新建分类表单
+    // Form tạo danh mục mới
     getFrom() {
       this.$modalForm(createApi({ id: this.treeId, type: 1 })).then((res) => {
         this.getList();
       });
     },
-    // 上传之前
+    // Trước khi tải lên
     beforeUpload(file) {
       // if (file.size > 2097152) {
-      //   this.$message.error(file.name + "大小超过2M!");
+      //   this.$message.error(file.name + "Kích thước vượt quá 2M!");
       // } else
       if (!/image\/\w+/.test(file.type)) {
-        this.$message.error('请上传以jpg、jpeg、png等结尾的视频文件'); //FileExt.toLowerCase()
+        this.$message.error('Vui lòng tải lên tệp video có đuôi như jpg, jpeg, png'); //FileExt.toLowerCase()
         return false;
       }
       this.uploadData = {
@@ -810,7 +810,7 @@ export default {
       });
       return promise;
     },
-    // 上传成功
+    // Tải lên thành công
     handleSuccess(res, file, fileList) {
       if (res.status === 200) {
         this.$message.success(res.msg);
@@ -820,11 +820,11 @@ export default {
         this.$message.error(res.msg);
       }
     },
-    // 关闭
+    // Tắt
     cancel() {
       this.$emit('changeCancel');
     },
-    // 选中视频
+    // Video đã chọn
     changImage(item, index, row) {
       let activeIndex = 0;
       if (!item.isSelect) {
@@ -856,23 +856,23 @@ export default {
         }
       });
     },
-    // 点击使用选中视频
+    // Bấm dùng video đã chọn
     checkPics() {
       if (this.isChoice === 'one') {
-        if (this.checkPicList.length > 1) return this.$message.warning('最多只能选一张视频');
+        if (this.checkPicList.length > 1) return this.$message.warning('Chỉ được chọn tối đa một video');
         this.$emit('getVideo', this.checkPicList[0].att_dir);
       } else {
         let maxLength = this.$route.query.maxLength;
         if (maxLength != undefined && this.checkPicList.length > Number(maxLength))
-          return this.$message.warning('最多只能选' + maxLength + '张视频');
+          return this.$message.warning('Chỉ được chọn tối đa ' + maxLength + ' video');
         this.$emit('getPicD', this.checkPicList);
         this.$emit('getVideo', this.checkPicList);
       }
     },
-    // 上传视频链接
+    // Tải lên video qua liên kết
     uploadByUrl() {
       if (!this.inputUrl) {
-        this.$message.error('请输入视频链接');
+        this.$message.error('Vui lòng nhập liên kết video');
         return;
       }
       this.$emit('getVideo', this.inputUrl);
@@ -885,10 +885,10 @@ export default {
       let len = it[0].length + it1.length;
       item.editName = len < 10 ? item.real_name : item.real_name.substr(0, 4) + '...' + item.real_name.substr(-5, 5);
     },
-    // 修改视频文字上传
+    // Sửa tải lên video/chữ
     bindTxt(item) {
       if (item.real_name == '') {
-        this.$message.error('请填写内容');
+        this.$message.error('Vui lòng điền nội dung');
       }
       fileUpdateApi(item.att_id, {
         real_name: item.real_name,
@@ -1172,10 +1172,10 @@ export default {
   background: #fff;
   height: 72px;
   box-sizing: border-box;
-  overflow-x: scroll; /* 设置溢出滚动 */
+  overflow-x: scroll; /* Đặt overflow scroll */
   white-space: nowrap;
   overflow-y: hidden;
-  /* 隐藏滚动条 */
+  /* Ẩn thanh cuộn */
   border-radius: 4px;
   scrollbar-width: none; /* firefox */
   -ms-overflow-style: none; /* IE 10+ */

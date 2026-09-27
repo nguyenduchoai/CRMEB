@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,7 +18,7 @@ use app\model\product\product\StoreProductLog;
 class StoreProductLogDao extends BaseDao
 {
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -51,7 +51,7 @@ class StoreProductLogDao extends BaseDao
     }
 
     /**
-     * 访问趋势
+     * Xu hướng truy cập
      * @param $time
      * @param $timeType
      * @param $str
@@ -70,7 +70,7 @@ class StoreProductLogDao extends BaseDao
     }
 
     /**
-     * 列表
+     * Danh sách
      * @param array $where
      * @param string $field
      * @param int $page
@@ -92,7 +92,7 @@ class StoreProductLogDao extends BaseDao
     }
 
     /**
-     * 获取用户访问商品数量
+     * Lấy số lượt người dùng truy cập sản phẩm
      * @param $uid
      * @return int
      * @author wuhaotian

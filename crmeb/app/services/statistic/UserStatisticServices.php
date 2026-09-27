@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -29,14 +29,14 @@ use crmeb\exceptions\AdminException;
 class UserStatisticServices extends BaseServices
 {
     /**
-     * 基本概况
+     * Tổng quan cơ bản
      * @param $where
      * @return mixed
      */
     public function getBasic($where)
     {
         $time = explode('-', $where['time']);
-        if (count($time) != 2) throw new AdminException('请选择时间');
+        if (count($time) != 2) throw new AdminException('Vui lòng chọn thời gian');
         /** @var UserVisitServices $userVisit */
         $userVisit = app()->make(UserVisitServices::class);
         /** @var UserServices $user */
@@ -49,12 +49,12 @@ class UserStatisticServices extends BaseServices
         $toEndTime = implode('-', [0, $time[1]]);
         $cumulativeUserWhere = ['time' => $toEndTime, 'user_type' => $where['channel_type']];
 
-        $now['people'] = $userVisit->getDistinctCount($where, 'uid');//访客数
-        $now['browse'] = $userVisit->count($where);//访问量
-        $now['newUser'] = $user->count($where + ['user_type' => $where['channel_type']]);//新增用户数
-        $now['payPeople'] = $order->getDistinctCount($where + ['paid' => 1], 'uid');//成交用户数
-        $now['payUser'] = $otherOrder->getDistinctCount($where + ['member_type' => -1], 'uid');//激活付费会员数
-        $now['cumulativeUser'] = $user->count($cumulativeUserWhere);//累计用户数
+        $now['people'] = $userVisit->getDistinctCount($where, 'uid');//Số khách truy cập
+        $now['browse'] = $userVisit->count($where);//Lượt truy cập
+        $now['newUser'] = $user->count($where + ['user_type' => $where['channel_type']]);//Số người dùng mới
+        $now['payPeople'] = $order->getDistinctCount($where + ['paid' => 1], 'uid');//Số khách hàng đã mua
+        $now['payUser'] = $otherOrder->getDistinctCount($where + ['member_type' => -1], 'uid');//Số thành viên trả phí đã kích hoạt
+        $now['cumulativeUser'] = $user->count($cumulativeUserWhere);//Tổng số người dùng lũy kế
 
 
         $dayNum = (strtotime($time[1]) - strtotime($time[0])) / 86400 + 1;
@@ -64,15 +64,15 @@ class UserStatisticServices extends BaseServices
         ];
         $where['time'] = implode('-', $lastTime);
         $toEndTime = implode('-', [0, $lastTime[1]]);
-        $last['people'] = $userVisit->getDistinctCount($where, 'uid');//访客数
-        $last['browse'] = $userVisit->count($where);//访问量
-        $last['newUser'] = $user->count($where + ['user_type' => $where['channel_type']]);//新增用户数
-        $last['payPeople'] = $order->getDistinctCount($where + ['paid' => 1], 'uid');//成交用户数
-        $last['payUser'] = $otherOrder->getDistinctCount($where + ['member_type' => -1], 'uid');//激活付费会员数
+        $last['people'] = $userVisit->getDistinctCount($where, 'uid');//Số khách truy cập
+        $last['browse'] = $userVisit->count($where);//Lượt truy cập
+        $last['newUser'] = $user->count($where + ['user_type' => $where['channel_type']]);//Số người dùng mới
+        $last['payPeople'] = $order->getDistinctCount($where + ['paid' => 1], 'uid');//Số khách hàng đã mua
+        $last['payUser'] = $otherOrder->getDistinctCount($where + ['member_type' => -1], 'uid');//Số thành viên trả phí đã kích hoạt
         $cumulativeUserWhere['time'] = $toEndTime;
-        $last['cumulativeUser'] = $user->count($cumulativeUserWhere);//累计用户数
+        $last['cumulativeUser'] = $user->count($cumulativeUserWhere);//Tổng số người dùng lũy kế
 
-        //组合数据，计算环比
+        //Kết hợp dữ liệu, tính tỷ lệ so với kỳ trước
         $data = [];
         foreach ($now as $key => $item) {
             $data[$key]['num'] = $item;
@@ -84,7 +84,7 @@ class UserStatisticServices extends BaseServices
     }
 
     /**
-     * 用户趋势
+     * Xu hướng người dùng
      * @param $where
      * @param $excel
      * @return mixed
@@ -93,7 +93,7 @@ class UserStatisticServices extends BaseServices
     {
         $time = explode('-', $where['time']);
         $channelType = $where['channel_type'];
-        if (count($time) != 2) throw new AdminException('参数错误');
+        if (count($time) != 2) throw new AdminException('Tham số không hợp lệ');
         $dayCount = bcadd(bcdiv(bcsub(strtotime($time[1]), strtotime($time[0])), '86400'), '1');
         $data = [];
         if ($dayCount == 1) {
@@ -109,7 +109,7 @@ class UserStatisticServices extends BaseServices
     }
 
     /**
-     * 用户趋势
+     * Xu hướng người dùng
      * @param $time
      * @param $channelType
      * @param $num
@@ -128,11 +128,11 @@ class UserStatisticServices extends BaseServices
         $otherOrder = app()->make(OtherOrderServices::class);
 
         $newPeople = $visitPeople = $paidPeople = $rechargePeople = $vipPeople = [];
-        $newPeople['name'] = '新增用户数';
-        $visitPeople['name'] = '访客数';
-        $paidPeople['name'] = '成交用户数';
-        $rechargePeople['name'] = '充值用户';
-        $vipPeople['name'] = '新增付费用户数';
+        $newPeople['name'] = 'Số người dùng mới';
+        $visitPeople['name'] = 'Số khách truy cập';
+        $paidPeople['name'] = 'Số khách hàng đã mua';
+        $rechargePeople['name'] = 'Người dùng nạp tiền';
+        $vipPeople['name'] = 'Số người dùng trả phí mới';
         if ($num == 0) {
             $xAxis = ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'];
             $timeType = '%H';
@@ -176,11 +176,11 @@ class UserStatisticServices extends BaseServices
         } else {
             $data = $series = [];
             foreach ($xAxis as $item) {
-                $data['新增用户数'][] = isset($newPeople[$item]) ? intval($newPeople[$item]) : 0;
-                $data['访客数'][] = isset($visitPeople[$item]) ? intval($visitPeople[$item]) : 0;
-                $data['浏览量'][] = isset($visitNum[$item]) ? intval($visitNum[$item]) : 0;
-                $data['成交用户数'][] = isset($paidPeople[$item]) ? intval($paidPeople[$item]) : 0;
-                $data['新增付费用户数'][] = isset($vipPeople[$item]) ? intval($vipPeople[$item]) : 0;
+                $data['Số người dùng mới'][] = isset($newPeople[$item]) ? intval($newPeople[$item]) : 0;
+                $data['Số khách truy cập'][] = isset($visitPeople[$item]) ? intval($visitPeople[$item]) : 0;
+                $data['Lượt xem'][] = isset($visitNum[$item]) ? intval($visitNum[$item]) : 0;
+                $data['Số khách hàng đã mua'][] = isset($paidPeople[$item]) ? intval($paidPeople[$item]) : 0;
+                $data['Số người dùng trả phí mới'][] = isset($vipPeople[$item]) ? intval($vipPeople[$item]) : 0;
             }
             foreach ($data as $key => $item) {
                 $series[] = ['name' => $key, 'value' => $item];
@@ -190,14 +190,14 @@ class UserStatisticServices extends BaseServices
     }
 
     /**
-     * 微信用户信息
+     * Thông tin người dùng WeChat
      * @param $where
      * @return array
      */
     public function getWechat($where)
     {
         $time = explode('-', $where['time']);
-        if (count($time) != 2) throw new AdminException('参数错误');
+        if (count($time) != 2) throw new AdminException('Tham số không hợp lệ');
         /** @var WechatUserServices $user */
         $user = app()->make(WechatUserServices::class);
 
@@ -248,7 +248,7 @@ class UserStatisticServices extends BaseServices
             ['subscribe_time', '<>', '']
         ]);
 
-        //组合数据，计算环比
+        //Kết hợp dữ liệu, tính tỷ lệ so với kỳ trước
         $data = [];
         foreach ($now as $key => $item) {
             $data[$key]['num'] = $item;
@@ -259,14 +259,14 @@ class UserStatisticServices extends BaseServices
     }
 
     /**
-     * 微信用户趋势
+     * Xu hướng người dùng WeChat
      * @param $where
      * @return array
      */
     public function getWechatTrend($where)
     {
         $time = explode('-', $where['time']);
-        if (count($time) != 2) throw new AdminException('参数错误');
+        if (count($time) != 2) throw new AdminException('Tham số không hợp lệ');
         $dayCount = bcadd(bcdiv(bcsub(strtotime($time[1]), strtotime($time[0])), '86400'), '1');
         $data = [];
         if ($dayCount == 1) {
@@ -282,7 +282,7 @@ class UserStatisticServices extends BaseServices
     }
 
     /**
-     * 微信用户趋势
+     * Xu hướng người dùng WeChat
      * @param $time
      * @param $num
      * @return array
@@ -347,13 +347,13 @@ class UserStatisticServices extends BaseServices
         }
         $data = $series = [];
         foreach ($xAxis as $item) {
-            $data['新增关注用户'][] = $subscribe[$item] ?? 0;
-            $data['新增取关用户'][] = $unSubscribe[$item] ?? 0;
-            $data['累计关注用户'][] = $cumulativeSubscribe[$item] ?? 0;
-            $data['累计取关用户'][] = $cumulativeUnSubscribe[$item] ?? 0;
+            $data['Người dùng theo dõi mới'][] = $subscribe[$item] ?? 0;
+            $data['Người dùng hủy theo dõi mới'][] = $unSubscribe[$item] ?? 0;
+            $data['Tổng người dùng theo dõi'][] = $cumulativeSubscribe[$item] ?? 0;
+            $data['Tổng người dùng hủy theo dõi'][] = $cumulativeUnSubscribe[$item] ?? 0;
         }
-        foreach ($data['新增关注用户'] as $keys => $items) {
-            $data['净增用户数'][] = $data['新增关注用户'][$keys] - $data['新增取关用户'][$keys];
+        foreach ($data['Người dùng theo dõi mới'] as $keys => $items) {
+            $data['Số người dùng tăng ròng'][] = $data['Người dùng theo dõi mới'][$keys] - $data['Người dùng hủy theo dõi mới'][$keys];
         }
         foreach ($data as $key => $item) {
             $series[] = ['name' => $key, 'value' => $item];
@@ -362,7 +362,7 @@ class UserStatisticServices extends BaseServices
     }
 
     /**
-     * 用户地域图表
+     * Biểu đồ khu vực người dùng
      * @param $where
      * @return array
      */
@@ -370,7 +370,7 @@ class UserStatisticServices extends BaseServices
     {
         $time = explode('-', $where['time']);
         $channelType = $where['channel_type'];
-        if (count($time) != 2) throw new AdminException('参数错误');
+        if (count($time) != 2) throw new AdminException('Tham số không hợp lệ');
 
         /** @var UserVisitServices $userVisit */
         $userVisit = app()->make(UserVisitServices::class);
@@ -413,7 +413,7 @@ class UserStatisticServices extends BaseServices
         }
         $all = array_merge($all, $payPrice);
         foreach ($all as &$item) {
-            if ($item['province'] == '') $item['province'] = '未知';
+            if ($item['province'] == '') $item['province'] = 'Không xác định';
             if (!isset($item['allNum'])) $item['allNum'] = 0;
             if (!isset($item['newNum'])) $item['newNum'] = 0;
             if (!isset($item['visitNum'])) $item['visitNum'] = 0;
@@ -430,7 +430,7 @@ class UserStatisticServices extends BaseServices
     }
 
     /**
-     * 用户性别
+     * Giới tính người dùng
      * @param $where
      * @return mixed
      */
@@ -438,16 +438,16 @@ class UserStatisticServices extends BaseServices
     {
         $time = explode('-', $where['time']);
         $channelType = $where['channel_type'];
-        if (count($time) != 2) throw new AdminException('参数错误');
+        if (count($time) != 2) throw new AdminException('Tham số không hợp lệ');
 
         /** @var UserWechatuserServices $user */
         $wechatUser = app()->make(UserWechatuserServices::class);
 
         $data = $wechatUser->getSex($time, $channelType);
         $oneData = [
-            ['value' => 0, 'name' => '未知', 'name_key' => 0],
-            ['value' => 0, 'name' => '男', 'name_key' => 1],
-            ['value' => 0, 'name' => '女', 'name_key' => 2],
+            ['value' => 0, 'name' => 'Không xác định', 'name_key' => 0],
+            ['value' => 0, 'name' => 'Nam', 'name_key' => 1],
+            ['value' => 0, 'name' => 'Nữ', 'name_key' => 2],
         ];
         foreach ($oneData as &$value) {
             foreach ($data as $item) {

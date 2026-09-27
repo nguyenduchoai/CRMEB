@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,7 +17,7 @@ use crmeb\traits\ModelTrait;
 use think\Model;
 
 /**
- * TODO 优惠券前台用户领取Model
+ * TODO Model người dùng nhận phiếu giảm giá ở phía người dùng
  * Class StoreCouponIssueUser
  * @package app\model\coupon
  */
@@ -26,13 +26,13 @@ class StoreCouponIssueUser extends BaseModel
     use ModelTrait;
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'store_coupon_issue_user';
 
     /**
-     * 获取领取人名称头像
+     * Lấy tên và ảnh đại diện người nhận
      * @return \think\model\relation\HasOne
      */
     public function userInfo()
@@ -41,7 +41,7 @@ class StoreCouponIssueUser extends BaseModel
     }
 
     /**
-     * 添加时间获取器
+     * Getter thời gian thêm
      * @param $value
      * @return false|string
      */
@@ -51,7 +51,7 @@ class StoreCouponIssueUser extends BaseModel
     }
 
     /**
-     * 领取用户搜索器
+     * Bộ lọc người dùng đã nhận
      * @param Model $query
      * @param $value
      * @param $data
@@ -62,7 +62,7 @@ class StoreCouponIssueUser extends BaseModel
     }
 
     /**
-     * 领取优惠券搜索器
+     * Bộ lọc phiếu giảm giá đã nhận
      * @param Model $query
      * @param $value
      * @param $data

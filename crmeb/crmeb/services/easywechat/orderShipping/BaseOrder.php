@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -40,18 +40,18 @@ class BaseOrder extends AbstractAPI
     private function resultHandle(Collection $result)
     {
         if (empty($result)) {
-            throw new AdminException('微信接口返回异常');
+            throw new AdminException('API WeChat trả về lỗi');
         }
         $res = $result->toArray();
         if ($res['errcode'] == 0) {
             return $res;
         } else {
-            throw  new AdminException("微信接口异常：code = {$res['errcode']} msg = {$res['errmsg']}");
+            throw  new AdminException("Lỗi API WeChat: code = {$res['errcode']} msg = {$res['errmsg']}");
         }
     }
 
     /**
-     * 发货
+     * Giao hàng
      * @param $params
      * @return array
      * @throws \EasyWeChat\Core\Exceptions\HttpException
@@ -65,7 +65,7 @@ class BaseOrder extends AbstractAPI
     }
 
     /**
-     * 订单列表查询
+     * Tra cứu danh sách đơn hàng
      * @param $params
      * @return array
      * @throws \EasyWeChat\Core\Exceptions\HttpException
@@ -79,7 +79,7 @@ class BaseOrder extends AbstractAPI
     }
 
     /**
-     * 合单
+     * Hợp đơn
      * @param $params
      * @return array
      * @throws \EasyWeChat\Core\Exceptions\HttpException
@@ -94,7 +94,7 @@ class BaseOrder extends AbstractAPI
 
 
     /**
-     * 签收消息提醒
+     * Nhắc tin nhắn ký nhận
      * @param $params
      * @return array
      * @throws \EasyWeChat\Core\Exceptions\HttpException
@@ -109,7 +109,7 @@ class BaseOrder extends AbstractAPI
 
 
     /**
-     * 查询小程序是否已开通发货信息管理服务
+     * Truy vấn Mini Program đã mở dịch vụ quản lý thông tin giao hàng chưa
      * @return array
      * @throws \EasyWeChat\Core\Exceptions\HttpException
      *
@@ -125,7 +125,7 @@ class BaseOrder extends AbstractAPI
     }
 
     /**
-     * 设置跳转连接
+     * Đặt liên kết chuyển trang
      * @param $path
      * @return array
      * @throws \EasyWeChat\Core\Exceptions\HttpException
@@ -142,7 +142,7 @@ class BaseOrder extends AbstractAPI
     }
 
     /**
-     * 获取运力id列表get_delivery_list
+     * Lấy danh sách id vận chuyển get_delivery_list
      * @return array
      * @throws \EasyWeChat\Core\Exceptions\HttpException
      *

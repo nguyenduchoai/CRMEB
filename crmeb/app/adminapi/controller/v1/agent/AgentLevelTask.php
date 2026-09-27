@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use app\services\agent\AgentLevelTaskServices;
 use think\facade\App;
 
 /**
- * 分销等级任务控制器
+ * Controller nhiệm vụ cấp độ CTV
  * Class AgentLevelTask
  * @package app\controller\admin\v1\agent
  */
@@ -39,7 +39,7 @@ class AgentLevelTask extends AuthController
     }
 
     /**
-     * 显示等级任务列表
+     * Hiển thị danh sách nhiệm vụ theo hạng
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -47,40 +47,40 @@ class AgentLevelTask extends AuthController
      */
     public function index()
     {
-        // 获取请求参数：等级ID、状态、关键词
+        // Lấy tham số yêu cầu: ID cấp độ, trạng thái, từ khóa
         $where = $this->request->getMore([
             ['id', 0],
             ['status', ''],
             ['keyword', '']
         ]);
         if (!$where['id']) {
-            return app('json')->fail('参数错误');
+            return app('json')->fail('Tham số không hợp lệ');
         }
         $where['level_id'] = $where['id'];
         unset($where['id']);
-        // 调用服务层获取等级任务列表
+        // Gọi tầng service để lấy danh sách nhiệm vụ cấp độ
         return app('json')->success($this->services->getLevelTaskList($where));
     }
 
     /**
-     * 等级任务添加表单
+     * Form thêm nhiệm vụ theo hạng
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
     public function create()
     {
-        // 获取等级ID
+        // Lấy ID cấp độ
         [$level_id] = $this->request->postMore([
             ['level_id', 0]], true);
         if (!$level_id) {
-            return app('json')->fail('参数错误');
+            return app('json')->fail('Tham số không hợp lệ');
         }
-        // 调用服务层创建添加表单
+        // Gọi tầng service để tạo form thêm mới
         return app('json')->success($this->services->createForm((int)$level_id));
     }
 
     /**
-     * 保存等级任务
+     * Lưu nhiệm vụ theo hạng
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -88,7 +88,7 @@ class AgentLevelTask extends AuthController
      */
     public function save()
     {
-        // 获取并验证请求数据
+        // Lấy và xác thực dữ liệu yêu cầu
         $data = $this->request->postMore([
             ['level_id', 0],
             ['name', ''],
@@ -97,25 +97,25 @@ class AgentLevelTask extends AuthController
             ['desc', 0],
             ['sort', 0],
             ['status', 0]]);
-        if (!$data['level_id']) return app('json')->fail('参数错误');
-        if (!$data['name']) return app('json')->fail('请输入任务名称');
-        if (!$data['type']) return app('json')->fail('请选择任务类型');
-        if (!$data['number']) return app('json')->fail('请输入限定数量');
-        // 检查任务类型是否有效
+        if (!$data['level_id']) return app('json')->fail('Tham số không hợp lệ');
+        if (!$data['name']) return app('json')->fail('Vui lòng nhập tên nhiệm vụ');
+        if (!$data['type']) return app('json')->fail('Vui lòng chọn loại nhiệm vụ');
+        if (!$data['number']) return app('json')->fail('Vui lòng nhập số lượng yêu cầu');
+        // Kiểm tra loại nhiệm vụ có hợp lệ không
         $this->services->checkTypeTask(0, $data);
         $data['add_time'] = time();
-        // 保存任务数据
+        // Lưu dữ liệu nhiệm vụ
         $this->services->save($data);
-        // 更新等级的任务数量
+        // Cập nhật số lượng nhiệm vụ của cấp độ
         $levelInfo = app()->make(AgentLevelServices::class)->get((int)$data['level_id']);
         $levelInfo->task_num = $levelInfo->task_num + 1;
         $levelInfo->task_total_num = $levelInfo->task_total_num + 1;
         $levelInfo->save();
-        return app('json')->success('添加任务成功');
+        return app('json')->success('Thêm nhiệm vụ thành công');
     }
 
     /**
-     * 显示指定的资源
+     * Hiển thị resource được chỉ định
      * @param $id
      */
     public function read($id)
@@ -124,19 +124,19 @@ class AgentLevelTask extends AuthController
     }
 
     /**
-     * 等级任务修改表单
+     * Form sửa nhiệm vụ theo hạng
      * @param $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
     public function edit($id)
     {
-        // 调用服务层创建编辑表单
+        // Gọi tầng service để tạo form chỉnh sửa
         return app('json')->success($this->services->editForm((int)$id));
     }
 
     /**
-     * 修改等级任务
+     * Sửa nhiệm vụ theo hạng
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -145,7 +145,7 @@ class AgentLevelTask extends AuthController
      */
     public function update($id)
     {
-        // 获取并验证请求数据
+        // Lấy và xác thực dữ liệu yêu cầu
         $data = $this->request->postMore([
             ['name', ''],
             ['type', ''],
@@ -153,14 +153,14 @@ class AgentLevelTask extends AuthController
             ['desc', 0],
             ['sort', 0],
             ['status', 0]]);
-        if (!$data['name']) return app('json')->fail('请输入任务名称');
-        if (!$data['type']) return app('json')->fail('请选择任务类型');
-        if (!$data['number']) return app('json')->fail('请输入限定数量');
-        // 检查任务是否存在
-        if (!$levelTaskInfo = $this->services->getLevelTaskInfo((int)$id)) return app('json')->fail('编辑的任务不存在');
-        // 检查任务类型是否有效
+        if (!$data['name']) return app('json')->fail('Vui lòng nhập tên nhiệm vụ');
+        if (!$data['type']) return app('json')->fail('Vui lòng chọn loại nhiệm vụ');
+        if (!$data['number']) return app('json')->fail('Vui lòng nhập số lượng yêu cầu');
+        // Kiểm tra nhiệm vụ có tồn tại không
+        if (!$levelTaskInfo = $this->services->getLevelTaskInfo((int)$id)) return app('json')->fail('Nhiệm vụ cần sửa không tồn tại');
+        // Kiểm tra loại nhiệm vụ có hợp lệ không
         $this->services->checkTypeTask((int)$id, $data);
-        // 更新任务信息
+        // Cập nhật thông tin nhiệm vụ
         $levelTaskInfo->name = $data['name'];
         $levelTaskInfo->type = $data['type'];
         $levelTaskInfo->number = $data['number'];
@@ -168,11 +168,11 @@ class AgentLevelTask extends AuthController
         $levelTaskInfo->sort = $data['sort'];
         $levelTaskInfo->status = $data['status'];
         $levelTaskInfo->save();
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
     /**
-     * 删除等级任务
+     * Xóa nhiệm vụ cấp độ
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -181,37 +181,37 @@ class AgentLevelTask extends AuthController
      */
     public function delete($id)
     {
-        if (!$id) return app('json')->fail('参数错误');
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $levelTaskInfo = $this->services->getLevelTaskInfo((int)$id);
         if ($levelTaskInfo) {
-            // 标记删除
+            // Đánh dấu xóa
             $res = $this->services->update($id, ['is_del' => 1]);
             if ($res) {
-                // 更新等级的任务数量
+                // Cập nhật số lượng nhiệm vụ của cấp độ
                 $levelInfo = app()->make(AgentLevelServices::class)->get((int)$levelTaskInfo['level_id']);
                 $levelInfo->task_num = $levelInfo->task_num - 1;
                 $levelInfo->task_total_num = $levelInfo->task_total_num - 1;
                 if ($levelInfo->task_num <= 0) $levelInfo->task_num = $levelInfo->task_total_num;
                 $levelInfo->save();
             } else {
-                return app('json')->fail('删除失败');
+                return app('json')->fail('Xóa thất bại');
             }
         }
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param int $id
      * @param string $status
      * @return mixed
      */
     public function set_status($id = 0, $status = '')
     {
-        if ($status == '' || $id == 0) return app('json')->fail('参数错误');
-        // 更新状态
+        if ($status == '' || $id == 0) return app('json')->fail('Tham số không hợp lệ');
+        // Cập nhật trạng thái
         $this->services->update($id, ['status' => $status]);
-        return app('json')->success('设置成功');
+        return app('json')->success('Cài đặt thành công');
     }
 
 }

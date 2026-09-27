@@ -10,7 +10,7 @@
         <view
           class="myApplet w-324 h-62 text-center rd-12rpx lh-62rpx fs-24 bg--w111-fff text-w111-303133"
         >
-          点击添加到我的小程序
+          Nhấn để thêm vào Mini Program của tôi
           <text
             class="iconfont icon-ic_close2 text--w111-ccc ml-16"
             @click="myApplet = false"
@@ -18,7 +18,7 @@
         </view>
       </view>
       <!-- #endif -->
-      <!-- 轮播搜索 -->
+      <!-- Tìm kiếm kèm ảnh trình chiếu -->
       <homeComb
         v-if="showHomeComb"
         :dataConfig="homeCombData"
@@ -28,7 +28,7 @@
         @storeTap="storeTap"
       ></homeComb>
 
-      <!-- 顶部搜索框 -->
+      <!-- Ô tìm kiếm phía trên -->
       <headerSerch
         v-if="isHeaderSerch"
         :dataConfig="headerSerchCombData"
@@ -45,7 +45,7 @@
       ></tabNav>
 
       <view class="index">
-        <!-- 自定义样式 -->
+        <!-- Style tùy chỉnh -->
         <block v-for="(item, index) in styleConfig" :key="index">
           <view :id="item.id">
             <userInfor
@@ -62,7 +62,7 @@
               v-else-if="item.name == 'newVip'"
               :dataConfig="item"
             ></newVip>
-            <!-- 文章列表 -->
+            <!-- Danh sách bài viết -->
             <articleList
               v-else-if="item.name == 'articleList'"
               :dataConfig="item"
@@ -80,18 +80,18 @@
               v-else-if="item.name == 'combination'"
               :dataConfig="item"
             ></combination>
-            <!-- 优惠券 -->
+            <!-- Phiếu giảm giá -->
             <coupon
               v-else-if="item.name == 'coupon'"
               :dataConfig="item"
               @changeLogin="changeLogin"
             ></coupon>
-            <!-- 客户服务 -->
+            <!-- Chăm sóc khách hàng -->
             <customerService
               v-else-if="item.name == 'customerService'"
               :dataConfig="item"
             ></customerService>
-            <!-- 商品列表 -->
+            <!-- Danh sách sản phẩm -->
             <goodList
               ref="goodLists"
               v-else-if="
@@ -107,7 +107,7 @@
               :dataConfig="item"
             ></homeGoodRecommend> -->
             <guide v-else-if="item.name == 'guide'" :dataConfig="item"></guide>
-            <!-- 直播模块 -->
+            <!-- Module livestream -->
             <!-- #ifdef  MP-WEIXIN -->
             <liveBroadcast
               v-else-if="item.name == 'liveBroadcast'"
@@ -115,14 +115,14 @@
             ></liveBroadcast>
             <!-- #endif -->
             <menus v-else-if="item.name == 'menus'" :dataConfig="item"></menus>
-            <!-- 实时消息 -->
+            <!-- Tin nhắn thời gian thực -->
             <news v-else-if="item.name == 'news'" :dataConfig="item"></news>
-            <!-- 图片库 -->
+            <!-- Thư viện ảnh -->
             <pictureCube
               v-else-if="item.name == 'pictureCube'"
               :dataConfig="item"
             ></pictureCube>
-            <!-- 促销列表 -->
+            <!-- Danh sách khuyến mãi -->
             <promotionList
               ref="promotionLists"
               v-else-if="item.name == 'promotionList'"
@@ -134,7 +134,7 @@
               v-else-if="item.name == 'seckill'"
               :dataConfig="item"
             ></seckill>
-            <!-- 轮播图-->
+            <!-- Ảnh trình chiếu-->
             <swiperBg
               v-else-if="item.name == 'swiperBg'"
               :dataConfig="item"
@@ -144,7 +144,7 @@
               :dataConfig="item"
             ></swipers>
 
-            <!-- 标题 -->
+            <!-- Tiêu đề -->
             <titles
               v-else-if="item.name == 'titles'"
               :dataConfig="item"
@@ -179,7 +179,7 @@
               v-else-if="item.name == 'follow'"
               :dataConfig="item"
             ></follow>
-            <!-- 商品详情 -->
+            <!-- Chi tiết sản phẩm -->
             <productInfo
               v-else-if="item.name == 'productInfo'"
               :dataConfig="item"
@@ -233,7 +233,7 @@
           </view>
         </block>
 
-        <!-- 插槽：用于展示分类商品列表或其他底部内容 -->
+        <!-- Slot: dùng để hiển thị danh sách sản phẩm theo danh mục hoặc nội dung khác ở phía dưới -->
         <slot name="bottom"></slot>
 
         <view class="pb-safe" :style="[pdHeights]" v-if="isFooter"></view>
@@ -248,8 +248,8 @@
     <view v-else>
       <view class="error-network">
         <image :src="imgHost + '/statics/images/error-network.gif'"></image>
-        <view class="title">{{ $t(`网络连接断开`) }}</view>
-        <view class="btn" @click="reconnect">{{ $t(`重新连接`) }}</view>
+        <view class="title">{{ $t(`Mất kết nối mạng`) }}</view>
+        <view class="btn" @click="reconnect">{{ $t(`Kết nối lại`) }}</view>
       </view>
     </view>
   </view>
@@ -259,7 +259,7 @@
 import pageFooter from "@/components/pageFooter/index.vue";
 import { HTTP_REQUEST_URL } from "@/config/app";
 import colors from "@/mixins/color";
-// diyComponents - 同目录使用相对路径
+// diyComponents - cùng thư mục nên dùng đường dẫn tương đối
 import homeComb from "./homeComb.vue";
 import headerSerch from "./headerSerch.vue";
 import tabNav from "./tabNav.vue";
@@ -340,22 +340,22 @@ export default {
   },
   mixins: [colors],
   props: {
-    // DIY配置数据
+    // Dữ liệu cấu hình DIY
     diyData: {
       type: Object,
       default: () => ({}),
     },
-    // 是否为首页（用于控制小程序添加到我的小程序提示等）
+    // Có phải trang chủ không (dùng để điều khiển lời nhắc “Thêm vào Mini Program của tôi”, v.v.)
     isHome: {
       type: Boolean,
       default: false,
     },
-    // 页面滚动状态
+    // Trạng thái cuộn trang
     isScrolled: {
       type: Boolean,
       default: false,
     },
-    // 是否固定（用于吸顶）
+    // Có cố định không (dùng để ghim ở đầu trang)
     isFixed: {
       type: Boolean,
       default: false,
@@ -392,17 +392,17 @@ export default {
       type: Array,
       default: () => [],
     },
-    // 视频播放状态
+    // Trạng thái phát video
     productVideoStatus: {
       type: Boolean,
       default: false,
     },
-    // 进店规则归属门店排序位置
+    // Vị trí sắp xếp của cửa hàng được gán theo quy tắc vào cửa hàng
     belongIndex: {
       type: Number,
       default: 0,
     },
-    // 网络错误状态
+    // Trạng thái lỗi mạng
     errorNetwork: {
       type: Boolean,
       default: false,
@@ -427,12 +427,12 @@ export default {
       type: String,
       default: "",
     },
-    // 微页面
+    // Trang tùy chỉnh
     microPage: {
       type: Boolean,
       default: false,
     },
-    // 商品 vip 模块
+    // Module vip của sản phẩm
     isShowPaidVip: {
       type: Boolean,
       default: false,
@@ -472,7 +472,7 @@ export default {
       return {
         backgroundColor: this.bgColor,
         backgroundImage: this.bgPic ? `url(${this.bgPic})` : "",
-        minHeight: "100vh", // 确保背景铺满
+        minHeight: "100vh", // Đảm bảo nền phủ kín
       };
     },
     bgClass() {
@@ -493,7 +493,7 @@ export default {
         if (val && Object.keys(val).length > 0) {
           this.setDiyData(val);
         } else {
-          // 重置数据
+          // Đặt lại dữ liệu
           this.styleConfig = [];
           this.homeCombData = {};
           this.headerSerchCombData = {};
@@ -533,7 +533,7 @@ export default {
     onShare() {
       this.$emit("share");
     },
-    // 对象转数组
+    // Chuyển object thành mảng
     objToArr(data) {
       if (!data) return [];
       let obj = Object.keys(data).sort();
@@ -551,7 +551,7 @@ export default {
       }
 
       let temp = [];
-      // 重置状态
+      // Đặt lại trạng thái
       this.showHomeComb = false;
       this.isHeaderSerch = false;
       this.showCateNav = false;
@@ -582,7 +582,7 @@ export default {
           }
         });
 
-        // 排序
+        // Thứ tự sắp xếp
         temp.sort((a, b) => a.timestamp - b.timestamp);
         this.styleConfig = temp;
       }

@@ -77,7 +77,7 @@ export default {
         },
       };
     },
-    // 视频高度
+    // Chiều cao video
     videoStyle() {
       let borderRadius = `${this.dataConfig.fillet.val * 2}rpx`;
       if (this.dataConfig.fillet.type) {

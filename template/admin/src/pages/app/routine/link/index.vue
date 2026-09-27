@@ -3,58 +3,58 @@
     <el-card :bordered="false" shadow="never" class="ivu-mt">
       <el-row class="mb20">
         <el-col :span="24">
-          <el-button type="primary" v-db-click @click="add" class="mr10">创建链接</el-button>
+          <el-button type="primary" v-db-click @click="add" class="mr10">Tạo liên kết</el-button>
         </el-col>
       </el-row>
       <el-table
         :data="tableList"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
-        <el-table-column label="编号" width="80">
+        <el-table-column label="Mã số" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="名称" width="180">
+        <el-table-column label="Tên" width="180">
           <template slot-scope="scope">
             <span>{{ scope.row.title }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="跳转地址" width="180">
+        <el-table-column label="Địa chỉ chuyển hướng" width="180">
           <template slot-scope="scope">
             <span>{{ scope.row.path }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="系统链接(编辑不改变)" min-width="200">
+        <el-table-column label="Liên kết hệ thống (không đổi khi sửa)" min-width="200">
           <template slot-scope="scope">
             <span>{{ scope.row.http_url }}</span>
-            <a class="ml10" v-db-click @click="onCopy(scope.row.http_url)">复制</a>
+            <a class="ml10" v-db-click @click="onCopy(scope.row.http_url)">Sao chép</a>
           </template>
         </el-table-column>
-        <el-table-column label="微信链接(编辑改变)" min-width="200">
+        <el-table-column label="Liên kết WeChat (thay đổi khi sửa)" min-width="200">
           <template slot-scope="scope">
             <span>{{ scope.row.url }}</span>
-            <a class="ml10" v-db-click @click="onCopy(scope.row.url)">复制</a>
+            <a class="ml10" v-db-click @click="onCopy(scope.row.url)">Sao chép</a>
           </template>
         </el-table-column>
-        <el-table-column label="添加时间" min-width="130">
+        <el-table-column label="Thời gian thêm" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.add_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="到期时间" min-width="130">
+        <el-table-column label="Thời gian hết hạn" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.expire_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="120">
+        <el-table-column label="Thao tác" fixed="right" width="120">
           <template slot-scope="scope">
-            <a v-db-click @click="edit(scope.row)">编辑</a>
+            <a v-db-click @click="edit(scope.row)">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除链接', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa liên kết', scope.$index)">Xóa</a>
           </template>
         </el-table-column>
       </el-table>
@@ -101,7 +101,7 @@ export default {
     this.routineSchemeList();
   },
   methods: {
-    // 添加
+    // Thêm
     add() {
       this.$modalForm(routineSchemeForm(0)).then((res) => {
         this.routineSchemeList();
@@ -110,13 +110,13 @@ export default {
     onCopy(copyData) {
       this.$copyText(copyData)
         .then((message) => {
-          this.$message.success('复制成功');
+          this.$message.success('Sao chép thành công');
         })
         .catch((err) => {
-          this.$message.error('复制失败');
+          this.$message.error('Sao chép thất bại');
         });
     },
-    // 列表
+    // Danh sách
     routineSchemeList() {
       this.loading = true;
       routineSchemeList(this.tableFrom)
@@ -130,13 +130,13 @@ export default {
           this.loading = false;
         });
     },
-    // 添加
+    // Thêm
     edit(row) {
       this.$modalForm(routineSchemeForm(row.id)).then((res) => {
         this.routineSchemeList();
       });
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,

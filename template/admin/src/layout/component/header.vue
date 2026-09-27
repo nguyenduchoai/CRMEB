@@ -13,7 +13,7 @@ export default {
     return {};
   },
   computed: {
-    // 设置顶部 header 的具体高度
+    // Đặt chiều cao cụ thể cho header phía trên
     setHeaderHeight() {
       let { isTagsview, layout } = this.$store.state.themeConfig.themeConfig;
       if (layout == 'classic') return '66px';

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -26,7 +26,7 @@ class OutInterfaceServices extends BaseServices
     }
 
     /**
-     * 验证对外接口权限
+     * Kiểm tra quyền API đối ngoại
      * @param Request $request
      * @return bool
      */
@@ -47,12 +47,12 @@ class OutInterfaceServices extends BaseServices
         if (in_array($rule, $rolesAuth[$method])) {
             return true;
         } else {
-            throw new AuthException('您暂时没有访问权限');
+            throw new AuthException('Bạn tạm thời không có quyền truy cập');
         }
     }
 
     /**
-     * 对外接口列表
+     * Danh sách API bên ngoài
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -60,11 +60,11 @@ class OutInterfaceServices extends BaseServices
      */
     public function outInterfaceList(): array
     {
-        // 获取系统路由分类列表
+        // Lấy danh sách danh mục route hệ thống
         $list = app()->make(SystemRouteCateServices::class)->selectList(['app_name' => 'outapi'], 'id,pid,name,name as title')->toArray();
-        // 获取系统路由列表
+        // Lấy danh sách route hệ thống
         $data = app()->make(SystemRouteServices::class)->selectList(['app_name' => 'outapi'], 'id,cate_id as pid,name,name as title')->toArray();
-        // 遍历分类列表，将分类下的路由添加到对应的子节点中
+        // Lặp qua danh sách danh mục, thêm route trong danh mục vào node con tương ứng
         foreach ($list as &$item) {
             foreach ($data as $k => $v) {
                 if ($item['id'] == $v['pid']) {
@@ -72,13 +72,13 @@ class OutInterfaceServices extends BaseServices
                 }
             }
         }
-        // 返回完整的外部接口列表
+        // Trả về danh sách API bên ngoài đầy đủ
         return $list;
     }
 
 
     /**
-     * 新增对外接口文档
+     * Thêm tài liệu API đối ngoại
      * @param $id
      * @param $data
      * @return bool
@@ -93,12 +93,12 @@ class OutInterfaceServices extends BaseServices
         } else {
             $res = $this->dao->save($data);
         }
-        if (!$res) throw new AdminException('保存失败');
+        if (!$res) throw new AdminException('Lưu thất bại');
         return true;
     }
 
     /**
-     * 对外接口文档
+     * Tài liệu API công khai
      * @param $id
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -107,9 +107,9 @@ class OutInterfaceServices extends BaseServices
      */
     public function interfaceInfo($id)
     {
-        if (!$id) throw new AdminException('参数错误');
+        if (!$id) throw new AdminException('Tham số không hợp lệ');
         $info = $this->dao->get($id);
-        if (!$info) throw new AdminException('数据不存在');
+        if (!$info) throw new AdminException('Dữ liệu không tồn tại');
         $info = $info->toArray();
         $info['request_params'] = json_decode($info['request_params']);
         $info['return_params'] = json_decode($info['return_params']);
@@ -118,26 +118,26 @@ class OutInterfaceServices extends BaseServices
     }
 
     /**
-     * 修改接口名称
+     * Sửa tên API
      * @param $data
      * @return bool
      */
     public function editInterfaceName($data)
     {
         $res = $this->dao->update($data['id'], ['name' => $data['name']]);
-        if (!$res) throw new AdminException('修改失败');
+        if (!$res) throw new AdminException('Sửa thất bại');
         return true;
     }
 
     /**
-     * 删除接口
+     * Xóa API
      * @param $id
      * @return bool
      */
     public function delInterface($id)
     {
         $res = $this->dao->update($id, ['is_del' => 1]);
-        if (!$res) throw new AdminException('删除失败');
+        if (!$res) throw new AdminException('Xóa thất bại');
         return true;
     }
 }

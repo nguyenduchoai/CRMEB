@@ -1,5 +1,5 @@
 <template>
-  <!-- 图片魔方 -->
+  <!-- Lưới ảnh -->
   <view v-if="picList.length">
     <common-wrapper :config="configData">
       <view class="pictureCube">
@@ -447,10 +447,10 @@ export default {
     this.computedHeight();
   },
   methods: {
-    //替换安全域名
+    //Thay domain an toàn
     setDomain: function (url) {
       url = url ? url.toString() : "";
-      //本地调试打开,生产请注销
+      //Mở khi debug local, khi lên production hãy comment lại
       if (url.indexOf("https://") > -1) return url;
       else return url.replace("http://", "https://");
     },

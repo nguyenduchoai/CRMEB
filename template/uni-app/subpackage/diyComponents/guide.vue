@@ -1,5 +1,5 @@
 <template>
-  <!-- 辅助线 -->
+  <!-- Đường phân cách -->
   <view v-show="!isSortType">
     <common-wrapper :config="configData">
       <view class="lines">

@@ -2,7 +2,7 @@
   <div>
     <div class="labelChange" :class="change === true ? 'on' : ''">
       <div class="priceTitle cor32">
-        用户标签
+        Nhãn người dùng
         <span class="iconfontYI icon-guanbi" v-db-click @click="close"></span>
       </div>
       <div class="label-wrapper">
@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="footer">
-        <el-button type="primary" class="btn" v-db-click @click="subBtn">确定</el-button>
+        <el-button type="primary" class="btn" v-db-click @click="subBtn">Xác nhận</el-button>
       </div>
     </div>
     <div class="maskModel" @touchmove.prevent v-show="change === true"></div>
@@ -70,7 +70,7 @@ export default {
         label.disabled = true;
       }
     },
-    // 确定
+    // Xác nhận
     subBtn() {
       let unLaberids = [];
       this.labelList.map((item) => {

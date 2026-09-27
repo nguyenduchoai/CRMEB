@@ -2,7 +2,7 @@
   <div>
     <el-dialog
       :visible.sync="isTemplate"
-      :title="formItem.id ? '编辑提货点' : '添加提货点'"
+      :title="formItem.id ? 'Sửa điểm nhận hàng' : 'Thêm điểm nhận hàng'"
       width="720px"
       @closed="cancel"
       append-to-body
@@ -19,28 +19,28 @@
           <el-row :gutter="24">
             <el-col :span="24">
               <el-col v-bind="grid">
-                <el-form-item label="提货点名称：" prop="name" label-for="name">
-                  <el-input v-model="formItem.name" placeholder="请输入提货点名称" />
+                <el-form-item label="Tên điểm nhận hàng:" prop="name" label-for="name">
+                  <el-input v-model="formItem.name" placeholder="Vui lòng nhập tên điểm nhận hàng" />
                 </el-form-item>
               </el-col>
             </el-col>
             <el-col :span="24">
               <el-col v-bind="grid">
-                <el-form-item label="提货点简介：" label-for="introduction">
-                  <el-input v-model="formItem.introduction" placeholder="请输入提货点简介" />
+                <el-form-item label="Giới thiệu điểm nhận hàng:" label-for="introduction">
+                  <el-input v-model="formItem.introduction" placeholder="Vui lòng nhập giới thiệu điểm nhận hàng" />
                 </el-form-item>
               </el-col>
             </el-col>
             <el-col :span="24">
               <el-col v-bind="grid">
-                <el-form-item label="提货点电话：" label-for="phone" prop="phone">
-                  <el-input v-model="formItem.phone" placeholder="请输入提货点电话：" />
+                <el-form-item label="Số điện thoại điểm nhận hàng:" label-for="phone" prop="phone">
+                  <el-input v-model="formItem.phone" placeholder="Vui lòng nhập số điện thoại điểm nhận hàng:" />
                 </el-form-item>
               </el-col>
             </el-col>
             <el-col :span="24">
               <el-col v-bind="grid">
-                <el-form-item label="提货点地址：" label-for="address" prop="address">
+                <el-form-item label="Địa chỉ điểm nhận hàng:" label-for="address" prop="address">
                   <el-cascader
                     :options="addresData"
                     v-model="formItem.address"
@@ -52,21 +52,21 @@
             </el-col>
             <el-col :span="24">
               <el-col v-bind="grid">
-                <el-form-item label="详细地址：" label-for="detailed_address" prop="detailed_address">
-                  <el-input v-model="formItem.detailed_address" placeholder="请输入详细地址" />
+                <el-form-item label="Địa chỉ chi tiết:" label-for="detailed_address" prop="detailed_address">
+                  <el-input v-model="formItem.detailed_address" placeholder="Vui lòng nhập địa chỉ chi tiết" />
                 </el-form-item>
               </el-col>
             </el-col>
             <!--<el-col :span="24">-->
             <!--<el-col v-bind="grid">-->
-            <!--<el-form-item label="核销时效：" label-for="valid_time">-->
-            <!--<DatePicker @change="onchangeDate" :value="formItem.valid_time" v-model="formItem.valid_time" format="yyyy/MM/dd" type="daterange" split-panels placeholder="请选择核销时效" ></DatePicker>-->
+            <!--<el-form-item label="Thời hạn xác nhận sử dụng:" label-for="valid_time">-->
+            <!--<DatePicker @change="onchangeDate" :value="formItem.valid_time" v-model="formItem.valid_time" format="yyyy/MM/dd" type="daterange" split-panels placeholder="Vui lòng chọn thời hạn xác nhận sử dụng" ></DatePicker>-->
             <!--</el-form-item>-->
             <!--</el-col>-->
             <!--</el-col>-->
             <el-col :span="24">
               <el-col v-bind="grid">
-                <el-form-item label="提货点营业：" label-for="day_time" prop="day_time">
+                <el-form-item label="Giờ hoạt động điểm nhận hàng:" label-for="day_time" prop="day_time">
                   <el-time-picker
                     is-range
                     @change="onchangeTime"
@@ -74,9 +74,9 @@
                     format="HH:mm:ss"
                     value-format="HH:mm:ss"
                     range-separator="-"
-                    start-placeholder="开始时间"
-                    end-placeholder="结束时间"
-                    placeholder="选择时间范围"
+                    start-placeholder="Thời gian bắt đầu"
+                    end-placeholder="Thời gian kết thúc"
+                    placeholder="Chọn khoảng thời gian"
                     style="width: 100%"
                   ></el-time-picker>
                 </el-form-item>
@@ -84,8 +84,8 @@
             </el-col>
             <el-col :span="24">
               <el-col v-bind="grid">
-                <el-form-item label="提货点logo：" prop="image">
-                  <div class="picBox" v-db-click @click="modalPicTap('单选', 'logo')">
+                <el-form-item label="Logo điểm nhận hàng:" prop="image">
+                  <div class="picBox" v-db-click @click="modalPicTap('Chọn một', 'logo')">
                     <div class="pictrue" v-if="formItem.image">
                       <img v-lazy="formItem.image" />
                     </div>
@@ -98,8 +98,8 @@
             </el-col>
             <el-col :span="24">
               <el-col v-bind="grid">
-                <el-form-item label="提货点大图：" prop="oblong_image">
-                  <div class="picBox" v-db-click @click="modalPicTap('单选', 'oblong')">
+                <el-form-item label="Ảnh lớn điểm nhận hàng:" prop="oblong_image">
+                  <div class="picBox" v-db-click @click="modalPicTap('Chọn một', 'oblong')">
                     <div class="pictrue" v-if="formItem.oblong_image">
                       <img v-lazy="formItem.oblong_image" />
                     </div>
@@ -112,12 +112,12 @@
             </el-col>
             <el-col :span="24">
               <el-col v-bind="grid">
-                <el-form-item label="经纬度：" label-for="status2" prop="latlng">
+                <el-form-item label="Kinh độ, vĩ độ:" label-for="status2" prop="latlng">
                   <el-tooltip>
-                    <el-input v-model="formItem.latlng" style="width: 100%" placeholder="请查找位置">
-                      <el-button type="primary" slot="append" v-db-click @click="onSearch">查找位置</el-button>
+                    <el-input v-model="formItem.latlng" style="width: 100%" placeholder="Vui lòng tìm vị trí">
+                      <el-button type="primary" slot="append" v-db-click @click="onSearch">Tìm vị trí</el-button>
                     </el-input>
-                    <div slot="content">请点击查找位置选择位置</div>
+                    <div slot="content">Vui lòng nhấn “Tìm vị trí” để chọn vị trí</div>
                   </el-tooltip>
                 </el-form-item>
               </el-col>
@@ -126,7 +126,7 @@
           <!-- <el-row>
               <div class="btn">
                 <el-button type="primary" long v-db-click @click="handleSubmit('formItem')">{{
-                  formItem.id ? '修改' : '提交'
+                  formItem.id ? 'Sửa' : 'Gửi'
                 }}</el-button>
               </div>
             </el-row> -->
@@ -150,13 +150,13 @@
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" long v-db-click @click="handleSubmit('formItem')">{{
-          formItem.id ? '修改' : '提交'
+          formItem.id ? 'Sửa' : 'Gửi'
         }}</el-button>
       </span>
     </el-dialog>
     <el-dialog
       :visible.sync="modalMap"
-      title="请选择地址"
+      title="Vui lòng chọn địa chỉ"
       append-to-body
       :close-on-click-modal="false"
       width="720px"
@@ -179,21 +179,21 @@ export default {
   data() {
     const validatePhone = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error('请填写电话号码'));
+        return callback(new Error('Vui lòng điền số điện thoại'));
       } else {
         callback();
       }
     };
     const validateUpload = (rule, value, callback) => {
       if (!this.formItem.image) {
-        callback(new Error('请上传提货点logo'));
+        callback(new Error('Vui lòng tải lên logo điểm nhận hàng'));
       } else {
         callback();
       }
     };
     const oblongImageUpload = (rule, value, callback) => {
       if (!this.formItem.oblong_image) {
-        callback(new Error('请上传提货点大图'));
+        callback(new Error('Vui lòng tải lên ảnh lớn điểm nhận hàng'));
       } else {
         callback();
       }
@@ -217,7 +217,7 @@ export default {
         id: 0,
       },
       ruleValidate: {
-        name: [{ required: true, message: '请输入提货点名称', trigger: 'blur' }],
+        name: [{ required: true, message: 'Vui lòng nhập tên điểm nhận hàng', trigger: 'blur' }],
         mail: [
           {
             required: true,
@@ -229,7 +229,7 @@ export default {
         address: [
           {
             required: true,
-            message: '请选择提货点地址',
+            message: 'Vui lòng chọn địa chỉ điểm nhận hàng',
             type: 'array',
             trigger: 'change',
           },
@@ -238,11 +238,11 @@ export default {
           {
             required: true,
             type: 'array',
-            message: '请选择核销时效',
+            message: 'Vui lòng chọn thời hạn xác nhận sử dụng',
             trigger: 'change',
             fields: {
-              0: { type: 'date', required: true, message: '请选择年度范围' },
-              1: { type: 'date', required: true, message: '请选择年度范围' },
+              0: { type: 'date', required: true, message: 'Vui lòng chọn khoảng năm' },
+              1: { type: 'date', required: true, message: 'Vui lòng chọn khoảng năm' },
             },
           },
         ],
@@ -250,15 +250,15 @@ export default {
           {
             required: true,
             type: 'array',
-            message: '请选择提货点营业时间',
+            message: 'Vui lòng chọn giờ hoạt động của điểm nhận hàng',
             trigger: 'change',
           },
         ],
         phone: [{ required: true, validator: validatePhone, trigger: 'blur' }],
-        detailed_address: [{ required: true, message: '请输入详细地址', trigger: 'blur' }],
+        detailed_address: [{ required: true, message: 'Vui lòng nhập địa chỉ chi tiết', trigger: 'blur' }],
         image: [{ required: true, validator: validateUpload, trigger: 'change' }],
         oblong_image: [{ required: true, validator: oblongImageUpload, trigger: 'change' }],
-        latlng: [{ required: true, message: '请选择经纬度', trigger: 'blur' }],
+        latlng: [{ required: true, message: 'Vui lòng chọn kinh độ và vĩ độ', trigger: 'blur' }],
       },
       keyUrl: '',
       grid: {
@@ -283,7 +283,7 @@ export default {
         xs: 8,
       },
       modalPic: false,
-      isChoice: '单选',
+      isChoice: 'Chọn một',
     };
   },
   created() {
@@ -294,10 +294,10 @@ export default {
     window.addEventListener(
       'message',
       function (event) {
-        // 接收位置信息，用户选择确认位置点后选点组件会触发该事件，回传用户的位置信息
+        // Nhận thông tin vị trí, sau khi người dùng chọn và xác nhận điểm vị trí, thành phần chọn điểm sẽ kích hoạt sự kiện này, trả về thông tin vị trí của người dùng
         var loc = event.data;
         if (loc && loc.module === 'locationPicker') {
-          // 防止其他应用也会向该页面post信息，需判断module是否为'locationPicker'
+          // Để tránh ứng dụng khác cũng post thông tin vào trang này, cần kiểm tra module có phải là 'locationPicker' không
           window.parent.selectAdderss(loc);
         }
       },
@@ -334,14 +334,14 @@ export default {
       this.formItem.oblong_image = '';
       this.formItem.id = 0;
     },
-    // 选择经纬度
+    // Chọn kinh độ vĩ độ
     selectAdderss(data) {
       this.formItem.latlng = data.latlng.lat + ',' + data.latlng.lng;
       this.modalMap = false;
     },
-    // key值
+    // Giá trị key
     getKey() {},
-    // 详情
+    // Chi tiết
     getInfo(id) {
       let that = this;
       that.formItem.id = id;
@@ -359,13 +359,13 @@ export default {
           that.$message.error(res.msg);
         });
     },
-    // 选择图片
+    // Chọn ảnh
     modalPicTap(tit, picTit) {
-      this.modalTitle = picTit == 'oblong' ? '提货点大图' : '提货点LOGO';
+      this.modalTitle = picTit == 'oblong' ? 'Ảnh lớn điểm nhận hàng' : 'LOGO điểm nhận hàng';
       this.modalPic = true;
       this.picTit = picTit;
     },
-    // 选中图片
+    // Ảnh đã chọn
     getPic(pc) {
       switch (this.picTit) {
         case 'logo':
@@ -377,16 +377,16 @@ export default {
       }
       this.modalPic = false;
     },
-    // 选择地址
+    // Chọn địa chỉ
     handleChange(value, selectedData) {
       this.formItem.address = selectedData.map((o) => o.label);
       //  this.formItem.address2 = selectedData.map(o => o.value);
     },
-    // 核销时效
+    // Thời hạn xác nhận sử dụng
     onchangeDate(e) {
       this.formItem.valid_time = e;
     },
-    // 营业时间
+    // Giờ mở cửa
     onchangeTime(e) {
       this.formItem.day_time = e;
     },
@@ -405,7 +405,7 @@ export default {
         this.modalMap = true;
       }
     },
-    // 提交
+    // Gửi
     handleSubmit(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {

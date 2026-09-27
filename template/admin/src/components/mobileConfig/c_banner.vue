@@ -54,7 +54,7 @@ export default {
           configNme: 'setUp',
         },
       ],
-      // 内容设置部分
+      // Phần cài đặt nội dung
       contentStyle: [
         {
           components: toolCom.c_title,
@@ -65,7 +65,7 @@ export default {
           configNme: 'swiperConfig',
         },
       ],
-      // 样式设置 - 指示器部分
+      // Cài đặt kiểu - phần chỉ báo
       oneStyle: [
         {
           components: toolCom.c_title,
@@ -157,10 +157,10 @@ export default {
           },
         ];
         if (nVal == 0) {
-          // 内容设置
+          // Cài đặt nội dung
           this.rCom = arr.concat(this.contentStyle);
         } else {
-          // 样式设置
+          // Cài đặt kiểu
           if (this.type2 == 2) {
             if (this.type) {
               this.rCom = [
@@ -373,17 +373,17 @@ export default {
   methods: {
     patchConfig(data) {
       if (!data) return data;
-      // 兼容旧数据：底部背景
+      // Tương thích dữ liệu cũ: nền phía dưới
       if (data.bgColor && !data.bottomBgColor) {
         this.$set(data, 'bottomBgColor', {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           default: [{ item: data.bgColor.color[0].item }],
           color: [{ item: data.bgColor.color[0].item }],
         });
       }
       if (!data.paddingConfig) {
         this.$set(data, 'paddingConfig', {
-          title: '内边距',
+          title: 'Lề trong',
           isAll: false,
           val: 0,
           min: 0,
@@ -399,7 +399,7 @@ export default {
       }
       if (!data.marginConfig) {
         this.$set(data, 'marginConfig', {
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,
@@ -410,7 +410,7 @@ export default {
       }
       return data;
     },
-    // 提交
+    // Gửi
     handleSubmit(name) {
       let obj = {};
       obj.activeIndex = this.activeIndex;

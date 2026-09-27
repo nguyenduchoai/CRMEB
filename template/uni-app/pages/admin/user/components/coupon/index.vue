@@ -1,14 +1,14 @@
 <template>
 	<base-drawer mode="bottom" :visible="visible" background-color="transparent" mask maskClosable @close="closeDrawer">
 		<view class="coupon rd-t-40rpx">
-			<view class="title">优惠券
+			<view class="title">Phiếu giảm giá
 			  <view class="close acea-row row-center-wrapper" @tap="closeDrawer">
 				  <text class="iconfont icon-iconfontguanbi"></text>
 			  </view>
 			</view>
 			<view class="search acea-row row-middle" v-if="num !=2">
 				<text class="iconfont icon-ic_search"></text>
-				<input class="inputs" placeholder='请输入优惠券名称' placeholder-class='placeholder' confirm-type='search' name="search"
+				<input class="inputs" placeholder='Vui lòng nhập tên phiếu giảm giá' placeholder-class='placeholder' confirm-type='search' name="search"
 					v-model="keyword" @confirm="searchSubmit"></input>
 			</view>
 			<view class="list" v-if="couponList.length">
@@ -16,23 +16,23 @@
 					<view class="item acea-row row-middle" v-for="(item,index) in couponList" :key="index">
 						<view class="bg">
 							<view class="price">¥<text class="num">{{item.coupon_price}}</text></view>
-							<view class="reduction">满{{item.use_min_price}}可用</view>
+							<view class="reduction">Dùng cho đơn từ {{item.use_min_price}}</view>
 						</view>
 						<view class="text">
 							<view class="name line1">{{item.coupon_title}}</view>
-							<view class="type" v-if="item.type === 0">通用优惠券</view>
-							<view class="type" v-if="item.type === 1">品类优惠券</view>
-							<view class="type" v-if="item.type === 2">商品优惠券</view>
-							<view class="time" v-if="item.coupon_time">有效期：{{item.coupon_time}}天</view>
-							<view class="time" v-else>有效期：{{ item.start_use_time | dateFormat }}{{ item.start_use_time ? '-' : '' }}{{ item.end_use_time | dateFormat }}</view>
+							<view class="type" v-if="item.type === 0">Phiếu giảm giá toàn cửa hàng</view>
+							<view class="type" v-if="item.type === 1">Phiếu giảm giá theo danh mục</view>
+							<view class="type" v-if="item.type === 2">Phiếu giảm giá sản phẩm</view>
+							<view class="time" v-if="item.coupon_time">Hạn sử dụng: {{item.coupon_time}} ngày</view>
+							<view class="time" v-else>Hạn sử dụng: {{ item.start_use_time | dateFormat }}{{ item.start_use_time ? '-' : '' }}{{ item.end_use_time | dateFormat }}</view>
 						</view>
-						<view v-if="num !=2" class="bnt acea-row row-center-wrapper" @click="send(item)">发送</view>
+						<view v-if="num !=2" class="bnt acea-row row-center-wrapper" @click="send(item)">Gửi</view>
 					</view>
-					<view class="tips">没有更多了～</view>
+					<view class="tips">Không còn dữ liệu nữa~</view>
 				</scroll-view>
 			</view>
 			<view class="empty-box" v-else>
-				<emptyPage title="暂无优惠券～" src="/statics/images/noCoupon.png"></emptyPage>
+				<emptyPage title="Chưa có phiếu giảm giá~" src="/statics/images/noCoupon.png"></emptyPage>
 			</view>
 		</view>
 	</base-drawer>
@@ -74,7 +74,7 @@ export default {
 		return{
 			keyword:'',
 			couponList:[],
-			num:0, //1用户批量，0单独用户，前两个是发送优惠券；点击获取优惠券时： 2是查看当前用户优惠券，否则获取优惠券
+			num:0, //1 người dùng hàng loạt, 0 từng người dùng riêng lẻ, hai giá trị đầu dùng để gửi phiếu giảm giá; khi nhấn lấy phiếu giảm giá: 2 là xem phiếu giảm giá của người dùng hiện tại, ngược lại là lấy phiếu giảm giá
 			ids:[]
 		}
 	},
@@ -252,8 +252,8 @@ export default {
 				color: #CCCCCC;
 				text-align: center;
 				margin: 32rpx 0;
-				margin-bottom: calc(32rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-				margin-bottom: calc(32rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+				margin-bottom: calc(32rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+				margin-bottom: calc(32rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 			}
 		}
 	}

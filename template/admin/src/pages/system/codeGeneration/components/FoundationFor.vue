@@ -1,11 +1,11 @@
 <template>
   <div class="main">
     <el-alert class="mb20" closable>
-      <template v-slot:title>crud生成说明</template>
-      <template> 不能生成系统自带的表；已经生成过的表还能继续生成 </template>
+      <template v-slot:title>Hướng dẫn tạo crud</template>
+      <template> Không thể tạo từ các bảng có sẵn của hệ thống; các bảng đã tạo trước đó vẫn có thể tiếp tục tạo </template>
     </el-alert>
     <el-form ref="foundation" :model="foundation" :rules="foundationRules" label-width="100px">
-      <el-form-item label="菜单：">
+      <el-form-item label="Menu:">
         <el-cascader
           class="form-width"
           v-model="foundation.pid"
@@ -14,22 +14,22 @@
           :props="{ checkStrictly: true, multiple: false, emitPath: false }"
           clearable
         ></el-cascader>
-        <div class="tip">选项，选择的菜单成功后会自动写入到此菜单下</div>
+        <div class="tip">Tùy chọn, sau khi tạo thành công sẽ tự động được ghi vào menu đã chọn</div>
       </el-form-item>
-      <el-form-item label="菜单名称：">
-        <el-input class="form-width" v-model="foundation.menuName" placeholder="请输入菜单名称"></el-input>
+      <el-form-item label="Tên menu:">
+        <el-input class="form-width" v-model="foundation.menuName" placeholder="Vui lòng nhập tên menu"></el-input>
         <div class="tip">
-          生成菜单为可选项，不填写默认生成的菜单名称将为表名；生成后会把自动生成的权限默认加入该菜单下
+          Tạo menu là tùy chọn, nếu không điền, tên menu được tạo mặc định sẽ là tên bảng; sau khi tạo, các quyền được sinh tự động sẽ mặc định được thêm vào menu này
         </div>
       </el-form-item>
-      <el-form-item label="模块名：" prop="modelName">
-        <el-input class="form-width" v-model="foundation.modelName" placeholder="请输入模块名"></el-input>
-        <div class="tip">模块名称为中文或者英文，用在接口名称前缀、表单头部标题</div>
+      <el-form-item label="Tên module:" prop="modelName">
+        <el-input class="form-width" v-model="foundation.modelName" placeholder="Vui lòng nhập tên module"></el-input>
+        <div class="tip">Tên module bằng tiếng Trung hoặc tiếng Anh, dùng cho tiền tố tên API, tiêu đề đầu biểu mẫu</div>
       </el-form-item>
-      <el-form-item label="表名：" prop="tableName">
-        <el-input class="form-width" v-model="foundation.tableName" placeholder="请输入表名"></el-input>
+      <el-form-item label="Tên bảng:" prop="tableName">
+        <el-input class="form-width" v-model="foundation.tableName" placeholder="Vui lòng nhập tên bảng"></el-input>
         <div class="tip">
-          用于生成CRUD指定的表名，不需要携带表前缀；对于生成过的表将不能在进行生成；或者可以删除对应的文件重新生成！对应系统中重要的数据表将不允许生成！
+          Tên bảng được chỉ định để tạo CRUD, không cần kèm tiền tố bảng; bảng đã được tạo sẽ không thể tạo lại; hoặc có thể xóa các tệp tương ứng để tạo lại! Các bảng dữ liệu quan trọng của hệ thống sẽ không được phép tạo!
         </div>
       </el-form-item>
     </el-form>
@@ -52,16 +52,16 @@ export default {
   data() {
     return {
       foundationRules: {
-        // pid: [{ required: true, message: '请输入菜单', trigger: 'blur' }],
-        tableName: [{ required: true, message: '请输入表名', trigger: 'blur' }],
-        modelName: [{ required: true, message: '请输入模块名', trigger: 'blur' }],
+        // pid: [{ required: true, message: 'Vui lòng nhập menu', trigger: 'blur' }],
+        tableName: [{ required: true, message: 'Vui lòng nhập tên bảng', trigger: 'blur' }],
+        modelName: [{ required: true, message: 'Vui lòng nhập tên module', trigger: 'blur' }],
       },
       menusList: [],
       columnTypeList: [],
       fromTypeList: [
         {
           value: '0',
-          label: '不生成',
+          label: 'Không tạo',
         },
         {
           value: 'input',
@@ -117,10 +117,10 @@ export default {
     },
     changeItemField(e, i) {
       if (e === 'addSoftDelete') {
-        this.$set(this.tableField[i], 'comment', '伪删除');
+        this.$set(this.tableField[i], 'comment', 'Xóa mềm');
       }
       if (e === 'addTimestamps') {
-        this.$set(this.tableField[i], 'comment', '添加和修改时间');
+        this.$set(this.tableField[i], 'comment', 'Thời gian thêm và sửa');
       }
     },
     getCrudMenus() {

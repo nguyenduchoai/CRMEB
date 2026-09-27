@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -37,7 +37,7 @@ class StoreActivityServices extends BaseServices
             $id = $timesData['id'];
             $time = intval($timesData['time']);
             $continued = intval($timesData['continued']);
-            // 格式化时间，加上 ":00"
+            // Định dạng thời gian, thêm ":00"
             $startTime = sprintf("%02d:00", $time);
             $endTime = sprintf("%02d:00", $time + $continued);
             $resultArray[$id] = $startTime . '-' . $endTime;
@@ -68,7 +68,7 @@ class StoreActivityServices extends BaseServices
     public function activityInfo($id)
     {
         $info = $this->dao->get(['id' => $id]);
-        if (!$info) throw new AdminException('数据不存在');
+        if (!$info) throw new AdminException('Dữ liệu không tồn tại');
         $info = $info->toArray();
         /** @var StoreSeckillServices $seckillServices */
         $seckillServices = app()->make(StoreSeckillServices::class);
@@ -82,7 +82,7 @@ class StoreActivityServices extends BaseServices
             $productList = $productServices->searchList(['id' => array_column($seckill, 'product_id'), 'is_del' => 0]);
             $productList = $productList['list'] ?? [];
             $seckill = array_combine(array_column($seckill, 'product_id'), $seckill);
-            //放入秒杀商品价格
+            //Đưa vào giá sản phẩm flash sale
             foreach ($productList as &$product) {
                 $product['product_price'] = $product['price'];
                 $seckillInfo = $seckill[$product['id']] ?? [];
@@ -117,7 +117,7 @@ class StoreActivityServices extends BaseServices
 
     public function activityDel($id, $type)
     {
-        if (!$id) throw new AdminException('缺少参数');
+        if (!$id) throw new AdminException('Thiếu tham số');
         $this->dao->update($id, ['is_del' => 1]);
 
         if ($type == 1) {
@@ -140,11 +140,11 @@ class StoreActivityServices extends BaseServices
 
     public function activityStatus($id, $status, $type)
     {
-        if (!$id) throw new AdminException('缺少参数');
+        if (!$id) throw new AdminException('Thiếu tham số');
         $info = $this->dao->get(['id' => $id]);
-        if (!$info) throw new AdminException('数据不存在');
+        if (!$info) throw new AdminException('Dữ liệu không tồn tại');
         if (bcadd($info['end_day'], '86400') < time() && $status == 1) {
-            throw new AdminException('活动已结束，无法操作');
+            throw new AdminException('Chương trình đã kết thúc, không thể thao tác');
         }
         $this->dao->update($id, ['status' => $status]);
         if ($type == 1) {

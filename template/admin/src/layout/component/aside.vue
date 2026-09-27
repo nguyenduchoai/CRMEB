@@ -35,7 +35,7 @@ export default {
     adminTitle() {
       return this.$store.state.app.adminTitle || '';
     },
-    // 设置左侧菜单的具体宽度
+    // Đặt chiều rộng cụ thể cho menu bên trái
     menuList() {
       this.$store.state.menus.childMenuList.length > 0
         ? (this.$store.state.themeConfig.themeConfig.isCollapse = false)
@@ -48,14 +48,14 @@ export default {
       layout === 'classic' || layout === 'columns' ? (asideBrColor = 'layout-el-aside-br-color') : '';
 
       if (layout === 'columns') {
-        // 分栏布局，菜单收起时宽度给 1px / 暂为0px
+        // Bố cục dạng cột, khi menu thu gọn thì để chiều rộng 1px / tạm thời là 0px
         if (isCollapse) {
           return ['layout-aside-width1', asideBrColor];
         } else {
           return ['layout-aside-width-default', asideBrColor];
         }
       } else {
-        // 其它布局给 64px
+        // Các bố cục khác để 64px
         if (isCollapse) {
           return ['layout-aside-width1', asideBrColor];
         } else {
@@ -63,12 +63,12 @@ export default {
         }
       }
     },
-    // 设置 logo 是否显示
+    // Đặt logo có hiển thị hay không
     setShowLogo() {
       let { layout, isShowLogo } = this.$store.state.themeConfig.themeConfig;
       return (isShowLogo && layout === 'defaults') || (isShowLogo && layout === 'columns');
     },
-    // 获取布局配置信息
+    // Lấy thông tin cấu hình bố cục
     getThemeConfig() {
       return this.$store.state.themeConfig.themeConfig;
     },
@@ -88,7 +88,7 @@ export default {
     this.bus.$on('oneCatName', (name) => {
       this.catName = name;
     });
-    // 菜单滚动条监听
+    // Theo dõi thanh cuộn của menu
     this.bus.$on('updateElScrollBar', () => {
       setTimeout(() => {
         this.$refs.layoutAsideRef.update();
@@ -104,13 +104,13 @@ export default {
     this.bus.$off('routesListChange');
   },
   methods: {
-    // 设置/过滤路由（非静态路由/是否显示在菜单中）
+    // Đặt/lọc route (route không tĩnh / có hiển thị trong menu hay không)
     setFilterRoutes() {
       if (this.$store.state.themeConfig.themeConfig.layout === 'columns') return false;
       this.$store.commit('menus/childMenuList', this.filterRoutesFun(this.$store.state.routesList.routesList));
       // this.menuList = this.filterRoutesFun(this.$store.state.routesList.routesList);
     },
-    // 设置/过滤路由 递归函数
+    // Hàm đệ quy đặt/lọc route
     filterRoutesFun(arr) {
       return arr
         .filter((item) => item.path)
@@ -120,15 +120,15 @@ export default {
           return item;
         });
     },
-    // 设置菜单导航是否固定（移动端）
+    // Đặt menu điều hướng có cố định hay không (trên di động)
     initMenuFixed(clientWidth) {
       this.clientWidth = clientWidth;
       this.$emit('routesListChange');
     },
   },
-  // 页面销毁时
+  // Khi trang bị destroy
   destroyed() {
-    // 取消菜单滚动条监听
+    // Bỏ theo dõi thanh cuộn của menu
     this.bus.$off('updateElScrollBar', () => {});
   },
 };

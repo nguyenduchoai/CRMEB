@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,11 +24,11 @@ use think\facade\Route as Url;
 /**
  * Class StoreCategoryService
  * @package app\services\product\product
- * @method cateIdByPid(array $cateId) 根据分类id获取上级id
- * @method byIndexList(int $limit, ?string $field) 根据分类id获取上级id
- * @method getCateParentAndChildName(string $cateIds) 获取一级分类和二级分类组成的集合
- * @method value(array $where, string $field) 获取某个字段的值
- * @method getColumn(array $where, string $field, string $key = '') 获取某个字段数组
+ * @method cateIdByPid(array $cateId) Lấy id cấp trên theo id danh mục
+ * @method byIndexList(int $limit, ?string $field) Lấy id cấp trên theo id danh mục
+ * @method getCateParentAndChildName(string $cateIds) Lấy tập hợp gồm danh mục cấp 1 và cấp 2
+ * @method value(array $where, string $field) Lấy giá trị một trường
+ * @method getColumn(array $where, string $field, string $key = '') Lấy mảng của một trường
  */
 class StoreCategoryServices extends BaseServices
 {
@@ -38,7 +38,7 @@ class StoreCategoryServices extends BaseServices
     }
 
     /**
-     * 获取分类列表
+     * Lấy danh sách danh mục
      * @param $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -73,7 +73,7 @@ class StoreCategoryServices extends BaseServices
     }
 
     /**
-     * 商品分类搜索下拉
+     * Dropdown tìm kiếm danh mục sản phẩm
      * @param string $show
      * @param string $type
      * @return array
@@ -90,7 +90,7 @@ class StoreCategoryServices extends BaseServices
     }
 
     /**
-     * 获取分类cascader
+     * Lấy cascader danh mục
      * @param string $show
      * @param int $type
      * @return array
@@ -113,7 +113,7 @@ class StoreCategoryServices extends BaseServices
     }
 
     /**
-     * 设置分类状态
+     * Đặt trạng thái danh mục
      * @param int $id
      * @param int $is_show
      */
@@ -123,22 +123,22 @@ class StoreCategoryServices extends BaseServices
         $res = $res && $this->dao->update($id, ['is_show' => $is_show], 'pid');
         CacheService::clear();
         if (!$res) {
-            throw new AdminException('操作失败');
+            throw new AdminException('Thao tác thất bại');
         }
     }
 
     /**
-     * 创建新增表单
+     * Tạo form thêm mới
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
      */
     public function createForm()
     {
-        return create_form('添加分类', $this->form(), Url::buildUrl('/product/category'), 'POST');
+        return create_form('Thêm danh mục', $this->form(), Url::buildUrl('/product/category'), 'POST');
     }
 
     /**
-     * 创建编辑表单
+     * Tạo form sửa
      * @param $id
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -146,11 +146,11 @@ class StoreCategoryServices extends BaseServices
     public function editForm(int $id)
     {
         $info = $this->dao->get($id);
-        return create_form('编辑分类', $this->form($info), $this->url('/product/category/' . $id), 'PUT');
+        return create_form('Sửa danh mục', $this->form($info), $this->url('/product/category/' . $id), 'PUT');
     }
 
     /**
-     * 生成表单参数
+     * Tạo tham số form
      * @param array $info
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -158,27 +158,27 @@ class StoreCategoryServices extends BaseServices
     public function form($info = [])
     {
         if (isset($info['pid'])) {
-            $f[] = Form::select('pid', '上级分类', (int)($info['pid'] ?? ''))->setOptions($this->menus($info['pid']))->filterable(1);
+            $f[] = Form::select('pid', 'Danh mục cha', (int)($info['pid'] ?? ''))->setOptions($this->menus($info['pid']))->filterable(1);
         } else {
-            $f[] = Form::select('pid', '上级分类', (int)($info['pid'] ?? ''))->setOptions($this->menus())->filterable(1);
+            $f[] = Form::select('pid', 'Danh mục cha', (int)($info['pid'] ?? ''))->setOptions($this->menus())->filterable(1);
         }
-        $f[] = Form::input('cate_name', '分类名称', $info['cate_name'] ?? '')->maxlength(8)->required();
-        $f[] = Form::frameImage('pic', '分类图标(180*180)', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'pic')), $info['pic'] ?? '')->icon('el-icon-picture-outline')->width('950px')->height('560px')->props(['footer' => false]);
-        $f[] = Form::frameImage('big_pic', '分类大图(468*340)', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'big_pic')), $info['big_pic'] ?? '')->icon('el-icon-picture-outline')->width('950px')->height('560px')->props(['footer' => false]);
-        $f[] = Form::number('sort', '排序', (int)($info['sort'] ?? 0))->min(0)->precision(0);
-        $f[] = Form::radio('is_show', '状态', $info['is_show'] ?? 1)->options([['label' => '显示', 'value' => 1], ['label' => '隐藏', 'value' => 0]]);
+        $f[] = Form::input('cate_name', 'Tên danh mục', $info['cate_name'] ?? '')->maxlength(8)->required();
+        $f[] = Form::frameImage('pic', 'Biểu tượng danh mục (180*180)', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'pic')), $info['pic'] ?? '')->icon('el-icon-picture-outline')->width('950px')->height('560px')->props(['footer' => false]);
+        $f[] = Form::frameImage('big_pic', 'Ảnh lớn danh mục (468*340)', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'big_pic')), $info['big_pic'] ?? '')->icon('el-icon-picture-outline')->width('950px')->height('560px')->props(['footer' => false]);
+        $f[] = Form::number('sort', 'Thứ tự sắp xếp', (int)($info['sort'] ?? 0))->min(0)->precision(0);
+        $f[] = Form::radio('is_show', 'Trạng thái', $info['is_show'] ?? 1)->options([['label' => 'Hiện', 'value' => 1], ['label' => 'Ẩn', 'value' => 0]]);
         return $f;
     }
 
     /**
-     * 获取一级分类组合数据
+     * Lấy dữ liệu tổ hợp danh mục cấp 1
      * @param string $pid
      * @return array[]
      */
     public function menus($pid = '')
     {
         $list = $this->dao->getMenus(['pid' => 0]);
-        $menus = [['value' => 0, 'label' => '顶级分类']];
+        $menus = [['value' => 0, 'label' => 'Danh mục cấp cao nhất']];
         if ($pid === 0) return $menus;
 //        if ($pid != '') $menus = [];
         foreach ($list as $menu) {
@@ -188,7 +188,7 @@ class StoreCategoryServices extends BaseServices
     }
 
     /**
-     * 保存新增数据
+     * Lưu dữ liệu thêm mới
      * @param $data
      * @return int
      * @throws \think\db\exception\DataNotFoundException
@@ -198,21 +198,21 @@ class StoreCategoryServices extends BaseServices
     public function createData($data)
     {
         if (!$data['cate_name']) {
-            throw new AdminException('请填写分类名称');
+            throw new AdminException('Vui lòng điền tên danh mục');
         }
 
         if ($this->dao->getOne(['cate_name' => $data['cate_name'], 'pid' => $data['pid']])) {
-            throw new AdminException('该分类已存在');
+            throw new AdminException('Danh mục này đã tồn tại');
         }
 
         $parent = $this->dao->getOne(['id' => $data['pid']]);
         if ($data['pid'] && (!$parent || $parent['pid'] > 0)) {
-            throw new AdminException('只支持两级分类');
+            throw new AdminException('Chỉ hỗ trợ danh mục hai cấp');
         }
 
         $data['add_time'] = time();
         $res = $this->dao->save($data);
-        if (!$res) throw new AdminException('保存失败');
+        if (!$res) throw new AdminException('Lưu thất bại');
 
         CacheService::clear();
 
@@ -220,60 +220,60 @@ class StoreCategoryServices extends BaseServices
     }
 
     /**
-     * 保存修改数据
+     * Lưu dữ liệu sửa
      * @param $id
      * @param $data
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/02/23
      */
     public function editData($id, $data)
     {
         if (!$data['cate_name']) {
-            throw new AdminException('请填写分类名称');
+            throw new AdminException('Vui lòng điền tên danh mục');
         }
 
         $parent = $this->dao->getOne(['id' => $data['pid']]);
         if ($parent && $parent['pid'] > 0) {
-            throw new AdminException('只支持两级分类');
+            throw new AdminException('Chỉ hỗ trợ danh mục hai cấp');
         }
 
         $cate = $this->dao->getOne(['cate_name' => $data['cate_name'], 'pid' => $data['pid']]);
         if ($cate && $cate['id'] != $id) {
-            throw new AdminException('该分类已存在');
+            throw new AdminException('Danh mục này đã tồn tại');
         }
         $this->transaction(function () use ($id, $data) {
             $res = $this->dao->update($id, $data);
             /** @var StoreProductCateServices $productCate */
             $productCate = app()->make(StoreProductCateServices::class);
             $res = $res && $productCate->update(['cate_id' => $id], ['cate_pid' => $data['pid']]);
-            if (!$res) throw new AdminException('修改失败');
+            if (!$res) throw new AdminException('Sửa thất bại');
         });
 
         CacheService::clear();
     }
 
     /**
-     * 删除数据
+     * Xóa dữ liệu
      * @param int $id
      */
     public function del(int $id)
     {
         if ($this->dao->count(['pid' => $id])) {
-            throw new AdminException('请先删除子分类');
+            throw new AdminException('Vui lòng xóa danh mục con trước');
         }
         $res = $this->dao->delete($id);
-        if (!$res) throw new AdminException('删除失败');
+        if (!$res) throw new AdminException('Xóa thất bại');
 
         CacheService::clear();
     }
 
     /**
      * @return mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/2/8
      */
@@ -288,13 +288,13 @@ class StoreCategoryServices extends BaseServices
     }
 
     /**
-     * 获取指定id下的分类,一=以数组形式返回
+     * Lấy danh mục theo id chỉ định, trả về dạng mảng
      * @param string $cateIds
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/02/23
      */
@@ -304,13 +304,13 @@ class StoreCategoryServices extends BaseServices
     }
 
     /**
-     * 前台分类列表
+     * Danh sách danh mục ở phía người dùng
      * @param array $where
      * @return array|mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/02/23
      */
@@ -327,7 +327,7 @@ class StoreCategoryServices extends BaseServices
     }
 
     /**
-     * 分类详情
+     * Chi tiết danh mục
      * @param int $id
      * @return array|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
@@ -344,7 +344,7 @@ class StoreCategoryServices extends BaseServices
     }
 
     /**
-     * 分类列表
+     * Danh sách danh mục
      * @return mixed
      */
     public function getCategoryList(array $where)

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -28,7 +28,7 @@ class LangCodeServices extends BaseServices
     }
 
     /**
-     * 语言列表
+     * Danh sách ngôn ngữ
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -44,8 +44,8 @@ class LangCodeServices extends BaseServices
         $typeList = $langTypeServices->getColumn([['status', '=', 1], ['is_del', '=', 0]], 'language_name,file_name,id', 'id');
         $langType = [
             'isAdmin' => [
-                ['title' => '页面语言', 'value' => 0],
-                ['title' => '接口语言', 'value' => 1]
+                ['title' => 'Ngôn ngữ trang', 'value' => 0],
+                ['title' => 'Ngôn ngữ API', 'value' => 1]
             ]
         ];
         foreach ($typeList as $value) {
@@ -59,7 +59,7 @@ class LangCodeServices extends BaseServices
     }
 
     /**
-     * 语言详情
+     * Chi tiết ngôn ngữ
      * @param $code
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -68,7 +68,7 @@ class LangCodeServices extends BaseServices
      */
     public function langCodeInfo($code)
     {
-        if (!$code) throw new AdminException('数据不存在');
+        if (!$code) throw new AdminException('Dữ liệu không tồn tại');
         /** @var LangTypeServices $langTypeServices */
         $langTypeServices = app()->make(LangTypeServices::class);
         $typeList = $langTypeServices->getColumn([['status', '=', 1], ['is_del', '=', 0]], 'language_name,file_name,id', 'id');
@@ -81,7 +81,7 @@ class LangCodeServices extends BaseServices
     }
 
     /**
-     * 保存修改语言
+     * Lưu chỉnh sửa ngôn ngữ
      * @param $data
      * @return bool
      * @throws \Exception
@@ -91,8 +91,8 @@ class LangCodeServices extends BaseServices
         if ($data['edit'] == 0) {
             if ($data['is_admin'] == 1) {
                 $code = $this->dao->getMax(['is_admin' => 1], 'code');
-                if ($code < '发起退款查询失败') {
-                    $code = '发起退款查询失败';
+                if ($code < 'Gửi yêu cầu tra cứu hoàn tiền thất bại') {
+                    $code = 'Gửi yêu cầu tra cứu hoàn tiền thất bại';
                 } else {
                     $code = $code + 1;
                 }
@@ -121,7 +121,7 @@ class LangCodeServices extends BaseServices
     }
 
     /**
-     * 删除语言
+     * Xóa ngôn ngữ
      * @param $id
      * @return bool
      */
@@ -131,11 +131,11 @@ class LangCodeServices extends BaseServices
         $res = $this->dao->delete(['code' => $code]);
         $this->clearLangCache();
         if ($res) return true;
-        throw new AdminException('删除失败');
+        throw new AdminException('Xóa thất bại');
     }
 
     /**
-     * 清除语言缓存
+     * Xóa cache ngôn ngữ
      * @return bool
      */
     public function clearLangCache()
@@ -152,7 +152,7 @@ class LangCodeServices extends BaseServices
     }
 
     /**
-     * 机器翻译
+     * Dịch máy
      * @param string $text
      * @return array
      * @throws \Throwable
@@ -160,7 +160,7 @@ class LangCodeServices extends BaseServices
     public function langCodeTranslate(string $text = ''): array
     {
         if (sys_config('hs_accesskey') == '' || sys_config('hs_secretkey') == '') {
-            throw new AdminException('请先配置火山翻译key');
+            throw new AdminException('Vui lòng cấu hình key Volcano Translate trước');
         }
         $translator = Translate::getInstance();
         $translator->setAccessKey(sys_config('hs_accesskey'));
@@ -181,9 +181,9 @@ class LangCodeServices extends BaseServices
     }
 
     /**
-     * 获取多语言缓存
+     * Lấy cache đa ngôn ngữ
      * @return mixed
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/03/06
      */

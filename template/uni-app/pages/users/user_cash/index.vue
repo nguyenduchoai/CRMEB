@@ -12,17 +12,17 @@
 				<view :hidden='currentTab != 0' class='list'>
 					<form @submit="subCash">
 						<view class='item acea-row row-between-wrapper'>
-							<view class='name'><text class='red'>*</text> {{$t(`持卡人`)}}</view>
-							<view class='input'><input :placeholder='$t(`请输入持卡人姓名`)' placeholder-class='placeholder'
+							<view class='name'><text class='red'>*</text> {{$t(`Chủ thẻ`)}}</view>
+							<view class='input'><input :placeholder='$t(`Vui lòng nhập họ tên chủ thẻ`)' placeholder-class='placeholder'
 									name="name"></input></view>
 						</view>
 						<view class='item acea-row row-between-wrapper'>
-							<view class='name'><text class='red'>*</text> {{$t(`卡号`)}}</view>
-							<view class='input'><input type='number' :placeholder='$t(`请填写卡号`)' placeholder-class='placeholder'
+							<view class='name'><text class='red'>*</text> {{$t(`Số thẻ`)}}</view>
+							<view class='input'><input type='number' :placeholder='$t(`Vui lòng nhập số thẻ`)' placeholder-class='placeholder'
 									name="cardnum"></input></view>
 						</view>
 						<view class='item acea-row row-between-wrapper'>
-							<view class='name'><text class='red'>*</text> {{$t(`银行`)}}</view>
+							<view class='name'><text class='red'>*</text> {{$t(`Ngân hàng`)}}</view>
 							<view class='input'>
 								<picker @change="bindPickerChange" :value="index" :range="array">
 									<text class='Bank'>{{array[index]}}</text>
@@ -31,43 +31,43 @@
 							</view>
 						</view>
 						<view class='item acea-row row-between-wrapper'>
-							<view class='name'><text class='red'>*</text> {{$t(`提现`)}}</view>
-							<view class='input'><input @input='inputNum' :placeholder='$t(`最低提现金额`)+minPrice'
+							<view class='name'><text class='red'>*</text> {{$t(`Rút tiền`)}}</view>
+							<view class='input'><input @input='inputNum' :placeholder='$t(`Số tiền rút tối thiểu`)+minPrice'
 									placeholder-class='placeholder' name="money" type='digit'></input></view>
 						</view>
 						<view class='tip'>
-							{{$t(`当前可提现金额`)}}: <text class="price">{{$t(`￥`)}}{{userInfo.commissionCount}}</text>，{{$t(`冻结佣金`)}}:
+							{{$t(`Số tiền có thể rút hiện tại`)}}: <text class="price">{{$t(`￥`)}}{{userInfo.commissionCount}}</text>，{{$t(`Hoa hồng đóng băng`)}}:
 							{{$t(`￥`)}}{{userInfo.broken_commission}}
 						</view>
 						<view class='tip'>
-							{{$t(`提现手续费: `)}}<text class="price">{{withdrawal_fee}}%</text>，{{$t(`实际到账: `)}}<text
+							{{$t(`Phí rút tiền: `)}}<text class="price">{{withdrawal_fee}}%</text>，{{$t(`Thực nhận: `)}}<text
 								class="price">{{$t(`￥`)}}{{true_money}}</text>
 						</view>
 						<view class='tip'>
-							{{$t(`说明: 每笔佣金的冻结期为`)}}{{userInfo.broken_day}}{{$t(`天，到期后可提现`)}}
+							{{$t(`Lưu ý: thời gian đóng băng của mỗi khoản hoa hồng là`)}}{{userInfo.broken_day}}{{$t(`ngày, hết thời hạn này mới có thể rút tiền`)}}
 						</view>
-						<button formType="submit" class='bnt bg-color'>{{$t(`提现`)}}</button>
+						<button formType="submit" class='bnt bg-color'>{{$t(`Rút tiền`)}}</button>
 					</form>
 				</view>
 				<view :hidden='currentTab != 1' class='list'>
 					<form @submit="subCash">
 						<view class='item acea-row row-between-wrapper'>
-							<view class='name'><text class='red'>*</text> {{$t(`姓名`)}}</view>
-							<view class='input'><input :placeholder='$t(`请填写您的真实姓名`)' placeholder-class='placeholder'
+							<view class='name'><text class='red'>*</text> {{$t(`Họ tên`)}}</view>
+							<view class='input'><input :placeholder='$t(`Vui lòng nhập họ tên thật của bạn`)' placeholder-class='placeholder'
 									name="user_name"></input></view>
 						</view>
 						<view class='item acea-row row-between-wrapper' v-if="!weixinExtractType">
-							<view class='name'><text class='red'>*</text> {{$t(`账号`)}}</view>
-							<view class='input'><input :placeholder='$t(`请填写您的微信账号`)' placeholder-class='placeholder'
+							<view class='name'><text class='red'>*</text> {{$t(`Tài khoản`)}}</view>
+							<view class='input'><input :placeholder='$t(`Vui lòng nhập tài khoản WeChat của bạn`)' placeholder-class='placeholder'
 									name="name"></input></view>
 						</view>
 						<view class='item acea-row row-between-wrapper'>
-							<view class='name'><text class='red'>*</text> {{$t(`提现`)}}</view>
-							<view class='input'><input @input='inputNum' :placeholder='$t(`提现最低`)+minPrice+$t(`元，最高500元`)'
+							<view class='name'><text class='red'>*</text> {{$t(`Rút tiền`)}}</view>
+							<view class='input'><input @input='inputNum' :placeholder='$t(`Rút tối thiểu`)+minPrice+$t(`đ, tối đa 500đ`)'
 									placeholder-class='placeholder' name="money" type='digit'></input></view>
 						</view>
 						<view class='item acea-row row-top row-between' v-if="!weixinExtractType">
-							<view class='name pos'>{{$t(`收款码`)}}</view>
+							<view class='name pos'>{{$t(`Mã QR nhận tiền`)}}</view>
 							<view class="input acea-row">
 								<view class="picEwm" v-if="qrcodeUrlW">
 									<image :src="qrcodeUrlW"></image>
@@ -75,43 +75,43 @@
 								</view>
 								<view class='pictrue acea-row row-center-wrapper row-column' @click='uploadpic("W")' v-else>
 									<text class='iconfont icon-icon25201'></text>
-									<view>{{$t(`上传图片`)}}</view>
+									<view>{{$t(`Tải lên ảnh`)}}</view>
 								</view>
 							</view>
 						</view>
 						<view class='tip'>
-							{{$t(`当前可提现金额`)}}: <text class="price">{{$t(`￥`)}}{{userInfo.commissionCount}}</text>，{{$t(`冻结佣金`)}}:
+							{{$t(`Số tiền có thể rút hiện tại`)}}: <text class="price">{{$t(`￥`)}}{{userInfo.commissionCount}}</text>，{{$t(`Hoa hồng đóng băng`)}}:
 							{{$t(`￥`)}}{{userInfo.broken_commission}}
 						</view>
 						<view class='tip'>
-							{{$t(`提现手续费: `)}}<text class="price">{{withdrawal_fee}}%</text>，{{$t(`实际到账: `)}}<text
+							{{$t(`Phí rút tiền: `)}}<text class="price">{{withdrawal_fee}}%</text>，{{$t(`Thực nhận: `)}}<text
 								class="price">{{$t(`￥`)}}{{true_money}}</text>
 						</view>
 						<view class='tip'>
-							{{$t(`说明: 每笔佣金的冻结期为`)}}{{userInfo.broken_day}}{{$t(`天，到期后可提现`)}}
+							{{$t(`Lưu ý: thời gian đóng băng của mỗi khoản hoa hồng là`)}}{{userInfo.broken_day}}{{$t(`ngày, hết thời hạn này mới có thể rút tiền`)}}
 						</view>
-						<button formType="submit" class='bnt bg-color'>{{$t(`提现`)}}</button>
+						<button formType="submit" class='bnt bg-color'>{{$t(`Rút tiền`)}}</button>
 					</form>
 				</view>
 				<view :hidden='currentTab != 2' class='list'>
 					<form @submit="subCash">
 						<view class='item acea-row row-between-wrapper'>
-							<view class='name'><text class='red'>*</text> {{$t(`账号`)}}</view>
-							<view class='input'><input :placeholder='$t(`请填写您的支付宝账号`)' placeholder-class='placeholder'
+							<view class='name'><text class='red'>*</text> {{$t(`Tài khoản`)}}</view>
+							<view class='input'><input :placeholder='$t(`Vui lòng nhập tài khoản Alipay của bạn`)' placeholder-class='placeholder'
 									name="name"></input></view>
 						</view>
 						<view class='item acea-row row-between-wrapper'>
-							<view class='name'><text class='red'>*</text> {{$t(`姓名`)}}</view>
-							<view class='input'><input :placeholder='$t(`请填写支付宝绑定的真实姓名`)' placeholder-class='placeholder'
+							<view class='name'><text class='red'>*</text> {{$t(`Họ tên`)}}</view>
+							<view class='input'><input :placeholder='$t(`Vui lòng nhập họ tên thật đã liên kết với Alipay`)' placeholder-class='placeholder'
 									name="user_name"></input></view>
 						</view>
 						<view class='item acea-row row-between-wrapper'>
-							<view class='name'><text class='red'>*</text> {{$t(`提现`)}}</view>
-							<view class='input'><input @input='inputNum' :placeholder='$t(`最低提现金额`)+minPrice'
+							<view class='name'><text class='red'>*</text> {{$t(`Rút tiền`)}}</view>
+							<view class='input'><input @input='inputNum' :placeholder='$t(`Số tiền rút tối thiểu`)+minPrice'
 									placeholder-class='placeholder' name="money" type='digit'></input></view>
 						</view>
 						<view class='item acea-row row-top row-between'>
-							<view class='name pos'>{{$t(`收款码`)}}</view>
+							<view class='name pos'>{{$t(`Mã QR nhận tiền`)}}</view>
 							<view class="input acea-row">
 								<view class="picEwm" v-if="qrcodeUrlZ">
 									<image :src="qrcodeUrlZ"></image>
@@ -119,36 +119,36 @@
 								</view>
 								<view class='pictrue acea-row row-center-wrapper row-column' @click='uploadpic("Z")' v-else>
 									<text class='iconfont icon-icon25201'></text>
-									<view>{{$t(`上传图片`)}}</view>
+									<view>{{$t(`Tải lên ảnh`)}}</view>
 								</view>
 							</view>
 						</view>
 						<view class='tip'>
-							{{$t(`当前可提现金额`)}}: <text class="price">{{$t(`￥`)}}{{userInfo.commissionCount}}</text>，{{$t(`冻结佣金`)}}:
+							{{$t(`Số tiền có thể rút hiện tại`)}}: <text class="price">{{$t(`￥`)}}{{userInfo.commissionCount}}</text>，{{$t(`Hoa hồng đóng băng`)}}:
 							{{$t(`￥`)}}{{userInfo.broken_commission}}
 						</view>
 						<view class='tip'>
-							{{$t(`提现手续费: `)}}<text class="price">{{withdrawal_fee}}%</text>，{{$t(`实际到账: `)}}<text
+							{{$t(`Phí rút tiền: `)}}<text class="price">{{withdrawal_fee}}%</text>，{{$t(`Thực nhận: `)}}<text
 								class="price">{{$t(`￥`)}}{{true_money}}</text>
 						</view>
 						<view class='tip'>
-							{{$t(`说明: 每笔佣金的冻结期为`)}}{{userInfo.broken_day}}{{$t(`天，到期后可提现`)}}
+							{{$t(`Lưu ý: thời gian đóng băng của mỗi khoản hoa hồng là`)}}{{userInfo.broken_day}}{{$t(`ngày, hết thời hạn này mới có thể rút tiền`)}}
 						</view>
-						<button formType="submit" class='bnt bg-color'>{{$t(`提现`)}}</button>
+						<button formType="submit" class='bnt bg-color'>{{$t(`Rút tiền`)}}</button>
 					</form>
 				</view>
 				<view :hidden='currentTab != 3' class='list'>
 					<form @submit="importNowMoney">
 						<view class='item acea-row row-between-wrapper'>
-							<view class='name'><text class='red'>*</text> {{$t(`提现`)}}</view>
-							<view class='input'><input @input='inputNum' placeholder='请输入提现金额' placeholder-class='placeholder'
+							<view class='name'><text class='red'>*</text> {{$t(`Rút tiền`)}}</view>
+							<view class='input'><input @input='inputNum' placeholder='Vui lòng nhập số tiền rút' placeholder-class='placeholder'
 									name="money" type='digit'></input></view>
 						</view>
 						<view class='tip'>
-							{{$t(`当前可提现金额`)}}: <text class="price">{{$t(`￥`)}}{{userInfo.commissionCount}}</text>，{{$t(`冻结佣金`)}}:
+							{{$t(`Số tiền có thể rút hiện tại`)}}: <text class="price">{{$t(`￥`)}}{{userInfo.commissionCount}}</text>，{{$t(`Hoa hồng đóng băng`)}}:
 							{{$t(`￥`)}}{{userInfo.broken_commission}}
 						</view>
-						<button formType="submit" class='bnt bg-color'>{{$t(`提现`)}}</button>
+						<button formType="submit" class='bnt bg-color'>{{$t(`Rút tiền`)}}</button>
 					</form>
 				</view>
 			</view>
@@ -191,18 +191,18 @@
 				navList: [],
 				currentTab: 0,
 				index: 0,
-				array: [], //提现银行
-				minPrice: 0.00, //最低提现金额
+				array: [], //Ngân hàng rút tiền
+				minPrice: 0.00, //Số tiền rút tối thiểu
 				userInfo: [],
 				isClone: false,
-				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false, //是否隐藏授权
+				isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+				isShowAuth: false, //Có ẩn ủy quyền hay không
 				qrcodeUrlW: "",
 				qrcodeUrlZ: "",
-				prevent: false, //避免重复提交成功多次
-				weixinExtractType: 0, // 佣金到账方式
-				alipayExtractType: 0, // 佣金到账方式
-				withdrawal_fee: 0, //提现手续费
+				prevent: false, //Tránh gửi trùng lặp dẫn đến thành công nhiều lần
+				weixinExtractType: 0, // Phương thức nhận hoa hồng
+				alipayExtractType: 0, // Phương thức nhận hoa hồng
+				withdrawal_fee: 0, //Phí rút tiền
 				true_money: 0
 			};
 		},
@@ -245,7 +245,7 @@
 			// 	this.uploadpic(this.qrcodeUrlZ);
 			// },
 			/**
-			 * 上传文件
+			 * Tải lên file
 			 * 
 			 */
 			uploadpic: function(type) {
@@ -259,7 +259,7 @@
 				});
 			},
 			/**
-			 * 删除图片
+			 * Xóa ảnh
 			 * 
 			 */
 			DelPicW: function() {
@@ -272,7 +272,7 @@
 				this.getUserInfo();
 				this.getUserExtractBank();
 			},
-			// 授权关闭
+			// Đóng ủy quyền
 			authColse: function(e) {
 				this.isShowAuth = e
 			},
@@ -280,7 +280,7 @@
 				let that = this;
 				extractBank().then(res => {
 					let array = res.data.extractBank;
-					array.unshift('请选择银行');
+					array.unshift('Vui lòng chọn ngân hàng');
 					array.forEach((v, i) => {
 						array.splice(i, 1, that.$t(v))
 					})
@@ -292,28 +292,28 @@
 				});
 			},
 			/**
-			 * 获取个人用户信息
+			 * Lấy thông tin người dùng cá nhân
 			 */
 			getUserInfo: function() {
 				let that = this;
 				getUserInfo().then(res => {
 					that.navList = [{
-							'name': that.$t(`银行卡`),
+							'name': that.$t(`Thẻ ngân hàng`),
 							'icon': 'icon-yinhangqia',
 							'id': 0
 						},
 						{
-							'name': that.$t(`微信`),
+							'name': that.$t(`WeChat`),
 							'icon': 'icon-weixin2',
 							'id': 1
 						},
 						{
-							'name': that.$t(`支付宝`),
+							'name': that.$t(`Alipay`),
 							'icon': 'icon-icon34',
 							'id': 2
 						},
 						{
-							'name': that.$t(`余额`),
+							'name': that.$t(`Số dư`),
 							'icon': 'icon-qiandai',
 							'id': 3
 						}
@@ -339,47 +339,47 @@
 				let that = this,
 					value = e.detail.value;
 				if (this.prevent) return
-				if (that.currentTab == 0) { //银行卡
+				if (that.currentTab == 0) { //Thẻ ngân hàng
 					if (!value.name.trim()) return this.$util.Tips({
-						title: this.$t(`请填写持卡人姓名`)
+						title: this.$t(`Vui lòng nhập họ tên chủ thẻ`)
 					});
 					if (!value.cardnum.trim()) return this.$util.Tips({
-						title: this.$t(`请填写卡号`)
+						title: this.$t(`Vui lòng nhập số thẻ`)
 					});
 					if (that.index == 0) return this.$util.Tips({
-						title: this.$t(`请选择银行`)
+						title: this.$t(`Vui lòng chọn ngân hàng`)
 					});
 					value.extract_type = 'bank';
 					value.bankname = that.array[that.index];
-				} else if (that.currentTab == 1) { //微信
+				} else if (that.currentTab == 1) { //WeChat
 					value.extract_type = 'weixin';
 
 					if (!value.user_name.trim()) return this.$util.Tips({
-						title: this.$t(`请填写姓名`)
+						title: this.$t(`Vui lòng điền họ tên`)
 					});
-					// 自动提现隐藏账号
+					// Ẩn số tài khoản khi rút tiền tự động
 					if (!that.weixinExtractType && !value.name.trim()) return this.$util.Tips({
-						title: this.$t(`请填写微信号`)
+						title: this.$t(`Vui lòng nhập ID WeChat`)
 					});
 					value.weixin = value.name;
 					value.qrcode_url = that.qrcodeUrlW;
 					
-				} else if (that.currentTab == 2) { //支付宝
+				} else if (that.currentTab == 2) { //Alipay
 					value.extract_type = 'alipay';
 					if (value.name.length == 0) return this.$util.Tips({
-						title: this.$t(`请填写支付宝号`)
+						title: this.$t(`Vui lòng nhập tài khoản Alipay`)
 					});
 					value.alipay_code = value.name;
 					value.qrcode_url = that.qrcodeUrlZ;
 				}
 				if (!value.money.trim()) return this.$util.Tips({
-					title: this.$t(`请填写提现金额`)
+					title: this.$t(`Vui lòng nhập số tiền rút`)
 				});
 				if (Number(value.money) < Number(that.minPrice)) return this.$util.Tips({
-					title: this.$t(`提现金额不能低于`) + that.minPrice
+					title: this.$t(`Số tiền rút không được thấp hơn`) + that.minPrice
 				});
 				if (Number(value.money) > 500) return this.$util.Tips({
-					title: this.$t(`提现金额不能高于500`)
+					title: this.$t(`Số tiền rút không được cao hơn 500`)
 				});
 				this.prevent = true
 				extractCash(value).then(res => {
@@ -408,7 +408,7 @@
 			// #ifdef MP
 			openSubscribe(page) {
 				// uni.showLoading({
-				// 	title: this.$t(`正在加载`),
+				// 	title: this.$t(`Đang tải`),
 				// })
 				openRevenueSubscribe().then(res => {
 					uni.hideLoading();
@@ -429,12 +429,12 @@
 				let value = e.detail.value.money;
 				if (parseFloat(value) < 0 || parseFloat(value) == NaN || value == undefined || value == "") {
 					return that.$util.Tips({
-						title: that.$t(`请输入金额`)
+						title: that.$t(`Vui lòng nhập số tiền`)
 					});
 				}
 				uni.showModal({
-					title: that.$t(`提现到余额`),
-					content: that.$t(`提现到余额后无法再次转出，确认是否提现到余额`),
+					title: that.$t(`Rút về số dư`),
+					content: that.$t(`Sau khi rút về số dư sẽ không thể chuyển ra lại, bạn có chắc chắn muốn rút về số dư không`),
 					success(res) {
 						if (res.confirm) {
 							recharge({
@@ -443,7 +443,7 @@
 								})
 								.then(res => {
 									return that.$util.Tips({
-										title: that.$t(`提现到余额成功`),
+										title: that.$t(`Rút về số dư thành công`),
 										icon: 'success'
 									}, {
 										tab: 5,
@@ -456,7 +456,7 @@
 								});
 						} else if (res.cancel) {
 							return that.$util.Tips({
-								title: that.$t(`已取消`)
+								title: that.$t(`Đã hủy`)
 							});
 						}
 					},

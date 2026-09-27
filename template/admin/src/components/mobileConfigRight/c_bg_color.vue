@@ -6,7 +6,7 @@
         <div class="color-item" v-for="(color, key) in configData.color" :key="key">
           <el-color-picker v-model="color.item" @change="changeColor($event, color)" show-alpha=""></el-color-picker>
           <el-input class="input" v-model="color.item" />
-          <span class="white-space-nowrap" @click="resetBgA(color, index, key)">重置</span>
+          <span class="white-space-nowrap" @click="resetBgA(color, index, key)">Đặt lại</span>
         </div>
         <div class="iconfont iconlianjie" v-if="configData.color.length > 1"></div>
       </el-col>
@@ -61,7 +61,7 @@ export default {
       }
       // this.$emit('getConfig', this.defaults)
     },
-    // 重置
+    // Đặt lại
     resetBgA(color, index, key) {
       color.item = this.configData.default[key].item;
     },

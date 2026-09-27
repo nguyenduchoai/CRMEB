@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,14 +16,14 @@ use app\dao\BaseDao;
 use app\model\activity\coupon\StoreCoupon;
 
 /**
- * 优惠卷
+ * Phiếu giảm giá
  * Class StoreCouponDao
  * @package app\dao\coupon
  */
 class StoreCouponDao extends BaseDao
 {
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -32,7 +32,7 @@ class StoreCouponDao extends BaseDao
     }
 
     /**
-     * 获取文章列表
+     * Lấy danh sách bài viết
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -44,7 +44,7 @@ class StoreCouponDao extends BaseDao
     }
 
     /**
-     * 写入优惠卷
+     * Ghi phiếu giảm giá
      * @param $cid
      * @param int $total_count
      * @param int $start_time
@@ -71,7 +71,7 @@ class StoreCouponDao extends BaseDao
         $data['is_full_give'] = $is_full_give;
         $data['full_reduction'] = $full_reduction;
         $data['add_time'] = $add_time;
-        //TODO $data 参数没有使用
+        //TODO tham số $data chưa được sử dụng
         return $this->getModel()->create(compact('cid', 'start_time', 'end_time', 'total_count', 'remain_count', 'is_permanent', 'status', 'is_give_subscribe', 'is_full_give', 'full_reduction', 'add_time'));
     }
 }

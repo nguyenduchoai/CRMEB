@@ -77,11 +77,11 @@ export default {
       }
       return selectMenu;
     },
-    // 获取布局配置信息
+    // Lấy thông tin cấu hình bố cục
     getThemeConfig() {
       return this.$store.state.themeConfig.themeConfig;
     },
-    // 动态设置经典、横向布局不显示
+    // Đặt động để không hiển thị bố cục kiểu cổ điển, ngang
     isShowBreadcrumb() {
       const { layout, isBreadcrumb } = this.$store.state.themeConfig.themeConfig;
       if (layout === 'transverse' || layout === 'classic') {
@@ -106,13 +106,13 @@ export default {
     this.initRouteSplit(this.$route.path);
   },
   methods: {
-    // breadcrumb 当前项点击时
+    // Khi bấm mục hiện tại của breadcrumb
     onBreadcrumbClick(v) {
       const { redirect, path } = v;
       if (redirect) this.$router.push(redirect);
       else this.$router.push(path);
     },
-    // breadcrumb icon 点击菜单展开与收起
+    // Bấm icon breadcrumb để mở/thu gọn menu
     onThemeConfigChange() {
       if (
         this.$store.state.themeConfig.themeConfig.layout == 'columns' &&
@@ -124,12 +124,12 @@ export default {
       this.$store.state.themeConfig.themeConfig.isCollapse = !this.$store.state.themeConfig.themeConfig.isCollapse;
       this.setLocalThemeConfig();
     },
-    // 存储布局配置
+    // Lưu cấu hình bố cục
     setLocalThemeConfig() {
       Local.remove('themeConfigPrev');
       Local.set('themeConfigPrev', this.$store.state.themeConfig.themeConfig);
     },
-    // 递归设置 breadcrumb
+    // Đệ quy đặt breadcrumb
     getBreadcrumbList(arr) {
       arr.map((item) => {
         this.routeSplit.map((v, k, arrs) => {
@@ -142,7 +142,7 @@ export default {
         });
       });
     },
-    // 当前路由分割处理
+    // Xử lý tách route hiện tại
     initRouteSplit(path) {
       this.breadcrumbList = [
         {
@@ -160,7 +160,7 @@ export default {
       this.getBreadcrumbList(this.$store.state.routesList.routesList);
     },
   },
-  // 监听路由的变化
+  // Theo dõi thay đổi route
   watch: {
     $route: {
       handler(newVal) {

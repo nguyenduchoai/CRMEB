@@ -3,7 +3,7 @@
     <el-card :bordered="false" shadow="never" class="ivu-mt">
       <el-row>
         <el-col v-bind="grid">
-          <el-button type="primary" v-db-click @click="add">添加语言</el-button>
+          <el-button type="primary" v-db-click @click="add">Thêm ngôn ngữ</el-button>
         </el-col>
       </el-row>
       <el-table
@@ -12,28 +12,28 @@
         class="mt14"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column label="ID" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="语言名称" min-width="200">
+        <el-table-column label="Tên ngôn ngữ" min-width="200">
           <template slot-scope="scope">
             <div class="acea-scope.row scope.row-middle">
               <span>{{ scope.row.language_name }}</span>
-              <el-tag class="ml10" color="default" v-if="scope.row.is_default">默认</el-tag>
+              <el-tag class="ml10" color="default" v-if="scope.row.is_default">Mặc định</el-tag>
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="浏览器语言识别码" min-width="130">
+        <el-table-column label="Mã nhận dạng ngôn ngữ của trình duyệt" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.file_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="状态" min-width="150">
+        <el-table-column label="Trạng thái" min-width="150">
           <template slot-scope="scope">
             <el-switch
               class="defineSwitch"
@@ -43,17 +43,17 @@
               :value="scope.row.status"
               @change="changeSwitch(scope.row)"
               size="large"
-              active-text="开启"
-              inactive-text="关闭"
+              active-text="Bật"
+              inactive-text="Tắt"
             >
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="170">
+        <el-table-column label="Thao tác" fixed="right" width="170">
           <template slot-scope="scope">
-            <a v-db-click @click="edit(scope.row, '编辑语言', index)">编辑</a>
+            <a v-db-click @click="edit(scope.row, 'Sửa ngôn ngữ', index)">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除语言', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa ngôn ngữ', scope.$index)">Xóa</a>
           </template>
         </el-table-column>
       </el-table>
@@ -107,11 +107,11 @@ export default {
     this.getList();
   },
   methods: {
-    // 添加
+    // Thêm
     add() {
       this.$modalForm(langTypeForm(0)).then(() => this.getList());
     },
-    // 分组列表
+    // Danh sách nhóm
     getList() {
       this.loading = true;
       langTypeList(this.langFrom)
@@ -126,11 +126,11 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 编辑
+    // Sửa
     edit(row) {
       this.$modalForm(langTypeForm(row.id)).then(() => this.getList());
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -149,7 +149,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 修改状态
+    // Sửa trạng thái
     changeSwitch(row) {
       langTypeStatus(row.id, row.status)
         .then((res) => {

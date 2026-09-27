@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -25,11 +25,11 @@ class WeChatClient extends AbstractAPI
 
 
     /**
-     * 创建订单 支付
+     * Tạo đơn hàng, thanh toán
      */
     const API_SET_CREATE_ORDER = 'https://api.weixin.qq.com/shop/pay/createorder';
     /**
-     * 退款
+     * Hoàn tiền
      */
     const API_SET_REFUND_ORDER = 'https://api.weixin.qq.com/shop/pay/refundorder';
 
@@ -52,14 +52,14 @@ class WeChatClient extends AbstractAPI
     }
 
     /**
-     * 支付
+     * Thanh toán
      * @param array $params [
-     *                      'openid'=>'支付者的openid',
-     *                      'out_trade_no'=>'商家合单支付总交易单号',
-     *                      'total_fee'=>'支付金额',
-     *                      'wx_out_trade_no'=>'商家交易单号',
-     *                      'body'=>'商品描述',
-     *                      'attach'=>'支付类型',  //product 产品  member 会员
+     *                      'openid'=>'openid của người thanh toán',
+     *                      'out_trade_no'=>'mã giao dịch tổng của đơn hợp nhất do merchant thanh toán',
+     *                      'total_fee'=>'số tiền thanh toán',
+     *                      'wx_out_trade_no'=>'mã giao dịch của merchant',
+     *                      'body'=>'mô tả sản phẩm',
+     *                      'attach'=>'loại thanh toán',  //product sản phẩm  member thành viên
      *                      ]
      * @param $isContract
      * @return mixed
@@ -68,8 +68,8 @@ class WeChatClient extends AbstractAPI
     public function createorder($order)
     {
         $params = [
-            'openid' => $order['openid'],    // 支付者的openid
-            'combine_trade_no' => $order['out_trade_no'],  // 商家合单支付总交易单号
+            'openid' => $order['openid'],    // openid của người thanh toán
+            'combine_trade_no' => $order['out_trade_no'],  // Mã giao dịch tổng của đơn hợp nhất do merchant thanh toán
             'expire_time' => time() + $this->expire_time,
             'sub_orders' => [
                 [
@@ -84,14 +84,14 @@ class WeChatClient extends AbstractAPI
     }
 
     /**
-     * 退款
+     * Hoàn tiền
      * @param array $params [
-     *                      'openid'=>'退款者的openid',
-     *                      'trade_no'=>'商家交易单号',
-     *                      'transaction_id'=>'支付单号',
-     *                      'refund_no'=>'商家退款单号',
-     *                      'total_amount'=>'订单总金额',
-     *                      'refund_amount'=>'退款金额',  //product 产品  member 会员
+     *                      'openid'=>'openid của người được hoàn tiền',
+     *                      'trade_no'=>'mã giao dịch của merchant',
+     *                      'transaction_id'=>'mã thanh toán',
+     *                      'refund_no'=>'mã hoàn tiền của merchant',
+     *                      'total_amount'=>'tổng số tiền đơn hàng',
+     *                      'refund_amount'=>'số tiền hoàn trả',  //product sản phẩm  member thành viên
      *                      ]
      * @return mixed
      * @throws \GuzzleHttp\Exception\GuzzleException

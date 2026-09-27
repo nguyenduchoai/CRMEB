@@ -10,9 +10,9 @@
           textAlign: titleAlign,
         }"
       >
-        产品介绍
+        Giới thiệu sản phẩm
       </div>
-      <div class="desc">此模块暂无内容设置，仅支持通用样式设置</div>
+      <div class="desc">Mô-đun này chưa có cài đặt nội dung, chỉ hỗ trợ cài đặt kiểu chung</div>
     </div>
   </common_wrapper>
 </template>
@@ -21,7 +21,7 @@
 import { mapState } from 'vuex';
 export default {
   name: 'home_product_desc',
-  cname: '产品介绍',
+  cname: 'Giới thiệu sản phẩm',
   configName: 'c_product_desc',
   icon: '#iconzujian-wenzhangliebiao',
   type: 3,
@@ -75,50 +75,50 @@ export default {
     return {
       configObj: null,
       defaultConfig: {
-        cname: '产品介绍',
+        cname: 'Giới thiệu sản phẩm',
         name: 'productDesc',
         timestamp: this.num,
-        contentTitle: '内容设置',
-        titleStyle: '标题样式',
+        contentTitle: 'Cài đặt nội dung',
+        titleStyle: 'Kiểu tiêu đề',
         setUp: {
           tabVal: 0,
         },
         isShow: {
-          title: '显示标题',
+          title: 'Hiển thị tiêu đề',
           tabVal: 0,
-          tabList: [{ name: '显示' }, { name: '隐藏' }],
+          tabList: [{ name: 'Hiện' }, { name: 'Ẩn' }],
         },
 
         textPosition: {
-          title: '对齐方式',
+          title: 'Căn chỉnh',
           val: 'center',
         },
         textColor: {
-          title: '文字颜色',
+          title: 'Màu chữ',
           default: [{ item: '#333' }],
           color: [{ item: '#333' }],
         },
         fontSize: {
-          title: '字体大小',
+          title: 'Cỡ chữ',
           val: 16,
           min: 12,
           max: 40,
         },
-        titleCurrency: '通用样式',
+        titleCurrency: 'Kiểu chung',
         moduleColor: {
-          title: '背景颜色',
+          title: 'Màu nền',
           name: 'moduleColor',
           default: [{ item: '#fff' }],
           color: [{ item: '#fff' }],
         },
         bottomBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           name: 'bottomBgColor',
           default: [{ item: '#fff' }],
           color: [{ item: '#fff' }],
         },
         marginConfig: {
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,
@@ -126,7 +126,7 @@ export default {
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         paddingConfig: {
-          title: '内边距',
+          title: 'Lề trong',
           val: 10,
           min: 0,
           max: 100,
@@ -134,57 +134,57 @@ export default {
           valList: [{ val: 10 }, { val: 10 }, { val: 10 }, { val: 10 }],
         },
         componentBgConfig: {
-          title: '组件背景',
+          title: 'Nền thành phần',
           tabVal: 0,
           colorConfig: {
-            title: '颜色设置',
+            title: 'Cài đặt màu sắc',
             default: [{ item: '#fff' }],
             color: [{ item: '#fff' }],
           },
           imageConfig: {
-            title: '图片设置',
+            title: 'Cài đặt ảnh',
             url: '',
           },
         },
         borderConfig: {
-          title: '边框设置',
+          title: 'Cài đặt viền',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0, // 0: Hide, 1: Show
           styleConfig: {
-            title: '边框样式',
+            title: 'Kiểu viền',
             tabVal: 0,
             tabList: [
-              { name: '实线', style: 'solid' },
-              { name: '虚线', style: 'dashed' },
-              { name: '点状', style: 'dotted' },
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
             ],
           },
           widthConfig: {
-            title: '边框粗细',
+            title: 'Độ dày viền',
             val: 1,
             min: 1,
           },
           colorConfig: {
-            title: '边框颜色',
+            title: 'Màu viền',
             default: [{ item: '#e5e5e5' }],
             color: [{ item: '#e5e5e5' }],
           },
         },
         shadowConfig: {
-          title: '阴影设置',
+          title: 'Cài đặt đổ bóng',
           tabVal: 0,
           tabList: [
             {
-              name: '隐藏',
+              name: 'Ẩn',
             },
             {
-              name: '显示',
+              name: 'Hiện',
             },
           ],
           val: 0,
           colorConfig: {
-            title: '阴影颜色',
+            title: 'Màu đổ bóng',
             default: [
               {
                 item: 'rgba(0,0,0,0.1)',
@@ -197,47 +197,47 @@ export default {
             ],
           },
           xConfig: {
-            title: 'X轴偏移',
+            title: 'Độ lệch trục X',
             val: 0,
             min: -50,
           },
           yConfig: {
-            title: 'Y轴偏移',
+            title: 'Độ lệch trục Y',
             val: 0,
             min: -50,
           },
           blurConfig: {
-            title: '模糊半径',
+            title: 'Bán kính làm mờ',
             val: 10,
             min: 0,
           },
           spreadConfig: {
-            title: '扩展半径',
+            title: 'Bán kính lan tỏa',
             val: 0,
             min: -50,
           },
         },
         fillet: {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 0,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         borderRadius: '0',
         zIndexConfig: {
-          title: '层级',
+          title: 'Phân cấp',
           val: 0,
           min: 0,
         },

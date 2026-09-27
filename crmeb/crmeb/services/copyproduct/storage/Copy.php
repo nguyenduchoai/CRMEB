@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -22,15 +22,15 @@ class Copy extends BaseCopyProduct
 {
 
     /**
-     * 是否开通
+     * Có kích hoạt không
      */
     const PRODUCT_OPEN = 'v2/copy/open';
     /**
-     * 获取详情
+     * Lấy chi tiết
      */
     const PRODUCT_GOODS = 'v2/copy/goods';
 
-    /** 初始化
+    /** Khởi tạo
      * @param array $config
      */
     protected function initialize(array $config = [])
@@ -38,7 +38,7 @@ class Copy extends BaseCopyProduct
         parent::initialize($config);
     }
 
-    /** 是否开通复制
+    /** Có kích hoạt sao chép không
      * @return mixed
      */
     public function open()
@@ -46,7 +46,7 @@ class Copy extends BaseCopyProduct
         return $this->accessToken->httpRequest(self::PRODUCT_OPEN, []);
     }
 
-    /** 复制商品
+    /** Sao chép sản phẩm
      * @param string $url
      * @param array $options
      * @param string $yihaotongCopyAppid

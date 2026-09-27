@@ -2,29 +2,29 @@
   <div class="grid-item-style-config">
     <div class="config-title">{{ configData.title }}</div>
 
-    <!-- 左右间距 -->
+    <!-- Khoảng cách trái phải -->
     <div class="config-item">
-      <span class="item-label">左右内边距</span>
+      <span class="item-label">Lề trong trái phải</span>
       <div class="slider-container">
         <el-slider v-model="configData.itemPadding" show-input :min="0"></el-slider>
       </div>
     </div>
-    <!-- 上下间距 -->
+    <!-- Khoảng cách trên dưới -->
     <div class="config-item">
-      <span class="item-label">上下内边距</span>
+      <span class="item-label">Lề trong trên dưới</span>
       <div class="slider-container">
         <el-slider v-model="configData.itemPaddingTop" show-input :min="0"></el-slider>
       </div>
     </div>
-    <!-- 背景色 -->
+    <!-- Màu nền -->
     <div class="config-item">
-      <span class="item-label">背景色</span>
+      <span class="item-label">Màu nền</span>
       <!-- <el-color-picker v-model="configData.itemBgColor" @change="handleChange" size="small"></el-color-picker> -->
       <div class="row slider-container">
         <el-color-picker v-model="configData.itemBgColor" @change="handleChange" show-alpha></el-color-picker>
         <el-input
           v-model="configData.itemBgColor"
-          placeholder="请输入颜色"
+          placeholder="Vui lòng nhập màu"
           @change="handleChange"
           style="margin-left: 10px; flex: 1"
         ></el-input>
@@ -34,13 +34,13 @@
             configData.itemBgColor = '#fff';
             handleChange();
           "
-          >重置</span
+          >Đặt lại</span
         >
       </div>
     </div>
-    <!-- 圆角 -->
+    <!-- Bo góc -->
     <div class="config-item">
-      <span class="item-label">圆角</span>
+      <span class="item-label">Bo góc</span>
       <div class="slider-container">
         <el-slider v-model="configData.itemRadius" show-input :min="0"></el-slider>
       </div>
@@ -63,7 +63,7 @@ export default {
   data() {
     return {
       configData: {
-        title: '宫格项样式',
+        title: 'Kiểu ô lưới',
         itemPadding: 8,
         itemBgColor: '#ffffff',
       },
@@ -73,7 +73,7 @@ export default {
     configObj: {
       handler(nVal, oVal) {
         this.configData = nVal[this.configNme] || {
-          title: '宫格项样式',
+          title: 'Kiểu ô lưới',
           itemPadding: 8,
           itemBgColor: '#ffffff',
         };

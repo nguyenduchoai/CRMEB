@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -27,22 +27,22 @@ use crmeb\services\CacheService;
 class LuckPrizeServices extends BaseServices
 {
     /**
-     * @var array 1：未中奖2：积分3:余额4：红包5:优惠券6：站内商品7：等级经验8：用户等级 9：svip天数
+     * @var array 1: không trúng thưởng 2: điểm thưởng 3: số dư 4: lì xì 5: phiếu giảm giá 6: sản phẩm nội bộ 7: điểm kinh nghiệm hạng 8: hạng người dùng 9: số ngày SVIP
      */
     public $prize_type = [
-        '1' => '未中奖',
-        '2' => '积分',
-        '3' => '余额',
-        '4' => '红包',
-        '5' => '优惠券',
-        '6' => '站内商品',
-        '7' => '等级经验',
-        '8' => '用户等级',
-        '9' => 'svip天数'
+        '1' => 'Không trúng thưởng',
+        '2' => 'Điểm thưởng',
+        '3' => 'Số dư',
+        '4' => 'Lì xì',
+        '5' => 'Phiếu giảm giá',
+        '6' => 'Sản phẩm trong cửa hàng',
+        '7' => 'Điểm kinh nghiệm',
+        '8' => 'Hạng người dùng',
+        '9' => 'Số ngày svip'
     ];
 
     /**
-     * 奖品数据字段
+     * Trường dữ liệu giải thưởng
      * @var array
      */
     public $prize = [
@@ -75,7 +75,7 @@ class LuckPrizeServices extends BaseServices
     }
 
     /**
-     * 奖品数据验证
+     * Kiểm tra dữ liệu giải thưởng
      * @param array $data
      * @return array
      */
@@ -83,43 +83,43 @@ class LuckPrizeServices extends BaseServices
     {
         $data = array_merge($this->prize, array_intersect_key($data, $this->prize));
         if (!isset($data['name']) || !$data['name']) {
-            throw new AdminException('请填写奖品名称');
+            throw new AdminException('Vui lòng điền tên giải thưởng');
         }
         if (!isset($data['image']) || !$data['image']) {
-            throw new AdminException('请选择奖品图片');
+            throw new AdminException('Vui lòng chọn hình ảnh giải thưởng');
         }
         if (!isset($data['percent']) || !$data['percent']) {
-            throw new AdminException('请填写奖品中奖概率');
+            throw new AdminException('Vui lòng nhập xác suất trúng thưởng của phần thưởng');
         }
         if (!isset($data['type']) || !isset($this->prize_type[$data['type']])) {
-            throw new AdminException('请选择奖品类型');
+            throw new AdminException('Vui lòng chọn loại giải thưởng');
         }
         if (in_array($data['type'], [2, 3, 4]) && (!isset($data['num']) || !$data['num'])) {
             $msg = '';
             switch ($data['type']) {
                 case 2:
-                    $msg = '积分';
+                    $msg = 'Điểm thưởng';
                     break;
                 case 3:
-                    $msg = '余额';
+                    $msg = 'Số dư';
                     break;
                 case 4:
-                    $msg = '红包';
+                    $msg = 'Lì xì';
                     break;
             }
-            throw new AdminException('请填写奖品赠送{:type}数', ['type' => $msg]);
+            throw new AdminException('Vui lòng điền số {:type} tặng kèm của giải thưởng', ['type' => $msg]);
         }
         if ($data['type'] == 5 && (!isset($data['coupon_id']) || !$data['coupon_id'])) {
-            throw new AdminException('请选择优惠券');
+            throw new AdminException('Vui lòng chọn phiếu giảm giá');
         }
         if ($data['type'] == 6 && (!isset($data['product_id']) || !$data['product_id'])) {
-            throw new AdminException('请选择商品');
+            throw new AdminException('Vui lòng chọn sản phẩm');
         }
         return $data;
     }
 
     /**
-     * 获取某个抽奖活动的所有奖品
+     * Lấy tất cả giải thưởng của một chương trình quay thưởng
      * @param int $lottery_id
      * @param string $field
      * @return array
@@ -134,7 +134,7 @@ class LuckPrizeServices extends BaseServices
 
 
     /**
-     * 随机奖品
+     * Giải thưởng ngẫu nhiên
      * @param array $data
      * @return array|mixed
      */
@@ -148,8 +148,8 @@ class LuckPrizeServices extends BaseServices
         $range = 0;
         $newPrize = array_combine(array_column($data, 'type'), $data);
         foreach ($data as $item) {
-            // 转换百分比为千分位范围
-            $range += $item['percent'] * 100; // 例如 12.34% -> 1234
+            // Chuyển tỷ lệ phần trăm sang khoảng phần nghìn
+            $range += $item['percent'] * 100; // Ví dụ 12.34% -> 1234
             if ($random <= $range) {
                 if (($item['type'] != 1 && $item['total'] != -1 && $item['total'] <= 0)) {
                     $prize = $newPrize[1] ?? [];
@@ -163,7 +163,7 @@ class LuckPrizeServices extends BaseServices
     }
 
     /**
-     * 中奖后减少奖品数量
+     * Sau khi trúng thưởng, giảm số lượng giải thưởng
      * @param int $id
      * @param array $prize
      * @return bool
@@ -178,13 +178,13 @@ class LuckPrizeServices extends BaseServices
             $prize = $this->dao->get($id);
         }
         if (!$prize) {
-            throw new ApiException('奖品不存在');
+            throw new ApiException('Giải thưởng không tồn tại');
         }
-        //不是未中奖奖品 减少奖品数量
+        //Không phải giải không trúng thưởng thì giảm số lượng giải thưởng
         if ($prize['type'] != 1 && $prize['total'] >= 1) {
             $total = $prize['total'] - 1;
             if (!$this->dao->update($id, ['total' => $total], 'id')) {
-                throw new ApiException('抽奖减少奖品总数失败');
+                throw new ApiException('Giảm tổng số phần thưởng khi quay thưởng thất bại');
             }
         }
         return true;

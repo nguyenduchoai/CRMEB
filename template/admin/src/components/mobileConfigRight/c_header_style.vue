@@ -2,17 +2,17 @@
   <div class="header-style-config">
     <div class="config-title">{{ configData.title }}</div>
 
-    <!-- 字号 -->
+    <!-- Cỡ chữ -->
     <div class="config-item">
-      <span class="item-label">标题字号</span>
+      <span class="item-label">Cỡ chữ tiêu đề</span>
       <div class="slider-container">
         <el-slider v-model="configData.fontSize" show-input :min="12" :max="24"></el-slider>
       </div>
     </div>
 
-    <!-- 左侧文字颜色 -->
+    <!-- Màu chữ bên trái -->
     <div class="config-item">
-      <span class="item-label">标题文字色</span>
+      <span class="item-label">Màu chữ tiêu đề</span>
       <!-- <el-color-picker v-model="configData.leftColor" @change="handleChange" size="small"></el-color-picker> -->
       <div class="row slider-container">
         <el-color-picker
@@ -23,7 +23,7 @@
         ></el-color-picker>
         <el-input
           v-model="configData.leftColor"
-          placeholder="请输入颜色"
+          placeholder="Vui lòng nhập màu"
           @change="handleChange"
           style="margin-left: 10px; flex: 1"
         ></el-input>
@@ -33,28 +33,28 @@
             configData.leftColor = '#fff';
             handleChange();
           "
-          >重置</span
+          >Đặt lại</span
         >
       </div>
     </div>
-    <!-- 左侧字重 可选 300 500 正常 -->
+    <!-- Độ đậm chữ bên trái, tùy chọn 300, 500, bình thường -->
     <div class="config-item">
-      <span class="item-label">标题字重</span>
+      <span class="item-label">Độ đậm chữ tiêu đề</span>
       <el-radio-group v-model="configData.leftWeight" size="small">
         <el-radio-button label="300" value="300"></el-radio-button>
         <el-radio-button label="500" value="500"></el-radio-button>
-        <el-radio-button label="normal">正常</el-radio-button>
+        <el-radio-button label="normal">Bình thường</el-radio-button>
       </el-radio-group>
     </div>
-    <!-- 右侧文字颜色 -->
+    <!-- Màu chữ bên phải -->
     <div class="config-item">
-      <span class="item-label">按钮字号</span>
+      <span class="item-label">Cỡ chữ nút</span>
       <div class="slider-container">
         <el-slider v-model="configData.rightFontSize" show-input :min="12" :max="24"></el-slider>
       </div>
     </div>
     <div class="config-item">
-      <span class="item-label">按钮文字色</span>
+      <span class="item-label">Màu chữ nút</span>
       <!-- <el-color-picker v-model="configData.rightColor" @change="handleChange" size="small"></el-color-picker> -->
       <div class="row slider-container">
         <el-color-picker
@@ -65,7 +65,7 @@
         ></el-color-picker>
         <el-input
           v-model="configData.rightColor"
-          placeholder="请输入颜色"
+          placeholder="Vui lòng nhập màu"
           @change="handleChange"
           style="margin-left: 10px; flex: 1"
         ></el-input>
@@ -75,37 +75,37 @@
             configData.rightColor = '#fff';
             handleChange();
           "
-          >重置</span
+          >Đặt lại</span
         >
       </div>
     </div>
     <div class="config-item">
-      <span class="item-label">按钮字重</span>
+      <span class="item-label">Độ đậm chữ nút</span>
       <el-radio-group v-model="configData.rightWeight" size="small">
         <el-radio-button label="300" value="300"></el-radio-button>
         <el-radio-button label="500" value="500"></el-radio-button>
-        <el-radio-button label="normal">正常</el-radio-button>
+        <el-radio-button label="normal">Bình thường</el-radio-button>
       </el-radio-group>
     </div>
-    <!-- 上边距 -->
+    <!-- Lề trên -->
     <div class="config-item">
-      <span class="item-label">上边距</span>
+      <span class="item-label">Lề trên</span>
       <div class="slider-container">
         <el-slider v-model="configData.topPadding" show-input :min="0"></el-slider>
       </div>
     </div>
 
-    <!-- 下边距 -->
+    <!-- Lề dưới -->
     <div class="config-item">
-      <span class="item-label">下边距</span>
+      <span class="item-label">Lề dưới</span>
       <div class="slider-container">
         <el-slider v-model="configData.bottomPadding" show-input :min="0"></el-slider>
       </div>
     </div>
 
-    <!-- 左右边距 -->
+    <!-- Lề trái phải -->
     <div class="config-item">
-      <span class="item-label">左右边距</span>
+      <span class="item-label">Lề trái phải</span>
       <div class="slider-container">
         <el-slider v-model="configData.leftRightPadding" show-input :min="0"></el-slider>
       </div>
@@ -128,7 +128,7 @@ export default {
   data() {
     return {
       configData: {
-        title: '顶部样式',
+        title: 'Kiểu phần đầu',
         fontSize: 14,
         leftColor: '#333333',
         rightColor: '#333333',
@@ -142,7 +142,7 @@ export default {
     configObj: {
       handler(nVal, oVal) {
         this.configData = nVal[this.configNme] || {
-          title: '顶部样式',
+          title: 'Kiểu phần đầu',
           fontSize: 14,
           leftColor: '#333333',
           rightColor: '#333333',

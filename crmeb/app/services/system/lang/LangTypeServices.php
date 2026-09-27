@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -29,7 +29,7 @@ class LangTypeServices extends BaseServices
     }
 
     /**
-     * 获取语言类型列表
+     * Lấy danh sách loại ngôn ngữ
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -45,7 +45,7 @@ class LangTypeServices extends BaseServices
     }
 
     /**
-     * 添加语言类型表单
+     * Form thêm loại ngôn ngữ
      * @param int $id
      * @return array
      * @throws FormBuilderException
@@ -54,20 +54,20 @@ class LangTypeServices extends BaseServices
     {
         if ($id) $info = $this->dao->get($id);
         $field = [];
-        $field[] = Form::input('language_name', '语言名称', $info['language_name'] ?? '')->required('请填写语言名称');
+        $field[] = Form::input('language_name', 'Tên ngôn ngữ', $info['language_name'] ?? '')->required('Vui lòng nhập tên ngôn ngữ');
         $langCountryList = app()->make(LangCountryServices::class)->selectList([])->toArray();
         $options = [];
         foreach ($langCountryList as $item) {
             $options[] = ['value' => $item['code'], 'label' => $item['name'] . ' [ ' . $item['code'] . ' ]'];
         }
-        $field[] = Form::select('file_name', '语言标识', $info['file_name'] ?? '')->setOptions(Form::setOptions($options))->filterable(1);
-        $field[] = Form::radio('is_default', '是否默认', $info['is_default'] ?? 0)->options([['label' => '开启', 'value' => 1], ['label' => '关闭', 'value' => 0]]);
-        $field[] = Form::radio('status', '状态', $info['status'] ?? 1)->options([['label' => '开启', 'value' => 1], ['label' => '关闭', 'value' => 0]]);
-        return create_form($id ? '修改语言类型' : '新增语言类型', $field, Url::buildUrl('/setting/lang_type/save/' . $id), 'POST');
+        $field[] = Form::select('file_name', 'Mã ngôn ngữ', $info['file_name'] ?? '')->setOptions(Form::setOptions($options))->filterable(1);
+        $field[] = Form::radio('is_default', 'Đặt làm mặc định', $info['is_default'] ?? 0)->options([['label' => 'Bật', 'value' => 1], ['label' => 'Tắt', 'value' => 0]]);
+        $field[] = Form::radio('status', 'Trạng thái', $info['status'] ?? 1)->options([['label' => 'Bật', 'value' => 1], ['label' => 'Tắt', 'value' => 0]]);
+        return create_form($id ? 'Sửa loại ngôn ngữ' : 'Thêm loại ngôn ngữ', $field, Url::buildUrl('/setting/lang_type/save/' . $id), 'POST');
     }
 
     /**
-     * 保存语言类型
+     * Lưu loại ngôn ngữ
      * @param array $data
      * @return bool
      */
@@ -80,7 +80,7 @@ class LangTypeServices extends BaseServices
             unset($data['id']);
             $res = $this->dao->save($data);
             if ($res) {
-                //同步语言
+                //Đồng bộ ngôn ngữ
                 /** @var LangCodeServices $codeServices */
                 $codeServices = app()->make(LangCodeServices::class);
                 $list = $codeServices->selectList(['type_id' => 1])->toArray();
@@ -92,18 +92,18 @@ class LangTypeServices extends BaseServices
                 $codeServices->BatchTranslation($res->id, $data['file_name']);
                 app()->make(LangCountryServices::class)->update(['code' => $data['file_name']], ['type_id' => $res->id]);
             } else {
-                throw new AdminException('保存失败');
+                throw new AdminException('Lưu thất bại');
             }
             $id = $res->id;
         }
-        //设置默认
+        //Đặt làm mặc định
         if ($data['is_default'] == 1) $this->dao->update([['id', '<>', $id]], ['is_default' => 0]);
         $this->setDefaultLangName();
         return true;
     }
 
     /**
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/2/10
      */
@@ -115,7 +115,7 @@ class LangTypeServices extends BaseServices
     }
 
     /**
-     * 修改语言类型状态
+     * Sửa trạng thái loại ngôn ngữ
      * @param $id
      * @param $status
      * @return bool
@@ -123,13 +123,13 @@ class LangTypeServices extends BaseServices
     public function langTypeStatus($id, $status)
     {
         $res = $this->dao->update(['id' => $id], ['status' => $status]);
-        if (!$res) throw new AdminException('设置失败');
+        if (!$res) throw new AdminException('Cài đặt thất bại');
         $this->setDefaultLangName();
         return true;
     }
 
     /**
-     * 删除语言类型
+     * Xóa loại ngôn ngữ
      * @param int $id
      * @return bool
      */

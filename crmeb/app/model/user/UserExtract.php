@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,36 +24,36 @@ class UserExtract extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'user_extract';
 
-    //审核中
+    //Đang duyệt
     const AUDIT_STATUS = 0;
-    //未通过
+    //Không được duyệt
     const FAIL_STATUS = -1;
-    //已提现
+    //Đã rút tiền
     const SUCCESS_STATUS = 1;
 
     /**
-     * 状态
+     * Trạng thái
      * @var string[]
      */
     protected static $status = [
-        -1 => '未通过',
-        0 => '审核中',
-        1 => '已提现'
+        -1 => 'Không được duyệt',
+        0 => 'Đang duyệt',
+        1 => 'Đã rút tiền'
     ];
 
     /**
-     * 关联user
+     * Liên kết user
      * @return model\relation\HasOne
      */
     public function user()
@@ -62,7 +62,7 @@ class UserExtract extends BaseModel
     }
 
     /**
-     * 用户uid
+     * uid người dùng
      * @param Model $query
      * @param $value
      */
@@ -75,7 +75,7 @@ class UserExtract extends BaseModel
     }
 
     /**
-     * 提现方式
+     * Phương thức rút tiền
      * @param Model $query
      * @param $value
      */
@@ -85,7 +85,7 @@ class UserExtract extends BaseModel
     }
 
     /**
-     * 审核状态
+     * Trạng thái duyệt
      * @param Model $query
      * @param $value
      */
@@ -97,7 +97,7 @@ class UserExtract extends BaseModel
     }
 
     /**
-     * 模糊搜索
+     * Tìm kiếm gần đúng
      * @param Model $query
      * @param $value
      */

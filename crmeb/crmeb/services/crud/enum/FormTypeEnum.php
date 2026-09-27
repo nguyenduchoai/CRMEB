@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -12,36 +12,36 @@
 namespace crmeb\services\crud\enum;
 
 /**
- * 表单类型枚举
+ * Enum loại form
  * Class FormTypeEnum
- * @author 等风来
+ * @author Deng Fenglai
  * @email 136327134@qq.com
  * @date 2023/8/14
  * @package crmeb\services\crud\enum
  */
 class FormTypeEnum
 {
-    //下拉框
+    //Danh sách thả xuống
     const SELECT = 'select';
-    //输入框
+    //Ô nhập liệu
     const INPUT = 'input';
-    //数字输入框
+    //Ô nhập số
     const NUMBER = 'number';
-    //多行文本框
+    //Ô văn bản nhiều dòng
     const TEXTAREA = 'textarea';
-    //单选日期时间
+    //Chọn một ngày giờ
     const DATE_TIME = 'dateTime';
-    //日期时间区间选择
+    //Chọn khoảng ngày giờ
     const DATE_TIME_RANGE = 'dateTimeRange';
-    //多选框
+    //Ô chọn nhiều
     const  CHECKBOX = 'checkbox';
-    //开关
+    //Công tắc
     const SWITCH = 'switches';
-    //单选框
+    //Ô chọn một
     const  RADIO = 'radio';
-    //单图选择
+    //Chọn một ảnh
     const FRAME_IMAGE_ONE = 'frameImageOne';
-    //多图选择
+    //Chọn nhiều ảnh
     const  FRAME_IMAGES = 'frameImages';
 
     const FORM_TYPE_ALL = [

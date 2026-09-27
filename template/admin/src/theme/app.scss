@@ -1,4 +1,4 @@
-/* 初始化样式
+/* Style khởi tạo
 ------------------------------- */
 * {
   margin: 0;
@@ -50,7 +50,7 @@ body,
   font-size: 14px;
 }
 
-/* 主布局样式
+/* Style layout chính
 ------------------------------- */
 .layout-container {
   width: 100%;
@@ -135,13 +135,13 @@ body,
   }
 }
 
-/* 进度条颜色
+/* Màu thanh tiến độ
 ------------------------------- */
 #nprogress .bar {
   background: var(--prev-color-primary) !important;
 }
 
-/* flex 弹性布局
+/* Layout linh hoạt flex
 ------------------------------- */
 .flex {
   display: flex;
@@ -178,7 +178,7 @@ body,
   }
 }
 
-/* 宽高 100%
+/* Rộng cao 100%
 ------------------------------- */
 .w100 {
   width: 100% !important;
@@ -206,7 +206,7 @@ body,
   min-height: 100vh !important;
 }
 
-/* 颜色值
+/* Giá trị màu
 ------------------------------- */
 .color-primary {
   color: var(--prev-color-primary);
@@ -228,7 +228,7 @@ body,
   color: var(--prev-color-info);
 }
 
-/* 溢出省略号
+/* Tràn thì hiện dấu ba chấm
 ------------------------------- */
 .one-text-overflow {
   overflow: hidden;
@@ -262,7 +262,7 @@ body,
   padding: 40px;
 }
 
-/* 字体大小全局样式
+/* Style cỡ chữ toàn cục
 ------------------------------- */
 @for $i from 10 through 32 {
   .font#{$i} {
@@ -270,7 +270,7 @@ body,
   }
 }
 
-/* 外边距、内边距全局样式
+/* Style margin, padding toàn cục
 ------------------------------- */
 @for $i from 5 through 35 {
   .mt#{$i} {

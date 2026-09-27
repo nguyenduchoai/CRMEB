@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\activity\live\LiveRoomServices;
 use think\facade\App;
 
 /**
- * 直播间
+ * Phòng livestream
  * Class LiveRoom
  * @package app\adminapi\controller\v1\marketing\live
  */
@@ -33,7 +33,7 @@ class LiveRoom extends AuthController
     }
 
     /**
-     * 直播间列表
+     * Danh sách phòng livestream
      * @return mixed
      */
     public function list()
@@ -46,18 +46,18 @@ class LiveRoom extends AuthController
     }
 
     /**
-     * 直播间详情
+     * Chi tiết phòng livestream
      * @param $id
      * @return mixed
      */
     public function detail($id)
     {
-        if (!$id) return app('json')->fail('参数错误');
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         return app('json')->success($this->services->get((int)$id)->toArray());
     }
 
     /**
-     * 添加直播间
+     * Thêm phòng livestream
      * @return mixed
      */
     public function add()
@@ -79,15 +79,15 @@ class LiveRoom extends AuthController
             ['sort', 0]
         ]);
         if (mb_strlen($data['name']) < 6 || mb_strlen($data['name']) > 17) {
-            return app('json')->fail('名称长度需在6-17个字符之间');
+            return app('json')->fail('Độ dài tên phải từ 6-17 ký tự');
         }
         $this->validate($data, \app\adminapi\validate\marketing\LiveRoomValidate::class, 'save');
         $this->services->add($data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     /**
-     * 添加直播间商品
+     * Thêm sản phẩm vào phòng livestream
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -100,11 +100,11 @@ class LiveRoom extends AuthController
             ['goods_ids', []]
         ], true);
         $this->services->exportGoods((int)$room_id, $goods_ids);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     /**
-     * 提交审核
+     * Gửi duyệt
      * @param $id
      * @return mixed
      */
@@ -115,11 +115,11 @@ class LiveRoom extends AuthController
             ['msg', '']
         ], true);
         $this->services->apply((int)$id, $status, $msg);
-        return app('json')->success('设置成功');
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
-     * 设置状态
+     * Thiết lập trạng thái
      * @param $id
      * @param $is_show
      * @return mixed
@@ -127,28 +127,28 @@ class LiveRoom extends AuthController
     public function setShow($id, $is_show)
     {
         $this->services->isShow((int)$id, $is_show);
-        return app('json')->success('设置成功');
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
-     * 删除直播间
+     * Xóa phòng livestream
      * @param $id
      * @return mixed
      */
     public function delete($id)
     {
         $this->services->delete($id);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 
     /**
-     * 同步直播间
+     * Đồng bộ phòng livestream
      * @return mixed
      */
     public function syncRoom()
     {
         $this->services->syncRoomStatus();
-        return app('json')->success('同步成功');
+        return app('json')->success('Đồng bộ thành công');
     }
 
 }

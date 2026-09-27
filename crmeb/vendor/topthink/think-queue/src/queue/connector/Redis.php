@@ -57,7 +57,7 @@ class Redis extends Connector
     public static function __make($config)
     {
         if (!extension_loaded('redis')) {
-            throw new Exception('redis扩展未安装');
+            throw new Exception('Chưa cài đặt tiện ích mở rộng redis');
         }
 
         $func = $config['persistent'] ? 'pconnect' : 'connect';

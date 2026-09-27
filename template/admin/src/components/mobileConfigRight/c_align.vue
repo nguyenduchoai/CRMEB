@@ -33,17 +33,17 @@ export default {
       configData: {},
       list: {
         left: {
-          val: '居左',
+          val: 'Căn trái',
           icon: 'iconzuoduiqi',
           key: 'left',
         },
         center: {
-          val: '居中',
+          val: 'Căn giữa',
           icon: 'iconjuzhongduiqi',
           key: 'center',
         },
         right: {
-          val: '居右',
+          val: 'Căn phải',
           icon: 'iconyouduiqi',
           key: 'right',
         },

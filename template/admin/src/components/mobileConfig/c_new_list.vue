@@ -122,7 +122,7 @@ export default {
     'configObj.setUp.tabVal': {
       handler(nVal, oVal) {
         this.setUp = nVal;
-        // 取前两个
+        // Lấy hai mục đầu
         var arr = [
           {
             components: toolCom.c_card_select,
@@ -203,7 +203,7 @@ export default {
       if (!data.paddingConfig) {
         this.$set(data, 'paddingConfig', {
           isAll: false,
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           max: 100,
@@ -218,7 +218,7 @@ export default {
       if (!data.marginConfig) {
         this.$set(data, 'marginConfig', {
           isAll: false,
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,
@@ -241,7 +241,7 @@ export default {
           this.$message.error(err.msg);
         });
     },
-    // 获取组件参数
+    // Lấy tham số thành phần (component)
     getConfig(data) {
       if (data.name == 'radio') {
         return;

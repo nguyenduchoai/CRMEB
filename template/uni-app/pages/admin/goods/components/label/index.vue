@@ -15,7 +15,7 @@
           class="sysTitle acea-row row-center-wrapper"
           :style="{ height: getHeight.barHeight + 'px' }"
         >
-          <view>添加标签</view>
+          <view>Thêm nhãn</view>
         </view>
       </view>
       <view
@@ -34,7 +34,7 @@
       >
         <!-- #endif -->
         <!-- #ifndef MP -->
-        <view class="header">添加标签</view>
+        <view class="header">Thêm nhãn</view>
         <view class="list" v-if="isStore">
           <!-- #endif -->
           <scroll-view scroll-y="true" style="height: 100%">
@@ -61,14 +61,14 @@
         </view>
         <view class="empty-box" v-else>
           <emptyPage
-            title="暂无标签～"
+            title="Chưa có nhãn~"
             src="/statics/images/empty-box.png"
           ></emptyPage>
         </view>
         <view class="footer acea-row row-between-wrapper">
-          <view class="bnt acea-row row-center-wrapper" @tap="reset">重置</view>
+          <view class="bnt acea-row row-center-wrapper" @tap="reset">Đặt lại</view>
           <view class="bnt on acea-row row-center-wrapper" @tap="define"
-            >确定</view
+            >Xác nhận</view
           >
         </view>
       </view>
@@ -99,11 +99,11 @@ export default {
       getHeight: this.$util.getWXStatusHeight(),
       // #endif
       labelList: [],
-      goodsInfo: {}, //列表中已存在id（固定不变）
-      dataLabel: [], //已存在选中id(随着选中可以变化)
-      isStore: false, //判断是否存在标签
-      num: 0, // 判断是否为批量
-      ids: [], //批量时的id集合
+      goodsInfo: {}, //ID đã có trong danh sách (cố định không đổi)
+      dataLabel: [], //ID đã chọn hiện có (có thể thay đổi theo lựa chọn)
+      isStore: false, //Kiểm tra có tồn tại nhãn không
+      num: 0, // Kiểm tra có phải thao tác hàng loạt không
+      ids: [], //Tập hợp id khi thao tác hàng loạt
     };
   },
   mounted() {},
@@ -279,10 +279,10 @@ export default {
     padding: 0 32rpx;
     background-color: #fff;
     border-radius: 0 0 0 40rpx;
-    height: calc(112rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-    height: calc(112rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
-    padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
-    padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
+    height: calc(112rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+    height: calc(112rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
+    padding-bottom: constant(safe-area-inset-bottom); ///Tương thích IOS<11.2/
+    padding-bottom: env(safe-area-inset-bottom); ///Tương thích IOS>11.2/
     .bnt {
       width: 296rpx;
       height: 72rpx;

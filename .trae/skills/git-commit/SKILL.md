@@ -1,240 +1,240 @@
 ---
-name: Git提交规范
-description: 规范git提交信息格式，确保不同目录下的文件提交时添加正确的前缀
+name: Quy ước commit Git
+description: Chuẩn hóa định dạng thông điệp commit git, đảm bảo thêm đúng tiền tố khi commit tệp ở các thư mục khác nhau
 ---
 
-# Git提交规范
+# Quy ước commit Git
 
-## 0. 自动触发说明
+## 0. Mô tả cơ chế tự động kích hoạt
 
-### 0.1 触发条件
+### 0.1 Điều kiện kích hoạt
 
-#### 0.1.1 操作触发
-- **文件浏览时**: 当浏览以下目录时自动调用
-  - 打开 `crmeb/` 目录时触发
-  - 打开 `docker-compose/` 目录时触发
-  - 打开 `dev-docs/` 目录时触发
-  - 打开 `template/` 目录时触发
-- **文件操作时**: 当对以下目录的文件进行操作时自动调用
-  - 修改 `crmeb/` 目录下文件时触发
-  - 修改 `docker-compose/` 目录下文件时触发
-  - 修改 `dev-docs/` 目录下文件时触发
-  - 修改 `template/` 目录下文件时触发
-- **Git操作时**: 当执行以下Git命令时自动调用
-  - `git add` (添加文件到暂存区)
-  - `git commit` (提交更改)
-  - `git push` (推送更改)
+#### 0.1.1 Kích hoạt theo thao tác
+- **Khi duyệt tệp**: Tự động được gọi khi duyệt các thư mục sau
+  - Kích hoạt khi mở thư mục `crmeb/`
+  - Kích hoạt khi mở thư mục `docker-compose/`
+  - Kích hoạt khi mở thư mục `dev-docs/`
+  - Kích hoạt khi mở thư mục `template/`
+- **Khi thao tác tệp**: Tự động được gọi khi thao tác với tệp trong các thư mục sau
+  - Kích hoạt khi sửa tệp trong thư mục `crmeb/`
+  - Kích hoạt khi sửa tệp trong thư mục `docker-compose/`
+  - Kích hoạt khi sửa tệp trong thư mục `dev-docs/`
+  - Kích hoạt khi sửa tệp trong thư mục `template/`
+- **Khi thao tác Git**: Tự động được gọi khi thực thi các lệnh Git sau
+  - `git add` (thêm tệp vào vùng staging)
+  - `git commit` (commit thay đổi)
+  - `git push` (push thay đổi)
 
-#### 0.1.2 内容触发
-- **关键词触发**: 当文件内容包含以下关键词时自动调用
-  - Git关键词: `git`、`commit`、`push`、`pull`、`branch`
-  - 提交关键词: `提交`、`更新`、`修复`、`添加`、`删除`
-  - 目录关键词: `crmeb`、`docker-compose`、`docs`、`template`
+#### 0.1.2 Kích hoạt theo nội dung
+- **Kích hoạt theo từ khóa**: Tự động được gọi khi nội dung tệp chứa các từ khóa sau
+  - Từ khóa Git: `git`, `commit`, `push`, `pull`, `branch`
+  - Từ khóa commit: `commit`, `cập nhật`, `sửa lỗi`, `thêm`, `xóa`
+  - Từ khóa thư mục: `crmeb`, `docker-compose`, `docs`, `template`
 
-#### 0.1.3 命令触发
-- **终端命令触发**: 当执行以下命令时自动调用
-  - `git` (Git相关命令)
-  - `git commit` (提交命令)
-  - `git add` (添加命令)
+#### 0.1.3 Kích hoạt theo lệnh
+- **Kích hoạt bằng lệnh terminal**: Tự động được gọi khi thực thi các lệnh sau
+  - `git` (các lệnh liên quan đến Git)
+  - `git commit` (lệnh commit)
+  - `git add` (lệnh add)
 
-### 0.2 适用场景
+### 0.2 Tình huống áp dụng
 
-#### 0.2.1 核心场景
-- **代码提交**: 提交代码更改时
-- **文件修改**: 修改项目文件时
-- **目录操作**: 对项目目录进行操作时
+#### 0.2.1 Tình huống cốt lõi
+- **Commit mã nguồn**: Khi commit thay đổi mã nguồn
+- **Sửa tệp**: Khi sửa tệp của dự án
+- **Thao tác thư mục**: Khi thao tác với thư mục dự án
 
-#### 0.2.2 辅助场景
-- **代码审查**: 审查代码提交时
-- **版本管理**: 管理项目版本时
-- **团队协作**: 团队成员协作开发时
+#### 0.2.2 Tình huống hỗ trợ
+- **Rà soát mã nguồn**: Khi rà soát các commit mã nguồn
+- **Quản lý phiên bản**: Khi quản lý phiên bản dự án
+- **Cộng tác nhóm**: Khi các thành viên trong nhóm cùng phối hợp phát triển
 
-### 0.3 触发机制
+### 0.3 Cơ chế kích hoạt
 
-#### 0.3.1 调用时机
-- **实时触发**: Git命令执行时立即触发
-- **延迟触发**: 文件操作后延迟1秒触发
-- **批量触发**: 批量文件操作时合并触发
+#### 0.3.1 Thời điểm gọi
+- **Kích hoạt tức thì**: Kích hoạt ngay khi lệnh Git được thực thi
+- **Kích hoạt trễ**: Kích hoạt sau khi thao tác tệp 1 giây
+- **Kích hoạt hàng loạt**: Gộp thành một lần kích hoạt khi thao tác file hàng loạt
 
-#### 0.3.2 调用频率
-- 文件浏览: 最多每10秒触发一次
-- 文件操作: 最多每5秒触发一次
-- Git命令: 最多每3秒触发一次
+#### 0.3.2 Tần suất gọi
+- Duyệt tệp: kích hoạt tối đa một lần mỗi 10 giây
+- Thao tác tệp: kích hoạt tối đa một lần mỗi 5 giây
+- Lệnh Git: Tối đa mỗi 3 giây kích hoạt một lần
 
-#### 0.3.3 调用优先级
-- **优先级等级**: 中等优先级 (3/5)
-- **竞争处理**: 当多个技能同时触发时
-  - 最高优先级: 系统核心技能
-  - 高优先级: 代码结构技能
-  - 中等优先级: Git提交技能、PHP后端技能、前端技能
-  - 低优先级: 辅助工具技能
+#### 0.3.3 Mức ưu tiên gọi
+- **Mức ưu tiên**: Ưu tiên trung bình (3/5)
+- **Xử lý tranh chấp**: Khi nhiều skill được kích hoạt cùng lúc
+  - Ưu tiên cao nhất: skill cốt lõi của hệ thống
+  - Ưu tiên cao: skill cấu trúc mã nguồn
+  - Ưu tiên trung bình: Skill commit Git, skill backend PHP, skill frontend
+  - Ưu tiên thấp: skill công cụ hỗ trợ
 
-### 0.4 触发后行为
+### 0.4 Hành vi sau khi kích hoạt
 
-#### 0.4.1 自动分析
-- **目录分析**: 分析当前操作的文件所在目录
-- **提交信息分析**: 分析提交信息格式是否符合规范
-- **前缀检查**: 检查提交信息是否包含正确的目录前缀
+#### 0.4.1 Tự động phân tích
+- **Phân tích thư mục**: Phân tích thư mục chứa tệp đang được thao tác
+- **Phân tích thông điệp commit**: Phân tích xem định dạng thông điệp commit có đúng quy ước không
+- **Kiểm tra tiền tố**: Kiểm tra thông điệp commit có chứa đúng tiền tố thư mục không
 
-#### 0.4.2 自动展示
-- **提交规范**: 展示Git提交规范
-- **目录前缀**: 展示当前目录对应的提交前缀
-- **示例格式**: 展示正确的提交信息格式示例
+#### 0.4.2 Tự động hiển thị
+- **Quy ước commit**: Hiển thị quy ước commit Git
+- **Tiền tố thư mục**: Hiển thị tiền tố commit tương ứng với thư mục hiện tại
+- **Định dạng mẫu**: Hiển thị ví dụ về định dạng thông điệp commit đúng
 
-#### 0.4.3 自动建议
-- **前缀建议**: 提供当前目录对应的提交前缀建议
-- **格式建议**: 提供提交信息格式建议
-- **最佳实践**: 提供Git提交最佳实践建议
+#### 0.4.3 Tự động đề xuất
+- **Gợi ý tiền tố**: Đưa ra gợi ý tiền tố commit tương ứng với thư mục hiện tại
+- **Gợi ý định dạng**: Đưa ra gợi ý về định dạng thông điệp commit
+- **Thực tiễn tốt nhất**: Đưa ra khuyến nghị về thực tiễn tốt nhất khi commit Git
 
-## 1. 提交信息格式规范
+## 1. Quy ước định dạng thông điệp commit
 
-### 1.1 基本格式
+### 1.1 Định dạng cơ bản
 ```
-[目录前缀] 提交描述
+[Tiền tố thư mục] Mô tả commit
 
-详细说明（可选）
+Giải thích chi tiết (tùy chọn)
 ```
 
-### 1.2 目录前缀规则
+### 1.2 Quy tắc tiền tố thư mục
 
-| 目录 | 前缀 | 示例 |
+| Thư mục | Tiền tố | Ví dụ |
 |------|------|------|
-| crmeb/ | 【程序目录】 | 【程序目录】修复登录功能bug |
-| docker-compose/ | 【DOCKER】 | 【DOCKER】更新Docker配置文件 |
-| dev-docs/ | 【开发文档】 | 【开发文档】完善API接口文档 |
-| template/ | 【前端文件】 | 【前端文件】优化前端界面样式 |
+| crmeb/ | [Thư mục chương trình] | [Thư mục chương trình] Sửa bug chức năng đăng nhập |
+| docker-compose/ | 【DOCKER】 | [DOCKER] Cập nhật tệp cấu hình Docker |
+| dev-docs/ | [Tài liệu phát triển] | [Tài liệu phát triển] Hoàn thiện tài liệu API |
+| template/ | [Tệp frontend] | [Tệp frontend] Tối ưu style giao diện frontend |
 
-### 1.3 提交描述规范
-- **长度限制**: 不超过50个字符
-- **内容要求**: 简洁明了，说明本次提交的主要内容
-- **动词使用**: 使用现在时动词，如「添加」、「修复」、「更新」等
-- **格式规范**: 首字母大写，结尾不加标点符号
+### 1.3 Quy ước mô tả commit
+- **Giới hạn độ dài**: Không quá 50 ký tự
+- **Yêu cầu nội dung**: Ngắn gọn, rõ ràng, nêu nội dung chính của lần commit này
+- **Cách dùng động từ**: Dùng động từ ở thì hiện tại, như “Thêm”, “Sửa”, “Cập nhật”, v.v.
+- **Quy ước định dạng**: Viết hoa chữ cái đầu, không thêm dấu câu ở cuối
 
-### 1.4 详细说明规范
-- **长度限制**: 不超过200个字符
-- **内容要求**: 详细说明本次提交的原因、解决的问题等
-- **格式规范**: 每行不超过72个字符，使用空行分隔不同段落
+### 1.4 Quy ước phần mô tả chi tiết
+- **Giới hạn độ dài**: Không quá 200 ký tự
+- **Yêu cầu nội dung**: Trình bày chi tiết lý do của lần commit này, vấn đề được giải quyết, v.v.
+- **Quy ước định dạng**: Mỗi dòng không quá 72 ký tự, dùng dòng trống để phân tách các đoạn
 
-## 2. 提交信息示例
+## 2. Ví dụ thông điệp commit
 
-### 2.1 crmeb目录示例
+### 2.1 Ví dụ cho thư mục crmeb
 ```
-【程序目录】添加用户注册功能
+[Thư mục chương trình] Thêm chức năng đăng ký người dùng
 
-- 实现用户注册接口
-- 添加注册参数验证
-- 集成短信验证码功能
-```
-
-### 2.2 docker-compose目录示例
-```
-【DOCKER】优化Docker镜像构建
-
-- 减少镜像体积
-- 提高构建速度
-- 修复容器启动问题
+- Triển khai API đăng ký người dùng
+- Thêm kiểm tra tham số đăng ký
+- Tích hợp chức năng mã xác thực (OTP) qua SMS
 ```
 
-### 2.3 docs目录示例
+### 2.2 Ví dụ cho thư mục docker-compose
 ```
-【开发文档】更新API接口文档
+【DOCKER】Tối ưu build image Docker
 
-- 补充新接口说明
-- 修正参数描述错误
-- 添加响应示例
-```
-
-### 2.4 template目录示例
-```
-【前端文件】优化登录页面样式
-
-- 调整表单布局
-- 美化按钮样式
-- 优化响应式设计
+- Giảm dung lượng image
+- Tăng tốc độ build
+- Sửa lỗi khởi động container
 ```
 
-## 3. 最佳实践
+### 2.3 Ví dụ cho thư mục docs
+```
+[Tài liệu phát triển] Cập nhật tài liệu API
 
-### 3.1 提交频率
-- **合理拆分**: 每个提交只包含一个功能或修复
-- **及时提交**: 完成一个功能或修复后及时提交
-- **避免批量**: 避免一次提交大量不相关的更改
+- Bổ sung mô tả API mới
+- Sửa lỗi mô tả tham số
+- Thêm ví dụ response
+```
 
-### 3.2 提交信息质量
-- **清晰明了**: 提交信息应清晰说明本次更改的内容
-- **准确描述**: 提交信息应准确反映代码更改
-- **格式规范**: 严格遵循提交信息格式规范
+### 2.4 Ví dụ cho thư mục template
+```
+[File frontend] Tối ưu giao diện trang đăng nhập
 
-### 3.3 分支管理
-- **主分支**: 保持主分支稳定，只用于发布
-- **开发分支**: 在开发分支上进行功能开发
-- **特性分支**: 为大型功能创建专门的特性分支
-- **修复分支**: 为紧急bug创建专门的修复分支
+- Điều chỉnh bố cục form
+- Làm đẹp kiểu nút
+- Tối ưu thiết kế responsive
+```
 
-### 3.4 代码审查
-- **自我审查**: 提交前自我审查代码
-- **团队审查**: 重要更改应进行团队代码审查
-- **审查标准**: 审查代码质量、安全性、性能等
+## 3. Thực tiễn tốt nhất
 
-## 4. 常见问题
+### 3.1 Tần suất commit
+- **Chia nhỏ hợp lý**: Mỗi commit chỉ chứa một tính năng hoặc một bản sửa lỗi
+- **Commit kịp thời**: Commit ngay sau khi hoàn thành một tính năng hoặc bản sửa lỗi
+- **Tránh commit dồn**: Tránh commit một lượng lớn thay đổi không liên quan trong một lần
 
-### 4.1 提交信息问题
-- **缺少前缀**: 忘记添加目录前缀
-  - 解决方法: 参考目录前缀规则，添加正确的前缀
-- **描述过长**: 提交描述超过50个字符
-  - 解决方法: 精简描述，突出重点
-- **格式不规范**: 提交信息格式不符合规范
-  - 解决方法: 参考提交信息格式规范，修正格式
+### 3.2 Chất lượng thông điệp commit
+- **Rõ ràng, dễ hiểu**: Thông điệp commit cần nêu rõ nội dung thay đổi lần này
+- **Mô tả chính xác**: Thông điệp commit cần phản ánh chính xác thay đổi của mã nguồn
+- **Quy ước định dạng**: Tuân thủ nghiêm ngặt quy ước định dạng thông điệp commit
 
-### 4.2 分支管理问题
-- **分支混乱**: 分支过多或命名不规范
-  - 解决方法: 定期清理无用分支，使用规范的分支命名
-- **合并冲突**: 分支合并时产生冲突
-  - 解决方法: 及时同步主分支，减少冲突可能性
+### 3.3 Quản lý nhánh
+- **Nhánh chính**: Giữ nhánh chính ổn định, chỉ dùng để phát hành
+- **Nhánh phát triển**: Phát triển tính năng trên nhánh phát triển
+- **Nhánh tính năng**: Tạo nhánh tính năng (feature branch) riêng cho các tính năng lớn
+- **Nhánh sửa lỗi**: Tạo nhánh sửa lỗi (hotfix) riêng cho các bug khẩn cấp
 
-### 4.3 提交频率问题
-- **提交过频**: 过于频繁的提交
-  - 解决方法: 合理组织提交，避免琐碎提交
-- **提交过少**: 长时间不提交
-  - 解决方法: 及时提交更改，避免代码丢失
+### 3.4 Rà soát mã nguồn
+- **Tự rà soát**: Tự rà soát mã nguồn trước khi commit
+- **Rà soát theo nhóm**: Các thay đổi quan trọng cần được cả nhóm rà soát mã nguồn
+- **Tiêu chí rà soát**: Rà soát chất lượng mã nguồn, tính bảo mật, hiệu năng, v.v.
 
-## 5. 常用Git命令
+## 4. Sự cố thường gặp
 
-### 5.1 基本命令
-- **git status**: 查看当前状态
-- **git add <file>**: 添加文件到暂存区
-- **git commit -m "[前缀] 描述"**: 提交更改
-- **git push**: 推送更改到远程仓库
-- **git pull**: 从远程仓库拉取更改
+### 4.1 Vấn đề về thông điệp commit
+- **Thiếu tiền tố**: Quên thêm tiền tố thư mục
+  - Cách giải quyết: Tham khảo quy tắc tiền tố thư mục, thêm đúng tiền tố
+- **Mô tả quá dài**: Mô tả commit vượt quá 50 ký tự
+  - Cách giải quyết: Rút gọn mô tả, làm nổi bật trọng tâm
+- **Định dạng không đúng quy ước**: Định dạng thông điệp commit không tuân thủ quy ước
+  - Cách giải quyết: Tham khảo quy ước định dạng thông điệp commit để sửa lại định dạng
 
-### 5.2 分支命令
-- **git branch**: 查看分支
-- **git checkout <branch>**: 切换分支
-- **git checkout -b <branch>**: 创建并切换分支
-- **git merge <branch>**: 合并分支
+### 4.2 Vấn đề về quản lý nhánh
+- **Nhánh lộn xộn**: Quá nhiều nhánh hoặc đặt tên không đúng quy ước
+  - Cách giải quyết: Định kỳ dọn dẹp các nhánh không dùng, đặt tên nhánh theo quy ước
+- **Xung đột khi merge**: Phát sinh xung đột khi merge nhánh
+  - Cách giải quyết: Kịp thời đồng bộ với nhánh chính để giảm khả năng xung đột
 
-### 5.3 历史命令
-- **git log**: 查看提交历史
-- **git show <commit>**: 查看提交详情
-- **git diff**: 查看更改内容
+### 4.3 Vấn đề về tần suất commit
+- **Commit quá dày**: Commit quá thường xuyên
+  - Cách giải quyết: Sắp xếp các commit hợp lý, tránh commit vụn vặt
+- **Commit quá thưa**: Thời gian dài không commit
+  - Cách giải quyết: Commit thay đổi kịp thời, tránh mất mã nguồn
 
-## 6. 参考资源
+## 5. Các lệnh Git thường dùng
 
-### 6.1 官方文档
-- [Git官方文档](https://git-scm.com/doc)
-- [GitHub Git教程](https://guides.github.com/introduction/git-handbook/)
+### 5.1 Lệnh cơ bản
+- **git status**: Xem trạng thái hiện tại
+- **git add <file>**: Thêm tệp vào vùng staging
+- **git commit -m "[Tiền tố] Mô tả"**: Commit thay đổi
+- **git push**: Đẩy thay đổi lên kho từ xa (remote)
+- **git pull**: Kéo thay đổi từ kho từ xa (remote) về
 
-### 6.2 学习资源
+### 5.2 Lệnh về nhánh
+- **git branch**: Xem các nhánh
+- **git checkout <branch>**: Chuyển nhánh
+- **git checkout -b <branch>**: Tạo và chuyển sang nhánh mới
+- **git merge <branch>**: Gộp (merge) nhánh
+
+### 5.3 Lệnh xem lịch sử
+- **git log**: Xem lịch sử commit
+- **git show <commit>**: Xem chi tiết commit
+- **git diff**: Xem nội dung thay đổi
+
+## 6. Tài liệu tham khảo
+
+### 6.1 Tài liệu chính thức
+- [Tài liệu chính thức của Git](https://git-scm.com/doc)
+- [Hướng dẫn Git của GitHub](https://guides.github.com/introduction/git-handbook/)
+
+### 6.2 Tài nguyên học tập
 - [Pro Git](https://git-scm.com/book/zh/v2)
-- [Git分支管理策略](https://nvie.com/posts/a-successful-git-branching-model/)
-- [提交信息规范](https://chris.beams.io/posts/git-commit/)
+- [Chiến lược quản lý nhánh Git](https://nvie.com/posts/a-successful-git-branching-model/)
+- [Quy ước thông điệp commit](https://chris.beams.io/posts/git-commit/)
 
-### 6.3 工具推荐
+### 6.3 Công cụ khuyên dùng
 - **Git GUI**: GitHub Desktop、SourceTree
-- **Git客户端**: GitKraken、Tower
-- **代码托管**: GitHub、GitLab、Gitee
+- **Git client**: GitKraken, Tower
+- **Lưu trữ mã nguồn**: GitHub, GitLab, Gitee
 
-### 6.4 其他资源
-- Git工作流最佳实践
-- 团队Git使用规范
-- 代码审查流程指南
+### 6.4 Tài nguyên khác
+- Thực tiễn tốt nhất cho quy trình làm việc (workflow) với Git
+- Quy ước sử dụng Git trong nhóm
+- Hướng dẫn quy trình rà soát mã nguồn

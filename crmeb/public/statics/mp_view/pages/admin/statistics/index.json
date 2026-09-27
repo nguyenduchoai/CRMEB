@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "订单数据统计",
+  "navigationBarTitleText": "Thống kê dữ liệu đơn hàng",
   "usingComponents": {
     "uni-calendar": "/pages/admin/components/uni-calendar/uni-calendar"
   }

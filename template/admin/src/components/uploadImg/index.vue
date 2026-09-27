@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-dialog
-      title="上传图片"
+      title="Tải lên ảnh"
       :visible.sync="uploadModal"
       :append-to-body="true"
       :width="isIframe ? '100%' : '1024px'"
@@ -10,14 +10,14 @@
     >
       <div class="main" v-loading="loading">
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-          <el-form-item label="上传方式：" prop="type">
+          <el-form-item label="Cách tải lên:" prop="type">
             <el-radio-group v-model="ruleForm.type" @input="radioChange(ruleForm.type)">
-              <el-radio :label="0">本地上传</el-radio>
-              <el-radio :label="1">网络上传</el-radio>
-              <el-radio :label="2">扫码上传</el-radio>
+              <el-radio :label="0">Tải lên từ máy</el-radio>
+              <el-radio :label="1">Tải lên từ URL</el-radio>
+              <el-radio :label="2">Quét mã để tải lên</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="上传至分组：" prop="region" v-show="ruleForm.type == 0 || ruleForm.type == 1">
+          <el-form-item label="Tải lên vào nhóm:" prop="region" v-show="ruleForm.type == 0 || ruleForm.type == 1">
             <el-cascader
               class="form-width"
               v-model="ruleForm.region"
@@ -26,11 +26,11 @@
               @change="handleChange"
             ></el-cascader>
           </el-form-item>
-          <el-form-item label="网络图片：" prop="region" v-if="ruleForm.type == 1">
-            <el-input class="form-width" v-model="webImgUrl" placeholder="请网络图片地址"></el-input>
-            <span class="tq-text" v-db-click @click="getImg">提取照片</span>
+          <el-form-item label="Ảnh từ URL:" prop="region" v-if="ruleForm.type == 1">
+            <el-input class="form-width" v-model="webImgUrl" placeholder="Vui lòng nhập URL ảnh"></el-input>
+            <span class="tq-text" v-db-click @click="getImg">Lấy ảnh</span>
           </el-form-item>
-          <el-form-item label="上传图片：" prop="region" v-if="ruleForm.type == 0">
+          <el-form-item label="Tải lên ảnh:" prop="region" v-if="ruleForm.type == 0">
             <div class="acea-row">
               <div class="uploadCont">
                 <el-upload
@@ -60,7 +60,7 @@
                   </div>
                 </el-upload>
                 <div class="tips">
-                  建议上传图片最大宽度750px，不超过3MB；仅支持jpeg、jpg、png格式，可拖拽调整上传顺序
+                  Đề xuất tải lên ảnh có chiều rộng tối đa 750px, không quá 3MB; chỉ hỗ trợ định dạng jpeg, jpg, png, có thể kéo thả để điều chỉnh thứ tự tải lên
                 </div>
               </div>
             </div>
@@ -84,7 +84,7 @@
           </template>
           <div class="code-image" v-if="ruleForm.type == 2">
             <div class="left">
-              <el-form-item label="上传至分组：" prop="region">
+              <el-form-item label="Tải lên vào nhóm:" prop="region">
                 <el-cascader
                   class="form-width"
                   v-model="ruleForm.region"
@@ -93,15 +93,15 @@
                   @change="handleChange"
                 ></el-cascader>
               </el-form-item>
-              <el-form-item label="二维码：" prop="region">
+              <el-form-item label="Mã QR:" prop="region">
                 <div class="code" ref="qrCodeUrl"></div>
-                <div class="trip">扫描二维码，快速上传手机图片</div>
-                <div class="trip-small">建议使用手机浏览器</div>
+                <div class="trip">Quét mã QR để tải nhanh ảnh từ điện thoại</div>
+                <div class="trip-small">Nên dùng trình duyệt trên điện thoại</div>
               </el-form-item>
             </div>
             <div class="right">
-              <el-button size="small" v-db-click @click="scanUploadGet">刷新图库</el-button>
-              <div class="tip">刷新图库按钮，可显示移动端上传成功的图片</div>
+              <el-button size="small" v-db-click @click="scanUploadGet">Làm mới thư viện ảnh</el-button>
+              <div class="tip">Nhấn nút “Làm mới thư viện ảnh” để hiển thị các ảnh đã tải lên thành công từ điện thoại</div>
               <div class="img-box">
                 <div
                   v-for="(item, index) in ruleForm.imgList"
@@ -123,9 +123,9 @@
       </div>
 
       <span slot="footer" class="dialog-footer">
-        <el-button v-db-click @click="clear">取 消</el-button>
+        <el-button v-db-click @click="clear">Hủy</el-button>
         <el-button type="primary" :disabled="!ruleForm.imgList.length" v-db-click @click="submitUpload"
-          >确 定</el-button
+          >Xác nhận</el-button
         >
       </span>
     </el-dialog>
@@ -182,7 +182,7 @@ export default {
         region: '',
         imgList: [],
       },
-      rules: { type: [{ required: true, message: '请选择活动资源', trigger: 'change' }] },
+      rules: { type: [{ required: true, message: 'Vui lòng chọn tài nguyên hoạt động', trigger: 'change' }] },
       qrcode: '',
       scanToken: '',
       limit: 20,
@@ -224,11 +224,11 @@ export default {
 
     getImg() {
       if (!this.webImgUrl) {
-        this.$message.error('请先输入图片地址');
+        this.$message.error('Vui lòng nhập địa chỉ ảnh trước');
         return;
       }
       if (this.webImgUrl.indexOf('.php') != -1) {
-        this.$message.error('请先输入其他图片地址');
+        this.$message.error('Vui lòng nhập địa chỉ ảnh khác trước');
         return;
       }
       this.ruleForm.imgList.push({
@@ -236,7 +236,7 @@ export default {
       });
     },
     async submitUpload() {
-      if (!this.ruleForm.imgList.length) return this.$message.warning('请先选择图片');
+      if (!this.ruleForm.imgList.length) return this.$message.warning('Vui lòng chọn ảnh trước');
       if (this.ruleForm.type == 0) {
         this.uploadData = {
           pid: this.ruleForm.region,
@@ -248,7 +248,7 @@ export default {
             const file = this.ruleForm.imgList[i].raw;
             await this.uploadItem(file);
             if (i == this.ruleForm.imgList.length - 1) {
-              this.$message.success('上传成功');
+              this.$message.success('Tải lên thành công');
               this.$emit('uploadSuccess');
               this.uploadModal = false;
               this.loading = false;
@@ -265,7 +265,7 @@ export default {
           this.loading = true;
           onlineUpload({ pid: this.ruleForm.region, images: urls })
             .then((res) => {
-              this.$message.success('上传成功');
+              this.$message.success('Tải lên thành công');
               this.$emit('uploadSuccess');
               this.uploadModal = false;
               this.loading = false;
@@ -281,7 +281,7 @@ export default {
           return e.att_id;
         });
         moveApi({ pid: this.ruleForm.region, images: attId }).then((res) => {
-          this.$message.success('上传成功');
+          this.$message.success('Tải lên thành công');
           this.$emit('uploadSuccess');
           this.uploadModal = false;
           this.initData();
@@ -301,7 +301,7 @@ export default {
             } else {
               this.loading = false;
               this.$message({
-                message: '上传失败',
+                message: 'Tải lên thất bại',
                 type: 'error',
                 duration: 1000,
               });
@@ -319,7 +319,7 @@ export default {
     creatQrCode(url) {
       this.$refs.qrCodeUrl.innerHTML = '';
       var qrcode = new QRCode(this.$refs.qrCodeUrl, {
-        text: url, // 需要转换为二维码的内容
+        text: url, // Nội dung cần chuyển đổi thành mã QR
         width: 160,
         height: 160,
         colorDark: '#000000',
@@ -358,7 +358,7 @@ export default {
           this.ruleForm.imgList = fileList;
         }
       } else {
-        // 从ruleForm对象的imgList数组中删除最后一个元素
+        // Xóa phần tử cuối cùng trong mảng imgList của đối tượng ruleForm
         this.ruleForm.imgList.splice(this.ruleForm.imgList.length, 1);
       }
     },
@@ -382,7 +382,7 @@ export default {
     handleChange(e) {
       if (this.ruleForm.type == 2) this.scanUploadQrcode();
     },
-    // 移动
+    // Di chuyển
     handleDragStart(e, item) {
       this.dragging = item;
     },

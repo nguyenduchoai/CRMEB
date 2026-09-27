@@ -1,5 +1,5 @@
     /**
-     * 保存
+     * Lưu
      * @return \think\Response
      * @date {%DATE%}
      */
@@ -13,5 +13,5 @@
 {%OTHER_PHP%}
         $this->service->crudSave($data);
 
-        return app('json')->success('添加成功');
+        return app('json')->success('Thêm thành công');
     }

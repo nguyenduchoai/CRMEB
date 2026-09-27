@@ -23,7 +23,7 @@ import { mapMutations } from 'vuex';
 export default {
   name: 'c_wechat_live',
   componentsName: 'wechat_live',
-  cname: '小程序直播',
+  cname: 'Livestream Mini Program',
   props: {
     activeIndex: {
       type: null,
@@ -41,11 +41,11 @@ export default {
   },
   data() {
     return {
-      // 组件参数配置
+      // Cấu hình tham số thành phần
       option: {
         submitBtn: false,
       },
-      configObj: {}, // 配置对象
+      configObj: {}, // Đối tượng cấu hình
       rCom: [
         {
           components: toolCom.c_card_select,
@@ -55,7 +55,7 @@ export default {
           components: toolCom.c_set_up,
           configNme: 'setUp',
         },
-      ], // 当前页面组件
+      ], // Thành phần (component) của trang hiện tại
     };
   },
   watch: {
@@ -133,7 +133,7 @@ export default {
     patchConfig(config) {
       if (!config.paddingConfig) {
         config.paddingConfig = {
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           max: 100,
@@ -147,7 +147,7 @@ export default {
       }
       if (!config.marginConfig) {
         config.marginConfig = {
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,

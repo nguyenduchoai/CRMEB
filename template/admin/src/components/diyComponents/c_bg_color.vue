@@ -9,7 +9,7 @@
           :key="key"
         >
           <el-color-picker v-model="color.item" @change="changeColor($event, color)"></el-color-picker
-          ><span class="white-space-nowrap" v-db-click @click="resetBgA(color, index, key)">重置</span>
+          ><span class="white-space-nowrap" v-db-click @click="resetBgA(color, index, key)">Đặt lại</span>
         </div>
       </el-col>
     </div>
@@ -65,7 +65,7 @@ export default {
       }
       // this.$emit('getConfig', this.defaults)
     },
-    // 重置
+    // Đặt lại
     resetBgA(color, index, key) {
       color.item = this.configData[this.configNum][this.name].default[key].item;
     },

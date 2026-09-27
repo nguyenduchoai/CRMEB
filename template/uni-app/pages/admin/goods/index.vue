@@ -7,7 +7,7 @@
         class="sysTitle acea-row row-center-wrapper"
         :style="{ height: getHeight.barHeight + 'px' }"
       >
-        <view>商品管理</view>
+        <view>Quản lý sản phẩm</view>
         <text class="iconfont icon-ic_leftarrow" @click="goarrow"></text>
       </view>
     </view>
@@ -20,7 +20,7 @@
         <text class="iconfont icon-ic_search"></text>
         <input
           class="inputs"
-          placeholder="请输入商品名称/ID"
+          placeholder="Vui lòng nhập tên sản phẩm/ID"
           placeholder-class="placeholder"
           confirm-type="search"
           name="search"
@@ -28,7 +28,7 @@
           @confirm="searchSubmit"
         />
       </view>
-      <view @click="manageTap" v-if="administer">取消</view>
+      <view @click="manageTap" v-if="administer">Hủy</view>
       <view class="edit acea-row row-center-wrapper" @click="manageTap" v-else>
         <text class="iconfont icon-ic_batch"></text>
       </view>
@@ -81,8 +81,8 @@
               <view class="text">
                 <view class="name line1">{{ item.store_name }}</view>
                 <view class="info">
-                  <text>销量: {{ item.sales }}</text>
-                  <text>库存: {{ item.stock }}</text>
+                  <text>Lượt bán: {{ item.sales }}</text>
+                  <text>Tồn kho: {{ item.stock }}</text>
                 </view>
                 <baseMoney
                   :money="item.price"
@@ -98,12 +98,12 @@
                 class="bnt acea-row row-center-wrapper"
                 :class="item.is_show ? '' : 'up'"
                 @click="setShow(item, 0)"
-                >{{ item.is_show ? "下架" : "上架" }}</view
+                >{{ item.is_show ? "Ngừng bán" : "Đang bán" }}</view
               >
               <view
                 class="bnt on acea-row row-center-wrapper"
                 @tap="openDrawer(item)"
-                >编辑</view
+                >Sửa</view
               >
             </view>
           </view>
@@ -112,7 +112,7 @@
     </view>
     <view class="empty-box" v-if="goodsList.length == 0 && !loading">
       <emptyPage
-        title="暂无商品～"
+        title="Chưa có sản phẩm~"
         src="/statics/images/empty-box.gif"
       ></emptyPage>
     </view>
@@ -128,26 +128,26 @@
           activeBackgroundColor="#2A7EFB"
           activeBorderColor="#2A7EFB"
         />
-        <text class="checkAll">全选({{ getIds().length }})</text>
+        <text class="checkAll">Chọn tất cả ({{ getIds().length }})</text>
       </checkbox-group>
       <view class="acea-row row-middle">
         <view class="bnt acea-row row-center-wrapper" @click="editLabels"
-          >添加标签</view
+          >Thêm nhãn</view
         >
         <view class="bnt acea-row row-center-wrapper" @click="editClass"
-          >修改分类</view
+          >Sửa danh mục</view
         >
         <view
           class="bnt acea-row row-center-wrapper"
           v-if="type == 1"
           @click="setShow('', 1, 0)"
-          >下架</view
+          >Ngừng bán</view
         >
         <view
           class="bnt acea-row row-center-wrapper"
           v-else-if="type == 2"
           @click="setShow('', 1, 1)"
-          >上架</view
+          >Đang bán</view
         >
       </view>
     </view>
@@ -217,35 +217,35 @@ export default {
       getHeight: this.$util.getWXStatusHeight(),
       navList: [
         {
-          name: "全部",
+          name: "Tất cả",
           type: "",
         },
         {
-          name: "出售中",
+          name: "Đang bán",
           type: 1,
         },
         {
-          name: "仓库中",
+          name: "Trong kho",
           type: 2,
         },
         {
-          name: "已售罄",
+          name: "Đã bán hết",
           type: 4,
         },
         {
-          name: "库存警告",
+          name: "Cảnh báo tồn kho",
           type: 5,
         },
       ],
       editList: [
         {
-          name: "修改价格/库存",
+          name: "Sửa giá/tồn kho",
         },
         {
-          name: "商品分类",
+          name: "Danh mục sản phẩm",
         },
         {
-          name: "商品标签",
+          name: "Nhãn sản phẩm",
         },
       ],
       current: 0,
@@ -254,15 +254,15 @@ export default {
       goodsList: [],
       goodsInfo: {},
       visible: false,
-      visiblePrice: false, //价格库存是否显示
-      visibleLable: false, //标签是否显示
-      loadTitle: "加载更多",
+      visiblePrice: false, //Có hiển thị giá và tồn kho không
+      visibleLable: false, //Có hiển thị nhãn không
+      loadTitle: "Tải thêm",
       loading: false,
       loadend: false,
       limit: 20,
       page: 1,
-      keyword: "", //搜索字段
-      type: "", //商品状态
+      keyword: "", //Trường tìm kiếm
+      type: "", //Trạng thái sản phẩm
       visibleClass: false,
     };
   },
@@ -279,11 +279,11 @@ export default {
     this.productList();
   },
   methods: {
-    // 去详情页
+    // Đến trang chi tiết
     goDetail(item) {
       if (!item.is_show) {
         this.$util.Tips({
-          title: "商品未上架",
+          title: "Sản phẩm chưa mở bán",
         });
         return;
       }
@@ -299,7 +299,7 @@ export default {
     editClass() {
       if (!this.getIds().length) {
         this.$util.Tips({
-          title: "请选择商品",
+          title: "Vui lòng chọn sản phẩm",
         });
         return;
       }
@@ -318,18 +318,18 @@ export default {
       this.visiblePrice = false;
       this.init();
     },
-    //批量编辑标签
+    //Sửa nhãn hàng loạt
     editLabels() {
       if (!this.getIds().length) {
         this.$util.Tips({
-          title: "请选择商品",
+          title: "Vui lòng chọn sản phẩm",
         });
         return;
       }
       this.visibleLable = true;
       this.$refs.lable.productLabel({}, 1, this.getIds());
     },
-    //批量获取id集合
+    //Lấy tập hợp id hàng loạt
     getIds() {
       let ids = [];
       this.goodsList.forEach((item) => {
@@ -345,7 +345,7 @@ export default {
       if (num) {
         if (!this.getIds().length) {
           this.$util.Tips({
-            title: "请选择商品",
+            title: "Vui lòng chọn sản phẩm",
           });
           return;
         }
@@ -405,20 +405,20 @@ export default {
           that.goodsList = that.$util.SplitArray(goodsList, that.goodsList);
           that.$set(that, "goodsList", that.goodsList);
           that.loadend = loadend;
-          that.loadTitle = loadend ? "没有更多内容啦~" : "加载更多";
+          that.loadTitle = loadend ? "Không còn nội dung nào nữa~" : "Tải thêm";
           that.page = that.page + 1;
           that.loading = false;
         })
         .catch((err) => {
           that.loading = false;
-          that.loadTitle = "加载更多";
+          that.loadTitle = "Tải thêm";
         });
     },
     editInfo(index) {
       switch (index) {
         case 0:
           if (this.goodsInfo.virtual_type != 0) {
-            this.$util.Tips({ title: '仅普通商品可在此处修改价格/库存' });
+            this.$util.Tips({ title: 'Chỉ sản phẩm thường mới có thể sửa giá/tồn kho tại đây' });
             return;
           }
           this.visible = false;
@@ -496,7 +496,7 @@ export default {
       if (value.length) {
         if (this.goodsList.length > 100) {
           this.$util.Tips({
-            title: "每次最多只提交100条数据",
+            title: "Mỗi lần chỉ gửi tối đa 100 bản ghi",
           });
         }
         this.isAllSelect = true;
@@ -702,8 +702,8 @@ export default {
   }
   .footerH {
     height: 110rpx;
-    height: calc(110rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-    height: calc(110rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+    height: calc(110rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+    height: calc(110rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
   }
   .footer {
     box-sizing: border-box;
@@ -714,10 +714,10 @@ export default {
     position: fixed;
     bottom: 0;
     z-index: 30;
-    height: calc(96rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-    height: calc(96rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
-    padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
-    padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
+    height: calc(96rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+    height: calc(96rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
+    padding-bottom: constant(safe-area-inset-bottom); ///Tương thích IOS<11.2/
+    padding-bottom: env(safe-area-inset-bottom); ///Tương thích IOS>11.2/
     width: 100%;
     left: 0;
 

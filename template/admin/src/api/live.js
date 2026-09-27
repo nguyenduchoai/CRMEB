@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -11,7 +11,7 @@
 import request from '@/libs/request';
 
 /**
- * @description 直播列表
+ * @description Danh sách livestream
  */
 export function liveList(params) {
   return request({
@@ -22,7 +22,7 @@ export function liveList(params) {
 }
 
 /**
- * @description 直播列表
+ * @description Danh sách livestream
  */
 export function liveAdd(data) {
   return request({
@@ -33,7 +33,7 @@ export function liveAdd(data) {
 }
 
 /**
- * @description 直播列表详情
+ * @description Chi tiết danh sách livestream
  */
 export function liveDetail(id) {
   return request({
@@ -43,7 +43,7 @@ export function liveDetail(id) {
 }
 
 /**
- * @description 直播间设置是否显示
+ * @description Thiết lập hiển thị phòng livestream
  */
 export function liveShow(id, type) {
   return request({
@@ -53,7 +53,7 @@ export function liveShow(id, type) {
 }
 
 /**
- * @description 直播商品列表
+ * @description Danh sách sản phẩm livestream
  */
 export function liveGoods(params) {
   return request({
@@ -64,7 +64,7 @@ export function liveGoods(params) {
 }
 
 /**
- * @description 直播商品列表生成直播商品
+ * @description Danh sách sản phẩm livestream, tạo sản phẩm livestream
  */
 export function liveGoodsCreat(data) {
   return request({
@@ -75,7 +75,7 @@ export function liveGoodsCreat(data) {
 }
 
 /**
- * @description 直播商品列表添加
+ * @description Thêm vào danh sách sản phẩm livestream
  */
 export function liveGoodsAdd(data) {
   return request({
@@ -86,7 +86,7 @@ export function liveGoodsAdd(data) {
 }
 
 /**
- * @description 直播间添加商品
+ * @description Thêm sản phẩm vào phòng livestream
  */
 export function liveRoomGoodsAdd(data) {
   return request({
@@ -97,7 +97,7 @@ export function liveRoomGoodsAdd(data) {
 }
 
 /**
- * @description 同步直播间
+ * @description Đồng bộ phòng livestream
  */
 export function liveSyncRoom() {
   return request({
@@ -107,7 +107,7 @@ export function liveSyncRoom() {
 }
 
 /**
- * @description 同步商品
+ * @description Đồng bộ sản phẩm
  */
 export function liveSyncGoods() {
   return request({
@@ -117,7 +117,7 @@ export function liveSyncGoods() {
 }
 
 /**
- * @description 主播列表
+ * @description Danh sách streamer
  */
 export function liveAuchorList(params) {
   return request({
@@ -128,7 +128,7 @@ export function liveAuchorList(params) {
 }
 
 /**
- * @description 主播添加/修改获取表单
+ * @description Lấy form thêm/sửa streamer (người livestream)
  */
 export function liveAuchorAdd(id) {
   return request({
@@ -138,7 +138,7 @@ export function liveAuchorAdd(id) {
 }
 
 /**
- * @description 直播商品详情
+ * @description Chi tiết sản phẩm livestream
  */
 export function liveGoodsDetail(id) {
   return request({
@@ -148,7 +148,7 @@ export function liveGoodsDetail(id) {
 }
 
 /**
- * @description 直播商品显示
+ * @description Hiển thị sản phẩm livestream
  */
 export function liveGoodsShow(id, type) {
   return request({

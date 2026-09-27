@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -42,7 +42,7 @@ class User extends AuthController
     }
 
     /**
-     * 获取当前客服和用户的聊天记录
+     * Lấy lịch sử chat giữa nhân viên CSKH hiện tại và người dùng
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -54,7 +54,7 @@ class User extends AuthController
     }
 
     /**
-     * 获取用户信息
+     * Lấy thông tin người dùng
      * @param UserServices $services
      * @param $uid
      * @return mixed
@@ -68,7 +68,7 @@ class User extends AuthController
     }
 
     /**
-     * 标签分类
+     * Danh mục nhãn
      * @param UserLabelCateServices $services
      * @return mixed
      */
@@ -78,7 +78,7 @@ class User extends AuthController
     }
 
     /**
-     * 获取用户分组
+     * Lấy nhóm người dùng
      * @param UserGroupServices $services
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -91,7 +91,7 @@ class User extends AuthController
     }
 
     /**
-     * 设置分组
+     * Đặt nhóm
      * @param UserGroupServices $services
      * @param UserServices $userServices
      * @param $uid
@@ -101,24 +101,24 @@ class User extends AuthController
     public function setUserGroup(UserGroupServices $services, UserServices $userServices, $uid, $id)
     {
         if (!$services->count(['id' => $id])) {
-            return app('json')->fail('数据不存在');
+            return app('json')->fail('Dữ liệu không tồn tại');
         }
         if (!($userInfo = $userServices->get($uid))) {
-            return app('json')->fail('用户不存在');
+            return app('json')->fail('Người dùng không tồn tại');
         }
         if ($userInfo->group_id == $id) {
-            return app('json')->fail('已拥有此分组');
+            return app('json')->fail('Đã có nhóm này');
         }
         $userInfo->group_id = $id;
         if ($userInfo->save()) {
-            return app('json')->success('设置成功');
+            return app('json')->success('Cài đặt thành công');
         } else {
-            return app('json')->fail('设置失败');
+            return app('json')->fail('Cài đặt thất bại');
         }
     }
 
     /**
-     * 设置用户标签
+     * Đặt nhãn người dùng
      * @param UserLabelRelationServices $services
      * @param $uid
      * @return mixed
@@ -130,17 +130,17 @@ class User extends AuthController
             ['un_label_ids', []]
         ], true);
         if (!count($labels) && !count($unLabelIds)) {
-            return app('json')->fail('缺少标签id');
+            return app('json')->fail('Thiếu id nhãn');
         }
         if ($services->setUserLabel($uid, $labels) && $services->unUserLabel($uid, $unLabelIds)) {
-            return app('json')->success('设置成功');
+            return app('json')->success('Cài đặt thành công');
         } else {
-            return app('json')->fail('设置失败');
+            return app('json')->fail('Cài đặt thất bại');
         }
     }
 
     /**
-     * 退出登陆
+     * Đăng xuất
      * @return mixed
      */
     public function logout()
@@ -151,7 +151,7 @@ class User extends AuthController
     }
 
     /**
-     * 图片上传
+     * Tải lên ảnh
      * @param Request $request
      * @return mixed
      * @throws \Psr\SimpleCache\InvalidArgumentException
@@ -161,8 +161,8 @@ class User extends AuthController
         $data = $request->postMore([
             ['filename', 'file'],
         ]);
-        if (!$data['filename']) return app('json')->fail('参数错误');
-        if (CacheService::has('start_uploads_' . $request->kefuId()) && CacheService::get('start_uploads_' . $request->kefuId()) >= 100) return app('json')->fail('非法操作');
+        if (!$data['filename']) return app('json')->fail('Tham số không hợp lệ');
+        if (CacheService::has('start_uploads_' . $request->kefuId()) && CacheService::get('start_uploads_' . $request->kefuId()) >= 100) return app('json')->fail('Thao tác không hợp lệ');
         $upload = UploadService::init();
         $info = $upload->to('store/comment')->validate()->move($data['filename']);
         if ($info === false) {
@@ -178,7 +178,7 @@ class User extends AuthController
         CacheService::set('start_uploads_' . $request->kefuId(), $start_uploads, 86400);
         $res['dir'] = path_to_url($res['dir']);
         if (strpos($res['dir'], 'http') === false) $res['dir'] = $request->domain() . $res['dir'];
-        return app('json')->success('图片上传成功', ['name' => $res['name'], 'url' => $res['dir']]);
+        return app('json')->success('Tải ảnh lên thành công', ['name' => $res['name'], 'url' => $res['dir']]);
     }
 
 }

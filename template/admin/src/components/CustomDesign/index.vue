@@ -3,13 +3,13 @@
     <!-- Toolbar -->
     <div class="header">
       <div class="left">
-        <span class="close-btn" @click="$emit('close')"><i class="icon el-icon-arrow-left"></i>返回</span>
-        <span class="title">设计组件</span>
+        <span class="close-btn" @click="$emit('close')"><i class="icon el-icon-arrow-left"></i>Quay lại</span>
+        <span class="title">Thiết kế thành phần</span>
       </div>
       <div class="center"></div>
       <div class="right">
-        <el-button size="small" @click="save(false)">保存</el-button>
-        <el-button type="primary" size="small" @click="save(true)">保存关闭</el-button>
+        <el-button size="small" @click="save(false)">Lưu</el-button>
+        <el-button type="primary" size="small" @click="save(true)">Lưu và đóng</el-button>
       </div>
     </div>
 
@@ -19,7 +19,7 @@
         <ComponentList />
 
         <div class="height-setting">
-          <div class="label">内容高度</div>
+          <div class="label">Chiều cao nội dung</div>
           <div class="control">
             <el-slider
               v-model="canvasHeight"
@@ -40,7 +40,7 @@
         </div>
 
         <div class="layer-list">
-          <div class="title">已选组件 ({{ componentData.length }})</div>
+          <div class="title">Thành phần đã chọn ({{ componentData.length }})</div>
           <el-scrollbar style="height: calc(100% - 40px)">
             <draggable v-model="reversedComponentData" handle=".handle" animation="200">
               <div
@@ -88,12 +88,12 @@
               <span class="iconfont iconshangyibu"></span>
             </div>
             <div class="divider"></div>
-            <div class="operation-item text" @click="historyVisible = !historyVisible">历史记录</div>
+            <div class="operation-item text" @click="historyVisible = !historyVisible">Lịch sử</div>
           </div>
         </div>
         <div class="history-list" v-show="historyVisible">
           <div class="history-header">
-            <span>历史记录</span>
+            <span>Lịch sử</span>
             <i class="el-icon-close close-icon" @click.stop="historyVisible = false"></i>
           </div>
           <div class="history-content">
@@ -104,7 +104,7 @@
               :class="{ active: index === snapshotIndex }"
               @click="handleHistorySelect(index)"
             >
-              <span class="type">{{ item.type || '操作' }}</span>
+              <span class="type">{{ item.type || 'Thao tác' }}</span>
               <div class="right-info">
                 <span class="time">{{ item.time }}</span>
                 <span class="iconfont icon-check" v-if="index === snapshotIndex">
@@ -116,16 +116,16 @@
           </div>
         </div>
         <div class="component-actions" v-if="curComponent" :style="actionBarStyle">
-          <div class="action-item" title="删除" @click="deleteComponent(curComponentIndex)">
+          <div class="action-item" title="Xóa" @click="deleteComponent(curComponentIndex)">
             <span class="iconfont iconshanchu3"></span>
           </div>
-          <div class="action-item" title="复制" @click="copyComponent(curComponent)">
+          <div class="action-item" title="Sao chép" @click="copyComponent(curComponent)">
             <i class="el-icon-document-copy"></i>
           </div>
           <div
             class="action-item"
             :class="{ disabled: isTop }"
-            title="上移一层"
+            title="Lên một lớp"
             @click="moveComponent({ index: curComponentIndex, type: 'up' })"
           >
             <i class="el-icon-arrow-up"></i>
@@ -133,7 +133,7 @@
           <div
             class="action-item"
             :class="{ disabled: isBottom }"
-            title="下移一层"
+            title="Xuống một lớp"
             @click="moveComponent({ index: curComponentIndex, type: 'down' })"
           >
             <i class="el-icon-arrow-down"></i>
@@ -141,7 +141,7 @@
           <div
             class="action-item"
             :class="{ disabled: isTop }"
-            title="置顶"
+            title="Lên trên cùng"
             @click="moveComponent({ index: curComponentIndex, type: 'top' })"
           >
             <span class="iconfont iconzhiding"></span>
@@ -149,7 +149,7 @@
           <div
             class="action-item"
             :class="{ disabled: isBottom }"
-            title="置底"
+            title="Xuống dưới cùng"
             @click="moveComponent({ index: curComponentIndex, type: 'bottom' })"
           >
             <span class="iconfont iconzhidi"></span>
@@ -190,7 +190,7 @@
         />
         <div v-else class="empty-tip">
           <img src="@/assets/images/no-sel-cum.png" alt="" />
-          <p>暂未选中任何组件～</p>
+          <p>Chưa chọn thành phần nào~</p>
         </div>
       </div>
     </div>
@@ -266,7 +266,7 @@ export default {
       },
       set(val) {
         this.componentData = val.slice().reverse();
-        this.recordSnapshot('调整层级');
+        this.recordSnapshot('Điều chỉnh thứ tự lớp');
       },
     },
   },
@@ -313,15 +313,15 @@ export default {
       this.componentData.splice(index, 1);
       this.curComponent = null;
       this.curComponentIndex = -1;
-      this.recordSnapshot('删除组件');
+      this.recordSnapshot('Xóa thành phần');
     },
     toggleHide(item) {
       this.$set(item, 'isHidden', !item.isHidden);
     },
     editName(item) {
-      this.$prompt('请输入组件名称', '修改名称', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$prompt('Vui lòng nhập tên thành phần', 'Sửa tên', {
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
         inputValue: item.label,
       })
         .then(({ value }) => {
@@ -335,8 +335,8 @@ export default {
       const s = date.getSeconds().toString().padStart(2, '0');
       return `${h}:${m}:${s}`;
     },
-    recordSnapshot(type = '操作') {
-      // 简单的撤销重做实现
+    recordSnapshot(type = 'Thao tác') {
+      // Triển khai hoàn tác/làm lại đơn giản
       this.snapshotIndex++;
       this.snapshotData[this.snapshotIndex] = {
         componentData: deepCopy(this.componentData),
@@ -344,7 +344,7 @@ export default {
         type,
         time: this.formatTime(new Date()),
       };
-      // 删除后续的历史记录
+      // Xóa các bản ghi lịch sử phía sau
       if (this.snapshotIndex < this.snapshotData.length - 1) {
         this.snapshotData = this.snapshotData.slice(0, this.snapshotIndex + 1);
       }
@@ -381,7 +381,7 @@ export default {
       component.style.top += 20;
       component.style.left += 20;
       this.componentData.push(component);
-      this.recordSnapshot('复制组件');
+      this.recordSnapshot('Sao chép thành phần');
     },
     moveComponent({ index, type }) {
       const component = this.componentData[index];
@@ -390,36 +390,36 @@ export default {
           this.componentData.splice(index, 1);
           this.componentData.splice(index + 1, 0, component);
           this.curComponentIndex = index + 1;
-          this.recordSnapshot('上移一层');
+          this.recordSnapshot('Lên một lớp');
         } else {
-          this.$message.warning('已经到顶了');
+          this.$message.warning('Đã ở lớp trên cùng');
         }
       } else if (type === 'down') {
         if (index > 0) {
           this.componentData.splice(index, 1);
           this.componentData.splice(index - 1, 0, component);
           this.curComponentIndex = index - 1;
-          this.recordSnapshot('下移一层');
+          this.recordSnapshot('Xuống một lớp');
         } else {
-          this.$message.warning('已经到底了');
+          this.$message.warning('Đã ở lớp dưới cùng');
         }
       } else if (type === 'top') {
         if (index < this.componentData.length - 1) {
           this.componentData.splice(index, 1);
           this.componentData.push(component);
           this.curComponentIndex = this.componentData.length - 1;
-          this.recordSnapshot('置顶');
+          this.recordSnapshot('Lên trên cùng');
         } else {
-          this.$message.warning('已经到顶了');
+          this.$message.warning('Đã ở lớp trên cùng');
         }
       } else if (type === 'bottom') {
         if (index > 0) {
           this.componentData.splice(index, 1);
           this.componentData.unshift(component);
           this.curComponentIndex = 0;
-          this.recordSnapshot('置底');
+          this.recordSnapshot('Xuống dưới cùng');
         } else {
-          this.$message.warning('已经到底了');
+          this.$message.warning('Đã ở lớp dưới cùng');
         }
       }
     },
@@ -432,10 +432,10 @@ export default {
       this.historyVisible = false;
     },
     handleAttrChange() {
-      this.recordSnapshot('修改属性');
+      this.recordSnapshot('Sửa thuộc tính');
     },
     handleUpdateGroup() {
-      this.recordSnapshot('调整对齐/位置');
+      this.recordSnapshot('Căn chỉnh/điều chỉnh vị trí');
     },
     save(close = false) {
       const data = {
@@ -446,7 +446,7 @@ export default {
       if (close) {
         this.$emit('close');
       } else {
-        this.$message.success('保存成功');
+        this.$message.success('Lưu thành công');
       }
     },
     handleMultiSelect(ids) {
@@ -475,7 +475,7 @@ export default {
         this.curComponent = null;
         this.curComponentIndex = -1;
         this.activeComponentIds = [];
-        this.recordSnapshot('删除组件');
+        this.recordSnapshot('Xóa thành phần');
       } else if (this.curComponent) {
         this.deleteComponent(this.curComponentIndex);
       }
@@ -518,11 +518,11 @@ export default {
           break;
         case 'lock':
           this.$set(this.curComponent, 'isLock', true);
-          this.recordSnapshot('锁定组件');
+          this.recordSnapshot('Khóa thành phần');
           break;
         case 'unlock':
           this.$set(this.curComponent, 'isLock', false);
-          this.recordSnapshot('解锁组件');
+          this.recordSnapshot('Mở khóa thành phần');
           break;
       }
     },

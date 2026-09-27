@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,21 +16,21 @@ use Spatie\Macroable\Macroable;
 /**
  * Class Request
  * @package app
- * @method tokenData() 获取token信息
- * @method user(string $key = null) 获取用户信息
- * @method uid() 获取用户uid
- * @method isAdminLogin() 后台登陆状态
- * @method adminId() 后台管理员id
- * @method adminInfo() 后台管理信息
- * @method kefuId() 客服id
- * @method kefuInfo() 客服信息
+ * @method tokenData() Lấy thông tin token
+ * @method user(string $key = null) Lấy thông tin người dùng
+ * @method uid() Lấy uid người dùng
+ * @method isAdminLogin() Trạng thái đăng nhập quản trị
+ * @method adminId() ID quản trị viên
+ * @method adminInfo() Thông tin quản trị
+ * @method kefuId() ID nhân viên CSKH
+ * @method kefuInfo() Thông tin chăm sóc khách hàng
  */
 class Request extends \think\Request
 {
     use Macroable;
 
     /**
-     * 不过滤变量名
+     * Tên biến không lọc
      * @var array
      */
     protected $except = [
@@ -49,7 +49,7 @@ class Request extends \think\Request
     ];
 
     /**
-     * 获取请求的数据
+     * Lấy dữ liệu của request
      * @param array $params
      * @param bool $suffix
      * @param bool $filter
@@ -86,7 +86,7 @@ class Request extends \think\Request
     }
 
     /**
-     * 过滤接数组中的字符串
+     * Lọc chuỗi trong mảng nhận được
      * @param $str
      * @param bool $filter
      * @return array|mixed|string|string[]
@@ -96,13 +96,13 @@ class Request extends \think\Request
         $result = [];
         foreach ($array as $key => $value) {
             if (is_array($value)) {
-                // 如果值是数组，并且不在不过滤变量名里面，递归调用 filterArrayValues，否则直接赋值
+                // Nếu giá trị là mảng và không thuộc danh sách tên biến không lọc, gọi đệ quy filterArrayValues, ngược lại gán giá trị trực tiếp
                 $result[$key] = in_array($key, $this->except) ? $value : $this->filterArrayValues($value);
             } else {
                 if (in_array($key, $this->except) || is_int($value) || is_null($value)) {
                     $result[$key] = $value;
                 } else {
-                    // 如果值是字符串，过滤特殊字符
+                    // Nếu giá trị là chuỗi, lọc ký tự đặc biệt
                     $result[$key] = filter_str($value);
                 }
             }
@@ -111,7 +111,7 @@ class Request extends \think\Request
     }
 
     /**
-     * 获取get参数
+     * Lấy tham số get
      * @param array $params
      * @param bool $suffix
      * @param bool $filter
@@ -123,7 +123,7 @@ class Request extends \think\Request
     }
 
     /**
-     * 获取post参数
+     * Lấy tham số post
      * @param array $params
      * @param bool $suffix
      * @param bool $filter
@@ -135,7 +135,7 @@ class Request extends \think\Request
     }
 
     /**
-     * 获取用户访问端
+     * Lấy nền tảng truy cập của người dùng
      * @return array|string|null
      */
     public function getFromType()
@@ -144,7 +144,7 @@ class Request extends \think\Request
     }
 
     /**
-     * 当前访问端
+     * Nền tảng truy cập hiện tại
      * @param string $terminal
      * @return bool
      */
@@ -154,7 +154,7 @@ class Request extends \think\Request
     }
 
     /**
-     * 是否是H5端
+     * Có phải là nền tảng H5 không
      * @return bool
      */
     public function isH5()
@@ -163,7 +163,7 @@ class Request extends \think\Request
     }
 
     /**
-     * 是否是微信端
+     * Có phải là nền tảng WeChat không
      * @return bool
      */
     public function isWechat()
@@ -172,7 +172,7 @@ class Request extends \think\Request
     }
 
     /**
-     * 是否是小程序端
+     * Có phải là nền tảng Mini Program không
      * @return bool
      */
     public function isRoutine()
@@ -181,7 +181,7 @@ class Request extends \think\Request
     }
 
     /**
-     * 是否是app端
+     * Có phải là nền tảng app không
      * @return bool
      */
     public function isApp()
@@ -190,7 +190,7 @@ class Request extends \think\Request
     }
 
     /**
-     * 是否是pc端
+     * Có phải là nền tảng pc không
      * @return bool
      */
     public function isPc()

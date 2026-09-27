@@ -254,7 +254,7 @@ export default {
       if (!config.paddingConfig) {
         config.paddingConfig = {
           isAll: false,
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           max: 100,
@@ -269,7 +269,7 @@ export default {
       if (!config.marginConfig) {
         config.marginConfig = {
           isAll: false,
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,
@@ -433,7 +433,7 @@ export default {
         }
       }
     },
-    // 获取组件参数
+    // Lấy tham số thành phần (component)
     // getConfig (data) {
     //     newcomerList({
     //         page: 1,

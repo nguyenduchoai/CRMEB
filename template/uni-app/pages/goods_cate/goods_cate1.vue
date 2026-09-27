@@ -3,7 +3,7 @@
 		<view class='header acea-row row-center-wrapper'>
 			<view class='acea-row row-between-wrapper input'>
 				<text class='iconfont icon-sousuo'></text>
-				<input type='text' :placeholder="$t('搜索商品名称')" @confirm="searchSubmitValue" confirm-type='search'
+				<input type='text' :placeholder="$t('Tìm kiếm tên sản phẩm')" @confirm="searchSubmitValue" confirm-type='search'
 					name="search" placeholder-class='placeholder'></input>
 			</view>
 		</view>
@@ -38,7 +38,7 @@
 									<view class='picture'>
 										<image :src="item.pic || defimg" mode="aspectFill" lazy-load></image>
 									</view>
-									<view class='name line1'>{{$t(`全部商品`)}}</view>
+									<view class='name line1'>{{$t(`Tất cả sản phẩm`)}}</view>
 								</navigator>
 								<block v-for="(itemn,indexn) in item.children" :key="indexn">
 									<navigator hover-class='none'
@@ -151,7 +151,7 @@
 				let that = this;
 				let len = that.productList.length;
 				this.number = that.productList[len - 1].children.length;
-				//设置商品列表高度
+				//Đặt chiều cao danh sách sản phẩm
 				uni.getSystemInfo({
 					success: function(res) {
 						that.height = (res.windowHeight) * (750 / res.windowWidth) - 98;
@@ -160,7 +160,7 @@
 				let height = 0;
 				let hightArr = [];
 				for (let i = 0; i < len; i++) {
-					//获取元素所在位置
+					//Lấy vị trí của phần tử
 					let query = uni.createSelectorQuery().in(this);
 					let idView = "#b" + i;
 					query.select(idView).boundingClientRect();
@@ -221,7 +221,7 @@
 					})
 				else
 					return this.$util.Tips({
-						title: this.$t(`搜索商品名称`)
+						title: this.$t(`Tìm kiếm tên sản phẩm`)
 					});
 			},
 		}

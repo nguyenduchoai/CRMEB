@@ -9,7 +9,7 @@
             :style="{ paddingRight: navbarRight - 20 + 'px' }"
           >
             <view class="header acea-row row-center-wrapper">
-              <view class="item on">{{ $t(`商品详情`) }}</view>
+              <view class="item on">{{ $t(`Chi tiết sản phẩm`) }}</view>
             </view>
           </view>
         </view>
@@ -104,7 +104,7 @@
         :showAnimate="showAnimate"
         @boxStatus="boxStatus"
       ></shareRedPackets>
-      <!-- 组件 -->
+      <!-- Thành phần -->
       <productWindow
         :attr="attr"
         :isShow="1"
@@ -140,7 +140,7 @@
         @ChangCouponsUseState="ChangCouponsUseState"
         @tabCouponType="tabCouponType"
       ></couponListWindow>
-      <!-- 分享按钮 -->
+      <!-- Nút chia sẻ -->
       <view
         class="generate-posters acea-row row-middle"
         :class="posters ? 'on' : ''"
@@ -153,7 +153,7 @@
           @click="H5ShareBox = true"
         >
           <view class="iconfont icon-weixin3"></view>
-          <view class="">{{ $t(`发送给朋友`) }}</view>
+          <view class="">{{ $t(`Gửi cho bạn bè`) }}</view>
         </button>
         <!-- #endif -->
         <!-- #ifdef MP -->
@@ -164,7 +164,7 @@
           @click="goFriend"
         >
           <view class="iconfont icon-weixin3"></view>
-          <view class="">{{ $t(`发送给朋友`) }}</view>
+          <view class="">{{ $t(`Gửi cho bạn bè`) }}</view>
         </button>
         <!-- #endif -->
         <!-- #ifdef H5  -->
@@ -174,29 +174,29 @@
           :data-clipboard-text="storeInfo.command_word"
         >
           <view class="iconfont icon-fuzhikouling"></view>
-          <text>{{ $t(`复制口令`) }}</text>
+          <text>{{ $t(`Sao chép mã chia sẻ`) }}</text>
         </div>
         <!-- #endif -->
         <!-- #ifdef APP-PLUS -->
         <view class="item" @click="appShare('WXSceneSession')">
           <view class="iconfont icon-weixin3"></view>
-          <view class="">{{ $t(`微信好友`) }}</view>
+          <view class="">{{ $t(`Bạn bè WeChat`) }}</view>
         </view>
         <view class="item" @click="appShare('WXSenceTimeline')">
           <view class="iconfont icon-pengyouquan"></view>
-          <view class="">{{ $t(`微信朋友圈`) }}</view>
+          <view class="">{{ $t(`Khoảnh khắc WeChat`) }}</view>
         </view>
         <!-- #endif -->
         <button class="item" hover-class="none" @click="goPoster">
           <view class="iconfont icon-haibao"></view>
-          <view class="">{{ $t(`生成海报`) }}</view>
+          <view class="">{{ $t(`Tạo poster`) }}</view>
         </button>
       </view>
       <view class="mask" v-if="posters" @click="listenerActionClose"></view>
       <!-- #ifdef MP -->
       <!-- <authorize @onLoadFun="onLoadFun" :isAuto="isAuto" :isShowAuth="isShowAuth" @authColse="authColse"></authorize> -->
       <!-- #endif -->
-      <!-- 海报展示 -->
+      <!-- Hiển thị poster -->
       <view class="poster-pop" v-if="posterImageStatus">
         <image
           src="../../static/images/poster-close.png"
@@ -206,16 +206,16 @@
         <image class="poster-img" :src="posterImage"></image>
         <!-- #ifndef H5  -->
         <view class="save-poster" @click="savePosterPath">{{
-          $t(`保存到手机`)
+          $t(`Lưu vào điện thoại`)
         }}</view>
         <!-- #endif -->
         <!-- #ifdef H5 -->
-        <view class="keep">{{ $t(`长按图片可以保存到手机`) }}</view>
+        <view class="keep">{{ $t(`Nhấn giữ ảnh để lưu vào điện thoại`) }}</view>
         <!-- #endif -->
       </view>
       <view class="mask" v-if="posterImageStatus"></view>
       <canvas class="canvas" canvas-id="myCanvas" v-if="canvasStatus"></canvas>
-      <!-- 发送给朋友图片 -->
+      <!-- Gửi ảnh cho bạn bè -->
       <view class="share-box" v-if="H5ShareBox">
         <image
           :src="imgHost + '/statics/images/share-info.png'"
@@ -251,7 +251,7 @@
         :specsInfo="storeInfo.params_list"
         @myevent="mySpecs"
       ></specs>
-      <!-- 服务抽屉 -->
+      <!-- Drawer dịch vụ -->
       <serviceModal
         ref="protection"
         :ensureInfo="storeInfo.protection_list"
@@ -333,11 +333,11 @@ export default {
       imgHost: HTTP_REQUEST_URL,
       sysHeight: sysHeight,
       noGoods: false,
-      showSkeleton: true, //骨架屏显示隐藏
-      isNodes: 0, //控制什么时候开始抓取元素节点,只要数值改变就重新抓取
+      showSkeleton: true, //Hiện/ẩn skeleton screen
+      isNodes: 0, //Kiểm soát thời điểm bắt đầu lấy node phần tử, chỉ cần giá trị thay đổi là lấy lại
       Active: false,
       presale_pay_status: 1,
-      //属性是否打开
+      //Thuộc tính có mở hay không
       coupon: {
         coupon: false,
         type: -1,
@@ -346,30 +346,30 @@ export default {
       },
       showAnimate: false,
       showMenuIcon: false,
-      attrTxt: this.$t(`请选择`), //属性页面提示
-      attrValue: "", //已选属性
-      animated: false, //购物车动画
-      id: 0, //商品id
-      replyCount: 0, //总评论数量
-      reply: [], //评论列表
-      storeInfo: {}, //商品详情
-      productValue: [], //系统属性
-      couponList: [], //优惠券
-      cart_num: 1, //购买数量
-      isAuto: false, //没有授权的不会自动授权
-      isShowAuth: false, //是否隐藏授权
-      isOpen: false, //是否打开属性组件
+      attrTxt: this.$t(`Vui lòng chọn`), //Gợi ý trên trang thuộc tính
+      attrValue: "", //Thuộc tính đã chọn
+      animated: false, //Hiệu ứng giỏ hàng
+      id: 0, //id sản phẩm
+      replyCount: 0, //Tổng số lượng đánh giá
+      reply: [], //Danh sách đánh giá
+      storeInfo: {}, //Chi tiết sản phẩm
+      productValue: [], //Thuộc tính hệ thống
+      couponList: [], //Phiếu giảm giá
+      cart_num: 1, //Số lượng mua
+      isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+      isShowAuth: false, //Có ẩn ủy quyền hay không
+      isOpen: false, //Có mở component thuộc tính hay không
       actionSheetHidden: true,
       posterImageStatus: false,
-      storeImage: "", //海报产品图
-      PromotionCode: "", //二维码图片
-      canvasStatus: false, //海报绘图标签
-      posterImage: "", //海报路径
+      storeImage: "", //Ảnh sản phẩm trên poster
+      PromotionCode: "", //Ảnh mã QR
+      canvasStatus: false, //Thẻ vẽ poster
+      posterImage: "", //Đường dẫn poster
       posterbackgd: "/static/images/posterbackgd.png",
       sharePacket: {
-        isState: true, //默认不显示
-      }, //分销商详细
-      uid: 0, //用户uid
+        isState: true, //Mặc định không hiển thị
+      }, //Chi tiết nhà phân phối
+      uid: 0, //uid người dùng
       good_list: [],
       replyChance: 0,
       CartCount: 0,
@@ -384,15 +384,15 @@ export default {
         productSelect: {},
       },
       description: "",
-      H5ShareBox: false, //公众号分享图片
+      H5ShareBox: false, //Ảnh chia sẻ của OA WeChat
       activity: [],
       navH: "",
       opacity: 0,
       scrollY: 0,
-      returnShow: true, //判断顶部返回是否出现
+      returnShow: true, //Kiểm tra nút quay lại phía trên có xuất hiện hay không
       diff: "",
       is_money_level: 1,
-      is_vip: 0, //是否是会员
+      is_vip: 0, //Có phải thành viên hay không
       navbarRight: 0,
       homeTop: 20,
       routineContact: 0,
@@ -400,7 +400,7 @@ export default {
       selectSku: {},
       currentPage: false,
       svip_price_open: 1,
-      is_gift: 0, // 是否支持送礼
+      is_gift: 0, // Có hỗ trợ tặng quà hay không
       isGiftOrder: 0,
       realPriceData: {
         is_vip: 0,
@@ -454,26 +454,26 @@ export default {
     that.id = options.id;
     uni.getSystemInfo({
       success: function (res) {
-        //res.windowHeight:获取整个窗口高度为px，*2为rpx；98为头部占据的高度；
+        //res.windowHeight: lấy chiều cao toàn bộ window là px, *2 ra rpx; 98 là chiều cao phần đầu trang chiếm;
         // #ifndef APP-PLUS || H5 || MP-ALIPAY
         that.navbarRight =
           res.windowWidth - uni.getMenuButtonBoundingClientRect().left;
         // #endif
       },
     });
-    //扫码携带参数处理
+    //Xử lý tham số mang theo khi quét mã
     // #ifdef MP
     if (options.scene) {
       let value = that.$util.getUrlParams(decodeURIComponent(options.scene));
       if (value.id) options.id = value.id;
-      //记录推广人uid
+      //Ghi lại uid người giới thiệu
       if (value.pid) app.globalData.spid = value.pid;
     }
     if (!options.id) {
       this.showSkeleton = false;
       return that.$util.Tips(
         {
-          title: that.$t(`缺少参数无法查看商品`),
+          title: that.$t(`Thiếu tham số, không thể xem sản phẩm`),
         },
         {
           tab: 3,
@@ -505,14 +505,14 @@ export default {
       const clipboard = new ClipboardJS(".copy-data");
       clipboard.on("success", () => {
         this.$util.Tips({
-          title: this.$t(`复制成功`),
+          title: this.$t(`Sao chép thành công`),
         });
       });
       // #endif
     });
   },
   /**
-   * 用户点击右上角分享
+   * Người dùng click chia sẻ ở góc trên phải
    */
   // #ifdef MP
   onShareAppMessage: function () {
@@ -553,7 +553,7 @@ export default {
     uni.$emit("scroll");
   },
   methods: {
-    // 操作菜单
+    // Menu thao tác
     moreNav() {
       this.currentPage = !this.currentPage;
     },
@@ -605,12 +605,12 @@ export default {
       this.PromotionCode = res;
       // #endif
     },
-    // app分享
+    // Chia sẻ app
     // #ifdef APP-PLUS
     appShare(scene) {
       let that = this;
-      let routes = getCurrentPages(); // 获取当前打开过的页面路由数组
-      let curRoute = routes[routes.length - 1].$page.fullPath; // 获取当前页面路由，也就是最后一个打开的页面路由
+      let routes = getCurrentPages(); // Lấy mảng route các trang đã từng mở
+      let curRoute = routes[routes.length - 1].$page.fullPath; // Lấy route trang hiện tại, tức route trang được mở cuối cùng
       uni.share({
         provider: "weixin",
         scene: scene,
@@ -621,14 +621,14 @@ export default {
         imageUrl: that.storeInfo.small_image,
         success: function (res) {
           // uni.showToast({
-          // 	title: that.$t(`分享成功`),
+          // 	title: that.$t(`Chia sẻ thành công`),
           // 	icon: "success",
           // });
           that.posters = false;
         },
         fail: function (err) {
           uni.showToast({
-            title: that.$t(`分享失败`),
+            title: that.$t(`Chia sẻ thất bại`),
             icon: "none",
             duration: 2000,
           });
@@ -644,7 +644,7 @@ export default {
       this.showAnimate = data;
     },
     /**
-     * 购物车手动填写
+     * Điền thủ công vào giỏ hàng
      *
      */
     iptCartNum: function (e) {
@@ -665,7 +665,7 @@ export default {
         });
       }
     },
-    // 后退
+    // quay lại
     returns() {
       // #ifdef H5
       return history.back();
@@ -677,7 +677,7 @@ export default {
       // #endif
     },
     /*
-     *去商品详情页
+     *Đến trang chi tiết sản phẩm
      */
     goDetail(item) {
       if (item.activity.length == 0) {
@@ -686,21 +686,21 @@ export default {
         });
         return;
       }
-      // 砍价
+      // Săn giảm giá
       if (item.activity && item.activity.type == 2) {
         uni.redirectTo({
           url: `/pages/activity/goods_bargain_details/index?id=${item.activity.id}&bargain=${this.uid}`,
         });
         return;
       }
-      // 拼团
+      // Mua chung
       if (item.activity && item.activity.type == 3) {
         uni.redirectTo({
           url: `/pages/activity/goods_combination_details/index?id=${item.activity.id}`,
         });
         return;
       }
-      // 秒杀
+      // Flash sale
       if (item.activity && item.activity.type == 1) {
         uni.redirectTo({
           url: `/pages/activity/goods_seckill_details/index?id=${item.activity.id}&time_id=${item.activity.time_id}`,
@@ -708,7 +708,7 @@ export default {
         return;
       }
     },
-    // 微信登录回调
+    // Callback đăng nhập WeChat
     onLoadFun: function (e) {
       // this.getUserInfo();
       // this.get_product_collect();
@@ -717,7 +717,7 @@ export default {
       this.$set(this.coupon, "coupon", false);
     },
     /*
-     * 获取用户信息
+     * Lấy thông tin người dùng
      */
     getUserInfo: function () {
       let that = this;
@@ -727,17 +727,17 @@ export default {
       });
     },
     /**
-     * 购物车数量加和数量减
+     * Tăng và giảm số lượng giỏ hàng
      *
      */
     ChangeCartNum: function (changeValue) {
-      //changeValue:是否 加|减
-      //获取当前变动属性
+      //changeValue: có tăng hay giảm
+      //Lấy thuộc tính vừa thay đổi hiện tại
       let productSelect = this.productValue[this.attrValue];
-      //如果没有属性,赋值给商品默认库存
+      //Nếu không có thuộc tính, gán bằng tồn kho mặc định của sản phẩm
       if (productSelect === undefined && !this.attr.productAttr.length)
         productSelect = this.attr.productSelect;
-      //无属性值即库存为0；不存在加减；
+      //Không có giá trị thuộc tính thì tồn kho là 0; không có tăng giảm;
       let stock = productSelect.stock || 0;
       let num = this.attr.productSelect;
       if (
@@ -777,14 +777,14 @@ export default {
       );
     },
     /**
-     * 属性变动赋值
+     * Gán giá trị khi thuộc tính thay đổi
      *
      */
     ChangeAttr: function (res) {
       let productSelect = this.productValue[res];
       if (!productSelect) {
         this.$util.Tips({
-          title: this.$t(`重新选择`),
+          title: this.$t(`Chọn lại`),
           success: () => {
             this.noGoods = true;
             this.attr.productSelect.stock = 0;
@@ -804,7 +804,7 @@ export default {
         this.$set(this.attr.productSelect, "cart_num", this.storeInfo.min_qty);
         // this.$set(this.attr.productSelect, 'vip_price', productSelect.vip_price);
         this.$set(this, "attrValue", res);
-        this.$set(this, "attrTxt", this.$t(`已选择`));
+        this.$set(this, "attrTxt", this.$t(`Đã chọn`));
         this.setRealPrice(this.storeInfo.id, productSelect.unique);
       } else {
         this.$set(this.attr.productSelect, "image", productSelect.image);
@@ -818,7 +818,7 @@ export default {
           this.storeInfo.vip_price
         );
         this.$set(this, "attrValue", "");
-        this.$set(this, "attrTxt", this.$t(`请选择`));
+        this.$set(this, "attrTxt", this.$t(`Vui lòng chọn`));
       }
     },
     setRealPrice(id, unique) {
@@ -830,7 +830,7 @@ export default {
       });
     },
     /**
-     * 领取完毕移除当前页面领取过的优惠券展示
+     * Sau khi nhận xong, ẩn hiển thị phiếu giảm giá đã nhận trên trang hiện tại
      */
     ChangCoupons: function (e) {
       let coupon = e;
@@ -840,13 +840,13 @@ export default {
     },
 
     /**
-     * 获取产品详情
+     * Lấy chi tiết sản phẩm
      *
      */
     getGoodsDetails() {
       let that = this;
       uni.showLoading({
-        title: "加载中",
+        title: "Đang tải",
         mask: true,
       });
       getProductDetail(that.id)
@@ -860,7 +860,7 @@ export default {
             that,
             "presale_pay_status",
             res.data.storeInfo.presale_pay_status
-          ); // 1未开始; 2进行中; 3已结束
+          ); // 1 chưa bắt đầu; 2 đang diễn ra; 3 đã kết thúc
           that.$set(that, "reply", res.data.reply ? [res.data.reply] : []);
           that.$set(that, "replyCount", res.data.replyCount);
           that.$set(that, "replyChance", res.data.replyChance);
@@ -948,11 +948,11 @@ export default {
           that.downloadFilestoreImage();
           // #endif
           if (!res.data.productAttr.length) {
-            // 单规格
+            // Một quy cách
             that.DefaultSelect();
             this.setRealPrice(storeInfo.id, res.data.spec_unique);
           } else {
-            // 多规格
+            // Nhiều quy cách
             that.DefaultSelect();
           }
           that.getCartCount();
@@ -960,7 +960,7 @@ export default {
         })
         .catch((err) => {
           uni.hideLoading();
-          //状态异常返回上级页面
+          //Trạng thái bất thường thì quay về trang trước
           return that.$util.Tips(
             {
               title: err.toString(),
@@ -976,7 +976,7 @@ export default {
       return;
     },
     /**
-     * 默认选中属性
+     * Thuộc tính được chọn mặc định
      *
      */
     DefaultSelect: function () {
@@ -995,7 +995,7 @@ export default {
       for (let i = 0; i < productAttr.length; i++) {
         this.$set(productAttr[i], "index", value[i]);
       }
-      //sort();排序函数:数字-英文-汉字；
+      //sort(); hàm sắp xếp: số - chữ Anh - chữ Hán;
       let productSelect = this.productValue[value.join(",")];
       if (productSelect && productAttr.length) {
         this.$set(
@@ -1010,7 +1010,7 @@ export default {
         this.$set(this.attr.productSelect, "cart_num", this.storeInfo.min_qty);
         this.$set(this, "attrValue", value.join(","));
         // this.$set(this.attr.productSelect, 'vip_price', productSelect.vip_price);
-        this.$set(this, "attrTxt", this.$t(`已选择`));
+        this.$set(this, "attrTxt", this.$t(`Đã chọn`));
         this.setRealPrice(this.storeInfo.id, productSelect.unique);
       } else if (!productSelect && productAttr.length) {
         this.$set(
@@ -1029,7 +1029,7 @@ export default {
           this.storeInfo.vip_price
         );
         this.$set(this, "attrValue", "");
-        this.$set(this, "attrTxt", this.$t(`请选择`));
+        this.$set(this, "attrTxt", this.$t(`Vui lòng chọn`));
       } else if (!productSelect && !productAttr.length) {
         this.$set(
           this.attr.productSelect,
@@ -1051,11 +1051,11 @@ export default {
           this.storeInfo.vip_price
         );
         this.$set(this, "attrValue", "");
-        this.$set(this, "attrTxt", this.$t(`请选择`));
+        this.$set(this, "attrTxt", this.$t(`Vui lòng chọn`));
       }
     },
     /**
-     * 获取优惠券
+     * Lấy phiếu giảm giá
      *
      */
     getCouponList(type) {
@@ -1111,7 +1111,7 @@ export default {
     /**
      *
      *
-     * 收藏商品
+     * Sản phẩm yêu thích
      */
     setCollect: function () {
       if (this.isLogin === false) {
@@ -1161,7 +1161,7 @@ export default {
       }
     },
     /**
-     * 打开属性插件
+     * Mở plugin thuộc tính
      */
     selecAttr: function () {
       // this.$refs.proSwiper.videoIsPause();
@@ -1172,7 +1172,7 @@ export default {
       this.$refs[ref].isShow = true;
     },
     /**
-     * 打开优惠券插件
+     * Mở plugin phiếu giảm giá
      */
     couponTap: function () {
       let that = this;
@@ -1205,11 +1205,11 @@ export default {
       this.isGiftOrder = 0;
     },
     /**
-     * 打开属性加入购物车
+     * Mở thuộc tính để thêm vào giỏ hàng
      *
      */
     joinCart: function (e) {
-      //是否登录
+      //Có đăng nhập hay không
       if (this.isLogin === false) {
         toLogin();
       } else {
@@ -1223,37 +1223,37 @@ export default {
       });
     },
     /*
-     * 加入购物车
+     * Thêm vào giỏ hàng
      */
     goCat(news) {
       let that = this,
         productSelect = that.productValue[this.attrValue];
       that.currentPage = false;
-      //打开属性
+      //Mở thuộc tính
       if (that.attrValue) {
-        //默认选中了属性，但是没有打开过属性弹窗还是自动打开让用户查看默认选中的属性
+        //Đã chọn thuộc tính mặc định nhưng chưa từng mở popup thuộc tính thì vẫn tự động mở để người dùng xem thuộc tính được chọn mặc định
         that.attr.cartAttr = !that.isOpen ? true : false;
       } else {
         if (that.isOpen) that.attr.cartAttr = true;
         else that.attr.cartAttr = !that.attr.cartAttr;
       }
-      //只有关闭属性弹窗时进行加入购物车
+      //Chỉ thêm vào giỏ hàng khi đóng popup thuộc tính
       if (that.attr.cartAttr === true && that.isOpen === false)
         return (that.isOpen = true);
-      //如果有属性,没有选择,提示用户选择
+      //Nếu có thuộc tính mà chưa chọn, nhắc người dùng chọn
       if (
         that.attr.productAttr.length &&
         productSelect === undefined &&
         that.isOpen === true
       )
         return that.$util.Tips({
-          title: that.$t(`产品库存不足，请选择其它属性`),
+          title: that.$t(`Sản phẩm không đủ tồn kho, vui lòng chọn thuộc tính khác`),
         });
       if (that.attr.productSelect.cart_num <= 0) {
         that.attr.productSelect.cart_num = 1;
         that.isOpen = false;
         return that.$util.Tips({
-          title: that.$t(`请选择数量`),
+          title: that.$t(`Vui lòng chọn số lượng`),
         });
       }
       let q = {
@@ -1280,7 +1280,7 @@ export default {
             });
           } else {
             that.$util.Tips({
-              title: that.$t(`添加成功`),
+              title: that.$t(`Thêm thành công`),
               success: () => {
                 that.getCartCount(true);
               },
@@ -1296,8 +1296,8 @@ export default {
         });
     },
     /**
-     * 获取购物车数量
-     * @param boolean 是否展示购物车动画和重置属性
+     * Lấy số lượng giỏ hàng
+     * @param boolean Có hiển thị hiệu ứng giỏ hàng và reset thuộc tính hay không
      */
     getCartCount: function (isAnima) {
       let that = this;
@@ -1313,7 +1313,7 @@ export default {
           // 	index: Number(uni.getStorageSync('FOOTER_ADDCART')) || 2,
           // 	text: that.CartCount + ''
           // })
-          //加入购物车后重置属性
+          //Reset thuộc tính sau khi thêm vào giỏ hàng
           if (isAnima) {
             that.animated = true;
             setTimeout(function () {
@@ -1328,7 +1328,7 @@ export default {
       this.goBuy();
     },
     /**
-     * 立即购买
+     * Mua ngay
      */
     goBuy() {
       if (this.isLogin === false) {
@@ -1341,12 +1341,12 @@ export default {
     open(data) {
       this.showMenuIcon = data;
     },
-    // 授权关闭
+    // Đóng ủy quyền
     authColse: function (e) {
       this.isShowAuth = e;
     },
     /**
-     * 分享打开
+     * Mở chia sẻ
      *
      */
     listenerActionSheet() {
@@ -1359,22 +1359,22 @@ export default {
 
       this.posters = true;
     },
-    // 分享关闭
+    // Đóng chia sẻ
     listenerActionClose: function () {
       this.posters = false;
       this.posterImageStatus = false;
     },
-    //隐藏海报
+    //Ẩn poster
     posterImageClose: function () {
       this.posterImageStatus = false;
     },
 
-    // 小程序关闭分享弹窗；
+    // Đóng popup chia sẻ của Mini Program;
     goFriend: function () {
       this.posters = false;
     },
     /*
-     * 保存到手机相册
+     * Lưu vào album điện thoại
      */
     // #ifdef MP
     savePosterPath: function () {
@@ -1390,13 +1390,13 @@ export default {
                   success: function (res) {
                     that.posterImageClose();
                     that.$util.Tips({
-                      title: that.$t(`保存成功`),
+                      title: that.$t(`Lưu thành công`),
                       icon: "success",
                     });
                   },
                   fail: function (res) {
                     that.$util.Tips({
-                      title: that.$t(`保存失败`),
+                      title: that.$t(`Lưu thất bại`),
                     });
                   },
                 });
@@ -1408,13 +1408,13 @@ export default {
               success: function (res) {
                 that.posterImageClose();
                 that.$util.Tips({
-                  title: that.$t(`保存成功`),
+                  title: that.$t(`Lưu thành công`),
                   icon: "success",
                 });
               },
               fail: function (res) {
                 that.$util.Tips({
-                  title: that.$t(`保存失败`),
+                  title: that.$t(`Lưu thất bại`),
                 });
               },
             });
@@ -1431,13 +1431,13 @@ export default {
         success: function (res) {
           that.posterImageClose();
           that.$util.Tips({
-            title: that.$t(`保存成功`),
+            title: that.$t(`Lưu thành công`),
             icon: "success",
           });
         },
         fail: function (res) {
           that.$util.Tips({
-            title: that.$t(`保存失败`),
+            title: that.$t(`Lưu thất bại`),
           });
         },
       });
@@ -1479,14 +1479,14 @@ export default {
       this.$set(this.coupon, "type", type);
       this.getCouponList(type);
     },
-    //点击sku图片打开轮播图
+    //Click ảnh sku để mở banner trình chiếu
     showImg(index) {
       this.$refs.cusPreviewImg.open(this.selectSku.suk);
     },
     showSwiperImg(index) {
       this.$refs.cusSwiperImg.open(index);
     },
-    //滑动轮播图选择商品
+    //Vuốt banner trình chiếu để chọn sản phẩm
     changeSwitch(e) {
       const productSelect = this.skuArr[e];
       if (!productSelect) return;
@@ -1495,20 +1495,20 @@ export default {
 
       const skuList = productSelect.suk.split(",");
 
-      // 使用循环设置所有productAttr的index，避免重复代码
+      // Dùng vòng lặp để đặt index cho tất cả productAttr, tránh lặp code
       skuList.forEach((sku, index) => {
         if (this.attr.productAttr[index]) {
           this.$set(this.attr.productAttr[index], "index", sku);
         }
       });
 
-      // 批量更新productSelect属性
+      // Cập nhật hàng loạt thuộc tính productSelect
       const selectProps = ["image", "price", "stock", "unique", "vipPrice"];
       selectProps.forEach((prop) => {
         this.$set(this.attr.productSelect, prop, productSelect[prop]);
       });
 
-      this.$set(this, "attrTxt", this.$t(`已选择`));
+      this.$set(this, "attrTxt", this.$t(`Đã chọn`));
       this.$set(this, "attrValue", productSelect.suk);
     },
     bindSortId(data) {
@@ -1516,7 +1516,7 @@ export default {
         uni.navigateTo({
           url: `/pages/goods/goods_list/index?cid=${data.classPage.id}&title=${data.classPage.name}`,
         });
-      } else if (data.text.val == '首页') {
+      } else if (data.text.val == 'Trang chủ') {
         uni.switchTab({
           url: `/pages/index/index`,
         });
@@ -1591,8 +1591,8 @@ export default {
 //   z-index: 277;
 //   border-top: 1rpx solid #f0f0f0;
 //   height: 100rpx;
-//   height: calc(100rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-//   height: calc(100rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+//   height: calc(100rpx + constant(safe-area-inset-bottom)); ///tương thích IOS<11.2/
+//   height: calc(100rpx + env(safe-area-inset-bottom)); ///tương thích IOS>11.2/
 //   transform: translate3d(0, 100%, 0);
 //   transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
 //   .gift-icon {

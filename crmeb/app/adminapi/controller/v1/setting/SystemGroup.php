@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,14 +16,14 @@ use app\adminapi\controller\AuthController;
 use app\services\system\config\SystemGroupServices;
 
 /**
- * 组合数据
+ * Dữ liệu tổ hợp
  * Class SystemGroup
  * @package app\adminapi\controller\v1\setting
  */
 class SystemGroup extends AuthController
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * SystemGroup constructor.
      * @param App $app
      * @param SystemGroupServices $services
@@ -35,7 +35,7 @@ class SystemGroup extends AuthController
     }
 
     /**
-     * 显示资源列表
+     * Hiển thị danh sách resource
      *
      * @return \think\Response
      */
@@ -48,7 +48,7 @@ class SystemGroup extends AuthController
     }
 
     /**
-     * 显示创建资源表单页.
+     * Hiển thị trang form tạo resource.
      *
      * @return \think\Response
      */
@@ -58,7 +58,7 @@ class SystemGroup extends AuthController
     }
 
     /**
-     * 保存新建的资源
+     * Lưu resource mới tạo
      *
      * @return \think\Response
      */
@@ -72,26 +72,26 @@ class SystemGroup extends AuthController
             ['typelist', []],
         ]);
 
-        //数据组名称判断
+        //Kiểm tra tên nhóm dữ liệu
         if (!$params['name']) {
-            return app('json')->fail('请输入名称');
+            return app('json')->fail('Vui lòng nhập tên');
         }
         if (!$params['config_name']) {
-            return app('json')->fail('请输入配置名称');
+            return app('json')->fail('Vui lòng nhập tên cấu hình');
         }
         $data["name"] = $params['name'];
         $data["config_name"] = $params['config_name'];
         $data["info"] = $params['info'];
         $data["cate_id"] = $params['cate_id'];
-        //字段信息判断
+        //Kiểm tra thông tin trường
         if (!count($params['typelist']))
-            return app('json')->fail('字段至少存在一个');
+            return app('json')->fail('Phải có ít nhất một trường');
         else {
             $validate = ["name", "type", "title", "description"];
             foreach ($params["typelist"] as $key => $value) {
                 foreach ($value as $name => $field) {
                     if (empty($field["value"]) && in_array($name, $validate))
-                        return app('json')->fail("字段" . ($key + 1) . "：" . $field["placeholder"] . "不能为空！");
+                        return app('json')->fail("Trường" . ($key + 1) . "：" . $field["placeholder"] . "không được để trống!");
                     else
                         $data["fields"][$key][$name] = $field["value"];
                 }
@@ -100,11 +100,11 @@ class SystemGroup extends AuthController
         $data["fields"] = json_encode($data["fields"]);
         $this->services->save($data);
         \crmeb\services\CacheService::clear();
-        return app('json')->success('添加数据组成功');
+        return app('json')->success('Thêm nhóm dữ liệu thành công');
     }
 
     /**
-     * 显示指定的资源
+     * Hiển thị resource được chỉ định
      *
      * @param int $id
      * @return \think\Response
@@ -126,7 +126,7 @@ class SystemGroup extends AuthController
     }
 
     /**
-     * 显示编辑资源表单页.
+     * Hiển thị trang form sửa resource.
      *
      * @param int $id
      * @return \think\Response
@@ -137,7 +137,7 @@ class SystemGroup extends AuthController
     }
 
     /**
-     * 保存更新的资源
+     * Lưu resource đã cập nhật
      *
      * @param int $id
      * @return \think\Response
@@ -152,28 +152,28 @@ class SystemGroup extends AuthController
             ['typelist', []],
         ]);
 
-        //数据组名称判断
-        if (!$params['name']) return app('json')->fail('请输入名称');
-        if (!$params['config_name']) return app('json')->fail('请输入配置名称');
-        //判断ID是否存在，存在就是编辑，不存在就是添加
+        //Kiểm tra tên nhóm dữ liệu
+        if (!$params['name']) return app('json')->fail('Vui lòng nhập tên');
+        if (!$params['config_name']) return app('json')->fail('Vui lòng nhập tên cấu hình');
+        //Kiểm tra ID có tồn tại không, tồn tại thì là sửa, không tồn tại thì là thêm
         if (!$id) {
             if ($this->services->count(['config_name' => $params['config_name']])) {
-                return app('json')->fail('数据关键字已存在');
+                return app('json')->fail('Từ khóa dữ liệu đã tồn tại');
             }
         }
         $data["name"] = $params['name'];
         $data["config_name"] = $params['config_name'];
         $data["info"] = $params['info'];
         $data["cate_id"] = $params['cate_id'];
-        //字段信息判断
+        //Kiểm tra thông tin trường
         if (!count($params['typelist']))
-            return app('json')->fail('字段至少存在一个');
+            return app('json')->fail('Phải có ít nhất một trường');
         else {
             $validate = ["name", "type", "title", "description"];
             foreach ($params["typelist"] as $key => $value) {
                 foreach ($value as $name => $field) {
                     if (empty($field["value"]) && in_array($name, $validate))
-                        return app('json')->fail('字段不能为空');
+                        return app('json')->fail('Trường không được để trống');
                     else
                         $data["fields"][$key][$name] = $field["value"];
                 }
@@ -182,11 +182,11 @@ class SystemGroup extends AuthController
         $data["fields"] = json_encode($data["fields"]);
         $this->services->update($id, $data);
         \crmeb\services\CacheService::clear();
-        return app('json')->success('添加数据组成功');
+        return app('json')->success('Thêm nhóm dữ liệu thành công');
     }
 
     /**
-     * 删除指定资源
+     * Xóa resource được chỉ định
      *
      * @param int $id
      * @return \think\Response
@@ -194,15 +194,15 @@ class SystemGroup extends AuthController
     public function delete($id, SystemGroupDataServices $services)
     {
         if (!$this->services->delete($id))
-            return app('json')->fail('删除失败');
+            return app('json')->fail('Xóa thất bại');
         else {
             $services->delete($id, 'gid');
-            return app('json')->success('删除成功');
+            return app('json')->success('Xóa thành công');
         }
     }
 
     /**
-     * 获取组合数据
+     * Lấy dữ liệu tổ hợp
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException

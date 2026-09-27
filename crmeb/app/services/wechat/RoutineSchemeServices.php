@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -30,7 +30,7 @@ class RoutineSchemeServices extends BaseServices
         $list = $this->dao->selectList($where, '*', $page, $limit, 'id desc', [], true);
         foreach ($list as &$item) {
             $item['add_time'] = date('Y-m-d H:i:s', $item['add_time']);
-            $item['expire_time'] = $item['expire_time'] == 0 ? '永久' : date('Y-m-d H:i:s', $item['expire_time']);
+            $item['expire_time'] = $item['expire_time'] == 0 ? 'Vĩnh viễn' : date('Y-m-d H:i:s', $item['expire_time']);
             $item['http_url'] = sys_config('site_url') . '/surl/' . $item['id'];
         }
         $count = $this->dao->count($where);
@@ -46,18 +46,18 @@ class RoutineSchemeServices extends BaseServices
             $info = [];
         }
         $field = [];
-        $field[] = Form::input('title', '名称', $info['title'] ?? '')->placeholder('请填写链接名称');
-        $field[] = Form::input('path', '小程序页面', $info['path'] ?? '')->placeholder('请填写小程序页面地址，可以携带参数，例：/pages/index/index?a=1&b=2');
-        $field[] = Form::radio('expire_type', '到期类型', $info['expire_type'] ?? -1)->appendControl(0, [
-            Form::dateTime('expire_num', '到期时间', $info['expire_time'] ?? 0)->appendRule('suffix', [
+        $field[] = Form::input('title', 'Tên', $info['title'] ?? '')->placeholder('Vui lòng nhập tên liên kết');
+        $field[] = Form::input('path', 'Trang Mini Program', $info['path'] ?? '')->placeholder('Vui lòng nhập đường dẫn trang Mini Program, có thể kèm tham số, ví dụ: /pages/index/index?a=1&b=2');
+        $field[] = Form::radio('expire_type', 'Loại thời hạn', $info['expire_type'] ?? -1)->appendControl(0, [
+            Form::dateTime('expire_num', 'Thời gian hết hạn', $info['expire_time'] ?? 0)->appendRule('suffix', [
                 'type' => 'div',
                 'class' => 'tips-info',
-                'domProps' => ['innerHTML' => '有效期限必须在当前时间1分钟之后，30天之前']
+                'domProps' => ['innerHTML' => 'Thời hạn hiệu lực phải sau thời điểm hiện tại 1 phút và trong vòng 30 ngày']
             ]),
         ])->appendControl(1, [
-            Form::input('expire_num', '有效天数', $info['expire_interval'] ?? 0),
-        ])->options([['label' => '永久', 'value' => -1], ['label' => '到期时间', 'value' => 0], ['label' => '有效天数', 'value' => 1]]);
-        return create_form('小程序链接', $field, Url::buildUrl('/app/routine/scheme_save/' . $id), 'POST');
+            Form::input('expire_num', 'Số ngày hiệu lực', $info['expire_interval'] ?? 0),
+        ])->options([['label' => 'Vĩnh viễn', 'value' => -1], ['label' => 'Thời gian hết hạn', 'value' => 0], ['label' => 'Số ngày hiệu lực', 'value' => 1]]);
+        return create_form('Liên kết Mini Program', $field, Url::buildUrl('/app/routine/scheme_save/' . $id), 'POST');
     }
 
     public function schemeSave($id, $data)
@@ -91,6 +91,6 @@ class RoutineSchemeServices extends BaseServices
             $res = $this->dao->save($saveData);
         }
         if ($res) return true;
-        throw new AdminException('小程序链接生成失败');
+        throw new AdminException('Tạo liên kết Mini Program thất bại');
     }
 }

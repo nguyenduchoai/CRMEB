@@ -2,15 +2,15 @@
   <div class="Box" v-loading="spinShow">
     <div>
       <div class="tips">
-        生成的商品默认是没有上架的，请手动上架商品！
-        <a href="https://doc.crmeb.com/single/v5/7785" v-if="copyConfig.copy_type == 2" target="_blank">如何配置密钥</a>
+        Sản phẩm được tạo mặc định chưa đăng bán, vui lòng đăng bán sản phẩm thủ công!
+        <a href="https://doc.crmeb.com/single/v5/7785" v-if="copyConfig.copy_type == 2" target="_blank">Cách cấu hình khóa bí mật</a>
         <span v-else
-          >您当前剩余{{ copyConfig.copy_num }}条采集次数，<span class="add" v-db-click @click="mealPay()"
-            >增加采集次数</span
+          >Bạn hiện còn {{ copyConfig.copy_num }} lượt thu thập,<span class="add" v-db-click @click="mealPay()"
+            >Thêm lượt thu thập</span
           ></span
         >
       </div>
-      <div>商品采集设置：设置 > 系统设置 > 第三方接口设置 > 采集商品配置</div>
+      <div>Cài đặt thu thập sản phẩm: Cài đặt > Cài đặt hệ thống > Cài đặt API bên thứ ba > Cấu hình thu thập sản phẩm</div>
     </div>
     <el-form
       class="formValidate mt20"
@@ -19,9 +19,9 @@
       label-position="right"
       @submit.native.prevent
     >
-      <el-form-item label="链接地址：">
-        <el-input clearable v-model="soure_link" placeholder="请输入链接地址" class="numPut" />
-        <el-button type="primary" class="ml15" v-db-click @click="add">确定</el-button>
+      <el-form-item label="Địa chỉ liên kết:">
+        <el-input clearable v-model="soure_link" placeholder="Vui lòng nhập địa chỉ liên kết" class="numPut" />
+        <el-button type="primary" class="ml15" v-db-click @click="add">Xác nhận</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -75,12 +75,12 @@ export default {
         this.copyConfig.copy_num = res.data.copy_num;
       });
     },
-    // 生成表单
+    // Tạo biểu mẫu
     add() {
       if (this.soure_link) {
         var reg = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&:/~\+#]*[\w\-\@?^=%&/~\+#])?/;
         if (!reg.test(this.soure_link)) {
-          return this.$message.warning('请输入以http开头的地址！');
+          return this.$message.warning('Vui lòng nhập địa chỉ bắt đầu bằng http!');
         }
         this.spinShow = true;
         this.artFrom.url = this.soure_link;
@@ -95,7 +95,7 @@ export default {
             this.$message.error(res.msg);
           });
       } else {
-        this.$message.warning('请输入链接地址！');
+        this.$message.warning('Vui lòng nhập địa chỉ liên kết!');
       }
     },
   },

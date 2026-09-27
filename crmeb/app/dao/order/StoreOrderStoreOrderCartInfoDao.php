@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -29,7 +29,7 @@ class StoreOrderStoreOrderCartInfoDao extends BaseDao
     protected $joinAlis = 'c';
 
     /**
-     * 设置主表模型
+     * Thiết lập model bảng chính
      * @return string
      */
     protected function setModel(): string
@@ -38,7 +38,7 @@ class StoreOrderStoreOrderCartInfoDao extends BaseDao
     }
 
     /**
-     * 设置链表模型
+     * Thiết lập model bảng liên kết
      * @return string
      */
     protected function setJoinModel(): string
@@ -47,7 +47,7 @@ class StoreOrderStoreOrderCartInfoDao extends BaseDao
     }
 
     /**
-     * 设置模型
+     * Thiết lập model
      * @return \crmeb\basic\BaseModel
      */
     public function getModel()
@@ -57,7 +57,7 @@ class StoreOrderStoreOrderCartInfoDao extends BaseDao
     }
 
     /**
-     * 获取用户购买过的商品id
+     * Lấy id sản phẩm người dùng đã mua
      * @param array $where
      * @return array
      */

@@ -29,7 +29,7 @@ export default {
       configData: {
         tabVal: 0,
       },
-      list: ['内容设置', '样式设置'],
+      list: ['Cài đặt nội dung', 'Cài đặt kiểu'],
       current: 0,
       activeTab: '0',
     };

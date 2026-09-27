@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -19,20 +19,20 @@ use crmeb\services\CacheService;
 use crmeb\services\FormBuilder as Form;
 
 /**
- * 城市数据
+ * Dữ liệu thành phố
  * Class SystemCityServices
  * @package app\services\shipping
- * @method deleteCity(int $cityId) 删除cityId下的数据
- * @method getCityIdMax() 获取最大的cityId
- * @method save(array $data) 保存数据
- * @method update($id, array $data, ?string $key = null) 修改数据
- * @method value(array $where, ?string $field = '') 获取一条数据
- * @method getShippingCity() 获取运费模板城市数据
+ * @method deleteCity(int $cityId) Xóa dữ liệu theo cityId
+ * @method getCityIdMax() Lấy cityId lớn nhất
+ * @method save(array $data) Lưu dữ liệu
+ * @method update($id, array $data, ?string $key = null) Dữ liệu cần chỉnh sửa
+ * @method value(array $where, ?string $field = '') Lấy một dòng dữ liệu
+ * @method getShippingCity() Lấy dữ liệu thành phố của mẫu phí vận chuyển
  */
 class SystemCityServices extends BaseServices
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * SystemCityServices constructor.
      * @param SystemCityDao $dao
      */
@@ -42,7 +42,7 @@ class SystemCityServices extends BaseServices
     }
 
     /**
-     * 获取城市数据
+     * Lấy dữ liệu thành phố
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -55,7 +55,7 @@ class SystemCityServices extends BaseServices
 //        $cityIds = array_column($list, 'parent_id');
 //        $cityNames = $this->dao->getCityArray(['city_id' => $cityIds], 'name', 'city_id');
 //        foreach ($list as &$item) {
-//            $item['parent_id'] = $cityNames[$item['parent_id']] ?? '中国';
+//            $item['parent_id'] = $cityNames[$item['parent_id']] ?? 'Trung Quốc';
 //        }
 //        return $list;
 //        return CacheService::get('tree_city_list', function () {
@@ -64,7 +64,7 @@ class SystemCityServices extends BaseServices
     }
 
     /**
-     * tree形城市列表
+     * Danh sách thành phố dạng cây (tree)
      * @param int $pid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -74,7 +74,7 @@ class SystemCityServices extends BaseServices
     public function getSonCityList($pid = 0)
     {
         $list = $this->dao->getCityList(['parent_id' => $pid], 'id,city_id,level,name');
-        $parent_name = $pid ? $this->dao->value(['city_id' => $pid], 'name') : '中国';
+        $parent_name = $pid ? $this->dao->value(['city_id' => $pid], 'name') : 'Trung Quốc';
         $is_add = $pid == 0 || $this->dao->value(['city_id' => $pid], 'parent_id') == 0 ? 1 : 0;
         $arr = [];
         if ($list) {
@@ -96,7 +96,7 @@ class SystemCityServices extends BaseServices
     }
 
     /**
-     * 添加城市数据表单
+     * Biểu mẫu thêm dữ liệu thành phố
      * @param int $parentId
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -109,17 +109,17 @@ class SystemCityServices extends BaseServices
         if ($parentId) {
             $info = $this->dao->getOne(['city_id' => $parentId], 'level,city_id,name');
         } else {
-            $info = ['level' => 0, 'city_id' => 0, 'name' => '中国'];
+            $info = ['level' => 0, 'city_id' => 0, 'name' => 'Trung Quốc'];
         }
         $field[] = Form::hidden('level', $info['level']);
         $field[] = Form::hidden('parent_id', $info['city_id']);
-        $field[] = Form::input('parent_name', '上级名称', $info['name'])->disabled(true)->readonly(true);
-        $field[] = Form::input('name', '名称')->required('请填写城市名称');
-        return create_form('添加城市', $field, $this->url('/setting/city/save'));
+        $field[] = Form::input('parent_name', 'Tên cấp trên', $info['name'])->disabled(true)->readonly(true);
+        $field[] = Form::input('name', 'Tên')->required('Vui lòng điền tên thành phố');
+        return create_form('Thêm thành phố', $field, $this->url('/setting/city/save'));
     }
 
     /**
-     * 添加城市数据创建
+     * Tạo mới dữ liệu thành phố
      * @param int $id
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -128,21 +128,21 @@ class SystemCityServices extends BaseServices
     {
         $info = $this->dao->get($id);
         if (!$info) {
-            throw new AdminException('数据不存在');
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         $info = $info->toArray();
-        $info['parent_name'] = $this->dao->value(['city_id' => $info['parent_id']], 'name') ?: '中国';
+        $info['parent_name'] = $this->dao->value(['city_id' => $info['parent_id']], 'name') ?: 'Trung Quốc';
         $field[] = Form::hidden('id', $info['id']);
         $field[] = Form::hidden('level', $info['level']);
         $field[] = Form::hidden('parent_id', $info['parent_id']);
-        $field[] = Form::input('parent_name', '上级名称', $info['parent_name'])->readonly(true);
-        $field[] = Form::input('name', '名称', $info['name'])->required('请填写城市名称');
-        $field[] = Form::input('merger_name', '合并名称', $info['merger_name'])->placeholder('格式:陕西,西安,雁塔')->required('请填写合并名称');
-        return create_form('修改城市', $field, $this->url('/setting/city/save'));
+        $field[] = Form::input('parent_name', 'Tên cấp trên', $info['parent_name'])->readonly(true);
+        $field[] = Form::input('name', 'Tên', $info['name'])->required('Vui lòng điền tên thành phố');
+        $field[] = Form::input('merger_name', 'Tên gộp', $info['merger_name'])->placeholder('Định dạng: Shaanxi,Xi’an,Yanta')->required('Vui lòng nhập tên gộp');
+        return create_form('Sửa thành phố', $field, $this->url('/setting/city/save'));
     }
 
     /**
-     * 获取城市数据
+     * Lấy dữ liệu thành phố
      * @return mixed
      */
     public function cityList()
@@ -154,7 +154,7 @@ class SystemCityServices extends BaseServices
     }
 
     /**
-     * 获取城市数据完整列表
+     * Lấy danh sách đầy đủ dữ liệu thành phố
      * @return mixed
      */
     public function fullList($field = '*')
@@ -165,12 +165,12 @@ class SystemCityServices extends BaseServices
     }
 
     /**
-     * 格式化获取城市数据完整列表
+     * Định dạng lấy danh sách đầy đủ dữ liệu thành phố
      * @param $data
      * @param int $pid
      * @param array $navList
      * @return array|mixed
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/04/10
      */

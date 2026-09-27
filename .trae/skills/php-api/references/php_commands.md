@@ -1,525 +1,525 @@
-# PHP常用命令文档
+# Tài liệu các lệnh PHP thường dùng
 
-## 1. 概述
+## 1. Tổng quan
 
-本文档描述了 CRMEB 项目中常用的 PHP 命令，包括 PHP 基础命令、Composer 命令、ThinkPHP 命令、CRMEB 特定命令等，旨在帮助开发者快速了解和使用这些命令，提高开发效率。
+Tài liệu này mô tả các lệnh PHP thường dùng trong dự án CRMEB, bao gồm lệnh PHP cơ bản, lệnh Composer, lệnh ThinkPHP, lệnh riêng của CRMEB, v.v., nhằm giúp lập trình viên nhanh chóng nắm bắt và sử dụng các lệnh này, nâng cao hiệu quả phát triển.
 
-## 2. PHP 基础命令
+## 2. Lệnh PHP cơ bản
 
-### 2.1 PHP 版本查看
+### 2.1 Xem phiên bản PHP
 
 ```bash
-# 查看 PHP 版本
+# Xem phiên bản PHP
 php -v
 
-# 查看 PHP 详细信息
+# Xem thông tin chi tiết PHP
 php -i
 
-# 查看 PHP 配置文件位置
+# Xem vị trí file cấu hình PHP
 php --ini
 ```
 
-### 2.2 PHP 运行命令
+### 2.2 Lệnh chạy PHP
 
 ```bash
-# 运行 PHP 文件
+# Chạy file PHP
 php filename.php
 
-# 交互式运行 PHP
+# Chạy tương tác PHP
 php -a
 
-# 执行 PHP 代码
+# Thực thi code PHP
 php -r "echo 'Hello, CRMEB!';"
 
-# 检查语法错误
+# Kiểm tra lỗi cú pháp
 php -l filename.php
 ```
 
-### 2.3 PHP 扩展管理
+### 2.3 Quản lý extension PHP
 
 ```bash
-# 查看已安装的扩展
+# Xem các extension đã cài đặt
 php -m
 
-# 查看特定扩展的信息
+# Xem thông tin của một extension cụ thể
 php -i | grep extension_name
 
-# 查看扩展目录
+# Xem thư mục extension
 php -i | grep extension_dir
 ```
 
-## 3. Composer 命令
+## 3. Lệnh Composer
 
-### 3.1 Composer 基础命令
+### 3.1 Lệnh Composer cơ bản
 
 ```bash
-# 查看 Composer 版本
+# Xem phiên bản Composer
 composer -V
 
-# 初始化 Composer 项目
+# Khởi tạo dự án Composer
 composer init
 
-# 安装依赖
+# Cài đặt các gói phụ thuộc
 composer install
 
-# 更新依赖
+# Cập nhật các phụ thuộc
 composer update
 
-# 添加新依赖
+# Thêm phụ thuộc mới
 composer require package_name
 
-# 移除依赖
+# Gỡ bỏ phụ thuộc
 composer remove package_name
 
-# 查看已安装的依赖
+# Xem các phụ thuộc đã cài đặt
 composer show
 
-# 优化自动加载
+# Tối ưu autoload
 composer dump-autoload
 
-# 优化自动加载（生产环境）
+# Tối ưu autoload (môi trường production)
 composer dump-autoload --optimize
 ```
 
-### 3.2 Composer 配置命令
+### 3.2 Lệnh cấu hình Composer
 
 ```bash
-# 查看 Composer 配置
+# Xem cấu hình Composer
 composer config --list
 
-# 设置 Composer 镜像
+# Đặt mirror cho Composer
 composer config -g repo.packagist composer https://mirrors.aliyun.com/composer/
 
-# 取消 Composer 镜像设置
+# Hủy cài đặt mirror của Composer
 composer config -g --unset repo.packagist
 ```
 
-## 4. ThinkPHP 命令
+## 4. Lệnh ThinkPHP
 
-### 4.1 ThinkPHP 基础命令
+### 4.1 Lệnh ThinkPHP cơ bản
 
 ```bash
-# 查看 ThinkPHP 命令列表
+# Xem danh sách lệnh ThinkPHP
 php think
 
-# 查看命令帮助
+# Xem trợ giúp của lệnh
 php think help command_name
 
-# 清除缓存
+# Xóa bộ nhớ đệm
 php think clear
 
-# 查看路由列表
+# Xem danh sách route
 php think route:list
 
-# 生成应用密钥
+# Tạo khóa ứng dụng
 php think generate:key
 ```
 
-### 4.2 数据库相关命令
+### 4.2 Lệnh liên quan đến cơ sở dữ liệu
 
 ```bash
-# 运行数据库迁移
+# Chạy migration cơ sở dữ liệu
 php think migrate:run
 
-# 回滚数据库迁移
+# Rollback migration cơ sở dữ liệu
 php think migrate:rollback
 
-# 创建数据库迁移文件
+# Tạo file migration cơ sở dữ liệu
 php think migrate:create migration_name
 
-# 运行数据库种子
+# Chạy seed cơ sở dữ liệu
 php think seed:run
 
-# 创建数据库种子文件
+# Tạo file seed cơ sở dữ liệu
 php think seed:create seed_name
 ```
 
-### 4.3 代码生成命令
+### 4.3 Lệnh sinh mã
 
 ```bash
-# 生成模型
+# Tạo model
 php think make:model ModelName
 
-# 生成控制器
+# Tạo controller
 php think make:controller ControllerName
 
-# 生成中间件
+# Tạo middleware
 php think make:middleware MiddlewareName
 
-# 生成验证器
+# Tạo validator
 php think make:validate ValidateName
 
-# 生成事件
+# Tạo event
 php think make:event EventName
 
-# 生成监听器
+# Tạo listener
 php think make:listener ListenerName
 ```
 
-## 5. CRMEB 特定命令
+## 5. Lệnh riêng của CRMEB
 
-### 5.1 CRMEB 代码生成命令
+### 5.1 Lệnh sinh mã của CRMEB
 
 ```bash
-# 生成 CRUD 代码
+# Tạo code CRUD
 php think crmeb:build
 
-# 生成 API 接口
+# Tạo API
 php think crmeb:api
 
-# 生成后台管理
+# Tạo trang quản trị
 php think crmeb:admin
 ```
 
-### 5.2 CRMEB 系统命令
+### 5.2 Lệnh hệ thống của CRMEB
 
 ```bash
-# 查看系统版本
+# Xem phiên bản hệ thống
 php think crmeb:version
 
-# 系统初始化
+# Khởi tạo hệ thống
 php think crmeb:init
 
-# 清理系统缓存
+# Dọn cache hệ thống
 php think crmeb:clear
 
-# 生成系统配置
+# Tạo cấu hình hệ thống
 php think crmeb:config
 ```
 
-### 5.3 队列相关命令
+### 5.3 Lệnh liên quan đến hàng đợi
 
 ```bash
-# 启动队列监听器
+# Khởi động listener của hàng đợi
 php think queue:listen
 
-# 启动队列工作进程
+# Khởi động tiến trình worker của hàng đợi
 php think queue:work
 
-# 查看队列状态
+# Xem trạng thái hàng đợi
 php think queue:status
 
-# 重启队列
+# Khởi động lại hàng đợi
 php think queue:restart
 ```
 
-### 5.4 定时任务命令
+### 5.4 Lệnh tác vụ định kỳ
 
 ```bash
-# 启动定时任务
+# Khởi động tác vụ định kỳ
 php think timer start --d
 
-# 停止定时任务
+# Dừng tác vụ định kỳ
 php think timer stop
 
-# 查看定时任务状态
+# Xem trạng thái tác vụ định kỳ
 php think timer status
 ```
 
-### 5.5 长连接命令
+### 5.5 Lệnh kết nối liên tục
 
 ```bash
-# 启动长连接服务
+# Khởi động dịch vụ kết nối liên tục
 php think workerman start --d
 
-# 停止长连接服务
+# Dừng dịch vụ kết nối liên tục
 php think workerman stop
 
-# 重启长连接服务
+# Khởi động lại dịch vụ kết nối liên tục
 php think workerman restart
 
-# 查看长连接服务状态
+# Xem trạng thái dịch vụ kết nối liên tục
 php think workerman status
 ```
 
-## 6. 开发工具命令
+## 6. Lệnh công cụ phát triển
 
-### 6.1 代码检查命令
+### 6.1 Lệnh kiểm tra mã
 
 ```bash
-# 使用 PHP_CodeSniffer 检查代码规范
+# Dùng PHP_CodeSniffer để kiểm tra chuẩn code
 ./vendor/bin/phpcs
 
-# 使用 PHPStan 进行静态分析
+# Dùng PHPStan để phân tích tĩnh
 ./vendor/bin/phpstan analyze
 
-# 使用 Psalm 进行静态分析
+# Dùng Psalm để phân tích tĩnh
 ./vendor/bin/psalm
 ```
 
-### 6.2 测试命令
+### 6.2 Lệnh kiểm thử
 
 ```bash
-# 运行 PHPUnit 测试
+# Chạy kiểm thử PHPUnit
 ./vendor/bin/phpunit
 
-# 运行特定测试
+# Chạy một kiểm thử cụ thể
 ./vendor/bin/phpunit tests/TestCase.php
 
-# 生成测试覆盖率报告
+# Tạo báo cáo độ bao phủ kiểm thử
 ./vendor/bin/phpunit --coverage-html coverage
 ```
 
-### 6.3 代码格式化命令
+### 6.3 Lệnh định dạng mã
 
 ```bash
-# 使用 PHP-CS-Fixer 格式化代码
+# Dùng PHP-CS-Fixer để định dạng code
 ./vendor/bin/php-cs-fixer fix
 
-# 使用 Pretty PHP 格式化代码
+# Dùng Pretty PHP để định dạng code
 ./vendor/bin/pretty-php
 ```
 
-## 7. 部署命令
+## 7. Lệnh triển khai
 
-### 7.1 项目构建命令
+### 7.1 Lệnh build dự án
 
 ```bash
-# 安装依赖（生产环境）
+# Cài đặt phụ thuộc (môi trường production)
 composer install --no-dev --optimize-autoloader
 
-# 编译前端资源
+# Biên dịch tài nguyên frontend
 npm install
 npm run build
 
-# 清理缓存
+# Dọn cache
 php think clear
 ```
 
-### 7.2 服务器部署命令
+### 7.2 Lệnh triển khai trên máy chủ
 
 ```bash
-# 上传代码到服务器
+# Tải code lên máy chủ
 scp -r local_directory user@server:/remote_directory
 
-# 远程执行命令
+# Thực thi lệnh từ xa
 ssh user@server "cd /project/directory && php think clear"
 
-# 使用 rsync 同步代码
+# Dùng rsync để đồng bộ code
 rsync -avz --exclude='.git' --exclude='vendor' local_directory/ user@server:/remote_directory/
 ```
 
-### 7.3 Docker 部署命令
+### 7.3 Lệnh triển khai bằng Docker
 
 ```bash
-# 构建 Docker 镜像
+# Build image Docker
 docker build -t crmeb .
 
-# 运行 Docker 容器
+# Chạy container Docker
 docker run -d --name crmeb -p 80:80 crmeb
 
-# 查看 Docker 容器状态
+# Xem trạng thái container Docker
 docker ps
 
-# 进入 Docker 容器
+# Vào container Docker
 docker exec -it crmeb bash
 ```
 
-## 8. 数据库命令
+## 8. Lệnh cơ sở dữ liệu
 
-### 8.1 MySQL 命令
+### 8.1 Lệnh MySQL
 
 ```bash
-# 连接 MySQL 数据库
+# Kết nối cơ sở dữ liệu MySQL
 mysql -u username -p database_name
 
-# 导入 SQL 文件
+# Nhập file SQL
 mysql -u username -p database_name < crmeb.sql
 
-# 导出 SQL 文件
+# Xuất file SQL
 mysqldump -u username -p database_name > backup.sql
 
-# 导出特定表
+# Xuất một bảng cụ thể
 mysqldump -u username -p database_name table1 table2 > backup.sql
 ```
 
-### 8.2 数据库迁移命令
+### 8.2 Lệnh migration cơ sở dữ liệu
 
 ```bash
-# 创建迁移文件
+# Tạo file migration
 php think migrate:create CreateUsersTable
 
-# 运行迁移
+# Chạy migration
 php think migrate:run
 
-# 回滚迁移
+# Rollback migration
 php think migrate:rollback
 
-# 查看迁移状态
+# Xem trạng thái migration
 php think migrate:status
 ```
 
-### 8.3 数据库种子命令
+### 8.3 Lệnh seed cơ sở dữ liệu
 
 ```bash
-# 创建种子文件
+# Tạo file seed
 php think seed:create UserSeeder
 
-# 运行种子
+# Chạy seed
 php think seed:run
 
-# 运行特定种子
+# Chạy một seed cụ thể
 php think seed:run --seed=UserSeeder
 ```
 
-## 9. 性能优化命令
+## 9. Lệnh tối ưu hiệu năng
 
-### 9.1 代码优化命令
+### 9.1 Lệnh tối ưu mã
 
 ```bash
-# 优化 Composer 自动加载
+# Tối ưu autoload của Composer
 composer dump-autoload --optimize --classmap-authoritative
 
-# 生成 OPcache 预热脚本
+# Tạo script làm nóng (warm-up) OPcache
 php -r '$files = glob(__DIR__ . "/vendor/**/*.php", GLOB_BRACE); foreach ($files as $file) { require_once $file; }'
 ```
 
-### 9.2 缓存优化命令
+### 9.2 Lệnh tối ưu bộ nhớ đệm
 
 ```bash
-# 清除所有缓存
+# Xóa toàn bộ cache
 php think clear
 
-# 清除模板缓存
+# Xóa cache template
 php think clear --template
 
-# 清除配置缓存
+# Xóa cache cấu hình
 php think clear --config
 
-# 清除路由缓存
+# Xóa cache route
 php think clear --route
 ```
 
-### 9.3 数据库优化命令
+### 9.3 Lệnh tối ưu cơ sở dữ liệu
 
 ```bash
-# 优化 MySQL 表
+# Tối ưu bảng MySQL
 mysql -u username -p -e "OPTIMIZE TABLE table1, table2;" database_name
 
-# 修复 MySQL 表
+# Sửa lỗi bảng MySQL
 mysql -u username -p -e "REPAIR TABLE table1, table2;" database_name
 
-# 分析 MySQL 表
+# Phân tích bảng MySQL
 mysql -u username -p -e "ANALYZE TABLE table1, table2;" database_name
 ```
 
-## 10. 故障排查命令
+## 10. Lệnh xử lý sự cố
 
-### 10.1 日志查看命令
+### 10.1 Lệnh xem log
 
 ```bash
-# 查看 Nginx 错误日志
+# Xem log lỗi Nginx
 tail -f /var/log/nginx/error.log
 
-# 查看 PHP-FPM 错误日志
+# Xem log lỗi PHP-FPM
 tail -f /var/log/php-fpm/error.log
 
-# 查看 CRMEB 应用日志
+# Xem log ứng dụng CRMEB
 tail -f runtime/log/$(date +%Y%m%d).log
 
-# 查看慢查询日志
+# Xem log truy vấn chậm
 tail -f /var/log/mysql/mysql-slow.log
 ```
 
-### 10.2 进程查看命令
+### 10.2 Lệnh xem tiến trình
 
 ```bash
-# 查看 PHP-FPM 进程
+# Xem tiến trình PHP-FPM
 ps aux | grep php-fpm
 
-# 查看 Nginx 进程
+# Xem tiến trình Nginx
 ps aux | grep nginx
 
-# 查看 MySQL 进程
+# Xem tiến trình MySQL
 ps aux | grep mysql
 
-# 查看 CRMEB 队列进程
+# Xem tiến trình hàng đợi CRMEB
 ps aux | grep queue:work
 ```
 
-### 10.3 网络查看命令
+### 10.3 Lệnh xem thông tin mạng
 
 ```bash
-# 查看端口占用
+# Xem các cổng đang bị chiếm dụng
 netstat -tuln
 
-# 查看特定端口占用
+# Xem một cổng cụ thể có bị chiếm dụng không
 lsof -i :80
 
-# 查看网络连接
+# Xem kết nối mạng
 netstat -an | grep ESTABLISHED
 
-# 测试网络连接
+# Kiểm tra kết nối mạng
 ping example.com
 
-# 测试端口连接
+# Kiểm tra kết nối cổng
 telnet example.com 80
 ```
 
-## 11. 最佳实践
+## 11. Thực tiễn tốt nhất
 
-### 11.1 命令使用建议
+### 11.1 Khuyến nghị khi sử dụng lệnh
 
-- **使用绝对路径**: 执行命令时尽量使用绝对路径，避免路径问题
-- **添加执行权限**: 对于脚本文件，记得添加执行权限
-- **使用别名**: 对于常用命令，可以在 `.bashrc` 或 `.zshrc` 中添加别名
-- **查看帮助**: 遇到不熟悉的命令，使用 `--help` 查看帮助信息
-- **记录常用命令**: 将常用命令记录在文档中，方便查阅
+- **Dùng đường dẫn tuyệt đối**: Khi chạy lệnh nên dùng đường dẫn tuyệt đối để tránh lỗi đường dẫn
+- **Cấp quyền thực thi**: Với tệp script, nhớ cấp quyền thực thi
+- **Dùng alias**: Với các lệnh thường dùng, có thể thêm alias trong `.bashrc` hoặc `.zshrc`
+- **Xem trợ giúp**: Khi gặp lệnh chưa quen, dùng `--help` để xem thông tin trợ giúp
+- **Ghi lại các lệnh thường dùng**: Ghi các lệnh thường dùng vào tài liệu để tiện tra cứu
 
-### 11.2 安全建议
+### 11.2 Khuyến nghị bảo mật
 
-- **避免使用 root 用户**: 执行 PHP 命令时，避免使用 root 用户
-- **保护敏感信息**: 避免在命令行中直接输入密码等敏感信息
-- **限制命令执行权限**: 对于生产环境，限制命令的执行权限
-- **定期更新依赖**: 定期使用 `composer update` 更新依赖，修复安全漏洞
+- **Tránh dùng người dùng root**: Khi chạy lệnh PHP, tránh dùng người dùng root
+- **Bảo vệ thông tin nhạy cảm**: Tránh nhập trực tiếp mật khẩu và các thông tin nhạy cảm khác trên dòng lệnh
+- **Giới hạn quyền thực thi lệnh**: Với môi trường production, hãy giới hạn quyền thực thi lệnh
+- **Cập nhật thư viện phụ thuộc định kỳ**: Định kỳ dùng `composer update` để cập nhật thư viện phụ thuộc, vá lỗ hổng bảo mật
 
-### 11.3 性能建议
+### 11.3 Khuyến nghị về hiệu năng
 
-- **使用缓存**: 对于频繁执行的命令，考虑使用缓存
-- **并行执行**: 对于独立的任务，可以考虑并行执行
-- **限制输出**: 对于产生大量输出的命令，使用管道或重定向限制输出
-- **使用后台执行**: 对于耗时较长的命令，使用后台执行
+- **Dùng bộ nhớ đệm**: Với các lệnh chạy thường xuyên, cân nhắc sử dụng bộ nhớ đệm (cache)
+- **Thực thi song song**: Với các tác vụ độc lập, có thể cân nhắc thực thi song song
+- **Giới hạn đầu ra**: Với các lệnh tạo nhiều đầu ra, dùng pipe hoặc chuyển hướng (redirect) để giới hạn đầu ra
+- **Chạy nền**: Với các lệnh tốn nhiều thời gian, hãy chạy ở chế độ nền
 
-## 12. 常见问题
+## 12. Sự cố thường gặp
 
-### 12.1 PHP 命令执行失败
+### 12.1 Chạy lệnh PHP thất bại
 
-- **问题**: 执行 PHP 命令时提示 "Command not found"
-- **解决方案**: 检查 PHP 是否已安装，以及是否在 PATH 环境变量中
+- **Vấn đề**: Khi chạy lệnh PHP nhận được thông báo "Command not found"
+- **Giải pháp**: Kiểm tra PHP đã được cài đặt chưa và đã có trong biến môi trường PATH chưa
 
-### 12.2 Composer 命令执行失败
+### 12.2 Chạy lệnh Composer thất bại
 
-- **问题**: 执行 Composer 命令时提示 "Composer could not find a composer.json file"
-- **解决方案**: 确保在项目根目录执行命令，且存在 composer.json 文件
+- **Vấn đề**: Khi chạy lệnh Composer nhận được thông báo "Composer could not find a composer.json file"
+- **Giải pháp**: Đảm bảo chạy lệnh tại thư mục gốc của dự án và tệp composer.json có tồn tại
 
-### 12.3 ThinkPHP 命令执行失败
+### 12.3 Chạy lệnh ThinkPHP thất bại
 
-- **问题**: 执行 ThinkPHP 命令时提示 "Class not found"
-- **解决方案**: 执行 `composer dump-autoload` 更新自动加载
+- **Vấn đề**: Khi chạy lệnh ThinkPHP nhận được thông báo "Class not found"
+- **Giải pháp**: Chạy `composer dump-autoload` để cập nhật autoload
 
-### 12.4 数据库命令执行失败
+### 12.4 Chạy lệnh cơ sở dữ liệu thất bại
 
-- **问题**: 执行数据库命令时提示 "Access denied for user"
-- **解决方案**: 检查数据库用户名和密码是否正确，以及是否有相应的权限
+- **Vấn đề**: Khi chạy lệnh cơ sở dữ liệu nhận được thông báo "Access denied for user"
+- **Giải pháp**: Kiểm tra tên đăng nhập và mật khẩu cơ sở dữ liệu có đúng không, và có đủ quyền tương ứng không
 
-### 12.5 队列命令执行失败
+### 12.5 Chạy lệnh hàng đợi thất bại
 
-- **问题**: 执行队列命令时提示 "Queue not found"
-- **解决方案**: 检查队列配置是否正确，以及队列服务是否启动
+- **Vấn đề**: Khi chạy lệnh hàng đợi nhận được thông báo "Queue not found"
+- **Giải pháp**: Kiểm tra cấu hình hàng đợi có đúng không, và dịch vụ hàng đợi đã được khởi động chưa
 
-## 13. 参考资源
+## 13. Tài liệu tham khảo
 
-- [PHP 官方文档](https://www.php.net/docs.php)
-- [Composer 官方文档](https://getcomposer.org/doc/)
-- [ThinkPHP 官方文档](https://www.kancloud.cn/manual/thinkphp6_0)
-- [MySQL 官方文档](https://dev.mysql.com/doc/)
-- [Docker 官方文档](https://docs.docker.com/)
-- [Linux 命令大全](https://www.runoob.com/linux/linux-command-manual.html)
+- [Tài liệu chính thức PHP](https://www.php.net/docs.php)
+- [Tài liệu chính thức Composer](https://getcomposer.org/doc/)
+- [Tài liệu chính thức ThinkPHP](https://www.kancloud.cn/manual/thinkphp6_0)
+- [Tài liệu chính thức MySQL](https://dev.mysql.com/doc/)
+- [Tài liệu chính thức Docker](https://docs.docker.com/)
+- [Tổng hợp lệnh Linux](https://www.runoob.com/linux/linux-command-manual.html)
 
-## 14. 总结
+## 14. Tổng kết
 
-本文档介绍了 CRMEB 项目中常用的 PHP 命令，包括 PHP 基础命令、Composer 命令、ThinkPHP 命令、CRMEB 特定命令、数据库命令、性能优化命令、故障排查命令等。
+Tài liệu này giới thiệu các lệnh PHP thường dùng trong dự án CRMEB, bao gồm lệnh PHP cơ bản, lệnh Composer, lệnh ThinkPHP, lệnh riêng của CRMEB, lệnh cơ sở dữ liệu, lệnh tối ưu hiệu năng, lệnh xử lý sự cố, v.v.
 
-通过掌握这些命令，开发者可以更加高效地进行项目开发、部署和维护。同时，本文档也提供了一些最佳实践和常见问题的解决方案，希望能够帮助开发者避免一些常见的问题。
+Khi nắm vững các lệnh này, lập trình viên có thể phát triển, triển khai và bảo trì dự án hiệu quả hơn. Đồng thời, tài liệu này cũng cung cấp một số thực tiễn tốt nhất và giải pháp cho các vấn đề thường gặp, hy vọng giúp lập trình viên tránh được một số lỗi phổ biến.
 
-随着项目的发展和技术的演进，这些命令也可能会有所变化，建议开发者定期查阅相关文档，了解最新的命令和用法。
+Cùng với sự phát triển của dự án và sự thay đổi của công nghệ, các lệnh này cũng có thể thay đổi, lập trình viên nên định kỳ tra cứu tài liệu liên quan để nắm được các lệnh và cách dùng mới nhất.

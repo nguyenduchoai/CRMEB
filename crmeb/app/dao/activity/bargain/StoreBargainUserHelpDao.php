@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,7 +24,7 @@ class StoreBargainUserHelpDao extends BaseDao
 {
 
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -33,7 +33,7 @@ class StoreBargainUserHelpDao extends BaseDao
     }
 
     /**
-     * 获取帮砍人数
+     * Lấy số người giúp giảm giá
      * @return array
      */
     public function getHelpAllCount(array $where = [])
@@ -42,7 +42,7 @@ class StoreBargainUserHelpDao extends BaseDao
     }
 
     /**
-     * 获取帮砍列表
+     * Lấy danh sách giúp giảm giá
      * @param int $bid
      * @param int $page
      * @param int $limit
@@ -59,7 +59,7 @@ class StoreBargainUserHelpDao extends BaseDao
     }
 
     /**
-     * 获取砍价商品已砍人数
+     * Lấy số người đã giúp giảm giá cho sản phẩm săn giảm giá
      * @return array
      */
     public function getNums()

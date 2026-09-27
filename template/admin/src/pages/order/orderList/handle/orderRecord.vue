@@ -1,18 +1,18 @@
 <template>
-  <el-drawer :visible.sync="modals" title="订单记录" :wrapperClosable="false" :size="700">
+  <el-drawer :visible.sync="modals" title="Lịch sử đơn hàng" :wrapperClosable="false" :size="700">
     <el-card :bordered="false" shadow="never">
-      <el-table :data="recordData" v-loading="loading" empty-text="暂无数据" highlight-current-row>
-        <el-table-column label="订单ID" min-width="100">
+      <el-table :data="recordData" v-loading="loading" empty-text="Chưa có dữ liệu" highlight-current-row>
+        <el-table-column label="ID đơn hàng" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.oid }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作记录" min-width="100">
+        <el-table-column label="Lịch sử thao tác" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.change_message }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作时间" min-width="100">
+        <el-table-column label="Thời gian thao tác" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.change_time }}</span>
           </template>
@@ -32,8 +32,8 @@ export default {
       loading: false,
       recordData: [],
       page: {
-        page: 1, // 当前页
-        limit: 15, // 每页显示条数
+        page: 1, // Trang hiện tại
+        limit: 15, // Số mục hiển thị mỗi trang
       },
     };
   },

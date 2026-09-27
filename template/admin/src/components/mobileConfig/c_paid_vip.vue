@@ -22,7 +22,7 @@ import { mapState, mapMutations, mapActions } from 'vuex';
 
 export default {
   name: 'c_paid_vip',
-  cname: '付费会员',
+  cname: 'Thành viên trả phí',
   componentsName: 'home_paid_vip',
   components: {
     ...toolCom,
@@ -49,7 +49,7 @@ export default {
           configNme: 'setUp',
         },
       ],
-      // 内容设置配置项
+      // Mục cấu hình cài đặt nội dung
       contentConfig: [
         {
           components: toolCom.c_title,
@@ -105,7 +105,7 @@ export default {
       if (!data) return data;
       if (!data.paddingConfig) {
         this.$set(data, 'paddingConfig', {
-          title: '内边距',
+          title: 'Lề trong',
           isAll: false,
           val: 0,
           min: 0,
@@ -121,7 +121,7 @@ export default {
       }
       if (!data.marginConfig) {
         this.$set(data, 'marginConfig', {
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,
@@ -132,26 +132,26 @@ export default {
       }
       if (!data.borderConfig) {
         this.$set(data, 'borderConfig', {
-          title: '边框设置',
+          title: 'Cài đặt viền',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0, // 0: Hide, 1: Show
           styleConfig: {
-            title: '边框样式',
+            title: 'Kiểu viền',
             tabVal: 0,
             tabList: [
-              { name: '实线', style: 'solid' },
-              { name: '虚线', style: 'dashed' },
-              { name: '点状', style: 'dotted' },
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
             ],
           },
           widthConfig: {
-            title: '边框粗细',
+            title: 'Độ dày viền',
             val: 1,
             min: 1,
           },
           colorConfig: {
-            title: '边框颜色',
+            title: 'Màu viền',
             default: [{ item: '#e5e5e5' }],
             color: [{ item: '#e5e5e5' }],
           },
@@ -159,12 +159,12 @@ export default {
       }
       if (!data.shadowConfig) {
         this.$set(data, 'shadowConfig', {
-          title: '阴影设置',
+          title: 'Cài đặt đổ bóng',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0, // 0: Hide, 1: Show
           colorConfig: {
-            title: '阴影颜色',
+            title: 'Màu đổ bóng',
             default: [{ item: '#e5e5e5' }],
             color: [{ item: '#e5e5e5' }],
           },
@@ -172,30 +172,30 @@ export default {
       }
       if (!data.componentBgConfig) {
         this.$set(data, 'componentBgConfig', {
-          title: '组件背景',
+          title: 'Nền thành phần',
           tabVal: 0,
-          tabList: [{ name: '颜色' }, { name: '图片' }],
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
           colorConfig: {
-            title: '背景颜色',
+            title: 'Màu nền',
             default: [{ item: '#fff' }],
             color: [{ item: '#fff' }],
           },
           imageConfig: {
             url: '',
             type: 'code',
-            name: '背景图片',
+            name: 'Ảnh nền',
           },
         });
       }
       if (!data.fillet) {
         this.$set(data, 'fillet', {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
-            { val: '全部', icon: 'iconcaozuo-zhengti' },
-            { val: '单个', icon: 'iconcaozuo-bianjiao' },
+            { val: 'Tất cả', icon: 'iconcaozuo-zhengti' },
+            { val: 'Từng góc', icon: 'iconcaozuo-bianjiao' },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 8,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
@@ -203,35 +203,35 @@ export default {
       }
       if (!data.imgConfig) {
         this.$set(data, 'imgConfig', {
-          info: '建议：36px * 36px',
+          info: 'Đề xuất: 36px * 36px',
           url: require('@/assets/images/goods_vip.png'),
           type: 'code',
           delType: 0,
-          name: '会员图片',
+          name: 'Ảnh thành viên',
         });
       }
       if (!data.rightBntConfig) {
         this.$set(data, 'rightBntConfig', {
-          title: '右侧按钮',
-          value: '立即开通',
-          place: '请输入按钮文字',
+          title: 'Nút bên phải',
+          value: 'Kích hoạt ngay',
+          place: 'Vui lòng nhập chữ trên nút',
           max: 6,
         });
       }
       if (!data.c_common_style) {
         this.$set(data, 'c_common_style', {
           color: {
-            title: '背景颜色',
+            title: 'Màu nền',
             val: '',
             name: 'bgColor',
           },
           color2: {
-            title: '线条颜色',
+            title: 'Màu đường kẻ',
             val: '',
             name: 'lineColor',
           },
           lr: {
-            title: '左右边距',
+            title: 'Lề trái phải',
             val: 0,
             min: 0,
             max: 100,
@@ -241,15 +241,15 @@ export default {
       }
       return data;
     },
-    // 更新配置组件列表
+    // Cập nhật danh sách thành phần cấu hình
     updateRCom() {
-      var arr = [this.rCom[0]]; // 保留第一个 setUp 组件
+      var arr = [this.rCom[0]]; // Giữ lại thành phần setUp đầu tiên
 
       if (this.setUp == 0) {
-        // 内容设置
+        // Cài đặt nội dung
         this.rCom = arr.concat(this.contentConfig);
       } else {
-        // 样式设置
+        // Cài đặt kiểu
         let styleArr = [
           {
             components: toolCom.c_title,

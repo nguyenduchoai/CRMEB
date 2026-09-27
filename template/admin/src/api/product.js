@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -11,7 +11,7 @@
 import request from '@/libs/request';
 
 /*
- * 获取商品表单头数量；
+ * Lấy số lượng phần đầu form sản phẩm;
  * */
 export function getGoodHeade(data) {
   return request({
@@ -22,7 +22,7 @@ export function getGoodHeade(data) {
 }
 
 /*
- * 获取商品表单头数量；
+ * Lấy số lượng phần đầu form sản phẩm;
  * */
 export function getGoodsCategory(data) {
   return request({
@@ -33,7 +33,7 @@ export function getGoodsCategory(data) {
 }
 
 /**
- * @description 商品管理-- 列表
+ * @description Quản lý sản phẩm -- Danh sách
  */
 export function getGoods(params) {
   return request({
@@ -44,7 +44,7 @@ export function getGoods(params) {
 }
 
 /**
- * @description 商品管理-- 临时保存
+ * @description Quản lý sản phẩm -- Lưu tạm
  */
 export function productCache() {
   return request({
@@ -54,7 +54,7 @@ export function productCache() {
 }
 
 /**
- * @description 商品管理-- 取消临时保存
+ * @description Quản lý sản phẩm -- Hủy lưu tạm
  */
 export function cacheDelete() {
   return request({
@@ -64,7 +64,7 @@ export function cacheDelete() {
 }
 
 /**
- * @description 商品管理-- 上下架
+ * @description Quản lý sản phẩm -- Lên/xuống kệ
  */
 export function PostgoodsIsShow(id, isShow) {
   return request({
@@ -74,8 +74,8 @@ export function PostgoodsIsShow(id, isShow) {
 }
 
 /**
- * @description 商品属性 -- 批量上下架
- * @param {Object} param data {Object} 传值对象
+ * @description Thuộc tính sản phẩm -- Lên/xuống kệ hàng loạt
+ * @param {Object} param data {Object} Đối tượng truyền giá trị
  */
 export function productShowApi(data) {
   return request({
@@ -86,7 +86,7 @@ export function productShowApi(data) {
 }
 
 /**
- * 添加虚拟评论
+ * Thêm đánh giá ảo
  * @param {*} data
  * @returns
  */
@@ -99,8 +99,8 @@ export function saveFictitiousReply(data) {
 }
 
 /**
- * @description 商品属性 -- 批量下架
- * @param {Object} param data {Object} 传值对象
+ * @description Thuộc tính sản phẩm -- Xuống kệ hàng loạt
+ * @param {Object} param data {Object} Đối tượng truyền giá trị
  */
 export function productUnshowApi(data) {
   return request({
@@ -111,7 +111,7 @@ export function productUnshowApi(data) {
 }
 
 /**
- * @description 商品管理-- 分类
+ * @description Quản lý sản phẩm -- Danh mục
  */
 export function treeListApi(type) {
   return request({
@@ -121,7 +121,7 @@ export function treeListApi(type) {
 }
 
 /**
- * @description 商品管理-- 分类 new
+ * @description Quản lý sản phẩm -- Danh mục bản mới
  */
 export function cascaderListApi(type) {
   return request({
@@ -131,7 +131,7 @@ export function cascaderListApi(type) {
 }
 
 /**
- * @description 商品管理-- 详情
+ * @description Quản lý sản phẩm -- Chi tiết
  */
 export function productInfoApi(id) {
   return request({
@@ -141,7 +141,7 @@ export function productInfoApi(id) {
 }
 
 /**
- * @description 商品管理-- 提交
+ * @description Quản lý sản phẩm -- Submit
  */
 export function productAddApi(data) {
   return request({
@@ -152,8 +152,8 @@ export function productAddApi(data) {
 }
 
 /**
- * @description 商品分类 -- 列表
- * @param {Object} param params {Object} 传值参数
+ * @description Danh mục sản phẩm -- Danh sách
+ * @param {Object} param params {Object} Tham số truyền giá trị
  */
 export function productListApi(params) {
   return request({
@@ -164,8 +164,8 @@ export function productListApi(params) {
 }
 
 /**
- * @description 商品分类 -- 添加表单
- * @param {Object} param params {Object} 传值参数
+ * @description Danh mục sản phẩm -- Form thêm
+ * @param {Object} param params {Object} Tham số truyền giá trị
  */
 export function productCreateApi() {
   return request({
@@ -175,8 +175,8 @@ export function productCreateApi() {
 }
 
 /**
- * @description 商品分类 -- 编辑表单
- * @param {Object} param params {Object} 传值参数
+ * @description Danh mục sản phẩm -- Form sửa
+ * @param {Object} param params {Object} Tham số truyền giá trị
  */
 export function productEditApi(id) {
   return request({
@@ -186,8 +186,8 @@ export function productEditApi(id) {
 }
 
 /**
- * @description 商品分类 -- 修改状态
- * @param {Object} param params {Object} 传值参数
+ * @description Danh mục sản phẩm -- Đổi trạng thái
+ * @param {Object} param params {Object} Tham số truyền giá trị
  */
 export function setShowApi(data) {
   return request({
@@ -197,7 +197,7 @@ export function setShowApi(data) {
 }
 
 /**
- * @description 选择商品 -- 列表
+ * @description Chọn sản phẩm -- Danh sách
  */
 export function changeListApi(params) {
   return request({
@@ -208,8 +208,8 @@ export function changeListApi(params) {
 }
 
 /**
- * @description 商品评论 -- 列表
- * @param {Object} param params {Object} 传值参数
+ * @description Bình luận sản phẩm -- Danh sách
+ * @param {Object} param params {Object} Tham số truyền giá trị
  */
 export function replyListApi(params) {
   return request({
@@ -220,8 +220,8 @@ export function replyListApi(params) {
 }
 
 /**
- * @description 商品评论 -- 回复
- * @param {Object} param data {Object} 传值参数
+ * @description Bình luận sản phẩm -- Trả lời
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function setReplyApi(data, id) {
   return request({
@@ -232,7 +232,7 @@ export function setReplyApi(data, id) {
 }
 
 /**
- * @description 获取复制商品配置
+ * @description Lấy cấu hình sao chép sản phẩm
  */
 export function copyConfigApi() {
   return request({
@@ -242,8 +242,8 @@ export function copyConfigApi() {
 }
 
 /**
- * @description 商品管理 -- 获取京东、淘宝商品数据
- * @param {Object} param data {Object} 传值参数
+ * @description Quản lý sản phẩm -- Lấy dữ liệu sản phẩm JD, Taobao
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function crawlFromApi(data) {
   return request({
@@ -254,8 +254,8 @@ export function crawlFromApi(data) {
 }
 
 /**
- * @description 商品管理 -- 京东、淘宝商品数据提交
- * @param {Object} param data {Object} 传值参数
+ * @description Quản lý sản phẩm -- Submit dữ liệu sản phẩm JD, Taobao
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function crawlSaveApi(data) {
   return request({
@@ -266,8 +266,8 @@ export function crawlSaveApi(data) {
 }
 
 /**
- * @description 商品管理 -- 生成属性
- * @param {Object} param data {Object} 传值参数
+ * @description Quản lý sản phẩm -- Tạo thuộc tính
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function generateAttrApi(data, id, type) {
   return request({
@@ -278,8 +278,8 @@ export function generateAttrApi(data, id, type) {
 }
 
 /**
- * @description 商品属性 -- 列表
- * @param {Object} param params {Object} 传值参数
+ * @description Thuộc tính sản phẩm -- Danh sách
+ * @param {Object} param params {Object} Tham số truyền giá trị
  */
 export function ruleListApi(params) {
   return request({
@@ -290,9 +290,9 @@ export function ruleListApi(params) {
 }
 
 /**
- * @description 商品属性 -- 添加
- * @param {Number} param id {Number} 属性id
- * @param {Object} param data {Object} 传值参数
+ * @description Thuộc tính sản phẩm -- Thêm
+ * @param {Number} param id {Number} ID thuộc tính
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function ruleAddApi(data, id) {
   return request({
@@ -303,8 +303,8 @@ export function ruleAddApi(data, id) {
 }
 
 /**
- * @description 商品属性 -- 详情
- * @param {Number} param id {Number} 属性id
+ * @description Thuộc tính sản phẩm -- Chi tiết
+ * @param {Number} param id {Number} ID thuộc tính
  */
 export function ruleInfoApi(id) {
   return request({
@@ -314,8 +314,8 @@ export function ruleInfoApi(id) {
 }
 
 /**
- * @description 商品评价 -- 虚拟评价
- * @id--产品id；
+ * @description Đánh giá sản phẩm -- Đánh giá ảo
+ * @id -- ID sản phẩm;
  */
 export function fictitiousReply(id) {
   return request({
@@ -325,7 +325,7 @@ export function fictitiousReply(id) {
 }
 
 /**
- * @description 商品属性 -- 获取规则属性模板
+ * @description Thuộc tính sản phẩm -- Lấy mẫu quy tắc thuộc tính
  */
 export function productGetRuleApi() {
   return request({
@@ -335,7 +335,7 @@ export function productGetRuleApi() {
 }
 
 /**
- * @description 商品 -- 获取运费模板
+ * @description Sản phẩm -- Lấy mẫu phí vận chuyển
  */
 export function productGetTemplateApi() {
   return request({
@@ -345,7 +345,7 @@ export function productGetTemplateApi() {
 }
 
 /**
- * @description 获取上传参数
+ * @description Lấy tham số tải lên
  */
 export function productGetTempKeysApi(data) {
   return request({
@@ -356,7 +356,7 @@ export function productGetTempKeysApi(data) {
 }
 
 /**
- * @description 商铺产品 -- 导出
+ * @description Sản phẩm shop -- Xuất
  */
 export function storeProductApi(data) {
   return request({
@@ -367,7 +367,7 @@ export function storeProductApi(data) {
 }
 
 /**
- * @description 添加商品 -- 检测活动存在
+ * @description Thêm sản phẩm -- Kiểm tra chương trình tồn tại
  */
 export function checkActivityApi(id) {
   return request({
@@ -377,7 +377,7 @@ export function checkActivityApi(id) {
 }
 
 /**
- * @description 商品添加编辑-- 用户标签
+ * @description Thêm/sửa sản phẩm -- Nhãn người dùng
  */
 export function labelListApi() {
   return request({
@@ -386,7 +386,7 @@ export function labelListApi() {
   });
 }
 /**
- * @description 组件获取用户标签
+ * @description Component lấy nhãn người dùng
  */
 export function productUserLabel() {
   return request({
@@ -395,7 +395,7 @@ export function productUserLabel() {
   });
 }
 /**
- * @description 上传类型
+ * @description Loại tải lên
  */
 export function uploadType() {
   return request({
@@ -405,7 +405,7 @@ export function uploadType() {
 }
 
 /**
- * @description 导入卡密
+ * @description Nhập mã thẻ
  */
 export function importCard(data) {
   return request({
@@ -416,9 +416,9 @@ export function importCard(data) {
 }
 
 /**
- * @description 商品批量设置
- * @param {Number} param id {Number} 属性id
- * @param {Object} param data {Object} 传值参数
+ * @description Cài đặt sản phẩm hàng loạt
+ * @param {Number} param id {Number} ID thuộc tính
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function batchSetting(data) {
   return request({
@@ -429,7 +429,7 @@ export function batchSetting(data) {
 }
 
 /**
- * @description 商品类型配置
+ * @description Cấu hình loại sản phẩm
  */
 export function getProductTypeConfig() {
   return request({
@@ -439,7 +439,7 @@ export function getProductTypeConfig() {
 }
 
 /**
- * @description 添加商品-- 商品标签
+ * @description Thêm sản phẩm -- Nhãn sản phẩm
  */
 export function productStoreLabel() {
   return request({
@@ -449,8 +449,8 @@ export function productStoreLabel() {
 }
 
 /**
- * @description 商品参数 -- 列表
- * @param {Object} param params {Object} 传值参数
+ * @description Tham số sản phẩm -- Danh sách
+ * @param {Object} param params {Object} Tham số truyền giá trị
  */
 export function paramListApi(params) {
   return request({
@@ -461,8 +461,8 @@ export function paramListApi(params) {
 }
 
 /**
- * @description 商品参数 -- 详情
- * @param {Number} param id {Number} 参数id
+ * @description Tham số sản phẩm -- Chi tiết
+ * @param {Number} param id {Number} ID tham số
  */
 export function paramInfoApi(id) {
   return request({
@@ -472,8 +472,8 @@ export function paramInfoApi(id) {
 }
 
 /**
- * @description 商品参数 -- 添加
- * @param {Object} param data {Object} 传值参数
+ * @description Tham số sản phẩm -- Thêm
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function paramSaveApi(data) {
   return request({
@@ -484,8 +484,8 @@ export function paramSaveApi(data) {
 }
 
 /**
- * @description 商品标签分类 -- 列表
- * @param {Object} param params {Object} 传值参数
+ * @description Danh mục nhãn sản phẩm -- Danh sách
+ * @param {Object} param params {Object} Tham số truyền giá trị
  */
 export function labelCateListApi(params) {
   return request({
@@ -496,8 +496,8 @@ export function labelCateListApi(params) {
 }
 
 /**
- * @description 商品标签分类 -- 添加
- * data 请求参数
+ * @description Danh mục nhãn sản phẩm -- Thêm
+ * Tham số request data
  */
 export function productLabelCateFormApi(id) {
   return request({
@@ -507,8 +507,8 @@ export function productLabelCateFormApi(id) {
 }
 
 /**
- * @description 商品标签列表
- * data 请求参数
+ * @description Danh sách nhãn sản phẩm
+ * Tham số request data
  */
 export function productLabelListApi(data) {
   return request({
@@ -518,8 +518,8 @@ export function productLabelListApi(data) {
   });
 }
 /**
- * @description 商品标签列表 -- 全部
- * data 请求参数
+ * @description Danh sách nhãn sản phẩm -- Tất cả
+ * Tham số request data
  */
 export function productLabelUseListApi(data) {
   return request({
@@ -529,8 +529,8 @@ export function productLabelUseListApi(data) {
 }
 
 /**
- * @description 商品标签获取
- * data 请求参数
+ * @description Lấy nhãn sản phẩm
+ * Tham số request data
  */
 export function productLabelInfoApi(data) {
   return request({
@@ -540,8 +540,8 @@ export function productLabelInfoApi(data) {
 }
 
 /**
- * @description 商品标签保存
- * data 请求参数
+ * @description Lưu nhãn sản phẩm
+ * Tham số request data
  */
 export function productLabelSaveApi(data) {
   return request({
@@ -551,8 +551,8 @@ export function productLabelSaveApi(data) {
   });
 }
 /**
- * @description 商品标签-- 修改状态
- * @param {Object} param params {Object} 传值参数
+ * @description Nhãn sản phẩm -- Đổi trạng thái
+ * @param {Object} param params {Object} Tham số truyền giá trị
  */
 export function labelStatusApi(data) {
   return request({
@@ -561,8 +561,8 @@ export function labelStatusApi(data) {
   });
 }
 /**
- * @description 商品标签-- 修改状态
- * @param {Object} param params {Object} 传值参数
+ * @description Nhãn sản phẩm -- Đổi trạng thái
+ * @param {Object} param params {Object} Tham số truyền giá trị
  */
 export function labelIsShowApi(data) {
   return request({
@@ -572,8 +572,8 @@ export function labelIsShowApi(data) {
 }
 
 /**
- * @description 商品保障服务 -- 列表
- * data 请求参数
+ * @description Dịch vụ bảo đảm sản phẩm -- Danh sách
+ * Tham số request data
  */
 export function productProtectionListApi(data) {
   return request({
@@ -584,8 +584,8 @@ export function productProtectionListApi(data) {
 }
 
 /**
- * @description 商品保障服务 -- 添加
- * data 请求参数
+ * @description Dịch vụ bảo đảm sản phẩm -- Thêm
+ * Tham số request data
  */
 export function productProtectionFormApi(id) {
   return request({
@@ -595,8 +595,8 @@ export function productProtectionFormApi(id) {
 }
 
 /**
- * @description 商品保障服务
- * data 请求参数
+ * @description Dịch vụ bảo đảm sản phẩm
+ * Tham số request data
  */
 export function productProtectionInfoApi(data) {
   return request({
@@ -607,8 +607,8 @@ export function productProtectionInfoApi(data) {
 }
 
 /**
- * @description 商品保障服务-- 修改状态
- * @param {Object} param params {Object} 传值参数
+ * @description Dịch vụ bảo đảm sản phẩm -- Đổi trạng thái
+ * @param {Object} param params {Object} Tham số truyền giá trị
  */
 export function protectionStatusApi(data) {
   return request({
@@ -618,7 +618,7 @@ export function protectionStatusApi(data) {
 }
 
 /**
- * @description 佣金列表
+ * @description Danh sách hoa hồng
  */
 export function productBrokerage(id, type) {
   return request({
@@ -628,7 +628,7 @@ export function productBrokerage(id, type) {
 }
 
 /**
- * @description 佣金  提交
+ * @description Hoa hồng, submit
  */
 export function productBrokerageUpdate(id, type, data) {
   return request({
@@ -639,7 +639,7 @@ export function productBrokerageUpdate(id, type, data) {
 }
 
 /**
- * @description 评论批量审核
+ * @description Duyệt bình luận hàng loạt
  */
 export function replyBatchStatus(data) {
   return request({

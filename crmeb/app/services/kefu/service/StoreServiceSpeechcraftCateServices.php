@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -27,29 +27,29 @@ class StoreServiceSpeechcraftCateServices extends CategoryServices
 
 
     /**
-     * 获取分类表单
+     * Lấy form danh mục
      * @param array $data
      * @return mixed
      */
     public function serviceSpeechcraftCateForm(array $data = [])
     {
-        $f[] = FormBuilder::input('name', '分类名称', $data['name'] ?? '')->required();
-        $f[] = FormBuilder::number('sort', '排序', (int)($data['sort'] ?? 0))->min(0);
+        $f[] = FormBuilder::input('name', 'Tên danh mục', $data['name'] ?? '')->required();
+        $f[] = FormBuilder::number('sort', 'Thứ tự sắp xếp', (int)($data['sort'] ?? 0))->min(0);
         return $f;
     }
 
     /**
-     * 获取创建表单
+     * Lấy form tạo
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
      */
     public function createForm()
     {
-        return create_form('添加分类', $this->serviceSpeechcraftCateForm(), $this->url('/app/wechat/speechcraftcate'), 'POST');
+        return create_form('Thêm danh mục', $this->serviceSpeechcraftCateForm(), $this->url('/app/wechat/speechcraftcate'), 'POST');
     }
 
     /**
-     * 获取编辑表单
+     * Lấy form sửa
      * @param int $id
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -61,9 +61,9 @@ class StoreServiceSpeechcraftCateServices extends CategoryServices
     {
         $cateInfo = $this->dao->get($id);
         if (!$cateInfo) {
-            throw new AdminException('分类不存在');
+            throw new AdminException('Danh mục không tồn tại');
         }
-        return create_form('修改分类', $this->serviceSpeechcraftCateForm($cateInfo->toArray()), $this->url('/app/wechat/speechcraftcate/' . $id), 'PUT');
+        return create_form('Sửa danh mục', $this->serviceSpeechcraftCateForm($cateInfo->toArray()), $this->url('/app/wechat/speechcraftcate/' . $id), 'PUT');
     }
 
 }

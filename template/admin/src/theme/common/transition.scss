@@ -1,4 +1,4 @@
-/* 页面切换动画
+/* Hiệu ứng chuyển trang
 ------------------------------- */
 .slide-right-enter-active,
 .slide-right-leave-active,
@@ -40,7 +40,7 @@
   transition: none;
 }
 
-/* Breadcrumb 面包屑过渡动画
+/* Hiệu ứng chuyển động Breadcrumb
 ------------------------------- */
 .breadcrumb-enter-active,
 .breadcrumb-leave-active {
@@ -58,7 +58,7 @@
   position: absolute;
 }
 
-/* logo 过渡动画
+/* Hiệu ứng chuyển động logo
 ------------------------------- */
 @keyframes logoAnimation {
   0% {
@@ -72,7 +72,7 @@
   }
 }
 
-/* 404、401 过渡动画
+/* Hiệu ứng chuyển động 404, 401
 ------------------------------- */
 @keyframes error-num {
   0% {
@@ -93,7 +93,7 @@
   }
 }
 
-/* 左右左 link.vue
+/* Trái phải trái link.vue
 ------------------------------- */
 @keyframes toRight {
   0% {

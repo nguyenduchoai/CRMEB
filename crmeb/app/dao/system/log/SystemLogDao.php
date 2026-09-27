@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,14 +16,14 @@ use app\dao\BaseDao;
 use app\model\system\log\SystemLog;
 
 /**
- * 系统日志
+ * Nhật ký hệ thống
  * Class SystemLogDao
  * @package app\dao\system\log
  */
 class SystemLogDao extends BaseDao
 {
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -32,7 +32,7 @@ class SystemLogDao extends BaseDao
     }
 
     /**
-     * 删除过期日志
+     * Xóa log đã hết hạn
      * @throws \Exception
      */
     public function deleteLog()
@@ -41,7 +41,7 @@ class SystemLogDao extends BaseDao
     }
 
     /**
-     * 获取系统日志列表
+     * Lấy danh sách log hệ thống
      * @param array $where
      * @param int $page
      * @param int $limit

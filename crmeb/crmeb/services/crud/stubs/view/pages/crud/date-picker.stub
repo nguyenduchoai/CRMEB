@@ -7,8 +7,8 @@
         format="yyyy/MM/dd"
         type="daterange"
         value-format="yyyy/MM/dd"
-        start-placeholder="开始日期"
-        end-placeholder="结束日期"
+        start-placeholder="Ngày bắt đầu"
+        end-placeholder="Ngày kết thúc"
         style="width:250px;"
     ></el-date-picker>
 </el-form-item>

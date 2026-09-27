@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -27,18 +27,18 @@ use crmeb\services\printer\Printer;
 /**
  * Class StoreIntegralOrderServices
  * @package app\services\order
- * @method getOrderIdsCount(array $ids) 获取订单id下没有删除的订单数量
- * @method getUserOrderDetail(string $key, int $uid) 获取订单详情
- * @method getBuyCount($uid, $type) 获取用户已购买此活动商品的个数
+ * @method getOrderIdsCount(array $ids) Lấy số lượng đơn hàng chưa xóa theo id đơn hàng
+ * @method getUserOrderDetail(string $key, int $uid) Lấy chi tiết đơn hàng
+ * @method getBuyCount($uid, $type) Lấy số lượng sản phẩm của hoạt động này mà người dùng đã mua
  */
 class StoreIntegralOrderServices extends BaseServices
 {
 
     /**
-     * 发货类型
+     * Hình thức giao hàng
      * @var string[]
      */
-    public $deliveryType = ['send' => '商家配送', 'express' => '快递配送', 'fictitious' => '虚拟发货'];
+    public $deliveryType = ['send' => 'Cửa hàng tự giao', 'express' => 'Giao qua đơn vị vận chuyển', 'fictitious' => 'Giao hàng ảo'];
 
     /**
      * StoreIntegralOrderServices constructor.
@@ -50,7 +50,7 @@ class StoreIntegralOrderServices extends BaseServices
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -68,7 +68,7 @@ class StoreIntegralOrderServices extends BaseServices
     }
 
     /**
-     * 获取导出数据
+     * Lấy dữ liệu xuất
      * @param array $where
      * @param int $limit
      * @return array
@@ -89,7 +89,7 @@ class StoreIntegralOrderServices extends BaseServices
     }
 
     /**
-     * 前端订单列表
+     * Danh sách đơn hàng phía trước
      * @param array $where
      * @param array|string[] $field
      * @param array $with
@@ -106,7 +106,7 @@ class StoreIntegralOrderServices extends BaseServices
     }
 
     /**
-     * 订单详情数据格式化
+     * Định dạng dữ liệu chi tiết đơn hàng
      * @param $order
      * @return mixed
      */
@@ -114,11 +114,11 @@ class StoreIntegralOrderServices extends BaseServices
     {
         $order['add_time'] = date('Y-m-d H:i:s', $order['add_time']);
         if ($order['status'] == 1) {
-            $order['status_name'] = '未发货';
+            $order['status_name'] = 'Chưa giao hàng';
         } else if ($order['status'] == 2) {
-            $order['status_name'] = '待收货';
+            $order['status_name'] = 'Chờ nhận hàng';
         } else if ($order['status'] == 3) {
-            $order['status_name'] = '已完成';
+            $order['status_name'] = 'Đã hoàn thành';
         }
         $order['price'] = (int)$order['price'];
         $order['total_price'] = (int)$order['total_price'];
@@ -126,7 +126,7 @@ class StoreIntegralOrderServices extends BaseServices
     }
 
     /**
-     * 数据转换
+     * Chuyển đổi dữ liệu
      * @param array $data
      * @return array
      */
@@ -135,11 +135,11 @@ class StoreIntegralOrderServices extends BaseServices
         foreach ($data as &$item) {
             $item['add_time'] = date('Y-m-d H:i:s', $item['add_time']);
             if ($item['status'] == 1) {
-                $item['status_name'] = '未发货';
+                $item['status_name'] = 'Chưa giao hàng';
             } else if ($item['status'] == 2) {
-                $item['status_name'] = '待收货';
+                $item['status_name'] = 'Chờ nhận hàng';
             } else if ($item['status'] == 3) {
-                $item['status_name'] = '已完成';
+                $item['status_name'] = 'Đã hoàn thành';
             }
             $item['price'] = (int)$item['price'];
             $item['total_price'] = (int)$item['total_price'];
@@ -148,7 +148,7 @@ class StoreIntegralOrderServices extends BaseServices
     }
 
     /**
-     * 创建订单
+     * Tạo đơn hàng
      * @param $uid
      * @param $addressId
      * @param string $mark
@@ -162,15 +162,15 @@ class StoreIntegralOrderServices extends BaseServices
         /** @var UserAddressServices $addressServices */
         $addressServices = app()->make(UserAddressServices::class);
         if (!$addressId) {
-            throw new ApiException('请选择收货地址');
+            throw new ApiException('Vui lòng chọn địa chỉ nhận hàng');
         }
-        if (!$addressInfo = $addressServices->getOne(['uid' => $uid, 'id' => $addressId, 'is_del' => 0])) throw new ApiException('地址选择有误');
+        if (!$addressInfo = $addressServices->getOne(['uid' => $uid, 'id' => $addressId, 'is_del' => 0])) throw new ApiException('Địa chỉ đã chọn không hợp lệ');
         $addressInfo = $addressInfo->toArray();
         $total_price = bcmul($productInfo['price'], $num, 2);
         /** @var UserBillServices $userBillServices */
         $userBillServices = app()->make(UserBillServices::class);
         $usable_integral = bcsub((string)$userInfo['integral'], (string)$userBillServices->getBillSum(['uid' => $userInfo['uid'], 'is_frozen' => 1]), 0);
-        if ($total_price > $usable_integral) throw new ApiException('可用积分不足');
+        if ($total_price > $usable_integral) throw new ApiException('Không đủ điểm thưởng khả dụng');
         $orderInfo = [
             'uid' => $uid,
             'order_id' => $this->getNewOrderId(),
@@ -190,14 +190,14 @@ class StoreIntegralOrderServices extends BaseServices
             'channel_type' => $userInfo['user_type']
         ];
         $order = $this->transaction(function () use ($orderInfo, $userInfo, $productInfo, $uid, $num, $total_price) {
-            //创建订单
+            //Tạo đơn hàng
             $order = $this->dao->save($orderInfo);
             if (!$order) {
-                throw new ApiException('订单生成失败');
+                throw new ApiException('Tạo đơn hàng thất bại');
             }
-            //扣库存
+            //Trừ tồn kho
             $this->decGoodsStock($productInfo, $num);
-            //减积分
+            //Trừ điểm thưởng
             $this->deductIntegral($userInfo, $total_price, (int)$userInfo['uid'], $order->id);
             return $order;
         });
@@ -206,14 +206,14 @@ class StoreIntegralOrderServices extends BaseServices
         $statusService->save([
             'oid' => $order['id'],
             'change_type' => 'cache_key_create_order',
-            'change_message' => '订单生成',
+            'change_message' => 'Tạo đơn hàng',
             'change_time' => time()
         ]);
         return $order;
     }
 
     /**
-     * 抵扣积分
+     * Khấu trừ điểm thưởng
      * @param array $userInfo
      * @param bool $useIntegral
      * @param array $priceData
@@ -233,12 +233,12 @@ class StoreIntegralOrderServices extends BaseServices
             $res2 = $res2 && false != $res3;
         }
         if (!$res2) {
-            throw new ApiException('使用积分抵扣失败');
+            throw new ApiException('Dùng điểm thưởng để khấu trừ thất bại');
         }
     }
 
     /**
-     * 扣库存
+     * Trừ tồn kho
      * @param array $cartInfo
      * @param int $combinationId
      * @param int $seckillId
@@ -252,22 +252,22 @@ class StoreIntegralOrderServices extends BaseServices
         try {
             $res5 = $res5 && $StoreIntegralServices->decIntegralStock((int)$num, $productInfo['product_id'], $productInfo['unique']);
             if (!$res5) {
-                throw new ApiException('该商品库存不足');
+                throw new ApiException('Sản phẩm này không đủ tồn kho');
             }
         } catch (\Throwable $e) {
-            throw new ApiException('该商品库存不足');
+            throw new ApiException('Sản phẩm này không đủ tồn kho');
         }
     }
 
     /**
-     * 使用雪花算法生成订单ID
+     * Dùng thuật toán Snowflake để tạo ID đơn hàng
      * @return string
      * @throws \Exception
      */
     public function getNewOrderId(string $prefix = 'wx')
     {
         $snowflake = new \Godruoyi\Snowflake\Snowflake();
-        //32位
+        //32-bit
         if (PHP_INT_SIZE == 4) {
             $id = abs($snowflake->id());
         } else {
@@ -277,28 +277,28 @@ class StoreIntegralOrderServices extends BaseServices
     }
 
     /**
-     *获取订单数量
+     *Lấy số lượng đơn hàng
      * @param array $where
      * @return mixed
      */
     public function orderCount(array $where)
     {
-        //全部订单
+        //Tất cả đơn hàng
         $data['statusAll'] = (string)$this->dao->count($where + ['is_system_del' => 0]);
-        //未发货
+        //Chưa giao hàng
         $data['unshipped'] = (string)$this->dao->count($where + ['status' => 1, 'is_system_del' => 0]);
-        //待收货
+        //Chờ nhận hàng
         $data['untake'] = (string)$this->dao->count($where + ['status' => 2, 'is_system_del' => 0]);
-        //待评价
+        //Chờ đánh giá
 //        $data['unevaluate'] = (string)$this->dao->count(['status' => 3, 'time' => $where['time'], 'is_system_del' => 0]);
-        //交易完成
+        //Giao dịch hoàn tất
         $data['complete'] = (string)$this->dao->count($where + ['status' => 3, 'is_system_del' => 0]);
         return $data;
     }
 
 
     /**
-     * 打印订单
+     * In đơn hàng
      * @param $order
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -313,7 +313,7 @@ class StoreIntegralOrderServices extends BaseServices
             'terminal' => sys_config('terminal_number', '')
         ];
         if (!$data['clientId'] || !$data['apiKey'] || !$data['partner'] || !$data['terminal']) {
-            throw new AdminException('请先配置小票打印开发者');
+            throw new AdminException('Vui lòng cấu hình thông tin nhà phát triển in biên lai trước');
         }
         $printer = new Printer('yi_lian_yun', $data);
         $res = $printer->setIntegralPrinterContent([
@@ -327,7 +327,7 @@ class StoreIntegralOrderServices extends BaseServices
     }
 
     /**
-     * 获取订单确认数据
+     * Lấy dữ liệu xác nhận đơn hàng
      * @param array $user
      * @param $cartId
      * @return mixed
@@ -338,7 +338,7 @@ class StoreIntegralOrderServices extends BaseServices
         $StoreProductAttrValueServices = app()->make(StoreProductAttrValueServices::class);
         $attrValue = $StoreProductAttrValueServices->uniqueByField($unique, 'product_id,suk,price,image,unique');
         if (!$attrValue || !isset($attrValue['storeIntegral']) || !$attrValue['storeIntegral']) {
-            throw new ApiException('该商品已下架或删除');
+            throw new ApiException('Sản phẩm này đã ngừng bán hoặc bị xóa');
         }
         $data = [];
         $attrValue = is_object($attrValue) ? $attrValue->toArray() : $attrValue;
@@ -353,7 +353,7 @@ class StoreIntegralOrderServices extends BaseServices
     }
 
     /**
-     * 删除订单
+     * Xóa đơn hàng
      * @param $uni
      * @param $uid
      * @return bool
@@ -362,7 +362,7 @@ class StoreIntegralOrderServices extends BaseServices
     {
         $order = $this->getUserOrderDetail($order_id, $uid);
         if ($order['status'] != 3)
-            throw new ApiException('删除失败');
+            throw new ApiException('Xóa thất bại');
 
         $order->is_del = 1;
         /** @var StoreIntegralOrderStatusServices $statusService */
@@ -370,17 +370,17 @@ class StoreIntegralOrderServices extends BaseServices
         $res = $statusService->save([
             'oid' => $order['id'],
             'change_type' => 'remove_order',
-            'change_message' => '删除订单',
+            'change_message' => 'Xóa đơn hàng',
             'change_time' => time()
         ]);
         if ($order->save() && $res) {
             return true;
         } else
-            throw new ApiException('删除失败');
+            throw new ApiException('Xóa thất bại');
     }
 
     /**
-     * 订单发货
+     * Giao đơn hàng
      * @param int $id
      * @param array $data
      * @return bool
@@ -389,27 +389,27 @@ class StoreIntegralOrderServices extends BaseServices
     {
         $orderInfo = $this->dao->get($id);
         if (!$orderInfo) {
-            throw new AdminException('订单不存在');
+            throw new AdminException('Đơn hàng không tồn tại');
         }
         if ($orderInfo->is_del) {
-            throw new AdminException('订单已删除');
+            throw new AdminException('Đơn hàng đã bị xóa');
         }
         if ($orderInfo->status != 1) {
-            throw new AdminException('订单已发货');
+            throw new AdminException('Đơn hàng đã được giao');
         }
         $type = (int)$data['type'];
         unset($data['type']);
         if ($type == 1) {
-            // 检测快递公司编码
+            // Kiểm tra mã đơn vị vận chuyển
             /** @var ExpressServices $expressServices */
             $expressServices = app()->make(ExpressServices::class);
             if (!$expressServices->be(['code' => $data['delivery_code']])) {
-                throw new AdminException('请核对快递公司编码');
+                throw new AdminException('Vui lòng kiểm tra lại mã đơn vị vận chuyển');
             }
         }
         switch ($type) {
             case 1:
-                //发货
+                //Giao hàng
                 $this->orderDeliverGoods($id, $data, $orderInfo);
                 break;
             case 2:
@@ -419,13 +419,13 @@ class StoreIntegralOrderServices extends BaseServices
                 $this->orderVirtualDelivery($id, $data, $orderInfo);
                 break;
             default:
-                throw new AdminException('暂时不支持其他发货类型');
+                throw new AdminException('Tạm thời chưa hỗ trợ hình thức giao hàng khác');
         }
         return true;
     }
 
     /**
-     * 虚拟发货
+     * Giao hàng ảo
      * @param int $id
      * @param array $data
      */
@@ -434,7 +434,7 @@ class StoreIntegralOrderServices extends BaseServices
         $data['delivery_type'] = 'fictitious';
         $data['status'] = 2;
         unset($data['sh_delivery_name'], $data['sh_delivery_id'], $data['delivery_name'], $data['delivery_id']);
-        //保存信息
+        //Lưu thông tin
         /** @var StoreIntegralOrderStatusServices $services */
         $services = app()->make(StoreIntegralOrderStatusServices::class);
         $this->transaction(function () use ($id, $data, $services) {
@@ -442,14 +442,14 @@ class StoreIntegralOrderServices extends BaseServices
             $services->save([
                 'oid' => $id,
                 'change_type' => 'delivery_fictitious',
-                'change_message' => '已虚拟发货',
+                'change_message' => 'Đã giao hàng ảo',
                 'change_time' => time()
             ]);
         });
     }
 
     /**
-     * 订单配送
+     * Vận chuyển đơn hàng
      * @param int $id
      * @param array $data
      */
@@ -459,20 +459,20 @@ class StoreIntegralOrderServices extends BaseServices
         $data['delivery_name'] = $data['sh_delivery_name'];
         $data['delivery_id'] = $data['sh_delivery_id'];
         $data['delivery_uid'] = $data['sh_delivery_uid'];
-//        获取核销码
+//        Lấy mã xác nhận
         $data['verify_code'] = $this->getStoreCode();
         unset($data['sh_delivery_name'], $data['sh_delivery_id'], $data['sh_delivery_uid']);
         if (!$data['delivery_name']) {
-            throw new AdminException('请输入送货人姓名');
+            throw new AdminException('Vui lòng nhập họ tên người giao hàng');
         }
         if (!$data['delivery_id']) {
-            throw new AdminException('请输入送货人电话号码');
+            throw new AdminException('Vui lòng nhập số điện thoại người giao hàng');
         }
         if (!$data['delivery_uid']) {
-            throw new AdminException('请输入送货人信息');
+            throw new AdminException('Vui lòng nhập thông tin người giao hàng');
         }
         if (!check_phone($data['delivery_id'])) {
-            throw new AdminException('请输入正确的送货人电话号码');
+            throw new AdminException('Vui lòng nhập đúng số điện thoại người giao hàng');
         }
         $data['status'] = 2;
         $orderInfo->delivery_type = $data['delivery_type'];
@@ -483,43 +483,43 @@ class StoreIntegralOrderServices extends BaseServices
         $services = app()->make(StoreIntegralOrderStatusServices::class);
         $this->transaction(function () use ($id, $data, $services) {
             $this->dao->update($id, $data);
-            //记录订单状态
+            //Ghi lại trạng thái đơn hàng
             $services->save([
                 'oid' => $id,
                 'change_type' => 'delivery',
                 'change_time' => time(),
-                'change_message' => '已配送 发货人：' . $data['delivery_name'] . ' 发货人电话：' . $data['delivery_id']
+                'change_message' => 'Đã giao hàng, người giao:' . $data['delivery_name'] . ' SĐT người giao:' . $data['delivery_id']
             ]);
         });
         return true;
     }
 
     /**
-     * 订单快递发货
+     * Đơn hàng giao qua vận chuyển
      * @param int $id
      * @param array $data
      */
     public function orderDeliverGoods(int $id, array $data, $orderInfo)
     {
         if (!$data['delivery_name']) {
-            throw new AdminException('请选择快递公司');
+            throw new AdminException('Vui lòng chọn đơn vị vận chuyển');
         }
         $data['delivery_type'] = 'express';
-        if ($data['express_record_type'] == 2) {//电子面单
+        if ($data['express_record_type'] == 2) {//Vận đơn điện tử
             if (!$data['delivery_code']) {
-                throw new AdminException('快递公司编号缺失');
+                throw new AdminException('Thiếu mã đơn vị vận chuyển');
             }
             if (!$data['express_temp_id']) {
-                throw new AdminException('请选择电子面单模板');
+                throw new AdminException('Vui lòng chọn mẫu vận đơn điện tử');
             }
             if (!$data['to_name']) {
-                throw new AdminException('请填写寄件人姓名');
+                throw new AdminException('Vui lòng điền họ tên người gửi');
             }
             if (!$data['to_tel']) {
-                throw new AdminException('请输入寄件人手机号码');
+                throw new AdminException('Vui lòng nhập số điện thoại người gửi');
             }
             if (!$data['to_addr']) {
-                throw new AdminException('请填写寄件人详细地址');
+                throw new AdminException('Vui lòng điền địa chỉ chi tiết của người gửi');
             }
             /** @var ServeServices $ServeServices */
             $ServeServices = app()->make(ServeServices::class);
@@ -537,7 +537,7 @@ class StoreIntegralOrderServices extends BaseServices
             $expData['cargo'] = $orderInfo->store_name . '(' . $orderInfo->suk . ')*' . $orderInfo->total_num;
             $expData['order_id'] = $orderInfo->order_id;
             if (!sys_config('config_export_open', 0)) {
-                throw new AdminException('电子面单已关闭，请选择其他发货方式');
+                throw new AdminException('Vận đơn điện tử đã tắt, vui lòng chọn phương thức giao hàng khác');
             }
             $dump = $ServeServices->express()->dump($expData);
             $orderInfo->delivery_id = $dump['kuaidinum'];
@@ -552,7 +552,7 @@ class StoreIntegralOrderServices extends BaseServices
             $data['delivery_id'] = $dump['kuaidinum'];
         } else {
             if (!$data['delivery_id']) {
-                throw new AdminException('快递单号不存在');
+                throw new AdminException('Mã vận đơn không tồn tại');
             }
             $orderInfo->delivery_id = $data['delivery_id'];
         }
@@ -568,24 +568,24 @@ class StoreIntegralOrderServices extends BaseServices
                     'oid' => $id,
                     'change_time' => time(),
                     'change_type' => 'delivery_goods',
-                    'change_message' => '已发货 快递公司：' . $data['delivery_name'] . ' 快递单号：' . $data['delivery_id']
+                    'change_message' => 'Đã giao hàng. Đơn vị vận chuyển:' . $data['delivery_name'] . ' Mã vận đơn:' . $data['delivery_id']
                 ]);
             if (!$res) {
-                throw new AdminException('发货失败');
+                throw new AdminException('Giao hàng thất bại');
             }
         });
         return true;
     }
 
     /**
-     * 核销订单生成核销码
+     * Tạo mã xác nhận cho đơn hàng cần xác nhận sử dụng
      * @return false|string
      */
     public function getStoreCode()
     {
         mt_srand();
         list($msec, $sec) = explode(' ', microtime());
-        $num = time() + mt_rand(10, 999999) . '' . substr($msec, 2, 3);//生成随机数
+        $num = time() + mt_rand(10, 999999) . '' . substr($msec, 2, 3);//Tạo số ngẫu nhiên
         if (strlen($num) < 12)
             $num = str_pad((string)$num, 12, 0, STR_PAD_RIGHT);
         else
@@ -597,7 +597,7 @@ class StoreIntegralOrderServices extends BaseServices
     }
 
     /**
-     * 获取修改配送信息表单结构
+     * Lấy cấu trúc form sửa thông tin giao hàng
      * @param int $id
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -605,27 +605,27 @@ class StoreIntegralOrderServices extends BaseServices
     public function distributionForm(int $id)
     {
         if (!$orderInfo = $this->dao->get($id))
-            throw new AdminException('订单不存在');
+            throw new AdminException('Đơn hàng không tồn tại');
 
-        $f[] = Form::input('order_id', '订单号', $orderInfo->getData('order_id'))->disabled(1);
+        $f[] = Form::input('order_id', 'Mã đơn hàng', $orderInfo->getData('order_id'))->disabled(1);
 
         switch ($orderInfo['delivery_type']) {
             case 'send':
-                $f[] = Form::input('delivery_name', '送货人姓名', $orderInfo->getData('delivery_name'))->required('请输入送货人姓名');
-                $f[] = Form::input('delivery_id', '送货人电话', $orderInfo->getData('delivery_id'))->required('请输入送货人电话');
+                $f[] = Form::input('delivery_name', 'Họ tên người giao hàng', $orderInfo->getData('delivery_name'))->required('Vui lòng nhập họ tên người giao hàng');
+                $f[] = Form::input('delivery_id', 'Số điện thoại người giao hàng', $orderInfo->getData('delivery_id'))->required('Vui lòng nhập số điện thoại người giao hàng');
                 break;
             case 'express':
                 /** @var ExpressServices $expressServices */
                 $expressServices = app()->make(ExpressServices::class);
-                $f[] = Form::select('delivery_code', '快递公司', (string)$orderInfo->getData('delivery_code'))->setOptions($expressServices->expressSelectForm(['is_show' => 1]))->required('请选择快递公司');
-                $f[] = Form::input('delivery_id', '快递单号', $orderInfo->getData('delivery_id'))->required('请填写快递单号');
+                $f[] = Form::select('delivery_code', 'Đơn vị vận chuyển', (string)$orderInfo->getData('delivery_code'))->setOptions($expressServices->expressSelectForm(['is_show' => 1]))->required('Vui lòng chọn đơn vị vận chuyển');
+                $f[] = Form::input('delivery_id', 'Mã vận đơn', $orderInfo->getData('delivery_id'))->required('Vui lòng nhập mã vận đơn');
                 break;
         }
-        return create_form('配送信息', $f, $this->url('/marketing/integral/order/distribution/' . $id), 'PUT');
+        return create_form('Thông tin giao hàng', $f, $this->url('/marketing/integral/order/distribution/' . $id), 'PUT');
     }
 
     /**
-     * 用户订单收货
+     * Người dùng xác nhận nhận hàng đơn hàng
      * @param $uni
      * @param $uid
      * @return bool
@@ -634,10 +634,10 @@ class StoreIntegralOrderServices extends BaseServices
     {
         $order = $this->dao->getUserOrderDetail($order_id, $uid);
         if (!$order) {
-            throw new ApiException('订单不存在');
+            throw new ApiException('Đơn hàng không tồn tại');
         }
         if ($order['status'] != 2) {
-            throw new ApiException('订单状态错误');
+            throw new ApiException('Trạng thái đơn hàng không hợp lệ');
         }
         $order->status = 3;
         /** @var StoreIntegralOrderStatusServices $statusService */
@@ -645,88 +645,88 @@ class StoreIntegralOrderServices extends BaseServices
         $res = $order->save() && $statusService->save([
                 'oid' => $order['id'],
                 'change_type' => 'user_take_delivery',
-                'change_message' => '用户已收货',
+                'change_message' => 'Người dùng đã nhận hàng',
                 'change_time' => time()
             ]);
         if (!$res) {
-            throw new ApiException('收货失败,请稍候再试');
+            throw new ApiException('Xác nhận nhận hàng thất bại, vui lòng thử lại sau');
         }
         return $order;
     }
 
     /**
-     * 修改配送信息
-     * @param int $id 订单id
+     * Sửa thông tin giao hàng
+     * @param int $id ID đơn hàng
      * @return mixed
      */
     public function updateDistribution(int $id, array $data)
     {
         $order = $this->dao->get($id);
         if (!$order) {
-            throw new AdminException('订单不存在');
+            throw new AdminException('Đơn hàng không tồn tại');
         }
         switch ($order['delivery_type']) {
             case 'send':
                 if (!$data['delivery_name']) {
-                    throw new AdminException('请输入送货人姓名');
+                    throw new AdminException('Vui lòng nhập họ tên người giao hàng');
                 }
                 if (!$data['delivery_id']) {
-                    throw new AdminException('请输入送货人电话号码');
+                    throw new AdminException('Vui lòng nhập số điện thoại người giao hàng');
                 }
                 if (!check_phone($data['delivery_id'])) {
-                    throw new AdminException('请输入正确的送货人电话号码');
+                    throw new AdminException('Vui lòng nhập đúng số điện thoại người giao hàng');
                 }
                 break;
             case 'express':
-                // 检测快递公司编码
+                // Kiểm tra mã đơn vị vận chuyển
                 /** @var ExpressServices $expressServices */
                 $expressServices = app()->make(ExpressServices::class);
                 if ($name = $expressServices->value(['code' => $data['delivery_code']], 'name')) {
                     $data['delivery_name'] = $name;
                 } else {
-                    throw new AdminException('请核对快递公司编码');
+                    throw new AdminException('Vui lòng kiểm tra lại mã đơn vị vận chuyển');
                 }
                 break;
             default:
-                throw new AdminException('请先发货再修改配送信息');
+                throw new AdminException('Vui lòng giao hàng trước rồi mới sửa thông tin vận chuyển');
         }
         /** @var StoreIntegralOrderStatusServices $statusService */
         $statusService = app()->make(StoreIntegralOrderStatusServices::class);
         $statusService->save([
             'oid' => $id,
             'change_type' => 'distribution',
-            'change_message' => '修改发货信息为' . $data['delivery_name'] . '号' . $data['delivery_id'],
+            'change_message' => 'Sửa thông tin giao hàng thành:' . $data['delivery_name'] . ', số:' . $data['delivery_id'],
             'change_time' => time()
         ]);
         return $this->dao->update($id, $data);
     }
 
     /**
-     * 批量删除用户已经删除的订单
+     * Xóa theo lô các đơn hàng người dùng đã xóa
      * @return string|null
      */
     public function delOrders(array $ids)
     {
-        if (!count($ids)) throw new AdminException('参数错误');
-        if ($this->getOrderIdsCount($ids)) throw new AdminException('订单不存在');
+        if (!count($ids)) throw new AdminException('Tham số không hợp lệ');
+        if ($this->getOrderIdsCount($ids)) throw new AdminException('Đơn hàng không tồn tại');
         return $this->batchUpdate($ids, ['is_system_del' => 1]);
     }
 
     /**
-     * 删除订单
+     * Xóa đơn hàng
      * @param $id
      * @return bool
      */
     public function delOrder(int $id)
     {
-        if (!$id || !($orderInfo = $this->get($id))) throw new AdminException('订单不存在');
-        if (!$orderInfo->is_del) throw new AdminException('您选择的的订单存在用户未删除的订单');
+        if (!$id || !($orderInfo = $this->get($id))) throw new AdminException('Đơn hàng không tồn tại');
+        if (!$orderInfo->is_del) throw new AdminException('Trong các đơn hàng bạn chọn có đơn người dùng chưa xóa');
         $orderInfo->is_system_del = 1;
         return $orderInfo->save();
     }
 
     /**
-     * 修改备注
+     * Sửa ghi chú
      * @param int $id
      * @param string $remark
      * @return mixed
@@ -736,10 +736,10 @@ class StoreIntegralOrderServices extends BaseServices
      */
     public function remark(int $id, string $remark)
     {
-        if (!$remark) throw new AdminException('备注不能为空');
-        if (!$id) throw new AdminException('参数错误');
+        if (!$remark) throw new AdminException('Ghi chú không được để trống');
+        if (!$id) throw new AdminException('Tham số không hợp lệ');
         if (!$order = $this->dao->get($id)) {
-            throw new AdminException('备注失败');
+            throw new AdminException('Ghi chú thất bại');
         }
 
         $order->remark = $remark;

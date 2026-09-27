@@ -94,7 +94,7 @@ export default {
       position: relative;
       display: flex;
       background: #f9f9f9;
-      align-items: center; // 垂直居中，类似 c_menu_list
+      align-items: center; // Căn giữa theo chiều dọc, tương tự c_menu_list
       padding: 16px 20px 16px 0;
       margin-bottom: 16px;
       border-radius: 3px;
@@ -116,7 +116,7 @@ export default {
 
         .info {
           flex: 1;
-          margin-left: 10px; // 调整间距
+          margin-left: 10px; // Điều chỉnh khoảng cách
 
           .info-item {
             display: flex;
@@ -130,7 +130,7 @@ export default {
             }
 
             .span {
-              width: 70px; // 调整宽度以适应"商品价格"等文字
+              width: 70px; // Điều chỉnh chiều rộng để vừa các chữ như “Giá sản phẩm”
               font-size: 12px;
               color: #999;
             }
@@ -138,9 +138,9 @@ export default {
             .input-box {
               flex: 1;
               display: flex;
-              justify-content: flex-end; // 开关和复选框靠右
+              justify-content: flex-end; // Công tắc và checkbox căn phải
 
-              // 针对复选框组的特殊处理
+              // Xử lý riêng cho nhóm checkbox
               ::v-deep .el-checkbox-group {
                 display: flex;
                 flex-wrap: wrap;

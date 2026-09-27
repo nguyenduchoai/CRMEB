@@ -1,22 +1,22 @@
-crmeb/upgrade/versions目录在CRMEB项目中的主要作用是用于存放系统升级相关的版本文件和升级脚本。
+Thư mục crmeb/upgrade/versions trong dự án CRMEB có vai trò chính là lưu trữ các tệp phiên bản và script nâng cấp liên quan đến việc nâng cấp hệ thống.
 
-CRMEB系统在迭代更新过程中，需要一套完整的升级机制来保证数据迁移和版本兼容。这个目录就承担了集中管理各版本升级资源的职责。
+Trong quá trình cập nhật qua các phiên bản, hệ thống CRMEB cần một cơ chế nâng cấp hoàn chỉnh để đảm bảo việc di chuyển dữ liệu và tương thích giữa các phiên bản. Thư mục này đảm nhận việc quản lý tập trung tài nguyên nâng cấp của từng phiên bản.
 
-具体来说:
+Cụ thể:
 
-- 存放各版本的升级说明文档，记录版本变更内容
-- 放置数据库迁移脚本，处理表结构变更和数据迁移
-- 存储升级所需的静态资源文件
-- 记录版本依赖关系和升级顺序
-- 保存版本检测和升级状态标识文件
+- Lưu tài liệu hướng dẫn nâng cấp của từng phiên bản, ghi lại nội dung thay đổi của phiên bản
+- Chứa các script migration cơ sở dữ liệu, xử lý thay đổi cấu trúc bảng và di chuyển dữ liệu
+- Lưu trữ các tệp tài nguyên tĩnh cần cho việc nâng cấp
+- Ghi lại quan hệ phụ thuộc giữa các phiên bản và thứ tự nâng cấp
+- Lưu tệp đánh dấu phát hiện phiên bản và trạng thái nâng cấp
 
-使用这个目录有以下优点:
+Việc sử dụng thư mục này có các ưu điểm sau:
 
-- 实现版本升级的模块化管理，便于追溯和回滚
-- 与核心业务代码隔离，降低升级风险
-- 支持多版本增量升级，灵活适配不同起始版本
-- 便于自动化部署工具识别和执行升级流程
+- Quản lý nâng cấp phiên bản theo mô-đun, thuận tiện cho việc truy vết và rollback
+- Tách biệt với mã nghiệp vụ cốt lõi, giảm rủi ro khi nâng cấp
+- Hỗ trợ nâng cấp tăng dần qua nhiều phiên bản, linh hoạt thích ứng với các phiên bản xuất phát khác nhau
+- Giúp công cụ triển khai tự động dễ dàng nhận diện và thực hiện quy trình nâng cấp
 
-总体来说，它承担了系统版本迭代和数据库迁移的协调工作。
+Nhìn chung, thư mục này đảm nhận việc điều phối quá trình cập nhật phiên bản hệ thống và di chuyển cơ sở dữ liệu.
 
-通过规范使用这个目录，可以确保升级过程的安全可控和可追溯。
+Bằng cách sử dụng thư mục này đúng quy chuẩn, có thể đảm bảo quá trình nâng cấp an toàn, kiểm soát được và truy vết được.

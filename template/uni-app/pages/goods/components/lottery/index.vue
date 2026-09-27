@@ -8,7 +8,7 @@
 						<view :class="{in_line:index != 8 }" class="lottery-msg">
 							<image v-if="index != 8" class="grid_img" mode='aspectFit' :src="item.image" alt="" />
 							<text v-if="index !=8" class="name">
-								{{ index == 8 ? $t(`抽奖`) : item.name }}
+								{{ index == 8 ? $t(`Quay thưởng`) : item.name }}
 							</text>
 							<image v-else class="lottery-click" src="../../static/lottery-click.png" mode="">
 							</image>
@@ -50,7 +50,7 @@
 			luck_draw(event) {
 				if (Number(this.lotteryNum) <= 0) {
 					return this.$util.Tips({
-						title: this.$t(`剩余抽奖次数为0`)
+						title: this.$t(`Số lượt quay thưởng còn lại là 0`)
 					});
 				} else if (this.lotteryBtn) {
 					this.lotteryBtn = false
@@ -60,7 +60,7 @@
 				let index = event.currentTarget.dataset.index;
 				let that = this;
 				if (index == 8) {
-					// 点击抽奖之后知道获奖位置，修改父组件中lottery_draw_param的值
+					// Sau khi click quay thưởng biết được vị trí trúng thưởng, sửa giá trị lottery_draw_param trong component cha
 					this.$emit('get_winingIndex', function(res) {
 						let lottery_draw_param = res;
 						let win = new LotteryDraw({

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\user\UserAddressServices;
 use app\services\wechat\WechatUserServices;
 
 /**
- * 用户地址类
+ * Lớp địa chỉ người dùng
  * Class UserController
  * @package app\api\controller\store
  */
@@ -33,7 +33,7 @@ class UserAddressController
     }
 
     /**
-     * 地址 获取单个
+     * Địa chỉ - Lấy một địa chỉ
      * @param Request $request
      * @param $id
      * @return mixed
@@ -42,15 +42,15 @@ class UserAddressController
     {
         $uid = (int)$request->uid();
         if (!$id) {
-            return app('json')->fail('参数错误');
+            return app('json')->fail('Tham số không hợp lệ');
         }
         $info = $this->services->address((int)$id);
-        if ($info['uid'] != $uid) return app('json')->fail('数据不存在');
+        if ($info['uid'] != $uid) return app('json')->fail('Dữ liệu không tồn tại');
         return app('json')->success($info);
     }
 
     /**
-     * 地址列表
+     * Danh sách địa chỉ
      * @param Request $request
      * @return mixed
      */
@@ -61,26 +61,26 @@ class UserAddressController
     }
 
     /**
-     * 设置默认地址
+     * Đặt địa chỉ mặc định
      * @param Request $request
      * @return mixed
      */
     public function address_default_set(Request $request)
     {
         list($id) = $request->getMore([['id', 0]], true);
-        if (!$id || !is_numeric($id)) return app('json')->fail('参数错误');
+        if (!$id || !is_numeric($id)) return app('json')->fail('Tham số không hợp lệ');
         $uid = (int)$request->uid();
         $res = $this->services->setDefault($uid, (int)$id);
         $province = $this->services->value(['id' => $id], 'province');
         app()->make(WechatUserServices::class)->update(['uid' => $uid], ['province' => $province]);
         if (!$res)
-            return app('json')->fail('地址不存在');
+            return app('json')->fail('Địa chỉ không tồn tại');
         else
-            return app('json')->success('设置成功');
+            return app('json')->success('Cài đặt thành công');
     }
 
     /**
-     * 获取默认地址
+     * Lấy địa chỉ mặc định
      * @param Request $request
      * @return mixed
      */
@@ -96,7 +96,7 @@ class UserAddressController
     }
 
     /**
-     * 修改 添加地址
+     * Sửa - Thêm địa chỉ
      * @param Request $request
      * @return mixed
      */
@@ -112,36 +112,36 @@ class UserAddressController
             [['id', 'd'], 0],
             [['type', 'd'], 0]
         ]);
-        if (!isset($addressInfo['address']['province']) || !$addressInfo['address']['province'] || $addressInfo['address']['province'] == '省') return app('json')->fail('收货地址格式错误');
-        if (!isset($addressInfo['address']['city']) || !$addressInfo['address']['city'] || $addressInfo['address']['city'] == '市') return app('json')->fail('收货地址格式错误或系统未完善当前地址');
-        if (!isset($addressInfo['address']['district']) || !$addressInfo['address']['district'] || $addressInfo['address']['district'] == '区') return app('json')->fail('收货地址格式错误或系统未完善当前地址');
-        if (!isset($addressInfo['address']['city_id']) && $addressInfo['type'] == 0) return app('json')->fail('收货地址格式错误，请重新选择');
-        if (!$addressInfo['detail']) return app('json')->fail('请填写详细地址');
+        if (!isset($addressInfo['address']['province']) || !$addressInfo['address']['province'] || $addressInfo['address']['province'] == 'Tỉnh') return app('json')->fail('Địa chỉ nhận hàng sai định dạng');
+        if (!isset($addressInfo['address']['city']) || !$addressInfo['address']['city'] || $addressInfo['address']['city'] == 'Thành phố') return app('json')->fail('Địa chỉ nhận hàng sai định dạng hoặc hệ thống chưa cập nhật đầy đủ địa chỉ này');
+        if (!isset($addressInfo['address']['district']) || !$addressInfo['address']['district'] || $addressInfo['address']['district'] == 'Quận/Huyện') return app('json')->fail('Địa chỉ nhận hàng sai định dạng hoặc hệ thống chưa cập nhật đầy đủ địa chỉ này');
+        if (!isset($addressInfo['address']['city_id']) && $addressInfo['type'] == 0) return app('json')->fail('Địa chỉ nhận hàng sai định dạng, vui lòng chọn lại');
+        if (!$addressInfo['detail']) return app('json')->fail('Vui lòng điền địa chỉ chi tiết');
         $uid = (int)$request->uid();
         $res = $this->services->editAddress($uid, $addressInfo);
         if ($res) {
             app()->make(WechatUserServices::class)->update(['uid' => $uid], ['province' => $addressInfo['address']['province']]);
-            return app('json')->success($res['type'] == 'edit' ? '修改成功' : $res['data']);
+            return app('json')->success($res['type'] == 'edit' ? 'Sửa thành công' : $res['data']);
         } else {
-            return app('json')->fail('修改失败');
+            return app('json')->fail('Sửa thất bại');
         }
 
     }
 
     /**
-     * 删除地址
+     * Xóa địa chỉ
      * @param Request $request
      * @return mixed
      */
     public function address_del(Request $request)
     {
         list($id) = $request->postMore([['id', 0]], true);
-        if (!$id || !is_numeric($id)) return app('json')->fail('参数错误');
+        if (!$id || !is_numeric($id)) return app('json')->fail('Tham số không hợp lệ');
         $uid = (int)$request->uid();
         $re = $this->services->delAddress($uid, (int)$id);
         if ($re)
-            return app('json')->success('删除成功');
+            return app('json')->success('Xóa thành công');
         else
-            return app('json')->fail('删除失败');
+            return app('json')->fail('Xóa thất bại');
     }
 }

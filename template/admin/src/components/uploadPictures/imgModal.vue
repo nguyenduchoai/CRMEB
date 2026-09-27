@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible.sync="visible" width="1024px" title="选择图片" :close-on-click-modal="false">
+  <el-dialog :visible.sync="visible" width="1024px" title="Chọn ảnh" :close-on-click-modal="false">
     <uploadPictures
       v-if="visible"
       :isChoice="isMore"
@@ -39,7 +39,7 @@ export default {
   },
   computed: {
     isMore() {
-      return this.more ? '多选' : '单选';
+      return this.more ? 'Chọn nhiều' : 'Chọn một';
     },
   },
   methods: {

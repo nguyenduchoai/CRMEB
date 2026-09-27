@@ -10,45 +10,45 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="上架状态：">
+          <el-form-item label="Trạng thái đăng bán:">
             <el-select
-              placeholder="请选择"
+              placeholder="Vui lòng chọn"
               v-model="tableFrom.status"
               clearable
               @change="userSearchs"
               class="form_content_width"
             >
-              <el-option value="1" label="上架"></el-option>
-              <el-option value="0" label="下架"></el-option>
+              <el-option value="1" label="Đang bán"></el-option>
+              <el-option value="0" label="Ngừng bán"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="商品搜索：" label-for="store_name">
+          <el-form-item label="Tìm kiếm sản phẩm:" label-for="store_name">
             <el-input
               clearable
-              placeholder="请输入砍价名称，ID"
+              placeholder="Vui lòng nhập tên săn giảm giá, ID"
               v-model="tableFrom.store_name"
               class="form_content_width"
             />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="userSearchs">查询</el-button>
+            <el-button type="primary" v-db-click @click="userSearchs">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
     <el-card :bordered="false" shadow="never" class="ivu-mt mt16">
       <el-button v-auth="['marketing-store_bargain-create']" type="primary" v-db-click @click="add"
-        >添加砍价商品</el-button
+        >Thêm sản phẩm săn giảm giá</el-button
       >
       <el-button v-auth="['export-storeBargain']" class="export" icon="ios-share-outline" v-db-click @click="exportList"
-        >导出</el-button
+        >Xuất</el-button
       >
       <el-table
         :data="tableList"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
         class="mt14"
       >
         <el-table-column label="ID" width="80">
@@ -56,14 +56,14 @@
             <div>{{ scope.row.id }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="砍价图片" min-width="80">
+        <el-table-column label="Hình ảnh săn giảm giá" min-width="80">
           <template slot-scope="scope">
             <div class="tabBox_img" v-viewer>
               <img v-lazy="scope.row.image" />
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="砍价名称" min-width="150">
+        <el-table-column label="Tên săn giảm giá" min-width="150">
           <template slot-scope="scope">
             <el-tooltip placement="top" :open-delay="600">
               <div slot="content">{{ scope.row.title }}</div>
@@ -71,55 +71,55 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column label="砍价价格" min-width="100">
+        <el-table-column label="Giá săn giảm giá" min-width="100">
           <template slot-scope="scope">
             <div>{{ scope.row.price }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="最低价" min-width="100">
+        <el-table-column label="Giá thấp nhất" min-width="100">
           <template slot-scope="scope">
             <div>{{ scope.row.min_price }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="参与人数" min-width="100">
+        <el-table-column label="Số người tham gia" min-width="100">
           <template slot-scope="scope">
             <div>{{ scope.row.count_people_all }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="帮忙砍价人数" min-width="100">
+        <el-table-column label="Số người giúp giảm giá" min-width="100">
           <template slot-scope="scope">
             <div>{{ scope.row.count_people_help }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="砍价成功人数" min-width="100">
+        <el-table-column label="Số người săn giảm giá thành công" min-width="100">
           <template slot-scope="scope">
             <div>{{ scope.row.count_people_success }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="限量" min-width="80">
+        <el-table-column label="Giới hạn số lượng" min-width="80">
           <template slot-scope="scope">
             <div>{{ scope.row.quota_show }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="限量剩余" min-width="80">
+        <el-table-column label="Số lượng giới hạn còn lại" min-width="80">
           <template slot-scope="scope">
             <div>{{ scope.row.quota }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="活动状态" min-width="100">
+        <el-table-column label="Trạng thái chương trình" min-width="100">
           <template slot-scope="scope">
-            <el-tag size="medium" v-show="scope.row.start_name === '进行中'">进行中</el-tag>
-            <el-tag size="medium" type="warning" v-show="scope.row.start_name === '未开始'">未开始</el-tag>
-            <el-tag size="medium" type="info" v-show="scope.row.start_name === '已结束'">已结束</el-tag>
+            <el-tag size="medium" v-show="scope.row.start_name === 'Đang diễn ra'">Đang diễn ra</el-tag>
+            <el-tag size="medium" type="warning" v-show="scope.row.start_name === 'Chưa bắt đầu'">Chưa bắt đầu</el-tag>
+            <el-tag size="medium" type="info" v-show="scope.row.start_name === 'Đã kết thúc'">Đã kết thúc</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="活动时间" min-width="180">
+        <el-table-column label="Thời gian chương trình" min-width="180">
           <template slot-scope="scope">
-            <p>开始：{{ scope.row.start_time }}</p>
-            <p>结束：{{ scope.row.stop_time }}</p>
+            <p>Bắt đầu: {{ scope.row.start_time }}</p>
+            <p>Kết thúc: {{ scope.row.stop_time }}</p>
           </template>
         </el-table-column>
-        <el-table-column label="上架状态" min-width="100">
+        <el-table-column label="Trạng thái đăng bán" min-width="100">
           <template slot-scope="scope">
             <el-switch
               class="defineSwitch"
@@ -129,21 +129,21 @@
               :value="scope.row.status"
               @change="onchangeIsShow(scope.row)"
               size="large"
-              active-text="上架"
-              inactive-text="下架"
+              active-text="Đang bán"
+              inactive-text="Ngừng bán"
             >
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="170">
+        <el-table-column label="Thao tác" fixed="right" width="170">
           <template slot-scope="scope">
-            <a v-if="scope.row.stop_status === 0" v-db-click @click="edit(scope.row, 0)">编辑</a>
+            <a v-if="scope.row.stop_status === 0" v-db-click @click="edit(scope.row, 0)">Sửa</a>
             <el-divider v-if="scope.row.stop_status === 0" direction="vertical" />
-            <a v-db-click @click="edit(scope.row, 1)">复制</a>
+            <a v-db-click @click="edit(scope.row, 1)">Sao chép</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除砍价商品', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa sản phẩm săn giảm giá', scope.$index)">Xóa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="viewInfo(scope.row)">统计</a>
+            <a v-db-click @click="viewInfo(scope.row)">Thống kê</a>
           </template>
         </el-table-column>
       </el-table>
@@ -185,67 +185,67 @@ export default {
           width: 80,
         },
         {
-          title: '砍价图片',
+          title: 'Hình ảnh săn giảm giá',
           slot: 'image',
           minWidth: 90,
         },
         {
-          title: '砍价名称',
+          title: 'Tên săn giảm giá',
           key: 'title',
           minWidth: 130,
         },
         {
-          title: '砍价价格',
+          title: 'Giá săn giảm giá',
           key: 'price',
           minWidth: 100,
         },
         {
-          title: '最低价',
+          title: 'Giá thấp nhất',
           key: 'min_price',
           minWidth: 100,
         },
         {
-          title: '参与人数',
+          title: 'Số người tham gia',
           key: 'count_people_all',
           minWidth: 100,
         },
         {
-          title: '帮忙砍价人数',
+          title: 'Số người giúp giảm giá',
           key: 'count_people_help',
           minWidth: 100,
         },
         {
-          title: '砍价成功人数',
+          title: 'Số người săn giảm giá thành công',
           key: 'count_people_success',
           minWidth: 100,
         },
         {
-          title: '限量',
+          title: 'Giới hạn số lượng',
           key: 'quota_show',
           minWidth: 100,
         },
         {
-          title: '限量剩余',
+          title: 'Số lượng giới hạn còn lại',
           key: 'quota',
           minWidth: 100,
         },
         {
-          title: '活动状态',
+          title: 'Trạng thái chương trình',
           slot: 'start_name',
           minWidth: 100,
         },
         {
-          title: '结束时间',
+          title: 'Thời gian kết thúc',
           slot: 'stop_time',
           minWidth: 150,
         },
         {
-          title: '上架状态',
+          title: 'Trạng thái đăng bán',
           slot: 'status',
           minWidth: 130,
         },
         {
-          title: '操作',
+          title: 'Thao tác',
           slot: 'action',
           fixed: 'right',
           minWidth: 160,
@@ -286,11 +286,11 @@ export default {
     this.getList();
   },
   methods: {
-    // 添加
+    // Thêm
     add() {
       this.$router.push({ path: this.$routeProStr + '/marketing/store_bargain/create' });
     },
-    // 用户导出
+    // Xuất người dùng
     async exportList() {
       this.tableFrom.status = this.tableFrom.status || '';
       let [th, filekey, data, fileName] = [[], [], [], ''];
@@ -320,13 +320,13 @@ export default {
         });
       });
     },
-    // 编辑 / 复制  type 0 编辑 1 复制
+    // Sửa / Sao chép  type 0 sửa 1 sao chép
     edit(row, type) {
       this.$router.push({
         path: this.$routeProStr + `/marketing/store_bargain/create/${row.id}/${type}`,
       });
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -349,7 +349,7 @@ export default {
         path: this.$routeProStr + '/marketing/store_bargain/statistics/' + row.id,
       });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       this.tableFrom.status = this.tableFrom.status || '';
@@ -366,12 +366,12 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.tableFrom.page = 1;
       this.getList();
     },
-    // 修改是否显示
+    // Sửa có hiển thị hay không
     onchangeIsShow(row) {
       let data = {
         id: row.id,

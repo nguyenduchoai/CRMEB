@@ -3,12 +3,12 @@
 		"autoscan": true,
 		"custom": {}
 	},
-	"pages": [ //pages数组中第一项表示应用启动页
+	"pages": [ //Phần tử đầu tiên trong mảng pages biểu thị trang khởi động ứng dụng
 		{
 			"path": "pages/guide/index",
 			"style": {
 				"app-plus": {
-					"titleNView": false //禁用原生导航栏
+					"titleNView": false //Tắt thanh điều hướng gốc
 				}
 			}
 		},
@@ -31,7 +31,7 @@
 		{
 			"path": "pages/order_addcart/order_addcart",
 			"style": {
-				"navigationBarTitleText": "购物车",
+				"navigationBarTitleText": "Giỏ hàng",
 				"app-plus": {
 					// #ifdef APP-PLUS
 					"titleNView": {
@@ -46,7 +46,7 @@
 			"path": "pages/user/index",
 			"style": {
 
-				"navigationBarTitleText": "个人中心",
+				"navigationBarTitleText": "Trang cá nhân",
 				"mp-weixin": {
 					"componentPlaceholder": {
 						"page-design": "view"
@@ -64,7 +64,7 @@
 		{
 			"path": "pages/goods_cate/goods_cate",
 			"style": {
-				"navigationBarTitleText": "商品分类",
+				"navigationBarTitleText": "Danh mục sản phẩm",
 				"app-plus": {
 					// #ifdef APP-PLUS
 					"titleNView": {
@@ -77,7 +77,7 @@
 		}
 
 	],
-	// 模块分包
+	// Chia gói module (subpackage)
 	"subPackages": [
 			{
 			"root": "pages/goods_details",
@@ -102,7 +102,7 @@
 			"pages": [{
 					"path": "customer_list/chat",
 					"style": {
-						"navigationBarTitleText": "对话详情",
+						"navigationBarTitleText": "Chi tiết cuộc trò chuyện",
 						"navigationBarBackgroundColor": "#3875EA",
 						"navigationBarTextStyle": "white",
 						"app-plus": {
@@ -117,7 +117,7 @@
 				{
 					"path": "news_list/index",
 					"style": {
-						"navigationBarTitleText": "资讯",
+						"navigationBarTitleText": "Tin tức",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -130,7 +130,7 @@
 				{
 					"path": "news_details/index",
 					"style": {
-						"navigationBarTitleText": "资讯详情",
+						"navigationBarTitleText": "Chi tiết tin tức",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -147,7 +147,7 @@
 			"pages": [ {
 					"path": "goods_list/index",
 					"style": {
-						"navigationBarTitleText": "商品列表",
+						"navigationBarTitleText": "Danh sách sản phẩm",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -159,7 +159,7 @@
 				}, {
 					"path": "goods_search/index",
 					"style": {
-						"navigationBarTitleText": "搜索商品",
+						"navigationBarTitleText": "Tìm kiếm sản phẩm",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -171,7 +171,7 @@
 				}, {
 					"path": "order_pay_status/index",
 					"style": {
-						"navigationBarTitleText": "支付成功",
+						"navigationBarTitleText": "Thanh toán thành công",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -183,7 +183,7 @@
 				}, {
 					"path": "admin_order_detail/index",
 					"style": {
-						"navigationBarTitleText": "订单详情",
+						"navigationBarTitleText": "Chi tiết đơn hàng",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -195,7 +195,7 @@
 				}, {
 					"path": "goods_comment_con/index",
 					"style": {
-						"navigationBarTitleText": "商品评价",
+						"navigationBarTitleText": "Đánh giá sản phẩm",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -207,7 +207,7 @@
 				}, {
 					"path": "goods_comment_con/lottery_comment",
 					"style": {
-						"navigationBarTitleText": "订单评价",
+						"navigationBarTitleText": "Đánh giá đơn hàng",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -219,7 +219,7 @@
 				}, {
 					"path": "goods_comment_list/index",
 					"style": {
-						"navigationBarTitleText": "商品评分",
+						"navigationBarTitleText": "Điểm đánh giá sản phẩm",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -231,7 +231,7 @@
 				}, {
 					"path": "goods_details_store/index",
 					"style": {
-						"navigationBarTitleText": "门店列表",
+						"navigationBarTitleText": "Danh sách cửa hàng",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -243,7 +243,7 @@
 				}, {
 					"path": "goods_logistics/index",
 					"style": {
-						"navigationBarTitleText": "物流信息",
+						"navigationBarTitleText": "Thông tin vận chuyển",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -255,7 +255,7 @@
 				}, {
 					"path": "goods_return/index",
 					"style": {
-						"navigationBarTitleText": "申请退货",
+						"navigationBarTitleText": "Yêu cầu trả hàng",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -267,7 +267,7 @@
 				}, {
 					"path": "goods_return_list/index",
 					"style": {
-						"navigationBarTitleText": "退货列表",
+						"navigationBarTitleText": "Danh sách trả hàng",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -279,7 +279,7 @@
 				}, {
 					"path": "lottery/grids/index",
 					"style": {
-						"navigationBarTitleText": "抽奖活动",
+						"navigationBarTitleText": "Hoạt động quay thưởng",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -292,7 +292,7 @@
 				{
 					"path": "lottery/grids/record",
 					"style": {
-						"navigationBarTitleText": "中奖记录",
+						"navigationBarTitleText": "Lịch sử trúng thưởng",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -304,7 +304,7 @@
 				}, {
 					"path": "order_confirm/index",
 					"style": {
-						"navigationBarTitleText": "提交订单",
+						"navigationBarTitleText": "Đặt hàng",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -316,7 +316,7 @@
 				}, {
 					"path": "order_details/index",
 					"style": {
-						"navigationBarTitleText": "订单详情",
+						"navigationBarTitleText": "Chi tiết đơn hàng",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -328,7 +328,7 @@
 				}, {
 					"path": "order_list/index",
 					"style": {
-						"navigationBarTitleText": "我的订单",
+						"navigationBarTitleText": "Đơn hàng của tôi",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -340,7 +340,7 @@
 				}, {
 					"path": "order_refund_goods/index",
 					"style": {
-						"navigationBarTitleText": "退回商品",
+						"navigationBarTitleText": "Trả lại sản phẩm",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -352,7 +352,7 @@
 				}, {
 					"path": "receive_gifts_status/index",
 					"style": {
-						"navigationBarTitleText": "领取结果",
+						"navigationBarTitleText": "Kết quả nhận",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -364,7 +364,7 @@
 				}, {
 					"path": "receive_gift/index",
 					"style": {
-						"navigationBarTitleText": "领取礼物",
+						"navigationBarTitleText": "Nhận quà",
 						"navigationBarBackgroundColor": "#e93323",
 						// #ifdef MP
 						"navigationBarTextStyle": "#fff",
@@ -380,7 +380,7 @@
 				}, {
 					"path": "cashier/index",
 					"style": {
-						"navigationBarTitleText": "收银台",
+						"navigationBarTitleText": "Thu ngân",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -397,7 +397,7 @@
 			"pages": [{
 					"path": "user_vip_areer/index",
 					"style": {
-						"navigationBarTitleText": "经验记录",
+						"navigationBarTitleText": "Lịch sử điểm kinh nghiệm",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -410,7 +410,7 @@
 				{
 					"path": "privacy/index",
 					"style": {
-						"navigationBarTitleText": "隐私协议",
+						"navigationBarTitleText": "Chính sách bảo mật",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -423,7 +423,7 @@
 				{
 					"path": "user_cancellation/index",
 					"style": {
-						"navigationBarTitleText": "注销协议",
+						"navigationBarTitleText": "Thỏa thuận hủy tài khoản",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -436,7 +436,7 @@
 				{
 					"path": "message_center/index",
 					"style": {
-						"navigationBarTitleText": "消息中心",
+						"navigationBarTitleText": "Trung tâm tin nhắn",
 						"enablePullDownRefresh": true,
 						"app-plus": {
 							// #ifdef APP-PLUS
@@ -450,7 +450,7 @@
 				{
 					"path": "message_center/messageDetail",
 					"style": {
-						"navigationBarTitleText": "消息详情",
+						"navigationBarTitleText": "Chi tiết tin nhắn",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -463,7 +463,7 @@
 				{
 					"path": "user_invoice_order/index",
 					"style": {
-						"navigationBarTitleText": "发票详情",
+						"navigationBarTitleText": "Chi tiết hóa đơn",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -476,13 +476,13 @@
 				{
 					"path": "scan_login/index",
 					"style": {
-						"navigationBarTitleText": "授权登录"
+						"navigationBarTitleText": "Đăng nhập ủy quyền"
 					}
 				},
 				{
 					"path": "user_invoice_list/index",
 					"style": {
-						"navigationBarTitleText": "发票管理",
+						"navigationBarTitleText": "Quản lý hóa đơn",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -495,7 +495,7 @@
 				{
 					"path": "user_invoice_form/index",
 					"style": {
-						"navigationBarTitleText": "添加新发票",
+						"navigationBarTitleText": "Thêm hóa đơn mới",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -509,7 +509,7 @@
 				{
 					"path": "alipay_invoke/index",
 					"style": {
-						"navigationBarTitleText": "支付提示"
+						"navigationBarTitleText": "Thông báo thanh toán"
 					}
 				},
 				//#endif
@@ -536,7 +536,7 @@
 				{
 					"path": "retrievePassword/index",
 					"style": {
-						"navigationBarTitleText": "忘记密码",
+						"navigationBarTitleText": "Quên mật khẩu",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -549,7 +549,7 @@
 				{
 					"path": "user_info/index",
 					"style": {
-						"navigationBarTitleText": "设置",
+						"navigationBarTitleText": "Cài đặt",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -562,7 +562,7 @@
 				{
 					"path": "user_get_coupon/index",
 					"style": {
-						"navigationBarTitleText": "领取优惠券",
+						"navigationBarTitleText": "Nhận phiếu giảm giá",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -575,7 +575,7 @@
 				{
 					"path": "visit_list/index",
 					"style": {
-						"navigationBarTitleText": "浏览记录",
+						"navigationBarTitleText": "Lịch sử xem",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -588,7 +588,7 @@
 				{
 					"path": "user_goods_collection/index",
 					"style": {
-						"navigationBarTitleText": "收藏商品",
+						"navigationBarTitleText": "Sản phẩm yêu thích",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -601,7 +601,7 @@
 				{
 					"path": "user_sgin/index",
 					"style": {
-						"navigationBarTitleText": "签到",
+						"navigationBarTitleText": "Điểm danh",
 						// #ifdef MP
 						// "navigationBarTextStyle": "white",
 						// "navigationBarBackgroundColor": "#e93323"
@@ -618,7 +618,7 @@
 				{
 					"path": "user_sgin_list/index",
 					"style": {
-						"navigationBarTitleText": "签到记录",
+						"navigationBarTitleText": "Lịch sử điểm danh",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -631,7 +631,7 @@
 				{
 					"path": "user_money/index",
 					"style": {
-						"navigationBarTitleText": "我的账户",
+						"navigationBarTitleText": "Tài khoản của tôi",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -644,7 +644,7 @@
 				{
 					"path": "user_bill/index",
 					"style": {
-						"navigationBarTitleText": "账单明细",
+						"navigationBarTitleText": "Chi tiết sao kê",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -657,7 +657,7 @@
 				{
 					"path": "user_integral/index",
 					"style": {
-						"navigationBarTitleText": "积分详情"
+						"navigationBarTitleText": "Chi tiết điểm thưởng"
 
 							// #ifdef MP
 							,
@@ -677,7 +677,7 @@
 				{
 					"path": "user_coupon/index",
 					"style": {
-						"navigationBarTitleText": "我的优惠券",
+						"navigationBarTitleText": "Phiếu giảm giá của tôi",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -690,7 +690,7 @@
 				{
 					"path": "user_spread_user/index",
 					"style": {
-						"navigationBarTitleText": "我的推广"
+						"navigationBarTitleText": "Giới thiệu của tôi"
 
 							// #ifdef MP
 							,
@@ -710,7 +710,7 @@
 				{
 					"path": "user_spread_code/index",
 					"style": {
-						"navigationBarTitleText": "分销海报",
+						"navigationBarTitleText": "Poster tiếp thị liên kết",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -723,7 +723,7 @@
 				{
 					"path": "user_spread_money/index",
 					"style": {
-						"navigationBarTitleText": "佣金记录"
+						"navigationBarTitleText": "Lịch sử hoa hồng"
 
 							// #ifdef MP
 							,
@@ -742,7 +742,7 @@
 				}, {
 					"path": "user_spread_money/receiving",
 					"style": {
-						"navigationBarTitleText": "收款"
+						"navigationBarTitleText": "Thu tiền"
 							// #ifdef MP
 							,
 						"navigationBarTextStyle": "black",
@@ -761,7 +761,7 @@
 				{
 					"path": "user_cash/index",
 					"style": {
-						"navigationBarTitleText": "提现",
+						"navigationBarTitleText": "Rút tiền",
 						"navigationBarBackgroundColor": "#FFFFFF"
 							// #ifdef MP || APP-PLUS
 							,
@@ -780,7 +780,7 @@
 				{
 					"path": "user_vip/index",
 					"style": {
-						"navigationBarTitleText": "我的等级",
+						"navigationBarTitleText": "Hạng thành viên của tôi",
 						"navigationBarBackgroundColor": "#232323"
 							// #ifdef MP || APP-PLUS
 							,
@@ -798,7 +798,7 @@
 				}, {
 					"path": "user_distribution_level/index",
 					"style": {
-						"navigationBarTitleText": "分销等级",
+						"navigationBarTitleText": "Cấp độ CTV",
 						"navigationBarBackgroundColor": "#232323"
 							// #ifdef MP || APP-PLUS
 							,
@@ -817,7 +817,7 @@
 				{
 					"path": "user_address_list/index",
 					"style": {
-						"navigationBarTitleText": "地址管理",
+						"navigationBarTitleText": "Quản lý địa chỉ",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -830,7 +830,7 @@
 				{
 					"path": "user_address/index",
 					"style": {
-						"navigationBarTitleText": "添加地址",
+						"navigationBarTitleText": "Thêm địa chỉ",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -843,7 +843,7 @@
 				{
 					"path": "user_phone/index",
 					"style": {
-						"navigationBarTitleText": "绑定手机",
+						"navigationBarTitleText": "Liên kết số điện thoại",
 
 						// #ifdef MP
 						// "navigationBarTextStyle": "white",
@@ -861,7 +861,7 @@
 				{
 					"path": "user_payment/index",
 					"style": {
-						"navigationBarTitleText": "余额充值",
+						"navigationBarTitleText": "Nạp tiền vào số dư",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -874,7 +874,7 @@
 				{
 					"path": "user_pwd_edit/index",
 					"style": {
-						"navigationBarTitleText": "修改密码"
+						"navigationBarTitleText": "Đổi mật khẩu"
 
 							// #ifdef MP
 							// 	,
@@ -894,7 +894,7 @@
 				{
 					"path": "promoter-list/index",
 					"style": {
-						"navigationBarTitleText": "推广人列表"
+						"navigationBarTitleText": "Danh sách người được giới thiệu"
 							// #ifdef MP
 							,
 						"navigationBarBackgroundColor": "#FFFFFF",
@@ -913,7 +913,7 @@
 				{
 					"path": "promoter-order/index",
 					"style": {
-						"navigationBarTitleText": "推广人订单"
+						"navigationBarTitleText": "Đơn hàng người được giới thiệu"
 
 							// #ifdef MP
 							,
@@ -933,7 +933,7 @@
 				{
 					"path": "promoter_rank/index",
 					"style": {
-						"navigationBarTitleText": "推广人排行"
+						"navigationBarTitleText": "Xếp hạng người giới thiệu"
 
 							// #ifdef MP
 							,
@@ -953,7 +953,7 @@
 				{
 					"path": "commission_rank/index",
 					"style": {
-						"navigationBarTitleText": "佣金排行",
+						"navigationBarTitleText": "Xếp hạng hoa hồng",
 						"navigationBarBackgroundColor": "#FFFFFF"
 							// #ifdef MP || APP-PLUS
 							,
@@ -972,7 +972,7 @@
 				{
 					"path": "user_return_list/index",
 					"style": {
-						"navigationBarTitleText": "退货列表",
+						"navigationBarTitleText": "Danh sách trả hàng",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -985,7 +985,7 @@
 				{
 					"path": "login/index",
 					"style": {
-						"navigationBarTitleText": "登录",
+						"navigationBarTitleText": "Đăng nhập",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -998,7 +998,7 @@
 				{
 					"path": "payment_on_behalf/index",
 					"style": {
-						"navigationBarTitleText": "好友代付",
+						"navigationBarTitleText": "Bạn bè thanh toán hộ",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1010,7 +1010,7 @@
 				}, {
 					"path": "payment_on_behalf/pay_status",
 					"style": {
-						"navigationBarTitleText": "代付成功",
+						"navigationBarTitleText": "Thanh toán hộ thành công",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1023,7 +1023,7 @@
 				{
 					"path": "staff_list/index",
 					"style": {
-						"navigationBarTitleText": "员工列表",
+						"navigationBarTitleText": "Danh sách nhân viên",
 						"navigationBarBackgroundColor": "#e93323"
 							// #ifdef MP
 							,
@@ -1058,7 +1058,7 @@
 						// #ifdef MP
 						// "navigationBarTextStyle": "white",
 						// "navigationBarBackgroundColor": "#E93323",
-						"navigationBarTitleText": "砍价列表",
+						"navigationBarTitleText": "Danh sách săn giảm giá",
 						// #endif
 						"app-plus": {
 							// #ifdef APP-PLUS
@@ -1073,7 +1073,7 @@
 					"path": "goods_bargain_details/index",
 					"style": {
 						// #ifdef MP
-						"navigationBarTitleText": "砍价活动",
+						"navigationBarTitleText": "Hoạt động săn giảm giá",
 						// #endif
 						"app-plus": {
 							// #ifdef APP-PLUS
@@ -1090,7 +1090,7 @@
 						// #ifdef MP
 						// "navigationBarTextStyle": "white",
 						// "navigationBarBackgroundColor": "#E93323",
-						"navigationBarTitleText": "拼团活动",
+						"navigationBarTitleText": "Hoạt động mua chung",
 						// #endif
 						"app-plus": {
 							// #ifdef APP-PLUS
@@ -1111,9 +1111,9 @@
 								"padding-left": "10px",
 								"padding-right": "10px",
 								"type": "transparent",
-								"buttons": [ //原生标题栏按钮配置,
+								"buttons": [ //Cấu hình nút thanh tiêu đề gốc,
 									{
-										"type": "menu" //原生标题栏增加分享按钮，点击事件可通过页面的 onNavigationBarButtonTap 函数进行监听
+										"type": "menu" //Thêm nút chia sẻ vào thanh tiêu đề gốc, sự kiện click có thể theo dõi qua hàm onNavigationBarButtonTap của trang
 									}
 								]
 							}
@@ -1124,7 +1124,7 @@
 				{
 					"path": "goods_combination_status/index",
 					"style": {
-						"navigationBarTitleText": "拼团",
+						"navigationBarTitleText": "Mua chung",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1137,7 +1137,7 @@
 				{
 					"path": "goods_seckill/index",
 					"style": {
-						"navigationBarTitleText": "限时秒杀"
+						"navigationBarTitleText": "Flash sale giờ vàng"
 							// #ifdef MP
 							// "navigationBarTextStyle": "white"
 							// "navigationBarBackgroundColor": "#e93323"
@@ -1167,9 +1167,9 @@
 								"padding-left": "10px",
 								"padding-right": "10px",
 								"type": "transparent",
-								"buttons": [ //原生标题栏按钮配置,
+								"buttons": [ //Cấu hình nút thanh tiêu đề gốc,
 									{
-										"type": "menu" //原生标题栏增加分享按钮，点击事件可通过页面的 onNavigationBarButtonTap 函数进行监听
+										"type": "menu" //Thêm nút chia sẻ vào thanh tiêu đề gốc, sự kiện click có thể theo dõi qua hàm onNavigationBarButtonTap của trang
 									}
 								]
 							}
@@ -1180,7 +1180,7 @@
 				{
 					"path": "poster-poster/index",
 					"style": {
-						"navigationBarTitleText": "砍价海报"
+						"navigationBarTitleText": "Poster săn giảm giá"
 							// #ifdef MP
 							// "navigationBarTextStyle": "white"
 							// "navigationBarBackgroundColor": "#d22516"
@@ -1198,7 +1198,7 @@
 				{
 					"path": "bargain/index",
 					"style": {
-						"navigationBarTitleText": "砍价记录",
+						"navigationBarTitleText": "Lịch sử săn giảm giá",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1211,7 +1211,7 @@
 				{
 					"path": "presell/index",
 					"style": {
-						"navigationBarTitleText": "预售列表",
+						"navigationBarTitleText": "Danh sách đặt trước",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1235,7 +1235,7 @@
 				}, {
 					"path": "distribution/scanning/index",
 					"style": {
-						"navigationBarTitleText": "订单核销",
+						"navigationBarTitleText": "Xác nhận sử dụng đơn hàng",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1247,7 +1247,7 @@
 				}, {
 					"path": "distribution/scanning/detail/index",
 					"style": {
-						"navigationBarTitleText": "订单核销",
+						"navigationBarTitleText": "Xác nhận sử dụng đơn hàng",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1264,13 +1264,13 @@
 				}, {
 					"path": "custom_date/index",
 					"style": {
-						"navigationBarTitleText": "选择日期"
+						"navigationBarTitleText": "Chọn ngày"
 					}
 				},
 				{
 					"path": "order/index",
 					"style": {
-						"navigationBarTitleText": "订单统计",
+						"navigationBarTitleText": "Thống kê đơn hàng",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1283,7 +1283,7 @@
 				{
 					"path": "orderList/index",
 					"style": {
-						"navigationBarTitleText": "订单列表",
+						"navigationBarTitleText": "Danh sách đơn hàng",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1296,7 +1296,7 @@
 				{
 					"path": "orderDetail/index",
 					"style": {
-						"navigationBarTitleText": "订单详情",
+						"navigationBarTitleText": "Chi tiết đơn hàng",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1309,7 +1309,7 @@
 				{
 					"path": "delivery/index",
 					"style": {
-						"navigationBarTitleText": "订单发货",
+						"navigationBarTitleText": "Giao đơn hàng",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1322,28 +1322,28 @@
 				{
 					"path": "refund/index",
 					"style": {
-						"navigationBarTitleText": "售后退款",
+						"navigationBarTitleText": "Đổi trả & hoàn tiền",
 						"navigationStyle": "custom"
 					}
 				},
 				{
 					"path": "logistics/index",
 					"style": {
-						"navigationBarTitleText": "物流信息",
+						"navigationBarTitleText": "Thông tin vận chuyển",
 						"navigationStyle": "custom"
 					}
 				},
 				{
 					"path": "refund_order_list/index",
 					"style": {
-						"navigationBarTitleText": "售后订单列表",
+						"navigationBarTitleText": "Danh sách đơn hậu mãi",
 						"navigationStyle": "custom"
 					}
 				},
 				{
 					"path": "refund_order_detail/index",
 					"style": {
-						"navigationBarTitleText": "售后订单详情",
+						"navigationBarTitleText": "Chi tiết đơn hậu mãi",
 						"navigationStyle": "custom"
 					}
 				},
@@ -1351,13 +1351,13 @@
 					"path": "goods/index",
 					"style": {
 						"navigationStyle": "custom",
-						"navigationBarTitleText": "商品管理"
+						"navigationBarTitleText": "Quản lý sản phẩm"
 					}
 				},
 				{
 					"path": "goods/specs",
 					"style": {
-						"navigationBarTitleText": "修改价格/库存",
+						"navigationBarTitleText": "Sửa giá/tồn kho",
 						"navigationBarBackgroundColor": "#F5F5F5",
 						"app-plus": {
 							// #ifdef APP-PLUS
@@ -1371,27 +1371,27 @@
 				{
 					"path": "goods/addGoods",
 					"style": {
-						"navigationBarTitleText": "添加商品"
+						"navigationBarTitleText": "Thêm sản phẩm"
 					}
 				},
 				{
 					"path": "user/list",
 					"style": {
 						"navigationStyle": "custom",
-						"navigationBarTitleText": "用户管理"
+						"navigationBarTitleText": "Quản lý người dùng"
 					}
 				},
 				{
 					"path": "user/index",
 					"style": {
 						"navigationStyle": "custom",
-						"navigationBarTitleText": "用户详情"
+						"navigationBarTitleText": "Chi tiết người dùng"
 					}
 				},
 				{
 					"path": "statistics/index",
 					"style": {
-						"navigationBarTitleText": "订单数据统计",
+						"navigationBarTitleText": "Thống kê dữ liệu đơn hàng",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1404,7 +1404,7 @@
 				{
 					"path": "order_cancellation/index",
 					"style": {
-						"navigationBarTitleText": "订单核销",
+						"navigationBarTitleText": "Xác nhận sử dụng đơn hàng",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1422,7 +1422,7 @@
 			"pages": [{
 					"path": "HotNewGoods/index",
 					"style": {
-						"navigationBarTitleText": "精品推荐",
+						"navigationBarTitleText": "Đề xuất nổi bật",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1435,7 +1435,7 @@
 				{
 					"path": "HotNewGoods/feedback",
 					"style": {
-						"navigationBarTitleText": "我的客服",
+						"navigationBarTitleText": "CSKH của tôi",
 						"navigationBarTextStyle": "white",
 						"navigationBarBackgroundColor": "#3A3A3A",
 						"app-plus": {
@@ -1450,7 +1450,7 @@
 				{
 					"path": "live_list/index",
 					"style": {
-						"navigationBarTitleText": "精彩内容"
+						"navigationBarTitleText": "Nội dung nổi bật"
 					}
 				}
 			]
@@ -1472,7 +1472,7 @@
 				}, {
 					"path": "vip_paid/index",
 					"style": {
-						"navigationBarTitleText": "SVIP会员",
+						"navigationBarTitleText": "Thành viên SVIP",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1485,7 +1485,7 @@
 				{
 					"path": "vip_coupon/index",
 					"style": {
-						"navigationBarTitleText": "会员优惠券",
+						"navigationBarTitleText": "Phiếu giảm giá thành viên",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1498,7 +1498,7 @@
 				{
 					"path": "vip_clause/index",
 					"style": {
-						"navigationBarTitleText": "会员协议",
+						"navigationBarTitleText": "Thỏa thuận thành viên",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1511,7 +1511,7 @@
 				{
 					"path": "vip_active/index",
 					"style": {
-						"navigationBarTitleText": "激活会员",
+						"navigationBarTitleText": "Kích hoạt thành viên",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1524,7 +1524,7 @@
 				{
 					"path": "offline_pay/index",
 					"style": {
-						"navigationBarTitleText": "支付",
+						"navigationBarTitleText": "Thanh toán",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1537,7 +1537,7 @@
 				{
 					"path": "offline_result/index",
 					"style": {
-						"navigationBarTitleText": "支付结果",
+						"navigationBarTitleText": "Kết quả thanh toán",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1552,7 +1552,7 @@
 					"style": {
 						"navigationBarTextStyle": "white",
 						"navigationBarBackgroundColor": "#333333",
-						"navigationBarTitleText": "专题页",
+						"navigationBarTitleText": "Trang chủ đề",
 						"app-plus": {
 							"scrollIndicator": "none"
 						},
@@ -1566,7 +1566,7 @@
 				{
 					"path": "settled/index",
 					"style": {
-						"navigationBarTitleText": "分销申请",
+						"navigationBarTitleText": "Đăng ký CTV",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1585,7 +1585,7 @@
 					"style": {
 						"navigationBarTextStyle": "white",
 						"navigationBarBackgroundColor": "#333333",
-						"navigationBarTitleText": "积分商城",
+						"navigationBarTitleText": "Cửa hàng đổi điểm",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1598,7 +1598,7 @@
 				{
 					"path": "integral_goods_list",
 					"style": {
-						"navigationBarTitleText": "商品列表",
+						"navigationBarTitleText": "Danh sách sản phẩm",
 						// "navigationBarTextStyle": "white",
 						// "navigationBarBackgroundColor": "#E93323",
 						"app-plus": {
@@ -1620,9 +1620,9 @@
 								"padding-left": "10px",
 								"padding-right": "10px",
 								"type": "transparent",
-								"buttons": [ //原生标题栏按钮配置,
+								"buttons": [ //Cấu hình nút thanh tiêu đề gốc,
 									{
-										"type": "menu" //原生标题栏增加分享按钮，点击事件可通过页面的 onNavigationBarButtonTap 函数进行监听
+										"type": "menu" //Thêm nút chia sẻ vào thanh tiêu đề gốc, sự kiện click có thể theo dõi qua hàm onNavigationBarButtonTap của trang
 									}
 								]
 							}
@@ -1633,7 +1633,7 @@
 				{
 					"path": "exchange_record",
 					"style": {
-						"navigationBarTitleText": "兑换记录",
+						"navigationBarTitleText": "Lịch sử đổi thưởng",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1646,7 +1646,7 @@
 				{
 					"path": "integral_order",
 					"style": {
-						"navigationBarTitleText": "积分订单",
+						"navigationBarTitleText": "Đơn đổi điểm",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1658,7 +1658,7 @@
 				}, {
 					"path": "user_address",
 					"style": {
-						"navigationBarTitleText": "选择地址",
+						"navigationBarTitleText": "Chọn địa chỉ",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1671,7 +1671,7 @@
 				{
 					"path": "integral_order_status",
 					"style": {
-						"navigationBarTitleText": "兑换成功",
+						"navigationBarTitleText": "Đổi thành công",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1683,7 +1683,7 @@
 				}, {
 					"path": "integral_order_details",
 					"style": {
-						"navigationBarTitleText": "兑换订单详情",
+						"navigationBarTitleText": "Chi tiết đơn đổi điểm",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1695,7 +1695,7 @@
 				}, {
 					"path": "logistics_details",
 					"style": {
-						"navigationBarTitleText": "兑换物流详情",
+						"navigationBarTitleText": "Chi tiết vận chuyển đơn đổi điểm",
 						"app-plus": {
 							// #ifdef APP-PLUS
 							"titleNView": {
@@ -1719,7 +1719,7 @@
 		}	
 
 	],
-	"tabBar": { // 底部菜单
+	"tabBar": { // Menu dưới cùng
 		"color": "#282828",
 		"selectedColor": "#ff3366",
 		"borderStyle": "white",
@@ -1728,43 +1728,43 @@
 				"pagePath": "pages/index/index",
 				"iconPath": "static/images/1-001.png",
 				"selectedIconPath": "static/images/1-002.png",
-				"text": "首页"
+				"text": "Trang chủ"
 			},
 			{
 				"pagePath": "pages/goods_cate/goods_cate",
 				"iconPath": "static/images/2-001.png",
 				"selectedIconPath": "static/images/2-002.png",
-				"text": "分类"
+				"text": "Danh mục"
 			},
 			{
 				"pagePath": "pages/order_addcart/order_addcart",
 				"iconPath": "static/images/3-001.png",
 				"selectedIconPath": "static/images/3-002.png",
-				"text": "购物车"
+				"text": "Giỏ hàng"
 			},
 			{
 				"pagePath": "pages/user/index",
 				"iconPath": "static/images/4-001.png",
 				"selectedIconPath": "static/images/4-002.png",
-				"text": "我的"
+				"text": "Tôi"
 			}
 		]
 	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "加载中",
+		"navigationBarTitleText": "Đang tải",
 		"navigationBarBackgroundColor": "#fff",
 		"backgroundColor": "#F8F8F8",
 		"titleNView": false,
-		"pageOrientation": "portrait" // 全局设置为竖屏
+		"pageOrientation": "portrait" // Đặt toàn cục là màn hình dọc
 	},
-	"condition": { //模式配置，仅开发期间生效
-		"current": 0, //当前激活的模式(list 的索引项)
+	"condition": { //Cấu hình mode, chỉ có hiệu lực trong giai đoạn phát triển
+		"current": 0, //Mode đang kích hoạt (chỉ số trong list)
 		"list": [{
-			"name": "", //模式名称
-			"path": "", //启动页面，必选
-			"query": "" //启动参数，在页面的onLoad函数里面得到
+			"name": "", //Tên mode
+			"path": "", //Trang khởi động, bắt buộc chọn
+			"query": "" //Tham số khởi động, lấy được trong hàm onLoad của trang
 		}]
 	},
-	"embeddedAppIdList": ["wxef277996acc166c3"] //通联支付appid
+	"embeddedAppIdList": ["wxef277996acc166c3"] //appid của Allinpay
 }

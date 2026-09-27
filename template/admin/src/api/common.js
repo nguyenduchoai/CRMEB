@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -27,8 +27,8 @@ export function ajCaptchaCheck(data) {
 }
 
 /**
- * @description 表格--删除
- * @param {Number} param id {Number} 配置id
+ * @description Bảng -- Xóa
+ * @param {Number} param id {Number} ID cấu hình
  */
 export function tableDelApi(data) {
   return request({
@@ -40,7 +40,7 @@ export function tableDelApi(data) {
 }
 
 /**
- * 获取消息提醒
+ * Lấy thông báo nhắc nhở
  */
 export function jnoticeRequest() {
   return request({
@@ -50,7 +50,7 @@ export function jnoticeRequest() {
 }
 
 /**
- * 获取logo
+ * Lấy logo
  */
 export function getLogo() {
   return request({

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,8 +17,8 @@ use think\Validate;
 class ServeValidata extends Validate
 {
     /**
-     * 定义验证规则
-     * 格式：'字段名'    =>    ['规则1','规则2'...]
+     * Định nghĩa quy tắc xác thực
+     * Định dạng: 'tên trường'    =>    ['quy tắc 1','quy tắc 2'...]
      *
      * @var array
      */
@@ -30,19 +30,19 @@ class ServeValidata extends Validate
     ];
 
     /**
-     * 定义错误信息
-     * 格式：'字段名.规则名'    =>    '错误信息'
+     * Định nghĩa thông báo lỗi
+     * Định dạng: 'tên trường.tên quy tắc'    =>    'thông báo lỗi'
      *
      * @var array
      */
     protected $message = [
-        'phone.require' => '请填写手机号码',
-        'phone.number' => '您输入的手机号码必须为数字',
-        'phone.mobile' => '手机号格式错误',
-        'password.require' => '密码必须填写',
-        'verify_code.require' => '请填写验证码',
-        'verify_code.number' => '短信验证码必须为数字',
-        'account.require' => '请填写账号',
+        'phone.require' => 'Vui lòng điền số điện thoại',
+        'phone.number' => 'Số điện thoại bạn nhập phải là số',
+        'phone.mobile' => 'Số điện thoại sai định dạng',
+        'password.require' => 'Mật khẩu là bắt buộc',
+        'verify_code.require' => 'Vui lòng điền mã xác thực',
+        'verify_code.number' => 'Mã xác thực SMS phải là số',
+        'account.require' => 'Vui lòng điền tài khoản',
     ];
 
     protected $scene = [

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,43 +17,43 @@ use think\facade\Log;
 use crmeb\exceptions\AdminException;
 
 /**
- * 版本管理器
- * 用于跨版本升级管理
+ * Trình quản lý phiên bản
+ * Dùng để quản lý nâng cấp vượt phiên bản
  * Class VersionManager
  * @package upgrade
  */
 class VersionManager
 {
     /**
-     * 配置
+     * Cấu hình
      * @var array
      */
     protected $config = [];
 
     /**
-     * 数据库表前缀
+     * Tiền tố bảng cơ sở dữ liệu
      * @var string
      */
     protected $prefix = '';
 
     /**
-     * 当前版本信息
+     * Thông tin phiên bản hiện tại
      * @var array
      */
     protected $currentVersion = [];
 
     /**
-     * SQL类型说明
+     * Giải thích các loại SQL
      */
-    const SQL_TYPE_CREATE_TABLE = 1;    // 建表
-    const SQL_TYPE_DROP_TABLE = 2;       // 删表
-    const SQL_TYPE_ADD_COLUMN = 3;       // 添加字段
-    const SQL_TYPE_MODIFY_COLUMN = 4;    // 修改字段
-    const SQL_TYPE_DROP_COLUMN = 5;      // 删除字段
-    const SQL_TYPE_INSERT_DATA = 6;      // 添加数据
-    const SQL_TYPE_UPDATE_DATA = 7;      // 修改数据
-    const SQL_TYPE_DELETE_DATA = 8;      // 删除数据
-    const SQL_TYPE_RAW = -1;             // 直接执行SQL
+    const SQL_TYPE_CREATE_TABLE = 1;    // Tạo bảng
+    const SQL_TYPE_DROP_TABLE = 2;       // Xóa bảng
+    const SQL_TYPE_ADD_COLUMN = 3;       // Thêm trường
+    const SQL_TYPE_MODIFY_COLUMN = 4;    // Trường được sửa
+    const SQL_TYPE_DROP_COLUMN = 5;      // Xóa trường
+    const SQL_TYPE_INSERT_DATA = 6;      // Thêm dữ liệu
+    const SQL_TYPE_UPDATE_DATA = 7;      // Dữ liệu cần chỉnh sửa
+    const SQL_TYPE_DELETE_DATA = 8;      // Xóa dữ liệu
+    const SQL_TYPE_RAW = -1;             // Thực thi SQL trực tiếp
 
     /**
      * VersionManager constructor.
@@ -66,7 +66,7 @@ class VersionManager
     }
 
     /**
-     * 获取当前系统版本信息
+     * Lấy thông tin phiên bản hệ thống hiện tại
      * @return array
      */
     public function getCurrentVersion(): array
@@ -95,7 +95,7 @@ class VersionManager
     }
 
     /**
-     * 获取当前版本代码
+     * Lấy mã phiên bản hiện tại
      * @return int
      */
     public function getCurrentVersionCode(): int
@@ -104,7 +104,7 @@ class VersionManager
     }
 
     /**
-     * 获取当前版本名称
+     * Lấy tên phiên bản hiện tại
      * @return string
      */
     public function getCurrentVersionName(): string
@@ -113,7 +113,7 @@ class VersionManager
     }
 
     /**
-     * 获取所有版本列表
+     * Lấy danh sách tất cả phiên bản
      * @return array
      */
     public function getAllVersions(): array
@@ -122,7 +122,7 @@ class VersionManager
     }
 
     /**
-     * 获取最新版本信息
+     * Lấy thông tin phiên bản mới nhất
      * @return array
      */
     public function getLatestVersion(): array
@@ -132,8 +132,8 @@ class VersionManager
     }
 
     /**
-     * 获取需要升级的版本列表
-     * 从当前版本到最新版本之间的所有版本
+     * Lấy danh sách phiên bản cần nâng cấp
+     * Tất cả phiên bản từ phiên bản hiện tại đến phiên bản mới nhất
      * @return array
      */
     public function getPendingVersions(): array
@@ -147,7 +147,7 @@ class VersionManager
             }
         }
 
-        // 按版本代码从小到大排序
+        // Sắp xếp theo mã phiên bản từ nhỏ đến lớn
         usort($pending, function ($a, $b) {
             return $a['code'] - $b['code'];
         });
@@ -156,7 +156,7 @@ class VersionManager
     }
 
     /**
-     * 获取版本升级差距
+     * Lấy khoảng cách phiên bản cần nâng cấp
      * @return int
      */
     public function getVersionGap(): int
@@ -165,7 +165,7 @@ class VersionManager
     }
 
     /**
-     * 是否需要升级
+     * Có cần nâng cấp không
      * @return bool
      */
     public function needUpgrade(): bool
@@ -174,7 +174,7 @@ class VersionManager
     }
 
     /**
-     * 获取最低版本要求配置
+     * Lấy cấu hình yêu cầu phiên bản tối thiểu
      * @return array
      */
     public function getMinVersionConfig(): array
@@ -183,14 +183,14 @@ class VersionManager
     }
 
     /**
-     * 检查当前版本是否满足最低版本要求
+     * Kiểm tra phiên bản hiện tại có đáp ứng yêu cầu phiên bản tối thiểu không
      * @return bool
      */
     public function meetsMinVersionRequirement(): bool
     {
         $minVersion = $this->getMinVersionConfig();
         if (empty($minVersion)) {
-            return true; // 未配置最低版本，默认允许
+            return true; // Chưa cấu hình phiên bản tối thiểu, mặc định cho phép
         }
 
         $minCode = $minVersion['code'] ?? 0;
@@ -200,17 +200,17 @@ class VersionManager
     }
 
     /**
-     * 获取最低版本错误提示信息
+     * Lấy thông báo lỗi về phiên bản tối thiểu
      * @return string
      */
     public function getMinVersionMessage(): string
     {
         $minVersion = $this->getMinVersionConfig();
-        return $minVersion['message'] ?? '当前版本不支持跨版本在线升级功能';
+        return $minVersion['message'] ?? 'Phiên bản hiện tại không hỗ trợ tính năng nâng cấp trực tuyến vượt phiên bản';
     }
 
     /**
-     * 检查跨版本升级可用性
+     * Kiểm tra tính khả dụng của nâng cấp vượt phiên bản
      * @return array ['available' => bool, 'message' => string, 'current_version' => string, 'min_version' => string]
      */
     public function checkUpgradeAvailability(): array
@@ -222,7 +222,7 @@ class VersionManager
         if (empty($minVersion)) {
             return [
                 'available' => true,
-                'message' => '可以使用跨版本升级',
+                'message' => 'Có thể sử dụng nâng cấp vượt phiên bản',
                 'current_version' => $currentVersion,
                 'current_code' => $currentCode,
                 'min_version' => '',
@@ -235,7 +235,7 @@ class VersionManager
 
         return [
             'available' => $available,
-            'message' => $available ? '可以使用跨版本升级' : $this->getMinVersionMessage(),
+            'message' => $available ? 'Có thể sử dụng nâng cấp vượt phiên bản' : $this->getMinVersionMessage(),
             'current_version' => $currentVersion,
             'current_code' => $currentCode,
             'min_version' => $minVersion['version'] ?? '',
@@ -244,7 +244,7 @@ class VersionManager
     }
 
     /**
-     * 获取版本升级脚本
+     * Lấy script nâng cấp của phiên bản
      * @param array $version
      * @return array
      */
@@ -261,7 +261,7 @@ class VersionManager
     }
 
     /**
-     * 获取所有待执行的升级SQL
+     * Lấy tất cả SQL nâng cấp chờ thực thi
      * @return array
      */
     public function getAllPendingUpgradeSql(): array
@@ -284,7 +284,7 @@ class VersionManager
     }
 
     /**
-     * 执行单条升级SQL
+     * Thực thi một câu SQL nâng cấp
      * @param array $sqlItem
      * @return array ['success' => bool, 'message' => string]
      */
@@ -300,12 +300,12 @@ class VersionManager
         $newTable = isset($sqlItem['new_table']) ? $this->prefix . $sqlItem['new_table'] : '';
 
         try {
-            // 替换表名
+            // Thay thế tên bảng
             if ($findSql) {
                 $findSql = str_replace('@table', $table, $findSql);
             }
 
-            // 预检查
+            // Kiểm tra trước
             if ($findSql) {
                 $exists = !empty(Db::query($findSql));
 
@@ -326,32 +326,32 @@ class VersionManager
                         break;
                     case self::SQL_TYPE_DELETE_DATA:
                         if (!$exists) {
-                            return ['success' => true, 'message' => '数据不存在，跳过删除', 'skipped' => true];
+                            return ['success' => true, 'message' => 'Dữ liệu không tồn tại, bỏ qua thao tác xóa', 'skipped' => true];
                         }
                         break;
                 }
             }
 
-            // 替换SQL中的占位符
+            // Thay thế placeholder trong SQL
             $execSql = str_replace('@table', $table, $sql);
 
-            // 处理关联表查询
+            // Xử lý truy vấn bảng liên kết
             if (in_array($type, [self::SQL_TYPE_INSERT_DATA, self::SQL_TYPE_UPDATE_DATA]) && $whereSql && $whereTable) {
                 $whereSql = str_replace('@whereTable', $whereTable, $whereSql);
                 $result = Db::query($whereSql);
                 $tabId = $result[0]['tabId'] ?? 0;
                 if (!$tabId) {
-                    return ['success' => true, 'message' => '关联数据不存在，跳过', 'skipped' => true];
+                    return ['success' => true, 'message' => 'Dữ liệu liên kết không tồn tại, bỏ qua', 'skipped' => true];
                 }
                 $execSql = str_replace('@tabId', $tabId, $execSql);
             }
 
-            // 处理新表名
+            // Xử lý tên bảng mới
             if ($type == self::SQL_TYPE_RAW && $newTable) {
                 $execSql = str_replace('@new_table', $newTable, $execSql);
             }
 
-            // 执行SQL
+            // Thực thi SQL
             if ($execSql) {
                 Db::execute($execSql);
                 Log::write(['type' => 'upgrade_sql', 'sql' => $execSql, 'item' => json_encode($sqlItem)], 'notice');
@@ -366,43 +366,43 @@ class VersionManager
     }
 
     /**
-     * 获取跳过消息
+     * Lấy thông báo bỏ qua
      */
     protected function getSkipMessage(int $type, string $table, string $field): string
     {
         $messages = [
-            self::SQL_TYPE_CREATE_TABLE => "{$table} 表已存在",
-            self::SQL_TYPE_DROP_TABLE => "{$table} 表不存在",
-            self::SQL_TYPE_ADD_COLUMN => "{$table} 表中 {$field} 字段已存在",
-            self::SQL_TYPE_MODIFY_COLUMN => "{$table} 表中 {$field} 字段不存在",
-            self::SQL_TYPE_DROP_COLUMN => "{$table} 表中 {$field} 字段不存在",
-            self::SQL_TYPE_INSERT_DATA => "{$table} 数据已存在",
-            self::SQL_TYPE_UPDATE_DATA => "{$table} 数据不存在",
+            self::SQL_TYPE_CREATE_TABLE => "Bảng {$table} đã tồn tại",
+            self::SQL_TYPE_DROP_TABLE => "Bảng {$table} không tồn tại",
+            self::SQL_TYPE_ADD_COLUMN => "Trường {$field} trong bảng {$table} đã tồn tại",
+            self::SQL_TYPE_MODIFY_COLUMN => "Trường {$field} trong bảng {$table} không tồn tại",
+            self::SQL_TYPE_DROP_COLUMN => "Trường {$field} trong bảng {$table} không tồn tại",
+            self::SQL_TYPE_INSERT_DATA => "Dữ liệu trong bảng {$table} đã tồn tại",
+            self::SQL_TYPE_UPDATE_DATA => "Dữ liệu trong bảng {$table} không tồn tại",
         ];
-        return $messages[$type] ?? '跳过';
+        return $messages[$type] ?? 'Bỏ qua';
     }
 
     /**
-     * 获取成功消息
+     * Lấy thông báo thành công
      */
     protected function getSuccessMessage(int $type, string $table, string $field): string
     {
         $messages = [
-            self::SQL_TYPE_CREATE_TABLE => "{$table} 表创建成功",
-            self::SQL_TYPE_DROP_TABLE => "{$table} 表删除成功",
-            self::SQL_TYPE_ADD_COLUMN => "{$table} 表中 {$field} 字段添加成功",
-            self::SQL_TYPE_MODIFY_COLUMN => "{$table} 表中 {$field} 字段修改成功",
-            self::SQL_TYPE_DROP_COLUMN => "{$table} 表中 {$field} 字段删除成功",
-            self::SQL_TYPE_INSERT_DATA => "{$table} 数据添加成功",
-            self::SQL_TYPE_UPDATE_DATA => "{$table} 数据修改成功",
-            self::SQL_TYPE_DELETE_DATA => "{$table} 数据删除成功",
-            self::SQL_TYPE_RAW => "{$table} SQL执行成功",
+            self::SQL_TYPE_CREATE_TABLE => "Tạo bảng {$table} thành công",
+            self::SQL_TYPE_DROP_TABLE => "Xóa bảng {$table} thành công",
+            self::SQL_TYPE_ADD_COLUMN => "Thêm trường {$field} vào bảng {$table} thành công",
+            self::SQL_TYPE_MODIFY_COLUMN => "Sửa trường {$field} trong bảng {$table} thành công",
+            self::SQL_TYPE_DROP_COLUMN => "Xóa trường {$field} khỏi bảng {$table} thành công",
+            self::SQL_TYPE_INSERT_DATA => "Thêm dữ liệu vào bảng {$table} thành công",
+            self::SQL_TYPE_UPDATE_DATA => "Sửa dữ liệu trong bảng {$table} thành công",
+            self::SQL_TYPE_DELETE_DATA => "Xóa dữ liệu khỏi bảng {$table} thành công",
+            self::SQL_TYPE_RAW => "Thực thi SQL trên bảng {$table} thành công",
         ];
-        return $messages[$type] ?? '执行成功';
+        return $messages[$type] ?? 'Thực thi thành công';
     }
 
     /**
-     * 更新版本文件
+     * Cập nhật tệp phiên bản
      * @param string $version
      * @param int $code
      * @return bool
@@ -427,7 +427,7 @@ class VersionManager
     }
 
     /**
-     * 获取升级概览信息
+     * Lấy thông tin tổng quan nâng cấp
      * @return array
      */
     public function getUpgradeOverview(): array
@@ -455,7 +455,7 @@ class VersionManager
     }
 
     /**
-     * 获取所有待执行的数据迁移处理器
+     * Lấy tất cả bộ xử lý di chuyển dữ liệu đang chờ thực thi
      * @return array
      */
     public function getAllPendingDataHandlers(): array
@@ -478,7 +478,7 @@ class VersionManager
     }
 
     /**
-     * 获取指定版本的数据迁移处理器
+     * Lấy bộ xử lý di chuyển dữ liệu của phiên bản chỉ định
      * @param array $version
      * @return array
      */

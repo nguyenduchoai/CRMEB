@@ -10,7 +10,7 @@
           inline
           @submit.native.prevent
         >
-          <el-form-item label="创建时间：">
+          <el-form-item label="Thời gian tạo:">
             <el-date-picker
               clearable
               v-model="timeVal"
@@ -19,88 +19,88 @@
               @change="onchangeTime"
               format="yyyy/MM/dd"
               value-format="yyyy/MM/dd"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              start-placeholder="Ngày bắt đầu"
+              end-placeholder="Ngày kết thúc"
               :picker-options="pickerOptions"
               style="width: 250px"
               class="mr20"
             ></el-date-picker>
           </el-form-item>
-          <el-form-item label="搜索：" prop="real_name" label-for="real_name">
-            <el-input clearable v-model="orderData.real_name" placeholder="请输入" class="form_content_width">
+          <el-form-item label="Tìm kiếm:" prop="real_name" label-for="real_name">
+            <el-input clearable v-model="orderData.real_name" placeholder="Vui lòng nhập" class="form_content_width">
               <el-select v-model="orderData.field_key" slot="prepend" style="width: 100px">
-                <el-option value="all" label="全部"></el-option>
-                <el-option value="order_id" label="订单号"></el-option>
+                <el-option value="all" label="Tất cả"></el-option>
+                <el-option value="order_id" label="Mã đơn hàng"></el-option>
                 <el-option value="uid" label="UID"></el-option>
-                <el-option value="real_name" label="用户姓名"></el-option>
-                <el-option value="user_phone" label="用户电话"></el-option>
+                <el-option value="real_name" label="Họ tên người dùng"></el-option>
+                <el-option value="user_phone" label="Số điện thoại người dùng"></el-option>
               </el-select>
             </el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="orderSearch">查询</el-button>
+            <el-button type="primary" v-db-click @click="orderSearch">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
     <el-card :bordered="false" shadow="never" :body-style="{ padding: '0 20px 20px' }">
       <el-tabs v-model="currentTab" @tab-click="onClickTab" v-if="tablists">
-        <el-tab-pane :label="'全部发票（' + tablists.all + '）'" name=" " />
-        <el-tab-pane :label="'待开发票（' + tablists.noOpened + '）'" name="1" />
-        <el-tab-pane :label="'已开发票（' + tablists.opened + '）'" name="2" />
-        <el-tab-pane :label="'退款发票（' + tablists.refund + '）'" name="3" />
+        <el-tab-pane :label="'Tất cả hóa đơn (' + tablists.all + '）'" name=" " />
+        <el-tab-pane :label="'Chờ xuất hóa đơn (' + tablists.noOpened + '）'" name="1" />
+        <el-tab-pane :label="'Đã xuất hóa đơn (' + tablists.opened + '）'" name="2" />
+        <el-tab-pane :label="'Hóa đơn hoàn tiền (' + tablists.refund + '）'" name="3" />
       </el-tabs>
       <el-table
         :data="orderList"
         ref="table"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
-        <el-table-column label="订单号" min-width="140">
+        <el-table-column label="Mã đơn hàng" min-width="140">
           <template slot-scope="scope">
             <span>{{ scope.row.order_id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="订单金额" min-width="90">
+        <el-table-column label="Số tiền đơn hàng" min-width="90">
           <template slot-scope="scope">
             <div>¥ {{ scope.row.pay_price }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="发票类型" min-width="130">
+        <el-table-column label="Loại hóa đơn" min-width="130">
           <template slot-scope="scope">
-            <div v-if="scope.row.type === 1">电子普通发票</div>
-            <div v-else>纸质专用发票</div>
+            <div v-if="scope.row.type === 1">Hóa đơn điện tử thông thường</div>
+            <div v-else>Hóa đơn chuyên dụng (VAT) bản giấy</div>
           </template>
         </el-table-column>
-        <el-table-column label="发票抬头类型" min-width="130">
+        <el-table-column label="Loại tiêu đề hóa đơn" min-width="130">
           <template slot-scope="scope">
-            <div v-if="scope.row.header_type === 1">个人</div>
-            <div v-else>企业</div>
+            <div v-if="scope.row.header_type === 1">Cá nhân</div>
+            <div v-else>Doanh nghiệp</div>
           </template>
         </el-table-column>
-        <el-table-column label="下单时间" min-width="130">
+        <el-table-column label="Thời gian đặt hàng" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.add_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="开票状态" min-width="130">
+        <el-table-column label="Trạng thái xuất hóa đơn" min-width="130">
           <template slot-scope="scope">
-            <div v-if="scope.row.is_invoice === 1">已开票</div>
-            <div v-else>未开票</div>
+            <div v-if="scope.row.is_invoice === 1">Đã xuất hóa đơn</div>
+            <div v-else>Chưa xuất hóa đơn</div>
           </template>
         </el-table-column>
-        <el-table-column label="订单状态" min-width="130">
+        <el-table-column label="Trạng thái đơn hàng" min-width="130">
           <template slot-scope="scope">
-            <div v-if="scope.row.status === 0">未发货</div>
-            <div v-else-if="scope.row.status === 1">待收货</div>
-            <div v-else-if="scope.row.status === 2">待评价</div>
-            <div v-else-if="scope.row.status === 3">已完成</div>
-            <div v-else-if="scope.row.status === -2">已退款</div>
+            <div v-if="scope.row.status === 0">Chưa giao hàng</div>
+            <div v-else-if="scope.row.status === 1">Chờ nhận hàng</div>
+            <div v-else-if="scope.row.status === 2">Chờ đánh giá</div>
+            <div v-else-if="scope.row.status === 3">Đã hoàn thành</div>
+            <div v-else-if="scope.row.status === -2">Đã hoàn tiền</div>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="300">
+        <el-table-column label="Thao tác" fixed="right" width="300">
           <template slot-scope="scope">
             <template v-if="tablists.elec_invoice && tablists.elec_invoice == 1">
               <a
@@ -112,7 +112,7 @@
                 "
                 v-db-click
                 @click="downInvoice(scope.row)"
-                >下载发票</a
+                >Tải xuống hóa đơn</a
               >
               <el-divider
                 v-if="
@@ -127,7 +127,7 @@
                 v-if="scope.row.is_invoice == 1 && scope.row.unique_num !== '' && scope.row.red_invoice_num == ''"
                 v-db-click
                 @click="openNegative(scope.row)"
-                >开具负数发票</a
+                >Xuất hóa đơn điều chỉnh giảm</a
               >
               <el-divider
                 v-if="scope.row.is_invoice == 1 && scope.row.unique_num !== '' && scope.row.red_invoice_num == ''"
@@ -137,13 +137,13 @@
                 v-if="scope.row.is_invoice !== 1 && scope.row.refund_status == 0"
                 v-db-click
                 @click="getInvoice(scope.row)"
-                >开具电子发票</a
+                >Xuất hóa đơn điện tử</a
               >
               <el-divider v-if="scope.row.is_invoice !== 1 && scope.row.refund_status == 0" direction="vertical" />
             </template>
-            <a v-if="scope.row.status != -2" v-db-click @click="edit(scope.row)">操作</a>
+            <a v-if="scope.row.status != -2" v-db-click @click="edit(scope.row)">Thao tác</a>
             <el-divider v-if="scope.row.status != -2" direction="vertical" />
-            <a v-db-click @click="orderInfo(scope.row.id)">订单信息</a>
+            <a v-db-click @click="orderInfo(scope.row.id)">Thông tin đơn hàng</a>
           </template>
         </el-table-column>
       </el-table>
@@ -157,128 +157,128 @@
         />
       </div>
     </el-card>
-    <el-dialog :visible.sync="invoiceShow" title="发票详情" class="order_box" width="720px" @closed="cancel">
+    <el-dialog :visible.sync="invoiceShow" title="Chi tiết hóa đơn" class="order_box" width="720px" @closed="cancel">
       <el-form ref="formInline" :model="formInline" label-width="80px" @submit.native.prevent>
         <div v-if="invoiceDetails.header_type === 1 && invoiceDetails.type === 1">
           <div class="list">
-            <div class="title">发票信息</div>
+            <div class="title">Thông tin hóa đơn</div>
             <el-row class="row">
               <el-col :span="12"
-                >发票抬头: <span class="info">{{ invoiceDetails.name }}</span></el-col
+                >Tiêu đề hóa đơn: <span class="info">{{ invoiceDetails.name }}</span></el-col
               >
-              <el-col :span="12">发票类型: <span class="info">电子普通发票</span></el-col>
+              <el-col :span="12">Loại hóa đơn: <span class="info">Hóa đơn điện tử thông thường</span></el-col>
             </el-row>
             <el-row class="row">
-              <el-col :span="12">发票抬头类型: 个人</el-col>
-              <el-col :span="12">订单金额: {{ invoiceDetails.pay_price }}</el-col>
+              <el-col :span="12">Loại tiêu đề hóa đơn: Cá nhân</el-col>
+              <el-col :span="12">Số tiền đơn hàng: {{ invoiceDetails.pay_price }}</el-col>
             </el-row>
           </div>
           <div class="list">
-            <div class="title row">联系信息</div>
+            <div class="title row">Thông tin liên hệ</div>
             <el-row class="row">
-              <el-col :span="12">真实姓名: {{ invoiceDetails.name }}</el-col>
-              <el-col :span="12">联系电话: {{ invoiceDetails.drawer_phone }}</el-col>
+              <el-col :span="12">Họ tên: {{ invoiceDetails.name }}</el-col>
+              <el-col :span="12">Số điện thoại liên hệ: {{ invoiceDetails.drawer_phone }}</el-col>
             </el-row>
             <el-row class="row">
-              <el-col :span="12">联系邮箱: {{ invoiceDetails.email }}</el-col>
+              <el-col :span="12">Email liên hệ: {{ invoiceDetails.email }}</el-col>
             </el-row>
           </div>
         </div>
         <div v-if="invoiceDetails.header_type === 2 && invoiceDetails.type === 1">
           <div class="list">
-            <div class="title">发票信息</div>
+            <div class="title">Thông tin hóa đơn</div>
             <el-row class="row">
               <el-col :span="12"
-                >发票抬头: <span class="info">{{ invoiceDetails.name }}</span></el-col
+                >Tiêu đề hóa đơn: <span class="info">{{ invoiceDetails.name }}</span></el-col
               >
               <el-col :span="12"
-                >企业税号: <span class="info">{{ invoiceDetails.duty_number }}</span></el-col
+                >Mã số thuế doanh nghiệp: <span class="info">{{ invoiceDetails.duty_number }}</span></el-col
               >
             </el-row>
             <el-row class="row">
-              <el-col :span="12">发票类型: 电子普通发票</el-col>
-              <el-col :span="12">发票抬头类型: 企业</el-col>
+              <el-col :span="12">Loại hóa đơn: Hóa đơn điện tử thông thường</el-col>
+              <el-col :span="12">Loại tiêu đề hóa đơn: Doanh nghiệp</el-col>
             </el-row>
           </div>
           <div class="list">
-            <div class="title row">联系信息</div>
+            <div class="title row">Thông tin liên hệ</div>
             <el-row class="row">
-              <el-col :span="12">真实姓名: {{ invoiceDetails.name }}</el-col>
-              <el-col :span="12">联系电话: {{ invoiceDetails.user_phone }}</el-col>
+              <el-col :span="12">Họ tên: {{ invoiceDetails.name }}</el-col>
+              <el-col :span="12">Số điện thoại liên hệ: {{ invoiceDetails.user_phone }}</el-col>
             </el-row>
             <el-row class="row">
-              <el-col :span="12">联系邮箱: {{ invoiceDetails.email }}</el-col>
+              <el-col :span="12">Email liên hệ: {{ invoiceDetails.email }}</el-col>
             </el-row>
           </div>
         </div>
         <div v-if="invoiceDetails.header_type === 2 && invoiceDetails.type === 2">
           <div class="list">
-            <div class="title">发票信息</div>
+            <div class="title">Thông tin hóa đơn</div>
             <el-row class="row">
               <el-col :span="12"
-                >发票抬头: <span class="info">{{ invoiceDetails.name }}</span></el-col
+                >Tiêu đề hóa đơn: <span class="info">{{ invoiceDetails.name }}</span></el-col
               >
               <el-col :span="12"
-                >企业税号: <span class="info">{{ invoiceDetails.duty_number }}</span></el-col
-              >
-            </el-row>
-            <el-row class="row">
-              <el-col :span="12">发票类型: 纸质专用发票</el-col>
-              <el-col :span="12">发票抬头类型: 企业</el-col>
-            </el-row>
-            <el-row class="row">
-              <el-col :span="12"
-                >开户银行: <span class="info">{{ invoiceDetails.bank }}</span></el-col
-              >
-              <el-col :span="12"
-                >银行账号: <span class="info">{{ invoiceDetails.card_number }}</span></el-col
+                >Mã số thuế doanh nghiệp: <span class="info">{{ invoiceDetails.duty_number }}</span></el-col
               >
             </el-row>
             <el-row class="row">
-              <el-col :span="12">企业地址: {{ invoiceDetails.address }}</el-col>
-              <el-col :span="12">企业电话: {{ invoiceDetails.tell }}</el-col>
+              <el-col :span="12">Loại hóa đơn: Hóa đơn chuyên dụng (VAT) bản giấy</el-col>
+              <el-col :span="12">Loại tiêu đề hóa đơn: Doanh nghiệp</el-col>
+            </el-row>
+            <el-row class="row">
+              <el-col :span="12"
+                >Ngân hàng mở tài khoản: <span class="info">{{ invoiceDetails.bank }}</span></el-col
+              >
+              <el-col :span="12"
+                >Số tài khoản ngân hàng: <span class="info">{{ invoiceDetails.card_number }}</span></el-col
+              >
+            </el-row>
+            <el-row class="row">
+              <el-col :span="12">Địa chỉ doanh nghiệp: {{ invoiceDetails.address }}</el-col>
+              <el-col :span="12">Điện thoại doanh nghiệp: {{ invoiceDetails.tell }}</el-col>
             </el-row>
           </div>
           <div class="list">
-            <div class="title row">联系信息</div>
+            <div class="title row">Thông tin liên hệ</div>
             <el-row class="row">
-              <el-col :span="12">真实姓名: {{ invoiceDetails.real_name }}</el-col>
-              <el-col :span="12">联系电话: {{ invoiceDetails.user_phone }}</el-col>
+              <el-col :span="12">Họ tên: {{ invoiceDetails.real_name }}</el-col>
+              <el-col :span="12">Số điện thoại liên hệ: {{ invoiceDetails.user_phone }}</el-col>
             </el-row>
             <el-row class="row">
-              <el-col :span="12">联系邮箱: {{ invoiceDetails.email }}</el-col>
+              <el-col :span="12">Email liên hệ: {{ invoiceDetails.email }}</el-col>
             </el-row>
           </div>
         </div>
-        <el-form-item label="开票状态：" style="margin-top: 14px">
+        <el-form-item label="Trạng thái xuất hóa đơn:" style="margin-top: 14px">
           <el-radio-group v-model="formInline.is_invoice" @input="kaiInvoice(formInline.is_invoice)">
-            <el-radio :label="1">已开票</el-radio>
-            <el-radio :label="0">未开票</el-radio>
+            <el-radio :label="1">Đã xuất hóa đơn</el-radio>
+            <el-radio :label="0">Chưa xuất hóa đơn</el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="发票编号：" v-if="formInline.is_invoice === 1">
-          <el-input v-model="formInline.invoice_number" placeholder="请输入发票编号"></el-input>
+        <el-form-item label="Số hóa đơn:" v-if="formInline.is_invoice === 1">
+          <el-input v-model="formInline.invoice_number" placeholder="Vui lòng nhập số hóa đơn"></el-input>
         </el-form-item>
-        <el-form-item label="发票备注：" v-if="formInline.is_invoice === 1">
+        <el-form-item label="Ghi chú hóa đơn:" v-if="formInline.is_invoice === 1">
           <el-input
             v-model="formInline.remark"
-            value="备注"
+            value="Ghi chú"
             type="textarea"
             :autosize="{ minRows: 2, maxRows: 5 }"
-            placeholder="请输入发票备注"
+            placeholder="Vui lòng nhập ghi chú hóa đơn"
           ></el-input>
         </el-form-item>
         <div class="acea-row row-right">
-          <el-button type="primary" v-db-click @click="handleSubmit()">确定</el-button>
+          <el-button type="primary" v-db-click @click="handleSubmit()">Xác nhận</el-button>
         </div>
       </el-form>
     </el-dialog>
-    <el-dialog :visible.sync="orderShow" title="订单详情" class="order_box" width="720px">
+    <el-dialog :visible.sync="orderShow" title="Chi tiết đơn hàng" class="order_box" width="720px">
       <orderDetall :orderId="orderId" @detall="detall" v-if="orderShow"></orderDetall>
     </el-dialog>
     <el-dialog
       :visible.sync="invoiceModalShow"
-      title="发票信息"
+      title="Thông tin hóa đơn"
       append-to-body
       :close-on-click-modal="false"
       width="1320px"
@@ -332,10 +332,10 @@ export default {
       timeVal: [],
       pickerOptions: this.$timeOptions,
       orderList: [],
-      total: 0, // 总条数
+      total: 0, // Tổng số bản ghi
       orderData: {
-        page: 1, // 当前页
-        limit: 15, // 每页显示条数
+        page: 1, // Trang hiện tại
+        limit: 15, // Số mục hiển thị mỗi trang
         status: '',
         data: '',
         real_name: '',
@@ -354,10 +354,10 @@ export default {
 
   methods: {
     openNegative(row) {
-      // 弹窗确认
-      this.$confirm('确定开具负数发票？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      // Xác nhận popup
+      this.$confirm('Xác nhận xuất hóa đơn điều chỉnh giảm?', 'Thông báo', {
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
         type: 'warning',
       }).then(() => {
         redInvoiceIssuance(row.invoice_id).then((res) => {
@@ -379,7 +379,7 @@ export default {
         window.addEventListener('message', this.handleMessage);
       });
     },
-    // 处理iframe传值
+    // Xử lý truyền giá trị iframe
     handleMessage(event) {
       switch (event.data.event) {
         case 'onCancel':
@@ -426,7 +426,7 @@ export default {
     },
     handleSubmit() {
       if (this.formInline.is_invoice === 1) {
-        if (this.formInline.invoice_number.trim() === '') return this.$message.error('请填写发票编号');
+        if (this.formInline.invoice_number.trim() === '') return this.$message.error('Vui lòng nhập số hóa đơn');
       }
       orderInvoiceSet(this.invoiceDetails.invoice_id, this.formInline)
         .then((res) => {
@@ -447,7 +447,7 @@ export default {
       this.formInline.remark = row.invoice_reamrk;
       this.formInline.is_invoice = row.is_invoice;
     },
-    // 订单列表
+    // Danh sách đơn hàng
     getList() {
       this.loading = true;
       orderInvoiceList(this.orderData)
@@ -471,13 +471,13 @@ export default {
           this.$message.error(err.msg);
         });
     },
-    // 精确搜索()
+    // Tìm kiếm chính xác()
     orderSearch() {
       this.orderData.page = 1;
       this.getTabs();
       this.getList();
     },
-    // 具体日期搜索()；
+    // Tìm kiếm theo ngày cụ thể();
     onchangeTime(e) {
       this.orderData.page = 1;
       this.timeVal = e || [];
@@ -485,12 +485,12 @@ export default {
       this.getList();
       this.getTabs();
     },
-    //订单状态搜索()
+    //Tìm kiếm theo trạng thái đơn hàng()
     selectChange() {
       this.orderData.page = 1;
       this.getList();
     },
-    //订单搜索()
+    //Tìm kiếm đơn hàng()
     onClickTab() {
       this.orderData.page = 1;
       this.orderData.type = this.currentTab;

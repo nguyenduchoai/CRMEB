@@ -1,54 +1,54 @@
 <template>
 	<view :style="colorStyle">
 		<view class="payment-status" v-if="(!orderLottery || !order_pay_info.paid || is_gift) && loading && lotteryLoading">
-			<!--失败时： 用icon-iconfontguanbi fail替换icon-duihao2 bg-color-->
+			<!--Khi thất bại: dùng icon-iconfontguanbi fail thay cho icon-duihao2 bg-color-->
 			<view class="iconfont icons icon-duihao2 bg-color" v-if="order_pay_info.paid || order_pay_info.pay_type == 'offline'"></view>
 			<view class="iconfont icons icon-iconfontguanbi" v-else></view>
-			<!-- 失败时：订单支付失败 -->
+			<!-- Khi thất bại: thanh toán đơn hàng thất bại -->
 			<view class="status" v-if="order_pay_info.pay_type != 'offline'">
-				{{ order_pay_info.paid ? $t(`订单支付成功`) : $t(payType ? `订单支付中` : `订单支付失败`) }}
+				{{ order_pay_info.paid ? $t(`Thanh toán đơn hàng thành công`) : $t(payType ? `Đang thanh toán đơn hàng` : `Thanh toán đơn hàng thất bại`) }}
 			</view>
-			<view class="status" v-else>{{ $t(`订单创建成功`) }}</view>
+			<view class="status" v-else>{{ $t(`Tạo đơn hàng thành công`) }}</view>
 			<view class="wrapper">
 				<view class="item acea-row row-between-wrapper">
-					<view>{{ $t(`订单号`) }}</view>
+					<view>{{ $t(`Mã đơn hàng`) }}</view>
 					<view class="itemCom">{{ orderId }}</view>
 				</view>
 				<view class="item acea-row row-between-wrapper">
-					<view>{{ $t(`下单时间`) }}</view>
+					<view>{{ $t(`Thời gian đặt hàng`) }}</view>
 					<view class="itemCom">{{ order_pay_info._add_time }}</view>
 				</view>
 				<view class="item acea-row row-between-wrapper">
-					<view>{{ $t(`支付方式`) }}</view>
-					<view class="itemCom">{{ $t(order_pay_info._status._payType) || $t(`暂未支付`) }}</view>
+					<view>{{ $t(`Phương thức thanh toán`) }}</view>
+					<view class="itemCom">{{ $t(order_pay_info._status._payType) || $t(`Chưa thanh toán`) }}</view>
 				</view>
 				<view class="item acea-row row-between-wrapper">
-					<view>{{ $t(`支付金额`) }}</view>
+					<view>{{ $t(`Số tiền thanh toán`) }}</view>
 					<view class="itemCom">{{ order_pay_info.pay_price }}</view>
 				</view>
-				<!--失败时加上这个  -->
+				<!--Khi thất bại thì thêm cái này  -->
 				<view class="item acea-row row-between-wrapper" v-if="order_pay_info.paid == 0 && order_pay_info.pay_type != 'offline'">
-					<view>{{ $t(`失败原因`) }}</view>
-					<view class="itemCom">{{ $t(`未支付`) }}</view>
+					<view>{{ $t(`Lý do thất bại`) }}</view>
+					<view class="itemCom">{{ $t(`Chưa thanh toán`) }}</view>
 				</view>
 			</view>
 			<view v-if="order_pay_info.paid != 0 && is_gift !== 0" @click="giftModalShow = true">
-				<button class="returnBnt bg-color" hover-class="none">{{ $t(`送给好友`) }}</button>
+				<button class="returnBnt bg-color" hover-class="none">{{ $t(`Tặng bạn bè`) }}</button>
 			</view>
-			<!--失败时： 重新购买 -->
+			<!--Khi thất bại: mua lại -->
 			<view @tap="goOrderDetails" v-if="status == 0">
-				<button formType="submit" class="returnBnt bg-color" hover-class="none">{{ $t(`查看订单`) }}</button>
+				<button formType="submit" class="returnBnt bg-color" hover-class="none">{{ $t(`Xem đơn hàng`) }}</button>
 			</view>
 			<!-- #ifdef H5 -->
 			<view @tap="getOrderPayInfo" v-if="order_pay_info.paid == 0">
-				<button class="returnBnt bg-color" hover-class="none">{{ $t(`刷新支付状态`) }}</button>
+				<button class="returnBnt bg-color" hover-class="none">{{ $t(`Làm mới trạng thái thanh toán`) }}</button>
 			</view>
 			<!-- #endif -->
 			<view @tap="goOrderDetails" v-if="order_pay_info.paid == 0 && status == 1">
-				<button class="returnBnt bg-color" hover-class="none">{{ $t(`重新购买`) }}</button>
+				<button class="returnBnt bg-color" hover-class="none">{{ $t(`Mua lại`) }}</button>
 			</view>
 			<view @tap="goOrderDetails" v-if="order_pay_info.paid == 0 && status == 2">
-				<button class="returnBnt bg-color" hover-class="none">{{ $t(`重新支付`) }}</button>
+				<button class="returnBnt bg-color" hover-class="none">{{ $t(`Thanh toán lại`) }}</button>
 			</view>
 			<button
 				@click="goPink(order_pay_info.pink_id)"
@@ -57,13 +57,13 @@
 				hover-class="none"
 				v-if="order_pay_info.pink_id && order_pay_info.paid != 0 && status != 2 && status != 1"
 			>
-				{{ $t(`邀请好友参团`) }}
+				{{ $t(`Mời bạn bè tham gia nhóm`) }}
 			</button>
-			<button @click="goIndex" class="returnBnt cart-color" formType="submit" hover-class="none" v-else>{{ $t(`返回首页`) }}</button>
+			<button @click="goIndex" class="returnBnt cart-color" formType="submit" hover-class="none" v-else>{{ $t(`Về trang chủ`) }}</button>
 			<view class="coupons" v-if="couponList.length">
 				<view class="title acea-row row-center-wrapper">
 					<view class="line"></view>
-					<view class="name">{{ $t(`赠送优惠券`) }}</view>
+					<view class="name">{{ $t(`Phiếu giảm giá được tặng`) }}</view>
 					<view class="line"></view>
 				</view>
 				<view class="list">
@@ -78,12 +78,12 @@
 						</view>
 						<view class="text">
 							<view class="name line1">{{ item.coupon_title }}</view>
-							<view class="priceMin">{{ $t(`满`) }}{{ item.use_min_price }}{{ $t(`元可用`) }}</view>
-							<view class="time">{{ $t(`有效期`) }}:{{ item.add_time ? item.add_time + '-' : '' }}{{ item.end_time }}</view>
+							<view class="priceMin">{{ $t(`Đơn từ`) }}{{ item.use_min_price }}{{ $t(`đ có thể dùng`) }}</view>
+							<view class="time">{{ $t(`Thời hạn hiệu lực`) }}:{{ item.add_time ? item.add_time + '-' : '' }}{{ item.end_time }}</view>
 						</view>
 					</view>
 					<view class="open acea-row row-center-wrapper" @click="openTap" v-if="couponList.length > 2">
-						{{ couponsHidden ? $t(`更多`) : $t(`关闭`) }}
+						{{ couponsHidden ? $t(`Xem thêm`) : $t(`Tắt`) }}
 						<text class="iconfont" :class="couponsHidden == true ? 'icon-xiangxia' : 'icon-xiangshang'"></text>
 					</view>
 				</view>
@@ -137,8 +137,8 @@ export default {
 				paid: 1,
 				_status: {}
 			},
-			isAuto: false, //没有授权的不会自动授权
-			isShowAuth: false, //是否隐藏授权
+			isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+			isShowAuth: false, //Có ẩn ủy quyền hay không
 			status: 0,
 			msg: '',
 			couponsHidden: true,
@@ -169,7 +169,7 @@ export default {
 		if (!options.order_id)
 			return this.$util.Tips(
 				{
-					title: this.$t(`缺少参数无法查看订单支付状态`)
+					title: this.$t(`Thiếu tham số, không thể xem trạng thái thanh toán đơn hàng`)
 				},
 				{
 					tab: 3,
@@ -185,7 +185,7 @@ export default {
 		// document.addEventListener('visibilitychange', (e) => {
 		// 	let state = document.visibilityState
 		// 	if (state == 'hidden') {
-		// 		console.log('用户离开了');
+		// 		console.log('Người dùng đã rời đi');
 		// 	}
 		// 	if (state == 'visible') {
 		// 		this.getOrderPayInfo();
@@ -201,7 +201,7 @@ export default {
 		}
 	},
 	/**
-	 * 用户点击右上角分享
+	 * Người dùng click chia sẻ ở góc trên phải
 	 */
 	// #ifdef MP
 	onShareAppMessage: function () {
@@ -267,20 +267,20 @@ export default {
 		},
 		/**
 		 *
-		 * 支付完成查询支付状态
+		 * Sau khi thanh toán xong thì kiểm tra trạng thái thanh toán
 		 *
 		 */
 		getOrderPayInfo: function () {
 			let that = this;
 			uni.showLoading({
-				title: that.$t(`正在加载中`)
+				title: that.$t(`Đang tải`)
 			});
 			getOrderDetail(that.orderId)
 				.then((res) => {
 					uni.hideLoading();
 					that.$set(that, 'order_pay_info', res.data);
 					uni.setNavigationBarTitle({
-						title: res.data.paid ? that.$t(`支付成功`) : that.$t(`未支付`)
+						title: res.data.paid ? that.$t(`Thanh toán thành công`) : that.$t(`Chưa thanh toán`)
 					});
 					this.loading = true;
 					if (res.data.paid && res.data.is_gift) {
@@ -299,7 +299,7 @@ export default {
 					// #ifdef H5
 					if (this.is_gift) this.setOpenShare();
 					// #endif
-					// 非礼品禁用分享
+					// Không phải quà tặng thì tắt chia sẻ
 					if (!this.is_gift) {
 						uni.hideShareMenu();
 					}
@@ -317,14 +317,14 @@ export default {
 			});
 		},
 		/**
-		 * 去首页关闭当前所有页面
+		 * Về trang chủ và đóng tất cả trang hiện tại
 		 */
 		goIndex: function (e) {
 			uni.switchTab({
 				url: '/pages/index/index'
 			});
 		},
-		// 去参团页面；
+		// Đến trang tham gia nhóm mua chung;
 		goPink: function (id) {
 			uni.navigateTo({
 				url: '/pages/activity/goods_combination_status/index?id=' + id
@@ -332,13 +332,13 @@ export default {
 		},
 		/**
 		 *
-		 * 去订单详情页面
+		 * Đến trang chi tiết đơn hàng
 		 */
 		goOrderDetails: function (e) {
 			let that = this;
 			// #ifdef MP
 			uni.showLoading({
-				title: that.$t(`正在加载中`)
+				title: that.$t(`Đang tải`)
 			});
 			openOrderSubscribe()
 				.then((res) => {

@@ -9,14 +9,14 @@
 			</view>
 		</view>
 		<form class="form" @submit="active">
-			<input class="input" name="account" :placeholder="$t(`请输入卡号`)" placeholder-style="color:#C38D5D" />
-			<input class="input" name="password" :placeholder="$t(`请输入卡密`)" placeholder-style="color:#C38D5D" password />
-			<button class="button" form-type="submit">{{$t(`确认激活`)}}</button>
+			<input class="input" name="account" :placeholder="$t(`Vui lòng nhập số thẻ`)" placeholder-style="color:#C38D5D" />
+			<input class="input" name="password" :placeholder="$t(`Vui lòng nhập mã thẻ`)" placeholder-style="color:#C38D5D" password />
+			<button class="button" form-type="submit">{{$t(`Xác nhận kích hoạt`)}}</button>
 		</form>
-		<!-- 会员权益 -->
+		<!-- Quyền lợi thành viên -->
 		<view class="right-section">
 			<view class="section-hd acea-row row-center-wrapper">
-				<view class="title acea-row row-center row-bottom"><text class="iconfont icon-huiyuan2"></text>{{$t(`SVIP会员尊享权`)}}</view>
+				<view class="title acea-row row-center row-bottom"><text class="iconfont icon-huiyuan2"></text>{{$t(`Đặc quyền thành viên SVIP`)}}</view>
 			</view>
 			<view class="section-bd acea-row row-between-wrapper">
 				<view v-for="item in memberRights" :key="item.id" class="acea-row row-middle item">
@@ -47,10 +47,10 @@
 			this.getMemberCard();
 		},
 		methods: {
-			// 会员权益
+			// Quyền lợi thành viên
 			getMemberCard() {
 				uni.showLoading({
-					title: this.$t(`正在加载中`)
+					title: this.$t(`Đang tải`)
 				});
 				memberCard().then(res => {
 					uni.hideLoading();
@@ -62,7 +62,7 @@
 					});
 				});
 			},
-			// 激活
+			// Kích hoạt
 			active(e) {
 				let formData = e.detail.value,
 					data = {
@@ -72,13 +72,13 @@
 					};
 				if (!formData.account) {
 					return uni.showToast({
-						title: this.$t(`请输入卡号`),
+						title: this.$t(`Vui lòng nhập số thẻ`),
 						icon: 'none'
 					});
 				}
 				if (!formData.password) {
 					return uni.showToast({
-						title: this.$t(`请输入卡密`),
+						title: this.$t(`Vui lòng nhập mã thẻ`),
 						icon: 'none'
 					});
 				}
@@ -94,7 +94,7 @@
 				data.from = 'routine';
 				// #endif
 				uni.showLoading({
-					title: this.$t(`正在激活`)
+					title: this.$t(`Đang kích hoạt`)
 				});
 				memberCardDraw(data).then(res => {
 					let that = this;

@@ -10,7 +10,7 @@
     >
       <el-row :gutter="24" justify="end">
         <el-col :span="24" class="ivu-text-left">
-          <el-form-item label="订单状态：">
+          <el-form-item label="Trạng thái đơn hàng:">
             <el-radio-group v-model="DataList.status" type="button" @input="selectChange(DataList.status)">
               <el-radio-button :label="item.label" v-for="(item, i) in typeName" :key="i">{{
                 item.name + '(' + item.num + ')'
@@ -20,12 +20,12 @@
         </el-col>
         <el-col :span="24" class="ivu-text-left">
           <el-col v-bind="grid">
-            <el-form-item label="创建时间：">
+            <el-form-item label="Thời gian tạo:">
               <el-radio-group v-model="DataList.data" type="button" @input="timeChange(DataList.data)">
-                <el-radio-button label="today">今天</el-radio-button>
-                <el-radio-button label="yesterday">昨天</el-radio-button>
-                <el-radio-button label="lately7">最近7天</el-radio-button>
-                <el-radio-button label="lately30">最近30天</el-radio-button>
+                <el-radio-button label="today">Hôm nay</el-radio-button>
+                <el-radio-button label="yesterday">Hôm qua</el-radio-button>
+                <el-radio-button label="lately7">7 ngày qua</el-radio-button>
+                <el-radio-button label="lately30">30 ngày qua</el-radio-button>
               </el-radio-group>
             </el-form-item>
           </el-col>
@@ -37,21 +37,21 @@
                 value-format="yyyy/MM/dd"
                 type="daterange"
                 range-separator="-"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                start-placeholder="Ngày bắt đầu"
+                end-placeholder="Ngày kết thúc"
                 style="width: 200px"
               ></el-date-picker>
             </el-form-item>
           </el-col>
         </el-col>
         <el-col :span="24" class="ivu-text-left" v-if="$route.path === routePro + '/echarts/trade/order'">
-          <el-form-item label="订单类型：">
+          <el-form-item label="Loại đơn hàng:">
             <el-radio-group v-model="currentTab" type="button" @input="onClickTab(currentTab)">
-              <el-radio-button label="">全部</el-radio-button>
-              <el-radio-button label="1">普通</el-radio-button>
-              <el-radio-button v-permission="'combination'" label="2">拼团</el-radio-button>
-              <el-radio-button v-permission="'bargain'" label="3">砍价</el-radio-button>
-              <el-radio-button v-permission="'seckill'" label="4">秒杀</el-radio-button>
+              <el-radio-button label="">Tất cả</el-radio-button>
+              <el-radio-button label="1">Thường</el-radio-button>
+              <el-radio-button v-permission="'combination'" label="2">Mua chung</el-radio-button>
+              <el-radio-button v-permission="'bargain'" label="3">Săn giảm giá</el-radio-button>
+              <el-radio-button v-permission="'seckill'" label="4">Flash sale</el-radio-button>
             </el-radio-group>
           </el-form-item>
         </el-col>
@@ -79,7 +79,7 @@ export default {
         xs: 24,
       },
       // collapse: false,
-      // 搜索条件
+      // Điều kiện tìm kiếm
       DataList: {
         status: '',
         data: '',
@@ -95,27 +95,27 @@ export default {
     ...mapState('order', ['orderChartType']),
   },
   methods: {
-    // 订单选择状态
+    // Trạng thái chọn đơn hàng
     selectChange(status) {
       this.$emit('getTypeNum', status);
     },
-    // 时间状态
+    // Trạng thái thời gian
     timeChange(time) {
       this.$emit('getSeachTime', time);
     },
-    // 订单号搜索
+    // Tìm kiếm theo mã đơn hàng
     orderSearch(num) {
       this.getOrderNum(num);
       this.$emit('getList');
     },
-    // 点击订单类型
+    // Bấm chọn loại đơn hàng
     onClickTab() {
       this.$emit('onChangeType', this.currentTab);
     },
     handleSubmit() {
       this.$emit('on-submit', this.data);
     },
-    // 刷新
+    // Làm mới
     Refresh() {
       this.$emit('getList');
     },

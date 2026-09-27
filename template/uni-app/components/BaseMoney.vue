@@ -14,7 +14,7 @@
 	export default {
 		name: 'BaseMoney',
 		props: {
-			// 小数位数，为0则不显示
+			// Số chữ số thập phân, bằng 0 thì không hiển thị
 			digits: {
 				type: Number,
 				default: 2
@@ -23,12 +23,12 @@
 				type: String | Number,
 				default: ""
 			},
-			// 删除线
+			// Gạch ngang
 			line: {
 				type: Boolean,
 				default: false
 			},
-			// 粗体
+			// Đậm
 			weight: {
 				type: Boolean,
 				default: false

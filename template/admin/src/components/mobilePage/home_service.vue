@@ -16,11 +16,11 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'home_service',
-  cname: '悬浮按钮',
+  cname: 'Nút nổi',
   configName: 'c_home_service',
   icon: '#iconzujian-xuanfuanniu',
-  type: 2, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'customerService', // 外面匹配名称
+  type: 2, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'customerService', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -58,126 +58,126 @@ export default {
   data() {
     return {
       defaultConfig: {
-        cname: '悬浮按钮',
+        cname: 'Nút nổi',
         name: 'customerService',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
         },
-        titleLeft: '按钮设置',
-        titleRight: '位置设置',
+        titleLeft: 'Cài đặt nút',
+        titleRight: 'Cài đặt vị trí',
         buttonConfig: {
-          title: '按钮跳转',
+          title: 'Liên kết của nút',
           tabVal: 0,
           tabList: [
             {
-              name: '页面链接',
+              name: 'Liên kết trang',
             },
             {
-              name: '客服入口',
+              name: 'Lối vào CSKH',
             },
           ],
         },
         locationConfig: {
-          title: '展示位置',
+          title: 'Vị trí hiển thị',
           tabVal: 1,
           tabList: [
             {
-              name: '左',
+              name: 'Trái',
             },
             {
-              name: '右',
+              name: 'Phải',
             },
           ],
         },
         logoConfig: {
-          title: '建议：展示上传100*100px；',
+          title: 'Đề xuất: tải lên ảnh 100*100px;',
           url: '',
           link: '',
         },
         zIndexConfig: {
-          title: '组件上浮',
+          title: 'Thứ tự lớp thành phần',
           val: 0,
           min: 0,
         },
         borderConfig: {
-          title: '边框设置',
+          title: 'Cài đặt viền',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0, // 0: Hide, 1: Show
           styleConfig: {
-            title: '边框样式',
+            title: 'Kiểu viền',
             tabVal: 0,
             tabList: [
-              { name: '实线', style: 'solid' },
-              { name: '虚线', style: 'dashed' },
-              { name: '点状', style: 'dotted' },
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
             ],
           },
           widthConfig: {
-            title: '边框粗细',
+            title: 'Độ dày viền',
             val: 1,
             min: 1,
           },
           colorConfig: {
-            title: '边框颜色',
+            title: 'Màu viền',
             default: [{ item: '#e5e5e5' }],
             color: [{ item: '#e5e5e5' }],
           },
         },
         shadowConfig: {
-          title: '阴影设置',
+          title: 'Cài đặt đổ bóng',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0, // 0: Hide, 1: Show
           colorConfig: {
-            title: '阴影颜色',
+            title: 'Màu đổ bóng',
             default: [{ item: 'rgba(0,0,0,0.1)' }],
             color: [{ item: 'rgba(0,0,0,0.1)' }],
           },
           xConfig: {
-            title: 'X轴偏移',
+            title: 'Độ lệch trục X',
             val: 0,
             min: -50,
           },
           yConfig: {
-            title: 'Y轴偏移',
+            title: 'Độ lệch trục Y',
             val: 0,
             min: -50,
           },
           blurConfig: {
-            title: '模糊半径',
+            title: 'Bán kính làm mờ',
             val: 10,
             min: 0,
           },
           spreadConfig: {
-            title: '扩展半径',
+            title: 'Bán kính lan tỏa',
             val: 0,
             min: -50,
           },
         },
         componentBgConfig: {
-          title: '组件背景',
+          title: 'Nền thành phần',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0, // 0: Hide, 1: Show
           colorConfig: {
-            title: '背景颜色',
+            title: 'Màu nền',
             default: [{ item: '#fff' }],
             color: [{ item: '#fff' }],
           },
         },
-        // 页面间距
+        // Lề trang
         paddingConfig: {
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           isAll: false,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         marginConfig: {
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           isAll: false,
@@ -187,7 +187,7 @@ export default {
       imgUrl: '',
       pageData: {},
       mTop: 0,
-      positions: 1, //展示位置
+      positions: 1, //Vị trí hiển thị
       configObj: null,
     };
   },

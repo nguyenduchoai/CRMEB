@@ -1,70 +1,70 @@
-# crmeb 目录文件说明
+# Mô tả các tệp trong thư mục crmeb
 
-## 目录结构概览
+## Tổng quan cấu trúc thư mục
 ```
 crmeb/
-├── app/                 # 应用程序核心代码（控制器、模型、服务等）
-├── backup/              # 数据备份文件
-├── config/              # 配置文件（数据库、缓存、接口等）
-├── crmeb/               # 项目内部公共模块或扩展库
-├── public/              # Web 可访问入口（静态资源、index.php）
-├── route/               # 路由定义
-├── runtime/             # 运行时缓存、日志、Session 等（需忽略版本控制）
+├── app/                 # Mã nguồn lõi của ứng dụng (controller, model, service, v.v.)
+├── backup/              # File sao lưu dữ liệu
+├── config/              # File cấu hình (cơ sở dữ liệu, cache, API, v.v.)
+├── crmeb/               # Module dùng chung nội bộ của dự án hoặc thư viện mở rộng
+├── public/              # Web - điểm truy cập công khai (tài nguyên tĩnh, index.php）
+├── route/               # Định nghĩa route
+├── runtime/             # Cache, log, Session, v.v. sinh ra khi chạy (cần loại khỏi quản lý phiên bản)
 │
-├── .constant            # 常量定义文件（需忽略版本控制）
-├── .dockerignore        # Docker 构建忽略规则
-├── .env                 # 环境变量配置（敏感信息）（需忽略版本控制）
-├── .env.example         # 环境变量示例文件
-├── .htaccess            # Apache 重写规则
-├── .phpstorm.meta.php   # PhpStorm 元数据
-├── .travis.yml          # Travis CI 配置
-├── .version             # 版本信息
-├── Dockerfile           # Docker 镜像构建文件
-├── LICENSE.txt          # 开源许可协议
-├── README.md            # 项目说明
-├── build.example.php    # 构建示例脚本
-├── composer.json        # Composer 依赖配置
-├── composer.lock        # Composer 锁定版本
-├── filetree.txt         # 文件树结构快照
-├── index.html           # 默认首页（防访问目录）
-├── my.cnf               # MySQL 自定义配置（需忽略版本控制）
-├── nginx.conf           # Nginx 配置（需忽略版本控制）
-├── php-fpm.conf         # PHP-FPM 配置（需忽略版本控制）
-├── php-ini-overrides.ini# PHP 自定义 ini 覆盖（需忽略版本控制）
-├── redis.conf           # Redis 配置（需忽略版本控制）
-├── start.sh             # 项目启动脚本（需忽略版本控制）
-├── supervisord.conf     # Supervisor 进程管理配置（需忽略版本控制）
-├── think                # ThinkPHP 框架入口文件
-├── vhost.conf           # 虚拟主机配置（需忽略版本控制）
-└── workerman.bat        # Windows 下 Workerman 启动脚本
+├── .constant            # File định nghĩa hằng số (cần loại khỏi quản lý phiên bản)
+├── .dockerignore        # Docker - quy tắc bỏ qua khi build
+├── .env                 # Cấu hình biến môi trường (thông tin nhạy cảm) (cần loại khỏi quản lý phiên bản)
+├── .env.example         # File mẫu biến môi trường
+├── .htaccess            # Apache - quy tắc viết lại URL (rewrite)
+├── .phpstorm.meta.php   # PhpStorm - siêu dữ liệu (metadata)
+├── .travis.yml          # Travis CI Cấu hình
+├── .version             # Thông tin phiên bản
+├── Dockerfile           # Docker - file build image
+├── LICENSE.txt          # Giấy phép mã nguồn mở
+├── README.md            # Giới thiệu dự án
+├── build.example.php    # Script build mẫu
+├── composer.json        # Composer cấu hình phụ thuộc
+├── composer.lock        # Composer - khóa phiên bản
+├── filetree.txt         # Bản chụp cấu trúc cây thư mục
+├── index.html           # Trang chủ mặc định (chặn truy cập trực tiếp thư mục)
+├── my.cnf               # MySQL - cấu hình tùy chỉnh (cần loại khỏi quản lý phiên bản)
+├── nginx.conf           # Nginx - cấu hình (cần loại khỏi quản lý phiên bản)
+├── php-fpm.conf         # PHP-FPM - cấu hình (cần loại khỏi quản lý phiên bản)
+├── php-ini-overrides.ini# PHP - ghi đè ini tùy chỉnh (cần loại khỏi quản lý phiên bản)
+├── redis.conf           # Redis - cấu hình (cần loại khỏi quản lý phiên bản)
+├── start.sh             # Script khởi động dự án (cần loại khỏi quản lý phiên bản)
+├── supervisord.conf     # Supervisor - cấu hình quản lý tiến trình (cần loại khỏi quản lý phiên bản)
+├── think                # ThinkPHP - file entry của framework
+├── vhost.conf           # Cấu hình virtual host (cần loại khỏi quản lý phiên bản)
+└── workerman.bat        # Windows - script khởi động Workerman
 ```
 
-## 主要目录说明
+## Mô tả các thư mục chính
 - **app/**  
-  存放业务逻辑的核心代码，包括控制器(Controller)、模型(Model)、服务层(Service)等，遵循 MVC 或类似分层架构。
+  Chứa mã nguồn cốt lõi của logic nghiệp vụ, bao gồm bộ điều khiển (Controller), mô hình (Model), tầng dịch vụ (Service), v.v., tuân theo kiến trúc MVC hoặc kiến trúc phân tầng tương tự.
 - **backup/**  
-  用于存放数据库或重要数据的备份文件，建议定期清理旧备份。
+  Dùng để lưu các tệp sao lưu cơ sở dữ liệu hoặc dữ liệu quan trọng, nên định kỳ dọn dẹp các bản sao lưu cũ.
 - **config/**  
-  各种环境与应用配置文件，如数据库、缓存、队列、接口认证等。
+  Các tệp cấu hình môi trường và ứng dụng, như cơ sở dữ liệu, bộ nhớ đệm (cache), hàng đợi, xác thực API, v.v.
 - **crmeb/**  
-  项目内部的公共模块或第三方 SDK 集成，可能包含一些工具类或扩展功能。
+  Các mô-đun dùng chung nội bộ của dự án hoặc phần tích hợp SDK bên thứ ba, có thể bao gồm một số lớp tiện ích hoặc chức năng mở rộng.
 - **public/**  
-  Web 服务器根目录，放置可直接通过浏览器访问的资源（如图片、JS、CSS）以及入口文件 `index.php`。
+  Thư mục gốc của Web server, chứa các tài nguyên có thể truy cập trực tiếp qua trình duyệt (như hình ảnh, JS, CSS) và tệp điểm vào `index.php`.
 - **route/**  
-  路由定义文件，用于映射 URL 请求到具体的控制器方法。
+  Tệp định nghĩa route, dùng để ánh xạ yêu cầu URL tới phương thức controller cụ thể.
 - **runtime/**  
-  存放运行时生成的缓存、日志、Session 等临时数据；此目录应在 `.gitignore` 中忽略。
+  Chứa dữ liệu tạm được sinh ra khi chạy như cache, log, Session, v.v.; thư mục này nên được bỏ qua trong `.gitignore`.
 
-## 主要文件说明
+## Mô tả các tệp chính
 - **.env / .env.example**  
-  环境变量配置与示例，`.env` 含敏感信息，不要提交到代码库。
+  Cấu hình biến môi trường và tệp mẫu, `.env` chứa thông tin nhạy cảm, không được commit lên kho mã nguồn.
 - **composer.json / composer.lock**  
-  PHP 项目依赖管理配置与锁定文件。
-- **Dockerfile / docker-compose 相关**  
-  用于容器化部署的配置。
+  Tệp cấu hình quản lý phụ thuộc (dependency) và tệp khóa (lock) của dự án PHP.
+- **Liên quan đến Dockerfile / docker-compose**  
+  Cấu hình dùng cho triển khai dạng container.
 - **my.cnf / redis.conf / nginx.conf**  
-  各类服务的自定义配置。
+  Cấu hình tùy chỉnh cho các loại dịch vụ.
 - **start.sh**  
-  项目本地或服务器启动入口脚本。
+  Script điểm vào để khởi động dự án ở máy cục bộ hoặc trên máy chủ.
 - **think**  
-  ThinkPHP 框架的统一入口文件，负责初始化框架并分发请求。
+  Tệp điểm vào thống nhất của framework ThinkPHP, chịu trách nhiệm khởi tạo framework và phân phối yêu cầu.

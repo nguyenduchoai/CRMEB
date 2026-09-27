@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -22,13 +22,13 @@ class UserFriends extends BaseModel
     use ModelTrait;
 
     /**
-     * 表明
+     * Tên bảng
      * @var string
      */
     protected $name = 'user_friends';
 
     /**
-     * 主键
+     * Khóa chính
      * @var string
      */
     protected $pk = 'id';
@@ -55,7 +55,7 @@ class UserFriends extends BaseModel
     }
 
     /**
-     * uid搜索器
+     * Bộ lọc uid
      * @param Model $query
      * @param $value
      */
@@ -65,7 +65,7 @@ class UserFriends extends BaseModel
     }
 
     /**
-     * 修改添加时间
+     * Cập nhật thời gian thêm
      * @param $value
      * @return false|string
      */

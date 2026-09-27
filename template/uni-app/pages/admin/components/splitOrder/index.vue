@@ -1,10 +1,10 @@
 <template>
-	<!-- 拆单订单 -->
+	<!-- Đơn hàng được tách -->
 	<view class='splitOrder' v-if="splitGoods.length">
 		<view class="all" v-if="select_all">
 			<checkbox-group @change="checkboxAllChange">
 				<checkbox value="all" :checked="isAllSelect" />
-				<text class='checkAll'>全选</text>
+				<text class='checkAll'>Chọn tất cả</text>
 			</checkbox-group>
 		</view>
 		<checkbox-group @change="checkboxChange">
@@ -28,9 +28,9 @@
 								<!-- <view>×{{item.cart_num}}</view> -->
 							</view>
 							<view class='infor line1'>
-								属性：{{item.cart_info.productInfo.attrInfo.suk || '默认'}}</view>
+								Thuộc tính: {{item.cart_info.productInfo.attrInfo.suk || 'Mặc định'}}</view>
 							<view class="acea-row row-middle money-section">
-								实付款：<view class='money'>¥{{item.cart_info.sum_true_price}}</view>
+								Thực thanh toán:<view class='money'>¥{{item.cart_info.sum_true_price}}</view>
 							</view>
 						</view>
 						<view class='carnum acea-row row-center-wrapper'>

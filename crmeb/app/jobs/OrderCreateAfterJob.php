@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -25,7 +25,7 @@ class OrderCreateAfterJob extends BaseJobs
     use QueueTrait;
 
     /**
-     * 订单后置处理
+     * Xử lý sau đơn hàng
      * @param $orderId
      * @param $cartInfo
      * @param $priceData
@@ -74,7 +74,7 @@ class OrderCreateAfterJob extends BaseJobs
             }
             $isCommission = 0;
             if ($orderInfo['combination_id']) {
-                //检测拼团是否参与返佣
+                //Kiểm tra mua chung có tham gia trả hoa hồng không
                 /** @var StoreCombinationServices $combinationServices */
                 $combinationServices = app()->make(StoreCombinationServices::class);
                 $isCommission = $combinationServices->value(['id' => $orderInfo['combination_id']], 'is_commission');
@@ -90,7 +90,7 @@ class OrderCreateAfterJob extends BaseJobs
             }
             $createService->update(['id' => $orderId], $orderData);
         } catch (\Throwable $e) {
-            Log::error('计算订单实际优惠、积分、邮费、佣金失败，原因：' . $e->getMessage());
+            Log::error('Tính ưu đãi thực tế, điểm thưởng, phí vận chuyển, hoa hồng của đơn hàng thất bại, nguyên nhân:' . $e->getMessage());
         }
 
         return true;

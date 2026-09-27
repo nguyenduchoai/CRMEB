@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -12,32 +12,32 @@
 namespace crmeb\services\crud\enum;
 
 /**
- * 访问方法枚举
+ * Enum phương thức truy cập
  * Class ActionEnum
- * @author 等风来
+ * @author Deng Fenglai
  * @email 136327134@qq.com
  * @date 2023/8/12
  * @package crmeb\services\crud\enum
  */
 class ActionEnum
 {
-    //列表
+    //Danh sách
     const INDEX = 'index';
-    //获取创建数据
+    //Lấy dữ liệu tạo
     const CREATE = 'create';
-    //保存
+    //Lưu
     const SAVE = 'save';
-    //获取编辑数据
+    //Lấy dữ liệu sửa
     const EDIT = 'edit';
-    //修改
+    //Sửa
     const UPDATE = 'update';
-    //状态
+    //Trạng thái
     const STATUS = 'status';
-    //删除
+    //Xóa
     const DELETE = 'delete';
-    //查看
+    //Xem
     const READ = 'read';
-    //所有方法名称
+    //Tên tất cả phương thức
     const ACTION_ALL = [
         self::INDEX,
         self::CREATE,

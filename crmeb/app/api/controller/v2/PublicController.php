@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -23,26 +23,26 @@ use app\services\wechat\WechatUserServices;
 class PublicController
 {
     /**
-     * 主页获取
+     * Lấy dữ liệu trang chủ
      * @param Request $request
      * @return mixed
      */
     public function index(Request $request)
     {
-        $fastNumber = (int)sys_config('fast_number', 0);//TODO 快速选择分类个数
+        $fastNumber = (int)sys_config('fast_number', 0);//TODO Số lượng danh mục chọn nhanh
         /** @var StoreCategoryServices $categoryService */
         $categoryService = app()->make(StoreCategoryServices::class);
-        $info['fastList'] = $fastNumber ? $categoryService->byIndexList($fastNumber, 'id,cate_name,pid,pic') : [];//TODO 快速选择分类个数
+        $info['fastList'] = $fastNumber ? $categoryService->byIndexList($fastNumber, 'id,cate_name,pid,pic') : [];//TODO Số lượng danh mục chọn nhanh
         /** @var StoreProductServices $storeProductServices */
         $storeProductServices = app()->make(StoreProductServices::class);
-        //获取推荐商品
+        //Lấy sản phẩm đề xuất
         [$baseList, $firstList, $benefit, $likeInfo, $vipList] = $storeProductServices->getRecommendProductArr((int)$request->uid(), ['is_best', 'is_new', 'is_benefit', 'is_hot']);
-        $info['bastList'] = $baseList;//TODO 精品推荐个数
-        $info['firstList'] = $firstList;//TODO 首发新品个数
+        $info['bastList'] = $baseList;//TODO Số lượng đề xuất sản phẩm chất lượng
+        $info['firstList'] = $firstList;//TODO Số lượng sản phẩm mới ra mắt
         if ($request->uid()) {
             /** @var UserServices $userService */
             $userService = app()->make(UserServices::class);
-            //看是否会员过期
+            //Kiểm tra thành viên có hết hạn không
             $userService->offMemberLevel($request->uid());
             /** @var WechatUserServices $wechatUserService */
             $wechatUserService = app()->make(WechatUserServices::class);
@@ -56,7 +56,7 @@ class PublicController
     }
 
     /**
-     * 获取页面数据
+     * Lấy dữ liệu trang
      * @param Request $request
      * @param string $name
      * @return mixed
@@ -78,7 +78,7 @@ class PublicController
     /**
      * @param int $id
      * @return mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/2/8
      */
@@ -91,7 +91,7 @@ class PublicController
     }
 
     /**
-     * 是否强制绑定手机号
+     * Bắt buộc liên kết số điện thoại
      * @return mixed
      */
     public function bindPhoneStatus()
@@ -101,7 +101,7 @@ class PublicController
     }
 
     /**
-     * 是否关注
+     * Có theo dõi không
      * @param Request $request
      * @param WechatServices $services
      * @return mixed
@@ -112,7 +112,7 @@ class PublicController
     }
 
     /**
-     * 获取提货点自提开启状态
+     * Lấy trạng thái mở nhận tại điểm nhận hàng
      * @return mixed
      */
     public function getStoreStatus()
@@ -122,7 +122,7 @@ class PublicController
     }
 
     /**
-     * 获取颜色选择和分类模板选择
+     * Lấy lựa chọn màu và lựa chọn mẫu danh mục
      * @param DiyServices $services
      * @param $name
      * @return mixed

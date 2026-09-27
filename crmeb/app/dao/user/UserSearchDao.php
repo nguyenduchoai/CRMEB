@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use app\dao\BaseDao;
 use app\model\user\UserSearch;
 
 /**
- * 用户搜索
+ * Tìm kiếm của người dùng
  * Class UserSearchDao
  * @package app\dao\user
  */
@@ -24,7 +24,7 @@ class UserSearchDao extends BaseDao
 {
 
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -33,7 +33,7 @@ class UserSearchDao extends BaseDao
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @param array $where
      * @param string $order
      * @param int $page
@@ -51,10 +51,10 @@ class UserSearchDao extends BaseDao
     }
 
     /**
-     * * 获取全局|用户某个关键词搜素结果
+     * * Lấy kết quả tìm kiếm một từ khóa trên toàn hệ thống|của người dùng
      * @param int $uid
-     * @param string $keyword 关键词
-     * @param int $preTime 多长时间内认为结果集有效
+     * @param string $keyword Từ khóa
+     * @param int $preTime Trong bao lâu thì coi kết quả còn hiệu lực
      * @return array|\think\Model
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException

@@ -1,11 +1,11 @@
 <template>
-  <el-form-item label="背景色">
+  <el-form-item label="Màu nền">
     <div style="margin-bottom: 10px">
       <el-radio-group v-model="curComponent.propValue.bgDirection" @change="onChange" size="mini">
-        <el-radio label="horizontal">横向</el-radio>
-        <el-radio label="vertical">纵向</el-radio>
-        <el-radio label="left-diagonal">左斜</el-radio>
-        <el-radio label="right-diagonal">右斜</el-radio>
+        <el-radio label="horizontal">Ngang</el-radio>
+        <el-radio label="vertical">Dọc</el-radio>
+        <el-radio label="left-diagonal">Chéo trái</el-radio>
+        <el-radio label="right-diagonal">Chéo phải</el-radio>
       </el-radio-group>
     </div>
     <div class="row">
@@ -13,7 +13,7 @@
       <el-color-picker v-model="curComponent.propValue.backgroundColor" @change="onChange" show-alpha></el-color-picker>
       <el-input
         v-model="curComponent.propValue.backgroundColor"
-        placeholder="请输入颜色"
+        placeholder="Vui lòng nhập màu"
         @change="onChange"
         style="margin-left: 10px; flex: 1"
       ></el-input>
@@ -23,14 +23,14 @@
           curComponent.propValue.backgroundColor = '';
           onChange();
         "
-        >重置</span
+        >Đặt lại</span
       >
     </div>
     <div class="row" style="margin-top: 10px">
       <el-color-picker v-model="curComponent.propValue.bgColor2" @change="onChange" show-alpha></el-color-picker>
       <el-input
         v-model="curComponent.propValue.bgColor2"
-        placeholder="请输入颜色"
+        placeholder="Vui lòng nhập màu"
         @change="onChange"
         style="margin-left: 10px; flex: 1"
       ></el-input>
@@ -40,7 +40,7 @@
           curComponent.propValue.bgColor2 = '';
           onChange();
         "
-        >重置</span
+        >Đặt lại</span
       >
     </div>
   </el-form-item>

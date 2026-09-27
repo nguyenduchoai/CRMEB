@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,37 +15,37 @@ use crmeb\services\invoice\BaseInvoice;
 class Yihaotong extends BaseInvoice
 {
     /**
-     * 获取发票开具页面iframe地址
+     * Lấy địa chỉ iframe của trang xuất hóa đơn
      */
     const INVOICE_ISSUANCE_URL = 'v2/invoice/invoice_issuance_url';
 
     /**
-     * 下载发票
+     * Tải xuống hóa đơn
      */
     const DOWNLOAD_INVOICE = 'v2/invoice/download_invoice';
 
     /**
-     * 查看发票详情
+     * Xem chi tiết hóa đơn
      */
     const INVOICE_INFO = 'v2/invoice/invoice_info';
 
     /**
-     * 获取商品类目
+     * Lấy danh mục sản phẩm
      */
     const CATEGORY = 'v2/invoice/category';
 
     /**
-     * 发票开具
+     * Xuất hóa đơn
      */
     const INVOICE_ISSUANCE = 'v2/invoice/invoice_issuance';
 
     /**
-     * 申请红字发票
+     * Yêu cầu hóa đơn đỏ
      */
     const APPLY_RED_INVOICE = 'v2/invoice/apply_red_invoice';
 
     /**
-     * 开具负数发票
+     * Xuất hóa đơn điều chỉnh giảm
      */
     const RED_INVOICE_ISSUANCE = 'v2/invoice/red_invoice_issuance';
 
@@ -63,7 +63,7 @@ class Yihaotong extends BaseInvoice
     }
 
     /**
-     * 获取发票开具页面iframe地址
+     * Lấy địa chỉ iframe của trang xuất hóa đơn
      * @param array $params
      * @return array|mixed
      * @author wuhaotian
@@ -76,7 +76,7 @@ class Yihaotong extends BaseInvoice
     }
 
     /**
-     * 下载发票
+     * Tải xuống hóa đơn
      * @param string $invoiceNum
      * @return array|mixed
      * @author wuhaotian
@@ -89,7 +89,7 @@ class Yihaotong extends BaseInvoice
     }
 
     /**
-     * 查看发票详情
+     * Xem chi tiết hóa đơn
      * @param string $invoiceNum
      * @return array|mixed
      * @author wuhaotian
@@ -102,7 +102,7 @@ class Yihaotong extends BaseInvoice
     }
 
     /**
-     * 获取商品类目
+     * Lấy danh mục sản phẩm
      * @return array|mixed
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -114,7 +114,7 @@ class Yihaotong extends BaseInvoice
     }
 
     /**
-     * 发票开具
+     * Xuất hóa đơn
      * @param string $unique
      * @param array $params
      * @return array|mixed
@@ -128,7 +128,7 @@ class Yihaotong extends BaseInvoice
     }
 
     /**
-     * 申请红字发票
+     * Yêu cầu hóa đơn đỏ
      * @param array $params
      * @return array|mixed
      * @author wuhaotian
@@ -141,7 +141,7 @@ class Yihaotong extends BaseInvoice
     }
 
     /**
-     * 开具负数发票
+     * Xuất hóa đơn điều chỉnh giảm
      * @param array $params
      * @return array|mixed
      * @author wuhaotian

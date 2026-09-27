@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="title-tips" v-if="datas[name].tabList">
-      <span>选择模板</span>{{ datas[name].tabList[datas[name].tabVal].name }}
+      <span>Chọn mẫu</span>{{ datas[name].tabList[datas[name].tabVal].name }}
     </div>
     <div class="radio-box" :class="{ on: datas[name].type == 1 }">
       <el-radio-group v-model="datas[name].tabVal" size="mini" type="button" @input="radioChange()">

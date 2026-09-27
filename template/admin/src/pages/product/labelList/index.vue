@@ -4,7 +4,7 @@
       <el-col v-bind="grid1" class="left-wrapper">
         <div class="tree_tit" v-db-click @click="addSort">
           <i class="el-icon-circle-plus"></i>
-          添加分组
+          Thêm nhóm
         </div>
         <div class="tree">
           <el-tree
@@ -30,8 +30,8 @@
                   <i class="el-icon-more el-icon--right"></i>
                   <template slot="dropdown">
                     <el-dropdown-menu>
-                      <el-dropdown-item command="1">编辑分组</el-dropdown-item>
-                      <el-dropdown-item v-if="data.id" command="2">删除分组</el-dropdown-item>
+                      <el-dropdown-item command="1">Sửa nhóm</el-dropdown-item>
+                      <el-dropdown-item v-if="data.id" command="2">Xóa nhóm</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
@@ -44,7 +44,7 @@
         <el-card :bordered="false" shadow="never">
           <el-row>
             <el-col>
-              <el-button type="primary" v-db-click @click="add">添加标签</el-button>
+              <el-button type="primary" v-db-click @click="add">Thêm nhãn</el-button>
             </el-col>
           </el-row>
           <el-table
@@ -53,20 +53,20 @@
             class="mt14"
             v-loading="loading"
             highlight-current-row
-            no-userFrom-text="暂无数据"
-            no-filtered-userFrom-text="暂无筛选结果"
+            no-userFrom-text="Chưa có dữ liệu"
+            no-filtered-userFrom-text="Không có kết quả phù hợp"
           >
             <el-table-column label="ID" width="80">
               <template slot-scope="scope">
                 <span>{{ scope.row.id }}</span>
               </template>
             </el-table-column>
-            <!-- <el-table-column label="标签名称" width="80">
+            <!-- <el-table-column label="Tên nhãn" width="80">
               <template slot-scope="scope">
                 <span>{{ scope.row.name }}</span>
               </template>
             </el-table-column> -->
-            <el-table-column label="标签名称" width="180">
+            <el-table-column label="Tên nhãn" width="180">
               <template slot-scope="scope">
                 <div
                   v-if="scope.row.type == 1"
@@ -82,12 +82,12 @@
                 <img :src="scope.row.image" class="tag-img" v-else />
               </template>
             </el-table-column>
-            <el-table-column label="分类名称" min-width="140">
+            <el-table-column label="Tên danh mục" min-width="140">
               <template slot-scope="scope">
                 <span>{{ scope.row.cate_name }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="状态" min-width="140">
+            <el-table-column label="Trạng thái" min-width="140">
               <template slot-scope="scope">
                 <el-switch
                   class="defineSwitch"
@@ -97,13 +97,13 @@
                   :value="scope.row.status"
                   @change="onchangeStatus(scope.row)"
                   size="large"
-                  active-text="开启"
-                  inactive-text="关闭"
+                  active-text="Bật"
+                  inactive-text="Tắt"
                 >
                 </el-switch>
               </template>
             </el-table-column>
-            <el-table-column label="移动端展示" min-width="140">
+            <el-table-column label="Hiển thị trên di động" min-width="140">
               <template slot-scope="scope">
                 <el-switch
                   class="defineSwitch"
@@ -113,17 +113,17 @@
                   :value="scope.row.is_show"
                   @change="onchangeShow(scope.row)"
                   size="large"
-                  active-text="开启"
-                  inactive-text="关闭"
+                  active-text="Bật"
+                  inactive-text="Tắt"
                 >
                 </el-switch>
               </template>
             </el-table-column>
-            <el-table-column fixed="right" label="操作" width="100">
+            <el-table-column fixed="right" label="Thao tác" width="100">
               <template slot-scope="scope">
-                <a v-db-click @click="edit(scope.row.id)">修改</a>
+                <a v-db-click @click="edit(scope.row.id)">Sửa</a>
                 <el-divider direction="vertical"></el-divider>
-                <a v-db-click @click="del(scope.row, '删除', scope.$index)">删除</a>
+                <a v-db-click @click="del(scope.row, 'Xóa', scope.$index)">Xóa</a>
               </template>
             </el-table-column>
           </el-table>
@@ -137,13 +137,13 @@
             />
           </div>
         </el-card>
-        <el-dialog :visible.sync="modals" closable :title="isEdit ? '编辑标签' : '添加标签'" width="560" @close="cancel">
+        <el-dialog :visible.sync="modals" closable :title="isEdit ? 'Sửa nhãn' : 'Thêm nhãn'" width="560" @close="cancel">
           <div>
             <el-form label-position="right" size="small" ref="form" :rules="rules" :model="form" label-width="100px">
-              <el-form-item label="标签名称：" prop="name">
+              <el-form-item label="Tên nhãn:" prop="name">
                 <el-input v-model="form.name" class="w-420"></el-input>
               </el-form-item>
-              <el-form-item label="分组选择：" prop="label_cate">
+              <el-form-item label="Chọn nhóm:" prop="label_cate">
                 <el-select v-model="form.cate_id" clearable class="w-420">
                   <el-option
                     v-for="item in labelSort.slice(1)"
@@ -153,28 +153,28 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="移动端展示：">
+              <el-form-item label="Hiển thị trên di động:">
                 <el-switch v-model="form.is_show" :active-value="1" :inactive-value="0"> </el-switch>
               </el-form-item>
-              <el-form-item label="效果设置：">
+              <el-form-item label="Cài đặt hiệu ứng:">
                 <el-radio-group v-model="form.type" :true-value="1" :false-value="2">
-                  <el-radio :label="1">自定义</el-radio>
-                  <el-radio :label="2">图片</el-radio>
+                  <el-radio :label="1">Tùy chỉnh</el-radio>
+                  <el-radio :label="2">Hình ảnh</el-radio>
                 </el-radio-group>
               </el-form-item>
-              <el-form-item label="字体颜色：" v-if="form.type == 1">
+              <el-form-item label="Màu chữ:" v-if="form.type == 1">
                 <el-color-picker v-model="form.font_color" show-alpha></el-color-picker>
-                <p class="tip">若未设置颜色，则为默认色</p>
+                <p class="tip">Nếu không thiết lập màu, sẽ dùng màu mặc định</p>
               </el-form-item>
-              <el-form-item label="背景颜色：" v-if="form.type == 1">
+              <el-form-item label="Màu nền:" v-if="form.type == 1">
                 <el-color-picker v-model="form.bg_color" show-alpha></el-color-picker>
-                <p class="tip">若未设置颜色，则为默认色</p>
+                <p class="tip">Nếu không thiết lập màu, sẽ dùng màu mặc định</p>
               </el-form-item>
-              <el-form-item label="边框颜色：" v-if="form.type == 1">
+              <el-form-item label="Màu viền:" v-if="form.type == 1">
                 <el-color-picker v-model="form.border_color" show-alpha></el-color-picker>
-                <p class="tip">若未设置颜色，则无边框</p>
+                <p class="tip">Nếu không thiết lập màu, sẽ không có viền</p>
               </el-form-item>
-              <el-form-item label="上传图标：" v-if="form.type == 2">
+              <el-form-item label="Tải lên biểu tượng:" v-if="form.type == 2">
                 <div v-if="form.image" class="upload-list">
                   <div class="upload-item">
                     <img :src="form.image" />
@@ -190,22 +190,22 @@
                   icon="el-icon-plus"
                   @click="modalPicTap(1)"
                 ></el-button>
-                <p class="tip">建议尺寸：80px*30px，若未上传则为空白</p>
+                <p class="tip">Kích thước đề xuất: 80px*30px, nếu không tải lên sẽ để trống</p>
               </el-form-item>
-              <el-form-item label="排序：">
+              <el-form-item label="Thứ tự sắp xếp:">
                 <el-input-number v-model="form.sort" :min="0" :max="999" class="selWidth"></el-input-number>
               </el-form-item>
-              <el-form-item label="是否开启：">
+              <el-form-item label="Bật:">
                 <el-switch v-model="form.status" :active-value="1" :inactive-value="0" size="large">
-                  <span slot="open">开启</span>
-                  <span slot="close">关闭</span>
+                  <span slot="open">Bật</span>
+                  <span slot="close">Tắt</span>
                 </el-switch>
               </el-form-item>
             </el-form>
           </div>
           <span slot="footer" class="dialog-footer">
-            <el-button @click="cancel">取 消</el-button>
-            <el-button type="primary" v-db-click @click="addWordsConfirm">确 定</el-button>
+            <el-button @click="cancel">Hủy</el-button>
+            <el-button type="primary" v-db-click @click="addWordsConfirm">Xác nhận</el-button>
           </span>
         </el-dialog>
       </el-col>
@@ -263,7 +263,7 @@ export default {
         id: 0,
         cate_id: '',
         name: '',
-        type: 1, //样式类型 1自定义 2图片
+        type: 1, //Loại kiểu 1 tùy chỉnh 2 hình ảnh
         font_color: '#e93323',
         bg_color: '#fff',
         border_color: '#e93323',
@@ -274,10 +274,10 @@ export default {
       },
       rules: {
         name: [
-          { required: true, message: '请输入标签名称', trigger: 'blur' },
-          { min: 2, max: 6, message: '长度在 2 到 6 个字符', trigger: 'blur' },
+          { required: true, message: 'Vui lòng nhập tên nhãn', trigger: 'blur' },
+          { min: 2, max: 6, message: 'Độ dài từ 2 đến 6 ký tự', trigger: 'blur' },
         ],
-        cate_id: [{ required: true, message: '请选择分组' }],
+        cate_id: [{ required: true, message: 'Vui lòng chọn nhóm' }],
       },
     };
   },
@@ -294,7 +294,7 @@ export default {
     this.getLabelLabelAll();
   },
   methods: {
-    // 添加
+    // Thêm
     add() {
       this.modals = true;
       this.isEdit = false;
@@ -304,7 +304,7 @@ export default {
         this.form.image = e.att_dir;
       });
     },
-    // 分组列表
+    // Danh sách nhóm
     getList() {
       this.loading = true;
       productLabelListApi(this.labelFrom)
@@ -319,7 +319,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 修改
+    // Sửa
     edit(id) {
       productLabelInfoApi({ id: id }).then((res) => {
         this.form = res.data;
@@ -329,7 +329,7 @@ export default {
 
       // this.$modalForm(userLabelAddApi(id)).then(() => this.getList());
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -348,7 +348,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 修改是否显示
+    // Sửa có hiển thị hay không
     onchangeStatus(row) {
       labelStatusApi(row)
         .then(async (res) => {
@@ -368,11 +368,11 @@ export default {
         });
     },
 
-    // 标签分类
+    // Danh mục nhãn
     getLabelLabelAll(key) {
       labelCateListApi().then((res) => {
         let obj = {
-          name: '全部',
+          name: 'Tất cả',
           id: '',
         };
         res.data.unshift(obj);
@@ -388,7 +388,7 @@ export default {
       });
       this.getList();
     },
-    // 显示标签小菜单
+    // Hiển thị menu nhỏ nhãn
     showMenu(item) {
       this.labelSort.forEach((el) => {
         if (el.id == item.id) {
@@ -399,7 +399,7 @@ export default {
       });
     },
     addWordsConfirm() {
-      if (!this.form.cate_id) return this.$message.error('请选择分组');
+      if (!this.form.cate_id) return this.$message.error('Vui lòng chọn nhóm');
       this.$refs.form.validate((valid) => {
         if (valid) {
           productLabelSaveApi(this.form)
@@ -421,7 +421,7 @@ export default {
         id: 0,
         cate_id: this.labelFrom.cate_id,
         name: '',
-        type: 1, //样式类型 1自定义 2图片
+        type: 1, //Loại kiểu 1 tùy chỉnh 2 hình ảnh
         font_color: '#e93323',
         bg_color: '#ffffff',
         border_color: '#e93323',
@@ -432,11 +432,11 @@ export default {
       };
       this.modals = false;
     },
-    //编辑标签
+    //Sửa nhãn
     labelEdit(item) {
       this.$modalForm(productLabelCateFormApi(item.id)).then(() => this.getLabelLabelAll(1));
     },
-    // 添加分类
+    // Thêm danh mục
     addSort() {
       this.$modalForm(productLabelCateFormApi(0)).then(() => this.getLabelLabelAll());
     },
@@ -466,7 +466,7 @@ export default {
       if (name == 1) {
         this.labelEdit(data);
       } else if (name == 2) {
-        this.deleteSort(data, '删除分类');
+        this.deleteSort(data, 'Xóa danh mục');
       }
     },
     bindMenuItem(name, index) {

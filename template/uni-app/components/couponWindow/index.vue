@@ -6,16 +6,16 @@
 				<view class='item acea-row row-between-wrapper' v-for="(item,index) in couponList" :key="index">
 					<view class='money font-color'>{{$t(`￥`)}}<text class='num'>{{item.coupon_price}}</text></view>
 					<view class='text'>
-						<view class='name'>{{$t(`购物满`)}}{{item.use_min_price}}{{$t(`减`)}}{{item.coupon_price}}</view>
-						<view v-if="item.coupon_time">{{$t(`领取后`)}}{{item.coupon_time}}{{$t(`天内可用`)}}</view>
+						<view class='name'>{{$t(`Đơn hàng từ`)}}{{item.use_min_price}}{{$t(`Trừ`)}}{{item.coupon_price}}</view>
+						<view v-if="item.coupon_time">{{$t(`Dùng trong vòng`)}}{{item.coupon_time}}{{$t(`ngày sau khi nhận`)}}</view>
 						<view v-else>
-							{{item.start_time ? item.start_time+'-' : ''}}{{item.end_time === 0 ? $t(`不限时`) : item.end_time}}
+							{{item.start_time ? item.start_time+'-' : ''}}{{item.end_time === 0 ? $t(`Không giới hạn thời gian`) : item.end_time}}
 						</view>
 					</view>
 				</view>
 			</view>
 			<view class='lid'>
-				<navigator v-if="window" hover-class='none' url='/pages/users/user_get_coupon/index' class='bnt'>{{$t(`立即领取`)}}</navigator>
+				<navigator v-if="window" hover-class='none' url='/pages/users/user_get_coupon/index' class='bnt'>{{$t(`Nhận ngay`)}}</navigator>
 				<view class='iconfont icon-guanbi3' @click="close"></view>
 			</view>
 		</view>

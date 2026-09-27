@@ -3,10 +3,10 @@
 		<view class="Loads acea-row row-center-wrapper" v-if="loading && !loaded" style="margin-top: .2rem;">
 			<view v-if="loading">
 				<view class="iconfont icon-jiazai loading acea-row row-center-wrapper"></view>
-				{{$t(`正在加载中`)}}
+				{{$t(`Đang tải`)}}
 			</view>
 			<view v-else>
-				{{$t(`上拉加载更多`)}}
+				{{$t(`Kéo lên để tải thêm`)}}
 			</view>
 		</view>
 	</view>
@@ -39,7 +39,7 @@
 	  height: 32upx;
 	  line-height: 32upx;
 	}
-	/*加载动画*/
+	/*Animation loading*/
 	@keyframes load {
 	  from {
 	    transform: rotate(0deg);

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,63 +16,63 @@ use think\facade\Db;
 class MysqlBackupService
 {
     /**
-     * 文件指针
+     * Con trỏ file
      * @var resource
      */
     private $fp;
     /**
-     * 备份文件信息 part - 卷号，name - 文件名
+     * Thông tin file sao lưu: part - số volume, name - tên file
      * @var array
      */
     private $file;
     /**
-     * 当前打开文件大小
+     * Kích thước file đang mở
      * @var integer
      */
     private $size = 0;
 
     /**
-     * 数据库配置
+     * Cấu hình cơ sở dữ liệu
      * @var integer
      */
     private $dbconfig = array();
     /**
-     * 备份配置
+     * Cấu hình sao lưu
      * @var integer
      */
     private $config = array(
         'path' => './Data/',
-        //数据库备份路径
+        //Đường dẫn sao lưu cơ sở dữ liệu
         'part' => 20971520,
-        //数据库备份卷大小
+        //Kích thước volume backup cơ sở dữ liệu
         'compress' => 0,
-        //数据库备份文件是否启用压缩 0不压缩 1 压缩
+        //File backup cơ sở dữ liệu có bật nén không, 0 là không nén, 1 là nén
         'level' => 9,
     );
 
     /**
-     * 数据库备份构造方法
+     * Phương thức khởi tạo sao lưu cơ sở dữ liệu
      *
-     * @param array $file 备份或还原的文件信息
-     * @param array $config 备份配置信息
+     * @param array $file Thông tin file sao lưu hoặc khôi phục
+     * @param array $config Thông tin cấu hình sao lưu
      */
     public function __construct($config = [])
     {
         $this->config['path'] = app()->getRootPath() . 'backup/';
         $this->config = array_merge($this->config, $config);
-        //初始化文件名
+        //Khởi tạo tên file
         $this->setFile();
-        //初始化数据库连接参数
+        //Khởi tạo tham số kết nối cơ sở dữ liệu
         $this->setDbConn();
-        //检查文件是否可写
+        //Kiểm tra file có ghi được không
         if (!$this->checkPath($this->config['path'])) {
-            throw new AdminException('文件不可写');
+            throw new AdminException('Tệp không thể ghi');
         }
     }
 
     /**
-     * 设置脚本运行超时时间
-     * 0表示不限制，支持连贯操作
+     * Đặt thời gian timeout chạy script
+     * 0 nghĩa là không giới hạn, hỗ trợ thao tác liên tiếp
      */
     public function setTimeout($time = null)
     {
@@ -83,9 +83,9 @@ class MysqlBackupService
     }
 
     /**
-     * 设置数据库连接必备参数
+     * Đặt tham số bắt buộc để kết nối cơ sở dữ liệu
      *
-     * @param array $dbconfig 数据库连接配置信息
+     * @param array $dbconfig Thông tin cấu hình kết nối cơ sở dữ liệu
      * @return $this
      */
     public function setDbConn($dbconfig = [])
@@ -100,7 +100,7 @@ class MysqlBackupService
     }
 
     /**
-     * 设置备份文件名
+     * Đặt tên file sao lưu
      *
      * @param null $file
      * @return $this
@@ -119,14 +119,14 @@ class MysqlBackupService
         return $this;
     }
 
-    //数据类连接
+    //Kết nối class dữ liệu
     public static function connect()
     {
         return Db::connect();
     }
 
     /**
-     * 数据库表列表
+     * Danh sách bảng cơ sở dữ liệu
      *
      * @param null $table
      * @param int $type
@@ -151,7 +151,7 @@ class MysqlBackupService
     }
 
     /**
-     * 数据库备份文件列表
+     * Danh sách file sao lưu cơ sở dữ liệu
      *
      * @return array
      */
@@ -198,7 +198,7 @@ class MysqlBackupService
     {
         //
         if (!is_numeric($time)) {
-            throw new AdminException('时间格式不正确');
+            throw new AdminException('Định dạng thời gian không đúng');
         }
         switch ($type) {
             case 'time':
@@ -220,7 +220,7 @@ class MysqlBackupService
                 if (count($list) === $last[0]) {
                     return $list;
                 } else {
-                    throw new AdminException('文件可能损坏，请检查');
+                    throw new AdminException('Tệp có thể đã bị hỏng, vui lòng kiểm tra');
                 }
             case 'pathname':
                 return "{$this->config['path']}{$this->file['name']}-{$this->file['part']}.sql";
@@ -235,7 +235,7 @@ class MysqlBackupService
     }
 
     /**
-     * 删除备份文件
+     * Xóa file backup
      * @param $time
      * @return mixed
      * @throws \Exception
@@ -246,17 +246,17 @@ class MysqlBackupService
             $file = $this->getFile('time', $time);
             array_map("unlink", $this->getFile('time', $time));
             if (count($this->getFile('time', $time))) {
-                throw new AdminException('删除失败');
+                throw new AdminException('Xóa thất bại');
             } else {
                 return $time;
             }
         } else {
-            throw new AdminException('时间格式不正确');
+            throw new AdminException('Định dạng thời gian không đúng');
         }
     }
 
     /**
-     * 下载备份
+     * Tải xuống file sao lưu
      *
      * @param $time
      * @param int $part
@@ -281,13 +281,13 @@ class MysqlBackupService
             header('Content-Disposition: attachment; filename=' . basename($fileName));
             return readfile($fileName);
         } else {
-            throw new AdminException('文件可能损坏，请检查');
+            throw new AdminException('Tệp có thể đã bị hỏng, vui lòng kiểm tra');
         }
     }
 
     public function import($start)
     {
-        //还原数据
+        //Khôi phục dữ liệu
         $db = self::connect();
         if ($this->config['compress']) {
             $gz = gzopen($this->file[1], 'r');
@@ -317,9 +317,9 @@ class MysqlBackupService
     }
 
     /**
-     * 写入初始数据
+     * Ghi dữ liệu khởi tạo
      *
-     * @return boolean true - 写入成功，false - 写入失败
+     * @return boolean true - Ghi thành công, false - ghi thất bại
      */
     public function Backup_Init()
     {
@@ -338,7 +338,7 @@ class MysqlBackupService
     }
 
     /**
-     * 备份表结构
+     * Sao lưu cấu trúc bảng
      *
      * @param string $table
      * @param int $start
@@ -349,7 +349,7 @@ class MysqlBackupService
     public function backup(string $table, int $start, $sql = '')
     {
         $db = self::connect();
-        // 备份表结构
+        // Sao lưu cấu trúc bảng
         if (0 == $start) {
             $result = $db->query("SHOW CREATE TABLE `{$table}`");
             $sql .= "\n";
@@ -359,18 +359,18 @@ class MysqlBackupService
             $sql .= "DROP TABLE IF EXISTS `{$table}`;\n";
             $sql .= trim($result[0]['Create Table']) . ";\n\n";
         }
-        //数据总数
+        //Tổng số dữ liệu
         $result = $db->query("SELECT COUNT(*) AS count FROM `{$table}`");
         $count = $result['0']['count'];
-        //备份表数据
+        //Backup dữ liệu bảng
         if ($count) {
-            //写入数据注释
+            //Ghi chú thích dữ liệu
             if (0 == $start) {
                 $sql .= "-- -----------------------------\n";
                 $sql .= "-- Records of `{$table}`\n";
                 $sql .= "-- -----------------------------\n";
             }
-            //备份数据记录
+            //Sao lưu bản ghi dữ liệu
             $result = $db->query("SELECT * FROM `{$table}` LIMIT :MIN, 1000", ['MIN' => intval($start)]);
             foreach ($result as $row) {
                 $row = array_map('addslashes', $row);
@@ -379,18 +379,18 @@ class MysqlBackupService
             if (false === $this->write($sql)) {
                 return false;
             }
-            //还有更多数据
+            //Còn nhiều dữ liệu
             if ($count > $start + 1000) {
                 //return array($start + 1000, $count);
                 return $this->backup($table, $start + 1000);
             }
         }
-        //备份下一表
+        //Sao lưu bảng tiếp theo
         return 0;
     }
 
     /**
-     * 优化表
+     * Tối ưu bảng
      *
      * @param array|string $tables
      * @throws \think\db\exception\BindParamException
@@ -407,16 +407,16 @@ class MysqlBackupService
                 $list = $db->query("OPTIMIZE TABLE {$tables}");
             }
             if (!$list) {
-                throw new AdminException('修复错误，请重试');
+                throw new AdminException('Lỗi khi sửa chữa, vui lòng thử lại');
             }
             return $list;
         } else {
-            throw new AdminException('请指定要修复的表');
+            throw new AdminException('Vui lòng chỉ định bảng cần sửa chữa');
         }
     }
 
     /**
-     * 修复表
+     * Sửa chữa bảng
      *
      * @param string|null $tables
      * @return array
@@ -436,33 +436,33 @@ class MysqlBackupService
             if ($list) {
                 return $list;
             } else {
-                throw new AdminException('修复错误，请重试');
+                throw new AdminException('Lỗi khi sửa chữa, vui lòng thử lại');
             }
         } else {
-            throw new AdminException('请指定要修复的表');
+            throw new AdminException('Vui lòng chỉ định bảng cần sửa chữa');
         }
     }
 
     /**
-     * 写入SQL语句
+     * Ghi câu lệnh SQL
      *
-     * @param string $sql 要写入的SQL语句
-     * @return boolean     true - 写入成功，false - 写入失败！
+     * @param string $sql Câu lệnh SQL cần ghi
+     * @return boolean     true - Ghi thành công, false - ghi thất bại!
      */
     private function write(string $sql)
     {
         $size = strlen($sql);
-        //由于压缩原因，无法计算出压缩后的长度，这里假设压缩率为50%，
-        //一般情况压缩率都会高于50%；
+        //Vì lý do nén nên không thể tính chính xác độ dài sau khi nén, ở đây tạm giả định tỷ lệ nén là 50%,
+        //Thông thường tỷ lệ nén sẽ cao hơn 50%;
         $size = $this->config['compress'] ? $size / 2 : $size;
         $this->open($size);
         return $this->config['compress'] ? @gzwrite($this->fp, $sql) : @fwrite($this->fp, $sql);
     }
 
     /**
-     * 打开一个卷，用于写入数据
+     * Mở một volume, dùng để ghi dữ liệu
      *
-     * @param integer $size 写入数据的大小
+     * @param integer $size Kích thước dữ liệu ghi
      */
     private function open(int $size)
     {
@@ -489,7 +489,7 @@ class MysqlBackupService
     }
 
     /**
-     * 检查目录是否可写
+     * Kiểm tra thư mục có ghi được không
      *
      * @param string $path
      * @return bool
@@ -507,7 +507,7 @@ class MysqlBackupService
     }
 
     /**
-     * 析构方法，用于关闭文件资源
+     * Phương thức destructor, dùng để đóng resource file
      */
     public function __destruct()
     {

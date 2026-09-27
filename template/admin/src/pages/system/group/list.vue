@@ -3,7 +3,7 @@
     <!--    <div class="i-layout-page-header header-title">-->
     <!--      <div class="fl_header">-->
     <!--        <router-link v-if="$route.params.id != 49" :to="{ path: $routeProStr + '/system/config/system_group/index' }"-->
-    <!--          ><el-button size="small" type="text">返回</el-button></router-link-->
+    <!--          ><el-button size="small" type="text">Quay lại</el-button></router-link-->
     <!--        >-->
     <!--        <el-divider direction="vertical" v-if="$route.params.id != 49" />-->
     <!--        <span class="ivu-page-header-title mr20" style="padding: 0" v-text="$route.meta.title"></span>-->
@@ -20,31 +20,31 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="是否显示：">
+          <el-form-item label="Hiển thị:">
             <el-select
               v-model="formValidate.status"
-              placeholder="请选择"
+              placeholder="Vui lòng chọn"
               clearable
               @change="userSearchs"
               class="form_content_width"
             >
-              <el-option value="1" label="显示"></el-option>
-              <el-option value="0" label="不显示"></el-option>
+              <el-option value="1" label="Hiện"></el-option>
+              <el-option value="0" label="Không hiển thị"></el-option>
             </el-select>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
     <el-card :bordered="false" shadow="never" class="ivu-mt mt14">
-      <el-button type="primary" v-db-click @click="groupAdd('添加数据')" class="mr20">添加数据</el-button>
+      <el-button type="primary" v-db-click @click="groupAdd('Thêm dữ liệu')" class="mr20">Thêm dữ liệu</el-button>
       <el-table
         :data="tabList"
         ref="table"
         class="mt14"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column :label="item.title" :min-width="item.minWidth" v-for="(item, index) in columns1" :key="index">
           <template slot-scope="scope">
@@ -70,9 +70,9 @@
               </el-switch>
             </template>
             <template v-else-if="item.slot === 'action'">
-              <a v-db-click @click="edit(scope.row, '编辑')">编辑</a>
+              <a v-db-click @click="edit(scope.row, 'Sửa')">Sửa</a>
               <el-divider direction="vertical"></el-divider>
-              <a v-db-click @click="del(scope.row, '删除这条信息', scope.$index)">删除</a>
+              <a v-db-click @click="del(scope.row, 'xóa thông tin này', scope.$index)">Xóa</a>
             </template>
           </template>
         </el-table-column>
@@ -180,7 +180,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 返回
+    // Quay lại
     back() {
       this.$router.push({ path: this.$routeProStr + '/system/config/system_group/index' });
     },
@@ -200,7 +200,7 @@ export default {
         return url;
       }
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       this.formValidate.gid = this.$route.params.id ? this.$route.params.id : this.formValidate.gid;
@@ -217,7 +217,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格头部
+    // Phần đầu bảng
     getListHeader() {
       this.loading = true;
       let data = {
@@ -277,12 +277,12 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.formValidate.page = 1;
       this.getList();
     },
-    // 添加表单
+    // Biểu mẫu thêm
     groupAdd() {
       this.$modalForm(
         groupDataAddApi(
@@ -291,7 +291,7 @@ export default {
         ),
       ).then(() => this.getList());
     },
-    // 修改是否显示
+    // Sửa có hiển thị hay không
     onchangeIsShow(row) {
       groupDataSetApi(this.getUrl(`/set_status/${row.id}/${row.status}`))
         .then(async (res) => {
@@ -302,14 +302,14 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 编辑
+    // Sửa
     edit(row) {
       let data = {
         gid: row.gid,
       };
       this.$modalForm(groupDataEditApi(data, this.getUrl(`/${row.id}/edit`))).then(() => this.getList());
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,

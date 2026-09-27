@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -22,7 +22,7 @@ class SyncMessageJob extends BaseJobs
     use QueueTrait;
 
     /**
-     * 同步小程序订阅消息
+     * Đồng bộ tin nhắn đăng ký Mini Program
      * @param $template
      * @return bool
      */
@@ -44,7 +44,7 @@ class SyncMessageJob extends BaseJobs
             try {
                 $tempid = MiniProgramService::addSubscribeTemplate($key, $kid, $data['name']);
             } catch (\Throwable $e) {
-                Log::error('同步订阅消息失败：' . $e->getMessage());
+                Log::error('Đồng bộ tin nhắn đăng ký thất bại:' . $e->getMessage());
                 return true;
             }
             app()->make(SystemNotificationServices::class)->update(['routine_tempkey' => $key], ['routine_tempid' => $tempid, 'routine_kid' => json_encode($kid)]);
@@ -54,11 +54,11 @@ class SyncMessageJob extends BaseJobs
     }
 
     /**
-     * 同步公众号模版消息
+     * Đồng bộ tin nhắn mẫu OA WeChat
      * @param $key
      * @param $content
      * @return bool
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/16
      */
@@ -72,7 +72,7 @@ class SyncMessageJob extends BaseJobs
         try {
             $res = WechatService::addTemplateId($key, $name);
         } catch (\Throwable $e) {
-            Log::error('同步模版消息失败：' . $e->getMessage());
+            Log::error('Đồng bộ tin nhắn mẫu thất bại:' . $e->getMessage());
             return true;
         }
         if (!$res->errcode && $res->template_id) {

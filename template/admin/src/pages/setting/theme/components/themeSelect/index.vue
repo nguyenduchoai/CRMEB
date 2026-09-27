@@ -14,21 +14,21 @@
     <div slot="title" v-if="!showDetail" class="dialog-header">
       <div class="dialog-header-tabs">
         <div class="tabs">
-          <span class="title">我的主题</span>
+          <span class="title">Chủ đề của tôi</span>
           <img class="theme-in" src="https://www.crmeb.com/static/images/zhutishichang.png" alt="" @click="toTheme" />
         </div>
       </div>
       <i class="el-icon-close" @click="handleClose"></i>
     </div>
     <div class="dialog-content" v-if="!showDetail">
-      <!-- 顶部Tab切换 -->
+      <!-- Chuyển tab phía trên -->
 
       <div class="content-wrapper">
-        <!-- 右侧内容 -->
+        <!-- Nội dung bên phải -->
         <div class="main-content">
           <div class="filters-header">
             <div v-if="type != 'mall'" class="filter-left">
-              <el-select v-model="currentFilter" size="small" placeholder="首页" style="width: 204px">
+              <el-select v-model="currentFilter" size="small" placeholder="Trang chủ" style="width: 204px">
                 <el-option
                   v-for="item in filterOptions"
                   :key="item.value"
@@ -40,7 +40,7 @@
             <div class="search-box">
               <el-input
                 v-model="searchKeyword"
-                placeholder="请输入主题名称"
+                placeholder="Vui lòng nhập tên chủ đề"
                 suffix-icon="el-icon-search"
                 size="small"
                 @change="searchTheme"
@@ -49,18 +49,18 @@
           </div>
 
           <div class="theme-grid">
-            <!-- 新建空白主题 -->
+            <!-- Tạo chủ đề trống -->
             <div class="theme-item create-new" v-if="activeTab === 'my'" @click="createNewTheme">
               <div class="create-icon">
                 <div class="iconfont iconic_brush"></div>
               </div>
-              <div class="create-text">新建空白主题</div>
+              <div class="create-text">Tạo chủ đề trống</div>
             </div>
 
-            <!-- 主题列表 -->
+            <!-- Danh sách chủ đề -->
             <div class="theme-item" v-for="(theme, index) in themes" :key="index">
               <div class="theme-cover">
-                <!-- 背景模糊层 -->
+                <!-- Lớp nền làm mờ -->
                 <div class="blur-bg" :style="{ backgroundImage: `url(${theme[currentFilter]})` }"></div>
                 <div class="phone-preview">
                   <img
@@ -70,22 +70,22 @@
                   />
                   <div class="no-poster" v-else>
                     <img :src="require('@/assets/images/no-theme-poster.png')" class="preview-image" alt="no poster" />
-                    <div>暂无封面</div>
+                    <div>Chưa có ảnh bìa</div>
                   </div>
                 </div>
               </div>
               <div class="theme-info">
                 <div class="theme-title">
                   <div class="line1">
-                    {{ theme.title || '暂无主题名称' }}
+                    {{ theme.title || 'Chưa có tên chủ đề' }}
                   </div>
-                  <div class="tag" v-if="theme.page_type == 'micro'">专题页</div>
+                  <div class="tag" v-if="theme.page_type == 'micro'">Trang chủ đề</div>
                 </div>
-                <div class="theme-time">修改时间：{{ theme.up_time }}</div>
+                <div class="theme-time">Thời gian sửa: {{ theme.up_time }}</div>
 
                 <div class="theme-hover-actions">
-                  <div class="button default" @click="viewThemeDetail(theme)">查看详情</div>
-                  <div class="button primary" @click="selectTheme(theme)">使用主题</div>
+                  <div class="button default" @click="viewThemeDetail(theme)">Xem chi tiết</div>
+                  <div class="button primary" @click="selectTheme(theme)">Áp dụng chủ đề</div>
                 </div>
               </div>
             </div>
@@ -104,12 +104,12 @@
       </div>
     </div>
 
-    <!-- 详情页视图 -->
+    <!-- View trang chi tiết -->
     <div class="detail-content" v-else>
       <div class="detail-header">
         <div class="flex">
-          <div class="back-btn" @click="showDetail = false"><i class="el-icon-arrow-left"></i> 返回</div>
-          <div class="detail-title">主题详情</div>
+          <div class="back-btn" @click="showDetail = false"><i class="el-icon-arrow-left"></i> Quay lại</div>
+          <div class="detail-title">Chi tiết chủ đề</div>
         </div>
         <i class="el-icon-close" @click="handleClose"></i>
       </div>
@@ -127,19 +127,19 @@
           </div>
           <div class="detail-info-box">
             <div>
-              <div class="info-title">{{ currentTheme.title || '暂无主题名称' }}</div>
+              <div class="info-title">{{ currentTheme.title || 'Chưa có tên chủ đề' }}</div>
               <div class="info-desc">
-                {{ currentTheme.info || '暂无描述' }}
+                {{ currentTheme.info || 'Chưa có mô tả' }}
               </div>
             </div>
             <div class="info-btn">
-              <el-button type="primary" @click="selectTheme(currentTheme)">使用主题</el-button>
+              <el-button type="primary" @click="selectTheme(currentTheme)">Áp dụng chủ đề</el-button>
             </div>
           </div>
         </div>
 
         <div class="detail-images-section">
-          <div class="section-title">主题图片</div>
+          <div class="section-title">Hình ảnh chủ đề</div>
           <div class="images-list">
             <div class="image-item" v-for="(opt, index) in filterOptions" :key="index">
               <div class="phone-mockup">
@@ -152,13 +152,13 @@
                 />
                 <div class="no-poster" v-else>
                   <img :src="require('@/assets/images/no-theme-poster.png')" class="preview-image" alt="no poster" />
-                  <div>暂无封面</div>
+                  <div>Chưa có ảnh bìa</div>
                 </div>
               </div>
             </div>
             <div class="detail-qrcode">
               <div class="qrcode-box" id="qrcodeDetail"></div>
-              <div class="qrcode-text">扫码查看完整演示</div>
+              <div class="qrcode-text">Quét mã để xem bản demo đầy đủ</div>
             </div>
           </div>
         </div>
@@ -182,7 +182,7 @@ export default {
     },
     type: {
       type: String,
-      default: 'mall', // mall: 商城装修, my: 我的主题
+      default: 'mall', // mall: thiết kế giao diện cửa hàng, my: chủ đề của tôi
     },
     themeId: {
       type: [Number, String],
@@ -205,10 +205,10 @@ export default {
       currentFilter: 'home_image',
       searchKeyword: '',
       filterOptions: [
-        { label: '首页', value: 'home_image' },
-        { label: '分类页', value: 'category_image' },
-        { label: '详情页', value: 'detail_image' },
-        { label: '个人中心', value: 'user_image' },
+        { label: 'Trang chủ', value: 'home_image' },
+        { label: 'Trang danh mục', value: 'category_image' },
+        { label: 'Trang chi tiết', value: 'detail_image' },
+        { label: 'Trang cá nhân', value: 'user_image' },
       ],
       themes: [],
       page: 1,
@@ -265,9 +265,9 @@ export default {
     },
     selectTheme(theme) {
       if (this.themeId && this.themeId != 0) {
-        this.$confirm('确定要使用该主题数据吗？这将覆盖当前页面配置', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Bạn có chắc muốn dùng dữ liệu của chủ đề này không? Thao tác này sẽ ghi đè cấu hình trang hiện tại', 'Thông báo', {
+          confirmButtonText: 'Xác nhận',
+          cancelButtonText: 'Hủy',
           type: 'warning',
         })
           .then(() => {
@@ -277,13 +277,13 @@ export default {
               type: type,
             })
               .then(() => {
-                this.$message.success('设置成功');
+                this.$message.success('Cài đặt thành công');
                 this.$emit('success');
                 this.handleClose();
                 this.showDetail = false;
               })
               .catch((err) => {
-                this.$message.error(err.msg || '设置失败');
+                this.$message.error(err.msg || 'Cài đặt thất bại');
               });
           })
           .catch(() => {});
@@ -332,7 +332,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// 弹窗样式
+// Kiểu hộp thoại
 ::v-deep .theme-dialog {
   border-radius: 8px;
   overflow: hidden;

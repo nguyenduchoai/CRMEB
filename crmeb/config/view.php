@@ -1,36 +1,36 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 // +----------------------------------------------------------------------
-// | 模板设置
+// | Cài đặt template
 // +----------------------------------------------------------------------
 
 return [
-    // 模板引擎类型使用Think
+    // Loại template engine dùng Think
     'type'          => 'Think',
-    // 默认模板渲染规则 1 解析为小写+下划线 2 全部转换小写 3 保持操作方法
+    // Quy tắc render template mặc định: 1 chuyển thành chữ thường + gạch dưới, 2 chuyển toàn bộ thành chữ thường, 3 giữ nguyên tên action
     'auto_rule'     => 1,
-    // 模板目录名
+    // Tên thư mục template
     'view_dir_name' => 'view',
-    // 模板后缀
+    // Hậu tố template
     'view_suffix'   => 'html',
-    // 模板文件名分隔符
+    // Ký tự phân tách tên file template
     'view_depr'     => DIRECTORY_SEPARATOR,
-    // 模板引擎普通标签开始标记
+    // Thẻ bắt đầu tag thông thường của template engine
     'tpl_begin'     => '{',
-    // 模板引擎普通标签结束标记
+    // Thẻ kết thúc tag thông thường của template engine
     'tpl_end'       => '}',
-    // 标签库标签开始标记
+    // Thẻ bắt đầu tag của thư viện tag (taglib)
     'taglib_begin'  => '{',
-    // 标签库标签结束标记
+    // Thẻ kết thúc tag của thư viện tag (taglib)
     'taglib_end'    => '}',
-    //模板文件路径
+    //Đường dẫn file template
     'view_path'     => public_path(),
 ];

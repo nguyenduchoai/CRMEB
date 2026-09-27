@@ -1,5 +1,5 @@
 <template>
-  <!-- 首页 -->
+  <!-- Trang chủ -->
   <view
     v-if="pageShow"
     class="page"
@@ -34,7 +34,7 @@
       @reconnect="reconnect"
     >
       <template #bottom>
-        <!-- 分类商品模块 -->
+        <!-- Module sản phẩm theo danh mục -->
         <view
           class="sort-product px-20"
           :style="{ marginTop: sortMpTop + 'px' }"
@@ -84,7 +84,7 @@
           ></waterfallsFlow>
           <Loading :loaded="loaded" :loading="loading"></Loading>
           <view v-if="goodList.length == 0 && loaded">
-            <emptyPage title="暂无商品，去看点别的吧～"></emptyPage>
+            <emptyPage title="Chưa có sản phẩm, hãy xem sản phẩm khác nhé~"></emptyPage>
           </view>
         </view>
         <couponWindow
@@ -118,7 +118,7 @@
     <app-update ref="appUpdate" :force="true" :tabbar="false"></app-update>
     <!-- #endif -->
     <view v-if="isPreview" class="exit-preview" @click="exitPreview">
-      退出预览
+      Thoát xem trước
     </view>
   </view>
 </template>
@@ -189,7 +189,7 @@ export default {
       styleConfig: [],
       loading: false,
       loadend: false,
-      loadTitle: "下拉加载更多", //提示语
+      loadTitle: "Kéo xuống để tải thêm", //Câu thông báo
       page: 1,
       limit: this.$config.LIMIT,
       numConfig: 0,
@@ -217,7 +217,7 @@ export default {
       isFixed: false,
       // #endif
       site_config: "",
-      errorNetwork: false, // 是否断网
+      errorNetwork: false, // Có mất mạng hay không
       isHeaderSerch: false,
       showHomeComb: false,
       showCateNav: false,
@@ -237,7 +237,7 @@ export default {
       confirm_video_status: false,
       positionTop: 0,
       isFooter: false,
-      pdHeight: 0, //自定义底部导航上下边距和
+      pdHeight: 0, //Tổng margin trên dưới tùy chỉnh của thanh điều hướng dưới
       entryData: {
         store_id: "",
         latitude: "",
@@ -246,8 +246,8 @@ export default {
       },
       goodsIndex: [],
       promotionIndex: [],
-      belongIndex: 0, // 进店规则归属门店排序位置；
-      isBelongStore: false, //判断是否为归属门店；
+      belongIndex: 0, // Vị trí sắp xếp cửa hàng thuộc quy tắc vào cửa hàng;
+      isBelongStore: false, //Kiểm tra có phải cửa hàng trực thuộc hay không;
       getHeight: this.$util.getWXStatusHeight(),
       myApplet: true,
       configData: Cache.get("BASIC_CONFIG"),
@@ -312,10 +312,10 @@ export default {
         return;
       }
       uni.showModal({
-        content: "当前使用移动网络，是否继续播放视频？",
+        content: "Bạn đang dùng mạng di động, có tiếp tục phát video không?",
         success: (res) => {
           if (res.confirm) {
-            // 监听
+            // Theo dõi (listener)
             this.SET_AUTOPLAY(true);
             this.$eventHub.$emit("product_video_observe");
           }
@@ -334,14 +334,14 @@ export default {
     // #endif
   },
   onUnload() {
-    // 清除监听
+    // Xóa listener
     uni.$off("activeFn");
   },
   watch: {
     isLogin: {
-      deep: true, //深度监听设置为 true
+      deep: true, //Đặt deep watch thành true
       handler: function (newV, oldV) {
-        // 优惠券弹窗
+        // Popup phiếu giảm giá
         var newDates = new Date().toLocaleDateString();
         if (newV) {
           try {
@@ -356,7 +356,7 @@ export default {
   },
   onShow() {
     uni.removeStorageSync("form_type_cart");
-    // 优惠券弹窗
+    // Popup phiếu giảm giá
     if (this.isLogin) {
       this.getCoupon();
       this.getCartNum();
@@ -447,13 +447,13 @@ export default {
       // #ifdef MP
       if (options.scene) {
         let value = that.$util.getUrlParams(decodeURIComponent(options.scene));
-        //记录推广人uid
+        //Ghi lại uid người giới thiệu
         if (value.spid) app.globalData.spid = value.spid;
       }
       // #endif
       if (options.spid) app.globalData.spid = options.spid;
     },
-    // 重新链接
+    // Kết nối lại
     reconnect() {
       this.diyData();
       getShare().then((res) => {
@@ -479,7 +479,7 @@ export default {
       uni.hideLoading();
       this.domOffsetTop = data.top;
     },
-    // 去商品详情
+    // Đến chi tiết sản phẩm
     goGoodsDetail(item) {
       goShopDetail(item, this.uid).then((res) => {
         uni.navigateTo({
@@ -487,7 +487,7 @@ export default {
         });
       });
     },
-    // 分类点击
+    // Click danh mục
     changeSort(item, index) {
       if (this.curSort == index) return;
       this.curSort = index;
@@ -499,16 +499,16 @@ export default {
     },
     /**
 			 * @param data {
-				classPage: 0 分类id
-				microPage: 0 微页面id
-				type: 1   0 微页面 1 商品分类
+				classPage: 0 id danh mục
+				microPage: 0 id trang micro
+				type: 1   0 trang micro  1 danh mục sản phẩm
 			 }*/
     bindSortId(data) {
       if (data.dataType.tabVal == 1) {
         uni.navigateTo({
           url: `/pages/goods/goods_list/index?cid=${data.classPage.id}&title=${data.classPage.name}`,
         });
-      } else if (data.text.val == '首页') {
+      } else if (data.text.val == 'Trang chủ') {
         uni.switchTab({
           url: `/pages/index/index`,
         });
@@ -552,7 +552,7 @@ export default {
         });
       }
     },
-    // 商品列表
+    // Danh sách sản phẩm
     getGoodsList() {
       if (this.loading || this.loaded) return;
       this.loading = true;
@@ -572,7 +572,7 @@ export default {
         this.goodList = this.goodList.concat(res.data);
       });
     },
-    // 新用户优惠券
+    // Phiếu giảm giá người dùng mới
     getNewCoupon() {
       const oldUser = uni.getStorageSync("oldUser") || 0;
       if (!oldUser) {
@@ -590,7 +590,7 @@ export default {
         });
       }
     },
-    // 优惠券弹窗
+    // Popup phiếu giảm giá
     getCoupon() {
       const tagDate = uni.getStorageSync("tagDate") || "",
         nowDate = new Date().toLocaleDateString();
@@ -609,7 +609,7 @@ export default {
         });
       }
     },
-    // 优惠券弹窗关闭
+    // Đóng popup phiếu giảm giá
     couponClose() {
       this.isCouponShow = false;
       if (!uni.getStorageSync("oldUser")) {
@@ -620,7 +620,7 @@ export default {
       this.isShowAuth = false;
     },
     // #ifdef H5
-    // 获取url后面的参数
+    // Lấy tham số phía sau url
     getQueryString(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
       var reg_rewrite = new RegExp("(^|/)" + name + "/([^/]*)(/|$)", "i");
@@ -647,7 +647,7 @@ export default {
       }
     },
     // #endif
-    // 对象转数组
+    // Chuyển object thành mảng
     objToArr(data) {
       if (!data || typeof data !== "object") return [];
       let obj = Object.keys(data).sort();
@@ -722,7 +722,7 @@ export default {
       this.isPreview = false;
       applyTheme();
       this.diyData();
-      // 去掉 theme_id 刷新当前页面
+      // Bỏ theme_id và làm mới trang hiện tại
       // uni.reLaunch({ url: "/pages/index/index" });
     },
     getDiyData() {
@@ -739,7 +739,7 @@ export default {
             uni.hideLoading();
             if (this.errorNetwork) {
               uni.showToast({
-                title: "请开启网络连接",
+                title: "Vui lòng bật kết nối mạng",
                 icon: "none",
                 duration: 2000,
               });
@@ -793,7 +793,7 @@ export default {
       this.pdHeight = num;
     },
     // #ifdef H5
-    // 微信分享；
+    // Chia sẻ WeChat;
     setOpenShare: function () {
       let that = this;
       let uid = this.uid ? this.uid : 0;
@@ -870,7 +870,7 @@ export default {
       };
     }
   },
-  //分享到朋友圈
+  //Chia sẻ lên Moments
   onShareTimeline: function () {
     return {
       title: this.shareInfo.title,

@@ -67,7 +67,7 @@ export default {
         if (nVal != oVal) {
           if (nVal.length) {
             this.labelList = [];
-            // 根据nVal 去listData 中查找 不改变查找出来的顺序
+            // Tìm trong listData theo nVal, không thay đổi thứ tự kết quả tìm được
             nVal.forEach((item) => {
               this.listData.forEach((item2) => {
                 if (item == item2.id) {

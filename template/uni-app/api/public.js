@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2024 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -12,7 +12,7 @@ import request from "@/utils/request.js";
 import wechat from "@/libs/wechat.js";
 
 /**
- * 获取微信sdk配置
+ * Lấy cấu hình sdk WeChat
  * @returns {*}
  */
 export function getWechatConfig() {
@@ -28,7 +28,7 @@ export function getWechatConfig() {
 }
 
 /**
- * 获取微信sdk配置
+ * Lấy cấu hình sdk WeChat
  * @returns {*}
  */
 export function wechatAuth(code, spread, login_type) {
@@ -46,7 +46,7 @@ export function wechatAuth(code, spread, login_type) {
 }
 
 /**
- * 获取登录授权login
+ * Lấy ủy quyền đăng nhập (login)
  *
  */
 export function getLogo() {
@@ -60,8 +60,8 @@ export function getLogo() {
 }
 
 /**
- * 小程序用户登录
- * @param data object 小程序用户登录信息
+ * Đăng nhập người dùng Mini Program
+ * @param data object Thông tin đăng nhập người dùng Mini Program
  */
 export function login(data) {
   return request.post("wechat/mp_auth", data, {
@@ -70,7 +70,7 @@ export function login(data) {
 }
 
 /**
- * 静默授权
+ * Ủy quyền im lặng
  * @param {Object} data
  */
 export function silenceAuth(data) {
@@ -87,7 +87,7 @@ export function silenceAuth(data) {
 }
 
 /**
- * 分享
+ * Chia sẻ
  * @returns {*}
  */
 export function getShare() {
@@ -101,7 +101,7 @@ export function getShare() {
 }
 
 /**
- * 公众号登录
+ * Đăng nhập OA WeChat
  * @returns {*}
  */
 export function wechatAuthLogin(data) {
@@ -111,7 +111,7 @@ export function wechatAuthLogin(data) {
 }
 
 /**
- * 获取关注海报
+ * Lấy poster theo dõi
  * @returns {*}
  */
 export function follow() {
@@ -125,7 +125,7 @@ export function follow() {
 }
 
 /**
- * code生成用户
+ * Code tạo người dùng
  * @returns {*}
  */
 export function authType(data) {
@@ -135,7 +135,7 @@ export function authType(data) {
 }
 
 /**
- * 授权登录
+ * Đăng nhập ủy quyền
  * @returns {*}
  */
 export function authLogin(data) {
@@ -145,7 +145,7 @@ export function authLogin(data) {
 }
 
 /**
- * 获取图片base64
+ * Lấy base64 của ảnh
  * @retins {*}
  * */
 export function imageBase64(image, code) {
@@ -162,7 +162,7 @@ export function imageBase64(image, code) {
 }
 
 /**
- * 自动复制口令功能
+ * Chức năng tự động copy mã lệnh
  * @returns {*}
  */
 export function copyWords() {
@@ -176,7 +176,7 @@ export function copyWords() {
 }
 
 /**
- * 获取商城是否强制绑定手机号
+ * Lấy trạng thái shop có bắt buộc liên kết số điện thoại hay không
  */
 export function getShopConfig() {
   return request.get(
@@ -189,7 +189,7 @@ export function getShopConfig() {
 }
 
 /**
- * 小程序绑定手机号
+ * Liên kết số điện thoại trên Mini Program
  * @param {Object} data
  */
 export function routineBindingPhone(data) {
@@ -198,7 +198,7 @@ export function routineBindingPhone(data) {
   });
 }
 /**
- * 小程序绑定手机号
+ * Liên kết số điện thoại trên Mini Program
  * @param {Object} data
  */
 export function wechatBindingPhone(data) {
@@ -207,7 +207,7 @@ export function wechatBindingPhone(data) {
   });
 }
 /**
- * 小程序手机号登录
+ * Đăng nhập bằng số điện thoại trên Mini Program
  * @param {Object} data
  */
 export function phoneLogin(data) {
@@ -217,8 +217,8 @@ export function phoneLogin(data) {
 }
 
 /**
- * 小程序用户登录
- * @param data object 小程序用户登录信息
+ * Đăng nhập người dùng Mini Program
+ * @param data object Thông tin đăng nhập người dùng Mini Program
  */
 export function routineLogin(data) {
   return request.get("v2/wechat/routine_auth", data, {
@@ -227,7 +227,7 @@ export function routineLogin(data) {
 }
 
 /**
- * 获取微信sdk配置
+ * Lấy cấu hình sdk WeChat
  * @returns {*}
  */
 export function wechatAuthV2(code, spread) {
@@ -244,8 +244,8 @@ export function wechatAuthV2(code, spread) {
 }
 
 /**
- * 获取组件底部菜单
- * @param data object 获取组件底部菜单
+ * Lấy menu dưới cùng của component
+ * @param data object Lấy menu dưới cùng của component
  */
 export function getNavigation(data) {
   return request.get("theme/navigation", data, {
@@ -263,8 +263,8 @@ export function getSubscribe() {
 }
 
 /**
- * 获取版本信息
- * @param 系统类型
+ * Lấy thông tin phiên bản
+ * @param Loại hệ thống
  */
 export function getUpdateInfo(type) {
   return request.get(
@@ -277,7 +277,7 @@ export function getUpdateInfo(type) {
 }
 
 /**
- * 获取首页DIY数据版本号
+ * Lấy số phiên bản dữ liệu DIY trang chủ
  *
  */
 export function getVersion(name) {
@@ -290,7 +290,7 @@ export function getVersion(name) {
   );
 }
 /**
- * 获取商品分类版本号
+ * Lấy số phiên bản danh mục sản phẩm
  *
  */
 export function getCategoryVersion(name) {
@@ -304,7 +304,7 @@ export function getCategoryVersion(name) {
 }
 
 /**
- * 配置信息
+ * Thông tin cấu hình
  *
  */
 export function basicConfig(name) {
@@ -317,7 +317,7 @@ export function basicConfig(name) {
   );
 }
 /**
- * 后台版本信息
+ * Thông tin phiên bản backend
  *
  */
 export function getSystemVersion() {
@@ -331,7 +331,7 @@ export function getSystemVersion() {
 }
 
 /**
- * iframe登录
+ * Đăng nhập iframe
  *
  */
 export function remoteRegister(data) {

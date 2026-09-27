@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -25,7 +25,7 @@ class Route extends Make
 
     /**
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/4
      */
@@ -47,7 +47,7 @@ class Route extends Make
         $routePath = $options['routePath'] ?? '';
         $menus = $options['menus'] ?? '';
         if (!$route) {
-            throw new CrudException('不存在的资源路由类型');
+            throw new CrudException('Loại route resource không tồn tại');
         }
 
         return $this->setRouteContent($route, $routePath, $controller, $menus)
@@ -55,11 +55,11 @@ class Route extends Make
     }
 
     /**
-     * 设置路由模板内容
+     * Đặt nội dung mẫu route
      * @param string $name
      * @param string $path
      * @return $this
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
@@ -78,13 +78,13 @@ class Route extends Make
     }
 
     /**
-     * 设置路由页面内容
+     * Đặt nội dung trang route
      * @param string $route
      * @param string $routePath
      * @param string $controller
      * @param string $menus
      * @return $this
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
@@ -118,7 +118,7 @@ class Route extends Make
      * @param string $path
      * @param string $name
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/11
      */
@@ -130,10 +130,10 @@ class Route extends Make
     }
 
     /**
-     * 设置模板
+     * Đặt mẫu
      * @param string $type
      * @return string|string[]
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/14
      */

@@ -1,21 +1,21 @@
 <template>
-  <el-dialog :visible.sync="modals" title="请修改内容" width="470px" class="order_box" :show-close="true">
+  <el-dialog :visible.sync="modals" title="Vui lòng sửa nội dung" width="470px" class="order_box" :show-close="true">
     <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="85px" @submit.native.prevent>
-      <el-form-item label="备注：" prop="remark">
+      <el-form-item label="Ghi chú:" prop="remark">
         <el-input
           v-model="formValidate.remark"
           :maxlength="200"
           :rows="8"
           show-word-limit
           type="textarea"
-          placeholder="订单备注"
+          placeholder="Ghi chú đơn hàng"
           style="width: 100%"
         />
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button v-db-click @click="cancel('formValidate')">取消</el-button>
-      <el-button type="primary" v-db-click @click="putRemark('formValidate')">提交</el-button>
+      <el-button v-db-click @click="cancel('formValidate')">Hủy</el-button>
+      <el-button type="primary" v-db-click @click="putRemark('formValidate')">Gửi</el-button>
     </span>
   </el-dialog>
 </template>
@@ -31,7 +31,7 @@ export default {
       },
       modals: false,
       ruleValidate: {
-        remark: [{ required: true, message: '请输入备注信息', trigger: 'blur' }],
+        remark: [{ required: true, message: 'Vui lòng nhập thông tin ghi chú', trigger: 'blur' }],
       },
     };
   },
@@ -61,7 +61,7 @@ export default {
               this.$message.error(res.msg);
             });
         } else {
-          this.$message.warning('请填写备注信息');
+          this.$message.warning('Vui lòng điền thông tin ghi chú');
         }
       });
     },

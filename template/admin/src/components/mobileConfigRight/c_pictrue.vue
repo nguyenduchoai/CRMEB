@@ -1,8 +1,8 @@
 <template>
   <div class="mobile-page">
     <div v-if="isUpdate">
-      <!-- <div class="title">布局</div>
-            <div class="tip">选定布局区域，在下方添加图片，建议添加比例一致的图片</div> -->
+      <!-- <div class="title">Bố cục</div>
+            <div class="tip">Chọn vùng bố cục, thêm ảnh ở phía dưới, nên thêm ảnh có tỷ lệ giống nhau</div> -->
       <div class="advert">
         <div
           class="advertItem07"
@@ -173,7 +173,7 @@
         </div>
         <div class="advertItem01 acea-row" v-if="style === 10" v-for="(item, index) in configData.picList" :key="index">
           <img :src="item.image" v-if="item.image" />
-          <div class="empty-box" v-else>尺寸不限</div>
+          <div class="empty-box" v-else>Không giới hạn kích thước</div>
         </div>
         <template v-if="style === 11">
           <div class="pic-box" @mousemove.stop="move">
@@ -231,7 +231,7 @@ export default {
       defaults: {},
       configData: {},
       style: 0,
-      isUpdate: false, // 重新渲染
+      isUpdate: false, // Render lại
       currentIndex: 0,
       arrayObj: {
         image: '',
@@ -240,15 +240,15 @@ export default {
       list: undefined,
       select: false,
       lis: undefined,
-      rect: null, // 定义移动元素div
-      // 记录鼠标按下时的坐标
+      rect: null, // Định nghĩa div phần tử di chuyển
+      // Ghi lại tọa độ khi nhấn chuột
       downX: 0,
       downY: 0,
-      // 记录鼠标抬起时候的坐标
+      // Ghi lại tọa độ khi thả chuột
       mouseX2: 0,
       mouseY2: 0,
       imgNum: 0,
-      selPicBox: 0, // 当前选中的图片盒子
+      selPicBox: 0, // Khung ảnh đang được chọn
     };
   },
   mounted() {
@@ -349,9 +349,9 @@ export default {
         this.configData.picList.push(JSON.parse(JSON.stringify(this.arrayObj)));
       }
     },
-    // 删除指定热区
+    // Xóa vùng nóng chỉ định
     delAreaBox(index) {
-      /* 删除某个热区 */
+      /* Xóa một vùng nóng */
       this.selBoxList.splice(index, 1);
       this.configObj.picStyle.picList.splice(index, 1);
       this.configObj.picStyle.picList.push({ image: '', link: '' });
@@ -362,7 +362,7 @@ export default {
         document.getElementById('lay1').removeChild(this.rect);
       }
     },
-    //处理鼠标按下事件
+    //Xử lý sự kiện nhấn chuột
     clickBox(event) {
       if (this.select) {
         let boxData = this.up();
@@ -384,57 +384,57 @@ export default {
         this.selPicBox = this.selBoxList.length ? this.selBoxList.length - 1 : 0;
         return;
       }
-      // 鼠标按下时才允许处理鼠标的移动事件
+      // Chỉ cho phép xử lý sự kiện di chuyển chuột khi đã nhấn chuột
       this.select = true;
       this.rect = document.createElement('div');
-      // 框选div 样式
+      // Kiểu div khung chọn
       this.rect.style.cssText =
         'position:absolute;width:0px;height:0px;font-size:0px;margin:0px;padding:0px;border:1px dashed #0099FF;background-color:#C3D5ED;z-index:1000;filter:alpha(opacity:60);opacity:0.6;display:none;';
       this.rect.id = 'selectDiv';
-      // 添加到lay1下
+      // Thêm vào dưới lay1
       document.getElementById('lay1').appendChild(this.rect);
-      // 取得鼠标按下时的坐标位置
+      // Lấy vị trí tọa độ khi nhấn chuột
       this.downX = event.layerX;
       this.downY = event.layerY;
       this.rect.style.left = this.downX + 'px';
       this.rect.style.top = this.downY + 'px';
-      //设置你要画的矩形框的起点位置
+      //Đặt vị trí điểm bắt đầu của khung chữ nhật cần vẽ
       this.rect.style.left = this.downX + 'px';
       this.rect.style.top = this.downY + 'px';
     },
 
-    //鼠标抬起事件
+    //Sự kiện thả chuột
     up() {
       let topList = [];
       let leftList = [];
       for (let i = 0; i < this.lis.length; i++) {
-        //将移动的div的四个点和和div元素的四个点进行比较
+        //So sánh bốn điểm của div di chuyển với bốn điểm của phần tử div
         if (
-          //判断div元素 右边框的位置大于移动div的左起始点
+          //Kiểm tra vị trí viền phải của phần tử div lớn hơn điểm bắt đầu bên trái của div di chuyển
           this.rect.offsetLeft < this.lis[i].offsetLeft + this.lis[i].offsetWidth &&
-          //判断div元素 下边框的位置大于移动div的上起始点
+          //Kiểm tra vị trí viền dưới của phần tử div lớn hơn điểm bắt đầu bên trên của div di chuyển
           this.lis[i].offsetTop + this.lis[i].offsetHeight > this.rect.offsetTop &&
-          // 判断div元素左边框的位置小于移动div的右起始点
+          // Kiểm tra vị trí viền trái của phần tử div nhỏ hơn điểm bắt đầu bên phải của div di chuyển
           this.rect.offsetLeft + this.rect.offsetWidth > this.lis[i].offsetLeft &&
-          // 判断div元素上边框的位置小于移动div的下起始点
+          // Kiểm tra vị trí viền trên của phần tử div nhỏ hơn điểm bắt đầu bên dưới của div di chuyển
           this.rect.offsetTop + this.rect.offsetHeight > this.lis[i].offsetTop
         ) {
-          //将已选中的样式改变
+          //Thay đổi kiểu của phần đã chọn
           if (this.lis[i].className.indexOf('seled') == -1) {
             topList.push(this.lis[i].offsetTop);
             leftList.push(this.lis[i].offsetLeft);
           }
         } else {
-          //如果没有选中则清除样式
+          //Nếu không có gì được chọn thì xóa kiểu
           if (this.lis[i].className.indexOf('seled') != -1) {
             this.lis[i].className = 'lay-item';
           }
         }
-        //鼠标抬起,就不允许在处理鼠标移动事件
+        //Khi thả chuột thì không cho phép xử lý sự kiện di chuyển chuột nữa
         this.select = false;
       }
 
-      //隐藏图层
+      //Ẩn layer
       if (this.rect) {
         document.getElementById('lay1').removeChild(this.rect);
       }
@@ -446,7 +446,7 @@ export default {
         h: this.getMax(topList) - this.getMin(topList) + 93.75,
       };
     },
-    // 删除
+    // Xóa
     del() {
       this.$emit('delAreaBox', this.areaDataIndex);
     },
@@ -474,20 +474,20 @@ export default {
         document.getElementById('lay1').removeChild(this.rect);
       }
     },
-    //鼠标移动事件,最主要的事件
+    //Sự kiện di chuyển chuột, sự kiện quan trọng nhất
     move(event) {
       event.preventDefault();
       if (!this.select) return;
       /*
-            这个部分,根据你鼠标按下的位置,和你拉框时鼠标松开的位置关系,可以把区域分为四个部分,根据四个部分的不同,
-            我们可以分别来画框,否则的话,就只能向一个方向画框,也就是点的右下方画框.
+            Phần này, dựa vào mối quan hệ giữa vị trí nhấn chuột và vị trí thả chuột khi kéo khung, có thể chia vùng thành bốn phần, dựa theo sự khác nhau của bốn phần đó,
+            chúng ta có thể vẽ khung tương ứng, nếu không thì chỉ có thể vẽ khung theo một hướng, nghĩa là vẽ khung về phía dưới bên phải của điểm nhấn.
             */
       if (this.select) {
         window.requestAnimationFrame(() => {
-          // 取得鼠标移动时的坐标位置
+          // Lấy vị trí tọa độ khi di chuyển chuột
           this.mouseX2 = event.layerX - 5;
           this.mouseY2 = event.layerY - 5;
-          // 显示框选元素
+          // Hiển thị phần tử khung chọn
           if (this.rect.style.display == 'none') {
             this.rect.style.display = '';
           }
@@ -523,9 +523,9 @@ export default {
         });
       }
 
-      // 阻止事件上传
+      // Ngăn sự kiện lan truyền lên
       window.event.cancelBubble = true;
-      // 阻止默认事件
+      // Ngăn hành vi mặc định (preventDefault)
       window.event.returnValue = false;
     },
   },

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -33,7 +33,7 @@ class SystemAdmin extends AuthController
     }
 
     /**
-     * 显示管理员资源列表
+     * Hiển thị danh sách resource quản trị viên
      *
      * @return \think\Response
      */
@@ -50,7 +50,7 @@ class SystemAdmin extends AuthController
     }
 
     /**
-     * 创建表单
+     * Tạo form
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
@@ -60,7 +60,7 @@ class SystemAdmin extends AuthController
     }
 
     /**
-     * 保存管理员
+     * Lưu quản trị viên
      * @return mixed
      */
     public function save()
@@ -78,11 +78,11 @@ class SystemAdmin extends AuthController
 
         $data['level'] = $this->adminInfo['level'] + 1;
         $this->services->create($data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     /**
-     * 显示编辑资源表单页.
+     * Hiển thị trang form sửa resource.
      *
      * @param int $id
      * @return \think\Response
@@ -90,14 +90,14 @@ class SystemAdmin extends AuthController
     public function edit($id)
     {
         if (!$id) {
-            return app('json')->fail('管理员信息读取失败');
+            return app('json')->fail('Đọc thông tin quản trị viên thất bại');
         }
 
         return app('json')->success($this->services->updateForm($this->adminInfo['level'] + 1, (int)$id));
     }
 
     /**
-     * 修改管理员信息
+     * Sửa thông tin quản trị viên
      * @param $id
      * @return mixed
      */
@@ -115,28 +115,28 @@ class SystemAdmin extends AuthController
         $this->validate($data, \app\adminapi\validate\setting\SystemAdminValidata::class, 'update');
 
         if ($this->services->save((int)$id, $data)) {
-            return app('json')->success('修改成功');
+            return app('json')->success('Sửa thành công');
         } else {
-            return app('json')->fail('修改失败');
+            return app('json')->fail('Sửa thất bại');
         }
     }
 
     /**
-     * 删除管理员
+     * Xóa quản trị viên
      * @param $id
      * @return mixed
      */
     public function delete($id)
     {
-        if (!$id) return app('json')->fail('参数错误');
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         if ($this->services->update((int)$id, ['is_del' => 1, 'status' => 0]))
-            return app('json')->success('删除成功');
+            return app('json')->success('Xóa thành công');
         else
-            return app('json')->fail('删除失败');
+            return app('json')->fail('Xóa thất bại');
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param $id
      * @param $status
      * @return mixed
@@ -144,11 +144,11 @@ class SystemAdmin extends AuthController
     public function set_status($id, $status)
     {
         $this->services->update((int)$id, ['status' => $status]);
-        return app('json')->success('设置成功');
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
-     * 获取当前登陆管理员的信息
+     * Lấy thông tin quản trị viên đang đăng nhập
      * @return mixed
      */
     public function info()
@@ -157,7 +157,7 @@ class SystemAdmin extends AuthController
     }
 
     /**
-     * 修改当前登陆admin信息
+     * Sửa thông tin admin đang đăng nhập
      * @return mixed
      */
     public function update_admin()
@@ -172,18 +172,18 @@ class SystemAdmin extends AuthController
 
         if ($data['pwd']) {
             if (!preg_match('/^(?![^a-zA-Z]+$)(?!\D+$).{6,}$/', $data['new_pwd'])) {
-                return app('json')->fail('密码太过简单，请输入较为复杂的密码');
+                return app('json')->fail('Mật khẩu quá đơn giản, vui lòng nhập mật khẩu phức tạp hơn');
             }
         }
 
         if ($this->services->updateAdmin($this->adminId, $data))
-            return app('json')->success('修改成功');
+            return app('json')->success('Sửa thành công');
         else
-            return app('json')->fail('修改失败');
+            return app('json')->fail('Sửa thất bại');
     }
 
     /**
-     * 修改当前登陆admin的文件管理密码
+     * Sửa mật khẩu quản lý file của admin đang đăng nhập
      * @return mixed
      */
     public function set_file_password()
@@ -193,16 +193,16 @@ class SystemAdmin extends AuthController
             ['conf_file_pwd', ''],
         ]);
         if (!preg_match('/^(?![^a-zA-Z]+$)(?!\D+$).{6,}$/', $data['file_pwd'])) {
-            return app('json')->fail('密码太过简单，请输入较为复杂的密码');
+            return app('json')->fail('Mật khẩu quá đơn giản, vui lòng nhập mật khẩu phức tạp hơn');
         }
         if ($this->services->setFilePassword($this->adminId, $data))
-            return app('json')->success('修改成功');
+            return app('json')->success('Sửa thành công');
         else
-            return app('json')->fail('修改失败');
+            return app('json')->fail('Sửa thất bại');
     }
 
     /**
-     * 退出登陆
+     * Đăng xuất
      * @return mixed
      */
     public function logout()

@@ -2,7 +2,7 @@
   <view class="product-info-diy" v-if="productData">
     <common-wrapper :config="configData">
       <view class="product-info-box" :class="'style-' + specStyle">
-        <!-- 图片区域 -->
+        <!-- Vùng hình ảnh -->
         <view class="image-wrap">
           <swiper
             class="swiper"
@@ -13,7 +13,7 @@
             @change="swiperChange"
           >
             <swiper-item v-for="(item, index) in sliderImage" :key="index">
-              <!-- 视频项 -->
+              <!-- Mục video -->
               <view v-if="item.isVideo" class="video-item">
                 <view v-show="!videoControls" class="video-wrap">
                   <video
@@ -39,11 +39,11 @@
                   <image class="icon" src="@/static/images/stop.png" mode="aspectFit"></image>
                 </view>
               </view>
-              <!-- 图片项 -->
+              <!-- Mục hình ảnh -->
               <image v-else :src="item" mode="aspectFill" class="slide-image"></image>
             </swiper-item>
           </swiper>
-          <!-- 镜像效果 -->
+          <!-- Hiệu ứng phản chiếu -->
           <view class="mirror-wrap">
             <image
               :src="currentSlideImage"
@@ -52,13 +52,13 @@
             ></image>
           </view>
 
-          <!-- 指示器 -->
+          <!-- Chỉ báo -->
           <view
             class="indicators"
             :class="'pos-' + indicatorPosition"
             v-if="indicatorConfig.tabVal !== undefined"
           >
-            <!-- 线段样式 -->
+            <!-- Kiểu gạch -->
             <view v-if="indicatorConfig.tabVal === 0" class="indicator-line">
               <view
                 class="line-item"
@@ -71,7 +71,7 @@
                 }"
               ></view>
             </view>
-            <!-- 点线样式 -->
+            <!-- Kiểu chấm -->
             <view v-if="indicatorConfig.tabVal === 1" class="indicator-dot">
               <view
                 class="dot-item"
@@ -84,7 +84,7 @@
                 }"
               ></view>
             </view>
-            <!-- 数字样式 -->
+            <!-- Style số -->
             <view v-if="indicatorConfig.tabVal === 2" class="indicator-number">
               <view class="num-box">
                 <text class="current">{{ currentSwiper + 1 }}</text>
@@ -94,7 +94,7 @@
             </view>
           </view>
 
-          <!-- 规格样式 4: 图片内部底部 -->
+          <!-- Kiểu phân loại 4: phía dưới bên trong ảnh -->
           <view
             v-if="specStyle === 3 && skuList.length > 0"
             class="spec-style-4"
@@ -125,7 +125,7 @@
                           : specUnselectedTextColor,
                     }"
                   >
-                    {{ item.suk || "规格" }}
+                    {{ item.suk || "Quy cách" }}
                   </view>
                 </view>
               </view>
@@ -135,8 +135,8 @@
                 @click="showSpecModal"
               >
                 <view>
-                  <view>{{ skuList.length }}款</view>
-                  <view>可选</view>
+                  <view>{{ skuList.length }} mẫu</view>
+                  <view>có sẵn</view>
                 </view>
                 <text class="iconfont icon-jiantou"></text>
               </view>
@@ -144,15 +144,15 @@
           </view>
         </view>
 
-        <!-- 信息区域 -->
+        <!-- Vùng thông tin -->
         <view class="info-box">
-          <!-- 规格样式 0 & 1: 顶部 -->
+          <!-- Kiểu phân loại 0 & 1: phía trên -->
           <view
             v-if="(specStyle === 0 || specStyle === 1) && skuList.length > 0"
             class="spec-top-section"
             :class="'style-' + specStyle"
           >
-            <!-- 样式 0: 小图列表 -->
+            <!-- Kiểu 0: danh sách ảnh nhỏ -->
             <scroll-view
               scroll-x="true"
               class="spec-list"
@@ -181,12 +181,12 @@
               @click="showSpecModal"
             >
               <view>
-                <view>{{ skuList.length }}款</view>
-                <view>可选</view>
+                <view>{{ skuList.length }} mẫu</view>
+                <view>có sẵn</view>
               </view>
               <text class="iconfont icon-jiantou"></text>
             </view>
-            <!-- 样式 1: 图文列表 -->
+            <!-- Kiểu 1: danh sách ảnh kèm chữ -->
             <view class="spec-list-text-wrapper" v-if="specStyle === 1">
               <scroll-view scroll-x="true" class="spec-list-text">
                 <view
@@ -218,19 +218,19 @@
                 :style="{ color: specTextColor }"
                 @click="showSpecModal"
               >
-                <text>共{{ skuList.length }}款</text>
+                <text>Tổng {{ skuList.length }} mẫu</text>
                 <text class="iconfont icon-jiantou"></text>
               </view>
             </view>
           </view>
 
-          <!-- 信息排序列表 -->
+          <!-- Danh sách thứ tự thông tin -->
           <view
             class="info-item"
             v-for="(item, index) in sortList"
             :key="index"
           >
-            <!-- 价格区域 -->
+            <!-- Vùng giá -->
             <view
               v-if="item.name === 'price' && item.show"
               class="price-section"
@@ -241,7 +241,7 @@
                   class="main-price-wrap"
                   :style="{ color: finalPriceColor }"
                 >
-                  <view class="label">到手价</view>
+                  <view class="label">Giá cuối cùng</view>
                   <view class="symbol">¥</view>
                   <view
                     class="price"
@@ -257,7 +257,7 @@
                   class="ot-price-wrap"
                   :style="{ color: sellingPriceColor }"
                 >
-                  <text class="label">售价</text>
+                  <text class="label">Giá bán</text>
                   <text class="price">¥{{ displayInfo.ot_price }}</text>
                 </view>
                 <view
@@ -270,7 +270,7 @@
               </view>
             </view>
 
-            <!-- 名称区域 -->
+            <!-- Vùng tên -->
             <view v-if="item.name === 'name' && item.show" class="name-section">
               <view
                 class="title"
@@ -286,26 +286,26 @@
               </view> -->
             </view>
 
-            <!-- 数据区域 -->
+            <!-- Vùng dữ liệu -->
             <view v-if="item.name === 'data' && item.show" class="data-section">
               <text
                 v-if="item.checkList.includes(0)"
                 :style="{ color: originalPriceColor }"
-                >原价: ¥{{ displayInfo.ot_price }}</text
+                >Giá gốc: ₫{{ displayInfo.ot_price }}</text
               >
               <text
                 v-if="item.checkList.includes(1)"
                 :style="{ color: stockColor }"
-                >库存: {{ displayInfo.stock }}</text
+                >Tồn kho: {{ displayInfo.stock }}</text
               >
               <text
                 v-if="item.checkList.includes(2)"
                 :style="{ color: salesColor }"
-                >销量: {{ displayInfo.fsales }}{{ displayInfo.unit_name }}</text
+                >Lượt bán: {{ displayInfo.fsales }} {{ displayInfo.unit_name }}</text
               >
             </view>
 
-            <!-- 标签区域 -->
+            <!-- Vùng nhãn -->
             <view
               v-if="
                 item.name === 'tags' &&
@@ -329,7 +329,7 @@
             </view>
           </view>
 
-          <!-- 规格样式 2: 底部 -->
+          <!-- Kiểu phân loại 2: phía dưới -->
           <view
             v-if="specStyle === 2 && skuList.length > 0"
             class="spec-bottom-section"
@@ -369,8 +369,8 @@
               </scroll-view>
               <view class="total-count" @click="showSpecModal">
                 <view>
-                  <view>{{ skuList.length }}款</view>
-                  <view>可选</view>
+                  <view>{{ skuList.length }} mẫu</view>
+                  <view>có sẵn</view>
                 </view>
                 <text class="iconfont icon-jiantou"></text>
               </view>
@@ -448,7 +448,7 @@ export default {
       const images = this.productData.slider_image || [];
       const videoLink = this.productData.video_link;
       if (videoLink) {
-        // 有视频时，第一项为视频对象，后面是图片（跳过第一张图片作为封面）
+        // Khi có video, mục đầu tiên là đối tượng video, phía sau là ảnh (bỏ qua ảnh đầu tiên vì được dùng làm ảnh bìa)
         return [
           {
             isVideo: true,
@@ -463,7 +463,7 @@ export default {
     currentSlideImage() {
       const currentItem = this.sliderImage[this.currentSwiper];
       if (currentItem) {
-        // 如果是视频，返回 poster；否则返回图片
+        // Nếu là video thì trả về poster; nếu không thì trả về ảnh
         return currentItem.isVideo ? currentItem.poster : currentItem;
       }
       return '';
@@ -650,11 +650,11 @@ export default {
   methods: {
     swiperChange(e) {
       this.currentSwiper = e.detail.current;
-      // 切换到非视频页时暂停视频
+      // Tạm dừng video khi chuyển sang trang không phải video
       if (this.currentSwiper !== 0 || !this.productData.video_link) {
         this.videoControls = true;
         this.videoPlaying = false;
-        // 暂停视频
+        // Tạm dừng video
         const videoContext = uni.createVideoContext('productVideo', this);
         videoContext && videoContext.pause();
       }

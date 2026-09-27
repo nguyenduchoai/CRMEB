@@ -4,8 +4,8 @@
 			<view class="card-list" v-for="item in listData" :key="item.mer_intention_id">
 				<view class="card-top">
 					<view class="title">{{item.mer_name || ''}}</view>
-					<view class="time">{{$t(`提交时间`)}}：{{item.create_time || ''}}</view>
-					<view v-if="item.fail_msg" class="reason">{{$t(`原因`)}}：{{item.fail_msg || ''}}</view>
+					<view class="time">{{$t(`Thời gian gửi`)}}：{{item.create_time || ''}}</view>
+					<view v-if="item.fail_msg" class="reason">{{$t(`Lý do`)}}：{{item.fail_msg || ''}}</view>
 				</view>
 				<view class="line"></view>
 				<view class="card-bottom">
@@ -22,7 +22,7 @@
 		<view class='no-shop' v-if="!listData.length && !loading">
 			<view class='pictrue' style="margin: 0 auto;">
 				<image src='/static/images/no-shop.png'></image>
-				<text>{{$t(`暂无申请记录，快去申请吧!`)}}</text>
+				<text>{{$t(`Chưa có lịch sử đăng ký, hãy đăng ký ngay nhé!`)}}</text>
 			</view>
 		</view>
 	</view>
@@ -46,11 +46,11 @@
 		onLoad() {
 			// this.getListData()
 		},
-		// 滚动到底部
+		// Cuộn xuống cuối
 		onReachBottom() {
 			if (this.count == this.listData.length) {
 				uni.showToast({
-					title: this.$t(`没有更多啦`),
+					title: this.$t(`Không còn dữ liệu nữa`),
 					icon: 'none',
 					duration: 1000
 				});
@@ -63,7 +63,7 @@
 			getListData() {
 				this.loading = true
 				uni.showLoading({
-					title: this.$t(`正在加载中`),
+					title: this.$t(`Đang tải`),
 				});
 				getApplicationRecordList(this.pageData).then(res => {
 					this.count = res.data.count
@@ -72,7 +72,7 @@
 					this.loading = false
 				})
 			},
-			// 跳转逻辑
+			// Logic chuyển hướng
 			jump(item) {
 				if ([0, 2].includes(item.status)) {
 					uni.navigateTo({
@@ -84,23 +84,23 @@
 					})
 				}
 			},
-			//状态判断
+			//Kiểm tra trạng thái
 			statusText(number) {
-				// 使用对象
+				// Object sử dụng
 				let statusData = {
-					0: this.$t(`待审核`),
-					1: this.$t(`审核通过`),
-					2: this.$t(`审核未通过`),
+					0: this.$t(`Chờ duyệt`),
+					1: this.$t(`Đã duyệt`),
+					2: this.$t(`Không được duyệt`),
 				};
 				return statusData[number]
 			},
-			// button显示文字
+			// Chữ hiển thị trên button
 			statusBtn(number) {
-				// 使用对象
+				// Object sử dụng
 				let statusData = {
-					0: this.$t(`编辑`),
-					1: this.$t(`查看`),
-					2: this.$t(`重新提交`),
+					0: this.$t(`Sửa`),
+					1: this.$t(`Xem`),
+					2: this.$t(`Gửi lại`),
 				};
 				return statusData[number]
 			},

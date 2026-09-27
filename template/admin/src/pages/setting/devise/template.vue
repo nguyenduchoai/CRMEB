@@ -2,9 +2,9 @@
   <div>
     <div class="i-layout-page-header">
       <router-link :to="{ path: $routeProStr + '/setting/pages/devise' }"
-        ><el-button size="small" class="mr20">返回</el-button></router-link
+        ><el-button size="small" class="mr20">Quay lại</el-button></router-link
       >
-      <span class="ivu-page-header-title mr20">页面设计</span>
+      <span class="ivu-page-header-title mr20">Thiết kế trang</span>
     </div>
     <el-card :bordered="false" shadow="never" class="ivu-mt">
       <div class="flex-wrapper">
@@ -55,11 +55,11 @@ export default {
     });
   },
   mounted() {
-    //监听子页面给当前页面传值
+    //Theo dõi trang con truyền giá trị cho trang hiện tại
     window.addEventListener('message', this.handleMessage, false);
   },
   methods: {
-    //接收iframe值
+    //Nhận giá trị iframe
     handleMessage(event) {
       if (event.data.name) {
         this.configName = event.data.name;

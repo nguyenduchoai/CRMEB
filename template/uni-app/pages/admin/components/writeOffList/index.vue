@@ -18,13 +18,13 @@
 											<view class='line1'>
 												{{ item.cart_info.productInfo.store_name }}
 											</view>
-											<view v-if="item.is_writeoff == 1" class="txt">已核销</view>
-											<view v-if="item.is_writeoff == 0 && item.surplus_num == item.cart_num" class="txt bluecol">未核销</view>
+											<view v-if="item.is_writeoff == 1" class="txt">Đã xác nhận sử dụng</view>
+											<view v-if="item.is_writeoff == 0 && item.surplus_num == item.cart_num" class="txt bluecol">Chưa xác nhận sử dụng</view>
 											<view v-if="item.is_writeoff == 0 && item.surplus_num != item.cart_num" class="txt orangcol">
-												已核销{{item.cart_num - item.surplus_num}}件</view>
+												Đã xác nhận sử dụng {{item.cart_num - item.surplus_num}} sản phẩm</view>
 										</view>
 										<view class='infor line1'>
-											属性：{{ item.cart_info.productInfo.attrInfo.suk }}</view>
+											Thuộc tính: {{ item.cart_info.productInfo.attrInfo.suk }}</view>
 										<view class='money he row-middle'>
 											<view>￥{{ item.cart_info.productInfo.attrInfo?item.cart_info.productInfo.attrInfo.price:item.cart_info.productInfo.price }}</view>
 											<view v-if="item.is_writeoff == 1" class="txt">
@@ -69,11 +69,11 @@
 						<div class="xuan" @click="checkAll" v-model="checked">
 							<view class="iconfont" :class="checked?'icon-a-ic_CompleteSelect':'icon-ic_unselect'"></view>
 						</div>
-						<text class='checkAll'>全选</text>
+						<text class='checkAll'>Chọn tất cả</text>
 					</view>
 				</view>
 				<view>
-					<button class='money' type="primary" @click="verification">{{checked?'一键':'确认'}}核销({{numChecked}})</button>
+					<button class='money' type="primary" @click="verification">{{checked?'Xác nhận tất cả lượt':'Xác nhận'}} sử dụng ({{numChecked}})</button>
 				</view>
 			</view>
 		</view>
@@ -81,19 +81,19 @@
 			<view class="box">
 				<view class="small_box">
 					<view class="content">
-						<view class="font">核销成功</view>
-						<view v-if="list.total_num == parseInt(list.writeoff_count)+writeOffNum" class="small_font">当前订单已完成核销</view>
-						<view v-else class="small_font">该订单仍有其他待核销商品</view>
+						<view class="font">Xác nhận sử dụng thành công</view>
+						<view v-if="list.total_num == parseInt(list.writeoff_count)+writeOffNum" class="small_font">Đơn hàng này đã xác nhận sử dụng xong</view>
+						<view v-else class="small_font">Đơn hàng này vẫn còn sản phẩm khác chờ xác nhận sử dụng</view>
 					</view>
 					<view class="acea-row btn-box">
-						<view v-if="lets == 1 && list.total_num == parseInt(list.writeoff_count)+writeOffNum" class="btn" @click="ok(1)">知道了</view>
+						<view v-if="lets == 1 && list.total_num == parseInt(list.writeoff_count)+writeOffNum" class="btn" @click="ok(1)">Đã hiểu</view>
 						<navigator v-if="lets > 1 && list.total_num != parseInt(list.writeoff_count)+writeOffNum" :url='"/pages/admin/distribution/scanning/index?code="+attr.code' hover-class='none'
-							open-type="redirect" class="btn">返回列表</navigator>
+							open-type="redirect" class="btn">Quay lại danh sách</navigator>
 						<navigator v-if="(lets > 1 && list.total_num == parseInt(list.writeoff_count)+writeOffNum)||(lets==1&&list.total_num != parseInt(list.writeoff_count)+writeOffNum)"
-							url="/pages/admin/distribution/index" hover-class='none' open-type="redirect" class="btn">返回首页</navigator>
-						<view v-if="list.total_num != parseInt(list.writeoff_count)+writeOffNum" class="btn on" @click="ok(0)">继续核销</view>
+							url="/pages/admin/distribution/index" hover-class='none' open-type="redirect" class="btn">Về trang chủ</navigator>
+						<view v-if="list.total_num != parseInt(list.writeoff_count)+writeOffNum" class="btn on" @click="ok(0)">Tiếp tục xác nhận sử dụng</view>
 						<navigator v-if="lets > 1 && list.total_num == parseInt(list.writeoff_count)+writeOffNum" :url='"/pages/admin/distribution/scanning/index?code="+attr.code' open-type="redirect"
-							hover-class='none' class="btn">核销其他订单</navigator>
+							hover-class='none' class="btn">Xác nhận sử dụng đơn khác</navigator>
 					</view>
 				</view>
 			</view>
@@ -132,16 +132,16 @@
 				newList: [],
 				reduce_show: -1,
 				plus_show: -1,
-				ids: [], //选定需要核销的id
-				lets: 0, //判断订单的数量
-				listlet: 0, //判断订单商品的数量
-				attr: { //切换组件传值
+				ids: [], //ID được chọn cần xác nhận sử dụng
+				lets: 0, //Kiểm tra số lượng đơn hàng
+				listlet: 0, //Kiểm tra số lượng sản phẩm của đơn hàng
+				attr: { //Giá trị truyền cho thành phần chuyển đổi
 					cartAttr: false,
 					id: [],
 					code: '',
 					type: 0
 				},
-				// id: 0, //订单ID
+				// id: 0, //ID đơn hàng
 				// list: [],
 				lists: {},
 				lengt: 0,
@@ -159,7 +159,7 @@
 					id: '3',
 					value: 'ccc'
 				}],
-				writeOffNum: 0, //每次核销商品数量
+				writeOffNum: 0, //Số lượng sản phẩm xác nhận sử dụng mỗi lần
 				cart_info: [],
 				numChecked: 0,
 			};
@@ -182,7 +182,7 @@
 			// this.num()
 		},
 		methods: {
-			//处理每一条数据的最大值
+			//Xử lý giá trị tối đa của từng bản ghi
 			num() {
 				for (let index = 0; index < this.lists.cart_info.length; index++) {
 					this.nums.push({
@@ -321,14 +321,14 @@
 				}
 				// return
 				// let obj = {};
-				// 将数组转化为对象
+				// Chuyển mảng thành đối tượng
 				// for (let key in this.checkModel) {
 				// 	obj[key] = this.checkModel[key];
 				// };
 				// let newObj = Object.keys(obj).map(val => ({
 				// 	cart_id: obj[val],
 				// }));
-				//处理列表内对应的核销数的数值
+				//Xử lý giá trị số lượng xác nhận sử dụng tương ứng trong danh sách
 				// for (var i = 0; i < newObj.length; i++) {
 				// 	for (var j = 0; j < this.list.cart_info.length; j++) {
 				// 		if (newObj[i].cart_id == this.list.cart_info[j].cart_id) {
@@ -339,11 +339,11 @@
 				this.newList = newObj
 				if (that.checkModel.length == 0) {
 					that.$util.Tips({
-						title: '请选择商品'
+						title: 'Vui lòng chọn sản phẩm'
 					});
 				} else {
 					uni.showLoading({
-						title: '加载中',
+						title: 'Đang tải',
 					});
 					let num = 0;
 					newObj.forEach((item) => {
@@ -377,7 +377,7 @@
 					}, 1000);
 				}
 			},
-			// 所有订单核销完成
+			// Tất cả đơn hàng đã xác nhận sử dụng xong
 			ok(type) {
 				this.box = false
 				this.nums.forEach((item) => {
@@ -584,10 +584,10 @@
 		bottom: 0;
 		left: 0;
 		height: 96rpx;
-		height: calc(96rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-		height: calc(96rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
-		padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
-		padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
+		height: calc(96rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+		height: calc(96rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
+		padding-bottom: constant(safe-area-inset-bottom); ///Tương thích IOS<11.2/
+		padding-bottom: env(safe-area-inset-bottom); ///Tương thích IOS>11.2/
 	}
 
 	.shoppingCart .footer.on {

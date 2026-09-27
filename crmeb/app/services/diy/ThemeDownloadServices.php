@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\BaseServices;
 use crmeb\exceptions\AdminException;
 
 /**
- * 主题下载记录服务类
+ * Lớp service bản ghi tải xuống theme
  * @author wuhaotian
  * @email 442384644@qq.com
  * @date 2026/3/10
@@ -23,7 +23,7 @@ use crmeb\exceptions\AdminException;
 class ThemeDownloadServices extends BaseServices
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * @param ThemeDownloadDao $dao
      */
     public function __construct(ThemeDownloadDao $dao)
@@ -32,7 +32,7 @@ class ThemeDownloadServices extends BaseServices
     }
 
     /**
-     * 获取下载记录列表
+     * Lấy danh sách bản ghi tải xuống
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -52,7 +52,7 @@ class ThemeDownloadServices extends BaseServices
     }
 
     /**
-     * 获取下载记录详情
+     * Lấy chi tiết bản ghi tải xuống
      * @param int $id
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -66,17 +66,17 @@ class ThemeDownloadServices extends BaseServices
     {
         $info = $this->dao->get($id);
         if (!$info) {
-            throw new AdminException('下载记录不存在');
+            throw new AdminException('Bản ghi tải xuống không tồn tại');
         }
         return $info->toArray();
     }
 
     /**
-     * 新增下载记录
-     * @param int $tid 主题ID
-     * @param string $title 主题名称
-     * @param string $downloadUrl 下载地址
-     * @return int 新记录ID
+     * Thêm bản ghi tải xuống
+     * @param int $tid ID chủ đề
+     * @param string $title Tên chủ đề
+     * @param string $downloadUrl Địa chỉ tải xuống
+     * @return int ID bản ghi mới
      * @author wuhaotian
      * @email 442384644@qq.com
      * @date 2026/3/10
@@ -92,7 +92,7 @@ class ThemeDownloadServices extends BaseServices
     }
 
     /**
-     * 删除下载记录
+     * Xóa bản ghi tải xuống
      * @param int $id
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
@@ -105,15 +105,15 @@ class ThemeDownloadServices extends BaseServices
     public function deleteDownloadRecord(int $id): bool
     {
         if (!$this->dao->get($id)) {
-            throw new AdminException('下载记录不存在');
+            throw new AdminException('Bản ghi tải xuống không tồn tại');
         }
         return (bool)$this->dao->delete($id);
     }
 
     /**
-     * 更新下载地址
-     * @param int $id 记录ID
-     * @param string $downloadUrl 下载地址
+     * Cập nhật địa chỉ tải xuống
+     * @param int $id ID bản ghi
+     * @param string $downloadUrl Địa chỉ tải xuống
      * @return bool
      * @author wuhaotian
      * @email 442384644@qq.com

@@ -17,7 +17,7 @@
         >
           <div slot="default" class="upload-card" v-if="!imgList.length">
             <i class="el-icon-plus"></i>
-            <p class="text">点击选择图片</p>
+            <p class="text">Nhấn để chọn ảnh</p>
           </div>
           <div slot="file" slot-scope="{ file }">
             <img class="el-upload-list__item-thumbnail" :src="file.url" alt="" />
@@ -27,13 +27,13 @@
       </div>
 
       <div class="footer">
-        <div v-if="imgList.length">共{{ imgList.length }}/{{ limit }}张，{{ (allSize / 1000000).toFixed(2) }} M</div>
+        <div v-if="imgList.length">Tổng {{ imgList.length }}/{{ limit }} ảnh, {{ (allSize / 1000000).toFixed(2) }} M</div>
         <div v-else></div>
         <div class="upload-btn">
           <div v-if="imgList.length < limit" class="btn" v-db-click @click="selectImgs">
-            {{ imgList.length ? '继续选择' : '选择图片' }}
+            {{ imgList.length ? 'Chọn thêm' : 'Chọn ảnh' }}
           </div>
-          <div class="btn upload" :class="{ 'no-pic': !imgList.length }" v-db-click @click="submitUpload">确认上传</div>
+          <div class="btn upload" :class="{ 'no-pic': !imgList.length }" v-db-click @click="submitUpload">Xác nhận tải lên</div>
         </div>
       </div>
     </div>
@@ -41,8 +41,8 @@
       <div class="success">
         <img class="image" src="@/assets/images/success.jpg" alt="" />
       </div>
-      <div class="text">图片上传成功</div>
-      <div class="again" v-db-click @click="again">继续上传</div>
+      <div class="text">Tải ảnh lên thành công</div>
+      <div class="again" v-db-click @click="again">Tiếp tục tải lên</div>
     </div>
   </div>
 </template>
@@ -70,7 +70,7 @@ export default {
   created() {
     this.token = this.$route.query.token;
     this.pid = this.$route.query.pid;
-    document.title = '手机端扫码上传';
+    document.title = 'Quét mã bằng điện thoại để tải lên';
   },
   methods: {
     selectImgs() {
@@ -95,7 +95,7 @@ export default {
           }
         }
       } else {
-        this.$message.warning('请先选择图片');
+        this.$message.warning('Vui lòng chọn ảnh trước');
       }
     },
     handleRemove(file) {
@@ -129,7 +129,7 @@ export default {
             } else {
               this.loading = false;
               this.$message({
-                message: '上传失败',
+                message: 'Tải lên thất bại',
                 type: 'error',
                 duration: 1000,
               });

@@ -1,6 +1,6 @@
 <template>
   <div class="custom-btn-box">
-    <el-button type="primary" class="btn" @click="onClick">{{ configData.title || '设计组件' }}</el-button>
+    <el-button type="primary" class="btn" @click="onClick">{{ configData.title || 'Thiết kế thành phần' }}</el-button>
   </div>
 </template>
 

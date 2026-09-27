@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,72 +21,72 @@ class ProgramWechatLive extends AbstractAPI
 {
 
     /**
-     * 获取直播列表信息
+     * Lấy thông tin danh sách livestream
      */
     const API_WECHAT_LIVE = 'https://api.weixin.qq.com/wxa/business/getliveinfo';
     /**
-     * 创建直播间
+     * Tạo phòng livestream
      */
     const CREATE_LIVE_ROOM = 'https://api.weixin.qq.com/wxaapi/broadcast/room/create';
     /**
-     * 直播间导入商品
+     * Nhập sản phẩm vào phòng livestream
      */
     const LIVE_ROOM_ADD_GOODS = 'https://api.weixin.qq.com/wxaapi/broadcast/room/addgoods';
 
     /**
-     * 获取商品列表信息
+     * Lấy thông tin danh sách sản phẩm
      */
     const GOODS_LIST = 'https://api.weixin.qq.com/wxaapi/broadcast/goods/getapproved';
     /**
-     * 商品添加并审核
+     * Thêm sản phẩm và duyệt
      */
     const GOODS_ADD = 'https://api.weixin.qq.com/wxaapi/broadcast/goods/add';
     /**
-     * 撤回审核
+     * Rút lại yêu cầu duyệt
      */
     const GOODS_RESET_AUDIT = 'https://api.weixin.qq.com/wxaapi/broadcast/goods/resetaudit';
     /**
-     * 重新提交审核
+     * Gửi lại để duyệt
      */
     const GOODS_AUDIT = 'https://api.weixin.qq.com/wxaapi/broadcast/goods/autdit';
     /**
-     * 删除商品
+     * Xóa sản phẩm
      */
     const GOODS_DELETE = 'https://api.weixin.qq.com/wxaapi/broadcast/goods/delete';
     /**
-     * 更新商品
+     * Cập nhật sản phẩm
      */
     const GOODS_UPDATE = 'https://api.weixin.qq.com/wxaapi/broadcast/goods/update';
     /**
-     * 获取商品状态
+     * Lấy trạng thái sản phẩm
      */
     const GOODS_INFO = 'https://api.weixin.qq.com/wxa/business/getgoodswarehouse';
     /**
-     * 获取成员列表
+     * Lấy danh sách thành viên
      */
     const ROLE_LIST = 'https://api.weixin.qq.com/wxaapi/broadcast/role/getrolelist';
     /**
-     * 添加直播间参数
+     * Tham số thêm phòng livestream
      * @var array
      */
     protected $create_data = [
-        'name' => '',  // 房间名字
-        'coverImg' => '',   // 通过 uploadfile 上传，填写 mediaID
-        'startTime' => 0,   // 开始时间
-        'endTime' => 0, // 结束时间
-        'anchorName' => '',  // 主播昵称
-        'anchorWechat' => '',  // 主播微信号
-        'shareImg' => '',  //通过 uploadfile 上传，填写 mediaID
-        'feedsImg' => '',   //通过 uploadfile 上传，填写 mediaID
-        'isFeedsPublic' => 1, // 是否开启官方收录，1 开启，0 关闭
-        'type' => 1, // 直播类型，1 推流 0 手机直播
-        'screenType' => 0,  // 1：横屏 0：竖屏
-        'closeLike' => 0, // 是否 关闭点赞 1 关闭
-        'closeGoods' => 0, // 是否 关闭商品货架，1：关闭
-        'closeComment' => 0, // 是否开启评论，1：关闭
-        'closeReplay' => 1, // 是否关闭回放 1 关闭
-        'closeShare' => 0,   //  是否关闭分享 1 关闭
-        'closeKf' => 0 // 是否关闭客服，1 关闭
+        'name' => '',  // Tên phòng
+        'coverImg' => '',   // Tải lên qua uploadfile, điền mediaID
+        'startTime' => 0,   // Thời gian bắt đầu
+        'endTime' => 0, // Thời gian kết thúc
+        'anchorName' => '',  // Biệt danh streamer
+        'anchorWechat' => '',  // ID WeChat của streamer
+        'shareImg' => '',  //Tải lên qua uploadfile, điền mediaID
+        'feedsImg' => '',   //Tải lên qua uploadfile, điền mediaID
+        'isFeedsPublic' => 1, // Có mở thu thập chính thức không, 1 là mở, 0 là tắt
+        'type' => 1, // Loại livestream, 1 là push stream, 0 là livestream bằng điện thoại
+        'screenType' => 0,  // 1: ngang màn hình  0: dọc màn hình
+        'closeLike' => 0, // Có tắt thích (like) không, 1 là tắt
+        'closeGoods' => 0, // Có tắt kệ sản phẩm không, 1: tắt
+        'closeComment' => 0, // Có mở bình luận không, 1: tắt
+        'closeReplay' => 1, // Có tắt xem lại (playback) không, 1 là tắt
+        'closeShare' => 0,   //  Có tắt chia sẻ không, 1 là tắt
+        'closeKf' => 0 // Có tắt CSKH không, 1 là tắt
     ];
 
     /**
@@ -99,7 +99,7 @@ class ProgramWechatLive extends AbstractAPI
     }
 
     /**
-     * 获取直播间列表
+     * Lấy danh sách phòng livestream
      * @param int $page
      * @param int $limit
      * @return \EasyWeChat\Support\Collection|null
@@ -116,7 +116,7 @@ class ProgramWechatLive extends AbstractAPI
     }
 
     /**
-     * 获取直播间回放
+     * Lấy video xem lại phòng livestream
      * @param int $room_id
      * @param int $page
      * @param int $limit
@@ -136,7 +136,7 @@ class ProgramWechatLive extends AbstractAPI
     }
 
     /**
-     * 创建直播间
+     * Tạo phòng livestream
      * @param $data
      * @return \EasyWeChat\Support\Collection|null
      * @throws \EasyWeChat\Core\Exceptions\HttpException
@@ -148,7 +148,7 @@ class ProgramWechatLive extends AbstractAPI
     }
 
     /**
-     * 直播间导入商品
+     * Nhập sản phẩm vào phòng livestream
      * @param int $room_id
      * @param $ids
      * @return \EasyWeChat\Support\Collection|null
@@ -164,7 +164,7 @@ class ProgramWechatLive extends AbstractAPI
     }
 
     /**
-     * 获取商品列表
+     * Lấy danh sách sản phẩm
      * @param $status
      * @param int $page
      * @param int $limit
@@ -182,7 +182,7 @@ class ProgramWechatLive extends AbstractAPI
     }
 
     /**
-     * 获取商品详情
+     * Lấy chi tiết sản phẩm
      * @param $ids
      * @return \EasyWeChat\Support\Collection|null
      * @throws \EasyWeChat\Core\Exceptions\HttpException
@@ -196,7 +196,7 @@ class ProgramWechatLive extends AbstractAPI
     }
 
     /**
-     * 添加商品
+     * Thêm sản phẩm
      * @param string $coverImgUrl
      * @param string $name
      * @param int $priceType
@@ -220,7 +220,7 @@ class ProgramWechatLive extends AbstractAPI
     }
 
     /**
-     * 商品撤回审核
+     * Rút lại yêu cầu duyệt sản phẩm
      * @param int $goodsId
      * @param int $auditId
      * @return \EasyWeChat\Support\Collection|null
@@ -236,7 +236,7 @@ class ProgramWechatLive extends AbstractAPI
     }
 
     /**
-     * 商品重新提交审核
+     * Gửi lại sản phẩm để duyệt
      * @param int $goodsId
      * @return \EasyWeChat\Support\Collection|null
      * @throws \EasyWeChat\Core\Exceptions\HttpException
@@ -250,7 +250,7 @@ class ProgramWechatLive extends AbstractAPI
     }
 
     /**
-     * 删除商品
+     * Xóa sản phẩm
      * @param int $goodsId
      * @return \EasyWeChat\Support\Collection|null
      * @throws \EasyWeChat\Core\Exceptions\HttpException
@@ -264,7 +264,7 @@ class ProgramWechatLive extends AbstractAPI
     }
 
     /**
-     * 更新商品
+     * Cập nhật sản phẩm
      * @param int $goodsId
      * @param string $coverImgUrl
      * @param string $name
@@ -290,7 +290,7 @@ class ProgramWechatLive extends AbstractAPI
     }
 
     /**
-     * 获取成员列表
+     * Lấy danh sách thành viên
      * @param int $goodsId
      * @return \EasyWeChat\Support\Collection|null
      * @throws \EasyWeChat\Core\Exceptions\HttpException

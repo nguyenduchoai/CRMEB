@@ -1,7 +1,7 @@
 <template>
   <div class="goods-box" v-if="defaults.goodsList">
     <div class="acea-row">
-      <div class="title">选择商品</div>
+      <div class="title">Chọn sản phẩm</div>
       <div class="wrapper">
         <draggable class="dragArea list-group" :list="defaults.goodsList.list" group="peoples">
           <div
@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <el-dialog :visible.sync="modals" title="商品列表" class="paymentFooter" width="900">
+    <el-dialog :visible.sync="modals" title="Danh sách sản phẩm" class="paymentFooter" width="900">
       <goods-list
         ref="goodslist"
         :ischeckbox="true"
@@ -66,7 +66,7 @@ export default {
     this.defaults = this.configObj;
   },
   methods: {
-    //对象数组去重；
+    //Loại bỏ trùng lặp trong mảng object;
     unique(arr) {
       const res = new Map();
       return arr.filter((arr) => !res.has(arr.id) && res.set(arr.id, 1));

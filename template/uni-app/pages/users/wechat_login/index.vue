@@ -12,7 +12,7 @@
       <view class="icon" @click="home" v-else>
         <image src="../static/home.png"></image>
       </view>
-      {{ $t(`商城登录`) }}
+      {{ $t(`Đăng nhập cửa hàng`) }}
     </view>
     <!-- #endif -->
     <view class="merchant-msg">
@@ -25,7 +25,7 @@
       <view class="btn-wrapper">
         <!-- #ifdef H5 -->
         <button hover-class="none" @click="wechatLogin" class="bg-theme btn1">
-          {{ $t(`微信登录`) }}
+          {{ $t(`Đăng nhập bằng WeChat`) }}
         </button>
         <!-- #endif -->
         <!-- #ifdef MP -->
@@ -36,14 +36,14 @@
             open-type="getPhoneNumber"
             @getphonenumber="getphonenumber"
           >
-            {{ $t(`授权登录`) }}
+            {{ $t(`Đăng nhập ủy quyền`) }}
           </button>
           <button
             class="bg-theme btn1"
             v-else-if="!bindPhone"
             @click="getAuthLogin"
           >
-            {{ $t(`授权登录`) }}
+            {{ $t(`Đăng nhập ủy quyền`) }}
           </button>
         </template>
         <button
@@ -52,9 +52,9 @@
           @click="phoneLogin"
           class="btn2"
         >
-          {{ $t(`手机号登录`) }}
+          {{ $t(`Đăng nhập bằng số điện thoại`) }}
         </button>
-        <view class="cancel-login" @click="onReject">取消登录</view>
+        <view class="cancel-login" @click="onReject">Hủy đăng nhập</view>
         <!-- #endif -->
       </view>
     </view>
@@ -65,13 +65,13 @@
           @animationend="inAnimation = false"
           :checked="protocol ? true : false"
         />
-        <text @click.stop="ChangeIsDefault">{{ $t(`已阅读并同意`) }}</text>
+        <text @click.stop="ChangeIsDefault">{{ $t(`Đã đọc và đồng ý`) }}</text>
         <text class="main-color" @click.stop="privacy(4)">{{
-          $t(`《用户协议》`)
+          $t(`“Thỏa thuận người dùng”`)
         }}</text>
-        {{ $t(`与`)
+        {{ $t(`và`)
         }}<text class="main-color" @click.stop="privacy(3)">{{
-          $t(`《隐私协议》`)
+          $t(`“Chính sách bảo mật”`)
         }}</text>
       </checkbox-group>
     </view>
@@ -212,7 +212,7 @@ export default {
   methods: {
     wechatAuthLogin(d, back_url) {
       uni.showLoading({
-        title: this.$t(`正在登录中`),
+        title: this.$t(`Đang đăng nhập`),
       });
       wechatAuthLogin(d)
         .then((res) => {
@@ -243,11 +243,11 @@ export default {
     onAgree() {
       this.protocol = true;
     },
-    // 小程序 22.11.8日删除getUserProfile 接口获取用户昵称头像
+    // Mini Program: ngày 8/11/22 xóa API getUserProfile dùng để lấy biệt danh, ảnh đại diện người dùng
     userLogin() {
       // if (!this.protocol) {
       // 	uni.showToast({
-      // 		title: this.$t('请先阅读并同意协议'),
+      // 		title: this.$t('Vui lòng đọc và đồng ý với thỏa thuận trước'),
       // 		icon: 'none',
       // 		duration: 2000
       // 	});
@@ -256,7 +256,7 @@ export default {
       Routine.getCode()
         .then((code) => {
           // uni.showLoading({
-          // 	title: this.$t(`正在登录中`)
+          // 	title: this.$t(`Đang đăng nhập`)
           // });
           authType({
             code,
@@ -288,14 +288,14 @@ export default {
       if (!this.authKey) return;
       if (!this.protocol) {
         uni.showToast({
-          title: this.$t("请先阅读并同意协议"),
+          title: this.$t("Vui lòng đọc và đồng ý với thỏa thuận trước"),
           icon: "none",
           duration: 2000,
         });
         return;
       }
       uni.showLoading({
-        title: this.$t(`正在登录中`),
+        title: this.$t(`Đang đăng nhập`),
       });
       authLogin({
         key: this.authKey,
@@ -333,7 +333,7 @@ export default {
       this.isShow = false;
       this.$util.Tips(
         {
-          title: this.$t(`登录成功`),
+          title: this.$t(`Đăng nhập thành công`),
           icon: "success",
         },
         {
@@ -367,7 +367,7 @@ export default {
         url: "/pages/index/index",
       });
     },
-    // 弹窗关闭
+    // Đóng popup
     maskClose(new_user) {
       this.isUp = false;
       // #ifdef MP
@@ -385,7 +385,7 @@ export default {
         // #ifndef MP
         this.$util.Tips(
           {
-            title: this.$t(`登录成功`),
+            title: this.$t(`Đăng nhập thành công`),
             icon: "success",
           },
           {
@@ -396,18 +396,18 @@ export default {
       }
     },
     // #ifdef MP
-    // 小程序获取手机号码
+    // Mini Program lấy số điện thoại
     getphonenumber(e) {
       if (!this.protocol) {
         uni.showToast({
-          title: this.$t("请先阅读并同意协议"),
+          title: this.$t("Vui lòng đọc và đồng ý với thỏa thuận trước"),
           icon: "none",
           duration: 2000,
         });
         return;
       }
       uni.showLoading({
-        title: this.$t(`正在登录中`),
+        title: this.$t(`Đang đăng nhập`),
       });
       Routine.getCode()
         .then((code) => {
@@ -418,7 +418,7 @@ export default {
           uni.hideLoading();
         });
     },
-    // 小程序获取手机号码回调
+    // Callback Mini Program lấy số điện thoại
     getUserPhoneNumber(encryptedData, iv, code) {
       routineBindingPhone({
         encryptedData: encryptedData,
@@ -441,7 +441,7 @@ export default {
           this.$Cache.clear("snsapiKey");
           this.getUserInfo(res.data.bindName);
           // this.$util.Tips({
-          // 	title: this.$t(`登录成功`),
+          // 	title: this.$t(`Đăng nhập thành công`),
           // 	icon: 'success'
           // }, {
           // 	tab: 3
@@ -453,7 +453,7 @@ export default {
     },
     // #endif
     /**
-     * 获取个人用户信息
+     * Lấy thông tin người dùng cá nhân
      */
     getUserInfo(new_user, back_url) {
       let that = this;
@@ -469,7 +469,7 @@ export default {
             // #ifdef MP
             that.$util.Tips(
               {
-                title: that.$t(`登录成功`),
+                title: that.$t(`Đăng nhập thành công`),
                 icon: "success",
               },
               {
@@ -480,7 +480,7 @@ export default {
             // #ifndef MP
             that.$util.Tips(
               {
-                title: that.$t(`登录成功`),
+                title: that.$t(`Đăng nhập thành công`),
                 icon: "success",
               },
               {
@@ -506,7 +506,7 @@ export default {
       });
     },
     // #ifdef H5
-    // 获取url后面的参数
+    // Lấy tham số phía sau url
     getQueryString(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
       var reg_rewrite = new RegExp("(^|/)" + name + "/([^/]*)(/|$)", "i");
@@ -520,11 +520,11 @@ export default {
         return null;
       }
     },
-    // 公众号登录
+    // Đăng nhập OA WeChat
     wechatLogin() {
       if (!this.protocol) {
         uni.showToast({
-          title: this.$t("请先阅读并同意协议"),
+          title: this.$t("Vui lòng đọc và đồng ý với thỏa thuận trước"),
           icon: "none",
           duration: 2000,
         });
@@ -542,7 +542,7 @@ export default {
       }
     },
 
-    // 输入手机号后的回调
+    // Callback sau khi nhập số điện thoại
     wechatPhone() {
       this.$Cache.clear("snsapiKey");
       if (this.options.back_url) {
@@ -556,7 +556,7 @@ export default {
         }
         this.isUp = false;
         uni.showToast({
-          title: this.$t(`登录成功`),
+          title: this.$t(`Đăng nhập thành công`),
           icon: "none",
         });
         setTimeout((res) => {
@@ -565,7 +565,7 @@ export default {
       } else {
         this.isUp = false;
         uni.showToast({
-          title: this.$t(`登录成功`),
+          title: this.$t(`Đăng nhập thành công`),
           icon: "none",
         });
         setTimeout((res) => {
@@ -704,8 +704,8 @@ page {
   font-size: 24rpx;
   line-height: 22rpx;
   text-align: center;
-  bottom: calc(52rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-  bottom: calc(52rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+  bottom: calc(52rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+  bottom: calc(52rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 
   .main-color {
     color: var(--view-theme);
@@ -728,18 +728,18 @@ page {
     margin-bottom: 1px;
   }
 
-  /*checkbox 选项框大小  */
+  /*Kích thước ô checkbox  */
   ::v-deep checkbox .wx-checkbox-input {
     width: 28rpx;
     height: 28rpx;
   }
 
-  /*checkbox选中后样式  */
+  /*Style checkbox sau khi chọn  */
   ::v-deep checkbox .wx-checkbox-input.wx-checkbox-input-checked {
     background: white;
   }
 
-  /*checkbox选中后图标样式  */
+  /*Style icon checkbox sau khi chọn  */
   ::v-deep checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
     width: 28rpx;
     height: 28rpx;

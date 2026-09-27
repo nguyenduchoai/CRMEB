@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,13 +24,13 @@ class WechatUser extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'uid';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'wechat_user';
@@ -49,7 +49,7 @@ class WechatUser extends BaseModel
     }
 
     /**
-     * 关联user
+     * Liên kết user
      * @return \think\model\relation\HasOne
      */
     public function user()
@@ -58,7 +58,7 @@ class WechatUser extends BaseModel
     }
 
     /**
-     * 绑定公众号
+     * Liên kết OA WeChat
      * @param Model $query
      * @param $value
      */
@@ -68,7 +68,7 @@ class WechatUser extends BaseModel
     }
 
     /**
-     * 公众号唯一id
+     * id duy nhất của OA WeChat
      * @param Model $query
      * @param $value
      */
@@ -78,7 +78,7 @@ class WechatUser extends BaseModel
     }
 
     /**
-     * 分组
+     * Nhóm
      * @param Model $query
      * @param $value
      */
@@ -88,7 +88,7 @@ class WechatUser extends BaseModel
     }
 
     /**
-     * 性别
+     * Giới tính
      * @param Model $query
      * @param $value
      */
@@ -98,7 +98,7 @@ class WechatUser extends BaseModel
     }
 
     /**
-     * 是否关注
+     * Có theo dõi không
      * @param Model $query
      * @param $value
      */
@@ -108,7 +108,7 @@ class WechatUser extends BaseModel
     }
 
     /**
-     * 用户类型
+     * Loại người dùng
      * @param Model $query
      * @param $value
      */
@@ -118,7 +118,7 @@ class WechatUser extends BaseModel
     }
 
     /**
-     * 用户类型
+     * Loại người dùng
      * @param Model $query
      * @param $value
      */
@@ -128,11 +128,11 @@ class WechatUser extends BaseModel
     }
 
     /**
-     * is_del 搜索器
+     * Bộ lọc is_del
      * @param $query
      * @param $value
      * @return void
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/03/03
      */

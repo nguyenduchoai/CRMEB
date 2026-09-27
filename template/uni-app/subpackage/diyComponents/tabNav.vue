@@ -1,5 +1,5 @@
 <template>
-  <!-- 商品分类 -->
+  <!-- Danh mục sản phẩm -->
   <view>
     <!-- #ifdef MP || APP-PLUS -->
     <!-- <view :style="{height: (40+dataConfig.topConfig.val*2+dataConfig.bottomConfig.val*2) + 'rpx'}" v-if="!fromType"></view> -->
@@ -74,9 +74,9 @@ export default {
     return {
       tabTitle: [],
       tabLeft: 0,
-      isWidth: 0, //每个导航栏占位
-      tabClick: 0, //导航栏被点击
-      isLeft: 0, //导航栏下划线位置
+      isWidth: 0, //Vị trí chiếm chỗ của mỗi tab điều hướng
+      tabClick: 0, //Thanh điều hướng bị click
+      isLeft: 0, //Vị trí gạch chân của thanh điều hướng
       fixedTop: 0,
       isTop: 0,
       navHeight: 45,
@@ -199,7 +199,7 @@ export default {
           id: 0,
         },
         text: {
-          val: "首页",
+          val: "Trang chủ",
         },
       });
       return tabList;
@@ -208,7 +208,7 @@ export default {
   created() {
     let that = this;
     that.getAllCategory();
-    // 获取设备宽度
+    // Lấy chiều rộng thiết bị
     uni.getSystemInfo({
       success(e) {
         that.isWidth = e.windowWidth / 5;
@@ -216,15 +216,15 @@ export default {
     });
   },
   methods: {
-    // 导航栏点击
+    // Click thanh điều hướng
     longClick(item, index) {
       if (this.tabTitle.length > 5) {
-        this.tabLeft = (index - 2) * this.isWidth; //设置下划线位置
+        this.tabLeft = (index - 2) * this.isWidth; //Đặt vị trí gạch chân
       }
-      this.tabClick = index; //设置导航点击了哪一个
-      this.isLeft = index * this.isWidth; //设置下划线位置
+      this.tabClick = index; //Đặt tab điều hướng nào đã được click
+      this.isLeft = index * this.isWidth; //Đặt vị trí gạch chân
       let data = {
-        type: item.dataType.tabVal, //0 商品分类 1 微页面
+        type: item.dataType.tabVal, //0 danh mục sản phẩm  1 trang micro
         microPage: item.microPage.id,
         classPage: item.classPage.id,
       };
@@ -233,7 +233,7 @@ export default {
     setCategory(data) {
       data.unshift({
         id: -99,
-        cate_name: "首页",
+        cate_name: "Trang chủ",
       });
       this.tabTitle = data;
       // #ifdef MP || APP-PLUS
@@ -249,7 +249,7 @@ export default {
         this.setCategory(res.data);
       });
     },
-    // 获取导航
+    // Lấy điều hướng
     getAllCategory: function () {
       let that = this;
       let category = uni.getStorageSync("category");

@@ -1,5 +1,5 @@
 /**
- * 获取编辑表单数据
+ * Lấy dữ liệu form sửa
  * @param id
  * @return {*}
  */

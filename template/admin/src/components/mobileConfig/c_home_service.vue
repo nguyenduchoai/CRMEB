@@ -25,7 +25,7 @@ import { mapMutations } from 'vuex';
 export default {
   name: 'c_home_service',
   componentsName: 'home_service',
-  cname: '悬浮按钮',
+  cname: 'Nút nổi',
   props: {
     activeIndex: {
       type: null,
@@ -44,13 +44,13 @@ export default {
   data() {
     return {
       hotIndex: 1,
-      configObj: {}, // 配置对象
+      configObj: {}, // Đối tượng cấu hình
       rCom: [
         {
           components: toolCom.c_set_up,
           configNme: 'setUp',
         },
-      ], // 当前页面组件
+      ], // Thành phần (component) của trang hiện tại
     };
   },
   watch: {
@@ -115,7 +115,7 @@ export default {
     patchConfig(config) {
       if (!config.paddingConfig) {
         config.paddingConfig = {
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           max: 100,
@@ -125,7 +125,7 @@ export default {
       }
       if (!config.marginConfig) {
         config.marginConfig = {
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,
@@ -143,7 +143,7 @@ export default {
       }
       return config;
     },
-    // 获取组件参数
+    // Lấy tham số thành phần (component)
     getConfig(data) {},
   },
 };

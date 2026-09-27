@@ -126,7 +126,7 @@ import { getArticleList, getCouponList, getThemeProduct } from '@/api/diy';
 
 export default {
   name: 'home_custom_component',
-  cname: '超级组件',
+  cname: 'Siêu thành phần',
   configName: 'c_custom_component',
   icon: '#iconzujian-zidingyi',
   type: 0,
@@ -329,193 +329,193 @@ export default {
   data() {
     return {
       defaultConfig: {
-        cname: '超级组件',
+        cname: 'Siêu thành phần',
         name: 'customComponent',
         timestamp: this.num,
-        messageTitle: '信息设置',
-        dataTitle: '数据设置',
-        designTitle: '组件设计',
-        commonTitle: '通用样式',
-        dataStyleTitle: '数据样式',
+        messageTitle: 'Cài đặt thông tin',
+        dataTitle: 'Cài đặt dữ liệu',
+        designTitle: 'Thiết kế thành phần',
+        commonTitle: 'Kiểu chung',
+        dataStyleTitle: 'Kiểu trình bày dữ liệu',
         setUp: {
           tabVal: 0,
         },
         selectType: {
-          title: '选择信息',
+          title: 'Chọn thông tin',
           activeValue: 'user',
           list: [
-            { activeValue: 'user', title: '用户' },
-            { activeValue: 'article', title: '文章' },
-            { activeValue: 'coupon', title: '优惠券' },
-            { activeValue: 'goods', title: '商品' },
+            { activeValue: 'user', title: 'Người dùng' },
+            { activeValue: 'article', title: 'Bài viết' },
+            { activeValue: 'coupon', title: 'Phiếu giảm giá' },
+            { activeValue: 'goods', title: 'Sản phẩm' },
           ],
         },
 
         // Article Config
         articleDisplayMode: {
-          title: '展示方式',
+          title: 'Cách hiển thị',
           tabVal: 0,
-          tabList: [{ name: '纵向平铺' }, { name: '横向滑动' }],
+          tabList: [{ name: 'Xếp dọc' }, { name: 'Vuốt ngang' }],
         },
         articleColumnStyle: {
-          title: '排列方式',
+          title: 'Cách sắp xếp',
           tabVal: 0,
-          tabList: [{ name: '1列' }, { name: '2列' }, { name: '3列' }, { name: '4列' }],
+          tabList: [{ name: '1 cột' }, { name: '2 cột' }, { name: '3 cột' }, { name: '4 cột' }],
         },
         articleDataSource: {
-          title: '数据选择',
+          title: 'Chọn dữ liệu',
           tabVal: 0,
-          tabList: [{ name: '指定数据' }, { name: '筛选数据' }],
+          tabList: [{ name: 'Dữ liệu chỉ định' }, { name: 'Dữ liệu theo bộ lọc' }],
         },
         articleList: {
           list: [],
         },
         articleClass: {
-          title: '文章分类',
+          title: 'Danh mục bài viết',
           activeValue: '',
           list: [],
         },
         articleNum: {
-          title: '显示数量',
+          title: 'Số lượng hiển thị',
           val: 1,
           min: 1,
         },
         articleSort: {
-          title: '排序类型',
+          title: 'Loại sắp xếp',
           tabVal: 0,
-          tabList: [{ name: '浏览量' }, { name: '发布时间' }],
+          tabList: [{ name: 'Lượt xem' }, { name: 'Thời gian đăng' }],
         },
         articleSortRule: {
-          title: '排序规则',
+          title: 'Quy tắc sắp xếp',
           tabVal: 0,
-          tabList: [{ name: '升序' }, { name: '降序' }],
+          tabList: [{ name: 'Tăng dần' }, { name: 'Giảm dần' }],
         },
 
         // Coupon Config
         couponDisplayMode: {
-          title: '展示方式',
+          title: 'Cách hiển thị',
           tabVal: 0,
-          tabList: [{ name: '纵向平铺' }, { name: '横向滑动' }],
+          tabList: [{ name: 'Xếp dọc' }, { name: 'Vuốt ngang' }],
         },
         couponColumnStyle: {
-          title: '排列方式',
+          title: 'Cách sắp xếp',
           tabVal: 0,
-          tabList: [{ name: '1列' }, { name: '2列' }, { name: '3列' }, { name: '4列' }],
+          tabList: [{ name: '1 cột' }, { name: '2 cột' }, { name: '3 cột' }, { name: '4 cột' }],
         },
         couponDataSource: {
-          title: '数据选择',
+          title: 'Chọn dữ liệu',
           tabVal: 0,
-          tabList: [{ name: '指定数据' }, { name: '筛选数据' }],
+          tabList: [{ name: 'Dữ liệu chỉ định' }, { name: 'Dữ liệu theo bộ lọc' }],
         },
         couponList: {
           list: [],
         },
         couponType: {
-          title: '优惠券类型',
+          title: 'Loại phiếu giảm giá',
           activeValue: '',
           list: [
-            { activeValue: '', title: '全部' },
-            { activeValue: '0', title: '通用券' },
-            { activeValue: '1', title: '品类券' },
-            { activeValue: '2', title: '商品券' },
+            { activeValue: '', title: 'Tất cả' },
+            { activeValue: '0', title: 'Phiếu toàn cửa hàng' },
+            { activeValue: '1', title: 'Phiếu theo danh mục' },
+            { activeValue: '2', title: 'Phiếu theo sản phẩm' },
           ],
         },
         couponUserType: {
-          title: '用户类型',
+          title: 'Loại người dùng',
           activeValue: '',
           list: [
-            { activeValue: '', title: '全部' },
-            { activeValue: '1', title: '普通用户' },
-            { activeValue: '2', title: '会员用户' },
+            { activeValue: '', title: 'Tất cả' },
+            { activeValue: '1', title: 'Người dùng thường' },
+            { activeValue: '2', title: 'Người dùng thành viên' },
           ],
         },
         couponSendType: {
-          title: '发送方式',
+          title: 'Hình thức phát hành',
           activeValue: '',
           list: [
-            { activeValue: '', title: '全部' },
-            { activeValue: '1', title: '手动领取' },
-            { activeValue: '3', title: '赠送券' },
+            { activeValue: '', title: 'Tất cả' },
+            { activeValue: '1', title: 'Tự nhận' },
+            { activeValue: '3', title: 'Phiếu tặng kèm' },
           ],
         },
 
         couponThreshold: {
-          title: '使用门槛',
+          title: 'Điều kiện sử dụng',
           tabVal: 0,
-          tabList: [{ name: '无门槛' }, { name: '有门槛' }],
+          tabList: [{ name: 'Không điều kiện' }, { name: 'Có điều kiện' }],
         },
         couponThresholdValue: {
-          title: '门槛金额',
+          title: 'Giá trị đơn tối thiểu',
           val: 0,
           min: 0,
           max: 10000,
         },
         couponTime: {
-          title: '领取时间',
+          title: 'Thời gian nhận',
           val: [],
         },
         couponSort: {
-          title: '排序类型',
+          title: 'Loại sắp xếp',
           tabVal: 0,
-          tabList: [{ name: '面值大小' }, { name: '发布时间' }],
+          tabList: [{ name: 'Mệnh giá' }, { name: 'Thời gian đăng' }],
         },
         couponSortRule: {
-          title: '排序规则',
+          title: 'Quy tắc sắp xếp',
           tabVal: 0,
-          tabList: [{ name: '升序' }, { name: '降序' }],
+          tabList: [{ name: 'Tăng dần' }, { name: 'Giảm dần' }],
         },
         couponNum: {
-          title: '显示数量',
+          title: 'Số lượng hiển thị',
           val: 1,
           min: 1,
         },
 
         // Goods Config
         goodsDisplayMode: {
-          title: '展示方式',
+          title: 'Cách hiển thị',
           tabVal: 0,
-          tabList: [{ name: '纵向平铺' }, { name: '横向滑动' }],
+          tabList: [{ name: 'Xếp dọc' }, { name: 'Vuốt ngang' }],
         },
         goodsColumnStyle: {
-          title: '排列方式',
+          title: 'Cách sắp xếp',
           tabVal: 0,
-          tabList: [{ name: '1列' }, { name: '2列' }, { name: '3列' }, { name: '4列' }],
+          tabList: [{ name: '1 cột' }, { name: '2 cột' }, { name: '3 cột' }, { name: '4 cột' }],
         },
         goodsDataSource: {
-          title: '数据选择',
+          title: 'Chọn dữ liệu',
           tabVal: 0,
-          tabList: [{ name: '指定数据' }, { name: '指定分类' }],
+          tabList: [{ name: 'Dữ liệu chỉ định' }, { name: 'Danh mục chỉ định' }],
         },
         goodsList: {
-          title: '商品列表',
+          title: 'Danh sách sản phẩm',
           max: 20,
           list: [],
         },
         goodsClass: {
-          title: '商品分类',
+          title: 'Danh mục sản phẩm',
           activeValue: '',
           list: [],
         },
         goodsNum: {
-          title: '显示数量',
+          title: 'Số lượng hiển thị',
           val: 6,
           min: 1,
         },
         goodsSort: {
-          title: '商品排序',
+          title: 'Sắp xếp sản phẩm',
           tabVal: 0,
-          tabList: [{ name: '销量' }, { name: '价格' }],
+          tabList: [{ name: 'Lượt bán' }, { name: 'Giá' }],
         },
         goodsSortRule: {
-          title: '排序规则',
+          title: 'Quy tắc sắp xếp',
           tabVal: 0,
-          tabList: [{ name: '降序' }, { name: '升序' }],
+          tabList: [{ name: 'Giảm dần' }, { name: 'Tăng dần' }],
         },
 
         // Common Styles
         paddingConfig: {
           isAll: false,
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           max: 500,
@@ -523,14 +523,14 @@ export default {
         },
         marginConfig: {
           isAll: false,
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         bottomBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           default: [
             {
               item: '#F5F5F5',
@@ -543,73 +543,73 @@ export default {
           ],
         },
         componentBgConfig: {
-          title: '背景设置',
+          title: 'Cài đặt nền',
           tabVal: 0,
-          tabList: [{ name: '颜色' }, { name: '图片' }],
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
           colorConfig: {
-            title: '背景颜色',
+            title: 'Màu nền',
             default: [{ item: '#fff' }, { item: '#fff' }],
             color: [{ item: '#fff' }, { item: '#fff' }],
           },
           colorDirection: {
-            title: '渐变方向',
+            title: 'Hướng chuyển màu',
             tabVal: 0,
-            tabList: [{ name: '横向' }, { name: '纵向' }, { name: '左斜' }, { name: '右斜' }],
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
           },
           imageConfig: {
-            header: '背景图片',
+            header: 'Ảnh nền',
             title: '',
-            name: '上传图片',
+            name: 'Tải lên ảnh',
             type: 'code',
             url: '',
-            info: '建议尺寸：750px * 400px',
+            info: 'Kích thước đề xuất: 750px * 400px',
           },
         },
         fillet: {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 6,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         borderConfig: {
-          title: '边框设置',
+          title: 'Cài đặt viền',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0, // 0: Hide, 1: Show
           styleConfig: {
-            title: '边框样式',
+            title: 'Kiểu viền',
             tabVal: 0,
             tabList: [
-              { name: '实线', style: 'solid' },
-              { name: '虚线', style: 'dashed' },
-              { name: '点状', style: 'dotted' },
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
             ],
           },
           widthConfig: {
-            title: '边框粗细',
+            title: 'Độ dày viền',
             val: 1,
             min: 1,
           },
           colorConfig: {
-            title: '边框颜色',
+            title: 'Màu viền',
             default: [{ item: '#e5e5e5' }],
             color: [{ item: '#e5e5e5' }],
           },
         },
         moduleColor: {
-          title: '组件背景',
+          title: 'Nền thành phần',
           default: [
             {
               item: '#fff',
@@ -628,38 +628,38 @@ export default {
           ],
         },
         shadowConfig: {
-          title: '阴影设置',
+          title: 'Cài đặt đổ bóng',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0,
           colorConfig: {
-            title: '阴影颜色',
+            title: 'Màu đổ bóng',
             default: [{ item: 'rgba(0,0,0,0.1)' }],
             color: [{ item: 'rgba(0,0,0,0.1)' }],
           },
           xConfig: {
-            title: 'X轴偏移',
+            title: 'Độ lệch trục X',
             val: 0,
             min: -50,
           },
           yConfig: {
-            title: 'Y轴偏移',
+            title: 'Độ lệch trục Y',
             val: 0,
             min: -50,
           },
           blurConfig: {
-            title: '模糊半径',
+            title: 'Bán kính làm mờ',
             val: 10,
             min: 0,
           },
           spreadConfig: {
-            title: '扩展半径',
+            title: 'Bán kính lan tỏa',
             val: 0,
             min: -50,
           },
         },
         zIndexConfig: {
-          title: '组件上浮',
+          title: 'Thứ tự lớp thành phần',
           val: 0,
           min: 0,
         },
@@ -814,9 +814,9 @@ export default {
       return config.tabList[config.tabVal] ? config.tabList[config.tabVal].name : '';
     },
     getSelectTitle(config) {
-      if (!config || !config.list) return '全部';
+      if (!config || !config.list) return 'Tất cả';
       const item = config.list.find((item) => item.activeValue == config.activeValue);
-      return item ? item.title : '全部';
+      return item ? item.title : 'Tất cả';
     },
     getContainerStyle(displayMode, columnStyle) {
       const style = {
@@ -1250,8 +1250,8 @@ export default {
           if (field === 'coupon_price') return dataItem.coupon_price;
           if (field === 'use_min_price') return dataItem.use_min_price;
           if (field === 'coupon_time') return dataItem.coupon_time;
-          if (field === 'type') return dataItem.type === 1 ? '品类券' : dataItem.type === 2 ? '商品券' : '通用券';
-          if (field === 'status') return dataItem.status === 1 ? '开启' : '关闭';
+          if (field === 'type') return dataItem.type === 1 ? 'Phiếu theo danh mục' : dataItem.type === 2 ? 'Phiếu theo sản phẩm' : 'Phiếu toàn cửa hàng';
+          if (field === 'status') return dataItem.status === 1 ? 'Bật' : 'Tắt';
           if (field === 'receive_time') return dataItem.receive_time;
           if (field === 'use_time') return dataItem.use_time;
           if (field === 'receive_count') return dataItem.receive_count;
@@ -1376,7 +1376,7 @@ export default {
     height: 50px;
   }
 }
-// 隐藏滚动条
+// Ẩn thanh cuộn
 .custom-box-list {
   overflow: auto;
   &::-webkit-scrollbar {

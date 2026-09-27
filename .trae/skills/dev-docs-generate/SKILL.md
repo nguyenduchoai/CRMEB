@@ -1,273 +1,273 @@
 ---
 name: dev-docs-generate
-description: 开发文档生成规范，快速生成开发文档，自动放到docs目录下，方便技术快速了解项目，能快速入手开发
+description: Quy chuẩn tạo tài liệu phát triển, giúp tạo nhanh tài liệu phát triển và tự động đặt vào thư mục docs, giúp đội ngũ kỹ thuật nhanh chóng hiểu dự án và bắt tay vào phát triển
 ---
 
-# CRMEB 项目文档写作规范
+# Quy chuẩn viết tài liệu dự án CRMEB
 
-## 0. 自动调用场景
+## 0. Tình huống tự động gọi
 
-### 0.1 触发条件
+### 0.1 Điều kiện kích hoạt
 
-- **目录浏览时**：当浏览文档相关目录时自动调用
-  - 打开 `dev-docs/` 目录时触发
-  - 打开 `dev-docs/phpapi/` 目录时触发
-  - 打开 `dev-docs/admin/` 目录时触发
-  - 打开 `dev-docs/uniapp/` 目录时触发
-  - 打开 `dev-docs/nuxt/` 目录时触发
-- **文档创建时**：当创建新的 Markdown 文档文件时自动调用
-- **文档编辑时**：当编辑现有文档文件时自动调用
-- **关键词触发**：当文档内容包含以下关键词时自动调用
-  - `文档`、`说明`、`指南`、`手册`、`规范`
-  - `API`、`接口`、`部署`、`开发`、`需求`
+- **Khi duyệt thư mục**: Tự động được gọi khi duyệt các thư mục liên quan đến tài liệu
+  - Kích hoạt khi mở thư mục `dev-docs/`
+  - Kích hoạt khi mở thư mục `dev-docs/phpapi/`
+  - Kích hoạt khi mở thư mục `dev-docs/admin/`
+  - Kích hoạt khi mở thư mục `dev-docs/uniapp/`
+  - Kích hoạt khi mở thư mục `dev-docs/nuxt/`
+- **Khi tạo tài liệu**: Tự động được gọi khi tạo tệp tài liệu Markdown mới
+- **Khi chỉnh sửa tài liệu**: Tự động được gọi khi chỉnh sửa tệp tài liệu hiện có
+- **Kích hoạt theo từ khóa**: Tự động được gọi khi nội dung tài liệu chứa các từ khóa sau
+  - `tài liệu`、`giải thích`、`hướng dẫn`、`sổ tay`、`quy chuẩn`
+  - `API`、`API`、`triển khai`、`phát triển`、`yêu cầu`
 
-### 0.2 适用文件类型
+### 0.2 Loại tệp áp dụng
 
-- `.md` (Markdown 文件)
-- `.txt` (文本文件)
-- `.doc`/`.docx` (Word 文档)
-- `.pdf` (PDF 文档)
+- `.md` (tệp Markdown)
+- `.txt` (tệp văn bản)
+- `.doc`/`.docx` (tài liệu Word)
+- `.pdf` (tài liệu PDF)
 
-### 0.3 调用优先级
+### 0.3 Mức ưu tiên gọi
 
-- 当多个技能同时触发时，文档规范技能优先级中等
-- 仅在文档相关操作时被触发
-- 不影响其他技能的正常使用
+- Khi nhiều skill được kích hoạt cùng lúc, skill quy chuẩn tài liệu có mức ưu tiên trung bình
+- Chỉ được kích hoạt khi thao tác liên quan đến tài liệu
+- Không ảnh hưởng đến việc sử dụng bình thường của các skill khác
 
-## 1. 文档类型
+## 1. Loại tài liệu
 
-### 1.1 技术文档
+### 1.1 Tài liệu kỹ thuật
 
-- **API 文档**：接口设计、参数说明、返回格式
-- **开发文档**：架构设计、模块说明、开发流程
-- **部署文档**：环境要求、安装步骤、配置说明
-- **接口文档**：接口列表、请求参数、返回示例
+- **Tài liệu API**: Thiết kế API, mô tả tham số, định dạng trả về
+- **Tài liệu phát triển**: Thiết kế kiến trúc, mô tả module, quy trình phát triển
+- **Tài liệu triển khai**: Yêu cầu môi trường, các bước cài đặt, hướng dẫn cấu hình
+- **Tài liệu endpoint**: Danh sách endpoint, tham số request, ví dụ kết quả trả về
 
-### 1.2 业务文档
+### 1.2 Tài liệu nghiệp vụ
 
-- **需求文档**：功能描述、业务流程、数据结构
-- **测试文档**：测试用例、测试结果、缺陷报告
-- **用户手册**：功能介绍、操作指南、常见问题
+- **Tài liệu yêu cầu**: Mô tả chức năng, quy trình nghiệp vụ, cấu trúc dữ liệu
+- **Tài liệu kiểm thử**: Test case, kết quả kiểm thử, báo cáo lỗi
+- **Sổ tay người dùng**: Giới thiệu chức năng, hướng dẫn thao tác, câu hỏi thường gặp
 
-## 2. 格式规范
+## 2. Quy chuẩn định dạng
 
-### 2.1 文件名规范
+### 2.1 Quy chuẩn tên tệp
 
-- 使用小写下划线分隔
-- 清晰描述文档内容
-- 示例：`api接口文档.md`、`部署指南.md`
+- Dùng chữ thường, phân tách bằng dấu gạch dưới
+- Mô tả rõ nội dung tài liệu
+- Ví dụ: `tai-lieu-api.md`, `huong-dan-trien-khai.md`
 
-### 2.2 标题层级
+### 2.2 Cấp tiêu đề
 
-- 使用 `#` 表示标题层级
-- 一级标题：文档主题
-- 二级标题：主要章节
-- 三级标题：细分内容
-- 最多使用四级标题
+- Dùng `#` để biểu thị cấp tiêu đề
+- Tiêu đề cấp 1: Chủ đề tài liệu
+- Tiêu đề cấp 2: Các chương chính
+- Tiêu đề cấp 3: Nội dung chi tiết
+- Dùng tối đa tiêu đề cấp 4
 
-### 2.3 文本格式
+### 2.3 Định dạng văn bản
 
-- 正文使用宋体/无衬线字体，14px
-- 代码块使用 ``` 包裹，指定语言
-- 列表使用 `-` 或 `1.` 表示
-- 强调内容使用 `**加粗**` 或 `*斜体*`
+- Nội dung chính dùng phông SimSun/phông không chân (sans-serif), 14px
+- Khối mã được bao bằng ```, chỉ rõ ngôn ngữ
+- Danh sách được biểu thị bằng `-` hoặc `1.`
+- Nội dung nhấn mạnh dùng `**in đậm**` hoặc `*in nghiêng*`
 
-### 2.4 代码规范
+### 2.4 Quy chuẩn mã nguồn
 
-- 代码块必须指定语言
-- 缩进一致，格式清晰
-- 关键代码添加注释
-- 示例：
+- Khối mã bắt buộc phải chỉ rõ ngôn ngữ
+- Thụt lề nhất quán, định dạng rõ ràng
+- Thêm chú thích cho các đoạn mã quan trọng
+- Ví dụ:
   ```php
-  // 获取用户信息
+  // Lấy thông tin người dùng
   public function getUserInfo($id) {
       return $this->where('id', $id)->find();
   }
   ```
 
-### 2.5 文档存放目录
+### 2.5 Thư mục lưu trữ tài liệu
 
-- 文档保存到 `dev-docs` 目录中
-- 后端接口文档存放 `dev-docs/phpapi` 目录中
-- 后端前端 ElementUI（Admin）文档存放 `dev-docs/admin` 目录中
-- 移动端前端 UniApp（移动端）文档存放 `dev-docs/uniapp` 目录中
-- PC 端 Nuxt（PC）文档存放 `dev-docs/nuxt` 目录中
+- Tài liệu được lưu vào thư mục `dev-docs`
+- Tài liệu API backend lưu trong thư mục `dev-docs/phpapi`
+- Tài liệu frontend trang quản trị ElementUI (Admin) lưu trong thư mục `dev-docs/admin`
+- Tài liệu frontend di động UniApp (di động) lưu trong thư mục `dev-docs/uniapp`
+- Tài liệu phía PC Nuxt (PC) lưu trong thư mục `dev-docs/nuxt`
 
-## 3. 内容要求
+## 3. Yêu cầu về nội dung
 
-### 3.1 结构清晰
+### 3.1 Cấu trúc rõ ràng
 
-- 引言：文档目的、适用范围
-- 主体：详细内容，逻辑连贯
-- 结论：总结、后续计划
-- 附录：参考资料、术语表
+- Lời mở đầu: Mục đích tài liệu, phạm vi áp dụng
+- Phần chính: Nội dung chi tiết, logic mạch lạc
+- Kết luận: Tổng kết, kế hoạch tiếp theo
+- Phụ lục: Tài liệu tham khảo, bảng thuật ngữ
 
-### 3.2 语言要求
+### 3.2 Yêu cầu về ngôn ngữ
 
-- 使用简洁、准确的语言
-- 避免歧义，术语统一
-- 中文文档使用规范汉字
-- 英文文档语法正确
+- Dùng ngôn ngữ ngắn gọn, chính xác
+- Tránh gây hiểu nhầm, thống nhất thuật ngữ
+- Tài liệu tiếng Việt dùng chính tả chuẩn
+- Tài liệu tiếng Anh phải đúng ngữ pháp
 
-### 3.3 内容完整性
+### 3.3 Tính đầy đủ của nội dung
 
-- 包含必要的背景信息
-- 步骤清晰，可操作
-- 提供示例和截图
-- 注明版本和更新日期
+- Có đủ thông tin bối cảnh cần thiết
+- Các bước rõ ràng, có thể thực hiện được
+- Cung cấp ví dụ và ảnh chụp màn hình
+- Ghi rõ phiên bản và ngày cập nhật
 
-### 3.4 可维护性
+### 3.4 Khả năng bảo trì
 
-- 定期更新，保持时效性
-- 使用版本控制管理文档
-- 注明作者和联系方式
-- 便于搜索和导航
+- Cập nhật định kỳ, đảm bảo tính thời sự
+- Dùng hệ thống quản lý phiên bản để quản lý tài liệu
+- Ghi rõ tác giả và thông tin liên hệ
+- Thuận tiện cho việc tìm kiếm và điều hướng
 
-## 4. 文档工具
+## 4. Công cụ tài liệu
 
-### 4.1 编辑工具
+### 4.1 Công cụ soạn thảo
 
-- 推荐使用 Markdown 格式
-- 支持工具：VS Code、Typora、语雀
-- 图片存储：项目内部或图床
+- Khuyến nghị dùng định dạng Markdown
+- Công cụ hỗ trợ: VS Code, Typora, Yuque
+- Lưu trữ hình ảnh: Trong nội bộ dự án hoặc dịch vụ lưu trữ ảnh (image hosting)
 
-### 4.2 版本管理
+### 4.2 Quản lý phiên bản
 
-- 与代码一同纳入 Git 管理
-- 提交信息清晰，说明文档变更
-- 定期备份，防止丢失
+- Quản lý bằng Git cùng với mã nguồn
+- Thông điệp commit rõ ràng, nêu rõ thay đổi của tài liệu
+- Sao lưu định kỳ để tránh mất dữ liệu
 
-## 5. 审核与发布
+## 5. Duyệt và phát hành
 
-### 5.1 审核流程
+### 5.1 Quy trình duyệt
 
-1. 编写完成后进行自我检查
-2. 提交给相关人员审核
-3. 根据反馈修改完善
-4. 最终确认发布
+1. Tự kiểm tra sau khi soạn xong
+2. Gửi cho người liên quan duyệt
+3. Chỉnh sửa, hoàn thiện theo phản hồi
+4. Xác nhận cuối cùng và phát hành
 
-### 5.2 发布规范
+### 5.2 Quy chuẩn phát hành
 
-- 发布前检查格式和内容
-- 明确文档版本号
-- 通知相关人员文档更新
-- 确保文档可访问
+- Kiểm tra định dạng và nội dung trước khi phát hành
+- Ghi rõ số phiên bản tài liệu
+- Thông báo cho người liên quan về việc cập nhật tài liệu
+- Đảm bảo tài liệu có thể truy cập được
 
-## 6. Markdown 文档模板
+## 6. Mẫu tài liệu Markdown
 
 ```markdown
-# 文档标题
+# Tiêu đề tài liệu
 
-## 1. 引言
+## 1. Lời mở đầu
 
-### 1.1 文档目的
-- 说明文档的编写目的
+### 1.1 Mục đích tài liệu
+- Nêu mục đích biên soạn tài liệu
 
-### 1.2 适用范围
-- 说明文档的适用范围
+### 1.2 Phạm vi áp dụng
+- Nêu phạm vi áp dụng của tài liệu
 
-### 1.3 术语定义
-- 解释文档中使用的专业术语
+### 1.3 Định nghĩa thuật ngữ
+- Giải thích các thuật ngữ chuyên môn dùng trong tài liệu
 
-## 2. 主体内容
+## 2. Nội dung chính
 
-### 2.1 功能描述
-- 详细描述功能特性
+### 2.1 Mô tả chức năng
+- Mô tả chi tiết các đặc tính chức năng
 
-### 2.2 实现方案
-- 说明技术实现方案
+### 2.2 Phương án triển khai
+- Nêu phương án triển khai kỹ thuật
 
-### 2.3 代码示例
+### 2.3 Ví dụ code
 
 ```php
-// 代码示例
+// Ví dụ mã
 function example() {
     return true;
 }
 ```
 
-### 2.4 操作步骤
+### 2.4 Các bước thực hiện
 
-1. 第一步操作
-2. 第二步操作
-3. 第三步操作
+1. Thao tác bước 1
+2. Thao tác bước 2
+3. Thao tác bước 3
 
-## 3. 结论
+## 3. Kết luận
 
-### 3.1 总结
-- 总结文档的主要内容
+### 3.1 Tổng kết
+- Tóm tắt nội dung chính của tài liệu
 
-### 3.2 后续计划
-- 说明后续的工作计划
+### 3.2 Kế hoạch tiếp theo
+- Nêu kế hoạch công việc tiếp theo
 
-## 4. 附录
+## 4. Phụ lục
 
-### 4.1 参考资料
-- 列出参考的文档和资源
+### 4.1 Tài liệu tham khảo
+- Liệt kê các tài liệu và nguồn tham khảo
 
-### 4.2 联系方式
-- 提供联系人信息
+### 4.2 Thông tin liên hệ
+- Cung cấp thông tin người liên hệ
 
 ---
 
-**版本**: 1.0
-**作者**: 文档作者
-**更新日期**: YYYY-MM-DD
+**Phiên bản**: 1.0
+**Tác giả**: Tác giả tài liệu
+**Ngày cập nhật**: YYYY-MM-DD
 ```
 
-## 7. Markdown 语法指南
+## 7. Hướng dẫn cú pháp Markdown
 
-### 7.1 标题
+### 7.1 Tiêu đề
 
 ```markdown
-# 一级标题
-## 二级标题
-### 三级标题
-#### 四级标题
+# Tiêu đề cấp 1
+## Tiêu đề cấp 2
+### Tiêu đề cấp 3
+#### Tiêu đề cấp 4
 ```
 
-### 7.2 列表
+### 7.2 Danh sách
 
-- 无序列表项 1
-- 无序列表项 2
-  - 嵌套列表项
+- Mục danh sách không thứ tự 1
+- Mục danh sách không thứ tự 2
+  - Mục danh sách lồng nhau
 
-1. 有序列表项 1
-2. 有序列表项 2
+1. Mục danh sách có thứ tự 1
+2. Mục danh sách có thứ tự 2
 
-### 7.3 链接和图片
+### 7.3 Liên kết và hình ảnh
 
-- [链接文本](https://example.com)
-- ![图片描述](https://example.com/image.jpg)
+- [Văn bản liên kết](https://example.com)
+- ![Mô tả hình ảnh](https://example.com/image.jpg)
 
-### 7.4 代码块
+### 7.4 Khối mã
 
 ```javascript
-// JavaScript 代码
+// JavaScript Code
 console.log('Hello World');
 ```
 
-### 7.5 表格
+### 7.5 Bảng
 
-| 表头 1 | 表头 2 |
+| Tiêu đề cột 1 | Tiêu đề cột 2 |
 | ------ | ------ |
-| 单元格 1 | 单元格 2 |
-| 单元格 3 | 单元格 4 |
+| Ô 1 | Ô 2 |
+| Ô 3 | Ô 4 |
 
-### 7.6 引用
+### 7.6 Trích dẫn
 
-> 这是一段引用文本
+> Đây là một đoạn văn bản trích dẫn
 
-## 8. 注意事项
+## 8. Lưu ý
 
-- 避免冗长，重点突出
-- 保持格式统一
-- 定期更新文档
-- 确保内容准确无误
-- 便于他人理解和使用
-- 生成文档最后说明由AI生成
+- Tránh dài dòng, làm nổi bật trọng tâm
+- Giữ định dạng thống nhất
+- Cập nhật tài liệu định kỳ
+- Đảm bảo nội dung chính xác, không sai sót
+- Giúp người khác dễ hiểu và dễ sử dụng
+- Cuối tài liệu được tạo phải ghi rõ là do AI tạo
 
 ---
 
-以上规范适用于 CRMEB 项目所有文档写作，确保文档质量和一致性。
+Các quy chuẩn trên áp dụng cho mọi hoạt động viết tài liệu của dự án CRMEB, nhằm đảm bảo chất lượng và tính nhất quán của tài liệu.
 

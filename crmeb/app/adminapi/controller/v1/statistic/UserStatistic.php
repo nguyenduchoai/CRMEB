@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -34,7 +34,7 @@ class UserStatistic extends AuthController
     }
 
     /**
-     * 用户基础信息
+     * Thông tin cơ bản người dùng
      * @return mixed
      */
     public function getBasic()
@@ -47,7 +47,7 @@ class UserStatistic extends AuthController
     }
 
     /**
-     * 用户趋势
+     * Xu hướng người dùng
      * @return mixed
      */
     public function getTrend()
@@ -61,7 +61,7 @@ class UserStatistic extends AuthController
     }
 
     /**
-     * 微信用户信息
+     * Thông tin người dùng WeChat
      * @return mixed
      */
     public function getWechat()
@@ -75,7 +75,7 @@ class UserStatistic extends AuthController
     }
 
     /**
-     * 微信用户趋势
+     * Xu hướng người dùng WeChat
      * @return mixed
      */
     public function getWechatTrend()
@@ -89,7 +89,7 @@ class UserStatistic extends AuthController
     }
 
     /**
-     * 用户地域
+     * Khu vực người dùng
      * @return mixed
      */
     public function getRegion()
@@ -104,7 +104,7 @@ class UserStatistic extends AuthController
     }
 
     /**
-     * 用户性别
+     * Giới tính người dùng
      * @return mixed
      */
     public function getSex()
@@ -118,7 +118,7 @@ class UserStatistic extends AuthController
     }
 
     /**
-     * 用户统计导出
+     * Xuất thống kê người dùng
      * @return mixed
      */
     public function getExcel()
@@ -132,7 +132,7 @@ class UserStatistic extends AuthController
     }
 
     /**
-     * 格式化时间
+     * Định dạng thời gian
      * @param $time
      * @return string
      */

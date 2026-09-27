@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible.sync="visible" width="1024px" title="选择视频" :close-on-click-modal="false">
+  <el-dialog :visible.sync="visible" width="1024px" title="Chọn video" :close-on-click-modal="false">
     <uploaFile
       v-if="visible"
       :isChoice="isMore"

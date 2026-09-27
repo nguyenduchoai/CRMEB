@@ -45,9 +45,9 @@
                             {{ item.productInfo.store_name }}
                           </div>
                           <div class="attr">
-                            <span>库存：{{ item.productInfo.stock }}</span>
+                            <span>Tồn kho: {{ item.productInfo.stock }}</span>
                             <span
-                              >销量：{{
+                              >Lượt bán: {{
                                 parseInt(item.productInfo.sales) +
                                 parseInt(item.productInfo.ficti ? item.productInfo.ficti : 0)
                               }}</span
@@ -56,7 +56,7 @@
                           <div class="group">
                             <div class="money">￥{{ item.productInfo.price }}</div>
                             <span style="cursor: pointer" v-db-click @click.stop="onLook(item.productInfo.id)"
-                              >查看商品 ></span
+                              >Xem sản phẩm ></span
                             >
                           </div>
                         </div>
@@ -67,8 +67,8 @@
                             <img :src="itm.productInfo.image" />
                           </div>
                           <div class="intro">
-                            <div class="name">订单ID：{{ item.orderInfo.order_id }}</div>
-                            <div class="attr">商品数量：{{ itm.cart_num }}</div>
+                            <div class="name">ID đơn hàng: {{ item.orderInfo.order_id }}</div>
+                            <div class="attr">Số lượng sản phẩm: {{ itm.cart_num }}</div>
                             <div class="group">
                               <div class="money">￥{{ itm.productInfo.price }}</div>
                               <nuxt-link
@@ -77,7 +77,7 @@
                                   path: '/order_detail',
                                   query: { orderId: item.orderInfo.order_id },
                                 }"
-                                >查看订单 ></nuxt-link
+                                >Xem đơn hàng ></nuxt-link
                               >
                             </div>
                           </div>
@@ -92,10 +92,10 @@
           <div class="editor">
             <div class="editor-hd">
               <div>
-                <button class="emoji-btn" title="表情" v-db-click @click.stop="emojiSwitch">
+                <button class="emoji-btn" title="Biểu tượng cảm xúc" v-db-click @click.stop="emojiSwitch">
                   <span class="iconfont iconbiaoqing1"></span>
                 </button>
-                <button title="图片" v-if="kufuToken">
+                <button title="Hình ảnh" v-if="kufuToken">
                   <el-upload
                     :show-file-list="false"
                     :action="uploadAction"
@@ -112,10 +112,10 @@
               </div>
               <!--                            <div>-->
               <!--                                <button class="end" v-db-click @click="chatEnd">-->
-              <!--                                    <i class="iconfont icon-guanji"></i>结束-->
+              <!--                                    <i class="iconfont icon-guanji"></i>Kết thúc-->
               <!--                                </button>-->
               <!--                            </div>-->
-              <!-- 表情 -->
+              <!-- Biểu tượng cảm xúc -->
               <div class="emoji-panel" v-if="emojiShow">
                 <i
                   class="em"
@@ -128,10 +128,10 @@
               </div>
             </div>
             <div class="editor-bd">
-              <textarea v-model="chatCont" placeholder="请输入文字内容" @keydown.enter="ctrlEnter"></textarea>
+              <textarea v-model="chatCont" placeholder="Vui lòng nhập nội dung văn bản" @keydown.enter="ctrlEnter"></textarea>
             </div>
             <div class="editor-ft">
-              <button :disabled="!chatCont" v-db-click @click.stop="sendMessage">发送</button>
+              <button :disabled="!chatCont" v-db-click @click.stop="sendMessage">Gửi</button>
             </div>
           </div>
         </div>
@@ -139,7 +139,7 @@
           <div v-if="notice" class="rich" v-html="notice"></div>
           <div class="copy">
             <span v-if="copyright">{{ copyright }}</span>
-            <a v-else href="http://www.crmeb.com/" target="_blank">CRMEB提供技术支持</a>
+            <a v-else href="http://www.crmeb.com/" target="_blank">Hỗ trợ kỹ thuật bởi CRMEB</a>
           </div>
         </div>
       </div>
@@ -228,7 +228,7 @@ export default {
     return {
       locations: `${location.origin}`,
       change: false,
-      emojiGroup: chunk(emojiList, 20), // 表情列表
+      emojiGroup: chunk(emojiList, 20), // Danh sách biểu tượng cảm xúc
       emojiList: emojiList,
       emojiShow: false,
       recordList: [],
@@ -245,13 +245,13 @@ export default {
       audioSrc: '',
       upperId: 0,
       uploadData: {},
-      is_tourist: 1, // 0登录状态，1未登录状态游客
+      is_tourist: 1, // 0 trạng thái đã đăng nhập, 1 trạng thái khách chưa đăng nhập
       text: '',
       isLoad: false,
       page: 1,
-      tourist_avatar: '', //游客头像
-      tourist_uid: '', //游客id
-      toUid: '', //客服id
+      tourist_avatar: '', //Ảnh đại diện khách
+      tourist_uid: '', //ID khách
+      toUid: '', //ID nhân viên CSKH
       kufuToken: '', // token
       copyright: Session.get('copyright') || '',
     };
@@ -309,7 +309,7 @@ export default {
           });
         }, 300);
       });
-      // 监听客服转接
+      // Theo dõi chuyển tiếp CSKH
       ws.$on('to_transfer', (data) => {
         this.toUid = data.toUid;
         ws.send({
@@ -320,7 +320,7 @@ export default {
         });
       });
       ws.$on('socket_error', () => {
-        this.$message.error('连接失败');
+        this.$message.error('Kết nối thất bại');
       });
       ws.$on('err_tip', (data) => {
         this.$message.error(data.msg);
@@ -338,11 +338,11 @@ export default {
     onLook(id) {
       window.open(`${location.origin}/home/goods_detail/${id}`);
     },
-    // 关闭
+    // Tắt
     closeChange(msg) {
       this.change = msg;
     },
-    // 统一发送处理
+    // Xử lý gửi thống nhất
     sendMsg(msn, type) {
       let obj = {
         type: 'chat',
@@ -360,7 +360,7 @@ export default {
         ws.send(obj);
       });
     },
-    // 随机客服
+    // CSKH ngẫu nhiên
     getService() {
       serviceListApi({ token: this.kufuToken || '' })
         .then((res) => {
@@ -398,7 +398,7 @@ export default {
       //     this.emojiShow = false;
       // }
     },
-    // enter 发送
+    // Gửi bằng enter
     ctrlEnter(e) {
       if (e.keyCode == 13) {
         e.preventDefault();
@@ -407,17 +407,17 @@ export default {
         this.sendMessage();
       }
     },
-    // 关闭聊天窗口
+    // Đóng cửa sổ chat
     close() {
       this.$emit('chat-close');
     },
-    // 选择表情
+    // Chọn biểu tượng cảm xúc
     selectEmoji(data) {
       let val = `[${data}]`;
       this.chatCont += val;
       this.emojiShow = false;
     },
-    // 聊天表情转换
+    // Chuyển đổi biểu tượng cảm xúc trong chat
     replace_em(str) {
       str = str.replace(/\[em-([\s\S]*)\]/g, "<span class='em em-$1'/></span>");
       return str;
@@ -429,7 +429,7 @@ export default {
         }
       }
     },
-    // 聊天记录
+    // Lịch sử trò chuyện
     getRecordList() {
       if (this.loading) {
         return;
@@ -470,7 +470,7 @@ export default {
           this.loading = false;
         });
     },
-    // 设置页面滚动位置
+    // Đặt vị trí cuộn trang
     setPageScrollTo(selector) {
       this.$nextTick(() => {
         if (selector) {
@@ -489,11 +489,11 @@ export default {
         }
       });
     },
-    // 表情包显示隐藏
+    // Hiện/ẩn bộ biểu tượng cảm xúc
     emojiSwitch() {
       this.emojiShow = !this.emojiShow;
     },
-    // 发送消息
+    // Gửi tin nhắn
     sendMessage() {
       this.sendMsg(this.chatCont, 1);
       this.chatCont = '';
@@ -552,7 +552,7 @@ export default {
         window.close();
       }
     },
-    // 广告
+    // Quảng cáo
     getNotice() {
       getAdvApi().then((res) => {
         this.notice = res.data.content;
@@ -573,7 +573,7 @@ export default {
       }
     },
     handleFormatError(file) {
-      this.$message.error('上传图片只能是 jpg、jpg、jpeg、gif 格式!');
+      this.$message.error('Ảnh tải lên chỉ được có định dạng jpg, jpg, jpeg, gif!');
     },
     uploadSuccess(res) {
       this.sendMsg(res.data.url, 3);

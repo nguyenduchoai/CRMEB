@@ -12,14 +12,14 @@
             <el-tab-pane v-for="(item, index) in tabsList" :key="index" :name="item.slot" :label="item.title">
               <el-form class="form-sty" ref="formData" :model="formData" :rules="ruleValidate" label-width="85px">
                 <div v-if="item.slot === 'is_system' && !loading">
-                  <el-form-item label="通知标题：">
+                  <el-form-item label="Tiêu đề thông báo:">
                     <el-input
                       v-model="formData.system_title"
-                      placeholder="请输入通知标题"
+                      placeholder="Vui lòng nhập tiêu đề thông báo"
                       style="width: 500px"
                     ></el-input>
                   </el-form-item>
-                  <el-form-item label="通知内容：">
+                  <el-form-item label="Nội dung thông báo:">
                     <div class="content">
                       <el-input
                         ref="system_text"
@@ -27,7 +27,7 @@
                         v-model="formData.system_text"
                         type="textarea"
                         :autosize="{ minRows: 5, maxRows: 8 }"
-                        placeholder="请输入通知内容"
+                        placeholder="Vui lòng nhập nội dung thông báo"
                         style="width: 500px"
                       >
                       </el-input>
@@ -49,20 +49,20 @@
                         </el-popover>
                       </div>
                     </div>
-                    <div class="tips-info" v-if="formData.type_n == 3">可点击右下角图标,插入自定义变量</div>
+                    <div class="tips-info" v-if="formData.type_n == 3">Có thể nhấp vào biểu tượng ở góc dưới bên phải để chèn biến tùy chỉnh</div>
                   </el-form-item>
-                  <el-form-item label="状态：" prop="is_system">
+                  <el-form-item label="Trạng thái:" prop="is_system">
                     <el-radio-group v-model="formData.is_system">
-                      <el-radio :label="1">开启</el-radio>
-                      <el-radio :label="2">关闭</el-radio>
+                      <el-radio :label="1">Bật</el-radio>
+                      <el-radio :label="2">Tắt</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </div>
                 <div v-if="item.slot === 'is_sms' && !loading">
-                  <el-form-item label="短信模版ID：">
-                    <el-input v-model="formData.sms_id" placeholder="短信模版ID" style="width: 500px"></el-input>
+                  <el-form-item label="ID mẫu SMS:">
+                    <el-input v-model="formData.sms_id" placeholder="ID mẫu SMS" style="width: 500px"></el-input>
                   </el-form-item>
-                  <el-form-item label="通知内容：">
+                  <el-form-item label="Nội dung thông báo:">
                     <div class="content">
                       <el-input
                         id="sms_text"
@@ -70,7 +70,7 @@
                         type="textarea"
                         :disabled="formData.type_n != 3"
                         :autosize="{ minRows: 5, maxRows: 8 }"
-                        placeholder="请输入通知内容"
+                        placeholder="Vui lòng nhập nội dung thông báo"
                         style="width: 500px"
                       ></el-input>
                       <div class="value-list" v-if="formData.type_n == 3">
@@ -91,41 +91,41 @@
                         </el-popover>
                       </div>
                     </div>
-                    <div class="tips-info" v-if="formData.type_n == 3">可点击右下角图标,插入自定义变量</div>
+                    <div class="tips-info" v-if="formData.type_n == 3">Có thể nhấp vào biểu tượng ở góc dưới bên phải để chèn biến tùy chỉnh</div>
                   </el-form-item>
-                  <el-form-item label="状态：" prop="is_sms">
+                  <el-form-item label="Trạng thái:" prop="is_sms">
                     <el-radio-group v-model="formData.is_sms">
-                      <el-radio :label="1">开启</el-radio>
-                      <el-radio :label="2">关闭</el-radio>
+                      <el-radio :label="1">Bật</el-radio>
+                      <el-radio :label="2">Tắt</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </div>
                 <div v-else-if="item.slot === 'is_wechat' && !loading">
-                  <el-form-item label="模板编号：">
+                  <el-form-item label="Mã mẫu:">
                     <el-input
                       v-model="formData.tempkey"
                       :disabled="formData.type_n !== 3"
-                      placeholder="请输入通模板编号"
+                      placeholder="Vui lòng nhập mã mẫu"
                       style="width: 500px"
                     ></el-input>
                   </el-form-item>
-                  <el-form-item label="模板ID：">
-                    <el-input v-model="formData.tempid" placeholder="请输入模板ID" style="width: 500px"></el-input>
+                  <el-form-item label="ID mẫu:">
+                    <el-input v-model="formData.tempid" placeholder="Vui lòng nhập ID mẫu" style="width: 500px"></el-input>
                   </el-form-item>
-                  <el-form-item label="模板：">
+                  <el-form-item label="Mẫu:">
                     <div class="content">
                       <el-input
                         :disabled="formData.type_n !== 3"
                         v-model="formData.content"
                         type="textarea"
                         :autosize="{ minRows: 5, maxRows: 8 }"
-                        placeholder="请输入模板"
+                        placeholder="Vui lòng nhập mẫu"
                         style="width: 500px"
                         @input="handleContentChange"
                       ></el-input>
                     </div>
                   </el-form-item>
-                  <el-form-item label="字段：" v-if="formData.type_n == 3 && keyList.length">
+                  <el-form-item label="Trường:" v-if="formData.type_n == 3 && keyList.length">
                     <div class="content">
                       <keys-list
                         :key-list="keyList"
@@ -135,55 +135,55 @@
                       />
                     </div>
                   </el-form-item>
-                  <el-form-item label="跳转链接：">
+                  <el-form-item label="Liên kết chuyển hướng:">
                     <el-input
                       v-model="formData.wechat_link"
-                      placeholder="请输入模版跳转链接，可携带参数"
+                      placeholder="Vui lòng nhập liên kết chuyển hướng của mẫu, có thể kèm tham số"
                       style="width: 500px"
                     ></el-input>
                   </el-form-item>
-                  <el-form-item label="跳转小程序：" prop="wechat_to_routine">
+                  <el-form-item label="Chuyển đến Mini Program:" prop="wechat_to_routine">
                     <el-radio-group v-model="formData.wechat_to_routine">
-                      <el-radio :label="1">开启</el-radio>
-                      <el-radio :label="0">关闭</el-radio>
+                      <el-radio :label="1">Bật</el-radio>
+                      <el-radio :label="0">Tắt</el-radio>
                     </el-radio-group>
                     <div class="tips-info">
-                      开启之后，点击模版消息，跳转小程序对应的页面，需要小程序已经审核上线才可使用
+                      Sau khi bật, khi nhấp vào tin nhắn mẫu sẽ chuyển đến trang tương ứng trong Mini Program, chỉ dùng được khi Mini Program đã được duyệt và phát hành
                     </div>
                   </el-form-item>
-                  <el-form-item label="状态：" prop="is_wechat">
+                  <el-form-item label="Trạng thái:" prop="is_wechat">
                     <el-radio-group v-model="formData.is_wechat">
-                      <el-radio :label="1">开启</el-radio>
-                      <el-radio :label="2">关闭</el-radio>
+                      <el-radio :label="1">Bật</el-radio>
+                      <el-radio :label="2">Tắt</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </div>
                 <div v-else-if="item.slot === 'is_routine' && !loading">
-                  <el-form-item label="模板编号：">
+                  <el-form-item label="Mã mẫu:">
                     <el-input
                       v-model="formData.tempkey"
                       :disabled="formData.type_n !== 3"
-                      placeholder="请输入通模板编号"
+                      placeholder="Vui lòng nhập mã mẫu"
                       style="width: 500px"
                     ></el-input>
                   </el-form-item>
-                  <el-form-item label="模板ID：">
-                    <el-input v-model="formData.tempid" placeholder="请输入模板ID" style="width: 500px"></el-input>
+                  <el-form-item label="ID mẫu:">
+                    <el-input v-model="formData.tempid" placeholder="Vui lòng nhập ID mẫu" style="width: 500px"></el-input>
                   </el-form-item>
-                  <el-form-item label="模板：">
+                  <el-form-item label="Mẫu:">
                     <div class="content">
                       <el-input
                         :disabled="formData.type_n !== 3"
                         v-model="formData.content"
                         type="textarea"
                         :autosize="{ minRows: 5, maxRows: 8 }"
-                        placeholder="请输入模板"
+                        placeholder="Vui lòng nhập mẫu"
                         style="width: 500px"
                         @input="handleContentChange"
                       ></el-input>
                     </div>
                   </el-form-item>
-                  <el-form-item label="字段：" v-if="formData.type_n == 3 && keyList.length">
+                  <el-form-item label="Trường:" v-if="formData.type_n == 3 && keyList.length">
                     <div class="content">
                       <keys-list
                         :key-list="keyList"
@@ -193,30 +193,30 @@
                       />
                     </div>
                   </el-form-item>
-                  <el-form-item label="跳转链接：">
+                  <el-form-item label="Liên kết chuyển hướng:">
                     <el-input
                       v-model="formData.routine_link"
-                      placeholder="请输入模版跳转链接，可携带参数"
+                      placeholder="Vui lòng nhập liên kết chuyển hướng của mẫu, có thể kèm tham số"
                       style="width: 500px"
                     ></el-input>
                   </el-form-item>
-                  <el-form-item label="状态：" prop="is_routine">
+                  <el-form-item label="Trạng thái:" prop="is_routine">
                     <el-radio-group v-model="formData.is_routine">
-                      <el-radio :label="1">开启</el-radio>
-                      <el-radio :label="2">关闭</el-radio>
+                      <el-radio :label="1">Bật</el-radio>
+                      <el-radio :label="2">Tắt</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </div>
 
                 <div v-else-if="item.slot === 'is_ent_wechat' && !loading">
-                  <el-form-item label="通知内容：">
+                  <el-form-item label="Nội dung thông báo:">
                     <div class="content">
                       <el-input
                         id="ent_wechat_text"
                         v-model="formData.ent_wechat_text"
                         type="textarea"
                         :autosize="{ minRows: 5, maxRows: 8 }"
-                        placeholder="请输入通知内容"
+                        placeholder="Vui lòng nhập nội dung thông báo"
                         style="width: 500px"
                       ></el-input>
                       <div class="value-list" v-if="formData.type_n == 3">
@@ -237,22 +237,22 @@
                         </el-popover>
                       </div>
                     </div>
-                    <div class="tips-info" v-if="formData.type_n == 3">可点击右下角图标,插入自定义变量</div>
+                    <div class="tips-info" v-if="formData.type_n == 3">Có thể nhấp vào biểu tượng ở góc dưới bên phải để chèn biến tùy chỉnh</div>
                   </el-form-item>
-                  <el-form-item label="机器人链接：">
+                  <el-form-item label="Liên kết bot:">
                     <div class="content">
-                      <el-input v-model="formData.url" placeholder="请输入机器人链接" style="width: 500px"></el-input>
+                      <el-input v-model="formData.url" placeholder="Vui lòng nhập liên kết bot" style="width: 500px"></el-input>
                     </div>
                   </el-form-item>
-                  <el-form-item label="状态：" prop="is_ent_wechat">
+                  <el-form-item label="Trạng thái:" prop="is_ent_wechat">
                     <el-radio-group v-model="formData.is_ent_wechat">
-                      <el-radio :label="1">开启</el-radio>
-                      <el-radio :label="2">关闭</el-radio>
+                      <el-radio :label="1">Bật</el-radio>
+                      <el-radio :label="2">Tắt</el-radio>
                     </el-radio-group>
                   </el-form-item>
                 </div>
                 <el-form-item>
-                  <el-button type="primary" v-db-click @click="handleSubmit('formData')">提交</el-button>
+                  <el-button type="primary" v-db-click @click="handleSubmit('formData')">Gửi</el-button>
                 </el-form-item>
               </el-form>
             </el-tab-pane>
@@ -272,23 +272,23 @@ export default {
     return {
       tabs: [
         {
-          title: '系统通知',
+          title: 'Thông báo hệ thống',
           slot: 'is_system',
         },
         {
-          title: '短信通知',
+          title: 'Thông báo SMS',
           slot: 'is_sms',
         },
         {
-          title: '微信模板消息',
+          title: 'Tin nhắn mẫu WeChat',
           slot: 'is_wechat',
         },
         {
-          title: '微信小程序提醒',
+          title: 'Nhắc nhở qua Mini Program WeChat',
           slot: 'is_routine',
         },
         {
-          title: '企业微信',
+          title: 'WeCom',
           slot: 'is_ent_wechat',
         },
       ],
@@ -301,21 +301,21 @@ export default {
         name: [
           {
             required: true,
-            message: '请输入通知场景',
+            message: 'Vui lòng nhập tình huống thông báo',
             trigger: 'blur',
           },
         ],
         title: [
           {
             required: true,
-            message: '请输入通知场景',
+            message: 'Vui lòng nhập tình huống thông báo',
             trigger: 'blur',
           },
         ],
         content: [
           {
             required: true,
-            message: '请输入通知内容',
+            message: 'Vui lòng nhập nội dung thông báo',
             trigger: 'blur',
           },
         ],
@@ -344,7 +344,7 @@ export default {
     handleRemove(index) {
       this.keyList.splice(index, 1);
     },
-    // 新增卡密
+    // Thêm mã thẻ
     handleAdd() {
       this.keyList.push({
         key: '',
@@ -369,7 +369,7 @@ export default {
           if (init) this.tagName = this.tabsList[0].slot;
           this.formData = res.data;
           this.formData.type_n = res.data.type; // - -!
-          this.formData.type = name; // 类型名称
+          this.formData.type = name; // Tên loại
           this.formData.id = id;
           this.keyList = res.data.key_list || [];
           this.loading = false;
@@ -382,7 +382,7 @@ export default {
       this.formData.key_list = this.keyList;
       getNotificationSave(this.formData)
         .then((res) => {
-          this.$message.success('设置成功');
+          this.$message.success('Cài đặt thành công');
         })
         .catch((err) => {
           this.$message.error(err);
@@ -392,11 +392,11 @@ export default {
       this.$emit('close');
     },
     changeValue(e, name) {
-      // 获取dom元素
+      // Lấy phần tử dom
       let textInput = document.getElementById(name);
-      // 获取光标初始索引
+      // Lấy chỉ số ban đầu của con trỏ
       let index = textInput.selectionStart;
-      // 拼接字符串的形式来得到需要的内容
+      // Dùng cách nối chuỗi để lấy nội dung cần thiết
       this.formData[name] = this.formData[name].substring(0, index) + e + this.formData[name].substring(index);
       this.$nextTick(() => {
         textInput.selectionStart = index + e.length;
@@ -478,7 +478,7 @@ export default {
     border-radius: 4px;
   }
 }
-// 滚动条样式
+// Kiểu thanh cuộn
 .variable::-webkit-scrollbar {
   width: 4px;
   height: 4px;

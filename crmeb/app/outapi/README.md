@@ -1,29 +1,29 @@
-crmeb/app/outapi目录用于定义项目对外开放的接口。
+Thư mục crmeb/app/outapi dùng để định nghĩa các API mà dự án mở ra bên ngoài.
 
-具体来说:
+Cụ thể:
 
-- 是项目对合作第三方开放的API接口定义目录
+- Là thư mục định nghĩa các API mà dự án mở cho các bên thứ ba hợp tác
 
-- 这里的接口可以被第三方直接调用来获取数据或完成相关业务
+- Các API ở đây có thể được bên thứ ba gọi trực tiếp để lấy dữ liệu hoặc hoàn thành các nghiệp vụ liên quan
 
-- 这类API接口与内部使用的API有区别:
+- Loại API này khác với API dùng nội bộ:
 
-  - 对外开放,不需要登录授权
-  - 安全限制较严,只提供必要接口
-  - 接口规范遵循RESTful原则
+  - Mở ra bên ngoài, không cần đăng nhập/ủy quyền
+  - Giới hạn bảo mật khá nghiêm ngặt, chỉ cung cấp các API cần thiết
+  - Quy chuẩn API tuân theo nguyên tắc RESTful
 
-- 常见场景:
+- Các tình huống phổ biến:
 
-  - 第方小程序/APP直接获取商品数据
-  - 第方商户后台系统同步订单信息
-  - 小程序支付回调通知接口
+  - Mini Program/APP của bên thứ ba lấy trực tiếp dữ liệu sản phẩm
+  - Hệ thống quản trị của người bán bên thứ ba đồng bộ thông tin đơn hàng
+  - API nhận thông báo callback thanh toán của Mini Program
 
-使用这个目录定义外部接口可以:
+Sử dụng thư mục này để định nghĩa API bên ngoài có thể:
 
-- 实现与其他系统的深度集成
+- Tích hợp sâu với các hệ thống khác
 
-- 让更多场景能够使用CRMEB提供的能力
+- Cho phép nhiều tình huống hơn sử dụng được các năng lực do CRMEB cung cấp
 
-- 降低对第方的侵入性,仅开放必要接口
+- Giảm tính xâm lấn đối với bên thứ ba, chỉ mở các API cần thiết
 
-所以总结来说,outapi用于项目对外部开放的公开API,扩展第三方接入能力。
+Tóm lại, outapi dùng cho các API công khai mà dự án mở ra bên ngoài, mở rộng khả năng kết nối của bên thứ ba.

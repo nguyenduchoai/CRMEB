@@ -1,246 +1,246 @@
-# 代码规范文档
+# Tài liệu quy chuẩn code
 
-## 1. 概述
+## 1. Tổng quan
 
-本文档描述了 CRMEB 项目的代码规范，包括 PHP、Vue、JavaScript 等语言的编码标准，旨在统一代码风格，提高代码质量和可维护性。
+Tài liệu này mô tả quy chuẩn code của dự án CRMEB, bao gồm tiêu chuẩn viết code cho các ngôn ngữ PHP, Vue, JavaScript, v.v., nhằm thống nhất phong cách code, nâng cao chất lượng và khả năng bảo trì của code.
 
-## 2. PHP 代码规范
+## 2. Quy chuẩn code PHP
 
-### 2.1 命名规范
+### 2.1 Quy tắc đặt tên
 
-- **类名**：使用 PascalCase 命名风格，如 `UserController`
-- **方法名**：使用 camelCase 命名风格，如 `getUserList`
-- **变量名**：使用 camelCase 命名风格，如 `$userName`
-- **常量**：使用全大写字母和下划线分隔，如 `MAX_PAGE_SIZE`
-- **属性名**：使用 camelCase 命名风格，如 `$userId`
-- **文件名**：与类名一致，使用 PascalCase 命名风格，如 `UserController.php`
-- **目录名**：使用小写字母，单词之间用下划线分隔，如 `user_service`
+- **Tên lớp**: sử dụng kiểu đặt tên PascalCase, ví dụ `UserController`
+- **Tên phương thức**: sử dụng kiểu đặt tên camelCase, ví dụ `getUserList`
+- **Tên biến**: sử dụng kiểu đặt tên camelCase, ví dụ `$userName`
+- **Hằng số**: viết hoa toàn bộ, các từ phân tách bằng dấu gạch dưới, ví dụ `MAX_PAGE_SIZE`
+- **Tên thuộc tính**: sử dụng kiểu đặt tên camelCase, ví dụ `$userId`
+- **Tên tệp**: trùng với tên lớp, sử dụng kiểu đặt tên PascalCase, ví dụ `UserController.php`
+- **Tên thư mục**: sử dụng chữ thường, các từ phân tách bằng dấu gạch dưới, ví dụ `user_service`
 
-### 2.2 代码格式
+### 2.2 Định dạng code
 
-- **缩进**：使用 4 个空格进行缩进，禁止使用制表符
-- **行宽**：每行代码不超过 120 个字符
-- **空行**：在类、方法、逻辑块之间使用空行分隔
-- **空格**：
-  - 在操作符两边使用空格，如 `$a = $b + $c`
-  - 在逗号后使用空格，如 `function($a, $b, $c)`
-  - 在括号内不使用空格，如 `if($condition)`
+- **Thụt lề**: thụt lề bằng 4 dấu cách, không được dùng ký tự tab
+- **Độ dài dòng**: mỗi dòng code không quá 120 ký tự
+- **Dòng trống**: sử dụng dòng trống để phân tách giữa các lớp, phương thức, khối logic
+- **Dấu cách**:
+  - Đặt dấu cách ở hai bên toán tử, ví dụ `$a = $b + $c`
+  - Đặt dấu cách sau dấu phẩy, ví dụ `function($a, $b, $c)`
+  - Không đặt dấu cách bên trong dấu ngoặc, ví dụ `if($condition)`
 
-### 2.3 注释规范
+### 2.3 Quy chuẩn chú thích
 
-- **类注释**：使用 DocBlock 注释类的功能、作者和版本
-- **方法注释**：使用 DocBlock 注释方法的功能、参数、返回值和异常
-- **代码注释**：对复杂的代码逻辑添加注释
-- **TODO 注释**：使用 `// TODO:` 标记待完成的任务
+- **Chú thích lớp**: sử dụng DocBlock để chú thích chức năng, tác giả và phiên bản của lớp
+- **Chú thích phương thức**: sử dụng DocBlock để chú thích chức năng, tham số, giá trị trả về và ngoại lệ của phương thức
+- **Chú thích code**: thêm chú thích cho các đoạn logic phức tạp
+- **Chú thích TODO**: sử dụng `// TODO:` để đánh dấu các công việc cần hoàn thành
 
-### 2.4 代码结构
+### 2.4 Cấu trúc code
 
-- **类结构**：
-  - 类的声明
-  - 属性声明
-  - 构造方法
-  - 其他方法
+- **Cấu trúc lớp**:
+  - Khai báo lớp
+  - Khai báo thuộc tính
+  - Phương thức khởi tạo
+  - Các phương thức khác
 
-- **方法结构**：
-  - 参数声明
-  - 变量声明
-  - 业务逻辑
-  - 返回语句
+- **Cấu trúc phương thức**:
+  - Khai báo tham số
+  - Khai báo biến
+  - Logic nghiệp vụ
+  - Câu lệnh return
 
-### 2.5 最佳实践
+### 2.5 Thực tiễn tốt nhất
 
-- **单一职责**：每个类和方法只负责一个功能
-- **代码复用**：抽取公共代码为方法或类
-- **异常处理**：使用 try-catch 处理异常
-- **类型提示**：使用类型提示增强代码可读性
-- **魔术方法**：谨慎使用魔术方法
+- **Đơn trách nhiệm**: mỗi lớp và phương thức chỉ đảm nhận một chức năng
+- **Tái sử dụng code**: tách phần code dùng chung thành phương thức hoặc lớp
+- **Xử lý ngoại lệ**: sử dụng try-catch để xử lý ngoại lệ
+- **Khai báo kiểu (type hint)**: sử dụng type hint để code dễ đọc hơn
+- **Magic method**: thận trọng khi sử dụng magic method
 
-## 3. Vue 代码规范
+## 3. Quy chuẩn code Vue
 
-### 3.1 命名规范
+### 3.1 Quy tắc đặt tên
 
-- **组件名**：使用 PascalCase 命名风格，如 `UserList`
-- **props**：使用 camelCase 命名风格，如 `userName`
-- **data 属性**：使用 camelCase 命名风格，如 `userList`
-- **methods**：使用 camelCase 命名风格，如 `getUserList`
-- **事件名**：使用 kebab-case 命名风格，如 `user-clicked`
-- **插槽名**：使用 kebab-case 命名风格，如 `header-content`
+- **Tên component**: sử dụng kiểu đặt tên PascalCase, ví dụ `UserList`
+- **props**: sử dụng kiểu đặt tên camelCase, ví dụ `userName`
+- **Thuộc tính data**: sử dụng kiểu đặt tên camelCase, ví dụ `userList`
+- **methods**: sử dụng kiểu đặt tên camelCase, ví dụ `getUserList`
+- **Tên sự kiện**: sử dụng kiểu đặt tên kebab-case, ví dụ `user-clicked`
+- **Tên slot**: sử dụng kiểu đặt tên kebab-case, ví dụ `header-content`
 
-### 3.2 代码格式
+### 3.2 Định dạng code
 
-- **缩进**：使用 2 个空格进行缩进
-- **行宽**：每行代码不超过 120 个字符
-- **空行**：在不同逻辑块之间使用空行分隔
-- **空格**：
-  - 在操作符两边使用空格
-  - 在逗号后使用空格
-  - 在括号内不使用空格
+- **Thụt lề**: thụt lề bằng 2 dấu cách
+- **Độ dài dòng**: mỗi dòng code không quá 120 ký tự
+- **Dòng trống**: sử dụng dòng trống để phân tách giữa các khối logic khác nhau
+- **Dấu cách**:
+  - Đặt dấu cách ở hai bên toán tử
+  - Đặt dấu cách sau dấu phẩy
+  - Không đặt dấu cách bên trong dấu ngoặc
 
-### 3.3 模板规范
+### 3.3 Quy chuẩn template
 
-- **标签名**：使用 kebab-case 命名风格，如 `<user-list>`
-- **属性名**：使用 kebab-case 命名风格，如 `:user-name="userName"`
-- **指令缩写**：使用 `:` 代替 `v-bind:`，使用 `@` 代替 `v-on:`
-- **模板表达式**：保持模板表达式简洁，复杂逻辑应在计算属性或方法中处理
+- **Tên thẻ**: sử dụng kiểu đặt tên kebab-case, ví dụ `<user-list>`
+- **Tên thuộc tính**: sử dụng kiểu đặt tên kebab-case, ví dụ `:user-name="userName"`
+- **Viết tắt directive**: sử dụng `:` thay cho `v-bind:`, sử dụng `@` thay cho `v-on:`
+- **Biểu thức template**: giữ biểu thức template ngắn gọn, logic phức tạp nên được xử lý trong thuộc tính computed hoặc phương thức
 
-### 3.4 组件结构
+### 3.4 Cấu trúc component
 
-- **template**：模板部分
-- **script**：脚本部分
-- **style**：样式部分
+- **template**: phần template
+- **script**: phần script
+- **style**: phần style
 
-### 3.5 最佳实践
+### 3.5 Thực tiễn tốt nhất
 
-- **组件拆分**：将复杂组件拆分为多个子组件
-- **计算属性**：使用计算属性处理复杂的响应式数据
-- **监听器**：使用监听器监听数据变化
-- **混入**：使用混入复用组件逻辑
-- **指令**：使用自定义指令封装 DOM 操作
+- **Tách component**: tách component phức tạp thành nhiều component con
+- **Thuộc tính computed**: sử dụng thuộc tính computed để xử lý dữ liệu reactive phức tạp
+- **Watcher**: sử dụng watcher để theo dõi sự thay đổi của dữ liệu
+- **Mixin**: sử dụng mixin để tái sử dụng logic của component
+- **Directive**: sử dụng directive tùy chỉnh để đóng gói các thao tác DOM
 
-## 4. JavaScript 代码规范
+## 4. Quy chuẩn code JavaScript
 
-### 4.1 命名规范
+### 4.1 Quy tắc đặt tên
 
-- **变量名**：使用 camelCase 命名风格，如 `userName`
-- **函数名**：使用 camelCase 命名风格，如 `getUserList`
-- **常量**：使用全大写字母和下划线分隔，如 `MAX_PAGE_SIZE`
-- **对象属性**：使用 camelCase 命名风格，如 `userName`
-- **类名**：使用 PascalCase 命名风格，如 `UserService`
+- **Tên biến**: sử dụng kiểu đặt tên camelCase, ví dụ `userName`
+- **Tên hàm**: sử dụng kiểu đặt tên camelCase, ví dụ `getUserList`
+- **Hằng số**: viết hoa toàn bộ, các từ phân tách bằng dấu gạch dưới, ví dụ `MAX_PAGE_SIZE`
+- **Thuộc tính đối tượng**: sử dụng kiểu đặt tên camelCase, ví dụ `userName`
+- **Tên lớp**: sử dụng kiểu đặt tên PascalCase, ví dụ `UserService`
 
-### 4.2 代码格式
+### 4.2 Định dạng code
 
-- **缩进**：使用 2 个空格进行缩进
-- **行宽**：每行代码不超过 120 个字符
-- **空行**：在不同逻辑块之间使用空行分隔
-- **空格**：
-  - 在操作符两边使用空格
-  - 在逗号后使用空格
-  - 在括号内不使用空格
+- **Thụt lề**: thụt lề bằng 2 dấu cách
+- **Độ dài dòng**: mỗi dòng code không quá 120 ký tự
+- **Dòng trống**: sử dụng dòng trống để phân tách giữa các khối logic khác nhau
+- **Dấu cách**:
+  - Đặt dấu cách ở hai bên toán tử
+  - Đặt dấu cách sau dấu phẩy
+  - Không đặt dấu cách bên trong dấu ngoặc
 
-### 4.3 代码结构
+### 4.3 Cấu trúc code
 
-- **函数声明**：使用函数表达式或箭头函数
-- **对象字面量**：使用简洁的对象字面量语法
-- **数组字面量**：使用简洁的数组字面量语法
-- **条件语句**：使用简洁的条件语句语法
-- **循环语句**：使用简洁的循环语句语法
+- **Khai báo hàm**: sử dụng biểu thức hàm (function expression) hoặc arrow function
+- **Object literal**: sử dụng cú pháp object literal ngắn gọn
+- **Array literal**: sử dụng cú pháp array literal ngắn gọn
+- **Câu lệnh điều kiện**: sử dụng cú pháp câu lệnh điều kiện ngắn gọn
+- **Câu lệnh lặp**: sử dụng cú pháp câu lệnh lặp ngắn gọn
 
-### 4.4 最佳实践
+### 4.4 Thực tiễn tốt nhất
 
-- **变量声明**：使用 `let` 和 `const` 声明变量，避免使用 `var`
-- **箭头函数**：在适当的场景使用箭头函数
-- **模板字符串**：使用模板字符串代替字符串拼接
-- **解构赋值**：使用解构赋值简化代码
-- **展开运算符**：使用展开运算符简化代码
-- **异步编程**：使用 `async/await` 处理异步操作
+- **Khai báo biến**: sử dụng `let` và `const` để khai báo biến, tránh dùng `var`
+- **Arrow function**: sử dụng arrow function trong những trường hợp phù hợp
+- **Template string**: sử dụng template string thay cho nối chuỗi
+- **Destructuring**: sử dụng phép gán destructuring để đơn giản hóa code
+- **Toán tử spread**: sử dụng toán tử spread để đơn giản hóa code
+- **Lập trình bất đồng bộ**: sử dụng `async/await` để xử lý các thao tác bất đồng bộ
 
-## 5. HTML/CSS 代码规范
+## 5. Quy chuẩn code HTML/CSS
 
-### 5.1 HTML 规范
+### 5.1 Quy chuẩn HTML
 
-- **标签名**：使用小写字母，如 `<div>`
-- **属性名**：使用小写字母，如 `class="container"`
-- **属性值**：使用双引号包围，如 `class="container"`
-- **缩进**：使用 2 个空格进行缩进
-- **嵌套**：保持标签嵌套层次清晰
-- **注释**：对复杂的 HTML 结构添加注释
+- **Tên thẻ**: sử dụng chữ thường, ví dụ `<div>`
+- **Tên thuộc tính**: sử dụng chữ thường, ví dụ `class="container"`
+- **Giá trị thuộc tính**: đặt trong dấu nháy kép, ví dụ `class="container"`
+- **Thụt lề**: thụt lề bằng 2 dấu cách
+- **Lồng nhau**: giữ cấp lồng nhau của các thẻ rõ ràng
+- **Chú thích**: thêm chú thích cho các cấu trúc HTML phức tạp
 
-### 5.2 CSS 规范
+### 5.2 Quy chuẩn CSS
 
-- **选择器**：使用小写字母和连字符分隔，如 `.user-list`
-- **属性名**：使用小写字母，如 `font-size`
-- **属性值**：使用小写字母，如 `color: #333`
-- **缩进**：使用 2 个空格进行缩进
-- **分号**：每个属性声明后添加分号
-- **空行**：在不同选择器之间使用空行分隔
-- **注释**：对复杂的 CSS 规则添加注释
+- **Selector**: sử dụng chữ thường, phân tách bằng dấu gạch ngang, ví dụ `.user-list`
+- **Tên thuộc tính**: sử dụng chữ thường, ví dụ `font-size`
+- **Giá trị thuộc tính**: sử dụng chữ thường, ví dụ `color: #333`
+- **Thụt lề**: thụt lề bằng 2 dấu cách
+- **Dấu chấm phẩy**: thêm dấu chấm phẩy sau mỗi khai báo thuộc tính
+- **Dòng trống**: sử dụng dòng trống để phân tách giữa các selector khác nhau
+- **Chú thích**: thêm chú thích cho các quy tắc CSS phức tạp
 
-### 5.3 最佳实践
+### 5.3 Thực tiễn tốt nhất
 
-- **语义化标签**：使用语义化的 HTML 标签
-- **CSS 预处理器**：使用 SCSS 或 Less 等 CSS 预处理器
-- **BEM 命名**：使用 BEM 命名规范组织 CSS 类名
-- **响应式设计**：使用媒体查询实现响应式设计
-- **CSS 变量**：使用 CSS 变量管理样式值
+- **Thẻ ngữ nghĩa**: sử dụng các thẻ HTML có ngữ nghĩa
+- **Bộ tiền xử lý CSS**: sử dụng các bộ tiền xử lý CSS như SCSS hoặc Less
+- **Đặt tên theo BEM**: sử dụng quy tắc đặt tên BEM để tổ chức tên class CSS
+- **Thiết kế responsive**: sử dụng media query để hiện thực thiết kế responsive
+- **Biến CSS**: sử dụng biến CSS để quản lý các giá trị style
 
-## 6. 数据库规范
+## 6. Quy chuẩn cơ sở dữ liệu
 
-### 6.1 命名规范
+### 6.1 Quy tắc đặt tên
 
-- **数据库名**：使用小写字母和下划线分隔，如 `crmeb_db`
-- **表名**：使用小写字母和下划线分隔，如 `user`
-- **字段名**：使用小写字母和下划线分隔，如 `user_name`
-- **索引名**：使用小写字母和下划线分隔，如 `idx_user_name`
+- **Tên cơ sở dữ liệu**: sử dụng chữ thường, phân tách bằng dấu gạch dưới, ví dụ `crmeb_db`
+- **Tên bảng**: sử dụng chữ thường, phân tách bằng dấu gạch dưới, ví dụ `user`
+- **Tên trường**: sử dụng chữ thường, phân tách bằng dấu gạch dưới, ví dụ `user_name`
+- **Tên chỉ mục**: sử dụng chữ thường, phân tách bằng dấu gạch dưới, ví dụ `idx_user_name`
 
-### 6.2 设计规范
+### 6.2 Quy chuẩn thiết kế
 
-- **主键**：使用 `id` 作为主键，自增整数类型
-- **外键**：使用 `表名_id` 作为外键，如 `user_id`
-- **时间字段**：使用 `create_time` 和 `update_time` 作为时间字段
-- **状态字段**：使用 `status` 作为状态字段，默认值为 0
-- **软删除**：使用 `delete_time` 作为软删除字段
+- **Khóa chính**: sử dụng `id` làm khóa chính, kiểu số nguyên tự tăng
+- **Khóa ngoại**: sử dụng `{tên_bảng}_id` làm khóa ngoại, ví dụ `user_id`
+- **Trường thời gian**: sử dụng `create_time` và `update_time` làm trường thời gian
+- **Trường trạng thái**: sử dụng `status` làm trường trạng thái, giá trị mặc định là 0
+- **Xóa mềm**: sử dụng `delete_time` làm trường xóa mềm
 
-### 6.3 最佳实践
+### 6.3 Thực tiễn tốt nhất
 
-- **范式设计**：遵循数据库设计范式
-- **索引优化**：为经常查询的字段添加索引
-- **分区表**：对大表进行分区
-- **事务处理**：使用事务保证数据一致性
-- **备份策略**：定期备份数据库
+- **Thiết kế theo dạng chuẩn**: tuân theo các dạng chuẩn (normal form) trong thiết kế cơ sở dữ liệu
+- **Tối ưu chỉ mục**: thêm chỉ mục cho các trường thường xuyên được truy vấn
+- **Bảng phân vùng**: phân vùng (partition) các bảng lớn
+- **Xử lý transaction**: sử dụng transaction để đảm bảo tính nhất quán của dữ liệu
+- **Chiến lược sao lưu**: sao lưu cơ sở dữ liệu định kỳ
 
-## 7. 代码审查
+## 7. Review code
 
-### 7.1 审查内容
+### 7.1 Nội dung review
 
-- **代码风格**：是否符合代码规范
-- **代码质量**：是否存在代码异味
-- **安全性**：是否存在安全漏洞
-- **性能**：是否存在性能问题
-- **功能**：是否实现了需求功能
+- **Phong cách code**: có tuân thủ quy chuẩn code hay không
+- **Chất lượng code**: có tồn tại code smell hay không
+- **Bảo mật**: có tồn tại lỗ hổng bảo mật hay không
+- **Hiệu năng**: có tồn tại vấn đề hiệu năng hay không
+- **Chức năng**: đã hiện thực đúng chức năng theo yêu cầu hay chưa
 
-### 7.2 审查流程
+### 7.2 Quy trình review
 
-1. **提交代码**：开发者提交代码到版本控制系统
-2. **代码审查**：审查者审查代码
-3. **反馈修改**：审查者提供反馈，开发者修改代码
-4. **合并代码**：代码审查通过后合并代码
+1. **Commit code**: lập trình viên commit code lên hệ thống quản lý phiên bản
+2. **Review code**: người review tiến hành review code
+3. **Phản hồi và chỉnh sửa**: người review đưa ra phản hồi, lập trình viên chỉnh sửa code
+4. **Merge code**: merge code sau khi review đạt yêu cầu
 
-### 7.3 审查工具
+### 7.3 Công cụ review
 
-- **ESLint**：JavaScript 代码审查工具
-- **PHP CodeSniffer**：PHP 代码审查工具
-- **Prettier**：代码格式化工具
-- **SonarQube**：代码质量分析工具
+- **ESLint**: công cụ kiểm tra code JavaScript
+- **PHP CodeSniffer**: công cụ kiểm tra code PHP
+- **Prettier**: công cụ định dạng code
+- **SonarQube**: công cụ phân tích chất lượng code
 
-## 8. 版本控制规范
+## 8. Quy chuẩn quản lý phiên bản
 
-### 8.1 Git 规范
+### 8.1 Quy chuẩn Git
 
-- **分支命名**：使用小写字母和连字符分隔，如 `feature/user-auth`
-- **提交信息**：使用中文描述，格式为 `[模块名] 操作描述`，如 `[用户] 添加用户登录功能`
-- **提交频率**：每个功能或 bug 修复单独提交
-- **代码冲突**：及时解决代码冲突
+- **Đặt tên nhánh**: sử dụng chữ thường, phân tách bằng dấu gạch ngang, ví dụ `feature/user-auth`
+- **Nội dung commit**: mô tả bằng tiếng Việt, định dạng `[tên module] mô tả thao tác`, ví dụ `[Người dùng] Thêm chức năng đăng nhập`
+- **Tần suất commit**: mỗi tính năng hoặc bản sửa bug được commit riêng
+- **Xung đột code**: giải quyết xung đột code kịp thời
 
-### 8.2 版本号规范
+### 8.2 Quy chuẩn số phiên bản
 
-使用语义化版本号，格式为 `主版本号.次版本号.修订号`，如 `5.6.4`：
-- **主版本号**：不兼容的 API 变更
-- **次版本号**：向下兼容的功能新增
-- **修订号**：向下兼容的问题修正
+Sử dụng số phiên bản ngữ nghĩa (Semantic Versioning), định dạng `MAJOR.MINOR.PATCH`, ví dụ `5.6.4`:
+- **Số phiên bản chính (major)**: thay đổi API không tương thích ngược
+- **Số phiên bản phụ (minor)**: bổ sung tính năng có tương thích ngược
+- **Số bản vá (patch)**: sửa lỗi có tương thích ngược
 
-## 9. 最佳实践
+## 9. Thực tiễn tốt nhất
 
-1. **代码可读性**：编写易于理解的代码
-2. **代码可维护性**：编写易于维护的代码
-3. **代码可测试性**：编写易于测试的代码
-4. **代码可扩展性**：编写易于扩展的代码
-5. **代码安全性**：编写安全的代码
-6. **代码性能**：编写高性能的代码
+1. **Tính dễ đọc của code**: viết code dễ hiểu
+2. **Tính dễ bảo trì của code**: viết code dễ bảo trì
+3. **Tính dễ kiểm thử của code**: viết code dễ kiểm thử
+4. **Tính dễ mở rộng của code**: viết code dễ mở rộng
+5. **Tính bảo mật của code**: viết code an toàn
+6. **Hiệu năng code**: viết code hiệu năng cao
 
-## 10. 参考资源
+## 10. Tài liệu tham khảo
 
-- [PSR-1: 基本编码规范](https://www.php-fig.org/psr/psr-1/)
-- [PSR-2: 编码风格规范](https://www.php-fig.org/psr/psr-2/)
-- [Vue 官方风格指南](https://cn.vuejs.org/v2/style-guide/)
-- [JavaScript 标准风格](https://standardjs.com/)
-- [Google HTML/CSS 风格指南](https://google.github.io/styleguide/htmlcssguide.html)
+- [PSR-1: Quy chuẩn viết code cơ bản](https://www.php-fig.org/psr/psr-1/)
+- [PSR-2: Quy chuẩn phong cách viết code](https://www.php-fig.org/psr/psr-2/)
+- [Hướng dẫn phong cách chính thức của Vue](https://cn.vuejs.org/v2/style-guide/)
+- [Phong cách chuẩn JavaScript](https://standardjs.com/)
+- [Hướng dẫn phong cách HTML/CSS của Google](https://google.github.io/styleguide/htmlcssguide.html)

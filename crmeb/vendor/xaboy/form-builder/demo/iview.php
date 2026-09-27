@@ -19,10 +19,10 @@ use FormBuilder\UI\Iview\Components\DatePicker;
 class GoodsForm extends IviewFormHandle
 {
     protected $action = 'save.php';
-    protected $title = '测试 Handle';
+    protected $title = 'Kiểm thử Handle';
     protected $fieldTitles = [
-        'start_time' => '开启时间',
-        'star' => '点赞'
+        'start_time' => 'Thời gian bắt đầu',
+        'star' => 'Lượt thích'
     ];
 
     protected $scene = 'get';
@@ -38,7 +38,7 @@ class GoodsForm extends IviewFormHandle
      */
     public function goods_name_field()
     {
-        return Iview::input('goods_name', '商品名称')->required();
+        return Iview::input('goods_name', 'Tên sản phẩm')->required();
     }
 
     /**
@@ -48,7 +48,7 @@ class GoodsForm extends IviewFormHandle
      */
     public function goods_info_field()
     {
-        return Iview::textarea('goods_info', '商品简介');
+        return Iview::textarea('goods_info', 'Mô tả ngắn sản phẩm');
     }
 
     /**
@@ -58,7 +58,7 @@ class GoodsForm extends IviewFormHandle
      */
     public function is_open_field()
     {
-        return Iview::switches('is_open', '是否开启');
+        return Iview::switches('is_open', 'Bật');
     }
 
     public function id_field()

@@ -27,8 +27,8 @@
 		fs = uni.getFileSystemManager ? uni.getFileSystemManager() : null,
 		// #endif
 		Parser = require('./libs/MpHtmlParser.js');
-	var document; // document 补丁包 https://jin-yufeng.github.io/Parser/#/instructions?id=document
-	// 计算 cache 的 key
+	var document; // Gói patch document https://jin-yufeng.github.io/Parser/#/instructions?id=document
+	// Tính key của cache
 	function hash(str) {
 		for (var i = str.length, val = 5381; i--;)
 			val += (val << 5) + str.charCodeAt(i);
@@ -104,7 +104,7 @@
 			}
 		},
 		mounted() {
-			// 图片数组
+			// Mảng ảnh
 			this.imgList = [];
 			this.imgList.each = function(f) {
 				for (var i = 0, len = this.length; i < len; i++)
@@ -113,7 +113,7 @@
 			this.imgList.setItem = function(i, src) {
 				if (i == void 0 || !src) return;
 				// #ifndef MP-ALIPAY || APP-PLUS
-				// 去重
+				// Loại bỏ trùng lặp
 				if (src.indexOf('http') == 0 && this.includes(src)) {
 					var newSrc = '';
 					for (var j = 0, c; c = src[j]; j++) {
@@ -125,7 +125,7 @@
 				}
 				// #endif
 				this[i] = src;
-				// 暂存 data src
+				// Lưu tạm data src
 				if (src.includes('data:image')) {
 					var filePath, info = src.match(/data:image\/(\S+?);(\S+?),(.+)/);
 					if (!info) return;
@@ -192,11 +192,11 @@
 			},
 			_handleHtml(html, append) {
 				if (typeof html != 'string') html = this._Dom2Str(html.nodes || html);
-				// 处理 rpx
+				// Xử lý rpx
 				if (html.includes('rpx'))
 					html = html.replace(/[0-9.]+\s*rpx/g, $ => parseFloat($) * rpx + 'px');
 				if (!append) {
-					// 处理 tag-style 和 userAgentStyles
+					// Xử lý tag-style và userAgentStyles
 					var style = '<style>@keyframes show{0%{opacity:0}100%{opacity:1}}';
 					for (var item in cfg.userAgentStyles)
 						style += `${item}{${cfg.userAgentStyles[item]}}`;
@@ -267,7 +267,7 @@
 					style.innerHTML = style.innerHTML.replace(/body/g, '#rtf' + this._uid);
 					style.setAttribute('scoped', 'true');
 				}
-				// 懒加载
+				// Lazy load
 				if (!this._observer && this.lazyLoad && IntersectionObserver) {
 					this._observer = new IntersectionObserver(changes => {
 						for (let item, i = 0; item = changes[i++];) {
@@ -282,13 +282,13 @@
 					})
 				}
 				var _ts = this;
-				// 获取标题
+				// Lấy tiêu đề
 				var title = this.rtf.getElementsByTagName('title');
 				if (title.length && this.autosetTitle)
 					uni.setNavigationBarTitle({
 						title: title[0].innerText
 					})
-				// 图片处理
+				// Xử lý ảnh
 				this.imgList.length = 0;
 				var imgs = this.rtf.getElementsByTagName('img');
 				for (let i = 0, j = 0, img; img = imgs[i]; i++) {
@@ -328,7 +328,7 @@
 						this._observer.observe(img);
 					}
 				}
-				// 链接处理
+				// Xử lý liên kết
 				var links = this.rtf.getElementsByTagName('a');
 				for (var link of links) {
 					link.onclick = function() {
@@ -356,7 +356,7 @@
 						return false;
 					}
 				}
-				// 视频处理
+				// Xử lý video
 				var videos = this.rtf.getElementsByTagName('video');
 				_ts.videoContexts = videos;
 				for (let video, i = 0; video = videos[i++];) {
@@ -374,7 +374,7 @@
 								if (item != this) item.pause();
 					}
 				}
-				// 音频处理
+				// Xử lý âm thanh
 				var audios = this.rtf.getElementsByTagName('audios');
 				for (var audio of audios)
 					audio.onerror = function() {
@@ -397,7 +397,7 @@
 					return this.nodes = [];
 				else if (typeof html == 'string') {
 					let parser = new Parser(html, this);
-					// 缓存读取
+					// Đọc cache
 					if (this.useCache) {
 						var hashVal = hash(html);
 						if (cache[hashVal])
@@ -409,7 +409,7 @@
 					} else nodes = parser.parse();
 					this.$emit('parse', nodes);
 				} else if (Object.prototype.toString.call(html) == '[object Array]') {
-					// 非本插件产生的 array 需要进行一些转换
+					// Array không do plugin này tạo ra cần được chuyển đổi một chút
 					if (html.length && html[0].PoweredBy != 'Parser') {
 						let parser = new Parser(html, this);
 						(function f(ns) {
@@ -430,9 +430,9 @@
 					nodes = html;
 				} else if (typeof html == 'object' && html.nodes) {
 					nodes = html.nodes;
-					console.warn('错误的 html 类型：object 类型已废弃');
+					console.warn('Kiểu html không hợp lệ: kiểu object đã ngừng hỗ trợ');
 				} else
-					return console.warn('错误的 html 类型：' + typeof html);
+					return console.warn('Kiểu html không hợp lệ:' + typeof html);
 				// #ifdef APP-PLUS
 				this.loadVideo = false;
 				// #endif
@@ -551,7 +551,7 @@
 						.replace(/&amp;/g, '&');
 					else if (n.type == 'br') txt += '\n';
 					else {
-						// 块级标签前后加换行
+						// Thêm xuống dòng trước và sau tag cấp block
 						var block = n.name == 'p' || n.name == 'div' || n.name == 'tr' || n.name == 'li' || (n.name[0] == 'h' && n.name[1] >
 							'0' && n.name[1] < '7');
 						if (block && txt && txt[txt.length - 1] != '\n') txt += '\n';
@@ -626,7 +626,7 @@
 						if (this.videoContexts[i].id == id) return this.videoContexts[i];
 				// #endif
 			},
-			// 预加载
+			// Preload
 			preLoad(html, num) {
 				// #ifdef H5 || APP-PLUS-NVUE
 				if (html.constructor == Array)
@@ -664,7 +664,7 @@
 			},
 			// #ifdef APP-PLUS-NVUE
 			_message(e) {
-				// 接收 web-view 消息
+				// Nhận tin nhắn web-view
 				var data = e.detail.data[0];
 				if (data.action == 'load') {
 					this.$emit('load');

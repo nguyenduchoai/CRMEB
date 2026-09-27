@@ -25,53 +25,53 @@
         <!-- #endif -->
         <view class="listCon">
           <!-- <view class="item acea-row row-middle">
-						<view class="name">商品图</view>
+						<view class="name">Ảnh sản phẩm</view>
 						<view class="pictrue">
 							<image :src="item.image" mode="aspectFill"></image>
 						</view>
 					</view> -->
           <view class="item acea-row row-middle">
-            <view class="name">规格名称</view>
+            <view class="name">Tên quy cách</view>
             <view class="info">{{ item.suk }}</view>
           </view>
           <view class="item acea-row row-middle">
-            <view class="name">售价</view>
+            <view class="name">Giá bán</view>
             <input
               type="digit"
               :disabled="administer"
               min="0"
               v-model="item.price"
-              placeholder="请填写售价"
+              placeholder="Vui lòng điền giá bán"
               placeholder-class="placeholder"
             />
           </view>
           <view class="item acea-row row-middle">
-            <view class="name">成本价</view>
+            <view class="name">Giá vốn</view>
             <input
               type="digit"
               :disabled="administer"
               v-model="item.cost"
-              placeholder="请填写成本价"
+              placeholder="Vui lòng điền giá vốn"
               placeholder-class="placeholder"
             />
           </view>
           <view class="item acea-row row-middle">
-            <view class="name">原价</view>
+            <view class="name">Giá gốc</view>
             <input
               type="digit"
               :disabled="administer"
               v-model="item.ot_price"
-              placeholder="请填写原价"
+              placeholder="Vui lòng điền giá gốc"
               placeholder-class="placeholder"
             />
           </view>
           <view class="item acea-row row-middle">
-            <view class="name">库存</view>
+            <view class="name">Tồn kho</view>
             <input
               type="number"
               :disabled="administer"
               v-model="item.stock"
-              placeholder="请填写库存"
+              placeholder="Vui lòng điền tồn kho"
               placeholder-class="placeholder"
             />
           </view>
@@ -81,23 +81,23 @@
     <view class="footer on acea-row row-between-wrapper" v-if="administer">
       <checkbox-group @change="checkboxAllChange">
         <checkbox value="all" :checked="isAllSelect" />
-        <text class="checkAll">全选</text>
+        <text class="checkAll">Chọn tất cả</text>
       </checkbox-group>
       <view class="acea-row row-middle">
         <view class="bnt acea-row row-center-wrapper" @click="manageTap"
-          >取消</view
+          >Hủy</view
         >
         <view class="bnt on acea-row row-center-wrapper" @click="batchEdit"
-          >批量修改</view
+          >Sửa hàng loạt</view
         >
       </view>
     </view>
     <view class="footer acea-row row-between-wrapper" v-else>
       <view class="bnt acea-row row-center-wrapper" @click="manageTap"
-        >批量操作</view
+        >Thao tác hàng loạt</view
       >
       <view class="bnt on acea-row row-center-wrapper" @click="define"
-        >保存</view
+        >Lưu</view
       >
     </view>
     <edit-price
@@ -136,7 +136,7 @@ export default {
     this.getAttrsList();
   },
   methods: {
-    //批量获取id集合
+    //Lấy tập hợp id hàng loạt
     getIds() {
       let ids = [];
       this.attrsList.forEach((item) => {
@@ -149,7 +149,7 @@ export default {
     batchEdit() {
       if (!this.getIds().length) {
         this.$util.Tips({
-          title: "请选择商品规格",
+          title: "Vui lòng chọn phân loại sản phẩm",
         });
         return;
       }
@@ -295,8 +295,8 @@ export default {
   padding: 24rpx 20rpx 112rpx 20rpx;
   padding-bottom: calc(
     112rpx + constant(safe-area-inset-bottom)
-  ); ///兼容 IOS<11.2/
-  padding-bottom: calc(112rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+  ); ///Tương thích IOS<11.2/
+  padding-bottom: calc(112rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
   .list {
     background-color: #fff;
     border-radius: 24rpx;
@@ -366,16 +366,16 @@ export default {
     position: fixed;
     bottom: 0;
     z-index: 30;
-    height: calc(112rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-    height: calc(112rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
-    padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
-    padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
+    height: calc(112rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+    height: calc(112rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
+    padding-bottom: constant(safe-area-inset-bottom); ///Tương thích IOS<11.2/
+    padding-bottom: env(safe-area-inset-bottom); ///Tương thích IOS>11.2/
     width: 100%;
     left: 0;
     &.on {
       height: 96rpx;
-      height: calc(96rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-      height: calc(96rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+      height: calc(96rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+      height: calc(96rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
       .bnt {
         width: 160rpx;
         height: 64rpx;

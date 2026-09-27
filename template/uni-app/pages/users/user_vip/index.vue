@@ -11,22 +11,22 @@
 									<view class="text">
 										<view class="name">{{ $t(userInfo.nickname || '') }}</view>
 										<view>
-											{{ $t(`商城购物可享`) }}
+											{{ $t(`Mua sắm tại cửa hàng được hưởng`) }}
 											<text class="num">{{ item.discount }}</text>
-											{{ $t(`折`) }}
+											{{ $t(`/10 giá`) }}
 										</view>
 									</view>
-									<view v-if="item.grade === levelInfo.grade" class="state">{{ $t(`当前等级`) }}</view>
+									<view v-if="item.grade === levelInfo.grade" class="state">{{ $t(`Hạng hiện tại`) }}</view>
 									<view v-if="!levelInfo.grade || item.grade > levelInfo.grade" class="state">
-										{{ $t(`未达成`) }}
+										{{ $t(`Chưa đạt`) }}
 									</view>
 								</view>
 								<template v-if="item.grade === levelInfo.grade">
 									<view class="grow-wrap">
 										<view>
-											{{ $t(`今日成长值`) }}
+											{{ $t(`Điểm kinh nghiệm hôm nay`) }}
 											<text class="num">{{ levelInfo.today_exp || '' }}</text>
-											{{ $t(`点`) }}
+											{{ $t(`điểm`) }}
 										</view>
 										<view class="process">
 											<view :style="{ width: `${Math.floor(levelInfo.exp / item.next_exp_num > 1 ? 100 : (levelInfo.exp / item.next_exp_num) * 100)}%` }" class="fill"></view>
@@ -38,7 +38,7 @@
 										</view>
 									</view>
 									<navigator class="acea-row row-between-wrapper record-wrap" url="/pages/users/user_vip_areer/index" hover-class="none">
-										<view>{{ $t(`我的成长值记录`) }}</view>
+										<view>{{ $t(`Lịch sử điểm kinh nghiệm của tôi`) }}</view>
 										<view class="iconfont icon-jiantou"></view>
 									</navigator>
 								</template>
@@ -46,91 +46,91 @@
 									<view class="grow-wrap">
 										<view class="lock">
 											<text class="iconfont icon-quanxianguanlisuozi"></text>
-											{{ $t(`暂未解锁该等级`) }}
+											{{ $t(`Chưa mở khóa hạng này`) }}
 										</view>
 										<view class="process">
 											<view :style="{ width: `${Math.floor((levelInfo.exp / item.exp_num) * 100)}%` }" class="fill"></view>
 										</view>
 										<view class="ratio">
 											<text class="num">
-												{{ $t(`当前`) }}
+												{{ $t(`Hiện tại`) }}
 												<text>{{ levelInfo.exp || 0 }}</text>
-												{{ $t(`点，需达到`) }}
+												{{ $t(`điểm, cần đạt`) }}
 												<text>{{ item.exp_num || '' }}</text>
-												{{ $t(`点解锁`) }}
+												{{ $t(`điểm để mở khóa`) }}
 											</text>
 										</view>
 										<navigator class="acea-row row-between-wrapper record-wrap" style="padding-left: 0" url="/pages/users/user_vip_areer/index" hover-class="none">
-											<view>{{ $t(`我的成长值记录`) }}</view>
+											<view>{{ $t(`Lịch sử điểm kinh nghiệm của tôi`) }}</view>
 											<view class="iconfont icon-jiantou"></view>
 										</navigator>
 									</view>
 								</template>
 								<view class="level">{{ $t(item.name) }}</view>
-								<view v-if="item.grade < levelInfo.grade" class="pass">{{ $t(`已解锁更高等级`) }}</view>
-								<!-- <view v-if="!levelInfo.grade || item.grade > levelInfo.grade" class='lock'><text class='iconfont icon-quanxianguanlisuozi'></text>暂未解锁该等级</view> -->
+								<view v-if="item.grade < levelInfo.grade" class="pass">{{ $t(`Đã mở khóa hạng cao hơn`) }}</view>
+								<!-- <view v-if="!levelInfo.grade || item.grade > levelInfo.grade" class='lock'><text class='iconfont icon-quanxianguanlisuozi'></text>Chưa mở khóa hạng này</view> -->
 							</view>
 						</swiper-item>
 					</block>
 				</swiper>
 				<view class="right-section">
 					<view class="section-hd acea-row row-between-wrapper">
-						<view>{{ $t(`我的成长特权`) }}</view>
-						<navigator v-if="is_open_member" class="svip" url="/pages/annex/vip_paid/index">{{ $t(`立即升级`) }}</navigator>
+						<view>{{ $t(`Đặc quyền hạng thành viên của tôi`) }}</view>
+						<navigator v-if="is_open_member" class="svip" url="/pages/annex/vip_paid/index">{{ $t(`Nâng cấp ngay`) }}</navigator>
 					</view>
 					<view class="section-bd acea-row">
 						<view class="item">
 							<image class="image" src="../static/1.png"></image>
-							<view class="">{{ $t(`购物折扣`) }}</view>
+							<view class="">{{ $t(`Chiết khấu mua sắm`) }}</view>
 						</view>
 						<view class="item">
 							<image class="image" src="../static/2.png"></image>
-							<view class="">{{ $t(`专属徽章`) }}</view>
+							<view class="">{{ $t(`Huy hiệu độc quyền`) }}</view>
 						</view>
 						<view class="item">
 							<image class="image" src="../static/3.png"></image>
-							<view class="">{{ $t(`经验累积`) }}</view>
+							<view class="">{{ $t(`Tích lũy kinh nghiệm`) }}</view>
 						</view>
 						<view class="item">
 							<image class="image" src="../static/4.png"></image>
-							<view class="">{{ $t(`尊享客服`) }}</view>
+							<view class="">{{ $t(`CSKH ưu tiên`) }}</view>
 						</view>
 					</view>
 				</view>
 			</view>
 			<view class="skill-section">
-				<view class="section-hd">{{ $t(`快速升级技巧`) }}</view>
+				<view class="section-hd">{{ $t(`Mẹo lên hạng nhanh`) }}</view>
 				<view class="section-bd">
 					<view class="item acea-row row-middle">
 						<view class="text">
 							<view class="title">
-								{{ $t(`签到`) }}
-								<text class="mark">{{ $t(`可获得`) }}{{ taskInfo.sign || '' }}{{ $t(`点经验`) }}</text>
+								{{ $t(`Điểm danh`) }}
+								<text class="mark">{{ $t(`Nhận được`) }}{{ taskInfo.sign || '' }}{{ $t(`điểm kinh nghiệm`) }}</text>
 							</view>
-							<view class="info">{{ $t(`每日签到可获得经验值，已签到`) }}{{ taskInfo.sign_count || '' }}{{ $t(`天`) }}</view>
+							<view class="info">{{ $t(`Điểm danh hằng ngày để nhận điểm kinh nghiệm, đã điểm danh`) }}{{ taskInfo.sign_count || '' }}{{ $t(`ngày`) }}</view>
 						</view>
-						<navigator class="link" url="/pages/users/user_sgin/index" hover-class="none">{{ $t(`去签到`) }}</navigator>
+						<navigator class="link" url="/pages/users/user_sgin/index" hover-class="none">{{ $t(`Điểm danh ngay`) }}</navigator>
 					</view>
 					<view class="item acea-row row-middle">
 						<view class="text">
 							<view class="title">
-								{{ $t(`购买商品`) }}
-								<text class="mark">+{{ taskInfo.order || '' }}{{ $t(`点经验/元`) }}</text>
+								{{ $t(`Mua sản phẩm`) }}
+								<text class="mark">+{{ taskInfo.order || '' }}{{ $t(`điểm kinh nghiệm/đ`) }}</text>
 							</view>
-							<view class="info">{{ $t(`购买商品可获得对应的经验值`) }}</view>
+							<view class="info">{{ $t(`Mua sản phẩm để nhận điểm kinh nghiệm tương ứng`) }}</view>
 						</view>
-						<navigator class="link" open-type="switchTab" url="/pages/goods_cate/goods_cate" hover-class="none">{{ $t(`去购买`) }}</navigator>
+						<navigator class="link" open-type="switchTab" url="/pages/goods_cate/goods_cate" hover-class="none">{{ $t(`Mua ngay`) }}</navigator>
 					</view>
 					<view class="item acea-row row-middle">
 						<view class="text">
 							<view class="title">
-								{{ $t(`邀请好友`) }}
-								<text class="mark">+{{ taskInfo.invite || '' }}{{ $t(`点经验/人`) }}</text>
+								{{ $t(`Mời bạn bè`) }}
+								<text class="mark">+{{ taskInfo.invite || '' }}{{ $t(`điểm kinh nghiệm/người`) }}</text>
 							</view>
-							<view class="info">{{ $t(`邀请好友注册商城可获得经验值`) }}</view>
+							<view class="info">{{ $t(`Mời bạn bè đăng ký tài khoản để nhận điểm kinh nghiệm`) }}</view>
 						</view>
 						<navigator class="link" url="/pages/users/user_spread_code/index" hover-class="none">
-							{{ $t(`去邀请`) }}
+							{{ $t(`Mời ngay`) }}
 						</navigator>
 					</view>
 				</view>
@@ -175,13 +175,13 @@ export default {
 			// duration: 500,
 			swiperIndex: 0,
 			growthValue: true,
-			task: [], //任务列表
-			illustrate: '', //任务说明
-			level_id: 0, //任务id,
+			task: [], //Danh sách tác vụ
+			illustrate: '', //Mô tả nhiệm vụ
+			level_id: 0, //ID nhiệm vụ,
 			hostProduct: [],
 			grade: 0,
-			isAuto: false, //没有授权的不会自动授权
-			isShowAuth: false, //是否隐藏授权
+			isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+			isShowAuth: false, //Có ẩn ủy quyền hay không
 			hotScroll: false,
 			hotPage: 1,
 			hotLimit: 10,
@@ -190,15 +190,15 @@ export default {
 			levelInfo: {},
 			task_list: [
 				{
-					real_name: this.$t(`积分数`),
+					real_name: this.$t(`Số điểm thưởng`),
 					number: 0
 				},
 				{
-					real_name: this.$t(`消费金额`),
+					real_name: this.$t(`Số tiền chi tiêu`),
 					number: 0
 				},
 				{
-					real_name: this.$t(`优惠券`),
+					real_name: this.$t(`Phiếu giảm giá`),
 					number: 0
 				}
 			],
@@ -252,7 +252,7 @@ export default {
 				if (res.data.member_func_status === 0) {
 					this.$util.Tips(
 						{
-							title: this.$t(`暂未开启等级`)
+							title: this.$t(`Chưa bật tính năng hạng thành viên`)
 						},
 						{
 							tab: 3
@@ -261,15 +261,15 @@ export default {
 				}
 				this.task_list = [
 					{
-						real_name: this.$t(`积分数`),
+						real_name: this.$t(`Số điểm thưởng`),
 						number: res.data.integral
 					},
 					{
-						real_name: this.$t(`消费金额`),
+						real_name: this.$t(`Số tiền chi tiêu`),
 						number: res.data.orderStatusSum
 					},
 					{
-						real_name: this.$t(`优惠券`),
+						real_name: this.$t(`Phiếu giảm giá`),
 						number: res.data.couponCount
 					}
 				];
@@ -297,12 +297,12 @@ export default {
 			this.setLeveLComplete();
 			this.get_host_product();
 		},
-		// 授权关闭
+		// Đóng ủy quyền
 		authColse: function (e) {
 			this.isShowAuth = e;
 		},
 		/**
-		 * 获取我的推荐
+		 * Lấy gợi ý của tôi
 		 */
 		get_host_product: function () {
 			let that = this;
@@ -317,7 +317,7 @@ export default {
 			});
 		},
 		/**
-		 * 会员切换
+		 * Chuyển đổi thành viên
 		 *
 		 */
 		swiperChange(e) {
@@ -330,20 +330,20 @@ export default {
 			// this.getTask();
 		},
 		/**
-		 * 关闭说明
+		 * Đóng phần giải thích
 		 */
 		growthValueClose: function () {
 			this.growthValue = true;
 		},
 		/**
-		 * 打开说明
+		 * Mở phần giải thích
 		 */
 		opHelp: function (index) {
 			this.growthValue = false;
 			this.illustrate = this.task[index].illustrate;
 		},
 		/**
-		 * 设置会员
+		 * Thiết lập thành viên
 		 */
 		setLeveLComplete: function () {
 			let that = this;
@@ -352,7 +352,7 @@ export default {
 			});
 		},
 		/**
-		 * 获取会员等级
+		 * Lấy hạng thành viên
 		 *
 		 */
 		getVipList: function () {
@@ -375,7 +375,7 @@ export default {
 			});
 		},
 		/**
-		 * 获取任务要求
+		 * Lấy yêu cầu nhiệm vụ
 		 */
 		getTask: function () {
 			let that = this;
@@ -388,9 +388,9 @@ export default {
 	onReachBottom() {
 		this.get_host_product();
 	},
-	// 滚动监听
+	// Theo dõi cuộn (scroll listener)
 	onPageScroll(e) {
-		// 传入scrollTop值并触发所有easy-loadimage组件下的滚动监听事件
+		// Truyền vào giá trị scrollTop và kích hoạt sự kiện theo dõi cuộn của tất cả component easy-loadimage
 		uni.$emit('scroll');
 	}
 };

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -28,7 +28,7 @@ class LangType extends AuthController
     }
 
     /**
-     * 获取语言类型列表
+     * Lấy danh sách loại ngôn ngữ
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -41,7 +41,7 @@ class LangType extends AuthController
     }
 
     /**
-     * 添加语言类型表单
+     * Form thêm loại ngôn ngữ
      * @param int $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -52,7 +52,7 @@ class LangType extends AuthController
     }
 
     /**
-     * 保存语言类型
+     * Lưu loại ngôn ngữ
      * @return mixed
      */
     public function langTypeSave()
@@ -66,11 +66,11 @@ class LangType extends AuthController
         ]);
         $this->services->langTypeSave($data);
         CacheService::delete('lang_type_data');
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     /**
-     * 修改语言类型状态
+     * Sửa trạng thái loại ngôn ngữ
      * @param $id
      * @param $status
      * @return mixed
@@ -78,11 +78,11 @@ class LangType extends AuthController
     public function langTypeStatus($id, $status)
     {
         $this->services->langTypeStatus($id, $status);
-        return app('json')->success('设置成功');
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
-     * 删除语言类型
+     * Xóa loại ngôn ngữ
      * @param int $id
      * @return mixed
      */
@@ -90,6 +90,6 @@ class LangType extends AuthController
     {
         $this->services->langTypeDel($id);
         CacheService::delete('lang_type_data');
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 }

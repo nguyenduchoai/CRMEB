@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,7 +18,7 @@ use app\services\system\SystemDatabackupServices;
 
 
 /**
- * 数据备份
+ * Sao lưu dữ liệu
  * Class SystemDatabackup
  * @package app\admin\controller\system
  *
@@ -26,7 +26,7 @@ use app\services\system\SystemDatabackupServices;
 class SystemDatabackup extends AuthController
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * SystemDatabackup constructor.
      * @param App $app
      * @param SystemDatabackupServices $services
@@ -38,7 +38,7 @@ class SystemDatabackup extends AuthController
     }
 
     /**
-     * 获取数据库表
+     * Lấy bảng cơ sở dữ liệu
      */
     public function index()
     {
@@ -46,7 +46,7 @@ class SystemDatabackup extends AuthController
     }
 
     /**
-     * 查看表结构 详情
+     * Xem chi tiết cấu trúc bảng
      */
     public function read()
     {
@@ -57,9 +57,9 @@ class SystemDatabackup extends AuthController
     }
 
     /**
-     * 更新数据表或者表字段备注
+     * Cập nhật ghi chú bảng dữ liệu hoặc trường của bảng
      * @return \think\Response
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/04/11
      */
@@ -90,11 +90,11 @@ class SystemDatabackup extends AuthController
             $sql .= "COMMENT '$mark'";
         }
         Db::execute($sql);
-        return app('json')->success('备注成功');
+        return app('json')->success('Ghi chú thành công');
     }
 
     /**
-     * 优化表
+     * Tối ưu bảng
      */
     public function optimize()
     {
@@ -102,11 +102,11 @@ class SystemDatabackup extends AuthController
             ['tables', ''],
         ], true);
         $res = $this->services->getDbBackup()->optimize($tables);
-        return app('json')->success($res ? '优化成功' : '优化失败');
+        return app('json')->success($res ? 'Tối ưu hóa thành công' : 'Tối ưu hóa thất bại');
     }
 
     /**
-     * 修复表
+     * Sửa chữa bảng
      */
     public function repair()
     {
@@ -114,11 +114,11 @@ class SystemDatabackup extends AuthController
             ['tables', ''],
         ], true);
         $res = $this->services->getDbBackup()->repair($tables);
-        return app('json')->success($res ? '修复成功' : '修复失败');
+        return app('json')->success($res ? 'Sửa chữa thành công' : 'Sửa chữa thất bại');
     }
 
     /**
-     * 备份表
+     * Bảng backup
      */
     public function backup()
     {
@@ -126,11 +126,11 @@ class SystemDatabackup extends AuthController
             ['tables', ''],
         ], true);
         $data = $this->services->backup($tables);
-        return app('json')->success('备份成功');
+        return app('json')->success('Sao lưu thành công');
     }
 
     /**
-     * 获取备份记录表
+     * Lấy bảng lịch sử backup
      */
     public function fileList()
     {
@@ -138,17 +138,17 @@ class SystemDatabackup extends AuthController
     }
 
     /**
-     * 删除备份记录表
+     * Xóa bảng lịch sử backup
      */
     public function delFile()
     {
         $filename = intval(request()->post('filename'));
         $files = $this->services->getDbBackup()->delFile($filename);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 
     /**
-     * 导入备份记录表
+     * Nhập bảng lịch sử backup
      */
     public function import()
     {
@@ -162,40 +162,40 @@ class SystemDatabackup extends AuthController
             $list = $db->getFile('timeverif', $time);
             if (is_array($list)) {
                 session::set('backup_list', $list);
-                return app('json')->success('初始化完成', array('part' => 1, 'start' => 0));
+                return app('json')->success('Khởi tạo hoàn tất', array('part' => 1, 'start' => 0));
             } else {
-                return app('json')->fail('备份文件可能已经损坏，请检查');
+                return app('json')->fail('Tệp sao lưu có thể đã bị hỏng, vui lòng kiểm tra');
             }
         } else if (is_numeric($part) && is_numeric($start) && $part && $start) {
             $list = session::get('backup_list');
             $start = $db->setFile($list)->import($start);
             if (false === $start) {
-                return app('json')->fail('还原数据出错');
+                return app('json')->fail('Lỗi khi khôi phục dữ liệu');
             } elseif (0 === $start) {
                 if (isset($list[++$part])) {
                     $data = array('part' => $part, 'start' => 0);
-                    return app('json')->success('正在还原...', $data);
+                    return app('json')->success('Đang khôi phục...', $data);
                 } else {
                     session::delete('backup_list');
-                    return app('json')->success('还原完成');
+                    return app('json')->success('Khôi phục hoàn tất');
                 }
             } else {
                 $data = array('part' => $part, 'start' => $start[0]);
                 if ($start[1]) {
                     $rate = floor(100 * ($start[0] / $start[1]));
-                    return app('json')->success('正在还原...', $data);
+                    return app('json')->success('Đang khôi phục...', $data);
                 } else {
                     $data['gz'] = 1;
-                    return app('json')->success('正在还原...', $data);
+                    return app('json')->success('Đang khôi phục...', $data);
                 }
             }
         } else {
-            return app('json')->fail('参数错误');
+            return app('json')->fail('Tham số không hợp lệ');
         }
     }
 
     /**
-     * 下载备份记录表
+     * Tải bảng lịch sử backup
      */
     public function downloadFile()
     {

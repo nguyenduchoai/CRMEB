@@ -2,34 +2,34 @@
 	<view>
 		<form class="form" @submit="checkForm" :style="colorStyle">
 			<view class="input-section">
-				<view class="section-hd">{{ $t(`支付金额`) }}</view>
+				<view class="section-hd">{{ $t(`Số tiền thanh toán`) }}</view>
 				<view class="section-bd">
 					<view class="input-group">
 						{{ $t(`￥`) }}
 						<input v-model.number="money" class="input" name="money" type="digit" @input="inputChange" placeholder="0.00" />
 					</view>
-					<view v-if="payPrice && show" class="discount">{{ $t(`会员优惠价`) }}：{{ $t(`￥`) }}{{ payPrice || 0 }}</view>
+					<view v-if="payPrice && show" class="discount">{{ $t(`Giá ưu đãi thành viên`) }}：{{ $t(`￥`) }}{{ payPrice || 0 }}</view>
 				</view>
 			</view>
 			<view class="radio-section">
-				<view class="section-hd">{{ $t(`支付方式`) }}</view>
+				<view class="section-hd">{{ $t(`Phương thức thanh toán`) }}</view>
 				<radio-group class="section-bd" name="method">
 					<label class="item" v-if="yuePay">
 						<text class="iconfont icon-yue"></text>
 						<view class="name">
-							<text>{{ $t(`余额支付`) }}</text>
-							<text class="money">{{ $t(`可用余额`) }}:{{ $t(`￥`) }}{{ now_money || 0 }}</text>
+							<text>{{ $t(`Thanh toán bằng số dư`) }}</text>
+							<text class="money">{{ $t(`Số dư khả dụng`) }}:{{ $t(`￥`) }}{{ now_money || 0 }}</text>
 						</view>
 						<radio value="yue" :checked="payType === 'yue'" />
 					</label>
 					<label v-if="wxpay" class="item">
 						<text class="iconfont icon-weixinzhifu"></text>
-						<text class="name">{{ $t(`微信支付`) }}</text>
+						<text class="name">{{ $t(`WeChat Pay`) }}</text>
 						<radio value="weixin" :checked="payType === 'weixin'" />
 					</label>
 				</radio-group>
 			</view>
-			<button class="button" form-type="submit">{{ $t(`确认`) }}</button>
+			<button class="button" form-type="submit">{{ $t(`Xác nhận`) }}</button>
 			<view class="alipay" v-html="alipayHtml"></view>
 		</form>
 	</view>
@@ -102,8 +102,8 @@ export default {
 					this.site_name = site_name;
 					if (!offline_pay_status) {
 						uni.showModal({
-							title: this.$t(`支付提醒`),
-							content: this.$t(`线下支付已关闭，请点击确认按钮返回主页`),
+							title: this.$t(`Nhắc nhở thanh toán`),
+							content: this.$t(`Thanh toán ngoại tuyến đã tắt, vui lòng nhấn nút xác nhận để quay về trang chủ`),
 							showCancel: false,
 							success() {
 								uni.switchTab({
@@ -131,12 +131,12 @@ export default {
 				this.combData(method);
 			} else {
 				uni.showToast({
-					title: this.$t(`请输入支付金额`),
+					title: this.$t(`Vui lòng nhập số tiền thanh toán`),
 					icon: 'none'
 				});
 			}
 		},
-		// 优惠价
+		// Giá ưu đãi
 		checkPrice() {
 			offlineCheckPrice({
 				pay_price: this.money
@@ -152,7 +152,7 @@ export default {
 					});
 				});
 		},
-		// 组合数据
+		// Dữ liệu tổ hợp
 		combData(payType) {
 			let data = {
 				type: 3,
@@ -183,7 +183,7 @@ export default {
 			}
 			this.paying = true;
 			uni.showLoading({
-				title: this.$t(`正在确认`)
+				title: this.$t(`Đang xác nhận`)
 			});
 			offlineCreate(data)
 				.then((res) => {
@@ -215,7 +215,7 @@ export default {
 				tempform.submit();
 			});
 		},
-		// 调用支付
+		// Gọi thanh toán
 		callPay(res) {
 			const { status, result } = res.data,
 				{ orderId, jsConfig } = result,
@@ -306,7 +306,7 @@ export default {
 						success: function (res) {
 							that.$util.Tips(
 								{
-									title: that.$t(`支付成功`),
+									title: that.$t(`Thanh toán thành công`),
 									icon: 'success'
 								},
 								{
@@ -317,7 +317,7 @@ export default {
 						},
 						fail: function () {
 							uni.showToast({
-								title: that.$t(`取消支付`),
+								title: that.$t(`Hủy thanh toán`),
 								icon: 'none',
 								success: function () {
 									that.paying = false;
@@ -337,7 +337,7 @@ export default {
 							this.paying = false;
 							this.$util.Tips(
 								{
-									title: this.$t(`支付成功`),
+									title: this.$t(`Thanh toán thành công`),
 									icon: 'success'
 								},
 								{
@@ -350,7 +350,7 @@ export default {
 							this.paying = false;
 							if (err.errMsg == 'chooseWXPay:cancel') {
 								uni.showToast({
-									title: this.$t(`取消支付`),
+									title: this.$t(`Hủy thanh toán`),
 									icon: 'none'
 								});
 							}

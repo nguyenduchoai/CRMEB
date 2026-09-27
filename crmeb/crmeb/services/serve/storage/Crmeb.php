@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -42,7 +42,7 @@ class Crmeb extends BaseStorage
     }
 
     /**
-     * 获取用户信息
+     * Lấy thông tin người dùng
      * @param string $account
      * @param string $secret
      * @return array|mixed
@@ -53,7 +53,7 @@ class Crmeb extends BaseStorage
     }
 
     /**
-     * 用量记录
+     * Bản ghi lượng sử dụng
      * @param int $page
      * @param int $limit
      * @param int $type
@@ -63,7 +63,7 @@ class Crmeb extends BaseStorage
     {
         $typeContent = [1 => 'sms', 2 => 'expr_dump', 3 => 'expr_query', 4 => 'copy'];
         if (!isset($typeContent[$type])) {
-            throw new AdminException('参数错误');
+            throw new AdminException('Tham số không hợp lệ');
         }
         $data = ['page' => $page, 'limit' => $limit, 'type' => $typeContent[$type]];
         if ($type == 1 && $status != '') {

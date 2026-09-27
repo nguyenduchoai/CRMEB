@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,8 +16,8 @@ class StoreBargainValidate extends Validate
 {
 
     /**
-     * 定义验证规则
-     * 格式：'字段名'    =>    ['规则1','规则2'...]
+     * Định nghĩa quy tắc xác thực
+     * Định dạng: 'tên trường'    =>    ['quy tắc 1','quy tắc 2'...]
      *
      * @var array
      */
@@ -38,27 +38,27 @@ class StoreBargainValidate extends Validate
     ];
 
     /**
-     * 定义错误信息
-     * 格式：'字段名.规则名'    =>    '错误信息'
+     * Định nghĩa thông báo lỗi
+     * Định dạng: 'tên trường.tên quy tắc'    =>    'thông báo lỗi'
      *
      * @var array
      */
     protected $message = [
-        'product_id.require' => '请选择商品',
-        'title.require' => '请输入商品名称',
-        'info.require' => '请填写活动简介',
-        'unit_name.require' => '请填写单位',
-        'images.require' => '请选择商品轮播图',
-        'section_time.require' => '请选择活动时间段',
-        'num.require' => '请填写购买数量限制',
-        'num.gt' => '购买数量限制必须大于0',
-        'bargain_num.require' => '请填写帮砍次数',
-        'bargain_num.gt' => '帮砍次数必须大于0',
-        'people_num.require' => '请填写砍价人数',
-        'people_num.gt' => '砍价人数必须大于1',
-        'temp_id.require' => '请选择运费模板',
-        'description.require' => '请填写商品详情',
-        'attrs.require' => '请选择规格',
+        'product_id.require' => 'Vui lòng chọn sản phẩm',
+        'title.require' => 'Vui lòng nhập tên sản phẩm',
+        'info.require' => 'Vui lòng điền giới thiệu chương trình',
+        'unit_name.require' => 'Vui lòng điền đơn vị tính',
+        'images.require' => 'Vui lòng chọn ảnh trình chiếu sản phẩm',
+        'section_time.require' => 'Vui lòng chọn khung giờ chương trình',
+        'num.require' => 'Vui lòng điền giới hạn số lượng mua',
+        'num.gt' => 'Giới hạn số lượng mua phải lớn hơn 0',
+        'bargain_num.require' => 'Vui lòng điền số lần giúp săn giảm giá',
+        'bargain_num.gt' => 'Số lần giúp săn giảm giá phải lớn hơn 0',
+        'people_num.require' => 'Vui lòng điền số người săn giảm giá',
+        'people_num.gt' => 'Số người săn giảm giá phải lớn hơn 1',
+        'temp_id.require' => 'Vui lòng chọn mẫu phí vận chuyển',
+        'description.require' => 'Vui lòng điền chi tiết sản phẩm',
+        'attrs.require' => 'Vui lòng chọn quy cách',
     ];
 
     protected $scene = [

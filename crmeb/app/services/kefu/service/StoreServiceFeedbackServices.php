@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,7 +18,7 @@ use crmeb\exceptions\AdminException;
 use crmeb\services\FormBuilder;
 
 /**
- * 客服反馈
+ * Phản hồi CSKH
  * Class StoreServiceFeedbackServices
  * @package app\services\kefu\service
  */
@@ -35,7 +35,7 @@ class StoreServiceFeedbackServices extends BaseServices
     }
 
     /**
-     * 获取反馈列表
+     * Lấy danh sách phản hồi
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -63,18 +63,18 @@ class StoreServiceFeedbackServices extends BaseServices
     {
         $feedInfo = $this->dao->get($id);
         if (!$feedInfo) {
-            throw new AdminException('反馈内容没有查到');
+            throw new AdminException('Không tìm thấy nội dung phản hồi');
         }
         $feedInfo = $feedInfo->toArray();
         $field = [
-            FormBuilder::textarea('make', '备注', $feedInfo['make'])->col(22),
+            FormBuilder::textarea('make', 'Ghi chú', $feedInfo['make'])->col(22),
         ];
         if (!$feedInfo['status']) {
-            $field[] = FormBuilder::radio('status', '状态', 0)->setOptions([
-                ['label' => '已处理', 'value' => 1],
-                ['label' => '未处理', 'value' => 0]
+            $field[] = FormBuilder::radio('status', 'Trạng thái', 0)->setOptions([
+                ['label' => 'Đã xử lý', 'value' => 1],
+                ['label' => 'Chưa xử lý', 'value' => 0]
             ]);
         }
-        return create_form($feedInfo['status'] ? '备注' : '处理', $field, $this->url('/app/feedback/' . $id), 'PUT');
+        return create_form($feedInfo['status'] ? 'Ghi chú' : 'Xử lý', $field, $this->url('/app/feedback/' . $id), 'PUT');
     }
 }

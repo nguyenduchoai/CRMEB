@@ -1,9 +1,9 @@
 // +---------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +---------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +---------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +---------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +---------------------------------------------------------------------
@@ -32,7 +32,7 @@ export default {
       name: `${pre}product`,
       meta: {
         // auth: ['setting-system-role'],
-        title: '商品统计',
+        title: 'Thống kê sản phẩm',
       },
       component: () => import('@/pages/statistic/product/index'),
     },
@@ -41,7 +41,7 @@ export default {
       name: `${pre}user`,
       meta: {
         // auth: ['setting-system-role'],
-        title: '用户统计',
+        title: 'Thống kê người dùng',
       },
       component: () => import('@/pages/statistic/user/index'),
     },
@@ -50,7 +50,7 @@ export default {
       name: `${pre}transaction`,
       meta: {
         // auth: ['setting-system-role'],
-        title: '交易统计',
+        title: 'Thống kê giao dịch',
       },
       component: () => import('@/pages/statistic/transaction/index'),
     },
@@ -59,7 +59,7 @@ export default {
       name: `${pre}integral`,
       meta: {
         // auth: ['setting-system-role'],
-        title: '积分统计',
+        title: 'Thống kê điểm thưởng',
       },
       component: () => import('@/pages/statistic/integral/index'),
     },
@@ -68,7 +68,7 @@ export default {
       name: `${pre}order`,
       meta: {
         // auth: ['setting-system-role'],
-        title: '订单统计',
+        title: 'Thống kê đơn hàng',
       },
       component: () => import('@/pages/statistic/order/index'),
     },
@@ -77,7 +77,7 @@ export default {
       name: `${pre}balance`,
       meta: {
         // auth: ['setting-system-role'],
-        title: '余额统计',
+        title: 'Thống kê số dư',
       },
       component: () => import('@/pages/statistic/balance/index'),
     },

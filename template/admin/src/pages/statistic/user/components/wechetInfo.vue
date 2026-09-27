@@ -2,24 +2,24 @@
   <el-card :bordered="false" shadow="never" class="ivu-mt-16" v-loading="spinShow">
     <div class="acea-row row-between-wrapper">
       <div class="statics-header-title mb20">
-        公众号用户概括
+        Tổng quan người dùng OA WeChat
         <el-tooltip effect="light" word-wrap width="500" trigger="hover" placement="right-start">
           <i class="el-icon-info"></i>
           <div slot="content">
-            <div>新增关注用户数</div>
-            <div>在选定条件下，关注公众号的用户数量，包括首次关注和再次关注的用户</div>
+            <div>Số người theo dõi mới</div>
+            <div>Trong điều kiện đã chọn, số người dùng theo dõi OA WeChat, bao gồm người theo dõi lần đầu và người theo dõi lại</div>
             <br />
-            <div>新增取关用户数</div>
-            <div>在选定条件下，取消关注公众号的用户数量</div>
+            <div>Số người hủy theo dõi mới</div>
+            <div>Trong điều kiện đã chọn, số người dùng hủy theo dõi OA WeChat</div>
             <br />
-            <div>净增用户数</div>
-            <div>在选定条件下，新增关注用户数 - 新增取关用户数</div>
+            <div>Số người dùng tăng ròng</div>
+            <div>Trong điều kiện đã chọn, số người theo dõi mới - số người hủy theo dõi mới</div>
             <br />
-            <div>累积关注用户数</div>
-            <div>筛选时间截止时，关注公众号的用户数量</div>
+            <div>Số người theo dõi tích lũy</div>
+            <div>Tính đến thời điểm kết thúc khoảng lọc, số người dùng đang theo dõi OA WeChat</div>
             <br />
-            <div>累积取关用户数</div>
-            <div>筛选时间截止时，取消关注公众号的用户数量</div>
+            <div>Số người hủy theo dõi tích lũy</div>
+            <div>Tính đến thời điểm kết thúc khoảng lọc, số người dùng đã hủy theo dõi OA WeChat</div>
           </div>
         </el-tooltip>
       </div>
@@ -37,7 +37,7 @@
           <span class="sp2" v-if="index === list.length - 1" v-text="item.list.num"></span>
           <span class="sp2" v-else v-text="item.list.num"></span>
           <span class="content-time spBlock"
-            >环比增长：<i class="content-is" :class="Number(item.list.percent) >= 0 ? 'up' : 'down'"
+            >Tăng trưởng so với kỳ trước:<i class="content-is" :class="Number(item.list.percent) >= 0 ? 'up' : 'down'"
               >{{ Number(item.list.percent).toFixed(2) }}%</i
             ><Icon
               :color="Number(item.list.percent) >= 0 ? '#F5222D' : '#39C15B'"
@@ -91,7 +91,7 @@ export default {
     this.getTrend();
   },
   methods: {
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e;
       this.dataTime = this.timeVal ? this.timeVal.join('-') : '';
@@ -100,34 +100,34 @@ export default {
       this.getTrend();
       // this.userFrom.user_time = this.timeVal ? this.timeVal.join('-') : ''
     },
-    // 统计
+    // Thống kê
     getStatistics() {
       statisticWechatApi(this.formInline)
         .then(async (res) => {
           const cardLists = res.data;
           this.list = [
             {
-              name: '新增关注用户数',
+              name: 'Số người theo dõi mới',
               icon: 'iconxinzengguanzhuyonghu',
               list: cardLists.subscribe,
             },
             {
-              name: '新增取关用户数',
+              name: 'Số người hủy theo dõi mới',
               icon: 'iconxinzengquguanyonghu',
               list: cardLists.unSubscribe,
             },
             {
-              name: '净增用户数',
+              name: 'Số người dùng tăng ròng',
               icon: 'iconjingzengyonghu',
               list: cardLists.increaseSubscribe,
             },
             {
-              name: '累积关注用户数',
+              name: 'Số người theo dõi tích lũy',
               icon: 'iconleijiguanzhuyonghu',
               list: cardLists.cumulativeSubscribe,
             },
             {
-              name: '累积取关用户数',
+              name: 'Số người hủy theo dõi tích lũy',
               icon: 'iconleijiquguanyonghu',
               list: cardLists.cumulativeUnSubscribe,
             },
@@ -137,7 +137,7 @@ export default {
           this.$message.error(res);
         });
     },
-    // 统计图
+    // Biểu đồ thống kê
     getTrend() {
       this.spinShow = true;
       statisticWechatTrendApi(this.formInline)

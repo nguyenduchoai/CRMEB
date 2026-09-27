@@ -3,62 +3,62 @@
     <el-card :bordered="false" shadow="never" class="ivu-mt">
       <el-row class="mb20">
         <el-col :span="24">
-          <el-button type="primary" v-db-click @click="add" class="mr10">发布版本</el-button>
+          <el-button type="primary" v-db-click @click="add" class="mr10">Phát hành phiên bản</el-button>
         </el-col>
       </el-row>
       <el-table
         :data="tableList"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
-        <el-table-column label="版本号" width="80">
+        <el-table-column label="Số phiên bản" width="80">
           <template slot-scope="scope">
             <el-tooltip
               effect="light"
               v-if="scope.row.is_new"
               trigger="hover"
               placement="top-start"
-              content="当前为最新线上版本!"
+              content="Đây là phiên bản trực tuyến mới nhất!"
             >
               <i class="el-icon-s-promotion" style="font-size: 16px; color: red"></i>
             </el-tooltip>
             {{ scope.row.version }}
           </template>
         </el-table-column>
-        <el-table-column label="平台类型" min-width="90">
+        <el-table-column label="Loại nền tảng" min-width="90">
           <template slot-scope="scope">
             <div>
-              <span>{{ scope.row.platform === 1 ? '安卓' : '苹果' }}</span>
+              <span>{{ scope.row.platform === 1 ? 'Android' : 'iOS' }}</span>
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="升级信息" min-width="130">
+        <el-table-column label="Thông tin cập nhật" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.info }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="是否强制" min-width="130">
+        <el-table-column label="Bắt buộc cập nhật" min-width="130">
           <template slot-scope="scope">
-            <span>{{ scope.row.is_force === 1 ? '强制' : '非强制' }}</span>
+            <span>{{ scope.row.is_force === 1 ? 'Bắt buộc cập nhật' : 'Không bắt buộc' }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="发布日期" min-width="130">
+        <el-table-column label="Ngày phát hành" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.add_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="下载地址" min-width="130">
+        <el-table-column label="Địa chỉ tải xuống" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.url }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="120">
+        <el-table-column label="Thao tác" fixed="right" width="120">
           <template slot-scope="scope">
-            <a v-db-click @click="edit(scope.row)">编辑</a>
+            <a v-db-click @click="edit(scope.row)">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除版本', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa phiên bản', scope.$index)">Xóa</a>
           </template>
         </el-table-column>
       </el-table>
@@ -106,24 +106,24 @@ export default {
     this.getList();
   },
   methods: {
-    // 修改成功
+    // Sửa thành công
     submitFail() {
       this.getList();
     },
-    // 聊天记录
+    // Lịch sử trò chuyện
     record(row) {
       this.rows = row;
       this.modals3 = true;
       this.isChat = true;
       this.getListRecord();
     },
-    // 添加
+    // Thêm
     add() {
       this.$modalForm(versionCrate(0)).then((res) => {
         this.getList();
       });
     },
-    // 版本信息列表
+    // Danh sách thông tin phiên bản
     getList() {
       this.loading = true;
       versionList()
@@ -137,13 +137,13 @@ export default {
           this.loading = false;
         });
     },
-    // 添加
+    // Thêm
     edit(row) {
       this.$modalForm(versionCrate(row.id)).then((res) => {
         this.getList();
       });
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -164,9 +164,9 @@ export default {
     handleSubmit(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
-          this.$message.success('成功!');
+          this.$message.success('Thành công!');
         } else {
-          this.$message.error('失败!');
+          this.$message.error('Thất bại!');
         }
       });
     },

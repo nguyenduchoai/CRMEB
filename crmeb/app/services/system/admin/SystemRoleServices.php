@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -22,16 +22,16 @@ use crmeb\services\CacheService;
 /**
  * Class SystemRoleServices
  * @package app\services\system\admin
- * @method update($id, array $data, ?string $key = null) 修改数据
- * @method save(array $data) 保存数据
- * @method get(int $id, ?array $field = []) 获取数据
- * @method delete(int $id, ?string $key = null) 删除数据
+ * @method update($id, array $data, ?string $key = null) Dữ liệu cần chỉnh sửa
+ * @method save(array $data) Lưu dữ liệu
+ * @method get(int $id, ?array $field = []) Lấy dữ liệu
+ * @method delete(int $id, ?string $key = null) Xóa dữ liệu
  */
 class SystemRoleServices extends BaseServices
 {
 
     /**
-     * 当前管理员权限缓存前缀
+     * Tiền tố cache quyền của quản trị viên hiện tại
      */
     const ADMIN_RULES_LEVEL = 'Admin_rules_level_';
 
@@ -45,7 +45,7 @@ class SystemRoleServices extends BaseServices
     }
 
     /**
-     * 获取权限
+     * Lấy quyền
      * @return mixed
      */
     public function getRoleArray(array $where = [], string $field = '', string $key = '')
@@ -54,7 +54,7 @@ class SystemRoleServices extends BaseServices
     }
 
     /**
-     * 获取表单所需的权限名称列表
+     * Lấy danh sách tên quyền cần cho biểu mẫu
      * @param int $level
      * @return array
      */
@@ -69,7 +69,7 @@ class SystemRoleServices extends BaseServices
     }
 
     /**
-     * 身份管理列表
+     * Danh sách quản lý vai trò
      * @param array $where
      * @return array
      */
@@ -87,23 +87,23 @@ class SystemRoleServices extends BaseServices
     }
 
     /**
-     * 后台验证权限
+     * Xác thực quyền ở admin
      * @param Request $request
      * @return bool|void
      * @throws \throwable
      */
     public function verifyAuth(Request $request)
     {
-        // 获取当前的接口于接口类型
+        // Lấy interface hiện tại và loại interface
         $rule = trim(strtolower($request->rule()->getRule()));
         $method = trim(strtolower($request->method()));
 
-        // 判断接口是一下两种的时候放行
+        // Cho qua khi interface thuộc một trong hai loại sau
         if (in_array($rule, ['setting/admin/logout', 'menuslist'])) {
             return true;
         }
 
-        // 获取所有接口类型以及对应的接口
+        // Lấy tất cả loại interface và interface tương ứng
         $allAuth = CacheService::remember('all_auth', function () {
             /** @var SystemMenusServices $menusService */
             $menusService = app()->make(SystemMenusServices::class);
@@ -115,13 +115,13 @@ class SystemRoleServices extends BaseServices
             return $allAuth;
         });
 
-        // 权限菜单未添加时放行
+        // Cho qua khi chưa thêm menu quyền
         if (!in_array($rule, $allAuth[$method])) return true;
 
-        // 如果是crud接口放行
+        // Nếu là interface crud thì cho qua
         if (strpos($rule, 'crud/') === 0) return true;
 
-        // 获取管理员的接口权限列表，存在时放行
+        // Lấy danh sách quyền interface của quản trị viên, cho qua nếu tồn tại
         $auth = $this->getRolesByAuth($request->adminInfo()['roles'], 2);
         if (isset($auth[$method]) && in_array($rule, $auth[$method])) {
             return true;
@@ -131,7 +131,7 @@ class SystemRoleServices extends BaseServices
     }
 
     /**
-     * 获取指定权限
+     * Lấy quyền chỉ định
      * @param array $rules
      * @param int $type
      * @param string $cachePrefix
@@ -155,7 +155,7 @@ class SystemRoleServices extends BaseServices
     }
 
     /**
-     * 获取权限id
+     * Lấy ID quyền
      * @param array $rules
      * @return array
      */

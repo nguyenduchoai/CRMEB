@@ -154,12 +154,12 @@
 import { mapState } from 'vuex';
 // import theme from "@/mixins/theme";
 export default {
-  name: 'home_comb', // 组件名称
-  cname: '轮播搜索', // 标题名称
+  name: 'home_comb', // Tên thành phần
+  cname: 'Tìm kiếm kèm ảnh trình chiếu', // Tên tiêu đề
   icon: '#iconzujian-zuhezujian',
-  defaultName: 'homeComb', // 外面匹配名称
-  configName: 'c_home_comb', // 右侧配置名称
-  type: 0, // 0 基础组件 1 营销组件 2工具组件
+  defaultName: 'homeComb', // Tên khớp bên ngoài
+  configName: 'c_home_comb', // Tên cấu hình bên phải
+  type: 0, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
   props: {
     index: {
       type: null,
@@ -205,67 +205,67 @@ export default {
   // mixins: [theme],
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
-        cname: '轮播搜索',
-        // 组件描述
-        desc: '轮播搜索组件',
+        cname: 'Tìm kiếm kèm ảnh trình chiếu',
+        // Mô tả thành phần
+        desc: 'Thành phần tìm kiếm kèm ảnh trình chiếu',
         name: 'homeComb',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
         },
-        titleLeft: '展示设置',
-        titleSearch: '搜索设置',
-        titleHotWords: '搜索热词',
-        titleTab: '选项卡设置',
-        titleImg: '图片设置',
-        titleRight: '标签设置',
-        titlePointer: '指示器设置',
-        titleGradient: '渐变设置',
+        titleLeft: 'Cài đặt hiển thị',
+        titleSearch: 'Cài đặt tìm kiếm',
+        titleHotWords: 'Từ khóa tìm kiếm phổ biến',
+        titleTab: 'Cài đặt tab',
+        titleImg: 'Cài đặt ảnh',
+        titleRight: 'Cài đặt nhãn',
+        titlePointer: 'Cài đặt chỉ báo',
+        titleGradient: 'Cài đặt chuyển màu',
         styleConfig: {
-          title: '选择风格',
+          title: 'Chọn phong cách',
           tabVal: 0,
           tabList: [
             {
-              name: '样式一',
+              name: 'Kiểu 1',
             },
             {
-              name: '样式二',
+              name: 'Kiểu 2',
             },
           ],
         },
         classConfig: {
-          title: '分类设置',
+          title: 'Cài đặt danh mục',
           tabVal: 0,
           tabList: [
             {
-              name: '显示',
+              name: 'Hiện',
             },
             {
-              name: '隐藏',
+              name: 'Ẩn',
             },
           ],
         },
         searchConfig: {
-          title: '搜索设置',
+          title: 'Cài đặt tìm kiếm',
           tabVal: 0,
           tabList: [
             {
-              name: '正常显示',
+              name: 'Hiển thị bình thường',
             },
             {
-              name: '滚动至顶部固定',
+              name: 'Cố định ở đầu trang khi cuộn',
             },
           ],
         },
         searchBox: {
-          title: '搜索框',
+          title: 'Ô tìm kiếm',
           tabVal: 1,
           tabList: [
             {
-              name: '文字',
+              name: 'Văn bản',
             },
             {
               name: 'logo',
@@ -273,39 +273,39 @@ export default {
           ],
         },
         searchFix: {
-          title: '定位类型',
+          title: 'Loại định vị',
           tabVal: 0,
           tabList: [
             {
-              name: '门店',
+              name: 'Cửa hàng',
             },
             {
-              name: '用户定位',
+              name: 'Vị trí người dùng',
             },
           ],
         },
         titleConfig: {
-          title: '标题',
-          value: '标题',
-          place: '请输入标题',
+          title: 'Tiêu đề',
+          value: 'Tiêu đề',
+          place: 'Vui lòng nhập tiêu đề',
           max: 6,
         },
         logoConfig: {
-          info: '建议：200px * 100px',
+          info: 'Đề xuất: 200px * 100px',
           url: '',
           type: 'code',
-          name: '默认logo',
+          name: 'Logo mặc định',
         },
         logoUpConfig: {
-          info: '建议：200px * 100px',
+          info: 'Đề xuất: 200px * 100px',
           url: '',
           type: 'code',
-          name: '顶部固定logo',
+          name: 'Logo khi cố định đầu trang',
         },
         inputConfig: {
-          title: '提示文字',
-          value: '请输入搜索词',
-          place: '填写内容',
+          title: 'Chữ gợi ý',
+          value: 'Vui lòng nhập từ khóa tìm kiếm',
+          place: 'Điền nội dung',
           max: 10,
         },
         hotWords: {
@@ -316,7 +316,7 @@ export default {
           ],
         },
         gradientColor: {
-          title: '组件背景',
+          title: 'Nền thành phần',
           default: [
             {
               item: '#f5f5f5',
@@ -329,31 +329,31 @@ export default {
           ],
         },
         numConfig: {
-          placeholder: '设置搜索热词显示时间',
-          title: '滚动时间',
+          placeholder: 'Đặt thời gian hiển thị từ khóa phổ biến',
+          title: 'Thời gian cuộn',
           val: 3,
           type: 'words',
         },
         tabListConfig: {
-          title: '鼠标拖拽版块可调整选项卡顺序',
+          title: 'Kéo thả khối để điều chỉnh thứ tự tab',
           max: 100,
           list: [
             {
               text: {
-                title: '显示文字',
-                val: '首页',
+                title: 'Chữ hiển thị',
+                val: 'Trang chủ',
                 max: 4,
-                pla: '请输入分类名称',
+                pla: 'Vui lòng nhập tên danh mục',
               },
               dataType: {
-                title: '数据类型',
+                title: 'Loại dữ liệu',
                 tabVal: 0,
                 tabList: [
                   {
-                    name: '微页面',
+                    name: 'Trang tùy chỉnh',
                   },
                   {
-                    name: '商品分类',
+                    name: 'Danh mục sản phẩm',
                   },
                 ],
               },
@@ -368,20 +368,20 @@ export default {
             },
             {
               text: {
-                title: '显示文字',
-                val: '标题标题',
+                title: 'Chữ hiển thị',
+                val: 'Tiêu đề mẫu',
                 max: 4,
-                pla: '请输入分类名称',
+                pla: 'Vui lòng nhập tên danh mục',
               },
               dataType: {
-                title: '数据类型',
+                title: 'Loại dữ liệu',
                 tabVal: 0,
                 tabList: [
                   {
-                    name: '微页面',
+                    name: 'Trang tùy chỉnh',
                   },
                   {
-                    name: '商品分类',
+                    name: 'Danh mục sản phẩm',
                   },
                 ],
               },
@@ -396,20 +396,20 @@ export default {
             },
             {
               text: {
-                title: '显示文字',
-                val: '标题标题',
+                title: 'Chữ hiển thị',
+                val: 'Tiêu đề mẫu',
                 max: 4,
-                pla: '请输入分类名称',
+                pla: 'Vui lòng nhập tên danh mục',
               },
               dataType: {
-                title: '数据类型',
+                title: 'Loại dữ liệu',
                 tabVal: 0,
                 tabList: [
                   {
-                    name: '微页面',
+                    name: 'Trang tùy chỉnh',
                   },
                   {
-                    name: '商品分类',
+                    name: 'Danh mục sản phẩm',
                   },
                 ],
               },
@@ -424,20 +424,20 @@ export default {
             },
             {
               text: {
-                title: '显示文字',
-                val: '标题标题',
+                title: 'Chữ hiển thị',
+                val: 'Tiêu đề mẫu',
                 max: 4,
-                pla: '请输入分类名称',
+                pla: 'Vui lòng nhập tên danh mục',
               },
               dataType: {
-                title: '数据类型',
+                title: 'Loại dữ liệu',
                 tabVal: 0,
                 tabList: [
                   {
-                    name: '微页面',
+                    name: 'Trang tùy chỉnh',
                   },
                   {
-                    name: '商品分类',
+                    name: 'Danh mục sản phẩm',
                   },
                 ],
               },
@@ -453,12 +453,12 @@ export default {
           ],
         },
         contentConfig: {
-          title: '内容间距',
+          title: 'Khoảng cách nội dung',
           val: 20,
           min: 0,
         },
         classColor: {
-          title: '下拉分类',
+          title: 'Danh mục thả xuống',
           default: [
             {
               item: '#E93323',
@@ -477,52 +477,52 @@ export default {
           ],
         },
         docConfig: {
-          title: '指示器样式',
+          title: 'Kiểu chỉ báo',
           tabVal: 0,
           tabList: [
             {
-              name: '样式一',
+              name: 'Kiểu 1',
             },
             {
-              name: '样式二',
+              name: 'Kiểu 2',
             },
             {
-              name: '样式三',
+              name: 'Kiểu 3',
             },
             {
-              name: '样式四',
+              name: 'Kiểu 4',
             },
           ],
         },
         docPosition: {
-          title: '指示器位置',
+          title: 'Vị trí chỉ báo',
           tabVal: 1,
           tabList: [
             {
-              name: '左对齐',
+              name: 'Căn trái',
             },
             {
-              name: '居中对齐',
+              name: 'Căn giữa',
             },
             {
-              name: '右对齐',
+              name: 'Căn phải',
             },
           ],
         },
         toneConfig: {
-          title: '色调',
+          title: 'Tông màu',
           tabVal: 0,
           tabList: [
             {
-              name: '跟随主题风格',
+              name: 'Theo phong cách chủ đề',
             },
             {
-              name: '自定义',
+              name: 'Tùy chỉnh',
             },
           ],
         },
         dotColor: {
-          title: '选中样式',
+          title: 'Kiểu khi được chọn',
           default: [
             {
               item: '#E93323',
@@ -535,7 +535,7 @@ export default {
           ],
         },
         dotBgColor: {
-          title: '常规样式',
+          title: 'Kiểu thường',
           default: [
             {
               item: '#DDDDDD',
@@ -548,41 +548,41 @@ export default {
           ],
         },
         filletImg: {
-          title: '图片圆角',
+          title: 'Bo góc ảnh',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 10,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         swiperConfig: {
-          title: '建议：图片尺寸702*320px；鼠标拖拽版块可调整图片顺序',
-          bnt: '添加',
+          title: 'Đề xuất: kích thước ảnh 702*320px; kéo thả khối để điều chỉnh thứ tự ảnh',
+          bnt: 'Thêm',
           maxList: 10,
           list: [
             {
               img: '',
               info: [
                 {
-                  title: '标题',
-                  value: '标题',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Tiêu đề',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -590,106 +590,106 @@ export default {
           ],
         },
         paddingConfig: {
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           isAll: false,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         marginConfig: {
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           isAll: false,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         bottomBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           default: [{ item: '#f5f5f5' }],
           color: [{ item: '#f5f5f5' }],
         },
         zIndexConfig: {
-          title: '组件上浮',
+          title: 'Thứ tự lớp thành phần',
           val: 0,
           min: 0,
         },
         borderConfig: {
-          title: '边框设置',
+          title: 'Cài đặt viền',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0, // 0: Hide, 1: Show
           styleConfig: {
-            title: '边框样式',
+            title: 'Kiểu viền',
             tabVal: 0,
             tabList: [
-              { name: '实线', style: 'solid' },
-              { name: '虚线', style: 'dashed' },
-              { name: '点状', style: 'dotted' },
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
             ],
           },
           widthConfig: {
-            title: '边框粗细',
+            title: 'Độ dày viền',
             val: 1,
             min: 1,
           },
           colorConfig: {
-            title: '边框颜色',
+            title: 'Màu viền',
             default: [{ item: '#e5e5e5' }],
             color: [{ item: '#e5e5e5' }],
           },
         },
         shadowConfig: {
-          title: '阴影设置',
+          title: 'Cài đặt đổ bóng',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0, // 0: Off, 1: On
           colorConfig: {
-            title: '阴影颜色',
+            title: 'Màu đổ bóng',
             default: [{ item: 'rgba(0,0,0,0.1)' }],
             color: [{ item: 'rgba(0,0,0,0.1)' }],
           },
           xConfig: {
-            title: 'X轴偏移',
+            title: 'Độ lệch trục X',
             val: 0,
             min: -50,
           },
           yConfig: {
-            title: 'Y轴偏移',
+            title: 'Độ lệch trục Y',
             val: 0,
             min: -50,
           },
           blurConfig: {
-            title: '模糊半径',
+            title: 'Bán kính làm mờ',
             val: 10,
             min: 0,
           },
           spreadConfig: {
-            title: '扩展半径',
+            title: 'Bán kính lan tỏa',
             val: 0,
             min: -50,
           },
         },
         componentBgConfig: {
-          title: '背景设置',
+          title: 'Cài đặt nền',
           tabVal: 0,
-          tabList: [{ name: '颜色' }, { name: '图片' }],
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
           colorConfig: {
-            title: '背景颜色',
+            title: 'Màu nền',
             default: [{ item: '#E93323' }, { item: '#E93323' }],
             color: [{ item: '#E93323' }, { item: '#E93323' }],
           },
           colorDirection: {
-            title: '渐变方向',
+            title: 'Hướng chuyển màu',
             tabVal: 0,
-            tabList: [{ name: '横向' }, { name: '纵向' }, { name: '左斜' }, { name: '右斜' }],
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
           },
           imageConfig: {
-            header: '背景图片',
+            header: 'Ảnh nền',
             title: '',
-            name: '上传图片',
+            name: 'Tải lên ảnh',
             type: 'code',
             url: '',
-            info: '建议尺寸：750px * 400px',
+            info: 'Kích thước đề xuất: 750px * 400px',
           },
         },
       },

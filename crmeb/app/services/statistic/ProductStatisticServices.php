@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -29,18 +29,18 @@ use crmeb\exceptions\AdminException;
 class ProductStatisticServices extends BaseServices
 {
     /**
-     * 商品基础
+     * Thông tin cơ bản sản phẩm
      * @param $where
      * @return array
      */
     public function getBasic($where)
     {
         $time = explode('-', $where['time']);
-        if (count($time) != 2) throw new AdminException('请选择时间');
-        //当前数据
+        if (count($time) != 2) throw new AdminException('Vui lòng chọn thời gian');
+        //Dữ liệu hiện tại
         $now = $this->basicInfo($where, $time);
 
-        //环比数据
+        //Dữ liệu so với kỳ trước
         $dayNum = bcadd(bcdiv(bcsub(strtotime($time[1]), strtotime($time[0])), '86400'), '1');
         $lastTime = array(
             date("Y/m/d", strtotime("-$dayNum days", strtotime($time[0]))),
@@ -49,7 +49,7 @@ class ProductStatisticServices extends BaseServices
         $where['time'] = implode('-', $lastTime);
         $last = $this->basicInfo($where, $lastTime);
 
-        //组合数据，计算环比
+        //Kết hợp dữ liệu, tính tỷ lệ so với kỳ trước
         $data = [];
         foreach ($now as $key => $item) {
             $data[$key]['num'] = $item;
@@ -60,7 +60,7 @@ class ProductStatisticServices extends BaseServices
     }
 
     /**
-     * 商品基础数据
+     * Dữ liệu cơ bản sản phẩm
      * @param $where
      * @param $time
      * @return mixed
@@ -76,37 +76,37 @@ class ProductStatisticServices extends BaseServices
         /** @var StoreProductLogServices $productLog */
         $productLog = app()->make(StoreProductLogServices::class);
 
-        $data['browse'] = $productLog->count($where + ['type' => 'visit']);//商品浏览量
-        $data['user'] = $productLog->getDistinctCount($where + ['type' => 'visit'], 'uid');//商品访客数
-        $data['cart'] = $storeCart->getSum($where, 'cart_num');//加入购物车件数
-        $data['order'] = $storeOrder->sum($where + ['pid' => 0], 'total_num', true);//下单件数
+        $data['browse'] = $productLog->count($where + ['type' => 'visit']);//Lượt xem sản phẩm
+        $data['user'] = $productLog->getDistinctCount($where + ['type' => 'visit'], 'uid');//Số khách truy cập sản phẩm
+        $data['cart'] = $storeCart->getSum($where, 'cart_num');//Số lượng thêm vào giỏ hàng
+        $data['order'] = $storeOrder->sum($where + ['pid' => 0], 'total_num', true);//Số lượng đặt hàng
         $data['pay'] = $storeOrder->sum([
             ['paid', '=', 1],
             ['pay_time', '>=', strtotime($time[0])],
             ['pay_time', '<', strtotime($time[1]) + 86400],
             ['pid', '>=', 0]
-        ], 'total_num');//支付件数
+        ], 'total_num');//Số lượng thanh toán
         $data['payPrice'] = $storeOrder->sum([
             ['paid', '=', 1],
             ['pay_time', '>=', strtotime($time[0])],
             ['pay_time', '<', strtotime($time[1]) + 86400],
             ['pid', '>=', 0]
-        ], 'pay_price');//支付金额
+        ], 'pay_price');//Số tiền thanh toán
         $data['cost'] = $storeOrder->sum([
             ['paid', '=', 1],
             ['pay_time', '>=', strtotime($time[0])],
             ['pay_time', '<', strtotime($time[1]) + 86400],
             ['pid', '>=', 0]
-        ], 'cost');//成本金额
-        $data['refundPrice'] = $storeOrder->sum($where + ['refund_status' => 2], 'pay_price', true);//退款金额
-        $data['refund'] = $storeOrder->sum($where + ['refund_status' => 2], 'total_num', true);//退款件数
-        $payPeople = $storeOrder->getDistinctCount($where + ['paid' => 1], 'uid');//成交用户数
-        $data['payPercent'] = $data['user'] > 0 ? bcmul(bcdiv($payPeople, $data['user'], 4), 100, 2) : 0;//访问-付款转化率
+        ], 'cost');//Tổng giá vốn
+        $data['refundPrice'] = $storeOrder->sum($where + ['refund_status' => 2], 'pay_price', true);//Số tiền hoàn
+        $data['refund'] = $storeOrder->sum($where + ['refund_status' => 2], 'total_num', true);//Số lượng hoàn tiền
+        $payPeople = $storeOrder->getDistinctCount($where + ['paid' => 1], 'uid');//Số khách hàng đã mua
+        $data['payPercent'] = $data['user'] > 0 ? bcmul(bcdiv($payPeople, $data['user'], 4), 100, 2) : 0;//Tỷ lệ chuyển đổi truy cập - thanh toán
         return $data;
     }
 
     /**
-     * 商品趋势
+     * Xu hướng sản phẩm
      * @param $where
      * @param $excel
      * @return array
@@ -114,7 +114,7 @@ class ProductStatisticServices extends BaseServices
     public function getTrend($where, $excel = false)
     {
         $time = explode('-', $where['time']);
-        if (count($time) != 2) throw new AdminException('参数错误');
+        if (count($time) != 2) throw new AdminException('Tham số không hợp lệ');
         $dayCount = bcadd(bcdiv(bcsub(strtotime($time[1]), strtotime($time[0])), '86400'), '1');
         $data = [];
         if ($dayCount == 1) {
@@ -130,7 +130,7 @@ class ProductStatisticServices extends BaseServices
     }
 
     /**
-     * 商品趋势
+     * Xu hướng sản phẩm
      * @param $time
      * @param $num
      * @param $excel
@@ -205,13 +205,13 @@ class ProductStatisticServices extends BaseServices
         } else {
             $data = $series = [];
             foreach ($xAxis as $item) {
-                $data['商品浏览量'][] = isset($browse[$item]) ? floatval($browse[$item]) : 0;
-                $data['商品访客量'][] = isset($user[$item]) ? floatval($user[$item]) : 0;
-                $data['支付金额'][] = isset($pay[$item]) ? floatval($pay[$item]) : 0;
-                $data['退款金额'][] = isset($refund[$item]) ? floatval($refund[$item]) : 0;
+                $data['Lượt xem sản phẩm'][] = isset($browse[$item]) ? floatval($browse[$item]) : 0;
+                $data['Lượt khách truy cập sản phẩm'][] = isset($user[$item]) ? floatval($user[$item]) : 0;
+                $data['Số tiền thanh toán'][] = isset($pay[$item]) ? floatval($pay[$item]) : 0;
+                $data['Số tiền hoàn'][] = isset($refund[$item]) ? floatval($refund[$item]) : 0;
             }
             foreach ($data as $key => $item) {
-                if ($key == '商品浏览量' || $key == '商品访客量') {
+                if ($key == 'Lượt xem sản phẩm' || $key == 'Lượt khách truy cập sản phẩm') {
                     $series[] = [
                         'name' => $key,
                         'data' => $item,
@@ -233,7 +233,7 @@ class ProductStatisticServices extends BaseServices
     }
 
     /**
-     * 商品排行
+     * Xếp hạng sản phẩm
      * @param $where
      * @return mixed
      */

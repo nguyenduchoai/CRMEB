@@ -3,7 +3,7 @@
     <el-card :bordered="false" shadow="never" class="ivu-mt">
       <el-row>
         <el-col v-bind="grid">
-          <el-button v-auth="['admin-user-group']" type="primary" v-db-click @click="add">添加分组</el-button>
+          <el-button v-auth="['admin-user-group']" type="primary" v-db-click @click="add">Thêm nhóm</el-button>
         </el-col>
       </el-row>
       <el-table
@@ -12,24 +12,24 @@
         class="mt14"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column label="ID" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="分组" min-width="80">
+        <el-table-column label="Nhóm" min-width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.group_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column fixed="right" label="操作" width="100">
+        <el-table-column fixed="right" label="Thao tác" width="100">
           <template slot-scope="scope">
-            <a v-db-click @click="edit(scope.row.id)">修改</a>
+            <a v-db-click @click="edit(scope.row.id)">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除分组', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa nhóm', scope.$index)">Xóa</a>
           </template>
         </el-table-column>
       </el-table>
@@ -83,7 +83,7 @@ export default {
     this.getList();
   },
   methods: {
-    // 添加
+    // Thêm
     add() {
       this.$modalForm(groupAddApi(0))
         .then(() => this.getList())
@@ -91,7 +91,7 @@ export default {
           console.log('error');
         });
     },
-    // 分组列表
+    // Danh sách nhóm
     getList() {
       this.loading = true;
       userGroupApi(this.groupFrom)
@@ -106,11 +106,11 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 修改
+    // Sửa
     edit(id) {
       this.$modalForm(groupAddApi(id)).then(() => this.getList());
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,

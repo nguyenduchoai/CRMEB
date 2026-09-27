@@ -9,28 +9,28 @@
         inline
         @submit.native.prevent
       >
-        <el-form-item label="订单类型：">
-          <el-select v-model="orderData.status" clearable @change="selectChange2" placeholder="全部">
-            <el-option label="全部订单" value="" />
-            <el-option label="普通订单" value="1" />
-            <el-option v-permission="'combination'" label="拼团订单" value="2" />
-            <el-option v-permission="'seckill'" label="秒杀订单" value="3" />
-            <el-option v-permission="'bargain'" label="砍价订单" value="4" />
-            <el-option label="预售订单" value="5" />
+        <el-form-item label="Loại đơn hàng:">
+          <el-select v-model="orderData.status" clearable @change="selectChange2" placeholder="Tất cả">
+            <el-option label="Tất cả đơn hàng" value="" />
+            <el-option label="Đơn hàng thường" value="1" />
+            <el-option v-permission="'combination'" label="Đơn mua chung" value="2" />
+            <el-option v-permission="'seckill'" label="Đơn flash sale" value="3" />
+            <el-option v-permission="'bargain'" label="Đơn săn giảm giá" value="4" />
+            <el-option label="Đơn đặt trước" value="5" />
           </el-select>
         </el-form-item>
-        <el-form-item label="支付方式：">
+        <el-form-item label="Phương thức thanh toán:">
           <el-select
             v-model="orderData.pay_type"
             clearable
             @change="userSearchs"
-            placeholder="全部"
+            placeholder="Tất cả"
             class="form_content_width"
           >
             <el-option v-for="item in payList" :value="item.val" :label="item.label" :key="item.id" />
           </el-select>
         </el-form-item>
-        <el-form-item label="创建时间：">
+        <el-form-item label="Thời gian tạo:">
           <el-date-picker
             clearable
             v-model="timeVal"
@@ -38,27 +38,27 @@
             @change="onchangeTime"
             format="yyyy/MM/dd"
             value-format="yyyy/MM/dd"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
+            start-placeholder="Ngày bắt đầu"
+            end-placeholder="Ngày kết thúc"
             :picker-options="pickerOptions"
             style="width: 250px"
           ></el-date-picker>
         </el-form-item>
-        <el-form-item label="订单搜索：" prop="real_name" label-for="real_name">
-          <el-input clearable v-model="orderData.real_name" placeholder="请输入" class="form_content_width">
+        <el-form-item label="Tìm kiếm đơn hàng:" prop="real_name" label-for="real_name">
+          <el-input clearable v-model="orderData.real_name" placeholder="Vui lòng nhập" class="form_content_width">
             <el-select v-model="orderData.field_key" slot="prepend" style="width: 100px">
-              <el-option value="all" label="全部"></el-option>
-              <el-option value="order_id" label="订单号"></el-option>
+              <el-option value="all" label="Tất cả"></el-option>
+              <el-option value="order_id" label="Mã đơn hàng"></el-option>
               <el-option value="uid" label="UID"></el-option>
-              <el-option value="real_name" label="用户姓名"></el-option>
-              <el-option value="user_phone" label="用户电话"></el-option>
-              <el-option value="title" label="商品名称"></el-option>
+              <el-option value="real_name" label="Họ tên người dùng"></el-option>
+              <el-option value="user_phone" label="Số điện thoại người dùng"></el-option>
+              <el-option value="title" label="Tên sản phẩm"></el-option>
             </el-select>
           </el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-db-click @click="orderSearch">查询</el-button>
-          <el-button v-db-click @click="handleReset">重置</el-button>
+          <el-button type="primary" v-db-click @click="orderSearch">Tra cứu</el-button>
+          <el-button v-db-click @click="handleReset">Đặt lại</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -75,16 +75,16 @@ export default {
   data() {
     return {
       fromList: {
-        title: '选择时间',
+        title: 'Chọn giờ',
         custom: true,
         fromTxt: [
-          { text: '全部', val: '' },
-          { text: '今天', val: 'today' },
-          { text: '昨天', val: 'yesterday' },
-          { text: '最近7天', val: 'lately7' },
-          { text: '最近30天', val: 'lately30' },
-          { text: '本月', val: 'month' },
-          { text: '本年', val: 'year' },
+          { text: 'Tất cả', val: '' },
+          { text: 'Hôm nay', val: 'today' },
+          { text: 'Hôm qua', val: 'yesterday' },
+          { text: '7 ngày qua', val: 'lately7' },
+          { text: '30 ngày qua', val: 'lately30' },
+          { text: 'Tháng này', val: 'month' },
+          { text: 'Năm nay', val: 'year' },
         ],
       },
       currentTab: '',
@@ -95,7 +95,7 @@ export default {
         sm: 24,
         xs: 24,
       },
-      // 搜索条件
+      // Điều kiện tìm kiếm
       orderData: {
         status: '',
         data: '',
@@ -111,11 +111,11 @@ export default {
       modals2: false,
       timeVal: [],
       payList: [
-        { label: '全部', val: '' },
-        { label: '微信支付', val: '1' },
-        { label: '支付宝支付', val: '4' },
-        { label: '余额支付', val: '2' },
-        { label: '线下支付', val: '3' },
+        { label: 'Tất cả', val: '' },
+        { label: 'WeChat Pay', val: '1' },
+        { label: 'Thanh toán Alipay', val: '4' },
+        { label: 'Thanh toán bằng số dư', val: '2' },
+        { label: 'Thanh toán ngoại tuyến', val: '3' },
       ],
       pickerOptions: timeOptions,
     };
@@ -162,7 +162,7 @@ export default {
       this.getOrderStatus(this.orderData.status);
       this.$emit('getList', 1);
     },
-    // 导出
+    // Xuất
     async exportList() {
       this.orderData.type = this.orderType === 0 ? '' : this.orderType;
       let [th, filekey, data, fileName] = [[], [], [], ''];
@@ -193,7 +193,7 @@ export default {
         });
       });
     },
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e || [];
       this.orderData.data = this.timeVal[0] ? (this.timeVal ? this.timeVal.join('-') : '') : '';
@@ -207,7 +207,7 @@ export default {
       this.getOrderTime(this.orderData.data);
       this.$emit('getList', 1);
     },
-    // 选择时间
+    // Chọn giờ
     selectChange(tab) {
       this.$store.dispatch('order/getOrderTabs', {
         type: this.orderData.status,
@@ -221,7 +221,7 @@ export default {
       this.timeVal = [];
       this.$emit('getList');
     },
-    // 订单选择状态
+    // Trạng thái chọn đơn hàng
     selectChange2(tab) {
       this.onChangeTabs(Number(tab));
       this.$store.dispatch('order/getOrderTabs', {
@@ -244,12 +244,12 @@ export default {
       });
       this.$emit('getList', 1);
     },
-    // 时间状态
+    // Trạng thái thời gian
     timeChange(time) {
       this.getOrderTime(time);
       this.$emit('getList');
     },
-    // 订单号搜索
+    // Tìm kiếm theo mã đơn hàng
     orderSearch() {
       this.setOrderKeyword(this.orderData.real_name);
       this.getfieldKey(this.orderData.field_key);
@@ -262,21 +262,21 @@ export default {
         real_name: this.orderData.real_name,
       });
     },
-    // 点击订单类型
+    // Bấm chọn loại đơn hàng
     onClickTab() {
       this.$emit('onChangeType', this.currentTab);
     },
-    // 批量删除
+    // Xóa hàng loạt
     delAll() {
       if (this.delIdList.length === 0) {
-        this.$message.error('请先选择删除的订单！');
+        this.$message.error('Vui lòng chọn đơn hàng cần xóa trước!');
       } else {
         if (this.isDels) {
           let idss = {
             ids: this.delIdList,
           };
           let delfromData = {
-            title: '删除订单',
+            title: 'Xóa đơn hàng',
             url: `/order/dels`,
             method: 'post',
             ids: idss,
@@ -290,11 +290,11 @@ export default {
               this.$message.error(res.msg);
             });
         } else {
-          this.$message.error('您选择的的订单存在用户未删除的订单，无法删除用户未删除的订单！');
+          this.$message.error('Trong các đơn hàng bạn chọn có đơn người dùng chưa xóa, không thể xóa đơn hàng mà người dùng chưa xóa!');
         }
       }
     },
-    // 刷新
+    // Làm mới
     Refresh() {
       this.$emit('getList');
     },

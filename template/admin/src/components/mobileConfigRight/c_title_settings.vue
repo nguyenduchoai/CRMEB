@@ -4,7 +4,7 @@
     <div class="box-content">
       <!-- Color Tone -->
       <div class="box-item">
-        <span class="label">颜色设置</span>
+        <span class="label">Cài đặt màu sắc</span>
         <div class="input-box">
           <el-radio-group v-model="configData.tabVal">
             <el-radio :label="item.val" v-for="(item, index) in configData.tabList" :key="index">

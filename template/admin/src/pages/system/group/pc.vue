@@ -4,30 +4,30 @@
       <span class="ivu-page-header-title mr20">{{ $route.meta.title }}</span>
       <div>
         <div style="float: right">
-          <el-button class="bnt" type="primary" v-db-click @click="save">保存</el-button>
+          <el-button class="bnt" type="primary" v-db-click @click="save">Lưu</el-button>
         </div>
       </div>
     </div> -->
     <pages-header ref="pageHeader" :title="$route.meta.title">
-      <el-button class="bnt" type="primary" v-db-click @click="save">保存</el-button>
+      <el-button class="bnt" type="primary" v-db-click @click="save">Lưu</el-button>
     </pages-header>
     <el-card :bordered="false" shadow="never" class="h100 mt16">
       <el-row class="box-wrapper">
         <el-col :xs="24" :sm="24" :md="6" :lg="3">
           <div class="left_box">
-            <div class="left_cont" :class="pageId == 1 ? 'on' : ''" v-db-click @click="menu(1)">网站LOGO</div>
+            <div class="left_cont" :class="pageId == 1 ? 'on' : ''" v-db-click @click="menu(1)">LOGO website</div>
             <div
               class="left_cont"
               :class="pageId == 'pc_home_banner' ? 'on' : ''"
               v-db-click
               @click="menu('pc_home_banner')"
             >
-              首页轮播图
+              Ảnh trình chiếu (banner) trang chủ
             </div>
-            <div class="left_cont" :class="pageId == 3 ? 'on' : ''" v-db-click @click="menu(3)">客服页面广告</div>
-            <div class="left_cont" :class="pageId == 4 ? 'on' : ''" v-db-click @click="menu(4)">顶部菜单配置</div>
-            <div class="left_cont" :class="pageId == 5 ? 'on' : ''" v-db-click @click="menu(5)">友情链接配置</div>
-            <div class="left_cont" :class="pageId == 6 ? 'on' : ''" v-db-click @click="menu(6)">关于我们</div>
+            <div class="left_cont" :class="pageId == 3 ? 'on' : ''" v-db-click @click="menu(3)">Quảng cáo trang CSKH</div>
+            <div class="left_cont" :class="pageId == 4 ? 'on' : ''" v-db-click @click="menu(4)">Cấu hình menu trên cùng</div>
+            <div class="left_cont" :class="pageId == 5 ? 'on' : ''" v-db-click @click="menu(5)">Cấu hình liên kết đối tác</div>
+            <div class="left_cont" :class="pageId == 6 ? 'on' : ''" v-db-click @click="menu(6)">Về chúng tôi</div>
           </div>
         </el-col>
         <div style="display: flex; width: 83%">
@@ -37,7 +37,7 @@
               <img :src="pclogo" />
             </div>
             <div v-if="pageId == 'pc_home_banner'" class="pcmoddile_goods">
-              <div class="nofonts" v-if="tabList.list == ''">暂无照片，请添加~</div>
+              <div class="nofonts" v-if="tabList.list == ''">Chưa có ảnh, vui lòng thêm~</div>
               <swiper v-else :options="swiperOption" class="pcswiperimg_goods">
                 <swiper-slide class="spcwiperimg_goods" v-for="(item, index) in tabList.list" :key="index">
                   <img :src="item.image" />
@@ -56,9 +56,9 @@
             <div class="content">
               <div class="right-box">
                 <div class="hot_imgs">
-                  <div class="title">轮播图设置</div>
-                  <div class="title-text">建议尺寸：690 * 240px，拖拽图片可调整图片顺序哦，最多添加五张。</div>
-                  <div class="title-text">除轮播图外，页面其他内容仅供参考</div>
+                  <div class="title">Cài đặt ảnh trình chiếu (banner)</div>
+                  <div class="title-text">Kích thước đề xuất: 690 * 240px, kéo thả ảnh để thay đổi thứ tự, tối đa 5 ảnh.</div>
+                  <div class="title-text">Ngoài ảnh trình chiếu, các nội dung khác trên trang chỉ mang tính tham khảo</div>
                   <div class="list-box">
                     <draggable
                       v-if="pageId == 'pc_home_banner'"
@@ -71,7 +71,7 @@
                         <div class="move-icon">
                           <span class="iconfont icondrag2"></span>
                         </div>
-                        <div class="img-box imgBoxs" v-db-click @click="modalPicTap('单选', index)">
+                        <div class="img-box imgBoxs" v-db-click @click="modalPicTap('Chọn một', index)">
                           <img :src="item.image" alt="" v-if="item.image" />
                           <div class="upload-box" v-else>
                             <i class="el-icon-picture-outline" style="font-size: 24px"></i>
@@ -87,16 +87,16 @@
                         </div>
                         <div class="info">
                           <div class="info-item">
-                            <span>图片名称：</span>
+                            <span>Tên hình ảnh:</span>
                             <div class="input-box">
-                              <el-input v-model="item.title" placeholder="请填写名称" />
+                              <el-input v-model="item.title" placeholder="Vui lòng nhập tên" />
                             </div>
                           </div>
                           <div class="info-item">
-                            <span>链接地址：</span>
+                            <span>Địa chỉ liên kết:</span>
                             <!-- v-db-click @click="link(index)"-->
                             <div class="input-box">
-                              <el-input v-model="item.url" placeholder="请填写链接" />
+                              <el-input v-model="item.url" placeholder="Vui lòng nhập liên kết" />
                             </div>
                           </div>
                         </div>
@@ -106,7 +106,7 @@
                       <el-dialog
                         :visible.sync="modalPic"
                         width="950px"
-                        title="上传商品图"
+                        title="Tải lên ảnh sản phẩm"
                         :close-on-click-modal="false"
                       >
                         <uploadPictures
@@ -127,7 +127,7 @@
                         style="width: 100px; height: 35px; background-color: var(--prev-color-primary); color: #ffffff"
                         v-db-click
                         @click="addBox"
-                        >添加图片
+                        >Thêm ảnh
                       </el-button>
                     </div>
                   </template>
@@ -139,20 +139,20 @@
             <div class="content">
               <div class="right-box">
                 <div class="hot_imgs">
-                  <div class="title">页面设置</div>
-                  <div class="title-text">建议尺寸：140px * 60px</div>
-                  <div class="title-text">除LOGO图标外，页面其他内容仅供参考</div>
+                  <div class="title">Cài đặt trang</div>
+                  <div class="title-text">Kích thước đề xuất: 140px * 60px</div>
+                  <div class="title-text">Ngoài biểu tượng LOGO, các nội dung khác trên trang chỉ mang tính tham khảo</div>
                   <div class="list-box">
-                    <div class="img-boxs" v-db-click @click="modalPicTap('单选', 0)">
+                    <div class="img-boxs" v-db-click @click="modalPicTap('Chọn một', 0)">
                       <img :src="pclogo" alt="" />
                       <div class="img_font"></div>
-                      <div class="img_fonts">更换图片</div>
+                      <div class="img_fonts">Đổi ảnh</div>
                     </div>
                     <div>
                       <el-dialog
                         :visible.sync="modalPic"
                         width="950px"
-                        title="上传商品图"
+                        title="Tải lên ảnh sản phẩm"
                         :close-on-click-modal="false"
                       >
                         <uploadPictures
@@ -173,7 +173,7 @@
             <div class="table_box">
               <el-row>
                 <el-col v-bind="grid">
-                  <div class="title">客服广告内容：</div>
+                  <div class="title">Nội dung quảng cáo CSKH:</div>
                 </el-col>
               </el-row>
               <div>
@@ -197,7 +197,7 @@
             <div class="content">
               <div class="right-box">
                 <div class="hot_imgs">
-                  <div class="title">顶部菜单设置</div>
+                  <div class="title">Cài đặt menu trên cùng</div>
                   <div class="list-box">
                     <draggable class="dragArea list-group" :list="menuList" group="peoples" handle=".move-icon">
                       <div class="item" v-for="(item, index) in menuList" :key="index">
@@ -209,20 +209,20 @@
                         </div>
                         <div class="info">
                           <div class="info-item">
-                            <span>菜单名称：</span>
+                            <span>Tên menu:</span>
                             <div class="input-box">
-                              <el-input v-model="item.title" placeholder="请填写名称" />
+                              <el-input v-model="item.title" placeholder="Vui lòng nhập tên" />
                             </div>
                           </div>
                           <div class="info-item">
-                            <span>链接地址：</span>
+                            <span>Địa chỉ liên kết:</span>
                             <!-- v-db-click @click="link(index)"-->
                             <div class="input-box">
-                              <el-input v-model="item.url" placeholder="请填写链接" />
+                              <el-input v-model="item.url" placeholder="Vui lòng nhập liên kết" />
                             </div>
                           </div>
                           <!-- <div class="info-item">
-                            <span>是否需要登录：</span>
+                            <span>Có cần đăng nhập không:</span>
                             <div class="input-box">
                               <el-switch v-model="item.auth" active-value="1" inactive-value="0"> </el-switch>
                             </div>
@@ -239,7 +239,7 @@
                         style="width: 100px; height: 35px; background-color: var(--prev-color-primary); color: #ffffff"
                         v-db-click
                         @click="addMenu"
-                        >添加菜单
+                        >Thêm menu
                       </el-button>
                     </div>
                   </template>
@@ -251,7 +251,7 @@
             <div class="content">
               <div class="right-box">
                 <div class="hot_imgs">
-                  <div class="title">友情链接配置</div>
+                  <div class="title">Cấu hình liên kết đối tác</div>
                   <div class="list-box">
                     <draggable class="dragArea list-group" :list="linkList" group="peoples" handle=".move-icon">
                       <div class="item" v-for="(item, index) in linkList" :key="index">
@@ -268,16 +268,16 @@
                         </div>
                         <div class="info">
                           <div class="info-item">
-                            <span>链接名称：</span>
+                            <span>Tên liên kết:</span>
                             <div class="input-box">
-                              <el-input v-model="item.title" placeholder="请填写名称" />
+                              <el-input v-model="item.title" placeholder="Vui lòng nhập tên" />
                             </div>
                           </div>
                           <div class="info-item">
-                            <span>链接地址：</span>
+                            <span>Địa chỉ liên kết:</span>
                             <!-- v-db-click @click="link(index)"-->
                             <div class="input-box">
-                              <el-input v-model="item.url" placeholder="请填写链接" />
+                              <el-input v-model="item.url" placeholder="Vui lòng nhập liên kết" />
                             </div>
                           </div>
                         </div>
@@ -292,7 +292,7 @@
                         style="width: 100px; height: 35px; background-color: var(--prev-color-primary); color: #ffffff"
                         v-db-click
                         @click="addLink"
-                        >添加链接
+                        >Thêm liên kết
                       </el-button>
                     </div>
                   </template>
@@ -304,7 +304,7 @@
             <div class="content">
               <div class="right-box">
                 <div class="hot_imgs">
-                  <div class="title">关于我们-详情</div>
+                  <div class="title">Về chúng tôi - Chi tiết</div>
                   <WangEditor
                     style="width: 100%"
                     :content="formValidate.content"
@@ -318,7 +318,7 @@
       </el-row>
     </el-card>
     <!-- <div class="save">
-			<el-button type="primary" v-db-click @click="save" >保存</el-button>
+			<el-button type="primary" v-db-click @click="save" >Lưu</el-button>
 		</div> -->
     <linkaddress ref="linkaddres" @linkUrl="linkUrl"></linkaddress>
   </div>
@@ -369,22 +369,22 @@ export default {
         xs: 24,
       },
       swiperOption: {
-        //显示分页
+        //Hiển thị phân trang
         pagination: {
           el: '.swiper-pagination',
         },
-        //设置点击箭头
+        //Đặt bấm mũi tên
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
         },
-        //自动轮播
+        //Tự động trình chiếu
         autoplay: {
           delay: 2000,
-          //当用户滑动图片后继续自动轮播
+          //Sau khi người dùng vuốt ảnh thì tiếp tục tự động trình chiếu
           disableOnInteraction: false,
         },
-        //开启循环模式
+        //Bật chế độ lặp
         loop: false,
       },
       pageId: 1,
@@ -401,7 +401,7 @@ export default {
         title: '',
         url: '',
       },
-      isChoice: '单选',
+      isChoice: 'Chọn một',
       modalPic: false,
       gridPic: {
         xl: 6,
@@ -419,9 +419,9 @@ export default {
       },
       activeIndex: 0,
       myConfig: {
-        autoHeightEnabled: false, // 编辑器不自动被内容撑高
-        initialFrameHeight: 500, // 初始容器高度
-        initialFrameWidth: '100%', // 初始容器宽度
+        autoHeightEnabled: false, // Trình soạn thảo không tự động giãn cao theo nội dung
+        initialFrameHeight: 500, // Chiều cao container ban đầu
+        initialFrameWidth: '100%', // Chiều rộng container ban đầu
         UEDITOR_HOME_URL: '/UEditor/',
         serverUrl: '',
       },
@@ -449,7 +449,7 @@ export default {
       this.tabList.list[this.activeIndexs].url = e;
       // item.url = e
     },
-    // 提交数据
+    // Gửi dữ liệu
     onsubmit(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
@@ -465,7 +465,7 @@ export default {
         }
       });
     },
-    //详情
+    //Chi tiết
     getKfAdv() {
       getKfAdv()
         .then(async (res) => {
@@ -487,19 +487,19 @@ export default {
       });
     },
     setAboutUs(id) {
-      if (this.formValidate.content == '') return this.$message.warning('请输入内容');
+      if (this.formValidate.content == '') return this.$message.warning('Vui lòng nhập nội dung');
       let data = {
         id: id,
         content: this.formValidate.content,
         type: id,
-        title: '关于我们',
+        title: 'Về chúng tôi',
       };
 
       setAgreements(data).then((res) => {
         this.$message.success(res.msg);
       });
     },
-    // 添加表单
+    // Biểu mẫu thêm
     groupAdd() {
       this.$modalForm(groupDataAddApi({ config_name: this.pageId }, 'setting/group_data/create')).then(() =>
         this.info(),
@@ -552,7 +552,7 @@ export default {
         };
       } else {
         if (this.tabList.list.length == 5) {
-          this.$message.warning('最多添加5张');
+          this.$message.warning('Chỉ được thêm tối đa 5 ảnh');
         } else {
           let obj = JSON.parse(JSON.stringify(this.lastObj));
           this.tabList.list.push(obj);
@@ -561,7 +561,7 @@ export default {
     },
     addMenu() {
       if (this.menuList.length >= 6) {
-        return this.$message.warning('最多添加6个菜单');
+        return this.$message.warning('Chỉ được thêm tối đa 6 menu');
       }
       this.menuList.push({
         title: '',
@@ -570,14 +570,14 @@ export default {
     },
     addLink() {
       if (this.linkList.length >= 20) {
-        return this.$message.warning('最多添加20个链接');
+        return this.$message.warning('Chỉ được thêm tối đa 20 liên kết');
       }
       this.linkList.push({
         title: '',
         url: '',
       });
     },
-    // 删除
+    // Xóa
     bindDelete(item, index) {
       if (this.tabList.list.length == 1) {
         this.lastObj = this.tabList.list[0];
@@ -588,16 +588,16 @@ export default {
       console.log(index);
       this.menuList.splice(index, 1);
     },
-    // 友情链接
+    // Liên kết hữu ích
     linkDelete(index) {
       this.linkList.splice(index, 1);
     },
-    // 点击图文封面
+    // Click vào ảnh bìa bài viết ảnh-văn
     modalPicTap(title, index) {
       this.activeIndex = index;
       this.modalPic = true;
     },
-    // 获取图片信息
+    // Lấy thông tin ảnh
     getPic(pc) {
       this.$nextTick(() => {
         if (this.pageId == 'pc_home_banner') {
@@ -653,7 +653,7 @@ export default {
           this.$message.error(err.msg);
         });
     },
-    // 菜单保存
+    // Lưu menu
     saveMenu(config_name) {
       let data = {
         config_name: config_name,

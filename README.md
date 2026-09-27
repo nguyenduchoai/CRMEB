@@ -1,10 +1,22 @@
+> **Bản Việt hóa CRMEB (v6.0.0)**
+>
+> - Giao diện quản trị, H5/App, trình cài đặt, thông báo API, dữ liệu mẫu SQL, chú thích code và tài liệu đã được dịch sang **tiếng Việt**.
+>   - Ngôn ngữ mặc định: **vi-VN**. Múi giờ: **Asia/Ho_Chi_Minh**.
+>   - Các gói ngôn ngữ khác vẫn còn và có thể bật lại trong trang quản trị.
+>   - README tiếng Anh gốc: [`README_EN.md`](README_EN.md).
+> - Đánh giá khả năng dùng CRMEB làm nền tảng TMĐT tại Việt Nam: [`PHAN_TICH_CRMEB_VIETNAM.md`](PHAN_TICH_CRMEB_VIETNAM.md).
+> - Mã nguồn gốc thuộc bản quyền CRMEB (Xi'an Zhongbang). Văn bản license gốc giữ nguyên; bản dịch tham khảo nằm ở `crmeb/LICENSE.vi.txt`.
+> - Build lại frontend:
+>   - Admin: `cd template/admin && npm ci && NODE_OPTIONS=--openssl-legacy-provider npm run build`, sau đó chép `dist/` vào `crmeb/public/admin/`.
+>   - UniApp: dùng HBuilderX như trước, hoặc build bằng uni-app CLI (Vue 2). Với H5, project CLI cần template `public/index.html` chuẩn của uni-app (có dòng nạp `static/index.<hash>.css`), nếu không trang sẽ thiếu CSS toàn cục.
+
 <div align="center" >
     <img src="https://www.crmeb.com/static/images/dark_logo.png" />
 </div>
 
 <div align="center" style="font-size: 15px;">
 
-CRMEB High-quality Open Source E-commerce System (PHP Version)
+Hệ thống thương mại điện tử mã nguồn mở chất lượng cao CRMEB (phiên bản PHP) 
 
 </div>
 
@@ -25,14 +37,14 @@ CRMEB High-quality Open Source E-commerce System (PHP Version)
 </div>
 
 <div align="center" style="font-size: 15px;">
-  We are committed to open source, and your encouragement is also very important to us! Top right corner Star🌟, waiting for you to light it up
+  Chúng tôi tận tâm làm mã nguồn mở và rất cần sự khích lệ của bạn! Star🌟 ở góc trên bên phải đang chờ bạn thắp sáng
 </div>
 
 ####
 
 <div align="center">
 
-[简体中文](./README_ZH.md)  |  English
+Tiếng Việt | [English](./README_EN.md) 
 
 </div>
 
@@ -49,302 +61,307 @@ CRMEB High-quality Open Source E-commerce System (PHP Version)
 
 <div align="center">
 
-[Official Website](https://www.crmeb.com/?from=giteephp) |
-[Online Demo](http://v6.crmeb.net/admin/) |
-[Help Documentation](https://doc.crmeb.com/single_open) |
-[Plugin Marketplace](https://www.crmeb.com/market?from=giteephp) |
-[Technical Forum](https://www.crmeb.com/ask/thread/list/147) |
-[Theme Market](https://www.crmeb.com/theme)
+[Website chính thức](https://www.crmeb.com/?from=giteephp) |
+[Trải nghiệm trực tuyến](http://v6.crmeb.net/admin/) |
+[Tài liệu hướng dẫn](https://doc.crmeb.com/single_open) |
+[Chợ ứng dụng](https://www.crmeb.com/market?from=giteephp) |
+[Cộng đồng kỹ thuật](https://www.crmeb.com/ask/thread/list/147) |
+[Kho giao diện](https://www.crmeb.com/theme) |
+[Xem màn hình rộng](https://gitee.com/ZhongBangKeJi/CRMEB/blob/master/README.md)
 
 
 </div>
 
 
 
----
-
-### 📝 **Project Introduction**
-
-**Open-source freedom**
-
-CRMEB open-source mall system features 100% open-source code, is licensed under the **Apache-2.0** license, and can be used commercially at no cost—without any hidden fees or functional restrictions—truly enabling zero-cost deployment and unrestricted secondary development!
-
-**Technical Architecture**
-
-Adopt **ThinkPHP 6 + ElementUI + UniApp** Technology stack, front-end and back-end separation design, supports modular development and efficient maintenance. The front-end is compatible with WeChat Mini Programs, H5, APP, PC, and other platforms, while the back-end centrally manages data across all platforms, ensuring smooth user experience and high-concurrency performance.
-
-**Full scene coverage**
-
-Seamlessly integrate with official accounts, mini programs, H5, APP, and PC ends, enabling real-time data interoperability to help merchants operate multi-channel businesses in an all-in-one manner, meeting all-scenario e-commerce needs.
-
-**Native Marketing Engine**
-
-Built-in **20+ Core Marketing Modules** (Group buying, price slashing, flash sales, coupons, points system, live streaming sales, paid memberships, tiered memberships, user recharge, distribution and viral marketing, channel codes, new user gifts, etc.), supports custom activity rules without plugins. through **Home DIY Features** Merchants can design the homepage of the mall with drag-and-drop functionality, allowing them to quickly build high-conversion scenarios without any technical background, achieving operational efficiency of "what you see is what you get."
-
-**Community Technical Forum**
-
-We are committed to building a developer-friendly ecosystem, open-sourcing our code, continuously updating functional modules, and adding a theme plaza. This allows merchants to quickly customize their stores by applying beautiful e-commerce themes with one click. Developers and designers can upload original themes for users to download and use, enabling creative sharing and monetization. At the same time, we welcome developers to submit optimization suggestions or contribute code. By sharing technical achievements, we can reduce the cost of redundant development in the industry and promote the sustainable development of open-source e-commerce systems.
-
----
-
-### 📝 **Theme Market**
-
-**Free Download**
-
-Come to the CRMEB Theme Plaza to enjoy a vast selection of premium templates and create a personalized mall with zero cost. No professional design skills are required. A vast number of free templates are available for direct download and use. A variety of theme styles can accurately match the needs of different industries, quickly enhancing the store's image and user experience, allowing your mall to start strong visually from the beginning.
-
-**One-click import**
-
-Simplify the complex, quickly refresh the mall interface. Say goodbye to the cumbersome manual DIY configuration process of the past. With just one click to import a theme package, you can seamlessly integrate the entire theme (including page layout and global color scheme) into your system. The system automatically completes component matching and data mounting, no code needs to be written, and the preview takes effect immediately. Making the mall's renovation and upgrade as easy as changing a mobile phone wallpaper, greatly saving the time and cost of operations and development.
-
-**Theme Square Listing**
-
-Not only use it freely, but also earn money easily. You can leverage the system's powerful DIY capabilities to freely combine color schemes, layouts, and components based on existing modules, creating a unique custom theme and directly publishing it to the Theme Plaza. You will receive the corresponding revenue share when other users pay to download your work. This not only provides a direct way to monetize your design capabilities and technical expertise, but also helps build a thriving open-source marketplace ecosystem, achieving a win-win situation for creativity and value.
-
-Theme Market：<a href="https://www.crmeb.com/theme" target="_blank">Theme Market</a>
-
-
-![输入图片说明](help/resource/pic/主题广场.png)
-
-
-
-🔗 <a href="https://doc.crmeb.com/single_open/open_v60/39233" target="_blank">List of Features </a> | 📩 <a href="https://gitee.com/ZhongBangKeJi/CRMEB/issues" target="_blank"> Submit Feedback</a> | 📩 <a href="https://gitee.com/ZhongBangKeJi/CRMEB/pulls" target="_blank">Submit code</a> | 🔗 <a href="https://www.crmeb.com/theme" target="_blank">Theme Market</a>
-
 
 
 ---
 
-### docker one-click experience
+### 📝 **Giới thiệu dự án**
+
+**Mã nguồn mở tự do**
+
+Mã nguồn của hệ thống thương mại điện tử mã nguồn mở CRMEB được công khai 100%, cho phép sử dụng thương mại miễn phí theo **giấy phép Apache-2.0**, không có bất kỳ chi phí ẩn hay giới hạn tính năng nào, thực sự mang lại khả năng triển khai “không tốn chi phí” và tự do phát triển tùy biến!
+
+**Kiến trúc kỹ thuật**
+
+Sử dụng bộ công nghệ **ThinkPHP 6 + ElementUI + UniApp**, thiết kế tách biệt frontend và backend, hỗ trợ phát triển theo module và bảo trì hiệu quả. Frontend tương thích nhiều nền tảng như WeChat Mini Program, H5, APP, PC, còn backend quản lý thống nhất dữ liệu của toàn bộ nền tảng, đảm bảo trải nghiệm mượt mà và hiệu năng xử lý đồng thời cao.
+
+**Bao phủ mọi kịch bản**
+
+Kết nối liền mạch OA WeChat, Mini Program, H5, APP và PC, dữ liệu liên thông theo thời gian thực, giúp người bán vận hành kinh doanh đa kênh tại một nơi, đáp ứng nhu cầu thương mại điện tử cho mọi kịch bản.
+
+**Công cụ marketing tích hợp sẵn**
+
+Tích hợp sẵn **20+ module marketing cốt lõi** (mua chung, săn giảm giá, flash sale, phiếu giảm giá, hệ thống điểm thưởng, livestream bán hàng, thành viên trả phí, thành viên theo hạng, nạp tiền tài khoản, tiếp thị liên kết lan truyền, mã kênh, quà tặng người mới, v.v.), hỗ trợ tùy chỉnh quy tắc chương trình khuyến mãi mà không cần plugin. Với **tính năng DIY trang chủ**, người bán có thể thiết kế trang chủ cửa hàng bằng thao tác kéo thả, nhanh chóng xây dựng các kịch bản có tỷ lệ chuyển đổi cao mà không cần kiến thức kỹ thuật, đạt hiệu quả vận hành theo kiểu “thấy gì được nấy”.
+
+**Kế hoạch cùng xây dựng cộng đồng**
+
+Chúng tôi cam kết xây dựng hệ sinh thái thân thiện với lập trình viên: công khai mã nguồn, liên tục cập nhật các module tính năng, đồng thời bổ sung Kho giao diện, cho phép người bán áp dụng các giao diện cửa hàng đẹp mắt chỉ với một cú nhấp để nhanh chóng thiết kế cửa hàng; lập trình viên và nhà thiết kế có thể đăng bán giao diện do mình sáng tạo để người dùng tải về sử dụng, qua đó chia sẻ sáng tạo và biến giá trị thành thu nhập. Đồng thời, chúng tôi hoan nghênh lập trình viên gửi đề xuất tối ưu hoặc đóng góp mã nguồn. Thông qua việc chia sẻ thành quả kỹ thuật, chúng tôi góp phần giảm chi phí “phát minh lại bánh xe” trong ngành, thúc đẩy sự phát triển bền vững của các hệ thống thương mại điện tử mã nguồn mở.
+
+---
+
+### 📝 **Kho giao diện**
+
+**Tải xuống miễn phí**
+
+Hãy đến Kho giao diện CRMEB để thỏa sức khám phá kho mẫu tuyển chọn khổng lồ, xây dựng cửa hàng mang dấu ấn riêng mà không tốn chi phí. Không cần năng lực thiết kế chuyên nghiệp, vô số mẫu miễn phí có thể tải về dùng ngay, phong cách giao diện đa dạng đáp ứng chính xác nhu cầu của từng ngành hàng, nhanh chóng nâng tầm hình ảnh cửa hàng và trải nghiệm người dùng, giúp cửa hàng của bạn chiếm ưu thế về thị giác ngay từ vạch xuất phát.
+
+**Nhập bằng một cú nhấp**
+
+Đơn giản hóa mọi thao tác, làm mới giao diện cửa hàng với tốc độ cực nhanh. Tạm biệt hoàn toàn quy trình cấu hình DIY thủ công rườm rà trước đây: chỉ cần nhập gói giao diện bằng một cú nhấp là toàn bộ giao diện (bao gồm bố cục trang và bảng màu toàn cục) sẽ được tích hợp liền mạch vào hệ thống của bạn. Hệ thống tự động khớp thành phần và gắn dữ liệu, không cần viết bất kỳ dòng mã nào, xem trước và áp dụng ngay lập tức. Việc thay đổi, nâng cấp giao diện cửa hàng trở nên dễ dàng như thay hình nền điện thoại, giúp tiết kiệm đáng kể thời gian và chi phí cho cả vận hành lẫn phát triển.
+
+**Đăng bán trên Kho giao diện**
+
+Không chỉ dùng thoải mái mà còn kiếm tiền dễ dàng. Bạn có thể tận dụng tính năng DIY mạnh mẽ của hệ thống, tự do kết hợp bảng màu, bố cục và thành phần dựa trên các module sẵn có để tạo ra giao diện độc quyền mang bản sắc riêng, rồi đăng bán trực tiếp trên Kho giao diện. Khi người dùng khác trả phí tải xuống tác phẩm của bạn, bạn sẽ nhận được phần chia sẻ doanh thu tương ứng. Điều này không chỉ mang lại kênh kiếm tiền trực tiếp từ năng lực thiết kế và kinh nghiệm kỹ thuật tích lũy của bạn, mà còn góp phần cùng xây dựng một hệ sinh thái cửa hàng trực tuyến mã nguồn mở thịnh vượng, tạo nên thành công kép cho cả sáng tạo lẫn giá trị.
+
+Kho giao diện: <a href="https://www.crmeb.com/theme" target="_blank">Kho giao diện</a>
+
+
+![Mô tả hình ảnh](help/resource/pic/kho-giao-dien.png)
+
+
+
+🔗 <a href="https://doc.crmeb.com/single_open/open_v60/39233" target="_blank">Danh sách tính năng</a> | 📩 <a href="https://gitee.com/ZhongBangKeJi/CRMEB/issues" target="_blank">Gửi phản hồi</a> | 📩 <a href="https://gitee.com/ZhongBangKeJi/CRMEB/pulls" target="_blank">Đóng góp mã nguồn</a> | 🔗 <a href="https://www.crmeb.com/theme" target="_blank">Kho giao diện</a>
+
+
+
+---
+
+### Trải nghiệm bằng docker chỉ với một lệnh
 ```
-# Pull and run the CRMEB Docker image
+# Pull và chạy image Docker của CRMEB
 docker run -d --name crmeb -p 8080:80 ccr.ccs.tencentyun.com/crmebky_php/crmebky:latest
 ```
 
-#### Access service
+#### Truy cập dịch vụ
 - **Website**: http://localhost:8080 
-- **Backend**: http://localhost:8080/admin （Account: admin，Password: crmeb.com）
-- **MySQL**: localhost:3306（Account: root，Password: 123456）
+- **Trang quản trị**: http://localhost:8080/admin (tài khoản: admin, mật khẩu: crmeb.com)
+- **MySQL**: localhost:3306 (tài khoản: root, mật khẩu: 123456)
 - **Redis**: localhost:6379
-> Click here for detailed information [Help Documentation](/help/docker/docker.md)。
+> Xem hướng dẫn chi tiết tại [Tài liệu hướng dẫn](/help/docker/docker.md).
 ---
 
-![输入图片说明](help/resource/pic/开源banner-PHP.jpg)
+![Mô tả hình ảnh](help/resource/pic/banner-ma-nguon-mo-php.jpg)
 
 
-
-### 🫧 Technical Features
+### 🫧 Đặc điểm kỹ thuật
 
 ~~~
-About secondary development：
-1. Code specification: follow PSR-2 naming specification, Restful standard interface, strictly layered code, complete notes, and unified error code;
-2. Permission management: built-in powerful and flexible permission management, which can control every menu;
-3. Development configuration: low code added configuration, system combination data module;
-4. Code generation: quickly generate background menus and pages, and quickly add, delete, modify, and query;
-5. Scheduled tasks: the system has 10 built-in scheduled tasks, as well as user-defined tasks. You can set the execution cycle and code by yourself, which are perfectly compatible;
-6. System events: Embed 30+system event anchors, and add events on the background page;
-7. Online editing: You can edit and modify the system code in the background, without logging in to the server to modify the code file, which is convenient and fast;
-8. Interface management: all interface data in the system can be seen on the background page, and the interface can be debugged online;
-9. Second development efficiency: form builder PHP can quickly generate forms;
-10. Quick start: background interface management, background database dictionary, system file management notes, code comments, one click installation;
+Về phát triển tùy biến:
+1.Chuẩn mã nguồn: tuân thủ quy chuẩn đặt tên PSR-2, API theo chuẩn Restful, phân lớp mã nguồn chặt chẽ, chú thích đầy đủ, mã lỗi thống nhất;
+2.Quản lý quyền: tích hợp sẵn cơ chế quản lý quyền mạnh mẽ, linh hoạt, có thể kiểm soát đến từng menu;
+3.Cấu hình phát triển: thêm cấu hình theo hướng low-code, module dữ liệu tổ hợp của hệ thống;
+4.Sinh mã: tạo nhanh menu và trang trong hệ thống quản trị, nhanh chóng hiện thực các thao tác thêm, xóa, sửa, tra cứu;
+5.Tác vụ định kỳ: hệ thống tích hợp sẵn 10 loại tác vụ định kỳ, ngoài ra còn có tác vụ tùy chỉnh, có thể tự thiết lập chu kỳ thực thi và mã thực thi, tương thích hoàn hảo;
+6.Sự kiện hệ thống: cài sẵn 30+ điểm neo sự kiện hệ thống, có thể thêm sự kiện ngay trên trang quản trị;
+7.Chỉnh sửa trực tuyến: có thể chỉnh sửa mã nguồn hệ thống ngay trong trang quản trị mà không cần đăng nhập vào máy chủ để sửa tệp mã nguồn, tiện lợi và nhanh chóng;
+8.Quản lý API: trang quản trị hiển thị toàn bộ dữ liệu API trong hệ thống, đồng thời cho phép gỡ lỗi API trực tuyến;
+9.Hiệu quả phát triển tùy biến: sử dụng form-builder PHP để tạo biểu mẫu nhanh chóng;
+10.Nhanh chóng làm quen: quản lý API trong trang quản trị, từ điển cơ sở dữ liệu trong trang quản trị, ghi chú quản lý tệp hệ thống, chú thích mã nguồn, cài đặt bằng một cú nhấp;
 ~~~
 ~~~
-Performance and expansion:
-1. System security: system operation log, system production log, file verification, data backup;
-2. High performance: support Redis cache, queue, long connection, multiple cloud storage, and cluster deployment;
-3. Multilingual: support automatic identification of browser multilingual display;
-4. Drive extension: support multiple payment methods, multiple SMS messages, multiple cloud storage, etc;
-5. Cloud storage: cloud storage supports remote cloud storage of pictures and videos, Alibaba Cloud, Tencent Cloud, Qiniu Cloud, JD Cloud, Tianyi Cloud, Huawei Cloud
-6. One number pass: general third-party extension, supporting SMS, logistics query, electronic face bill, electronic invoice, commodity collection, and business mailing
+Hiệu năng và khả năng mở rộng:
+1.Bảo mật hệ thống: nhật ký thao tác hệ thống, nhật ký vận hành hệ thống, kiểm tra tệp, sao lưu dữ liệu;
+2.Hiệu năng cao: hỗ trợ bộ nhớ đệm Redis, hàng đợi, kết nối liên tục, nhiều loại lưu trữ đám mây, hỗ trợ triển khai dạng cụm (cluster);
+3.Đa ngôn ngữ: hỗ trợ tự động nhận diện ngôn ngữ của trình duyệt để hiển thị đa ngôn ngữ;
+4.Mở rộng driver: hỗ trợ nhiều phương thức thanh toán, nhiều nhà cung cấp SMS, nhiều dịch vụ lưu trữ đám mây, v.v.;
+5.Lưu trữ đám mây: hỗ trợ lưu trữ hình ảnh và video từ xa trên đám mây, hỗ trợ Alibaba Cloud, Tencent Cloud, Qiniu Cloud, JD Cloud, Tianyi Cloud, Huawei Cloud
+6.Yihaotong: tiện ích mở rộng bên thứ ba dùng chung, hỗ trợ SMS, tra cứu vận chuyển, vận đơn điện tử, hóa đơn điện tử, thu thập sản phẩm, người bán gửi hàng
 ~~~
 
 ---
 
-### 📖 System Features
+### 📖 Tính năng hệ thống
 
-![输入图片说明](help/resource/pic/核心功能.jpg)
-
----
-
-### 📖 UI Interface Display
-
-![输入图片说明](help/resource/pic/PHP_06.jpg)
-
-
+![Mô tả hình ảnh](help/resource/pic/tinh-nang-cot-loi.jpg)
 
 ---
 
-### 📖 Backend Interface Display
+### 📖 Minh họa giao diện UI
 
-![输入图片说明](help/resource/pic/PHP_05.jpg)
+![Mô tả hình ảnh](help/resource/pic/PHP_06.jpg)
+
 
 
 ---
 
+### 📖 Minh họa giao diện trang quản trị
 
-### 📱 System Demo
-![输入图片说明](help/resource/pic/contact2.jpg)
-
-Admin Panel: http://v6.crmeb.net/admin
-
-Account: admin，Password: crmeb.com
-
-H5：http://v6.crmeb.net/ （Open on mobile）
-
-PC：http://v6.crmeb.net/ （Open on computer）
-
-APP：http://app.crmeb.cn/bzv （Iphone can earch for CRMEB in the AppStore to download）
-
-Theme：https://www.crmeb.com/theme （Open on computer）
-
-> I heard you want to take a look at the complete framework of the CRMEB open source project? <a href="https://doc.crmeb.com/single_open/open_v60/39235" target="_blank"> Click here for access!</a>
+![Mô tả hình ảnh](help/resource/pic/PHP_05.jpg)
 
 
 ---
 
 
+### 📱 Demo hệ thống
+![Mô tả hình ảnh](help/resource/pic/contact2.jpg)
 
-### 🔐 **Operating environment**
+Trang quản trị: http://v6.crmeb.net/admin
+
+Tài khoản: demo Mật khẩu: crmeb.com
+
+Bản H5: http://v6.crmeb.net/ (mở trên thiết bị di động)
+
+Bản PC: http://v6.crmeb.net/ (mở trên máy tính)
+
+Tải APP: http://app.crmeb.cn/bzv (với iPhone, tìm CRMEB trực tiếp trên APP Store để tải về)
+
+Giao diện: https://www.crmeb.com/theme (mở trên máy tính)
+
+> Nghe nói cao thủ như bạn muốn xem toàn bộ khung kiến trúc của dự án mã nguồn mở CRMEB? <a href="https://doc.crmeb.com/single_open/open_v60/39235" target="_blank">Nhấn vào đây để nhận ngay!</a>
 
 
-| **Operating environment**         | **Requirements**                                                                 |
+
+
+
+---
+
+
+
+
+
+### 🔐 **Môi trường vận hành**
+
+
+| **Môi trường vận hành**         | **Yêu cầu**                                                                 |
 |------------------|------------------------------------------------------------------------|
-| **Operating System**     | Linux / Windows                                                        |
-| **WEB Service**   | Nginx / Apache / IIS                                                      |
-| **PPHP version**     | PHP 7.1 ~ 7.4                                                          |
-| **Mysql**       | MySQL 5.7 ~ 8.0（Engine:InnoDB）                                         |
-| **Redis**         | Redis（optional, file caching is used if not installed）                                      |
-| **Manager**       | Supervisor（for managing message queues）                                          |
-| **Recommended Tools**     | BT Panel (User-Friendly)                                                   |
-| **Cloud Server**     | Aliyun ECS / Tencent Cloud CVM / JD Cloud ECS                                              |
-| **Open port**     | 80, 21, 8888, 888, 443, 3306, 6379（authorized object：`0.0.0.0/0`）              |
-| **PHP extension**     | fileinfo（optional）、redis（optional）                               |
-| **Disabled functions**     | `proc_open`, `pcntl_signal`, `pcntl_signal_dispatch`, `pcntl_fork`, `pcntl_wait`, `pcntl_alarm` |
-| **Message queue**     | Run command：`php think queue:listen --queue`    （Using Supervisor）                          |
-| **Long connection**       | Run command：`sudo -u www php think workerman start --d`     （Command line execution）              |
-| **Scheduled Task**     | Run command：`php think timer start --d`            （ommand line execution）                       |
-> Warm reminder: Virtual space is not supported. It is recommended to use the bt panel, and the server is recommended to use JD Cloud server: <a href="https://partner.jdcloud.com/partner/notice/b06c3232b6394fdfa496923b8e00b286" target="_blank">Register now to enjoy an exclusive 65% discount, click here to claim it!</a>
+| **Hệ điều hành**     | Linux / Windows                                                        |
+| **Máy chủ WEB**   | Nginx / Apache / IIS                                                      |
+| **Phiên bản PHP**     | PHP 7.1 ~ 7.4                                                          |
+| **Cơ sở dữ liệu**       | MySQL 5.7 ~ 8.0 (engine: InnoDB)                                         |
+| **Bộ nhớ đệm**         | Redis (tùy chọn, nếu không cài đặt sẽ dùng bộ nhớ đệm bằng tệp)                                      |
+| **Trình quản lý**       | Supervisor (dùng để quản lý hàng đợi tin nhắn)                                          |
+| **Công cụ khuyên dùng**     | BT Panel (đơn giản, dễ sử dụng)                                                    |
+| **Máy chủ đám mây**     | Alibaba Cloud ECS / Tencent Cloud CVM / JD Cloud ECS                                                |
+| **Cổng cần mở**     | 80, 21, 8888, 888, 443, 3306, 6379 (đối tượng cấp quyền: `0.0.0.0/0`)              |
+| **Tiện ích mở rộng PHP**     | fileinfo (tùy chọn), redis (tùy chọn)                               |
+| **Hàm cần bỏ vô hiệu hóa**     | `proc_open`, `pcntl_signal`, `pcntl_signal_dispatch`, `pcntl_fork`, `pcntl_wait`, `pcntl_alarm` |
+| **Hàng đợi tin nhắn**     | Lệnh chạy: `php think queue:listen --queue`    (dùng Supervisor)                          |
+| **Kết nối liên tục**       | Lệnh chạy: `sudo -u www php think workerman start --d`     (chạy bằng dòng lệnh)              |
+| **Tác vụ định kỳ**     | Lệnh chạy: `php think timer start --d`            (chạy bằng dòng lệnh)                       |
+> Lưu ý: không hỗ trợ hosting ảo, khuyên dùng BT Panel (Baota), về máy chủ khuyên dùng máy chủ JD Cloud: <a href="https://partner.jdcloud.com/partner/notice/b06c3232b6394fdfa496923b8e00b286" target="_blank">Đăng ký là được hưởng ưu đãi độc quyền giảm 35%, nhấn vào đây để nhận!</a>
 
 ---
-### 📺 **Development Environment and Technologies Used**
+### 📺 **Môi trường phát triển và công nghệ sử dụng**
 
-### **Development environment：**
-| tool          | Version               | Download link                                                                 |
+### **Môi trường phát triển:**
+| Công cụ          | Phiên bản               | Liên kết tải xuống                                                                 |
 |--------------|--------------------|-------------------------------------------------------------------------|
-| **PHP**      | 7.1-7.4            | [PHP Download](https://www.php.net/downloads.php)                           |
-| **MySQL**    | 5.7                | [MySQL Website](https://www.mysql.com/)                                       |
-| **Redis**    | 7.0                | [Redis Website](https://redis.io/download)                                     |
-| **Nginx**    | 1.22               | [Nginx Website](http://nginx.org/en/download.html)                             |
+| **PHP**      | 7.1-7.4            | [Tải PHP từ trang chính thức](https://www.php.net/downloads.php)                           |
+| **MySQL**    | 5.7                | [Website chính thức MySQL](https://www.mysql.com/)                                       |
+| **Redis**    | 7.0                | [Website chính thức Redis](https://redis.io/download)                                     |
+| **Nginx**    | 1.22               | [Website chính thức Nginx](http://nginx.org/en/download.html)                             |
 | **Apache**   | 2.4                | [Apache HTTP Server](https://httpd.apache.org/download.cgi)              |
-| **Node.js**  | 14/18              | [Node.js LTS version](https://nodejs.org/en/download/releases/)                |
+| **Node.js**  | 14/18              | [Node.js phiên bản LTS](https://nodejs.org/en/download/releases/)                |
 
-### Back-end technology stack
-| **Technology**            | **Name**                                                                 | **URL**                                                                 |
+### Bộ công nghệ backend
+| **Công nghệ**            | **Tên**                                                                 | **Địa chỉ web**                                                                 |
 |---------------------|-----------------------------------------------------------------------------|-------------------------------------------------------------------------|
-| PHP extension library          | Basic PHP runtime environment, JSON data processing, high-precision mathematical calculations, etc                                | https://www.php.net/                                                   |
-| topthink          | ThinkPHP view template engine, CAPTCHA generation component, queue task support, database migration tool                 | https://www.thinkphp.cn/                     |
-| overtrue          | WeChat ecosystem development (official account/Mini Program/Payment)                                               | https://github.com/w7corp/easywechat                                     |
-| php-jwt           | JWT Token Generation and Verification                                                           | https://github.com/firebase/php-jwt                                    |
-| var-dumper        | Debug Output Tool (Formatted Variables)                                                    | https://symfony.com/doc/current/components/var_dumper.html            |
-| phpoffice         | File processing                                                                    | https://github.com/PHPOffice/PhpSpreadsheet                           |
-| guzzlehttp｜psr7  | HTTP client library, PSR-7 HTTP Message Interface Implementation                                        | https://guzzle-cn.readthedocs.io/zh-cn/latest                        |
-| form-builder      | UI tool for quickly building forms                                                     | https://form-create.com                                  |
-| workerman         | High-performance Socket server framework, scheduled timer tasks                                       | https://www.workerman.net                                   |
+| Thư viện mở rộng php          | Môi trường chạy cơ bản của PHP, xử lý dữ liệu JSON, tính toán số học độ chính xác cao, v.v.                                | https://www.php.net/                                                   |
+| topthink          | Template engine cho view của ThinkPHP, thành phần tạo mã xác thực (captcha), hỗ trợ tác vụ hàng đợi, công cụ migration cơ sở dữ liệu                 | https://www.thinkphp.cn/                     |
+| overtrue          | Phát triển cho hệ sinh thái WeChat (OA WeChat/Mini Program/thanh toán)                                               | https://github.com/w7corp/easywechat                                     |
+| php-jwt           | Tạo và xác thực token JWT                                                             | https://github.com/firebase/php-jwt                                    |
+| var-dumper        | Công cụ xuất thông tin gỡ lỗi (định dạng biến)                                                     | https://symfony.com/doc/current/components/var_dumper.html            |
+| phpoffice         | Xử lý tệp                                                                    | https://github.com/PHPOffice/PhpSpreadsheet                           |
+| guzzlehttp｜psr7  | Thư viện HTTP client, triển khai interface thông điệp HTTP theo PSR-7                                        | https://guzzle-cn.readthedocs.io/zh-cn/latest                        |
+| form-builder      | Công cụ UI giúp xây dựng biểu mẫu nhanh chóng                                                      | https://form-create.com                                  |
+| workerman         | Framework máy chủ Socket hiệu năng cao, lập lịch tác vụ định kỳ                                        | https://www.workerman.net                                   |
 
-### Mobile technology stack
-| **Technology** | **Name** | **Official website** |
+### Bộ công nghệ phía di động
+| **Công nghệ** | **Tên** | **Website chính thức** |
 | --- | --- | --- |
-| uniapp | Cross-end framework | https://uniapp.dcloud.net.cn/ |
-| vuex | State management library | https://vuex.vuejs.org/ |
-| socket | WebSocket communication | https://socket.io/ |
-| dayjs | Time processing library | https://day.js.org/ |
-| animate | CSS Animation Library | https://animate.style/ |
-| easy-loadimage | Image lazy loading | https://github.com/TSjianjiao/easy-loadimage |
+| uniapp | Framework đa nền tảng | https://uniapp.dcloud.net.cn/ |
+| vuex | Thư viện quản lý trạng thái | https://vuex.vuejs.org/ |
+| socket | Giao tiếp WebSocket | https://socket.io/ |
+| dayjs | Thư viện xử lý thời gian | https://day.js.org/ |
+| animate | Thư viện hiệu ứng động CSS | https://animate.style/ |
+| easy-loadimage | Tải ảnh trì hoãn (lazy load) | https://github.com/TSjianjiao/easy-loadimage |
 
-### Admin End Technology Stack
-
-| **Technology** | **Name** | **Official website** |
+### Bộ công nghệ phía Admin
+| **Công nghệ** | **Tên** | **Website chính thức** |
 | --- | --- | --- |
-| vue2 | Vue framework | https://v2.vuejs.org/ |
-| vuex | State management library | https://vuex.vuejs.org/ |
-| element-ui | UI framework | https://element.eleme.io/ |
+| vue2 | Framework Vue | https://v2.vuejs.org/ |
+| vuex | Thư viện quản lý trạng thái | https://vuex.vuejs.org/ |
+| element-ui | Framework UI | https://element.eleme.io/ |
 | axios | HTTP client | https://axios-http.com/ |
-| vxe-table | Advanced Table Component | https://vxetable.cn/ |
-| wangeditor | Text editor | https://www.wangeditor.com/ |
-| qs | Query string parsing | https://github.com/ljharb/qs |
-| xlsx | Excel processing library | https://sheetjs.com/ |
-| sass | CSS Preprocessor | https://sass-lang.com/ |
-| prettier | Code formatting | https://prettier.io/ |
-| v-viewer | Image Viewer | https://github.com/mirari/v-viewer |
+| vxe-table | Thành phần bảng nâng cao | https://vxetable.cn/ |
+| wangeditor | Trình soạn thảo văn bản định dạng | https://www.wangeditor.com/ |
+| qs | Phân tích chuỗi truy vấn (query string) | https://github.com/ljharb/qs |
+| xlsx | Thư viện xử lý Excel | https://sheetjs.com/ |
+| sass | Bộ tiền xử lý CSS | https://sass-lang.com/ |
+| prettier | Định dạng mã nguồn | https://prettier.io/ |
+| v-viewer | Trình xem ảnh | https://github.com/mirari/v-viewer |
 
-### PC End Technology Stack
-
-| **Technology** | **Name** | **Official website** |
+### Bộ công nghệ phía PC
+| **Công nghệ** | **Tên** | **Website chính thức** |
 | --- | --- | --- |
-| nuxt | Vue framework | https://nuxtjs.org/ |
-| element | UI framework | https://element.eleme.io/ |
+| nuxt | Framework render phía máy chủ (SSR) cho Vue | https://nuxtjs.org/ |
+| element | Framework UI | https://element.eleme.io/ |
 | axios | HTTP client | https://axios-http.com/ |
-| sass | CSS Preprocessor | https://sass-lang.com/ |
-| cookie-universal-nuxt | Nuxt Cookie Handling | https://github.com/microcipcip/cookie-universal |
-| postcss | CSS Transformation Tool | https://postcss.org/ |
-| qs | Query string parsing | https://github.com/ljharb/qs |
+| sass | Bộ tiền xử lý CSS | https://sass-lang.com/ |
+| cookie-universal-nuxt | Xử lý Cookie cho Nuxt | https://github.com/microcipcip/cookie-universal |
+| postcss | Công cụ chuyển đổi CSS | https://postcss.org/ |
+| qs | Phân tích chuỗi truy vấn (query string) | https://github.com/ljharb/qs |
 
 
 
-### Want a quick installation? The tutorial is here to help!
+### Muốn cài đặt nhanh, đã có hướng dẫn hỗ trợ!
 
-Quick one-click installation：https://doc.crmeb.com/single_open/open_v54/20366
+Cài đặt và triển khai nhanh bằng một cú nhấp: https://doc.crmeb.com/single_open/open_v54/20366
 
-Manual installation configuration：https://doc.crmeb.com/single_open/open_v54/20389
+Cài đặt với cấu hình thủ công: https://doc.crmeb.com/single_open/open_v54/20389
 
-Docker-compose one-click deployment：https://doc.crmeb.com/single_open/open_v54/20145
+Triển khai bằng một cú nhấp với docker-compose: https://doc.crmeb.com/single_open/open_v54/20145
 
-Quick Installation for BT Panel：https://doc.crmeb.com/single_open/open_v54/19892
+Cài đặt bằng một cú nhấp trên môi trường BT Panel: https://doc.crmeb.com/single_open/open_v54/19892
 
-### Development Documents：
-Use Document：https://doc.crmeb.com/single_open/open_v54/19849
+### Hỗ trợ phát triển tùy biến:
+Tài liệu sử dụng: https://doc.crmeb.com/single_open/open_v54/19849
 
-API Documentation：https://doc.crmeb.com/single_open/open_v54/21040
+Tài liệu API: https://doc.crmeb.com/single_open/open_v54/21040
 
-Data Dictionary：https://doc.crmeb.com/single_open/open_v54/20136
+Từ điển dữ liệu: https://doc.crmeb.com/single_open/open_v54/20136
 
-Code generation：https://doc.crmeb.com/single_open/open_v54/20135
+Sinh mã: https://doc.crmeb.com/single_open/open_v54/20135
 
-Development Documents：https://doc.crmeb.com/single_open/open_v54/19851
+Tài liệu phát triển tùy biến: https://doc.crmeb.com/single_open/open_v54/19851
 
-Video tutorial：https://www.bilibili.com/video/BV1kh4y1872K/
+Video hướng dẫn: https://www.bilibili.com/video/BV1kh4y1872K/
 
-Technical Community：https://www.crmeb.com/ask/thread/list/147
-
----
-
-###  📞 CRMEB Interaction
-#### CRMEB Open Source Technology Exchange Group (Scan the code to join the group and get the open source version interface document, product function list, and mind map!) )
-![输入图片说明](help/resource/pic/开源PHP1.jpg)
-#### Technical community! Find methods, report bugs, check official news, and win active rewards!All are <a href="https://www.crmeb.com/ask/?from=giteephp" target="_blank">CRMEB Technology Community</a> Everything you need is available
-
-
-
+Cộng đồng kỹ thuật: https://www.crmeb.com/ask/thread/list/147
 
 ---
 
-❤️ In the name of business, safeguard the open source heart
-
-### 📕 Go online in 2 hours in your WeChat mall
-
-[![CRMEB saas](help/resource/pic/java-saas.jpg)](https://shop.crmeb.com)
-
-
-### 📕 Professional Private Domain Membership E-commerce System
-
-[![CRMEB pro](help/resource/pic/PRO版2.jpg)](https://www.crmeb.com/index/pro?from=giteephp)
+###  📞 Tương tác cùng CRMEB
+#### Nhóm trao đổi kỹ thuật mã nguồn mở CRMEB (quét mã để vào nhóm và nhận tài liệu API bản mã nguồn mở, danh sách tính năng sản phẩm, sơ đồ tư duy!)
+![Mô tả hình ảnh](help/resource/pic/nhom-ma-nguon-mo-php.jpg)
+#### Cộng đồng kỹ thuật! Tìm giải pháp, báo bug, xem tin tức chính thức, nhận giải thưởng lớn cho thành viên tích cực! <a href="https://www.crmeb.com/ask/?from=giteephp" target="_blank">Cộng đồng kỹ thuật CRMEB</a> có đầy đủ tất cả
 
 
-### 📕 Create a platform that recommends high cost-effective multi-merchant system
 
-[![CRMEB多商户](help/resource/pic/duoshanghu2.jpg)](https://www.crmeb.com/index/merchant?from=giteephp)
+
+---
+
+❤️ Lấy thương mại làm bệ đỡ, bảo vệ trái tim mã nguồn mở
+
+### 📕 Dựng nhanh cửa hàng Mini Program của bạn trong 2 giờ
+
+[![Mô tả hình ảnh](help/resource/pic/java-saas.jpg)](https://shop.crmeb.com)
+
+### 📕 Hệ thống thương mại điện tử thành viên chuyên nghiệp cho tệp khách hàng riêng
+
+[![Mô tả hình ảnh](help/resource/pic/ban-pro-2.jpg)](https://www.crmeb.com/index/pro?from=giteephp)
+
+
+
+### 📕 Xây dựng sàn thương mại? Khuyên dùng hệ thống đa người bán tối ưu chi phí
+
+[![Mô tả hình ảnh](help/resource/pic/duoshanghu2.jpg)](https://www.crmeb.com/index/merchant?from=giteephp)
 
 ---
 
 
-[Back to Top :fa-arrow-circle-up: ](https://gitee.com/ZhongBangKeJi/CRMEB#%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D)
+[Về đầu trang :fa-arrow-circle-up: ](https://gitee.com/ZhongBangKeJi/CRMEB#%E9%A1%B9%E7%9B%AE%E4%BB%8B%E7%BB%8D)
 

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,7 +21,7 @@ use think\helper\Str;
 
 /**
  * Class SystemRouteServices
- * @author 等风来
+ * @author Deng Fenglai
  * @email 136327134@qq.com
  * @date 2023/4/6
  * @package app\services\system
@@ -41,7 +41,7 @@ class SystemRouteServices extends BaseServices
     /**
      * @param array $where
      * @return array
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/7
      */
@@ -56,7 +56,7 @@ class SystemRouteServices extends BaseServices
     /**
      * @param int $id
      * @return array
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/10
      */
@@ -64,7 +64,7 @@ class SystemRouteServices extends BaseServices
     {
         $routeInfo = $this->dao->get($id);
         if (!$routeInfo) {
-            throw new ValidateException('接口信息不存在');
+            throw new ValidateException('Thông tin API không tồn tại');
         }
 
         $routeInfo = $routeInfo->toArray();
@@ -73,11 +73,11 @@ class SystemRouteServices extends BaseServices
     }
 
     /**
-     * 获取tree数据
+     * Lấy dữ liệu tree (cây)
      * @param string $appName
      * @param string $name
      * @return mixed
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/05/06
      */
@@ -115,7 +115,7 @@ class SystemRouteServices extends BaseServices
     /**
      * @param array $importData
      * @return bool
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/26
      */
@@ -138,16 +138,16 @@ class SystemRouteServices extends BaseServices
     }
 
     /**
-     * 获取某个应用下的所有路由权限
+     * Lấy tất cả quyền route của một ứng dụng
      * @param string $app
      * @return array
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/6
      */
     public function getRouteListAll(string $app = 'adminapi')
     {
-        //获取所有的路由
+        //Lấy tất cả route
         $this->app = app();
         $this->app->route->setTestMode(true);
         $this->app->route->clear();
@@ -178,7 +178,7 @@ class SystemRouteServices extends BaseServices
 
             $router = is_string($item['route']) ? explode('/', $item['route']) : [];
             $action = $router[count($router) - 1] ?? null;
-            //去除不需要的路由
+            //Loại bỏ route không cần thiết
             if ($except && $action && in_array($action, $except)) {
                 unset($route[$key]);
             }
@@ -192,10 +192,10 @@ class SystemRouteServices extends BaseServices
     }
 
     /**
-     * 获取顶级id
+     * Lấy ID cấp cao nhất
      * @param string $app
      * @return mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/11
      */
@@ -203,7 +203,7 @@ class SystemRouteServices extends BaseServices
     {
         $oneId = app()->make(SystemRouteCateServices::class)->value(['app_name' => $app, 'name' => $cateName, 'pid' => 0], 'id');
         if (!$oneId) {
-            //修复重复同步后反复增加二级文件夹
+            //Sửa lỗi thêm lặp lại thư mục cấp 2 sau khi đồng bộ nhiều lần
             $id = app()->make(SystemRouteCateServices::class)->value(['app_name' => $app, 'name' => $cateName, 'pid' => $pid], 'id');
             if ($id) return $id;
             $res = app()->make(SystemRouteCateServices::class)->save([
@@ -218,8 +218,8 @@ class SystemRouteServices extends BaseServices
     }
 
     /**
-     * 同步路由
-     * @author 等风来
+     * Đồng bộ route
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/6
      */
@@ -266,7 +266,7 @@ class SystemRouteServices extends BaseServices
             }
         }
 
-        //保持新增的权限路由
+        //Giữ lại route quyền mới thêm
         $data = $this->dao->selectList(['app_name' => $app], 'path,method')->toArray();
         $save = [];
         foreach ($list as $key => $value) {
@@ -291,7 +291,7 @@ class SystemRouteServices extends BaseServices
         if ($save) {
             $this->dao->saveAll($save);
         }
-        //删除不存在的权限路由
+        //Xóa route quyền không còn tồn tại
         $data = $this->dao->selectList(['app_name' => $app], 'path,method,id')->toArray();
         $delete = [];
         $deleteData = [];
@@ -304,11 +304,11 @@ class SystemRouteServices extends BaseServices
                 ];
             }
         }
-        //删除不存在的路由
+        //Xóa route không còn tồn tại
         if ($delete) {
             $this->dao->delete([['id', 'in', $delete]]);
         }
-        //删除不存在的权限
+        //Xóa quyền không còn tồn tại
         if ($deleteData) {
             foreach ($deleteData as $item) {
                 app()->make(SystemMenusServices::class)->deleteMenu($item['path'], $item['method']);
@@ -318,12 +318,12 @@ class SystemRouteServices extends BaseServices
     }
 
     /**
-     * 对比路由
+     * So sánh route
      * @param array $data
      * @param string $path
      * @param string $method
      * @return bool
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/6
      */
@@ -343,10 +343,10 @@ class SystemRouteServices extends BaseServices
     }
 
     /**
-     * 添加和修改路由
+     * Thêm và sửa route
      * @param int $id
      * @return array
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/7
      */
@@ -363,32 +363,32 @@ class SystemRouteServices extends BaseServices
         }
 
         $rule = [
-            FormBuilder::cascader('cate_id', '分类', $routeInfo['cate_id'] ?? 0)->data($cateList),
-            FormBuilder::input('name', '路由名称', $routeInfo['name'] ?? '')->required(),
-            FormBuilder::input('path', '路由路径', $routeInfo['path'] ?? '')->required(),
-            FormBuilder::select('method', '请求方式', $routeInfo['method'] ?? '')->options([
+            FormBuilder::cascader('cate_id', 'Danh mục', $routeInfo['cate_id'] ?? 0)->data($cateList),
+            FormBuilder::input('name', 'Tên route', $routeInfo['name'] ?? '')->required(),
+            FormBuilder::input('path', 'Đường dẫn route', $routeInfo['path'] ?? '')->required(),
+            FormBuilder::select('method', 'Phương thức yêu cầu', $routeInfo['method'] ?? '')->options([
                 ['value' => 'POST', 'label' => 'POST'],
                 ['value' => 'GET', 'label' => 'GET'],
                 ['value' => 'DELETE', 'label' => 'DELETE'],
                 ['value' => 'PUT', 'label' => 'PUT'],
                 ['value' => '*', 'label' => '*'],
             ])->required(),
-            FormBuilder::radio('type', '类型', $routeInfo['type'] ?? 0)->options([
-                ['value' => 0, 'lable' => '普通路由'],
-                ['value' => 1, 'lable' => '公共路由'],
+            FormBuilder::radio('type', 'Loại', $routeInfo['type'] ?? 0)->options([
+                ['value' => 0, 'lable' => 'Route thường'],
+                ['value' => 1, 'lable' => 'Route công khai'],
             ]),
             FormBuilder::hidden('app_name', $appName),
         ];
 
-        return create_form($id ? '修改路由' : '添加路由', $rule, $url, $id ? 'PUT' : 'POST');
+        return create_form($id ? 'Sửa route' : 'Thêm route', $rule, $url, $id ? 'PUT' : 'POST');
     }
 
 
     /**
-     * 导入数据
+     * Nhập dữ liệu
      * @param string $filePath
      * @return mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/26
      */
@@ -444,7 +444,7 @@ class SystemRouteServices extends BaseServices
     protected function getParameters(array $api, array $commonParameters = [], string $type = 'query', $parentId = '')
     {
         $parameters = [];
-        // 获取参数
+        // Lấy tham số
         if (!empty($api['parameters'][$type])) {
             foreach ($api['parameters'][$type] as $key => $option) {
                 $id = uniqid();
@@ -459,10 +459,10 @@ class SystemRouteServices extends BaseServices
                 ];
             }
         }
-        // 获取公共参数
+        // Lấy tham số chung
         if (!empty($api['commonParameters'][$type]) && !empty($commonParameters['parameters'][$type])) {
             foreach ($api['commonParameters'][$type] as $key => $option) {
-                // 获取common参数
+                // Lấy tham số common
                 foreach ($commonParameters['parameters'][$type] as $parameter) {
                     if ($parameter['name'] == $option['name']) {
                         $id = uniqid();
@@ -483,11 +483,11 @@ class SystemRouteServices extends BaseServices
     }
 
     /**
-     * 获取请求返回数据
+     * Lấy dữ liệu phản hồi của request
      * @param array $options
      * @param string $parentId
      * @return array
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/26
      */
@@ -516,10 +516,10 @@ class SystemRouteServices extends BaseServices
     }
 
     /**
-     * 获取请求数据
+     * Lấy dữ liệu request
      * @param array $options
      * @return array
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/26
      */
@@ -551,10 +551,10 @@ class SystemRouteServices extends BaseServices
     }
 
     /**
-     * 处理path路径
+     * Xử lý đường dẫn path
      * @param array $options
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/26
      */

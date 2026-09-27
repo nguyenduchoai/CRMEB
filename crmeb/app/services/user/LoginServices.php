@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -41,7 +41,7 @@ class LoginServices extends BaseServices
     }
 
     /**
-     * H5账号登陆
+     * Đăng nhập tài khoản H5
      * @param $account
      * @param $password
      * @param $spread
@@ -55,16 +55,16 @@ class LoginServices extends BaseServices
         $user = $this->dao->getOne(['account|phone' => $account, 'is_del' => 0]);
         if ($user) {
             if ($user->pwd !== md5((string)$password))
-                throw new ApiException('账号或密码错误');
+                throw new ApiException('Tài khoản hoặc mật khẩu không đúng');
             if ($user->pwd === md5('123456'))
-                throw new ApiException('请修改您的初始密码，再尝试登录');
+                throw new ApiException('Vui lòng đổi mật khẩu ban đầu rồi thử đăng nhập lại');
         } else {
-            throw new ApiException('账号或密码错误');
+            throw new ApiException('Tài khoản hoặc mật khẩu không đúng');
         }
         if (!$user['status'])
-            throw new ApiException('您已被禁止登录，请联系管理员');
+            throw new ApiException('Bạn đã bị cấm đăng nhập, vui lòng liên hệ quản trị viên');
 
-        //更新用户信息
+        //Cập nhật thông tin người dùng
         if ($agent_id) {
             $this->updateUserInfo(['code' => $agent_id, 'is_staff' => 1], $user);
         } else {
@@ -74,11 +74,11 @@ class LoginServices extends BaseServices
         if ($token) {
             return ['token' => $token['token'], 'expires_time' => $token['params']['exp']];
         } else
-            throw new ApiException('登录失败');
+            throw new ApiException('Đăng nhập thất bại');
     }
 
     /**
-     * 更新用户信息
+     * Cập nhật thông tin người dùng
      * @param $user
      * @param $userInfo
      * @param false $is_new
@@ -94,7 +94,7 @@ class LoginServices extends BaseServices
         $data['last_time'] = time();
         $data['last_ip'] = app()->request->ip();
         $spreadUid = $user['code'] ?? 0;
-        //如果扫了员工邀请码，上级，代理商，区域代理都会改动。
+        //Nếu quét mã mời của nhân viên, người giới thiệu, đại lý, đại lý khu vực đều sẽ thay đổi.
         if (isset($user['is_staff']) && !$userInfo['is_agent'] && !$userInfo['is_division']) {
             $spreadInfo = $this->dao->get($spreadUid);
             if ($userInfo['uid'] != $spreadUid) {
@@ -109,18 +109,18 @@ class LoginServices extends BaseServices
             $data['division_status'] = 1;
             $data['division_change_time'] = time();
             $data['division_end_time'] = $spreadInfo->division_end_time;
-            //如果店员切换代理商，则店员在之前代理商下推广的用户，他们的直接上级从当前店员变为之前代理商
+            //Nếu nhân viên cửa hàng đổi đại lý, thì với những người dùng mà nhân viên đó đã giới thiệu dưới đại lý cũ, người giới thiệu trực tiếp của họ sẽ đổi từ nhân viên cửa hàng hiện tại thành đại lý cũ
             if ($userInfo->agent_id != 0 && $userInfo->agent_id != $spreadInfo->agent_id) {
                 $this->dao->update(['staff_id' => $userInfo['uid'], 'spread_uid' => $userInfo['uid']], ['spread_uid' => $spreadInfo['agent_id'], 'staff_id' => 0]);
                 $this->dao->getSearch(['staff_id' => $userInfo['uid'], 'not_spread_uid' => $userInfo['uid']])->update(['staff_id' => 0]);
 
             }
-            //绑定用户后置事件
+            //Sự kiện sau khi liên kết người dùng
             event('UserRegisterListener', [$spreadUid, $userInfo['user_type'], $userInfo['nickname'], $userInfo['uid'], $is_new]);
-            //推送消息
+            //Đẩy tin nhắn
             event('NoticeListener', [['spreadUid' => $spreadUid, 'user_type' => $userInfo['user_type'], 'nickname' => $userInfo['nickname']], 'bind_spread_uid']);
 
-            //自定义事件-绑定关系
+            //Sự kiện tùy chỉnh - Liên kết quan hệ
             event('CustomEventListener', ['user_spread', [
                 'uid' => $userInfo['uid'],
                 'nickname' => $userInfo['nickname'],
@@ -139,12 +139,12 @@ class LoginServices extends BaseServices
                     $data['agent_id'] = $spreadInfo->agent_id;
                     $data['division_id'] = $spreadInfo->division_id;
                     $data['staff_id'] = $spreadInfo->staff_id;
-                    //绑定用户后置事件
+                    //Sự kiện sau khi liên kết người dùng
                     event('UserRegisterListener', [$spreadUid, $userInfo['user_type'], $userInfo['nickname'], $userInfo['uid'], 1]);
-                    //推送消息
+                    //Đẩy tin nhắn
                     event('NoticeListener', [['spreadUid' => $spreadUid, 'user_type' => $userInfo['user_type'], 'nickname' => $userInfo['nickname']], 'bind_spread_uid']);
 
-                    //自定义事件-绑定关系
+                    //Sự kiện tùy chỉnh - Liên kết quan hệ
                     event('CustomEventListener', ['user_spread', [
                         'uid' => $userInfo['uid'],
                         'nickname' => $userInfo['nickname'],
@@ -154,14 +154,14 @@ class LoginServices extends BaseServices
                     ]]);
                 }
             } else {
-                //永久绑定
+                //Liên kết vĩnh viễn
                 $store_brokerage_binding_status = sys_config('store_brokerage_binding_status', 1);
                 if ($userInfo->spread_uid && $store_brokerage_binding_status == 1 && !isset($user['is_staff'])) {
                     $data['login_type'] = $user['login_type'] ?? $userInfo->login_type;
                 } else {
-                    //绑定分销关系 = 所有用户
+                    //Liên kết quan hệ tiếp thị liên kết = tất cả người dùng
                     if (sys_config('brokerage_bindind', 1) == 1) {
-                        //分销绑定类型为时间段且过期 ｜｜临时
+                        //Loại liên kết tiếp thị liên kết là theo khoảng thời gian và đã hết hạn || tạm thời
                         $store_brokerage_binding_time = sys_config('store_brokerage_binding_time', 30);
                         if (!$userInfo['spread_uid'] || $store_brokerage_binding_status == 3 || ($store_brokerage_binding_status == 2 && ($userInfo['spread_time'] + $store_brokerage_binding_time * 24 * 3600) < time())) {
                             if ($spreadUid && $user['code'] != $userInfo->uid && $userInfo->uid != $this->dao->value(['uid' => $spreadUid], 'spread_uid')) {
@@ -172,12 +172,12 @@ class LoginServices extends BaseServices
                                 $data['agent_id'] = $spreadInfo->agent_id;
                                 $data['division_id'] = $spreadInfo->division_id;
                                 $data['staff_id'] = $spreadInfo->staff_id;
-                                //绑定用户后置事件
+                                //Sự kiện sau khi liên kết người dùng
                                 event('UserRegisterListener', [$spreadUid, $userInfo['user_type'], $userInfo['nickname'], $userInfo['uid'], 0]);
-                                //推送消息
+                                //Đẩy tin nhắn
                                 event('NoticeListener', [['spreadUid' => $spreadUid, 'user_type' => $userInfo['user_type'], 'nickname' => $userInfo['nickname']], 'bind_spread_uid']);
 
-                                //自定义事件-绑定关系
+                                //Sự kiện tùy chỉnh - Liên kết quan hệ
                                 event('CustomEventListener', ['user_spread', [
                                     'uid' => $userInfo['uid'],
                                     'nickname' => $userInfo['nickname'],
@@ -192,7 +192,7 @@ class LoginServices extends BaseServices
             }
         }
         if (!$this->dao->update($userInfo['uid'], $data, 'uid')) {
-            throw new ApiException('修改失败');
+            throw new ApiException('Sửa thất bại');
         }
         return true;
     }
@@ -200,19 +200,19 @@ class LoginServices extends BaseServices
     public function verify(SmsService $services, $phone, $type, $time)
     {
         if ($this->dao->getOne(['account' => $phone, 'is_del' => 0]) && $type == 'register') {
-            throw new ApiException('手机号已注册');
+            throw new ApiException('Số điện thoại đã được đăng ký');
         }
         $code = rand(100000, 999999);
         $data['code'] = $code;
         $data['time'] = $time;
         $res = $services->send(true, $phone, $data, 'verify_code');
         if ($res !== true)
-            throw new ApiException('短信平台验证码发送失败');
+            throw new ApiException('Nền tảng SMS gửi mã xác thực thất bại');
         return $code;
     }
 
     /**
-     * H5用户注册
+     * Người dùng H5 đăng ký
      * @param $account
      * @param $password
      * @param $spread
@@ -225,7 +225,7 @@ class LoginServices extends BaseServices
     public function register($account, $password, $spread, $user_type = 'h5')
     {
         if ($this->dao->getOne(['account|phone' => $account, 'is_del' => 0])) {
-            throw new ApiException('手机号已注册');
+            throw new ApiException('Số điện thoại đã được đăng ký');
         }
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
@@ -259,13 +259,13 @@ class LoginServices extends BaseServices
         $data['country'] = '';
         $data['status'] = 1;
         if (!$re = $this->dao->save($data)) {
-            throw new ApiException('注册失败');
+            throw new ApiException('Đăng ký thất bại');
         } else {
             $userServices->rewardNewUser((int)$re->uid);
-            //用户生成后置事件
+            //Sự kiện sau khi tạo người dùng
             event('UserRegisterListener', [$spread, $user_type, $data['nickname'], $re->uid, 1]);
 
-            //自定义事件-用户注册
+            //Sự kiện tùy chỉnh - Người dùng đăng ký
             event('CustomEventListener', ['user_register', [
                 'uid' => $re->uid,
                 'nickname' => $data['nickname'],
@@ -275,10 +275,10 @@ class LoginServices extends BaseServices
             ]]);
 
             if ($spread) {
-                //推送消息
+                //Đẩy tin nhắn
                 event('NoticeListener', [['spreadUid' => $spread, 'user_type' => $user_type, 'nickname' => $data['nickname']], 'bind_spread_uid']);
 
-                //自定义事件-绑定关系
+                //Sự kiện tùy chỉnh - Liên kết quan hệ
                 event('CustomEventListener', ['user_spread', [
                     'uid' => $re->uid,
                     'nickname' => $data['nickname'],
@@ -292,7 +292,7 @@ class LoginServices extends BaseServices
     }
 
     /**
-     * 重置密码
+     * Đặt lại mật khẩu
      * @param $account
      * @param $password
      * @return bool
@@ -304,16 +304,16 @@ class LoginServices extends BaseServices
     {
         $user = $this->dao->getOne(['account|phone' => $account, 'is_del' => 0], 'uid');
         if (!$user) {
-            throw new ApiException('用户不存在');
+            throw new ApiException('Người dùng không tồn tại');
         }
         if (!$this->dao->update($user['uid'], ['pwd' => md5((string)$password)], 'uid')) {
-            throw new ApiException('修改密码失败');
+            throw new ApiException('Đổi mật khẩu thất bại');
         }
         return true;
     }
 
     /**
-     * 手机号登录
+     * Đăng nhập bằng số điện thoại
      * @param $phone
      * @param $spread
      * @param string $user_type
@@ -324,19 +324,19 @@ class LoginServices extends BaseServices
      */
     public function mobile($phone, $spread, string $user_type = 'h5', $agent_id = 0)
     {
-        //数据库查询
+        //Truy vấn cơ sở dữ liệu
         $user = $this->dao->getOne(['account|phone' => $phone, 'is_del' => 0]);
         if (!$user) {
             $user = $this->register($phone, '123456', $spread, $user_type);
             if (!$user) {
-                throw new ApiException('用户登录失败,无法生成新用户,请稍后再试');
+                throw new ApiException('Đăng nhập thất bại, không thể tạo người dùng mới, vui lòng thử lại sau');
             }
         }
 
         if (!$user->status)
-            throw new ApiException('您已被禁止登录，请联系管理员');
+            throw new ApiException('Bạn đã bị cấm đăng nhập, vui lòng liên hệ quản trị viên');
 
-        // 设置推广关系
+        // Đặt quan hệ giới thiệu
         if ($agent_id) {
             $this->updateUserInfo(['code' => $agent_id, 'is_staff' => 1], $user);
         } else {
@@ -347,12 +347,12 @@ class LoginServices extends BaseServices
         if ($token) {
             return ['token' => $token['token'], 'expires_time' => $token['params']['exp']];
         } else {
-            throw new ApiException('登录失败');
+            throw new ApiException('Đăng nhập thất bại');
         }
     }
 
     /**
-     * 切换登录
+     * Chuyển đổi đăng nhập
      * @param $user
      * @param $from
      * @return array
@@ -366,31 +366,31 @@ class LoginServices extends BaseServices
             $where = [['phone', '=', $user['phone']], ['user_type', '<>', 'h5'], ['is_del', '=', 0]];
             $login_type = 'wechat';
         } else {
-            //数据库查询
+            //Truy vấn cơ sở dữ liệu
             $where = [['account|phone', '=', $user['phone']], ['user_type', '=', 'h5'], ['is_del', '=', 0]];
             $login_type = 'h5';
         }
         $switch_user = $this->dao->getOne($where);
         if (!$switch_user) {
-            return app('json')->fail('用户不存在,无法切换');
+            return app('json')->fail('Người dùng không tồn tại, không thể chuyển đổi');
         }
         if (!$switch_user->status) {
-            return app('json')->fail('您已被禁止登录，请联系管理员');
+            return app('json')->fail('Bạn đã bị cấm đăng nhập, vui lòng liên hệ quản trị viên');
         }
         $edit_data = ['login_type' => $login_type];
         if (!$this->dao->update($switch_user['uid'], $edit_data, 'uid')) {
-            throw new ApiException('修改新用户登录类型出错');
+            throw new ApiException('Lỗi khi sửa loại đăng nhập của người dùng mới');
         }
         $token = $this->createToken((int)$switch_user['uid'], 'api');
         if ($token) {
             return ['token' => $token['token'], 'expires_time' => $token['params']['exp']];
         } else {
-            throw new ApiException('登录失败');
+            throw new ApiException('Đăng nhập thất bại');
         }
     }
 
     /**
-     * 绑定手机号(静默还没写入用户信息)
+     * Liên kết số điện thoại (âm thầm, chưa ghi vào thông tin người dùng)
      * @param $phone
      * @param string $key
      * @return array
@@ -401,16 +401,16 @@ class LoginServices extends BaseServices
     public function bindind_phone($phone, string $key = '')
     {
         if (!$key) {
-            throw new ApiException('请刷新页面或者重新授权');
+            throw new ApiException('Vui lòng tải lại trang hoặc ủy quyền lại');
         }
         [$openid, $wechatInfo, $spreadId, $agent_id, $login_type, $userType] = $createData = CacheService::get($key);
         if (!$createData) {
-            throw new ApiException('请刷新页面或者重新授权');
+            throw new ApiException('Vui lòng tải lại trang hoặc ủy quyền lại');
         }
         $wechatInfo['phone'] = $phone;
         /** @var WechatUserServices $wechatUser */
         $wechatUser = app()->make(WechatUserServices::class);
-        //更新用户信息
+        //Cập nhật thông tin người dùng
         $user = $wechatUser->wechatOauthAfter([$openid, $wechatInfo, $spreadId, $agent_id, $login_type, $userType]);
         $token = $this->createToken((int)$user['uid'], 'api');
         if ($token) {
@@ -420,11 +420,11 @@ class LoginServices extends BaseServices
                 'expires_time' => $token['params']['exp'],
             ];
         } else
-            return app('json')->fail('登录失败');
+            return app('json')->fail('Đăng nhập thất bại');
     }
 
     /**
-     * 用户绑定手机号
+     * Người dùng liên kết số điện thoại
      * @param int $uid
      * @param $phone
      * @param $step
@@ -437,29 +437,29 @@ class LoginServices extends BaseServices
     {
         $userInfo = $this->dao->get($uid);
         if (!$userInfo) {
-            throw new ApiException('用户不存在');
+            throw new ApiException('Người dùng không tồn tại');
         }
         if ($this->dao->getOne([['phone', '=', $phone], ['user_type', '<>', 'h5'], ['is_del', '=', 0]])) {
-            throw new ApiException('此手机已经绑定，无法多次绑定');
+            throw new ApiException('Số điện thoại này đã được liên kết, không thể liên kết nhiều lần');
         }
         if ($userInfo->phone) {
-            throw new ApiException('您的账号已经绑定过手机号码');
+            throw new ApiException('Tài khoản của bạn đã liên kết số điện thoại');
         }
         $data = [];
         if ($this->dao->getOne(['account' => $phone, 'phone' => $phone, 'user_type' => 'h5', 'is_del' => 0])) {
-            if (!$step) return ['msg' => 'H5已有账号是否绑定此账号上', 'data' => ['is_bind' => 1]];
+            if (!$step) return ['msg' => 'Đã có tài khoản H5, có muốn liên kết vào tài khoản này không', 'data' => ['is_bind' => 1]];
         } else {
             $data['account'] = $phone;
         }
         $data['phone'] = $phone;
         if ($this->dao->update($userInfo['uid'], $data, 'uid') || $userInfo->phone == $phone)
-            return ['msg' => '绑定成功', 'data' => []];
+            return ['msg' => 'Liên kết thành công', 'data' => []];
         else
-            throw new ApiException('绑定失败');
+            throw new ApiException('Liên kết thất bại');
     }
 
     /**
-     * 用户绑定手机号
+     * Người dùng liên kết số điện thoại
      * @param int $uid
      * @param $phone
      * @return array
@@ -471,25 +471,25 @@ class LoginServices extends BaseServices
     {
         $userInfo = $this->dao->get(['uid' => $uid, 'is_del' => 0]);
         if (!$userInfo) {
-            throw new ApiException('用户不存在');
+            throw new ApiException('Người dùng không tồn tại');
         }
         if ($userInfo->phone == $phone) {
-            throw new ApiException('新手机号和原手机号相同，无需修改');
+            throw new ApiException('Số điện thoại mới trùng với số hiện tại, không cần thay đổi');
         }
         if ($this->dao->getOne([['phone', '=', $phone], ['is_del', '=', 0]])) {
-            throw new ApiException('此手机已经注册');
+            throw new ApiException('Số điện thoại này đã được đăng ký');
         }
         $data = [];
         $data['phone'] = $phone;
         $data['account'] = $phone;
         if ($this->dao->update($userInfo['uid'], $data, 'uid'))
-            return ['msg' => '修改成功', 'data' => []];
+            return ['msg' => 'Sửa thành công', 'data' => []];
         else
-            throw new ApiException('修改失败');
+            throw new ApiException('Sửa thất bại');
     }
 
     /**
-     * 远程注册登录
+     * Đăng ký đăng nhập từ xa
      * @param string $out_token
      * @return array
      * @throws \Psr\SimpleCache\InvalidArgumentException
@@ -543,7 +543,7 @@ class LoginServices extends BaseServices
         if ($token) {
             return ['token' => $token['token'], 'expires_time' => $token['params']['exp']];
         } else {
-            throw new ApiException('登录失败');
+            throw new ApiException('Đăng nhập thất bại');
         }
     }
 }

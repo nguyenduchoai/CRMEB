@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="configObj">
-      <c_title :configObj="configObj" title="数据样式"></c_title>
+      <c_title :configObj="configObj" title="Kiểu trình bày dữ liệu"></c_title>
       <!-- Background Config -->
       <div v-if="configObj.componentBgDataConfig">
         <c_radio :configObj="configObj" configNme="componentBgDataConfig"></c_radio>

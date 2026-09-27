@@ -1,5 +1,5 @@
 <template>
-  <!-- 新闻播报 -->
+  <!-- Bản tin -->
   <common-wrapper :config="configData" v-if="newsList.length">
     <view
       class="news"
@@ -21,7 +21,7 @@
           class="more"
           @click="moreTab(linkConfig)"
           :style="[moreStyle]"
-          >{{ $t(`更多`) }}<text class="iconfont icon-ic_rightarrow"></text
+          >{{ $t(`Xem thêm`) }}<text class="iconfont icon-ic_rightarrow"></text
         ></view>
       </view>
       <view class="news-bottom">

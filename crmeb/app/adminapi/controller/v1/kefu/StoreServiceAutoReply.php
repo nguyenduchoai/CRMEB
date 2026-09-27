@@ -1,15 +1,15 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 /**
- * @author: 吴汐
+ * @author: Wu Xi
  * @email: 442384644@qq.com
  * @date: 2023/8/3
  */
@@ -23,7 +23,7 @@ class StoreServiceAutoReply extends AuthController
 {
     /**
      * @return \think\Response
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/3
      */
@@ -39,14 +39,14 @@ class StoreServiceAutoReply extends AuthController
     }
 
     /**
-     * 获取自动回复表单
+     * Lấy form trả lời tự động
      * @param int $id
      * @return \think\Response
      * @throws \FormBuilder\Exception\FormBuilderException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/3
      */
@@ -56,10 +56,10 @@ class StoreServiceAutoReply extends AuthController
     }
 
     /**
-     * 保存自动回复
+     * Lưu trả lời tự động
      * @param int $id
      * @return \think\Response
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/3
      */
@@ -72,20 +72,20 @@ class StoreServiceAutoReply extends AuthController
             ['status', 1],
         ]);
         app()->make(WechatReplyServices::class)->autoReplySave($id, $data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     /**
-     * 删除自动回复
+     * Xóa trả lời tự động
      * @param $id
      * @return \think\Response
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/3
      */
     public function autoReplyDel($id)
     {
         app()->make(WechatReplyServices::class)->autoReplyDel($id);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 }

@@ -10,7 +10,7 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="提货点名称：">
+          <el-form-item label="Tên điểm nhận hàng:">
             <el-select v-model="artFrom.store_id" clearable @change="userSearchs" class="form_content_width">
               <el-option v-for="item in storeSelectList" :value="item.id" :key="item.id" :label="item.name"></el-option>
             </el-select>
@@ -19,49 +19,49 @@
       </div>
     </el-card>
     <el-card :bordered="false" shadow="never" class="ivu-mt">
-      <el-button v-auth="['merchant-store_staff-create']" type="primary" v-db-click @click="add">添加核销员</el-button>
+      <el-button v-auth="['merchant-store_staff-create']" type="primary" v-db-click @click="add">Thêm nhân viên xác nhận</el-button>
       <el-table
         :data="storeLists"
         ref="table"
         class="mt14"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column label="ID" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="头像" min-width="90">
+        <el-table-column label="Ảnh đại diện" min-width="90">
           <template slot-scope="scope">
             <div class="tabBox_img" v-viewer>
               <img v-lazy="scope.row.avatar" />
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="用户名称" min-width="130">
+        <el-table-column label="Tên người dùng" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.nickname }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="核销员名称" min-width="130">
+        <el-table-column label="Tên nhân viên xác nhận" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.staff_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="所属提货点" min-width="130">
+        <el-table-column label="Điểm nhận hàng trực thuộc" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="添加时间" min-width="130">
+        <el-table-column label="Thời gian thêm" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.add_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="状态" min-width="150">
+        <el-table-column label="Trạng thái" min-width="150">
           <template slot-scope="scope">
             <el-switch
               class="defineSwitch"
@@ -71,17 +71,17 @@
               :value="scope.row.status"
               @change="onchangeIsShow(scope.row.id, scope.row.status)"
               size="large"
-              active-text="开启"
-              inactive-text="关闭"
+              active-text="Bật"
+              inactive-text="Tắt"
             >
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="170">
+        <el-table-column label="Thao tác" fixed="right" width="170">
           <template slot-scope="scope">
-            <a v-db-click @click="edit(scope.row.id)">编辑</a>
+            <a v-db-click @click="edit(scope.row.id)">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除核销员', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa nhân viên xác nhận', scope.$index)">Xóa</a>
           </template>
         </el-table-column>
       </el-table>
@@ -164,12 +164,12 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 搜索；
+    // Tìm kiếm;
     userSearchs() {
       this.artFrom.page = 1;
       this.getList();
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -187,7 +187,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 添加核销员；
+    // Thêm nhân viên xác nhận sử dụng;
     add() {
       this.$modalForm(storeStaffCreateApi(0)).then(() => this.getList());
     },

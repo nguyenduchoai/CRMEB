@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,7 +20,7 @@ use think\facade\Route as Url;
 
 /**
  * Class SystemCrudDataService
- * @author 等风来
+ * @author Deng Fenglai
  * @email 136327134@qq.com
  * @date 2023/7/28
  * @package app\services\system
@@ -38,13 +38,13 @@ class SystemCrudDataService extends BaseServices
     }
 
     /**
-     * 获取全部数据
+     * Lấy toàn bộ dữ liệu
      * @return array
      * @throws \ReflectionException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/1
      */
@@ -61,7 +61,7 @@ class SystemCrudDataService extends BaseServices
     }
 
     /**
-     * 获取数据字典列表
+     * Lấy danh sách từ điển dữ liệu
      * @param $cid
      * @return array
      * @throws \ReflectionException
@@ -89,7 +89,7 @@ class SystemCrudDataService extends BaseServices
     }
 
     /**
-     * 格式化获取数据字典列表
+     * Định dạng lấy danh sách từ điển dữ liệu
      * @param $data
      * @param int $pid
      * @param array $navList
@@ -114,7 +114,7 @@ class SystemCrudDataService extends BaseServices
     }
 
     /**
-     * 数据字典内容添加修改表单
+     * Form thêm/sửa nội dung từ điển dữ liệu
      * @param $cid
      * @param int $id
      * @param int $pid
@@ -144,20 +144,20 @@ class SystemCrudDataService extends BaseServices
                 $data = get_tree_value($dataList, $pid);
             }
             $dataList = get_tree_children($dataList, 'children', 'value');
-            array_unshift($dataList, ['value' => 0, 'pid' => 0, 'label' => '顶级']);
-            $field[] = Form::cascader('pid', '上级', array_reverse($data))->options($dataList)->filterable(true)->props(['props' => ['multiple' => false, 'checkStrictly' => true, 'emitPath' => true]]);
+            array_unshift($dataList, ['value' => 0, 'pid' => 0, 'label' => 'Cấp cao nhất']);
+            $field[] = Form::cascader('pid', 'Mục cha', array_reverse($data))->options($dataList)->filterable(true)->props(['props' => ['multiple' => false, 'checkStrictly' => true, 'emitPath' => true]]);
         } else {
             $field[] = Form::hidden('pid', 0);
         }
-        $field[] = Form::input('name', '名称', $info['name'] ?? '')->required();
+        $field[] = Form::input('name', 'Tên', $info['name'] ?? '')->required();
         $count = $this->dao->count(['cid' => $cid]);
-        $field[] = Form::input('value', '值', $info['value'] ?? $count)->required();
-        $field[] = Form::input('sort', '排序', $info['sort'] ?? 0)->required();
-        return create_form($id ? '编辑' : '新增', $field, Url::buildUrl('/system/crud/data_dictionary/info_save/' . $cid . '/' . $id), 'POST');
+        $field[] = Form::input('value', 'Giá trị', $info['value'] ?? $count)->required();
+        $field[] = Form::input('sort', 'Thứ tự sắp xếp', $info['sort'] ?? 0)->required();
+        return create_form($id ? 'Sửa' : 'Thêm mới', $field, Url::buildUrl('/system/crud/data_dictionary/info_save/' . $cid . '/' . $id), 'POST');
     }
 
     /**
-     * 数据字典内容添加修改
+     * Thêm sửa nội dung từ điển dữ liệu
      * @param $cid
      * @param $id
      * @param $data
@@ -180,7 +180,7 @@ class SystemCrudDataService extends BaseServices
     }
 
     /**
-     * 数据字典内容删除
+     * Xóa nội dung từ điển dữ liệu
      * @param $id
      * @return bool
      * @throws \ReflectionException
@@ -192,7 +192,7 @@ class SystemCrudDataService extends BaseServices
     {
         $count = $this->dao->count(['pid' => $id]);
         if ($count) {
-            throw new AdminException('请先删除子级');
+            throw new AdminException('Vui lòng xóa các mục con trước');
         }
         $this->dao->delete($id);
         return true;

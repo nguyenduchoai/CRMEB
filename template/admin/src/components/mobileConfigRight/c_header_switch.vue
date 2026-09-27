@@ -5,8 +5,8 @@
       <el-switch
         class="defineSwitch"
         v-model="configData.enable"
-        active-text="开启"
-        inactive-text="关闭"
+        active-text="Bật"
+        inactive-text="Tắt"
         @change="handleChange"
       ></el-switch>
     </div>

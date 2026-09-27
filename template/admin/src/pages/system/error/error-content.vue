@@ -8,7 +8,7 @@
         <div>
           <h1 class="num">{{ code }}</h1>
           <div class="desc">{{ desc }}</div>
-          <el-button type="primary" size="large" v-db-click @click="backHome">返回首页</el-button>
+          <el-button type="primary" size="large" v-db-click @click="backHome">Về trang chủ</el-button>
         </div>
       </el-col>
     </el-row>

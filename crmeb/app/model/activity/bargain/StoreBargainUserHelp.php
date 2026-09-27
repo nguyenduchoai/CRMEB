@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,20 +16,20 @@ use crmeb\traits\ModelTrait;
 use think\Model;
 
 /**
- * TODO 砍价帮砍Model
+ * TODO Model giúp giảm giá
  * Class StoreBargainUserHelp
  * @package app\model\activity
  */
 class StoreBargainUserHelp extends BaseModel
 {
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'store_bargain_user_help';
@@ -37,7 +37,7 @@ class StoreBargainUserHelp extends BaseModel
     use ModelTrait;
 
     /**
-     * 用户搜索器
+     * Bộ lọc người dùng
      * @param Model $query
      * @param $value
      * @param $data
@@ -48,7 +48,7 @@ class StoreBargainUserHelp extends BaseModel
     }
 
     /**
-     * 商品ID搜索器
+     * Bộ lọc ID sản phẩm
      * @param Model $query
      * @param $value
      * @param $data
@@ -59,7 +59,7 @@ class StoreBargainUserHelp extends BaseModel
     }
 
     /**
-     * 砍价ID搜索器
+     * Bộ lọc ID săn giảm giá
      * @param $query
      * @param $value
      */
@@ -69,7 +69,7 @@ class StoreBargainUserHelp extends BaseModel
     }
 
     /**
-     * 砍价ID搜索器
+     * Bộ lọc ID săn giảm giá
      * @param $query
      * @param $value
      */

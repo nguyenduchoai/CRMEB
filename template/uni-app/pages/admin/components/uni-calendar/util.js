@@ -8,29 +8,29 @@ class Calendar {
 		endDate,
 		range
 	} = {}) {
-		// 当前日期
-		this.date = this.getDate(date) // 当前初入日期
-		// 打点信息
+		// Ngày hiện tại
+		this.date = this.getDate(date) // Ngày mới vào hiện tại
+		// Thông tin đánh dấu
 		this.selected = selected || [];
-		// 范围开始
+		// Bắt đầu phạm vi
 		this.startDate = startDate
-		// 范围结束
+		// Kết thúc phạm vi
 		this.endDate = endDate
 		this.range = range
-		// 多选状态
+		// Trạng thái chọn nhiều
 		this.multipleStatus = {
 			before: '',
 			after: '',
 			data: []
 		}
-		// 每周日期
+		// Ngày trong tuần
 		this.weeks = {}
 
 		this._getWeek(this.date.fullDate)
 	}
 
 	/**
-	 * 获取任意时间
+	 * Lấy thời gian bất kỳ
 	 */
 	getDate(date, AddDayCount = 0, str = 'day') {
 		if (!date) {
@@ -42,22 +42,22 @@ class Calendar {
 		const dd = new Date(date)
 		switch (str) {
 			case 'day':
-				dd.setDate(dd.getDate() + AddDayCount) // 获取AddDayCount天后的日期
+				dd.setDate(dd.getDate() + AddDayCount) // Lấy ngày sau AddDayCount ngày
 				break
 			case 'month':
 				if (dd.getDate() === 31) {
 					dd.setDate(dd.getDate() + AddDayCount)
 				} else {
-					dd.setMonth(dd.getMonth() + AddDayCount) // 获取AddDayCount天后的日期
+					dd.setMonth(dd.getMonth() + AddDayCount) // Lấy ngày sau AddDayCount ngày
 				}
 				break
 			case 'year':
-				dd.setFullYear(dd.getFullYear() + AddDayCount) // 获取AddDayCount天后的日期
+				dd.setFullYear(dd.getFullYear() + AddDayCount) // Lấy ngày sau AddDayCount ngày
 				break
 		}
 		const y = dd.getFullYear()
-		const m = dd.getMonth() + 1 < 10 ? '0' + (dd.getMonth() + 1) : dd.getMonth() + 1 // 获取当前月份的日期，不足10补0
-		const d = dd.getDate() < 10 ? '0' + dd.getDate() : dd.getDate() // 获取当前几号，不足10补0
+		const m = dd.getMonth() + 1 < 10 ? '0' + (dd.getMonth() + 1) : dd.getMonth() + 1 // Lấy ngày của tháng hiện tại, nhỏ hơn 10 thì thêm số 0
+		const d = dd.getDate() < 10 ? '0' + dd.getDate() : dd.getDate() // Lấy ngày hiện tại là mùng mấy, nhỏ hơn 10 thì thêm số 0
 		return {
 			fullDate: y + '-' + m + '-' + d,
 			year: y,
@@ -69,7 +69,7 @@ class Calendar {
 
 
 	/**
-	 * 获取上月剩余天数
+	 * Lấy số ngày còn lại của tháng trước
 	 */
 	_getLastMonthDays(firstDay, full) {
 		let dateArr = []
@@ -85,7 +85,7 @@ class Calendar {
 		return dateArr
 	}
 	/**
-	 * 获取本月天数
+	 * Lấy số ngày của tháng này
 	 */
 	_currentMonthDys(dateData, full) {
 		let dateArr = []
@@ -95,16 +95,16 @@ class Calendar {
 			let nowDate = full.year + '-' + (full.month < 10 ?
 				full.month : full.month) + '-' + (i < 10 ?
 				'0' + i : i)
-			// 是否今天
+			// Có phải hôm nay hay không
 			let isDay = fullDate === nowDate
-			// 获取打点信息
+			// Lấy thông tin đánh dấu
 			let info = this.selected && this.selected.find((item) => {
 				if (this.dateEqual(nowDate, item.date)) {
 					return item
 				}
 			})
 
-			// 日期禁用
+			// Vô hiệu hóa ngày
 			let disableBefore = true
 			let disableAfter = true
 			if (this.startDate) {
@@ -150,7 +150,7 @@ class Calendar {
 		return dateArr
 	}
 	/**
-	 * 获取下月天数
+	 * Lấy số ngày của tháng sau
 	 */
 	_getNextMonthDays(surplus, full) {
 		let dateArr = []
@@ -165,14 +165,14 @@ class Calendar {
 		return dateArr
 	}
 	/**
-	 * 设置日期
+	 * Đặt ngày
 	 * @param {Object} date
 	 */
 	setDate(date) {
 		this._getWeek(date)
 	}
 	/**
-	 * 获取当前日期详情
+	 * Lấy chi tiết ngày hiện tại
 	 * @param {Object} date
 	 */
 	getInfo(date) {
@@ -184,12 +184,12 @@ class Calendar {
 	}
 
 	/**
-	 * 比较时间大小
+	 * So sánh lớn nhỏ thời gian
 	 */
 	dateCompare(startDate, endDate) {
-		// 计算截止时间
+		// Tính thời gian kết thúc
 		startDate = new Date(startDate.replace('-', '/').replace('-', '/'))
-		// 计算详细项的截止时间
+		// Tính thời gian kết thúc của mục chi tiết
 		endDate = new Date(endDate.replace('-', '/').replace('-', '/'))
 		if (startDate <= endDate) {
 			return true
@@ -199,12 +199,12 @@ class Calendar {
 	}
 
 	/**
-	 * 比较时间是否相等
+	 * So sánh thời gian có bằng nhau hay không
 	 */
 	dateEqual(before, after) {
-		// 计算截止时间
+		// Tính thời gian kết thúc
 		before = new Date(before.replace('-', '/').replace('-', '/'))
-		// 计算详细项的截止时间
+		// Tính thời gian kết thúc của mục chi tiết
 		after = new Date(after.replace('-', '/').replace('-', '/'))
 		if (before.getTime() - after.getTime() === 0) {
 			return true
@@ -215,7 +215,7 @@ class Calendar {
 
 
 	/**
-	 * 获取日期范围内所有日期
+	 * Lấy tất cả ngày trong phạm vi ngày
 	 * @param {Object} begin
 	 * @param {Object} end
 	 */
@@ -236,13 +236,13 @@ class Calendar {
 		return arr
 	}
 	/**
-	 * 计算阴历日期显示
+	 * Tính hiển thị ngày âm lịch
 	 */
 	getlunar(year, month, date) {
 		return CALENDAR.solar2lunar(year, month, date)
 	}
 	/**
-	 * 设置打点
+	 * Đặt đánh dấu
 	 */
 	setSelectInfo(data, value) {
 		this.selected = value
@@ -250,7 +250,7 @@ class Calendar {
 	}
 
 	/**
-	 *  获取多选状态
+	 *  Lấy trạng thái chọn nhiều
 	 */
 	setMultiple(fullDate) {
 		let {
@@ -279,7 +279,7 @@ class Calendar {
 	}
 
 	/**
-	 * 获取每周数据
+	 * Lấy dữ liệu theo tuần
 	 * @param {Object} dateData
 	 */
 	_getWeek(dateData) {
@@ -293,9 +293,9 @@ class Calendar {
 		let firstDay = new Date(year, month - 1, 1).getDay()
 		let currentDay = new Date(year, month, 0).getDate()
 		let dates = {
-			lastMonthDays: this._getLastMonthDays(firstDay, this.getDate(dateData)), // 上个月末尾几天
-			currentMonthDys: this._currentMonthDys(currentDay, this.getDate(dateData)), // 本月天数
-			nextMonthDays: [], // 下个月开始几天
+			lastMonthDays: this._getLastMonthDays(firstDay, this.getDate(dateData)), // Vài ngày cuối tháng trước
+			currentMonthDys: this._currentMonthDys(currentDay, this.getDate(dateData)), // Số ngày tháng này
+			nextMonthDays: [], // Vài ngày đầu tháng sau
 			weeks: []
 		}
 		let canlender = []
@@ -303,7 +303,7 @@ class Calendar {
 		dates.nextMonthDays = this._getNextMonthDays(surplus, this.getDate(dateData))
 		canlender = canlender.concat(dates.lastMonthDays, dates.currentMonthDys, dates.nextMonthDays)
 		let weeks = {}
-		// 拼接数组  上个月开始几天 + 本月天数+ 下个月开始几天
+		// Ghép mảng: vài ngày đầu tháng trước + số ngày tháng này + vài ngày đầu tháng sau
 		for (let i = 0; i < canlender.length; i++) {
 			if (i % 7 === 0) {
 				weeks[parseInt(i / 7)] = new Array(7)
@@ -314,7 +314,7 @@ class Calendar {
 		this.weeks = weeks
 	}
 
-	//静态方法
+	//Phương thức tĩnh (static)
 	// static init(date) {
 	// 	if (!this.instance) {
 	// 		this.instance = new Calendar(date);

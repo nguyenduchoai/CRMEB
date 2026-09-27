@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -72,12 +72,12 @@ class SpreadApplyServices extends BaseServices
 
     public function applyPromoter($data, $id, $userInfo)
     {
-        if (!sys_config('brokerage_func_status')) throw new ApiException('未开启推广功能');
-        if (sys_config('store_brokerage_statu') != 1) throw new ApiException('非指定分销模式无需申请推广员');
-        if ($userInfo['is_promoter']) throw new ApiException('您已经是推广员');
+        if (!sys_config('brokerage_func_status')) throw new ApiException('Chưa bật tính năng giới thiệu');
+        if (sys_config('store_brokerage_statu') != 1) throw new ApiException('Không phải chế độ tiếp thị liên kết chỉ định, không cần đăng ký làm CTV');
+        if ($userInfo['is_promoter']) throw new ApiException('Bạn đã là CTV');
         if ($data['phone'] != $userInfo['phone']) {
             $phoneUsed = app()->make(UserServices::class)->count(['phone' => $data['phone']]);
-            if ($phoneUsed) throw new ApiException('该手机号已被使用');
+            if ($phoneUsed) throw new ApiException('Số điện thoại này đã được sử dụng');
         }
         if ($id) {
             $data['status'] = 0;
@@ -87,7 +87,7 @@ class SpreadApplyServices extends BaseServices
             $res = $this->dao->save($data);
             $id = $res->id;
         }
-        if (!$res) throw new ApiException('申请失败');
+        if (!$res) throw new ApiException('Gửi yêu cầu thất bại');
         return $id;
     }
 

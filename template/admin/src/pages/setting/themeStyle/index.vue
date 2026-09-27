@@ -4,7 +4,7 @@
       <span class="ivu-page-header-title mr20">{{ $route.meta.title }}</span>
       <div>
         <div style="float: right">
-          <el-button class="bnt" type="primary" v-db-click @click="submit">保存</el-button>
+          <el-button class="bnt" type="primary" v-db-click @click="submit">Lưu</el-button>
         </div>
       </div>
     </div>
@@ -38,7 +38,7 @@
       </div>
     </el-card>
     <!--<div class="footer acea-row row-center-wrapper">-->
-    <!--<el-button type="primary" v-db-click @click="submit">保存</el-button>-->
+    <!--<el-button type="primary" v-db-click @click="submit">Lưu</el-button>-->
     <!--</div>-->
   </div>
 </template>
@@ -58,11 +58,11 @@ export default {
         xs: 24,
       },
       tabList: [
-        { tit: '天空蓝', class: 'blue' },
-        { tit: '生鲜绿', class: 'green' },
-        { tit: '热情红', class: 'red' },
-        { tit: '魅力粉', class: 'pink' },
-        { tit: '活力橙', class: 'orange' },
+        { tit: 'Xanh da trời', class: 'blue' },
+        { tit: 'Xanh lá tươi', class: 'green' },
+        { tit: 'Đỏ nồng nhiệt', class: 'red' },
+        { tit: 'Hồng quyến rũ', class: 'pink' },
+        { tit: 'Cam năng động', class: 'orange' },
       ],
       picList: [
         { image: require('@/assets/images/bule.jpg') },
@@ -91,7 +91,7 @@ export default {
   },
   mounted: function () {
     this.$nextTick(() => {
-      this.clientHeight = `${document.documentElement.clientHeight}` - 250; //获取浏览器可视区域高度
+      this.clientHeight = `${document.documentElement.clientHeight}` - 250; //Lấy chiều cao vùng hiển thị của trình duyệt
       let that = this;
       window.onresize = function () {
         that.clientHeight = `${document.documentElement.clientHeight}` - 250;

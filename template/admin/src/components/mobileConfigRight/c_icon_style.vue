@@ -1,18 +1,18 @@
 <template>
   <div class="icon-style-config" v-if="configData">
-    <!-- <div class="title">{{ configData.title || '图标样式' }}</div> -->
+    <!-- <div class="title">{{ configData.title || 'Kiểu biểu tượng' }}</div> -->
 
-    <!-- 图标颜色 -->
+    <!-- Màu biểu tượng -->
     <div class="config-item" v-if="configData.color">
       <span class="item-label">{{ configData.color.title }}</span>
       <div class="color-box">
         <el-color-picker v-model="configData.color.color[0].item" size="small"></el-color-picker>
         <el-input class="input" v-model="configData.color.color[0].item" />
-        <span class="reset" @click="configData.color.color[0].item = configData.color.default[0].item">重置</span>
+        <span class="reset" @click="configData.color.color[0].item = configData.color.default[0].item">Đặt lại</span>
       </div>
     </div>
 
-    <!-- 图标大小 -->
+    <!-- Kích thước biểu tượng -->
     <div class="config-item" v-if="configData.size">
       <span class="item-label">{{ configData.size.title }}</span>
       <div class="slider-box">
@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <!-- 图标位置 -->
+    <!-- Vị trí biểu tượng -->
     <div class="config-item" v-if="configData.position">
       <span class="item-label">{{ configData.position.title }}</span>
       <div class="radio-box">
@@ -37,7 +37,7 @@
       </div>
     </div>
 
-    <!-- 内边距 -->
+    <!-- Lề trong -->
     <div class="config-item" v-if="configData.padding">
       <span class="item-label">{{ configData.padding.title }}</span>
       <div class="slider-box">
@@ -50,7 +50,7 @@
       </div>
     </div>
 
-    <!-- 旋转角度 -->
+    <!-- Góc xoay -->
     <div class="config-item" v-if="configData.rotate">
       <span class="item-label">{{ configData.rotate.title }}</span>
       <div class="slider-box">
@@ -63,7 +63,7 @@
       </div>
     </div>
 
-    <!-- 阴影 -->
+    <!-- Đổ bóng -->
     <div class="config-item" v-if="configData.shadow">
       <span class="item-label">{{ configData.shadow.title }}</span>
       <el-radio-group v-model="configData.shadow.tabVal">

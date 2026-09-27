@@ -9,7 +9,7 @@
           type="text"
           v-db-click
           @click="$router.go(-1)"
-          >返回</el-button
+          >Quay lại</el-button
         >
         <el-divider direction="vertical"></el-divider>
         <span class="ivu-page-header-title">{{ $route.meta.title }}</span>
@@ -25,7 +25,7 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="时间选择：">
+          <el-form-item label="Chọn thời gian:">
             <el-date-picker
               clearable
               v-model="timeVal"
@@ -34,22 +34,22 @@
               @change="onchangeTime"
               format="yyyy/MM/dd"
               value-format="yyyy/MM/dd"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              start-placeholder="Ngày bắt đầu"
+              end-placeholder="Ngày kết thúc"
               :picker-options="pickerOptions"
               style="width: 250px"
             ></el-date-picker>
           </el-form-item>
-          <el-form-item label="奖品类型：">
+          <el-form-item label="Loại giải thưởng:">
             <el-select type="button" v-model="tableFrom.type" @change="selectType" class="form_content_width" clearable>
               <el-option v-for="(item, i) in typeList" :key="i" :label="item.text" :value="item.val"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="搜索用户：" label-for="store_name">
-            <el-input clearable placeholder="请输入用户信息" v-model="tableFrom.keyword" class="form_content_width" />
+          <el-form-item label="Tìm kiếm người dùng:" label-for="store_name">
+            <el-input clearable placeholder="Vui lòng nhập thông tin người dùng" v-model="tableFrom.keyword" class="form_content_width" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="userSearchs">查询</el-button>
+            <el-button type="primary" v-db-click @click="userSearchs">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -59,20 +59,20 @@
         :data="tableList"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column label="ID" width="80">
           <template slot-scope="scope">
             <div>{{ scope.row.id }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="用户信息" min-width="90">
+        <el-table-column label="Thông tin người dùng" min-width="90">
           <template slot-scope="scope">
             <span>{{ scope.row.user.nickname }} </span>
           </template>
         </el-table-column>
-        <el-table-column label="奖品信息" min-width="130">
+        <el-table-column label="Thông tin giải thưởng" min-width="130">
           <template slot-scope="scope">
             <div class="prize">
               <img :src="scope.row.prize.image" alt="" />
@@ -80,36 +80,36 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="抽奖时间" min-width="100">
+        <el-table-column label="Thời gian quay thưởng" min-width="100">
           <template slot-scope="scope">
             <div>{{ scope.row.add_time }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="收货信息" min-width="100">
+        <el-table-column label="Thông tin nhận hàng" min-width="100">
           <template slot-scope="scope">
             <div v-if="scope.row.receive_info.name">
-              <div>姓名：{{ scope.row.receive_info.name }}</div>
-              <div>电话：{{ scope.row.receive_info.phone }}</div>
-              <div>地址：{{ scope.row.receive_info.address }}</div>
-              <div v-if="scope.row.receive_info.mark">备注：{{ scope.row.receive_info.mark }}</div>
+              <div>Họ tên: {{ scope.row.receive_info.name }}</div>
+              <div>Điện thoại: {{ scope.row.receive_info.phone }}</div>
+              <div>Địa chỉ: {{ scope.row.receive_info.address }}</div>
+              <div v-if="scope.row.receive_info.mark">Ghi chú: {{ scope.row.receive_info.mark }}</div>
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="备注" min-width="100">
+        <el-table-column label="Ghi chú" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.deliver_info.mark }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="120">
+        <el-table-column label="Thao tác" fixed="right" width="120">
           <template slot-scope="scope">
             <a v-db-click @click="deliver(scope.row, 1)" v-if="scope.row.type == 6 && scope.row.is_deliver === 0"
-              >发货</a
+              >Giao hàng</a
             >
             <a v-else-if="scope.row.type == 6 && scope.row.is_deliver === 1" v-db-click @click="isDeliver(scope.row)"
-              >配送信息</a
+              >Thông tin giao hàng</a
             >
             <el-divider direction="vertical" v-if="scope.row.type == 6" />
-            <a v-db-click @click="deliver(scope.row, 2)">备注</a>
+            <a v-db-click @click="deliver(scope.row, 2)">Ghi chú</a>
           </template>
         </el-table-column>
       </el-table>
@@ -123,11 +123,11 @@
         />
       </div>
     </el-card>
-    <!-- 发货-->
+    <!-- Giao hàng-->
     <el-dialog
       :visible.sync="shipModel"
       width="540px"
-      :title="!modelTitle ? (modelType === 1 ? '发货' : '备注') : modelTitle"
+      :title="!modelTitle ? (modelType === 1 ? 'Giao hàng' : 'Ghi chú') : modelTitle"
       :close-on-click-modal="false"
     >
       <el-form
@@ -137,25 +137,25 @@
         :rules="modelType === 1 ? ruleShip : ruleMark"
         label-width="90px"
       >
-        <el-form-item v-if="modelType === 1" label="快递公司：" prop="deliver_name">
+        <el-form-item v-if="modelType === 1" label="Đơn vị vận chuyển:" prop="deliver_name">
           <el-select v-model="shipForm.deliver_name" class="w100">
             <el-option v-for="item in locationList" :value="item.value" :key="item.id" :label="item.value"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item v-if="modelType === 1" label="快递单号：" prop="deliver_number">
-          <el-input v-model="shipForm.deliver_number" placeholder="请输入快递单号" class="w100"></el-input>
-          <div class="tips-info" v-if="shipForm.deliver_name == '顺丰速运'">
-            <p>顺丰请输入单号 :收件人或寄件人手机号后四位</p>
-            <p>例如：SF000000000000:3941</p>
+        <el-form-item v-if="modelType === 1" label="Mã vận đơn:" prop="deliver_number">
+          <el-input v-model="shipForm.deliver_number" placeholder="Vui lòng nhập mã vận đơn" class="w100"></el-input>
+          <div class="tips-info" v-if="shipForm.deliver_name == 'SF Express'">
+            <p>Với SF Express, vui lòng nhập mã vận đơn: 4 số cuối số điện thoại người nhận hoặc người gửi</p>
+            <p>Ví dụ: SF000000000000:3941</p>
           </div>
         </el-form-item>
-        <el-form-item v-if="modelType === 2" label="备注：">
-          <el-input v-model="markForm.mark" placeholder="请输入备注" class="w100"></el-input>
+        <el-form-item v-if="modelType === 2" label="Ghi chú:">
+          <el-input v-model="markForm.mark" placeholder="Vui lòng nhập ghi chú" class="w100"></el-input>
         </el-form-item>
         <el-form-item>
           <div class="acea-row row-right">
-            <el-button v-db-click @click="cancel('formValidate')">关闭</el-button>
-            <el-button type="primary" v-db-click @click="ok(modelType === 1 ? 'shipForm' : 'markForm')">提交</el-button>
+            <el-button v-db-click @click="cancel('formValidate')">Tắt</el-button>
+            <el-button type="primary" v-db-click @click="ok(modelType === 1 ? 'shipForm' : 'markForm')">Gửi</el-button>
           </div>
         </el-form-item>
       </el-form>
@@ -197,13 +197,13 @@ export default {
       ruleMark: ruleMark,
       pickerOptions: this.$timeOptions,
       typeList: [
-        { text: '全部', val: '' },
-        { text: '未中奖', val: '1' },
-        { text: '积分', val: '2' },
-        { text: '余额', val: '3' },
-        { text: '红包', val: '4' },
-        { text: '优惠券', val: '5' },
-        { text: '商品', val: '6' },
+        { text: 'Tất cả', val: '' },
+        { text: 'Không trúng thưởng', val: '1' },
+        { text: 'Điểm thưởng', val: '2' },
+        { text: 'Số dư', val: '3' },
+        { text: 'Lì xì', val: '4' },
+        { text: 'Phiếu giảm giá', val: '5' },
+        { text: 'Sản phẩm', val: '6' },
       ],
       tableList: [],
       grid: {
@@ -256,7 +256,7 @@ export default {
       this.markForm.id = row.id;
       this.shipForm.id = row.id;
       this.modelType = 1;
-      this.modelTitle = '配送信息';
+      this.modelTitle = 'Thông tin giao hàng';
       this.shipModel = true;
       this.shipForm.deliver_name = row.deliver_info.deliver_name;
       this.shipForm.deliver_number = row.deliver_info.deliver_number;
@@ -265,7 +265,7 @@ export default {
       this.$refs[name].validate((valid) => {
         lotteryRecordDeliver(this.modelType == 1 ? this.shipForm : this.markForm)
           .then((res) => {
-            this.$message.success('操作成功');
+            this.$message.success('Thao tác thành công');
             this.shipModel = false;
             this.getList();
             this.shipForm = {
@@ -289,7 +289,7 @@ export default {
       this.modelTitle = '';
       this.shipModel = false;
     },
-    // 物流公司列表
+    // Danh sách đơn vị vận chuyển
     getExpressData() {
       getExpressData()
         .then(async (res) => {
@@ -299,14 +299,14 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e || [];
       this.tableFrom.time = this.timeVal[0] ? (this.timeVal ? this.timeVal.join('-') : '') : '';
       this.tableFrom.page = 1;
       this.getList();
     },
-    // 选择时间
+    // Chọn giờ
     selectChange(tab) {
       this.tableFrom.page = 1;
       this.tableFrom.time = tab;
@@ -323,7 +323,7 @@ export default {
       this.timeVal = [];
       this.getList();
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       lotteryRecordList(this.tableFrom)
@@ -338,7 +338,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.tableFrom.page = 1;
       this.getList();

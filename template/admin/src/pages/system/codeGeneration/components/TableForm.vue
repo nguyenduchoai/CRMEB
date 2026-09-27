@@ -1,26 +1,26 @@
 <template>
   <div class="main">
     <el-alert closable class="mb14">
-      <template v-slot:title>crud生成说明</template>
+      <template v-slot:title>Hướng dẫn tạo crud</template>
       <template>
         <p>
-          1、字段配置中表存在生成的字段为表内列的信息,并且主键、伪删除字段不允许设置为列，主键默认展示在列表中，伪删除字段不允许展示
+          1. Trong cấu hình trường, nếu bảng đã tồn tại thì các trường được tạo là thông tin các cột trong bảng, đồng thời khóa chính, trường xóa mềm không được đặt làm cột, khóa chính mặc định hiển thị trong danh sách, trường xóa mềm không được phép hiển thị
         </p>
-        <p>2、在字段配置中新建表时，主键不需要增加列，会自动增加一行主键id</p>
-        <p>3、在字段配置中，表单类型为不生成时创建后不会生成对应的表单项</p>
-        <p>4、添加字段id、create_time、update_time、delete_time为不可用字段</p>
+        <p>2. Khi tạo bảng mới trong cấu hình trường, không cần thêm cột cho khóa chính, hệ thống sẽ tự động thêm một dòng khóa chính id</p>
+        <p>3. Trong cấu hình trường, khi loại biểu mẫu là “Không tạo” thì sau khi tạo sẽ không sinh mục biểu mẫu tương ứng</p>
+        <p>4. Khi thêm trường, id, create_time, update_time, delete_time là các tên trường không khả dụng</p>
       </template>
     </el-alert>
     <div class="df mb14">
-      <el-button class="mr20" type="primary" v-db-click @click="addRow">添加一行</el-button>
-      <el-checkbox class="mr10" v-model="isCreate" @change="addCreate">添加与修改时间</el-checkbox>
-      <el-checkbox class="mr10" v-model="isDelete" @change="addDelete">伪删除</el-checkbox>
+      <el-button class="mr20" type="primary" v-db-click @click="addRow">Thêm một dòng</el-button>
+      <el-checkbox class="mr10" v-model="isCreate" @change="addCreate">Thời gian thêm và sửa</el-checkbox>
+      <el-checkbox class="mr10" v-model="isDelete" @change="addDelete">Xóa mềm</el-checkbox>
     </div>
     <div>
       <el-table
         ref="selection"
         :data="tableField"
-        empty-text="暂无数据"
+        empty-text="Chưa có dữ liệu"
         highlight-current-row
         v-loading="loading"
         max-height="600"
@@ -33,7 +33,7 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="表单名" min-width="130">
+        <el-table-column label="Tên biểu mẫu" min-width="130">
           <template slot-scope="scope">
             <el-input
               v-model="scope.row.table_name"
@@ -42,7 +42,7 @@
             ></el-input>
           </template>
         </el-table-column>
-        <el-table-column label="表单类型" min-width="130">
+        <el-table-column label="Loại biểu mẫu" min-width="130">
           <template slot-scope="scope">
             <el-select
               clearable
@@ -59,7 +59,7 @@
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column label="数据字典" min-width="130">
+        <el-table-column label="Từ điển dữ liệu" min-width="130">
           <template slot-scope="scope">
             <div class="table-options" v-if="['select', 'radio', 'checkbox'].includes(scope.row.from_type)">
               <el-select clearable v-model="scope.row.dictionary_id">
@@ -75,7 +75,7 @@
             <div v-else>--</div>
           </template>
         </el-table-column>
-        <el-table-column label="必填" width="50">
+        <el-table-column label="Bắt buộc" width="50">
           <template slot-scope="scope">
             <el-checkbox
               v-model="scope.row.required"
@@ -84,14 +84,14 @@
           </template>
         </el-table-column>
 
-        <el-table-column label="查询方式" min-width="130">
+        <el-table-column label="Kiểu tra cứu" min-width="130">
           <template slot-scope="scope">
             <el-select
               clearable
               v-model="scope.row.search"
               :disabled="disabledInput(scope.$index)"
               slot="prepend"
-              placeholder="请选择"
+              placeholder="Vui lòng chọn"
             >
               <el-option
                 :label="item.label"
@@ -102,7 +102,7 @@
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column label="列表" width="50">
+        <el-table-column label="Danh sách" width="50">
           <template slot-scope="scope">
             <el-checkbox
               v-model="scope.row.is_table"
@@ -110,7 +110,7 @@
             ></el-checkbox>
           </template>
         </el-table-column>
-        <el-table-column label="字段名称" min-width="120">
+        <el-table-column label="Tên trường" min-width="120">
           <template slot-scope="scope">
             <el-input
               :disabled="disabledInput(scope.$index)"
@@ -119,7 +119,7 @@
             ></el-input>
           </template>
         </el-table-column>
-        <el-table-column label="字段类型" min-width="130">
+        <el-table-column label="Loại trường" min-width="130">
           <template slot-scope="scope">
             <el-select
               v-model="scope.row.field_type"
@@ -131,7 +131,7 @@
             </el-select>
           </template>
         </el-table-column>
-        <el-table-column label="长度" min-width="80">
+        <el-table-column label="Độ dài" min-width="80">
           <template slot-scope="scope">
             <el-input
               v-if="scope.row.field_type !== 'enum'"
@@ -146,11 +146,11 @@
               allow-create
               clearable
               default-first-option
-              placeholder="请添加"
+              placeholder="Vui lòng thêm"
             />
           </template>
         </el-table-column>
-        <el-table-column label="默认值" min-width="180">
+        <el-table-column label="Giá trị mặc định" min-width="180">
           <template slot-scope="scope">
             <el-input
               class="input-with-select"
@@ -163,7 +163,7 @@
                 v-model="scope.row.default_type"
                 slot="prepend"
                 :disabled="disabledInput(scope.$index)"
-                placeholder="请选择"
+                placeholder="Vui lòng chọn"
                 style="width: 100px"
               >
                 <el-option
@@ -177,13 +177,13 @@
             <!-- <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"> </el-option> -->
           </template>
         </el-table-column>
-        <el-table-column label="字段描述" min-width="130">
+        <el-table-column label="Mô tả trường" min-width="130">
           <template slot-scope="scope">
             <el-input v-model="scope.row.comment" :disabled="disabledInput(scope.$index)"></el-input>
           </template>
         </el-table-column>
 
-        <el-table-column label="关联表" min-width="130">
+        <el-table-column label="Bảng liên kết" min-width="130">
           <template slot-scope="scope">
             <el-cascader
               clearable
@@ -195,7 +195,7 @@
             ></el-cascader>
           </template>
         </el-table-column>
-        <el-table-column label="索引" width="50">
+        <el-table-column label="Chỉ mục" width="50">
           <template slot-scope="scope">
             <el-checkbox
               v-model="scope.row.index"
@@ -203,10 +203,10 @@
             ></el-checkbox>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="100">
+        <el-table-column label="Thao tác" fixed="right" width="100">
           <template slot-scope="scope">
             <a v-if="!scope.row.primaryKey && !disabledInput(scope.$index)" v-db-click @click="del(row, scope.$index)"
-              >删除</a
+              >Xóa</a
             >
             <span v-else>--</span>
           </template>
@@ -215,7 +215,7 @@
     </div>
     <el-dialog
       :visible.sync="optionsModal"
-      title="字典配置"
+      title="Cấu hình từ điển"
       @close="beforeChange"
       :close-on-click-modal="false"
       width="600px"
@@ -223,29 +223,29 @@
       <div class="options-list">
         <el-form ref="form" :inline="true" label-width="80px">
           <div class="mb10">
-            <el-form-item label="字典名称：">
-              <el-input class="mr10" v-model="dictionaryName" placeholder="字典名称" style="width: 310px" />
+            <el-form-item label="Tên từ điển:">
+              <el-input class="mr10" v-model="dictionaryName" placeholder="Tên từ điển" style="width: 310px" />
             </el-form-item>
           </div>
           <div class="item" v-for="(item, index) in optionsList" :key="index">
-            <el-form-item label="数据名称：">
+            <el-form-item label="Tên dữ liệu:">
               <el-input class="mr10" v-model="item.label" placeholder="label" style="width: 150px" />
             </el-form-item>
-            <el-form-item label="数据值：">
+            <el-form-item label="Giá trị dữ liệu:">
               <el-input class="mr10" v-model="item.value" placeholder="value" style="width: 150px" />
             </el-form-item>
             <div style="display: inline-block; margin-bottom: 14px">
               <i
                 v-if="index == optionsList.length - 1"
                 class="el-icon-circle-plus-outline add"
-                title="新增"
+                title="Thêm mới"
                 v-db-click
                 @click="addOneOptions"
               />
               <i
                 v-if="index > 0"
                 class="el-icon-remove-outline delete"
-                title="删除"
+                title="Xóa"
                 v-db-click
                 @click="delOneOptions(index)"
               />
@@ -254,8 +254,8 @@
         </el-form>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button v-db-click @click="optionsModal = false">取 消</el-button>
-        <el-button type="primary" v-db-click @click="addOptions">确 定</el-button>
+        <el-button v-db-click @click="optionsModal = false">Hủy</el-button>
+        <el-button type="primary" v-db-click @click="addOptions">Xác nhận</el-button>
       </span>
     </el-dialog>
   </div>
@@ -302,9 +302,9 @@ export default {
       index: 0,
       deleteField: [],
       searchType: [],
-      dictionaryName: '', // 字典名称
-      defaultType: [], // 默认类型
-      associationTable: [], // 关联表
+      dictionaryName: '', // Tên từ điển
+      defaultType: [], // Loại mặc định
+      associationTable: [], // Bảng liên kết
       dictionaryList: [],
       props: {
         lazy: true,
@@ -317,7 +317,7 @@ export default {
               resolve(res.data);
             });
           }
-          // 通过调用resolve将子节点数据返回，通知组件数据加载完成
+          // Gọi resolve để trả về dữ liệu nút con, thông báo thành phần đã tải xong dữ liệu
         },
       },
     };
@@ -335,7 +335,7 @@ export default {
       this.getCrudDataDictionary();
     },
     setSort() {
-      // ref一定跟table上面的ref一致
+      // ref phải khớp với ref ở trên table
       const el = this.$refs.selection.$el.querySelectorAll('.el-table__body-wrapper > table > tbody')[0];
       this.sortable = Sortable.create(el, {
         ghostClass: 'sortable-ghost',
@@ -343,7 +343,7 @@ export default {
         setData: function (dataTransfer) {
           dataTransfer.setData('Text', '');
         },
-        // 监听拖拽事件结束时触发
+        // Kích hoạt khi sự kiện kéo thả kết thúc
         onEnd: (evt) => {
           if (evt.newIndex === 0) {
             setTimeout(() => {
@@ -391,10 +391,10 @@ export default {
     },
     changeItemField(e, i) {
       if (e === 'addSoftDelete') {
-        this.$set(this.tableField[i], 'comment', '伪删除');
+        this.$set(this.tableField[i], 'comment', 'Xóa mềm');
       }
       if (e === 'addTimestamps') {
-        this.$set(this.tableField[i], 'comment', '添加和修改时间');
+        this.$set(this.tableField[i], 'comment', 'Thời gian thêm và sửa');
       }
     },
     eidtOptions(i) {
@@ -434,7 +434,7 @@ export default {
       for (let i = 0; i < this.tableField.length; i++) {
         const el = this.tableField[i];
         if ((!el.field || !el.field_type) && !['addTimestamps', 'addSoftDelete'].includes(el.field_type)) {
-          return this.$message.warning('请先完善上一条数据');
+          return this.$message.warning('Vui lòng hoàn thiện dữ liệu dòng trước');
         }
         if (
           el.is_table &&
@@ -442,7 +442,7 @@ export default {
           !Number(el.primaryKey) &&
           !['addTimestamps', 'addSoftDelete'].includes(el.field_type)
         ) {
-          return this.$message.warning('请输入列表名');
+          return this.$message.warning('Vui lòng nhập tên danh sách');
         }
       }
       let i = this.tableField.length;
@@ -483,7 +483,7 @@ export default {
           this.$nextTick((e) => {
             this.isCreate = false;
           });
-          return this.$message.warning('已存在 create_time或update_time');
+          return this.$message.warning('Đã tồn tại create_time hoặc update_time');
         }
         let data = [
           {
@@ -491,10 +491,10 @@ export default {
             field_type: 'timestamp',
             default: '',
             default_type: '-1',
-            comment: '添加时间',
+            comment: 'Thời gian thêm',
             required: false,
             is_table: false,
-            table_name: '添加时间',
+            table_name: 'Thời gian thêm',
             limit: '',
             primaryKey: 0,
             from_type: '',
@@ -508,10 +508,10 @@ export default {
             field_type: 'timestamp',
             default_type: '-1',
             default: '',
-            comment: '修改时间',
+            comment: 'Thời gian sửa',
             required: false,
             is_table: false,
-            table_name: '修改时间',
+            table_name: 'Thời gian sửa',
             limit: '',
             primaryKey: 0,
             from_type: '',
@@ -532,7 +532,7 @@ export default {
         let haveDel = this.tableField.findIndex((e) => e.field === 'delete_time');
         if (haveDel > 0) {
           this.isDelete = false;
-          return this.$message.warning('已存在 delete_time');
+          return this.$message.warning('Đã tồn tại delete_time');
         }
         let data = [
           {
@@ -540,10 +540,10 @@ export default {
             field_type: 'timestamp',
             default: '',
             default_type: '-1',
-            comment: '伪删除',
+            comment: 'Xóa mềm',
             required: false,
             is_table: false,
-            table_name: '伪删除',
+            table_name: 'Xóa mềm',
             limit: '',
             primaryKey: 0,
             from_type: '',
@@ -564,7 +564,7 @@ export default {
         for (let i = 0; i < this.tableField.length; i++) {
           const e = this.tableField[i];
           if (['id', 'create_time', 'update_time', 'delete_time'].includes(this.tableField[index].field)) {
-            this.$message.warning('列表中已存在该字段名称');
+            this.$message.warning('Tên trường này đã tồn tại trong danh sách');
             this.tableField[index].field = '';
             return;
           }

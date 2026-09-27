@@ -483,7 +483,7 @@ class Form
             if (is_null($field) || $field === '')
                 continue;
             else if (isset($fields[$field]))
-                throw new FormBuilderException('组件的 field 不能重复');
+                throw new FormBuilderException('Thuộc tính field của thành phần không được trùng lặp');
             else
                 $fields[$field] = true;
         }

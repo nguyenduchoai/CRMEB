@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use crmeb\basic\BaseModel;
 use think\Model;
 
 /**
- * TODO 文章Model
+ * TODO Model bài viết
  * Class Article
  * @package app\model\article
  */
@@ -25,19 +25,19 @@ class Article extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'article';
 
     /**
-     * 商品一对一关联
+     * Liên kết một-một với sản phẩm
      * @return \think\model\relation\HasOne
      */
     public function storeInfo()
@@ -47,7 +47,7 @@ class Article extends BaseModel
     }
 
     /**
-     * 文章详情一对一关联
+     * Liên kết một-một với chi tiết bài viết
      * @return \think\model\relation\HasOne
      */
     public function content()
@@ -56,7 +56,7 @@ class Article extends BaseModel
     }
 
     /**
-     * 文章详情一对一关联
+     * Liên kết một-một với chi tiết bài viết
      * @return \think\model\relation\HasOne
      */
     public function cateName()
@@ -65,7 +65,7 @@ class Article extends BaseModel
     }
 
     /**
-     * 文章图片获取器
+     * Getter hình ảnh bài viết
      * @param $value
      * @return array|false|string[]
      */
@@ -75,7 +75,7 @@ class Article extends BaseModel
     }
 
     /**
-     * 文章分类搜索器
+     * Bộ lọc danh mục bài viết
      * @param Model $query
      * @param $value
      * @param $data
@@ -92,7 +92,7 @@ class Article extends BaseModel
     }
 
     /**
-     * 文章标题搜索器
+     * Bộ lọc tiêu đề bài viết
      * @param Model $query
      * @param $value
      * @param $data
@@ -105,7 +105,7 @@ class Article extends BaseModel
     }
 
     /**
-     * 热门文章搜索器
+     * Bộ lọc bài viết nổi bật
      * @param Model $query
      * @param $value
      * @param $data
@@ -118,7 +118,7 @@ class Article extends BaseModel
     }
 
     /**
-     * 轮播文章搜索器
+     * Bộ lọc bài viết trình chiếu
      * @param Model $query
      * @param $value
      * @param $data

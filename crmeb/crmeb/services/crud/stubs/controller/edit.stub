@@ -1,5 +1,5 @@
     /**
-     * 编辑获取数据
+     * Lấy dữ liệu để sửa
      * @param $id
      * @return \think\Response
      * @date {%DATE%}

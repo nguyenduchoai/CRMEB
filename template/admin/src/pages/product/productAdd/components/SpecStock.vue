@@ -1,14 +1,14 @@
 <template>
-  <!-- 规格库存 -->
+  <!-- Phân loại và tồn kho -->
   <el-row :gutter="24">
     <el-col :span="24">
-      <el-form-item label="规格类型：" props="spec_type">
+      <el-form-item label="Kiểu phân loại:" props="spec_type">
         <el-radio-group v-model="formValidate.spec_type" @input="changeSpec">
-          <el-radio :label="0" class="radio">单规格</el-radio>
-          <el-radio :label="1">多规格</el-radio>
+          <el-radio :label="0" class="radio">Một quy cách</el-radio>
+          <el-radio :label="1">Nhiều quy cách</el-radio>
         </el-radio-group>
         <el-dropdown v-if="formValidate.spec_type == 1" class="ml20" @command="confirm" trigger="hover">
-          <span class="el-dropdown-link"> 选择规格模版<i class="el-icon-arrow-down el-icon--right"></i> </span>
+          <span class="el-dropdown-link"> Chọn mẫu phân loại<i class="el-icon-arrow-down el-icon--right"></i> </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item v-for="(item, index) in ruleList" :key="index" :command="item.rule_name">{{
               item.rule_name
@@ -17,9 +17,9 @@
         </el-dropdown>
       </el-form-item>
     </el-col>
-    <!-- 规格设置 -->
+    <!-- Thiết lập quy cách -->
     <el-col :span="24" v-if="formValidate.spec_type === 1" class="noForm">
-      <el-form-item label="商品规格：" prop="">
+      <el-form-item label="Phân loại sản phẩm:" prop="">
         <div class="specifications">
           <draggable
             group="specifications"
@@ -44,7 +44,7 @@
                 <div class="specifications-item-name mb18">
                   <el-input
                     v-model="item.value"
-                    placeholder="规格名称"
+                    placeholder="Tên quy cách"
                     @change="attrChangeValue(index, item.value)"
                     @focus="handleFocus(item.value)"
                     class="specifications-item-name-input"
@@ -58,12 +58,12 @@
                     :true-label="1"
                     :false-label="0"
                     @change="(e) => addPic(e, index)"
-                    >添加规格图</el-checkbox
+                    >Thêm ảnh phân loại</el-checkbox
                   >
                   <el-tooltip
                     class="item"
                     effect="dark"
-                    content="添加规格图片, 仅支持打开一个(建议尺寸:800*800)"
+                    content="Thêm ảnh phân loại, chỉ hỗ trợ bật cho một nhóm phân loại (kích thước đề xuất: 800*800)"
                     placement="right"
                   >
                     <i class="el-icon-info"></i>
@@ -83,7 +83,7 @@
                       <el-input
                         style="width: 120px"
                         v-model="det.value"
-                        placeholder="规格值"
+                        placeholder="Giá trị phân loại"
                         @change="attrDetailChangeValue(det.value, index)"
                         @focus="handleFocus(det.value)"
                         maxlength="30"
@@ -111,7 +111,7 @@
                     >
                       <el-input
                         :ref="'inputRef_' + index"
-                        placeholder="请输入规格值"
+                        placeholder="Vui lòng nhập giá trị phân loại"
                         v-model="formDynamic.attrsVal"
                         @keyup.enter.native="createAttr(formDynamic.attrsVal, index)"
                         @blur="createAttr(formDynamic.attrsVal, index)"
@@ -119,22 +119,22 @@
                         show-word-limit
                       >
                       </el-input>
-                      <div class="addfont" slot="reference" type="text" v-db-click>添加规格值</div>
+                      <div class="addfont" slot="reference" type="text" v-db-click>Thêm giá trị phân loại</div>
                     </el-popover>
                   </draggable>
                 </div>
               </div>
             </div>
           </draggable>
-          <el-button v-if="attrs.length < 4" v-db-click @click="handleAddRole()">添加新规格</el-button>
+          <el-button v-if="attrs.length < 4" v-db-click @click="handleAddRole()">Thêm phân loại mới</el-button>
           <el-button v-if="attrs.length >= 1" type="text" v-db-click @click="handleSaveAsTemplate()"
-            >另存为模板</el-button
+            >Lưu thành mẫu</el-button
           >
         </div>
       </el-form-item>
     </el-col>
     <el-col :span="24" v-if="formValidate.spec_type === 1">
-      <el-form-item label="商品属性：" class="labeltop" v-if="manyFormValidate.length">
+      <el-form-item label="Thuộc tính sản phẩm:" class="labeltop" v-if="manyFormValidate.length">
         <VirtualScroll
           :data="manyFormValidate"
           :buffer="50"
@@ -161,11 +161,11 @@
               :fixed="item.fixed"
             >
               <template slot-scope="scope">
-                <!-- 批量设置 -->
+                <!-- Thiết lập hàng loạt -->
                 <template v-if="scope.$index == 0">
                   <template v-if="item.key">
                     <div v-if="attrs.length && attrs[scope.column.index] && manyFormValidate.length">
-                      <el-select v-model="oneFormBatch[0][item.title]" :placeholder="`请选择${item.title}`" clearable>
+                      <el-select v-model="oneFormBatch[0][item.title]" :placeholder="`Vui lòng chọn ${item.title}`" clearable>
                         <el-option
                           v-for="val in attrs[scope.column.index].detail"
                           :key="val.value"
@@ -257,9 +257,9 @@
                   </template>
                   <template v-else-if="item.slot === 'selected_spec'"> -- </template>
                   <template v-else-if="item.slot === 'action'">
-                    <a v-db-click @click="batchAdd">批量修改</a>
+                    <a v-db-click @click="batchAdd">Sửa hàng loạt</a>
                     <el-divider direction="vertical"></el-divider>
-                    <a v-db-click @click="batchDel">清空</a>
+                    <a v-db-click @click="batchDel">Xóa hết</a>
                   </template>
                 </template>
                 <template v-else>
@@ -345,7 +345,7 @@
                       v-if="!manyFormValidate[scope.$index].coupon_id && formValidate.virtual_type == 2"
                       v-db-click
                       @click="addGoodsCoupon(scope.$index, 'manyFormValidate')"
-                      >选择优惠券</el-button
+                      >Chọn phiếu giảm giá</el-button
                     >
                     <span
                       class="see"
@@ -362,7 +362,7 @@
                       "
                       v-db-click
                       @click="addVirtual(scope.$index, 'manyFormValidate')"
-                      >添加卡密</el-button
+                      >Thêm mã thẻ</el-button
                     >
                     <span
                       class="see"
@@ -372,7 +372,7 @@
                       "
                       v-db-click
                       @click="see(manyFormValidate[scope.$index], 'manyFormValidate', scope.$index)"
-                      >已设置</span
+                      >Đã thiết lập</span
                     >
                   </template>
 
@@ -388,8 +388,8 @@
                     <el-switch
                       class="defineSwitch"
                       v-model="manyFormValidate[scope.$index].is_show"
-                      active-text="显示"
-                      inactive-text="隐藏"
+                      active-text="Hiện"
+                      inactive-text="Ẩn"
                       :active-value="1"
                       :inactive-value="0"
                       @change="changeDefaultShow(scope.$index)"
@@ -403,10 +403,10 @@
       </el-form-item>
     </el-col>
     <!-- ------------------------------------------------- -->
-    <!-- 单规格表格-->
+    <!-- Bảng quy cách đơn-->
     <div v-if="formValidate.spec_type === 0">
       <el-col :span="24">
-        <el-form-item label="图片：">
+        <el-form-item label="Hình ảnh:">
           <div class="pictrueBox" v-db-click @click="modalPicTap('dan', 'danTable', 0)">
             <div class="pictrue" v-if="oneFormValidate[0].pic">
               <img v-lazy="oneFormValidate[0].pic" />
@@ -420,7 +420,7 @@
         </el-form-item>
       </el-col>
       <el-col :span="24">
-        <el-form-item label="售价：">
+        <el-form-item label="Giá bán:">
           <el-input-number
             :controls="false"
             v-model="oneFormValidate[0].price"
@@ -429,12 +429,12 @@
             :max="9999999999"
             class="input_width input-number-unit-class"
             :active-change="false"
-            class-unit="元"
+            class-unit="đ"
           ></el-input-number>
         </el-form-item>
       </el-col>
       <el-col :span="24">
-        <el-form-item label="成本价：">
+        <el-form-item label="Giá vốn:">
           <el-input-number
             :controls="false"
             v-model="oneFormValidate[0].cost"
@@ -443,12 +443,12 @@
             :precision="2"
             :active-change="false"
             class="input_width input-number-unit-class"
-            class-unit="元"
+            class-unit="đ"
           ></el-input-number>
         </el-form-item>
       </el-col>
       <el-col :span="24">
-        <el-form-item label="划线价：">
+        <el-form-item label="Giá gốc:">
           <el-input-number
             :controls="false"
             v-model="oneFormValidate[0].ot_price"
@@ -457,12 +457,12 @@
             :precision="2"
             :active-change="false"
             class="input_width input-number-unit-class"
-            class-unit="元"
+            class-unit="đ"
           ></el-input-number>
         </el-form-item>
       </el-col>
       <el-col :span="24">
-        <el-form-item label="库存：">
+        <el-form-item label="Tồn kho:">
           <el-input-number
             :controls="false"
             v-model="oneFormValidate[0].stock"
@@ -471,22 +471,22 @@
             :disabled="formValidate.virtual_type == 1"
             :precision="0"
             class="input_width input-number-unit-class"
-            :class-unit="formValidate.unit_name || '件'"
+            :class-unit="formValidate.unit_name || 'cái'"
           ></el-input-number>
         </el-form-item>
       </el-col>
       <el-col :span="24">
-        <el-form-item label="商品编码：">
+        <el-form-item label="Mã sản phẩm:">
           <el-input v-model.trim="oneFormValidate[0].bar_code" class="input_width"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="24">
-        <el-form-item label="条形码：">
+        <el-form-item label="Mã vạch:">
           <el-input v-model.trim="oneFormValidate[0].bar_code_number" class="input_width"></el-input>
         </el-form-item>
       </el-col>
       <el-col :span="24" v-if="formValidate.virtual_type == 0">
-        <el-form-item label="重量：">
+        <el-form-item label="Trọng lượng:">
           <el-input-number
             :controls="false"
             v-model="oneFormValidate[0].weight"
@@ -498,7 +498,7 @@
         </el-form-item>
       </el-col>
       <el-col :span="24">
-        <el-form-item label="体积：" v-if="formValidate.virtual_type == 0">
+        <el-form-item label="Thể tích:" v-if="formValidate.virtual_type == 0">
           <el-input-number
             :controls="false"
             v-model="oneFormValidate[0].volume"
@@ -512,14 +512,14 @@
 
       <el-col :span="24">
         <el-form-item
-          :label="formValidate.virtual_type == 1 ? '添加卡密/网盘：' : '选择优惠券：'"
+          :label="formValidate.virtual_type == 1 ? 'Thêm mã thẻ/lưu trữ đám mây:' : 'Chọn phiếu giảm giá:'"
           v-if="formValidate.virtual_type == 1 || formValidate.virtual_type == 2"
         >
           <el-button
             v-if="!oneFormValidate[0].coupon_id && formValidate.virtual_type == 2"
             v-db-click
             @click="addGoodsCoupon(0, 'oneFormValidate')"
-            >选择优惠券</el-button
+            >Chọn phiếu giảm giá</el-button
           >
           <span
             class="see"
@@ -534,7 +534,7 @@
             "
             v-db-click
             @click="addVirtual(0, 'oneFormValidate')"
-            >添加卡密</el-button
+            >Thêm mã thẻ</el-button
           >
           <span
             class="see"
@@ -543,7 +543,7 @@
             "
             v-db-click
             @click="see(oneFormValidate[0], 'oneFormValidate', 0)"
-            >已设置</span
+            >Đã thiết lập</span
           >
         </el-form-item>
       </el-col>
@@ -676,14 +676,14 @@ export default {
     createAttr(data, index) {
       this.$emit('createAttr', data, index);
     },
-    // 生成列表 行 列 数据
+    // Tạo dữ liệu danh sách theo hàng cột
     tableCellClassName({ row, column, rowIndex, columnIndex }) {
-      //注意这里是解构
-      //利用单元格的 className 的回调方法，给行列索引赋值
+      //Chú ý ở đây là phép destructuring
+      //Dùng phương thức callback className của ô để gán giá trị chỉ số hàng cột
       row.index = rowIndex || '';
       column.index = columnIndex;
     },
-    // 规格图片添加开关
+    // Công tắc thêm ảnh quy cách
     addPic(e, i) {
       if (e) {
         this.attrs.map((item, ii) => {
@@ -696,11 +696,11 @@ export default {
         this.canSel = true;
       }
     },
-    // 合并单元格
+    // Hợp nhất ô
     objectSpanMethod({ row, column, rowIndex, columnIndex }) {
       if (columnIndex === 0 && rowIndex > 0) {
         let lable = column.label;
-        //这里判断第几列需要合并
+        //Ở đây kiểm tra cột thứ mấy cần hợp nhất
         const tagFamily = this.manyFormValidate[rowIndex].detail[lable];
         const index = this.manyFormValidate.findIndex((item, index) => {
           if (index > 0) return item.detail[lable] == tagFamily;

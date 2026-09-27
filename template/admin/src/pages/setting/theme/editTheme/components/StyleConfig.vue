@@ -1,17 +1,17 @@
 <template>
   <div class="style-config-container">
-    <!-- 左侧配置 -->
+    <!-- Cấu hình bên trái -->
     <div class="config-panel">
       <div class="panel-header">
-        <span class="title">当前风格：商城通用主题</span>
-        <el-button type="text" @click="openStyleDialog">更换风格</el-button>
-        <span class="restore-btn" @click="initData()"><i class="el-icon-refresh-left"></i> 还原主题</span>
+        <span class="title">Phong cách hiện tại: Chủ đề chung của cửa hàng</span>
+        <el-button type="text" @click="openStyleDialog">Đổi phong cách</el-button>
+        <span class="restore-btn" @click="initData()"><i class="el-icon-refresh-left"></i> Khôi phục chủ đề</span>
       </div>
 
       <div class="config-body">
         <div class="">
           <div class="config-item">
-            <div class="label">主题颜色</div>
+            <div class="label">Màu chủ đề</div>
             <div class="color-picker-row">
               <el-color-picker v-model="themeColor"></el-color-picker>
               <span class="color-value">{{ themeColor }}</span>
@@ -19,7 +19,7 @@
           </div>
 
           <div class="config-item">
-            <div class="label">渐变颜色</div>
+            <div class="label">Màu chuyển sắc</div>
             <div class="color-picker-row">
               <el-color-picker v-model="gradientColor"></el-color-picker>
               <span class="color-value">{{ gradientColor }}</span>
@@ -27,7 +27,7 @@
           </div>
 
           <div class="config-item">
-            <div class="label">辅助颜色</div>
+            <div class="label">Màu phụ</div>
             <div class="color-picker-row">
               <el-color-picker v-model="subColor"></el-color-picker>
               <span class="color-value">{{ subColor }}</span>
@@ -40,17 +40,17 @@
               <div class="qrcode-box" ref="qrCodeUrl"></div>
             </div>
           </div>
-          <div class="demo-tip">扫码查看完整演示</div>
+          <div class="demo-tip">Quét mã để xem bản demo đầy đủ</div>
         </div>
       </div>
     </div>
 
-    <!-- 右侧预览 -->
+    <!-- Xem trước bên phải -->
     <div class="preview-panel">
-      <div class="preview-title">预览效果</div>
+      <div class="preview-title">Xem trước hiệu ứng</div>
 
       <div class="preview-list">
-        <!-- 模拟预览图 0 1 2 -->
+        <!-- Ảnh xem trước mô phỏng 0 1 2 -->
         <div class="preview-item" v-for="i in [0, 1, 2]" :key="i">
           <div class="phone-mockup">
             <img
@@ -59,15 +59,15 @@
               alt="preview"
             />
             <div v-if="i == 0" class="buy-btn">
-              <div class="btn btn-outline" :style="{ background: subColor }">加入购物车</div>
-              <div class="btn btn-primary" :style="{ background: themeColor }">立即购买</div>
+              <div class="btn btn-outline" :style="{ background: subColor }">Thêm vào giỏ hàng</div>
+              <div class="btn btn-primary" :style="{ background: themeColor }">Mua ngay</div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 风格选择弹窗 -->
+    <!-- Hộp thoại chọn phong cách -->
     <el-dialog
       :visible.sync="styleDialogVisible"
       width="1188px"
@@ -83,7 +83,7 @@
       <div slot="title" v-if="!showDetail" class="dialog-header">
         <div class="dialog-header-tabs">
           <div class="tabs">
-            <span class="title">我的主题</span>
+            <span class="title">Chủ đề của tôi</span>
             <img
               class="title-icon"
               src="https://www.crmeb.com/static/images/zhutishichang.png"
@@ -96,9 +96,9 @@
       </div>
       <div v-else class="detail-header" slot="title">
         <div class="left-action">
-          <div class="back-btn" @click="backToStyleList"><i class="el-icon-arrow-left"></i> 返回</div>
+          <div class="back-btn" @click="backToStyleList"><i class="el-icon-arrow-left"></i> Quay lại</div>
           <div class="vertical-line"></div>
-          <span class="detail-title">风格详情</span>
+          <span class="detail-title">Chi tiết phong cách</span>
         </div>
       </div>
 
@@ -110,7 +110,7 @@
                 <div class="search-box">
                   <el-input
                     v-model="searchKeyword"
-                    placeholder="请输入主题名称"
+                    placeholder="Vui lòng nhập tên chủ đề"
                     prefix-icon="el-icon-search"
                     size="small"
                   ></el-input>
@@ -130,7 +130,7 @@
                   </div>
                   <div class="theme-info">
                     <div class="default-info">
-                      <div class="theme-title line1">{{ item.name || '无名称' }}</div>
+                      <div class="theme-title line1">{{ item.name || 'Không có tên' }}</div>
                       <div class="color-dots">
                         <span class="dot" :style="{ background: item.themeColor }"></span>
                         <span class="dot" :style="{ background: item.gradientColor }"></span>
@@ -138,8 +138,8 @@
                       </div>
                     </div>
                     <div class="hover-actions">
-                      <el-button plain size="small" @click="viewStyleDetail(item)">查看详情</el-button>
-                      <el-button type="primary" size="small" @click="handleStyleSelect(item)">使用风格</el-button>
+                      <el-button plain size="small" @click="viewStyleDetail(item)">Xem chi tiết</el-button>
+                      <el-button type="primary" size="small" @click="handleStyleSelect(item)">Dùng phong cách</el-button>
                     </div>
                   </div>
                 </div>
@@ -159,11 +159,11 @@
           </div>
         </div>
 
-        <!-- 详情视图 -->
+        <!-- View chi tiết -->
         <div class="detail-content" v-else key="detail">
           <div class="detail-body">
             <div class="detail-images-section">
-              <div class="section-title">页面预览</div>
+              <div class="section-title">Xem trước trang</div>
               <div class="images-list">
                 <div class="image-item" v-for="i in [0, 1, 2]" :key="i">
                   <div class="phone-mockup">
@@ -173,8 +173,8 @@
                       alt="preview"
                     />
                     <div v-if="i == 0" class="buy-btn">
-                      <div class="btn btn-outline" :style="{ background: selectedStyle.subColor }">加入购物车</div>
-                      <div class="btn btn-primary" :style="{ background: selectedStyle.themeColor }">立即购买</div>
+                      <div class="btn btn-outline" :style="{ background: selectedStyle.subColor }">Thêm vào giỏ hàng</div>
+                      <div class="btn btn-primary" :style="{ background: selectedStyle.themeColor }">Mua ngay</div>
                     </div>
                   </div>
                 </div>
@@ -258,7 +258,7 @@ export default {
       this.themeColor = item.theme_data?.theme_color || '#E93323';
       this.gradientColor = item.theme_data?.gradient_color || '#FF7F00';
       this.subColor = item.theme_data?.sub_color || '#FFC300';
-      this.$message.success('已应用风格颜色');
+      this.$message.success('Đã áp dụng màu phong cách');
       this.styleDialogVisible = false;
       this.showDetail = false;
     },
@@ -276,7 +276,7 @@ export default {
       this.styleDialogVisible = false;
       this.showDetail = false;
     },
-    // 生成二维码
+    // Tạo mã QR
     creatQrCode() {
       if (this.$refs.qrCodeUrl) {
         this.$refs.qrCodeUrl.innerHTML = '';
@@ -300,14 +300,14 @@ export default {
       return `rgba(${r}, ${g}, ${b}, ${opacity})`;
     },
     bgLight() {
-      //这里根据this.themeColor计算出一个该色值透明度为0.1的颜色
+      //Ở đây dựa vào this.themeColor tính ra màu cùng giá trị màu nhưng có độ trong suốt 0.1
       const hex = this.themeColor.replace('#', '');
       const r = parseInt(hex.substring(0, 2), 16);
       const g = parseInt(hex.substring(2, 4), 16);
       const b = parseInt(hex.substring(4, 6), 16);
       return `rgba(${r}, ${g}, ${b}, 0.1)`;
     },
-    // 初始化数据
+    // Khởi tạo dữ liệu
     initData() {
       this.$nextTick(() => {
         this.creatQrCode();
@@ -321,9 +321,9 @@ export default {
       });
     },
     saveOnly() {
-      this.$confirm('确认仅保存风格吗？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Xác nhận chỉ lưu phong cách?', 'Thông báo', {
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
         type: 'warning',
       }).then(() => {
         themeSave(this.$route.query.id, {
@@ -346,7 +346,7 @@ export default {
       });
     },
     saveAndClose() {
-      // 保存主题配置数据
+      // Lưu dữ liệu cấu hình chủ đề
       themeSave(this.$route.query.id, {
         type: 'theme',
         value: {
@@ -357,23 +357,23 @@ export default {
         },
       })
         .then((res) => {
-          // 如果是新建（id为0），更新路由参数
+          // Nếu là tạo mới (id bằng 0) thì cập nhật tham số route
           if (this.$route.query.id == 0) {
             this.$router.replace({ query: { ...this.$route.query, id: res.data.id } });
           }
 
-          // 显示成功消息
+          // Hiển thị thông báo thành công
           this.$message({
             type: 'success',
             message: res.msg,
           });
 
-          // 保存成功后跳转回主题列表页面
+          // Sau khi lưu thành công thì quay về trang danh sách chủ đề
           this.$router.push(`${Setting.routePre}/setting/my_theme`);
         })
         .catch((err) => {
-          // 保存失败时的处理
-          this.$message.error(err.msg || '保存失败');
+          // Xử lý khi lưu thất bại
+          this.$message.error(err.msg || 'Lưu thất bại');
         });
     },
   },
@@ -569,7 +569,7 @@ export default {
     }
   }
 
-  // 弹窗样式
+  // Kiểu hộp thoại
   ::v-deep .theme-dialog {
     border-radius: 8px;
     overflow: hidden;

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,12 +17,12 @@ use app\services\BaseServices;
 use crmeb\exceptions\ApiException;
 
 /**
- * 站内信services类
+ * Class services thông báo nội bộ
  * Class MessageSystemServices
  * @package app\services\system
- * @method save(array $data) 保存数据
- * @method mixed saveAll(array $data) 批量保存数据
- * @method update($id, array $data, ?string $key = null) 修改数据
+ * @method save(array $data) Lưu dữ liệu
+ * @method mixed saveAll(array $data) Lưu dữ liệu theo lô
+ * @method update($id, array $data, ?string $key = null) Dữ liệu cần chỉnh sửa
  *
  */
 class MessageSystemServices extends BaseServices
@@ -38,7 +38,7 @@ class MessageSystemServices extends BaseServices
     }
 
     /**
-     * 站内信列表
+     * Danh sách thông báo nội bộ
      * @param $uid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -63,7 +63,7 @@ class MessageSystemServices extends BaseServices
     }
 
     /**
-     * 站内信详情
+     * Chi tiết thông báo nội bộ
      * @param $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -74,7 +74,7 @@ class MessageSystemServices extends BaseServices
     {
         $info = $this->dao->getOne($where);
         if (!$info || $info['is_del'] == 1) {
-            throw new ApiException('数据不存在');
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         $info = $info->toArray();
         if ($info['look'] == 0) {
@@ -91,75 +91,75 @@ class MessageSystemServices extends BaseServices
     {
         switch ($mark) {
             case 'admin_pay_success_code':
-                $code = '您有一笔支付成功的订单待处理，订单号{:order_id}！';
+                $code = 'Bạn có một đơn hàng đã thanh toán thành công đang chờ xử lý, mã đơn hàng {:order_id}!';
                 break;
             case 'bind_spread_uid':
-                $code = '恭喜，又一员猛将将永久绑定到您的团队，用户{:nickname}加入您的队伍！';
+                $code = 'Chúc mừng, lại thêm một chiến tướng được liên kết vĩnh viễn vào đội của bạn, người dùng {:nickname} đã gia nhập đội ngũ của bạn!';
                 break;
             case 'order_pay_success':
-                $code = '您购买的商品已支付成功，支付金额{:pay_price}元，订单号{:order_id},感谢您的光临！';
+                $code = 'Sản phẩm bạn mua đã được thanh toán thành công, số tiền thanh toán {:pay_price}đ, mã đơn hàng {:order_id}, cảm ơn bạn đã mua hàng!';
                 break;
             case 'order_take':
-                $code = '亲，您的订单{:order_id},商品{:store_name}已确认收货,感谢您的光临！';
+                $code = 'Bạn ơi, đơn hàng {:order_id}, sản phẩm {:store_name} đã được xác nhận nhận hàng, cảm ơn bạn đã mua hàng!';
                 break;
             case 'price_revision':
-                $code = '您的订单{:order_id}，实际支付金额已被修改为{:pay_price}';
+                $code = 'Đơn hàng {:order_id} của bạn đã được thay đổi số tiền thanh toán thực tế thành {:pay_price}';
                 break;
             case 'order_refund':
-                $code = '您的订单{:order_id}已同意退款,退款金额{:refund_price}元。';
+                $code = 'Đơn hàng {:order_id} của bạn đã được đồng ý hoàn tiền, số tiền hoàn {:refund_price}đ.';
                 break;
             case 'recharge_success':
-                $code = '您成功充值￥{:price}，现剩余余额￥{:now_money}元';
+                $code = 'Bạn đã nạp thành công {:price}đ, số dư hiện tại là {:now_money}đ';
                 break;
             case 'integral_accout':
-                $code = '亲，您成功获得积分{:gain_integral}，现有积分{:integral}';
+                $code = 'Bạn ơi, bạn đã nhận được {:gain_integral} điểm thưởng, điểm thưởng hiện có {:integral}';
                 break;
             case 'order_brokerage':
-                $code = '亲，恭喜您成功获得佣金{:brokerage_price}元';
+                $code = 'Bạn ơi, chúc mừng bạn đã nhận được {:brokerage_price}đ hoa hồng';
                 break;
             case 'bargain_success':
-                $code = '亲，好腻害！你的朋友们已经帮你砍到底价了，商品名称{:title}，底价{:min_price}';
+                $code = 'Bạn ơi, tuyệt quá! Bạn bè đã giúp bạn săn được giá thấp nhất rồi, tên sản phẩm {:title}, giá thấp nhất {:min_price}';
                 break;
             case 'order_user_groups_success':
-                $code = '亲，您的拼团已经完成了，拼团名称{:title}，团长{:nickname}';
+                $code = 'Bạn ơi, nhóm mua chung của bạn đã hoàn tất, tên chương trình mua chung {:title}, trưởng nhóm {:nickname}';
                 break;
             case 'send_order_pink_fial':
-                $code = '亲，您的拼团失败，活动名称{:title}';
+                $code = 'Bạn ơi, nhóm mua chung của bạn đã thất bại, tên chương trình {:title}';
                 break;
             case 'can_pink_success':
             case 'open_pink_success':
-                $code = '亲，您已成功参与拼团，活动名称{:title}';
+                $code = 'Bạn ơi, bạn đã tham gia mua chung thành công, tên chương trình {:title}';
                 break;
             case 'user_extract':
-                $code = '亲，您成功提现佣金{:extract_number}元';
+                $code = 'Bạn ơi, bạn đã rút thành công {:extract_number}đ hoa hồng';
                 break;
             case 'user_balance_change':
-                $code = '亲，您发起的提现被驳回，返回佣金{:extract_number}元';
+                $code = 'Bạn ơi, yêu cầu rút tiền của bạn đã bị từ chối, hoàn lại {:extract_number}đ hoa hồng';
                 break;
             case 'recharge_order_refund_status':
-                $code = '亲，您充值的金额已退款,本次退款{:refund_price}元';
+                $code = 'Bạn ơi, khoản tiền nạp của bạn đã được hoàn lại, lần này hoàn {:refund_price}đ';
                 break;
             case 'send_order_refund_no_status':
-                $code = '您好！您的订单{:order_id}已拒绝退款。';
+                $code = 'Xin chào! Đơn hàng {:order_id} của bạn đã bị từ chối hoàn tiền.';
                 break;
             case 'send_order_apply_refund':
-                $code = '您有一笔退款订单待处理，订单号{:order_id}!';
+                $code = 'Bạn có một đơn hoàn tiền cần xử lý, mã đơn hàng {:order_id}!';
                 break;
             case 'order_deliver_success':
             case 'order_postage_success':
-                $code = '亲爱的用户{:nickname}您的商品{:store_name}，订单号{:order_id}已发货，请注意查收';
+                $code = 'Chào bạn {:nickname}, sản phẩm {:store_name} của bạn thuộc đơn hàng {:order_id} đã được gửi đi, vui lòng chú ý nhận hàng';
                 break;
             case 'send_order_pink_clone':
-                $code = '亲，您的拼团取消，活动名称{:title}';
+                $code = 'Bạn ơi, nhóm mua chung của bạn đã bị hủy, tên chương trình {:title}';
                 break;
             case 'kefu_send_extract_application':
-                $code = '您有一笔提现申请待处理，提现金额{:money}!';
+                $code = 'Bạn có một yêu cầu rút tiền cần xử lý, số tiền rút {:money}!';
                 break;
             case 'send_admin_confirm_take_over':
-                $code = '您有一笔订单已经确认收货，订单号{:order_id}!';
+                $code = 'Bạn có một đơn hàng đã được xác nhận nhận hàng, mã đơn hàng {:order_id}!';
                 break;
             case 'order_pay_false':
-                $code = '您有未付款订单,订单号为:{:order_id}，商品数量有限，请及时付款。';
+                $code = 'Bạn có đơn hàng chưa thanh toán, mã đơn hàng: {:order_id}, số lượng sản phẩm có hạn, vui lòng thanh toán sớm.';
                 break;
             default:
                 $code = 000000;

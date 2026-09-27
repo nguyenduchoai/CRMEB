@@ -12,7 +12,7 @@
                 type="text"
                 v-model="formInline.account"
                 prefix="ios-contact-outline"
-                placeholder="请输入当前手机号"
+                placeholder="Vui lòng nhập số điện thoại hiện tại"
                 size="large"
               />
             </el-form-item>
@@ -21,7 +21,7 @@
                 type="password"
                 v-model="formInline.password"
                 prefix="ios-lock-outline"
-                placeholder="请输入密码"
+                placeholder="Vui lòng nhập mật khẩu"
               />
             </el-form-item>
           </template>
@@ -31,7 +31,7 @@
                 type="text"
                 v-model="formInline.phone"
                 prefix="ios-lock-outline"
-                placeholder="请输入新手机号"
+                placeholder="Vui lòng nhập số điện thoại mới"
                 size="large"
               />
             </el-form-item>
@@ -41,7 +41,7 @@
                   type="text"
                   v-model="formInline.verify_code"
                   prefix="ios-keypad-outline"
-                  placeholder="请输入验证码"
+                  placeholder="Vui lòng nhập mã xác thực"
                   size="large"
                 />
                 <el-button :disabled="!this.canClick" v-db-click @click="cutDown" size="large">{{ cutNUm }}</el-button>
@@ -54,7 +54,7 @@
                 type="text"
                 v-model="formInline.phone"
                 prefix="ios-contact-outline"
-                placeholder="请输入手机号"
+                placeholder="Vui lòng nhập số điện thoại"
               />
             </el-form-item>
             <el-form-item prop="password" class="maxInpt">
@@ -62,7 +62,7 @@
                 type="password"
                 v-model="formInline.password"
                 prefix="ios-lock-outline"
-                placeholder="请输入密码"
+                placeholder="Vui lòng nhập mật khẩu"
               />
             </el-form-item>
           </template>
@@ -75,7 +75,7 @@
               v-db-click
               @click="handleSubmit1('formInline', current)"
               class="mb20"
-              >下一步</el-button
+              >Bước tiếp theo</el-button
             >
             <el-button
               v-if="current === 1"
@@ -85,7 +85,7 @@
               v-db-click
               @click="handleSubmit2('formInline', current)"
               class="mb20"
-              >提交</el-button
+              >Gửi</el-button
             >
             <el-button
               v-if="current === 2"
@@ -95,9 +95,9 @@
               v-db-click
               @click="handleSubmit('formInline', current)"
               class="mb20"
-              >登录</el-button
+              >Đăng nhập</el-button
             >
-            <el-button long size="large" v-db-click @click="returns('formInline')" class="btn">返回 </el-button>
+            <el-button long size="large" v-db-click @click="returns('formInline')" class="btn">Quay lại </el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -121,16 +121,16 @@ export default {
   data() {
     const validatePhone = (rule, value, callback) => {
       if (!value) {
-        return callback(new Error('请填写手机号'));
+        return callback(new Error('Vui lòng điền số điện thoại'));
       } else if (!/^1[3456789]\d{9}$/.test(value)) {
-        callback(new Error('手机号格式不正确!'));
+        callback(new Error('Số điện thoại không đúng định dạng!'));
       } else {
         callback();
       }
     };
     var validatePass = (rule, value, callback) => {
       if (value === '') {
-        callback(new Error('请输入密码'));
+        callback(new Error('Vui lòng nhập mật khẩu'));
       } else {
         if (this.formInline.checkPass !== '') {
           this.$refs.formInline.validateField('checkPass');
@@ -140,7 +140,7 @@ export default {
     };
 
     return {
-      cutNUm: '获取验证码',
+      cutNUm: 'Lấy mã xác thực',
       canClick: true,
       current: 0,
       formInline: {
@@ -151,15 +151,15 @@ export default {
       },
       ruleInline: {
         phone: [{ required: true, validator: validatePhone, trigger: 'blur' }],
-        verify_code: [{ required: true, message: '请输入验证码', trigger: 'blur' }],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+        verify_code: [{ required: true, message: 'Vui lòng nhập mã xác thực', trigger: 'blur' }],
+        password: [{ required: true, message: 'Vui lòng nhập mật khẩu', trigger: 'blur' }],
         account: [{ required: true, validator: validatePhone, trigger: 'blur' }],
       },
-      stepList: ['验证账号信息', '修改手机号码', '登录'],
+      stepList: ['Xác minh thông tin tài khoản', 'Đổi số điện thoại', 'Đăng nhập'],
     };
   },
   methods: {
-    // 短信验证码
+    // Mã xác thực SMS
     cutDown() {
       if (this.formInline.phone) {
         if (!this.canClick) return;
@@ -178,13 +178,13 @@ export default {
         let time = setInterval(() => {
           this.cutNUm--;
           if (this.cutNUm === 0) {
-            this.cutNUm = '获取验证码';
+            this.cutNUm = 'Lấy mã xác thực';
             this.canClick = true;
             clearInterval(time);
           }
         }, 1000);
       } else {
-        this.$message.warning('请填写手机号!');
+        this.$message.warning('Vui lòng nhập số điện thoại!');
       }
     },
     handleSubmit1(name) {
@@ -212,7 +212,7 @@ export default {
         }
       });
     },
-    //登录
+    //Đăng nhập
     handleSubmit(name, num) {
       this.$refs[name].validate((valid) => {
         if (valid) {
@@ -221,7 +221,7 @@ export default {
             password: this.formInline.password,
           })
             .then(async (res) => {
-              num === 1 ? this.$message.success('原手机号密码正确') : this.$message.success('登录成功');
+              num === 1 ? this.$message.success('Số điện thoại cũ và mật khẩu chính xác') : this.$message.success('Đăng nhập thành công');
               num === 1 ? (this.current = 1) : this.$emit('on-Login');
             })
             .catch((res) => {

@@ -1,7 +1,7 @@
 import { getThemeInfo } from "@/api/api.js";
 
 /**
- * 处理颜色
+ * Xử lý màu sắc
  */
 export function hexToRgba(hex, alpha) {
   let sColor = hex.toLowerCase();
@@ -14,7 +14,7 @@ export function hexToRgba(hex, alpha) {
       }
       sColor = sColorNew;
     }
-    //处理六位的颜色值
+    //Xử lý giá trị màu 6 chữ số
     let sColorChange = [];
     for (let i = 1; i < 7; i += 2) {
       sColorChange.push(parseInt("0x" + sColor.slice(i, i + 2)));
@@ -25,12 +25,12 @@ export function hexToRgba(hex, alpha) {
 }
 
 /**
- * 设置主题颜色
- * @param {Object} data 主题数据
+ * Đặt màu chủ đề
+ * @param {Object} data Dữ liệu chủ đề
  */
 export function setThemeColor(data) {
   let selectedTheme;
-  // 处理自定义主题色数据
+  // Xử lý dữ liệu màu chủ đề tùy chỉnh
   if (data.theme_color) {
     let themeColor = data.theme_color;
     let gradientColor = data.gradient_color;
@@ -60,8 +60,8 @@ export function setThemeColor(data) {
 }
 
 /**
- * 获取并应用主题
- * @param {Number|String} themeId 主题ID
+ * Lấy và áp dụng chủ đề
+ * @param {Number|String} themeId ID chủ đề
  */
 export function applyTheme(themeId) {
   let data = {};

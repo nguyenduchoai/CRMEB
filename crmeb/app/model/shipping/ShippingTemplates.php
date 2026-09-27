@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use crmeb\basic\BaseModel;
 use think\Model;
 
 /**
- *  运费模板Model
+ *  Model mẫu phí vận chuyển
  * Class ShippingTemplates
  * @package app\model\shipping
  */
@@ -25,41 +25,41 @@ class ShippingTemplates extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'shipping_templates';
 
     /**
-     * 类型获取器
+     * Getter loại
      * @param $value
      * @return string
      */
     public function getTypeAttr($value)
     {
-        $status = [1 => '按件数', 2 => '按重量', 3 => '按体积'];
+        $status = [1 => 'Theo số lượng', 2 => 'Theo trọng lượng', 3 => 'Theo thể tích'];
         return $status[$value];
     }
 
     /**
-     * 是否开启包邮获取器
+     * Getter có mở miễn phí vận chuyển hay không
      * @param $value
      * @return string
      */
     public function getAppointAttr($value)
     {
-        $status = [1 => '开启', 0 => '关闭'];
+        $status = [1 => 'Bật', 0 => 'Tắt'];
         return $status[$value];
     }
 
     /**
-     * 添加时间获取器
+     * Getter thời gian thêm
      * @param $value
      * @return false|string
      */
@@ -70,7 +70,7 @@ class ShippingTemplates extends BaseModel
     }
 
     /**
-     * 运费地区一对多关联
+     * Liên kết một-nhiều với khu vực áp phí vận chuyển
      * @return \think\model\relation\HasMany
      */
     public function region()
@@ -79,7 +79,7 @@ class ShippingTemplates extends BaseModel
     }
 
     /**
-     * 包邮地区一对多关联
+     * Liên kết một-nhiều với khu vực miễn phí vận chuyển
      * @return \think\model\relation\HasMany
      */
     public function free()
@@ -88,7 +88,7 @@ class ShippingTemplates extends BaseModel
     }
 
     /**
-     * ID搜索器
+     * Bộ lọc ID
      * @param Model $query
      * @param $value
      * @param $data
@@ -103,7 +103,7 @@ class ShippingTemplates extends BaseModel
     }
 
     /**
-     * 模板名称搜索器
+     * Bộ lọc tên mẫu
      * @param Model $query
      * @param $value
      * @param $data

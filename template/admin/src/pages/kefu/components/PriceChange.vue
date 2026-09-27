@@ -2,30 +2,30 @@
   <div>
     <div class="priceChange" :class="change === true ? 'on' : ''">
       <div class="priceTitle">
-        {{ status === 0 ? (orderInfo.refund_status === 1 ? '立即退款' : '一键改价') : '订单备注' }}
+        {{ status === 0 ? (orderInfo.refund_status === 1 ? 'Hoàn tiền ngay' : 'Sửa giá nhanh') : 'Ghi chú đơn hàng' }}
         <span class="iconfontYI icon-guanbi" v-db-click @click="close"></span>
       </div>
       <div class="listChange" v-if="status === 0">
         <div class="item acea-row row-between-wrapper" v-if="orderInfo.refund_status === 0">
-          <div>商品总价(¥)</div>
+          <div>Tổng tiền hàng (₫)</div>
           <div class="money">{{ orderInfo.total_price }}<span class="iconfontYI icon-suozi"></span></div>
         </div>
         <div class="item acea-row row-between-wrapper" v-if="orderInfo.refund_status === 0">
-          <div>原始邮费(¥)</div>
+          <div>Phí vận chuyển ban đầu (₫)</div>
           <div class="money">{{ orderInfo.pay_postage }}<span class="iconfontYI icon-suozi"></span></div>
         </div>
         <div class="item acea-row row-between-wrapper" v-if="orderInfo.refund_status === 0">
-          <div>实际支付(¥)</div>
+          <div>Thực thanh toán (₫)</div>
           <div class="money">
             <input type="text" v-model="price" :class="focus === true ? 'on' : ''" @focus="priceChange" />
           </div>
         </div>
         <div class="item acea-row row-between-wrapper" v-if="orderInfo.refund_status === 1">
-          <div>实际支付(¥)</div>
+          <div>Thực thanh toán (₫)</div>
           <div class="money">{{ orderInfo.pay_price }}<span class="iconfontYI icon-suozi"></span></div>
         </div>
         <div class="item acea-row row-between-wrapper" v-if="orderInfo.refund_status === 1">
-          <div>退款金额(¥)</div>
+          <div>Số tiền hoàn (₫)</div>
           <div class="money">
             <input type="text" v-model="refund_price" :class="focus === true ? 'on' : ''" @focus="priceChange" />
           </div>
@@ -33,16 +33,16 @@
       </div>
       <div class="listChange" v-else>
         <textarea
-          :placeholder="orderInfo.remark ? orderInfo.remark : '请填写备注信息...'"
+          :placeholder="orderInfo.remark ? orderInfo.remark : 'Vui lòng điền thông tin ghi chú...'"
           v-model="remark"
           maxlength="100"
         ></textarea>
       </div>
       <div class="modify" v-db-click @click="save">
-        {{ orderInfo.refund_status === 0 || status === 1 ? '立即修改' : '确认退款' }}
+        {{ orderInfo.refund_status === 0 || status === 1 ? 'Lưu chỉnh sửa' : 'Xác nhận hoàn tiền' }}
       </div>
       <div class="modify1" v-db-click @click="refuse" v-if="orderInfo.refund_status === 1 && status === 0">
-        拒绝退款
+        Từ chối hoàn tiền
       </div>
     </div>
     <div class="maskModel" @touchmove.prevent v-show="change === true"></div>
@@ -109,7 +109,7 @@ export default {
       if (that.status == 0 && refund_status === 0) {
         try {
           await this.$validator({
-            price: [required(required.message('金额')), num(num.message('金额'))],
+            price: [required(required.message('Số tiền')), num(num.message('Số tiền'))],
           }).validate({ price });
         } catch (e) {
           return validatorDefaultCatch(e);
@@ -123,7 +123,7 @@ export default {
         editPriceApi(opt.id, data)
           .then(() => {
             this.$emit('closechange', false);
-            that.$dialog.success('改价成功');
+            that.$dialog.success('Đổi giá thành công');
           })
           .catch((error) => {
             that.$dialog.error(error.msg);
@@ -131,7 +131,7 @@ export default {
       } else if (that.status == 0 && refund_status === 1) {
         try {
           await this.$validator({
-            refund_price: [required(required.message('金额')), num(num.message('金额'))],
+            refund_price: [required(required.message('Số tiền')), num(num.message('Số tiền'))],
           }).validate({ refund_price });
         } catch (e) {
           return validatorDefaultCatch(e);
@@ -142,7 +142,7 @@ export default {
         orderRefundApi(data).then(
           (res) => {
             this.$emit('closechange', false);
-            that.$dialog.success('操作成功');
+            that.$dialog.success('Thao tác thành công');
           },
           (err) => {
             this.$emit('closechange', false);
@@ -152,7 +152,7 @@ export default {
       } else {
         try {
           await this.$validator({
-            remark: [required(required.message('备注'))],
+            remark: [required(required.message('Ghi chú'))],
           }).validate({ remark });
         } catch (e) {
           return validatorDefaultCatch(e);
@@ -162,7 +162,7 @@ export default {
         orderRemark(data).then(
           (res) => {
             this.$emit('closechange', false);
-            that.$dialog.success('提交成功');
+            that.$dialog.success('Gửi thành công');
           },
           (err) => {
             this.$emit('closechange', false);

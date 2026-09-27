@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,8 +18,8 @@ use app\services\BaseServices;
 /**
  * Class StoreProductCateService
  * @package app\services\product\product
- * @method productIdByCateId(array $productId) 根据商品id获取分类id
- * @method cateIdByProduct(array $cate_id) 根据分类获取商品id
+ * @method productIdByCateId(array $productId) Lấy id danh mục theo id sản phẩm
+ * @method cateIdByProduct(array $cate_id) Lấy id sản phẩm theo danh mục
  */
 class StoreProductCateServices extends BaseServices
 {
@@ -29,7 +29,7 @@ class StoreProductCateServices extends BaseServices
     }
 
     /**
-     * 商品添加修改商品分类关联
+     * Thêm sửa liên kết danh mục khi thêm sửa sản phẩm
      * @param $id
      * @param $cateData
      */

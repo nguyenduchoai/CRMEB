@@ -10,27 +10,27 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="活动搜索：" label-for="title">
-            <el-input placeholder="请输入活动名称，ID" v-model="tableFrom.title" clearable class="form_content_width" />
+          <el-form-item label="Tìm kiếm chương trình:" label-for="title">
+            <el-input placeholder="Vui lòng nhập tên chương trình, ID" v-model="tableFrom.title" clearable class="form_content_width" />
           </el-form-item>
-          <el-form-item label="活动状态：">
+          <el-form-item label="Trạng thái chương trình:">
             <el-select
-              placeholder="请选择"
+              placeholder="Vui lòng chọn"
               clearable
               v-model="tableFrom.status"
               @change="searchs"
               class="form_content_width"
             >
-              <el-option value="1" label="开启"></el-option>
-              <el-option value="0" label="关闭"></el-option>
+              <el-option value="1" label="Bật"></el-option>
+              <el-option value="0" label="Tắt"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="活动时段：">
+          <el-form-item label="Khung giờ chương trình:">
             <el-select v-model="tableFrom.time_ids" multiple class="form_content_width" @change="searchs">
               <el-option v-for="item in timeList" :value="item.id" :key="item.id" :label="item.time_name"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="活动时间：">
+          <el-form-item label="Thời gian chương trình:">
             <el-date-picker
               clearable
               v-model="timeVal"
@@ -39,27 +39,27 @@
               @change="onchangeTime"
               format="yyyy/MM/dd"
               value-format="yyyy/MM/dd"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              start-placeholder="Ngày bắt đầu"
+              end-placeholder="Ngày kết thúc"
               style="width: 250px"
             ></el-date-picker>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="searchs">查询</el-button>
+            <el-button type="primary" v-db-click @click="searchs">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
     <el-card :bordered="false" shadow="never" class="ivu-mt mt16">
       <el-button v-auth="['marketing-store_seckill-create']" type="primary" v-db-click @click="add"
-        >添加秒杀活动</el-button
+        >Thêm chương trình flash sale</el-button
       >
       <el-table
         :data="tableList"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
         class="mt14"
       >
         <el-table-column label="ID" width="80">
@@ -67,7 +67,7 @@
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="活动标题" min-width="130">
+        <el-table-column label="Tiêu đề chương trình" min-width="130">
           <template slot-scope="scope">
             <el-tooltip placement="top" :open-delay="600">
               <div slot="content">{{ scope.row.title }}</div>
@@ -75,35 +75,35 @@
             </el-tooltip>
           </template>
         </el-table-column>
-        <el-table-column label="单次限购" min-width="100">
+        <el-table-column label="Giới hạn mỗi lần mua" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.once_num }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="总购买数量限制" min-width="100">
+        <el-table-column label="Giới hạn tổng số lượng mua" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.num }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="商品数量" min-width="100">
+        <el-table-column label="Số lượng sản phẩm" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.product_count }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="活动时段" min-width="200">
+        <el-table-column label="Khung giờ chương trình" min-width="200">
           <template slot-scope="scope">
             <el-tag class="m2" v-for="(item, index) in scope.row.times_list" :key="index" effect="plain">
               {{ item }}
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="活动时间" min-width="210">
+        <el-table-column label="Thời gian chương trình" min-width="210">
           <template slot-scope="scope">
-            <div>开始: {{ scope.row.start_day }}</div>
-            <div>结束: {{ scope.row.end_day }}</div>
+            <div>Bắt đầu: {{ scope.row.start_day }}</div>
+            <div>Kết thúc: {{ scope.row.end_day }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="状态" min-width="100">
+        <el-table-column label="Trạng thái" min-width="100">
           <template slot-scope="scope">
             <el-switch
               class="defineSwitch"
@@ -113,17 +113,17 @@
               :value="scope.row.status"
               @change="onchangeIsShow(scope.row)"
               size="large"
-              active-text="开启"
-              inactive-text="关闭"
+              active-text="Bật"
+              inactive-text="Tắt"
             >
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="100">
+        <el-table-column label="Thao tác" fixed="right" width="100">
           <template slot-scope="scope">
-            <a v-db-click @click="edit(scope.row)">编辑</a>
+            <a v-db-click @click="edit(scope.row)">Sửa</a>
             <el-divider direction="vertical" />
-            <a v-db-click @click="del(scope.row, '删除秒杀活动', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa hoạt động flash sale', scope.$index)">Xóa</a>
           </template>
         </el-table-column>
       </el-table>
@@ -166,57 +166,57 @@ export default {
           width: 80,
         },
         {
-          title: '商品图片',
+          title: 'Hình ảnh sản phẩm',
           slot: 'image',
           minWidth: 90,
         },
         {
-          title: '活动标题',
+          title: 'Tiêu đề chương trình',
           key: 'title',
           minWidth: 130,
         },
         {
-          title: '活动简介',
+          title: 'Giới thiệu chương trình',
           key: 'info',
           minWidth: 100,
         },
         {
-          title: '原价',
+          title: 'Giá gốc',
           key: 'ot_price',
           minWidth: 100,
         },
         {
-          title: '秒杀价',
+          title: 'Giá flash sale',
           key: 'price',
           minWidth: 100,
         },
         {
-          title: '限量',
+          title: 'Giới hạn số lượng',
           key: 'quota_show',
           minWidth: 130,
         },
         {
-          title: '限量剩余',
+          title: 'Số lượng giới hạn còn lại',
           key: 'quota',
           minWidth: 130,
         },
         {
-          title: '秒杀状态',
+          title: 'Trạng thái flash sale',
           key: 'start_name',
           minWidth: 100,
         },
         {
-          title: '结束时间',
+          title: 'Thời gian kết thúc',
           slot: 'stop_time',
           minWidth: 100,
         },
         {
-          title: '状态',
+          title: 'Trạng thái',
           slot: 'status',
           minWidth: 100,
         },
         {
-          title: '操作',
+          title: 'Thao tác',
           slot: 'action',
           fixed: 'right',
           minWidth: 130,
@@ -266,7 +266,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e;
       this.tableFrom.time = this.timeVal ? this.timeVal.join('-') : '';
@@ -276,11 +276,11 @@ export default {
       }
       this.getList();
     },
-    // 添加
+    // Thêm
     add() {
       this.$router.push({ path: this.$routeProStr + '/marketing/store_seckill/create_more' });
     },
-    // 导出
+    // Xuất
     async exports() {
       let [th, filekey, data, fileName] = [[], [], [], ''];
       let excelData = JSON.parse(JSON.stringify(this.tableFrom));
@@ -310,13 +310,13 @@ export default {
       });
     },
 
-    // 编辑
+    // Sửa
     edit(row) {
       this.$router.push({
         path: this.$routeProStr + '/marketing/store_seckill/create_more/' + row.id,
       });
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -339,7 +339,7 @@ export default {
         path: this.$routeProStr + '/marketing/store_seckill/statistics/' + row.id,
       });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       this.tableFrom.status = this.tableFrom.status || '';
@@ -355,12 +355,12 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     searchs() {
       this.tableFrom.page = 1;
       this.getList();
     },
-    // 修改是否显示
+    // Sửa có hiển thị hay không
     onchangeIsShow(row) {
       let data = {
         id: row.id,

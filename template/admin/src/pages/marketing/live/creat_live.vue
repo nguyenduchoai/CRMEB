@@ -19,17 +19,17 @@
           <el-col :span="24">
             <el-alert class="mb10" type="warning" show-icon :closable="false">
               <span slot="title"
-                >必须前往微信小程序官方后台开通直播权限，关注<span
+                >Phải truy cập trang quản trị chính thức của WeChat Mini Program để kích hoạt quyền livestream, theo dõi<span
                   style="color: red; cursor: pointer"
                   v-db-click
                   @click="codeImg"
-                  >【小程序直播】</span
-                >须知直播状态</span
+                  >[Livestream Mini Program]</span
+                >để nắm được trạng thái livestream</span
               >
             </el-alert>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="选择主播：" prop="anchor_wechat">
+            <el-form-item label="Chọn streamer:" prop="anchor_wechat">
               <el-select
                 v-model="formValidate.anchor_wechat"
                 filterable
@@ -47,10 +47,10 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="直播间名称：" prop="name">
+            <el-form-item label="Tên phòng livestream:" prop="name">
               <el-input
                 enter-button
-                placeholder="请输入直播间名称"
+                placeholder="Vui lòng nhập tên phòng livestream"
                 element-id="name"
                 v-model="formValidate.name"
                 class="content_width"
@@ -61,39 +61,39 @@
           </el-col>
           <el-col :span="24">
             <div style="display: flex">
-              <el-form-item label="背景图：" prop="name">
+              <el-form-item label="Ảnh nền:" prop="name">
                 <div v-db-click @click="modalPicTap(0)" class="box">
                   <img :src="formValidate.cover_img" alt="" v-if="formValidate.cover_img" />
                   <div class="upload-box acea-row row-center-wrapper" v-else>
                     <i class="el-icon-picture-outline" style="font-size: 24px"></i>
                   </div>
                 </div>
-                <div class="desc">尺寸：1080*1920px</div>
+                <div class="desc">Kích thước: 1080*1920px</div>
               </el-form-item>
             </div>
           </el-col>
           <el-col :span="24">
             <div style="display: flex">
-              <el-form-item label="分享图：" prop="name">
+              <el-form-item label="Ảnh chia sẻ:" prop="name">
                 <div v-db-click @click="modalPicTap(1)" class="box">
                   <img :src="formValidate.share_img" alt="" v-if="formValidate.share_img" />
                   <div class="upload-box acea-row row-center-wrapper" v-else>
                     <i class="el-icon-picture-outline" style="font-size: 24px"></i>
                   </div>
                 </div>
-                <div class="desc">尺寸：800*640px</div>
+                <div class="desc">Kích thước: 800*640px</div>
               </el-form-item>
             </div>
           </el-col>
           <!--<el-col :span="24">-->
-          <!--<el-form-item label="主播昵称：">-->
-          <!--<el-input enter-button  placeholder="请输入主播昵称" element-id="anchor_name" v-model="formValidate.anchor_name" style="width: 60%;"/>-->
+          <!--<el-form-item label="Biệt danh streamer:">-->
+          <!--<el-input enter-button  placeholder="Vui lòng nhập biệt danh streamer" element-id="anchor_name" v-model="formValidate.anchor_name" style="width: 60%;"/>-->
           <!--</el-form-item>-->
           <!--</el-col>-->
           <el-col :span="24">
-            <el-form-item label="联系电话：">
+            <el-form-item label="Số điện thoại liên hệ:">
               <el-input
-                placeholder="请输入主播联系电话"
+                placeholder="Vui lòng nhập số điện thoại liên hệ của streamer"
                 v-model="formValidate.phone"
                 class="content_width"
                 maxlength="11"
@@ -102,29 +102,29 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="直播时间：" prop="name">
+            <el-form-item label="Thời gian livestream:" prop="name">
               <el-date-picker
                 clearable
                 type="datetimerange"
                 format="yyyy-MM-dd HH:mm"
-                placeholder="请选择直播时间"
+                placeholder="Vui lòng chọn thời gian livestream"
                 class="content_width"
                 v-model="timeVal"
                 @change="selectDate"
                 value-format="yyyy-MM-dd HH:mm"
                 range-separator="-"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                start-placeholder="Ngày bắt đầu"
+                end-placeholder="Ngày kết thúc"
               ></el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="排序：">
+            <el-form-item label="Thứ tự sắp xếp:">
               <el-input type="number" placeholder="0" v-model="formValidate.sort" class="content_width" />
             </el-form-item>
           </el-col>
           <!-- <el-col :span="24">
-            <el-form-item label="显示样式：">
+            <el-form-item label="Kiểu hiển thị:">
               <el-radio-group v-model="formValidate.screen_type">
                 <el-radio :label="item.label" v-for="(item, index) in screen_type" :key="index">
                   <span>{{ item.value }}</span>
@@ -133,7 +133,7 @@
             </el-form-item>
           </el-col> -->
           <el-col :span="24">
-            <el-form-item label="直播间类型：">
+            <el-form-item label="Loại phòng livestream:">
               <el-radio-group v-model="formValidate.type">
                 <el-radio :label="item.label" v-for="(item, index) in type" :key="index">
                   <span>{{ item.value }}</span>
@@ -142,43 +142,43 @@
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="直播间点赞：">
+            <el-form-item label="Lượt thích phòng livestream:">
               <el-switch
                 class="defineSwitch"
                 :active-value="1"
                 :inactive-value="0"
                 v-model="formValidate.close_like"
                 size="large"
-                active-text="开启"
-                inactive-text="关闭"
+                active-text="Bật"
+                inactive-text="Tắt"
               >
               </el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="直播卖货：">
+            <el-form-item label="Bán hàng khi livestream:">
               <el-switch
                 class="defineSwitch"
                 :active-value="1"
                 :inactive-value="0"
                 v-model="formValidate.close_goods"
                 size="large"
-                active-text="开启"
-                inactive-text="关闭"
+                active-text="Bật"
+                inactive-text="Tắt"
               >
               </el-switch>
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="直播间评论：">
+            <el-form-item label="Bình luận phòng livestream:">
               <el-switch
                 class="defineSwitch"
                 :active-value="1"
                 :inactive-value="0"
                 v-model="formValidate.close_comment"
                 size="large"
-                active-text="开启"
-                inactive-text="关闭"
+                active-text="Bật"
+                inactive-text="Tắt"
               >
               </el-switch>
             </el-form-item>
@@ -193,20 +193,20 @@
               v-db-click
               @click="handleSubmit('formItem')"
             >
-              提交
+              Gửi
             </el-button>
             <!-- <el-button
               type="primary"
               v-db-click @click="handleSubmit('formItem')"
               style="width: 19%; margin-left: 99px"
-              >提交</el-button
+              >Gửi</el-button
             > -->
           </el-col>
         </el-row>
       </el-form>
     </el-card>
     <div>
-      <el-dialog :visible.sync="modalPic" width="950px" title="上传商品图" :close-on-click-modal="false" :z-index="888">
+      <el-dialog :visible.sync="modalPic" width="950px" title="Tải lên ảnh sản phẩm" :close-on-click-modal="false" :z-index="888">
         <uploadPictures
           :isChoice="isChoice"
           @getPic="getPic"
@@ -216,7 +216,7 @@
         ></uploadPictures>
       </el-dialog>
     </div>
-    <el-dialog :visible.sync="modal3" title="二维码">
+    <el-dialog :visible.sync="modal3" title="Mã QR">
       <div class="acea-row row-around">
         <div v-viewer class="QRpic">
           <img src="https://res.wx.qq.com/op_res/9rSix1dhHfK4rR049JL0PHJ7TpOvkuZ3mE0z7Ou_Etvjf-w1J_jVX0rZqeStLfwh" />
@@ -285,57 +285,57 @@ export default {
       },
       screen_type: [
         {
-          value: '竖屏',
+          value: 'Màn hình dọc',
           label: 0,
         },
         {
-          value: '横屏',
+          value: 'Màn hình ngang',
           label: 1,
         },
       ],
       type: [
         // {
-        //     value:'推流',
+        //     value:'Đẩy luồng (streaming)',
         //     label:1
         // },
         {
-          value: '手机直播',
+          value: 'Livestream bằng điện thoại',
           label: 0,
         },
       ],
       close_like: [
         {
-          value: '开启',
+          value: 'Bật',
           label: 1,
         },
         {
-          value: '关闭',
+          value: 'Tắt',
           label: 0,
         },
       ],
       close_goods: [
         {
-          value: '开启',
+          value: 'Bật',
           label: 1,
         },
         {
-          value: '关闭',
+          value: 'Tắt',
           label: 0,
         },
       ],
       close_comment: [
         {
-          value: '开启',
+          value: 'Bật',
           label: 1,
         },
         {
-          value: '关闭',
+          value: 'Tắt',
           label: 0,
         },
       ],
       timeVal: '',
       modalPic: false,
-      isChoice: '单选',
+      isChoice: 'Chọn một',
       activeIndex: 0,
       liveList: [],
       modal3: false,
@@ -362,7 +362,7 @@ export default {
         }
       });
     },
-    //主播列表；
+    //Danh sách streamer;
     getLive() {
       let formValidate = {
         kerword: '',
@@ -377,16 +377,16 @@ export default {
           this.$message.error(error.msg);
         });
     },
-    // 点击图文封面
+    // Click vào ảnh bìa bài viết ảnh-văn
     modalPicTap(type) {
       this.activeIndex = type;
       this.modalPic = true;
     },
-    // 选择日期
+    // Chọn ngày
     selectDate(e) {
       this.formValidate.start_time = e;
     },
-    // 获取图片信息
+    // Lấy thông tin ảnh
     getPic(pc) {
       this.$nextTick(() => {
         if (this.activeIndex == 0) {
@@ -397,12 +397,12 @@ export default {
         this.modalPic = false;
       });
     },
-    // 保存
+    // Lưu
     handleSubmit(name) {
       this.loading = true;
       liveAdd(this.formValidate)
         .then((res) => {
-          this.$message.success('添加成功');
+          this.$message.success('Thêm thành công');
           setTimeout(() => {
             this.loading = false;
             this.$router.push({ path: this.$routeProStr + '/marketing/live/live_room' });

@@ -7,7 +7,7 @@
       <el-col :span="18">
         <el-cascader
           @change="sliderChange"
-          placeholder="请选择分类"
+          placeholder="Vui lòng chọn danh mục"
           size="mini"
           v-model="modelValue"
           :options="treeSelect"

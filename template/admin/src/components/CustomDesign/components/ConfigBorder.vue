@@ -1,20 +1,20 @@
 <template>
   <div>
-    <el-form-item label="边框显示">
+    <el-form-item label="Hiển thị viền">
       <el-radio-group v-model="curComponent.propValue.showBorder" @change="onChange">
-        <el-radio :label="false">隐藏</el-radio>
-        <el-radio :label="true">显示</el-radio>
+        <el-radio :label="false">Ẩn</el-radio>
+        <el-radio :label="true">Hiện</el-radio>
       </el-radio-group>
     </el-form-item>
     <template v-if="curComponent.propValue.showBorder">
-      <el-form-item label="边框样式">
+      <el-form-item label="Kiểu viền">
         <el-radio-group v-model="curComponent.propValue.borderStyle" @change="onChange">
-          <el-radio label="solid">实线</el-radio>
-          <el-radio label="dashed">虚线</el-radio>
-          <el-radio label="dotted">点状</el-radio>
+          <el-radio label="solid">Nét liền</el-radio>
+          <el-radio label="dashed">Nét đứt</el-radio>
+          <el-radio label="dotted">Nét chấm</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="边框粗细">
+      <el-form-item label="Độ dày viền">
         <div class="row">
           <el-slider
             v-model="curComponent.propValue.borderWidth"
@@ -30,12 +30,12 @@
           ></el-input-number>
         </div>
       </el-form-item>
-      <el-form-item label="边框颜色">
+      <el-form-item label="Màu viền">
         <div class="row">
           <el-color-picker v-model="curComponent.propValue.borderColor" @change="onChange" show-alpha></el-color-picker>
           <el-input
             v-model="curComponent.propValue.borderColor"
-            placeholder="请输入颜色"
+            placeholder="Vui lòng nhập màu"
             @change="onChange"
             style="margin-left: 10px; flex: 1"
           ></el-input>
@@ -45,7 +45,7 @@
               curComponent.propValue.borderColor = '#000000';
               onChange();
             "
-            >重置</span
+            >Đặt lại</span
           >
         </div>
       </el-form-item>

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -22,8 +22,8 @@ use EasyWeChat\Payment\Order;
 use think\facade\Event;
 
 /**
- * Class 微信支付v3
- * @author 等风来
+ * Class thanh toán WeChat v3
+ * @author Deng Fenglai
  * @email 136327134@qq.com
  * @date 2022/9/22
  * @package crmeb\services\pay\storage
@@ -39,7 +39,7 @@ class V3WechatPay extends BasePay implements PayInterface
     /**
      * @param array $config
      * @return mixed|void
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2022/9/22
      */
@@ -81,10 +81,10 @@ class V3WechatPay extends BasePay implements PayInterface
     }
 
     /**
-     * 获取证书不带域名的路径
+     * Lấy đường dẫn chứng chỉ không kèm domain
      * @param string $path
      * @return mixed|string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2022/9/22
      */
@@ -105,7 +105,7 @@ class V3WechatPay extends BasePay implements PayInterface
     }
 
     /**
-     * 创建订单返回支付参数
+     * Tạo đơn hàng, trả về tham số thanh toán
      * @param string $orderId
      * @param string $totalFee
      * @param string $attach
@@ -113,7 +113,7 @@ class V3WechatPay extends BasePay implements PayInterface
      * @param string $detail
      * @param array $options
      * @return array|false|mixed|string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2022/9/22
      */
@@ -131,10 +131,10 @@ class V3WechatPay extends BasePay implements PayInterface
                 return $this->instance->v3pay->appPay($orderId, $totalFee, $body, $attach);
             case Order::JSAPI:
                 if (empty($options['openid'])) {
-                    throw new PayException('缺少openid');
+                    throw new PayException('Thiếu openid');
                 }
                 if (request()->isRoutine()) {
-                    // 获取配置  判断是否为新支付
+                    // Lấy cấu hình, kiểm tra có phải thanh toán mới không
                     if ($options['pay_new_weixin_open']) {
                         return MiniProgramService::newJsPay($options['openid'], $orderId, $totalFee, $attach, $body, $detail, $options);
                     }
@@ -144,7 +144,7 @@ class V3WechatPay extends BasePay implements PayInterface
             case 'h5':
                 return $this->instance->v3pay->h5Pay($orderId, $totalFee, $body, $attach);
             default:
-                throw new PayException('微信支付:支付类型错误');
+                throw new PayException('WeChat Pay: loại thanh toán không hợp lệ');
         }
     }
 
@@ -154,7 +154,7 @@ class V3WechatPay extends BasePay implements PayInterface
      * @param string $amount
      * @param array $options
      * @return mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2022/9/22
      */
@@ -197,7 +197,7 @@ class V3WechatPay extends BasePay implements PayInterface
     }
 
     /**
-     * 发起退款
+     * Khởi tạo hoàn tiền
      * @param string $outTradeNo
      * @param array $options
      * @return mixed
@@ -208,7 +208,7 @@ class V3WechatPay extends BasePay implements PayInterface
     }
 
     /**
-     * 查询退款
+     * Truy vấn hoàn tiền
      * @param string $outTradeNo
      * @param string|null $outRequestNo
      * @param array $other
@@ -221,7 +221,7 @@ class V3WechatPay extends BasePay implements PayInterface
 
     /**
      * @return mixed|\think\Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2022/9/22
      */

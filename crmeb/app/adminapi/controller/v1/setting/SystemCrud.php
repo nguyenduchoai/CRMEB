@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -33,7 +33,7 @@ use think\Response;
 
 /**
  * Class SystemCrud
- * @author 等风来
+ * @author Deng Fenglai
  * @email 136327134@qq.com
  * @date 2023/4/6
  * @package app\adminapi\controller\v1\setting
@@ -54,7 +54,7 @@ class SystemCrud extends AuthController
 
     /**
      * @return Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/11
      */
@@ -64,7 +64,7 @@ class SystemCrud extends AuthController
     }
 
     /**
-     * 验证路径
+     * Xác thực đường dẫn
      * @param $data
      * @return bool
      * @author wuhaotian
@@ -87,29 +87,29 @@ class SystemCrud extends AuthController
 
     /**
      * @return Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/11
      */
     public function save(SystemCrudDataService $service, $id = 0)
     {
         $data = $this->request->postMore([
-            ['pid', 0],//上级菜单id
-            ['menuName', ''],//菜单名
-            ['tableName', ''],//表名
-            ['modelName', ''],//模块名称
-            ['tableComment', ''],//表备注
-            ['tableField', []],//表字段
-            ['tableIndex', []],//索引
-            ['filePath', []],//生成文件位置
-            ['isTable', 0],//是否生成表
-            ['deleteField', []],//删除的表字段
+            ['pid', 0],//ID menu cấp trên
+            ['menuName', ''],//Tên menu
+            ['tableName', ''],//Tên bảng
+            ['modelName', ''],//Tên mô-đun
+            ['tableComment', ''],//Ghi chú bảng
+            ['tableField', []],//Trường của bảng
+            ['tableIndex', []],//Chỉ mục
+            ['filePath', []],//Vị trí tạo file
+            ['isTable', 0],//Có tạo bảng không
+            ['deleteField', []],//Trường của bảng đã xóa
         ]);
 
-        if (!preg_match('/^[\x{4e00}-\x{9fa5}a-zA-Z]+$/u', $data['menuName'])) return app('json')->fail('菜单名称只能是中文或者英文');
-        if (!preg_match('/^[\x{4e00}-\x{9fa5}a-zA-Z]+$/u', $data['modelName'])) return app('json')->fail('模块名称只能是中文或者英文');
-        if (!preg_match('/^[a-zA-Z_]+$/u', $data['tableName'])) return app('json')->fail('表名称只能是英文和下划线组成');
-        if (!$this->crudVerifyPath($data['filePath'])) return app('json')->fail('生成的文件位置有误，请检查后重新生成');
+        if (!preg_match('/^[\x{4e00}-\x{9fa5}a-zA-Z]+$/u', $data['menuName'])) return app('json')->fail('Tên menu chỉ được gồm chữ tiếng Trung hoặc tiếng Anh');
+        if (!preg_match('/^[\x{4e00}-\x{9fa5}a-zA-Z]+$/u', $data['modelName'])) return app('json')->fail('Tên mô-đun chỉ được gồm chữ tiếng Trung hoặc tiếng Anh');
+        if (!preg_match('/^[a-zA-Z_]+$/u', $data['tableName'])) return app('json')->fail('Tên bảng chỉ được gồm chữ cái tiếng Anh và dấu gạch dưới');
+        if (!$this->crudVerifyPath($data['filePath'])) return app('json')->fail('Vị trí tệp được tạo không đúng, vui lòng kiểm tra rồi tạo lại');
 
 
         $fromField = $searchField = $hasOneField = $columnField = $tableIndex = [];
@@ -130,14 +130,14 @@ class SystemCrud extends AuthController
 //        }
 
         foreach ($data['tableField'] as $item) {
-            //判断字段长度
+            //Kiểm tra độ dài trường
             if (in_array($item['field_type'], [FormTypeEnum::DATE_TIME, 'timestamp', 'time', 'date', 'year']) && $item['limit'] > 6) {
-                return app('json')->fail('字段' . $item['field'] . '长度不能大于6');
+                return app('json')->fail('Trường' . $item['field'] . 'có độ dài không được lớn hơn 6');
             }
             if ($item['field_type'] == 'enum' && !is_array($item['limit'])) {
-                return app('json')->fail('数据类型为枚举时,长度为数组类型');
+                return app('json')->fail('Khi kiểu dữ liệu là enum, độ dài phải là kiểu mảng');
             }
-            //收集列表展示数据
+            //Thu thập dữ liệu hiển thị danh sách
             if ($item['is_table'] && !in_array($item['field_type'], ['primaryKey', 'addSoftDelete'])) {
                 if (isset($item['primaryKey']) && !$item['primaryKey']) {
                     $columnField[] = [
@@ -149,13 +149,13 @@ class SystemCrud extends AuthController
             }
             $name = $item['table_name'] ?: $item['comment'];
             $option = $item['options'] ?? (isset($item['dictionary_id']) ? ($dictionaryList[$item['dictionary_id']] ?? []) : []);
-            //收集表单展示数据
+            //Thu thập dữ liệu hiển thị form
             if ($item['from_type']) {
                 if (!$name) {
-                    return app('json')->fail('列表名称不能为空', [], ['field' => $item['field']]);
+                    return app('json')->fail('Tên danh sách không được để trống', [], ['field' => $item['field']]);
                 }
                 if (!$option && in_array($item['from_type'], [FormTypeEnum::RADIO, FormTypeEnum::SELECT])) {
-                    return app('json')->fail('表单类型为radio或select时,options字段不能为空');
+                    return app('json')->fail('Khi loại biểu mẫu là radio hoặc select, trường options không được để trống');
                 }
                 $fromField[] = [
                     'field' => $item['field'],
@@ -166,7 +166,7 @@ class SystemCrud extends AuthController
                 ];
             }
 
-            //搜索
+            //Tìm kiếm
             if (!empty($item['search'])) {
                 $searchField[] = [
                     'field' => $item['field'],
@@ -177,7 +177,7 @@ class SystemCrud extends AuthController
                 ];
             }
 
-            //关联
+            //Liên kết
             if (!empty($item['hasOne'])) {
                 $hasOneField[] = [
                     'field' => $item['field'],
@@ -186,16 +186,16 @@ class SystemCrud extends AuthController
                 ];
             }
 
-            //索引
+            //Chỉ mục
             if (!empty($item['index'])) {
                 $tableIndex[] = $item['field'];
             }
         }
         if (!$fromField) {
-            return app('json')->fail('表单类型至少选择一项');
+            return app('json')->fail('Loại biểu mẫu phải chọn ít nhất một mục');
         }
         if (!$columnField) {
-            return app('json')->fail('列表展示数据生成失败');
+            return app('json')->fail('Tạo dữ liệu hiển thị danh sách thất bại');
         }
         $data['fromField'] = $fromField;
         $data['tableIndex'] = $tableIndex;
@@ -203,18 +203,18 @@ class SystemCrud extends AuthController
         $data['searchField'] = $searchField;
         $data['hasOneField'] = $hasOneField;
         if (!$data['tableName']) {
-            return app('json')->fail('表名不能为空');
+            return app('json')->fail('Tên bảng không được để trống');
         }
 
         $this->services->createCrud($id, $data);
 
-        return app('json')->success('功能创建成功');
+        return app('json')->success('Tạo chức năng thành công');
     }
 
     /**
-     * 获取创建文件的目录存放位置
+     * Lấy vị trí thư mục lưu file được tạo
      * @return Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/11
      */
@@ -225,11 +225,11 @@ class SystemCrud extends AuthController
         ], true);
 
         if (!$tableName) {
-            return app('json')->fail('表名不能为空');
+            return app('json')->fail('Tên bảng không được để trống');
         }
 
         if (in_array($tableName, SystemCrudServices::NOT_CRUD_TABANAME)) {
-            return app('json')->fail('系统数据表，无法生成');
+            return app('json')->fail('Bảng dữ liệu hệ thống, không thể tạo');
         }
 
         $routeName = 'crud/' . Str::snake($tableName);
@@ -274,19 +274,19 @@ class SystemCrud extends AuthController
     /**
      * @param $id
      * @return Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/12
      */
     public function read($id)
     {
         if (!$id) {
-            return app('json')->fail('接口不存在');
+            return app('json')->fail('API không tồn tại');
         }
 
         $info = $this->services->get($id);
         if (!$info) {
-            return app('json')->fail('数据不存在');
+            return app('json')->fail('Dữ liệu không tồn tại');
         }
 
         $routeName = 'crud/' . Str::snake($info->table_name);
@@ -337,18 +337,18 @@ class SystemCrud extends AuthController
             }
         }
 
-        //调整排序
+        //Điều chỉnh thứ tự sắp xếp
         $makeData = [];
         $names = [
-            'controller' => '控制器',
-            'validate' => '验证器',
-            'service' => '逻辑层',
-            'dao' => '数据库操作',
-            'model' => '模型层',
-            'route' => '后端路由',
-            'router' => '前端路由',
-            'api' => '前端接口',
-            'pages' => '前端页面'
+            'controller' => 'Controller',
+            'validate' => 'Validator',
+            'service' => 'Tầng logic',
+            'dao' => 'Thao tác cơ sở dữ liệu',
+            'model' => 'Tầng model',
+            'route' => 'Route backend',
+            'router' => 'Route frontend',
+            'api' => 'API frontend',
+            'pages' => 'Trang frontend'
         ];
         foreach ($names as $name => $value) {
             if (isset($data[$name])) {
@@ -359,7 +359,7 @@ class SystemCrud extends AuthController
         $data = $makeData;
 
         $info = $info->toArray();
-        //记录没有修改之前的数据
+        //Ghi lại dữ liệu trước khi sửa
         foreach ((array)$info['field']['tableField'] as $key => $item) {
             $item['default_field'] = $item['field'];
             $item['default_limit'] = $item['limit'];
@@ -377,7 +377,7 @@ class SystemCrud extends AuthController
             }
             $info['field']['tableField'][$key] = $item;
         }
-        //对比数据库,是否有新增字段
+        //So sánh với cơ sở dữ liệu, có trường mới thêm không
         $newColumn = [];
         $fieldAll = array_column($info['field']['tableField'], 'field');
         foreach ($column as $value) {
@@ -449,7 +449,7 @@ class SystemCrud extends AuthController
      * @param SystemFileServices $service
      * @param $id
      * @return Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/24
      */
@@ -460,18 +460,18 @@ class SystemCrud extends AuthController
         $pwd = $request->param('pwd');
 
         if ($pwd == '') {
-            return app('json')->fail('请输入文件管理密码');
+            return app('json')->fail('Vui lòng nhập mật khẩu quản lý tệp');
         }
         if (config('filesystem.password') != $pwd) {
-            return app('json')->fail('文件管理密码错误');
+            return app('json')->fail('Mật khẩu quản lý tệp không đúng');
         }
 
         if (empty($filepath) || !$id) {
-            return app('json')->fail('平台错误：发生异常，请稍后重试');
+            return app('json')->fail('Lỗi nền tảng: đã xảy ra sự cố, vui lòng thử lại sau');
         }
         $crudInfo = $this->services->get($id, ['make_path']);
         if (!$crudInfo) {
-            return app('json')->fail('修改的CRUD文件不存在');
+            return app('json')->fail('Tệp CRUD cần sửa không tồn tại');
         }
 
         $makeFilepath = '';
@@ -488,20 +488,20 @@ class SystemCrud extends AuthController
             }
         }
         if (!$makeFilepath || !in_array($filepath, $crudInfo->make_path)) {
-            return app('json')->fail('您没有权限修改此文件');
+            return app('json')->fail('Bạn không có quyền sửa tệp này');
         }
         $res = $service->savefile($makeFilepath, $comment);
         if ($res) {
-            return app('json')->success('保存成功');
+            return app('json')->success('Lưu thành công');
         } else {
-            return app('json')->fail('保存失败');
+            return app('json')->fail('Lưu thất bại');
         }
     }
 
     /**
-     * 获取tree菜单
+     * Lấy menu dạng tree
      * @return Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/11
      */
@@ -512,9 +512,9 @@ class SystemCrud extends AuthController
     }
 
     /**
-     * 获取可以进行关联的表名
+     * Lấy tên các bảng có thể liên kết
      * @return Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/2
      */
@@ -524,20 +524,20 @@ class SystemCrud extends AuthController
     }
 
     /**
-     * 获取表的详细信息
+     * Lấy thông tin chi tiết của bảng
      * @param string $tableName
      * @return Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/2
      */
     public function getAssociationTableInfo(string $tableName)
     {
         if (!$tableName) {
-            return app('json')->fail('缺少表名');
+            return app('json')->fail('Thiếu tên bảng');
         }
         if (in_array($tableName, SystemCrudServices::NOT_CRUD_TABANAME)) {
-            return app('json')->fail('不允许查看当前表明细');
+            return app('json')->fail('Không được phép xem chi tiết bảng hiện tại');
         }
         $tableInfo = $this->services->getColumnNamesList($tableName);
 
@@ -553,9 +553,9 @@ class SystemCrud extends AuthController
     }
 
     /**
-     * 获取创建表数据类型
+     * Lấy loại dữ liệu khi tạo bảng
      * @return Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/11
      */
@@ -568,19 +568,19 @@ class SystemCrud extends AuthController
      * @param SystemMenusServices $services
      * @param $id
      * @return Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/11
      */
     public function delete(SystemMenusServices $services, $id)
     {
         if (!$id) {
-            return app('json')->fail('接口不存在');
+            return app('json')->fail('API không tồn tại');
         }
 
         $info = $this->services->get($id);
         if (!$info) {
-            return app('json')->fail('数据不存在');
+            return app('json')->fail('Dữ liệu không tồn tại');
         }
 
         $menusServices = app()->make(SystemMenusServices::class);
@@ -613,8 +613,8 @@ class SystemCrud extends AuthController
                 }
             }
             if ($errorFile) {
-                return app('json')->success('删除文件失败，失败原因{:message}', [], [
-                    'message' => '文件：' . implode("\n", $errorFile) . ';无法被删除!'
+                return app('json')->success('Xóa tệp thất bại, lý do: {:message}', [], [
+                    'message' => 'Tệp:' . implode("\n", $errorFile) . '; không thể xóa!'
                 ]);
             }
         }
@@ -622,26 +622,26 @@ class SystemCrud extends AuthController
         $info->delete();
 
 
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 
     /**
-     * 下载文件
+     * Tải xuống tệp
      * @param $id
      * @return Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/15
      */
     public function download($id)
     {
         if (!$id) {
-            return app('json')->fail('接口不存在');
+            return app('json')->fail('API không tồn tại');
         }
 
         $info = $this->services->get($id);
         if (!$info) {
-            return app('json')->fail('数据不存在');
+            return app('json')->fail('Dữ liệu không tồn tại');
         }
         $zipPath = app()->getRootPath() . 'backup' . DS . Str::camel($info->table_name);
         $zipName = app()->getRootPath() . 'backup' . DS . Str::camel($info->table_name) . '.zip';
@@ -691,7 +691,7 @@ class SystemCrud extends AuthController
         ], $makePath, $zipPath);
 
         if (!extension_loaded('zip')) {
-            return app('json')->fail('zip扩展未安装');
+            return app('json')->fail('Chưa cài đặt extension zip');
         }
 
         $fileService = new FileService();
@@ -706,10 +706,10 @@ class SystemCrud extends AuthController
     }
 
     /**
-     * 获取权限路由
+     * Lấy route quyền
      * @param $tableName
      * @return Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/20
      */
@@ -717,7 +717,7 @@ class SystemCrud extends AuthController
     {
         $info = $this->services->get(['table_name' => $tableName]);
         if (!$info) {
-            return app('json')->fail('crud详情查询失败');
+            return app('json')->fail('Tra cứu chi tiết crud thất bại');
         }
 
         $routeList = app()->make(SystemMenusServices::class)->getColumn([
@@ -839,11 +839,11 @@ class SystemCrud extends AuthController
     }
 
     /**
-     * 修改或者保存字典数据
+     * Sửa hoặc lưu dữ liệu từ điển
      * @param SystemCrudDataService $service
      * @param int $id
      * @return Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/1
      */
@@ -855,10 +855,10 @@ class SystemCrud extends AuthController
         ]);
 
         if (!$data['name']) {
-            return app('json')->fail('数据字段名不能为空');
+            return app('json')->fail('Tên trường dữ liệu không được để trống');
         }
         if (!$data['value']) {
-            return app('json')->fail('数据字段内容不能为空');
+            return app('json')->fail('Nội dung trường dữ liệu không được để trống');
         }
         $data['value'] = json_encode($data['value']);
         if ($id) {
@@ -867,39 +867,39 @@ class SystemCrud extends AuthController
             $service->save($data);
         }
 
-        return app('json')->success($id ? '修改成功' : '添加成功');
+        return app('json')->success($id ? 'Sửa thành công' : 'Thêm thành công');
     }
 
     /**
-     * 查看数据字典
+     * Xem từ điển dữ liệu
      * @param SystemCrudDataService $service
      * @param $id
      * @return Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/7
      */
     public function getDataDictionaryOne(SystemCrudDataService $service, $id)
     {
         if (!$id) {
-            return app('json')->fail('缺少参数');
+            return app('json')->fail('Thiếu tham số');
         }
         $info = $service->get($id);
         if (!$info) {
-            return app('json')->fail('没有查询到数据');
+            return app('json')->fail('Không tìm thấy dữ liệu');
         }
         return app('json')->success($info->toArray());
     }
 
     /**
-     * 获取数据字典列表
+     * Lấy danh sách từ điển dữ liệu
      * @param SystemCrudDataService $service
      * @return Response
      * @throws \ReflectionException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/1
      */
@@ -911,33 +911,33 @@ class SystemCrud extends AuthController
     }
 
     /**
-     * 删除数据字典
+     * Xóa từ điển dữ liệu
      * @param SystemCrudDataService $service
      * @param $id
      * @return Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/4
      */
     public function deleteDataDictionary(SystemCrudDataService $service, $id)
     {
         if (!$id) {
-            return app('json')->fail('缺少参数');
+            return app('json')->fail('Thiếu tham số');
         }
         if ($service->delete($id)) {
-            return app('json')->success('删除成功');
+            return app('json')->success('Xóa thành công');
         } else {
-            return app('json')->fail('删除失败');
+            return app('json')->fail('Xóa thất bại');
         }
     }
 
 
 
 
-    /** 数据字典新 */
+    /** Mới - Từ điển dữ liệu */
 
     /**
-     * 获取数据字典列表
+     * Lấy danh sách từ điển dữ liệu
      * @param SystemCrudListServices $service
      * @return Response
      * @throws \ReflectionException
@@ -957,7 +957,7 @@ class SystemCrud extends AuthController
     }
 
     /**
-     * 获取数据字典添加修改表单
+     * Lấy biểu mẫu thêm/sửa từ điển dữ liệu
      * @param SystemCrudListServices $service
      * @param $id
      * @return Response
@@ -975,7 +975,7 @@ class SystemCrud extends AuthController
     }
 
     /**
-     * 保存数据字典
+     * Lưu từ điển dữ liệu
      * @param SystemCrudListServices $service
      * @param $id
      * @return Response
@@ -992,11 +992,11 @@ class SystemCrud extends AuthController
             ['status', ''],
         ]);
         $service->dataDictionaryListSave($id, $data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     /**
-     * 删除数据字典
+     * Xóa từ điển dữ liệu
      * @param SystemCrudListServices $service
      * @param $id
      * @return Response
@@ -1007,11 +1007,11 @@ class SystemCrud extends AuthController
     public function dataDictionaryListDel(SystemCrudListServices $service, $id)
     {
         $service->dataDictionaryListDel($id);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 
     /**
-     * 数据字典内容列表
+     * Danh sách nội dung từ điển dữ liệu
      * @param SystemCrudDataService $service
      * @param $cid
      * @return Response
@@ -1029,7 +1029,7 @@ class SystemCrud extends AuthController
     }
 
     /**
-     * 数据字典内容添加修改表单
+     * Form thêm/sửa nội dung từ điển dữ liệu
      * @param SystemCrudDataService $service
      * @param $cid
      * @param $id
@@ -1050,7 +1050,7 @@ class SystemCrud extends AuthController
     }
 
     /**
-     * 保存数据字典内容
+     * Lưu nội dung từ điển dữ liệu
      * @param SystemCrudDataService $service
      * @param $cid
      * @param $id
@@ -1068,11 +1068,11 @@ class SystemCrud extends AuthController
             ['sort', 0],
         ]);
         $service->dataDictionaryInfoSave($cid, $id, $data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     /**
-     * 删除数据字典内容
+     * Xóa nội dung từ điển dữ liệu
      * @param SystemCrudDataService $service
      * @param $id
      * @return Response
@@ -1084,6 +1084,6 @@ class SystemCrud extends AuthController
     public function dataDictionaryInfoDel(SystemCrudDataService $service, $id)
     {
         $service->dataDictionaryInfoDel($id);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 }

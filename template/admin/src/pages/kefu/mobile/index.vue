@@ -2,7 +2,7 @@
   <div class="chat-box">
     <div class="head-box">
       <div class="back" v-db-click @click="goBack"><span class="iconfont iconfanhui"></span></div>
-      <div class="title">{{ nickname }} - 对话详情</div>
+      <div class="title">{{ nickname }} - Chi tiết cuộc trò chuyện</div>
     </div>
     <div class="chat-scroll-box">
       <vue-scroll
@@ -26,11 +26,11 @@
                 v-db-click
                 @click="goUserInfo(item, item.uid == kefuInfo.uid)"
               />
-              <!-- 消息 -->
+              <!-- Tin nhắn -->
               <div class="msg-box" v-if="item.msn_type == 1" v-html="item.msn"></div>
-              <!-- 图片 -->
+              <!-- Hình ảnh -->
               <div class="img-box" v-if="item.msn_type == 3" v-viewer><img v-lazy="item.msn" mode="widthFix" /></div>
-              <!-- 商品 -->
+              <!-- Sản phẩm -->
               <div class="product-box" v-if="item.msn_type == 5" v-db-click @click="goProduct(item)">
                 <img v-lazy="item.productInfo.image" mode="widthFix" />
                 <div class="info">
@@ -38,9 +38,9 @@
                   <div class="name line2">{{ item.productInfo.store_name }}</div>
                 </div>
               </div>
-              <!-- 订单 -->
+              <!-- Đơn hàng -->
               <div class="order-box" v-if="item.msn_type == 6" v-db-click @click="goOrderDetail(item)">
-                <div class="title">订单ID: {{ item.orderInfo.order_id }}</div>
+                <div class="title">ID đơn hàng: {{ item.orderInfo.order_id }}</div>
                 <div class="info">
                   <img v-lazy="item.orderInfo.cartInfo[0].productInfo.image" />
                   <div class="product-info">
@@ -57,13 +57,13 @@
     <div class="footer-box">
       <div class="words" v-db-click @click="showWords"><span class="iconfont iconhuashu1"></span></div>
       <div class="input-box">
-        <el-input v-model="con" placeholder="请输入内容" style="font-size: 0.28rem" />
+        <el-input v-model="con" placeholder="Vui lòng nhập nội dung" style="font-size: 0.28rem" />
         <span class="iconfont iconfasong" v-db-click @click="sendText" :class="{ isSend: isSend }"></span>
       </div>
       <div class="emoji" v-db-click @click="openBox(1)"><span class="iconfont iconbiaoqing2"></span></div>
       <div class="more" v-db-click @click="openBox(2)"><span class="iconfont icongengduozhankai1"></span></div>
     </div>
-    <!-- 工具 -->
+    <!-- Công cụ -->
     <div class="tool-wrapper" v-if="isTool">
       <div class="tool-item">
         <el-upload
@@ -80,23 +80,23 @@
           style="margin-top: 1px; display: inline-block"
         >
           <img src="../static/tool-01.png" mode="" />
-          <div>图片</div>
+          <div>Hình ảnh</div>
         </el-upload>
       </div>
       <div class="tool-item" v-db-click @click="goTransfer">
         <img src="../static/tool-02.png" mode="" />
-        <div>转接</div>
+        <div>Chuyển tiếp</div>
       </div>
       <div class="tool-item" v-db-click @click="goAdminOrder">
         <img src="../static/tool-03.png" mode="" />
-        <div>交易订单</div>
+        <div>Đơn hàng giao dịch</div>
       </div>
       <div class="tool-item" v-db-click @click="goodsInfo">
         <img src="../static/tool-04.png" mode="" />
-        <div>商品信息</div>
+        <div>Thông tin sản phẩm</div>
       </div>
     </div>
-    <!-- 表情 -->
+    <!-- Biểu tượng cảm xúc -->
     <div class="banner slider-banner" v-show="isSwiper">
       <swiper class="swiper-wrapper" ref="mySwiper" :options="swiperOptions">
         <swiper-slide v-for="(emojiList, index) in emojiGroup" :key="index">
@@ -104,12 +104,12 @@
         </swiper-slide>
       </swiper>
     </div>
-    <!-- 常用语 -->
+    <!-- Câu nói thường dùng -->
     <words :isWords="isWords" @closeBox="closeBox" @selectMsg="selectMsg"></words>
-    <!-- 转接 -->
+    <!-- Chuyển tiếp -->
     <div class="transfer-mask" v-if="isTransfer">
       <div class="content" :class="{ on: isTransfer }">
-        <div class="title">转接客服<span class="iconfont iconcha" v-db-click @click="closeTransfer"></span></div>
+        <div class="title">Chuyển tiếp CSKH<span class="iconfont iconcha" v-db-click @click="closeTransfer"></span></div>
         <div class="list-wrapper">
           <el-radio-group v-model="activeKF">
             <el-radio class="list-item" v-for="(item, index) in transferList" :label="item.uid" :key="index">
@@ -120,7 +120,7 @@
             </el-radio>
           </el-radio-group>
         </div>
-        <el-button class="btn" v-db-click @click="confirm">确定</el-button>
+        <el-button class="btn" v-db-click @click="confirm">Xác nhận</el-button>
       </div>
     </div>
   </div>
@@ -166,7 +166,7 @@ export default {
             autoLoadDistance: 0,
             tips: {
               deactive: '',
-              active: '上拉加载更多',
+              active: 'Kéo lên để tải thêm',
               start: 'Loading...',
               beforeDeactive: ' ',
             },
@@ -204,9 +204,9 @@ export default {
       isScroll: true,
       oldHeight: 0,
       selector: '',
-      transferList: [], //转接列表
+      transferList: [], //Danh sách chuyển tiếp
       isTransfer: false,
-      uploadData: {}, // 上传参数
+      uploadData: {}, // Tham số tải lên
       header: {},
       fileUrl: '',
       tourist: 0,
@@ -249,8 +249,8 @@ export default {
     Promise.all([this.getChatList(), this.getTransferList()]);
   },
   mounted() {
-    window.document.title = `${this.$route.query.nickname || ''} - 对话详情`;
-    // 上传头部token
+    window.document.title = `${this.$route.query.nickname || ''} - Chi tiết cuộc trò chuyện`;
+    // Token trong header khi tải lên
     this.header['Authori-zation'] = 'Bearer ' + getCookies('kefu_token');
     let isLogin = JSON.parse(sessionStorage.getItem('wsLogin'));
     Socket.then((ws) => {
@@ -268,7 +268,7 @@ export default {
           data: getCookies('kefu_token'),
         });
       }
-      // 消息接收
+      // Nhận tin nhắn
       ws.$on(['reply', 'chat'], (data) => {
         if (data.msn_type == 1 || data.msn_type == 2) {
           data.msn = this.replace_em(data.msn);
@@ -286,7 +286,7 @@ export default {
       });
       ws.$on('socket_error', () => {
         this.$util.Tips({
-          title: '连接失败',
+          title: 'Kết nối thất bại',
         });
       });
     });
@@ -307,9 +307,9 @@ export default {
       this.$router.go(-1);
     },
     handleFormatError(file) {
-      this.$message.error('上传图片只能是 jpg、jpg、jpeg、gif 格式!');
+      this.$message.error('Ảnh tải lên chỉ được có định dạng jpg, jpg, jpeg, gif!');
     },
-    // 用户详情
+    // Chi tiết người dùng
     goUserInfo(item, status) {
       if (!status) {
         this.$router.push({
@@ -317,11 +317,11 @@ export default {
         });
       }
     },
-    // 上传之前
+    // Trước khi tải lên
     beforeUpload(file) {
       return isPicUpload(file);
     },
-    // 上传成功
+    // Tải lên thành công
     handleSuccess(res, file, fileList) {
       if (res.status === 200) {
         this.$message.success(res.msg);
@@ -330,7 +330,7 @@ export default {
         this.$message.error(res.msg);
       }
     },
-    // 滚动到底部
+    // Cuộn xuống cuối
     scrollBom() {
       setTimeout((res) => {
         let num = parseFloat(document.getElementById('chatBox').offsetHeight);
@@ -344,7 +344,7 @@ export default {
         }
       }, 300);
     },
-    // 订单详情
+    // Chi tiết đơn hàng
     goOrderDetail(item) {
       this.$router.push({
         path: `/kefu/orderDetail/${item.orderInfo.id}`,
@@ -353,7 +353,7 @@ export default {
       //     url: `/pages/admin/orderDetail/index?id=${item.msn}`
       // })
     },
-    // 底部功能区打开
+    // Mở khu vực chức năng phía dưới
     openBox(key) {
       if (key == 1) {
         this.isTool = false;
@@ -371,18 +371,18 @@ export default {
       this.isWords = true;
     },
 
-    // 转接
+    // Chuyển tiếp
     goTransfer() {
       this.isTransfer = true;
     },
-    // 转接关闭
+    // Đóng chuyển tiếp
     closeTransfer() {
       this.transferList.forEach((el, index) => {
         el.isCheck = false;
       });
       this.isTransfer = false;
     },
-    // 转接确认
+    // Xác nhận chuyển tiếp
     confirm() {
       if (this.activeKF) {
         serviceTransfer({
@@ -400,26 +400,26 @@ export default {
             this.$message.error(error.msg);
           });
       } else {
-        this.$message.error('请选择转接客服');
+        this.$message.error('Vui lòng chọn nhân viên CSKH để chuyển tiếp');
       }
     },
-    // 商品信息
+    // Thông tin sản phẩm
     goodsInfo() {
       this.$router.push({
         path: '/kefu/goods/list?toUid=' + this.toUid,
       });
     },
-    // 表情点击
+    // Bấm biểu tượng cảm xúc
     addEmoji(item) {
       let val = `[${item}]`;
       this.con += val;
     },
-    // 聊天表情转换
+    // Chuyển đổi biểu tượng cảm xúc trong chat
     replace_em(str) {
       str = str.replace(/\[em-([\s\S]*)\]/g, "<span class='em em-$1'/></span>");
       return str;
     },
-    // 获取聊天列表
+    // Lấy danh sách chat
     getChatList() {
       let self = this;
       serviceList({
@@ -460,15 +460,15 @@ export default {
         });
       });
     },
-    // 发送消息
+    // Gửi tin nhắn
     sendText() {
       if (!this.isSend) {
-        return this.$message.error('请输入内容');
+        return this.$message.error('Vui lòng nhập nội dung');
       }
       this.sendMsg(this.con, 1);
       this.con = '';
     },
-    // ws发送
+    // Gửi qua ws (websocket)
     sendMsg(msn, type) {
       let obj = {
         type: 'chat',
@@ -482,7 +482,7 @@ export default {
         ws.send(obj);
       });
     },
-    // 图片上传
+    // Tải lên ảnh
     uploadImg() {
       let self = this;
       self.$util.uploadImageOne('upload/image', function (res) {
@@ -491,24 +491,24 @@ export default {
         }
       });
     },
-    // 常用于选择
+    // Thường dùng để chọn
     selectWords(item) {
       this.isWords = false;
       this.sendMsg(item.message, 1);
     },
-    //  商品详情页
+    //  Trang chi tiết sản phẩm
     goProduct(item) {
       this.$router.push({
         path: '/kefu/goods/detail?goodsId=' + item.msn,
       });
     },
-    // 管理员订单
+    // Đơn hàng quản trị viên
     goAdminOrder() {
       this.$router.push({
         path: '/kefu/orderList/0/' + this.toUid,
       });
     },
-    // 滚动到底部
+    // Cuộn xuống cuối
     height() {
       let self = this;
       var scrollTop = 0;
@@ -516,7 +516,7 @@ export default {
       setTimeout((res) => {
         info
           .boundingClientRect(function (data) {
-            //data - 各种参数
+            //data - các loại tham số
             scrollTop = data.height;
             if (self.active) {
               self.scrollTop = parseInt(scrollTop) + 500;
@@ -527,7 +527,7 @@ export default {
           .exec();
       }, 1000);
     },
-    // 转接列表
+    // Danh sách chuyển tiếp
     getTransferList() {
       transferList({
         uid: this.toUid,
@@ -538,11 +538,11 @@ export default {
         this.transferList = res.data.list;
       });
     },
-    // 关闭常用语
+    // Đóng câu nói thường dùng
     closeBox() {
       this.isWords = false;
     },
-    // 选择话术
+    // Chọn mẫu câu
     selectMsg(data) {
       this.con += data;
       this.isWords = false;

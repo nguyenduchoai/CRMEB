@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -38,7 +38,7 @@ class Login extends AuthController
     }
 
     /**
-     * 客服登录
+     * Đăng nhập CSKH
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -55,11 +55,11 @@ class Login extends AuthController
 
         $token = $this->services->authLogin($appid, $appsecret);
 
-        return app('json')->success('操作成功', $token);
+        return app('json')->success('Thao tác thành công', $token);
     }
 
     /**
-     * 刷新token
+     * Làm mới token
      * @return void
      */
     public function refreshToken(Request $request)
@@ -68,7 +68,7 @@ class Login extends AuthController
             ['access_token', ''],
         ], true);
         $token = $this->services->refresh($token);
-        return app('json')->success('操作成功', $token);
+        return app('json')->success('Thao tác thành công', $token);
     }
 
 }

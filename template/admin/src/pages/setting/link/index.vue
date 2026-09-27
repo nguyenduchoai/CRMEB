@@ -6,7 +6,7 @@
           <div class="trees-coadd">
             <div class="tree_tit" v-db-click @click="append">
               <i class="el-icon-circle-plus"></i>
-              添加分类
+              Thêm danh mục
             </div>
             <div class="scollhide">
               <div class="tree" v-if="treeData.length">
@@ -36,9 +36,9 @@
                         <i class="el-icon-more el-icon--right"></i>
                         <template slot="dropdown">
                           <el-dropdown-menu>
-                            <el-dropdown-item v-if="data.pid == 1" command="1">新增分类</el-dropdown-item>
-                            <el-dropdown-item v-if="data.id" command="2">编辑分类</el-dropdown-item>
-                            <el-dropdown-item v-if="data.id" command="3">删除</el-dropdown-item>
+                            <el-dropdown-item v-if="data.pid == 1" command="1">Thêm danh mục</el-dropdown-item>
+                            <el-dropdown-item v-if="data.id" command="2">Sửa danh mục</el-dropdown-item>
+                            <el-dropdown-item v-if="data.id" command="3">Xóa</el-dropdown-item>
                           </el-dropdown-menu>
                         </template>
                       </el-dropdown>
@@ -50,50 +50,50 @@
           </div>
         </div>
         <div class="conter">
-          <el-button type="primary" @click="addLink">添加链接</el-button>
+          <el-button type="primary" @click="addLink">Thêm liên kết</el-button>
           <el-table
             :data="linkList"
             ref="couponTable"
             class="mt20"
             v-loading="loading"
             highlight-current-row
-            no-userFrom-text="暂无数据"
-            no-filtered-userFrom-text="暂无筛选结果"
+            no-userFrom-text="Chưa có dữ liệu"
+            no-filtered-userFrom-text="Không có kết quả phù hợp"
           >
             <el-table-column label="ID" width="70">
               <template slot-scope="scope">
                 <span>{{ scope.row.id }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="名称" width="150">
+            <el-table-column label="Tên" width="150">
               <template slot-scope="scope">
                 <span>{{ scope.row.name }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="H5链接" minWidth="170">
+            <el-table-column label="Liên kết H5" minWidth="170">
               <template slot-scope="scope">
-                <el-tooltip class="item pointer" content="点击复制">
+                <el-tooltip class="item pointer" content="Nhấn để sao chép">
                   <span v-db-click @click="onCopy(scope.row.h5_url)">{{ scope.row.h5_url }}</span>
                 </el-tooltip>
               </template>
             </el-table-column>
-            <el-table-column label="小程序链接" minWidth="140">
+            <el-table-column label="Liên kết Mini Program" minWidth="140">
               <template slot-scope="scope">
-                <el-tooltip class="item pointer" content="点击复制">
+                <el-tooltip class="item pointer" content="Nhấn để sao chép">
                   <span v-db-click @click="onCopy(scope.row.url)">{{ scope.row.url }}</span>
                 </el-tooltip>
               </template>
             </el-table-column>
-            <el-table-column label="添加时间" minWidth="90">
+            <el-table-column label="Thời gian thêm" minWidth="90">
               <template slot-scope="scope">
                 <span>{{ scope.row.add_time }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="操作" fixed="right" width="90">
+            <el-table-column label="Thao tác" fixed="right" width="90">
               <template slot-scope="scope">
-                <a v-db-click @click="edit(scope.row)">编辑</a>
+                <a v-db-click @click="edit(scope.row)">Sửa</a>
                 <el-divider direction="vertical"></el-divider>
-                <a v-db-click @click="del(scope.row, '删除链接', scope.$index)">删除</a>
+                <a v-db-click @click="del(scope.row, 'Xóa liên kết', scope.$index)">Xóa</a>
               </template>
             </el-table-column>
           </el-table>
@@ -110,29 +110,29 @@
       </div>
     </div>
     <el-dialog
-      title="链接"
+      title="Liên kết"
       :visible.sync="dialogVisible"
       width="40%"
       :before-close="handleClose"
       :close-on-click-modal="false"
     >
       <el-form :model="linkForm" ref="linkForm" label-width="80px">
-        <el-form-item label="名称:" prop="name">
-          <el-input v-model="linkForm.name" placeholder="请输入名称"></el-input>
+        <el-form-item label="Tên:" prop="name">
+          <el-input v-model="linkForm.name" placeholder="Vui lòng nhập tên"></el-input>
         </el-form-item>
-        <el-form-item label="跳转链接:" prop="url">
-          <el-input v-model="linkForm.url" placeholder="请输入跳转链接"></el-input>
+        <el-form-item label="Liên kết chuyển hướng:" prop="url">
+          <el-input v-model="linkForm.url" placeholder="Vui lòng nhập liên kết chuyển hướng"></el-input>
         </el-form-item>
-        <el-form-item label="排序:" prop="url">
-          <el-input v-model="linkForm.sort" placeholder="请输入排序"></el-input>
+        <el-form-item label="Thứ tự sắp xếp:" prop="url">
+          <el-input v-model="linkForm.sort" placeholder="Vui lòng nhập thứ tự sắp xếp"></el-input>
         </el-form-item>
-        <el-form-item label="是否开启:" prop="url">
+        <el-form-item label="Bật:" prop="url">
           <el-switch v-model="linkForm.status" :active-value="1" :inactive-value="0"></el-switch>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addLinkSubmit">确 定</el-button>
+        <el-button @click="dialogVisible = false">Hủy</el-button>
+        <el-button type="primary" @click="addLinkSubmit">Xác nhận</el-button>
       </div>
     </el-dialog>
   </el-card>
@@ -183,10 +183,10 @@ export default {
     onCopy(copyData) {
       this.$copyText(copyData)
         .then((message) => {
-          this.$message.success('复制成功');
+          this.$message.success('Sao chép thành công');
         })
         .catch((err) => {
-          this.$message.error('复制失败');
+          this.$message.error('Sao chép thất bại');
         });
     },
     edit(row) {
@@ -222,14 +222,14 @@ export default {
         }
       });
     },
-    // 点击菜单
+    // Bấm vào menu
     clickMenu(data, name) {
       if (name == 1) {
         this.editLinkCategory(data, 0);
       } else if (name == 2) {
         this.editLinkCategory(data, 1);
       } else if (name == 3) {
-        this.remove(data, '分类');
+        this.remove(data, 'Danh mục');
       }
     },
     delImg(id) {
@@ -237,7 +237,7 @@ export default {
         ids: id,
       };
       let delfromData = {
-        title: '删除选中图片',
+        title: 'Xóa ảnh đã chọn',
         url: `file/file/delete`,
         method: 'POST',
         ids: ids,
@@ -252,13 +252,13 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 删除图片
+    // Xóa ảnh
     editPicList(id) {
       let ids = {
         ids: id || this.ids.toString(),
       };
       let delfromData = {
-        title: '删除选中图片',
+        title: 'Xóa ảnh đã chọn',
         url: `file/file/delete`,
         method: 'POST',
         ids: ids,
@@ -280,7 +280,7 @@ export default {
       this.linkForm.h5_url = '';
       this.linkForm.url = '';
     },
-    // 鼠标移入 移出
+    // Chuột di vào / di ra
     onMouseOver(root, node, data) {
       event.preventDefault();
       data.flag = !data.flag;
@@ -292,7 +292,7 @@ export default {
       this.initData();
       this.dialogVisible = true;
     },
-    // 点击树
+    // Bấm vào cây (tree)
     appendBtn(data, n, d) {
       if (data.pid == 1 && !n.expanded) {
         this.highlightCurrent = false;
@@ -316,15 +316,15 @@ export default {
         }
       }
     },
-    // 点击添加
+    // nhấn để thêm
     append() {
       this.getFrom();
     },
-    // 删除分类
+    // Xóa danh mục
     remove(data, tit) {
       this.tits = tit;
       let delfromData = {
-        title: '删除 [ ' + data.title + ' ] ' + '分类',
+        title: 'xóa [ ' + data.title + ' ] ' + 'Danh mục',
         url: `diy/link/category/del/${data.id}`,
         method: 'DELETE',
         ids: '',
@@ -339,11 +339,11 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 编辑树表单
+    // Form sửa cây (tree)
     editLinkCategory(data, type) {
       this.$modalForm(linkCategoryFormApi(type ? data.id : 0, data.id ? data.id : 1)).then(() => this.getList());
     },
-    // 分类列表树
+    // Cây danh sách danh mục
     getList(type) {
       diyLinkCategoryListApi(this.uploadName)
         .then((res) => {
@@ -355,7 +355,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 文件列表
+    // Danh sách tệp
     getLinkList() {
       this.fileData.id = this.treeId;
       this.loading = true;
@@ -399,7 +399,7 @@ export default {
       this.getLinkList();
       this.checkPicList = [];
     },
-    // 新建分类表单
+    // Form tạo danh mục mới
     getFrom() {
       this.$modalForm(linkCategoryFormApi(0, 1)).then((res) => {
         this.getList();
@@ -590,10 +590,10 @@ export default {
   background: #fff;
   height: 72px;
   box-sizing: border-box;
-  overflow-x: scroll; /* 设置溢出滚动 */
+  overflow-x: scroll; /* Đặt overflow scroll */
   white-space: nowrap;
   overflow-y: hidden;
-  /* 隐藏滚动条 */
+  /* Ẩn thanh cuộn */
   border-radius: 4px;
   scrollbar-width: none; /* firefox */
   -ms-overflow-style: none; /* IE 10+ */

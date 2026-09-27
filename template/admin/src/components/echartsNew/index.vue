@@ -33,7 +33,7 @@ export default {
       handler(newVal, oldVal) {
         this.handleSetVisitChart();
       },
-      deep: true, // 对象内部属性的监听，关键。
+      deep: true, // Theo dõi (watch) thuộc tính bên trong object, quan trọng.
     },
   },
   mounted: function () {
@@ -59,7 +59,7 @@ export default {
       this.myChart = echarts.init(document.getElementById(this.echarts));
       let option = null;
       option = this.optionData;
-      // 基于准备好的dom，初始化echarts实例
+      // Dựa trên dom đã chuẩn bị, khởi tạo instance echarts
       this.myChart.setOption(option, true);
     },
   },

@@ -54,7 +54,7 @@ class Helper
         }
         $type = self::getVarType($var);
         if (!in_array($type, $verify))
-            throw new FormBuilderException($title . '类型需为' . implode(',', $verify));
+            throw new FormBuilderException($title . ' phải có kiểu ' . implode(',', $verify));
     }
 
     public static function getDate($date)

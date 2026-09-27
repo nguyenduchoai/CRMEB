@@ -10,62 +10,62 @@
       >
         <el-row :gutter="24">
           <el-col :span="24">
-            <el-form-item label="数据组名称：" prop="name">
-              <el-input v-model="formValidate.name" placeholder="请输入数据组名称" style="width: 90%"></el-input>
+            <el-form-item label="Tên nhóm dữ liệu:" prop="name">
+              <el-input v-model="formValidate.name" placeholder="Vui lòng nhập tên nhóm dữ liệu" style="width: 90%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="数据字段：" prop="config_name">
-              <el-input v-model="formValidate.config_name" placeholder="请输入数据字段" style="width: 90%"></el-input>
+            <el-form-item label="Trường dữ liệu:" prop="config_name">
+              <el-input v-model="formValidate.config_name" placeholder="Vui lòng nhập trường dữ liệu" style="width: 90%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="数据简介：" prop="info">
-              <el-input v-model="formValidate.info" placeholder="请输入数据简介" style="width: 90%"></el-input>
+            <el-form-item label="Mô tả dữ liệu:" prop="info">
+              <el-input v-model="formValidate.info" placeholder="Vui lòng nhập mô tả dữ liệu" style="width: 90%"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="24">
-            <el-form-item label="数据类型：" prop="cate_id">
+            <el-form-item label="Loại dữ liệu:" prop="cate_id">
               <el-radio-group v-model="formValidate.cate_id">
-                <el-radio :label="0">默认</el-radio>
-                <el-radio :label="1">数据</el-radio>
+                <el-radio :label="0">Mặc định</el-radio>
+                <el-radio :label="1">Dữ liệu</el-radio>
               </el-radio-group>
             </el-form-item>
           </el-col>
           <el-col :span="24" v-for="(item, index) in formValidate.typelist" :key="index">
             <el-col v-bind="grid">
               <el-form-item
-                :label="'字段' + (index + 1) + '：'"
+                :label="'Trường' + (index + 1) + '：'"
                 label-width="90px"
                 :prop="'typelist.' + index + '.name.value'"
-                :rules="{ required: true, message: '请输入字段名称：姓名', trigger: 'blur' }"
+                :rules="{ required: true, message: 'Vui lòng nhập tên trường: Họ tên', trigger: 'blur' }"
               >
-                <el-input v-model="item.name.value" placeholder="字段名称：姓名"></el-input>
+                <el-input v-model="item.name.value" placeholder="Tên trường: Họ tên"></el-input>
               </el-form-item>
             </el-col>
             <el-col v-bind="grid" class="goupBox">
               <el-form-item
                 label-width="0"
                 :prop="'typelist.' + index + '.title.value'"
-                :rules="{ required: true, message: '请输入字段配置名', trigger: 'blur' }"
+                :rules="{ required: true, message: 'Vui lòng nhập tên cấu hình trường', trigger: 'blur' }"
               >
-                <el-input v-model="item.title.value" placeholder="字段配置名：name"></el-input>
+                <el-input v-model="item.title.value" placeholder="Tên cấu hình trường: name"></el-input>
               </el-form-item>
             </el-col>
             <el-col v-bind="grid" prop="type" class="goupBox">
               <el-form-item
                 :prop="'typelist.' + index + '.type.value'"
-                :rules="{ required: true, message: '请选择字段类型', trigger: 'change' }"
+                :rules="{ required: true, message: 'Vui lòng chọn loại trường', trigger: 'change' }"
                 label-width="0"
               >
-                <el-select placeholder="字段类型" v-model="item.type.value">
-                  <el-option value="input">文本框</el-option>
-                  <el-option value="textarea">多行文本框</el-option>
-                  <el-option value="radio">单选框</el-option>
-                  <el-option value="checkbox">多选框</el-option>
-                  <el-option value="select">下拉选择</el-option>
-                  <el-option value="upload">单图</el-option>
-                  <el-option value="uploads">多图</el-option>
+                <el-select placeholder="Loại trường" v-model="item.type.value">
+                  <el-option value="input">Ô văn bản</el-option>
+                  <el-option value="textarea">Ô văn bản nhiều dòng</el-option>
+                  <el-option value="radio">Ô chọn một</el-option>
+                  <el-option value="checkbox">Ô chọn nhiều</el-option>
+                  <el-option value="select">Danh sách thả xuống</el-option>
+                  <el-option value="upload">Một ảnh</el-option>
+                  <el-option value="uploads">Nhiều ảnh</el-option>
                 </el-select>
               </el-form-item>
             </el-col>
@@ -77,7 +77,7 @@
             >
               <el-form-item
                 :prop="'typelist.' + index + '.param.value'"
-                :rules="{ required: true, message: '请输入参数方式', trigger: 'blur' }"
+                :rules="{ required: true, message: 'Vui lòng nhập định dạng tham số', trigger: 'blur' }"
               >
                 <el-input
                   type="textarea"
@@ -91,14 +91,14 @@
           </el-col>
           <el-col>
             <el-form-item>
-              <el-button type="primary" v-db-click @click="addType">添加字段</el-button>
+              <el-button type="primary" v-db-click @click="addType">Thêm trường</el-button>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button v-db-click @click="handleReset">取 消</el-button>
-        <el-button type="primary" v-db-click @click="handleSubmit('formValidate')" :disabled="valids">确 定</el-button>
+        <el-button v-db-click @click="handleReset">Hủy</el-button>
+        <el-button type="primary" v-db-click @click="handleSubmit('formValidate')" :disabled="valids">Xác nhận</el-button>
       </span>
     </el-dialog>
   </div>
@@ -135,10 +135,10 @@ export default {
       modals: false,
       modal12: false,
       ruleValidate: {
-        name: [{ required: true, message: '请输入数据组名称', trigger: 'blur' }],
-        config_name: [{ required: true, message: '请输入数据字段', trigger: 'blur' }],
-        info: [{ required: true, message: '请输入数据简介', trigger: 'blur' }],
-        names: [{ required: true, message: '请输入字段名称', trigger: 'blur' }],
+        name: [{ required: true, message: 'Vui lòng nhập tên nhóm dữ liệu', trigger: 'blur' }],
+        config_name: [{ required: true, message: 'Vui lòng nhập trường dữ liệu', trigger: 'blur' }],
+        info: [{ required: true, message: 'Vui lòng nhập mô tả dữ liệu', trigger: 'blur' }],
+        names: [{ required: true, message: 'Vui lòng nhập tên trường', trigger: 'blur' }],
       },
       FromData: [],
       valids: false,
@@ -160,7 +160,7 @@ export default {
     },
   },
   methods: {
-    // 点击添加字段
+    // Nhấp để thêm trường
     addType() {
       this.formValidate.typelist.push({
         name: {
@@ -173,16 +173,16 @@ export default {
           value: '',
         },
         param: {
-          placeholder: '参数方式例如:\n1=>白色\n2=>红色\n3=>黑色',
+          placeholder: 'Định dạng tham số, ví dụ:\n1=>Trắng\n2=>Đỏ\n3=>Đen',
           value: '',
         },
       });
     },
-    // 删除字段
+    // Xóa trường
     delGroup(index) {
       this.formValidate.typelist.splice(index, 1);
     },
-    // 详情
+    // Chi tiết
     fromData(id) {
       groupInfoApi(id)
         .then(async (res) => {
@@ -192,7 +192,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 提交
+    // Gửi
     handleSubmit(name) {
       let data = {
         url: this.groupId ? `/setting/group/${this.groupId}` : 'setting/group',
@@ -201,7 +201,7 @@ export default {
       };
       this.$refs[name].validate((valid) => {
         if (valid) {
-          if (this.formValidate.typelist.length === 0) return this.$message.error('请添加字段名称：姓名！');
+          if (this.formValidate.typelist.length === 0) return this.$message.error('Vui lòng thêm tên trường: Họ tên!');
           groupAddApi(data)
             .then(async (res) => {
               this.$message.success(res.msg);
@@ -214,9 +214,9 @@ export default {
               this.$message.error(res.msg);
             });
         } else {
-          if (!this.formValidate.name) return this.$message.error('请添加数据组名称！');
-          if (!this.formValidate.config_name) return this.$message.error('请添加数据字段！');
-          if (!this.formValidate.info) return this.$message.error('请添加数据简介！');
+          if (!this.formValidate.name) return this.$message.error('Vui lòng thêm tên nhóm dữ liệu!');
+          if (!this.formValidate.config_name) return this.$message.error('Vui lòng thêm trường dữ liệu!');
+          if (!this.formValidate.info) return this.$message.error('Vui lòng thêm mô tả dữ liệu!');
         }
       });
     },

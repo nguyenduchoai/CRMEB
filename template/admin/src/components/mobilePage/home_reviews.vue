@@ -4,11 +4,11 @@
       <!-- Header -->
       <div class="header">
         <div class="left">
-          <span class="title" :style="{ color: titleColor }">评价</span>
+          <span class="title" :style="{ color: titleColor }">Đánh giá</span>
           <span class="count" :style="{ color: countColor }" v-if="checkList.includes(0)">(2.3k)</span>
         </div>
         <div class="right" v-if="checkList.includes(1)">
-          <span class="rate"><span :style="{ color: rateColor }">99.0% </span>好评率</span>
+          <span class="rate"><span :style="{ color: rateColor }">99.0% </span>Tỷ lệ đánh giá tốt</span>
           <span class="iconfont iconyou" :style="{ color: rateColor }"></span>
         </div>
       </div>
@@ -50,10 +50,10 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'home_reviews',
-  cname: '商品评价',
+  cname: 'Đánh giá sản phẩm',
   configName: 'c_reviews',
   icon: '#iconzujian-shangpinpingjia',
-  type: 3, // 0 基础组件 1 营销组件 2工具组件
+  type: 3, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
   defaultName: 'reviews',
   props: {
     index: {
@@ -102,92 +102,92 @@ export default {
       rateColor: '',
       starColor: '',
       defaultConfig: {
-        cname: '商品评价',
+        cname: 'Đánh giá sản phẩm',
         name: 'reviews',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
         },
-        headTitle: '头部设置',
+        headTitle: 'Cài đặt phần đầu',
         checkBoxConfig: {
-          title: '展示信息',
+          title: 'Thông tin hiển thị',
           type: [0, 1],
           list: [
-            { id: 0, name: '评价数' },
-            { id: 1, name: '好评率' },
+            { id: 0, name: 'Số đánh giá' },
+            { id: 1, name: 'Tỷ lệ đánh giá tốt' },
           ],
         },
-        listTitle: '评价列表',
+        listTitle: 'Danh sách đánh giá',
         layoutConfig: {
-          title: '选择风格',
+          title: 'Chọn phong cách',
           tabVal: 0,
-          tabList: [{ name: '单列展示' }, { name: '左右滑动' }],
+          tabList: [{ name: 'Hiển thị một cột' }, { name: 'Vuốt ngang' }],
         },
         numConfig: {
-          title: '评价数量',
+          title: 'Số lượng đánh giá',
           val: 2,
           min: 1,
           max: 10,
         },
         // Style Config
-        reviewStyleTitle: '评价样式',
-        generalStyleTitle: '通用样式',
+        reviewStyleTitle: 'Kiểu đánh giá',
+        generalStyleTitle: 'Kiểu chung',
         titleColor: {
-          title: '标题文字',
+          title: 'Chữ tiêu đề',
           default: [{ item: '#333333' }],
           color: [{ item: '#333333' }],
         },
         countColor: {
-          title: '评价数量',
+          title: 'Số lượng đánh giá',
           default: [{ item: '#999999' }],
           color: [{ item: '#999999' }],
         },
         toneConfig: {
-          title: '色调',
+          title: 'Tông màu',
           tabVal: 0, // 0: Follow Theme, 1: Custom
-          tabList: [{ name: '跟随主题风格' }, { name: '自定义' }],
+          tabList: [{ name: 'Theo phong cách chủ đề' }, { name: 'Tùy chỉnh' }],
         },
         rateColor: {
-          title: '好评百分比',
+          title: 'Phần trăm đánh giá tốt',
           default: [{ item: '#E93323' }],
           color: [{ item: '#E93323' }],
         },
         starColor: {
-          title: '星级',
+          title: 'Số sao',
           default: [{ item: '#E93323' }],
           color: [{ item: '#E93323' }],
         },
         componentBgConfig: {
-          title: '背景设置',
+          title: 'Cài đặt nền',
           tabVal: 0,
-          tabList: [{ name: '颜色' }, { name: '图片' }],
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
           colorConfig: {
-            title: '背景颜色',
+            title: 'Màu nền',
             default: [{ item: '#fff' }, { item: '#fff' }],
             color: [{ item: '#fff' }, { item: '#fff' }],
           },
           colorDirection: {
-            title: '渐变方向',
+            title: 'Hướng chuyển màu',
             tabVal: 0,
-            tabList: [{ name: '横向' }, { name: '纵向' }, { name: '左斜' }, { name: '右斜' }],
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
           },
           imageConfig: {
-            header: '背景图片',
+            header: 'Ảnh nền',
             title: '',
-            name: '上传图片',
+            name: 'Tải lên ảnh',
             type: 'code',
             url: '',
-            info: '建议尺寸：750px * 400px',
+            info: 'Kích thước đề xuất: 750px * 400px',
           },
         },
         bottomBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           default: [{ item: '#F5F5F5' }],
           color: [{ item: '#F5F5F5' }],
         },
         paddingConfig: {
-          title: '内边距',
+          title: 'Lề trong',
           val: 10,
           min: 0,
           max: 100,
@@ -195,7 +195,7 @@ export default {
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         marginConfig: {
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,
@@ -203,85 +203,85 @@ export default {
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         zIndexConfig: {
-          title: '组件上浮',
+          title: 'Thứ tự lớp thành phần',
           val: 0,
           min: 0,
         },
         borderConfig: {
-          title: '边框设置',
+          title: 'Cài đặt viền',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0,
           styleConfig: {
-            title: '边框样式',
+            title: 'Kiểu viền',
             tabVal: 0,
             tabList: [
-              { name: '实线', style: 'solid' },
-              { name: '虚线', style: 'dashed' },
-              { name: '点状', style: 'dotted' },
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
             ],
           },
           widthConfig: {
-            title: '边框粗细',
+            title: 'Độ dày viền',
             val: 1,
             min: 1,
           },
           colorConfig: {
-            title: '边框颜色',
+            title: 'Màu viền',
             default: [{ item: '#e5e5e5' }],
             color: [{ item: '#e5e5e5' }],
           },
         },
         shadowConfig: {
-          title: '阴影设置',
+          title: 'Cài đặt đổ bóng',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0,
           colorConfig: {
-            title: '阴影颜色',
+            title: 'Màu đổ bóng',
             default: [{ item: 'rgba(0,0,0,0.1)' }],
             color: [{ item: 'rgba(0,0,0,0.1)' }],
           },
           xConfig: {
-            title: 'X轴偏移',
+            title: 'Độ lệch trục X',
             val: 0,
             min: -50,
           },
           yConfig: {
-            title: 'Y轴偏移',
+            title: 'Độ lệch trục Y',
             val: 0,
             min: -50,
           },
           blurConfig: {
-            title: '模糊半径',
+            title: 'Bán kính làm mờ',
             val: 10,
             min: 0,
           },
           spreadConfig: {
-            title: '扩展半径',
+            title: 'Bán kính lan tỏa',
             val: 0,
             min: -50,
           },
         },
         mbConfig: {
-          title: '页面间距',
+          title: 'Lề trang',
           val: 10,
           min: 0,
         },
         fillet: {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 8,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
@@ -290,9 +290,9 @@ export default {
       mockList: [
         {
           avatar: require('@/assets/images/yonghu.png'), // Use placeholder if available
-          name: '用户昵称',
+          name: 'Biệt danh người dùng',
           star: 5,
-          content: '小小的很轻便，喜欢的无以复加！柔柔滑滑特别细腻...',
+          content: 'Nhỏ nhắn, rất nhẹ và tiện, thích vô cùng! Mềm mại, mịn màng, cực kỳ tinh tế...',
           images: [
             require('@/assets/images/videoBg.png'),
             require('@/assets/images/videoBg.png'),
@@ -303,16 +303,16 @@ export default {
         },
         {
           avatar: require('@/assets/images/yonghu.png'),
-          name: '用户昵称',
+          name: 'Biệt danh người dùng',
           star: 4,
-          content: '非常不错，物超所值，下次还会再来购买的。',
+          content: 'Rất tốt, đáng đồng tiền, lần sau sẽ quay lại mua tiếp.',
           images: [require('@/assets/images/videoBg.png'), require('@/assets/images/videoBg.png')],
         },
         {
           avatar: require('@/assets/images/yonghu.png'),
-          name: '用户昵称',
+          name: 'Biệt danh người dùng',
           star: 5,
-          content: '非常不错，物超所值，下次还会再来购买的。',
+          content: 'Rất tốt, đáng đồng tiền, lần sau sẽ quay lại mua tiếp.',
           images: [],
         },
       ],

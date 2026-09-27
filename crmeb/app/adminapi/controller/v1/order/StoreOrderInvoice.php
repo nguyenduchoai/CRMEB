@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,7 +21,7 @@ use app\services\user\UserServices;
 use think\facade\App;
 
 /**
- * 发票管理
+ * Quản lý hóa đơn
  * Class StoreOrderInvoice
  * @package app\adminapi\controller\v1\order
  */
@@ -40,7 +40,7 @@ class StoreOrderInvoice extends AuthController
     }
 
     /**
-     * 获取订单类型数量
+     * Lấy số lượng theo loại đơn hàng
      * @return mixed
      */
     public function chart()
@@ -56,7 +56,7 @@ class StoreOrderInvoice extends AuthController
     }
 
     /**
-     * 查询发票列表
+     * Truy vấn danh sách hóa đơn
      * @return mixed
      */
     public function list()
@@ -74,47 +74,47 @@ class StoreOrderInvoice extends AuthController
 
 
     /**
-     * 设置发票状态
+     * Đặt trạng thái hóa đơn
      * @param string $id
      * @return mixed
      */
     public function set_invoice($id = '')
     {
-        if ($id == '') return app('json')->fail('参数错误');
+        if ($id == '') return app('json')->fail('Tham số không hợp lệ');
         $data = $this->request->postMore([
             ['is_invoice', 0],
             ['invoice_number', 0],
             ['remark', '']
         ]);
         if ($data['is_invoice'] == 1 && !$data['invoice_number']) {
-            return app('json')->fail('请填写开票号');
+            return app('json')->fail('Vui lòng điền số hóa đơn');
         }
         $this->services->setInvoice((int)$id, $data);
-        return app('json')->success('设置成功');
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
-     * 订单详情
-     * @param $id 订单id
+     * Chi tiết đơn hàng
+     * @param $id ID đơn hàng
      * @return mixed
      */
     public function orderInfo(StoreProductServices $productServices, StoreOrderServices $orderServices, $id)
     {
         if (!$id || !($orderInfo = $orderServices->get($id))) {
-            return app('json')->fail('订单不存在');
+            return app('json')->fail('Đơn hàng không tồn tại');
         }
         /** @var UserServices $services */
         $services = app()->make(UserServices::class);
         $userInfo = $services->get($orderInfo['uid']);
         if (!$userInfo) {
-            return app('json')->fail('用户信息不存在');
+            return app('json')->fail('Thông tin người dùng không tồn tại');
         }
         $userInfo = $userInfo->hidden(['pwd', 'add_ip', 'last_ip', 'login_type']);
         $userInfo['spread_name'] = '';
         if ($userInfo['spread_uid'])
             $userInfo['spread_name'] = $services->value(['uid' => $userInfo['spread_uid']], 'nickname');
         $orderInfo = $orderServices->tidyOrder($orderInfo->toArray(), true, true);
-        //核算优惠金额
+        //Tính toán số tiền ưu đãi
         $vipTruePrice = array_column($orderInfo['cartInfo'], 'vip_sum_truePrice');
         $vipTruePrice = array_sum($vipTruePrice);
         $orderInfo['vip_true_price'] = $vipTruePrice ?: 0;
@@ -138,7 +138,7 @@ class StoreOrderInvoice extends AuthController
     }
 
     /**
-     * 获取电子发票配置信息
+     * Lấy thông tin cấu hình hóa đơn điện tử
      * @return \think\Response
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -157,7 +157,7 @@ class StoreOrderInvoice extends AuthController
     }
 
     /**
-     * 获取发票开具页面iframe地址
+     * Lấy địa chỉ iframe của trang xuất hóa đơn
      * @param $id
      * @return \think\Response
      * @throws \ReflectionException
@@ -168,7 +168,7 @@ class StoreOrderInvoice extends AuthController
     public function invoiceIssuanceUrl($id)
     {
         if (sys_config('elec_invoice', 1) != 1) {
-            return app('json')->fail('电子发票功能未开启，请在一号通中开启并且在商城后台一号通配置中开启');
+            return app('json')->fail('Chức năng hóa đơn điện tử chưa được bật, vui lòng bật trong Yihaotong và bật trong mục cấu hình Yihaotong ở trang quản trị cửa hàng');
         }
         $info = $this->services->getOne(['id' => $id]);
         $unique = app()->make(StoreOrderServices::class)->value(['id' => $info['order_id']], 'order_id');
@@ -199,7 +199,7 @@ class StoreOrderInvoice extends AuthController
     }
 
     /**
-     * 保存发票信息
+     * Lưu thông tin hóa đơn
      * @param $id
      * @return \think\Response
      * @author wuhaotian
@@ -218,11 +218,11 @@ class StoreOrderInvoice extends AuthController
         $data['is_invoice'] = 1;
         $data['invoice_time'] = time();
         $this->services->update($id, $data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     /**
-     * 查看发票详情
+     * Xem chi tiết hóa đơn
      * @param $id
      * @return \think\Response
      * @author wuhaotian
@@ -237,7 +237,7 @@ class StoreOrderInvoice extends AuthController
     }
 
     /**
-     * 下载发票
+     * Tải xuống hóa đơn
      * @param $id
      * @return \think\Response
      * @author wuhaotian
@@ -252,7 +252,7 @@ class StoreOrderInvoice extends AuthController
     }
 
     /**
-     * 电子发票分类
+     * Danh mục hóa đơn điện tử
      * @return \think\Response
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -270,7 +270,7 @@ class StoreOrderInvoice extends AuthController
     }
 
     /**
-     * 开具发票
+     * Xuất hóa đơn
      * @param $id
      * @return \think\Response
      * @throws \ReflectionException
@@ -284,11 +284,11 @@ class StoreOrderInvoice extends AuthController
     public function invoiceIssuance($id)
     {
         $this->services->invoiceIssuance($id);
-        return app('json')->success('开票成功');
+        return app('json')->success('Xuất hóa đơn thành công');
     }
 
     /**
-     * 负数发票开具
+     * Xuất hóa đơn số âm
      * @param $id
      * @return \think\Response
      * @throws \think\db\exception\DataNotFoundException
@@ -301,6 +301,6 @@ class StoreOrderInvoice extends AuthController
     public function redInvoiceIssuance($id)
     {
         $this->services->redInvoiceIssuance($id);
-        return app('json')->success('开具负数发票成功');
+        return app('json')->success('Xuất hóa đơn điều chỉnh giảm thành công');
     }
 }

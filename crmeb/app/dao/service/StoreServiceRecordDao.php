@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -31,7 +31,7 @@ class StoreServiceRecordDao extends BaseDao
     }
 
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -40,7 +40,7 @@ class StoreServiceRecordDao extends BaseDao
     }
 
     /**
-     * 删除上周游客记录
+     * Xóa bản ghi khách vãng lai tuần trước
      */
     protected function deleteWeekRecord()
     {
@@ -59,7 +59,7 @@ class StoreServiceRecordDao extends BaseDao
     }
 
     /**
-     * 获取客服聊天用户列表
+     * Lấy danh sách người dùng chat với CSKH
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -77,7 +77,7 @@ class StoreServiceRecordDao extends BaseDao
     }
 
     /**
-     * 查询最近和用户聊天的uid用户
+     * Tra cứu uid người dùng vừa chat gần nhất
      * @param array $where
      * @param string $key
      * @return array|\think\Model|null

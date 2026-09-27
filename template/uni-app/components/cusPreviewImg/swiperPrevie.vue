@@ -42,7 +42,7 @@
 			list(val) {}
 		},
 		methods: {
-			// 左右切换
+			// Chuyển đổi trái phải
 			changeSwiper(e) {
 				this.currentIndex = e.target.current;
 				// this.$emit('changeSwitch', e.target.current)

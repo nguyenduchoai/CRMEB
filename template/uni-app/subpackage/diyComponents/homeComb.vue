@@ -10,7 +10,7 @@
           :src="i.img"
         ></image>
       </view>
-      <!--搜索-->
+      <!--Tìm kiếm-->
       <view class="my-main">
         <view class="mp-header" id="home" :style="[mpHeaderStyle]">
           <view
@@ -111,7 +111,7 @@
             :style="{ height: statusBarHeight + 'px' }"
             v-if="!special"
           ></view>
-          <view class="fs-28">精选类目</view>
+          <view class="fs-28">Danh mục chọn lọc</view>
           <view class="cate_count grid-column-4 grid-gap-16rpx mt-32">
             <view
               class="category_item"
@@ -160,7 +160,7 @@
               </swiper-item>
             </block>
           </swiper>
-          <!--重置小圆点的样式  -->
+          <!--Reset style chấm tròn nhỏ  -->
           <view
             class="dots acea-row"
             :class="{
@@ -243,9 +243,9 @@ export default {
       interval: this.dataConfig.numConfig.val * 1000 || 2500,
       duration: 500,
       logoConfig: this.dataConfig.logoConfig.url,
-      tabClick: 0, //导航栏被点击
-      isLeft: 0, //导航栏下划线位置
-      isWidth: 0, //每个导航栏占位
+      tabClick: 0, //Thanh điều hướng bị click
+      isLeft: 0, //Vị trí gạch chân của thanh điều hướng
+      isWidth: 0, //Vị trí chiếm chỗ của mỗi tab điều hướng
       mainWidth: 0,
       tabLeft: 0,
       tabTitle: [],
@@ -254,7 +254,7 @@ export default {
       indicatorDots: false,
       circular: true,
       intervals: 3000,
-      imgUrls: [], //图片轮播数据
+      imgUrls: [], //Dữ liệu banner trình chiếu ảnh
       swiperCur: 0,
       searchVal: "",
       bgColor: this.dataConfig.swiperConfig.list.length
@@ -405,7 +405,7 @@ export default {
           id: 0,
         },
         text: {
-          val: "首页",
+          val: "Trang chủ",
         },
       });
       return tabList;
@@ -437,7 +437,7 @@ export default {
   },
   created() {
     var that = this;
-    // 获取设备宽度
+    // Lấy chiều rộng thiết bị
     uni.getSystemInfo({
       success(e) {
         that.mainWidth = e.windowWidth;
@@ -460,10 +460,10 @@ export default {
       let urls = url.info[1].value;
       this.$util.JumpPath(urls);
     },
-    //替换安全域名
+    //Thay domain an toàn
     setDomain: function (url) {
       url = url ? url.toString() : "";
-      //本地调试打开,生产请注销
+      //Mở khi debug local, khi lên production hãy comment lại
       if (url.indexOf("https://") > -1) return url;
       else return url.replace("http://", "https://");
     },
@@ -480,15 +480,15 @@ export default {
         this.searchVal = this.hotWords[e.detail.current]["val"];
       }
     },
-    /**显示全部分类*/
+    /**Hiển thị tất cả danh mục*/
     showCategory() {
       this.isCategory = true;
     },
-    /*跳转为页面*/
+    /*Chuyển đến trang*/
     changeTab(item, index) {
       this.isCategory = false;
-      if (item.text && item.text.val === "首页") {
-        this.tabClick = index; //设置导航点击了哪一个
+      if (item.text && item.text.val === "Trang chủ") {
+        this.tabClick = index; //Đặt tab điều hướng nào đã được click
         uni.switchTab({
           url: "/pages/index/index",
         });
@@ -496,10 +496,10 @@ export default {
       }
       this.$emit("bindSortId", item, index);
       if (this.tabClick == index) return;
-      this.tabClick = index; //设置导航点击了哪一个
-      this.isLeft = index * this.isWidth + 16; //设置下划线位置
+      this.tabClick = index; //Đặt tab điều hướng nào đã được click
+      this.isLeft = index * this.isWidth + 16; //Đặt vị trí gạch chân
       let data = {
-        type: item.dataType.tabVal, // 0 微页面 1 商品分类
+        type: item.dataType.tabVal, // 0 trang micro  1 danh mục sản phẩm
         microPage: item.microPage.id,
         classPage: item.classPage.id,
       };
@@ -909,7 +909,7 @@ export default {
       }
     }
 
-    /*用来包裹所有的小圆点  */
+    /*Dùng để bao tất cả chấm tròn nhỏ  */
     .dots {
       // width: 156rpx;
       // height: 36rpx;
@@ -921,7 +921,7 @@ export default {
       bottom: 23rpx;
     }
 
-    /*未选中时的小圆点样式 */
+    /*Style chấm tròn nhỏ khi chưa chọn */
     .dot1 {
       .dot {
         width: 12rpx;
@@ -934,7 +934,7 @@ export default {
           margin-right: 0;
         }
 
-        /*选中以后的小圆点样式  */
+        /*Style chấm tròn nhỏ sau khi chọn  */
         &.active {
           background: #e93323;
         }
@@ -953,7 +953,7 @@ export default {
           margin-right: 0;
         }
 
-        /*选中以后的小圆点样式  */
+        /*Style chấm tròn nhỏ sau khi chọn  */
         &.active {
           width: 18rpx;
           background: #e93323;
@@ -973,7 +973,7 @@ export default {
           margin-right: 0;
         }
 
-        /*选中以后的小圆点样式  */
+        /*Style chấm tròn nhỏ sau khi chọn  */
         &.active {
           background: #e93323;
         }
@@ -991,7 +991,7 @@ export default {
           margin-right: 0;
         }
 
-        /*选中以后的小圆点样式  */
+        /*Style chấm tròn nhỏ sau khi chọn  */
         .active {
           height: 6rpx;
           border-radius: 3rpx;

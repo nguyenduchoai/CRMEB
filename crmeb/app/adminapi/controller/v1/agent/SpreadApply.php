@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -33,7 +33,7 @@ class SpreadApply extends AuthController
     }
 
     /**
-     * 申请列表
+     * Danh sách yêu cầu
      * @return mixed
      */
     public function applyList()
@@ -46,7 +46,7 @@ class SpreadApply extends AuthController
     }
 
     /**
-     * 审核申请
+     * Duyệt đơn đăng ký
      * @param $id
      * @param $uid
      * @param $status
@@ -58,17 +58,17 @@ class SpreadApply extends AuthController
             ['refusal_reason', ''],
         ], true);
         $this->services->applyExamine($id, $uid, $status, $refusal_reason);
-        return app('json')->success($status == 1 ? '审核通过' : '拒绝成功');
+        return app('json')->success($status == 1 ? 'Đã duyệt' : 'Từ chối thành công');
     }
 
     /**
-     * 删除申请
+     * xóa đơn đăng ký
      * @param $id
      * @return mixed
      */
     public function applyDelete($id)
     {
         $this->services->applyDelete($id);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 }

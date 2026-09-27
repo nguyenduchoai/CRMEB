@@ -20,10 +20,10 @@
         ref="selection"
         :data="tabList"
         v-loading="loading"
-        empty-text="暂无数据"
+        empty-text="Chưa có dữ liệu"
         class="mt14"
       >
-        <el-table-column label="文件/文件夹名" min-width="150">
+        <el-table-column label="Tên tệp/thư mục" min-width="150">
           <template slot-scope="scope">
             <div class="file-name" v-db-click @click="currentChange(scope.row)">
               <i v-if="scope.row.isDir" class="el-icon-folder mr5" />
@@ -32,17 +32,17 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="文件/文件夹大小" min-width="100">
+        <el-table-column label="Kích thước tệp/thư mục" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.size }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="更新时间" min-width="100">
+        <el-table-column label="Thời gian cập nhật" min-width="100">
           <template slot-scope="scope">
             <span>{{ scope.row.mtime }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="备注" min-width="120">
+        <el-table-column label="Ghi chú" min-width="120">
           <template slot-scope="scope">
             <div class="mark">
               <div v-if="scope.row.is_edit" class="table-mark" v-db-click @click="isEditMark(scope.row)">
@@ -52,10 +52,10 @@
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="60">
+        <el-table-column label="Thao tác" fixed="right" width="60">
           <template slot-scope="scope">
-            <el-button type="text" v-db-click @click="open(scope.row)" v-if="scope.row.isDir">打开</el-button>
-            <el-button type="text" v-db-click @click="edit(scope.row)" v-else>编辑</el-button>
+            <el-button type="text" v-db-click @click="open(scope.row)" v-if="scope.row.isDir">Mở</el-button>
+            <el-button type="text" v-db-click @click="edit(scope.row)" v-else>Sửa</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -83,16 +83,16 @@
       <div style="height: 100%">
         <div class="top-button">
           <el-button type="primary" id="savefile" class="diy-button" v-db-click @click="savefile(indexEditor)"
-            >保存</el-button
+            >Lưu</el-button
           >
-          <el-button id="refresh" class="diy-button" v-db-click @click="refreshfile">刷新</el-button>
+          <el-button id="refresh" class="diy-button" v-db-click @click="refreshfile">Làm mới</el-button>
         </div>
         <div class="file-box">
           <div class="show-info">
-            <div class="show-text" :title="navItem.pathname">目录: {{ navItem.pathname }}</div>
+            <div class="show-text" :title="navItem.pathname">Thư mục: {{ navItem.pathname }}</div>
             <div class="diy-button-list">
-              <el-button class="diy-button" v-db-click @click="goBack(true)">返回上一级</el-button>
-              <el-button class="diy-button" v-db-click @click="getList(true, true)">刷新</el-button>
+              <el-button class="diy-button" v-db-click @click="goBack(true)">Quay lại cấp trên</el-button>
+              <el-button class="diy-button" v-db-click @click="getList(true, true)">Làm mới</el-button>
             </div>
           </div>
           <div class="file-left">
@@ -108,13 +108,13 @@
             >
               <!-- <template transfer slot="contextMenu">
                 <DropdownItem v-if="contextData && contextData.isDir" v-db-click @click.native="handleContextCreateFolder()"
-                  >新建文件夹</DropdownItem
+                  >Tạo thư mục mới</DropdownItem
                 >
                 <DropdownItem v-if="contextData && contextData.isDir" v-db-click @click.native="handleContextCreateFile()"
-                  >新建文件</DropdownItem
+                  >Tạo file mới</DropdownItem
                 >
-                <DropdownItem v-db-click @click.native="handleContextRename()">重命名</DropdownItem>
-                <DropdownItem v-db-click @click.native="handleContextDelFolder()" style="color: #ed4014">删除</DropdownItem>
+                <DropdownItem v-db-click @click.native="handleContextRename()">Đổi tên</DropdownItem>
+                <DropdownItem v-db-click @click.native="handleContextDelFolder()" style="color: #ed4014">Xóa</DropdownItem>
               </template> -->
             </el-tree>
           </div>
@@ -156,15 +156,15 @@
       </div>
       <el-form ref="formInline" :model="formFile" :rules="ruleInline" inline>
         <el-form-item prop="filename" class="diy-file">
-          <el-input type="text" class="diy-file" v-model="formFile.filename" placeholder="请输入名字">
+          <el-input type="text" class="diy-file" v-model="formFile.filename" placeholder="Vui lòng nhập tên">
             <i class="el-icon-folder-opened" slot="prepend"></i>
           </el-input>
         </el-form-item>
         <el-form-item>
-          <el-button class="diy-button" v-db-click @click="handleSubmit('formInline')">确定</el-button>
+          <el-button class="diy-button" v-db-click @click="handleSubmit('formInline')">Xác nhận</el-button>
         </el-form-item>
         <el-form-item>
-          <el-button class="diy-button" v-db-click @click="formExit()">取消</el-button>
+          <el-button class="diy-button" v-db-click @click="formExit()">Hủy</el-button>
         </el-form-item>
         <div class="form-mask" v-show="formShow"></div>
       </el-form>
@@ -195,10 +195,10 @@ export default {
   name: 'opendir',
   data() {
     return {
-      modals: false, //编辑器开关
-      editor: '', //当前编辑器对象
+      modals: false, //Công tắc trình soạn thảo
+      editor: '', //Đối tượng trình soạn thảo hiện tại
       editorIndex: [
-        //选项卡数组
+        //Mảng tab
         {
           tab: true,
           index: '0',
@@ -206,48 +206,48 @@ export default {
           icon: '',
         },
       ],
-      editorList: [], //编辑器数组
-      indexEditor: 0, //当前编辑器索引
-      code: '', //当前文件打开时的内容
-      navList: [], //左侧导航数据
-      navItem: {}, //左侧导航点击是选中的数据
-      contextData: null, //左侧导航右键点击是产生的数据对象
+      editorList: [], //Mảng trình soạn thảo
+      indexEditor: 0, //Chỉ số trình soạn thảo hiện tại
+      code: '', //Nội dung khi file hiện tại được mở
+      navList: [], //Dữ liệu điều hướng bên trái
+      navItem: {}, //Dữ liệu được chọn khi click vào điều hướng bên trái
+      contextData: null, //Đối tượng dữ liệu được tạo ra khi nhấp chuột phải vào điều hướng bên trái
 
-      fileType: '', // 文件操作类型 createFolder|创建文件夹 createFile|创建文件 delFolder|删除文件夹或者文件
-      className: '', //全屏 class名
-      // fullscreen:false,  // 是否全屏
-      isSave: true, //当前文件是否保存
+      fileType: '', // Loại thao tác file createFolder|tạo thư mục createFile|tạo file delFolder|xóa thư mục hoặc file
+      className: '', //Tên class toàn màn hình
+      // fullscreen:false,  // Có toàn màn hình hay không
+      isSave: true, //Tệp hiện tại đã được lưu hay chưa
 
-      isShowLogn: false, // 登录
-      isShowList: false, // 登录之后列表
+      isShowLogn: false, // Đăng nhập
+      isShowList: false, // Danh sách sau khi đăng nhập
 
       spinShow: false,
       loading: false,
       tabList: [],
 
       formItem: {
-        //记录当前路径信息，获取文件列表时使用
+        //Ghi lại thông tin đường dẫn hiện tại, dùng khi lấy danh sách file
         dir: '',
         superior: 0,
         filedir: '',
         fileToken: getCookies('file_token'),
       },
-      dir: '', //当前完整文件路径
+      dir: '', //Đường dẫn file đầy đủ hiện tại
       // rows: {},  //
-      pathname: '', // 当前文件路径
-      title: '', //当前文件标题
+      pathname: '', // Đường dẫn file hiện tại
+      title: '', //Tiêu đề file hiện tại
 
       formFile: {
-        //重命名表单
+        //Form đổi tên
         filename: '',
       },
       ruleInline: {
-        filename: [{ required: true, message: '请输入文件或文件夹的名字', trigger: 'blur' }],
+        filename: [{ required: true, message: 'Vui lòng nhập tên tệp hoặc thư mục', trigger: 'blur' }],
       },
-      formShow: false, //表单开关
-      formTitle: '', //表单标题
+      formShow: false, //Bật/tắt form
+      formTitle: '', //Tiêu đề biểu mẫu
       fileToken: getCookies('file_token'),
-      routeList: [], //  打开文件路径
+      routeList: [], //  Đường dẫn file đang mở
       props: {
         label: 'title',
         children: 'children',
@@ -270,7 +270,7 @@ export default {
   },
   computed: {},
   methods: {
-    // 点击行
+    // Click vào dòng
     currentChange(currentRow) {
       if (currentRow.isDir) {
         this.open(currentRow);
@@ -279,9 +279,9 @@ export default {
       }
     },
     /**
-     * 文件列表
-     * @param {Object} refresh   // 是否重新加载 bool
-     * @param {Object} is_edit   // 是否是编辑器中的刷新 bool
+     * Danh sách tệp
+     * @param {Object} refresh   // Có tải lại hay không (bool)
+     * @param {Object} is_edit   // Có phải làm mới trong trình soạn thảo hay không (bool)
      */
     getList(refresh, is_edit) {
       let params;
@@ -318,7 +318,7 @@ export default {
           this.catchFun(res);
         });
     },
-    //新建文件后重新加载左侧导航
+    //Sau khi tạo file mới thì tải lại điều hướng bên trái
     getListItem(data) {
       opendirListApi(data)
         .then(async (res) => {
@@ -329,7 +329,7 @@ export default {
         });
     },
 
-    // 返回上级
+    // Quay lại cấp trên
     goBack(is_edit) {
       this.formItem = {
         dir: this.dir,
@@ -338,7 +338,7 @@ export default {
       };
       this.getList(false, is_edit);
     },
-    // 打开
+    // Mở
     open(row) {
       // this.rows = row;
       this.formItem = {
@@ -363,7 +363,7 @@ export default {
       };
       this.open(data);
     },
-    // 编辑ß
+    // Sửaß
     edit(row) {
       this.navItem = row;
       this.spinShow = true;
@@ -373,14 +373,14 @@ export default {
       this.editorIndex[0].pathname = row.pathname;
       this.navList = this.navListForTab;
       this.dir = row.path;
-      // 创建代码容器
+      // Tạo container code
       if (this.editorList.length <= 0) {
         // this.initEditor();
       }
       this.openfile(row.pathname, false);
     },
     /**
-     * 备注
+     * Ghi chú
      */
     mark(row) {
       this.$modalForm(
@@ -391,9 +391,9 @@ export default {
       ).then(() => this.getList(true, false));
     },
     /**
-     * 保存
-     * @param {Object} index   // 当前索引
-     * @param {Object} type    // true 不更新当前本地数据，false或者为空 更新当前数据
+     * Lưu
+     * @param {Object} index   // Chỉ số hiện tại
+     * @param {Object} type    // true Không cập nhật dữ liệu cục bộ hiện tại, false hoặc rỗng thì cập nhật dữ liệu hiện tại
      */
     savefile(index, type) {
       let code = this.editorList[index].editor.getValue();
@@ -418,18 +418,18 @@ export default {
           that.catchFun(res);
         });
     },
-    // 刷新
+    // Làm mới
     refreshfile() {
-      // 刷新编辑器
+      // Làm mới trình soạn thảo
       if (this.editorList[this.indexEditor]) this.openfile(this.editorList[this.indexEditor].path, true);
     },
-    //计算token过期时间
+    //Tính thời gian hết hạn token
     getExpiresTime(expiresTime) {
       let nowTimeNum = Math.round(new Date() / 1000);
       let expiresTimeNum = expiresTime - nowTimeNum;
       return parseFloat(parseFloat(parseFloat(expiresTimeNum / 60) / 60) / 24);
     },
-    // 侧边栏异步加载
+    // Tải bất đồng bộ thanh bên
     loadData(item, callback) {
       if (!item.data.isLeaf) {
         this.formItem = {
@@ -454,7 +454,7 @@ export default {
           });
       }
     },
-    // 自定义显示
+    // Hiển thị tùy chỉnh
     renderContent(h, { node, data, root }) {
       let that = this;
       return h(
@@ -502,7 +502,7 @@ export default {
       );
     },
     /**
-     * 侧边栏点击事件
+     * Sự kiện nhấp sidebar
      * @param {Object} data
      */
     clickDir(data, root, node) {
@@ -519,7 +519,7 @@ export default {
           that.toggleEditor();
         } else {
           let index = that.editorIndex.length;
-          // 创建tabs
+          // Tạo tabs
           that.editorIndex.push({
             tab: true,
             index: index.toString(),
@@ -528,38 +528,38 @@ export default {
             pathname: data.pathname,
           });
           that.indexEditor = index.toString();
-          // 创建代码容器
+          // Tạo container code
           that.initEditor();
           that.openfile(data.pathname, true);
         }
       }
     },
-    //侧边栏右键点击事件
+    //Sự kiện nhấp chuột phải sidebar
     handleContextMenu(data, event, position) {
       position.left = Number(position.left.slice(0, -2)) + 75 + 'px';
       this.contextData = data;
     },
-    // 文件操作类型 createFolder|创建文件夹 createFile|创建文件 delFolder|删除文件夹或者文件 renameFile|文件重命名
-    //创建文件夹
+    // Loại thao tác file createFolder|tạo thư mục createFile|tạo file delFolder|xóa thư mục hoặc file renameFile|đổi tên file
+    //Tạo thư mục
     handleContextCreateFolder() {
       this.formFile.filename = '';
-      this.formTitle = '创建文件夹';
+      this.formTitle = 'Tạo thư mục';
       this.formShow = true;
       this.fileType = 'createFolder';
     },
-    //创建文件
+    //Tạo tệp
     handleContextCreateFile() {
       this.formFile.filename = '';
-      this.formTitle = '创建文件';
+      this.formTitle = 'Tạo tệp';
       this.formShow = true;
       this.fileType = 'createFile';
     },
-    //删除文件
+    //Xóa file
     handleContextDelFolder() {
       let that = this;
       that.$Modal.confirm({
-        title: '删除文件夹和文件',
-        content: '您确定要删除改文件？',
+        title: 'Xóa thư mục và tệp',
+        content: 'Bạn có chắc chắn muốn xóa tệp này?',
         loading: true,
         onOk: () => {
           let data = {
@@ -570,25 +570,25 @@ export default {
             .then(async (res) => {
               that.loopDel(that.navList, that.contextData.nodeKey);
               that.$Modal.remove();
-              that.$message.success('删除成功');
+              that.$message.success('Xóa thành công');
             })
             .catch((res) => {
               that.catchFun(res);
             });
         },
         onCancel: () => {
-          that.$message.info('取消删除');
+          that.$message.info('Đã hủy xóa');
         },
       });
     },
-    //重命名
+    //Đổi tên
     handleContextRename() {
       this.formFile.filename = this.contextData.title;
-      this.formTitle = '重命名文件';
+      this.formTitle = 'Đổi tên tệp';
       this.formShow = true;
       this.fileType = 'renameFile';
     },
-    //打开文件
+    //Mở file
     openfile(path, is_edit) {
       let that = this;
       let params = {
@@ -605,14 +605,14 @@ export default {
           }
           let data = res.data;
           that.code = data.content;
-          // 保存相对信息
+          // Lưu thông tin liên quan
 
           that.editorList[that.indexEditor].oldCode = that.code;
           this.$nextTick((e) => {
             that.editorList[that.indexEditor || 0].path = path;
             that.editorList[that.indexEditor || 0].pathname = path;
           });
-          //改变属性
+          //Thay đổi thuộc tính
           that.changeModel(data.mode, that.code);
         })
         .catch((res) => {
@@ -620,34 +620,34 @@ export default {
         });
     },
     /**
-     * 初始化编辑器
+     * Khởi tạo trình soạn thảo
      */
     initEditor() {
       let that = this;
       that.$nextTick(() => {
-        // 初始化编辑器，确保dom已经渲染
+        // Khởi tạo trình soạn thảo, đảm bảo dom đã được render
         that.editor = monaco.editor.create(document.getElementById('container_' + that.indexEditor), {
-          value: that.code, //编辑器初始显示文字
-          language: 'sql', //语言支持自行查阅demo
-          automaticLayout: true, //自动布局
-          theme: 'vs', //官方自带三种主题vs, hc-black, or vs-dark
-          foldingStrategy: 'indentation', // 代码可分小段折叠
-          overviewRulerBorder: false, // 不要滚动条的边框
+          value: that.code, //Văn bản hiển thị ban đầu của trình soạn thảo
+          language: 'sql', //Hỗ trợ ngôn ngữ, tự tham khảo demo
+          automaticLayout: true, //Tự động bố cục
+          theme: 'vs', //Chính thức có sẵn 3 chủ đề vs, hc-black, or vs-dark
+          foldingStrategy: 'indentation', // Code có thể gập theo từng đoạn nhỏ
+          overviewRulerBorder: false, // Không cần viền thanh cuộn
           scrollbar: {
-            // 滚动条设置
-            verticalScrollbarSize: 4, // 竖滚动条
-            horizontalScrollbarSize: 10, // 横滚动条
+            // Thiết lập thanh cuộn
+            verticalScrollbarSize: 4, // Thanh cuộn dọc
+            horizontalScrollbarSize: 10, // Thanh cuộn ngang
           },
-          autoIndent: true, // 自动布局
-          tabSize: 4, // tab缩进长度
+          autoIndent: true, // Tự động bố cục
+          tabSize: 4, // Độ dài thụt lề tab
           autoClosingOvertype: 'always',
         });
-        //添加按键监听
+        //Thêm lắng nghe phím bấm
         that.editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S, function () {
           that.savefile(that.indexEditor);
         });
         that.editor.onKeyUp(() => {
-          // 当键盘按下，判断当前编辑器文本与已保存的编辑器文本是否一致
+          // Khi nhấn phím, kiểm tra văn bản hiện tại trong trình soạn thảo có khớp với văn bản đã lưu hay không
           if (that.editor.getValue() != that.code) {
             that.isSave = false;
             that.editorIndex[that.indexEditor].icon = 'md-warning';
@@ -664,27 +664,27 @@ export default {
       });
     },
     /**
-     * 切换语言
+     * Chuyển đổi ngôn ngữ
      * @param {Object} mode
      */
     changeModel(mode, value) {
-      var oldModel = this.editorList[this.indexEditor].editor.getModel(); //获取旧模型
-      // var value = this.editor.getValue();//获取旧的文本
-      //创建新模型，value为旧文本，id为modeId，即语言（language.id）
-      //modesIds即为支持语言
+      var oldModel = this.editorList[this.indexEditor].editor.getModel(); //Lấy model cũ
+      // var value = this.editor.getValue();//Lấy văn bản cũ
+      //Tạo model mới, value là văn bản cũ, id là modeId, tức ngôn ngữ (language.id)
+      //modesIds chính là ngôn ngữ được hỗ trợ
       // var modesIds = monaco.languages.getLanguages().map(function(lang) { return lang.id; });
       if (!mode) mode = oldModel.getLanguageId();
       // if(!value) value = this.editor.getValue();
 
       var newModel = monaco.editor.createModel(value, mode);
-      //将旧模型销毁
+      //Hủy model cũ
       if (oldModel) {
         oldModel.dispose();
       }
-      //设置新模型
+      //Thiết lập model mới
       this.editorList[this.indexEditor].editor.setModel(newModel);
     },
-    // 文件操作类型 createFolder|创建文件夹 createFile|创建文件 delFolder|删除文件夹或者文件
+    // Loại thao tác file createFolder|tạo thư mục createFile|tạo file delFolder|xóa thư mục hoặc file
     handleSubmit(name) {
       let that = this;
       let data = '';
@@ -708,7 +708,7 @@ export default {
                   };
                   that.getListItem(dataItem);
                   if (that.formShow) that.formShow = false;
-                  that.$message.success('创建成功');
+                  that.$message.success('Tạo thành công');
                 })
                 .catch((res) => {
                   that.catchFun(res);
@@ -730,7 +730,7 @@ export default {
                   };
                   that.getListItem(dataItem);
                   if (that.formShow) that.formShow = false;
-                  that.$message.success('创建成功');
+                  that.$message.success('Tạo thành công');
                 })
                 .catch((res) => {
                   that.catchFun(res);
@@ -745,7 +745,7 @@ export default {
               rename(data)
                 .then(async (res) => {
                   that.$set(that.contextData, 'title', that.formFile.filename);
-                  that.$message.success('修改成功');
+                  that.$message.success('Sửa thành công');
                   if (that.formShow) that.formShow = false;
                 })
                 .catch((res) => {
@@ -759,14 +759,14 @@ export default {
       });
     },
     /**
-     * 退出表单
+     * Đóng form
      */
     formExit() {
       this.formShow = false;
     },
 
     /**
-     * 处理接口回调
+     * Xử lý callback API
      * @param {Object} res
      */
     catchFun(res) {
@@ -779,11 +779,11 @@ export default {
           this.loading = false;
         }
       } else {
-        // this.$message.error('文件编码不被兼容，无法正确读取文件!');
+        // this.$message.error('Bảng mã file không tương thích, không thể đọc file đúng cách!');
       }
-      //关闭蒙版层
+      //Đóng lớp phủ
       if (this.spinShow) this.spinShow = false;
-      // 关闭文件列表展示
+      // Đóng hiển thị danh sách file
       if (this.loading) this.loading = false;
     },
     loopDel(data, nodeKey) {
@@ -797,7 +797,7 @@ export default {
       });
     },
     /**
-     * 窗口最大化
+     * Tối đa hóa cửa sổ
      */
     winChanges() {
       if (this.className) {
@@ -807,13 +807,13 @@ export default {
       }
     },
     /**
-     * 切换选项卡
+     * Chuyển đổi tab
      * @param {Object} index
      */
     toggleEditor() {
       let index = Number(this.indexEditor);
-      this.code = this.editorList[index].oldCode; //设置文件打开时的代码
-      this.editor = this.editorList[index].editor; //设置编辑器实例
+      this.code = this.editorList[index].oldCode; //Thiết lập code khi file được mở
+      this.editor = this.editorList[index].editor; //Thiết lập instance trình soạn thảo
     },
     isEditMark(row) {
       try {
@@ -842,45 +842,45 @@ export default {
     handleTabRemove(index) {
       let that = this;
 
-      // 关闭选项卡
-      that.editorIndex[index].tab = false; // 关闭选项卡
-      // 判断当前文件有没有保存
+      // Đóng tab
+      that.editorIndex[index].tab = false; // Đóng tab
+      // Kiểm tra file hiện tại đã lưu hay chưa
       if (!that.editorList[index].isSave) {
         that.$Modal.confirm({
-          title: '文件未保存',
-          content: '您是否需要保存当前文件',
+          title: 'Tệp chưa được lưu',
+          content: 'Bạn có muốn lưu tệp hiện tại không',
           loading: true,
           onOk: () => {
-            // 保存文件
+            // Lưu tệp
             that.savefile(index);
           },
           onCancel: () => {
-            that.$message.info('取消保存');
+            that.$message.info('Đã hủy lưu');
           },
         });
       }
     },
-    //编辑器状态变化
+    //Trạng thái trình soạn thảo thay đổi
     editModalChange() {
       let that = this;
       that.editorList.forEach(function (value, index) {
         if (value.isSave === false) {
-          if (confirm(`${that.editorIndex[index].title}文件未保存,是否要保存该文件`)) {
-            // 保存当前文件
+          if (confirm(`Tệp ${that.editorIndex[index].title} chưa được lưu, bạn có muốn lưu tệp này không`)) {
+            // Lưu file hiện tại
             that.savefile(index, true);
           } else {
-            that.$message.info(`已取消${that.editorIndex[index].title}文件保存`);
+            that.$message.info(`Đã hủy lưu tệp ${that.editorIndex[index].title}`);
           }
         }
-        // 销毁当前编辑器
+        // Hủy trình soạn thảo hiện tại
         that.editorList[index].editor.dispose();
         that.editorList[index].editor = null;
       });
-      // 初始话数据
-      that.modals = false; //编辑器开关
-      that.editor = ''; //当前编辑器对象
+      // Khởi tạo dữ liệu
+      that.modals = false; //Công tắc trình soạn thảo
+      that.editor = ''; //Đối tượng trình soạn thảo hiện tại
       that.editorIndex = [
-        //选项卡数组
+        //Mảng tab
         {
           tab: true,
           index: '0',
@@ -888,12 +888,12 @@ export default {
           icon: '',
         },
       ];
-      that.editorList = []; //编辑器数组
-      that.indexEditor = '0'; //当前编辑器索引
-      that.code = ''; //当前文件打开时的内容
-      that.navList = []; //左侧导航数据
-      that.navItem = {}; //左侧导航点击是选中的数据
-      that.contextData = null; //左侧导航右键点击是产生的数据对象
+      that.editorList = []; //Mảng trình soạn thảo
+      that.indexEditor = '0'; //Chỉ số trình soạn thảo hiện tại
+      that.code = ''; //Nội dung khi file hiện tại được mở
+      that.navList = []; //Dữ liệu điều hướng bên trái
+      that.navItem = {}; //Dữ liệu được chọn khi click vào điều hướng bên trái
+      that.contextData = null; //Đối tượng dữ liệu được tạo ra khi nhấp chuột phải vào điều hướng bên trái
     },
   },
 };
@@ -901,7 +901,7 @@ export default {
 <style scoped>
 .file-left ::v-deep .ivu-tree-title {
   font-weight: 500;
-  font-family: SourceHanSansSC-regular, '微软雅黑', Arial, Helvetica, sans-serif;
+  font-family: SourceHanSansSC-regular, 'Microsoft YaHei', Arial, Helvetica, sans-serif;
 }
 .file-content ::v-deep .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab-active {
   border-bottom: 1px solid orange;
@@ -1079,8 +1079,8 @@ export default {
     text-align: right;
     font-size: 12px;
     width: 280px;
-    word-break: keep-all; /* 不换行 */
-    white-space: nowrap; /* 不换行 */
+    word-break: keep-all; /* Không xuống dòng */
+    white-space: nowrap; /* Không xuống dòng */
     overflow: hidden;
     text-overflow: ellipsis;
   }
@@ -1121,8 +1121,8 @@ export default {
   }
   .show-text {
     padding-left: 10px;
-    word-break: keep-all; /* 不换行 */
-    white-space: nowrap; /* 不换行 */
+    word-break: keep-all; /* Không xuống dòng */
+    white-space: nowrap; /* Không xuống dòng */
     overflow: hidden;
     text-overflow: ellipsis;
     padding: 7px 5px;

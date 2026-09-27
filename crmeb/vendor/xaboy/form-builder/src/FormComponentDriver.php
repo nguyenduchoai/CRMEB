@@ -218,7 +218,7 @@ abstract class FormComponentDriver implements FormComponentInterFace
      * @param string $pre
      * @return string
      */
-    protected function getPlaceHolder($pre = '请选择')
+    protected function getPlaceHolder($pre = 'Vui lòng chọn')
     {
         return $pre . $this->title;
     }

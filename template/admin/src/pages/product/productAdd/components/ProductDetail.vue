@@ -1,8 +1,8 @@
 <template>
-  <!-- 商品详情 -->
+  <!-- Chi tiết sản phẩm -->
   <el-row>
     <el-col :span="16">
-      <el-form-item label="商品详情：">
+      <el-form-item label="Chi tiết sản phẩm:">
         <WangEditor style="width: 100%" :content="contents" @editorContent="getEditorContent"></WangEditor>
       </el-form-item>
     </el-col>

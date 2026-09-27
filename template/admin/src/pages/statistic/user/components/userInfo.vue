@@ -2,27 +2,27 @@
   <el-card :bordered="false" shadow="never" class="ivu-mt-16" v-loading="spinShow">
     <div class="acea-row row-between-wrapper">
       <div class="statics-header-title mb20">
-        <h4>用户概况</h4>
+        <h4>Tổng quan người dùng</h4>
         <el-tooltip placement="right-start">
           <i class="el-icon-question ml10"></i>
           <div slot="content">
-            <div>累积用户数</div>
-            <div>商城的总用户</div>
+            <div>Số người dùng tích lũy</div>
+            <div>Tổng số người dùng của cửa hàng</div>
             <br />
-            <div>访客数</div>
-            <div>在选定条件下，访问商城页面的去重人数</div>
+            <div>Số khách truy cập</div>
+            <div>Trong điều kiện đã chọn, số người truy cập các trang của cửa hàng (đã loại bỏ trùng lặp)</div>
             <br />
-            <div>浏览量</div>
-            <div>在选定条件下，用户浏览商城页面的次数。每打开一个页面或每刷新一次页面都记录1次</div>
+            <div>Lượt xem</div>
+            <div>Trong điều kiện đã chọn, số lần người dùng xem các trang của cửa hàng. Mỗi lần mở một trang hoặc tải lại trang đều được tính 1 lần</div>
             <br />
-            <div>新增用户数</div>
-            <div>在选定条件下，新注册的用户</div>
+            <div>Số người dùng mới</div>
+            <div>Trong điều kiện đã chọn, số người dùng đăng ký mới</div>
             <br />
-            <div>成交用户数</div>
-            <div>在选定条件下，下单并支付成功的用户</div>
+            <div>Số khách hàng đã mua</div>
+            <div>Trong điều kiện đã chọn, số người dùng đã đặt hàng và thanh toán thành công</div>
             <br />
-            <div>付费会员数</div>
-            <div>筛选时间截止时，具有商城付费会员身份的用户数</div>
+            <div>Số thành viên trả phí</div>
+            <div>Tính đến thời điểm kết thúc khoảng lọc, số người dùng là thành viên trả phí của cửa hàng</div>
           </div>
         </el-tooltip>
       </div>
@@ -39,7 +39,7 @@
               <span class="sp2" v-if="index === list.length - 1" v-text="item.list.num"></span>
               <span class="sp2" v-else v-text="item.list.num"></span>
               <span class="content-time spBlock"
-                >环比增长：<i class="content-is" :class="Number(item.list.percent) >= 0 ? 'up' : 'down'"
+                >Tăng trưởng so với kỳ trước:<i class="content-is" :class="Number(item.list.percent) >= 0 ? 'up' : 'down'"
                   >{{ item.list.percent }}%</i
                 >
                 <i
@@ -85,7 +85,7 @@ export default {
         sm: 24,
         xs: 24,
       },
-      name: '近30天',
+      name: '30 ngày gần đây',
       timeVal: [],
       dataTime: '',
       list: [],
@@ -102,50 +102,50 @@ export default {
       this.getStatistics();
       this.getTrend();
     },
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e;
       this.dataTime = this.timeVal ? this.timeVal.join('-') : '';
       this.name = this.dataTime;
     },
-    // 统计
+    // Thống kê
     getStatistics() {
       statisticUserBasicApi(this.formInline)
         .then(async (res) => {
           const cardLists = res.data;
           this.list = [
             {
-              name: '累计用户',
+              name: 'Tổng người dùng',
               icon: 'iconleijiyonghu',
               list: cardLists.cumulativeUser,
               colors: 'four',
             },
             {
-              name: '访客数',
+              name: 'Số khách truy cập',
               icon: 'iconfangkeshu',
               list: cardLists.people,
               colors: 'one',
             },
             {
-              name: '浏览量',
+              name: 'Lượt xem',
               icon: 'iconshangpinliulanliang',
               list: cardLists.browse,
               colors: 'two',
             },
             {
-              name: '新增用户数',
+              name: 'Số người dùng mới',
               icon: 'iconxinzengyonghushu',
               list: cardLists.newUser,
               colors: 'three',
             },
             {
-              name: '成交用户数',
+              name: 'Số khách hàng đã mua',
               icon: 'iconchengjiaoyonghushu',
               list: cardLists.payPeople,
               colors: 'four',
             },
             {
-              name: '付费会员数',
+              name: 'Số thành viên trả phí',
               icon: 'iconfufeihuiyuanshu',
               list: cardLists.payUser,
               colors: 'four',
@@ -156,7 +156,7 @@ export default {
           this.$message.error(res);
         });
     },
-    // 统计图
+    // Biểu đồ thống kê
     getTrend() {
       this.spinShow = true;
       statisticUserTrendApi(this.formInline)

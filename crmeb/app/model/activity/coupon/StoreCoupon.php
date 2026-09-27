@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use crmeb\traits\ModelTrait;
 use think\Model;
 
 /**
- * TODO 优惠券模板Model
+ * TODO Model mẫu phiếu giảm giá
  * Class StoreCoupon
  * @package app\model\coupon
  */
@@ -25,25 +25,25 @@ class StoreCoupon extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'store_coupon';
 
     /**
-     * 优惠卷类型
+     * Loại phiếu giảm giá
      * @var string[]
      */
-    protected $couponType = [0 => '通用券', 1 => '品类券', 2 => '商品券'];
+    protected $couponType = [0 => 'Phiếu toàn cửa hàng', 1 => 'Phiếu theo danh mục', 2 => 'Phiếu theo sản phẩm'];
 
     /**
-     * 一对多关联
+     * Liên kết một-nhiều
      * @return \think\model\relation\HasMany
      */
     public function productId()
@@ -52,7 +52,7 @@ class StoreCoupon extends BaseModel
     }
 
     /**
-     * 优惠券类型获取器
+     * Getter loại phiếu giảm giá
      * @param $value
      * @return string
      */
@@ -62,7 +62,7 @@ class StoreCoupon extends BaseModel
     }
 
     /**
-     * 优惠券模板标题搜索器
+     * Bộ lọc tiêu đề mẫu phiếu giảm giá
      * @param Model $query
      * @param $value
      * @param $data
@@ -73,7 +73,7 @@ class StoreCoupon extends BaseModel
     }
 
     /**
-     * 优惠券模板状态搜索器
+     * Bộ lọc trạng thái mẫu phiếu giảm giá
      * @param Model $query
      * @param $value
      * @param $data
@@ -84,7 +84,7 @@ class StoreCoupon extends BaseModel
     }
 
     /**
-     * 最低消费金额搜索器
+     * Bộ lọc số tiền tiêu tối thiểu
      * @param Model $query
      * @param $value
      * @param $data
@@ -95,7 +95,7 @@ class StoreCoupon extends BaseModel
     }
 
     /**
-     * 优惠券面值搜索器
+     * Bộ lọc giá trị phiếu giảm giá
      * @param Model $query
      * @param $value
      * @param $data
@@ -106,7 +106,7 @@ class StoreCoupon extends BaseModel
     }
 
     /**
-     * 是否删除搜索器
+     * Bộ lọc đã xóa hay chưa
      * @param Model $query
      * @param $value
      * @param $data
@@ -117,7 +117,7 @@ class StoreCoupon extends BaseModel
     }
 
     /**
-     * 优惠券类型搜索器
+     * Bộ lọc loại phiếu giảm giá
      * @param Model $query
      * @param $value
      * @param $data
@@ -128,7 +128,7 @@ class StoreCoupon extends BaseModel
     }
 
     /**
-     * 分类ID搜索器
+     * Bộ lọc ID danh mục
      * @param Model $query
      * @param $value
      * @param $data

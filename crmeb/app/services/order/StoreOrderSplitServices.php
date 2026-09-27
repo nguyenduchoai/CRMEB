@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,20 +15,20 @@ use app\dao\order\StoreOrderDao;
 use crmeb\exceptions\AdminException;
 
 /**
- * 订单拆分
+ * Tách đơn hàng
  * Class StoreOrderSplitServices
  * @package app\services\order
  */
 class StoreOrderSplitServices extends BaseServices
 {
     /**
-     * 需要清空恢复默认数据字段
+     * Cần xóa và khôi phục trường dữ liệu mặc định
      * @var string[]
      */
     protected $order_data = ['id', 'status', 'refund_status', 'refund_type', 'refund_express', 'refund_reason_wap_img', 'refund_reason_wap_explain', 'refund_reason_time', 'refund_reason_wap', 'refund_reason', 'refund_price', 'delivery_name', 'delivery_code', 'delivery_type', 'delivery_id', 'fictitious_content', 'delivery_uid'];
 
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * StoreOrderRefundServices constructor.
      * @param StoreOrderDao $dao
      */
@@ -38,7 +38,7 @@ class StoreOrderSplitServices extends BaseServices
     }
 
     /**
-     * 主订单平行拆单
+     * Tách đơn song song từ đơn hàng chính
      * @param $id
      * @param $cart_ids
      * @param $orderInfo
@@ -60,19 +60,19 @@ class StoreOrderSplitServices extends BaseServices
         $ids = array_unique(array_column($cart_ids, 'cart_id'));
         if (!$cart_ids || !$ids) return false;
         if (!$orderInfo) $orderInfo = $this->dao->get($id, ['*']);
-        if (!$orderInfo) throw new AdminException('订单不存在');
+        if (!$orderInfo) throw new AdminException('Đơn hàng không tồn tại');
         $old_order = $orderInfo;
         $orderInfo = $orderInfoOld = is_object($orderInfo) ? $orderInfo->toArray() : $orderInfo;
         foreach ($this->order_data as $field) {
             unset($orderInfo[$field]);
         }
         unset($orderInfoOld['id']);
-        //获取拆分之后的两个cart_id
+        //Lấy hai cart_id sau khi tách
         $cartInfo = $storeOrderCartInfoServices->getColumn(['oid' => $id], 'cart_num,surplus_num,cart_info', 'cart_id');
         $new_cart_ids = array_combine(array_column($cart_ids, 'cart_id'), $cart_ids);
         $other_cart_ids = [];
         foreach ($cartInfo as $cart_id => $cart) {
-            if (!isset($new_cart_ids[$cart_id]) && $cart['surplus_num']) {//无拆分
+            if (!isset($new_cart_ids[$cart_id]) && $cart['surplus_num']) {//Không tách
                 $other = ['cart_id' => (string)$cart_id, 'cart_num' => $cart['surplus_num']];
             } else if ($new_cart_ids[$cart_id]['cart_num'] < $cart['surplus_num']) {
                 $other = ['cart_id' => (string)$cart_id, 'cart_num' => bcsub((string)$cart['surplus_num'], (string)$new_cart_ids[$cart_id]['cart_num'], 0)];
@@ -86,9 +86,9 @@ class StoreOrderSplitServices extends BaseServices
         return $this->transaction(function () use ($id, $cart_ids_arr, $orderInfo, $orderInfoOld, $cartInfo, $storeOrderCreateServices, $storeOrderCartInfoServices, $statusService) {
             $order = $otherOrder = [];
             $statusData = $statusService->selectList(['oid' => $id])->toArray();
-            //订单实际支付金额
+            //Số tiền thanh toán thực tế của đơn hàng
             $order_pay_price = bcsub((string)bcadd((string)$orderInfo['total_price'], (string)$orderInfo['pay_postage'], 2), (string)bcadd((string)$orderInfo['deduction_price'], (string)$orderInfo['coupon_price'], 2), 2);
-            //有改价
+            //Có đổi giá
             $change_price = $order_pay_price != $orderInfo['pay_price'];
             foreach ($cart_ids_arr as $key => $cart_ids) {
                 if ($orderInfo['pid'] == 0 || ($orderInfo['pid'] > 0 && $key == 'new')) {
@@ -100,7 +100,7 @@ class StoreOrderSplitServices extends BaseServices
                     $order_data['unique'] = $storeOrderCreateServices->getNewOrderId('');
                     $new_order = $this->dao->save($order_data);
                     if (!$new_order) {
-                        throw new AdminException('生成新订单失败');
+                        throw new AdminException('Tạo đơn hàng mới thất bại');
                     }
                     $new_id = (int)$new_order->id;
                     $allData = [];
@@ -118,7 +118,7 @@ class StoreOrderSplitServices extends BaseServices
                 $statusService->save([
                     'oid' => $new_id,
                     'change_type' => 'split_create_order',
-                    'change_message' => '拆分订单生成',
+                    'change_message' => 'Đã tạo đơn hàng tách',
                     'change_time' => time()
                 ]);
 
@@ -179,7 +179,7 @@ class StoreOrderSplitServices extends BaseServices
             }
             if (!$orderInfo['pid']) $this->dao->update($id, ['pid' => -1]);
 
-            //处理申请开票记录
+            //Xử lý bản ghi yêu cầu xuất hóa đơn
             /** @var StoreOrderInvoiceServices $storeOrderInvoiceServics */
             $storeOrderInvoiceServics = app()->make(StoreOrderInvoiceServices::class);
             $storeOrderInvoiceServics->splitOrderInvoice((int)$id);
@@ -188,7 +188,7 @@ class StoreOrderSplitServices extends BaseServices
     }
 
     /**
-     * 订单拆分
+     * Tách đơn hàng
      * @param int $id
      * @param array $cart_ids
      * @param array $orderInfo
@@ -206,7 +206,7 @@ class StoreOrderSplitServices extends BaseServices
             $orderInfo = $this->dao->get($id, ['*']);
         }
         if (!$orderInfo) {
-            throw new AdminException('订单不存在');
+            throw new AdminException('Đơn hàng không tồn tại');
         }
         /** @var StoreOrderCreateServices $storeOrderCreateServices */
         $storeOrderCreateServices = app()->make(StoreOrderCreateServices::class);
@@ -223,7 +223,7 @@ class StoreOrderSplitServices extends BaseServices
         $order_data['add_time'] = time();
         $new_order = $this->dao->save($order_data);
         if (!$new_order) {
-            throw new AdminException('生成新订单失败');
+            throw new AdminException('Tạo đơn hàng mới thất bại');
         }
         $new_id = (int)$new_order->id;
         /** @var StoreOrderStatusServices $statusService */
@@ -231,12 +231,12 @@ class StoreOrderSplitServices extends BaseServices
         $statusService->save([
             'oid' => $new_id,
             'change_type' => 'split_create_order',
-            'change_message' => '发货拆分订单生成',
+            'change_message' => 'Đã tạo đơn hàng tách khi giao hàng',
             'change_time' => time()
         ]);
         /** @var StoreOrderCartInfoServices $storeOrderCartInfoServices */
         $storeOrderCartInfoServices = app()->make(StoreOrderCartInfoServices::class);
-        //订单下原商品信息
+        //Thông tin sản phẩm gốc trong đơn hàng
         $cartInfo = $storeOrderCartInfoServices->getColumn(['oid' => $id, 'cart_id' => $ids], 'cart_num,surplus_num,cart_info', 'cart_id');
         $cart_data = $cart_data_all = $update_data = [];
         $cart_data['oid'] = $new_id;
@@ -249,11 +249,11 @@ class StoreOrderSplitServices extends BaseServices
             $cart_data['old_cart_id'] = $cart['cart_id'];
             $cart_data['cart_num'] = $cart['cart_num'];
             $cart_data['unique'] = md5($cart_data['cart_id'] . '_' . $cart_data['oid']);
-            if ($cart['cart_num'] >= $surplus_num) {//拆分完成
+            if ($cart['cart_num'] >= $surplus_num) {//Tách xong
                 $cart_data['cart_num'] = $surplus_num;
                 $update_data['split_status'] = 2;
                 $update_data['surplus_num'] = 0;
-            } else {//拆分部分数量
+            } else {//Tách một phần số lượng
                 $update_data['surplus_num'] = bcsub((string)$surplus_num, $cart['cart_num'], 0);
                 $update_data['split_status'] = $update_data['surplus_num'] > 0 ? 1 : 2;
             }
@@ -261,14 +261,14 @@ class StoreOrderSplitServices extends BaseServices
             $_info['id'] = $cart_data['cart_id'];
             $cart_data['cart_info'] = json_encode($_info);
 
-            //修改原来订单商品信息
+            //Sửa thông tin sản phẩm đơn hàng gốc
             if (false === $storeOrderCartInfoServices->update(['oid' => $id, 'cart_id' => $cart['cart_id']], $update_data)) {
-                throw new AdminException('修改原来订单商品拆分状态失败');
+                throw new AdminException('Cập nhật trạng thái tách sản phẩm của đơn hàng gốc thất bại');
             }
             $cart_data_all[] = $cart_data;
         }
         if (!$storeOrderCartInfoServices->saveAll($cart_data_all)) {
-            throw new AdminException('新增拆分订单商品信息失败');
+            throw new AdminException('Thêm thông tin sản phẩm của đơn hàng tách thất bại');
         }
         $new_order = $this->dao->get($new_id);
         $this->splitComputeOrder($new_id, $cart_data_all, $new_order);
@@ -276,7 +276,7 @@ class StoreOrderSplitServices extends BaseServices
     }
 
     /**
-     * 重新计算新订单中价格等信息
+     * Tính lại giá và các thông tin khác trong đơn hàng mới
      * @param int $id
      * @param $orderInfo
      * @param array $cart_info_data
@@ -304,11 +304,11 @@ class StoreOrderSplitServices extends BaseServices
 
         $order_update['coupon_id'] = array_unique(array_column($cart_info_data, 'coupon_id'));
         $order_update['pay_price'] = bcadd((string)$total_price, (string)$pay_postage, 2);
-        //有订单原来支付金额 改价订单
+        //Đơn hàng có số tiền thanh toán gốc, đơn hàng đổi giá
         if ($order_pay_price) {
-            if ($pre_pay_price) {//上一个已经计算 这里减法
+            if ($pre_pay_price) {//Cái trước đã tính, ở đây trừ đi
                 $order_update['pay_price'] = bcsub((string)$pay_price, (string)$pre_pay_price, 2);
-            } else {//按比例计算实际支付金额
+            } else {//Tính số tiền thanh toán thực tế theo tỷ lệ
                 $order_update['pay_price'] = bcmul((string)bcdiv((string)$order_update['pay_price'], (string)$order_pay_price, 4), (string)$pay_price, 2);
             }
         }
@@ -325,13 +325,13 @@ class StoreOrderSplitServices extends BaseServices
         $order_update['agent_brokerage'] = $agentBrokerage;
         $order_update['division_brokerage'] = $divisionBrokerage;
         if (false === $this->dao->update($id, $order_update, 'id')) {
-            throw new AdminException('保存新订单商品信息失败');
+            throw new AdminException('Lưu thông tin sản phẩm của đơn hàng mới thất bại');
         }
         return true;
     }
 
     /**
-     * 部分发货重新计算订单商品：实际金额、优惠、积分等金额
+     * Giao hàng một phần thì tính lại sản phẩm trong đơn hàng: số tiền thực tế, ưu đãi, điểm thưởng...
      * @param int $cart_num
      * @param array $cart_info
      * @param string $orderType
@@ -352,7 +352,7 @@ class StoreOrderSplitServices extends BaseServices
             $scale = 2;
             if ($field == 'use_integral') $scale = 0;
             $new_cart_info[$field] = bcmul((string)$cart_num, bcdiv((string)$cart_info[$field], (string)$cart_info['cart_num'], 4), $scale);
-            if ($orderType == 'new') {//拆出
+            if ($orderType == 'new') {//Tách ra
                 if ($field == 'sum_true_price') {
                     $new_cart_info[$field] = round(bcmul((string)$cart_num, bcdiv((string)$cart_info[$field], (string)$cart_info['cart_num'], 4), 4), 2, PHP_ROUND_HALF_UP);
                 } else {
@@ -371,7 +371,7 @@ class StoreOrderSplitServices extends BaseServices
     }
 
     /**
-     * 获取整理后的订单商品信息
+     * Lấy thông tin sản phẩm đơn hàng đã sắp xếp lại
      * @param int $id
      * @param array $cart_ids
      * @param array $orderInfo
@@ -390,7 +390,7 @@ class StoreOrderSplitServices extends BaseServices
             $orderInfo = $this->dao->get($id, ['*']);
         }
         if (!$orderInfo) {
-            throw new AdminException('订单不存在');
+            throw new AdminException('Đơn hàng không tồn tại');
         }
         /** @var StoreOrderCartInfoServices $storeOrderCartInfoServices */
         $storeOrderCartInfoServices = app()->make(StoreOrderCartInfoServices::class);

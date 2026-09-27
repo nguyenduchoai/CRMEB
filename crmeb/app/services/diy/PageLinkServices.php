@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -37,7 +37,7 @@ class PageLinkServices extends BaseServices
     }
 
     /**
-     * 获取页面链接
+     * Lấy liên kết trang
      * @param array $where
      * @return array
      */
@@ -54,13 +54,13 @@ class PageLinkServices extends BaseServices
     }
 
     /**
-     * 删除
+     * Xóa
      * @param int $id
      */
     public function del(int $id)
     {
         $res = $this->dao->delete($id);
-        if (!$res) throw new AdminException('删除失败');
+        if (!$res) throw new AdminException('Xóa thất bại');
     }
 
     public function getLinkSave($id, $data)
@@ -74,7 +74,7 @@ class PageLinkServices extends BaseServices
             $res = $this->dao->save($data);
         }
         if (!$res) {
-            throw new AdminException('保存失败');
+            throw new AdminException('Lưu thất bại');
         } else {
             return true;
         }

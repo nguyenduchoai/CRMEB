@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -14,50 +14,50 @@ use think\Response;
 use app\http\middleware\AllowOriginMiddleware;
 
 /**
- * 无需授权的接口
+ * API không cần ủy quyền
  */
 Route::group(function () {
-    //升级程序
+    //Nâng cấp chương trình
     Route::get('upgrade', 'UpgradeController/index');
     Route::get('upgrade/run', 'UpgradeController/upgrade');
-    //用户名密码登录
-    Route::post('login', 'Login/login')->name('AdminLogin')->option(['real_name' => '下载表备份记录']);
-    //后台登录页面数据
-    Route::get('login/info', 'Login/info')->option(['real_name' => '登录信息']);
-    //验证码
-    Route::get('captcha_pro', 'Login/captcha')->name('')->option(['real_name' => '获取验证码']);
-    //获取验证码
-    Route::get('ajcaptcha', 'Login/ajcaptcha')->name('ajcaptcha')->option(['real_name' => '获取验证码']);
-    //一次验证
-    Route::post('ajcheck', 'Login/ajcheck')->name('ajcheck')->option(['real_name' => '一次验证']);
-    //获取客服数据
-    Route::get('get_workerman_url', 'PublicController/getWorkerManUrl')->option(['real_name' => '获取客服数据']);
-    //测试
-    Route::get('index', 'Test/index')->option(['real_name' => '测试地址']);
-    //扫码上传图片
-    Route::post('image/scan_upload', 'PublicController/scanUpload')->option(['real_name' => '扫码上传图片']);
-    Route::get('custom_admin_js', 'PublicController/customAdminJs')->option(['real_name' => '测试地址']);
+    //Đăng nhập bằng tên đăng nhập và mật khẩu
+    Route::post('login', 'Login/login')->name('AdminLogin')->option(['real_name' => 'Tải xuống bản sao lưu bảng']);
+    //Dữ liệu trang đăng nhập quản trị
+    Route::get('login/info', 'Login/info')->option(['real_name' => 'Thông tin đăng nhập']);
+    //Mã xác thực
+    Route::get('captcha_pro', 'Login/captcha')->name('')->option(['real_name' => 'Lấy mã xác thực']);
+    //Lấy mã xác thực
+    Route::get('ajcaptcha', 'Login/ajcaptcha')->name('ajcaptcha')->option(['real_name' => 'Lấy mã xác thực']);
+    //Xác minh lần đầu
+    Route::post('ajcheck', 'Login/ajcheck')->name('ajcheck')->option(['real_name' => 'Xác minh lần đầu']);
+    //Lấy dữ liệu CSKH
+    Route::get('get_workerman_url', 'PublicController/getWorkerManUrl')->option(['real_name' => 'Lấy dữ liệu CSKH']);
+    //Thử nghiệm
+    Route::get('index', 'Test/index')->option(['real_name' => 'Địa chỉ thử nghiệm']);
+    //Quét mã để tải lên ảnh
+    Route::post('image/scan_upload', 'PublicController/scanUpload')->option(['real_name' => 'Quét mã để tải lên ảnh']);
+    Route::get('custom_admin_js', 'PublicController/customAdminJs')->option(['real_name' => 'Địa chỉ thử nghiệm']);
 
-})->middleware(AllowOriginMiddleware::class)->option(['mark' => 'login', 'mark_name' => '登录相关']);
+})->middleware(AllowOriginMiddleware::class)->option(['mark' => 'login', 'mark_name' => 'Liên quan đăng nhập']);
 
 
 /**
- * 需授权的接口
+ * API cần ủy quyền
  */
 Route::group(function () {
-    //服务器信息
-    Route::get('system/info', 'PublicController/getSystemInfo')->option(['real_name' => '服务器信息']);
-    //路由导入
-    Route::get('route/import_api', 'PublicController/import')->option(['real_name' => '路由导入']);
-    //下载文件
-    Route::get('download/[:key]', 'PublicController/download')->option(['real_name' => '下载文件']);
+    //Thông tin máy chủ
+    Route::get('system/info', 'PublicController/getSystemInfo')->option(['real_name' => 'Thông tin máy chủ']);
+    //Nhập route
+    Route::get('route/import_api', 'PublicController/import')->option(['real_name' => 'Nhập route']);
+    //Tải xuống tệp
+    Route::get('download/[:key]', 'PublicController/download')->option(['real_name' => 'Tải xuống tệp']);
 })->middleware([
     AllowOriginMiddleware::class,
    \app\adminapi\middleware\AdminAuthTokenMiddleware::class
-])->option(['mark' => 'system', 'mark_name' => '系统相关']);
+])->option(['mark' => 'system', 'mark_name' => 'Liên quan hệ thống']);
 
 /**
- * miss 路由
+ * Route miss
  */
 Route::miss(function () {
     if (app()->request->isOptions()) {

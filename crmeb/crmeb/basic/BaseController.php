@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,24 +15,24 @@ namespace crmeb\basic;
 use think\facade\App;
 
 /**
- * 控制器基础类
+ * Class cơ sở của controller
  */
 abstract class BaseController
 {
     /**
-     * Request实例
+     * Instance Request
      * @var \app\Request
      */
     protected $request;
 
     /**
-     * 应用实例
+     * Instance ứng dụng
      * @var \think\App
      */
     protected $app;
 
     /**
-     * 控制器中间件
+     * Middleware controller
      * @var array
      */
     protected $middleware = [];
@@ -43,14 +43,14 @@ abstract class BaseController
     protected $services;
 
     /**
-     * 需要授权的接口地址
+     * Địa chỉ interface cần ủy quyền
      * @var string[]
      */
     private $authRule = [];
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * @access public
-     * @param App $app 应用对象
+     * @param App $app Đối tượng ứng dụng
      */
     public function __construct(App $app)
     {

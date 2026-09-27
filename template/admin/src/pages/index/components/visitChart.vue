@@ -11,14 +11,14 @@
                   size="small"
                   style="color: var(--prev-color-primary); background-color: #e6f7ff"
                 ></el-avatar>
-                <h4 class="ivu-pl-8">订单</h4>
+                <h4 class="ivu-pl-8">Đơn hàng</h4>
               </el-col>
               <el-col :span="16" class="ivu-text-right">
                 <el-radio-group v-model="visitDate" type="button" class="ivu-mr-8" @input="handleChangeVisitType">
-                  <el-radio-button label="thirtyday">30天</el-radio-button>
-                  <el-radio-button label="week">周</el-radio-button>
-                  <el-radio-button label="month">月</el-radio-button>
-                  <el-radio-button label="year">年</el-radio-button>
+                  <el-radio-button label="thirtyday">30 ngày</el-radio-button>
+                  <el-radio-button label="week">Tuần</el-radio-button>
+                  <el-radio-button label="month">Tháng</el-radio-button>
+                  <el-radio-button label="year">năm</el-radio-button>
                 </el-radio-group>
               </el-col>
             </el-row>
@@ -49,7 +49,7 @@ export default {
     };
   },
   methods: {
-    // 统计
+    // Thống kê
     getStatistics() {
       let data = {
         cycle: this.visitDate,
@@ -61,7 +61,7 @@ export default {
             (this.yAxisData = [
               {
                 type: 'value',
-                name: '金额',
+                name: 'Số tiền',
                 axisLine: {
                   show: false,
                 },
@@ -82,7 +82,7 @@ export default {
               },
               {
                 type: 'value',
-                name: '数量',
+                name: 'Số lượng',
                 axisLine: {
                   show: false,
                 },
@@ -110,11 +110,11 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 时间改变
+    // Thời gian thay đổi
     handleChangeVisitType() {
       this.getStatistics();
     },
-    // 监听页面宽度变化，刷新表格
+    // Theo dõi thay đổi chiều rộng trang, làm mới bảng
     handleResize() {
       if (this.infoList) this.$refs.visitChart.handleResize();
     },

@@ -1,31 +1,31 @@
-crmeb/app/services目录用于定义项目的业务服务类。
+Thư mục crmeb/app/services dùng để định nghĩa các lớp dịch vụ nghiệp vụ của dự án.
 
-服务类的主要特征和作用包括:
+Đặc điểm và vai trò chính của lớp dịch vụ bao gồm:
 
-1. 服务类封装具体的业务逻辑和规则。
+1. Lớp dịch vụ đóng gói logic và quy tắc nghiệp vụ cụ thể.
 
-2. 完成功能模块的抽象,提供统一的业务接口。
+2. Trừu tượng hóa các mô-đun chức năng, cung cấp giao diện nghiệp vụ thống nhất.
 
-3. 解耦项目各部分,降低他们之间的耦合度。
+3. Tách rời các phần của dự án, giảm mức độ phụ thuộc (coupling) giữa chúng.
 
-4. 提供给上下文的整个环境使用。
+4. Được cung cấp để toàn bộ môi trường ngữ cảnh sử dụng.
 
-具体来说:
+Cụ thể:
 
-- 每个服务类对应一个独立的业务功能或规则集合。
+- Mỗi lớp dịch vụ tương ứng với một chức năng nghiệp vụ hoặc một tập quy tắc độc lập.
 
-- 类内部可以调用其它模块完成业务需求。
+- Bên trong lớp có thể gọi các mô-đun khác để đáp ứng yêu cầu nghiệp vụ.
 
-- 对外提供简单的业务接口,隐藏内部实现细节。
+- Cung cấp giao diện nghiệp vụ đơn giản ra bên ngoài, ẩn chi tiết triển khai bên trong.
 
-- 服务类存在依赖关系,可以互相调用实现聚合服务。
+- Các lớp dịch vụ có quan hệ phụ thuộc, có thể gọi lẫn nhau để tạo thành dịch vụ tổng hợp.
 
-使用服务层设计可以:
+Sử dụng thiết kế tầng dịch vụ có thể:
 
-- 松耦合各个模块,提高扩展和重用能力。
+- Giảm sự phụ thuộc giữa các mô-đun (loose coupling), nâng cao khả năng mở rộng và tái sử dụng.
 
-- 同一个业务规则在多个场景复用。
+- Tái sử dụng cùng một quy tắc nghiệp vụ trong nhiều tình huống.
 
-- 加强项目的可测试性与维护性。
+- Tăng cường khả năng kiểm thử và bảo trì của dự án.
 
-所以此目录定义了项目核心业务服务模块,对外提供可复用的核心能力。
+Vì vậy, thư mục này định nghĩa các mô-đun dịch vụ nghiệp vụ cốt lõi của dự án, cung cấp ra bên ngoài các năng lực cốt lõi có thể tái sử dụng.

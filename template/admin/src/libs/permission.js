@@ -1,18 +1,18 @@
 import { Local } from '@/utils/storage.js';
 
 /**
- * 判断传入的 key 是否在数组 arr 中存在
- * @param {string} key - 待判断的字符串
- * @returns {boolean} - 返回布尔值，表示是否有权限
+ * Kiểm tra key truyền vào có tồn tại trong mảng arr không
+ * @param {string} key - Chuỗi cần kiểm tra
+ * @returns {boolean} - Trả về boolean, thể hiện có quyền hay không
  */
 export default function checkArray(key) {
-  // seckill 秒杀 bargain 砍价 combination 拼团
-  let arr = Local.get('PERMISSIONS') || ['seckill', 'bargain', 'combination']; // 定义一个数组，包含三种类型
-  let index = arr.indexOf(key); // 获取 key 在数组中的索引
+  // seckill flash sale bargain săn giảm giá combination mua chung
+  let arr = Local.get('PERMISSIONS') || ['seckill', 'bargain', 'combination']; // Định nghĩa một mảng, chứa ba loại
+  let index = arr.indexOf(key); // Lấy chỉ số (index) của key trong mảng
   if (index > -1) {
-    // 如果索引大于 -1，说明 key 存在于数组中
-    return true; // 有权限
+    // Nếu chỉ số lớn hơn -1 thì nghĩa là key tồn tại trong mảng
+    return true; // Có quyền
   } else {
-    return false; // 无权限
+    return false; // Không có quyền
   }
 }

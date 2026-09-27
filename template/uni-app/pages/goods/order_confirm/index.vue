@@ -7,13 +7,13 @@
 					<view class="item font-num" :class="shippingType == 0 ? 'on' : 'on2'" @tap="addressType(0)"
 						v-if='store_self_mention && is_shipping'>
 						<view class="before">
-							{{$t(`快递配送`)}}
+							{{$t(`Giao qua đơn vị vận chuyển`)}}
 						</view>
 					</view>
 					<view class="item font-num" :class="shippingType == 1 ? 'on' : 'on2'" @tap="addressType(1)"
 						v-if='store_self_mention && is_shipping'>
 						<view class="before">
-							{{$t(`到店自提`)}}
+							{{$t(`Nhận tại cửa hàng`)}}
 						</view>
 					</view>
 				</view>
@@ -21,13 +21,13 @@
 					@click.prevent="openList">
 					<view class="acea-row row-middle">
 						<view class="icon" :class="shippingType==1?'orange':'red'">
-							{{shippingType==0?'商城配送':'门店自提'}}
+							{{shippingType==0?'Giao hàng tận nơi':'Nhận tại cửa hàng'}}
 						</view>
-						<view class="text add-text line1" v-if="shippingType==0">{{$t(`由平台为您提供配送服务`)}}</view>
-						<view class="text add-text line1" v-if="shippingType==1">{{$t(`线上下单，到店自提`)}}</view>
+						<view class="text add-text line1" v-if="shippingType==0">{{$t(`Nền tảng cung cấp dịch vụ giao hàng cho bạn`)}}</view>
+						<view class="text add-text line1" v-if="shippingType==1">{{$t(`Đặt hàng online, nhận tại cửa hàng`)}}</view>
 					</view>
 
-					<view class="text">{{shippingType == 0 ? $t('切换地址') : $t('切换门店')}} <text class='iconfont icon-jiantou'></text>
+					<view class="text">{{shippingType == 0 ? $t('Đổi địa chỉ') : $t('Đổi cửa hàng')}} <text class='iconfont icon-jiantou'></text>
 					</view>
 				</view>
 				<view class='address acea-row row-between-wrapper' @tap='onAddress' v-if='shippingType == 0'>
@@ -37,12 +37,12 @@
 						</view>
 						<view class="line1">
 							<text class='default font-num'
-								v-if="addressInfo.is_default">[{{$t(`默认`)}}]</text>{{addressInfo.province}}{{addressInfo.city}}{{addressInfo.district}}{{addressInfo.detail}}
+								v-if="addressInfo.is_default">[{{$t(`Mặc định`)}}]</text>{{addressInfo.province}}{{addressInfo.city}}{{addressInfo.district}}{{addressInfo.detail}}
 						</view>
-						<!-- <view class='setaddress'>设置收货地址</view> -->
+						<!-- <view class='setaddress'>Đặt địa chỉ nhận hàng</view> -->
 					</view>
 					<view class='addressCon' v-else>
-						<view class='setaddress'>{{$t(`设置收货地址`)}}</view>
+						<view class='setaddress'>{{$t(`Thiết lập địa chỉ nhận hàng`)}}</view>
 					</view>
 					<view v-if="store_self_mention && is_shipping" class='iconfont icon-jiantou'></view>
 				</view>
@@ -57,7 +57,7 @@
 						<!-- <view class='iconfont icon-jiantou'></view> -->
 					</block>
 					<block v-else>
-						<view>{{$t(`暂无门店信息`)}}</view>
+						<view>{{$t(`Chưa có thông tin cửa hàng`)}}</view>
 					</block>
 					<view class="icon acea-row row-middle" v-if="storeList.length>0">
 						<view class="iconfont icon-dianhua" @click.stop="call(system_store.phone)"></view>
@@ -71,7 +71,7 @@
 			<view v-if="giftData" class="gift-box">
 				<view class="acea-row row-middle user-msg">
 					<image class="avatar mr-12" :src="giftData.avatar" mode=""></image>
-					<text class="nickname">{{ giftData.nickname}} 赠您一份礼物，请查收！</text>
+					<text class="nickname">{{ giftData.nickname}} tặng bạn một món quà, vui lòng nhận nhé!</text>
 				</view>
 				<view class="line"></view>
 				<view class="gift-mark" v-if="giftData.gift_mark">
@@ -80,35 +80,35 @@
 			</view>
 			<orderGoods :cartInfo="cartInfo" :is_confirm='true' :is_gift='is_gift' :shipping_type="shippingType"></orderGoods>
 			<view v-if="is_gift == 1" class="gift-msg acea-row row-between-wrapper">
-				<view>{{$t(`好友留言`)}}</view>
+				<view>{{$t(`Lời nhắn gửi bạn bè`)}}</view>
 				<view class="discount">
-					<input style="text-align: right;" v-model="gift_mark" type="text" :placeholder="$t(`填写好友留言，最多40字`)"
+					<input style="text-align: right;" v-model="gift_mark" type="text" :placeholder="$t(`Nhập lời nhắn gửi bạn bè, tối đa 40 ký tự`)"
 						placeholder-class="placeholder"></input>
 				</view>
 			</view>
 			<view class='wrapper' v-if="(!is_gift && is_gift == 2) && shippingType == 1">
 				<view class="item acea-row row-between-wrapper">
-					<view>{{$t(`用户姓名`)}}</view>
+					<view>{{$t(`Họ tên người dùng`)}}</view>
 					<view class="discount">
-						<input style="text-align: right;" v-model="contacts" type="text" :placeholder="$t(`请输入姓名`)"
+						<input style="text-align: right;" v-model="contacts" type="text" :placeholder="$t(`Vui lòng nhập họ tên`)"
 							placeholder-class="placeholder"></input>
 					</view>
 				</view>
 				<view class="item acea-row row-between-wrapper">
-					<view>{{$t(`联系电话`)}}</view>
+					<view>{{$t(`Số điện thoại liên hệ`)}}</view>
 					<view class="discount">
-						<input style="text-align: right;" v-model="contactsTel" type="text" :placeholder="$t(`请输入手机号`)"
+						<input style="text-align: right;" v-model="contactsTel" type="text" :placeholder="$t(`Vui lòng nhập số điện thoại`)"
 							placeholder-class="placeholder"></input>
 					</view>
 				</view>
 			</view>
 			<view v-if="is_gift == 2" class="receive-btn" @click="receiveGift">
-				立即领取
+				Nhận ngay
 			</view>
 			<view class='wrapper' v-if="!is_gift || is_gift == 1">
 				<view class='item acea-row row-between-wrapper' @tap='couponTap'
 					v-if="!pinkId && !BargainId && !combinationId && !seckillId&& !noCoupon && !discountId && !advanceId">
-					<view>{{$t(`优惠券`)}}</view>
+					<view>{{$t(`Phiếu giảm giá`)}}</view>
 					<view class='discount'>
 						{{couponTitle}}
 						<text class='iconfont icon-jiantou'></text>
@@ -116,9 +116,9 @@
 				</view>
 				<view class='item acea-row row-between-wrapper'
 					v-if="!pinkId && !BargainId && !combinationId && !seckillId && !advanceId && integral_open">
-					<view>{{$t(`积分抵扣`)}}</view>
+					<view>{{$t(`Khấu trừ bằng điểm thưởng`)}}</view>
 					<view class='discount acea-row row-middle'>
-						<view> {{useIntegral ? $t(`剩余积分`):$t(`当前积分`)}}
+						<view> {{useIntegral ? $t(`Điểm thưởng còn lại`):$t(`Điểm thưởng hiện tại`)}}
 							<text class='num font-color'>{{integral || 0}}</text>
 						</view>
 						<checkbox-group @change="ChangeIntegral">
@@ -127,7 +127,7 @@
 					</view>
 				</view>
 				<view v-if="invoice_func || special_invoice" class='item acea-row row-between-wrapper' @tap="goInvoice">
-					<view>{{$t(`开具发票`)}}</view>
+					<view>{{$t(`Xuất hóa đơn`)}}</view>
 					<view class='discount'>
 						{{invTitle}}
 						<text class='iconfont icon-jiantou'></text>
@@ -135,26 +135,26 @@
 				</view>
 				<view v-if="shippingType == 1">
 					<view class="item acea-row row-between-wrapper">
-						<view>{{$t(`用户姓名`)}}</view>
+						<view>{{$t(`Họ tên người dùng`)}}</view>
 						<view class="discount">
-							<input style="text-align: right;" v-model="contacts" type="text" :placeholder="$t(`请输入姓名`)"
+							<input style="text-align: right;" v-model="contacts" type="text" :placeholder="$t(`Vui lòng nhập họ tên`)"
 								placeholder-class="placeholder"></input>
 						</view>
 					</view>
 					<view class="item acea-row row-between-wrapper">
-						<view>{{$t(`联系电话`)}}</view>
+						<view>{{$t(`Số điện thoại liên hệ`)}}</view>
 						<view class="discount">
-							<input style="text-align: right;" v-model="contactsTel" type="text" :placeholder="$t(`请输入手机号`)"
+							<input style="text-align: right;" v-model="contactsTel" type="text" :placeholder="$t(`Vui lòng nhập số điện thoại`)"
 								placeholder-class="placeholder"></input>
 						</view>
 					</view>
 				</view>
 				<view class='item' v-if="textareaStatus">
-					<view>{{$t(`备注说明`)}}</view>
+					<view>{{$t(`Ghi chú`)}}</view>
 					<view class="mark" v-if="!coupon.coupon && !inputTrip" @click="inputTripClick">
-						<view :class="{'mark-msg': mark}" v-text="mark || $t(`填写备注信息，100字以内`)"></view>
+						<view :class="{'mark-msg': mark}" v-text="mark || $t(`Nhập ghi chú, tối đa 100 ký tự`)"></view>
 					</view>
-					<textarea placeholder-class='placeholder' :placeholder="$t(`填写备注信息，100字以内`)"
+					<textarea placeholder-class='placeholder' :placeholder="$t(`Nhập ghi chú, tối đa 100 ký tự`)"
 						v-if="!coupon.coupon && inputTrip" @input='bindHideKeyboard' :focus="focus" @blur="inputTrip = false"
 						:value="mark" :maxlength="150" name="mark">
 						</textarea>
@@ -169,15 +169,15 @@
 					</view>
 					<!-- text -->
 					<view v-if="item.label=='text'" class="confirm">
-						<input type="text" :placeholder="$t(`请填写${item.title}`)" v-model="item.value" />
+						<input type="text" :placeholder="$t(`Vui lòng nhập ${item.title}`)" v-model="item.value" />
 					</view>
 					<!-- number -->
 					<view v-if="item.label=='number'" class="confirm">
-						<input type="number" :placeholder="$t(`请填写${item.title}`)" v-model="item.value" />
+						<input type="number" :placeholder="$t(`Vui lòng nhập ${item.title}`)" v-model="item.value" />
 					</view>
 					<!-- email -->
 					<view v-if="item.label=='email'" class="confirm">
-						<input type="text" :placeholder="$t(`请填写${item.title}`)" v-model="item.value" />
+						<input type="text" :placeholder="$t(`Vui lòng nhập ${item.title}`)" v-model="item.value" />
 					</view>
 					<!-- data -->
 					<view v-if="item.label=='data'" class="uni-list">
@@ -206,11 +206,11 @@
 					</view>
 					<!-- id -->
 					<view v-if="item.label=='id'" class="confirm">
-						<input type="idcard" :placeholder="$t(`请填写`)+item.title" v-model="item.value" />
+						<input type="idcard" :placeholder="$t(`Vui lòng nhập`)+item.title" v-model="item.value" />
 					</view>
 					<!-- phone -->
 					<view v-if="item.label=='phone'" class="confirm">
-						<input type="tel" :placeholder="$t(`请填写`)+item.title" v-model="item.value" />
+						<input type="tel" :placeholder="$t(`Vui lòng nhập`)+item.title" v-model="item.value" />
 					</view>
 					<!-- img -->
 					<view v-if="item.label=='img'" class="confirmImg">
@@ -222,7 +222,7 @@
 							<view class='pictrue acea-row row-center-wrapper row-column bor' @click='uploadpic(index,item)'
 								v-if="item.value.length < 8">
 								<text class='iconfont icon-icon25201'></text>
-								<view>{{$t(`上传图片`)}}</view>
+								<view>{{$t(`Tải lên ảnh`)}}</view>
 							</view>
 						</view>
 					</view>
@@ -230,56 +230,56 @@
 			</view>
 			<view class='moneyList' v-if="!is_gift || is_gift == 1">
 				<view class='item acea-row row-between-wrapper'>
-					<view>{{$t(`商品总价`)}}：</view>
+					<view>{{$t(`Tổng giá sản phẩm`)}}：</view>
 					<view class='money'>
 						{{$t(`￥`)}}{{allPrice || 0}}
 					</view>
 				</view>
 				<view v-if="is_gift && priceGroup.giftPrice > 0" class='item acea-row row-between-wrapper'>
-					<view>{{$t(`礼品附加费`)}}：</view>
+					<view>{{$t(`Phụ phí quà tặng`)}}：</view>
 					<view class='money'>
 						{{$t(`￥`)}}{{parseFloat(priceGroup.giftPrice)}}
 					</view>
 				</view>
 				<view class='item acea-row row-between-wrapper'
 					v-if="priceGroup.storePostage > 0 || priceGroup.storePostageDiscount > 0">
-					<view>{{$t(`配送运费`)}}：</view>
+					<view>{{$t(`Phí vận chuyển`)}}：</view>
 					<view class='money'>
 						{{$t(`￥`)}}{{(parseFloat(priceGroup.storePostage)+parseFloat(priceGroup.storePostageDiscount)).toFixed(2)}}
 					</view>
 				</view>
 				<view class='item acea-row row-between-wrapper'
 					v-if="priceGroup.levelPrice > 0 && userInfo.vip && !pinkId && !BargainId && !combinationId && !seckillId && !discountId">
-					<view>{{$t(`用户等级优惠`)}}：</view>
+					<view>{{$t(`Ưu đãi hạng thành viên`)}}：</view>
 					<view class='money'>-{{$t(`￥`)}}{{parseFloat(priceGroup.levelPrice).toFixed(2)}}</view>
 				</view>
 				<view class='item acea-row row-between-wrapper'
 					v-if="priceGroup.memberPrice > 0 && userInfo.vip && !pinkId && !BargainId && !combinationId && !seckillId && !discountId">
-					<view>{{$t(`付费会员优惠`)}}：</view>
+					<view>{{$t(`Ưu đãi thành viên trả phí`)}}：</view>
 					<view class='money'>-{{$t(`￥`)}}{{parseFloat(priceGroup.memberPrice).toFixed(2)}}</view>
 				</view>
 				<view class='item acea-row row-between-wrapper' v-if="priceGroup.storePostageDiscount > 0">
-					<view>{{$t(`会员运费优惠`)}}：</view>
+					<view>{{$t(`Ưu đãi phí vận chuyển cho thành viên`)}}：</view>
 					<view class='money'>-{{$t(`￥`)}}{{parseFloat(priceGroup.storePostageDiscount).toFixed(2)}}</view>
 				</view>
 				<view class='item acea-row row-between-wrapper' v-if="coupon_price > 0">
-					<view>{{$t(`优惠券抵扣`)}}：</view>
+					<view>{{$t(`Giảm từ phiếu giảm giá`)}}：</view>
 					<view class='money'>-{{$t(`￥`)}}{{parseFloat(coupon_price).toFixed(2)}}</view>
 				</view>
 				<view class='item acea-row row-between-wrapper' v-if="integral_price > 0">
-					<view>{{$t(`积分抵扣`)}}：</view>
+					<view>{{$t(`Khấu trừ bằng điểm thưởng`)}}：</view>
 					<view class='money'>-{{$t(`￥`)}}{{parseFloat(integral_price).toFixed(2)}}</view>
 				</view>
 			</view>
 			<view style='height:120rpx;'></view>
 			<view class='footer acea-row row-between-wrapper' v-if="!is_gift || is_gift == 1">
-				<view>{{$t(`合计`)}}:
+				<view>{{$t(`Tổng cộng`)}}:
 					<text class='font-color'>{{$t(`￥`)}}{{totalPrice || 0}}</text>
 				</view>
 				<view class='settlement' style='z-index:100' @tap.stop="Debounce(SubOrder())"
-					v-if="(valid_count>0&&!discount_id) || (valid_count==cartInfo.length&&discount_id)">{{$t(`提交订单`)}}
+					v-if="(valid_count>0&&!discount_id) || (valid_count==cartInfo.length&&discount_id)">{{$t(`Đặt hàng`)}}
 				</view>
-				<view class='settlement bg-color-hui' style='z-index:100' v-else>{{$t(`提交订单`)}}</view>
+				<view class='settlement bg-color-hui' style='z-index:100' v-else>{{$t(`Đặt hàng`)}}</view>
 			</view>
 		</view>
 		<view class="alipaysubmit" v-html="formContent"></view>
@@ -360,9 +360,9 @@
 				format: true
 			})
 			return {
-				confirm: '', //自定义留言
-				date: this.$t(`请选择`),
-				time: this.$t(`请选择`),
+				confirm: '', //Lời nhắn tùy chỉnh
+				date: this.$t(`Vui lòng chọn`),
+				time: this.$t(`Vui lòng chọn`),
 
 				canvasWidth: "",
 				canvasHeight: "",
@@ -371,39 +371,39 @@
 
 
 				textareaStatus: true,
-				//支付方式
+				//Phương thức thanh toán
 				cartArr: [{
-						"name": this.$t(`微信支付`),
+						"name": this.$t(`WeChat Pay`),
 						"icon": "icon-weixin2",
 						value: 'weixin',
-						title: this.$t(`使用微信快捷支付`),
+						title: this.$t(`Thanh toán nhanh qua WeChat`),
 						payStatus: 1,
 					},
 					{
-						"name": this.$t(`支付宝支付`),
+						"name": this.$t(`Thanh toán Alipay`),
 						"icon": "icon-zhifubao",
 						value: 'alipay',
-						title: this.$t(`使用支付宝支付`),
+						title: this.$t(`Thanh toán bằng Alipay`),
 						payStatus: 1,
 					},
 					{
-						"name": this.$t(`余额支付`),
+						"name": this.$t(`Thanh toán bằng số dư`),
 						"icon": "icon-yuezhifu",
 						value: 'yue',
-						title: this.$t(`可用余额`),
+						title: this.$t(`Số dư khả dụng`),
 						payStatus: 1,
 					},
 					{
-						"name": this.$t(`线下支付`),
+						"name": this.$t(`Thanh toán ngoại tuyến`),
 						"icon": "icon-yuezhifu1",
 						value: 'offline',
-						title: this.$t(`使用线下付款`),
+						title: this.$t(`Sử dụng thanh toán ngoại tuyến`),
 						payStatus: 2,
 					}, {
-						"name": this.$t(`好友代付`),
+						"name": this.$t(`Bạn bè thanh toán hộ`),
 						"icon": "icon-haoyoudaizhifu",
 						value: 'friend',
-						title: this.$t(`找微信好友支付`),
+						title: this.$t(`Nhờ bạn bè WeChat thanh toán`),
 						payStatus: 1,
 					}
 
@@ -411,45 +411,45 @@
 				virtual_type: 0,
 				allPrice: 0,
 				formContent: '',
-				payType: '', //支付方式
-				openType: 1, //优惠券打开方式 1=使用
-				active: 0, //支付方式切换
+				payType: '', //Phương thức thanh toán
+				openType: 1, //Cách mở phiếu giảm giá, 1 = sử dụng
+				active: 0, //Chuyển đổi phương thức thanh toán
 				coupon: {
 					coupon: false,
 					list: [],
-					statusTile: this.$t(`立即使用`)
-				}, //优惠券组件
+					statusTile: this.$t(`Dùng ngay`)
+				}, //Component phiếu giảm giá
 				address: {
 					address: false
-				}, //地址组件
-				addressInfo: {}, //地址信息
-				pinkId: 0, //拼团id
-				addressId: 0, //地址id
-				couponId: 0, //优惠券id
-				cartId: '', //购物车id
-				orderId: '', // 订单id, 领取礼物页面传参
+				}, //Component địa chỉ
+				addressInfo: {}, //Thông tin địa chỉ
+				pinkId: 0, //ID mua chung
+				addressId: 0, //id địa chỉ
+				couponId: 0, //ID phiếu giảm giá
+				cartId: '', //ID giỏ hàng
+				orderId: '', // id đơn hàng, tham số truyền cho trang nhận quà
 				BargainId: 0,
 				combinationId: 0,
 				seckillId: 0,
 				discountId: 0,
-				userInfo: {}, //用户信息
-				mark: '', //备注信息
-				couponTitle: this.$t(`请选择`), //优惠券
-				coupon_price: 0, //优惠券抵扣金额
-				useIntegral: false, //是否使用积分
-				integral_price: 0, //积分抵扣金额
+				userInfo: {}, //Thông tin người dùng
+				mark: '', //Thông tin ghi chú
+				couponTitle: this.$t(`Vui lòng chọn`), //Phiếu giảm giá
+				coupon_price: 0, //Số tiền giảm từ phiếu giảm giá
+				useIntegral: false, //Có sử dụng điểm thưởng hay không
+				integral_price: 0, //Số tiền khấu trừ bằng điểm thưởng
 				integral: 0,
 				usable_integral: 0,
-				ChangePrice: 0, //使用积分抵扣变动后的金额
-				formIds: [], //收集formid
+				ChangePrice: 0, //Số tiền sau khi dùng điểm thưởng để trừ
+				formIds: [], //Thu thập formid
 				status: 0,
 				is_address: false,
-				toPay: false, //修复进入支付时页面隐藏从新刷新页面
+				toPay: false, //Sửa lỗi khi vào thanh toán trang bị ẩn thì phải tải lại trang
 				shippingType: 0,
 				system_store: {},
 				storePostage: 0,
 				advanceId: 0,
-				gift_mark: '这是送您的一份礼物~', // 礼物留言
+				gift_mark: 'Đây là món quà dành tặng bạn~', // Lời nhắn quà tặng
 				contacts: '',
 				contactsTel: '',
 				mydata: {},
@@ -464,13 +464,13 @@
 				orderKey: "",
 				// usableCoupon: {},
 				offlinePostage: "",
-				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false, //是否隐藏授权
+				isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+				isShowAuth: false, //Có ẩn ủy quyền hay không
 				from: '',
 				news: 1,
 
-				// invTitle: '不开发票',
-				invTitle: this.$t(`不开发票`),
+				// invTitle: 'Không xuất hóa đơn',
+				invTitle: this.$t(`Không xuất hóa đơn`),
 				special_invoice: false,
 				invoice_func: false,
 				header_type: '',
@@ -487,7 +487,7 @@
 				focus: true,
 				integral_open: false,
 				jumpData: {},
-				is_gift: 0, // 1 购买的礼品 2领取礼品
+				is_gift: 0, // 1 quà mua  2 quà nhận
 				giftData: null
 			};
 		},
@@ -511,7 +511,7 @@
 			this.from = 'app'
 			// #endif
 			if (!options.cartId && !options.order_id) return this.$util.Tips({
-				title: this.$t(`请选择要购买的商品`)
+				title: this.$t(`Vui lòng chọn sản phẩm cần mua`)
 			}, {
 				tab: 3,
 				url: 1
@@ -529,12 +529,12 @@
 			this.news = !options.new || options.new === '0' ? 0 : 1;
 			this.invChecked = options.invoice_id || '';
 			this.header_type = options.header_type || '1';
-			this.couponTitle = options.couponTitle || this.$t(`请选择`)
+			this.couponTitle = options.couponTitle || this.$t(`Vui lòng chọn`)
 			if (options.invoice_id) {
 				let name = ''
-				name += options.header_type == 1 ? this.$t(`个人`) : this.$t(`企业`);
-				name += options.invoice_type == 1 ? this.$t(`普通`) : this.$t(`专用`);
-				name += this.$t(`发票`);
+				name += options.header_type == 1 ? this.$t(`Cá nhân`) : this.$t(`Doanh nghiệp`);
+				name += options.invoice_type == 1 ? this.$t(`Thường`) : this.$t(`Chuyên dụng`);
+				name += this.$t(`Hóa đơn`);
 				this.invTitle = name;
 			}
 			// #ifndef APP-PLUS
@@ -549,7 +549,7 @@
 			}
 		},
 		/**
-		 * 生命周期函数--监听页面显示
+		 * Hàm lifecycle -- theo dõi khi trang hiển thị
 		 */
 		onShow() {
 			let _this = this
@@ -558,11 +558,11 @@
 				if (res) {
 					_this.system_store = res.address
 				}
-				// 清除监听
+				// Xóa listener
 				uni.$off('handClick');
 			})
 
-			// 如果当前是门店自提模式，重新获取定位以确保门店列表准确
+			// Nếu đang ở chế độ nhận tại cửa hàng thì lấy lại vị trí để đảm bảo danh sách cửa hàng chính xác
 			if (this.shippingType == 1 && !this.system_store.name) {
 				this.refreshLocationAndStores();
 			}
@@ -570,7 +570,7 @@
 		},
 		methods: {
 			/**
-			 * 刷新定位并更新门店列表
+			 * Làm mới vị trí và cập nhật danh sách cửa hàng
 			 */
 			refreshLocationAndStores() {
 				let that = this;
@@ -581,7 +581,7 @@
 						uni.setStorageSync('user_longitude', res.longitude);
 						this.getList()
 					}).catch(err => {
-						// 如果获取定位失败，仍然尝试用缓存的定位获取门店列表
+						// Nếu lấy vị trí thất bại, vẫn thử dùng vị trí trong bộ nhớ đệm để lấy danh sách cửa hàng
 						this.getList()
 					})
 				} else {
@@ -593,8 +593,8 @@
 							uni.setStorageSync('user_longitude', res.longitude);
 						},
 						fail: (err) => {
-							// 获取定位失败时的处理，仍然使用缓存定位
-							console.log('获取定位失败:', err);
+							// Xử lý khi lấy vị trí thất bại, vẫn dùng vị trí trong bộ nhớ đệm
+							console.log('Lấy vị trí thất bại:', err);
 						},
 						complete: () => {
 							this.getList()
@@ -640,21 +640,21 @@
 				});
 			},
 
-			// 不开发票
+			// Không xuất hóa đơn
 			invCancel() {
 				this.invChecked = '';
-				this.invTitle = this.$t(`不开发票`)
+				this.invTitle = this.$t(`Không xuất hóa đơn`)
 				this.invShow = false;
 			},
-			// 选择发票
+			// Chọn hóa đơn
 			invChange(id) {
 				let name = '';
 				this.invChecked = id;
 				this.invShow = false;
 				const result = this.invList.find(item => item.id === id);
-				name += result.header_type === 1 ? this.$t(`个人`) : this.$t(`企业`);
-				name += result.type === 1 ? this.$t(`普通`) : this.$t(`专用`);
-				name += this.$t(`发票`);
+				name += result.header_type === 1 ? this.$t(`Cá nhân`) : this.$t(`Doanh nghiệp`);
+				name += result.type === 1 ? this.$t(`Thường`) : this.$t(`Chuyên dụng`);
+				name += this.$t(`Hóa đơn`);
 				this.invTitle = name;
 			},
 			openList() {
@@ -664,14 +664,14 @@
 					this.showStoreList()
 				}
 			},
-			// 关闭发票
+			// Đóng hóa đơn
 			invClose() {
 				this.invShow = false;
 				this.getInvoiceList()
 			},
 			getInvoiceList() {
 				uni.showLoading({
-					title: this.$t(`正在加载中`)
+					title: this.$t(`Đang tải`)
 				})
 				invoiceList().then(res => {
 					uni.hideLoading();
@@ -682,9 +682,9 @@
 					const result = this.invList.find(item => item.id == this.invChecked);
 					if (result) {
 						let name = '';
-						name += result.header_type === 1 ? this.$t(`个人`) : this.$t(`企业`);
-						name += result.type === 1 ? this.$t(`普通`) : this.$t(`专用`);
-						name += this.$t(`发票`);
+						name += result.header_type === 1 ? this.$t(`Cá nhân`) : this.$t(`Doanh nghiệp`);
+						name += result.type === 1 ? this.$t(`Thường`) : this.$t(`Chuyên dụng`);
+						name += this.$t(`Hóa đơn`);
 						this.invTitle = name;
 					}
 				}).catch(err => {
@@ -695,7 +695,7 @@
 				});
 			},
 			/**
-			 * 开发票
+			 * Xuất hóa đơn
 			 */
 			goInvoice: function() {
 				this.getInvoiceList()
@@ -704,17 +704,17 @@
 					`new=${this.news}&cartId=${this.cartId}&pinkId=${this.pinkId}&couponId=${this.couponId}&addressId=${this.addressId}&specialInvoice=${this.special_invoice}&couponTitle=${this.couponTitle}`;
 			},
 			/**
-			 * 授权回调事件
+			 * Sự kiện callback ủy quyền
 			 * 
 			 */
 			onLoadFun: function() {
 				this.getaddressInfo();
 				this.getConfirm();
-				//调用子页面方法授权后执行获取地址列表
+				//Gọi phương thức trang con, sau khi ủy quyền thì thực hiện lấy danh sách địa chỉ
 				// this.$scope.selectComponent('#address-window').getAddressList();
 			},
 			/**
-			 * 事件回调
+			 * Callback sự kiện
 			 *
 			 */
 			onChangeFun: function(e) {
@@ -734,14 +734,14 @@
 				this.SubOrder();
 			},
 			/**
-			 * 获取门店列表数据
+			 * Lấy dữ liệu danh sách cửa hàng
 			 */
 			getList: function() {
-				let longitude = uni.getStorageSync("user_longitude") || ''; //经度
-				let latitude = uni.getStorageSync("user_latitude") || ''; //纬度
+				let longitude = uni.getStorageSync("user_longitude") || ''; //Kinh độ
+				let latitude = uni.getStorageSync("user_latitude") || ''; //Vĩ độ
 				let data = {
-					latitude: latitude, //纬度
-					longitude: longitude, //经度
+					latitude: latitude, //Vĩ độ
+					longitude: longitude, //Kinh độ
 					page: 1,
 					limit: 10
 				}
@@ -751,12 +751,12 @@
 					this.$set(this, 'system_store', list[0]);
 				}).catch(err => {})
 			},
-			// 关闭地址弹窗；
+			// Đóng popup địa chỉ;
 			changeClose: function() {
 				this.$set(this.address, 'address', false);
 			},
 			/*
-			 * 跳转门店列表
+			 * Chuyển đến danh sách cửa hàng
 			 */
 			showStoreList: function() {
 				let _this = this
@@ -848,7 +848,7 @@
 				this.$set(this.coupon, 'list', this.coupon.list);
 			},
 			/**
-			 * 处理点击优惠券后的事件
+			 * Xử lý sự kiện sau khi click phiếu giảm giá
 			 * 
 			 */
 			ChangCoupons: function(e) {
@@ -856,7 +856,7 @@
 				// this.coupon.coupon = false
 				let index = e,
 					list = this.coupon.list,
-					couponTitle = this.$t(`请选择`),
+					couponTitle = this.$t(`Vui lòng chọn`),
 					couponId = 0;
 				for (let i = 0, len = list.length; i < len; i++) {
 					if (i != index) {
@@ -865,12 +865,12 @@
 					}
 				}
 				if (list[index].is_use) {
-					//不使用优惠券
+					//Không dùng phiếu giảm giá
 					list[index].use_title = '';
 					list[index].is_use = 0;
 				} else {
-					//使用优惠券
-					list[index].use_title = this.$t(`不使用`);
+					//Dùng phiếu giảm giá
+					list[index].use_title = this.$t(`Không sử dụng`);
 					list[index].is_use = 1;
 					couponTitle = list[index].coupon_title;
 					couponId = list[index].id;
@@ -882,14 +882,14 @@
 				this.computedPrice();
 			},
 			/**
-			 * 使用积分抵扣
+			 * Dùng điểm thưởng để trừ
 			 */
 			ChangeIntegral: function() {
 				this.useIntegral = !this.useIntegral;
 				this.computedPrice();
 			},
 			/**
-			 * 选择地址后改变事件
+			 * Sự kiện thay đổi sau khi chọn địa chỉ
 			 * @param object e
 			 */
 			OnChangeAddress: function(e) {
@@ -935,14 +935,14 @@
 				})
 			},
 			/**
-			 * 获取当前订单详细信息
+			 * Lấy thông tin chi tiết đơn hàng hiện tại
 			 * 
 			 */
 			getConfirm: function() {
 				let that = this;
 				// return;
 				uni.showLoading({
-					title: that.$t(`正在加载中`),
+					title: that.$t(`Đang tải`),
 					mask: true
 				});
 				let data = {
@@ -984,15 +984,15 @@
 					that.$set(that, 'virtual_type', res.data.virtual_type || 0);
 					that.$set(that, 'integral_open', res.data.integral_open);
 					uni.hideLoading()
-					//微信支付是否开启
+					//WeChat Pay có mở hay không
 					that.cartArr[0].payStatus = res.data.pay_weixin_open || 0
-					//支付宝是否开启
+					//Alipay có mở hay không
 					that.cartArr[1].payStatus = res.data.ali_pay_status || 0;
 					//#ifdef MP
 					that.cartArr[1].payStatus = 0;
 					//#endif
-					//余额支付是否开启
-					// that.cartArr[2].title = '可用余额:' + res.data.userInfo.now_money;
+					//Thanh toán bằng số dư có mở hay không
+					// that.cartArr[2].title = 'Số dư khả dụng: ' + res.data.userInfo.now_money;
 					that.cartArr[2].number = res.data.userInfo.now_money;
 					that.cartArr[2].payStatus = res.data.yue_pay_status == 1 ? res.data.yue_pay_status : 0
 					if (res.data.offline_pay_status == 2 || res.data.deduction) {
@@ -1000,7 +1000,7 @@
 					} else {
 						that.cartArr[3].payStatus = 1
 					}
-					//好友代付是否开启
+					//Bạn bè thanh toán hộ có mở hay không
 					that.cartArr[4].payStatus = res.data.friend_pay_status || 0;
 					// that.$set(that, 'cartArr', that.cartArr);
 					that.$set(that, 'ChangePrice', that.totalPrice);
@@ -1019,7 +1019,7 @@
 				});
 			},
 			/*
-			 * 提取砍价和拼团id
+			 * Trích xuất id săn giảm giá và mua chung
 			 */
 			getBargainId: function() {
 				let that = this;
@@ -1044,7 +1044,7 @@
 				}
 			},
 			/**
-			 * 获取当前金额可用优惠券
+			 * Lấy phiếu giảm giá khả dụng với số tiền hiện tại
 			 * 
 			 */
 			getCouponList: function() {
@@ -1064,7 +1064,7 @@
 				});
 			},
 			/*
-			 * 获取默认收货地址或者获取某条地址信息
+			 * Lấy địa chỉ nhận hàng mặc định hoặc lấy thông tin một địa chỉ nào đó
 			 */
 			getaddressInfo: function() {
 				let that = this;
@@ -1169,26 +1169,26 @@
 				let that = this,
 					data = {};
 				if (!that.addressId && !that.shippingType && !that.virtual_type && !that.is_gift) return that.$util.Tips({
-					title: that.$t(`请选择收货地址`)
+					title: that.$t(`Vui lòng chọn địa chỉ nhận hàng`)
 				});
 				if (that.shippingType == 1) {
 					if (that.contacts == "" || that.contactsTel == "") {
 						return that.$util.Tips({
-							title: that.$t(`请填写联系人或联系人电话`)
+							title: that.$t(`Vui lòng nhập người liên hệ hoặc số điện thoại liên hệ`)
 						});
 					}
 					if (!/^1(3|4|5|7|8|9|6)\d{9}$/.test(that.contactsTel)) {
 						return that.$util.Tips({
-							title: that.$t(`请输入正确的手机号码`)
+							title: that.$t(`Vui lòng nhập đúng số điện thoại`)
 						});
 					}
 					if (!that.contacts) {
 						return that.$util.Tips({
-							title: that.$t(`请输入姓名`)
+							title: that.$t(`Vui lòng nhập họ tên`)
 						});
 					}
 					if (that.storeList.length == 0) return that.$util.Tips({
-						title: that.$t(`暂无门店,请选择其他方式`)
+						title: that.$t(`Chưa có cửa hàng, vui lòng chọn phương thức khác`)
 					});
 				}
 				for (var i = 0; i < that.confirm.length; i++) {
@@ -1198,7 +1198,7 @@
 							'id') {
 							if (!data.value.trim()) {
 								return uni.showToast({
-									title: that.$t(`请输入`) + `${data.title}`,
+									title: that.$t(`Vui lòng nhập`) + `${data.title}`,
 									icon: 'none'
 								});
 							}
@@ -1206,7 +1206,7 @@
 						if (data.label === 'number') {
 							if (data.value <= 0) {
 								return uni.showToast({
-									title: that.$t(`请输入`) + `${data.title}`,
+									title: that.$t(`Vui lòng nhập`) + `${data.title}`,
 									icon: 'none'
 								});
 							}
@@ -1214,7 +1214,7 @@
 						if (data.label === 'email') {
 							if (!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(data.value)) {
 								return uni.showToast({
-									title: that.$t(`请输入正确的`) + `${data.title}`,
+									title: that.$t(`Vui lòng nhập đúng`) + `${data.title}`,
 									icon: 'none'
 								});
 							}
@@ -1222,7 +1222,7 @@
 						if (data.label === 'phone') {
 							if (!/^1(3|4|5|7|8|9|6)\d{9}$/i.test(data.value)) {
 								return uni.showToast({
-									title: that.$t(`请输入正确的`) + `${data.title}`,
+									title: that.$t(`Vui lòng nhập đúng`) + `${data.title}`,
 									icon: 'none'
 								});
 							}
@@ -1230,7 +1230,7 @@
 						if (data.label === 'img') {
 							if (!data.value.length) {
 								return uni.showToast({
-									title: that.$t(`请上传`) + `${data.title}`,
+									title: that.$t(`Vui lòng tải lên`) + `${data.title}`,
 									icon: 'none'
 								});
 							}
@@ -1239,7 +1239,7 @@
 				}
 				data = {
 					custom_form: that.confirm,
-					gift_mark: that.gift_mark, // 礼物留言
+					gift_mark: that.gift_mark, // Lời nhắn quà tặng
 					real_name: that.contacts,
 					phone: that.contactsTel,
 					addressId: that.addressId,
@@ -1270,10 +1270,10 @@
 				if (that.is_gift) data.is_gift = that.is_gift
 				if (data.payType == 'yue' && parseFloat(that.userInfo.now_money) < parseFloat(that.totalPrice))
 					return that.$util.Tips({
-						title: that.$t(`余额不足`)
+						title: that.$t(`Số dư không đủ`)
 					});
 				// uni.showLoading({
-				// 	title: that.$t(`订单支付中`)
+				// 	title: that.$t(`Đang thanh toán đơn hàng`)
 				// });
 				// #ifdef MP
 				openPaySubscribe().then(() => {
@@ -1584,7 +1584,7 @@
 	.order-submission .allAddress .nav .item.on .before {
 		position: absolute;
 		bottom: 0;
-		// content: "快递配送";
+		// content: "Giao hàng qua vận chuyển";
 		left: 0;
 		font-size: 28rpx;
 		display: block;
@@ -1600,7 +1600,7 @@
 	}
 
 	.order-submission .allAddress .nav .item:nth-of-type(2).on .before {
-		// content: "到店自提";
+		// content: "Nhận tại cửa hàng";
 		border-width: 0 0 80rpx 20rpx;
 		border-radius: 30rpx 7rpx 0 0;
 	}
@@ -1613,7 +1613,7 @@
 		position: absolute;
 		bottom: 0;
 		left: 0;
-		// content: "到店自提";
+		// content: "Nhận tại cửa hàng";
 		font-size: 28rpx;
 		display: block;
 		height: 0;
@@ -1627,7 +1627,7 @@
 	}
 
 	.order-submission .allAddress .nav .item:nth-of-type(1).on2 .before {
-		// content: "快递配送";
+		// content: "Giao hàng qua vận chuyển";
 		border-width: 0 60rpx 60rpx 0;
 		border-radius: 6rpx 40rpx 0 0;
 	}
@@ -1823,8 +1823,8 @@
 		left: 0;
 		bottom: 0;
 		padding: 15rpx 30rpx;
-		padding-bottom: calc(15rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-		padding-bottom: calc(15rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+		padding-bottom: calc(15rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+		padding-bottom: calc(15rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 		z-index: 9;
 	}
 

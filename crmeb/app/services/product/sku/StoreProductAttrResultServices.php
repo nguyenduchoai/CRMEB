@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -33,7 +33,7 @@ class StoreProductAttrResultServices extends BaseServices
     }
 
     /**
-     * 获取属性规格
+     * Lấy thuộc tính, phân loại
      * @param array $where
      * @return mixed
      */
@@ -43,7 +43,7 @@ class StoreProductAttrResultServices extends BaseServices
     }
 
     /**
-     * 删除属性
+     * Xóa thuộc tính
      * @param int $id
      * @param int $type
      * @return bool
@@ -54,7 +54,7 @@ class StoreProductAttrResultServices extends BaseServices
     }
 
     /**
-     * 修改属性
+     * Sửa thuộc tính
      * @param array $data
      * @param int $id
      * @param int $type
@@ -62,6 +62,6 @@ class StoreProductAttrResultServices extends BaseServices
     public function setResult(array $data, int $id, int $type)
     {
         $res = $this->dao->save(['product_id' => $id, 'result' => json_encode($data), 'change_time' => time(), 'type' => $type]);
-        if (!$res) throw new AdminException('保存失败');
+        if (!$res) throw new AdminException('Lưu thất bại');
     }
 }

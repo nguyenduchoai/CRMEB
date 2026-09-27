@@ -1,5 +1,5 @@
 <template>
-	<!-- 核销订单下拉列表 -->
+	<!-- Danh sách thả xuống đơn hàng xác nhận sử dụng -->
 	<view>
 		<view class="product-window"
 			:class="(attr.cartAttr === true ? 'on' : '') + ' ' + (iSbnt?'join':'') + ' ' + (iScart?'joinCart':'')">
@@ -9,19 +9,19 @@
 			<view class="rollTop">
 				<view class="scan">
 					<view class="header" :style="{backgroundImage:'url('+imgHost+'/statics/images/banner.png'+')'}">
-						请选择当前核销订单
+						Vui lòng chọn đơn hàng cần xác nhận sử dụng
 					</view>
 					<view class="box">
 						<view class="content" v-for="(item,index) in list" :key="index"  @click="sure(item.id)">
 							<view  class="content_box">
 								<image :src="item.image" mode=""></image>
 								<view class="content_box_title">
-									<p class="textbox">订单号：{{ item.order_id }}</p>
-									<p class="attribute mar">下单时间：{{ item.add_time }}</p>
+									<p class="textbox">Mã đơn hàng: {{ item.order_id }}</p>
+									<p class="attribute mar">Thời gian đặt hàng: {{ item.add_time }}</p>
 									<view class="txt">
-										<p class="attribute">订单实付：¥{{ item.pay_price }}</p>
-										<p class="orange" v-if="item._status == 12">部分核销</p>
-										<p class="attributes blue" v-if="item._status == 11">未核销</p>
+										<p class="attribute">Thực thanh toán: ₫{{ item.pay_price }}</p>
+										<p class="orange" v-if="item._status == 12">Xác nhận sử dụng một phần</p>
+										<p class="attributes blue" v-if="item._status == 11">Chưa xác nhận sử dụng</p>
 										<slot name="bottom"></slot>
 									</view>
 								</view>
@@ -67,7 +67,7 @@
 			getList:function(type) {
 				this.attr.type = type;
 				// uni.showLoading({
-				// 	title: '加载中'
+				// 	title: 'Đang tải'
 				// });
 				orderWriteoffInfo(type,{verify_code:this.attr.code,code_type:2}).then(res=>{
 					// uni.hideLoading();
@@ -116,8 +116,8 @@
 		transform: translate3d(0, 100%, 0);
 		transition: all .3s cubic-bezier(.25, .5, .5, .9);
 		padding-bottom: 140rpx;
-		padding-bottom: calc(140rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-		padding-bottom: calc(140rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+		padding-bottom: calc(140rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+		padding-bottom: calc(140rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 	}
 
 	.product-window.on {
@@ -188,7 +188,7 @@
 				 width: 100%;
 				 height: 220upx;
 				 // background-image: url(../../static/images/banner.png);
-				 background-repeat: no-repeat;   //不重复
+				 background-repeat: no-repeat;   //Không lặp lại
 				 background-size: 100% 100%;
 				 color: #FFFFFF;
 				 font-size: 32upx;

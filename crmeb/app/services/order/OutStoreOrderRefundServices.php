@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -19,20 +19,20 @@ use crmeb\services\HttpService;
 use think\facade\Log;
 
 /**
- * 售后单
+ * Đơn đổi trả
  * Class OutStoreOrderRefundServices
  * @package app\services\order
  */
 class OutStoreOrderRefundServices extends BaseServices
 {
     /**
-     * 订单services
+     * Service đơn hàng
      * @var StoreOrderServices
      */
     protected $storeOrderServices;
 
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * OutStoreOrderRefundServices constructor.
      * @param StoreOrderRefundDao $dao
      */
@@ -43,7 +43,7 @@ class OutStoreOrderRefundServices extends BaseServices
     }
 
     /**
-     * 售后单列表
+     * Danh sách đơn hậu mãi
      * @param array $where
      * @return void
      */
@@ -64,7 +64,7 @@ class OutStoreOrderRefundServices extends BaseServices
     }
 
     /**
-     * 格式化订单商品
+     * Định dạng sản phẩm trong đơn hàng
      * @param array $carts
      * @return array
      */
@@ -85,9 +85,9 @@ class OutStoreOrderRefundServices extends BaseServices
 
 
     /**
-     * 退款订单详情
-     * @param string $orderId 售后单号
-     * @param int $id 售后单ID
+     * Chi tiết đơn hoàn tiền
+     * @param string $orderId Mã đơn hậu mãi
+     * @param int $id ID đơn hậu mãi
      * @return mixed
      */
     public function getInfo(string $orderId = '', int $id = 0)
@@ -103,10 +103,10 @@ class OutStoreOrderRefundServices extends BaseServices
             $where = ['order_id' => $orderId];
         }
         $refund = $this->dao->get($where, $field, ['orderData']);
-        if (!$refund) throw new ApiException('订单不存在');
+        if (!$refund) throw new ApiException('Đơn hàng không tồn tại');
         $refund = $refund->toArray();
 
-        //核算优惠金额
+        //Tính toán số tiền ưu đãi
         $totalPrice = 0;
         $vipTruePrice = 0;
         foreach ($refund['cart_info'] ?? [] as $key => &$cart) {
@@ -126,23 +126,23 @@ class OutStoreOrderRefundServices extends BaseServices
         $refund['total_price'] = bcadd((string)$totalPrice, bcadd((string)$refund['deduction_price'], (string)$refund['coupon_price'], 2), 2);
         $refund['items'] = $this->tidyCartList($refund['cart_info']);
         if (in_array($refund['refund_type'], [1, 2, 4, 5])) {
-            $title = '申请退款中';
+            $title = 'Đang yêu cầu hoàn tiền';
         } elseif ($refund['refund_type'] == 3) {
-            $title = '拒绝退款';
+            $title = 'Từ chối hoàn tiền';
         } else {
-            $title = '已退款';
+            $title = 'Đã hoàn tiền';
         }
 
         $refund['refund_type_name'] = $title;
-        $refund['pay_type_name'] = PayServices::PAY_TYPE[$refund['pay_type']] ?? '其他方式';
+        $refund['pay_type_name'] = PayServices::PAY_TYPE[$refund['pay_type']] ?? 'Phương thức khác';
         unset($refund['cart_info']);
         return $refund;
     }
 
     /**
-     * 修改售后单备注
-     * @param string $orderId 售后单号
-     * @param string $remark 备注
+     * Sửa ghi chú đơn hậu mãi
+     * @param string $orderId Mã đơn hậu mãi
+     * @param string $remark Ghi chú
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -152,7 +152,7 @@ class OutStoreOrderRefundServices extends BaseServices
     {
         $order = $this->dao->get(['order_id' => $orderId]);
         if (!$order) {
-            throw new ApiException('订单不存在');
+            throw new ApiException('Đơn hàng không tồn tại');
         }
         /** @var StoreOrderRefundServices $refundServices */
         $refundServices = app()->make(StoreOrderRefundServices::class);
@@ -160,9 +160,9 @@ class OutStoreOrderRefundServices extends BaseServices
     }
 
     /**
-     * 订单退款
-     * @param string $orderId 售后单号
-     * @param string $refundPrice 退款金额
+     * Hoàn tiền đơn hàng
+     * @param string $orderId Mã đơn hậu mãi
+     * @param string $refundPrice Số tiền hoàn
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -172,18 +172,18 @@ class OutStoreOrderRefundServices extends BaseServices
     {
         $orderRefund = $this->dao->get(['order_id' => $orderId]);
         if (!$orderRefund) {
-            throw new ApiException('数据不存在');
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         if ($orderRefund['is_cancel'] == 1) {
-            throw new ApiException('订单不存在');
+            throw new ApiException('Đơn hàng không tồn tại');
         }
 
         $order = $this->storeOrderServices->get((int)$orderRefund['store_order_id']);
         if (!$order) {
-            throw new ApiException('数据不存在');
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         if (!in_array($orderRefund['refund_type'], [1, 5])) {
-            throw new ApiException('售后订单状态不支持该操作');
+            throw new ApiException('Trạng thái đơn đổi trả không hỗ trợ thao tác này');
         }
 
         $data['refund_type'] = 6;
@@ -192,21 +192,21 @@ class OutStoreOrderRefundServices extends BaseServices
         /** @var StoreOrderRefundServices $refundServices */
         $refundServices = app()->make(StoreOrderRefundServices::class);
 
-        //0元退款
+        //Hoàn tiền 0đ
         if ($orderRefund['refund_price'] == 0 && in_array($orderRefund['refund_type'], [1, 5])) {
             $refundPrice = 0;
         } else {
             if (!$refundPrice) {
-                throw new ApiException('请输入退款金额');
+                throw new ApiException('Vui lòng nhập số tiền hoàn');
             }
             if ($orderRefund['refund_price'] == $orderRefund['refunded_price']) {
-                throw new ApiException('已退完支付金额，不能再退款了');
+                throw new ApiException('Đã hoàn hết số tiền thanh toán, không thể hoàn tiền thêm');
             }
 
             $data['refunded_price'] = bcadd($refundPrice, $orderRefund['refunded_price'], 2);
             $bj = bccomp((string)$orderRefund['refund_price'], $data['refunded_price'], 2);
             if ($bj < 0) {
-                throw new ApiException('退款金额大于支付金额，请修改退款金额');
+                throw new ApiException('Số tiền hoàn lớn hơn số tiền đã thanh toán, vui lòng sửa lại số tiền hoàn');
             }
         }
 
@@ -217,19 +217,19 @@ class OutStoreOrderRefundServices extends BaseServices
             $refundData['refund_id'] = $order['order_id'] . rand(100, 999);
         }
         $refundData['order_id'] = $orderId;
-        //修改订单退款状态
+        //Sửa trạng thái hoàn tiền đơn hàng
         if ($refundServices->agreeRefund((int)$orderRefund['id'], $refundData)) {
             $refundServices->update((int)$orderRefund['id'], $data);
             return true;
         } else {
             $refundServices->storeProductOrderRefundYFasle((int)$orderRefund['id'], $refundPrice);
-            throw new ApiException('退款失败');
+            throw new ApiException('Hoàn tiền thất bại');
         }
     }
 
     /**
-     * 同意退款
-     * @param string $orderId 售后单号
+     * Đồng ý hoàn tiền
+     * @param string $orderId Mã đơn hậu mãi
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -239,7 +239,7 @@ class OutStoreOrderRefundServices extends BaseServices
     {
         $orderRefund = $this->dao->get(['order_id' => $orderId]);
         if (!$orderRefund) {
-            throw new ApiException('数据不存在');
+            throw new ApiException('Dữ liệu không tồn tại');
         }
 
         /** @var StoreOrderRefundServices $refundServices */
@@ -248,9 +248,9 @@ class OutStoreOrderRefundServices extends BaseServices
     }
 
     /**
-     * 拒绝退款
-     * @param string $orderId 售后单号
-     * @param string $refundReason 不退款原因
+     * Từ chối hoàn tiền
+     * @param string $orderId Mã đơn hậu mãi
+     * @param string $refundReason Lý do từ chối hoàn tiền
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -260,7 +260,7 @@ class OutStoreOrderRefundServices extends BaseServices
     {
         $orderRefund = $this->dao->get(['order_id' => $orderId]);
         if (!$orderRefund) {
-            throw new ApiException('数据不存在');
+            throw new ApiException('Dữ liệu không tồn tại');
         }
 
         /** @var StoreOrderRefundServices $refundServices */
@@ -270,7 +270,7 @@ class OutStoreOrderRefundServices extends BaseServices
     }
 
     /**
-     * 售后单生成
+     * Tạo đơn hậu mãi
      * @param int $id
      * @param string $pushUrl
      * @return bool
@@ -282,14 +282,14 @@ class OutStoreOrderRefundServices extends BaseServices
         $orderServices = app()->make(OutStoreOrderServices::class);
         $orderInfo = $orderServices->get($refundInfo['store_order_id'], ['id', 'order_id']);
         if (!$orderInfo) {
-            throw new AdminException('订单不存在');
+            throw new AdminException('Đơn hàng không tồn tại');
         }
         $refundInfo['order'] = $orderInfo->toArray();
-        return out_push($pushUrl, $refundInfo, '售后单');
+        return out_push($pushUrl, $refundInfo, 'Đơn đổi trả');
     }
 
     /**
-     * 售后单取消
+     * Hủy đơn hậu mãi
      * @param int $id
      * @param string $pushUrl
      * @return bool
@@ -301,9 +301,9 @@ class OutStoreOrderRefundServices extends BaseServices
         $orderServices = app()->make(OutStoreOrderServices::class);
         $orderInfo = $orderServices->get($refundInfo['store_order_id'], ['id', 'order_id']);
         if (!$orderInfo) {
-            throw new AdminException('订单不存在');
+            throw new AdminException('Đơn hàng không tồn tại');
         }
         $refundInfo['order'] = $orderInfo->toArray();
-        return out_push($pushUrl, $refundInfo, '取消售后单');
+        return out_push($pushUrl, $refundInfo, 'Hủy đơn đổi trả');
     }
 }

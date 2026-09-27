@@ -1,68 +1,68 @@
-# UniApp 代码规范文档
+# Tài liệu quy chuẩn code UniApp
 
-## 1. 概述
+## 1. Tổng quan
 
-本文档描述了 CRMEB 项目中 UniApp 移动端的代码规范，包括命名规范、代码风格、文件结构、组件开发等，旨在统一代码风格，提高代码质量和可维护性。
+Tài liệu này mô tả quy chuẩn code cho phía di động UniApp trong dự án CRMEB, bao gồm quy chuẩn đặt tên, phong cách code, cấu trúc file, phát triển component, v.v., nhằm thống nhất phong cách code, nâng cao chất lượng code và khả năng bảo trì.
 
-## 2. 命名规范
+## 2. Quy tắc đặt tên
 
-### 2.1 目录命名
+### 2.1 Đặt tên thư mục
 
-- **目录名**: 小写字母，单词之间用下划线分隔
-- **示例**: `pages/index/`、`components/common/`、`utils/`
-- **规范**: 简洁明了，反映目录的功能
+- **Tên thư mục**: Chữ thường, các từ phân cách bằng dấu gạch dưới
+- **Ví dụ**: `pages/index/`, `components/common/`, `utils/`
+- **Quy tắc**: Ngắn gọn, rõ ràng, phản ánh chức năng của thư mục
 
-### 2.2 文件命名
+### 2.2 Đặt tên file
 
-- **页面文件**: 小写字母，单词之间用下划线分隔
-  - **示例**: `index.vue`、`login.vue`、`user_info.vue`
-- **组件文件**: 大写字母开头的 PascalCase 命名风格
-  - **示例**: `Button.vue`、`NavBar.vue`、`GoodsList.vue`
-- **JS 文件**: 小写字母，单词之间用下划线分隔
-  - **示例**: `user.js`、`request.js`、`util.js`
-- **CSS/SCSS 文件**: 小写字母，单词之间用下划线分隔
-  - **示例**: `common.scss`、`theme.scss`
+- **File trang**: Chữ thường, các từ phân tách bằng dấu gạch dưới
+  - **Ví dụ**: `index.vue`, `login.vue`, `user_info.vue`
+- **File component**: Kiểu đặt tên PascalCase, bắt đầu bằng chữ in hoa
+  - **Ví dụ**: `Button.vue`, `NavBar.vue`, `GoodsList.vue`
+- **File JS**: Chữ thường, các từ phân tách bằng dấu gạch dưới
+  - **Ví dụ**: `user.js`, `request.js`, `util.js`
+- **File CSS/SCSS**: Chữ thường, các từ phân tách bằng dấu gạch dưới
+  - **Ví dụ**: `common.scss`, `theme.scss`
 
-### 2.3 变量命名
+### 2.3 Đặt tên biến
 
-- **普通变量**: 驼峰命名法
-  - **示例**: `userInfo`、`goodsList`、`isLoading`
-- **常量**: 全大写，单词之间用下划线分隔
-  - **示例**: `BASE_URL`、`MAX_COUNT`、`DEFAULT_PAGE_SIZE`
-- **布尔变量**: 以 `is` 开头的驼峰命名法
-  - **示例**: `isShow`、`isLoading`、`isLogin`
+- **Biến thông thường**: Đặt tên kiểu camelCase
+  - **Ví dụ**: `userInfo`, `goodsList`, `isLoading`
+- **Hằng số**: Viết hoa toàn bộ, các từ phân tách bằng dấu gạch dưới
+  - **Ví dụ**: `BASE_URL`, `MAX_COUNT`, `DEFAULT_PAGE_SIZE`
+- **Biến boolean**: Đặt tên kiểu camelCase, bắt đầu bằng `is`
+  - **Ví dụ**: `isShow`, `isLoading`, `isLogin`
 
-### 2.4 函数命名
+### 2.4 Đặt tên hàm
 
-- **函数名**: 驼峰命名法，动词开头
-  - **示例**: `getUserInfo`、`submitForm`、`handleClick`
-- **方法名**: 驼峰命名法
-  - **示例**: `data`、`methods`、`computed`、`watch`
-- **生命周期函数**: 按照 Vue 规范命名
-  - **示例**: `created`、`mounted`、`beforeDestroy`
+- **Tên hàm**: Đặt tên kiểu camelCase, bắt đầu bằng động từ
+  - **Ví dụ**: `getUserInfo`, `submitForm`, `handleClick`
+- **Tên phương thức**: Đặt tên kiểu camelCase
+  - **Ví dụ**: `data`, `methods`, `computed`, `watch`
+- **Hàm vòng đời**: Đặt tên theo quy chuẩn của Vue
+  - **Ví dụ**: `created`, `mounted`, `beforeDestroy`
 
-### 2.5 组件命名
+### 2.5 Đặt tên component
 
-- **组件名**: PascalCase 命名风格
-  - **示例**: `Button`、`NavBar`、`GoodsList`
-- **组件标签**: 小写字母，单词之间用连字符分隔
-  - **示例**: `<my-button>`、`<nav-bar>`、`<goods-list>`
+- **Tên component**: Kiểu đặt tên PascalCase
+  - **Ví dụ**: `Button`, `NavBar`, `GoodsList`
+- **Thẻ component**: Chữ thường, các từ phân tách bằng dấu gạch ngang
+  - **Ví dụ**: `<my-button>`, `<nav-bar>`, `<goods-list>`
 
-### 2.6 其他命名
+### 2.6 Quy tắc đặt tên khác
 
-- **路由命名**: 小写字母，单词之间用连字符分隔
-  - **示例**: `/pages/index/index`、`/pages/user/login`
-- **CSS 类名**: 小写字母，单词之间用连字符分隔
-  - **示例**: `.user-info`、`.goods-list`、`.btn-primary`
-- **ID 命名**: 小写字母，单词之间用连字符分隔
-  - **示例**: `#app`、`#header`、`#footer`
+- **Đặt tên route**: Chữ thường, các từ phân tách bằng dấu gạch ngang
+  - **Ví dụ**: `/pages/index/index`, `/pages/user/login`
+- **Tên class CSS**: Chữ thường, các từ phân tách bằng dấu gạch ngang
+  - **Ví dụ**: `.user-info`, `.goods-list`, `.btn-primary`
+- **Đặt tên ID**: Chữ thường, các từ phân tách bằng dấu gạch ngang
+  - **Ví dụ**: `#app`, `#header`, `#footer`
 
-## 3. 代码风格
+## 3. Phong cách code
 
-### 3.1 缩进
+### 3.1 Thụt lề
 
-- **缩进方式**: 4 个空格
-- **示例**:
+- **Cách thụt lề**: 4 dấu cách
+- **Ví dụ**:
   ```vue
   <template>
       <view class="container">
@@ -71,10 +71,10 @@
   </template>
   ```
 
-### 3.2 换行
+### 3.2 Xuống dòng
 
-- **标签换行**: 多个属性的标签应该换行
-- **示例**:
+- **Xuống dòng cho thẻ**: Thẻ có nhiều thuộc tính nên xuống dòng
+- **Ví dụ**:
   ```vue
   <view
       class="container"
@@ -84,78 +84,78 @@
       <text>{{ message }}</text>
   </view>
   ```
-- **代码块换行**: 逻辑代码块应该换行
-- **示例**:
+- **Xuống dòng cho khối code**: Các khối code logic nên được xuống dòng
+- **Ví dụ**:
   ```javascript
   if (condition) {
-      // 代码块
+      // Khối code
   } else {
-      // 代码块
+      // Khối code
   }
   ```
 
-### 3.3 空格
+### 3.3 Dấu cách
 
-- **运算符空格**: 运算符两侧应该有空格
-  - **示例**: `a + b`、`x = y`、`i < 10`
-- **逗号空格**: 逗号后面应该有空格
-  - **示例**: `[1, 2, 3]`、`{ name: '张三', age: 18 }`
-- **括号空格**: 括号内侧不应该有空格
-  - **示例**: `if (condition)`、`function (param)`
+- **Dấu cách quanh toán tử**: Hai bên toán tử nên có dấu cách
+  - **Ví dụ**: `a + b`, `x = y`, `i < 10`
+- **Dấu cách sau dấu phẩy**: Sau dấu phẩy nên có dấu cách
+  - **Ví dụ**: `[1, 2, 3]`, `{ name: 'Nguyễn Văn A', age: 18 }`
+- **Dấu cách trong ngoặc**: Không nên có dấu cách ở phía trong dấu ngoặc
+  - **Ví dụ**: `if (condition)`, `function (param)`
 
-### 3.4 注释
+### 3.4 Chú thích
 
-- **单行注释**: 使用 `//` 注释
-  - **示例**: `// 这是单行注释`
-- **多行注释**: 使用 `/* */` 注释
-  - **示例**:
+- **Chú thích một dòng**: Dùng chú thích `//`
+  - **Ví dụ**: `// Đây là chú thích một dòng`
+- **Chú thích nhiều dòng**: Dùng chú thích `/* */`
+  - **Ví dụ**:
     ```javascript
     /*
-     * 这是多行注释
-     * 第二行
+     * Đây là chú thích nhiều dòng
+     * Dòng thứ hai
      */
     ```
-- **文档注释**: 使用 JSDoc 风格的注释
-  - **示例**:
+- **Chú thích tài liệu**: Dùng chú thích theo phong cách JSDoc
+  - **Ví dụ**:
     ```javascript
     /**
-     * 获取用户信息
-     * @param {number} id - 用户ID
-     * @returns {Promise} 用户信息
+     * Lấy thông tin người dùng
+     * @param {number} id - ID người dùng
+     * @returns {Promise} Thông tin người dùng
      */
     async function getUserInfo(id) {
-        // 代码
+        // Code
     }
     ```
 
-### 3.5 引号
+### 3.5 Dấu nháy
 
-- **字符串**: 使用单引号 `''`
-  - **示例**: `const name = '张三'`、`<text>Hello</text>`
-- **模板字符串**: 使用反引号 `` ` ``
-  - **示例**: `` const url = `${baseUrl}/api/user` ``
-- **HTML 属性**: 使用双引号 `""`
-  - **示例**: `<view class="container">`、`<image src="https://example.com/img.jpg">`
+- **Chuỗi**: Dùng dấu nháy đơn `''`
+  - **Ví dụ**: `const name = 'Nguyễn Văn A'`, `<text>Hello</text>`
+- **Chuỗi template**: Dùng dấu backtick `` ` ``
+  - **Ví dụ**: `` const url = `${baseUrl}/api/user` ``
+- **Thuộc tính HTML**: Dùng dấu nháy kép `""`
+  - **Ví dụ**: `<view class="container">`, `<image src="https://example.com/img.jpg">`
 
-## 4. 文件结构
+## 4. Cấu trúc file
 
-### 4.1 页面文件结构
+### 4.1 Cấu trúc file trang
 
 ```vue
 <template>
-    <!-- 模板内容 -->
+    <!-- Nội dung mẫu -->
 </template>
 
 <script>
-// 导入依赖
+// Import các phụ thuộc
 import userApi from '../../api/user';
 
-// 导出组件
+// Export thành phần
 export default {
-    // 组件名称
+    // Tên thành phần
     name: 'UserInfo',
     
-    // 组件属性
+    // Thuộc tính của thành phần
     props: {
         userId: {
             type: Number,
@@ -163,7 +163,7 @@ export default {
         }
     },
     
-    // 数据
+    // Dữ liệu
     data() {
         return {
             userInfo: {},
@@ -171,14 +171,14 @@ export default {
         };
     },
     
-    // 计算属性
+    // Thuộc tính computed
     computed: {
         fullName() {
             return this.userInfo.firstName + ' ' + this.userInfo.lastName;
         }
     },
     
-    // 监听
+    // Theo dõi (listener)
     watch: {
         userId: {
             handler(newVal) {
@@ -188,16 +188,16 @@ export default {
         }
     },
     
-    // 生命周期函数
+    // Hàm vòng đời
     created() {
-        // 初始化
+        // Khởi tạo
     },
     
     mounted() {
-        // 挂载后
+        // Sau khi mount
     },
     
-    // 方法
+    // Phương thức
     methods: {
         async getUserInfo(id) {
             try {
@@ -205,21 +205,21 @@ export default {
                 const res = await userApi.getUserInfo(id);
                 this.userInfo = res.data;
             } catch (error) {
-                console.error('获取用户信息失败:', error);
+                console.error('Lấy thông tin người dùng thất bại:', error);
             } finally {
                 this.loading = false;
             }
         },
         
         handleEdit() {
-            // 编辑用户信息
+            // Sửa thông tin người dùng
         }
     }
 };
 </script>
 
 <style scoped>
-/* 样式 */
+/* Kiểu */
 .user-info {
     padding: 20rpx;
     background-color: #f5f5f5;
@@ -232,11 +232,11 @@ export default {
 </style>
 ```
 
-### 4.2 组件文件结构
+### 4.2 Cấu trúc file component
 
 ```vue
 <template>
-    <!-- 模板内容 -->
+    <!-- Nội dung mẫu -->
     <view class="my-button">
         <button
             :class="[type, { disabled }]"
@@ -317,17 +317,17 @@ button {
 </style>
 ```
 
-### 4.3 JS 文件结构
+### 4.3 Cấu trúc file JS
 
 ```javascript
-// 导入依赖
+// Import các phụ thuộc
 import request from './request';
 
-// 常量定义
+// Định nghĩa hằng số
 const BASE_URL = 'https://api.crmeb.net';
 const TIMEOUT = 10000;
 
-// 工具函数
+// Hàm tiện ích (utility)
 function formatTime(time) {
     const date = new Date(time);
     return date.toLocaleString();
@@ -337,92 +337,92 @@ function getRandomNum(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-// 导出
+// Xuất
 export {
     formatTime,
     getRandomNum
 };
 
-// 默认导出
+// Export mặc định
 export default {
     BASE_URL,
     TIMEOUT
 };
 ```
 
-## 5. 组件开发规范
+## 5. Quy chuẩn phát triển component
 
-### 5.1 组件设计
+### 5.1 Thiết kế component
 
-- **单一职责**: 每个组件只负责一个功能
-- **可复用性**: 设计通用的、可复用的组件
-- **可配置性**: 通过 props 提供配置选项
-- **事件通信**: 通过事件与父组件通信
+- **Trách nhiệm đơn nhất**: Mỗi component chỉ đảm nhận một chức năng
+- **Khả năng tái sử dụng**: Thiết kế component dùng chung, có thể tái sử dụng
+- **Khả năng cấu hình**: Cung cấp tùy chọn cấu hình qua props
+- **Giao tiếp qua sự kiện**: Giao tiếp với component cha thông qua sự kiện
 
-### 5.2 组件使用
+### 5.2 Sử dụng component
 
-- **组件导入**: 使用 import 导入组件
-  - **示例**: `import Button from '../../components/Button.vue'`
-- **组件注册**: 在 components 中注册组件
-  - **示例**: 
+- **Import component**: Dùng import để nhập component
+  - **Ví dụ**: `import Button from '../../components/Button.vue'`
+- **Đăng ký component**: Đăng ký component trong components
+  - **Ví dụ**: 
     ```javascript
     components: {
         Button
     }
     ```
-- **组件使用**: 使用组件标签
-  - **示例**: `<Button type="primary">点击</Button>`
+- **Sử dụng component**: Dùng thẻ component
+  - **Ví dụ**: `<Button type="primary">Nhấn</Button>`
 
-### 5.3 组件通信
+### 5.3 Giao tiếp giữa các component
 
-- **props 向下传递**: 父组件通过 props 向子组件传递数据
-- **events 向上传递**: 子组件通过 events 向父组件传递事件
-- **refs 引用**: 通过 refs 引用子组件实例
-- **provide/inject**: 祖先组件向后代组件传递数据
+- **props truyền xuống**: Component cha truyền dữ liệu cho component con qua props
+- **events truyền lên**: Component con truyền sự kiện lên component cha qua events
+- **Tham chiếu qua refs**: Tham chiếu tới instance của component con qua refs
+- **provide/inject**: Component tổ tiên truyền dữ liệu cho component hậu duệ
 
-## 6. 页面开发规范
+## 6. Quy chuẩn phát triển trang
 
-### 6.1 页面结构
+### 6.1 Cấu trúc trang
 
-- **模板结构**: 清晰明了，层次分明
-- **脚本结构**: 按照 Vue 规范组织代码
-- **样式结构**: 模块化，可维护
+- **Cấu trúc template**: Rõ ràng, phân cấp mạch lạc
+- **Cấu trúc script**: Tổ chức code theo quy chuẩn của Vue
+- **Cấu trúc style**: Module hóa, dễ bảo trì
 
-### 6.2 数据管理
+### 6.2 Quản lý dữ liệu
 
-- **本地数据**: 使用 data 管理组件内部数据
-- **计算数据**: 使用 computed 计算衍生数据
-- **监听数据**: 使用 watch 监听数据变化
-- **全局数据**: 使用 Vuex 管理全局数据
+- **Dữ liệu cục bộ**: Dùng data để quản lý dữ liệu nội bộ của component
+- **Dữ liệu tính toán**: Dùng computed để tính dữ liệu dẫn xuất
+- **Theo dõi dữ liệu**: Dùng watch để theo dõi thay đổi của dữ liệu
+- **Dữ liệu toàn cục**: Dùng Vuex để quản lý dữ liệu toàn cục
 
-### 6.3 生命周期管理
+### 6.3 Quản lý vòng đời (lifecycle)
 
-- **created**: 初始化数据，发送请求
-- **mounted**: 操作 DOM，初始化第三方库
-- **beforeDestroy**: 清理定时器，取消订阅
+- **created**: Khởi tạo dữ liệu, gửi request
+- **mounted**: Thao tác DOM, khởi tạo thư viện bên thứ ba
+- **beforeDestroy**: Dọn dẹp timer, hủy đăng ký (unsubscribe)
 
-### 6.4 路由管理
+### 6.4 Quản lý định tuyến
 
-- **路由配置**: 在 pages.json 中配置路由
-- **路由跳转**: 使用 uni.navigateTo、uni.redirectTo 等方法
-- **路由参数**: 通过 options 或 $route.params 获取路由参数
+- **Cấu hình định tuyến**: Cấu hình route trong pages.json
+- **Chuyển trang**: Dùng các phương thức như uni.navigateTo, uni.redirectTo
+- **Tham số định tuyến**: Lấy tham số route qua options hoặc $route.params
 
-## 7. API 调用规范
+## 7. Quy chuẩn gọi API
 
-### 7.1 API 封装
+### 7.1 Đóng gói API
 
-- **模块化**: 按业务模块封装 API
-- **统一处理**: 统一处理请求头、响应拦截、错误处理
-- **Promise 化**: 使用 Promise 处理异步请求
+- **Mô-đun hóa**: Đóng gói API theo mô-đun nghiệp vụ
+- **Xử lý thống nhất**: Xử lý thống nhất header request, chặn response (interceptor), xử lý lỗi
+- **Promise hóa**: Dùng Promise để xử lý request bất đồng bộ
 
-### 7.2 API 调用
+### 7.2 Gọi API
 
-- **异步处理**: 使用 async/await 处理异步请求
-- **错误处理**: 使用 try/catch 捕获错误
-- **加载状态**: 显示加载状态，提升用户体验
-- **错误提示**: 统一处理错误提示
+- **Xử lý bất đồng bộ**: Dùng async/await để xử lý request bất đồng bộ
+- **Xử lý lỗi**: Dùng try/catch để bắt lỗi
+- **Trạng thái tải**: Hiển thị trạng thái đang tải, nâng cao trải nghiệm người dùng
+- **Thông báo lỗi**: Xử lý thống nhất việc hiển thị thông báo lỗi
 
-### 7.3 示例代码
+### 7.3 Code mẫu
 
 ```javascript
 async function getUserInfo() {
@@ -431,9 +431,9 @@ async function getUserInfo() {
         const res = await userApi.getUserInfo();
         this.userInfo = res.data;
     } catch (error) {
-        console.error('获取用户信息失败:', error);
+        console.error('Lấy thông tin người dùng thất bại:', error);
         uni.showToast({
-            title: '获取用户信息失败',
+            title: 'Lấy thông tin người dùng thất bại',
             icon: 'none'
         });
     } finally {
@@ -442,61 +442,61 @@ async function getUserInfo() {
 }
 ```
 
-## 8. 性能优化
+## 8. Tối ưu hiệu năng
 
-### 8.1 代码优化
+### 8.1 Tối ưu code
 
-- **减少冗余代码**: 避免重复的代码
-- **使用计算属性**: 对于复杂的计算，使用 computed
-- **使用 v-if 和 v-show 合理**: 根据场景选择合适的指令
-- **使用 key**: 在 v-for 中使用 key，提高渲染性能
+- **Giảm code dư thừa**: Tránh code lặp lại
+- **Dùng thuộc tính computed**: Với các phép tính phức tạp, hãy dùng computed
+- **Dùng v-if và v-show hợp lý**: Chọn directive phù hợp với từng tình huống
+- **Dùng key**: Dùng key trong v-for để tăng hiệu năng render
 
-### 8.2 网络优化
+### 8.2 Tối ưu mạng
 
-- **合理使用缓存**: 缓存不经常变化的数据
-- **减少请求次数**: 合并请求，批量操作
-- **使用防抖和节流**: 避免频繁的事件触发
-- **延迟加载**: 对于非首屏内容，使用延迟加载
+- **Dùng cache hợp lý**: Cache những dữ liệu ít thay đổi
+- **Giảm số lượng request**: Gộp request, thao tác theo lô
+- **Dùng debounce và throttle**: Tránh sự kiện bị kích hoạt quá thường xuyên
+- **Tải trễ (lazy load)**: Với nội dung không thuộc màn hình đầu tiên, dùng tải trễ
 
-### 8.3 其他优化
+### 8.3 Các tối ưu khác
 
-- **减少 DOM 节点**: 简化 DOM 结构
-- **优化图片**: 使用合适的图片格式和大小
-- **使用虚拟列表**: 对于长列表，使用虚拟列表
-- **避免内存泄漏**: 及时清理定时器、事件监听器等
+- **Giảm số node DOM**: Đơn giản hóa cấu trúc DOM
+- **Tối ưu hình ảnh**: Dùng định dạng và kích thước ảnh phù hợp
+- **Dùng danh sách ảo**: Với danh sách dài, hãy dùng danh sách ảo (virtual list)
+- **Tránh rò rỉ bộ nhớ**: Kịp thời dọn dẹp timer, event listener, v.v.
 
-## 9. 常见问题
+## 9. Sự cố thường gặp
 
-### 9.1 代码风格问题
+### 9.1 Vấn đề về phong cách code
 
-- **问题**: 代码风格不一致
-- **解决方案**: 使用 ESLint 等工具进行代码检查
+- **Vấn đề**: Phong cách code không thống nhất
+- **Giải pháp**: Dùng các công cụ như ESLint để kiểm tra code
 
-### 9.2 性能问题
+### 9.2 Vấn đề hiệu năng
 
-- **问题**: 页面加载慢，卡顿
-- **解决方案**: 优化代码，减少 DOM 操作，使用虚拟列表等
+- **Vấn đề**: Trang tải chậm, giật lag
+- **Giải pháp**: Tối ưu code, giảm thao tác DOM, dùng danh sách ảo, v.v.
 
-### 9.3 兼容性问题
+### 9.3 Vấn đề tương thích
 
-- **问题**: 在不同平台上表现不一致
-- **解决方案**: 遵循 UniApp 规范，使用条件编译
+- **Vấn đề**: Hoạt động không nhất quán giữa các nền tảng khác nhau
+- **Giải pháp**: Tuân theo quy chuẩn UniApp, dùng biên dịch có điều kiện
 
-### 9.4 维护性问题
+### 9.4 Vấn đề bảo trì
 
-- **问题**: 代码难以维护
-- **解决方案**: 模块化开发，添加注释，遵循代码规范
+- **Vấn đề**: Code khó bảo trì
+- **Giải pháp**: Phát triển theo module, thêm chú thích, tuân thủ quy chuẩn code
 
-## 10. 参考资源
+## 10. Tài liệu tham khảo
 
-- [Vue 官方文档](https://cn.vuejs.org/)
-- [UniApp 官方文档](https://uniapp.dcloud.io/)
-- [ESLint 官方文档](https://eslint.org/docs/user-guide/)
-- [Prettier 官方文档](https://prettier.io/docs/en/)
-- [前端代码规范指南](https://github.com/ecomfe/spec)
+- [Tài liệu chính thức của Vue](https://cn.vuejs.org/)
+- [Tài liệu chính thức UniApp](https://uniapp.dcloud.io/)
+- [Tài liệu chính thức ESLint](https://eslint.org/docs/user-guide/)
+- [Tài liệu chính thức Prettier](https://prettier.io/docs/en/)
+- [Hướng dẫn quy chuẩn code front-end](https://github.com/ecomfe/spec)
 
-## 11. 总结
+## 11. Tổng kết
 
-本文档描述了 CRMEB 项目中 UniApp 移动端的代码规范，包括命名规范、代码风格、文件结构、组件开发等。遵循本文档的规范，可以提高代码的可读性、可维护性和可扩展性，确保项目的质量和稳定性。
+Tài liệu này mô tả quy chuẩn code cho phía di động UniApp trong dự án CRMEB, bao gồm quy chuẩn đặt tên, phong cách code, cấu trúc file, phát triển component, v.v. Tuân theo các quy chuẩn trong tài liệu này sẽ giúp nâng cao khả năng đọc hiểu, khả năng bảo trì và khả năng mở rộng của code, đảm bảo chất lượng và sự ổn định của dự án.
 
-代码规范是团队协作的基础，建议开发团队成员严格遵循本文档的规范，共同维护一个高质量的代码库。
+Quy chuẩn code là nền tảng của việc làm việc nhóm; các thành viên trong đội phát triển nên tuân thủ nghiêm ngặt các quy chuẩn trong tài liệu này để cùng duy trì một codebase chất lượng cao.

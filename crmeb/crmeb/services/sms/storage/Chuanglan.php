@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,63 +24,63 @@ class Chuanglan extends BaseSms
 {
 
     /**
-     * 开通
+     * Kích hoạt
      */
     const SMS_OPEN = 'v2/sms_v2/open';
 
     /**
-     * 修改签名
+     * Sửa chữ ký
      */
     const SMS_MODIFY = 'v2/sms_v2/modify';
 
     /**
-     * 用户信息
+     * Thông tin người dùng
      */
     const SMS_INFO = 'v2/sms_v2/info';
 
     /**
-     * 发送短信
+     * Gửi SMS
      */
     const SMS_SEND = 'v2/sms_v2/send';
 
     /**
-     * 短信模板
+     * Mẫu SMS
      */
     const SMS_TEMPS = 'v2/sms_v2/temps';
 
     /**
-     * 申请模板
+     * Đăng ký mẫu
      */
     const SMS_APPLY = 'v2/sms_v2/apply';
 
     /**
-     * 模板记录
+     * Bản ghi mẫu
      */
     const SMS_APPLYS = 'v2/sms_v2/applys';
 
     /**
-     * 发送记录
+     * Bản ghi gửi
      */
     const SMS_RECORD = 'v2/sms_v2/record';
 
     /**
-     * 获取短信发送状态
+     * Lấy trạng thái gửi SMS
      */
     const SMS_STSTUS = 'v2/sms/status';
 
     /**
-     * 短信签名
+     * Chữ ký SMS
      * @var string
      */
     protected $sign = '';
 
     /**
-     * 模板id
+     * ID mẫu
      * @var array
      */
     protected $templateIds = [];
 
-    /** 初始化
+    /** Khởi tạo
      * @param array $config
      */
     protected function initialize(array $config = [])
@@ -91,7 +91,7 @@ class Chuanglan extends BaseSms
     }
 
     /**
-     * 提取模板code
+     * Trích xuất code mẫu
      * @param string $templateId
      * @return null
      */
@@ -101,7 +101,7 @@ class Chuanglan extends BaseSms
     }
 
     /**
-     * 设置签名
+     * Đặt chữ ký
      * @param $sign
      * @return $this
      */
@@ -112,7 +112,7 @@ class Chuanglan extends BaseSms
     }
 
     /**
-     * 获取验证码
+     * Lấy mã xác thực
      * @param string $phone
      * @return array|mixed
      */
@@ -125,7 +125,7 @@ class Chuanglan extends BaseSms
     }
 
     /**
-     * 开通服务
+     * Mở dịch vụ
      * @return array|bool|mixed
      */
     public function open()
@@ -137,7 +137,7 @@ class Chuanglan extends BaseSms
     }
 
     /**
-     * 修改签名
+     * Sửa chữ ký
      * @param string $sign
      * @return array|bool|mixed
      */
@@ -152,7 +152,7 @@ class Chuanglan extends BaseSms
     }
 
     /**
-     * 获取用户信息
+     * Lấy thông tin người dùng
      * @return array|bool|mixed
      */
     public function info()
@@ -161,7 +161,7 @@ class Chuanglan extends BaseSms
     }
 
     /**
-     * 获取短信模板
+     * Lấy mẫu SMS
      * @param int $page
      * @param int $limit
      * @param int $type
@@ -178,7 +178,7 @@ class Chuanglan extends BaseSms
     }
 
     /**
-     * 申请模版
+     * Đăng ký mẫu
      * @param $title
      * @param $content
      * @param $type
@@ -195,7 +195,7 @@ class Chuanglan extends BaseSms
     }
 
     /**
-     * 申请记录
+     * Bản ghi đăng ký
      * @param $temp_type
      * @param int $page
      * @param int $limit
@@ -212,7 +212,7 @@ class Chuanglan extends BaseSms
     }
 
     /**
-     * 发送短信
+     * Gửi SMS
      * @param $phone
      * @param $template
      * @param $param
@@ -221,7 +221,7 @@ class Chuanglan extends BaseSms
     public function send(string $phone, string $templateId, array $data = [])
     {
         if (!$phone) {
-            throw new AdminException('手机号不能为空');
+            throw new AdminException('Số điện thoại không được để trống');
         }
         $param = [
             'phone' => $phone,
@@ -229,14 +229,14 @@ class Chuanglan extends BaseSms
         ];
         $param['temp_id'] = $this->getTemplateCode($templateId);
         if (is_null($param['temp_id'])) {
-            throw new AdminException('模版ID不存在');
+            throw new AdminException('ID mẫu không tồn tại');
         }
         $param['param'] = json_encode($data);
         return $this->accessToken->httpRequest(self::SMS_SEND, $param);
     }
 
     /**
-     * 发送记录
+     * Bản ghi gửi
      * @param $record_id
      * @return array|bool|mixed
      */
@@ -249,7 +249,7 @@ class Chuanglan extends BaseSms
     }
 
     /**
-     * 获取发送状态
+     * Lấy trạng thái gửi
      * @param array $recordIds
      * @return array|mixed
      */

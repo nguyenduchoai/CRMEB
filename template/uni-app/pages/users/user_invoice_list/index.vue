@@ -1,8 +1,8 @@
 <template>
 	<view :style="colorStyle">
 		<view class="acea-row nav">
-			<view class="acea-row row-center-wrapper" :class="{ on: nav === 1 }" @click="navTab(1)">{{ $t(`发票记录`) }}</view>
-			<view class="acea-row row-center-wrapper" :class="{ on: nav === 2 }" @click="navTab(2)">{{ $t(`抬头管理`) }}</view>
+			<view class="acea-row row-center-wrapper" :class="{ on: nav === 1 }" @click="navTab(1)">{{ $t(`Lịch sử hóa đơn`) }}</view>
+			<view class="acea-row row-center-wrapper" :class="{ on: nav === 2 }" @click="navTab(2)">{{ $t(`Quản lý tiêu đề hóa đơn`) }}</view>
 		</view>
 		<view v-show="nav === 1" class="record-wrapper">
 			<view v-for="item in orderList" :key="item.id" class="item">
@@ -12,8 +12,8 @@
 				</view>
 				<view class="item-bd acea-row row-between-wrapper">
 					<view>
-						<view class="name">{{ item.header_type === 1 ? $t(`个人`) : $t(`企业`) }}{{ item.type === 1 ? $t(`普通`) : $t(`专用`) }}{{ $t(`发票`) }}</view>
-						<view>{{ $t(`申请时间`) }} {{ item.add_time }}</view>
+						<view class="name">{{ item.header_type === 1 ? $t(`Cá nhân`) : $t(`Doanh nghiệp`) }}{{ item.type === 1 ? $t(`Thường`) : $t(`Chuyên dụng`) }}{{ $t(`Hóa đơn`) }}</view>
+						<view>{{ $t(`Thời gian đăng ký`) }} {{ item.add_time }}</view>
 					</view>
 					<view class="money">
 						{{ $t(`￥`) }}
@@ -21,16 +21,16 @@
 					</view>
 				</view>
 				<view class="item-ft acea-row row-between-wrapper">
-					<view>{{ item.is_invoice ? $t(`已开票`) : $t(`未开票`) }}</view>
+					<view>{{ item.is_invoice ? $t(`Đã xuất hóa đơn`) : $t(`Chưa xuất hóa đơn`) }}</view>
 					<view class="acea-row row-center-wrapper">
-						<view class="link mr20" @click="getInvoiceLink(item.id)" v-if="item.is_invoice == 1 && item.unique_num != '' && item.red_invoice_num == ''">复制</view>
-						<navigator class="link" :url="`/pages/users/user_invoice_order/index?order_id=${item.order.order_id}`">{{ $t(`查看详情`) }}</navigator>
+						<view class="link mr20" @click="getInvoiceLink(item.id)" v-if="item.is_invoice == 1 && item.unique_num != '' && item.red_invoice_num == ''">Sao chép</view>
+						<navigator class="link" :url="`/pages/users/user_invoice_order/index?order_id=${item.order.order_id}`">{{ $t(`Xem chi tiết`) }}</navigator>
 					</view>
 				</view>
 			</view>
 			<view v-show="page === 2 && !orderList.length" class="nothing">
 				<image :src="imgHost + '/statics/images/noInvoice.png'"></image>
-				<view>{{ $t(`没有发票信息哟~`) }}</view>
+				<view>{{ $t(`Chưa có thông tin hóa đơn~`) }}</view>
 			</view>
 		</view>
 		<view v-show="nav === 2">
@@ -40,25 +40,25 @@
 						<view class="acea-row item-hd">
 							<view class="acea-row row-middle">
 								<view class="name">{{ item.name }}</view>
-								<view v-if="item.is_default" class="label">{{ $t(`默认`) }}</view>
+								<view v-if="item.is_default" class="label">{{ $t(`Mặc định`) }}</view>
 							</view>
 							<view class="type" :class="{ special: item.type === 2 }">
-								{{ item.type === 1 && item.header_type === 1 ? $t(`个人普通发票`) : item.type === 1 && item.header_type === 2 ? $t(`企业普通发票`) : $t(`企业专用发票`) }}
+								{{ item.type === 1 && item.header_type === 1 ? $t(`Hóa đơn thông thường (cá nhân)`) : item.type === 1 && item.header_type === 2 ? $t(`Hóa đơn thông thường (doanh nghiệp)`) : $t(`Hóa đơn chuyên dụng (doanh nghiệp)`) }}
 							</view>
 						</view>
 						<view class="item-bd">
-							<view class="cell">{{ $t(`联系邮箱`) }} {{ item.email }}</view>
-							<view v-if="item.header_type === 2" class="cell">{{ $t(`企业税号`) }} {{ item.duty_number }}</view>
-							<view v-if="item.header_type === 1 && item.drawer_phone" class="cell">{{ $t(`联系电话`) }} {{ item.drawer_phone }}</view>
+							<view class="cell">{{ $t(`Email liên hệ`) }} {{ item.email }}</view>
+							<view v-if="item.header_type === 2" class="cell">{{ $t(`Mã số thuế doanh nghiệp`) }} {{ item.duty_number }}</view>
+							<view v-if="item.header_type === 1 && item.drawer_phone" class="cell">{{ $t(`Số điện thoại liên hệ`) }} {{ item.drawer_phone }}</view>
 						</view>
 						<view class="acea-row row-right item-ft">
 							<view class="btn" @click="editInvoice(item.id)">
 								<text class="iconfont icon-bianji"></text>
-								{{ $t(`编辑`) }}
+								{{ $t(`Sửa`) }}
 							</view>
 							<view class="btn" @click="deleteInvoice(item.id)">
 								<text class="iconfont icon-shanchu"></text>
-								{{ $t(`删除`) }}
+								{{ $t(`Xóa`) }}
 							</view>
 						</view>
 					</view>
@@ -66,11 +66,11 @@
 			</view>
 			<view v-show="page === 2 && !invoiceList.length" class="nothing">
 				<image :src="imgHost + '/statics/images/noInvoice.png'"></image>
-				<view>{{ $t(`没有发票信息哟~`) }}</view>
+				<view>{{ $t(`Chưa có thông tin hóa đơn~`) }}</view>
 			</view>
 			<navigator class="add-link" :url="`/pages/users/user_invoice_form/index?specialInvoice=${specialInvoice}`">
 				<text class="iconfont icon-fapiao"></text>
-				{{ $t(`添加新发票`) }}
+				{{ $t(`Thêm hóa đơn mới`) }}
 			</navigator>
 		</view>
 		<!-- #ifndef MP -->
@@ -96,7 +96,7 @@ export default {
 			imgHost: HTTP_REQUEST_URL,
 			orderList: [],
 			invoiceList: [],
-			nav: 1, // 1：发票记录 2：抬头管理
+			nav: 1, // 1: lịch sử hóa đơn 2: quản lý thông tin xuất hóa đơn
 			page: 1,
 			limit: 30,
 			loading: false,
@@ -132,7 +132,7 @@ export default {
 	methods: {
 		getInvoiceLink(id) {
 			uni.showLoading({
-				title: '复制中'
+				title: 'Đang sao chép'
 			});
 			getInvoiceLink(id).then((res) => {
 				// #ifdef APP-PLUS
@@ -143,7 +143,7 @@ export default {
 					data: res.data.downloadBase64.pdfUrl,
 					success: () =>
 						uni.showToast({
-							title: '链接已复制'
+							title: 'Đã sao chép liên kết'
 						})
 				});
 				// #endif
@@ -155,16 +155,16 @@ export default {
 				this.specialInvoice = special_invoice;
 			});
 		},
-		// 菜单切换
+		// Chuyển đổi menu
 		navTab(nav) {
 			if (this.nav !== nav) {
 				this.nav = nav;
 			}
 		},
-		// 记录列表
+		// Danh sách lịch sử
 		getOrderList() {
 			uni.showLoading({
-				title: this.$t(`加载中`)
+				title: this.$t(`Đang tải`)
 			});
 			orderInvoiceList({
 				page: this.page,
@@ -184,10 +184,10 @@ export default {
 					});
 				});
 		},
-		// 发票列表
+		// Danh sách hóa đơn
 		getInvoiceList() {
 			uni.showLoading({
-				title: this.$t(`加载中`)
+				title: this.$t(`Đang tải`)
 			});
 			invoiceList({
 				page: this.page,
@@ -207,17 +207,17 @@ export default {
 					});
 				});
 		},
-		// 编辑发票
+		// Sửa hóa đơn
 		editInvoice(id) {
 			uni.navigateTo({
 				url: `/pages/users/user_invoice_form/index?id=${id}`
 			});
 		},
-		// 删除发票
+		// Xóa hóa đơn
 		deleteInvoice(id) {
 			let that = this;
 			uni.showModal({
-				content: that.$t(`删除该发票？`),
+				content: that.$t(`Xóa hóa đơn này?`),
 				confirmColor: '#E93323',
 				success(res) {
 					if (res.confirm) {
@@ -225,7 +225,7 @@ export default {
 							.then(() => {
 								that.$util.Tips(
 									{
-										title: that.$t(`删除成功`),
+										title: that.$t(`Xóa thành công`),
 										icon: 'success'
 									},
 									() => {

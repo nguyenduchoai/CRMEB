@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -19,7 +19,7 @@ use think\facade\App;
 
 /**
  * Class SystemRoute
- * @author 等风来
+ * @author Deng Fenglai
  * @email 136327134@qq.com
  * @date 2023/4/6
  * @package app\adminapi\controller\v1\setting
@@ -39,10 +39,10 @@ class SystemRoute extends AuthController
     }
 
     /**
-     * 同步路由权限
+     * Đồng bộ quyền route
      * @param string $appName
      * @return \think\Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/6
      */
@@ -50,13 +50,13 @@ class SystemRoute extends AuthController
     {
         $this->services->syncRoute($appName);
 
-        return app('json')->success('同步成功');
+        return app('json')->success('Đồng bộ thành công');
     }
 
     /**
-     * 列表数据
+     * Dữ liệu danh sách
      * @return \think\Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/7
      */
@@ -71,9 +71,9 @@ class SystemRoute extends AuthController
     }
 
     /**
-     * tree数据
+     * Dữ liệu dạng tree
      * @return \think\Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/7
      */
@@ -90,7 +90,7 @@ class SystemRoute extends AuthController
 
     /**
      * @return \think\Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/7
      */
@@ -114,16 +114,16 @@ class SystemRoute extends AuthController
         ]);
 
 //        if (!$data['name']) {
-//            return app('json')->fail('接口名不能为空');
+//            return app('json')->fail('Tên API không được để trống');
 //        }
 //        if (!$data['path']) {
-//            return app('json')->fail('接口地址不能为空');
+//            return app('json')->fail('Địa chỉ API không được để trống');
 //        }
 //        if (!$data['method']) {
-//            return app('json')->fail('请求方式不能为空');
+//            return app('json')->fail('Phương thức yêu cầu không được để trống');
 //        }
 //        if (!$data['app_name']) {
-//            return app('json')->fail('模块分类不能为空');
+//            return app('json')->fail('Danh mục mô-đun không được để trống');
 //        }
         if ($id) {
             $this->services->update($id, $data);
@@ -133,13 +133,13 @@ class SystemRoute extends AuthController
         }
         CacheService::clear();
 
-        return app('json')->success($id ? '修改成功' : '添加成功');
+        return app('json')->success($id ? 'Sửa thành công' : 'Thêm thành công');
     }
 
     /**
      * @param $id
      * @return \think\Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/7
      */
@@ -151,18 +151,18 @@ class SystemRoute extends AuthController
     /**
      * @param $id
      * @return \think\Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/7
      */
     public function delete($id)
     {
         if (!$id) {
-            return app('json')->fail('接口不存在');
+            return app('json')->fail('API không tồn tại');
         }
 
         $this->services->destroy($id);
 
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 }

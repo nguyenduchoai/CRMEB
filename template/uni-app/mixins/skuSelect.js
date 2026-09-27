@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2021 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -37,14 +37,14 @@ export default {
 						item.cart_num = e.cartNum
 					}
 				})
-				// 只有门店页面过来时调用
+				// Chỉ gọi khi đến từ trang cửa hàng
 				if(num){
 					this.getCartNum();
 				}
 			}
 		},
 		/**
-		 * 默认选中属性
+		 * Thuộc tính được chọn mặc định
 		 *
 		 */
 		DefaultSelect: function() {
@@ -59,7 +59,7 @@ export default {
 			for (let i = 0; i < productAttr.length; i++) {
 				this.$set(productAttr[i], "index", value[i]);
 			}
-			//sort();排序函数:数字-英文-汉字；
+			//sort(); hàm sắp xếp: số - chữ Anh - chữ Hán;
 			let productSelect = this.productValue[value.join(",")];
 			this.$set(this.attr.productSelect,"store_name",this.storeName);
 			if (productSelect && productAttr.length) {
@@ -89,7 +89,7 @@ export default {
 			}
 		},
 		/**
-		 * 属性变动赋值
+		 * Gán giá trị khi thuộc tính thay đổi
 		 *
 		 */
 		ChangeAttr: function(res) {
@@ -117,7 +117,7 @@ export default {
 				.indexn]);
 		},
 		/**
-		 * 购物车手动填写
+		 * Điền thủ công vào giỏ hàng
 		 *
 		 */
 		iptCartNum: function(e) {
@@ -135,20 +135,20 @@ export default {
 		onMyEvent: function() {
 			this.$set(this.attr, 'cartAttr', false);
 		},
-		// 改变多属性购物车
+		// Thay đổi giỏ hàng nhiều thuộc tính
 		ChangeCartNumDuo(changeValue) {
-			//获取当前变动属性
+			//Lấy thuộc tính vừa thay đổi hiện tại
 			let productSelect = this.productValue[this.attrValue];
-			//如果没有属性,赋值给商品默认库存
+			//Nếu không có thuộc tính, gán bằng tồn kho mặc định của sản phẩm
 			if (productSelect === undefined && !this.attr.productAttr.length)
 				productSelect = this.attr.productSelect;
-			//无属性值即库存为0；不存在加减；
+			//Không có giá trị thuộc tính thì tồn kho là 0; không có tăng giảm;
 			if (productSelect === undefined) return;
 			let stock = productSelect.stock || 0;
 			let num = this.attr.productSelect;
 			this.ChangeCartNum(changeValue, num, stock, 1);
 		},
-		// 改变单属性购物车
+		// Thay đổi giỏ hàng một thuộc tính
 		ChangeCartNumDan(changeValue, index, item) {
 			let num = this.tempArr[index];
 			let stock = this.tempArr[index].stock;
@@ -187,14 +187,14 @@ export default {
 				that.getCartNum();
 			})
 		},
-		// 多规格加入购物车；
+		// Thêm vào giỏ hàng nhiều phân loại (SKU);
 		goCatNum() {
 			this.goCat(1, this.id, 1);
 		},
 		closeList(e) {
 			this.$set(this.cartData, 'iScart', e);
 		},
-		// 已经加入购物车时的购物加减；
+		// Tăng giảm số lượng khi đã có trong giỏ hàng;
 		ChangeCartList(changeValue, index) {
 			let list = this.cartData.cartList;
 			let num = list[index];
@@ -208,7 +208,7 @@ export default {
 				this.productslist();
 			}
 		},
-		// 购物车加减计算函数
+		// Hàm tính tăng giảm giỏ hàng
 		ChangeCartNum(changeValue, num, stock, isDuo, id, index, cart) {
 			if (changeValue) {
 				num.cart_num++;
@@ -222,7 +222,7 @@ export default {
 						this.$set(this.cartData, 'cartList', this.cartData.cartList);
 					}
 					return this.$util.Tips({
-						title: "该产品没有更多库存了"
+						title: "Sản phẩm này không còn đủ tồn kho"
 					});
 				} else {
 					if (!isDuo) {
@@ -270,21 +270,21 @@ export default {
 			})
 		},
 		/*
-		 * 加入购物车
+		 * Thêm vào giỏ hàng
 		 */
 		goCat: function(duo, id, type, cart, unique) {
 			let that = this;
 
 			if (duo) {
 				let productSelect = that.productValue[this.attrValue];
-				//如果有属性,没有选择,提示用户选择
+				//Nếu có thuộc tính mà chưa chọn, nhắc người dùng chọn
 				
 				if (
 					that.attr.productAttr.length &&
 					productSelect === undefined
 				) {
 					return that.$util.Tips({
-						title: "产品库存不足，请选择其它属性"
+						title: "Sản phẩm không đủ tồn kho, vui lòng chọn thuộc tính khác"
 					});
 				}
 			}
@@ -336,7 +336,7 @@ export default {
 							url: `/pages/activity/goods_details/index?id=${item.id}&type=6`
 						})
 					}else{
-						//num:表示从首页点击进来的
+						//num: biểu thị click vào từ trang chủ
 						let page1 = `/pages/goods_details/index?id=${item.id}&fromType=1`;
 						let page2 = `/pages/goods_details/index?id=${item.id}`;
 						uni.navigateTo({
@@ -351,7 +351,7 @@ export default {
 				}
 			}
 		},
-		// 点击默认单属性购物车
+		// Click giỏ hàng một thuộc tính mặc định
 		goCartDan(item, index, num) {
 			if (!this.isLogin) {
 				toLogin();
@@ -368,7 +368,7 @@ export default {
 					}
 				}else{
 					this.tempArr[index].cart_num = 1;
-					// num表示从门店过来的；
+					// num biểu thị đến từ cửa hàng;
 					// if(num){
 					// 	this.$store.commit('indexData/setCartNum', parseInt(this.cartNum)+1)
 					// }

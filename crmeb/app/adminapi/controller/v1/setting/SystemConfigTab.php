@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,14 +17,14 @@ use think\facade\App;
 
 
 /**
- * 配置分类
+ * Danh mục cấu hình
  * Class SystemConfigTab
  * @package app\adminapi\controller\v1\setting
  */
 class SystemConfigTab extends AuthController
 {
     /**
-     * g构造方法
+     * Phương thức khởi tạo g
      * SystemConfigTab constructor.
      * @param App $app
      * @param SystemConfigTabServices $services
@@ -36,7 +36,7 @@ class SystemConfigTab extends AuthController
     }
 
     /**
-     * 显示资源列表
+     * Hiển thị danh sách resource
      *
      * @return \think\Response
      */
@@ -50,7 +50,7 @@ class SystemConfigTab extends AuthController
     }
 
     /**
-     * 显示创建资源表单页.
+     * Hiển thị trang form tạo resource.
      *
      * @return \think\Response
      */
@@ -60,7 +60,7 @@ class SystemConfigTab extends AuthController
     }
 
     /**
-     * 保存新建的资源
+     * Lưu resource mới tạo
      *
      * @return \think\Response
      */
@@ -77,13 +77,13 @@ class SystemConfigTab extends AuthController
             ['menus_id', 0],
         ]);
         if (is_array($data['pid'])) $data['pid'] = end($data['pid']);
-        if (!$data['title']) return app('json')->fail('请输入标题');
+        if (!$data['title']) return app('json')->fail('Vui lòng nhập tiêu đề');
         $this->services->save($data);
-        return app('json')->success('添加配置分类成功');
+        return app('json')->success('Thêm danh mục cấu hình thành công');
     }
 
     /**
-     * 显示指定的资源
+     * Hiển thị resource được chỉ định
      *
      * @param int $id
      * @return \think\Response
@@ -94,7 +94,7 @@ class SystemConfigTab extends AuthController
     }
 
     /**
-     * 显示编辑资源表单页.
+     * Hiển thị trang form sửa resource.
      *
      * @param int $id
      * @return \think\Response
@@ -105,7 +105,7 @@ class SystemConfigTab extends AuthController
     }
 
     /**
-     * 保存更新的资源
+     * Lưu resource đã cập nhật
      *
      * @param int $id
      * @return \think\Response
@@ -123,14 +123,14 @@ class SystemConfigTab extends AuthController
             ['menus_id', 0],
         ]);
         if (is_array($data['pid'])) $data['pid'] = end($data['pid']);
-        if (!$data['title']) return app('json')->fail('请输入标题');
-        if (!$data['eng_title']) return app('json')->fail('请输入字段名称');
+        if (!$data['title']) return app('json')->fail('Vui lòng nhập tiêu đề');
+        if (!$data['eng_title']) return app('json')->fail('Vui lòng nhập tên trường');
         $this->services->update($id, $data);
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
     /**
-     * 删除指定资源
+     * Xóa resource được chỉ định
      *
      * @param int $id
      * @return \think\Response
@@ -138,16 +138,16 @@ class SystemConfigTab extends AuthController
     public function delete(SystemConfigServices $services, $id)
     {
         if ($services->count(['tab_id' => $id])) {
-            return app('json')->fail('存在下级配置，无法删除');
+            return app('json')->fail('Có cấu hình cấp dưới, không thể xóa');
         }
         if (!$this->services->delete($id))
-            return app('json')->fail('删除失败');
+            return app('json')->fail('Xóa thất bại');
         else
-            return app('json')->success('删除成功');
+            return app('json')->success('Xóa thành công');
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param $id
      * @param $status
      * @return mixed
@@ -155,9 +155,9 @@ class SystemConfigTab extends AuthController
     public function set_status($id, $status)
     {
         if ($status == '' || $id == 0) {
-            return app('json')->fail('参数错误');
+            return app('json')->fail('Tham số không hợp lệ');
         }
         $this->services->update($id, ['status' => $status]);
-        return app('json')->success('设置成功');
+        return app('json')->success('Cài đặt thành công');
     }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="numbox" v-if="datas[name]">
     <div class="c_row-item" v-for="(item, index) in datas[name].list" :key="index">
-      <div class="dif" v-if="item.title === '链接'">
+      <div class="dif" v-if="item.title === 'Liên kết'">
         <el-col class="label" :span="4">
           <span>{{ item.title }}</span>
         </el-col>

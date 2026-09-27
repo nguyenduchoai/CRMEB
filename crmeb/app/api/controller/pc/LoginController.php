@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,7 +24,7 @@ class LoginController
     }
 
     /**
-     * 获取扫码登陆KEY
+     * Lấy KEY đăng nhập bằng quét mã
      * @return mixed
      */
     public function getLoginKey()
@@ -36,7 +36,7 @@ class LoginController
     }
 
     /**
-     * 扫码登陆
+     * Đăng nhập bằng quét mã
      * @param string $key
      * @return mixed
      * @throws \Psr\SimpleCache\InvalidArgumentException
@@ -47,7 +47,7 @@ class LoginController
     }
 
     /**
-     * 开放平台扫码登录
+     * Đăng nhập quét mã qua nền tảng mở
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -59,7 +59,7 @@ class LoginController
     }
 
     /**
-     * 获取公众平台id
+     * Lấy id nền tảng công khai
      * @return mixed
      */
     public function getAppid()

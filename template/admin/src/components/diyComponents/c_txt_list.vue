@@ -9,7 +9,7 @@
           </div>
           <div class="content">
             <div class="con-item" v-for="(list, key) in item.chiild" :key="key">
-              <div class="dif" v-if="list.title === '链接'">
+              <div class="dif" v-if="list.title === 'Liên kết'">
                 <el-col class="label" :span="4">
                   <span>{{ list.title }}</span>
                 </el-col>
@@ -65,7 +65,7 @@
           type="primary"
           ghost
           style="width: 100%; height: 40px; border-color: var(--prev-color-primary); color: var(--prev-color-primary)"
-          >添加模块</el-button
+          >Thêm mô-đun</el-button
         >
       </div>
     </div>
@@ -127,14 +127,14 @@ export default {
         chiild: [
           {
             max: 20,
-            pla: '选填，不超过四个字',
-            title: '标题',
+            pla: 'Không bắt buộc, tối đa 4 ký tự',
+            title: 'Tiêu đề',
             val: '',
           },
           {
             max: 99,
-            pla: '选填',
-            title: '链接',
+            pla: 'Không bắt buộc',
+            title: 'Liên kết',
             val: '',
           },
         ],
@@ -153,7 +153,7 @@ export default {
         this.datas[this.name].list.push(obj);
       }
     },
-    // 删除数组
+    // Xóa mảng
     bindDelete(index) {
       if (this.datas[this.name].list.length == 1) {
         let itemObj = this.datas[this.name].list[0];

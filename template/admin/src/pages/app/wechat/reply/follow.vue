@@ -6,10 +6,10 @@
       :backUrl="$routeProStr + '/app/wechat/reply/keyword'"
     ></pages-header>
     <el-card :bordered="false" shadow="never" class="ivu-mt-16">
-      <!-- 公众号设置 -->
+      <!-- Cài đặt OA WeChat -->
       <el-row :gutter="24">
         <el-col :span="24" class="ml40">
-          <!-- 预览功能 -->
+          <!-- Chức năng xem trước -->
           <el-col :span="24">
             <el-col :xl="7" :lg="7" :md="22" :sm="22" :xs="22" class="left mb15">
               <img class="top" src="../../../../assets/images/mobilehead.png" />
@@ -53,7 +53,7 @@
                     class="mt20"
                     @submit.native.prevent
                   >
-                    <el-form-item label="关键字：" prop="val" v-if="$route.params.id">
+                    <el-form-item label="Từ khóa:" prop="val" v-if="$route.params.id">
                       <div class="arrbox">
                         <!--:closable="$route.params.id==='0'? true : false"-->
                         <el-tag
@@ -68,46 +68,46 @@
                         <input
                           class="arrbox_ip"
                           v-model="val"
-                          placeholder="输入后回车"
+                          placeholder="Nhập rồi nhấn Enter"
                           style="width: 90%"
                           @keyup.enter="addlabel"
                         />
                       </div>
                     </el-form-item>
-                    <el-form-item label="消息状态：">
+                    <el-form-item label="Trạng thái tin nhắn:">
                       <el-radio-group v-model="formValidate.status">
-                        <el-radio :label="1">启用</el-radio>
-                        <el-radio :label="0">禁用</el-radio>
+                        <el-radio :label="1">Kích hoạt</el-radio>
+                        <el-radio :label="0">Vô hiệu hóa</el-radio>
                       </el-radio-group>
                     </el-form-item>
-                    <el-form-item label="消息类型：" prop="type">
+                    <el-form-item label="Loại tin nhắn:" prop="type">
                       <el-select
                         v-model="formValidate.type"
-                        placeholder="请选择规则状态"
+                        placeholder="Vui lòng chọn trạng thái quy tắc"
                         style="width: 90%"
                         @change="RuleFactor(formValidate.type)"
                       >
-                        <el-option value="text" label="文字消息"></el-option>
-                        <el-option value="image" label="图片消息"></el-option>
-                        <el-option value="news" label="图文消息"></el-option>
-                        <el-option value="voice" label="声音消息"></el-option>
+                        <el-option value="text" label="Tin nhắn văn bản"></el-option>
+                        <el-option value="image" label="Tin nhắn hình ảnh"></el-option>
+                        <el-option value="news" label="Tin nhắn hình ảnh và văn bản"></el-option>
+                        <el-option value="voice" label="Tin nhắn thoại"></el-option>
                       </el-select>
                     </el-form-item>
-                    <el-form-item label="消息内容：" prop="content" v-if="formValidate.type === 'text'">
+                    <el-form-item label="Nội dung tin nhắn:" prop="content" v-if="formValidate.type === 'text'">
                       <el-input
                         v-model="formValidate.data.content"
-                        placeholder="请填写消息内容"
+                        placeholder="Vui lòng điền nội dung tin nhắn"
                         style="width: 90%"
                         type="textarea"
                         :rows="4"
                       ></el-input>
                     </el-form-item>
-                    <el-form-item label="选取图文：" v-if="formValidate.type === 'news'">
-                      <el-button v-db-click @click="changePic">选择图文消息</el-button>
+                    <el-form-item label="Chọn tin bài:" v-if="formValidate.type === 'news'">
+                      <el-button v-db-click @click="changePic">Chọn tin bài</el-button>
                     </el-form-item>
 
                     <el-form-item
-                      :label="formValidate.type === 'image' ? '图片地址：' : '语音地址：'"
+                      :label="formValidate.type === 'image' ? 'Địa chỉ hình ảnh:' : 'Địa chỉ tệp âm thanh:'"
                       prop="src"
                       v-if="formValidate.type === 'image' || formValidate.type === 'voice'"
                     >
@@ -132,15 +132,15 @@
                           class="mr20"
                           style="margin-top: 1px"
                         >
-                          <el-button type="primary">上传</el-button>
+                          <el-button type="primary">Tải lên</el-button>
                         </el-upload>
                       </div>
-                      <span v-show="formValidate.type === 'image'">文件最大2Mb，支持bmp/png/jpeg/jpg/gif格式</span>
-                      <span v-show="formValidate.type === 'voice'">文件最大2Mb，支持mp3格式,播放长度不超过60s</span>
+                      <span v-show="formValidate.type === 'image'">Tệp tối đa 2Mb, hỗ trợ định dạng bmp/png/jpeg/jpg/gif</span>
+                      <span v-show="formValidate.type === 'voice'">Tệp tối đa 2Mb, hỗ trợ định dạng mp3, thời lượng phát không quá 60s</span>
                     </el-form-item>
                     <el-form-item>
                       <el-button type="primary" class="mr20" v-db-click @click="submenus('formValidate')"
-                        >保存并发布
+                        >Lưu và đăng
                       </el-button>
                     </el-form-item>
                   </el-form>
@@ -148,7 +148,7 @@
               </el-col>
               <!-- <el-col :span="24">
                 <div class="acea-row row-center">
-                  <el-button type="primary" class="mr20" v-db-click @click="submenus('formValidate')">保存并发布 </el-button>
+                  <el-button type="primary" class="mr20" v-db-click @click="submenus('formValidate')">Lưu và đăng </el-button>
                 </div>
               </el-col> -->
             </el-col>
@@ -157,8 +157,8 @@
       </el-row>
     </el-card>
 
-    <!--图文消息 -->
-    <el-dialog :visible.sync="modals" title="发送消息" width="1200px" :lock-scroll="false" class="modelBox">
+    <!--Tin nhắn hình ảnh và văn bản -->
+    <el-dialog :visible.sync="modals" title="Gửi tin nhắn" width="1200px" :lock-scroll="false" class="modelBox">
       <news-category
         v-if="modals"
         @getCentList="getCentList"
@@ -186,7 +186,7 @@ export default {
     const validateContent = (rule, value, callback) => {
       if (this.formValidate.type === 'text') {
         if (this.formValidate.data.content === '') {
-          callback(new Error('请填写规则内容'));
+          callback(new Error('Vui lòng điền nội dung quy tắc'));
         } else {
           callback();
         }
@@ -194,14 +194,14 @@ export default {
     };
     const validateSrc = (rule, value, callback) => {
       if (this.formValidate.type === 'image' && this.formValidate.data.src === '') {
-        callback(new Error('请上传'));
+        callback(new Error('Vui lòng tải lên'));
       } else {
         callback();
       }
     };
     const validateVal = (rule, value, callback) => {
       if (this.labelarr.length === 0) {
-        callback(new Error('请输入后回车'));
+        callback(new Error('Vui lòng nhập rồi nhấn Enter'));
       } else {
         callback();
       }
@@ -232,7 +232,7 @@ export default {
       fileUrl: Setting.apiBaseURL + '/file/upload/1',
       ruleValidate: {
         val: [{ required: true, validator: validateVal, trigger: 'change' }],
-        type: [{ required: true, message: '请选择消息类型', trigger: 'change' }],
+        type: [{ required: true, message: 'Vui lòng chọn loại tin nhắn', trigger: 'change' }],
         content: [{ required: true, validator: validateContent, trigger: 'blur' }],
         src: [{ required: true, validator: validateSrc, trigger: 'change' }],
       },
@@ -254,7 +254,7 @@ export default {
     imgUrl() {
       const search = '/adminapi/';
       const start = Setting.apiBaseURL.indexOf(search);
-      return Setting.apiBaseURL.substring(0, start); // 截取字符串
+      return Setting.apiBaseURL.substring(0, start); // Cắt chuỗi
     },
   },
   mounted() {
@@ -280,7 +280,7 @@ export default {
       const index = this.labelarr.indexOf(name);
       this.labelarr.splice(index, 1);
     },
-    // 详情
+    // Chi tiết
     details() {
       let url = '';
       let data = {};
@@ -322,11 +322,11 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 选择图文
+    // Chọn bài viết
     changePic() {
       this.modals = true;
     },
-    // 下拉选择
+    // Danh sách thả xuống
     RuleFactor(type) {
       switch (type) {
         case 'text':
@@ -344,11 +344,11 @@ export default {
       }
       // this.$refs['formValidate'].resetFields();
     },
-    // 上传头部token
+    // Token trong header khi tải lên
     getToken() {
       this.header['Authori-zation'] = 'Bearer ' + getCookies('token');
     },
-    // 上传成功
+    // Tải lên thành công
     handleSuccess(res, file) {
       if (res.status === 200) {
         this.formValidate.data.src = res.data.src;
@@ -359,15 +359,15 @@ export default {
     },
     handleFormatError(file) {
       if (this.formValidate.type === 'image') {
-        this.$message.warning('请上传bmp/png/jpeg/jpg/gif格式的图片');
+        this.$message.warning('Vui lòng tải lên ảnh định dạng bmp/png/jpeg/jpg/gif');
       } else {
-        this.$message.warning('请上传mp3/wma/wav/amr格式的语音');
+        this.$message.warning('Vui lòng tải lên âm thanh định dạng mp3/wma/wav/amr');
       }
     },
     handleMaxSize(file) {
-      this.$message.warning('请上传文件2M以内的文件');
+      this.$message.warning('Vui lòng tải lên tệp có dung lượng không quá 2M');
     },
-    // 保存
+    // Lưu
     submenus(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
@@ -397,15 +397,15 @@ export default {
         }
       });
     },
-    // 保存成功操作
+    // Xử lý khi lưu thành công
     operation() {
       if (this.$route.params.id && this.$route.params.id === '0') {
         this.$msgbox({
-          title: '提示',
-          message: '是否继续添加',
+          title: 'Thông báo',
+          message: 'Bạn có muốn tiếp tục thêm không',
           showCancelButton: true,
-          cancelButtonText: '否',
-          confirmButtonText: '是',
+          cancelButtonText: 'Không',
+          confirmButtonText: 'Có',
           iconClass: 'el-icon-warning',
           confirmButtonClass: 'btn-custom-cancel',
         })
@@ -431,10 +431,10 @@ export default {
 
 <style lang="scss" scoped>
 * {
-  -moz-user-select: none; /* 火狐 */
-  -webkit-user-select: none; /* webkit浏览器 */
+  -moz-user-select: none; /* Firefox */
+  -webkit-user-select: none; /* Trình duyệt webkit */
   -ms-user-select: none; /* IE10 */
-  -khtml-user-select: none; /* 早期浏览器 */
+  -khtml-user-select: none; /* Trình duyệt đời cũ */
   user-select: none;
 }
 .arrbox {

@@ -17,31 +17,31 @@
 							<text class="num">{{ item.coupon_price }}</text>
 						</view>
 						<view class="pic-num" v-if="item.use_min_price > 0">
-							{{ $t(`满`) }} {{ item.use_min_price }}
-							{{ $t(`元可用`) }}
+							{{ $t(`Đơn từ`) }} {{ item.use_min_price }}
+							{{ $t(`đ có thể dùng`) }}
 						</view>
-						<view class="pic-num" v-else>{{ $t(`无门槛券`) }}</view>
+						<view class="pic-num" v-else>{{ $t(`Phiếu không điều kiện`) }}</view>
 					</view>
 				</view>
 				<view class="text">
 					<view class="condition">
 						<view class="name line2">
-							<view class="line-title" :class="item.is_use >= item.receive_limit ? 'bg-color-huic' : ''" v-if="item.type === 0">{{ $t(`通用劵`) }}</view>
-							<view class="line-title" :class="item.is_use >= item.receive_limit ? 'bg-color-huic' : ''" v-else-if="item.type === 1">{{ $t(`品类券`) }}</view>
-							<view class="line-title" :class="item.is_use >= item.receive_limit ? 'bg-color-huic' : ''" v-else>{{ $t(`商品券`) }}</view>
+							<view class="line-title" :class="item.is_use >= item.receive_limit ? 'bg-color-huic' : ''" v-if="item.type === 0">{{ $t(`Phiếu toàn cửa hàng`) }}</view>
+							<view class="line-title" :class="item.is_use >= item.receive_limit ? 'bg-color-huic' : ''" v-else-if="item.type === 1">{{ $t(`Phiếu theo danh mục`) }}</view>
+							<view class="line-title" :class="item.is_use >= item.receive_limit ? 'bg-color-huic' : ''" v-else>{{ $t(`Phiếu theo sản phẩm`) }}</view>
 							<image v-if="item.receive_type === 4" class="pic" src="/static/images/fvip.png"></image>
 							<text class="title">{{ $t(item.title) }}</text>
 						</view>
 					</view>
 					<view class="data acea-row row-between-wrapper">
-						<view v-if="item.coupon_time">{{ $t(`领取后`) }} {{ item.coupon_time }} {{ $t(`天内可用`) }}</view>
+						<view v-if="item.coupon_time">{{ $t(`Dùng trong vòng`) }} {{ item.coupon_time }} {{ $t(`ngày sau khi nhận`) }}</view>
 						<view v-else-if="item.start_use_time || item.end_use_time">{{ item.start_use_time ? item.start_use_time + '-' : '' }}{{ item.end_use_time }}</view>
 						<view v-else></view>
-						<view class="bnt gray" v-if="item.is_use >= item.receive_limit">{{ $t(`已领取`) }}</view>
+						<view class="bnt gray" v-if="item.is_use >= item.receive_limit">{{ $t(`Đã nhận`) }}</view>
 						<view class="bnt gray" v-else-if="item.is_permanent == 0 && item.remain_count == 0">
-							{{ $t(`已领完`) }}
+							{{ $t(`Đã hết`) }}
 						</view>
-						<view class="bnt bg-color" v-else @click="getCoupon(item.id, item)">{{ $t(`立即领取`) }}</view>
+						<view class="bnt bg-color" v-else @click="getCoupon(item.id, item)">{{ $t(`Nhận ngay`) }}</view>
 					</view>
 				</view>
 			</view>
@@ -88,26 +88,26 @@ export default {
 			couponsList: [],
 			loading: false,
 			loadend: false,
-			loadTitle: this.$t(`加载更多`), //提示语
+			loadTitle: this.$t(`Tải thêm`), //Câu thông báo
 			page: 1,
 			limit: 20,
-			isAuto: false, //没有授权的不会自动授权
-			isShowAuth: false, //是否隐藏授权
+			isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+			isShowAuth: false, //Có ẩn ủy quyền hay không
 			type: 0,
 			navList: [
 				{
 					type: 0,
-					name: this.$t(`通用券`),
+					name: this.$t(`Phiếu toàn cửa hàng`),
 					count: 0
 				},
 				{
 					type: 1,
-					name: this.$t(`品类券`),
+					name: this.$t(`Phiếu theo danh mục`),
 					count: 0
 				},
 				{
 					type: 2,
-					name: this.$t(`商品券`),
+					name: this.$t(`Phiếu theo sản phẩm`),
 					count: 0
 				}
 			],
@@ -136,7 +136,7 @@ export default {
 		}
 	},
 	/**
-	 * 页面上拉触底事件的处理函数
+	 * Hàm xử lý sự kiện kéo lên đến đáy trang
 	 */
 	onReachBottom: function () {
 		this.getUseCoupons();
@@ -145,7 +145,7 @@ export default {
 		onLoadFun() {
 			this.getUseCoupons();
 		},
-		// 授权关闭
+		// Đóng ủy quyền
 		authColse: function (e) {
 			this.isShowAuth = e;
 		},
@@ -153,12 +153,12 @@ export default {
 			if (this.receiveLoading) return;
 			let that = this;
 			this.receiveLoading = true;
-			//领取优惠券
+			//Nhận phiếu giảm giá
 			setCouponReceive(id)
 				.then((res) => {
 					item.is_use += 1;
 					that.$util.Tips({
-						title: that.$t(`领取成功`)
+						title: that.$t(`Nhận thành công`)
 					});
 					setTimeout((e) => {
 						that.receiveLoading = false;
@@ -172,14 +172,14 @@ export default {
 				});
 		},
 		/**
-		 * 获取领取优惠券列表
+		 * Lấy danh sách phiếu giảm giá đã nhận
 		 */
 		getUseCoupons: function () {
 			let that = this;
 			if (this.loadend) return false;
 			if (this.loading) return false;
 			that.loading = true;
-			that.loadTitle = that.$t(`加载更多`);
+			that.loadTitle = that.$t(`Tải thêm`);
 			getCoupons({
 				type: that.type,
 				page: that.page,
@@ -198,12 +198,12 @@ export default {
 					that.$set(that, 'couponsList', couponsList);
 					that.loadend = loadend;
 					that.loading = false;
-					that.loadTitle = loadend ? that.$t(`我也是有底线的`) : that.$t(`加载更多`);
+					that.loadTitle = loadend ? that.$t(`Đã đến cuối danh sách`) : that.$t(`Tải thêm`);
 					that.page = that.page + 1;
 				})
 				.catch((err) => {
 					that.loading = false;
-					that.loadTitle = that.$t(`加载更多`);
+					that.loadTitle = that.$t(`Tải thêm`);
 				});
 		},
 		setType: function (type) {

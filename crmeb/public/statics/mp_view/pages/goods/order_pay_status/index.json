@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "支付成功",
+  "navigationBarTitleText": "Thanh toán thành công",
   "usingComponents": {
     "lottery-model": "/pages/goods/order_pay_status/payLottery",
     "gift-modal": "/pages/goods/order_pay_status/components/giftModal",

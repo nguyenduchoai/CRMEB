@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use app\dao\user\UserFriendsDao;
 use app\services\BaseServices;
 
 /**
- * 获取好友列表
+ * Lấy danh sách bạn bè
  * Class UserFriendsServices
  * @package app\services\user
  */
@@ -29,7 +29,7 @@ class UserFriendsServices extends BaseServices
     }
 
     /**
-     * 获取好友列表
+     * Lấy danh sách bạn bè
      * @param array $where
      * @param array $with
      * @throws \think\db\exception\DataNotFoundException
@@ -45,7 +45,7 @@ class UserFriendsServices extends BaseServices
     }
 
     /**
-     * 保存好友关系
+     * Lưu quan hệ bạn bè
      * @param array $data
      * @return bool|mixed
      * @throws \think\db\exception\DataNotFoundException

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,14 +18,14 @@ use crmeb\exceptions\AdminException;
 use crmeb\services\app\WechatService;
 
 /**
- * 微信菜单
+ * Menu WeChat
  * Class WechatMenuServices
  * @package app\services\wechat
  */
 class WechatMenuServices extends BaseServices
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * WechatMenuServices constructor.
      * @param WechatMenuDao $dao
      */
@@ -35,7 +35,7 @@ class WechatMenuServices extends BaseServices
     }
 
     /**
-     * 获取微信菜单
+     * Lấy menu WeChat
      * @return array|mixed
      */
     public function getWechatMenu()
@@ -45,7 +45,7 @@ class WechatMenuServices extends BaseServices
     }
 
     /**
-     * 保存微信菜单
+     * Lưu menu WeChat
      * @param array $buttons
      * @return bool
      */
@@ -65,11 +65,11 @@ class WechatMenuServices extends BaseServices
                 $msgData = json_decode($msgData, true);
                 $errcode = $msgData['errcode'] ?? 0;
                 if ($errcode == 40164) {
-                    throw new AdminException('您得ip不再白名单中,请前往腾讯微信公众平台添加ip白名单');
+                    throw new AdminException('IP của bạn không có trong danh sách trắng, vui lòng truy cập nền tảng WeChat Official Accounts để thêm IP vào danh sách trắng');
                 }
             }
             if (strstr($e->getMessage(), 'invalid weapp appid')) {
-                throw new AdminException('您填写得appid无效,请检查');
+                throw new AdminException('Mã appid bạn điền không hợp lệ, vui lòng kiểm tra');
             }
             throw new AdminException(WechatService::getMessage($e->getMessage()));
         }

@@ -11,19 +11,19 @@
     </div>
     <div class="user-list">
       <div class="acea-row item bgt">
-        <span class="sp1">用户标签</span>
+        <span class="sp1">Nhãn người dùng</span>
         <div class="labelBox" v-if="activeUserInfo.labelNames.length">
           <span class="label" v-for="(item, index) in activeUserInfo.labelNames" :key="index">{{ item }}</span>
         </div>
-        <span v-else class="labelBox">无</span>
+        <span v-else class="labelBox">Không có</span>
         <span class="iconfontYI icon-up" v-db-click @click="onShowLabel"></span>
       </div>
       <div class="acea-row item bgt">
-        <span class="sp1">手机号</span>
-        <span class="sp2" v-text="activeUserInfo.phone || '无'"></span>
+        <span class="sp1">Số điện thoại</span>
+        <span class="sp2" v-text="activeUserInfo.phone || 'Không có'"></span>
       </div>
       <div class="acea-row item">
-        <span class="sp1">分组</span>
+        <span class="sp1">Nhóm</span>
         <span
           class="checkName"
           v-if="activeUserInfo.group_name"
@@ -31,8 +31,10 @@
           v-db-click
           @click="showName"
         ></span>
-        <span v-else v-db-click @click="showName">无</span>
+        <span v-else v-db-click @click="showName">Không có</span>
         <vue-pickers
+          cancelText="Hủy"
+          confirmText="Xác nhận"
           :data="groupList"
           v-if="groupList.length"
           :showToolbar="true"
@@ -45,24 +47,24 @@
     </div>
     <div class="user-list">
       <div class="acea-row item bgt">
-        <span class="sp1">用户等级</span>
-        <span class="sp2" v-text="activeUserInfo.level_name ? activeUserInfo.level_name : '无'"></span>
+        <span class="sp1">Hạng người dùng</span>
+        <span class="sp2" v-text="activeUserInfo.level_name ? activeUserInfo.level_name : 'Không có'"></span>
       </div>
       <div class="acea-row item bgt">
-        <span class="sp1">用户类型</span>
+        <span class="sp1">Loại người dùng</span>
         <span class="sp2">{{ activeUserInfo.user_type | userType }}</span>
       </div>
       <div class="acea-row item bgt">
-        <span class="sp1">余额</span>
-        <span class="sp2" v-text="activeUserInfo.now_money || '无'"></span>
+        <span class="sp1">Số dư</span>
+        <span class="sp2" v-text="activeUserInfo.now_money || 'Không có'"></span>
       </div>
       <div class="acea-row item bgt">
-        <span class="sp1">推广员</span>
-        <span class="sp2" v-text="activeUserInfo.is_promoter === 1 ? '是' : '否'"></span>
+        <span class="sp1">Cộng tác viên</span>
+        <span class="sp2" v-text="activeUserInfo.is_promoter === 1 ? 'Có' : 'Không'"></span>
       </div>
       <div class="acea-row item">
-        <span class="sp1">生日</span>
-        <span class="sp2" v-text="activeUserInfo.birthday || '无'"></span>
+        <span class="sp1">Ngày sinh</span>
+        <span class="sp2" v-text="activeUserInfo.birthday || 'Không có'"></span>
       </div>
     </div>
     <user-labels
@@ -89,11 +91,11 @@ export default {
   },
   data() {
     return {
-      change: false, //模态框显示隐藏
+      change: false, //Hiện/ẩn modal
       activeUserInfo: '',
-      pickerVisible: false, //分组选择
-      groupList: [], //分组
-      labelList: [], //标签
+      pickerVisible: false, //Chọn nhóm
+      groupList: [], //Nhóm
+      labelList: [], //Nhãn
     };
   },
   mounted() {
@@ -101,7 +103,7 @@ export default {
     this.getUserInfo();
   },
   methods: {
-    //获取用户标签
+    //Lấy nhãn người dùng
     getList() {
       userLabel(this.$route.params.uid)
         .then((res) => {
@@ -109,14 +111,14 @@ export default {
           if (this.labelList.length) {
             this.change = true;
           } else {
-            this.$dialog.error('暂无标签');
+            this.$dialog.error('Chưa có nhãn');
           }
         })
         .catch((err) => {
           this.$dialog.error(err.msg);
         });
     },
-    //获取用户详情
+    //Lấy chi tiết người dùng
     getUserInfo() {
       userInfo(this.$route.params.uid)
         .then((res) => {
@@ -126,11 +128,11 @@ export default {
           this.$dialog.error(err.msg);
         });
     },
-    //获取用户分组
+    //Lấy nhóm người dùng
     getGroup() {
       let obj = {
         id: 0,
-        group_name: '无',
+        group_name: 'Không có',
       };
       userGroupApi()
         .then((res) => {
@@ -159,7 +161,7 @@ export default {
       this.pickerVisible = true;
     },
     cancel() {},
-    // 选择分组
+    // Chọn nhóm
     confirm(res) {
       putGroupApi(this.$route.params.uid, res[0].value)
         .then((res) => {

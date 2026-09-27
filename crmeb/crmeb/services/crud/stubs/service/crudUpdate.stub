@@ -1,5 +1,5 @@
     /**
-     * 修改
+     * Sửa
      * @date {%DATE%}
      * @param int $id
      * @param array $data

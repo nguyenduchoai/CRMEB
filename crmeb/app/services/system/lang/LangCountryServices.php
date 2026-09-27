@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -28,7 +28,7 @@ class LangCountryServices extends BaseServices
     }
 
     /**
-     * 地区语言列表
+     * Danh sách ngôn ngữ theo khu vực
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -46,7 +46,7 @@ class LangCountryServices extends BaseServices
             if (isset($langTypeList[$item['type_id']])) {
                 $item['link_lang'] = $langTypeList[$item['type_id']]['language_name'] . '(' . $langTypeList[$item['type_id']]['file_name'] . ')';
             } else {
-                $item['link_lang'] = '暂无';
+                $item['link_lang'] = 'Chưa có';
             }
         }
         $count = $this->dao->count($where);
@@ -54,7 +54,7 @@ class LangCountryServices extends BaseServices
     }
 
     /**
-     * 添加语言地区表单
+     * Biểu mẫu thêm khu vực ngôn ngữ
      * @param $id
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -66,15 +66,15 @@ class LangCountryServices extends BaseServices
     {
         if ($id) $info = $this->dao->get($id);
         $field = [];
-        $field[] = Form::input('name', '所属地区', $info['name'] ?? '')->required('请填写所属地区')->appendRule('suffix', [
+        $field[] = Form::input('name', 'Khu vực', $info['name'] ?? '')->required('Vui lòng nhập khu vực')->appendRule('suffix', [
             'type' => 'div',
             'class' => 'tips-info',
-            'domProps' => ['innerHTML' => '例如：中国、香港、德国']
+            'domProps' => ['innerHTML' => 'Ví dụ: Trung Quốc, Hồng Kông, Đức']
         ]);
-        $field[] = Form::input('code', '语言识别码', $info['code'] ?? '')->required('请填写浏览器语言识别码')->appendRule('suffix', [
+        $field[] = Form::input('code', 'Mã nhận dạng ngôn ngữ', $info['code'] ?? '')->required('Vui lòng nhập mã nhận dạng ngôn ngữ của trình duyệt')->appendRule('suffix', [
             'type' => 'div',
             'class' => 'tips-info',
-            'domProps' => ['innerHTML' => '浏览器语言识别码']
+            'domProps' => ['innerHTML' => 'Mã nhận dạng ngôn ngữ của trình duyệt']
         ]);
         /** @var LangTypeServices $langTypeServices */
         $langTypeServices = app()->make(LangTypeServices::class);
@@ -86,16 +86,16 @@ class LangCountryServices extends BaseServices
             }
             return $menus;
         };
-        $field[] = Form::select('type_id', '关联语言', $info['type_id'] ?? 0)->setOptions(Form::setOptions($setOption))->filterable(true)->appendRule('suffix', [
+        $field[] = Form::select('type_id', 'Ngôn ngữ liên kết', $info['type_id'] ?? 0)->setOptions(Form::setOptions($setOption))->filterable(true)->appendRule('suffix', [
             'type' => 'div',
             'class' => 'tips-info',
-            'domProps' => ['innerHTML' => '请选择关联语言，语言类型是由您自行添加的']
+            'domProps' => ['innerHTML' => 'Vui lòng chọn ngôn ngữ liên kết, loại ngôn ngữ do bạn tự thêm']
         ]);
-        return create_form($id ? '修改语言地区' : '新增语言地区', $field, Url::buildUrl('/setting/lang_country/save/' . $id), 'POST');
+        return create_form($id ? 'Sửa khu vực ngôn ngữ' : 'Thêm khu vực ngôn ngữ', $field, Url::buildUrl('/setting/lang_country/save/' . $id), 'POST');
     }
 
     /**
-     * 保存语言地区
+     * Lưu khu vực ngôn ngữ
      * @param $id
      * @param $typeId
      * @return bool
@@ -107,20 +107,20 @@ class LangCountryServices extends BaseServices
         } else {
             $res = $this->dao->save($data);
         }
-        if (!$res) throw new AdminException('修改失败');
+        if (!$res) throw new AdminException('Sửa thất bại');
         CacheService::clear();
         return true;
     }
 
     /**
-     * 删除语言地区
+     * Xóa khu vực ngôn ngữ
      * @param $id
      * @return bool
      */
     public function langCountryDel($id)
     {
         $res = $this->dao->delete($id);
-        if (!$res) throw new AdminException('删除失败');
+        if (!$res) throw new AdminException('Xóa thất bại');
         CacheService::clear();
         return true;
     }

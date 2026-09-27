@@ -1,13 +1,13 @@
-import E from 'wangeditor'; // npm 安装
-// const E = window.wangEditor // CDN 引入的方式
+import E from 'wangeditor'; // Cài đặt npm
+// const E = window.wangEditor // Cách import qua CDN
 import util from '../../utils/bus';
-// 获取必要的变量，这些在下文中都会用到
+// Lấy các biến cần thiết, các biến này sẽ được dùng ở phần sau
 const { $, BtnMenu, DropListMenu, PanelMenu, DropList, Panel, Tooltip } = E;
 var _this = null;
 export default class HtmlMenu extends BtnMenu {
   constructor(editor) {
     _this = editor;
-    // data-title属性表示当鼠标悬停在该按钮上时提示该按钮的功能简述
+    // Thuộc tính data-title thể hiện chú thích ngắn về chức năng của nút khi di chuột vào (hover)
     const $elem = E.$(
       `<div class="w-e-menu" data-title="html">
                 <div>HTML</div>
@@ -15,7 +15,7 @@ export default class HtmlMenu extends BtnMenu {
     );
     super($elem, editor);
   }
-  // 菜单点击事件
+  // Sự kiện bấm menu
   clickHandler() {
     // getHtmlint()
     util.$emit('Html');

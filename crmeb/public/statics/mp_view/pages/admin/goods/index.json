@@ -1,6 +1,6 @@
 {
   "navigationStyle": "custom",
-  "navigationBarTitleText": "商品管理",
+  "navigationBarTitleText": "Quản lý sản phẩm",
   "usingComponents": {
     "edit-price": "/pages/admin/goods/components/editPrice/index",
     "edit-lable": "/pages/admin/goods/components/label/index",

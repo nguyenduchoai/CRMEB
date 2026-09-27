@@ -1,34 +1,34 @@
 import { Local } from '@/utils/storage.js';
 
 /**
- * 判断传入的 key 是否在数组 arr 中存在
- * @param {string} key - 待判断的字符串
- * @returns {boolean} - 返回布尔值，表示是否有权限
+ * Kiểm tra key truyền vào có tồn tại trong mảng arr không
+ * @param {string} key - Chuỗi cần kiểm tra
+ * @returns {boolean} - Trả về boolean, thể hiện có quyền hay không
  */
 function checkArray(key) {
-  // seckill 秒杀 bargain 砍价 combination 拼团
-  let arr = Local.get('PERMISSIONS') || ['seckill', 'bargain', 'combination']; // 定义一个数组，包含三种类型
-  let index = arr.indexOf(key); // 获取 key 在数组中的索引
+  // seckill flash sale bargain săn giảm giá combination mua chung
+  let arr = Local.get('PERMISSIONS') || ['seckill', 'bargain', 'combination']; // Định nghĩa một mảng, chứa ba loại
+  let index = arr.indexOf(key); // Lấy chỉ số (index) của key trong mảng
   if (index > -1) {
-    // 如果索引大于 -1，说明 key 存在于数组中
-    return true; // 有权限
+    // Nếu chỉ số lớn hơn -1 thì nghĩa là key tồn tại trong mảng
+    return true; // Có quyền
   } else {
-    return false; // 无权限
+    return false; // Không có quyền
   }
 }
 
 /**
- * @description 一个Vue指令，用于控制组件的显示和隐藏
- * @param {Object} el - 指令绑定的DOM元素
- * @param {Object} binding - 指令绑定的对象
+ * @description Một directive Vue dùng để điều khiển hiển thị/ẩn của thành phần
+ * @param {Object} el - Phần tử DOM mà directive gắn vào
+ * @param {Object} binding - Đối tượng mà directive gắn vào
  */
 const permission = {
   inserted: function (el, binding) {
-    let permission = binding.value; // 获取到 v-permission的值
+    let permission = binding.value; // Lấy giá trị của v-permission
     if (permission) {
-      let hasPermission = checkArray(permission); // 调用checkArray函数判断是否有权限
+      let hasPermission = checkArray(permission); // Gọi hàm checkArray để kiểm tra có quyền hay không
       if (!hasPermission) {
-        // 没有权限 移除Dom元素
+        // Không có quyền thì gỡ bỏ phần tử DOM
         el.parentNode && el.parentNode.removeChild(el);
       }
     }

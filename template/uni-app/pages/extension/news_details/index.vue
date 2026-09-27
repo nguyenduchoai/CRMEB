@@ -27,14 +27,14 @@
 					</view>
 					<view class="y_money">{{$t(`￥`)}}{{store_info.ot_price || 0}}</view>
 				</view>
-				<navigator class="label"><text class="span">{{$t(`查看商品`)}}</text></navigator>
+				<navigator class="label"><text class="span">{{$t(`Xem sản phẩm`)}}</text></navigator>
 			</navigator>
 			<!-- #ifdef H5 -->
 			<button class="bnt bg-color" hover-class='none' @click="listenerActionSheet"
-				v-if="this.$wechat.isWeixin()">{{$t(`和好友一起分享`)}}</button>
+				v-if="this.$wechat.isWeixin()">{{$t(`Chia sẻ cùng bạn bè`)}}</button>
 			<!-- #endif -->
 			<!-- #ifdef MP -->
-			<button class="bnt bg-color" open-type="share" hover-class='none'>{{$t(`和好友一起分享`)}}</button>
+			<button class="bnt bg-color" open-type="share" hover-class='none'>{{$t(`Chia sẻ cùng bạn bè`)}}</button>
 			<!-- #endif -->
 		</view>
 		<shareInfo @setShareInfoStatus="setShareInfoStatus" :shareInfoStatus="shareInfoStatus"></shareInfo>
@@ -77,7 +77,7 @@
 			};
 		},
 		/**
-		 * 生命周期函数--监听页面加载
+		 * Hàm lifecycle -- theo dõi khi trang load
 		 */
 		onLoad: function(options) {
 			if (options.hasOwnProperty('id')) {

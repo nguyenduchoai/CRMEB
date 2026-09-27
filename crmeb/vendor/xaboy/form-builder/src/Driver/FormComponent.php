@@ -64,6 +64,6 @@ abstract class FormComponent extends CustomComponent implements FormComponentInt
      */
     protected function getPlaceHolder()
     {
-        return ($this->selectComponent ? '请选择' : '请输入') . $this->title;
+        return ($this->selectComponent ? 'Vui lòng chọn' : 'Vui lòng nhập') . $this->title;
     }
 }

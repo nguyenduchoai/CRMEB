@@ -1,51 +1,51 @@
 <template>
   <div>
     <el-card :bordered="false" shadow="never" class="ivu-mt" v-loading="spinShow">
-      <el-button type="primary" v-db-click @click="groupAdd()" class="mr20">添加功能</el-button>
-      <!-- <el-button type="success" v-db-click @click="buildCode()" class="mr20">重新发布</el-button> -->
+      <el-button type="primary" v-db-click @click="groupAdd()" class="mr20">Thêm chức năng</el-button>
+      <!-- <el-button type="success" v-db-click @click="buildCode()" class="mr20">Phát hành lại</el-button> -->
       <el-table
         :data="tabList"
         ref="table"
         class="mt14"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column label="ID" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="菜单名" min-width="130">
+        <el-table-column label="Tên menu" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="表名" min-width="130">
+        <el-table-column label="Tên bảng" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.table_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="表备注" min-width="130">
+        <el-table-column label="Ghi chú bảng" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.table_comment }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="添加时间" min-width="130">
+        <el-table-column label="Thời gian thêm" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.add_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="200">
+        <el-table-column label="Thao tác" fixed="right" width="200">
           <template slot-scope="scope">
-            <a v-db-click @click="edit(scope.row, '编辑')">查看代码</a>
+            <a v-db-click @click="edit(scope.row, 'Sửa')">Xem mã nguồn</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="editItem(scope.row)">编辑</a>
+            <a v-db-click @click="editItem(scope.row)">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="downLoad(scope.row)">下载</a>
+            <a v-db-click @click="downLoad(scope.row)">Tải xuống</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa', scope.$index)">Xóa</a>
           </template>
         </el-table-column>
       </el-table>
@@ -72,7 +72,7 @@
         <span>{{ title }}</span>
       </p>
       <div class="file" style="height: 100%">
-        <el-button class="save" type="primary" v-db-click @click="pwdModal = true">保存</el-button>
+        <el-button class="save" type="primary" v-db-click @click="pwdModal = true">Lưu</el-button>
 
         <div class="file-box">
           <div class="file-fix"></div>
@@ -113,10 +113,10 @@
                   style="height: 100%; min-height: calc(100vh - 110px)"
                 ></div>
               </el-tab-pane>
-              <!-- <el-tab-pane label="用户管理" name="first">用户管理</el-tab-pane>
-              <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
-              <el-tab-pane label="角色管理" name="third">角色管理</el-tab-pane>
-              <el-tab-pane label="定时任务补偿" name="fourth">定时任务补偿</el-tab-pane> -->
+              <!-- <el-tab-pane label="Quản lý người dùng" name="first">Quản lý người dùng</el-tab-pane>
+              <el-tab-pane label="Quản lý cấu hình" name="second">Quản lý cấu hình</el-tab-pane>
+              <el-tab-pane label="Quản lý vai trò" name="third">Quản lý vai trò</el-tab-pane>
+              <el-tab-pane label="Bù tác vụ định kỳ" name="fourth">Bù tác vụ định kỳ</el-tab-pane> -->
             </el-tabs>
           </div>
         </div>
@@ -124,13 +124,13 @@
     </el-drawer>
     <el-dialog
       :visible.sync="buildModals"
-      title="终端"
+      title="Terminal"
       :show-close="true"
       :close-on-click-modal="false"
       width="720px"
       @close="editModalChange"
     >
-      <el-alert type="warning" title="当前终端未运行于安装服务下，部分命令可能无法执行."></el-alert>
+      <el-alert type="warning" title="Terminal hiện tại không chạy trong dịch vụ cài đặt, một số lệnh có thể không thực thi được."></el-alert>
       <div>
         <div v-for="(item, index) in codeBuildList" :key="index">{{ item }}</div>
       </div>
@@ -138,14 +138,14 @@
     <el-dialog
       :visible.sync="pwdModal"
       width="470px"
-      title="文件管理密码"
+      title="Mật khẩu quản lý tệp"
       :show-close="true"
       :close-on-click-modal="false"
     >
-      <el-input v-model="pwd" type="password" placeholder="请输入文件管理密码"></el-input>
+      <el-input v-model="pwd" type="password" placeholder="Vui lòng nhập mật khẩu quản lý tệp"></el-input>
       <span slot="footer" class="dialog-footer">
-        <el-button v-db-click @click="pwdModal = false">取 消</el-button>
-        <el-button type="primary" v-db-click @click="crudSaveFile">确 定</el-button>
+        <el-button v-db-click @click="pwdModal = false">Hủy</el-button>
+        <el-button type="primary" v-db-click @click="crudSaveFile">Xác nhận</el-button>
       </span>
     </el-dialog>
   </div>
@@ -192,32 +192,32 @@ export default {
           width: 80,
         },
         {
-          title: '菜单名',
+          title: 'Tên menu',
           key: 'name',
           minWidth: 130,
         },
         {
-          title: '表名',
+          title: 'Tên bảng',
           key: 'table_name',
           minWidth: 130,
         },
         {
-          title: '字符集',
+          title: 'Bộ ký tự',
           key: 'table_collation',
           minWidth: 130,
         },
         {
-          title: '表备注',
+          title: 'Ghi chú bảng',
           key: 'table_comment',
           minWidth: 130,
         },
         {
-          title: '添加时间',
+          title: 'Thời gian thêm',
           key: 'add_time',
           minWidth: 130,
         },
         {
-          title: '操作',
+          title: 'Thao tác',
           slot: 'action',
           fixed: 'right',
           minWidth: 150,
@@ -227,16 +227,16 @@ export default {
       titleFrom: '',
       groupId: 0,
       addId: '',
-      editorList: [], //编辑器数组
-      indexEditor: 0, //当前编辑器索引
-      code: '', //当前文件打开时的内容
-      contextData: null, //左侧导航右键点击是产生的数据对象
+      editorList: [], //Mảng trình soạn thảo
+      indexEditor: 0, //Chỉ số trình soạn thảo hiện tại
+      code: '', //Nội dung khi file hiện tại được mở
+      contextData: null, //Đối tượng dữ liệu được tạo ra khi nhấp chuột phải vào điều hướng bên trái
 
-      fileType: '', // 文件操作类型 createFolder|创建文件夹 createFile|创建文件 delFolder|删除文件夹或者文件
-      className: '', //全屏 class名
+      fileType: '', // Loại thao tác file createFolder|tạo thư mục createFile|tạo file delFolder|xóa thư mục hoặc file
+      className: '', //Tên class toàn màn hình
       spinShow: false,
-      modals: false, //编辑器开关
-      editor: '', //当前编辑器对象
+      modals: false, //Công tắc trình soạn thảo
+      editor: '', //Đối tượng trình soạn thảo hiện tại
       editorIndex: [],
       title: '',
       editId: 0,
@@ -256,7 +256,7 @@ export default {
   },
   beforeDestroy() {
     if (this.source) {
-      this.source.close(); //关闭EventSource
+      this.source.close(); //Đóng EventSource
     }
   },
   methods: {
@@ -283,26 +283,26 @@ export default {
     buildCode() {
       this.buildModals = true;
       if (typeof EventSource !== 'undefined') {
-        //支持eventSource
+        //Hỗ trợ eventSource
         var postURL = Setting.apiBaseURL + '/system/crud/npm?token=' + getCookies('token');
         this.source = new EventSource(postURL);
-        let self = this; //因EventSource中this的指向变了，所以要提前存储一下
+        let self = this; //Vì this trong EventSource bị đổi hướng tham chiếu, nên cần lưu trước
         this.source.onopen = function (res) {};
         this.source.onmessage = function (data) {};
         this.source.onerror = function (err) {
-          //链接失败后EventSource会每隔三秒左右重新发起链接
+          //Sau khi kết nối thất bại, EventSource sẽ tự kết nối lại mỗi khoảng 3 giây
         };
       } else {
-        console.log('暂不支持EventSource');
+        console.log('Chưa hỗ trợ EventSource');
       }
     },
-    // 跳转到组合数据列表页面
+    // Chuyển đến trang danh sách dữ liệu tổ hợp
     goList(row) {
       this.$router.push({
         path: this.$routeProStr + '/system/config/system_group/list/' + row.id,
       });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       crudList(this.formValidate)
@@ -317,18 +317,18 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.formValidate.page = 1;
       this.getList();
     },
-    // 点击添加
+    // nhấn để thêm
     groupAdd() {
       this.$router.push({
         name: 'system_code_generation',
       });
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -347,10 +347,10 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 编辑
+    // Sửa
     edit(row) {
       this.spinShow = true;
-      // 创建代码容器
+      // Tạo container code
       this.title = row.name;
       this.$nextTick((e) => {
         this.openfile(row.id, false);
@@ -364,7 +364,7 @@ export default {
         },
       });
     },
-    //打开文件
+    //Mở file
     openfile(id) {
       try {
         this.editId = id;
@@ -386,7 +386,7 @@ export default {
               that.code = data.content;
               this.initEditor(index, data.content);
               this.$nextTick((e) => {
-                // 保存相对信息
+                // Lưu thông tin liên quan
                 that.editorList[index].path = data.path;
                 that.editorList[index].oldCode = that.content;
                 that.editorIndex[index].title = data.name;
@@ -404,7 +404,7 @@ export default {
       }
     },
     /**
-     * 窗口最大化
+     * Tối đa hóa cửa sổ
      */
     winChanges() {
       if (this.className) {
@@ -414,27 +414,27 @@ export default {
       }
     },
     /**
-     * 初始化编辑器
+     * Khởi tạo trình soạn thảo
      */
     initEditor(index, conetnt) {
       try {
         let that = this;
         that.$nextTick(() => {
-          // 初始化编辑器，确保dom已经渲染
+          // Khởi tạo trình soạn thảo, đảm bảo dom đã được render
           that.editor = monaco.editor.create(document.getElementById('container_' + index), {
-            value: conetnt, //编辑器初始显示文字
-            language: 'sql', //语言支持自行查阅demo
-            automaticLayout: true, //自动布局
-            theme: 'vs', //官方自带三种主题vs, hc-black, or vs-dark
-            foldingStrategy: 'indentation', // 代码可分小段折叠
-            overviewRulerBorder: false, // 不要滚动条的边框
+            value: conetnt, //Văn bản hiển thị ban đầu của trình soạn thảo
+            language: 'sql', //Hỗ trợ ngôn ngữ, tự tham khảo demo
+            automaticLayout: true, //Tự động bố cục
+            theme: 'vs', //Chính thức có sẵn 3 chủ đề vs, hc-black, or vs-dark
+            foldingStrategy: 'indentation', // Code có thể gập theo từng đoạn nhỏ
+            overviewRulerBorder: false, // Không cần viền thanh cuộn
             scrollbar: {
-              // 滚动条设置
-              verticalScrollbarSize: 4, // 竖滚动条
-              horizontalScrollbarSize: 10, // 横滚动条
+              // Thiết lập thanh cuộn
+              verticalScrollbarSize: 4, // Thanh cuộn dọc
+              horizontalScrollbarSize: 10, // Thanh cuộn ngang
             },
-            autoIndent: true, // 自动布局
-            tabSize: 4, // tab缩进长度
+            autoIndent: true, // Tự động bố cục
+            tabSize: 4, // Độ dài thụt lề tab
             autoClosingOvertype: 'always',
             readOnly: false,
           });
@@ -451,7 +451,7 @@ export default {
     },
 
     /**
-     * 处理接口回调
+     * Xử lý callback API
      * @param {Object} res
      */
     catchFun(res) {
@@ -464,26 +464,26 @@ export default {
           this.loading = false;
         }
       } else {
-        // this.$message.error('文件编码不被兼容，无法正确读取文件!');
+        // this.$message.error('Bảng mã file không tương thích, không thể đọc file đúng cách!');
       }
-      //关闭蒙版层
+      //Đóng lớp phủ
       if (this.spinShow) this.spinShow = false;
-      // 关闭文件列表展示
+      // Đóng hiển thị danh sách file
       if (this.loading) this.loading = false;
     },
-    //编辑器状态变化
+    //Trạng thái trình soạn thảo thay đổi
     editModalChange() {
       let that = this;
       that.editorList.forEach(function (value, index) {
-        // 销毁当前编辑器
+        // Hủy trình soạn thảo hiện tại
         that.editorList[index].editor.dispose();
         that.editorList[index].editor = null;
       });
-      // 初始话数据
-      that.modals = false; //编辑器开关
-      that.editor = ''; //当前编辑器对象
+      // Khởi tạo dữ liệu
+      that.modals = false; //Công tắc trình soạn thảo
+      that.editor = ''; //Đối tượng trình soạn thảo hiện tại
       that.editorIndex = [
-        //选项卡数组
+        //Mảng tab
         {
           tab: true,
           index: '0',
@@ -491,31 +491,31 @@ export default {
           icon: '',
         },
       ];
-      that.editorList = []; //编辑器数组
-      that.indexEditor = '0'; //当前编辑器索引
-      that.code = ''; //当前文件打开时的内容
-      that.contextData = null; //左侧导航右键点击是产生的数据对象
+      that.editorList = []; //Mảng trình soạn thảo
+      that.indexEditor = '0'; //Chỉ số trình soạn thảo hiện tại
+      that.code = ''; //Nội dung khi file hiện tại được mở
+      that.contextData = null; //Đối tượng dữ liệu được tạo ra khi nhấp chuột phải vào điều hướng bên trái
     },
     /**
-     * 切换选项卡
+     * Chuyển đổi tab
      * @param {Object} index
      */
     toggleEditor(index) {
       index = Number(index);
-      this.code = this.editorList[index].oldCode; //设置文件打开时的代码
-      this.editor = this.editorList[index].editor; //设置编辑器实例
+      this.code = this.editorList[index].oldCode; //Thiết lập code khi file được mở
+      this.editor = this.editorList[index].editor; //Thiết lập instance trình soạn thảo
     },
     handleTabRemove(index) {
       let that = this;
-      // 关闭选项卡
-      that.editorIndex[index].tab = false; // 关闭选项卡
+      // Đóng tab
+      that.editorIndex[index].tab = false; // Đóng tab
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-// 自定义方法缩小
+// Phương thức tùy chỉnh để thu nhỏ
 ::v-deep .diy-fullscreen {
   overflow: hidden;
 
@@ -600,12 +600,12 @@ export default {
   background: red !important;
 }
 
-// 导航栏右键样式 无效
+// Kiểu chuột phải thanh điều hướng, không hiệu lực
 .file-left ::v-deep .ivu-select-dropdown.ivu-dropdown-transfer .ivu-dropdown-menu .ivu-dropdown-item:hover {
   background-color: #e5e5e5 !important;
 }
 
-// 选项卡头部
+// Phần đầu tab
 ::v-deep .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-nav-container {
   background-color: #fff;
 }

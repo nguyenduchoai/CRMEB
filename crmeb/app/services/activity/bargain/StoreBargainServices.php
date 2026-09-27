@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -38,14 +38,14 @@ use Guzzle\Http\EntityBody;
  *
  * Class StoreBargainServices
  * @package app\services\activity
- * @method get(int $id, ?array $field) 获取一条数据
+ * @method get(int $id, ?array $field) Lấy một dòng dữ liệu
  * @method getBargainIdsArray(array $ids, array $field)
  * @method sum(array $where, string $field)
  * @method update(int $id, array $data)
  * @method addBargain(int $id, string $field)
  * @method value(array $where, string $field)
  * @method validWhere()
- * @method getList(array $where, int $page = 0, int $limit = 0) 获取砍价列表
+ * @method getList(array $where, int $page = 0, int $limit = 0) Lấy danh sách săn giảm giá
  */
 class StoreBargainServices extends BaseServices
 {
@@ -60,7 +60,7 @@ class StoreBargainServices extends BaseServices
     }
 
     /**
-     * 判断砍价商品是否开启
+     * Kiểm tra sản phẩm săn giảm giá có mở hay không
      * @param int $bargainId
      * @return int
      */
@@ -77,7 +77,7 @@ class StoreBargainServices extends BaseServices
     }
 
     /**
-     * 获取后台列表
+     * Lấy danh sách ở trang quản trị
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -102,22 +102,22 @@ class StoreBargainServices extends BaseServices
         $countHelpAll = $storeBargainUserHelpServices->getHelpAllCount([['bargain_id', 'in', $ids]]);
         $stopIds = [];
         foreach ($list as &$item) {
-            $item['count_people_all'] = $countAll[$item['id']] ?? 0;//参与人数
-            $item['count_people_help'] = $countHelpAll[$item['id']] ?? 0;//帮忙砍价人数
-            $item['count_people_success'] = $countSuccess[$item['id']] ?? 0;//砍价成功人数
+            $item['count_people_all'] = $countAll[$item['id']] ?? 0;//Số người tham gia
+            $item['count_people_help'] = $countHelpAll[$item['id']] ?? 0;//Số người giúp giảm giá
+            $item['count_people_success'] = $countSuccess[$item['id']] ?? 0;//Số người săn giảm giá thành công
             $item['stop_status'] = $item['stop_time'] < time() ? 1 : 0;
             if ($item['status']) {
                 if ($item['start_time'] > time()) {
-                    $item['start_name'] = '未开始';
+                    $item['start_name'] = 'Chưa bắt đầu';
                 } else if ($item['stop_time'] < time()) {
-                    $item['start_name'] = '已结束';
+                    $item['start_name'] = 'Đã kết thúc';
                     $item['status'] = 0;
                     $stopIds[] = $item['id'];
                 } else if ($item['stop_time'] > time() && $item['start_time'] < time()) {
-                    $item['start_name'] = '进行中';
+                    $item['start_name'] = 'Đang diễn ra';
                 }
             } else {
-                $item['start_name'] = '已结束';
+                $item['start_name'] = 'Đã kết thúc';
             }
             $item['start_time'] = $item['start_time'] ? date('Y-m-d H:i:s', $item['start_time']) : '';
             $item['stop_time'] = $item['stop_time'] ? date('Y-m-d 23:59:59', $item['stop_time']) : '';
@@ -129,7 +129,7 @@ class StoreBargainServices extends BaseServices
     }
 
     /**
-     * 保存数据
+     * Lưu dữ liệu
      * @param int $id
      * @param array $data
      */
@@ -148,13 +148,13 @@ class StoreBargainServices extends BaseServices
         $data['price'] = $detail[0]['price'];
         $data['min_price'] = $detail[0]['min_price'];
         $data['logistics'] = implode(',', $data['logistics']);
-        if ($detail[0]['min_price'] < 0 || $detail[0]['price'] <= 0 || $detail[0]['min_price'] === '' || $detail[0]['price'] === '') throw new AdminException('金额不能小于0');
-        if ($detail[0]['min_price'] >= $detail[0]['price']) throw new AdminException('砍价最低价不能大于或等于起始金额');
-        if ($detail[0]['quota'] > $detail[0]['stock']) throw new AdminException('限量不能超过商品库存');
+        if ($detail[0]['min_price'] < 0 || $detail[0]['price'] <= 0 || $detail[0]['min_price'] === '' || $detail[0]['price'] === '') throw new AdminException('Số tiền không được nhỏ hơn 0');
+        if ($detail[0]['min_price'] >= $detail[0]['price']) throw new AdminException('Giá thấp nhất khi săn giảm giá không được lớn hơn hoặc bằng giá khởi điểm');
+        if ($detail[0]['quota'] > $detail[0]['stock']) throw new AdminException('Số lượng giới hạn không được vượt quá tồn kho sản phẩm');
 
-        //按照能砍掉的金额计算最大设置人数，并判断填写的砍价人数是否大于最大设置人数
+        //Tính số người tối đa được đặt theo số tiền có thể giảm, và kiểm tra số người săn giảm giá nhập vào có lớn hơn số người tối đa đã đặt không
         $bNum = bcmul(bcsub((string)$data['price'], (string)$data['min_price'], 2), '100');
-        if ($data['people_num'] > $bNum) throw new AdminException('砍价人数不能大于{:num}人', ['num' => $bNum]);
+        if ($data['people_num'] > $bNum) throw new AdminException('Số người săn giảm giá không được lớn hơn {:num} người', ['num' => $bNum]);
 
         unset($data['section_time'], $data['description'], $data['attrs'], $data['items'], $detail[0]['min_price'], $detail[0]['_index'], $detail[0]['_rowKey']);
         /** @var StoreDescriptionServices $storeDescriptionServices */
@@ -169,23 +169,23 @@ class StoreBargainServices extends BaseServices
                 $storeDescriptionServices->saveDescription((int)$id, $description, 2);
                 $skuList = $storeProductServices->validateProductAttr($items, $detail, (int)$id, 2);
                 $valueGroup = $storeProductAttrServices->saveProductAttr($skuList, (int)$id, 2);
-                if (!$res) throw new AdminException('修改失败');
+                if (!$res) throw new AdminException('Sửa thất bại');
             } else {
                 if (!$storeProductServices->getOne(['is_del' => 0, 'id' => $data['product_id']])) {
-                    throw new AdminException('无法添加回收站商品');
+                    throw new AdminException('Không thể thêm sản phẩm trong thùng rác');
                 }
                 $data['add_time'] = time();
                 $res = $this->dao->save($data);
                 $storeDescriptionServices->saveDescription((int)$res->id, $description, 2);
                 $skuList = $storeProductServices->validateProductAttr($items, $detail, (int)$res->id, 2, 1, true);
                 $valueGroup = $storeProductAttrServices->saveProductAttr($skuList, (int)$res->id, 2);
-                if (!$res) throw new AdminException('添加失败');
+                if (!$res) throw new AdminException('Thêm thất bại');
             }
         });
     }
 
     /**
-     * 获取砍价详情
+     * Lấy chi tiết săn giảm giá
      * @param int $id
      * @return array|\think\Model|null
      */
@@ -222,7 +222,7 @@ class StoreBargainServices extends BaseServices
     }
 
     /**
-     * 获取规格
+     * Lấy phân loại
      * @param int $id
      * @param int $pid
      * @return mixed
@@ -269,23 +269,23 @@ class StoreBargainServices extends BaseServices
         foreach ($items as $key => $item) {
             $header[] = ['title' => $item['value'], 'key' => 'value' . ($key + 1), 'align' => 'center', 'minWidth' => 80];
         }
-        $header[] = ['title' => '图片', 'slot' => 'pic', 'align' => 'center', 'minWidth' => 120];
-        $header[] = ['title' => '砍价起始金额', 'slot' => 'price', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '砍价最低价', 'slot' => 'min_price', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '成本价', 'key' => 'cost', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '日常售价', 'key' => 'r_price', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '库存', 'key' => 'stock', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '限量', 'slot' => 'quota', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '重量(KG)', 'key' => 'weight', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '体积(m³)', 'key' => 'volume', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '商品编码', 'key' => 'bar_code', 'align' => 'center', 'minWidth' => 80];
-        $header[] = ['title' => '条形码', 'key' => 'bar_code_number', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Hình ảnh', 'slot' => 'pic', 'align' => 'center', 'minWidth' => 120];
+        $header[] = ['title' => 'Giá khởi điểm săn giảm giá', 'slot' => 'price', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Giá thấp nhất săn giảm giá', 'slot' => 'min_price', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Giá vốn', 'key' => 'cost', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Giá bán thường ngày', 'key' => 'r_price', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Tồn kho', 'key' => 'stock', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Giới hạn số lượng', 'slot' => 'quota', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Trọng lượng (KG)', 'key' => 'weight', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Thể tích (m³)', 'key' => 'volume', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Mã sản phẩm', 'key' => 'bar_code', 'align' => 'center', 'minWidth' => 80];
+        $header[] = ['title' => 'Mã vạch', 'key' => 'bar_code_number', 'align' => 'center', 'minWidth' => 80];
         $attrs['header'] = $header;
         return $attrs;
     }
 
     /**
-     * 获取规格
+     * Lấy phân loại
      * @param $attr
      * @param $id
      * @param $type
@@ -333,10 +333,10 @@ class StoreBargainServices extends BaseServices
     }
 
 //    /**
-//     * TODO 获取砍价表ID
-//     * @param int $bargainId $bargainId 砍价商品
-//     * @param int $bargainUserUid $bargainUserUid  开启砍价用户编号
-//     * @param int $status $status  砍价状态 1参与中 2 活动结束参与失败 3活动结束参与成功
+//     * TODO Lấy ID bảng săn giảm giá
+//     * @param int $bargainId $bargainId sản phẩm săn giảm giá
+//     * @param int $bargainUserUid $bargainUserUid  mã người dùng mở săn giảm giá
+//     * @param int $status $status  trạng thái săn giảm giá: 1 đang tham gia, 2 hoạt động kết thúc tham gia thất bại, 3 hoạt động kết thúc tham gia thành công
 //     * @return mixed
 //     */
 //    public function getBargainUserTableId($bargainId = 0, $bargainUserUid = 0)
@@ -345,8 +345,8 @@ class StoreBargainServices extends BaseServices
 //    }
 
 //    /**
-//     * TODO 获取用户可以砍掉的价格
-//     * @param $id $id 用户参与砍价表编号
+//     * TODO Lấy số tiền người dùng có thể giảm được
+//     * @param $id $id mã bản ghi người dùng tham gia săn giảm giá
 //     * @return float
 //     * @throws \think\db\exception\DataNotFoundException
 //     * @throws \think\db\exception\ModelNotFoundException
@@ -359,8 +359,8 @@ class StoreBargainServices extends BaseServices
 //    }
 
 //    /**
-//     * TODO 获取用户砍掉的价格
-//     * @param int $id $id 用户参与砍价表编号
+//     * TODO Lấy số tiền người dùng đã giảm được
+//     * @param int $id $id mã bản ghi người dùng tham gia săn giảm giá
 //     * @return float
 //     */
 //    public function getBargainUserPrice($id = 0)
@@ -369,7 +369,7 @@ class StoreBargainServices extends BaseServices
 //    }
 
 //    /**
-//     * 获取一条砍价商品
+//     * Lấy một sản phẩm săn giảm giá
 //     * @param int $bargainId
 //     * @param string $field
 //     * @return array
@@ -383,7 +383,7 @@ class StoreBargainServices extends BaseServices
 //    }
 
     /**
-     * 砍价列表
+     * Danh sách săn giảm giá
      * @return array
      */
     public function getBargainList()
@@ -402,7 +402,7 @@ class StoreBargainServices extends BaseServices
     }
 
     /**
-     * 后台页面设计获取砍价列表
+     * Trang thiết kế giao diện ở trang quản trị lấy danh sách săn giảm giá
      * @param $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -435,7 +435,7 @@ class StoreBargainServices extends BaseServices
     }
 
     /**
-     * 首页砍价商品
+     * Sản phẩm săn giảm giá trang chủ
      * @param $where
      * @return array
      */
@@ -454,7 +454,7 @@ class StoreBargainServices extends BaseServices
     }
 
     /**
-     * 前端获取砍价详情
+     * Lấy chi tiết săn giảm giá ở phía người dùng
      * @param Request $request
      * @param int $id
      * @param int $bargainUid
@@ -472,10 +472,10 @@ class StoreBargainServices extends BaseServices
         /** @var StoreBargainUserServices $bargainUserService */
         $bargainUserService = app()->make(StoreBargainUserServices::class);
 
-        //获取砍价商品信息
+        //Lấy thông tin sản phẩm săn giảm giá
         $bargain = $this->dao->getOne(['id' => $id], '*', ['description']);
-        if (!$bargain) throw new ApiException('砍价商品不存在');
-        if ($bargain['stop_time'] < time()) throw new ApiException('砍价已结束');
+        if (!$bargain) throw new ApiException('Sản phẩm săn giảm giá không tồn tại');
+        if ($bargain['stop_time'] < time()) throw new ApiException('Săn giảm giá đã kết thúc');
         list($productAttr, $productValue) = $storeProductAttrServices->getProductAttrDetail($id, $request->uid(), 0, 2, $bargain['product_id']);
         foreach ($productValue as $v) {
             $bargain['attr'] = $v;
@@ -485,63 +485,63 @@ class StoreBargainServices extends BaseServices
         $bargain['small_image'] = $bargain['image'];
         $data['bargain'] = $bargain;
 
-        //写入查看和分享数据
+        //Ghi dữ liệu xem và chia sẻ
         $this->dao->addBargain($id, 'look');
 
-        //用户数据
+        //Dữ liệu người dùng
         $user = $request->user();
         $data['userInfo']['uid'] = $user['uid'];
         $data['userInfo']['nickname'] = $user['nickname'];
         $data['userInfo']['avatar'] = $user['avatar'];
 
-        //砍价数据
+        //Dữ liệu săn giảm giá
         $userBargainInfo = $bargainUserService->helpCount($request, $id, $bargainUid);
-        //用户已经生成砍价订单的总数
+        //Tổng số đơn hàng săn giảm giá người dùng đã tạo
         $userBargainInfo['bargainOrderCount'] = $orderService->count(['bargain_id' => $id, 'uid' => $user['uid']]);
-        //用户砍价的总数
+        //Tổng số lần săn giảm giá của người dùng
         $userBargainInfo['bargainCount'] = $bargainUserService->count(['bargain_id' => $id, 'uid' => $user['uid'], 'is_del' => 0]);
-        //判断砍价状态
-        if (($userBargainInfo['bargainCount'] == 0 || $userBargainInfo['bargainCount'] == $userBargainInfo['bargainOrderCount']) //没有发起过砍价或者发起的砍价数量等于对应砍价商品的订单数量
-            && $bargain['people_num'] > $userBargainInfo['bargainCount'] //商品的可发起砍价数量大于已经发起过的砍价数量
-            && $userBargainInfo['price'] > 0 //剩余金额大于0
-            && $request->uid() == $bargainUid) { //是自己砍价
-            $userBargainInfo['bargainType'] = 1; //用户发起砍价
-        } elseif ($userBargainInfo['bargainCount'] > $userBargainInfo['bargainOrderCount'] //发起的砍价数量大于生成的订单数量
-            && $userBargainInfo['price'] > 0 //剩余金额大于0
-            && $request->uid() == $bargainUid) { //是自己砍价
-            $userBargainInfo['bargainType'] = 2; //发送给好友邀请砍价
-        } elseif ($userBargainInfo['userBargainStatus'] //用户可以砍价
-            && $userBargainInfo['price'] > 0 //剩余金额大于0
-            && $request->uid() != $bargainUid) { //不是自己的砍价
-            $userBargainInfo['bargainType'] = 3; //帮朋友砍价
-        } elseif ($userBargainInfo['userBargainStatus'] //用户可以砍价
-            && $userBargainInfo['price'] == 0 //剩余金额大于0
-            && $request->uid() != $bargainUid) { //不是自己的砍价
-            $userBargainInfo['bargainType'] = 4; //好友已经完成
-        } elseif (!$userBargainInfo['userBargainStatus'] //用户不可以砍价
-            && $request->uid() != $bargainUid) { //不是自己的砍价
-            $userBargainInfo['bargainType'] = 5; //已经帮好友砍价
-        } elseif ($userBargainInfo['price'] == 0 //剩余金额等于0
-            && $request->uid() == $bargainUid //是自己砍价
-            && $userBargainInfo['status'] != 3) { //未生成订单
-            $userBargainInfo['bargainType'] = 6; //立即支付
+        //Kiểm tra trạng thái săn giảm giá
+        if (($userBargainInfo['bargainCount'] == 0 || $userBargainInfo['bargainCount'] == $userBargainInfo['bargainOrderCount']) //Chưa từng khởi tạo săn giảm giá, hoặc số lần khởi tạo bằng số đơn hàng của sản phẩm săn giảm giá tương ứng
+            && $bargain['people_num'] > $userBargainInfo['bargainCount'] //Số lần được khởi tạo săn giảm giá của sản phẩm lớn hơn số lần đã khởi tạo
+            && $userBargainInfo['price'] > 0 //Số tiền còn lại lớn hơn 0
+            && $request->uid() == $bargainUid) { //Là săn giảm giá của chính mình
+            $userBargainInfo['bargainType'] = 1; //Người dùng khởi tạo săn giảm giá
+        } elseif ($userBargainInfo['bargainCount'] > $userBargainInfo['bargainOrderCount'] //Số lần khởi tạo săn giảm giá lớn hơn số đơn hàng đã tạo
+            && $userBargainInfo['price'] > 0 //Số tiền còn lại lớn hơn 0
+            && $request->uid() == $bargainUid) { //Là săn giảm giá của chính mình
+            $userBargainInfo['bargainType'] = 2; //Gửi cho bạn bè để mời giúp giảm giá
+        } elseif ($userBargainInfo['userBargainStatus'] //Người dùng có thể săn giảm giá
+            && $userBargainInfo['price'] > 0 //Số tiền còn lại lớn hơn 0
+            && $request->uid() != $bargainUid) { //Không phải săn giảm giá của chính mình
+            $userBargainInfo['bargainType'] = 3; //Giúp bạn giảm giá
+        } elseif ($userBargainInfo['userBargainStatus'] //Người dùng có thể săn giảm giá
+            && $userBargainInfo['price'] == 0 //Số tiền còn lại lớn hơn 0
+            && $request->uid() != $bargainUid) { //Không phải săn giảm giá của chính mình
+            $userBargainInfo['bargainType'] = 4; //Bạn bè đã hoàn thành
+        } elseif (!$userBargainInfo['userBargainStatus'] //Người dùng không thể săn giảm giá
+            && $request->uid() != $bargainUid) { //Không phải săn giảm giá của chính mình
+            $userBargainInfo['bargainType'] = 5; //Đã giúp bạn giảm giá
+        } elseif ($userBargainInfo['price'] == 0 //Số tiền còn lại bằng 0
+            && $request->uid() == $bargainUid //Là săn giảm giá của chính mình
+            && $userBargainInfo['status'] != 3) { //Chưa tạo đơn hàng
+            $userBargainInfo['bargainType'] = 6; //Thanh toán ngay
         } else {
-            $userBargainInfo['bargainType'] = 1; //立即支付
+            $userBargainInfo['bargainType'] = 1; //Thanh toán ngay
         }
         $data['userBargainInfo'] = $userBargainInfo;
         $data['bargain']['price'] = bcsub($data['bargain']['price'], (string)$userBargainInfo['alreadyPrice'], 2);
         $data['bargain']['product_is_show'] = app()->make(StoreProductServices::class)->value($data['bargain']['product_id'], 'is_show');
 
-        //用户访问事件
+        //Sự kiện người dùng truy cập
         event('UserVisitListener', [$user['uid'], $id, 'bargain', $bargain['product_id'], 'view']);
 
-        //浏览记录
+        //Lịch sử xem
         ProductLogJob::dispatch(['visit', ['uid' => $user['uid'], 'product_id' => $bargain['product_id']]]);
         return $data;
     }
 
     /**
-     * 验证砍价是否能支付
+     * Kiểm tra săn giảm giá có thể thanh toán hay không
      * @param int $bargainId
      * @param int $uid
      */
@@ -551,34 +551,34 @@ class StoreBargainServices extends BaseServices
         $bargainUserServices = app()->make(StoreBargainUserServices::class);
         $bargainUserInfo = $bargainUserServices->getOne(['uid' => $uid, 'bargain_id' => $bargainId, 'status' => 1, 'is_del' => 0]);
         if (!$bargainUserInfo)
-            throw new ApiException('砍价失败');
+            throw new ApiException('Săn giảm giá thất bại');
         $bargainUserTableId = $bargainUserInfo['id'];
         if ($bargainUserInfo['bargain_price_min'] < bcsub((string)$bargainUserInfo['bargain_price'], (string)$bargainUserInfo['price'], 2)) {
-            throw new ApiException('砍价未成功');
+            throw new ApiException('Săn giảm giá chưa thành công');
         }
         if ($bargainUserInfo['status'] == 3)
-            throw new ApiException('砍价已支付');
+            throw new ApiException('Lượt săn giảm giá đã được thanh toán');
         /** @var StoreProductAttrValueServices $attrValueServices */
         $attrValueServices = app()->make(StoreProductAttrValueServices::class);
         $res = $attrValueServices->getOne(['product_id' => $bargainId, 'type' => 2]);
         if (!$this->validBargain($bargainId) || !$res) {
-            throw new ApiException('该商品已下架或删除');
+            throw new ApiException('Sản phẩm này đã ngừng bán hoặc bị xóa');
         }
         $StoreBargainInfo = $this->dao->get($bargainId);
         if (1 > $res['quota']) {
-            throw new ApiException('该商品库存不足');
+            throw new ApiException('Sản phẩm này không đủ tồn kho');
         }
         $product_stock = $attrValueServices->value(['product_id' => $StoreBargainInfo['product_id'], 'suk' => $res['suk'], 'type' => 0], 'stock');
         if ($product_stock < 1) {
-            throw new ApiException('该商品库存不足');
+            throw new ApiException('Sản phẩm này không đủ tồn kho');
         }
-        //修改砍价状态
+        //Sửa trạng thái săn giảm giá
         $this->setBargainUserStatus($bargainId, $uid, $bargainUserTableId);
         return true;
     }
 
     /**
-     * 修改砍价状态
+     * Sửa trạng thái săn giảm giá
      * @param int $bargainId
      * @param int $uid
      * @param int $bargainUserTableId
@@ -602,7 +602,7 @@ class StoreBargainServices extends BaseServices
     }
 
     /**
-     * 发起砍价
+     * Tạo lượt săn giảm giá
      * @param int $uid
      * @param int $bargainId
      * @return string
@@ -612,7 +612,7 @@ class StoreBargainServices extends BaseServices
      */
     public function setBargain(int $uid, int $bargainId)
     {
-        if (!$bargainId) throw new ApiException('非法操作');
+        if (!$bargainId) throw new ApiException('Thao tác không hợp lệ');
         $bargainInfo = $this->dao->getOne([
             ['is_del', '=', 0],
             ['status', '=', 1],
@@ -620,18 +620,18 @@ class StoreBargainServices extends BaseServices
             ['stop_time', '>', time()],
             ['id', '=', $bargainId],
         ]);
-        if (!$bargainInfo) throw new ApiException('砍价已结束');
+        if (!$bargainInfo) throw new ApiException('Săn giảm giá đã kết thúc');
         $bargainInfo = $bargainInfo->toArray();
         /** @var StoreBargainUserServices $bargainUserService */
         $bargainUserService = app()->make(StoreBargainUserServices::class);
         $count = $bargainUserService->count(['bargain_id' => $bargainId, 'uid' => $uid, 'is_del' => 0, 'status' => 1]);
         if ($count === false) {
-            throw new ApiException('非法操作');
+            throw new ApiException('Thao tác không hợp lệ');
         } else {
             /** @var StoreBargainUserHelpServices $bargainUserHelpService */
             $bargainUserHelpService = app()->make(StoreBargainUserHelpServices::class);
             $count = $bargainUserService->count(['uid' => $uid, 'bargain_id' => $bargainId, 'is_del' => 0]);
-            if ($count >= $bargainInfo['num']) throw new ApiException('您不能再发起此件商品砍价');
+            if ($count >= $bargainInfo['num']) throw new ApiException('Bạn không thể tạo thêm lượt săn giảm giá cho sản phẩm này');
             return $this->transaction(function () use ($bargainUserService, $bargainUserHelpService, $bargainId, $uid, $bargainInfo) {
                 $bargainUserInfo = $bargainUserService->setBargain($bargainId, $uid, $bargainInfo);
                 $price = $bargainUserHelpService->setBargainRecord($uid, $bargainUserInfo->toArray(), $bargainInfo);
@@ -641,7 +641,7 @@ class StoreBargainServices extends BaseServices
     }
 
     /**
-     * 参与砍价
+     * Tham gia săn giảm giá
      * @param int $uid
      * @param int $bargainId
      * @param int $bargainUserUid
@@ -652,7 +652,7 @@ class StoreBargainServices extends BaseServices
      */
     public function setHelpBargain(int $uid, int $bargainId, int $bargainUserUid)
     {
-        if (!$bargainId || !$bargainUserUid) throw new ApiException('参数错误');
+        if (!$bargainId || !$bargainUserUid) throw new ApiException('Tham số không hợp lệ');
         $bargainInfo = $this->dao->getOne([
             ['is_del', '=', 0],
             ['status', '=', 1],
@@ -660,17 +660,17 @@ class StoreBargainServices extends BaseServices
             ['stop_time', '>', time()],
             ['id', '=', $bargainId],
         ]);
-        if (!$bargainInfo) throw new ApiException('砍价已结束');
+        if (!$bargainInfo) throw new ApiException('Săn giảm giá đã kết thúc');
         $bargainInfo = $bargainInfo->toArray();
         /** @var StoreBargainUserHelpServices $userHelpService */
         $userHelpService = app()->make(StoreBargainUserHelpServices::class);
         /** @var StoreBargainUserServices $bargainUserService */
         $bargainUserService = app()->make(StoreBargainUserServices::class);
         $bargainUserTableId = $bargainUserService->getBargainUserTableId((int)$bargainId, (int)$bargainUserUid);
-        if (!$bargainUserTableId) throw new ApiException('该分享未开启砍价');
+        if (!$bargainUserTableId) throw new ApiException('Lượt chia sẻ này chưa bắt đầu săn giảm giá');
         $bargainUserInfo = $bargainUserService->get($bargainUserTableId)->toArray();
         $count = $userHelpService->isBargainUserHelpCount($bargainId, $bargainUserTableId, $uid);
-        if (!$count) throw new ApiException('您已经帮砍过此砍价');
+        if (!$count) throw new ApiException('Bạn đã giúp giảm giá cho lượt săn này rồi');
         $price = $userHelpService->setBargainRecord($uid, $bargainUserInfo, $bargainInfo);
         if ($price) {
             if (!$bargainUserService->getSurplusPrice($bargainUserTableId, 1)) {
@@ -681,7 +681,7 @@ class StoreBargainServices extends BaseServices
     }
 
     /**
-     * 减库存加销量
+     * Giảm tồn kho, tăng lượt bán
      * @param int $num
      * @param int $bargainId
      * @param string $unique
@@ -693,29 +693,29 @@ class StoreBargainServices extends BaseServices
         if ($unique) {
             /** @var StoreProductAttrValueServices $skuValueServices */
             $skuValueServices = app()->make(StoreProductAttrValueServices::class);
-            //减去砍价商品sku的库存增加销量
+            //Giảm tồn kho sku sản phẩm săn giảm giá, tăng lượt bán
             $res = false !== $skuValueServices->decProductAttrStock($bargainId, $unique, $num, 2);
-            //减去砍价商品的库存和销量
+            //Giảm tồn kho và lượt bán sản phẩm săn giảm giá
             $res = $res && $this->dao->decStockIncSales(['id' => $bargainId, 'type' => 2], $num);
-            //减掉普通商品sku的库存加销量
+            //Giảm tồn kho sku sản phẩm thường, tăng lượt bán
             $suk = $skuValueServices->value(['unique' => $unique, 'product_id' => $bargainId], 'suk');
             $productUnique = $skuValueServices->value(['suk' => $suk, 'product_id' => $product_id, 'type' => 0], 'unique');
             if ($productUnique) {
                 $res = $res && $skuValueServices->decProductAttrStock($product_id, $productUnique, $num);
             }
         } else {
-            //减去砍价商品的库存和销量
+            //Giảm tồn kho và lượt bán sản phẩm săn giảm giá
             $res = false !== $this->dao->decStockIncSales(['id' => $bargainId, 'type' => 2], $num);
         }
         /** @var StoreProductServices $services */
         $services = app()->make(StoreProductServices::class);
-        //减掉普通商品的库存加销量
+        //Giảm tồn kho sản phẩm thường, tăng lượt bán
         $res = $res && $services->decProductStock($num, $product_id);
         return $res;
     }
 
     /**
-     * 减销量加库存
+     * Giảm lượt bán, tăng tồn kho
      * @param int $num
      * @param int $bargainId
      * @param string $unique
@@ -727,29 +727,29 @@ class StoreBargainServices extends BaseServices
         if ($unique) {
             /** @var StoreProductAttrValueServices $skuValueServices */
             $skuValueServices = app()->make(StoreProductAttrValueServices::class);
-            //减去砍价商品sku的销量,增加库存和限购数量
+            //Giảm lượt bán sku sản phẩm săn giảm giá, tăng tồn kho và số lượng mua tối đa
             $res = false !== $skuValueServices->incProductAttrStock($bargainId, $unique, $num, 2);
-            //减去砍价商品的销量,增加库存
+            //Giảm lượt bán sản phẩm săn giảm giá, tăng tồn kho
             $res = $res && $this->dao->incStockDecSales(['id' => $bargainId, 'type' => 2], $num);
-            //减掉普通商品sku的销量,增加库存
+            //Giảm lượt bán sku sản phẩm thường, tăng tồn kho
             $suk = $skuValueServices->value(['unique' => $unique, 'product_id' => $bargainId], 'suk');
             $productUnique = $skuValueServices->value(['suk' => $suk, 'product_id' => $product_id], 'unique');
             if ($productUnique) {
                 $res = $res && $skuValueServices->incProductAttrStock($product_id, $productUnique, $num);
             }
         } else {
-            //减去砍价商品的销量,增加库存
+            //Giảm lượt bán sản phẩm săn giảm giá, tăng tồn kho
             $res = false !== $this->dao->incStockDecSales(['id' => $bargainId, 'type' => 2], $num);
         }
         /** @var StoreProductServices $services */
         $services = app()->make(StoreProductServices::class);
-        //减掉普通商品的库存加销量
+        //Giảm tồn kho sản phẩm thường, tăng lượt bán
         $res = $res && $services->incProductStock($num, $product_id);
         return $res;
     }
 
     /**
-     * 砍价分享
+     * Chia sẻ săn giảm giá
      * @param $bargainId
      * @param $user
      * @return bool|string
@@ -761,33 +761,33 @@ class StoreBargainServices extends BaseServices
     {
         $storeBargainInfo = $this->dao->get($bargainId, ['title', 'image', 'price']);
         if (!$storeBargainInfo) {
-            throw new ApiException('砍价信息没有查到');
+            throw new ApiException('Không tìm thấy thông tin săn giảm giá');
         }
         /** @var StoreBargainUserServices $services */
         $services = app()->make(StoreBargainUserServices::class);
         $bargainUser = $services->get(['bargain_id' => $bargainId, 'uid' => $user['uid']], ['price', 'bargain_price_min']);
         if (!$bargainUser) {
-            throw new ApiException('用户砍价信息未查到');
+            throw new ApiException('Không tìm thấy thông tin săn giảm giá của người dùng');
         }
         try {
             $siteUrl = sys_config('site_url');
             $data['title'] = $storeBargainInfo['title'];
             $data['image'] = $storeBargainInfo['image'];
             $data['price'] = bcsub($storeBargainInfo['price'], $bargainUser['price'], 2);
-            $data['label'] = '已砍至';
+            $data['label'] = 'Đã giảm còn';
             $price = bcsub($storeBargainInfo['price'], $bargainUser['price'], 2);
-            $data['msg'] = '还差' . (bcsub($price, $bargainUser['bargain_price_min'], 2)) . '元即可砍价成功';
+            $data['msg'] = 'Còn thiếu' . (bcsub($price, $bargainUser['bargain_price_min'], 2)) . 'đ nữa là săn giảm giá thành công';
             /** @var SystemAttachmentServices $systemAttachmentServices */
             $systemAttachmentServices = app()->make(SystemAttachmentServices::class);
             if ($from == 'wechat') {
                 $name = $bargainId . '_' . $user['uid'] . '_' . $user['is_promoter'] . '_bargain_share_wap.jpg';
-                //公众号
+                //OA WeChat
                 $imageInfo = $systemAttachmentServices->getInfo(['name' => $name]);
                 if (!$imageInfo) {
-                    $codeUrl = set_http_type($siteUrl . '/pages/activity/goods_bargain_details/index?id=' . $bargainId . '&bargain=' . $user['uid'] . '&spread=' . $user['uid'], 1);//二维码链接
+                    $codeUrl = set_http_type($siteUrl . '/pages/activity/goods_bargain_details/index?id=' . $bargainId . '&bargain=' . $user['uid'] . '&spread=' . $user['uid'], 1);//Liên kết mã QR
                     $imageInfo = PosterServices::getQRCodePath($codeUrl, $name);
                     if (is_string($imageInfo)) {
-                        throw new ApiException('二维码生成失败');
+                        throw new ApiException('Tạo mã QR thất bại');
                     }
                     $systemAttachmentServices->save([
                         'name' => $imageInfo['name'],
@@ -807,7 +807,7 @@ class StoreBargainServices extends BaseServices
                 if ($imageInfo['image_type'] == 1) $data['url'] = $siteUrl . $url;
                 $posterImage = PosterServices::setShareMarketingPoster($data, 'wap/activity/bargain/poster');
                 if (!is_array($posterImage)) {
-                    throw new ApiException('生成海报失败');
+                    throw new ApiException('Tạo poster thất bại');
                 }
                 $systemAttachmentServices->save([
                     'name' => $posterImage['name'],
@@ -822,10 +822,10 @@ class StoreBargainServices extends BaseServices
                     'type' => 1
                 ]);
                 if ($posterImage['image_type'] == 1) $posterImage['dir'] = $siteUrl . $posterImage['dir'];
-                $wapPosterImage = set_http_type($posterImage['dir'], 1);//公众号推广海报
+                $wapPosterImage = set_http_type($posterImage['dir'], 1);//Poster giới thiệu OA WeChat
                 return $wapPosterImage;
             } else {
-                //小程序
+                //Mini Program
                 $name = $bargainId . '_' . $user['uid'] . '_' . $user['is_promoter'] . '_bargain_share_routine.jpg';
                 $imageInfo = $systemAttachmentServices->getInfo(['name' => $name]);
                 if (!$imageInfo) {
@@ -836,7 +836,7 @@ class StoreBargainServices extends BaseServices
                         $valueData .= '&spread=' . $user['uid'];
                     }
                     $res = MiniProgramService::appCodeUnlimitService($valueData, 'pages/activity/goods_bargain_details/index', 280);
-                    if (!$res) throw new ApiException('二维码生成失败');
+                    if (!$res) throw new ApiException('Tạo mã QR thất bại');
                     $uploadType = (int)sys_config('upload_type', 1);
                     $upload = UploadService::init();
                     $res = (string)EntityBody::factory($res);
@@ -848,7 +848,7 @@ class StoreBargainServices extends BaseServices
                     $imageInfo['image_type'] = $uploadType;
                     if ($imageInfo['image_type'] == 1) $remoteImage = PosterServices::remoteImage($siteUrl . $imageInfo['dir']);
                     else $remoteImage = PosterServices::remoteImage($imageInfo['dir']);
-                    if (!$remoteImage['status']) throw new ApiException('二维码生成失败');
+                    if (!$remoteImage['status']) throw new ApiException('Tạo mã QR thất bại');
                     $systemAttachmentServices->save([
                         'name' => $imageInfo['name'],
                         'att_dir' => $imageInfo['dir'],
@@ -867,7 +867,7 @@ class StoreBargainServices extends BaseServices
                 if ($imageInfo['image_type'] == 1)
                     $data['url'] = $siteUrl . $url;
                 $posterImage = PosterServices::setShareMarketingPoster($data, 'routine/activity/bargain/poster');
-                if (!is_array($posterImage)) throw new ApiException('生成海报失败');
+                if (!is_array($posterImage)) throw new ApiException('Tạo poster thất bại');
                 $systemAttachmentServices->save([
                     'name' => $posterImage['name'],
                     'att_dir' => $posterImage['dir'],
@@ -881,7 +881,7 @@ class StoreBargainServices extends BaseServices
                     'type' => 1
                 ]);
                 if ($posterImage['image_type'] == 1) $posterImage['dir'] = $siteUrl . $posterImage['dir'];
-                $routinePosterImage = set_http_type($posterImage['dir'], 0);//小程序推广海报
+                $routinePosterImage = set_http_type($posterImage['dir'], 0);//Poster giới thiệu Mini Program
                 return $routinePosterImage;
             }
         } catch (\Exception $e) {
@@ -890,7 +890,7 @@ class StoreBargainServices extends BaseServices
     }
 
     /**
-     * 获取砍价海报信息
+     * Lấy thông tin poster săn giảm giá
      * @param int $bargainId
      * @param $user
      * @return array
@@ -902,27 +902,27 @@ class StoreBargainServices extends BaseServices
     {
         $storeBargainInfo = $this->dao->get($bargainId, ['title', 'image', 'price']);
         if (!$storeBargainInfo) {
-            throw new ApiException('砍价信息没有查到');
+            throw new ApiException('Không tìm thấy thông tin săn giảm giá');
         }
         /** @var StoreBargainUserServices $services */
         $services = app()->make(StoreBargainUserServices::class);
         $bargainUser = $services->get(['bargain_id' => $bargainId, 'uid' => $user['uid'], 'status' => 1], ['price', 'bargain_price_min']);
         if (!$bargainUser) {
-            throw new ApiException('用户砍价信息未查到');
+            throw new ApiException('Không tìm thấy thông tin săn giảm giá của người dùng');
         }
         $data['url'] = '';
         $data['title'] = $storeBargainInfo['title'];
         $data['image'] = $storeBargainInfo['image'];
         $data['price'] = bcsub($storeBargainInfo['price'], $bargainUser['price'], 2);
-        $data['label'] = '已砍至';
+        $data['label'] = 'Đã giảm còn';
         $price = bcsub($storeBargainInfo['price'], $bargainUser['price'], 2);
-        $data['msg'] = '还差' . (bcsub($price, $bargainUser['bargain_price_min'], 2)) . '元即可砍价成功';
-        //只有在小程序端，才会生成二维码
+        $data['msg'] = 'Còn thiếu' . (bcsub($price, $bargainUser['bargain_price_min'], 2)) . 'đ nữa là săn giảm giá thành công';
+        //Chỉ tạo mã QR ở phía Mini Program
         if (\request()->isRoutine()) {
             try {
                 /** @var SystemAttachmentServices $systemAttachmentServices */
                 $systemAttachmentServices = app()->make(SystemAttachmentServices::class);
-                //小程序
+                //Mini Program
                 $name = $bargainId . '_' . $user['uid'] . '_' . $user['is_promoter'] . '_bargain_share_routine.jpg';
                 $siteUrl = sys_config('site_url');
                 $imageInfo = $systemAttachmentServices->getInfo(['name' => $name]);
@@ -934,7 +934,7 @@ class StoreBargainServices extends BaseServices
                         $valueData .= '&spread=' . $user['uid'];
                     }
                     $res = MiniProgramService::appCodeUnlimitService($valueData, 'pages/activity/goods_bargain_details/index', 280);
-                    if (!$res) throw new ApiException('二维码生成失败');
+                    if (!$res) throw new ApiException('Tạo mã QR thất bại');
                     $uploadType = (int)sys_config('upload_type', 1);
                     $upload = UploadService::init();
                     $res = (string)EntityBody::factory($res);
@@ -979,7 +979,7 @@ class StoreBargainServices extends BaseServices
     }
 
     /**
-     * 验证砍价下单库存限量
+     * Kiểm tra giới hạn tồn kho khi đặt hàng săn giảm giá
      * @param int $uid
      * @param int $bargainId
      * @param int $cartNum
@@ -992,30 +992,30 @@ class StoreBargainServices extends BaseServices
     public function checkBargainStock(int $uid, int $bargainId, int $cartNum = 1, string $unique = '')
     {
         if (!$this->validBargain($bargainId)) {
-            throw new ApiException('该商品已下架或删除');
+            throw new ApiException('Sản phẩm này đã ngừng bán hoặc bị xóa');
         }
         /** @var StoreProductAttrValueServices $attrValueServices */
         $attrValueServices = app()->make(StoreProductAttrValueServices::class);
         $attrInfo = $attrValueServices->getOne(['product_id' => $bargainId, 'type' => 2]);
         if (!$attrInfo || $attrInfo['product_id'] != $bargainId) {
-            throw new ApiException('请选择有效的商品属性');
+            throw new ApiException('Vui lòng chọn thuộc tính sản phẩm hợp lệ');
         }
         $productInfo = $this->dao->get($bargainId, ['*', 'title as store_name']);
         /** @var StoreBargainUserServices $bargainUserService */
         $bargainUserService = app()->make(StoreBargainUserServices::class);
         $bargainUserInfo = $bargainUserService->getOne(['uid' => $uid, 'bargain_id' => $bargainId, 'status' => 1, 'is_del' => 0]);
         if ($bargainUserInfo['bargain_price_min'] < bcsub((string)$bargainUserInfo['bargain_price'], (string)$bargainUserInfo['price'], 2)) {
-            throw new ApiException('砍价价格不能低于最低价');
+            throw new ApiException('Giá săn giảm giá không được thấp hơn giá thấp nhất');
         }
         $unique = $attrInfo['unique'];
         if ($cartNum > $attrInfo['quota']) {
-            throw new ApiException('该商品库存不足');
+            throw new ApiException('Sản phẩm này không đủ tồn kho');
         }
         return [$attrInfo, $unique, $productInfo, $bargainUserInfo];
     }
 
     /**
-     * 砍价统计
+     * Thống kê săn giảm giá
      * @param $id
      * @return array
      */
@@ -1038,7 +1038,7 @@ class StoreBargainServices extends BaseServices
     }
 
     /**
-     * 砍价列表
+     * Danh sách săn giảm giá
      * @param $id
      * @param array $where
      * @return array
@@ -1052,7 +1052,7 @@ class StoreBargainServices extends BaseServices
     }
 
     /**
-     * 砍价订单
+     * Đơn săn giảm giá
      * @param $id
      * @param array $where
      * @return array
@@ -1068,20 +1068,20 @@ class StoreBargainServices extends BaseServices
         foreach ($list as &$item) {
             if ($item['status'] == 0) {
                 if ($item['paid'] == 0) {
-                    $item['status'] = '未支付';
+                    $item['status'] = 'Chưa thanh toán';
                 } else {
-                    $item['status'] = '未发货';
+                    $item['status'] = 'Chưa giao hàng';
                 }
             } elseif ($item['status'] == 1) {
-                $item['status'] = '待收货';
+                $item['status'] = 'Chờ nhận hàng';
             } elseif ($item['status'] == 2) {
-                $item['status'] = '待评价';
+                $item['status'] = 'Chờ đánh giá';
             } elseif ($item['status'] == 3) {
-                $item['status'] = '已完成';
+                $item['status'] = 'Đã hoàn thành';
             } elseif ($item['status'] == -2) {
-                $item['status'] = '已退款';
+                $item['status'] = 'Đã hoàn tiền';
             } else {
-                $item['status'] = '未知';
+                $item['status'] = 'Không xác định';
             }
             $item['add_time'] = date('Y-m-d H:i:s', $item['add_time']);
             $item['pay_time'] = $item['pay_time'] ? date('Y-m-d H:i:s', $item['pay_time']) : '';

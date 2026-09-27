@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,7 +20,7 @@ use app\services\other\UploadService;
 use crmeb\traits\QueueTrait;
 
 /**
- * 海报队列
+ * Hàng đợi poster
  * Class PosterJob
  * @package crmeb\jobs
  */
@@ -29,7 +29,7 @@ class PosterJob extends BaseJobs
     use QueueTrait;
 
     /**
-     * 海报生成
+     * Tạo poster
      * @param $user
      * @param $isSsl
      * @return bool
@@ -44,12 +44,12 @@ class PosterJob extends BaseJobs
 
         $rootPath = app()->getRootPath();
         try {
-            $resRoutine          = true;//小程序
-            $resWap              = true;//公众号
+            $resRoutine          = true;//Mini Program
+            $resWap              = true;//OA WeChat
             $siteUrl             = sys_config('site_url');
             $routineSpreadBanner = sys_data('routine_spread_banner');
             if (!count($routineSpreadBanner)) return false;
-            //小程序
+            //Mini Program
             $name_routine      = $user['uid'] . '_' . $user['is_promoter'] . '_user_routine.jpg';
             $name_wap          = $user['uid'] . '_' . $user['is_promoter'] . '_user_wap.jpg';
             $imageInfo_routine = $attachment->getInfo(['name' => $name_routine]);
@@ -85,7 +85,7 @@ class PosterJob extends BaseJobs
             } else $urlCode_routine = $imageInfo_routine['att_dir'];
             if ($imageInfo_routine['image_type'] == 1) $urlCode_routine = $siteUrl . $urlCode_routine;
             if (!$imageInfo_wap) {
-                $codeUrl       = set_http_type($siteUrl . '?spread=' . $user['uid'], $isSsl ? 0 : 1);//二维码链接
+                $codeUrl       = set_http_type($siteUrl . '?spread=' . $user['uid'], $isSsl ? 0 : 1);//Liên kết mã QR
                 $imageInfo_wap = PosterServices::getQRCodePath($codeUrl, $name_wap);
                 if (is_string($imageInfo_wap)) return false;
                 $attachment->attachmentAdd($imageInfo_wap['name'], $imageInfo_wap['size'], $imageInfo_wap['type'], $imageInfo_wap['dir'], $imageInfo_wap['thumb_path'], 1, $imageInfo_wap['image_type'], $imageInfo_wap['time'], 2);
@@ -100,11 +100,11 @@ class PosterJob extends BaseJobs
             if (!file_exists($filelink['Bold'])) return false;
             if (!file_exists($filelink['Normal'])) return false;
             foreach ($routineSpreadBanner as $key => &$item) {
-                $posterInfo_routine = '海报生成失败:(';
+                $posterInfo_routine = 'Tạo poster thất bại :(';
                 $config             = array(
                     'image'      => array(
                         array(
-                            'url'     => $urlCode_routine,     //二维码资源
+                            'url'     => $urlCode_routine,     //Resource mã QR
                             'stream'  => 0,
                             'left'    => 114,
                             'top'     => 790,
@@ -120,18 +120,18 @@ class PosterJob extends BaseJobs
                             'text'      => $user['nickname'],
                             'left'      => 250,
                             'top'       => 840,
-                            'fontPath'  => $rootPath . $filelink['Bold'],     //字体文件
-                            'fontSize'  => 16,             //字号
-                            'fontColor' => '40,40,40',       //字体颜色
+                            'fontPath'  => $rootPath . $filelink['Bold'],     //File font
+                            'fontSize'  => 16,             //Cỡ chữ
+                            'fontColor' => '40,40,40',       //Màu chữ
                             'angle'     => 0,
                         ),
                         array(
-                            'text'      => '邀请您加入' . sys_config('site_name'),
+                            'text'      => 'Mời bạn tham gia' . sys_config('site_name'),
                             'left'      => 250,
                             'top'       => 880,
-                            'fontPath'  => $rootPath . $filelink['Normal'],     //字体文件
-                            'fontSize'  => 16,             //字号
-                            'fontColor' => '40,40,40',       //字体颜色
+                            'fontPath'  => $rootPath . $filelink['Normal'],     //File font
+                            'fontSize'  => 16,             //Cỡ chữ
+                            'fontColor' => '40,40,40',       //Màu chữ
                             'angle'     => 0,
                         )
                     ),
@@ -149,11 +149,11 @@ class PosterJob extends BaseJobs
                 }
             }
             foreach ($routineSpreadBanner as $key => &$item) {
-                $posterInfo_wap = '海报生成失败:(';
+                $posterInfo_wap = 'Tạo poster thất bại :(';
                 $config         = array(
                     'image'      => array(
                         array(
-                            'url'     => $urlCode_wap,     //二维码资源
+                            'url'     => $urlCode_wap,     //Resource mã QR
                             'stream'  => 0,
                             'left'    => 114,
                             'top'     => 790,
@@ -169,18 +169,18 @@ class PosterJob extends BaseJobs
                             'text'      => $user['nickname'],
                             'left'      => 250,
                             'top'       => 840,
-                            'fontPath'  => $rootPath . $filelink['Bold'],     //字体文件
-                            'fontSize'  => 16,             //字号
-                            'fontColor' => '40,40,40',       //字体颜色
+                            'fontPath'  => $rootPath . $filelink['Bold'],     //File font
+                            'fontSize'  => 16,             //Cỡ chữ
+                            'fontColor' => '40,40,40',       //Màu chữ
                             'angle'     => 0,
                         ),
                         array(
-                            'text'      => '邀请您加入' . sys_config('site_name'),
+                            'text'      => 'Mời bạn tham gia' . sys_config('site_name'),
                             'left'      => 250,
                             'top'       => 880,
-                            'fontPath'  => $rootPath . $filelink['Normal'],     //字体文件
-                            'fontSize'  => 16,             //字号
-                            'fontColor' => '40,40,40',       //字体颜色
+                            'fontPath'  => $rootPath . $filelink['Normal'],     //File font
+                            'fontSize'  => 16,             //Cỡ chữ
+                            'fontColor' => '40,40,40',       //Màu chữ
                             'angle'     => 0,
                         )
                     ),

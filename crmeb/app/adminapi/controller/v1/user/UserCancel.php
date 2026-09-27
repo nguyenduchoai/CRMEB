@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -28,7 +28,7 @@ class UserCancel extends AuthController
     }
 
     /**
-     * 获取注销列表
+     * Lấy danh sách hủy tài khoản
      * @return mixed
      */
     public function getCancelList()
@@ -42,7 +42,7 @@ class UserCancel extends AuthController
     }
 
     /**
-     * 备注
+     * Ghi chú
      * @return mixed
      */
     public function setMark()
@@ -52,16 +52,16 @@ class UserCancel extends AuthController
             ['mark', ''],
         ], true);
         $this->services->serMark($id, $mark);
-        return app('json')->success('备注成功');
+        return app('json')->success('Ghi chú thành công');
     }
 
     public function agreeCancel($id)
     {
-        return app('json')->success('注销成功');
+        return app('json')->success('Hủy tài khoản thành công');
     }
 
     public function refuseCancel($id)
     {
-        return app('json')->success('拒绝注销');
+        return app('json')->success('Từ chối hủy tài khoản');
     }
 }

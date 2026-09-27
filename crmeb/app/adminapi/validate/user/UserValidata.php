@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,8 +16,8 @@ use think\Validate;
 class UserValidata extends Validate
 {
     /**
-     * 定义验证规则
-     * 格式：'字段名'    =>    ['规则1','规则2'...]
+     * Định nghĩa quy tắc xác thực
+     * Định dạng: 'tên trường'    =>    ['quy tắc 1','quy tắc 2'...]
      *
      * @var array
      */
@@ -29,16 +29,16 @@ class UserValidata extends Validate
     ];
 
     /**
-     * 定义错误信息
-     * 格式：'字段名.规则名'    =>    '错误信息'
+     * Định nghĩa thông báo lỗi
+     * Định dạng: 'tên trường.tên quy tắc'    =>    'thông báo lỗi'
      *
      * @var array
      */
     protected $message = [
-        'account.require' => '请输入账号',
-        'account.alphaNum' => '账号只能为数字和字母',
-        'pwd.require' => '请填写密码',
-        'true_pwd.require' => '请输入确认密码',
-        'nickname.number' => '请输入名称'
+        'account.require' => 'Vui lòng nhập tài khoản',
+        'account.alphaNum' => 'Tài khoản chỉ được gồm chữ số và chữ cái',
+        'pwd.require' => 'Vui lòng điền mật khẩu',
+        'true_pwd.require' => 'Vui lòng nhập mật khẩu xác nhận',
+        'nickname.number' => 'Vui lòng nhập tên'
     ];
 }

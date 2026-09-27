@@ -10,7 +10,7 @@
           inline
           @submit.native.prevent
         >
-          <el-form-item label="订单时间：">
+          <el-form-item label="Thời gian đơn hàng:">
             <el-date-picker
               clearable
               v-model="timeVal"
@@ -19,77 +19,77 @@
               @change="onchangeTime"
               format="yyyy/MM/dd"
               value-format="yyyy/MM/dd"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              start-placeholder="Ngày bắt đầu"
+              end-placeholder="Ngày kết thúc"
               :picker-options="pickerOptions"
               style="width: 250px"
               class="mr20"
             ></el-date-picker>
           </el-form-item>
-          <el-form-item label="交易类型：">
+          <el-form-item label="Loại giao dịch:">
             <el-select v-model="formValidate.status" @change="selChange" class="form_content_width">
               <el-option :label="item" :value="index" v-for="(item, index) in withdrawal" :key="index"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="流水搜索：">
+          <el-form-item label="Tìm kiếm giao dịch:">
             <div class="acea-row row-middle">
               <el-input
                 clearable
-                placeholder="订单号/昵称/电话/用户ID"
+                placeholder="Mã đơn hàng/Biệt danh/Số điện thoại/ID người dùng"
                 v-model="formValidate.keywords"
                 class="form_content_width"
               />
             </div>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="selChange">查询</el-button>
+            <el-button type="primary" v-db-click @click="selChange">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
     <el-card :bordered="false" shadow="never" class="mt16">
-      <el-table ref="table" :data="tabList" class="ivu-mt" v-loading="loading" empty-text="暂无数据">
-        <el-table-column label="交易单号" width="180">
+      <el-table ref="table" :data="tabList" class="ivu-mt" v-loading="loading" empty-text="Chưa có dữ liệu">
+        <el-table-column label="Mã giao dịch" width="180">
           <template slot-scope="scope">
             <span>{{ scope.row.flow_id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="关联订单" min-width="120">
+        <el-table-column label="Đơn hàng liên quan" min-width="120">
           <template slot-scope="scope">
             <span>{{ scope.row.order_id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="交易时间" min-width="130">
+        <el-table-column label="Thời gian giao dịch" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.add_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="交易金额" min-width="90">
+        <el-table-column label="Giá trị giao dịch" min-width="90">
           <template slot-scope="scope">
             <div v-if="scope.row.price >= 0" class="z-price">+{{ scope.row.price }}</div>
             <div v-if="scope.row.price < 0" class="f-price">{{ scope.row.price }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="交易用户" min-width="90">
+        <el-table-column label="Người giao dịch" min-width="90">
           <template slot-scope="scope">
             <span>{{ scope.row.nickname }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="支付方式" min-width="90">
+        <el-table-column label="Phương thức thanh toán" min-width="90">
           <template slot-scope="scope">
             <div v-for="item in payment" :key="item.value">
               <span v-if="scope.row.pay_type == item.value"> {{ item.title }} </span>
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="备注" min-width="90">
+        <el-table-column label="Ghi chú" min-width="90">
           <template slot-scope="scope">
             <span>{{ scope.row.mark }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="170">
+        <el-table-column label="Thao tác" fixed="right" width="170">
           <template slot-scope="scope">
-            <a v-db-click @click="setMark(scope.row)">备注</a>
+            <a v-db-click @click="setMark(scope.row)">Ghi chú</a>
           </template>
         </el-table-column>
       </el-table>
@@ -103,11 +103,11 @@
         />
       </div>
     </el-card>
-    <!-- 拒绝通过-->
-    <el-dialog :visible.sync="modals" title="备注" :close-on-click-modal="false" width="540px">
-      <el-input v-model="mark_msg.mark" type="textarea" :rows="4" placeholder="请输入备注" />
+    <!-- Từ chối duyệt-->
+    <el-dialog :visible.sync="modals" title="Ghi chú" :close-on-click-modal="false" width="540px">
+      <el-input v-model="mark_msg.mark" type="textarea" :rows="4" placeholder="Vui lòng nhập ghi chú" />
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" v-db-click @click.prevent="oks">确定</el-button>
+        <el-button type="primary" v-db-click @click.prevent="oks">Xác nhận</el-button>
       </span>
     </el-dialog>
   </div>
@@ -143,23 +143,23 @@ export default {
       withdrawal: [],
       payment: [
         {
-          title: '全部',
+          title: 'Tất cả',
           value: '',
         },
         {
-          title: '微信',
+          title: 'WeChat',
           value: 'weixin',
         },
         {
-          title: '支付宝',
+          title: 'Alipay',
           value: 'alipay',
         },
         {
-          title: '银行卡',
+          title: 'Thẻ ngân hàng',
           value: 'bank',
         },
         {
-          title: '线下支付',
+          title: 'Thanh toán ngoại tuyến',
           value: 'offline',
         },
       ],
@@ -188,7 +188,7 @@ export default {
     this.getList();
   },
   methods: {
-    // 确定
+    // Xác nhận
     oks() {
       this.modal_loading = true;
       setMarks(this.extractId, this.mark_msg)
@@ -203,25 +203,25 @@ export default {
           this.$message.error(err.msg);
         });
     },
-    // 备注
+    // Ghi chú
     setMark(row) {
       this.modals = true;
       this.extractId = row.id;
       this.mark_msg.mark = row.mark;
     },
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e;
       this.formValidate.time = this.timeVal ? this.timeVal.join('-') : '';
       this.formValidate.page = 1;
       this.getList();
     },
-    // 选择
+    // Chọn
     selChange(e) {
       this.formValidate.page = 1;
       this.getList();
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       getFlowList(this.formValidate)
@@ -237,7 +237,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 编辑提交成功
+    // Sửa gửi thành công
     submitFail() {
       this.getList();
     },

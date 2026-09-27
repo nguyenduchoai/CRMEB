@@ -1,220 +1,220 @@
-# 接口请求文档
+# Tài liệu request API
 
-## 1. 概述
+## 1. Tổng quan
 
-本文档描述了 CRMEB 项目中 API 接口请求的流程、规范、参数设计和响应格式等，旨在统一 API 请求格式，提高 API 的一致性和可维护性。
+Tài liệu này mô tả quy trình, quy chuẩn, thiết kế tham số, định dạng phản hồi, v.v. của request API trong dự án CRMEB, nhằm thống nhất định dạng request API, nâng cao tính nhất quán và khả năng bảo trì của API.
 
-## 2. 接口请求流程
+## 2. Quy trình request API
 
-### 2.1 基本流程
+### 2.1 Quy trình cơ bản
 
-1. **客户端发起请求**: 客户端通过 HTTP/HTTPS 协议向服务器发送请求
-2. **请求到达服务器**: 请求经过网络传输到达服务器
-3. **请求解析**: 服务器解析请求，包括请求方法、路径、参数等
-4. **认证授权**: 服务器对请求进行认证和授权
-5. **业务处理**: 服务器执行相应的业务逻辑
-6. **生成响应**: 服务器生成响应数据
-7. **返回响应**: 服务器将响应返回给客户端
-8. **客户端处理响应**: 客户端处理服务器返回的响应
+1. **Client gửi request**: Client gửi request tới máy chủ qua giao thức HTTP/HTTPS
+2. **Request đến máy chủ**: Request được truyền qua mạng đến máy chủ
+3. **Phân tích request**: Máy chủ phân tích request, bao gồm phương thức request, đường dẫn, tham số, v.v.
+4. **Xác thực và phân quyền**: Máy chủ xác thực và phân quyền cho request
+5. **Xử lý nghiệp vụ**: Máy chủ thực thi logic nghiệp vụ tương ứng
+6. **Tạo phản hồi**: Máy chủ tạo dữ liệu phản hồi
+7. **Trả về phản hồi**: Máy chủ trả phản hồi về cho client
+8. **Client xử lý phản hồi**: Client xử lý phản hồi do máy chủ trả về
 
-### 2.2 详细流程
+### 2.2 Quy trình chi tiết
 
 ```
 ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│   客户端       │     │   中间件       │     │   控制器       │
-│ 1. 发起请求     │────▶│ 2. 认证授权     │────▶│ 3. 业务处理     │
+│   Client        │     │   Middleware    │     │ Controller       │
+│ 1. Gửi yêu cầu  │────▶│ 2. Xác thực, phân quyền │────▶│ 3. Xử lý nghiệp vụ     │
 └─────────────────┘     └─────────────────┘     └─────────────────┘
                                                       │
                                                       ▼
                                              ┌─────────────────┐
-                                             │   服务层       │
-                                             │ 4. 执行逻辑     │
+                                             │   Tầng service       │
+                                             │ 4. Thực thi logic     │
                                              └─────────────────┘
                                                       │
                                                       ▼
                                              ┌─────────────────┐
-                                             │   数据层       │
-                                             │ 5. 数据操作     │
+                                             │   Tầng dữ liệu       │
+                                             │ 5. Thao tác dữ liệu     │
                                              └─────────────────┘
                                                       │
                                                       ▼
 ┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
-│   客户端       │     │   中间件       │     │   控制器       │
-│ 8. 处理响应     │◀────│ 7. 响应处理     │◀────│ 6. 生成响应     │
+│   Client        │     │   Middleware    │     │ Controller       │
+│ 8. Xử lý phản hồi │◀────│ 7. Xử lý phản hồi │◀────│ 6. Tạo phản hồi     │
 └─────────────────┘     └─────────────────┘     └─────────────────┘
 ```
 
-## 3. 请求方法
+## 3. Phương thức request
 
-### 3.1 HTTP 方法
+### 3.1 Phương thức HTTP
 
-| 方法 | 描述 | 幂等性 | 安全性 |
+| Phương thức | Mô tả | Tính lũy đẳng (idempotent) | Tính an toàn (safe) |
 |------|------|--------|--------|
-| GET | 获取资源 | 是 | 是 |
-| POST | 创建资源 | 否 | 否 |
-| PUT | 更新资源 | 是 | 否 |
-| DELETE | 删除资源 | 是 | 否 |
-| PATCH | 部分更新资源 | 否 | 否 |
-| OPTIONS | 获取资源的可用操作 | 是 | 是 |
-| HEAD | 获取资源的元数据 | 是 | 是 |
+| GET | Lấy tài nguyên | Có | Có |
+| POST | Tạo tài nguyên | Không | Không |
+| PUT | Cập nhật tài nguyên | Có | Không |
+| DELETE | Xóa tài nguyên | Có | Không |
+| PATCH | Cập nhật một phần tài nguyên | Không | Không |
+| OPTIONS | Lấy các thao tác khả dụng trên tài nguyên | Có | Có |
+| HEAD | Lấy metadata của tài nguyên | Có | Có |
 
-### 3.2 方法使用规范
+### 3.2 Quy chuẩn sử dụng phương thức
 
-- **GET**: 用于获取资源，不应修改资源状态
-- **POST**: 用于创建新资源
-- **PUT**: 用于更新整个资源，应包含资源的完整表示
-- **DELETE**: 用于删除资源
-- **PATCH**: 用于部分更新资源，只包含需要更新的字段
-- **OPTIONS**: 用于获取资源支持的 HTTP 方法
-- **HEAD**: 用于获取资源的元数据，如 Content-Length、Last-Modified 等
+- **GET**: Dùng để lấy tài nguyên, không được thay đổi trạng thái tài nguyên
+- **POST**: Dùng để tạo tài nguyên mới
+- **PUT**: Dùng để cập nhật toàn bộ tài nguyên, cần chứa biểu diễn đầy đủ của tài nguyên
+- **DELETE**: Dùng để xóa tài nguyên
+- **PATCH**: Dùng để cập nhật một phần tài nguyên, chỉ chứa các trường cần cập nhật
+- **OPTIONS**: Dùng để lấy các phương thức HTTP mà tài nguyên hỗ trợ
+- **HEAD**: Dùng để lấy metadata của tài nguyên, như Content-Length, Last-Modified, v.v.
 
-## 4. 请求头
+## 4. Request header
 
-### 4.1 通用请求头
+### 4.1 Request header thông dụng
 
-| 请求头 | 描述 | 示例 |
+| Request header | Mô tả | Ví dụ |
 |-------|------|------|
-| Accept | 客户端可接受的响应内容类型 | application/json |
-| Accept-Encoding | 客户端可接受的编码方式 | gzip, deflate |
-| Content-Type | 请求体的内容类型 | application/json |
-| Authorization | 认证信息 | Bearer {token} |
-| User-Agent | 客户端标识 | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 |
-| X-Requested-With | 请求类型 | XMLHttpRequest |
-| X-Token | 认证令牌（自定义） | your_token_here |
+| Accept | Kiểu nội dung phản hồi mà client chấp nhận | application/json |
+| Accept-Encoding | Kiểu mã hóa (encoding) mà client chấp nhận | gzip, deflate |
+| Content-Type | Kiểu nội dung của request body | application/json |
+| Authorization | Thông tin xác thực | Bearer {token} |
+| User-Agent | Định danh client | Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 |
+| X-Requested-With | Loại request | XMLHttpRequest |
+| X-Token | Token xác thực (tùy chỉnh) | your_token_here |
 
-### 4.2 自定义请求头
+### 4.2 Request header tùy chỉnh
 
-自定义请求头应以 `X-` 为前缀，如 `X-Token`、`X-Request-ID` 等。
+Request header tùy chỉnh nên có tiền tố `X-`, ví dụ `X-Token`, `X-Request-ID`, v.v.
 
-## 5. 请求参数
+## 5. Tham số request
 
-### 5.1 参数位置
+### 5.1 Vị trí tham số
 
-| 位置 | 适用场景 | 示例 |
+| Vị trí | Trường hợp sử dụng | Ví dụ |
 |------|----------|------|
-| URL 路径 | 资源标识 | /api/v1/user/1 |
-| 查询字符串 | 过滤、排序、分页 | /api/v1/user?page=1&limit=10&sort=create_time&order=desc |
-| 请求体 | 复杂数据、创建/更新资源 | {"username": "test", "password": "123456"} |
-| 请求头 | 认证信息、元数据 | Authorization: Bearer {token} |
-| Cookie | 会话信息 | PHPSESSID=your_session_id |
+| Đường dẫn URL | Định danh tài nguyên | /api/v1/user/1 |
+| Chuỗi truy vấn (query string) | Lọc, sắp xếp, phân trang | /api/v1/user?page=1&limit=10&sort=create_time&order=desc |
+| Request body | Dữ liệu phức tạp, tạo/cập nhật tài nguyên | {"username": "test", "password": "123456"} |
+| Request header | Thông tin xác thực, metadata | Authorization: Bearer {token} |
+| Cookie | Thông tin phiên (session) | PHPSESSID=your_session_id |
 
-### 5.2 参数命名规范
+### 5.2 Quy chuẩn đặt tên tham số
 
-- **命名风格**: 使用 camelCase 命名风格，如 `userName`
-- **语义化**: 参数名应具有明确的语义，如 `page`、`limit`、`sort`
-- **简洁性**: 参数名应简洁明了，避免过长
-- **一致性**: 相同类型的参数在不同接口中应保持一致
+- **Kiểu đặt tên**: Dùng kiểu đặt tên camelCase, ví dụ `userName`
+- **Rõ ngữ nghĩa**: Tên tham số cần có ngữ nghĩa rõ ràng, ví dụ `page`, `limit`, `sort`
+- **Ngắn gọn**: Tên tham số cần ngắn gọn, dễ hiểu, tránh quá dài
+- **Nhất quán**: Các tham số cùng loại cần được giữ nhất quán giữa các API khác nhau
 
-### 5.3 常用参数
+### 5.3 Tham số thường dùng
 
-| 参数名 | 类型 | 描述 | 示例 |
+| Tên tham số | Loại | Mô tả | Ví dụ |
 |-------|------|------|------|
-| page | int | 页码，默认 1 | page=1 |
-| limit | int | 每页数量，默认 10 | limit=20 |
-| sort | string | 排序字段 | sort=create_time |
-| order | string | 排序方式，asc 或 desc | order=desc |
-| keyword | string | 搜索关键词 | keyword=test |
-| status | int | 状态过滤 | status=1 |
-| start_time | string | 开始时间 | start_time=2024-01-01 |
-| end_time | string | 结束时间 | end_time=2024-01-31 |
+| page | int | Số trang, mặc định 1 | page=1 |
+| limit | int | Số lượng mỗi trang, mặc định 10 | limit=20 |
+| sort | string | Trường sắp xếp | sort=create_time |
+| order | string | Kiểu sắp xếp, asc hoặc desc | order=desc |
+| keyword | string | Từ khóa tìm kiếm | keyword=test |
+| status | int | Lọc theo trạng thái | status=1 |
+| start_time | string | Thời gian bắt đầu | start_time=2024-01-01 |
+| end_time | string | Thời gian kết thúc | end_time=2024-01-31 |
 
-## 6. 请求体
+## 6. Request body
 
-### 6.1 内容类型
+### 6.1 Kiểu nội dung
 
-| 内容类型 | 描述 | 示例 |
+| Kiểu nội dung | Mô tả | Ví dụ |
 |---------|------|------|
-| application/json | JSON 格式，最常用 | {"username": "test", "password": "123456"} |
-| application/x-www-form-urlencoded | 表单格式 | username=test&password=123456 |
-| multipart/form-data | 文件上传 | 包含文件和表单字段 |
-| text/plain | 纯文本 | 简单的文本数据 |
-| application/xml | XML 格式 | <user><username>test</username><password>123456</password></user> |
+| application/json | Định dạng JSON, phổ biến nhất | {"username": "test", "password": "123456"} |
+| application/x-www-form-urlencoded | Định dạng form | username=test&password=123456 |
+| multipart/form-data | Tải tệp lên | Chứa file và các trường form |
+| text/plain | Văn bản thuần | Dữ liệu văn bản đơn giản |
+| application/xml | Định dạng XML | <user><username>test</username><password>123456</password></user> |
 
-### 6.2 JSON 请求体规范
+### 6.2 Quy chuẩn request body JSON
 
-- **使用 camelCase 命名**: 字段名使用 camelCase 命名风格
-- **明确的数据类型**: 使用适当的数据类型，如字符串、数字、布尔值、数组、对象
-- **避免 null 值**: 非必要字段不应包含 null 值
-- **嵌套结构**: 合理使用嵌套结构，避免过深的嵌套
-- **数组格式**: 数组元素类型应一致
+- **Đặt tên theo camelCase**: Tên trường dùng kiểu đặt tên camelCase
+- **Kiểu dữ liệu rõ ràng**: Dùng kiểu dữ liệu phù hợp, như chuỗi, số, boolean, mảng, đối tượng
+- **Tránh giá trị null**: Các trường không bắt buộc không nên chứa giá trị null
+- **Cấu trúc lồng nhau**: Dùng cấu trúc lồng nhau hợp lý, tránh lồng quá sâu
+- **Định dạng mảng**: Các phần tử trong mảng cần cùng kiểu
 
-示例：
+Ví dụ:
 
 ```json
 {
   "username": "test",
   "password": "123456",
-  "nickname": "测试用户",
+  "nickname": "Người dùng thử nghiệm",
   "age": 18,
   "gender": 1,
   "tags": ["tag1", "tag2"],
   "address": {
-    "province": "北京",
-    "city": "北京",
-    "district": "朝阳区"
+    "province": "Beijing",
+    "city": "Beijing",
+    "district": "Quận Chaoyang"
   }
 }
 ```
 
-## 7. 响应格式
+## 7. Định dạng phản hồi
 
-### 7.1 基本响应格式
+### 7.1 Định dạng phản hồi cơ bản
 
-所有 API 响应应使用统一的 JSON 格式，包含 `status`、`msg` 和可选的 `data` 字段。系统实际调用方式为 `app('json')->success()`。
+Mọi phản hồi API cần dùng định dạng JSON thống nhất, gồm các trường `status`, `msg` và trường tùy chọn `data`. Cách gọi thực tế trong hệ thống là `app('json')->success()`.
 
-#### 7.1.1 调用示例
+#### 7.1.1 Ví dụ cách gọi
 
 ```php
-// 基本成功响应
-return app('json')->success('操作成功', ['id' => 1, 'username' => 'test']);
+// Response thành công cơ bản
+return app('json')->success('Thao tác thành công', ['id' => 1, 'username' => 'test']);
 
-// 只返回数据，不指定消息
+// Chỉ trả về dữ liệu, không chỉ định thông báo
 return app('json')->success(['id' => 1, 'username' => 'test']);
 
-// 使用系统内置成功码
-return app('json')->success(100000); // 100000 是 "保存成功" 对应的系统内置成功码
+// Dùng mã thành công tích hợp sẵn của hệ thống
+return app('json')->success(100000); // 100000 Có "Lưu thành công" tương ứng với mã thành công tích hợp sẵn của hệ thống
 ```
 
-#### 7.1.2 响应格式
+#### 7.1.2 Định dạng phản hồi
 
 ```json
 {
   "status": 200,
-  "msg": "操作成功",
+  "msg": "Thao tác thành công",
   "data": {
     "id": 1,
     "username": "test",
-    "nickname": "测试用户"
+    "nickname": "Người dùng thử nghiệm"
   }
 }
 ```
 
-### 7.2 分页响应格式
+### 7.2 Định dạng phản hồi phân trang
 
-分页响应应包含 `total`、`page`、`limit` 和 `list` 字段，系统实际调用方式为 `app('json')->success()`。
+Phản hồi phân trang cần gồm các trường `total`, `page`, `limit` và `list`, cách gọi thực tế trong hệ thống là `app('json')->success()`.
 
-#### 7.2.1 调用示例
+#### 7.2.1 Ví dụ cách gọi
 
 ```php
-// 分页数据响应
+// Response dữ liệu phân trang
 $pageData = [
     'total' => 100,
     'page' => 1,
     'limit' => 10,
     'list' => [
-        ['id' => 1, 'username' => 'test1', 'nickname' => '测试用户1'],
-        ['id' => 2, 'username' => 'test2', 'nickname' => '测试用户2']
+        ['id' => 1, 'username' => 'test1', 'nickname' => 'Người dùng thử nghiệm 1'],
+        ['id' => 2, 'username' => 'test2', 'nickname' => 'Người dùng thử nghiệm 2']
     ]
 ];
-return app('json')->success('获取列表成功', $pageData);
+return app('json')->success('Lấy danh sách thành công', $pageData);
 ```
 
-#### 7.2.2 响应格式
+#### 7.2.2 Định dạng phản hồi
 
 ```json
 {
   "status": 200,
-  "msg": "获取列表成功",
+  "msg": "Lấy danh sách thành công",
   "data": {
     "total": 100,
     "page": 1,
@@ -223,266 +223,266 @@ return app('json')->success('获取列表成功', $pageData);
       {
         "id": 1,
         "username": "test1",
-        "nickname": "测试用户1"
+        "nickname": "Người dùng thử nghiệm 1"
       },
       {
         "id": 2,
         "username": "test2",
-        "nickname": "测试用户2"
+        "nickname": "Người dùng thử nghiệm 2"
       }
     ]
   }
 }
 ```
 
-### 7.3 错误响应格式
+### 7.3 Định dạng phản hồi lỗi
 
-系统使用统一的错误响应格式，所有错误响应通过 `app('json')->fail()` 方法返回。`fail()` 方法支持两种参数类型：
+Hệ thống dùng định dạng phản hồi lỗi thống nhất, mọi phản hồi lỗi đều được trả về qua phương thức `app('json')->fail()`. Phương thức `fail()` hỗ trợ hai loại tham số:
 
-- **错误码**（推荐）：系统内置的数字错误码，如 `410025`
-- **错误消息**：直接的字符串错误信息
+- **Mã lỗi** (khuyến nghị): Mã lỗi dạng số có sẵn trong hệ thống, ví dụ `410025`
+- **Thông báo lỗi**: Thông báo lỗi dạng chuỗi trực tiếp
 
-#### 7.3.1 统一响应格式
+#### 7.3.1 Định dạng phản hồi thống nhất
 
-无论使用哪种参数类型，系统都会返回统一的 JSON 格式，包含 `status`、`msg` 和可选的 `data` 字段。当使用错误码时，响应中还会包含 `code` 字段。
+Dù dùng loại tham số nào, hệ thống đều trả về định dạng JSON thống nhất, gồm các trường `status`, `msg` và trường tùy chọn `data`. Khi dùng mã lỗi, phản hồi còn có thêm trường `code`.
 
 ```json
 {
   "status": 400,
-  "msg": "账号或密码错误",
+  "msg": "Tài khoản hoặc mật khẩu không đúng",
   "code": 410025,
   "data": null
 }
 ```
 
-#### 7.3.2 调用示例
+#### 7.3.2 Ví dụ cách gọi
 
 ```php
-// 推荐：使用系统内置错误码
+// Khuyến nghị: dùng mã lỗi tích hợp sẵn của hệ thống
 return app('json')->fail(410025);
 
-// 不推荐：直接使用错误消息
-return app('json')->fail('账号或密码错误');
+// Không khuyến nghị: dùng trực tiếp thông báo lỗi
+return app('json')->fail('Tài khoản hoặc mật khẩu không đúng');
 
-// 使用错误码并传递额外数据
+// Dùng mã lỗi và truyền thêm dữ liệu
 return app('json')->fail(410025, ['extra' => 'additional data']);
 
-// 使用错误码并传递替换参数
+// Dùng mã lỗi và truyền tham số thay thế
 return app('json')->fail(410025, [], ['field' => 'username']);
 ```
 
-#### 7.3.3 最佳实践
+#### 7.3.3 Thực tiễn tốt nhất
 
-- **优先使用错误码**：系统内置错误码经过统一规划，便于维护和国际化
-- **避免直接使用字符串**：直接使用字符串错误信息不利于国际化和统一管理
-- **传递必要的额外数据**：对于复杂错误，可以在 `data` 字段中提供详细信息
-- **使用替换参数**：对于动态错误信息，使用替换参数提高灵活性
+- **Ưu tiên dùng mã lỗi**: Mã lỗi có sẵn trong hệ thống đã được quy hoạch thống nhất, thuận tiện cho việc bảo trì và quốc tế hóa
+- **Tránh dùng chuỗi trực tiếp**: Dùng trực tiếp chuỗi thông báo lỗi sẽ gây bất lợi cho việc quốc tế hóa và quản lý thống nhất
+- **Truyền dữ liệu bổ sung cần thiết**: với các lỗi phức tạp, có thể cung cấp thông tin chi tiết trong trường `data`
+- **Sử dụng tham số thay thế**: với thông báo lỗi động, sử dụng tham số thay thế để tăng tính linh hoạt
 
-### 7.4 响应码规范
+### 7.4 Quy chuẩn mã phản hồi
 
-| 响应码范围 | 类型 | 描述 | 示例 |
+| Dải mã phản hồi | Loại | Mô tả | Ví dụ |
 |-----------|------|------|------|
-| 200 | 成功 | 操作成功 | 200 |
-| 1000-1999 | 系统级错误 | 系统核心错误 | 1001（参数错误） |
-| 4000-4999 | 业务级错误 | 具体业务逻辑错误 | 410025（账号或密码错误） |
-| 400 | 客户端错误 | 请求参数错误 | 400 |
-| 401 | 认证错误 | 未认证或认证过期 | 401 |
-| 403 | 权限错误 | 无权限访问 | 403 |
-| 404 | 资源错误 | 资源不存在 | 404 |
-| 500 | 服务器错误 | 服务器内部错误 | 500 |
+| 200 | Thành công | Thao tác thành công | 200 |
+| 1000-1999 | Lỗi cấp hệ thống | Lỗi lõi hệ thống | 1001 (tham số không hợp lệ) |
+| 4000-4999 | Lỗi cấp nghiệp vụ | Lỗi logic nghiệp vụ cụ thể | 410025 (sai tài khoản hoặc mật khẩu) |
+| 400 | Lỗi phía client | Tham số request không hợp lệ | 400 |
+| 401 | Lỗi xác thực | Chưa xác thực hoặc xác thực đã hết hạn | 401 |
+| 403 | Lỗi phân quyền | Không có quyền truy cập | 403 |
+| 404 | Lỗi tài nguyên | Tài nguyên không tồn tại | 404 |
+| 500 | Lỗi máy chủ | Lỗi máy chủ nội bộ | 500 |
 
-## 8. 错误处理
+## 8. Xử lý lỗi
 
-### 8.1 错误响应设计
+### 8.1 Thiết kế phản hồi lỗi
 
-错误响应应遵循以下设计原则：
+Phản hồi lỗi cần tuân theo các nguyên tắc thiết kế sau:
 
-1. **统一格式**: 所有错误响应使用相同的 JSON 格式
-2. **明确的错误码**: 使用唯一的错误码标识不同的错误类型
-3. **清晰的错误信息**: 错误信息应简洁明了，便于理解
-4. **可选的详细信息**: 对于复杂错误，可以在 `data` 字段中提供详细信息
-5. **HTTP 状态码匹配**: 错误码应与 HTTP 状态码匹配
+1. **Định dạng thống nhất**: mọi phản hồi lỗi đều sử dụng cùng một định dạng JSON
+2. **Mã lỗi rõ ràng**: sử dụng mã lỗi duy nhất để phân biệt các loại lỗi khác nhau
+3. **Thông báo lỗi rõ ràng**: thông báo lỗi cần ngắn gọn, rõ ràng, dễ hiểu
+4. **Thông tin chi tiết tùy chọn**: với các lỗi phức tạp, có thể cung cấp thông tin chi tiết trong trường `data`
+5. **Khớp với mã trạng thái HTTP**: mã lỗi cần khớp với mã trạng thái HTTP
 
-### 8.2 AI 自动提示系统内置错误码
+### 8.2 AI tự động gợi ý mã lỗi tích hợp sẵn của hệ thống
 
-CRMEB 系统集成了 AI 自动提示功能，当开发者在编写代码时使用 `fail()` 方法返回错误信息时，AI 会自动：
+Hệ thống CRMEB đã tích hợp tính năng gợi ý tự động bằng AI, khi lập trình viên sử dụng phương thức `fail()` để trả về thông báo lỗi trong lúc viết code, AI sẽ tự động:
 
-1. **识别错误信息**: 自动识别开发者输入的错误信息字符串
-2. **匹配内置错误码**: 在系统内置错误码库中查找匹配的错误码
-3. **自动转换**: 在运行时将错误信息自动转换为对应的系统内置错误码
-4. **提供建议**: 对于未匹配到的错误信息，提供相似的错误码建议
-5. **实时提示**: 在 IDE 中实时显示错误码建议
-6. **错误码文档**: 在错误码文档 error_code.md，找到对应的错误码说明
+1. **Nhận diện thông báo lỗi**: tự động nhận diện chuỗi thông báo lỗi do lập trình viên nhập
+2. **Đối chiếu mã lỗi tích hợp sẵn**: tìm mã lỗi phù hợp trong kho mã lỗi tích hợp sẵn của hệ thống
+3. **Tự động chuyển đổi**: khi chạy (runtime), tự động chuyển thông báo lỗi thành mã lỗi tích hợp sẵn tương ứng của hệ thống
+4. **Đưa ra gợi ý**: với thông báo lỗi chưa khớp được, đề xuất các mã lỗi tương tự
+5. **Gợi ý theo thời gian thực**: hiển thị gợi ý mã lỗi theo thời gian thực trong IDE
+6. **Tài liệu mã lỗi**: tìm phần mô tả mã lỗi tương ứng trong tài liệu mã lỗi error_code.md
 
-#### 8.2.1 功能示例
+#### 8.2.1 Ví dụ tính năng
 
 ```php
-// 开发者输入
-return $this->fail('登录失败');
+// Lập trình viên nhập vào
+return $this->fail('Đăng nhập thất bại');
 
-// AI 自动提示并替换为
-return $this->fail(410019); // 410019 是 "登录失败" 对应的系统内置错误码
+// AI tự động gợi ý và thay thế bằng
+return $this->fail(410019); // 410019 Có "Đăng nhập thất bại" tương ứng với mã lỗi tích hợp sẵn của hệ thống
 ```
 
-#### 8.2.2 工作原理
+#### 8.2.2 Nguyên lý hoạt động
 
-1. **语言文件解析**: 系统在运行时解析语言文件，构建错误码到错误信息的映射表
-2. **自动匹配**: 当调用 `fail()` 方法传入字符串错误信息时，系统自动在映射表中查找匹配的错误码
-3. **运行时转换**: 如果找到匹配的错误码，系统会将错误信息替换为错误码，并在响应中包含 `code` 字段
-4. **智能提示**: 在 IDE 中，AI 会实时提示开发者使用正确的系统内置错误码
+1. **Phân tích tệp ngôn ngữ**: khi chạy, hệ thống phân tích tệp ngôn ngữ và xây dựng bảng ánh xạ từ mã lỗi sang thông báo lỗi
+2. **Tự động đối chiếu**: khi gọi phương thức `fail()` và truyền vào thông báo lỗi dạng chuỗi, hệ thống tự động tìm mã lỗi phù hợp trong bảng ánh xạ
+3. **Chuyển đổi khi chạy**: nếu tìm thấy mã lỗi phù hợp, hệ thống sẽ thay thông báo lỗi bằng mã lỗi và đưa trường `code` vào phản hồi
+4. **Gợi ý thông minh**: trong IDE, AI sẽ nhắc lập trình viên theo thời gian thực để sử dụng đúng mã lỗi tích hợp sẵn của hệ thống
 
-#### 8.2.3 实际响应格式
+#### 8.2.3 Định dạng phản hồi thực tế
 
-当使用字符串错误信息时，系统会自动匹配并转换为错误码，最终响应格式为：
+Khi sử dụng thông báo lỗi dạng chuỗi, hệ thống sẽ tự động đối chiếu và chuyển thành mã lỗi, định dạng phản hồi cuối cùng là:
 
 ```json
 {
   "status": 400,
-  "msg": "登录失败",
+  "msg": "Đăng nhập thất bại",
   "code": 410019
 }
 ```
 
-当直接使用错误码时，响应格式为：
+Khi sử dụng trực tiếp mã lỗi, định dạng phản hồi là:
 
 ```json
 {
   "status": 400,
-  "msg": "登录失败",
+  "msg": "Đăng nhập thất bại",
   "code": 410019
 }
 ```
 
-### 8.3 错误处理最佳实践
+### 8.3 Thực tiễn tốt nhất khi xử lý lỗi
 
-1. **使用系统内置错误码**: 优先使用系统内置错误码，避免自定义错误信息
-2. **错误信息本地化**: 使用 `getLang()` 函数获取本地化的错误信息
-3. **详细的错误日志**: 记录详细的错误日志，包括错误码、错误信息、请求参数等
-4. **友好的错误提示**: 对客户端返回友好的错误信息，避免暴露系统内部细节
-5. **统一的错误处理**: 使用统一的错误处理中间件处理所有错误
-6. **错误码文档化**: 定期更新错误码文档，确保与实际代码一致
+1. **Sử dụng mã lỗi tích hợp sẵn của hệ thống**: ưu tiên sử dụng mã lỗi tích hợp sẵn của hệ thống, tránh tự định nghĩa thông báo lỗi
+2. **Bản địa hóa thông báo lỗi**: sử dụng hàm `getLang()` để lấy thông báo lỗi đã được bản địa hóa
+3. **Log lỗi chi tiết**: ghi log lỗi chi tiết, bao gồm mã lỗi, thông báo lỗi, tham số request, v.v.
+4. **Thông báo lỗi thân thiện**: trả về thông báo lỗi thân thiện cho client, tránh để lộ chi tiết nội bộ của hệ thống
+5. **Xử lý lỗi thống nhất**: sử dụng một middleware xử lý lỗi chung để xử lý mọi lỗi
+6. **Tài liệu hóa mã lỗi**: định kỳ cập nhật tài liệu mã lỗi, đảm bảo khớp với code thực tế
 
-### 8.4 自定义错误码
+### 8.4 Mã lỗi tùy chỉnh
 
-对于系统内置错误码无法覆盖的业务场景，可以自定义错误码，但应遵循以下规范：
+Với các tình huống nghiệp vụ mà mã lỗi tích hợp sẵn của hệ thống không bao quát được, có thể tự định nghĩa mã lỗi nhưng cần tuân theo các quy chuẩn sau:
 
-1. **错误码范围**: 使用系统未占用的错误码范围
-2. **命名规范**: 错误码应具有明确的语义
-3. **文档化**: 自定义错误码应在文档中明确说明
-4. **本地化**: 自定义错误码应在语言文件中定义对应的错误信息
+1. **Dải mã lỗi**: sử dụng dải mã lỗi mà hệ thống chưa dùng đến
+2. **Quy tắc đặt tên**: mã lỗi cần có ngữ nghĩa rõ ràng
+3. **Tài liệu hóa**: mã lỗi tùy chỉnh cần được mô tả rõ trong tài liệu
+4. **Bản địa hóa**: mã lỗi tùy chỉnh cần có thông báo lỗi tương ứng được định nghĩa trong tệp ngôn ngữ
 
-## 9. 接口开发流程
+## 9. Quy trình phát triển API
 
-### 9.1 需求分析与设计
+### 9.1 Phân tích yêu cầu và thiết kế
 
-1. **需求理解**: 明确接口的业务需求和功能要求
-2. **资源设计**: 确定接口涉及的资源和数据模型
-3. **接口设计**: 设计接口的 URL、请求方法、参数和响应格式
-4. **权限设计**: 确定接口的访问权限和认证方式
-5. **错误设计**: 定义接口可能出现的错误情况和错误码
+1. **Nắm rõ yêu cầu**: xác định rõ yêu cầu nghiệp vụ và yêu cầu chức năng của API
+2. **Thiết kế tài nguyên**: xác định các tài nguyên và mô hình dữ liệu mà API liên quan
+3. **Thiết kế API**: thiết kế URL, phương thức request, tham số và định dạng phản hồi của API
+4. **Thiết kế phân quyền**: xác định quyền truy cập và phương thức xác thực của API
+5. **Thiết kế lỗi**: định nghĩa các trường hợp lỗi có thể xảy ra và mã lỗi của API
 
-### 9.2 开发实现
+### 9.2 Phát triển và hiện thực
 
-1. **创建路由**: 在路由文件中定义接口路由
-2. **实现控制器**: 创建控制器并实现接口逻辑
-3. **参数验证**: 使用验证器对请求参数进行验证
-4. **业务逻辑**: 实现接口的业务逻辑
-5. **错误处理**: 使用 `app('json')->fail()` 统一处理错误
-6. **响应返回**: 使用 `app('json')->success()` 统一返回响应
+1. **Tạo route**: định nghĩa route của API trong tệp route
+2. **Hiện thực controller**: tạo controller và hiện thực logic của API
+3. **Kiểm tra tham số**: sử dụng validator để kiểm tra tham số request
+4. **Logic nghiệp vụ**: hiện thực logic nghiệp vụ của API
+5. **Xử lý lỗi**: sử dụng `app('json')->fail()` để xử lý lỗi thống nhất
+6. **Trả về phản hồi**: sử dụng `app('json')->success()` để trả về phản hồi thống nhất
 
-### 9.3 测试验证
+### 9.3 Kiểm thử và xác minh
 
-1. **单元测试**: 编写单元测试验证接口功能
-2. **集成测试**: 测试接口与其他模块的集成
-3. **接口测试**: 使用 Postman 或其他工具测试接口
-4. **性能测试**: 测试接口的性能和响应时间
-5. **安全测试**: 测试接口的安全性
+1. **Kiểm thử đơn vị**: viết unit test để kiểm tra chức năng của API
+2. **Kiểm thử tích hợp**: kiểm thử việc tích hợp giữa API và các module khác
+3. **Kiểm thử API**: sử dụng Postman hoặc công cụ khác để kiểm thử API
+4. **Kiểm thử hiệu năng**: kiểm thử hiệu năng và thời gian phản hồi của API
+5. **Kiểm thử bảo mật**: kiểm thử tính bảo mật của API
 
-### 9.4 文档编写
+### 9.4 Viết tài liệu
 
-1. **接口文档**: 编写接口的详细文档
-2. **错误码文档**: 在 `error_code.md` 中记录接口使用的错误码
-3. **变更记录**: 记录接口的变更历史
+1. **Tài liệu API**: viết tài liệu chi tiết cho API
+2. **Tài liệu mã lỗi**: ghi lại các mã lỗi mà API sử dụng trong `error_code.md`
+3. **Nhật ký thay đổi**: ghi lại lịch sử thay đổi của API
 
-### 9.5 上线发布
+### 9.5 Đưa vào vận hành
 
-1. **代码审查**: 进行代码审查，确保代码质量
-2. **测试环境验证**: 在测试环境验证接口功能
-3. **灰度发布**: 灰度发布接口，观察运行情况
-4. **正式上线**: 正式上线接口
+1. **Rà soát code**: Tiến hành rà soát code (code review), đảm bảo chất lượng code
+2. **Kiểm tra trên môi trường kiểm thử**: kiểm tra chức năng API trên môi trường kiểm thử
+3. **Phát hành từng phần (canary)**: phát hành API theo từng phần và theo dõi tình hình vận hành
+4. **Vận hành chính thức**: đưa API vào vận hành chính thức
 
-### 9.6 监控维护
+### 9.6 Giám sát và bảo trì
 
-1. **监控**: 监控接口的运行状态和性能
-2. **日志**: 记录接口的访问日志和错误日志
-3. **优化**: 根据监控数据优化接口性能
-4. **维护**: 定期维护和更新接口
+1. **Giám sát**: giám sát trạng thái hoạt động và hiệu năng của API
+2. **Log**: ghi log truy cập và log lỗi của API
+3. **Tối ưu**: tối ưu hiệu năng API dựa trên dữ liệu giám sát
+4. **Bảo trì**: định kỳ bảo trì và cập nhật API
 
-## 10. 最佳实践
+## 10. Thực tiễn tốt nhất
 
-### 10.1 请求设计
+### 10.1 Thiết kế request
 
-- **使用 RESTful 风格**: 遵循 RESTful API 设计规范
-- **明确的资源命名**: 使用明确的资源名称，如 `/api/v1/user` 而不是 `/api/v1/getUser`
-- **合理的 URL 层级**: URL 层级不应过深，一般不超过 3 层
-- **使用复数形式**: 资源名称使用复数形式，如 `/api/v1/users` 而不是 `/api/v1/user`
+- **Sử dụng phong cách RESTful**: tuân theo quy chuẩn thiết kế RESTful API
+- **Đặt tên tài nguyên rõ ràng**: sử dụng tên tài nguyên rõ ràng, ví dụ `/api/v1/user` thay vì `/api/v1/getUser`
+- **Phân cấp URL hợp lý**: URL không nên phân cấp quá sâu, thường không quá 3 cấp
+- **Sử dụng dạng số nhiều**: tên tài nguyên dùng dạng số nhiều, ví dụ `/api/v1/users` thay vì `/api/v1/user`
 
-### 10.2 参数设计
+### 10.2 Thiết kế tham số
 
-- **必填参数**: 明确标识必填参数
-- **默认值**: 为可选参数提供合理的默认值
-- **参数验证**: 对所有参数进行验证
-- **参数类型**: 明确参数类型和格式
+- **Tham số bắt buộc**: đánh dấu rõ các tham số bắt buộc
+- **Giá trị mặc định**: cung cấp giá trị mặc định hợp lý cho các tham số tùy chọn
+- **Kiểm tra tham số**: kiểm tra tính hợp lệ của mọi tham số
+- **Kiểu tham số**: xác định rõ kiểu và định dạng của tham số
 
-### 10.3 响应设计
+### 10.3 Thiết kế phản hồi
 
-- **统一格式**: 使用统一的响应格式
-- **明确的数据类型**: 响应数据类型应明确
-- **避免冗余数据**: 只返回必要的数据
-- **分页响应**: 列表接口应支持分页
-- **错误信息**: 错误信息应清晰、准确
+- **Định dạng thống nhất**: sử dụng định dạng phản hồi thống nhất
+- **Kiểu dữ liệu rõ ràng**: kiểu dữ liệu của phản hồi phải rõ ràng
+- **Tránh dữ liệu dư thừa**: chỉ trả về dữ liệu cần thiết
+- **Phản hồi phân trang**: API danh sách cần hỗ trợ phân trang
+- **Thông báo lỗi**: thông báo lỗi phải rõ ràng, chính xác
 
-### 10.4 安全设计
+### 10.4 Thiết kế bảo mật
 
-- **认证授权**: 使用 JWT 或 OAuth2 进行认证授权
-- **HTTPS**: 使用 HTTPS 加密传输
-- **参数验证**: 严格验证所有输入参数
-- **输出编码**: 对输出数据进行编码，防止 XSS 攻击
-- **SQL 注入防护**: 使用参数绑定，避免直接拼接 SQL
-- **CSRF 防护**: 实现 CSRF Token 验证
+- **Xác thực và phân quyền**: sử dụng JWT hoặc OAuth2 để xác thực và phân quyền
+- **HTTPS**: sử dụng HTTPS để mã hóa đường truyền
+- **Kiểm tra tham số**: kiểm tra chặt chẽ mọi tham số đầu vào
+- **Mã hóa đầu ra**: mã hóa (encode) dữ liệu đầu ra để chống tấn công XSS
+- **Chống SQL injection**: Dùng parameter binding, tránh nối chuỗi SQL trực tiếp
+- **Chống CSRF**: triển khai cơ chế xác thực CSRF Token
 
-## 11. 常见问题
+## 11. Sự cố thường gặp
 
-### 11.1 跨域问题
+### 11.1 Vấn đề truy cập chéo miền (CORS)
 
-- **问题**: 浏览器同源策略导致跨域请求失败
-- **解决方案**: 实现 CORS（跨域资源共享），设置适当的响应头
+- **Vấn đề**: Chính sách cùng nguồn gốc (same-origin policy) của trình duyệt khiến request chéo miền bị thất bại
+- **Giải pháp**: Áp dụng CORS (chia sẻ tài nguyên chéo miền), thiết lập header phản hồi phù hợp
 
-### 10.2 认证失败
+### 10.2 Xác thực thất bại
 
-- **问题**: 请求未携带认证信息或认证信息无效
-- **解决方案**: 检查请求头中的认证信息，确保令牌有效
+- **Vấn đề**: request không kèm thông tin xác thực hoặc thông tin xác thực không hợp lệ
+- **Cách khắc phục**: kiểm tra thông tin xác thực trong header của request, đảm bảo token còn hiệu lực
 
-### 10.3 参数错误
+### 10.3 Tham số không hợp lệ
 
-- **问题**: 请求参数格式错误或缺少必填参数
-- **解决方案**: 检查请求参数，确保格式正确且包含所有必填参数
+- **Vấn đề**: tham số request sai định dạng hoặc thiếu tham số bắt buộc
+- **Cách khắc phục**: kiểm tra tham số request, đảm bảo đúng định dạng và có đủ mọi tham số bắt buộc
 
-### 10.4 响应数据不符合预期
+### 10.4 Dữ liệu phản hồi không như mong đợi
 
-- **问题**: 响应数据格式或内容不符合预期
-- **解决方案**: 检查 API 文档，确保请求格式正确，或联系 API 提供者
+- **Vấn đề**: định dạng hoặc nội dung dữ liệu phản hồi không như mong đợi
+- **Cách khắc phục**: xem lại tài liệu API, đảm bảo định dạng request đúng, hoặc liên hệ bên cung cấp API
 
-### 10.5 性能问题
+### 10.5 Vấn đề hiệu năng
 
-- **问题**: API 请求响应时间过长
-- **解决方案**: 优化 API 实现，使用缓存，减少数据库查询次数
+- **Vấn đề**: thời gian phản hồi của request API quá lâu
+- **Giải pháp**: Tối ưu phần hiện thực API, sử dụng cache, giảm số lần truy vấn cơ sở dữ liệu
 
-## 12. 参考资源
+## 12. Tài liệu tham khảo
 
-- [RESTful API 设计指南](https://restfulapi.net/)
-- [HTTP 状态码](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status)
-- [API 设计最佳实践](https://cloud.google.com/apis/design)
-- [JSON API 规范](https://jsonapi.org/)
-- [OpenAPI 规范](https://swagger.io/specification/)
-- [API 安全性最佳实践](https://owasp.org/www-project-api-security/)
+- [Hướng dẫn thiết kế RESTful API](https://restfulapi.net/)
+- [Mã trạng thái HTTP](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status)
+- [Thực tiễn tốt nhất khi thiết kế API](https://cloud.google.com/apis/design)
+- [Đặc tả JSON API](https://jsonapi.org/)
+- [Đặc tả OpenAPI](https://swagger.io/specification/)
+- [Thực tiễn tốt nhất về bảo mật API](https://owasp.org/www-project-api-security/)

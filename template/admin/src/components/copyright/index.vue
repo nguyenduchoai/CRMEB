@@ -20,18 +20,18 @@ export default {
     return {
       links: [
         {
-          title: '官网',
-          key: '官网',
+          title: 'Website chính thức',
+          key: 'Website chính thức',
           href: 'https://www.crmeb.com',
         },
         {
-          title: '社区',
-          key: '社区',
+          title: 'Cộng đồng',
+          key: 'Cộng đồng',
           href: 'https://www.crmeb.com/ask',
         },
         {
-          title: '文档',
-          key: '文档',
+          title: 'Tài liệu',
+          key: 'Tài liệu',
           href: 'http://doc.crmeb.com',
         },
       ],

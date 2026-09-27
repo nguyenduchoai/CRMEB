@@ -1,5 +1,5 @@
 /*
-  解析和匹配 Css 的选择器
+  Phân tích và khớp selector của Css
   github：https://github.com/jin-yufeng/Parser
   docs：https://jin-yufeng.github.io/Parser
   author：JinYufeng
@@ -44,7 +44,7 @@ class CssParser {
 	}
 	section = () => this.data.substring(this.start, this.i);
 	isLetter = c => (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
-	// 状态机
+	// Máy trạng thái (state machine)
 	Space(c) {
 		if (c == '.' || c == '#' || this.isLetter(c)) {
 			this.start = this.i;

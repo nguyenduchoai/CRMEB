@@ -1,10 +1,10 @@
-# runtime目录说明
+# Mô tả thư mục runtime
 
-此目录用于存储CRMEB系统运行期间生成的各种临时文件和运行时数据。包含以下子目录：
+Thư mục này dùng để lưu trữ các loại tệp tạm và dữ liệu runtime được tạo ra trong quá trình hệ thống CRMEB vận hành. Bao gồm các thư mục con sau:
 
-- `cache/` - 系统缓存文件
-- `log/` - 系统日志文件
-- `session/` - 用户会话数据
-- `temp/` - 临时文件
+- `cache/` - Tệp cache hệ thống
+- `log/` - Tệp log hệ thống
+- `session/` - Dữ liệu phiên (session) người dùng
+- `temp/` - Tệp tạm
 
-请勿手动删除此目录下的文件，除非明确知道其用途。
+Không xóa thủ công các tệp trong thư mục này, trừ khi bạn biết rõ công dụng của chúng.

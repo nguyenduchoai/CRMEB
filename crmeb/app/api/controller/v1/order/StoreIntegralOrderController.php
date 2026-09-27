@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -27,7 +27,7 @@ class StoreIntegralOrderController
     }
 
     /**
-     * 订单确认
+     * Xác nhận đơn hàng
      * @param Request $request
      * @return mixed
      */
@@ -38,14 +38,14 @@ class StoreIntegralOrderController
             'num'
         ], true);
         if (!$unique) {
-            return app('json')->fail('请提交购买的商品');
+            return app('json')->fail('Vui lòng chọn sản phẩm cần mua');
         }
         $user = $request->user()->toArray();
         return app('json')->success($this->services->getOrderConfirmData($user, $unique, $num));
     }
 
     /**
-     * 订单创建
+     * Tạo đơn hàng
      * @param Request $request
      * @return mixed
      * @throws \Psr\SimpleCache\InvalidArgumentException
@@ -65,35 +65,35 @@ class StoreIntegralOrderController
         ], true);
         $productInfo = $storeProductAttrValueServices->uniqueByField($unique);
         if (!$productInfo || !isset($productInfo['storeIntegral']) || !$productInfo['storeIntegral']) {
-            return app('json')->fail('商品不存在，请重新选择商品下单');
+            return app('json')->fail('Sản phẩm không tồn tại, vui lòng chọn lại sản phẩm để đặt hàng');
         }
         $productInfo = is_object($productInfo) ? $productInfo->toArray() : $productInfo;
 
         $num = (int)$num;
-        //判断积分商品限量
+        //Kiểm tra giới hạn số lượng sản phẩm đổi điểm
         $storeIntegralServices->checkoutProductStock($uid, $productInfo['product_id'], $num, $unique);
         $order = $this->services->createOrder($uid, $addressId, $mark, $request->user()->toArray(), $num, $productInfo);
-        return app('json')->status('success', '订单创建成功', ['orderId' => $order['order_id']]);
+        return app('json')->status('success', 'Tạo đơn hàng thành công', ['orderId' => $order['order_id']]);
     }
 
     /**
-     * 订单详情
+     * Chi tiết đơn hàng
      * @param Request $request
      * @param $uni
      * @return mixed
      */
     public function detail(Request $request, $uni)
     {
-        if (!strlen(trim($uni))) return app('json')->fail('参数错误');
+        if (!strlen(trim($uni))) return app('json')->fail('Tham số không hợp lệ');
         $order = $this->services->getOne(['order_id' => $uni, 'is_del' => 0]);
-        if (!$order) return app('json')->fail('订单不存在');
+        if (!$order) return app('json')->fail('Đơn hàng không tồn tại');
         $order = $order->toArray();
         $orderData = $this->services->tidyOrder($order);
         return app('json')->success($orderData);
     }
 
     /**
-     * 订单列表
+     * Danh sách đơn hàng
      * @param Request $request
      * @return mixed
      */
@@ -107,7 +107,7 @@ class StoreIntegralOrderController
     }
 
     /**
-     * 订单收货
+     * Xác nhận đã nhận hàng
      * @param Request $request
      * @return mixed
      */
@@ -116,16 +116,16 @@ class StoreIntegralOrderController
         list($order_id) = $request->postMore([
             ['order_id', ''],
         ], true);
-        if (!$order_id) return app('json')->fail('参数错误');
+        if (!$order_id) return app('json')->fail('Tham số không hợp lệ');
         $order = $this->services->takeOrder($order_id, (int)$request->uid());
         if ($order) {
-            return app('json')->success('收货成功');
+            return app('json')->success('Xác nhận nhận hàng thành công');
         } else
-            return app('json')->fail('收货失败');
+            return app('json')->fail('Nhận hàng thất bại');
     }
 
     /**
-     * 订单 查看物流
+     * Đơn hàng - Xem vận chuyển
      * @param Request $request
      * @param ExpressServices $expressServices
      * @param $uni
@@ -133,8 +133,8 @@ class StoreIntegralOrderController
      */
     public function express(Request $request, ExpressServices $expressServices, $uni)
     {
-        if (!$uni || !($order = $this->services->getUserOrderDetail($uni, $request->uid()))) return app('json')->fail('订单不存在');
-        if ($order['delivery_type'] != 'express' || !$order['delivery_id']) return app('json')->fail('快递单号不存在');
+        if (!$uni || !($order = $this->services->getUserOrderDetail($uni, $request->uid()))) return app('json')->fail('Đơn hàng không tồn tại');
+        if ($order['delivery_type'] != 'express' || !$order['delivery_id']) return app('json')->fail('Mã vận đơn không tồn tại');
         $order['price'] = (int)$order['price'];
         $order['total_price'] = (int)$order['total_price'];
         $cacheName = 'integral' . $order['order_id'] . $order['delivery_id'];
@@ -148,7 +148,7 @@ class StoreIntegralOrderController
     }
 
     /**
-     * 订单删除
+     * Xóa đơn hàng
      * @param Request $request
      * @return mixed
      */
@@ -157,12 +157,12 @@ class StoreIntegralOrderController
         [$order_id] = $request->postMore([
             ['order_id', ''],
         ], true);
-        if (!$order_id) return app('json')->fail('参数错误');
+        if (!$order_id) return app('json')->fail('Tham số không hợp lệ');
         $res = $this->services->removeOrder($order_id, (int)$request->uid());
         if ($res) {
-            return app('json')->success('删除成功');
+            return app('json')->success('Xóa thành công');
         } else {
-            return app('json')->fail('删除失败');
+            return app('json')->fail('Xóa thất bại');
         }
     }
 }

@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -23,7 +23,7 @@ export function isPicUpload(file) {
   const type = file.name.substring(file.name.lastIndexOf('.'));
   const isImage = typeArry.indexOf(type) > -1;
   if (!isImage) {
-    Message.error('上传图片格式不对');
+    Message.error('Định dạng ảnh tải lên không đúng');
   }
   return isImage;
 }
@@ -33,7 +33,7 @@ export function isVoiceUpload(file) {
   const type = file.name.substring(file.name.lastIndexOf('.'));
   const isImage = typeArry.indexOf(type) > -1;
   if (!isImage) {
-    Message.error('上传音频格式不对');
+    Message.error('Định dạng âm thanh tải lên không đúng');
   }
   return isImage;
 }
@@ -43,7 +43,7 @@ export function isVideoUpload(file) {
   const type = file.name.substring(file.name.lastIndexOf('.'));
   const isImage = typeArry.indexOf(type) > -1;
   if (!isImage) {
-    Message.error('上传文件必须为mp4格式视频');
+    Message.error('Tệp tải lên phải là video định dạng mp4');
   }
   return isImage;
 }
@@ -53,7 +53,7 @@ export function isFileUpload(file) {
   const type = file.name.substring(file.name.lastIndexOf('.'));
   const isFile = typeArry.indexOf(type) > -1;
   if (!isFile) {
-    Message.error('上传文件格式不对');
+    Message.error('Định dạng tệp tải lên không đúng');
   }
   return isFile;
 }
@@ -62,22 +62,22 @@ export function isXlsUpload(file) {
   const type = file.name.substring(file.name.lastIndexOf('.'));
   const isFile = typeArry.indexOf(type) > -1;
   if (!isFile) {
-    Message.error('上传文件格式不对');
+    Message.error('Định dạng tệp tải lên không đúng');
   }
   return isFile;
 }
 
 export function arraysEqual(arr1, arr2) {
-  // 如果两个数组的长度不同，直接返回 false
+  // Nếu độ dài 2 mảng khác nhau, trả về false ngay
   if (arr1.length !== arr2.length) {
     return false;
   }
 
-  // 将两个数组分别排序
+  // Sắp xếp 2 mảng riêng biệt
   const sortedArr1 = arr1.slice().sort();
   const sortedArr2 = arr2.slice().sort();
 
-  // 比较排序后的数组
+  // So sánh các mảng sau khi sắp xếp
   for (let i = 0; i < sortedArr1.length; i++) {
     if (sortedArr1[i] !== sortedArr2[i]) {
       return false;

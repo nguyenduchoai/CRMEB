@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,13 +17,13 @@ use crmeb\exceptions\AdminException;
 use crmeb\services\FormBuilder as Form;
 
 /**
- * 组合数据数据集
+ * Tập dữ liệu kết hợp
  * Class SystemGroupDataServices
  * @package app\services\system\config
- * @method delete($id, ?string $key = null) 删除数据
- * @method get(int $id, ?array $field = []) 获取一条数据
- * @method save(array $data) 保存数据
- * @method update($id, array $data, ?string $key = null) 修改数据
+ * @method delete($id, ?string $key = null) Xóa dữ liệu
+ * @method get(int $id, ?array $field = []) Lấy một dòng dữ liệu
+ * @method save(array $data) Lưu dữ liệu
+ * @method update($id, array $data, ?string $key = null) Dữ liệu cần chỉnh sửa
  */
 class SystemGroupDataServices extends BaseServices
 {
@@ -37,7 +37,7 @@ class SystemGroupDataServices extends BaseServices
     }
 
     /**
-     * 获取某个配置下的数据从新组合成新得数据返回
+     * Lấy dữ liệu theo một cấu hình rồi tổ hợp lại thành dữ liệu mới để trả về
      * @param string $configName
      * @param int $limit
      * @return array
@@ -67,7 +67,7 @@ class SystemGroupDataServices extends BaseServices
     }
 
     /**
-     * 获取组合数据列表
+     * Lấy danh sách dữ liệu tổ hợp
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -91,7 +91,7 @@ class SystemGroupDataServices extends BaseServices
         $param = [];
         foreach ($header as $item) {
             if ($group['config_name'] == 'order_details_images' && $item['title'] == 'order_status') {
-                $status = str_replace("\r\n", "\n", $item["param"]);//防止不兼容
+                $status = str_replace("\r\n", "\n", $item["param"]);//Ngăn không tương thích
                 $status = explode("\n", $status);
                 if (is_array($status) && !empty($status)) {
                     foreach ($status as $index => $v) {
@@ -131,7 +131,7 @@ class SystemGroupDataServices extends BaseServices
     }
 
     /**
-     * 根据gid判断出是否能再次添加组合数据
+     * Theo gid, xác định có thể thêm dữ liệu tổ hợp lần nữa không
      * @param int $gid
      * @param int $count
      * @param string $key
@@ -150,7 +150,7 @@ class SystemGroupDataServices extends BaseServices
     }
 
     /**
-     * 创建表单
+     * Tạo form
      * @param int $gid
      * @param array $groupData
      * @return mixed
@@ -166,7 +166,7 @@ class SystemGroupDataServices extends BaseServices
         foreach ($fields as $key => $value) {
             $info = [];
             if (isset($value["param"])) {
-                $value["param"] = str_replace("\r\n", "\n", $value["param"]);//防止不兼容
+                $value["param"] = str_replace("\r\n", "\n", $value["param"]);//Ngăn không tương thích
                 $params = explode("\n", $value["param"]);
                 if (is_array($params) && !empty($params)) {
                     foreach ($params as $index => $v) {
@@ -222,24 +222,24 @@ class SystemGroupDataServices extends BaseServices
 
             }
         }
-        $f[] = Form::number('sort', '排序', (int)($groupData["sort"] ?? 1))->precision(0);
-        $f[] = Form::radio('status', '状态', (int)($groupData["status"] ?? 1))->options([['value' => 1, 'label' => '显示'], ['value' => 0, 'label' => '隐藏']]);
+        $f[] = Form::number('sort', 'Thứ tự sắp xếp', (int)($groupData["sort"] ?? 1))->precision(0);
+        $f[] = Form::radio('status', 'Trạng thái', (int)($groupData["status"] ?? 1))->options([['value' => 1, 'label' => 'Hiện'], ['value' => 0, 'label' => 'Ẩn']]);
         return $f;
     }
 
     /**
-     * 获取添加组合数据表单
+     * Lấy biểu mẫu thêm dữ liệu tổ hợp
      * @param int $gid
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
      */
     public function createForm(int $gid)
     {
-        return create_form('添加数据', $this->createGroupForm($gid), $this->url('/setting/group_data'));
+        return create_form('Thêm dữ liệu', $this->createGroupForm($gid), $this->url('/setting/group_data'));
     }
 
     /**
-     * 获取修改组合数据表单
+     * Lấy biểu mẫu sửa dữ liệu tổ hợp
      * @param int $gid
      * @param int $id
      * @return array
@@ -249,13 +249,13 @@ class SystemGroupDataServices extends BaseServices
     {
         $groupData = $this->dao->get($id);
         if (!$groupData) {
-            throw new AdminException('数据不存在');
+            throw new AdminException('Dữ liệu không tồn tại');
         }
-        return create_form('编辑数据', $this->createGroupForm($gid, $groupData->toArray()), $this->url('/setting/group_data/' . $id), 'PUT');
+        return create_form('Sửa dữ liệu', $this->createGroupForm($gid, $groupData->toArray()), $this->url('/setting/group_data/' . $id), 'PUT');
     }
 
     /**
-     * 根据id获取当前记录中的数据
+     * Theo id, lấy dữ liệu trong bản ghi hiện tại
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -275,7 +275,7 @@ class SystemGroupDataServices extends BaseServices
     }
 
     /**
-     * 根据id获取数据
+     * Theo id, lấy dữ liệu
      * @param array $ids
      * @param string $field
      */
@@ -291,7 +291,7 @@ class SystemGroupDataServices extends BaseServices
     }
 
     /**
-     * 根据gid删除数据
+     * Theo gid, xóa dữ liệu
      * @param int $gid
      * @return mixed
      */
@@ -301,7 +301,7 @@ class SystemGroupDataServices extends BaseServices
     }
 
     /**
-     * 批量保存
+     * Lưu theo lô
      * @param array $params
      * @param string $config_name
      * @return bool
@@ -312,7 +312,7 @@ class SystemGroupDataServices extends BaseServices
         /** @var SystemGroupServices $systemGroupServices */
         $systemGroupServices = app()->make(SystemGroupServices::class);
         $gid = $systemGroupServices->value(['config_name' => $config_name], 'id');
-        if (!$gid) throw new AdminException('数据不存在');
+        if (!$gid) throw new AdminException('Dữ liệu không tồn tại');
         $group = $systemGroupServices->getOne(['id' => $gid], 'id,config_name,fields');
         $fields = json_decode($group['fields'], true) ?? [];
         $this->transaction(function () use ($gid, $params, $fields) {
@@ -325,7 +325,7 @@ class SystemGroupDataServices extends BaseServices
                     foreach ($fields as $index => $field) {
                         if ($key == $field["title"]) {
                             if ($param == "") {
-                                throw new AdminException('{:name}不能为空', ['name' => $field["name"]]);
+                                throw new AdminException('{:name} không được để trống', ['name' => $field["name"]]);
                             } else {
                                 $value[$key]["type"] = $field["type"];
                                 $value[$key]["value"] = $param;
@@ -349,7 +349,7 @@ class SystemGroupDataServices extends BaseServices
     }
 
     /**
-     * 检查秒杀时间段
+     * Kiểm tra khoảng thời gian flash sale
      * @param SystemGroupServices $services
      * @param $gid
      * @param $params
@@ -361,18 +361,18 @@ class SystemGroupDataServices extends BaseServices
         $name = $services->value(['id' => $gid], 'config_name');
         if ($name == 'routine_seckill_time') {
             if ($params['time'] == '') {
-                throw new AdminException('请输入开始时间');
+                throw new AdminException('Vui lòng nhập thời gian bắt đầu');
             }
             if (!$params['continued']) {
-                throw new AdminException('请输入持续时间');
+                throw new AdminException('Vui lòng nhập thời lượng');
             }
             if (!preg_match('/^(\d|1\d|2[0-3])$/', $params['time'])) {
-                throw new AdminException('请输入0-23点之前的整点数');
+                throw new AdminException('Vui lòng nhập giờ chẵn trong khoảng 0-23');
             }
             if (!preg_match('/^([1-9]|1\d|2[0-4])$/', $params['continued'])) {
-                throw new AdminException('请输入1-24点之前的整点数');
+                throw new AdminException('Vui lòng nhập giờ chẵn trong khoảng 1-24');
             }
-            if (($params['time'] + $params['continued']) > 24) throw new AdminException('开始时间+持续时间不能大于24小时');
+            if (($params['time'] + $params['continued']) > 24) throw new AdminException('Thời gian bắt đầu + thời lượng không được vượt quá 24 giờ');
             $list = $this->dao->getColumn(['gid' => $gid], 'value', 'id');
             if ($id) unset($list[$id]);
             $times = $time = [];
@@ -386,7 +386,7 @@ class SystemGroupDataServices extends BaseServices
                 $time[] = $params['time'] + $i;
             }
             foreach ($time as $v) {
-                if (in_array($v, $times)) throw new AdminException('时段已占用');
+                if (in_array($v, $times)) throw new AdminException('Khung giờ đã được sử dụng');
             }
         }
     }

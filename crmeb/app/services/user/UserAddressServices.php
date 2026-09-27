@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,8 +24,8 @@ use crmeb\exceptions\ApiException;
  *
  * Class UserAddressServices
  * @package app\services\user
- * @method getOne(array $where, ?string $field = '*', array $with = []) 获取一条数据
- * @method be($map, string $field = '') 验证数据是否存在
+ * @method getOne(array $where, ?string $field = '*', array $with = []) Lấy một dòng dữ liệu
+ * @method be($map, string $field = '') Kiểm tra dữ liệu có tồn tại không
  */
 class UserAddressServices extends BaseServices
 {
@@ -40,7 +40,7 @@ class UserAddressServices extends BaseServices
     }
 
     /**
-     * 获取单个地址
+     * Lấy một địa chỉ
      * @param $id
      * @param $field
      * @return array
@@ -51,7 +51,7 @@ class UserAddressServices extends BaseServices
     }
 
     /**
-     * 获取所有地址
+     * Lấy tất cả địa chỉ
      * @param array $where
      * @param string $field
      * @return array
@@ -65,7 +65,7 @@ class UserAddressServices extends BaseServices
     }
 
     /**
-     * 获取某个用户的所有地址
+     * Lấy tất cả địa chỉ của một người dùng
      * @param int $uid
      * @param string $field
      * @return array
@@ -79,7 +79,7 @@ class UserAddressServices extends BaseServices
     }
 
     /**
-     * 获取用户默认地址
+     * Lấy địa chỉ mặc định của người dùng
      * @param int $uid
      * @param string $field
      * @return array
@@ -93,7 +93,7 @@ class UserAddressServices extends BaseServices
     }
 
     /**
-     * 获取条数
+     * Lấy số lượng bản ghi
      * @param array $where
      * @return int
      */
@@ -103,19 +103,19 @@ class UserAddressServices extends BaseServices
     }
 
     /**
-     * 添加地址
+     * Thêm địa chỉ
      * @param array $data
      * @return bool
      */
     public function create(array $data)
     {
         if (!$this->dao->save($data))
-            throw new AdminException('添加失败');
+            throw new AdminException('Thêm thất bại');
         return true;
     }
 
     /**
-     * 修改地址
+     * Sửa địa chỉ
      * @param $id
      * @param $data
      * @return bool
@@ -123,12 +123,12 @@ class UserAddressServices extends BaseServices
     public function updateAddress(int $id, array $data)
     {
         if (!$this->dao->update($id, $data))
-            throw new AdminException('修改失败');
+            throw new AdminException('Sửa thất bại');
         return true;
     }
 
     /**
-     * 设置默认定制
+     * Đặt tùy chỉnh mặc định
      * @param int $uid
      * @param int $id
      * @return bool
@@ -136,17 +136,17 @@ class UserAddressServices extends BaseServices
     public function setDefault(int $uid, int $id)
     {
         if (!$this->getAddress($id)) {
-            throw new ApiException('地址不存在');
+            throw new ApiException('Địa chỉ không tồn tại');
         }
         if (!$this->dao->update($uid, ['is_default' => 0], 'uid'))
-            throw new ApiException('取消原来默认地址失败');
+            throw new ApiException('Hủy địa chỉ mặc định cũ thất bại');
         if (!$this->dao->update($id, ['is_default' => 1]))
-            throw new ApiException('设置默认地址失败');
+            throw new ApiException('Đặt địa chỉ mặc định thất bại');
         return true;
     }
 
     /**
-     * 获取单个地址
+     * Lấy một địa chỉ
      * @param int $id
      * @return mixed
      */
@@ -154,13 +154,13 @@ class UserAddressServices extends BaseServices
     {
         $addressInfo = $this->getAddress($id);
         if (!$addressInfo || $addressInfo['is_del'] == 1) {
-            throw new ApiException('数据不存在');
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         return $addressInfo->toArray();
     }
 
     /**
-     * 添加|修改地址
+     * Thêm|Sửa địa chỉ
      * @param int $uid
      * @param array $addressInfo
      * @return mixed
@@ -179,7 +179,7 @@ class UserAddressServices extends BaseServices
                 $where += ['city_id', '=', $addressInfo['address']['city_id']];
             }
             $res = $this->dao->getCount($where);
-            if ($res) throw new ApiException('地址已存在');
+            if ($res) throw new ApiException('Địa chỉ đã tồn tại');
         }
 
         if ($addressInfo['type'] == 1 && !$addressInfo['id']) {
@@ -192,19 +192,19 @@ class UserAddressServices extends BaseServices
             } else {
                 $cityInfo = $systemCity->getOne([['name', 'like', "%$city%"], ['parent_id', '<>', 0]]);
                 if (!$cityInfo) {
-                    throw new ApiException('收货地址格式错误');
+                    throw new ApiException('Địa chỉ nhận hàng sai định dạng');
                 }
                 $addressInfo['address']['city_id'] = $cityInfo['city_id'];
             }
         }
-        if (!isset($addressInfo['address']['city_id']) || $addressInfo['address']['city_id'] == 0) throw new ApiException('添加失败');
+        if (!isset($addressInfo['address']['city_id']) || $addressInfo['address']['city_id'] == 0) throw new ApiException('Thêm thất bại');
         $addressInfo['province'] = $addressInfo['address']['province'];
         $addressInfo['city'] = $addressInfo['address']['city'];
         $addressInfo['city_id'] = $addressInfo['address']['city_id'] ?? 0;
         $addressInfo['district'] = $addressInfo['address']['district'];
         $addressInfo['uid'] = $uid;
         unset($addressInfo['address'], $addressInfo['type']);
-        //数据验证
+        //Xác thực dữ liệu
         validate(AddressValidate::class)->check($addressInfo);
         $address_check = [];
         if ($addressInfo['id']) {
@@ -217,31 +217,31 @@ class UserAddressServices extends BaseServices
             $id = (int)$addressInfo['id'];
             unset($addressInfo['id']);
             if (!$this->dao->update($id, $addressInfo, 'id')) {
-                throw new ApiException('修改失败');
+                throw new ApiException('Sửa thất bại');
             }
             if ($addressInfo['is_default']) {
                 $this->setDefault($uid, $id);
             }
-            return ['type' => 'edit', 'msg' => '编辑地址成功', 'data' => []];
+            return ['type' => 'edit', 'msg' => 'Sửa địa chỉ thành công', 'data' => []];
         } else {
             $addressInfo['add_time'] = time();
 
-            //首次添加地址，自动设置为默认地址
+            //Thêm địa chỉ lần đầu, tự động đặt làm địa chỉ mặc định
             $addrCount = $this->getAddresCount(['uid' => $uid]);
             if (!$addrCount) $addressInfo['is_default'] = 1;
 
             if (!$address = $this->dao->save($addressInfo)) {
-                throw new ApiException('添加失败');
+                throw new ApiException('Thêm thất bại');
             }
             if ($addressInfo['is_default']) {
                 $this->setDefault($uid, (int)$address->id);
             }
-            return ['type' => 'add', 'msg' => '添加地址成功', 'data' => ['id' => $address->id]];
+            return ['type' => 'add', 'msg' => 'Thêm địa chỉ thành công', 'data' => ['id' => $address->id]];
         }
     }
 
     /**
-     * 删除地址
+     * Xóa địa chỉ
      * @param int $uid
      * @param int $id
      * @return bool
@@ -250,16 +250,16 @@ class UserAddressServices extends BaseServices
     {
         $addressInfo = $this->getAddress($id);
         if (!$addressInfo || $addressInfo['is_del'] == 1 || $addressInfo['uid'] != $uid) {
-            throw new ApiException('数据不存在');
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         if ($this->dao->update($id, ['is_del' => '1'], 'id'))
             return true;
         else
-            throw new ApiException('删除失败');
+            throw new ApiException('Xóa thất bại');
     }
 
     /**
-     * 设置默认用户地址
+     * Đặt địa chỉ mặc định của người dùng
      * @param $id
      * @param $uid
      * @return bool

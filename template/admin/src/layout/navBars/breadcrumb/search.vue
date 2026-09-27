@@ -30,7 +30,7 @@ export default {
     };
   },
   methods: {
-    // 搜索弹窗打开
+    // Mở popup tìm kiếm
     openSearch() {
       this.menuQuery = '';
       this.isShowSearch = true;
@@ -39,14 +39,14 @@ export default {
         this.$refs.layoutMenuAutocompleteRef.focus();
       });
     },
-    // 搜索弹窗关闭
+    // Đóng popup tìm kiếm
     closeSearch() {
       setTimeout(() => {
         this.$emit('close');
         this.isShowSearch = false;
       }, 150);
     },
-    // 菜单搜索数据过滤
+    // Lọc dữ liệu tìm kiếm menu
     menuSearch(queryString, cb) {
       if (!queryString) {
         let results = queryString ? this.tagsViewList.filter(this.createFilter(queryString)) : this.tagsViewList;
@@ -60,7 +60,7 @@ export default {
         });
       }
     },
-    // 菜单搜索过滤
+    // Lọc tìm kiếm menu
     createFilter(queryString) {
       return (restaurant) => {
         return (
@@ -70,7 +70,7 @@ export default {
         );
       };
     },
-    // 初始化菜单数据
+    // Khởi tạo dữ liệu menu
     initTageView() {
       if (this.tagsViewList.length > 0) return false;
       this.tagsViewList = getAllSiderMenu(this.$store.state.routesList.routesList);
@@ -78,7 +78,7 @@ export default {
       // 	if (!v.isHide) this.tagsViewList.push({ ...v });
       // });
     },
-    // 当前菜单选中时
+    // Khi menu hiện tại được chọn
     onHandleSelect(item) {
       let { path, redirect } = item;
       if (item.isLink && !item.isIframe) window.open(item.isLink);
@@ -86,7 +86,7 @@ export default {
       else this.$router.push(path);
       this.closeSearch();
     },
-    // input 失去焦点时
+    // Khi input mất focus
     onSearchBlur() {
       this.closeSearch();
     },

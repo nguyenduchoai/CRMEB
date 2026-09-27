@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -28,7 +28,7 @@ class Service extends Make
 
     /**
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/4
      */
@@ -41,7 +41,7 @@ class Service extends Make
      * @param string $name
      * @param array $options
      * @return Service
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/23
      */
@@ -65,13 +65,13 @@ class Service extends Make
      * @param string $name
      * @param string $path
      * @return $this
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
     protected function setService(string $name, string $path)
     {
-        //生成service
+        //Tạo service
         [$className, $content] = $this->getStubContent($name, $this->name);
         $this->value['NAME'] = $className;
 
@@ -87,10 +87,10 @@ class Service extends Make
     }
 
     /**
-     * 获取请求方法
+     * Lấy phương thức request
      * @param string $name
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/9/5
      */
@@ -106,11 +106,11 @@ class Service extends Make
     }
 
     /**
-     * 获取列表展示字段
+     * Lấy trường hiển thị danh sách
      * @param array $columnField
      * @param array $options
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
@@ -118,7 +118,7 @@ class Service extends Make
     {
         $select = [];
         foreach ($columnField as $item) {
-            //处理查询字段
+            //Xử lý trường truy vấn
             if (in_array($item['type'], [
                 FormTypeEnum::FRAME_IMAGES,
                 FormTypeEnum::DATE_TIME_RANGE,
@@ -145,13 +145,13 @@ class Service extends Make
      * @param array $hasOneFields
      * @param array $options
      * @return Service
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
     protected function setServiceContent(array $field, string $name, array $columnField, array $hasOneFields, array $options = [])
     {
-        //生成form表单
+        //Tạo form
         $var = [
             '{%KEY%}',
             '{%DATE%}',
@@ -172,17 +172,17 @@ class Service extends Make
             $this->getWithFieldsContent($hasOneFields)
         ];
 
-        //替换模板中的变量
+        //Thay thế biến trong mẫu
         $this->value['CONTENT_PHP'] = str_replace($var, $value, $this->getActionContent($name));
 
         return $this;
     }
 
     /**
-     * 获取表单创建内容
+     * Lấy nội dung tạo form
      * @param array $field
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
@@ -204,7 +204,7 @@ class Service extends Make
                 $fieldPre = $item['field'];
             }
 
-            //处理表单信息
+            //Xử lý thông tin form
             switch ($item['type']) {
                 case FormTypeEnum::FRAME_IMAGE_ONE:
                     $from[] = $this->tab(2) . $this->getframeImageOnePhpContent($item['field'], $item['name']) . ';';
@@ -247,10 +247,10 @@ CONTENT;
     }
 
     /**
-     * 获取关联查询内容
+     * Lấy nội dung truy vấn liên kết
      * @param array $hasOneFields
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/8/12
      */
@@ -272,11 +272,11 @@ CONTENT;
     }
 
     /**
-     * 获取选项内容
+     * Lấy nội dung tùy chọn
      * @param bool $isOption
      * @param array $option
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/23
      */
@@ -302,7 +302,7 @@ CONTENT;
     }
 
     /**
-     * 单图获取formphp内容
+     * Lấy nội dung formphp cho ảnh đơn
      * @param string $field
      * @param string $name
      * @param bool $required
@@ -310,7 +310,7 @@ CONTENT;
      * @param string $width
      * @param string $height
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/14
      */
@@ -325,7 +325,7 @@ CONTENT;
     }
 
     /**
-     * 多图获取formphp内容
+     * Lấy nội dung formphp cho nhiều ảnh
      * @param string $field
      * @param string $name
      * @param bool $required
@@ -334,7 +334,7 @@ CONTENT;
      * @param string $width
      * @param string $height
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/14
      */
@@ -360,7 +360,7 @@ CONTENT;
      * @param string $name
      * @param string $path
      * @return string
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/23
      */
@@ -375,7 +375,7 @@ CONTENT;
     /**
      * @param string $type
      * @return string|string[]
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/3/13
      */

@@ -1,59 +1,59 @@
-# UniApp API 开发流程文档
+# Tài liệu quy trình phát triển API UniApp
 
-## 1. 概述
+## 1. Tổng quan
 
-本文档描述了 CRMEB 项目中 UniApp 移动端的 API 开发流程，包括 API 接口设计、请求流程、响应处理、错误处理等，旨在规范 API 开发，提高开发效率和代码质量。
+Tài liệu này mô tả quy trình phát triển API cho phía di động UniApp trong dự án CRMEB, bao gồm thiết kế API, luồng request, xử lý response, xử lý lỗi, v.v., nhằm chuẩn hóa việc phát triển API, nâng cao hiệu quả phát triển và chất lượng code.
 
-## 2. API 目录结构
+## 2. Cấu trúc thư mục API
 
 ```
 template/uni-app/api/
-├── activity.js           # 活动相关接口
-├── admin.js              # 管理相关接口
-├── api.js                # 基础 API 配置
-├── kefu.js               # 客服相关接口
-├── lottery.js            # 抽奖相关接口
-├── order.js              # 订单相关接口
-├── public.js             # 公共接口
-├── store.js              # 商城相关接口
-└── user.js               # 用户相关接口
+├── activity.js           # API liên quan đến hoạt động
+├── admin.js              # API liên quan đến quản lý
+├── api.js                # Cấu hình API cơ sở
+├── kefu.js               # API liên quan đến CSKH
+├── lottery.js            # API liên quan đến quay thưởng
+├── order.js              # API liên quan đến đơn hàng
+├── public.js             # API chung
+├── store.js              # API liên quan đến cửa hàng
+└── user.js               # API liên quan đến người dùng
 ```
 
-## 3. 基础 API 配置 (api.js)
+## 3. Cấu hình API cơ bản (api.js)
 
 ```javascript
-// 基础 API 配置
+// Cấu hình API cơ sở
 const baseURL = 'https://api.crmeb.net';
 
-// 请求超时时间
+// Thời gian timeout của request
 const timeout = 10000;
 
-// 请求拦截器
+// Interceptor cho request
 const requestInterceptor = (config) => {
-  // 添加 token
+  // Thêm token
   const token = uni.getStorageSync('token');
   if (token) {
     config.header['Authorization'] = `Bearer ${token}`;
   }
   
-  // 添加设备信息
+  // Thêm thông tin thiết bị
   config.header['X-Device-Type'] = uni.getSystemInfoSync().platform;
   
   return config;
 };
 
-// 响应拦截器
+// Interceptor cho response
 const responseInterceptor = (response) => {
   const { data } = response;
   
-  // 统一处理错误
+  // Xử lý lỗi tập trung
   if (data.code !== 200) {
     uni.showToast({
-      title: data.message || '请求失败',
+      title: data.message || 'Yêu cầu thất bại',
       icon: 'none'
     });
     
-    // 处理登录过期
+    // Xử lý phiên đăng nhập hết hạn
     if (data.code === 401) {
       uni.redirectTo({
         url: '/pages/login/index'
@@ -66,17 +66,17 @@ const responseInterceptor = (response) => {
   return data;
 };
 
-// 错误处理
+// Xử lý lỗi
 const errorHandler = (error) => {
   uni.showToast({
-    title: '网络错误，请稍后重试',
+    title: 'Lỗi mạng, vui lòng thử lại sau',
     icon: 'none'
   });
   
   return Promise.reject(error);
 };
 
-// 导出配置
+// Export cấu hình
 export default {
   baseURL,
   timeout,
@@ -86,9 +86,9 @@ export default {
 };
 ```
 
-## 4. API 接口封装
+## 4. Đóng gói API
 
-### 4.1 通用请求方法
+### 4.1 Phương thức request dùng chung
 
 ```javascript
 // utils/request.js
@@ -100,10 +100,10 @@ class Request {
     this.timeout = apiConfig.timeout;
   }
   
-  // 通用请求方法
+  // Phương thức request dùng chung
   request(options) {
     return new Promise((resolve, reject) => {
-      // 应用请求拦截器
+      // Áp dụng interceptor cho request
       if (apiConfig.requestInterceptor) {
         options = apiConfig.requestInterceptor(options);
       }
@@ -117,7 +117,7 @@ class Request {
         },
         timeout: this.timeout,
         success: (response) => {
-          // 应用响应拦截器
+          // Áp dụng interceptor cho response
           if (apiConfig.responseInterceptor) {
             try {
               const result = apiConfig.responseInterceptor(response);
@@ -130,7 +130,7 @@ class Request {
           }
         },
         fail: (error) => {
-          // 应用错误处理器
+          // Áp dụng bộ xử lý lỗi
           if (apiConfig.errorHandler) {
             apiConfig.errorHandler(error);
           }
@@ -140,7 +140,7 @@ class Request {
     });
   }
   
-  // GET 请求
+  // GET Gửi yêu cầu
   get(url, params = {}) {
     return this.request({
       url,
@@ -149,7 +149,7 @@ class Request {
     });
   }
   
-  // POST 请求
+  // POST Gửi yêu cầu
   post(url, data = {}) {
     return this.request({
       url,
@@ -158,7 +158,7 @@ class Request {
     });
   }
   
-  // PUT 请求
+  // PUT Gửi yêu cầu
   put(url, data = {}) {
     return this.request({
       url,
@@ -167,7 +167,7 @@ class Request {
     });
   }
   
-  // DELETE 请求
+  // DELETE Gửi yêu cầu
   delete(url, params = {}) {
     return this.request({
       url,
@@ -180,54 +180,54 @@ class Request {
 export default new Request();
 ```
 
-### 4.2 业务接口封装
+### 4.2 Đóng gói API nghiệp vụ
 
 ```javascript
 // api/user.js
 import request from '../utils/request';
 
-// 用户相关接口
+// API liên quan đến người dùng
 export default {
-  // 登录
+  // Đăng nhập
   login: (data) => request.post('/api/user/login', data),
   
-  // 注册
+  // Đăng ký
   register: (data) => request.post('/api/user/register', data),
   
-  // 获取用户信息
+  // Lấy thông tin người dùng
   getUserInfo: () => request.get('/api/user/info'),
   
-  // 更新用户信息
+  // Cập nhật thông tin người dùng
   updateUserInfo: (data) => request.put('/api/user/info', data),
   
-  // 修改密码
+  // Đổi mật khẩu
   changePassword: (data) => request.post('/api/user/password', data),
   
-  // 获取地址列表
+  // Lấy danh sách địa chỉ
   getAddressList: () => request.get('/api/user/address'),
   
-  // 添加地址
+  // Thêm địa chỉ
   addAddress: (data) => request.post('/api/user/address', data),
   
-  // 更新地址
+  // Cập nhật địa chỉ
   updateAddress: (id, data) => request.put(`/api/user/address/${id}`, data),
   
-  // 删除地址
+  // Xóa địa chỉ
   deleteAddress: (id) => request.delete(`/api/user/address/${id}`),
   
-  // 设置默认地址
+  // Đặt địa chỉ mặc định
   setDefaultAddress: (id) => request.put(`/api/user/address/${id}/default`)
 };
 ```
 
-## 5. API 调用示例
+## 5. Ví dụ gọi API
 
-### 5.1 页面中调用 API
+### 5.1 Gọi API trong trang
 
 ```vue
 <template>
   <view class="user-info">
-    <view v-if="loading">加载中...</view>
+    <view v-if="loading">Đang tải...</view>
     <view v-else>
       <image :src="userInfo.avatar" class="avatar"></image>
       <view class="name">{{ userInfo.nickname }}</view>
@@ -258,7 +258,7 @@ export default {
         const res = await userApi.getUserInfo();
         this.userInfo = res.data;
       } catch (error) {
-        console.error('获取用户信息失败:', error);
+        console.error('Lấy thông tin người dùng thất bại:', error);
       } finally {
         this.loading = false;
       }
@@ -268,7 +268,7 @@ export default {
 </script>
 ```
 
-### 5.2 组件中调用 API
+### 5.2 Gọi API trong component
 
 ```vue
 <template>
@@ -278,9 +278,9 @@ export default {
       <view class="detail">{{ item.province }}{{ item.city }}{{ item.district }}{{ item.detail }}</view>
     </view>
     <view class="address-actions">
-      <button @click="editAddress(item)">编辑</button>
-      <button @click="deleteAddress(item.id)">删除</button>
-      <button v-if="!item.is_default" @click="setDefault(item.id)">设为默认</button>
+      <button @click="editAddress(item)">Sửa</button>
+      <button @click="deleteAddress(item.id)">Xóa</button>
+      <button v-if="!item.is_default" @click="setDefault(item.id)">Đặt làm mặc định</button>
     </view>
   </view>
 </template>
@@ -305,7 +305,7 @@ export default {
         const res = await userApi.getAddressList();
         this.addressList = res.data;
       } catch (error) {
-        console.error('获取地址列表失败:', error);
+        console.error('Lấy danh sách địa chỉ thất bại:', error);
       }
     },
     
@@ -317,19 +317,19 @@ export default {
     
     async deleteAddress(id) {
       uni.showModal({
-        title: '提示',
-        content: '确定要删除这个地址吗？',
+        title: 'Thông báo',
+        content: 'Bạn có chắc muốn xóa địa chỉ này không?',
         success: async (res) => {
           if (res.confirm) {
             try {
               await userApi.deleteAddress(id);
               uni.showToast({
-                title: '删除成功',
+                title: 'Xóa thành công',
                 icon: 'success'
               });
               this.getAddressList();
             } catch (error) {
-              console.error('删除地址失败:', error);
+              console.error('Xóa địa chỉ thất bại:', error);
             }
           }
         }
@@ -340,12 +340,12 @@ export default {
       try {
         await userApi.setDefaultAddress(id);
         uni.showToast({
-          title: '设置成功',
+          title: 'Cài đặt thành công',
           icon: 'success'
         });
         this.getAddressList();
       } catch (error) {
-        console.error('设置默认地址失败:', error);
+        console.error('Đặt địa chỉ mặc định thất bại:', error);
       }
     }
   }
@@ -353,120 +353,120 @@ export default {
 </script>
 ```
 
-## 6. API 开发最佳实践
+## 6. Thực tiễn tốt nhất khi phát triển API
 
-### 6.1 命名规范
+### 6.1 Quy tắc đặt tên
 
-- **文件命名**: 小写字母，单词之间用下划线分隔，如 `user.js`
-- **方法命名**: 驼峰命名法，如 `getUserInfo`
-- **URL 命名**: 小写字母，单词之间用连字符分隔，如 `/api/user/info`
-- **参数命名**: 驼峰命名法，与后端保持一致
+- **Đặt tên file**: Chữ thường, các từ phân tách bằng dấu gạch dưới, ví dụ `user.js`
+- **Đặt tên phương thức**: Kiểu camelCase, ví dụ `getUserInfo`
+- **Đặt tên URL**: Chữ thường, các từ phân tách bằng dấu gạch nối, ví dụ `/api/user/info`
+- **Đặt tên tham số**: Kiểu camelCase, thống nhất với backend
 
-### 6.2 接口设计规范
+### 6.2 Quy chuẩn thiết kế API
 
-- **RESTful 风格**: 遵循 RESTful API 设计规范
-- **版本控制**: 在 URL 中包含版本号，如 `/api/v1/user/info`
-- **统一响应格式**: 所有接口返回统一的响应格式
-- **错误处理**: 统一的错误码和错误信息
+- **Phong cách RESTful**: Tuân theo quy chuẩn thiết kế RESTful API
+- **Quản lý phiên bản**: Đưa số phiên bản vào URL, ví dụ `/api/v1/user/info`
+- **Định dạng response thống nhất**: Tất cả API đều trả về cùng một định dạng response
+- **Xử lý lỗi**: Mã lỗi và thông báo lỗi thống nhất
 
-### 6.3 请求规范
+### 6.3 Quy chuẩn request
 
-- **请求方法**: 根据操作类型选择合适的 HTTP 方法
-  - GET: 获取资源
-  - POST: 创建资源
-  - PUT: 更新资源
-  - DELETE: 删除资源
-- **请求头**: 统一添加必要的请求头，如 Authorization、Content-Type 等
-- **参数传递**: 根据请求方法选择合适的参数传递方式
-  - GET: 查询参数
-  - POST/PUT: 请求体
-  - DELETE: 查询参数或路径参数
+- **Phương thức request**: Chọn phương thức HTTP phù hợp theo loại thao tác
+  - GET: Lấy tài nguyên
+  - POST: Tạo tài nguyên
+  - PUT: Cập nhật tài nguyên
+  - DELETE: Xóa tài nguyên
+- **Header request**: Thống nhất thêm các header cần thiết, như Authorization, Content-Type, v.v.
+- **Truyền tham số**: Chọn cách truyền tham số phù hợp theo phương thức request
+  - GET: Tham số truy vấn (query)
+  - POST/PUT: Body của request
+  - DELETE: Tham số truy vấn hoặc tham số đường dẫn (path)
 
-### 6.4 响应规范
+### 6.4 Quy chuẩn response
 
-- **成功响应**: 
+- **Response thành công**: 
   ```json
   {
     "code": 200,
-    "message": "请求成功",
+    "message": "Yêu cầu thành công",
     "data": {}
   }
   ```
-- **失败响应**: 
+- **Response thất bại**: 
   ```json
   {
     "code": 400,
-    "message": "请求失败",
+    "message": "Yêu cầu thất bại",
     "data": {}
   }
   ```
 
-### 6.5 错误处理规范
+### 6.5 Quy chuẩn xử lý lỗi
 
-- **网络错误**: 统一处理网络错误，如超时、断网等
-- **业务错误**: 根据错误码处理不同的业务错误
-- **登录过期**: 统一处理登录过期，跳转到登录页面
-- **错误提示**: 统一的错误提示方式，使用 uni.showToast
+- **Lỗi mạng**: Xử lý thống nhất lỗi mạng, như hết thời gian chờ (timeout), mất kết nối mạng, v.v.
+- **Lỗi nghiệp vụ**: Xử lý các lỗi nghiệp vụ khác nhau theo mã lỗi
+- **Hết hạn đăng nhập**: Xử lý thống nhất trường hợp hết hạn đăng nhập, chuyển hướng tới trang đăng nhập
+- **Thông báo lỗi**: Cách hiển thị thông báo lỗi thống nhất, dùng uni.showToast
 
-## 7. API 性能优化
+## 7. Tối ưu hiệu năng API
 
-### 7.1 请求优化
+### 7.1 Tối ưu request
 
-- **合并请求**: 多个相关请求合并为一个
-- **缓存策略**: 对不经常变化的数据使用缓存
-- **请求防抖**: 避免频繁发送相同的请求
-- **批量操作**: 支持批量操作，减少请求次数
+- **Gộp request**: Gộp nhiều request liên quan thành một
+- **Chiến lược cache**: Dùng cache cho dữ liệu ít thay đổi
+- **Debounce request**: Tránh gửi liên tục các request giống nhau
+- **Thao tác hàng loạt**: Hỗ trợ thao tác hàng loạt, giảm số lần gửi request
 
-### 7.2 响应优化
+### 7.2 Tối ưu response
 
-- **数据结构优化**: 优化响应数据结构，减少数据传输量
-- **分页处理**: 对列表数据使用分页
-- **字段筛选**: 支持字段筛选，只返回需要的字段
-- **压缩传输**: 使用 gzip 压缩传输数据
+- **Tối ưu cấu trúc dữ liệu**: Tối ưu cấu trúc dữ liệu response, giảm lượng dữ liệu truyền tải
+- **Phân trang**: Dùng phân trang cho dữ liệu dạng danh sách
+- **Lọc trường**: Hỗ trợ lọc trường, chỉ trả về các trường cần thiết
+- **Nén khi truyền tải**: Dùng gzip để nén dữ liệu truyền tải
 
-### 7.3 代码优化
+### 7.3 Tối ưu code
 
-- **模块化**: 按业务模块划分 API 文件
-- **复用代码**: 提取通用的请求逻辑
-- **减少冗余**: 避免重复的 API 调用
-- **代码可读性**: 保持代码清晰易读
+- **Mô-đun hóa**: Chia file API theo mô-đun nghiệp vụ
+- **Tái sử dụng code**: Tách riêng logic request dùng chung
+- **Giảm dư thừa**: Tránh gọi API trùng lặp
+- **Tính dễ đọc của code**: Giữ code rõ ràng, dễ đọc
 
-## 8. 常见问题
+## 8. Sự cố thường gặp
 
-### 8.1 跨域问题
+### 8.1 Vấn đề truy cập chéo miền (CORS)
 
-- **问题**: 开发环境中遇到跨域问题
-- **解决方案**: 在本地开发服务器中配置跨域代理
+- **Vấn đề**: Gặp vấn đề cross-domain trong môi trường phát triển
+- **Giải pháp**: Cấu hình proxy cross-domain trên máy chủ phát triển cục bộ
 
-### 8.2 Token 过期问题
+### 8.2 Vấn đề Token hết hạn
 
-- **问题**: Token 过期后请求失败
-- **解决方案**: 在响应拦截器中处理 Token 过期，跳转到登录页面
+- **Vấn đề**: Request thất bại sau khi Token hết hạn
+- **Giải pháp**: Xử lý Token hết hạn trong interceptor response, chuyển hướng tới trang đăng nhập
 
-### 8.3 请求超时问题
+### 8.3 Vấn đề request bị timeout
 
-- **问题**: 网络不稳定时请求超时
-- **解决方案**: 设置合理的超时时间，添加网络状态检测
+- **Vấn đề**: Request bị timeout khi mạng không ổn định
+- **Giải pháp**: Đặt thời gian timeout hợp lý, bổ sung kiểm tra trạng thái mạng
 
-### 8.4 重复请求问题
+### 8.4 Vấn đề request trùng lặp
 
-- **问题**: 快速点击按钮导致重复请求
-- **解决方案**: 添加请求防抖或锁机制
+- **Vấn đề**: Bấm nút nhanh liên tục dẫn đến request trùng lặp
+- **Giải pháp**: Thêm debounce cho request hoặc cơ chế khóa
 
-### 8.5 数据缓存问题
+### 8.5 Vấn đề cache dữ liệu
 
-- **问题**: 缓存数据与服务器数据不一致
-- **解决方案**: 合理设置缓存过期时间，提供手动刷新机制
+- **Vấn đề**: Dữ liệu cache không khớp với dữ liệu trên máy chủ
+- **Giải pháp**: Đặt thời gian hết hạn cache hợp lý, cung cấp cơ chế làm mới thủ công
 
-## 9. 参考资源
+## 9. Tài liệu tham khảo
 
-- [UniApp 网络请求文档](https://uniapp.dcloud.io/api/request/request)
-- [RESTful API 设计指南](https://restfulapi.cn/)
-- [Axios 文档](https://axios-http.com/zh/docs/intro)
-- [HTTP 方法](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods)
+- [Tài liệu request mạng của UniApp](https://uniapp.dcloud.io/api/request/request)
+- [Hướng dẫn thiết kế RESTful API](https://restfulapi.cn/)
+- [Tài liệu Axios](https://axios-http.com/zh/docs/intro)
+- [Phương thức HTTP](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Methods)
 
-## 10. 总结
+## 10. Tổng kết
 
-本文档描述了 CRMEB 项目中 UniApp 移动端的 API 开发流程，包括 API 接口设计、请求流程、响应处理、错误处理等。遵循本文档的开发规范，可以提高 API 开发的效率和质量，确保应用的稳定性和可靠性。
+Tài liệu này mô tả quy trình phát triển API cho phía di động UniApp trong dự án CRMEB, bao gồm thiết kế API, luồng request, xử lý response, xử lý lỗi, v.v. Tuân theo các quy chuẩn phát triển trong tài liệu này sẽ giúp nâng cao hiệu quả và chất lượng phát triển API, đảm bảo tính ổn định và độ tin cậy của ứng dụng.
 
-随着业务的发展和技术的演进，API 开发流程也需要不断优化和调整，以适应新的业务需求和技术挑战。
+Cùng với sự phát triển của nghiệp vụ và sự tiến bộ của công nghệ, quy trình phát triển API cũng cần liên tục được tối ưu và điều chỉnh để đáp ứng các yêu cầu nghiệp vụ và thách thức kỹ thuật mới.

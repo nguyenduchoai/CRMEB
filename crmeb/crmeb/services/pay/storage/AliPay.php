@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,7 +20,7 @@ use crmeb\services\pay\PayInterface;
 use crmeb\services\AliPayService;
 
 /**
- * 支付宝支付
+ * Thanh toán Alipay
  * Class AliPay
  * @package crmeb\services\pay\storage
  */
@@ -33,7 +33,7 @@ class AliPay extends BasePay implements PayInterface
     }
 
     /**
-     * 创建订单发起支付
+     * Tạo đơn hàng và khởi tạo thanh toán
      * @param string $orderId
      * @param string $totalFee
      * @param string $attach
@@ -54,7 +54,7 @@ class AliPay extends BasePay implements PayInterface
     }
 
     /**
-     * 企业支付到零钱
+     * Doanh nghiệp trả tiền vào số dư
      * @param string $openid
      * @param string $orderId
      * @param string $amount
@@ -67,7 +67,7 @@ class AliPay extends BasePay implements PayInterface
     }
 
     /**
-     * 退款
+     * Hoàn tiền
      * @param string $outTradeNo
      * @param string $totalAmount
      * @param string $refund_id
@@ -80,7 +80,7 @@ class AliPay extends BasePay implements PayInterface
     }
 
     /**
-     * 查询退款
+     * Truy vấn hoàn tiền
      * @param string $outTradeNo
      * @param string $outRequestNo
      * @param array $other
@@ -92,7 +92,7 @@ class AliPay extends BasePay implements PayInterface
     }
 
     /**
-     * 支付异步回调
+     * Callback thanh toán bất đồng bộ
      * @return mixed|string
      */
     public function handleNotify()

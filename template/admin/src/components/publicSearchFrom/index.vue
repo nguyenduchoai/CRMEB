@@ -18,8 +18,8 @@
               value-format="yyyy/MM/dd"
               type="daterange"
               range-separator="-"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              start-placeholder="Ngày bắt đầu"
+              end-placeholder="Ngày kết thúc"
               style="width: 200px"
             ></el-date-picker>
           </el-form-item>
@@ -32,8 +32,8 @@
           </el-form-item>
         </el-col>
         <el-col>
-          <el-button class="mr">导出</el-button>
-          <span class="Refresh">刷新</span>
+          <el-button class="mr">Xuất</el-button>
+          <span class="Refresh">Làm mới</span>
         </el-col>
       </el-row>
       <el-row :gutter="24" class="withdrawal" v-if="isExist.existTwo">
@@ -44,7 +44,7 @@
           <TreeSelect v-model="paymentTxt" :data="treeData.payment" class="perW160" @change="changeTree" />
         </el-col>
         <el-col :span="6" class="item">
-          <el-input search enter-button placeholder="微信名称、姓名、支付宝账号、银行卡号" element-id="name" />
+          <el-input search enter-button placeholder="Tên WeChat, họ tên, tài khoản Alipay, số thẻ ngân hàng" element-id="name" />
         </el-col>
       </el-row>
     </el-form>
@@ -95,9 +95,9 @@ export default {
   },
   data() {
     return {
-      date: '全部',
-      withdrawalTxt: '提现状态',
-      paymentTxt: '提现方式',
+      date: 'Tất cả',
+      withdrawalTxt: 'Trạng thái rút tiền',
+      paymentTxt: 'Phương thức rút tiền',
     };
   },
   computed: {},

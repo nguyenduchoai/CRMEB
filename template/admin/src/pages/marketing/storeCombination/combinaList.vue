@@ -10,7 +10,7 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="时间选择：">
+          <el-form-item label="Chọn thời gian:">
             <el-date-picker
               clearable
               v-model="timeVal"
@@ -19,24 +19,24 @@
               @change="onchangeTime"
               format="yyyy/MM/dd"
               value-format="yyyy/MM/dd"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              start-placeholder="Ngày bắt đầu"
+              end-placeholder="Ngày kết thúc"
               :picker-options="pickerOptions"
               style="width: 250px"
               class="mr20"
             ></el-date-picker>
           </el-form-item>
-          <el-form-item label="拼团状态：">
+          <el-form-item label="Trạng thái mua chung:">
             <el-select
               v-model="formValidate.status"
-              placeholder="请选择"
+              placeholder="Vui lòng chọn"
               clearable
               @change="userSearchs"
               class="form_content_width"
             >
-              <el-option :value="1" label="进行中"></el-option>
-              <el-option :value="2" label="已完成"></el-option>
-              <el-option :value="3" label="未完成"></el-option>
+              <el-option :value="1" label="Đang diễn ra"></el-option>
+              <el-option :value="2" label="Đã hoàn thành"></el-option>
+              <el-option :value="3" label="Chưa hoàn thành"></el-option>
             </el-select>
           </el-form-item>
         </el-form>
@@ -48,58 +48,58 @@
         :data="tableList"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
-        <el-table-column label="头像" min-width="90">
+        <el-table-column label="Ảnh đại diện" min-width="90">
           <template slot-scope="scope">
             <div class="tabBox_img" v-viewer>
               <img v-lazy="scope.row.avatar" />
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="开团团长" min-width="150">
+        <el-table-column label="Trưởng nhóm" min-width="150">
           <template slot-scope="scope">
             <span> {{ scope.row.nickname + ' / ' + scope.row.uid }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="开团时间" min-width="150">
+        <el-table-column label="Thời gian mở nhóm" min-width="150">
           <template slot-scope="scope">
             <span> {{ scope.row.add_time | formatDate }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="拼团商品" min-width="180">
+        <el-table-column label="Sản phẩm mua chung" min-width="180">
           <template slot-scope="scope">
             <span> {{ scope.row.title + ' / ' + scope.row.cid }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="几人团" min-width="80">
+        <el-table-column label="Quy mô nhóm" min-width="80">
           <template slot-scope="scope">
             <span> {{ scope.row.people }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="几人参加" min-width="80">
+        <el-table-column label="Số người tham gia" min-width="80">
           <template slot-scope="scope">
             <span> {{ scope.row.count_people }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="结束时间" min-width="120">
+        <el-table-column label="Thời gian kết thúc" min-width="120">
           <template slot-scope="scope">
             <span> {{ scope.row.stop_time | formatDate }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="状态" min-width="120">
+        <el-table-column label="Trạng thái" min-width="120">
           <template slot-scope="scope">
-            <el-tag type="info" v-show="scope.row.status === 1">进行中</el-tag>
-            <el-tag v-show="scope.row.status === 2">已完成</el-tag>
-            <el-tag type="warning" v-show="scope.row.status === 3">未完成</el-tag>
+            <el-tag type="info" v-show="scope.row.status === 1">Đang diễn ra</el-tag>
+            <el-tag v-show="scope.row.status === 2">Đã hoàn thành</el-tag>
+            <el-tag type="warning" v-show="scope.row.status === 3">Chưa hoàn thành</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="150">
+        <el-table-column label="Thao tác" fixed="right" width="150">
           <template slot-scope="scope">
-            <a v-db-click @click="Info(scope.row)">查看详情</a>
+            <a v-db-click @click="Info(scope.row)">Xem chi tiết</a>
             <el-divider v-if="scope.row.status === 1" direction="vertical"></el-divider>
-            <a v-if="scope.row.status === 1" v-db-click @click="joinCombination(scope.row)">立即成团</a>
+            <a v-if="scope.row.status === 1" v-db-click @click="joinCombination(scope.row)">Thành nhóm ngay</a>
           </template>
         </el-table-column>
       </el-table>
@@ -114,13 +114,13 @@
       </div>
     </el-card>
 
-    <!-- 详情模态框-->
-    <el-dialog :visible.sync="modals" class="tableBox" title="查看详情" :close-on-click-modal="false" width="720px">
+    <!-- Modal chi tiết-->
+    <el-dialog :visible.sync="modals" class="tableBox" title="Xem chi tiết" :close-on-click-modal="false" width="720px">
       <el-table
         ref="selection"
         :data="tabList3"
         v-loading="loading2"
-        empty-text="暂无数据"
+        empty-text="Chưa có dữ liệu"
         highlight-current-row
         max-height="600"
         size="small"
@@ -130,32 +130,32 @@
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="用户名称" min-width="100">
+        <el-table-column label="Tên người dùng" min-width="100">
           <template slot-scope="scope">
             <span> {{ scope.row.nickname + ' / ' + scope.row.uid }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="用户头像" min-width="150">
+        <el-table-column label="Ảnh đại diện người dùng" min-width="150">
           <template slot-scope="scope">
             <div class="tabBox_img" v-viewer>
               <img v-lazy="scope.row.avatar" />
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="订单编号" min-width="100">
+        <el-table-column label="Mã đơn hàng" min-width="100">
           <template slot-scope="scope">
             <span> {{ scope.row.order_id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="金额" min-width="100">
+        <el-table-column label="Số tiền" min-width="100">
           <template slot-scope="scope">
             <span> {{ scope.row.total_price }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="订单状态" min-width="100">
+        <el-table-column label="Trạng thái đơn hàng" min-width="100">
           <template slot-scope="scope">
-            <el-tag v-show="scope.row.is_refund != 0">已退款</el-tag>
-            <el-tag type="danger" v-show="scope.row.is_refund === 0">未退款</el-tag>
+            <el-tag v-show="scope.row.is_refund != 0">Đã hoàn tiền</el-tag>
+            <el-tag type="danger" v-show="scope.row.is_refund === 0">Chưa hoàn tiền</el-tag>
           </template>
         </el-table-column>
       </el-table>
@@ -214,7 +214,7 @@ export default {
     this.getStatistics();
   },
   methods: {
-    // 拼团统计
+    // Thống kê mua chung
     getStatistics() {
       statisticsApi()
         .then(async (res) => {
@@ -225,7 +225,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 查看详情
+    // Xem chi tiết
     Info(row) {
       this.modals = true;
       this.rows = row;
@@ -241,9 +241,9 @@ export default {
         });
     },
     joinCombination(row) {
-      this.$confirm('确认成团？', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Xác nhận thành nhóm?', 'Thông báo', {
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
         type: 'warning',
       })
         .then(() => {
@@ -259,11 +259,11 @@ export default {
         .catch(() => {
           this.$message({
             type: 'info',
-            message: '已取消',
+            message: 'Đã hủy',
           });
         });
     },
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e || [];
       if (this.timeVal[0] === '') {
@@ -274,14 +274,14 @@ export default {
       this.formValidate.page = 1;
       this.getList();
     },
-    // 选择时间
+    // Chọn giờ
     selectChange(tab) {
       this.formValidate.page = 1;
       this.formValidate.data = tab;
       this.timeVal = [];
       this.getList();
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       this.formValidate.status = this.formValidate.status || '';
@@ -301,7 +301,7 @@ export default {
       this.formValidate.page = index;
       this.getList();
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.formValidate.page = 1;
       this.getList();

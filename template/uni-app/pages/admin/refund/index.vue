@@ -2,19 +2,19 @@
 	<view class="refund">
 		<view class="money-section">
 			<view class="acea-row row-middle item">
-				<view class="">退款金额</view>
+				<view class="">Số tiền hoàn</view>
 				<input v-model="refundMoney" class="input" type="text" />
 				<text class="iconfont icon-ic_edit"></text>
 			</view>
 			<view class="acea-row row-middle item">
-				<view class="">退款类型</view>
+				<view class="">Loại hoàn tiền</view>
 				<view class="acea-row row-right radio-group">
 					<view class="acea-row row-middle radio-item" :class="{ on: !isSplit}" @click="refundTypeChange(0)">
-						<text class="iconfont" :class="isSplit ?'icon-ic_unselect' :'icon-ic_Selected'"></text>整单退款
+						<text class="iconfont" :class="isSplit ?'icon-ic_unselect' :'icon-ic_Selected'"></text>Hoàn tiền cả đơn
 					</view>
 					<view class="acea-row row-middle radio-item" :class="{ on: isSplit}" @click="refundTypeChange(1)"
 						v-if="splitGoods.length > 1">
-						<text class="iconfont" :class="isSplit ?'icon-ic_Selected' :'icon-ic_unselect'"></text>分单退款
+						<text class="iconfont" :class="isSplit ?'icon-ic_Selected' :'icon-ic_unselect'"></text>Hoàn tiền tách đơn
 					</view>
 				</view>
 			</view>
@@ -23,11 +23,11 @@
 		<view class="footer acea-row row-middle">
 			<view class="all acea-row row-middle" v-if="isSplit" @click="allChange">
 				<text class="iconfont" :class="isAll ?'icon-a-ic_CompleteSelect' :'icon-ic_unselect'"></text>
-				全选
+				Chọn tất cả
 			</view>
 			<view class="btn-box">
 				<view class="btn" :style="{ width: isSplit?'auto':'100%'}" @click="openRefund">
-					确认
+					Xác nhận
 					<text v-if="isSplit">({{ numTotal }})</text>
 				</view>
 			</view>

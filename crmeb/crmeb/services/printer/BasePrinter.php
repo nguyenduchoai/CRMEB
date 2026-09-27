@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,19 +21,19 @@ abstract class BasePrinter extends BaseStorage
 {
 
     /**
-     * token句柄
+     * Handle của token
      * @var AccessToken
      */
     protected $accessToken;
 
     /**
-     * 打印内容
+     * Nội dung in
      * @var string
      */
     protected $printerContent;
 
     /**
-     * 打印次数
+     * Số lần in
      * @var string
      */
     protected $times;
@@ -51,13 +51,13 @@ abstract class BasePrinter extends BaseStorage
     }
 
     /**
-     * 开始打印
+     * Bắt đầu in
      * @return mixed
      */
     abstract public function startPrinter();
 
     /**
-     * 设置打印内容
+     * Đặt nội dung in
      * @param $content
      * @return mixed
      */

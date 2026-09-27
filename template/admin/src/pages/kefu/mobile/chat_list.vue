@@ -8,16 +8,16 @@
             <div>{{ kefuInfo.nickname }}</div>
             <div class="status">
               <span class="doc" :class="{ off: !kefuInfo.online }"></span>
-              <span>{{ kefuInfo.online ? '在线' : '离线' }}</span>
+              <span>{{ kefuInfo.online ? 'Trực tuyến' : 'Ngoại tuyến' }}</span>
             </div>
           </div>
           <div class="down-wrapper" v-show="isOnLine">
             <div class="item" v-db-click @click="changOnline(1)">
-              <span class="dot green"></span>在线
+              <span class="dot green"></span>Trực tuyến
               <span class="iconfont iconduihao" v-if="kefuInfo.online"></span>
             </div>
             <div class="item" v-db-click @click="changOnline(0)">
-              <span class="dot"></span>离线
+              <span class="dot"></span>Ngoại tuyến
               <span class="iconfont iconduihao" v-if="!kefuInfo.online"></span>
             </div>
           </div>
@@ -25,7 +25,7 @@
         <div class="right-wrapper" v-db-click @click="outLogin">
           <div class="icon-box"><span class="iconfont icontuichu"></span></div>
 
-          <div style="margin-left: 5px">退出登录</div>
+          <div style="margin-left: 5px">Đăng xuất</div>
         </div>
       </div>
       <div class="tab-box">
@@ -40,7 +40,7 @@
         </div>
       </div>
       <div class="search-box">
-        <el-input v-model="searchTxt" placeholder="搜索用户名称" @change="bindSearch" />
+        <el-input v-model="searchTxt" placeholder="Tìm kiếm tên người dùng" @change="bindSearch" />
       </div>
     </div>
     <div class="list-box" v-if="list.length > 0">
@@ -55,23 +55,23 @@
               <div class="title">
                 <span class="line1">{{ item.nickname }}</span>
                 <template v-if="item.type == 2">
-                  <span class="label">小程序</span>
+                  <span class="label">Mini Program</span>
                 </template>
                 <template v-if="item.type == 3">
                   <span class="label h5">H5</span>
                 </template>
                 <template v-if="item.type == 1">
-                  <span class="label wx">公众号</span>
+                  <span class="label wx">OA WeChat</span>
                 </template>
                 <template v-if="item.type == 0">
-                  <span class="label pc">PC端</span>
+                  <span class="label pc">PC</span>
                 </template>
               </div>
               <div class="msg line1" v-if="item.message_type == 1">{{ item.message }}</div>
-              <div class="msg" v-if="item.message_type == 2">[表情]</div>
-              <div class="msg" v-if="item.message_type == 3">[图片]</div>
-              <div class="msg" v-if="item.message_type == 5">[商品]</div>
-              <div class="msg" v-if="item.message_type == 6">[订单]</div>
+              <div class="msg" v-if="item.message_type == 2">[Biểu tượng cảm xúc]</div>
+              <div class="msg" v-if="item.message_type == 3">[Hình ảnh]</div>
+              <div class="msg" v-if="item.message_type == 5">[Sản phẩm]</div>
+              <div class="msg" v-if="item.message_type == 6">[Đơn hàng]</div>
             </div>
           </div>
           <div class="right-wrapper">
@@ -80,10 +80,10 @@
           </div>
         </div>
         <div class="slot-load" slot="load-deactive"></div>
-        <div class="slot-load" slot="load-active">下滑加载更多</div>
+        <div class="slot-load" slot="load-active">Kéo xuống để tải thêm</div>
       </vue-scroll>
     </div>
-    <empty v-else status="3" msg="暂无用户列表"></empty>
+    <empty v-else status="3" msg="Chưa có danh sách người dùng"></empty>
   </div>
 </template>
 
@@ -145,7 +145,7 @@ export default {
       tabList: [
         {
           key: 0,
-          title: '用户列表',
+          title: 'Danh sách người dùng',
         },
       ],
       wsLogin: JSON.parse(sessionStorage.getItem('wsLogin')),
@@ -154,7 +154,7 @@ export default {
   filters: {
     toDay: function (value) {
       if (!value) return '';
-      var date = new Date(); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+      var date = new Date(); //Timestamp 10 chữ số cần *1000, timestamp 13 chữ số thì không cần nhân 1000
       var Y = date.getFullYear() + '-';
       var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
       var D = (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) + ' ';
@@ -171,11 +171,11 @@ export default {
   },
   mounted() {
     let that = this;
-    // 监听页面刷新
+    // Theo dõi refresh trang
     window.addEventListener('beforeunload', (e) => {
       sessionStorage.setItem('wsLogin', false);
     });
-    // 获取是否登录的key
+    // Lấy key kiểm tra đã đăng nhập chưa
     this.wsLogin = JSON.parse(sessionStorage.getItem('wsLogin'));
     let token = getCookies('kefu_token');
     Socket.then((ws) => {
@@ -185,7 +185,7 @@ export default {
           data: getCookies('kefu_token'),
         });
       }
-      //用户未读消息条数更改
+      //Thay đổi số tin nhắn chưa đọc của người dùng
       ws.$on('transfer', (data) => {
         if (data.recored.id) {
           let status = false;
@@ -228,12 +228,12 @@ export default {
           }
           if (data.recored.is_tourist != this.tabCur && data.recored.id) {
             this.$notify.info({
-              title: this.tabCur ? '用户发来消息啦！' : '游客发来消息啦！',
+              title: this.tabCur ? 'Người dùng vừa gửi tin nhắn!' : 'Khách vãng lai vừa gửi tin nhắn!',
             });
           }
         }
       });
-      // ws登录成功
+      // Đăng nhập ws thành công
       ws.$on('success', (data) => {
         sessionStorage.setItem('wsLogin', true);
       });
@@ -242,7 +242,7 @@ export default {
   beforeDestroy() {},
   methods: {
     ...mapActions('kefu/', ['logout', 'logoutKefu']),
-    // 列表切换
+    // Chuyển đổi danh sách
     changeClass(item) {
       if (this.tabCur == item.key) return;
       this.tabCur = item.key;
@@ -251,7 +251,7 @@ export default {
       this.isScroll = true;
       this.getList();
     },
-    // 客服上下线
+    // CSKH online/offline
     changOnline(key) {
       this.kefuInfo.online = key;
       this.isOnLine = false;
@@ -265,11 +265,11 @@ export default {
         });
       });
     },
-    // 客服详细信息
+    // Thông tin chi tiết CSKH
     getKefuInfo() {
       serviceInfo().then((res) => {
         this.kefuInfo = res.data;
-        window.document.title = `${res.data.site_name} - 消息列表`;
+        window.document.title = `${res.data.site_name} - Danh sách tin nhắn`;
       });
     },
     getList() {
@@ -288,15 +288,15 @@ export default {
         }, 100);
       });
     },
-    // 客服退出
+    // CSKH đăng xuất
     outLogin() {
       let self = this;
       this.$msgbox({
-        title: '退出登录确认',
-        message: '您确定退出登录当前账户吗？打开的标签页和个人设置将会保存。',
+        title: 'Xác nhận đăng xuất',
+        message: 'Bạn có chắc muốn đăng xuất khỏi tài khoản hiện tại? Các tab đang mở và cài đặt cá nhân sẽ được lưu lại.',
         showCancelButton: true,
-        cancelButtonText: '取消',
-        confirmButtonText: '确定',
+        cancelButtonText: 'Hủy',
+        confirmButtonText: 'Xác nhận',
         iconClass: 'el-icon-warning',
         confirmButtonClass: 'btn-custom-cancel',
       })
@@ -308,14 +308,14 @@ export default {
         })
         .catch(() => {});
     },
-    // 搜索
+    // Tìm kiếm
     bindSearch(e) {
       this.page = 1;
       this.list = [];
       this.isScroll = true;
       this.getList();
     },
-    // 进入对话
+    // Vào cuộc trò chuyện
     goPage(item) {
       this.$router.push({
         path: 'mobile_chat',

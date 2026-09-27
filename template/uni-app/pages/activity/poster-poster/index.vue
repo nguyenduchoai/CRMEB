@@ -3,7 +3,7 @@
 		<view class="poster-poster">
 			<view class="tip">
 				<text class="iconfont icon-shuoming"></text>
-				{{ $t(`提示：点击图片即可保存至手机相册`) }}
+				{{ $t(`Lưu ý: nhấn vào ảnh để lưu vào album ảnh trên điện thoại`) }}
 			</view>
 			<view class="pictrue">
 				<!-- <image :src='image' mode="widthFix"></image> -->
@@ -45,7 +45,7 @@ export default {
 		zbCode
 	},
 	mixins: [colors],
-	// 组件使用 props 传参
+	// Component dùng props để truyền tham số
 	props: {
 		comType: {
 			type: String,
@@ -67,7 +67,7 @@ export default {
 			parameter: {
 				navbar: '1',
 				return: '1',
-				title: this.$t(`拼团海报`),
+				title: this.$t(`Poster mua chung`),
 				color: true,
 				class: '0'
 			},
@@ -77,22 +77,22 @@ export default {
 			image: '',
 			from: '',
 			uid: '',
-			//二维码参数
+			//Tham số mã QR
 			codeShow: false,
 			cid: '1',
 			ifShow: true,
-			val: '', // 要生成的二维码值
-			size: 200, // 二维码大小
-			unit: 'upx', // 单位
-			background: '#FFF', // 背景色
-			foreground: '#000', // 前景色
-			pdground: '#000', // 角标色
-			icon: '', // 二维码图标
-			iconsize: 40, // 二维码图标大小
-			lv: 3, // 二维码容错级别 ， 一般不用设置，默认就行
-			onval: true, // val值变化时自动重新生成二维码
-			loadMake: true, // 组件加载完成后自动生成二维码
-			src: '', // 二维码生成后的图片地址或base64
+			val: '', // Giá trị mã QR cần tạo
+			size: 200, // Kích thước mã QR
+			unit: 'upx', // Đơn vị
+			background: '#FFF', // Màu nền
+			foreground: '#000', // Màu nền trước (foreground)
+			pdground: '#000', // Màu badge góc
+			icon: '', // Icon mã QR
+			iconsize: 40, // Kích thước icon mã QR
+			lv: 3, // Mức chịu lỗi mã QR, thường không cần đặt, để mặc định là được
+			onval: true, // Khi giá trị val thay đổi thì tự tạo lại mã QR
+			loadMake: true, // Sau khi component tải xong thì tự tạo mã QR
+			src: '', // Địa chỉ ảnh hoặc base64 của mã QR sau khi tạo
 			codeSrc: '',
 			wd: 0,
 			hg: 0,
@@ -116,17 +116,17 @@ export default {
 				if (options.type == 1) {
 					this.bargain = options.bargain;
 					uni.setNavigationBarTitle({
-						title: that.$t(`砍价海报`)
+						title: that.$t(`Poster săn giảm giá`)
 					});
 				} else {
 					uni.setNavigationBarTitle({
-						title: that.$t(`拼团海报`)
+						title: that.$t(`Poster mua chung`)
 					});
 				}
 			} else {
 				return app.Tips(
 					{
-						title: that.$t(`参数错误`),
+						title: that.$t(`Tham số không hợp lệ`),
 						icon: 'none'
 					},
 					{
@@ -148,7 +148,7 @@ export default {
 
 			var that = this;
 			uni.setNavigationBarTitle({
-				title: that.$t(`砍价海报`)
+				title: that.$t(`Poster săn giảm giá`)
 			});
 			this.type = this.comType;
 			this.id = this.comId;
@@ -228,7 +228,7 @@ export default {
 			this.uid = userData.data.uid;
 			let goods_img, mp_code, resData, arr, mpUrl;
 			uni.showLoading({
-				title: that.$t(`海报生成中`),
+				title: that.$t(`Đang tạo poster`),
 				mask: true
 			});
 			if (that.type == 1) {
@@ -238,7 +238,7 @@ export default {
 					})
 					.catch((err) => {
 						that.$util.Tips({
-							title: that.$t(`海报图片获取失败`)
+							title: that.$t(`Lấy ảnh poster thất bại`)
 						});
 						return;
 					});
@@ -249,7 +249,7 @@ export default {
 					})
 					.catch((err) => {
 						that.$util.Tips({
-							title: that.$t(`海报图片获取失败`)
+							title: that.$t(`Lấy ảnh poster thất bại`)
 						});
 						return;
 					});
@@ -275,7 +275,7 @@ export default {
 			let res = await routineCode();
 			this.mpUrl = res.data.url;
 		},
-		//图片转符合安全域名路径
+		//Chuyển ảnh sang đường dẫn phù hợp domain an toàn
 		downloadFilestoreImage(url) {
 			return new Promise((resolve, reject) => {
 				let that = this;
@@ -292,10 +292,10 @@ export default {
 				});
 			});
 		},
-		//替换安全域名
+		//Thay domain an toàn
 		setDomain: function (url) {
 			url = url ? url.toString() : '';
-			//本地调试打开,生产请注销
+			//Mở khi debug local, khi lên production hãy comment lại
 			if (url.indexOf('https://') > -1) return url;
 			else return url.replace('http://', 'https://');
 		},
@@ -315,13 +315,13 @@ export default {
 				filePath: url,
 				success: function (res) {
 					that.$util.Tips({
-						title: that.$t(`保存成功`),
+						title: that.$t(`Lưu thành công`),
 						icon: 'success'
 					});
 				},
 				fail: function (res) {
 					that.$util.Tips({
-						title: that.$t(`保存失败`)
+						title: that.$t(`Lưu thất bại`)
 					});
 				}
 			});
@@ -337,20 +337,20 @@ export default {
 									filePath: url,
 									success: function (res) {
 										that.$util.Tips({
-											title: that.$t(`保存成功`),
+											title: that.$t(`Lưu thành công`),
 											icon: 'success'
 										});
 									},
 									fail: function (res) {
 										that.$util.Tips({
-											title: that.$t(`保存失败`)
+											title: that.$t(`Lưu thất bại`)
 										});
 									}
 								});
 							},
 							fail: function (res) {
 								that.$util.Tips({
-									title: that.$t(`保存失败`)
+									title: that.$t(`Lưu thất bại`)
 								});
 							}
 						});
@@ -359,13 +359,13 @@ export default {
 							filePath: url,
 							success: function (res) {
 								that.$util.Tips({
-									title: that.$t(`保存成功`),
+									title: that.$t(`Lưu thành công`),
 									icon: 'success'
 								});
 							},
 							fail: function (res) {
 								that.$util.Tips({
-									title: that.$t(`保存失败`)
+									title: that.$t(`Lưu thất bại`)
 								});
 							}
 						});
@@ -374,11 +374,11 @@ export default {
 			});
 			// #endif
 			// #ifdef H5
-			// 创建隐藏的可下载链接
+			// Tạo link ẩn có thể tải xuống
 			var eleLink = document.createElement('a');
-			eleLink.download = that.$t(`海报`);
+			eleLink.download = that.$t(`Poster`);
 			eleLink.href = url;
-			// 触发点击
+			// Kích hoạt click
 			document.body.appendChild(eleLink);
 			eleLink.click();
 			// #endif
@@ -400,13 +400,13 @@ export default {
 									success: function (res) {
 										that.posterImageClose();
 										that.$util.Tips({
-											title: that.$t(`保存成功`),
+											title: that.$t(`Lưu thành công`),
 											icon: 'success'
 										});
 									},
 									fail: function (res) {
 										that.$util.Tips({
-											title: that.$t(`保存失败`)
+											title: that.$t(`Lưu thất bại`)
 										});
 									}
 								});
@@ -418,13 +418,13 @@ export default {
 							success: function (res) {
 								that.posterImageClose();
 								that.$util.Tips({
-									title: that.$t(`保存成功`),
+									title: that.$t(`Lưu thành công`),
 									icon: 'success'
 								});
 							},
 							fail: function (res) {
 								that.$util.Tips({
-									title: that.$t(`保存失败`)
+									title: that.$t(`Lưu thất bại`)
 								});
 							}
 						});

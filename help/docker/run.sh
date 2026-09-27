@@ -1,80 +1,80 @@
 #!/bin/bash
 
-# CRMEB Docker 开发环境管理脚本
+# Script quản lý môi trường phát triển CRMEB Docker
 
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$SCRIPT_DIR"
 
-# 配置文件（可自定义，默认 docker-compose.yml）
+# Tệp cấu hình (có thể tùy chỉnh, mặc định là docker-compose.yml)
 COMPOSE_FILE="${COMPOSE_FILE:-docker-compose.yml}"
 
-# 颜色定义
+# Định nghĩa màu
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 NC='\033[0m'
 
-# 帮助信息
+# Thông tin trợ giúp
 show_help() {
-    echo -e "${GREEN}CRMEB Docker 管理脚本${NC}"
+    echo -e "${GREEN}CRMEB Docker - script quản lý${NC}"
     echo ""
-    echo "用法: $0 [选项]"
+    echo "Cách dùng: $0 [tùy chọn]"
     echo ""
-    echo "选项:"
-    echo "  install   安装并启动（清理数据，首次部署）"
-    echo "  start     启动容器"
-    echo "  restart   重启容器"
-    echo "  stop      停止容器"
-    echo "  delete    删除容器和数据"
-    echo "  logs      查看日志"
-    echo "  -h, --help 显示帮助"
+    echo "Tùy chọn:"
+    echo "  install   Cài đặt và khởi động (xóa dữ liệu, triển khai lần đầu)"
+    echo "  start     Khởi động container"
+    echo "  restart   Khởi động lại container"
+    echo "  stop      Dừng container"
+    echo "  delete    Xóa container và dữ liệu"
+    echo "  logs      Xem log"
+    echo "  -h, --help Hiển thị trợ giúp"
     echo ""
-    echo "环境变量:"
-    echo "  COMPOSE_FILE  指定 compose 文件 (默认: docker-compose.yml)"
+    echo "Biến môi trường:"
+    echo "  COMPOSE_FILE  Chỉ định tệp compose (mặc định: docker-compose.yml)"
     echo ""
-    echo "示例:"
-    echo "  $0 install                    # 使用默认配置"
-    echo "  COMPOSE_FILE=docker-compose.build.yml $0 install   # 使用其他配置"
-    echo "  $0 start                      # 启动服务"
-    echo "  $0 logs                       # 查看日志"
+    echo "Ví dụ:"
+    echo "  $0 install                    # Dùng cấu hình mặc định"
+    echo "  COMPOSE_FILE=docker-compose.build.yml $0 install   # Dùng cấu hình khác"
+    echo "  $0 start                      # Khởi động dịch vụ"
+    echo "  $0 logs                       # Xem log"
 }
 
-# 检查 docker-compose 是否可用
+# Kiểm tra docker-compose có khả dụng không
 check_docker() {
     if ! command -v docker-compose &> /dev/null; then
-        echo -e "${RED}错误: docker-compose 未安装${NC}"
+        echo -e "${RED}Lỗi: docker-compose chưa được cài đặt${NC}"
         exit 1
     fi
     if [ ! -f "$COMPOSE_FILE" ]; then
-        echo -e "${RED}错误: 配置文件 $COMPOSE_FILE 不存在${NC}"
+        echo -e "${RED}Lỗi: tệp cấu hình $COMPOSE_FILE không tồn tại${NC}"
         exit 1
     fi
 }
 
-# 清理数据
+# Dọn dẹp dữ liệu
 cleanup() {
-    echo -e "${YELLOW}=== 清理旧数据 ===${NC}"
+    echo -e "${YELLOW}=== Dọn dẹp dữ liệu cũ ===${NC}"
 
-    # 删除 install.lock 文件
+    # Xóa tệp install.lock
     if [ -f "../../crmeb/public/install.lock" ]; then
-        echo "删除 install.lock..."
+        echo "Đang xóa install.lock..."
         rm -f ../../crmeb/public/install.lock
     fi
 
-    # 删除 MySQL 数据目录内容
+    # Xóa nội dung thư mục dữ liệu MySQL
     if [ -d "mysql/data" ] && [ -n "$(ls -A mysql/data 2>/dev/null)" ]; then
-        echo "删除 MySQL 数据..."
+        echo "Đang xóa dữ liệu MySQL..."
         rm -rf mysql/data/*
     fi
 
-    # 删除 runtime 目录内容
+    # Xóa nội dung thư mục runtime
     if [ -d "../../crmeb/runtime" ] && [ -n "$(ls -A ../../crmeb/runtime 2>/dev/null)" ]; then
-        echo "删除 runtime 缓存..."
+        echo "Đang xóa cache runtime..."
         rm -rf ../../crmeb/runtime/*
     fi
 
-    # 设置目录权限为 777
-    echo "设置目录权限..."
+    # Đặt quyền thư mục thành 777
+    echo "Đang thiết lập quyền thư mục..."
     chmod -R 777 ../../crmeb/runtime
     chmod -R 777 ../../crmeb/public
     chmod 777 ../../crmeb/.env 2>/dev/null
@@ -82,101 +82,101 @@ cleanup() {
     chmod 777 ../../crmeb/.constant 2>/dev/null
 }
 
-# 清理网络
+# Dọn dẹp network
 cleanup_network() {
-    echo "清理可能存在的冲突网络..."
+    echo "Đang dọn dẹp các mạng có thể gây xung đột..."
     
-    # 删除可能冲突的网络（docker-compose 默认使用目录名_app_net）
+    # Xóa các network có thể bị xung đột (docker-compose mặc định dùng <tên thư mục>_app_net)
     for net in $(docker network ls --format "{{.Name}}" | grep -E "(app_net|docker_app_net|crmeb_app_net)"); do
-        echo "删除网络: $net"
+        echo "Đang xóa mạng: $net"
         docker network rm "$net" 2>/dev/null
     done
     
-    # 清理未使用的网络
+    # Dọn dẹp các network không dùng đến
     docker network prune -f 2>/dev/null
 }
 
-# 安装（清理数据并启动）
+# Cài đặt (dọn dữ liệu và khởi động)
 do_install() {
     check_docker
     
-    echo -e "${YELLOW}=== 停止旧容器 ===${NC}"
+    echo -e "${YELLOW}=== Dừng container cũ ===${NC}"
     docker-compose -f "$COMPOSE_FILE" down 2>/dev/null
     
     cleanup
     
-    # 清理网络
+    # Dọn dẹp network
     cleanup_network
     
-    echo -e "${YELLOW}=== 安装并启动 Docker 环境 ===${NC}"
+    echo -e "${YELLOW}=== Cài đặt và khởi động môi trường Docker ===${NC}"
     docker-compose -f "$COMPOSE_FILE" up -d
     
     echo ""
-    echo -e "${GREEN}=== 安装完成 ===${NC}"
-    echo "配置文件: $COMPOSE_FILE"
-    echo "访问地址: http://localhost:8011"
-    echo "查看日志: $0 logs"
+    echo -e "${GREEN}=== Cài đặt hoàn tất ===${NC}"
+    echo "Tệp cấu hình: $COMPOSE_FILE"
+    echo "Địa chỉ truy cập: http://localhost:8011"
+    echo "Xem log: $0 logs"
 }
 
-# 启动
+# Khởi động
 do_start() {
     check_docker
     cleanup_network
-    echo -e "${YELLOW}=== 启动容器 ===${NC}"
+    echo -e "${YELLOW}=== Khởi động container ===${NC}"
     docker-compose -f "$COMPOSE_FILE" up -d
     echo ""
-    echo -e "${GREEN}=== 启动完成 ===${NC}"
-    echo "配置文件: $COMPOSE_FILE"
-    echo "访问地址: http://localhost:8011"
+    echo -e "${GREEN}=== Khởi động hoàn tất ===${NC}"
+    echo "Tệp cấu hình: $COMPOSE_FILE"
+    echo "Địa chỉ truy cập: http://localhost:8011"
 }
 
-# 重启
+# Khởi động lại
 do_restart() {
     check_docker
-    echo -e "${YELLOW}=== 重启容器 ===${NC}"
+    echo -e "${YELLOW}=== Khởi động lại container ===${NC}"
     docker-compose -f "$COMPOSE_FILE" restart
     echo ""
-    echo -e "${GREEN}=== 重启完成 ===${NC}"
+    echo -e "${GREEN}=== Khởi động lại hoàn tất ===${NC}"
 }
 
-# 停止
+# Dừng
 do_stop() {
     check_docker
-    echo -e "${YELLOW}=== 停止容器 ===${NC}"
+    echo -e "${YELLOW}=== Dừng container ===${NC}"
     docker-compose -f "$COMPOSE_FILE" down
-    echo -e "${GREEN}=== 已停止 ===${NC}"
+    echo -e "${GREEN}=== Đã dừng ===${NC}"
 }
 
-# 删除
+# Xóa
 do_delete() {
     check_docker
-    echo -e "${YELLOW}=== 删除容器和数据 ===${NC}"
+    echo -e "${YELLOW}=== Xóa container và dữ liệu ===${NC}"
     docker-compose -f "$COMPOSE_FILE" down -v
     rm -rf mysql/data/* 2>/dev/null
     rm -rf ../../crmeb/runtime/* 2>/dev/null
     rm -f ../../crmeb/public/install.lock 2>/dev/null
-    echo -e "${GREEN}=== 已删除 ===${NC}"
+    echo -e "${GREEN}=== Đã xóa ===${NC}"
 }
 
-# 查看日志
+# Xem log
 do_logs() {
     check_docker
     docker-compose -f "$COMPOSE_FILE" logs -f
 }
 
-# 交互式菜单
+# Menu tương tác
 show_menu() {
     echo ""
-    echo "  1、安装并启动"
-    echo "  2、启动容器"
-    echo "  3、重启容器"
-    echo "  4、停止容器"
-    echo "  5、删除容器和数据"
-    echo "  6、查看日志"
-    echo "  7、查看帮助"
-    echo "  8、退出"
+    echo "  1. Cài đặt và khởi động"
+    echo "  2. Khởi động container"
+    echo "  3. Khởi động lại container"
+    echo "  4. Dừng container"
+    echo "  5. Xóa container và dữ liệu"
+    echo "  6. Xem log"
+    echo "  7. Xem trợ giúp"
+    echo "  8. Thoát"
     echo ""
-    read -p "请选择操作 (1-8): " choice
+    read -p "Vui lòng chọn thao tác (1-8): " choice
     echo ""
     
     case $choice in
@@ -187,14 +187,14 @@ show_menu() {
         5) do_delete ;;
         6) do_logs ;;
         7) show_help; show_menu ;;
-        8) echo "已退出"; exit 0 ;;
-        *) echo "无效选择，请重试"; show_menu ;;
+        8) echo "Đã thoát"; exit 0 ;;
+        *) echo "Lựa chọn không hợp lệ, vui lòng thử lại"; show_menu ;;
     esac
 }
 
-# 主逻辑
+# Logic chính
 if [ $# -eq 0 ]; then
-    # 无参数时显示交互式菜单
+    # Hiển thị menu tương tác khi không có tham số
     show_menu
 else
     case "$1" in

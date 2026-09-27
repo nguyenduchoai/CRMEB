@@ -3,21 +3,21 @@
     <div>
       <div class="box-container">
         <div class="list sp">
-          <label class="name">商品名称：</label>
+          <label class="name">Tên sản phẩm:</label>
           <span class="info">{{ FormData.name }}</span>
         </div>
         <div class="list sp">
-          <label class="name">直播价：</label>
+          <label class="name">Giá livestream:</label>
           <span class="info">{{ FormData.price }}</span>
         </div>
         <div class="list sp100" style="display: flex" v-if="FormData.product">
-          <label class="name">商品图：</label>
+          <label class="name">Ảnh sản phẩm:</label>
           <div v-viewer>
             <img :src="FormData.product.image" alt="" />
           </div>
         </div>
         <div class="list sp100">
-          <label class="name">审核结果：</label>
+          <label class="name">Kết quả duyệt:</label>
           <span class="info">{{ FormData.audit_status | liveStatusFilter }}</span>
         </div>
       </div>

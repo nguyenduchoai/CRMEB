@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "我的优惠券",
+  "navigationBarTitleText": "Phiếu giảm giá của tôi",
   "usingComponents": {
     "authorize": "/components/Authorize",
     "home": "/components/home/index"

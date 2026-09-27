@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,7 +24,7 @@ class StoreBargainUserDao extends BaseDao
 {
 
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -33,7 +33,7 @@ class StoreBargainUserDao extends BaseDao
     }
 
     /**
-     * 获取帮砍数量
+     * Lấy số lượt giúp giảm giá
      * @param array $where
      * @return array
      */
@@ -43,10 +43,10 @@ class StoreBargainUserDao extends BaseDao
     }
 
     /**
-     * 获取砍价表ID
-     * @param int $bargainId $bargainId 砍价商品
-     * @param int $bargainUserUid $bargainUserUid  开启砍价用户编号
-     * @param int $status $status  砍价状态 1参与中 2 活动结束参与失败 3活动结束参与成功
+     * Lấy ID bảng săn giảm giá
+     * @param int $bargainId $bargainId Sản phẩm săn giảm giá
+     * @param int $bargainUserUid $bargainUserUid  Mã người dùng mở săn giảm giá
+     * @param int $status $status  Trạng thái săn giảm giá: 1 đang tham gia, 2 hoạt động kết thúc tham gia thất bại, 3 hoạt động kết thúc tham gia thành công
      * @return mixed
      */
     public function getBargainUserTableId(int $bargainId = 0, int $bargainUserUid = 0)
@@ -55,7 +55,7 @@ class StoreBargainUserDao extends BaseDao
     }
 
     /**
-     * 获取用户砍价列表
+     * Lấy danh sách săn giảm giá của người dùng
      * @param int $bargainUserUid
      * @param int $page
      * @param int $limit
@@ -70,7 +70,7 @@ class StoreBargainUserDao extends BaseDao
     }
 
     /**
-     * 获取砍价状态
+     * Lấy trạng thái săn giảm giá
      * @param $bargainId
      * @param $uid
      * @return mixed
@@ -82,7 +82,7 @@ class StoreBargainUserDao extends BaseDao
 
 
     /**
-     * 修改砍价状态
+     * Sửa trạng thái săn giảm giá
      * @param int $id
      * @param int $status
      * @return \crmeb\basic\BaseModel
@@ -93,7 +93,7 @@ class StoreBargainUserDao extends BaseDao
     }
 
     /**
-     * 砍价列表
+     * Danh sách săn giảm giá
      * @param $where
      * @param int $page
      * @param int $limit

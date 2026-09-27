@@ -1,31 +1,31 @@
-# 数据库设计文档
+# Tài liệu thiết kế cơ sở dữ liệu
 
-## 1. 概述
+## 1. Tổng quan
 
-本文档描述了 CRMEB 项目的数据库设计，包括数据库架构、表结构、索引设计、关系设计等，旨在规范数据库设计，提高数据库性能和可维护性。
+Tài liệu này mô tả thiết kế cơ sở dữ liệu của dự án CRMEB, bao gồm kiến trúc cơ sở dữ liệu, cấu trúc bảng, thiết kế chỉ mục, thiết kế quan hệ, v.v., nhằm chuẩn hóa việc thiết kế cơ sở dữ liệu, nâng cao hiệu năng và khả năng bảo trì của cơ sở dữ liệu.
 
-## 2. 数据库架构
+## 2. Kiến trúc cơ sở dữ liệu
 
-### 2.1 整体架构
+### 2.1 Kiến trúc tổng thể
 
-- **数据库系统**: MySQL 5.7~8.0
-- **存储引擎**: InnoDB (默认)
-- **字符集**: utf8mb4
-- **排序规则**: utf8mb4_general_ci
-- **连接池**: 建议使用
-- **SQL文件位置**: `public/install/crmeb.sql`
+- **Hệ quản trị cơ sở dữ liệu**: MySQL 5.7~8.0
+- **Engine lưu trữ**: InnoDB (mặc định)
+- **Bộ ký tự**: utf8mb4
+- **Quy tắc đối chiếu (collation)**: utf8mb4_general_ci
+- **Connection pool**: khuyến nghị sử dụng
+- **Vị trí tệp SQL**: `public/install/crmeb.sql`
 
-### 2.2 技术栈
+### 2.2 Bộ công nghệ
 
 - **MySQL**: 5.7+
-- **Redis**: 用于缓存
-- **ThinkPHP ORM**: 用于模型操作
-- **数据库迁移**: 用于版本控制
-- **数据库备份**: 用于数据安全
+- **Redis**: dùng làm bộ nhớ đệm (cache)
+- **ThinkPHP ORM**: dùng cho các thao tác với model
+- **Migration cơ sở dữ liệu**: dùng để quản lý phiên bản
+- **Sao lưu cơ sở dữ liệu**: dùng để đảm bảo an toàn dữ liệu
 
-### 2.3 配置说明
+### 2.3 Mô tả cấu hình
 
-#### 2.3.1 数据库配置
+#### 2.3.1 Cấu hình cơ sở dữ liệu
 
 ```php
 // config/database.php
@@ -47,187 +47,187 @@ return [
 ];
 ```
 
-## 3. 数据库设计规范
+## 3. Quy chuẩn thiết kế cơ sở dữ liệu
 
-### 3.1 命名规范
+### 3.1 Quy tắc đặt tên
 
-- **数据库名**: 小写字母，下划线分隔
-- **表名**: 小写字母，下划线分隔，前缀统一
-- **字段名**: 小写字母，下划线分隔
-- **索引名**: 小写字母，下划线分隔，类型前缀
-  - 主键: `PRIMARY`
-  - 唯一索引: `uk_字段名`
-  - 普通索引: `idx_字段名`
+- **Tên cơ sở dữ liệu**: chữ thường, phân tách bằng dấu gạch dưới
+- **Tên bảng**: chữ thường, phân tách bằng dấu gạch dưới, tiền tố thống nhất
+- **Tên trường**: chữ thường, phân tách bằng dấu gạch dưới
+- **Tên chỉ mục**: chữ thường, phân tách bằng dấu gạch dưới, có tiền tố theo loại chỉ mục
+  - Khóa chính: `PRIMARY`
+  - Chỉ mục duy nhất: `uk_{tên_trường}`
+  - Chỉ mục thường: `idx_{tên_trường}`
 
-### 3.2 表结构规范
+### 3.2 Quy chuẩn cấu trúc bảng
 
-- **主键**: 统一命名为 `id`，自增整数
-- **外键**: 格式 `表名_id`，如 `user_id`
-- **时间字段**: `create_time`/`update_time`
-- **状态字段**: `status`，默认值 0
-- **软删除字段**: `delete_time`，默认值 NULL
+- **Khóa chính**: thống nhất đặt tên là `id`, số nguyên tự tăng
+- **Khóa ngoại**: định dạng `{tên_bảng}_id`, ví dụ `user_id`
+- **Trường thời gian**: `create_time`/`update_time`
+- **Trường trạng thái**: `status`, giá trị mặc định 0
+- **Trường xóa mềm**: `delete_time`, giá trị mặc định NULL
 
-### 3.3 字段类型规范
+### 3.3 Quy chuẩn kiểu trường
 
-- **整数类型**: 根据实际范围选择
-  - `TINYINT`: 1字节，范围 -128~127
-  - `SMALLINT`: 2字节，范围 -32768~32767
-  - `INT`: 4字节，范围 -2147483648~2147483647
-  - `BIGINT`: 8字节，范围更大
+- **Kiểu số nguyên**: chọn theo phạm vi giá trị thực tế
+  - `TINYINT`: 1 byte, phạm vi -128~127
+  - `SMALLINT`: 2 byte, phạm vi -32768~32767
+  - `INT`: 4 byte, phạm vi -2147483648~2147483647
+  - `BIGINT`: 8 byte, phạm vi lớn hơn
 
-- **字符串类型**: 
-  - 固定长度: `CHAR`
-  - 可变长度: `VARCHAR`
-  - 长文本: `TEXT`
-  - 大文本: `LONGTEXT`
+- **Kiểu chuỗi**: 
+  - Độ dài cố định: `CHAR`
+  - Độ dài thay đổi: `VARCHAR`
+  - Văn bản dài: `TEXT`
+  - Văn bản lớn: `LONGTEXT`
 
-- **日期时间类型**: 
-  - 日期: `DATE`
-  - 时间: `TIME`
-  - 日期时间: `DATETIME`
-  - 时间戳: `TIMESTAMP`
+- **Kiểu ngày giờ**: 
+  - Ngày: `DATE`
+  - Thời gian: `TIME`
+  - Ngày giờ: `DATETIME`
+  - Dấu thời gian: `TIMESTAMP`
 
-- **数值类型**: 
-  - 小数: `DECIMAL`
-  - 浮点数: `FLOAT`, `DOUBLE`
+- **Kiểu số**: 
+  - Số thập phân: `DECIMAL`
+  - Số thực dấu phẩy động: `FLOAT`, `DOUBLE`
 
-- **布尔类型**: 使用 `TINYINT(1)`，0 表示 false，1 表示 true
+- **Kiểu boolean**: sử dụng `TINYINT(1)`, 0 biểu thị false, 1 biểu thị true
 
-### 3.4 索引规范
+### 3.4 Quy chuẩn chỉ mục
 
-- **主键索引**: 每个表必须有主键
-- **唯一索引**: 用于唯一标识的字段
-- **普通索引**: 用于经常查询的字段
-- **复合索引**: 用于多字段查询
-- **外键索引**: 用于关联查询
-- **索引数量**: 每个表索引数量不宜过多，一般不超过 5 个
+- **Chỉ mục khóa chính**: mỗi bảng bắt buộc phải có khóa chính
+- **Chỉ mục duy nhất**: dùng cho các trường định danh duy nhất
+- **Chỉ mục thường**: dùng cho các trường thường xuyên được truy vấn
+- **Chỉ mục kết hợp**: dùng cho truy vấn trên nhiều trường
+- **Chỉ mục khóa ngoại**: dùng cho truy vấn liên kết (JOIN)
+- **Số lượng chỉ mục**: mỗi bảng không nên có quá nhiều chỉ mục, thường không quá 5
 
-## 4. 核心表结构
+## 4. Cấu trúc các bảng cốt lõi
 
-### 4.1 用户表 (`user`)
+### 4.1 Bảng người dùng (`user`)
 
-| 字段名 | 数据类型 | 长度 | 约束 | 描述 |
+| Tên trường | Loại dữ liệu | Độ dài | Ràng buộc | Mô tả |
 |-------|---------|------|------|------|
-| `id` | `INT` | 11 | `PRIMARY KEY AUTO_INCREMENT` | 用户ID |
-| `username` | `VARCHAR` | 50 | `NOT NULL` | 用户名 |
-| `password` | `VARCHAR` | 255 | `NOT NULL` | 密码 |
-| `nickname` | `VARCHAR` | 50 | `NOT NULL` | 昵称 |
-| `avatar` | `VARCHAR` | 255 | | 头像 |
-| `mobile` | `VARCHAR` | 20 | | 手机号 |
-| `email` | `VARCHAR` | 100 | | 邮箱 |
-| `status` | `TINYINT` | 1 | `DEFAULT 1` | 状态 |
-| `create_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP` | 创建时间 |
-| `update_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP` | 更新时间 |
-| `delete_time` | `DATETIME` | | | 删除时间 |
+| `id` | `INT` | 11 | `PRIMARY KEY AUTO_INCREMENT` | ID người dùng |
+| `username` | `VARCHAR` | 50 | `NOT NULL` | Tên người dùng |
+| `password` | `VARCHAR` | 255 | `NOT NULL` | Mật khẩu |
+| `nickname` | `VARCHAR` | 50 | `NOT NULL` | Biệt danh |
+| `avatar` | `VARCHAR` | 255 | | Ảnh đại diện |
+| `mobile` | `VARCHAR` | 20 | | Số điện thoại |
+| `email` | `VARCHAR` | 100 | | Email |
+| `status` | `TINYINT` | 1 | `DEFAULT 1` | Trạng thái |
+| `create_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP` | Thời gian tạo |
+| `update_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP` | Thời gian cập nhật |
+| `delete_time` | `DATETIME` | | | Thời gian xóa |
 
-### 4.2 商品表 (`product`)
+### 4.2 Bảng sản phẩm (`product`)
 
-| 字段名 | 数据类型 | 长度 | 约束 | 描述 |
+| Tên trường | Loại dữ liệu | Độ dài | Ràng buộc | Mô tả |
 |-------|---------|------|------|------|
-| `id` | `INT` | 11 | `PRIMARY KEY AUTO_INCREMENT` | 商品ID |
-| `name` | `VARCHAR` | 255 | `NOT NULL` | 商品名称 |
-| `category_id` | `INT` | 11 | `NOT NULL` | 分类ID |
-| `price` | `DECIMAL` | 10,2 | `NOT NULL` | 价格 |
-| `stock` | `INT` | 11 | `NOT NULL` | 库存 |
-| `status` | `TINYINT` | 1 | `DEFAULT 1` | 状态 |
-| `create_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP` | 创建时间 |
-| `update_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP` | 更新时间 |
-| `delete_time` | `DATETIME` | | | 删除时间 |
+| `id` | `INT` | 11 | `PRIMARY KEY AUTO_INCREMENT` | ID sản phẩm |
+| `name` | `VARCHAR` | 255 | `NOT NULL` | Tên sản phẩm |
+| `category_id` | `INT` | 11 | `NOT NULL` | ID danh mục |
+| `price` | `DECIMAL` | 10,2 | `NOT NULL` | Giá |
+| `stock` | `INT` | 11 | `NOT NULL` | Tồn kho |
+| `status` | `TINYINT` | 1 | `DEFAULT 1` | Trạng thái |
+| `create_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP` | Thời gian tạo |
+| `update_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP` | Thời gian cập nhật |
+| `delete_time` | `DATETIME` | | | Thời gian xóa |
 
-### 4.3 订单表 (`order`)
+### 4.3 Bảng đơn hàng (`order`)
 
-| 字段名 | 数据类型 | 长度 | 约束 | 描述 |
+| Tên trường | Loại dữ liệu | Độ dài | Ràng buộc | Mô tả |
 |-------|---------|------|------|------|
-| `id` | `INT` | 11 | `PRIMARY KEY AUTO_INCREMENT` | 订单ID |
-| `order_sn` | `VARCHAR` | 32 | `NOT NULL UNIQUE` | 订单号 |
-| `user_id` | `INT` | 11 | `NOT NULL` | 用户ID |
-| `total_price` | `DECIMAL` | 10,2 | `NOT NULL` | 总价 |
-| `status` | `TINYINT` | 1 | `DEFAULT 0` | 状态 |
-| `create_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP` | 创建时间 |
-| `update_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP` | 更新时间 |
-| `delete_time` | `DATETIME` | | | 删除时间 |
+| `id` | `INT` | 11 | `PRIMARY KEY AUTO_INCREMENT` | ID đơn hàng |
+| `order_sn` | `VARCHAR` | 32 | `NOT NULL UNIQUE` | Mã đơn hàng |
+| `user_id` | `INT` | 11 | `NOT NULL` | ID người dùng |
+| `total_price` | `DECIMAL` | 10,2 | `NOT NULL` | Tổng giá |
+| `status` | `TINYINT` | 1 | `DEFAULT 0` | Trạng thái |
+| `create_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP` | Thời gian tạo |
+| `update_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP` | Thời gian cập nhật |
+| `delete_time` | `DATETIME` | | | Thời gian xóa |
 
-### 4.4 分类表 (`category`)
+### 4.4 Bảng danh mục (`category`)
 
-| 字段名 | 数据类型 | 长度 | 约束 | 描述 |
+| Tên trường | Loại dữ liệu | Độ dài | Ràng buộc | Mô tả |
 |-------|---------|------|------|------|
-| `id` | `INT` | 11 | `PRIMARY KEY AUTO_INCREMENT` | 分类ID |
-| `name` | `VARCHAR` | 50 | `NOT NULL` | 分类名称 |
-| `parent_id` | `INT` | 11 | `DEFAULT 0` | 父分类ID |
-| `sort` | `INT` | 11 | `DEFAULT 0` | 排序 |
-| `status` | `TINYINT` | 1 | `DEFAULT 1` | 状态 |
-| `create_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP` | 创建时间 |
-| `update_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP` | 更新时间 |
-| `delete_time` | `DATETIME` | | | 删除时间 |
+| `id` | `INT` | 11 | `PRIMARY KEY AUTO_INCREMENT` | ID danh mục |
+| `name` | `VARCHAR` | 50 | `NOT NULL` | Tên danh mục |
+| `parent_id` | `INT` | 11 | `DEFAULT 0` | ID danh mục cha |
+| `sort` | `INT` | 11 | `DEFAULT 0` | Thứ tự sắp xếp |
+| `status` | `TINYINT` | 1 | `DEFAULT 1` | Trạng thái |
+| `create_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP` | Thời gian tạo |
+| `update_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP` | Thời gian cập nhật |
+| `delete_time` | `DATETIME` | | | Thời gian xóa |
 
-### 4.5 地址表 (`address`)
+### 4.5 Bảng địa chỉ (`address`)
 
-| 字段名 | 数据类型 | 长度 | 约束 | 描述 |
+| Tên trường | Loại dữ liệu | Độ dài | Ràng buộc | Mô tả |
 |-------|---------|------|------|------|
-| `id` | `INT` | 11 | `PRIMARY KEY AUTO_INCREMENT` | 地址ID |
-| `user_id` | `INT` | 11 | `NOT NULL` | 用户ID |
-| `name` | `VARCHAR` | 50 | `NOT NULL` | 收货人姓名 |
-| `mobile` | `VARCHAR` | 20 | `NOT NULL` | 手机号 |
-| `province` | `VARCHAR` | 50 | `NOT NULL` | 省份 |
-| `city` | `VARCHAR` | 50 | `NOT NULL` | 城市 |
-| `district` | `VARCHAR` | 50 | `NOT NULL` | 区县 |
-| `detail` | `VARCHAR` | 255 | `NOT NULL` | 详细地址 |
-| `is_default` | `TINYINT` | 1 | `DEFAULT 0` | 是否默认 |
-| `create_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP` | 创建时间 |
-| `update_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP` | 更新时间 |
-| `delete_time` | `DATETIME` | | | 删除时间 |
+| `id` | `INT` | 11 | `PRIMARY KEY AUTO_INCREMENT` | ID địa chỉ |
+| `user_id` | `INT` | 11 | `NOT NULL` | ID người dùng |
+| `name` | `VARCHAR` | 50 | `NOT NULL` | Họ tên người nhận |
+| `mobile` | `VARCHAR` | 20 | `NOT NULL` | Số điện thoại |
+| `province` | `VARCHAR` | 50 | `NOT NULL` | Tỉnh |
+| `city` | `VARCHAR` | 50 | `NOT NULL` | Thành phố |
+| `district` | `VARCHAR` | 50 | `NOT NULL` | Quận/huyện |
+| `detail` | `VARCHAR` | 255 | `NOT NULL` | Địa chỉ chi tiết |
+| `is_default` | `TINYINT` | 1 | `DEFAULT 0` | Đặt làm mặc định |
+| `create_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP` | Thời gian tạo |
+| `update_time` | `DATETIME` | | `DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP` | Thời gian cập nhật |
+| `delete_time` | `DATETIME` | | | Thời gian xóa |
 
-## 5. 索引设计
+## 5. Thiết kế chỉ mục
 
-### 5.1 用户表索引
+### 5.1 Chỉ mục bảng người dùng
 
-| 索引名 | 类型 | 字段 | 描述 |
+| Tên chỉ mục | Loại | Trường | Mô tả |
 |-------|------|------|------|
-| `PRIMARY` | 主键 | `id` | 主键索引 |
-| `uk_username` | 唯一 | `username` | 用户名唯一索引 |
-| `idx_mobile` | 普通 | `mobile` | 手机号索引 |
-| `idx_email` | 普通 | `email` | 邮箱索引 |
-| `idx_status` | 普通 | `status` | 状态索引 |
+| `PRIMARY` | Khóa chính | `id` | Chỉ mục khóa chính |
+| `uk_username` | Duy nhất | `username` | Chỉ mục duy nhất cho tên người dùng |
+| `idx_mobile` | Thường | `mobile` | Chỉ mục số điện thoại |
+| `idx_email` | Thường | `email` | Chỉ mục email |
+| `idx_status` | Thường | `status` | Chỉ mục trạng thái |
 
-### 5.2 商品表索引
+### 5.2 Chỉ mục bảng sản phẩm
 
-| 索引名 | 类型 | 字段 | 描述 |
+| Tên chỉ mục | Loại | Trường | Mô tả |
 |-------|------|------|------|
-| `PRIMARY` | 主键 | `id` | 主键索引 |
-| `idx_category_id` | 普通 | `category_id` | 分类ID索引 |
-| `idx_price` | 普通 | `price` | 价格索引 |
-| `idx_status` | 普通 | `status` | 状态索引 |
+| `PRIMARY` | Khóa chính | `id` | Chỉ mục khóa chính |
+| `idx_category_id` | Thường | `category_id` | Chỉ mục ID danh mục |
+| `idx_price` | Thường | `price` | Chỉ mục giá |
+| `idx_status` | Thường | `status` | Chỉ mục trạng thái |
 
-### 5.3 订单表索引
+### 5.3 Chỉ mục bảng đơn hàng
 
-| 索引名 | 类型 | 字段 | 描述 |
+| Tên chỉ mục | Loại | Trường | Mô tả |
 |-------|------|------|------|
-| `PRIMARY` | 主键 | `id` | 主键索引 |
-| `uk_order_sn` | 唯一 | `order_sn` | 订单号唯一索引 |
-| `idx_user_id` | 普通 | `user_id` | 用户ID索引 |
-| `idx_status` | 普通 | `status` | 状态索引 |
-| `idx_create_time` | 普通 | `create_time` | 创建时间索引 |
+| `PRIMARY` | Khóa chính | `id` | Chỉ mục khóa chính |
+| `uk_order_sn` | Duy nhất | `order_sn` | Chỉ mục duy nhất cho mã đơn hàng |
+| `idx_user_id` | Thường | `user_id` | Chỉ mục ID người dùng |
+| `idx_status` | Thường | `status` | Chỉ mục trạng thái |
+| `idx_create_time` | Thường | `create_time` | Chỉ mục thời gian tạo |
 
-### 5.4 分类表索引
+### 5.4 Chỉ mục bảng danh mục
 
-| 索引名 | 类型 | 字段 | 描述 |
+| Tên chỉ mục | Loại | Trường | Mô tả |
 |-------|------|------|------|
-| `PRIMARY` | 主键 | `id` | 主键索引 |
-| `idx_parent_id` | 普通 | `parent_id` | 父分类ID索引 |
-| `idx_sort` | 普通 | `sort` | 排序索引 |
-| `idx_status` | 普通 | `status` | 状态索引 |
+| `PRIMARY` | Khóa chính | `id` | Chỉ mục khóa chính |
+| `idx_parent_id` | Thường | `parent_id` | Chỉ mục ID danh mục cha |
+| `idx_sort` | Thường | `sort` | Chỉ mục thứ tự sắp xếp |
+| `idx_status` | Thường | `status` | Chỉ mục trạng thái |
 
-### 5.5 地址表索引
+### 5.5 Chỉ mục bảng địa chỉ
 
-| 索引名 | 类型 | 字段 | 描述 |
+| Tên chỉ mục | Loại | Trường | Mô tả |
 |-------|------|------|------|
-| `PRIMARY` | 主键 | `id` | 主键索引 |
-| `idx_user_id` | 普通 | `user_id` | 用户ID索引 |
-| `idx_is_default` | 普通 | `is_default` | 是否默认索引 |
+| `PRIMARY` | Khóa chính | `id` | Chỉ mục khóa chính |
+| `idx_user_id` | Thường | `user_id` | Chỉ mục ID người dùng |
+| `idx_is_default` | Thường | `is_default` | Chỉ mục cờ mặc định |
 
-## 6. 关系设计
+## 6. Thiết kế quan hệ
 
-### 6.1 表关系图
+### 6.1 Sơ đồ quan hệ giữa các bảng
 
 ```
 user ----------------- order
@@ -241,107 +241,107 @@ address                product
                       category
 ```
 
-### 6.2 关系说明
+### 6.2 Mô tả quan hệ
 
-- **用户与订单**: 一对多关系，一个用户可以有多个订单
-- **用户与地址**: 一对多关系，一个用户可以有多个地址
-- **商品与分类**: 多对一关系，多个商品属于一个分类
-- **订单与商品**: 多对多关系，一个订单可以包含多个商品，一个商品可以出现在多个订单中
+- **Người dùng và đơn hàng**: quan hệ một-nhiều, một người dùng có thể có nhiều đơn hàng
+- **Người dùng và địa chỉ**: quan hệ một-nhiều, một người dùng có thể có nhiều địa chỉ
+- **Sản phẩm và danh mục**: quan hệ nhiều-một, nhiều sản phẩm thuộc về một danh mục
+- **Đơn hàng và sản phẩm**: quan hệ nhiều-nhiều, một đơn hàng có thể chứa nhiều sản phẩm, một sản phẩm có thể xuất hiện trong nhiều đơn hàng
 
-### 6.3 外键关系
+### 6.3 Quan hệ khóa ngoại
 
-| 主表 | 主键 | 从表 | 外键 | 描述 |
+| Bảng cha | Khóa chính | Bảng con | Khóa ngoại | Mô tả |
 |------|------|------|------|------|
-| `user` | `id` | `order` | `user_id` | 订单所属用户 |
-| `user` | `id` | `address` | `user_id` | 地址所属用户 |
-| `category` | `id` | `product` | `category_id` | 商品所属分类 |
+| `user` | `id` | `order` | `user_id` | Người dùng sở hữu đơn hàng |
+| `user` | `id` | `address` | `user_id` | Người dùng sở hữu địa chỉ |
+| `category` | `id` | `product` | `category_id` | Danh mục chứa sản phẩm |
 
-## 7. 性能优化
+## 7. Tối ưu hiệu năng
 
-### 7.1 索引优化
+### 7.1 Tối ưu chỉ mục
 
-- **选择合适的索引类型**: 根据查询场景选择合适的索引类型
-- **避免过度索引**: 只在需要的字段上创建索引
-- **使用复合索引**: 对于多字段查询，使用复合索引
-- **定期维护索引**: 定期重建碎片化的索引
+- **Chọn loại chỉ mục phù hợp**: chọn loại chỉ mục phù hợp theo tình huống truy vấn
+- **Tránh lạm dụng chỉ mục**: chỉ tạo chỉ mục trên những trường cần thiết
+- **Sử dụng chỉ mục kết hợp**: với truy vấn trên nhiều trường, hãy sử dụng chỉ mục kết hợp
+- **Bảo trì chỉ mục định kỳ**: định kỳ tạo lại các chỉ mục bị phân mảnh
 
-### 7.2 查询优化
+### 7.2 Tối ưu truy vấn
 
-- **避免全表扫描**: 使用索引覆盖查询
-- **减少查询字段**: 只查询需要的字段
-- **使用连接查询**: 合理使用连接查询，避免子查询
-- **限制查询结果**: 使用 LIMIT 限制查询结果数量
+- **Tránh quét toàn bảng**: sử dụng truy vấn có chỉ mục bao phủ (covering index)
+- **Giảm số trường truy vấn**: chỉ truy vấn những trường cần thiết
+- **Sử dụng truy vấn JOIN**: sử dụng JOIN hợp lý, tránh truy vấn con (subquery)
+- **Giới hạn kết quả truy vấn**: sử dụng LIMIT để giới hạn số lượng kết quả truy vấn
 
-### 7.3 存储优化
+### 7.3 Tối ưu lưu trữ
 
-- **选择合适的字段类型**: 根据实际需求选择合适的字段类型
-- **使用分区表**: 对于大表，使用分区表提高查询性能
-- **定期清理数据**: 定期清理无用数据，减少表大小
-- **使用缓存**: 对于频繁查询的数据，使用 Redis 缓存
+- **Chọn kiểu trường phù hợp**: chọn kiểu trường phù hợp theo nhu cầu thực tế
+- **Sử dụng bảng phân vùng**: với bảng lớn, sử dụng bảng phân vùng để cải thiện hiệu năng truy vấn
+- **Dọn dẹp dữ liệu định kỳ**: định kỳ xóa dữ liệu không còn sử dụng để giảm kích thước bảng
+- **Sử dụng bộ nhớ đệm**: với dữ liệu được truy vấn thường xuyên, sử dụng Redis để cache
 
-### 7.4 配置优化
+### 7.4 Tối ưu cấu hình
 
-- **调整 innodb_buffer_pool_size**: 根据服务器内存大小调整
-- **调整 max_connections**: 根据并发量调整
-- **启用查询缓存**: 对于读多写少的场景
-- **优化日志配置**: 合理配置二进制日志和慢查询日志
+- **Điều chỉnh innodb_buffer_pool_size**: điều chỉnh theo dung lượng bộ nhớ của máy chủ
+- **Điều chỉnh max_connections**: điều chỉnh theo lượng truy cập đồng thời
+- **Bật bộ nhớ đệm truy vấn**: dành cho tình huống đọc nhiều, ghi ít
+- **Tối ưu cấu hình log**: cấu hình hợp lý binary log và log truy vấn chậm
 
-## 8. 安全设计
+## 8. Thiết kế bảo mật
 
-### 8.1 数据安全
+### 8.1 An toàn dữ liệu
 
-- **加密存储**: 敏感数据（如密码）加密存储
-- **数据备份**: 定期备份数据库
-- **数据恢复**: 建立数据恢复机制
-- **访问控制**: 严格控制数据库访问权限
+- **Lưu trữ mã hóa**: dữ liệu nhạy cảm (như mật khẩu) phải được mã hóa khi lưu trữ
+- **Sao lưu dữ liệu**: sao lưu cơ sở dữ liệu định kỳ
+- **Khôi phục dữ liệu**: xây dựng cơ chế khôi phục dữ liệu
+- **Kiểm soát truy cập**: kiểm soát chặt chẽ quyền truy cập cơ sở dữ liệu
 
-### 8.2 SQL 注入防护
+### 8.2 Chống SQL injection
 
-- **使用参数化查询**: 避免直接拼接 SQL
-- **使用 ORM**: 使用 ThinkPHP ORM 框架
-- **输入验证**: 对用户输入进行验证
-- **转义特殊字符**: 对特殊字符进行转义
+- **Sử dụng truy vấn tham số hóa**: tránh nối chuỗi SQL trực tiếp
+- **Sử dụng ORM**: sử dụng framework ThinkPHP ORM
+- **Kiểm tra đầu vào**: kiểm tra tính hợp lệ của dữ liệu người dùng nhập vào
+- **Escape ký tự đặc biệt**: thực hiện escape cho các ký tự đặc biệt
 
-### 8.3 权限管理
+### 8.3 Quản lý quyền
 
-- **最小权限原则**: 只授予必要的权限
-- **角色分离**: 不同角色拥有不同权限
-- **定期审计**: 定期审计数据库访问日志
+- **Nguyên tắc đặc quyền tối thiểu**: chỉ cấp những quyền cần thiết
+- **Phân tách vai trò**: mỗi vai trò có quyền khác nhau
+- **Rà soát định kỳ**: định kỳ rà soát (audit) log truy cập cơ sở dữ liệu
 
-## 9. 备份与恢复
+## 9. Sao lưu và khôi phục
 
-### 9.1 备份策略
+### 9.1 Chiến lược sao lưu
 
-- **全量备份**: 定期进行全量备份
-- **增量备份**: 每天进行增量备份
-- **日志备份**: 备份二进制日志
+- **Sao lưu toàn bộ**: định kỳ sao lưu toàn bộ
+- **Sao lưu gia tăng**: sao lưu gia tăng hằng ngày
+- **Sao lưu log**: sao lưu binary log
 
-### 9.2 恢复策略
+### 9.2 Chiến lược khôi phục
 
-- **全量恢复**: 使用全量备份恢复
-- **增量恢复**: 使用增量备份恢复
-- **点恢复**: 使用二进制日志进行点恢复
+- **Khôi phục toàn bộ**: khôi phục từ bản sao lưu toàn bộ
+- **Khôi phục gia tăng**: khôi phục từ bản sao lưu gia tăng
+- **Khôi phục theo thời điểm**: sử dụng binary log để khôi phục về một thời điểm cụ thể
 
-### 9.3 备份工具
+### 9.3 Công cụ sao lưu
 
-- **mysqldump**: MySQL 自带备份工具
-- **xtrabackup**: Percona 提供的备份工具
-- **第三方工具**: 如 Navicat 等
+- **mysqldump**: công cụ sao lưu có sẵn của MySQL
+- **xtrabackup**: công cụ sao lưu do Percona cung cấp
+- **Công cụ bên thứ ba**: như Navicat, v.v.
 
-## 10. 版本控制
+## 10. Quản lý phiên bản
 
-### 10.1 数据库迁移
+### 10.1 Migration cơ sở dữ liệu
 
-- **使用迁移工具**: 使用 ThinkPHP 数据库迁移工具
-- **版本管理**: 对数据库结构变更进行版本管理
-- **回滚机制**: 支持数据库结构回滚
+- **Sử dụng công cụ migration**: sử dụng công cụ migration cơ sở dữ liệu của ThinkPHP
+- **Quản lý phiên bản**: quản lý phiên bản cho các thay đổi cấu trúc cơ sở dữ liệu
+- **Cơ chế rollback**: hỗ trợ rollback cấu trúc cơ sở dữ liệu
 
-### 10.2 迁移文件命名规范
+### 10.2 Quy tắc đặt tên tệp migration
 
-- **格式**: `YYYYMMDDHHMMSS_描述.php`
-- **示例**: `20230101000000_create_user_table.php`
+- **Định dạng**: `YYYYMMDDHHMMSS_mo_ta.php`
+- **Ví dụ**: `20230101000000_create_user_table.php`
 
-### 10.3 迁移文件结构
+### 10.3 Cấu trúc tệp migration
 
 ```php
 <?php
@@ -353,16 +353,16 @@ class CreateUserTable extends Migrator
     public function change()
     {
         $table = $this->table('user');
-        $table->addColumn('username', 'string', ['limit' => 50, 'comment' => '用户名'])
-              ->addColumn('password', 'string', ['limit' => 255, 'comment' => '密码'])
-              ->addColumn('nickname', 'string', ['limit' => 50, 'comment' => '昵称'])
-              ->addColumn('avatar', 'string', ['limit' => 255, 'comment' => '头像'])
-              ->addColumn('mobile', 'string', ['limit' => 20, 'comment' => '手机号'])
-              ->addColumn('email', 'string', ['limit' => 100, 'comment' => '邮箱'])
-              ->addColumn('status', 'tinyint', ['default' => 1, 'comment' => '状态'])
-              ->addColumn('create_time', 'datetime', ['default' => 'CURRENT_TIMESTAMP', 'comment' => '创建时间'])
-              ->addColumn('update_time', 'datetime', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP', 'comment' => '更新时间'])
-              ->addColumn('delete_time', 'datetime', ['comment' => '删除时间'])
+        $table->addColumn('username', 'string', ['limit' => 50, 'comment' => 'Tên người dùng'])
+              ->addColumn('password', 'string', ['limit' => 255, 'comment' => 'Mật khẩu'])
+              ->addColumn('nickname', 'string', ['limit' => 50, 'comment' => 'Biệt danh'])
+              ->addColumn('avatar', 'string', ['limit' => 255, 'comment' => 'Ảnh đại diện'])
+              ->addColumn('mobile', 'string', ['limit' => 20, 'comment' => 'Số điện thoại'])
+              ->addColumn('email', 'string', ['limit' => 100, 'comment' => 'Email'])
+              ->addColumn('status', 'tinyint', ['default' => 1, 'comment' => 'Trạng thái'])
+              ->addColumn('create_time', 'datetime', ['default' => 'CURRENT_TIMESTAMP', 'comment' => 'Thời gian tạo'])
+              ->addColumn('update_time', 'datetime', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP', 'comment' => 'Thời gian cập nhật'])
+              ->addColumn('delete_time', 'datetime', ['comment' => 'Thời gian xóa'])
               ->addIndex('username', ['unique' => true])
               ->addIndex('mobile')
               ->addIndex('email')
@@ -372,34 +372,34 @@ class CreateUserTable extends Migrator
 }
 ```
 
-## 11. 维护与监控
+## 11. Bảo trì và giám sát
 
-### 11.1 日常维护
+### 11.1 Bảo trì thường xuyên
 
-- **定期优化表**: 定期执行 OPTIMIZE TABLE 命令
-- **监控表大小**: 监控表大小变化
-- **检查慢查询**: 定期分析慢查询日志
-- **更新统计信息**: 定期更新表统计信息
+- **Tối ưu bảng định kỳ**: định kỳ chạy lệnh OPTIMIZE TABLE
+- **Giám sát kích thước bảng**: theo dõi sự thay đổi kích thước bảng
+- **Kiểm tra truy vấn chậm**: định kỳ phân tích log truy vấn chậm
+- **Cập nhật thông tin thống kê**: định kỳ cập nhật thông tin thống kê của bảng
 
-### 11.2 监控指标
+### 11.2 Chỉ số giám sát
 
-- **查询性能**: 监控查询响应时间
-- **连接数**: 监控数据库连接数
-- **缓存命中率**: 监控缓存命中率
-- **磁盘使用率**: 监控磁盘空间使用情况
-- **CPU 使用率**: 监控数据库服务器 CPU 使用率
+- **Hiệu năng truy vấn**: giám sát thời gian phản hồi của truy vấn
+- **Số kết nối**: giám sát số lượng kết nối cơ sở dữ liệu
+- **Tỷ lệ cache hit**: Giám sát tỷ lệ cache hit
+- **Tỷ lệ sử dụng ổ đĩa**: Giám sát tình trạng sử dụng dung lượng ổ đĩa
+- **Tỷ lệ sử dụng CPU**: Giám sát tỷ lệ sử dụng CPU của máy chủ cơ sở dữ liệu
 
-### 11.3 监控工具
+### 11.3 Công cụ giám sát
 
-- **MySQL Enterprise Monitor**: MySQL 企业版监控工具
-- **Percona Monitoring and Management**: 开源监控工具
-- **Zabbix**: 通用监控工具
-- **Prometheus + Grafana**: 现代化监控方案
+- **MySQL Enterprise Monitor**: Công cụ giám sát của MySQL bản Enterprise
+- **Percona Monitoring and Management**: Công cụ giám sát mã nguồn mở
+- **Zabbix**: Công cụ giám sát đa năng
+- **Prometheus + Grafana**: Giải pháp giám sát hiện đại
 
-## 12. 总结
+## 12. Tổng kết
 
-本文档描述了 CRMEB 项目的数据库设计规范和最佳实践，包括数据库架构、表结构、索引设计、关系设计、性能优化、安全设计、备份与恢复、版本控制、维护与监控等方面。
+Tài liệu này mô tả quy chuẩn thiết kế cơ sở dữ liệu và các thực tiễn tốt nhất (best practice) của dự án CRMEB, bao gồm các khía cạnh như kiến trúc cơ sở dữ liệu, cấu trúc bảng, thiết kế chỉ mục, thiết kế quan hệ, tối ưu hiệu năng, thiết kế bảo mật, sao lưu và khôi phục, quản lý phiên bản, bảo trì và giám sát.
 
-遵循本文档的设计规范，可以提高数据库性能和可维护性，确保系统的稳定运行。同时，定期对数据库进行维护和监控，可以及时发现和解决潜在问题，保障系统的安全性和可靠性。
+Tuân thủ quy chuẩn thiết kế trong tài liệu này giúp nâng cao hiệu năng và khả năng bảo trì của cơ sở dữ liệu, đảm bảo hệ thống vận hành ổn định. Đồng thời, việc bảo trì và giám sát cơ sở dữ liệu định kỳ giúp kịp thời phát hiện và xử lý các vấn đề tiềm ẩn, bảo đảm tính an toàn và độ tin cậy của hệ thống.
 
-随着业务的发展和系统的演进，数据库设计也需要不断优化和调整，以适应新的业务需求和技术挑战。
+Cùng với sự phát triển của nghiệp vụ và quá trình hoàn thiện của hệ thống, thiết kế cơ sở dữ liệu cũng cần được liên tục tối ưu và điều chỉnh để thích ứng với các yêu cầu nghiệp vụ và thách thức kỹ thuật mới.

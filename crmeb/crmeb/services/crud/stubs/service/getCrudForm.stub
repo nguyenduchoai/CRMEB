@@ -1,5 +1,5 @@
     /**
-     * 编辑和获取表单
+     * Sửa và lấy form
      * @date {%DATE%}
      * @param int $id
      * @return array

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -33,7 +33,7 @@ class SystemNotification extends AuthController
     }
 
     /**
-     * 显示资源列表
+     * Hiển thị danh sách resource
      * @return \think\Response
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -48,7 +48,7 @@ class SystemNotification extends AuthController
     }
 
     /**
-     * 添加消息
+     * Thêm thông báo
      * @return \think\Response
      * @throws \FormBuilder\Exception\FormBuilderException
      * @author wuhaotian
@@ -61,7 +61,7 @@ class SystemNotification extends AuthController
     }
 
     /**
-     * 保存自定义消息
+     * Lưu thông báo tùy chỉnh
      * @param $id
      * @return \think\Response
      * @author wuhaotian
@@ -76,11 +76,11 @@ class SystemNotification extends AuthController
             ['mark', ''],
         ]);
         $this->services->notFormSave($id, $data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     /**
-     * 删除消息
+     * Xóa thông báo
      * @param $id
      * @return \think\Response
      * @author wuhaotian
@@ -89,14 +89,14 @@ class SystemNotification extends AuthController
      */
     public function delNot($id)
     {
-        if (!$id) return app('json')->fail('参数错误');
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $this->services->delete($id);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 
 
     /**
-     * 显示编辑
+     * Hiển thị sửa
      * @return \think\Response
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -108,12 +108,12 @@ class SystemNotification extends AuthController
             ['type', ''],
             ['id', 0]
         ]);
-        if (!$where['id']) return app('json')->fail('参数错误');
+        if (!$where['id']) return app('json')->fail('Tham số không hợp lệ');
         return app('json')->success($this->services->getNotInfo($where));
     }
 
     /**
-     * 保存新建的资源
+     * Lưu resource mới tạo
      * @return mixed
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
@@ -148,17 +148,17 @@ class SystemNotification extends AuthController
             ['wechat_to_routine', ''],
         ]);
         if ($data['mark'] == 'verify_code') $data['type'] = 'is_sms';
-        if (!$data['id']) return app('json')->fail('参数错误');
+        if (!$data['id']) return app('json')->fail('Tham số không hợp lệ');
         if ($this->services->saveData($data)) {
             CacheService::clear();
-            return app('json')->success('修改成功');
+            return app('json')->success('Sửa thành công');
         } else {
-            return app('json')->fail('修改失败');
+            return app('json')->fail('Sửa thất bại');
         }
     }
 
     /**
-     * 修改消息状态
+     * Sửa trạng thái thông báo
      * @param $type
      * @param $status
      * @param $id
@@ -170,10 +170,10 @@ class SystemNotification extends AuthController
      */
     public function set_status($type, $status, $id)
     {
-        if ($type == '' || $status == '' || $id == 0) return app('json')->fail('参数错误');
+        if ($type == '' || $status == '' || $id == 0) return app('json')->fail('Tham số không hợp lệ');
         $this->services->update($id, [$type => $status]);
         $res = $this->services->getOneNotce(['id' => $id]);
         CacheService::clear();
-        return app('json')->success('设置成功');
+        return app('json')->success('Cài đặt thành công');
     }
 }

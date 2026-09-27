@@ -5,21 +5,21 @@
       <el-switch
         class="defineSwitch"
         v-model="configData.enable"
-        active-text="开启"
-        inactive-text="关闭"
+        active-text="Bật"
+        inactive-text="Tắt"
         @change="handleChange"
       ></el-switch>
     </div>
     <div class="item-content" v-if="configData.enable">
       <el-input
         v-model="configData.text"
-        placeholder="请输入文字"
+        placeholder="Vui lòng nhập văn bản"
         maxlength="20"
         show-word-limit
         @change="handleChange"
       ></el-input>
       <div class="link-box" v-if="configData.link !== undefined">
-        <el-input v-model="configData.link" placeholder="请选择链接">
+        <el-input v-model="configData.link" placeholder="Vui lòng chọn liên kết">
           <i slot="suffix" class="el-icon-link" @click="getLink"></i>
         </el-input>
       </div>

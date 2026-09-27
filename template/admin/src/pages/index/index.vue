@@ -3,15 +3,15 @@
     <!-- <div class="open-image" v-db-click @click="clear" v-if="openImage">
       <img src="@/assets/images/wechat_demo.png" alt="" />
     </div> -->
-    <!--头部-->
+    <!--Phần đầu-->
     <base-info ref="baseInfo" />
-    <!--小方块-->
+    <!--Ô vuông nhỏ-->
     <grid-menu v-if="userInfo.level == 0" />
-    <!--订单统计-->
+    <!--Thống kê đơn hàng-->
     <visit-chart ref="visitChart" />
-    <!--用户-->
+    <!--Người dùng-->
     <user-chart ref="userChart" />
-    <!--版本升级-->
+    <!--Nâng cấp phiên bản-->
     <!-- <upgrade v-if="force_reminder == 1" /> -->
   </div>
 </template>

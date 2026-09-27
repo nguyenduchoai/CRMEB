@@ -22,7 +22,7 @@
 		</div>
 		<view class="wrapper">
 			<GoodList :bastList="goodsList" :is-sort="false"></GoodList>
-			<emptyPage v-if="goodsList.length == 0 && !isScroll" :title="$t(`暂无数据`)"></emptyPage>
+			<emptyPage v-if="goodsList.length == 0 && !isScroll" :title="$t(`Chưa có dữ liệu`)"></emptyPage>
 		</view>
 		<!-- #ifndef MP -->
 		<home></home>
@@ -59,8 +59,8 @@
 				name: '',
 				icon: '',
 				type: 0,
-				typeName: ['', this.$t(`精品推荐`), this.$t(`热门榜单`), this.$t(`首发新品`),
-					this.$t(`促销单品`)
+				typeName: ['', this.$t(`Đề xuất nổi bật`), this.$t(`Top bán chạy`), this.$t(`Hàng mới ra mắt`),
+					this.$t(`Sản phẩm khuyến mãi`)
 				],
 				autoplay: true,
 				circular: true,
@@ -75,7 +75,7 @@
 			this.type = option.type;
 			this.titleInfo();
 			this.name = option.name;
-			// document.title = "精品推荐";
+			// document.title = "Gợi ý sản phẩm nổi bật";
 			uni.setNavigationBarTitle({
 				title: option.name
 			});

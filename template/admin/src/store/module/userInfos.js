@@ -6,13 +6,13 @@ const userInfosModule = {
     userInfos: {},
   },
   mutations: {
-    // 设置用户信息
+    // Đặt thông tin người dùng
     getUserInfos(state, data) {
       state.userInfos = data;
     },
   },
   actions: {
-    // 设置用户信息
+    // Đặt thông tin người dùng
     async setUserInfos({ commit }, data) {
       if (data) {
         commit('getUserInfos', data);

@@ -1,5 +1,5 @@
 <template>
-  <!-- 富文本 -->
+  <!-- Văn bản định dạng -->
   <view v-show="!isSortType">
     <common-wrapper :config="configData">
       <view class="richText" v-if="description" :style="[richTextStyle]">

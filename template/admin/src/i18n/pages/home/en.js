@@ -1,4 +1,4 @@
-// 定义内容
+// Định nghĩa nội dung
 export default {
   card: {
     title1: 'My desk',

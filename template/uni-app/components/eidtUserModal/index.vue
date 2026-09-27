@@ -4,21 +4,21 @@
 			<view class="iconfont icon-guanbi" @click="closeAttr"></view>
 			<view class="mp-data">
 				<image :src="mpData.siteLogo" mode=""></image>
-				<text class="mp-name">{{mpData.siteName}} 申请</text>
+				<text class="mp-name">{{mpData.siteName}} yêu cầu</text>
 			</view>
 			<view class="trip-msg">
 				<view class="title">
-					{{$t(`获取您的昵称、头像`)}}
+					{{$t(`Truy cập biệt danh, ảnh đại diện của bạn`)}}
 				</view>
 				<view class="trip">
-					{{$t(`提供具有辨识度的用户中心界面`)}}
+					{{$t(`Cung cấp giao diện trang cá nhân dễ nhận diện`)}}
 				</view>
 			</view>
 			<form @submit="formSubmit">
 				<view class="edit">
 					<view class="avatar edit-box">
 						<view class="left">
-							<view class="head">{{$t(`头像`)}}</view>
+							<view class="head">{{$t(`Ảnh đại diện`)}}</view>
 							<!-- <image :src="userInfo.avatar || defaultAvatar" mode=""></image> -->
 							<view class="avatar-box" v-if="!mp_is_new" @click.stop='uploadpic'>
 								<image :src="userInfo.avatar || defHead"></image>
@@ -31,9 +31,9 @@
 					</view>
 					<view class="nickname edit-box">
 						<view class="left">
-							<view class="head">{{$t(`昵称`)}}</view>
+							<view class="head">{{$t(`Biệt danh`)}}</view>
 							<view class='input'><input type='nickname' placeholder-class="pl-sty"
-									:placeholder="$t(`请输入昵称`)" name='nickname' :maxlength="16"
+									:placeholder="$t(`Vui lòng nhập biệt danh`)" name='nickname' :maxlength="16"
 									:value='userInfo.nickname'></input>
 							</view>
 						</view>
@@ -44,7 +44,7 @@
 
 				<view class="bottom">
 					<button class="save" formType="submit" :class="{'open': userInfo.avatar}">
-						{{$t(`保存`)}}
+						{{$t(`Lưu`)}}
 					</button>
 				</view>
 			</form>
@@ -88,7 +88,7 @@
 		},
 		methods: {
 			/**
-			 * 上传文件
+			 * Tải lên file
 			 * 
 			 */
 			uploadpic: function() {
@@ -107,7 +107,7 @@
 					this.canvasHeight = res.h
 				});
 			},
-			// 微信头像获取
+			// Lấy ảnh đại diện WeChat
 			onChooseAvatar(e) {
 				const {
 					avatarUrl
@@ -122,15 +122,15 @@
 				this.$emit('closeEdit');
 			},
 			/**
-			 * 提交修改
+			 * Gửi sửa đổi
 			 */
 			formSubmit(e) {
 				let that = this
 				if (!this.userInfo.avatar) return that.$util.Tips({
-					title: that.$t(`请上传头像`)
+					title: that.$t(`Vui lòng tải lên ảnh đại diện`)
 				});
 				if (!e.detail.value.nickname) return that.$util.Tips({
-					title: that.$t(`请输入昵称`)
+					title: that.$t(`Vui lòng nhập biệt danh`)
 				});
 				this.userInfo.nickname = e.detail.value.nickname
 				userEdit(this.userInfo).then(res => {
@@ -143,7 +143,7 @@
 					});
 				}).catch(msg => {
 					return that.$util.Tips({
-						title: msg || that.$t(`保存失败`)
+						title: msg || that.$t(`Lưu thất bại`)
 					}, {
 						tab: 3,
 						url: 1
@@ -180,8 +180,8 @@
 		transition: all .3s cubic-bezier(.25, .5, .5, .9);
 		padding: 38rpx 40rpx;
 		padding-bottom: 80rpx;
-		padding-bottom: calc(80rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-		padding-bottom: calc(80rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+		padding-bottom: calc(80rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+		padding-bottom: calc(80rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 
 		.icon-guanbi {
 			position: absolute;

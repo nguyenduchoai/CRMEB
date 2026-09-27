@@ -11,17 +11,17 @@
           @submit.native.prevent
           class="tabform"
         >
-          <el-form-item label="会员类型：">
+          <el-form-item label="Loại thành viên:">
             <el-select v-model="formValidate.member_type" clearable @change="userSearchs" class="form_content_width">
               <el-option v-for="item in treeSelect" :value="item.id" :key="item.id" :label="item.label"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="支付方式：">
+          <el-form-item label="Phương thức thanh toán:">
             <el-select v-model="formValidate.pay_type" clearable @change="paySearchs" class="form_content_width">
               <el-option v-for="item in payList" :value="item.val" :key="item.val" :label="item.label"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="购买时间：">
+          <el-form-item label="Thời gian mua:">
             <el-date-picker
               clearable
               v-model="timeVal"
@@ -30,22 +30,22 @@
               @change="onchangeTime"
               format="yyyy/MM/dd"
               value-format="yyyy/MM/dd"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              start-placeholder="Ngày bắt đầu"
+              end-placeholder="Ngày kết thúc"
               :picker-options="pickerOptions"
               style="width: 250px"
             ></el-date-picker>
           </el-form-item>
-          <el-form-item label="搜索：">
+          <el-form-item label="Tìm kiếm:">
             <el-input
               clearable
-              placeholder="请输入用户名称搜索"
+              placeholder="Vui lòng nhập tên người dùng để tìm kiếm"
               v-model="formValidate.name"
               class="form_content_width"
             />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="userSearchs">查询</el-button>
+            <el-button type="primary" v-db-click @click="userSearchs">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -56,45 +56,45 @@
         ref="table"
         v-loading="loading"
         size="small"
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
-        <el-table-column label="订单号" width="170">
+        <el-table-column label="Mã đơn hàng" width="170">
           <template slot-scope="scope">
             <span>{{ scope.row.order_id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="用户名" min-width="80">
+        <el-table-column label="Tên người dùng" min-width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.user.nickname }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="手机号码" min-width="80">
+        <el-table-column label="Số điện thoại" min-width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.user.phone || '--' }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="会员类型" min-width="80">
+        <el-table-column label="Loại thành viên" min-width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.member_type }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="有效期限（天）" min-width="80">
+        <el-table-column label="Thời hạn hiệu lực (ngày)" min-width="80">
           <template slot-scope="scope">
-            <span>{{ scope.row.vip_day === -1 ? '永久' : scope.row.vip_day }}</span>
+            <span>{{ scope.row.vip_day === -1 ? 'Vĩnh viễn' : scope.row.vip_day }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="支付金额（元）" min-width="50">
+        <el-table-column label="Số tiền thanh toán (đ)" min-width="50">
           <template slot-scope="scope">
             <span>{{ scope.row.pay_price }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="支付方式" min-width="30">
+        <el-table-column label="Phương thức thanh toán" min-width="30">
           <template slot-scope="scope">
             <span>{{ scope.row.pay_type }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="购买时间" min-width="80">
+        <el-table-column label="Thời gian mua" min-width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.pay_time }}</span>
           </template>
@@ -124,45 +124,45 @@ export default {
       treeSelect: [
         {
           id: 'free',
-          label: '试用',
+          label: 'Dùng thử',
         },
         {
           id: 'card',
-          label: '卡密',
+          label: 'Mã thẻ',
         },
         {
           id: 'month',
-          label: '月卡',
+          label: 'Thẻ tháng',
         },
         {
           id: 'quarter',
-          label: '季卡',
+          label: 'Thẻ quý',
         },
         {
           id: 'year',
-          label: '年卡',
+          label: 'Thẻ năm',
         },
         {
           id: 'ever',
-          label: '永久',
+          label: 'Vĩnh viễn',
         },
       ],
       payList: [
         {
           val: 'free',
-          label: '免费',
+          label: 'Miễn phí',
         },
         {
           val: 'yue',
-          label: '余额',
+          label: 'Số dư',
         },
         {
           val: 'weixin',
-          label: '微信',
+          label: 'WeChat',
         },
         {
           val: 'alipay',
-          label: '支付宝',
+          label: 'Alipay',
         },
       ],
       tbody: [],
@@ -195,22 +195,22 @@ export default {
     this.getMemberRecord();
   },
   methods: {
-    // 用户名搜索；
+    // Tìm kiếm theo tên người dùng;
     selChange() {
       this.tablePage.page = 1;
       this.getMemberRecord();
     },
-    //用户类型搜索；
+    //Tìm kiếm theo loại người dùng;
     userSearchs() {
       this.tablePage.page = 1;
       this.getMemberRecord();
     },
-    //支付方式搜索；
+    //Tìm kiếm theo phương thức thanh toán;
     paySearchs() {
       this.tablePage.page = 1;
       this.getMemberRecord();
     },
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e || [];
       this.formValidate.add_time = this.timeVal[0] ? (this.timeVal ? this.timeVal.join('-') : '') : '';

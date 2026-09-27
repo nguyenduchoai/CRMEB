@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,7 +17,7 @@ use app\Request;
 use app\services\user\UserServices;
 
 /**
- * 砍价商品类
+ * Lớp sản phẩm săn giảm giá
  * Class StoreBargainController
  * @package app\api\controller\activity
  */
@@ -31,18 +31,18 @@ class StoreBargainController
     }
 
     /**
-     * 砍价列表顶部图
+     * Ảnh đầu trang danh sách săn giảm giá
      * @return mixed
      */
     public function config()
     {
-        $lovely = sys_data('routine_lovely') ?? [];//banner图
+        $lovely = sys_data('routine_lovely') ?? [];//Ảnh banner
         $info = $lovely[2] ?? [];
         return app('json')->success($info);
     }
 
     /**
-     * 砍价商品列表
+     * Danh sách sản phẩm săn giảm giá
      * @param Request $request
      * @return mixed
      */
@@ -53,7 +53,7 @@ class StoreBargainController
     }
 
     /**
-     * 砍价详情和当前登录人信息
+     * Chi tiết săn giảm giá và thông tin người đang đăng nhập
      * @param Request $request
      * @param $id
      * @return mixed
@@ -71,7 +71,7 @@ class StoreBargainController
     }
 
     /**
-     * 砍价 观看/分享/参与次数
+     * Săn giảm giá - Số lần xem/chia sẻ/tham gia
      * @param Request $request
      * @return mixed
      */
@@ -80,16 +80,16 @@ class StoreBargainController
         /** @var StoreBargainUserHelpServices $bargainUserHelpService */
         $bargainUserHelpService = app()->make(StoreBargainUserHelpServices::class);
         list($bargainId) = $request->postMore([['bargainId', 0]], true);
-        $data['lookCount'] = $this->services->sum([], 'look');//TODO 观看人数
-        $data['userCount'] = $bargainUserHelpService->count([]);//TODO 参与人数
+        $data['lookCount'] = $this->services->sum([], 'look');//TODO Số người xem
+        $data['userCount'] = $bargainUserHelpService->count([]);//TODO Số người tham gia
         if (!$bargainId) return app('json')->success($data);
         $this->services->addBargain($bargainId, 'share');
-        $data['shareCount'] = $this->services->sum([], 'share');//TODO 分享人数
+        $data['shareCount'] = $this->services->sum([], 'share');//TODO Số người chia sẻ
         return app('json')->success($data);
     }
 
     /**
-     * 砍价开启
+     * Bắt đầu săn giảm giá
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -105,7 +105,7 @@ class StoreBargainController
     }
 
     /**
-     * 砍价 帮助好友砍价
+     * Săn giảm giá - Giúp bạn bè giảm giá
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -122,7 +122,7 @@ class StoreBargainController
     }
 
     /**
-     * 砍价 砍价帮
+     * Săn giảm giá - Người giúp giảm giá
      * @param Request $request
      * @return mixed
      */
@@ -144,7 +144,7 @@ class StoreBargainController
     }
 
     /**
-     * 砍价 开启砍价用户信息
+     * Săn giảm giá - Thông tin người dùng bắt đầu săn giảm giá
      * @param Request $request
      * @return mixed
      */
@@ -154,18 +154,18 @@ class StoreBargainController
             ['bargainId', 0],
             ['bargainUserUid', 0],
         ], true);
-        if (!$bargainId || !$bargainUserUid) return app('json')->fail('参数错误');
+        if (!$bargainId || !$bargainUserUid) return app('json')->fail('Tham số không hợp lệ');
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
         $userInfo = $userServices->getUserInfo((int)$bargainUserUid);
         if (!$userInfo) {
-            return app('json')->fail('用户信息获取失败');
+            return app('json')->fail('Lấy thông tin người dùng thất bại');
         }
         return app('json')->success(['nickname' => $userInfo['nickname'], 'avatar' => $userInfo['avatar']]);
     }
 
     /**
-     * 砍价列表(已参与)
+     * Danh sách săn giảm giá (đã tham gia)
      * @param Request $request
      * @return mixed
      */
@@ -174,30 +174,30 @@ class StoreBargainController
         $uid = $request->uid();
         /** @var StoreBargainUserServices $bargainUser */
         $bargainUser = app()->make(StoreBargainUserServices::class);
-        $bargainUser->editBargainUserStatus($uid);// TODO 判断过期砍价活动
+        $bargainUser->editBargainUserStatus($uid);// TODO Kiểm tra hoạt động săn giảm giá đã hết hạn
         $list = $bargainUser->getBargainUserAll($uid);
         if (count($list)) return app('json')->success(get_thumb_water($list));
         else return app('json')->success([]);
     }
 
     /**
-     * 砍价取消
+     * Hủy săn giảm giá
      * @param Request $request
      * @return mixed
      */
     public function user_cancel(Request $request)
     {
         list($bargainId) = $request->postMore([['bargainId', 0]], true);
-        if (!$bargainId) return app('json')->fail('参数错误');
+        if (!$bargainId) return app('json')->fail('Tham số không hợp lệ');
         /** @var StoreBargainUserServices $bargainUser */
         $bargainUser = app()->make(StoreBargainUserServices::class);
         $res = $bargainUser->cancelBargain($bargainId, $request->uid());
-        if ($res) return app('json')->success('取消成功');
-        else return app('json')->success('取消失败');
+        if ($res) return app('json')->success('Hủy thành công');
+        else return app('json')->success('Hủy thất bại');
     }
 
     /**
-     * 砍价海报
+     * Poster săn giảm giá
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -214,12 +214,12 @@ class StoreBargainController
         if ($posterUrl) {
             return app('json')->success(['url' => $posterUrl]);
         } else {
-            return app('json')->fail('生成海报失败');
+            return app('json')->fail('Tạo poster thất bại');
         }
     }
 
     /**
-     * 获取分享海报信息
+     * Lấy thông tin poster chia sẻ
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException

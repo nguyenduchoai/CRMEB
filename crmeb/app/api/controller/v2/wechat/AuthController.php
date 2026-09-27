@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -35,12 +35,12 @@ class AuthController
     }
 
     /**
-     * 返回用户信息的缓存key，返回是否强制绑定手机号
+     * Trả về key cache thông tin người dùng, trả về có bắt buộc liên kết số điện thoại không
      * @param $code
      * @param string $spread_code
      * @param string $spread_spid
      * @return \think\Response
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/12
      */
@@ -51,14 +51,14 @@ class AuthController
     }
 
     /**
-     * 根据缓存获取token
+     * Lấy token theo cache
      * @param $key
      * @return \think\Response
      * @throws \Psr\SimpleCache\InvalidArgumentException
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/12
      */
@@ -69,7 +69,7 @@ class AuthController
     }
 
     /**
-     * 授权获取小程序用户手机号 直接绑定
+     * Ủy quyền lấy số điện thoại người dùng Mini Program, liên kết trực tiếp
      * @param string $code
      * @param string $iv
      * @param string $encryptedData
@@ -84,16 +84,16 @@ class AuthController
     public function authBindingPhone($code = '', $iv = '', $encryptedData = '', $spread_code = '', $spread_spid = '', $key = '')
     {
         if (!$code || !$iv || !$encryptedData)
-            return app('json')->fail('参数错误');
+            return app('json')->fail('Tham số không hợp lệ');
         $data = $this->services->authBindingPhone($code, $iv, $encryptedData, $spread_code, $spread_spid, $key);
         if ($data) {
-            return app('json')->success('登录成功', $data);
+            return app('json')->success('Đăng nhập thành công', $data);
         } else
-            return app('json')->fail('登录失败');
+            return app('json')->fail('Đăng nhập thất bại');
     }
 
     /**
-     * 小程序手机号登录
+     * Đăng nhập bằng số điện thoại trên Mini Program
      * @param string $key
      * @param string $phone
      * @param string $captcha
@@ -105,20 +105,20 @@ class AuthController
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/12
      */
     public function phoneLogin($key = '', $phone = '', $captcha = '', $spread_code = '', $spread_spid = '', $code = '')
     {
-        //验证验证码
+        //Xác thực mã xác thực
         $verifyCode = CacheService::get('code_' . $phone);
         if (!$verifyCode)
-            return app('json')->fail('请先获取验证码');
+            return app('json')->fail('Vui lòng lấy mã xác thực trước');
         $verifyCode = substr($verifyCode, 0, 6);
         if ($verifyCode != $captcha) {
             CacheService::delete('code_' . $phone);
-            return app('json')->fail('验证码错误');
+            return app('json')->fail('Mã xác thực không đúng');
         }
         CacheService::delete('code_' . $phone);
         $data = $this->services->phoneLogin($key, $phone, $spread_code, 0, $spread_spid, $code);
@@ -126,19 +126,19 @@ class AuthController
     }
 
     /**
-     * 小程序绑定手机号
+     * Liên kết số điện thoại trên Mini Program
      * @param string $code
      * @param string $iv
      * @param string $encryptedData
      * @return \think\Response
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/02/24
      */
     public function bindingPhone($code = '', $iv = '', $encryptedData = '')
     {
-        if (!$code || !$iv || !$encryptedData) return app('json')->fail('参数错误');
+        if (!$code || !$iv || !$encryptedData) return app('json')->fail('Tham số không hợp lệ');
         $this->services->bindingPhone($code, $iv, $encryptedData);
-        return app('json')->success('绑定成功');
+        return app('json')->success('Liên kết thành công');
     }
 }

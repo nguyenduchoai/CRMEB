@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,7 +17,7 @@ use crmeb\services\UpgradeService as uService;
 use think\facade\Db;
 
 /**
- * 在线升级控制器
+ * Controller nâng cấp trực tuyến
  * Class SystemUpgradeclient
  * @package app\admin\controller\system
  *
@@ -25,15 +25,15 @@ use think\facade\Db;
 class SystemUpgradeClient extends AuthController
 {
 
-    protected $serverweb = array('version' => '1.0', 'version_code' => 0);//本站点信息
+    protected $serverweb = array('version' => '1.0', 'version_code' => 0);//Thông tin site này
 
     public function initialize()
     {
         parent::initialize();
-        self::snyweninfo();//更新站点信息
+        self::snyweninfo();//Cập nhật thông tin site
     }
 
-    //同步更新站点信息
+    //Đồng bộ cập nhật thông tin site
     public function snyweninfo()
     {
         /** @var SystemConfigServices $systemConfig */
@@ -50,14 +50,14 @@ class SystemUpgradeClient extends AuthController
         uService::snyweninfo($this->serverweb);
     }
 
-    //是否授权
+    //Đã cấp phép
     public function isauth()
     {
         return uService::isauth();
     }
 
     /**
-     * 升级列表
+     * Danh sách nâng cấp
      */
     public function index()
     {
@@ -74,12 +74,12 @@ class SystemUpgradeClient extends AuthController
         return app('json')->success($list);
     }
 
-    //删除备份文件
+    //Xóa file backup
     public function setcopydel()
     {
         $post = input('post.');
-        if (!isset($post['id'])) app('json')->fail('删除备份文件失败，缺少参数ID');
-        if (!isset($post['ids'])) app('json')->fail('删除备份文件失败，缺少参数IDS');
+        if (!isset($post['id'])) app('json')->fail('Xóa tệp sao lưu thất bại, thiếu tham số ID');
+        if (!isset($post['ids'])) app('json')->fail('Xóa tệp sao lưu thất bại, thiếu tham số IDS');
         $fileservice = new uService;
         if (is_array($post['ids'])) {
             foreach ($post['ids'] as $file) {
@@ -90,50 +90,50 @@ class SystemUpgradeClient extends AuthController
             $copyFile = app()->getRootPath() . 'public' . DS . 'copyfile' . $post['id'];
             $fileservice->del_dir($copyFile);
         }
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 
     public function get_new_version_conte()
     {
         $post = $this->request->post();
-        if (!isset($post['id'])) app('json')->fail('缺少参数ID');
+        if (!isset($post['id'])) app('json')->fail('Thiếu tham số ID');
         $versionInfo = uService::request_post(uService::$NewVersionCount, ['id' => $post['id']]);
         if (isset($versionInfo['code']) && isset($versionInfo['data']['count']) && $versionInfo['code'] == 200) {
             return app('json')->success(['count' => $versionInfo['data']['count']]);
         } else {
-            return app('json')->fail('服务器异常');
+            return app('json')->fail('Lỗi máy chủ');
         }
     }
 
-    //一键升级
+    //Nâng cấp bằng một cú nhấp
     public function auto_upgrade()
     {
         $prefix = config('database.prefix');
         $fileservice = new uService;
         $post = $this->request->post();
-        if (!isset($post['id'])) return app('json')->fail('缺少参数ID');
+        if (!isset($post['id'])) return app('json')->fail('Thiếu tham số ID');
         $versionInfo = $fileservice->request_post(uService::$isNowVersion, ['id' => $post['id']]);
-        if ($versionInfo === null) return app('json')->fail('服务器异常，请稍后再试');
-        if (isset($versionInfo['code']) && $versionInfo['code'] == 400) return app('json')->fail($versionInfo['msg'] ?? '您暂时没有权限升级，请联系管理员！');
+        if ($versionInfo === null) return app('json')->fail('Lỗi máy chủ, vui lòng thử lại sau');
+        if (isset($versionInfo['code']) && $versionInfo['code'] == 400) return app('json')->fail($versionInfo['msg'] ?? 'Bạn tạm thời không có quyền nâng cấp, vui lòng liên hệ quản trị viên!');
         if (is_array($versionInfo) && isset($versionInfo['data'])) {
             $list = $versionInfo['data'];
             $id = [];
             foreach ($list as $key => $val) {
                 $savefile = app()->getRootPath() . 'public' . DS . 'upgrade_lv';
-                //1，检查远程下载文件，并下载
-                if (($save_path = $fileservice->check_remote_file_exists($val['zip_name'], $savefile)) === false) app('json')->fail('远程升级包不存在');
-                //2，首先解压文件
+                //1, Kiểm tra file cần tải từ xa, và tải về
+                if (($save_path = $fileservice->check_remote_file_exists($val['zip_name'], $savefile)) === false) app('json')->fail('Gói nâng cấp từ xa không tồn tại');
+                //2, Trước tiên giải nén file
                 $savename = app()->getRootPath() . 'public' . DS . 'upgrade_lv' . DS . time();
                 $fileservice->zipOpen($save_path, $savename);
-                //3，执行SQL文件
+                //3, Thực thi file SQL
                 Db::startTrans();
                 try {
-                    //参数3不介意大小写的
+                    //Tham số 3 không phân biệt hoa thường
                     $sqlfile = $fileservice->listDirInfo($savename . DS, true, 'sql');
                     if (is_array($sqlfile) && !empty($sqlfile)) {
                         foreach ($sqlfile as $file) {
                             if (file_exists($file)) {
-                                //为一键安装做工作记得表前缀要改为[#DB_PREFIX#]哦
+                                //Chuẩn bị cho cài đặt một cú nhấp, nhớ đổi tiền tố bảng thành [#DB_PREFIX#] nhé
                                 $execute_sql = explode(";\r", str_replace(['[#DB_PREFIX#]', "\n"], [$prefix, "\r"], file_get_contents($file)));
                                 foreach ($execute_sql as $_sql) {
                                     if ($query_string = trim(str_replace(array(
@@ -142,7 +142,7 @@ class SystemUpgradeClient extends AuthController
                                         "\t"
                                     ), '', $_sql))) Db::execute($query_string);
                                 }
-                                //执行完sql记得删掉哦
+                                //Thực thi sql xong nhớ xóa nhé
                                 $fileservice->unlinkFile($file);
                             }
                         }
@@ -150,22 +150,22 @@ class SystemUpgradeClient extends AuthController
                     Db::commit();
                 } catch (\Exception $e) {
                     Db::rollback();
-                    //删除解压下的文件
+                    //Xóa file sau khi giải nén
                     $fileservice->del_dir(app()->getRootPath() . 'public' . DS . 'upgrade_lv');
-                    //删除压缩包
+                    //Xóa file nén
                     $fileservice->unlinkFile($save_path);
-                    //升级失败发送错误信息
+                    //Nâng cấp thất bại, gửi thông báo lỗi
                     $fileservice->request_post(uService::$isInsertLog, [
-                        'content' => '升级失败，错误信息为:' . $e->getMessage(),
+                        'content' => 'Nâng cấp thất bại, thông tin lỗi:' . $e->getMessage(),
                         'add_time' => time(),
                         'ip' => $this->request->ip(),
                         'http' => $this->request->domain(),
                         'type' => 'error',
                         'version' => $val['version']
                     ]);
-                    return app('json')->fail('升级失败SQL文件执行有误');
+                    return app('json')->fail('Nâng cấp thất bại, thực thi tệp SQL bị lỗi');
                 }
-                //4,备份文件
+                //4, Backup file
                 $copyFile = app()->getRootPath() . 'public' . DS . 'copyfile' . $val['id'];
                 $copyList = $fileservice->getDirs($savename . DS);
                 if (isset($copyList['dir'])) {
@@ -179,27 +179,27 @@ class SystemUpgradeClient extends AuthController
                         }
                     }
                 }
-                //5，覆盖文件
+                //5, Ghi đè file
                 $fileservice->handleDir($savename, app()->getRootPath());
-                //6,删除升级生成的目录
+                //6, Xóa thư mục do nâng cấp tạo ra
                 $fileservice->del_dir(app()->getRootPath() . 'public' . DS . 'upgrade_lv');
-                //7,删除压缩包
+                //7, Xóa file nén
                 $fileservice->unlinkFile($save_path);
-                //8,改写本地升级文件
+                //8, Ghi lại file nâng cấp cục bộ
                 $handle = fopen(app()->getRootPath() . '.version', 'w+');
-                if ($handle === false) return app('json')->fail(app()->getRootPath() . '.version' . '无法写入打开');
+                if ($handle === false) return app('json')->fail(app()->getRootPath() . '.version' . 'không thể mở để ghi');
                 $content = <<<EOT
 version={$val['version']}
 version_code={$val['id']}
 EOT;
-                if (fwrite($handle, $content) === false) return app('json')->fail('升级包写入失败');
+                if (fwrite($handle, $content) === false) return app('json')->fail('Ghi gói nâng cấp thất bại');
                 fclose($handle);
-                //9,向服务端发送升级日志
+                //9, Gửi log nâng cấp lên server
                 $posts = [
                     'ip' => $this->request->ip(),
                     'https' => $this->request->domain(),
                     'update_time' => time(),
-                    'content' => '一键升级成功，升级版本号为：' . $val['version'] . '。版本code为：' . $val['id'],
+                    'content' => 'Nâng cấp nhanh thành công, phiên bản nâng cấp:' . $val['version'] . '. Code phiên bản:' . $val['id'],
                     'type' => 'log',
                     'versionbefor' => $this->serverweb['version'],
                     'versionend' => $val['version']
@@ -207,10 +207,10 @@ EOT;
                 $inset = $fileservice->request_post(uService::$isInsertLog, $posts);
                 $id[] = $val['id'];
             }
-            //10,升级完成
-            return app('json')->success('升级成功', ['code' => end($id), 'version' => $val['version']]);
+            //10, Hoàn tất nâng cấp
+            return app('json')->success('Nâng cấp thành công', ['code' => end($id), 'version' => $val['version']]);
         } else {
-            return app('json')->fail('服务器异常，请稍后再试');
+            return app('json')->fail('Lỗi máy chủ, vui lòng thử lại sau');
         }
     }
 }

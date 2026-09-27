@@ -4,7 +4,7 @@
       <el-col v-bind="grid1" class="left-wrapper">
         <div class="tree_tit" v-db-click @click="addSort">
           <i class="el-icon-circle-plus"></i>
-          添加分类
+          Thêm danh mục
         </div>
         <div class="tree">
           <el-tree
@@ -30,8 +30,8 @@
                   <i class="el-icon-more el-icon--right"></i>
                   <template slot="dropdown">
                     <el-dropdown-menu>
-                      <el-dropdown-item command="1">编辑分类</el-dropdown-item>
-                      <el-dropdown-item v-if="data.id" command="2">删除分类</el-dropdown-item>
+                      <el-dropdown-item command="1">Sửa danh mục</el-dropdown-item>
+                      <el-dropdown-item v-if="data.id" command="2">Xóa danh mục</el-dropdown-item>
                     </el-dropdown-menu>
                   </template>
                 </el-dropdown>
@@ -45,29 +45,29 @@
           <el-row class="mb14">
             <el-col :span="24">
               <el-button v-auth="['setting-store_service-add']" type="primary" v-db-click @click="add"
-                >添加话术</el-button
+                >Thêm câu trả lời mẫu</el-button
               >
-              <!-- <el-button v-auth="['setting-store_service-add']" type="success" v-db-click @click="addSort">添加分类</el-button> -->
+              <!-- <el-button v-auth="['setting-store_service-add']" type="success" v-db-click @click="addSort">Thêm danh mục</el-button> -->
             </el-col>
           </el-row>
           <el-table
             :data="tableList"
             v-loading="loading"
             highlight-current-row
-            no-userFrom-text="暂无数据"
-            no-filtered-userFrom-text="暂无筛选结果"
+            no-userFrom-text="Chưa có dữ liệu"
+            no-filtered-userFrom-text="Không có kết quả phù hợp"
           >
             <el-table-column label="ID" width="80">
               <template slot-scope="scope">
                 <span>{{ scope.row.id }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="分类" min-width="120">
+            <el-table-column label="Danh mục" min-width="120">
               <template slot-scope="scope">
                 <span>{{ scope.row.cate_name }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="标题" min-width="120">
+            <el-table-column label="Tiêu đề" min-width="120">
               <template slot-scope="scope">
                 <el-tooltip placement="top" :open-delay="600">
                   <div slot="content">{{ scope.row.title }}</div>
@@ -75,7 +75,7 @@
                 </el-tooltip>
               </template>
             </el-table-column>
-            <el-table-column label="详情" min-width="120">
+            <el-table-column label="Chi tiết" min-width="120">
               <template slot-scope="scope">
                 <el-tooltip placement="top" :open-delay="600">
                   <div slot="content">{{ scope.row.message }}</div>
@@ -83,21 +83,21 @@
                 </el-tooltip>
               </template>
             </el-table-column>
-            <el-table-column label="排序" min-width="120">
+            <el-table-column label="Thứ tự sắp xếp" min-width="120">
               <template slot-scope="scope">
                 <span>{{ scope.row.sort }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="添加时间" min-width="150">
+            <el-table-column label="Thời gian thêm" min-width="150">
               <template slot-scope="scope">
                 <span>{{ scope.row.add_time }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="操作" fixed="right" width="170">
+            <el-table-column label="Thao tác" fixed="right" width="170">
               <template slot-scope="scope">
-                <a v-db-click @click="edit(scope.row)">编辑</a>
+                <a v-db-click @click="edit(scope.row)">Sửa</a>
                 <el-divider direction="vertical"></el-divider>
-                <a v-db-click @click="del(scope.row, '删除客服', scope.$index)">删除</a>
+                <a v-db-click @click="del(scope.row, 'Xóa nhân viên CSKH', scope.$index)">Xóa</a>
               </template>
             </el-table-column>
           </el-table>
@@ -131,8 +131,8 @@ export default {
   filters: {
     typeFilter(status) {
       const statusMap = {
-        wechat: '微信用户',
-        routine: '小程序用户',
+        wechat: 'Người dùng WeChat',
+        routine: 'Người dùng Mini Program',
       };
       return statusMap[status];
     },
@@ -174,16 +174,16 @@ export default {
       tableList3: [],
       columns3: [
         {
-          title: '用户名称',
+          title: 'Tên người dùng',
           key: 'nickname',
           width: 200,
         },
         {
-          title: '客服头像',
+          title: 'Ảnh đại diện CSKH',
           slot: 'headimgurl',
         },
         {
-          title: '操作',
+          title: 'Thao tác',
           slot: 'action',
         },
       ],
@@ -215,16 +215,16 @@ export default {
       },
       timeVal: [],
       fromList: {
-        title: '选择时间',
+        title: 'Chọn giờ',
         custom: true,
         fromTxt: [
-          { text: '全部', val: '' },
-          { text: '今天', val: 'today' },
-          { text: '昨天', val: 'yesterday' },
-          { text: '最近7天', val: 'lately7' },
-          { text: '最近30天', val: 'lately30' },
-          { text: '本月', val: 'month' },
-          { text: '本年', val: 'year' },
+          { text: 'Tất cả', val: '' },
+          { text: 'Hôm nay', val: 'today' },
+          { text: 'Hôm qua', val: 'yesterday' },
+          { text: '7 ngày qua', val: 'lately7' },
+          { text: '30 ngày qua', val: 'lately30' },
+          { text: 'Tháng này', val: 'month' },
+          { text: 'Năm nay', val: 'year' },
         ],
       },
       loading: false,
@@ -252,7 +252,7 @@ export default {
       speechcraftcate().then((res) => {
         let data = res.data.data;
         let obj = {
-          name: '全部',
+          name: 'Tất cả',
           id: '',
         };
         data.unshift(obj);
@@ -267,11 +267,11 @@ export default {
         this.labelSort = data;
       });
     },
-    // 添加分类
+    // Thêm danh mục
     addSort() {
       this.$modalForm(speechcraftcateCreate()).then(() => this.getUserLabelAll());
     },
-    //编辑标签
+    //Sửa nhãn
     labelEdit(item) {
       this.$modalForm(speechcraftcateEdit(item.id)).then(() => this.getUserLabelAll(1));
     },
@@ -297,15 +297,15 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 点击菜单
+    // Bấm vào menu
     clickMenu(data, name) {
       if (name == 1) {
         this.labelEdit(data);
       } else if (name == 2) {
-        this.deleteSort(data, '删除分类');
+        this.deleteSort(data, 'Xóa danh mục');
       }
     },
-    // 显示标签小菜单
+    // Hiển thị menu nhỏ nhãn
     showMenu(item) {
       this.labelSort.forEach((el) => {
         if (el.id == item.id) {
@@ -358,13 +358,13 @@ export default {
         }, 2000);
       });
     },
-    // 查看对话
+    // Xem cuộc trò chuyện
     look(row) {
       this.isChat = false;
       this.rowRecord = row;
       this.getChatlist();
     },
-    // 查看对话列表
+    // Xem danh sách cuộc trò chuyện
     getChatlist() {
       this.loading5 = true;
       this.formValidate5.uid = this.rows.uid;
@@ -386,18 +386,18 @@ export default {
       this.formValidate5.page = index;
       this.getChatlist();
     },
-    // 修改成功
+    // Sửa thành công
     submitFail() {
       this.getList();
     },
-    // 聊天记录
+    // Lịch sử trò chuyện
     record(row) {
       this.rows = row;
       this.modals3 = true;
       this.isChat = true;
       this.getListRecord();
     },
-    // 聊天记录列表
+    // Danh sách lịch sử trò chuyện
     getListRecord() {
       this.loading3 = true;
       kefuRecordApi(this.formValidate3, this.rows.id)
@@ -416,15 +416,15 @@ export default {
       this.formValidate3.page = index;
       this.getListRecord();
     },
-    // 编辑
+    // Sửa
     edit(row) {
       this.$modalForm(speechcraftEdit(row.id)).then(() => this.getList());
     },
-    // 添加
+    // Thêm
     add() {
       this.$modalForm(speechcraftCreate()).then(() => this.getList());
     },
-    // 全选
+    // Chọn tất cả
     onSelectTab(selection) {
       this.selections = selection;
       let data = [];
@@ -433,21 +433,21 @@ export default {
       });
       this.addFrom.uids = data;
     },
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e;
       this.formValidate.data = this.timeVal ? this.timeVal.join('-') : '';
       this.formValidate.page = 1;
       this.getListService();
     },
-    // 选择时间
+    // Chọn giờ
     selectChange(tab) {
       this.formValidate.data = tab;
       this.timeVal = [];
       this.formValidate.page = 1;
       this.getListService();
     },
-    // 客服列表
+    // Danh sách nhân viên CSKH
     getListService() {
       this.loading2 = true;
       kefucreateApi(this.formValidate)
@@ -470,12 +470,12 @@ export default {
       this.getListService();
       this.addFrom.uids = [];
     },
-    // 搜索
+    // Tìm kiếm
     userSearchs() {
       this.formValidate.page = 1;
       this.getListService();
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -493,7 +493,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       wechatSpeechcraft(this.tableFrom)
@@ -508,7 +508,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 修改是否显示
+    // Sửa có hiển thị hay không
     onchangeIsShow(row) {
       let data = {
         id: row.id,
@@ -522,10 +522,10 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 添加客服
+    // Thêm nhân viên CSKH
     putRemark() {
       if (this.addFrom.uids.length === 0) {
-        return this.$message.warning('请选择要添加的客服');
+        return this.$message.warning('Vui lòng chọn nhân viên CSKH cần thêm');
       }
       kefuAddApi(this.addFrom)
         .then(async (res) => {

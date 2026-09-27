@@ -3,13 +3,13 @@
 		<view class='my-promotion'>
 			<view class="header">
 				<view class='name acea-row row-center-wrapper'>
-					<!-- 当前佣金 -->
+					<!-- Hoa hồng hiện tại -->
 					<view>
 						<view class="user-msg">
 							<image class="avatar" :src="userInfo.avatar" mode=""></image>
 							<view class="nickname line1">{{userInfo.nickname}}</view>
 							<view v-if="userInfo.is_agent_level" class="level line1" @click="jumbPath">
-								<text>{{userInfo.agent_level_name?$t(userInfo.agent_level_name):$t(`分销等级`)}}</text>
+								<text>{{userInfo.agent_level_name?$t(userInfo.agent_level_name):$t(`Cấp độ CTV`)}}</text>
 								<text v-if="userInfo.is_agent_level" class='iconfont icon-xiangyou'></text>
 							</view>
 						</view>
@@ -18,71 +18,71 @@
 				<view class='num'>{{userInfo.brokerage_price}}</view>
 				<view class='profit acea-row row-between-wrapper'>
 					<view class='item'>
-						<view>{{$t(`昨日收益`)}}</view>
+						<view>{{$t(`Thu nhập hôm qua`)}}</view>
 						<view class='money'>{{userInfo.yesterDay}}</view>
 					</view>
 					<view class='item' @click="jumbPath(1)">
-						<view>{{$t(`累积已提`)}}<text class='iconfont icon-xiangyou'></text></view>
+						<view>{{$t(`Tổng đã rút`)}}<text class='iconfont icon-xiangyou'></text></view>
 						<view class='money'>{{userInfo.extractTotalPrice}}</view>
 					</view>
 				</view>
 				<view class="apply"
 					v-if="userInfo.division_open && userInfo.agent_apply_open && ((userInfo.is_division && userInfo.division_invite && userInfo.division_status) || (!userInfo.is_division && !userInfo.is_agent))">
-					<view v-if="userInfo.is_division">{{$t(`邀请码`)}}：{{userInfo.division_invite}}</view>
+					<view v-if="userInfo.is_division">{{$t(`Mã mời`)}}：{{userInfo.division_invite}}</view>
 					<view v-if="!userInfo.is_division && !userInfo.is_agent">
 						<navigator url='/pages/annex/settled/index?type=agent' hover-class="none">
-							<view>{{$t(`代理商申请`)}}</view>
+							<view>{{$t(`Đăng ký đại lý`)}}</view>
 						</navigator>
 					</view>
 				</view>
 			</view>
 			<!-- #ifdef APP-PLUS || H5 -->
-			<navigator url="/pages/users/user_cash/index" hover-class="none" class='bnt bg-color'>{{$t(`立即提现`)}}</navigator>
+			<navigator url="/pages/users/user_cash/index" hover-class="none" class='bnt bg-color'>{{$t(`Rút tiền ngay`)}}</navigator>
 			<!-- #endif -->
 			<!-- #ifdef MP -->
-			<view @click="openSubscribe('/pages/users/user_cash/index')" class='bnt bg-color'>{{$t(`立即提现`)}}</view>
+			<view @click="openSubscribe('/pages/users/user_cash/index')" class='bnt bg-color'>{{$t(`Rút tiền ngay`)}}</view>
 			<!-- #endif -->
 			<view class='list acea-row row-between-wrapper'>
 				<navigator url='/pages/users/user_spread_code/index' hover-class="none"
 					class='item acea-row row-center-wrapper row-column'>
 					<text class='iconfont icon-erweima'></text>
-					<view>{{$t(`推广名片`)}}</view>
+					<view>{{$t(`Danh thiếp giới thiệu`)}}</view>
 				</navigator>
 				<navigator url='/pages/users/promoter-list/index' hover-class="none"
 					class='item acea-row row-center-wrapper row-column'>
 					<text class='iconfont icon-tongji'></text>
-					<view>{{$t(`推广人统计`)}}</view>
+					<view>{{$t(`Thống kê người được giới thiệu`)}}</view>
 				</navigator>
 				<navigator url='/pages/users/user_spread_money/index?type=2' hover-class="none"
 					class='item acea-row row-center-wrapper row-column'>
 					<text class='iconfont icon-qiandai'></text>
-					<view>{{$t(`佣金明细`)}}</view>
+					<view>{{$t(`Chi tiết hoa hồng`)}}</view>
 				</navigator>
 
 				<navigator  v-if="(userInfo.division_open && !userInfo.is_agent && !userInfo.is_division) || !userInfo.division_open" url='/pages/users/promoter-order/index' hover-class="none"
 					class='item acea-row row-center-wrapper row-column'>
 					<text class='iconfont icon-dingdan'></text>
-					<view>{{$t(`推广人订单`)}}</view>
+					<view>{{$t(`Đơn hàng người được giới thiệu`)}}</view>
 				</navigator>
 				<navigator v-if="userInfo.division_open && (userInfo.is_agent || userInfo.is_division)" url='/pages/users/promoter-order/index?type=1' hover-class="none"
 					class='item acea-row row-center-wrapper row-column'>
 					<text class='iconfont icon-dingdan'></text>
-					<view>{{userInfo.is_division?$t(`事业部`):$t(`代理商`)}}{{$t(`推广订单`)}}</view>
+					<view>{{userInfo.is_division?$t(`Đại lý khu vực`):$t(`Đại lý`)}}{{$t(`Đơn hàng giới thiệu`)}}</view>
 				</navigator>
 				<navigator url='/pages/users/promoter_rank/index' hover-class="none"
 					class='item acea-row row-center-wrapper row-column'>
 					<text class='iconfont icon-paihang1'></text>
-					<view>{{$t(`推广人排行`)}}</view>
+					<view>{{$t(`Xếp hạng người giới thiệu`)}}</view>
 				</navigator>
 				<navigator url='/pages/users/commission_rank/index' hover-class="none"
 					class='item acea-row row-center-wrapper row-column'>
 					<text class='iconfont icon-paihang'></text>
-					<view>{{$t(`佣金排行`)}}</view>
+					<view>{{$t(`Xếp hạng hoa hồng`)}}</view>
 				</navigator>
 				<navigator v-if="userInfo.division_open && userInfo.is_agent" url='/pages/users/staff_list/index' hover-class="none"
 					class='item acea-row row-center-wrapper row-column'>
 					<text class='iconfont icon-tuandui'></text>
-					<view>{{$t(`员工列表`)}}</view>
+					<view>{{$t(`Danh sách nhân viên`)}}</view>
 				</navigator>
 				
 			</view>
@@ -126,8 +126,8 @@
 			return {
 				userInfo: {},
 				yesterdayPrice: 0.00,
-				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false //是否隐藏授权
+				isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+				isShowAuth: false //Có ẩn ủy quyền hay không
 			};
 		},
 		computed: mapGetters(['isLogin']),
@@ -167,27 +167,27 @@
 			onLoadFun: function() {
 				this.getUserInfo();
 			},
-			//跳转
+			//Chuyển trang
 			jumbPath(type) {
 				if (type == 1) {
 					uni.navigateTo({
-						// 提现记录
+						// Lịch sử rút tiền
 						url: '/pages/users/user_spread_money/index?type=1'
 					})
 				} else {
 					uni.navigateTo({
-						// 分佣等级
+						// Hạng chia hoa hồng
 						url: '/pages/users/user_distribution_level/index'
 					})
 				}
 			},
-			// 授权关闭
+			// Đóng ủy quyền
 			authColse: function(e) {
 				this.isShowAuth = e
 			},
 			openSubscribe: function(page) {
 				// uni.showLoading({
-				// 	title: this.$t(`正在加载`),
+				// 	title: this.$t(`Đang tải`),
 				// })
 				openExtrctSubscribe().then(res => {
 					uni.hideLoading();
@@ -199,7 +199,7 @@
 				});
 			},
 			/**
-			 * 获取个人用户信息
+			 * Lấy thông tin người dùng cá nhân
 			 */
 			getUserInfo: function() {
 				let that = this;
@@ -207,7 +207,7 @@
 					that.$set(that, 'userInfo', res.data);
 					if (!res.data.spread_status) {
 						that.$util.Tips({
-							title: that.$t(`您目前暂无推广权限`)
+							title: that.$t(`Bạn hiện chưa có quyền giới thiệu`)
 						}, {
 							tab: 1,
 							url: '/pages/index/index'

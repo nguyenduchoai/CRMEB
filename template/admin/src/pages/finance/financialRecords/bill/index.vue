@@ -13,12 +13,12 @@
       >
         <el-row :gutter="24">
           <el-col :xl="6" :lg="12" :md="13" :sm="12" :xs="24">
-            <el-form-item label="关键字：">
-              <el-input enter-button placeholder="请输入" element-id="name" v-model="formValidate.nickname" />
+            <el-form-item label="Từ khóa:">
+              <el-input enter-button placeholder="Vui lòng nhập" element-id="name" v-model="formValidate.nickname" />
             </el-form-item>
           </el-col>
           <el-col :xl="6" :lg="12" :md="13" :sm="12" :xs="24">
-            <el-form-item label="时间范围：" class="tab_data">
+            <el-form-item label="Khoảng thời gian:" class="tab_data">
               <el-date-picker
                 clearable
                 :editable="false"
@@ -27,14 +27,14 @@
                 value-format="yyyy/MM/dd"
                 type="daterange"
                 range-separator="-"
-                start-placeholder="开始日期"
-                end-placeholder="结束日期"
+                start-placeholder="Ngày bắt đầu"
+                end-placeholder="Ngày kết thúc"
                 style="width: 80%"
               ></el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :xl="6" :lg="12" :md="13" :sm="12" :xs="24">
-            <el-form-item label="筛选类型：" class="tab_data">
+            <el-form-item label="Lọc theo loại:" class="tab_data">
               <el-select v-model="formValidate.type" style="width: 200px; height: 32px" clearable>
                 <el-option
                   v-for="(item, index) in billList"
@@ -47,41 +47,41 @@
           </el-col>
           <el-col :span="6">
             <el-form-item>
-              <el-button type="primary" v-db-click @click="userSearchs">搜索</el-button>
-              <el-button v-auth="['export-userFinance']" class="export" v-db-click @click="exports">导出 </el-button>
+              <el-button type="primary" v-db-click @click="userSearchs">Tìm kiếm</el-button>
+              <el-button v-auth="['export-userFinance']" class="export" v-db-click @click="exports">Xuất </el-button>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
-      <el-table ref="table" highlight-current-row :data="tabList" v-loading="loading" empty-text="暂无数据">
-        <el-table-column label="用户ID" width="80">
+      <el-table ref="table" highlight-current-row :data="tabList" v-loading="loading" empty-text="Chưa có dữ liệu">
+        <el-table-column label="ID người dùng" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.uid }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="昵称" min-width="130">
+        <el-table-column label="Biệt danh" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.nickname }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="金额" min-width="130">
+        <el-table-column label="Số tiền" min-width="130">
           <template slot-scope="scope">
             <div :class="[scope.row.pm === 1 ? 'green' : 'red']">
               {{ scope.row.pm === 1 ? scope.row.number : '-' + scope.row.number }}
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="类型" min-width="130">
+        <el-table-column label="Loại" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.title }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="备注" min-width="130">
+        <el-table-column label="Ghi chú" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.mark }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="创建时间" min-width="130">
+        <el-table-column label="Thời gian tạo" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.add_time }}</span>
           </template>
@@ -114,8 +114,8 @@ export default {
         start_time: '',
         end_time: '',
         type: '',
-        page: 1, // 当前页
-        limit: 20, // 每页显示条数
+        page: 1, // Trang hiện tại
+        limit: 20, // Số mục hiển thị mỗi trang
       },
       loading: false,
       tabList: [],
@@ -136,12 +136,12 @@ export default {
     this.getList();
   },
   methods: {
-    // 时间
+    // Thời gian
     onchangeTime(e) {
       this.formValidate.start_time = e[0];
       this.formValidate.end_time = e[1];
     },
-    // 获取筛选类型
+    // Lấy loại lọc
     selList() {
       billTypeApi()
         .then(async (res) => {
@@ -151,7 +151,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       billListApi(this.formValidate)
@@ -166,12 +166,12 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 搜索
+    // Tìm kiếm
     userSearchs() {
       this.formValidate.page = 1;
       this.getList();
     },
-    // 导出
+    // Xuất
     exports() {
       let formValidate = this.formValidate;
       let data = {

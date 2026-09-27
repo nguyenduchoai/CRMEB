@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -39,7 +39,7 @@ class WechatQrcodeServices extends BaseServices
     }
 
     /**
-     * 获取渠道码列表
+     * Lấy danh sách mã kênh
      * @param $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -64,7 +64,7 @@ class WechatQrcodeServices extends BaseServices
     }
 
     /**
-     * 获取详情
+     * Lấy chi tiết
      * @param $id
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -77,7 +77,7 @@ class WechatQrcodeServices extends BaseServices
         if ($info) {
             $info = $info->toArray();
         } else {
-            throw new AdminException('数据不存在');
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         /** @var UserServices $userService */
         $userService = app()->make(UserServices::class);
@@ -96,7 +96,7 @@ class WechatQrcodeServices extends BaseServices
     }
 
     /**
-     * 保存渠道码数据
+     * Lưu dữ liệu mã kênh
      * @param $id
      * @param $data
      * @return bool
@@ -122,21 +122,21 @@ class WechatQrcodeServices extends BaseServices
         $data['data'] = json_encode($data['data']);
         if ($id) {
             $info = $this->dao->get($id);
-            if (!$info) throw new AdminException('数据不存在');
+            if (!$info) throw new AdminException('Dữ liệu không tồn tại');
             if ($info['image'] == '') $data['image'] = $this->getChannelCode($id);
             $info = $this->dao->update($id, $data);
-            if (!$info) throw new AdminException('保存失败');
+            if (!$info) throw new AdminException('Lưu thất bại');
         } else {
             $info = $this->dao->save($data);
             $image = $this->getChannelCode($info['id']);
             $info = $this->dao->update($info['id'], ['image' => $image]);
-            if (!$info) throw new AdminException('保存失败');
+            if (!$info) throw new AdminException('Lưu thất bại');
         }
         return true;
     }
 
     /**
-     * 生成渠道码
+     * Tạo mã kênh
      * @param int $id
      * @return mixed|string
      * @throws \think\db\exception\DataNotFoundException
@@ -153,14 +153,14 @@ class WechatQrcodeServices extends BaseServices
         if (!$imageInfo) {
             /** @var QrcodeServices $qrCode */
             $qrCode = app()->make(QrcodeServices::class);
-            //公众号
+            //OA WeChat
             $resCode = $qrCode->getForeverQrcode('wechatqrcode', $id);
             if ($resCode) {
                 $res = ['res' => $resCode, 'id' => $resCode['id']];
             } else {
                 $res = false;
             }
-            if (!$res) throw new AdminException('二维码生成失败');
+            if (!$res) throw new AdminException('Tạo mã QR thất bại');
             $imageInfo = $this->downloadImage($resCode['url'], $name);
             $systemAttachment->attachmentAdd($name, $imageInfo['size'], $imageInfo['type'], $imageInfo['att_dir'], $imageInfo['att_dir'], 1, $imageInfo['image_type'], time(), 1);
         }
@@ -168,7 +168,7 @@ class WechatQrcodeServices extends BaseServices
     }
 
     /**
-     * 下载图片
+     * Tải hình ảnh
      * @param string $url
      * @param string $name
      * @param int $type
@@ -181,7 +181,7 @@ class WechatQrcodeServices extends BaseServices
     {
         if (!strlen(trim($url))) return '';
         if (!strlen(trim($name))) {
-            //TODO 获取要下载的文件名称
+            //TODO lấy tên file cần tải xuống
             $downloadImageInfo = $this->getImageExtname($url);
             $ext = $downloadImageInfo['ext_name'];
             $name = $downloadImageInfo['file_name'];
@@ -190,18 +190,18 @@ class WechatQrcodeServices extends BaseServices
             $ext = $this->getImageExtname($name)['ext_name'];
         }
         if (!in_array($ext, Config::get('upload.fileExt'))) {
-            throw new AdminException('格式错误');
+            throw new AdminException('Sai định dạng');
         }
-        //TODO 获取远程文件所采用的方法
+        //TODO lấy phương thức dùng để tải file từ xa
         if ($type) {
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, false);
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); //TODO 跳过证书检查
-            if (stripos($url, "https://") !== FALSE) curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);  //TODO 从证书中检查SSL加密算法是否存在
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); //TODO bỏ qua kiểm tra chứng chỉ
+            if (stripos($url, "https://") !== FALSE) curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);  //TODO kiểm tra trong chứng chỉ xem có thuật toán mã hóa SSL không
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('user-agent:' . $_SERVER['HTTP_USER_AGENT']));
-            if (ini_get('open_basedir') == '' && ini_get('safe_mode' == 'Off')) curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);//TODO 是否采集301、302之后的页面
+            if (ini_get('open_basedir') == '' && ini_get('safe_mode' == 'Off')) curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);//TODO có thu thập trang sau khi chuyển hướng 301, 302 không
             $content = curl_exec($ch);
             curl_close($ch);
         } else {
@@ -215,7 +215,7 @@ class WechatQrcodeServices extends BaseServices
             }
         }
         $size = strlen(trim($content));
-        if (!$content || $size <= 2) return '图片流获取失败';
+        if (!$content || $size <= 2) return 'Lấy luồng dữ liệu hình ảnh thất bại';
         $upload_type = sys_config('upload_type', 1);
         $upload = UploadService::init();
         if ($upload->to('attach/spread/agent')->setAuthThumb(false)->stream($content, $name) === false) {
@@ -232,7 +232,7 @@ class WechatQrcodeServices extends BaseServices
     }
 
     /**
-     * 获取即将要下载的图片扩展名
+     * Lấy phần mở rộng của ảnh sẽ tải xuống
      * @param string $url
      * @param string $ex
      * @return array|string[]
@@ -253,7 +253,7 @@ class WechatQrcodeServices extends BaseServices
     }
 
     /**
-     * 扫码完成后方法
+     * Phương thức sau khi quét mã xong
      * @param $qrcodeInfo
      * @param $userInfo
      * @param $spreadInfo
@@ -264,7 +264,7 @@ class WechatQrcodeServices extends BaseServices
     {
         $response = $this->transaction(function () use ($qrcodeInfo, $userInfo, $spreadInfo, $isFollow) {
 
-            //绑定用户标签
+            //Gắn nhãn người dùng
             /** @var UserLabelRelationServices $labelServices */
             $labelServices = app()->make(UserLabelRelationServices::class);
             foreach ($qrcodeInfo['label_id'] as $item) {
@@ -275,10 +275,10 @@ class WechatQrcodeServices extends BaseServices
             }
             $labelServices->saveAll($labelArr);
 
-            //增加二维码扫码数量
+            //Tăng số lượt quét mã QR
             $this->dao->upFollowAndScan($qrcodeInfo['id'], $isFollow);
 
-            //写入扫码记录
+            //Ghi bản ghi quét mã
             /** @var WechatQrcodeRecordServices $recordServices */
             $recordServices = app()->make(WechatQrcodeRecordServices::class);
             $data['qid'] = $qrcodeInfo['id'];
@@ -287,14 +287,14 @@ class WechatQrcodeServices extends BaseServices
             $data['add_time'] = time();
             $recordServices->save($data);
 
-            //回复信息内容
+            //Nội dung trả lời tin nhắn
             return $this->replyDataByMessage($qrcodeInfo['type'], $qrcodeInfo['data']);
         });
         return $response;
     }
 
     /**
-     * 发送扫码之后的信息
+     * Gửi tin nhắn sau khi quét mã
      * @param $type
      * @param $data
      * @return array|\EasyWeChat\Message\Image|\EasyWeChat\Message\News|\EasyWeChat\Message\Text|\EasyWeChat\Message\Voice

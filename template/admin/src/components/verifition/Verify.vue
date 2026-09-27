@@ -2,13 +2,13 @@
   <div v-show="showBox" :class="mode == 'pop' ? 'mask' : ''">
     <div :class="mode == 'pop' ? 'verifybox' : ''" :style="{ 'max-width': parseInt(imgSize.width) + 30 + 'px' }">
       <div v-if="mode == 'pop'" class="verifybox-top">
-        请完成安全验证
+        Vui lòng hoàn tất xác minh bảo mật
         <span class="verifybox-close" v-db-click @click="closeBox">
           <i class="iconfont icon-close" />
         </span>
       </div>
       <div class="verifybox-bottom" :style="{ padding: mode == 'pop' ? '15px' : '0' }">
-        <!-- 验证码容器 -->
+        <!-- Container mã xác thực -->
         <components
           :is="componentType"
           v-if="componentType"
@@ -31,8 +31,8 @@
 </template>
 <script type="text/babel">
 /**
- * Verify 验证码组件
- * @description 分发验证码使用
+ * Thành phần mã xác thực Verify
+ * @description Phân phối để dùng mã xác thực
  * */
 import VerifySlide from './Verify/VerifySlide';
 import VerifyPoints from './Verify/VerifyPoints';
@@ -44,12 +44,12 @@ export default {
     VerifyPoints,
   },
   props: {
-    // 双语化
+    // Song ngữ hóa
     locale: {
       require: false,
       type: String,
       default() {
-        // 默认语言不输入为浏览器语言
+        // Ngôn ngữ mặc định nếu không nhập là ngôn ngữ của trình duyệt
         if (navigator.language) {
           var language = navigator.language;
         } else {
@@ -98,11 +98,11 @@ export default {
     return {
       // showBox:true,
       clickShow: false,
-      // 内部类型
+      // Loại nội bộ
       verifyType: undefined,
-      // 所用组件类型
+      // Loại thành phần sử dụng
       componentType: undefined,
-      // 默认图片
+      // Ảnh mặc định
       defaultImg: require('@/assets/images/default.jpg'),
     };
   },
@@ -139,7 +139,7 @@ export default {
     this.uuid();
   },
   methods: {
-    // 生成 uuid
+    // Sinh uuid
     uuid() {
       var s = [];
       var hexDigits = '0123456789abcdef';
@@ -152,7 +152,7 @@ export default {
 
       var slider = 'slider' + '-' + s.join('');
       var point = 'point' + '-' + s.join('');
-      // 判断下是否存在 slider
+      // Kiểm tra có tồn tại slider không
       if (!localStorage.getItem('slider')) {
         localStorage.setItem('slider', slider);
       }
@@ -162,22 +162,22 @@ export default {
     },
     /**
      * i18n
-     * @description 兼容vue-i18n 调用$t来转换ok
-     * @param {String} text-被转换的目标
-     * @return {String} i18n的结果
+     * @description Tương thích vue-i18n, gọi $t để chuyển đổi ok
+     * @param {String} text - đối tượng cần chuyển đổi
+     * @return {String} Kết quả i18n
      * */
     i18n(text) {
       if (this.$t) {
         return this.$t(text);
       } else {
-        // 兼容不存在的语言
+        // Tương thích với ngôn ngữ không tồn tại
         const i18n = this.$options.i18n.messages[this.locale] || this.$options.i18n.messages['en-US'];
         return i18n[text];
       }
     },
     /**
      * refresh
-     * @description 刷新
+     * @description Làm mới
      * */
     refresh() {
       if (this.instance.refresh) {
@@ -268,7 +268,7 @@ export default {
   transition: bottom 0.5s;
 }
 /* ---------------------------- */
-/*常规验证码*/
+/*Mã xác thực thông thường*/
 .verify-code {
   font-size: 20px;
   text-align: center;
@@ -317,7 +317,7 @@ export default {
   margin-top: 10px;
 }
 
-/*滑动验证码*/
+/*Mã xác thực dạng trượt*/
 .verify-bar-area {
   position: relative;
   background: #ffffff;
@@ -409,7 +409,7 @@ export default {
   z-index: 3;
 }
 
-/*字体图标的css*/
+/*CSS của font chữ biểu tượng (icon font)*/
 /*@font-face {font-family: "iconfont";*/
 /*src: url('../fonts/iconfont.eot?t=1508229193188'); !* IE9*!*/
 /*src: url('../fonts/iconfont.eot?t=1508229193188#iefix') format('embedded-opentype'), !* IE6-IE8 *!*/

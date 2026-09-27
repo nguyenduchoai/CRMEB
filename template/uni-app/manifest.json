@@ -1,12 +1,17 @@
 {
-    "name" : "CRMEB标准版",
+    "name" : "CRMEB phiên bản Tiêu chuẩn",
     "appid" : "__UNI__A3F1ED4",
-    "description" : "CRMEB标准版",
+    "description" : "CRMEB phiên bản Tiêu chuẩn",
     "versionName" : "6.0.0",
     "versionCode" : 600,
     "transformPx" : false,
+    "locale" : "vi",
+    "fallbackLocale" : "vi",
+    "uniStatistics" : {
+        "enable" : false
+    },
     "sassImplementationName" : "node-sass",
-    /* 5+App特有相关 */
+    /* Liên quan đặc thù của 5+App */
     "app-plus" : {
         "usingComponents" : true,
         "nvueCompiler" : "uni-app",
@@ -22,7 +27,7 @@
             "landscape-primary",
             "landscape-secondary"
         ],
-        /* 模块配置 */
+        /* Cấu hình mô-đun */
         "modules" : {
             "Payment" : {},
             "Share" : {},
@@ -36,9 +41,9 @@
                 "offset" : "none"
             }
         },
-        /* 应用发布信息 */
+        /* Thông tin phát hành ứng dụng */
         "distribute" : {
-            /* android打包配置 */
+            /* Cấu hình build android */
             "android" : {
                 "permissions" : [
                     "<uses-permission android:name=\"android.permission.ACCESS_COARSE_LOCATION\"/>",
@@ -62,14 +67,14 @@
                 "abiFilters" : [ "armeabi-v7a", "arm64-v8a" ],
                 "permissionExternalStorage" : {
                     "request" : "none",
-                    "prompt" : "应用保存运行状态等信息，需要获取读写手机存储（系统提示为访问设备上的照片、媒体内容和文件）权限，请允许。"
+                    "prompt" : "Ứng dụng cần quyền đọc/ghi bộ nhớ điện thoại (hệ thống sẽ hiển thị là truy cập ảnh, nội dung đa phương tiện và tệp trên thiết bị) để lưu trạng thái hoạt động và các thông tin khác, vui lòng cho phép."
                 },
                 "permissionPhoneState" : {
-                    "request" : "none" //拨打电话权限关闭
+                    "request" : "none" //Tắt quyền gọi điện
                 },
                 "targetSdkVersion" : 30
             },
-            /* ios打包配置 */
+            /* Cấu hình build ios */
             "ios" : {
                 "capabilities" : {
                     "entitlements" : {
@@ -82,17 +87,17 @@
                     }
                 },
                 "privacyDescription" : {
-                    "NSLocationWhenInUseUsageDescription" : "根据客户地理位置推荐最近门店",
-                    "NSPhotoLibraryUsageDescription" : "上传用户头像保存分享海报",
-                    "NSPhotoLibraryAddUsageDescription" : "上传用户头像保存分享海报",
-                    "NSLocationAlwaysAndWhenInUseUsageDescription" : "根据客户地理位置推荐最近门店",
-                    "NSLocationAlwaysUsageDescription" : "根据客户地理位置推荐最近门店",
-                    "NSCameraUsageDescription" : "上传用户头像保存分享海报"
+                    "NSLocationWhenInUseUsageDescription" : "Đề xuất cửa hàng gần nhất dựa trên vị trí địa lý của khách hàng",
+                    "NSPhotoLibraryUsageDescription" : "Dùng để tải lên ảnh đại diện và lưu poster chia sẻ",
+                    "NSPhotoLibraryAddUsageDescription" : "Dùng để tải lên ảnh đại diện và lưu poster chia sẻ",
+                    "NSLocationAlwaysAndWhenInUseUsageDescription" : "Đề xuất cửa hàng gần nhất dựa trên vị trí địa lý của khách hàng",
+                    "NSLocationAlwaysUsageDescription" : "Đề xuất cửa hàng gần nhất dựa trên vị trí địa lý của khách hàng",
+                    "NSCameraUsageDescription" : "Dùng để tải lên ảnh đại diện và lưu poster chia sẻ"
                 },
                 "idfa" : false,
                 "dSYMs" : false
             },
-            /* SDK配置 */
+            /* Cấu hình SDK */
             "sdkConfigs" : {
                 "payment" : {
                     "alipay" : {
@@ -179,9 +184,9 @@
             }
         }
     },
-    /* 快应用特有相关 */
+    /* Liên quan đặc thù của Quick App */
     "quickapp" : {},
-    /* 小程序特有相关 */
+    /* Liên quan đặc thù của Mini Program */
     "mp-weixin" : {
         "appid" : "wx3b82801238ca1b57",
         "setting" : {
@@ -192,7 +197,7 @@
         },
         "permission" : {
             "scope.userLocation" : {
-                "desc" : "你的位置信息将用于查看与门店的距离"
+                "desc" : "Thông tin vị trí của bạn sẽ được dùng để xem khoảng cách đến cửa hàng"
             }
         },
         "optimization" : {
@@ -241,7 +246,7 @@
         "async" : {
             "timeout" : 200000
         },
-        "title" : "加载中"
+        "title" : "Đang tải"
     },
     "plus" : {
         "statusbar" : {
@@ -251,5 +256,5 @@
     "_spaceID" : "679f0930-8f60-425c-9033-8c135f397ea5",
     "lazyCodeLoading" : "requiredComponents"
 }
-/* ios打包配置 */
+/* Cấu hình build ios */
 

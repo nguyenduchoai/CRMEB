@@ -28,9 +28,9 @@ export default {
   components: { uploadFrom },
   data() {
     return {
-      isChoice: '单选',
-      isChoiceD: '多选',
-      isIframe: true, //是否全屏打开选择图片
+      isChoice: 'Chọn một',
+      isChoiceD: 'Chọn nhiều',
+      isIframe: true, //Có mở chọn ảnh ở chế độ toàn màn hình không
       gridPic: {
         xl: 4,
         lg: 4,

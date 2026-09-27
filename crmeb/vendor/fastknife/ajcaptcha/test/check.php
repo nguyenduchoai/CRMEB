@@ -6,7 +6,7 @@ require 'autoload.php';
 $captchaType = @$_REQUEST['captchaType'];
 
 if (!in_array($captchaType, ['clickWord', 'blockPuzzle'])) {
-    throw new Exception('缺少参数:captchaType');
+    throw new Exception('Thiếu tham số: captchaType');
 }
 
 $controllerName = ucfirst($captchaType) . 'Controller';

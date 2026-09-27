@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use app\dao\BaseDao;
 use app\model\user\User;
 
 /**
- * 用户
+ * Người dùng
  * Class UserDao
  * @package app\dao\user
  */
@@ -29,7 +29,7 @@ class UserDao extends BaseDao
     }
 
     /**
-     * 获取用户列表
+     * Lấy danh sách người dùng
      * @param array $where
      * @param string $field
      * @param int $page
@@ -47,7 +47,7 @@ class UserDao extends BaseDao
     }
 
     /**
-     * 获取特定条件的总数
+     * Lấy tổng số theo điều kiện cụ thể
      * @param array $where
      * @param bool $is_list
      * @return array|int
@@ -61,7 +61,7 @@ class UserDao extends BaseDao
     }
 
     /**
-     * 用户支付成功个数增加
+     * Tăng số lần thanh toán thành công của người dùng
      * @param int $uid
      * @return mixed
      */
@@ -71,7 +71,7 @@ class UserDao extends BaseDao
     }
 
     /**
-     * 某个字段累加某个数值
+     * Cộng dồn một giá trị vào một trường
      * @param string $field
      * @param int $num
      */
@@ -95,7 +95,7 @@ class UserDao extends BaseDao
     }
 
     /**
-     * 获取分销用户
+     * Lấy người dùng là cộng tác viên
      * @param array $where
      * @param string $field
      * @param int $page
@@ -127,7 +127,7 @@ class UserDao extends BaseDao
     }
 
     /**
-     * 获取推广人列表
+     * Lấy danh sách người giới thiệu
      * @param array $where
      * @param string $field
      * @param int $page
@@ -151,7 +151,7 @@ class UserDao extends BaseDao
     }
 
     /**
-     * 获取推广人排行
+     * Lấy bảng xếp hạng người giới thiệu
      * @param array $time
      * @param string $field
      * @param int $page
@@ -173,7 +173,7 @@ class UserDao extends BaseDao
     }
 
     /**
-     * 获取推广员ids
+     * Lấy id các cộng tác viên
      * @param array $where
      * @return array
      * @throws \ReflectionException
@@ -184,7 +184,7 @@ class UserDao extends BaseDao
     }
 
     /**
-     * 某个条件 用户某个字段总和
+     * Tổng giá trị một trường của người dùng theo một điều kiện
      * @param array $where
      * @param string $filed
      * @return float
@@ -195,7 +195,7 @@ class UserDao extends BaseDao
     }
 
     /**
-     * 根据条件查询对应的用户信息以数组形式返回
+     * Tra cứu thông tin người dùng tương ứng theo điều kiện, trả về dạng mảng
      * @param array $where
      * @param string $field
      * @param string $key
@@ -207,7 +207,7 @@ class UserDao extends BaseDao
     }
 
     /**
-     * 获取特定时间用户访问量
+     * Lấy lượt truy cập của người dùng trong thời gian cụ thể
      * @param $time
      * @param $week
      * @return int
@@ -223,7 +223,7 @@ class UserDao extends BaseDao
     }
 
     /**
-     * 获取特定时间用户访问量
+     * Lấy lượt truy cập của người dùng trong thời gian cụ thể
      * @param $time
      * @param $week
      * @return int
@@ -239,7 +239,7 @@ class UserDao extends BaseDao
     }
 
     /**
-     * 获取特定时间内用户列表
+     * Lấy danh sách người dùng trong khoảng thời gian cụ thể
      * @param $starday
      * @param $yesterday
      * @return mixed
@@ -254,7 +254,7 @@ class UserDao extends BaseDao
     }
 
     /**
-     * 购买量范围的用户数量
+     * Số lượng người dùng theo phạm vi số lượng mua
      * @param $status
      * @return int
      */
@@ -269,7 +269,7 @@ class UserDao extends BaseDao
     }
 
     /**
-     * 获取用户统计数据
+     * Lấy dữ liệu thống kê người dùng
      * @param $time
      * @param $type
      * @param $timeType
@@ -302,7 +302,7 @@ class UserDao extends BaseDao
     }
 
     /**
-     * 获取用户会员数量
+     * Lấy số lượng người dùng là thành viên
      * @param $where (time  type)
      * @return int
      */
@@ -315,7 +315,7 @@ class UserDao extends BaseDao
     }
 
     /**
-     * 使用搜索器
+     * Dùng bộ lọc tìm kiếm (searcher)
      * @param array $where
      * @return \crmeb\basic\BaseModel
      * @throws \ReflectionException

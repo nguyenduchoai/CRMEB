@@ -231,7 +231,7 @@ class Image
                     }
                     break;
                 default:
-                    throw new ImageException('不支持的翻转类型');
+                    throw new ImageException('Kiểu lật ảnh không được hỗ trợ');
             }
 
             imagedestroy($this->im);
@@ -368,7 +368,7 @@ class Image
                 $x = $y = 0;
                 break;
             default:
-                throw new ImageException('不支持的缩略图裁剪类型');
+                throw new ImageException('Kiểu cắt ảnh thu nhỏ không được hỗ trợ');
         }
         /* 裁剪图像 */
         return $this->crop($w, $h, $x, $y, $width, $height);
@@ -385,12 +385,12 @@ class Image
     public function water($source, $locate = self::WATER_SOUTHEAST, $alpha = 100)
     {
         if (!is_file($source)) {
-            throw new ImageException('水印图像不存在');
+            throw new ImageException('Ảnh watermark không tồn tại');
         }
         //获取水印图像信息
         $info = getimagesize($source);
         if (false === $info || (IMAGETYPE_GIF === $info[2] && empty($info['bits']))) {
-            throw new ImageException('非法水印文件');
+            throw new ImageException('Tệp watermark không hợp lệ');
         }
         //创建水印图像资源
         $fun   = 'imagecreatefrom' . image_type_to_extension($info[2], false);
@@ -448,7 +448,7 @@ class Image
                 if (is_array($locate)) {
                     list($x, $y) = $locate;
                 } else {
-                    throw new ImageException('不支持的水印位置类型');
+                    throw new ImageException('Kiểu vị trí watermark không được hỗ trợ');
                 }
         }
         do {
@@ -486,7 +486,7 @@ class Image
         $locate = self::WATER_SOUTHEAST, $offset = 0, $angle = 0) {
 
         if (!is_file($font)) {
-            throw new ImageException("不存在的字体文件：{$font}");
+            throw new ImageException("Tệp phông chữ không tồn tại: {$font}");
         }
         //获取文字信息
         $info = imagettfbbox($size, $angle, $font, $text);
@@ -548,7 +548,7 @@ class Image
                     $x += $posx;
                     $y += $posy;
                 } else {
-                    throw new ImageException('不支持的文字位置类型');
+                    throw new ImageException('Kiểu vị trí văn bản không được hỗ trợ');
                 }
         }
         /* 设置偏移量 */
@@ -567,7 +567,7 @@ class Image
                 $color[3] = 0;
             }
         } elseif (!is_array($color)) {
-            throw new ImageException('错误的颜色值');
+            throw new ImageException('Giá trị màu không hợp lệ');
         }
         do {
             /* 写入文字 */

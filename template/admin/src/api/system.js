@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -11,8 +11,8 @@
 import request from '@/libs/request';
 
 /**
- * @description 配置分类--列表
- * @param {Object} param data {Object} 传值参数
+ * @description Danh mục cấu hình -- Danh sách
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function classListApi(data) {
   return request({
@@ -23,8 +23,8 @@ export function classListApi(data) {
 }
 
 /**
- * @description 配置分类--新增表单
- * @param {Object} param data {Object} 传值参数
+ * @description Danh mục cấu hình -- Form thêm mới
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function classAddApi(data) {
   return request({
@@ -34,8 +34,8 @@ export function classAddApi(data) {
 }
 
 /**
- * @description 配置分类--编辑表单
- * @param {Number} param id {Number} 配置分类id
+ * @description Danh mục cấu hình -- Form sửa
+ * @param {Number} param id {Number} ID danh mục cấu hình
  */
 export function classEditApi(id) {
   return request({
@@ -45,8 +45,8 @@ export function classEditApi(id) {
 }
 
 /**
- * @description 配置分类--修改状态
- * @param {Number} param id {Number} 文章id
+ * @description Danh mục cấu hình -- Đổi trạng thái
+ * @param {Number} param id {Number} ID bài viết
  */
 export function setStatusApi(data) {
   return request({
@@ -56,8 +56,8 @@ export function setStatusApi(data) {
 }
 
 /**
- * @description 配置--列表
- * @param {Object} param data {Object} 传值参数
+ * @description Cấu hình -- Danh sách
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function configTabListApi(data) {
   return request({
@@ -68,8 +68,8 @@ export function configTabListApi(data) {
 }
 
 /**
- * @description 配置--新增表单
- * @param {Object} param data {Object} 传值参数
+ * @description Cấu hình -- Form thêm mới
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function configTabAddApi(data) {
   return request({
@@ -80,8 +80,8 @@ export function configTabAddApi(data) {
 }
 
 /**
- * @description 配置--编辑表单
- * @param {Number} param id {Number} 配置id
+ * @description Cấu hình -- Form sửa
+ * @param {Number} param id {Number} ID cấu hình
  */
 export function configTabEditApi(id) {
   return request({
@@ -91,8 +91,8 @@ export function configTabEditApi(id) {
 }
 
 /**
- * @description 配置--修改状态
- * @param {Number} param id {Number} 文章id
+ * @description Cấu hình -- Đổi trạng thái
+ * @param {Number} param id {Number} ID bài viết
  */
 export function configSetStatusApi(id, status) {
   return request({
@@ -102,8 +102,8 @@ export function configSetStatusApi(id, status) {
 }
 
 /**
- * @description 组合数据--列表
- * @param {Object} param data {Object} 传值参数
+ * @description Dữ liệu tổ hợp -- Danh sách
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function groupListApi(data) {
   return request({
@@ -114,8 +114,8 @@ export function groupListApi(data) {
 }
 
 /**
- * @description 组合数据--新增
- * @param {Object} param data {Object} 传值参数
+ * @description Dữ liệu tổ hợp -- Thêm mới
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function groupAddApi(data) {
   return request({
@@ -126,8 +126,8 @@ export function groupAddApi(data) {
 }
 
 /**
- * @description 组合数据--详情
- * @param {Number} param id {Number} 组合数据id
+ * @description Dữ liệu tổ hợp -- Chi tiết
+ * @param {Number} param id {Number} ID dữ liệu tổ hợp
  */
 export function groupInfoApi(id) {
   return request({
@@ -137,8 +137,8 @@ export function groupInfoApi(id) {
 }
 
 /**
- * @description 组合数据列表
- * @param {Number} param id {Number} 组合数据id
+ * @description Danh sách dữ liệu tổ hợp
+ * @param {Number} param id {Number} ID dữ liệu tổ hợp
  */
 export function groupDataListApi(id, url) {
   return request({
@@ -149,8 +149,8 @@ export function groupDataListApi(id, url) {
 }
 
 /**
- * @description 组合数据列表 -- 新增表单
- * @param {Number} param id {Number} 组合数据id
+ * @description Danh sách dữ liệu tổ hợp -- Form thêm mới
+ * @param {Number} param id {Number} ID dữ liệu tổ hợp
  */
 export function groupDataAddApi(id, url) {
   return request({
@@ -161,9 +161,9 @@ export function groupDataAddApi(id, url) {
 }
 
 /**
- * @description 组合数据列表 -- 编辑表单
- * @param {Number} param id {Number} 组合数据列表id
- * @param {Object} param data {Object} 组合数据id对象
+ * @description Danh sách dữ liệu tổ hợp -- Form sửa
+ * @param {Number} param id {Number} ID danh sách dữ liệu tổ hợp
+ * @param {Object} param data {Object} Đối tượng ID dữ liệu tổ hợp
  */
 export function groupDataEditApi(data, url) {
   return request({
@@ -174,8 +174,8 @@ export function groupDataEditApi(data, url) {
 }
 
 /**
- * @description 组合数据列表 -- 编辑表单
- * @param {Number} param id {Number} 组合数据id
+ * @description Danh sách dữ liệu tổ hợp -- Form sửa
+ * @param {Number} param id {Number} ID dữ liệu tổ hợp
  */
 export function groupDataHeaderApi(data, url) {
   return request({
@@ -186,8 +186,8 @@ export function groupDataHeaderApi(data, url) {
 }
 
 /**
- * @description 组合数据列表 -- 修改状态
- * @param {Object} param data {Object} 组合数据列表传值
+ * @description Danh sách dữ liệu tổ hợp -- Đổi trạng thái
+ * @param {Object} param data {Object} Truyền giá trị danh sách dữ liệu tổ hợp
  */
 export function groupDataSetApi(url) {
   return request({
@@ -197,7 +197,7 @@ export function groupDataSetApi(url) {
 }
 
 /**
- * @description 系统日志 -- 搜索条件
+ * @description Log hệ thống -- Điều kiện tìm kiếm
  */
 export function searchAdminApi(data) {
   return request({
@@ -207,7 +207,7 @@ export function searchAdminApi(data) {
 }
 
 /**
- * @description 系统日志 -- 搜索条件
+ * @description Log hệ thống -- Điều kiện tìm kiếm
  */
 export function systemListApi(params) {
   return request({
@@ -218,7 +218,7 @@ export function systemListApi(params) {
 }
 
 /**
- * @description 文件校验 -- 列表
+ * @description Kiểm tra file -- Danh sách
  */
 export function fileListApi() {
   return request({
@@ -228,7 +228,7 @@ export function fileListApi() {
 }
 
 /**
- * @description 数据备份 -- 数据库列表
+ * @description Sao lưu dữ liệu -- Danh sách cơ sở dữ liệu
  */
 export function backupListApi() {
   return request({
@@ -238,7 +238,7 @@ export function backupListApi() {
 }
 
 /**
- * @description 数据备份 -- 查看表结构详情
+ * @description Sao lưu dữ liệu -- Xem chi tiết cấu trúc bảng
  */
 export function backupReadListApi(params) {
   return request({
@@ -249,7 +249,7 @@ export function backupReadListApi(params) {
 }
 
 /**
- * @description 数据备份 -- 备份表
+ * @description Sao lưu dữ liệu -- Sao lưu bảng
  */
 export function backupBackupApi(data) {
   return request({
@@ -260,7 +260,7 @@ export function backupBackupApi(data) {
 }
 
 /**
- * @description 数据备份 -- 优化表
+ * @description Sao lưu dữ liệu -- Tối ưu bảng
  */
 export function backupOptimizeApi(data) {
   return request({
@@ -271,7 +271,7 @@ export function backupOptimizeApi(data) {
 }
 
 /**
- * @description 数据备份 -- 修复表
+ * @description Sao lưu dữ liệu -- Sửa bảng
  */
 export function backupRepairApi(data) {
   return request({
@@ -282,7 +282,7 @@ export function backupRepairApi(data) {
 }
 
 /**
- * @description 数据备份 -- 备份记录表
+ * @description Sao lưu dữ liệu -- Bảng lịch sử sao lưu
  */
 export function filesListApi(data) {
   return request({
@@ -292,7 +292,7 @@ export function filesListApi(data) {
 }
 
 /**
- * @description 数据备份 -- 下载备份记录表
+ * @description Sao lưu dữ liệu -- Tải bảng lịch sử sao lưu
  */
 export function filesDownloadApi(params) {
   return request({
@@ -303,7 +303,7 @@ export function filesDownloadApi(params) {
 }
 
 /**
- * @description 数据备份 -- 导入
+ * @description Sao lưu dữ liệu -- Nhập
  */
 export function filesImportApi(data) {
   return request({
@@ -314,7 +314,7 @@ export function filesImportApi(data) {
 }
 
 /**
- * @description 文件管理 -- 登录
+ * @description Quản lý file -- Đăng nhập
  */
 export function opendirLoginApi(data) {
   return request({
@@ -325,7 +325,7 @@ export function opendirLoginApi(data) {
 }
 
 /**
- * @description 文件管理 -- 列表
+ * @description Quản lý file -- Danh sách
  */
 export function opendirListApi(params) {
   return request({
@@ -337,7 +337,7 @@ export function opendirListApi(params) {
 }
 
 /**
- * @description 文件管理 -- 读取文件
+ * @description Quản lý file -- Đọc file
  */
 export function openfileApi(params) {
   return request({
@@ -349,7 +349,7 @@ export function openfileApi(params) {
 }
 
 /**
- * @description 文件管理 -- 保存
+ * @description Quản lý file -- Lưu
  */
 export function savefileApi(data) {
   return request({
@@ -360,7 +360,7 @@ export function savefileApi(data) {
   });
 }
 /**
- * @description 文件管理 -- 新建文件夹
+ * @description Quản lý file -- Tạo thư mục mới
  */
 export function createFolder(params) {
   return request({
@@ -371,7 +371,7 @@ export function createFolder(params) {
   });
 }
 /**
- * @description 文件管理 -- 新建文件
+ * @description Quản lý file -- Tạo file mới
  */
 export function createFile(params) {
   return request({
@@ -382,7 +382,7 @@ export function createFile(params) {
   });
 }
 /**
- * @description 文件管理 -- 删除文件或文件夹
+ * @description Quản lý file -- Xóa file hoặc thư mục
  */
 export function rename(params) {
   return request({
@@ -393,7 +393,7 @@ export function rename(params) {
   });
 }
 /**
- * @description 文件管理 -- 删除文件或文件夹
+ * @description Quản lý file -- Xóa file hoặc thư mục
  */
 export function delFolder(params) {
   return request({
@@ -405,7 +405,7 @@ export function delFolder(params) {
 }
 
 /**
- * 文件备注
+ * Ghi chú tệp
  * @param {*} id
  * @param {*} params
  * @returns
@@ -420,7 +420,7 @@ export function fileMark(params) {
 }
 
 /**
- * @description 安全维护 -- 更换域名
+ * @description Bảo trì an toàn -- Đổi domain
  */
 export function replaceSiteUrlApi(data) {
   return request({
@@ -441,7 +441,7 @@ export function auth() {
 }
 
 /**
- * @description 申请授权
+ * @description Yêu cầu cấp phép
  * @param data
  */
 export function authApply(data) {
@@ -453,7 +453,7 @@ export function authApply(data) {
 }
 
 /**
- * @description 获取客服页面广告
+ * @description Lấy quảng cáo trang CSKH
  * @param data
  */
 export function getKfAdv() {
@@ -464,7 +464,7 @@ export function getKfAdv() {
 }
 
 /**
- * @description 设置客服页面广告
+ * @description Thiết lập quảng cáo trang CSKH
  * @param data
  */
 export function setKfAdv(data) {
@@ -476,7 +476,7 @@ export function setKfAdv(data) {
 }
 
 /**
- * @description 数据配置
+ * @description Cấu hình dữ liệu
  * @param data
  */
 export function groupAllApi() {
@@ -486,7 +486,7 @@ export function groupAllApi() {
   });
 }
 /**
- * APP版本列表
+ * Danh sách phiên bản APP
  */
 export function versionList(params) {
   return request({
@@ -496,7 +496,7 @@ export function versionList(params) {
   });
 }
 /**
- * APP版本列表
+ * Danh sách phiên bản APP
  */
 export function versionCrate(id) {
   return request({
@@ -506,7 +506,7 @@ export function versionCrate(id) {
 }
 
 /**
- * @description 数据配置保存
+ * @description Lưu cấu hình dữ liệu
  */
 export function groupSaveApi(data) {
   return request({
@@ -517,7 +517,7 @@ export function groupSaveApi(data) {
 }
 
 /**
- * @description 引导页数据配置保存
+ * @description Lưu cấu hình dữ liệu trang hướng dẫn
  */
 export function openAdvSave(data) {
   return request({
@@ -528,7 +528,7 @@ export function openAdvSave(data) {
 }
 
 /**
- * @description 引导页数据配置保存
+ * @description Lưu cấu hình dữ liệu trang hướng dẫn
  */
 export function getOpenAdv() {
   return request({
@@ -538,7 +538,7 @@ export function getOpenAdv() {
 }
 
 /**
- * @description 获取pc商城端logo
+ * @description Lấy logo shop trên PC
  */
 export function pcLogoApi(id) {
   return request({
@@ -548,7 +548,7 @@ export function pcLogoApi(id) {
 }
 
 /**
- * @description pc商城端logo
+ * @description Logo shop trên PC
  */
 export function pcLogoSave(data) {
   return request({
@@ -558,7 +558,7 @@ export function pcLogoSave(data) {
   });
 }
 /**
- * @description 获取隐私协议
+ * @description Lấy chính sách bảo mật
  * @param data
  */
 export function getAgreement() {
@@ -569,7 +569,7 @@ export function getAgreement() {
 }
 
 /**
- * @description 设置隐私协议
+ * @description Đặt chính sách bảo mật
  * @param data
  */
 export function setAgreement(data) {
@@ -581,7 +581,7 @@ export function setAgreement(data) {
 }
 
 /**
- * @description 获取协议
+ * @description Lấy thỏa thuận
  * @param data
  */
 export function getAgreements(type) {
@@ -591,7 +591,7 @@ export function getAgreements(type) {
   });
 }
 /**
- * @description 设置隐私协议
+ * @description Đặt chính sách bảo mật
  * @param data
  */
 export function setAgreements(data, type) {
@@ -603,7 +603,7 @@ export function setAgreements(data, type) {
 }
 
 /**
- * @description 获取授权产品
+ * @description Lấy sản phẩm được cấp quyền
  */
 export function crmebProduct(params) {
   return request({
@@ -614,7 +614,7 @@ export function crmebProduct(params) {
 }
 
 /**
- * @description 获取授权订单
+ * @description Lấy đơn hàng được cấp quyền
  */
 export function getVersion() {
   return request({
@@ -624,7 +624,7 @@ export function getVersion() {
 }
 
 /**
- * @description 获取版权
+ * @description Lấy bản quyền
  */
 export function getCrmebCopyRight() {
   return request({
@@ -634,7 +634,7 @@ export function getCrmebCopyRight() {
 }
 
 /**
- * @description 保存版权
+ * @description Lưu bản quyền
  */
 export function saveCrmebCopyRight(data) {
   return request({
@@ -645,7 +645,7 @@ export function saveCrmebCopyRight(data) {
 }
 
 /**
- * @description 升级包 -- 列表
+ * @description Gói nâng cấp -- Danh sách
  * @param data
  */
 export function upgradeListApi(params) {
@@ -657,7 +657,7 @@ export function upgradeListApi(params) {
 }
 
 /**
- * @description 升级进度
+ * @description Tiến trình nâng cấp
  */
 export function upgradeProgressApi() {
   return request({
@@ -667,7 +667,7 @@ export function upgradeProgressApi() {
 }
 
 /**
- * @description 升级协议
+ * @description Thỏa thuận nâng cấp
  */
 export function upgradeAgreementApi() {
   return request({
@@ -677,7 +677,7 @@ export function upgradeAgreementApi() {
 }
 
 /**
- * @description 升级状态
+ * @description Trạng thái nâng cấp
  */
 export function upgradeStatusApi() {
   return request({
@@ -687,7 +687,7 @@ export function upgradeStatusApi() {
 }
 
 /**
- * @description 下载进度
+ * @description Tiến độ tải xuống
  */
 export function downloadProgressApi(data) {
   return request({
@@ -705,7 +705,7 @@ export function upgradeIgnoreFileApi() {
 }
 
 /**
- * @description 升级包 -- 升级记录
+ * @description Gói nâng cấp -- Lịch sử nâng cấp
  * @param data
  */
 export function upgradeLogListApi(params) {
@@ -717,7 +717,7 @@ export function upgradeLogListApi(params) {
 }
 
 /**
- * 导出备份文件
+ * Xuất file sao lưu
  */
 export function upgradeExportApi(id) {
   return request({
@@ -728,7 +728,7 @@ export function upgradeExportApi(id) {
 }
 
 /**
- * @description 下载升级包
+ * @description Tải gói nâng cấp
  */
 export function downloadApi(params) {
   return request({
@@ -738,7 +738,7 @@ export function downloadApi(params) {
 }
 
 /**
- * @description 升级包 -- 可升级列表
+ * @description Gói nâng cấp -- Danh sách có thể nâng cấp
  * @param data
  */
 export function upgradeableListApi(params) {
@@ -750,7 +750,7 @@ export function upgradeableListApi(params) {
 }
 
 /**
- * 定时任务列表
+ * Danh sách tác vụ định kỳ
  * @param {*} params
  * @returns
  */
@@ -762,7 +762,7 @@ export function timerIndex(params) {
 }
 
 /**
- * 修改定时任务状态
+ * Sửa trạng thái tác vụ định kỳ
  * @param {*} params
  * @returns
  */
@@ -773,7 +773,7 @@ export function showTimer(id, is_open) {
 }
 
 /**
- * 获取定时任务信息
+ * Lấy thông tin tác vụ định kỳ
  * @param {*} params
  * @returns
  */
@@ -784,7 +784,7 @@ export function timerInfo(id) {
 }
 
 /**
- * 保存定时任务
+ * Lưu tác vụ định kỳ
  * @param {*} data
  * @returns
  */
@@ -797,7 +797,7 @@ export function saveTimer(data) {
 }
 
 /**
- * 更新定时任务
+ * Cập nhật tác vụ định kỳ
  * @param {*} id
  * @param {*} data
  * @returns
@@ -810,7 +810,7 @@ export function updateTimer(id, data) {
   });
 }
 /**
- * 更新备注
+ * Cập nhật ghi chú
  * @param {*} data
  * @returns
  */
@@ -822,7 +822,7 @@ export function updateMark(data) {
   });
 }
 /**
- * 文件管理 更新备注
+ * Quản lý file, Cập nhật ghi chú
  * @param {*} data
  * @returns
  */
@@ -835,7 +835,7 @@ export function markSave(fileToken, data) {
 }
 
 /**
- * 定时任务名称及标识
+ * Tên và mã định danh tác vụ định kỳ
  * @returns
  */
 export function timerTask() {
@@ -844,10 +844,10 @@ export function timerTask() {
   });
 }
 
-// ----自定义事件
+// ----Sự kiện tùy chỉnh
 
 /**
- * 自定义事件列表
+ * Danh sách sự kiện tùy chỉnh
  * @param {*} params
  * @returns
  */
@@ -859,7 +859,7 @@ export function eventIndex(params) {
 }
 
 /**
- * 自定义事件修改状态
+ * Sửa trạng thái sự kiện tùy chỉnh
  * @param {*} params
  * @returns
  */
@@ -870,7 +870,7 @@ export function eventShowTimer(id, is_open) {
 }
 
 /**
- * 自定义事件信息
+ * Thông tin sự kiện tùy chỉnh
  * @param {*} params
  * @returns
  */
@@ -881,7 +881,7 @@ export function eventInfo(id) {
 }
 
 /**
- * 自定义事件保存
+ * Lưu sự kiện tùy chỉnh
  * @param {*} data
  * @returns
  */
@@ -893,7 +893,7 @@ export function eventSave(data) {
   });
 }
 /**
- * 自定义事件更新
+ * Cập nhật sự kiện tùy chỉnh
  * @returns
  */
 export function eventTask() {
@@ -903,7 +903,7 @@ export function eventTask() {
 }
 
 /**
- * 版权模块列表信息
+ * Thông tin danh sách module bản quyền
  * @returns
  */
 export function copyrightList() {
@@ -912,10 +912,10 @@ export function copyrightList() {
   });
 }
 
-// ==================== 跨版本升级接口 ====================
+// ==================== API nâng cấp vượt phiên bản ====================
 
 /**
- * 检查跨版本升级
+ * Kiểm tra nâng cấp vượt phiên bản
  * @returns
  */
 export function checkCrossVersionUpgradeApi() {
@@ -926,7 +926,7 @@ export function checkCrossVersionUpgradeApi() {
 }
 
 /**
- * 获取待执行的升级SQL列表
+ * Lấy danh sách SQL nâng cấp đang chờ thực thi
  * @returns
  */
 export function pendingSqlListApi() {
@@ -937,8 +937,8 @@ export function pendingSqlListApi() {
 }
 
 /**
- * 执行跨版本升级(单步)
- * @param {Number} step 步骤索引
+ * Thực hiện nâng cấp vượt phiên bản (từng bước)
+ * @param {Number} step Chỉ số bước
  * @returns
  */
 export function executeCrossVersionApi(step) {
@@ -950,7 +950,7 @@ export function executeCrossVersionApi(step) {
 }
 
 /**
- * 一键执行全部跨版本升级
+ * Thực thi toàn bộ nâng cấp vượt phiên bản bằng một cú nhấp
  * @returns
  */
 export function executeAllCrossVersionApi() {
@@ -961,7 +961,7 @@ export function executeAllCrossVersionApi() {
 }
 
 /**
- * 获取跨版本升级进度
+ * Lấy tiến trình nâng cấp vượt phiên bản
  * @returns
  */
 export function crossVersionUpgradeProgressApi() {
@@ -972,7 +972,7 @@ export function crossVersionUpgradeProgressApi() {
 }
 
 /**
- * 获取备份状态
+ * Lấy trạng thái sao lưu
  * @returns
  */
 export function backupStatusApi() {
@@ -983,7 +983,7 @@ export function backupStatusApi() {
 }
 
 /**
- * 获取可回退版本列表
+ * Lấy danh sách phiên bản có thể quay lại (rollback)
  * @returns
  */
 export function rollbackVersionsApi() {
@@ -993,7 +993,7 @@ export function rollbackVersionsApi() {
   });
 }
 /**
- * 重新执行升级
+ * Thực hiện lại nâng cấp
  * @returns
  */
 export function reExecuteUpgradeApi(data) {
@@ -1005,8 +1005,8 @@ export function reExecuteUpgradeApi(data) {
 }
 
 /**
- * 执行版本回退
- * @param {Number} logId 升级日志ID
+ * Thực hiện quay lại phiên bản
+ * @param {Number} logId ID nhật ký nâng cấp
  * @returns
  */
 export function executeRollbackApi(logId) {

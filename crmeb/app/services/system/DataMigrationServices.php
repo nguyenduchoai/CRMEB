@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -26,26 +26,26 @@ use app\services\activity\coupon\StoreCouponIssueServices;
 use app\services\activity\coupon\StoreCouponProductServices;
 
 /**
- * 数据迁移服务
- * 用于跨版本升级时处理历史数据迁移
+ * Service di chuyển dữ liệu (migration)
+ * Dùng để xử lý migration dữ liệu lịch sử khi nâng cấp vượt phiên bản
  * Class DataMigrationServices
  * @package app\services\system
  */
 class DataMigrationServices extends BaseServices
 {
     /**
-     * 迁移状态缓存前缀
+     * Tiền tố cache trạng thái migration
      */
     const MIGRATION_STATUS_PREFIX = 'data_migration_';
     
     /**
-     * 默认分页大小
+     * Kích thước phân trang mặc định
      */
     const DEFAULT_LIMIT = 100;
 
     /**
-     * 检查迁移是否已完成
-     * @param string $name 迁移名称
+     * Kiểm tra migration đã hoàn tất chưa
+     * @param string $name Tên migration
      * @return bool
      */
     public function isMigrationCompleted(string $name): bool
@@ -54,8 +54,8 @@ class DataMigrationServices extends BaseServices
     }
 
     /**
-     * 标记迁移已完成
-     * @param string $name 迁移名称
+     * Đánh dấu migration đã hoàn tất
+     * @param string $name Tên migration
      * @return void
      */
     public function markMigrationCompleted(string $name): void
@@ -64,8 +64,8 @@ class DataMigrationServices extends BaseServices
     }
 
     /**
-     * 获取迁移进度
-     * @param string $name 迁移名称
+     * Lấy tiến độ migration
+     * @param string $name Tên migration
      * @return array
      */
     public function getMigrationProgress(string $name): array
@@ -82,10 +82,10 @@ class DataMigrationServices extends BaseServices
     }
 
     /**
-     * 更新迁移进度
-     * @param string $name 迁移名称
-     * @param int $page 当前页
-     * @param int $processed 已处理数量
+     * Cập nhật tiến độ migration
+     * @param string $name Tên migration
+     * @param int $page Trang hiện tại
+     * @param int $processed Số lượng đã xử lý
      * @return void
      */
     protected function updateMigrationProgress(string $name, int $page, int $processed): void
@@ -95,8 +95,8 @@ class DataMigrationServices extends BaseServices
     }
 
     /**
-     * 执行数据迁移处理器
-     * @param array $handler 处理器配置
+     * Thực thi handler migration dữ liệu
+     * @param array $handler Cấu hình handler
      * @return array ['success' => bool, 'message' => string, 'completed' => bool]
      */
     public function executeHandler(array $handler): array
@@ -107,54 +107,54 @@ class DataMigrationServices extends BaseServices
         $title = $handler['title'] ?? $name;
         
         if (!$name || !$method) {
-            return ['success' => false, 'message' => '迁移配置错误', 'completed' => false];
+            return ['success' => false, 'message' => 'Lỗi cấu hình di chuyển dữ liệu', 'completed' => false];
         }
         
-        // 检查是否已完成
+        // Kiểm tra đã hoàn tất chưa
         if ($this->isMigrationCompleted($name)) {
-            return ['success' => true, 'message' => $title . ' 已完成', 'completed' => true, 'skipped' => true];
+            return ['success' => true, 'message' => $title . ' đã hoàn thành', 'completed' => true, 'skipped' => true];
         }
         
-        // 检查方法是否存在
+        // Kiểm tra phương thức có tồn tại không
         if (!method_exists($this, $method)) {
-            return ['success' => false, 'message' => '迁移方法不存在: ' . $method, 'completed' => false];
+            return ['success' => false, 'message' => 'Phương thức di chuyển không tồn tại: ' . $method, 'completed' => false];
         }
         
         try {
-            // 获取当前进度
+            // Lấy tiến độ hiện tại
             $progress = $this->getMigrationProgress($name);
             $page = $progress['page'];
             
-            // 执行迁移方法
+            // Thực thi phương thức migration
             $result = $this->$method($page, $limit);
             
             if ($result['completed']) {
                 $this->markMigrationCompleted($name);
                 return [
                     'success' => true,
-                    'message' => $title . ' 迁移完成',
+                    'message' => $title . ' di chuyển hoàn tất',
                     'completed' => true,
                     'processed' => $result['processed'] ?? 0
                 ];
             } else {
-                // 更新进度
+                // Cập nhật tiến độ
                 $this->updateMigrationProgress($name, $page + 1, ($progress['processed'] ?? 0) + ($result['count'] ?? 0));
                 return [
                     'success' => true,
-                    'message' => $title . ' 处理中 (第' . $page . '页)',
+                    'message' => $title . ' đang xử lý (trang ' . $page . ')',
                     'completed' => false,
                     'processed' => $result['count'] ?? 0
                 ];
             }
         } catch (\Exception $e) {
-            Log::error('数据迁移失败: ' . $e->getMessage(), ['handler' => $handler]);
-            return ['success' => false, 'message' => $title . ' 迁移失败: ' . $e->getMessage(), 'completed' => false];
+            Log::error('Di chuyển dữ liệu thất bại: ' . $e->getMessage(), ['handler' => $handler]);
+            return ['success' => false, 'message' => $title . ' di chuyển thất bại: ' . $e->getMessage(), 'completed' => false];
         }
     }
 
     /**
-     * 执行所有数据迁移处理器（循环直到全部完成）
-     * @param array $handlers 处理器列表
+     * Thực thi tất cả handler migration dữ liệu (lặp cho đến khi hoàn tất toàn bộ)
+     * @param array $handlers Danh sách handler
      * @return array
      */
     public function executeAllHandlers(array $handlers): array
@@ -165,14 +165,14 @@ class DataMigrationServices extends BaseServices
         foreach ($handlers as $handler) {
             $name = $handler['name'] ?? '';
             
-            // 循环执行直到完成
+            // Lặp thực thi cho đến khi hoàn tất
             while (!$this->isMigrationCompleted($name)) {
                 $result = $this->executeHandler($handler);
                 
                 if (!$result['success']) {
                     $results[$name] = $result;
                     $allCompleted = false;
-                    break; // 失败则跳过此处理器
+                    break; // Thất bại thì bỏ qua handler này
                 }
                 
                 if ($result['completed']) {
@@ -182,7 +182,7 @@ class DataMigrationServices extends BaseServices
             }
             
             if (!isset($results[$name])) {
-                $results[$name] = ['success' => true, 'message' => ($handler['title'] ?? $name) . ' 已跳过', 'completed' => true, 'skipped' => true];
+                $results[$name] = ['success' => true, 'message' => ($handler['title'] ?? $name) . ' đã bỏ qua', 'completed' => true, 'skipped' => true];
             }
         }
         
@@ -192,10 +192,10 @@ class DataMigrationServices extends BaseServices
         ];
     }
 
-    // ==================== 数据迁移方法 ====================
+    // ==================== Phương thức migration dữ liệu ====================
 
     /**
-     * 处理历史余额数据
+     * Xử lý dữ liệu số dư lịch sử
      * @param int $page
      * @param int $limit
      * @return array
@@ -238,7 +238,7 @@ class DataMigrationServices extends BaseServices
     }
 
     /**
-     * 处理历史佣金数据
+     * Xử lý dữ liệu hoa hồng lịch sử
      * @param int $page
      * @param int $limit
      * @return array
@@ -263,7 +263,7 @@ class DataMigrationServices extends BaseServices
             if (in_array($item['type'], ['brokerage_user', 'extract', 'refund', 'extract_fail'])) {
                 $type = $item['type'];
             } else {
-                $type = strpos($item['mark'], '二级') !== false ? 'two_brokerage' : 'one_brokerage';
+                $type = strpos($item['mark'], 'Cấp 2') !== false ? 'two_brokerage' : 'one_brokerage';
             }
             
             $allData[] = [
@@ -292,7 +292,7 @@ class DataMigrationServices extends BaseServices
     }
 
     /**
-     * 处理历史退款数据
+     * Xử lý dữ liệu hoàn tiền lịch sử
      * @param int $page
      * @param int $limit
      * @return array
@@ -350,7 +350,7 @@ class DataMigrationServices extends BaseServices
     }
 
     /**
-     * 更新订单商品表UID
+     * Cập nhật UID của bảng sản phẩm trong đơn hàng
      * @param int $page
      * @param int $limit
      * @return array
@@ -387,7 +387,7 @@ class DataMigrationServices extends BaseServices
     }
 
     /**
-     * 更新分类券数据
+     * Cập nhật dữ liệu phiếu giảm giá theo danh mục
      * @param int $page
      * @param int $limit
      * @return array

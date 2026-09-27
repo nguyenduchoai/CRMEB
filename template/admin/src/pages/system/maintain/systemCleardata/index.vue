@@ -4,7 +4,7 @@
       <span class="ivu-page-header-title">{{ $route.meta.title }}</span>
       <span class="clear_tit">
         <i class="el-icon-info" style="color: #ed4014" />
-        <span>清除数据请谨慎，清除就无法恢复哦！</span>
+        <span>Hãy thận trọng khi xóa dữ liệu, dữ liệu đã xóa sẽ không thể khôi phục!</span>
       </span>
     </div>
     <el-card :bordered="false" shadow="never" class="ivu-mt">
@@ -15,7 +15,7 @@
             <span class="clear_box_sp2" v-text="item.tlt"></span>
             <el-button
               :type="item.typeName"
-              v-text="item.typeName === 'primary' ? '立即更换' : '立即清理'"
+              v-text="item.typeName === 'primary' ? 'Thay đổi ngay' : 'Dọn dẹp ngay'"
               v-db-click
               @click="onChange(item)"
             ></el-button>
@@ -23,17 +23,17 @@
         </el-col>
       </el-row>
     </el-card>
-    <!-- 更换域名-->
-    <el-dialog :visible.sync="modals" class="tableBox" title="更换域名" width="540px" :close-on-click-modal="false">
+    <!-- Thay đổi tên miền-->
+    <el-dialog :visible.sync="modals" class="tableBox" title="Thay đổi tên miền" width="540px" :close-on-click-modal="false">
       <div class="acea-row row-column">
-        <span>请输入需要替换的域名，格式为：http://域名。</span>
-        <span>替换规则：会使用当前[设置]里面的[网站域名]去替换成当前您输入的域名。</span>
-        <span class="mb15">替换成功后再去更换[网站域名]。</span>
-        <el-input v-model="value6" type="textarea" :rows="4" placeholder="请输入网站域名..." />
+        <span>Vui lòng nhập tên miền cần thay thế, định dạng: http://tên miền.</span>
+        <span>Quy tắc thay thế: [Tên miền website] trong [Cài đặt] hiện tại sẽ được thay thế bằng tên miền bạn vừa nhập.</span>
+        <span class="mb15">Sau khi thay thế thành công, hãy thay đổi [Tên miền website].</span>
+        <el-input v-model="value6" type="textarea" :rows="4" placeholder="Vui lòng nhập tên miền website..." />
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button v-db-click @click="modals = false">取 消</el-button>
-        <el-button type="primary" v-db-click @click="changeYU">确 定</el-button>
+        <el-button v-db-click @click="modals = false">Hủy</el-button>
+        <el-button type="primary" v-db-click @click="changeYU">Xác nhận</el-button>
       </span>
     </el-dialog>
   </div>
@@ -56,74 +56,74 @@ export default {
       },
       tabList: [
         {
-          title: '更换域名',
-          tlt: '替换所有本地上传的图片域名',
+          title: 'Thay đổi tên miền',
+          tlt: 'Thay thế tên miền của tất cả hình ảnh được tải lên cục bộ',
           typeName: 'primary',
           type: '11',
         },
         {
-          title: '清除用户生成的临时附件',
-          tlt: '清除用户生成的临时附件，不会影响商品图',
+          title: 'Xóa tệp đính kèm tạm do người dùng tạo',
+          tlt: 'Xóa tệp đính kèm tạm thời do người dùng tạo, không ảnh hưởng đến ảnh sản phẩm',
           typeName: 'error',
           type: 'temp',
         },
         {
-          title: '清除回收站商品',
-          tlt: '清除回收站商品，谨慎操作',
+          title: 'Xóa sản phẩm trong thùng rác',
+          tlt: 'Xóa sản phẩm trong thùng rác, hãy thao tác thận trọng',
           typeName: 'error',
           type: 'recycle',
         },
         {
-          title: '清除用户数据',
-          tlt: '用户相关的所有表都将被清除，谨慎操作',
+          title: 'Xóa dữ liệu người dùng',
+          tlt: 'Tất cả các bảng liên quan đến người dùng sẽ bị xóa, hãy thao tác thận trọng',
           typeName: 'error',
           type: 'user',
         },
         {
-          title: '清除商城数据',
-          tlt: '清除所有商城数据，谨慎操作',
+          title: 'Xóa dữ liệu cửa hàng',
+          tlt: 'Xóa toàn bộ dữ liệu cửa hàng, hãy thao tác thận trọng',
           typeName: 'error',
           type: 'store',
         },
         {
-          title: '清除商品分类',
-          tlt: '会清除所有商品分类，谨慎操作',
+          title: 'Xóa danh mục sản phẩm',
+          tlt: 'Sẽ xóa toàn bộ danh mục sản phẩm, hãy thao tác thận trọng',
           typeName: 'error',
           type: 'category',
         },
         {
-          title: '清除订单数据',
-          tlt: '清除用户所有订单数据，谨慎操作',
+          title: 'Xóa dữ liệu đơn hàng',
+          tlt: 'Xóa toàn bộ dữ liệu đơn hàng của người dùng, hãy thao tác thận trọng',
           typeName: 'error',
           type: 'order',
         },
         {
-          title: '清除客服数据',
-          tlt: '清除添加的客服数据，谨慎操作',
+          title: 'Xóa dữ liệu CSKH',
+          tlt: 'Xóa dữ liệu CSKH đã thêm, hãy thao tác thận trọng',
           typeName: 'error',
           type: 'kefu',
         },
         {
-          title: '清除微信数据',
-          tlt: '清除微信菜单保存数据，微信关键字无效回复',
+          title: 'Xóa dữ liệu WeChat',
+          tlt: 'Xóa dữ liệu menu WeChat đã lưu, câu trả lời cho từ khóa không hợp lệ của WeChat',
           typeName: 'error',
           type: 'wechat',
         },
         {
-          title: '清除内容分类',
-          tlt: '清除添加的文章和文章分类,谨慎操作',
+          title: 'Xóa danh mục nội dung',
+          tlt: 'Xóa bài viết và danh mục bài viết đã thêm, hãy thao tác thận trọng',
           typeName: 'error',
           type: 'article',
         },
         {
-          title: '清除所有附件',
-          tlt: '清除所有附件用户生成和后台上传,谨慎操作',
+          title: 'Xóa tất cả tệp đính kèm',
+          tlt: 'Xóa toàn bộ tệp đính kèm do người dùng tạo và tải lên từ trang quản trị, hãy thao tác thận trọng',
           typeName: 'error',
           type: 'attachment',
         },
         {
-          title: '清除系统记录',
-          tlt: '清除系统记录,谨慎操作',
+          title: 'Xóa bản ghi hệ thống',
+          tlt: 'Xóa nhật ký hệ thống, hãy thao tác thận trọng',
           typeName: 'error',
           type: 'system',
         },
@@ -131,7 +131,7 @@ export default {
     };
   },
   methods: {
-    // 清除数据
+    // Xóa dữ liệu
     onChange(item) {
       if (item.type === '11') {
         this.modals = true;
@@ -154,7 +154,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 更换域名
+    // Thay đổi tên miền
     changeYU() {
       replaceSiteUrlApi({ url: this.value6 })
         .then((res) => {

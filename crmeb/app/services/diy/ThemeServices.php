@@ -2,11 +2,11 @@
 
 
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,18 +18,18 @@ use crmeb\exceptions\AdminException;
 use crmeb\exceptions\ApiException;
 
 /**
- * 主题服务类
+ * Lớp dịch vụ chủ đề
  *
- * 功能概述:
- * 负责系统主题的管理，包括主题的增删改查、导入导出、应用切换等功能。
- * 提供了对首页、分类页、详情页、个人中心等页面数据的独立管理和组合使用能力。
+ * Tổng quan chức năng:
+ * Phụ trách quản lý theme của hệ thống, bao gồm các chức năng thêm/xóa/sửa/tra cứu theme, nhập/xuất, áp dụng và chuyển đổi theme, v.v.
+ * Cung cấp khả năng quản lý độc lập và sử dụng kết hợp dữ liệu của các trang như trang chủ, trang danh mục, trang chi tiết, trang cá nhân.
  *
- * 主要功能:
- * 1. 主题管理 - 主题列表查询、详情获取、创建与编辑
- * 2. 主题应用 - 切换当前使用的主题，或单独应用某个主题的特定页面数据
- * 3. 数据导入 - 支持导入外部主题配置数据
- * 4. 资源管理 - 管理主题相关的图片、标题等资源
- * 5. 版本控制 - 记录主题数据的更新时间和版本信息
+ * Chức năng chính:
+ * 1. Quản lý theme - Tra cứu danh sách theme, lấy chi tiết, tạo và chỉnh sửa
+ * 2. Áp dụng theme - Chuyển đổi theme đang sử dụng, hoặc áp dụng riêng dữ liệu của một trang cụ thể thuộc một theme nào đó
+ * 3. Nhập dữ liệu - Hỗ trợ nhập dữ liệu cấu hình theme từ bên ngoài
+ * 4. Quản lý tài nguyên - Quản lý hình ảnh, tiêu đề và các tài nguyên khác liên quan đến theme
+ * 5. Quản lý phiên bản - Ghi lại thời gian cập nhật và thông tin phiên bản của dữ liệu theme
  *
  * @package app\services\diy
  * @author wuhaotian
@@ -39,11 +39,11 @@ use crmeb\exceptions\ApiException;
 class ThemeServices extends BaseServices
 {
     /**
-     * 构造函数 - 初始化依赖
+     * Hàm khởi tạo - Khởi tạo các phụ thuộc
      *
-     * 注入 ThemeDao 依赖，用于数据库操作。
+     * Inject phụ thuộc ThemeDao, dùng cho các thao tác cơ sở dữ liệu.
      *
-     * @param ThemeDao $dao 主题数据访问对象
+     * @param ThemeDao $dao Đối tượng truy cập dữ liệu theme
      * @author wuhaotian
      * @email 442384644@qq.com
      * @date 2026/02/03
@@ -54,14 +54,14 @@ class ThemeServices extends BaseServices
     }
 
     /**
-     * 获取主题列表
+     * Lấy danh sách chủ đề
      *
-     * 功能概述:
-     * 根据传入的查询条件，分页获取主题列表数据，并对返回的数据进行格式化处理。
-     * 处理内容包括：时间戳转日期字符串、图片路径转完整URL、JSON数据解析等。
+     * Tổng quan chức năng:
+     * Dựa theo điều kiện truy vấn truyền vào, lấy dữ liệu danh sách theme có phân trang và định dạng dữ liệu trả về.
+     * Nội dung xử lý bao gồm: chuyển timestamp thành chuỗi ngày, chuyển đường dẫn ảnh thành URL đầy đủ, phân tích dữ liệu JSON, v.v.
      *
-     * @param array $where 查询条件数组
-     * @return array 包含列表数据 list 和总数 count 的数组
+     * @param array $where Mảng điều kiện truy vấn
+     * @return array Mảng chứa dữ liệu danh sách list và tổng số count
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
@@ -88,7 +88,7 @@ class ThemeServices extends BaseServices
             if (isset($item['detail_data_update_time'])) $item['detail_data_update_time'] = date('Y-m-d H:i', $item['detail_data_update_time']);
             if (isset($item['user_data_update_time'])) $item['user_data_update_time'] = date('Y-m-d H:i', $item['user_data_update_time']);
             if (isset($item['theme_data_update_time'])) $item['theme_data_update_time'] = date('Y-m-d H:i', $item['theme_data_update_time']);
-            if (isset($item['type'])) $item['type'] = $item['type'] == 0 ? '自建主题' : '广场主题';
+            if (isset($item['type'])) $item['type'] = $item['type'] == 0 ? 'Chủ đề tự tạo' : 'Chủ đề từ kho';
             if (isset($item['theme_data'])) $item['theme_data'] = json_decode($item['theme_data'], true) ?? [];
             $item['home_image'] = set_file_url($item['home_image']);
             $item['category_image'] = set_file_url($item['category_image']);
@@ -100,14 +100,14 @@ class ThemeServices extends BaseServices
     }
 
     /**
-     * 获取主题版本号
+     * Lấy số phiên bản theme
      *
-     * 功能概述:
-     * 根据主题ID获取该主题的当前版本号。
-     * 如果ID为0，则获取当前正在使用的主题的版本号。
+     * Tổng quan chức năng:
+     * Lấy số phiên bản hiện tại của theme theo ID theme.
+     * Nếu ID là 0 thì lấy số phiên bản của theme đang được sử dụng.
      *
-     * @param int $id 主题ID，0表示当前使用的主题
-     * @return mixed 版本号字符串
+     * @param int $id ID theme, 0 nghĩa là theme đang sử dụng
+     * @return mixed Chuỗi số phiên bản
      * @author wuhaotian
      * @email 442384644@qq.com
      * @date 2026/02/03
@@ -119,26 +119,26 @@ class ThemeServices extends BaseServices
     }
 
     /**
-     * 获取主题信息
+     * Lấy thông tin chủ đề
      *
-     * 功能概述:
-     * 根据主题ID和类型获取主题的详细信息。
-     * 支持获取全部信息或指定类型（如首页、分类页、详情页等）的数据。
-     * 对返回的数据进行必要的格式化和默认值填充。
+     * Tổng quan chức năng:
+     * Lấy thông tin chi tiết của theme theo ID theme và loại.
+     * Hỗ trợ lấy toàn bộ thông tin hoặc dữ liệu của loại chỉ định (như trang chủ, trang danh mục, trang chi tiết, v.v.).
+     * Thực hiện định dạng cần thiết và điền giá trị mặc định cho dữ liệu trả về.
      *
-     * 返回数据结构:
-     * 根据 $type 不同返回不同结构：
-     * - 'all'/'base': 返回主题完整记录数组
-     * - 'home'/'detail'/'user'/'theme': 返回解析后的配置数组
-     * - 'category': 返回包含 status 的数组
+     * Cấu trúc dữ liệu trả về:
+     * Tùy theo $type mà trả về cấu trúc khác nhau:
+     * - 'all'/'base': Trả về mảng bản ghi đầy đủ của theme
+     * - 'home'/'detail'/'user'/'theme': Trả về mảng cấu hình đã phân tích
+     * - 'category': Trả về mảng có chứa status
      *
-     * @param int $id 主题ID，0表示当前使用的主题
-     * @param string $type 数据类型：all, home, category, detail, user, theme, base
+     * @param int $id ID theme, 0 nghĩa là theme đang sử dụng
+     * @param string $type Loại dữ liệu: all, home, category, detail, user, theme, base
      * @return array|int[]|mixed|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @throws AdminException 数据不存在时抛出
+     * @throws AdminException Ném ra khi dữ liệu không tồn tại
      * @author wuhaotian
      * @email 442384644@qq.com
      * @date 2026/02/03
@@ -147,7 +147,7 @@ class ThemeServices extends BaseServices
     {
         $where = $id == 0 ? ['is_use' => 1] : ['id' => $id];
         $info = $this->dao->get($where);
-        if (!$info) throw new AdminException('数据不存在');
+        if (!$info) throw new AdminException('Dữ liệu không tồn tại');
         $info = $info->toArray();
         if ($type == 'home') {
             return json_decode($info['home_data'], true) ?? [];
@@ -184,42 +184,42 @@ class ThemeServices extends BaseServices
     }
 
     /**
-     * 保存主题数据
+     * Lưu dữ liệu theme
      *
-     * 功能概述:
-     * 创建新主题或更新现有主题的数据。
-     * 支持从模板主题复制数据创建新主题。
-     * 根据不同的页面类型（home, category, detail, user, theme）处理相应的数据保存逻辑。
-     * 自动更新版本号和最后修改时间。
+     * Tổng quan chức năng:
+     * Tạo theme mới hoặc cập nhật dữ liệu của theme hiện có.
+     * Hỗ trợ sao chép dữ liệu từ theme mẫu để tạo theme mới.
+     * Xử lý logic lưu dữ liệu tương ứng theo từng loại trang (home, category, detail, user, theme).
+     * Tự động cập nhật số phiên bản và thời gian sửa đổi cuối cùng.
      *
-     * @param int $id 主题主键，0 表示新增
-     * @param array $data 待保存数据，必须包含 type、value，可选 tid、title
-     * @return int 新增或更新后的主题 ID
-     * @throws AdminException 当指定 tid 但主题不存在时抛出
+     * @param int $id Khóa chính của theme, 0 nghĩa là thêm mới
+     * @param array $data Dữ liệu cần lưu, bắt buộc có type, value, tùy chọn tid, title
+     * @return int ID theme sau khi thêm mới hoặc cập nhật
+     * @throws AdminException Ném ra khi có chỉ định tid nhưng theme không tồn tại
      * @author wuhaotian
      * @email 442384644@qq.com
      * @date 2026/02/03
      */
     public function saveTheme($id, $data)
     {
-        // 初始化待写入数组
+        // Khởi tạo mảng dữ liệu cần ghi
         $saveData = [];
 
-        // 如果指定了模板主题 ID（tid），则先复制其数据作为基础
+        // Nếu có chỉ định ID theme mẫu (tid) thì trước tiên sao chép dữ liệu của nó làm cơ sở
         if ($data['tid'] !== 0) {
-            // 查询模板主题
+            // Truy vấn theme mẫu
             $tInfo = $this->dao->get($data['tid']);
             if (!$tInfo) {
-                throw new AdminException('主题不存在');
+                throw new AdminException('Chủ đề không tồn tại');
             }
-            // 将模板主题数据转为数组，并剔除主键 id，避免冲突
+            // Chuyển dữ liệu theme mẫu thành mảng và loại bỏ khóa chính id để tránh xung đột
             $saveData = $tInfo->toArray();
-            // 新主题默认未启用
+            // Theme mới mặc định chưa kích hoạt
             $saveData['is_use'] = 0;
             unset($saveData['id']);
         }
 
-        // 如果传入了标题，则覆盖
+        // Nếu có truyền tiêu đề thì ghi đè
         if ($data['title'] != '') {
             $saveData['title'] = $data['title'];
         }
@@ -233,26 +233,26 @@ class ThemeServices extends BaseServices
             $type = $this->dao->value(['id' => $id], 'type');
         }
 
-        // 将传入的 value 统一转为 JSON 字符串
+        // Chuyển value truyền vào thống nhất thành chuỗi JSON
         $value = json_encode($data['value']);
 
-        // 根据模块类型分别处理数据、预览图及更新时间
+        // Xử lý riêng dữ liệu, ảnh xem trước và thời gian cập nhật theo loại module
         switch ($data['type']) {
             case 'home':
-                // 首页
+                // Trang chủ
                 $saveData['home_data'] = $value;
                 $saveData['home_data_update_time'] = time();
-                // 自建主题需要同步写入默认数据
+                // Theme tự tạo cần ghi đồng thời dữ liệu mặc định
                 if ($type == 0) {
                     $saveData['home_default_data'] = $value;
                 }
                 break;
 
             case 'category':
-                // 分类页
+                // Trang danh mục
                 $saveData['category_data'] = $value;
                 $saveData['category_data_update_time'] = time();
-                // 根据 value 生成对应预览图路径
+                // Tạo đường dẫn ảnh xem trước tương ứng dựa theo value
                 $saveData['category_image'] = '/statics/images/cate' . $value . '.png';
                 if ($type == 0) {
                     $saveData['category_default_data'] = $value;
@@ -261,7 +261,7 @@ class ThemeServices extends BaseServices
                 break;
 
             case 'detail':
-                // 详情页
+                // Trang chi tiết
                 $saveData['detail_data'] = $value;
                 $saveData['detail_data_update_time'] = time();
                 if ($type == 0) {
@@ -270,7 +270,7 @@ class ThemeServices extends BaseServices
                 break;
 
             case 'user':
-                // 用户中心
+                // Trung tâm người dùng
                 $saveData['user_data'] = $value;
                 $saveData['user_data_update_time'] = time();
                 if ($type == 0) {
@@ -279,7 +279,7 @@ class ThemeServices extends BaseServices
                 break;
 
             case 'theme':
-                // 主题自身数据
+                // Dữ liệu riêng của theme
                 $saveData['theme_data'] = $value;
                 $saveData['theme_data_update_time'] = time();
                 if ($type == 0) {
@@ -288,52 +288,52 @@ class ThemeServices extends BaseServices
                 break;
         }
 
-        // 每次保存都生成新的版本号
+        // Mỗi lần lưu đều tạo số phiên bản mới
         $saveData['version'] = uniqid();
 
-        // 新增 or 更新
+        // Thêm mới hoặc cập nhật
         if ($id) {
-            // 更新
+            // Cập nhật
             $saveData['up_time'] = time();
             $this->dao->update($id, $saveData);
         } else {
-            // 新增
+            // Thêm mới
             $saveData['page_type'] = $data['page_type'];
             $saveData['add_time'] = time();
             $saveData['up_time'] = time();
             $id = $this->dao->insertGetId($saveData);
         }
 
-        // 返回最终主题 ID
+        // Trả về ID theme cuối cùng
         return $id;
     }
 
     /**
-     * 保存主题标题信息
+     * Lưu thông tin tiêu đề của chủ đề
      *
-     * 功能概述:
-     * 更新主题的标题和简介信息，或创建新的主题记录（仅包含标题信息）。
-     * 更新操作会同步更新版本号和最后修改时间。
+     * Tổng quan chức năng:
+     * Cập nhật tiêu đề và thông tin giới thiệu của theme, hoặc tạo bản ghi theme mới (chỉ gồm thông tin tiêu đề).
+     * Thao tác cập nhật sẽ đồng thời cập nhật số phiên bản và thời gian sửa đổi cuối cùng.
      *
-     * @param int $id 主题ID，0表示新增
-     * @param array $data 包含 title 和 info 的数据数组
-     * @return int|mixed|string 主题ID
+     * @param int $id ID theme, 0 nghĩa là thêm mới
+     * @param array $data Mảng dữ liệu chứa title và info
+     * @return int|mixed|string ID chủ đề
      * @author wuhaotian
      * @email 442384644@qq.com
      * @date 2026/02/03
      */
     public function saveThemeTitle($id, $data)
     {
-        // 如果指定了模板主题 ID（tid），则先复制其数据作为基础
+        // Nếu có chỉ định ID theme mẫu (tid) thì trước tiên sao chép dữ liệu của nó làm cơ sở
         if ($data['tid'] !== 0) {
-            // 查询模板主题
+            // Truy vấn theme mẫu
             $tInfo = $this->dao->get($data['tid']);
             if (!$tInfo) {
-                throw new AdminException('主题不存在');
+                throw new AdminException('Chủ đề không tồn tại');
             }
-            // 将模板主题数据转为数组，并剔除主键 id，避免冲突
+            // Chuyển dữ liệu theme mẫu thành mảng và loại bỏ khóa chính id để tránh xung đột
             $saveData = $tInfo->toArray();
-            // 新主题默认未启用
+            // Theme mới mặc định chưa kích hoạt
             $saveData['is_use'] = 0;
             unset($saveData['id']);
         }
@@ -353,16 +353,16 @@ class ThemeServices extends BaseServices
     }
 
     /**
-     * 保存主题图片信息
+     * Lưu thông tin hình ảnh của chủ đề
      *
-     * 功能概述:
-     * 更新主题各模块（首页、详情页、用户中心）的预览图片。
-     * 如果是默认主题（type=0），会同步更新默认图片配置。
-     * 自动更新版本号和最后修改时间。
+     * Tổng quan chức năng:
+     * Cập nhật ảnh xem trước của các module theme (trang chủ, trang chi tiết, trang cá nhân).
+     * Nếu là theme mặc định (type=0), sẽ đồng thời cập nhật cấu hình ảnh mặc định.
+     * Tự động cập nhật số phiên bản và thời gian sửa đổi cuối cùng.
      *
-     * @param int $id 主题ID
-     * @param array $data 包含 type (home/detail/user) 和 image 的数据数组
-     * @return int|mixed|string 主题ID
+     * @param int $id ID chủ đề
+     * @param array $data Mảng dữ liệu chứa type (home/detail/user) và image
+     * @return int|mixed|string ID chủ đề
      * @author wuhaotian
      * @email 442384644@qq.com
      * @date 2025/12/18
@@ -398,14 +398,14 @@ class ThemeServices extends BaseServices
     }
 
     /**
-     * 导入主题数据
+     * Nhập dữ liệu theme
      *
-     * 功能概述:
-     * 将外部导入的主题配置数据保存到数据库中。
-     * 包含主题的所有页面配置（首页、分类、详情、个人中心）及其对应的默认配置。
+     * Tổng quan chức năng:
+     * Lưu dữ liệu cấu hình theme được nhập từ bên ngoài vào cơ sở dữ liệu.
+     * Bao gồm toàn bộ cấu hình trang của theme (trang chủ, danh mục, chi tiết, trang cá nhân) và cấu hình mặc định tương ứng.
      *
-     * @param array $config 主题配置数据数组
-     * @return mixed 新增的主题ID
+     * @param array $config Mảng dữ liệu cấu hình theme
+     * @return mixed ID theme mới thêm
      * @author wuhaotian
      * @email 442384644@qq.com
      * @date 2026/02/03
@@ -413,47 +413,47 @@ class ThemeServices extends BaseServices
     public function importThemeData($config)
     {
         $data = [];
-        $data['version'] = uniqid(); // 版本号
-        $data['title'] = $config['title']; // 标题
-        $data['info'] = $config['info']; // 简介
-        $data['type'] = 1; // 类型
-        $data['home_data'] = $data['home_default_data'] = $config['home_data']; // 首页数据
-        $data['home_image'] = $data['home_default_image'] = $config['home_image']; // 首页封面
-        $data['home_data_id'] = $config['home_data_id']; // 首页数据ID
-        $data['home_data_update_time'] = time(); // 首页数据更新时间
-        $data['category_data'] = $data['category_default_data'] = $config['category_data']; // 分类页数据
-        $data['category_image'] = $data['category_default_image'] = $config['category_image']; // 分类页封面
-        $data['category_data_id'] = $config['category_data_id']; // 分类页数据ID
-        $data['category_data_update_time'] = time(); // 分类页数据更新时间
-        $data['detail_data'] = $data['detail_default_data'] = $config['detail_data']; // 详情页数据
-        $data['detail_image'] = $data['detail_default_image'] = $config['detail_image']; // 详情页封面
-        $data['detail_data_id'] = $config['detail_data_id']; // 详情页数据ID
-        $data['detail_data_update_time'] = time(); // 详情页数据更新时间
-        $data['user_data'] = $data['user_default_data'] = $config['user_data']; // 个人中心数据
-        $data['user_image'] = $data['user_default_image'] = $config['user_image']; // 个人中心封面
-        $data['user_data_id'] = $config['user_data_id']; // 个人中心数据ID
-        $data['user_data_update_time'] = time(); // 个人中心数据更新时间
-        $data['theme_data'] = $data['theme_default_data'] = json_encode($config['theme_data'], JSON_UNESCAPED_UNICODE); // 主题数据
-        $data['theme_data_id'] = $config['theme_data_id']; // 主题数据ID
-        $data['theme_data_update_time'] = time(); // 主题数据更新时间
-        $data['page_type'] = 'theme'; // 页面类型
-        $data['is_use'] = 0; // 是否使用
-        $data['is_del'] = 0; // 是否删除
-        $data['add_time'] = time(); // 添加时间
-        $data['up_time'] = time(); // 更新时间
+        $data['version'] = uniqid(); // Số phiên bản
+        $data['title'] = $config['title']; // Tiêu đề
+        $data['info'] = $config['info']; // Mô tả ngắn
+        $data['type'] = 1; // Loại
+        $data['home_data'] = $data['home_default_data'] = $config['home_data']; // Dữ liệu trang chủ
+        $data['home_image'] = $data['home_default_image'] = $config['home_image']; // Ảnh bìa trang chủ
+        $data['home_data_id'] = $config['home_data_id']; // ID dữ liệu trang chủ
+        $data['home_data_update_time'] = time(); // Thời gian cập nhật dữ liệu trang chủ
+        $data['category_data'] = $data['category_default_data'] = $config['category_data']; // Dữ liệu trang danh mục
+        $data['category_image'] = $data['category_default_image'] = $config['category_image']; // Ảnh bìa trang danh mục
+        $data['category_data_id'] = $config['category_data_id']; // ID dữ liệu trang danh mục
+        $data['category_data_update_time'] = time(); // Thời gian cập nhật dữ liệu trang danh mục
+        $data['detail_data'] = $data['detail_default_data'] = $config['detail_data']; // Dữ liệu trang chi tiết
+        $data['detail_image'] = $data['detail_default_image'] = $config['detail_image']; // Ảnh bìa trang chi tiết
+        $data['detail_data_id'] = $config['detail_data_id']; // ID dữ liệu trang chi tiết
+        $data['detail_data_update_time'] = time(); // Thời gian cập nhật dữ liệu trang chi tiết
+        $data['user_data'] = $data['user_default_data'] = $config['user_data']; // Dữ liệu trang cá nhân
+        $data['user_image'] = $data['user_default_image'] = $config['user_image']; // Ảnh bìa trang cá nhân
+        $data['user_data_id'] = $config['user_data_id']; // ID dữ liệu trang cá nhân
+        $data['user_data_update_time'] = time(); // Thời gian cập nhật dữ liệu trang cá nhân
+        $data['theme_data'] = $data['theme_default_data'] = json_encode($config['theme_data'], JSON_UNESCAPED_UNICODE); // Dữ liệu chủ đề
+        $data['theme_data_id'] = $config['theme_data_id']; // ID dữ liệu theme
+        $data['theme_data_update_time'] = time(); // Thời gian cập nhật dữ liệu theme
+        $data['page_type'] = 'theme'; // Loại trang
+        $data['is_use'] = 0; // Đã sử dụng
+        $data['is_del'] = 0; // Đã xóa
+        $data['add_time'] = time(); // Thời gian thêm
+        $data['up_time'] = time(); // Thời gian cập nhật
         $id = $this->dao->insertGetId($data);
         return $id;
     }
 
     /**
-     * 使用主题
+     * Áp dụng chủ đề
      *
-     * 功能概述:
-     * 将指定主题设置为当前启用状态。
-     * 该操作会先将所有主题设为未启用，然后启用指定ID的主题。
+     * Tổng quan chức năng:
+     * Đặt theme được chỉ định thành theme đang kích hoạt.
+     * Thao tác này sẽ đặt tất cả theme về trạng thái chưa kích hoạt trước, sau đó kích hoạt theme có ID chỉ định.
      *
-     * @param int $id 要启用的主题ID
-     * @return bool 操作成功返回 true
+     * @param int $id ID theme cần kích hoạt
+     * @return bool Thao tác thành công thì trả về true
      * @author wuhaotian
      * @email 442384644@qq.com
      * @date 2026/02/03
@@ -466,17 +466,17 @@ class ThemeServices extends BaseServices
     }
 
     /**
-     * 使用主题数据
+     * Áp dụng dữ liệu chủ đề
      *
-     * 功能概述:
-     * 将某个主题的特定模块数据（如首页、详情页等）应用到目标主题数据记录中。
-     * 实现主题数据的局部复用或混搭。
+     * Tổng quan chức năng:
+     * Áp dụng dữ liệu module cụ thể của một theme (như trang chủ, trang chi tiết, v.v.) vào bản ghi dữ liệu theme đích.
+     * Thực hiện tái sử dụng một phần hoặc kết hợp dữ liệu theme.
      *
-     * @param int $id 目标主题数据ID
-     * @param int $theme_id 源主题ID
-     * @param string $type 数据类型（home/category/detail/user/theme）
-     * @return bool 操作成功返回 true
-     * @throws AdminException 当源主题数据不存在时抛出
+     * @param int $id ID dữ liệu theme đích
+     * @param int $theme_id ID theme nguồn
+     * @param string $type Loại dữ liệu (home/category/detail/user/theme)
+     * @return bool Thao tác thành công thì trả về true
+     * @throws AdminException Ném ra khi dữ liệu theme nguồn không tồn tại
      * @author wuhaotian
      * @email 442384644@qq.com
      * @date 2026/02/03
@@ -484,55 +484,55 @@ class ThemeServices extends BaseServices
     public function useThemeData(int $id, int $theme_id, string $type)
     {
         $data = $this->dao->get(['id' => $theme_id]);
-        if (!$data) throw new AdminException('主题数据不存在');
+        if (!$data) throw new AdminException('Dữ liệu chủ đề không tồn tại');
         $this->dao->update(['id' => $id], [$type . '_data_update_time' => time(), $type . '_image' => $data[$type . '_image'], $type . '_data' => $data[$type . '_data'], $type . '_data_id' => $theme_id]);
         return true;
     }
 
 
     /**
-     * 获取当前正在使用的主题信息
+     * Lấy thông tin theme đang được sử dụng
      *
-     * 功能概述:
-     * 查询当前启用的主题（is_use=1），并聚合其关联的各模块（首页、分类、详情等）数据。
-     * 如果采用了混搭模式（引用了其他主题的模块），会解析出实际来源主题的标题和图片信息。
+     * Tổng quan chức năng:
+     * Truy vấn theme đang được kích hoạt (is_use=1) và tổng hợp dữ liệu các module liên kết của nó (trang chủ, danh mục, chi tiết, v.v.).
+     * Nếu dùng chế độ kết hợp (tham chiếu module của theme khác), sẽ phân tích ra tiêu đề và thông tin ảnh của theme nguồn thực tế.
      *
-     * 返回数据结构:
-     * - id, title, info, version: 主题基础信息
-     * - confuse: 是否混搭模式 (0/1)
-     * - data_info: 各模块详情列表（包含 key, title, image, update_time）
-     * - theme_data: 主题全局样式配置
+     * Cấu trúc dữ liệu trả về:
+     * - id, title, info, version: Thông tin cơ bản của theme
+     * - confuse: Có phải chế độ kết hợp không (0/1)
+     * - data_info: Danh sách chi tiết các module (gồm key, title, image, update_time)
+     * - theme_data: Cấu hình style toàn cục của theme
      *
-     * @return array 返回包含主题基础信息及各个模块详细配置的数据
-     * @throws AdminException 当没有正在使用的主题时抛出异常
+     * @return array Trả về dữ liệu gồm thông tin cơ bản của theme và cấu hình chi tiết của từng module
+     * @throws AdminException Ném ngoại lệ khi không có theme nào đang được sử dụng
      * @author wuhaotian
      * @email 442384644@qq.com
      * @date 2026/02/03
      */
     public function getUsingTheme()
     {
-        // 查询当前正在使用的主题记录（is_use = 1）
+        // Truy vấn bản ghi theme đang được sử dụng (is_use = 1)
         $data = $this->dao->get(['is_use' => 1]);
-        if (!$data) throw new AdminException('没有正在使用的主题');
+        if (!$data) throw new AdminException('Không có chủ đề nào đang được sử dụng');
 
-        // 收集各模块关联的主题ID，并过滤掉空值
+        // Thu thập ID theme liên kết của các module và lọc bỏ giá trị rỗng
         $themeIds = array_filter([
-            $data['home_data_id'],      // 首页模块关联主题ID
-            $data['category_data_id'],  // 分类页模块关联主题ID
-            $data['detail_data_id'],    // 详情页模块关联主题ID
-            $data['user_data_id'],      // 用户中心模块关联主题ID
-            $data['theme_data_id'],     // 主题自身数据关联主题ID
+            $data['home_data_id'],      // ID theme liên kết của module trang chủ
+            $data['category_data_id'],  // ID theme liên kết của module trang danh mục
+            $data['detail_data_id'],    // ID theme liên kết của module trang chi tiết
+            $data['user_data_id'],      // ID theme liên kết của module trang cá nhân
+            $data['theme_data_id'],     // ID theme liên kết của dữ liệu riêng theme
         ]);
 
 
-        // 组装最终返回的主题信息数组
+        // Tạo mảng thông tin theme trả về cuối cùng
         $theme = [];
-        $theme['id'] = $data['id'];             // 主题ID
-        $theme['title'] = $data['title'];         // 主题名称
-        $theme['info'] = $data['info'];           // 主题简介
-        $theme['version'] = $data['version'];   // 主题版本号
-        $theme['confuse'] = 0;                  // 是否混搭使用主题：0否 1是
-        // 若存在关联主题ID，则批量查询其标题，供后续拼接使用
+        $theme['id'] = $data['id'];             // ID chủ đề
+        $theme['title'] = $data['title'];         // Tên chủ đề
+        $theme['info'] = $data['info'];           // Mô tả ngắn của chủ đề
+        $theme['version'] = $data['version'];   // Số phiên bản theme
+        $theme['confuse'] = 0;                  // Có dùng theme kết hợp không: 0 không, 1 có
+        // Nếu có ID theme liên kết thì truy vấn hàng loạt tiêu đề của chúng để dùng cho việc ghép nối phía sau
         if ($themeIds) {
             $themeData = $this->dao->getColumn([['id', 'in', $themeIds]], 'title', 'id');
             $theme['confuse'] = 1;
@@ -540,43 +540,43 @@ class ThemeServices extends BaseServices
         $theme['data_info'] = [
             [
                 'key' => 'home',
-                'title' => $themeData[$data['home_data_id']] ?? $data['title'], // 首页模块标题（优先取关联主题标题）
-                'image' => set_file_url($data['home_image']), // 首页预览图
-                'update_time' => date('Y-m-d H:i:s', $data['home_data_update_time']), // 首页数据更新时间
+                'title' => $themeData[$data['home_data_id']] ?? $data['title'], // Tiêu đề module trang chủ (ưu tiên lấy tiêu đề theme liên kết)
+                'image' => set_file_url($data['home_image']), // Ảnh xem trước trang chủ
+                'update_time' => date('Y-m-d H:i:s', $data['home_data_update_time']), // Thời gian cập nhật dữ liệu trang chủ
             ],
             [
                 'key' => 'category',
-                'title' => $themeData[$data['category_data_id']] ?? $data['title'], // 分类页模块标题（优先取关联主题标题）
-                'image' => set_file_url($data['category_image']), // 分类页预览图
-                'update_time' => date('Y-m-d H:i:s', $data['category_data_update_time']), // 分类页数据更新时间
+                'title' => $themeData[$data['category_data_id']] ?? $data['title'], // Tiêu đề module trang danh mục (ưu tiên lấy tiêu đề theme liên kết)
+                'image' => set_file_url($data['category_image']), // Ảnh xem trước trang danh mục
+                'update_time' => date('Y-m-d H:i:s', $data['category_data_update_time']), // Thời gian cập nhật dữ liệu trang danh mục
             ],
             [
                 'key' => 'detail',
-                'title' => $themeData[$data['detail_data_id']] ?? $data['title'], // 详情页模块标题（优先取关联主题标题）
-                'image' => set_file_url($data['detail_image']), // 详情页预览图
-                'update_time' => date('Y-m-d H:i:s', $data['detail_data_update_time']), // 详情页数据更新时间
+                'title' => $themeData[$data['detail_data_id']] ?? $data['title'], // Tiêu đề module trang chi tiết (ưu tiên lấy tiêu đề theme liên kết)
+                'image' => set_file_url($data['detail_image']), // Ảnh xem trước trang chi tiết
+                'update_time' => date('Y-m-d H:i:s', $data['detail_data_update_time']), // Thời gian cập nhật dữ liệu trang chi tiết
             ],
             [
                 'key' => 'user',
-                'title' => $themeData[$data['user_data_id']] ?? $data['title'], // 用户中心模块标题（优先取关联主题标题）
-                'image' => set_file_url($data['user_image']), // 用户中心预览图
-                'update_time' => date('Y-m-d H:i:s', $data['user_data_update_time']), // 用户中心数据更新时间
+                'title' => $themeData[$data['user_data_id']] ?? $data['title'], // Tiêu đề module trang cá nhân (ưu tiên lấy tiêu đề theme liên kết)
+                'image' => set_file_url($data['user_image']), // Ảnh xem trước trang cá nhân
+                'update_time' => date('Y-m-d H:i:s', $data['user_data_update_time']), // Thời gian cập nhật dữ liệu trang cá nhân
             ],
         ];
-        $theme['theme_data'] = json_decode($data['theme_data'], true); // 主题自身数据（JSON格式）
+        $theme['theme_data'] = json_decode($data['theme_data'], true); // Dữ liệu riêng của theme (định dạng JSON)
 
         return $theme;
     }
 
     /**
-     * @description: 还原主题
-     * @param int $id 主题ID
+     * @description: Khôi phục chủ đề
+     * @param int $id ID chủ đề
      * @return void
      */
     public function restoreTheme(int $id)
     {
         $data = $this->dao->get($id);
-        if (!$data) throw new AdminException('主题不存在');
+        if (!$data) throw new AdminException('Chủ đề không tồn tại');
         $this->dao->update($id, [
             'home_data' => $data['home_default_data'],
             'home_data_id' => 0,
@@ -596,21 +596,21 @@ class ThemeServices extends BaseServices
             'user_data_update_time' => time(),
             'theme_data' => $data['theme_default_data'],
             'theme_data_update_time' => time(),
-            'version' => uniqid(), // 更新版本号
-            'up_time' => time(), // 更新时间
+            'version' => uniqid(), // Cập nhật số phiên bản
+            'up_time' => time(), // Thời gian cập nhật
         ]);
         return true;
     }
 
     /**
-     * 删除主题
+     * Xóa chủ đề
      *
-     * 功能概述:
-     * 软删除指定的主题（更新 is_del 字段）。
+     * Tổng quan chức năng:
+     * Xóa mềm theme chỉ định (cập nhật trường is_del).
      *
-     * @param int $id 主题ID
-     * @return bool 操作成功返回 true
-     * @throws AdminException 当主题不存在时抛出
+     * @param int $id ID chủ đề
+     * @return bool Thao tác thành công thì trả về true
+     * @throws AdminException Ném ra khi theme không tồn tại
      * @author wuhaotian
      * @email 442384644@qq.com
      * @date 2026/02/03
@@ -618,65 +618,65 @@ class ThemeServices extends BaseServices
     public function deleteTheme(int $id)
     {
         $data = $this->dao->get($id);
-        if (!$data) throw new AdminException('主题不存在');
-        if ($data['is_use']) throw new AdminException('当前主题正在使用中，不能删除');
+        if (!$data) throw new AdminException('Chủ đề không tồn tại');
+        if ($data['is_use']) throw new AdminException('Chủ đề này đang được sử dụng, không thể xóa');
         $this->dao->update($id, ['is_del' => 1]);
         return true;
     }
 
     /**
-     * 获取当前启用主题的底部导航配置
+     * Lấy cấu hình thanh điều hướng dưới cùng của theme đang kích hoạt
      *
-     * 功能概述:
-     * 解析当前启用主题的首页数据，提取其中的底部导航（pagefoot）组件配置。
+     * Tổng quan chức năng:
+     * Phân tích dữ liệu trang chủ của theme đang kích hoạt, trích xuất cấu hình thành phần điều hướng dưới cùng (pagefoot) trong đó.
      *
-     * @return array 返回名为 pagefoot 的组件配置数组，未找到时返回空数组
-     * @throws ApiException 当启用主题不存在首页数据时抛出
+     * @return array Trả về mảng cấu hình của thành phần có tên pagefoot, không tìm thấy thì trả về mảng rỗng
+     * @throws ApiException Ném ra khi theme đang kích hoạt không có dữ liệu trang chủ
      * @author wuhaotian
      * @email 442384644@qq.com
      * @date 2026/02/03
      */
     public function themeNavigation()
     {
-        // 查询当前正在使用的主题的首页数据（JSON 字符串）
+        // Truy vấn dữ liệu trang chủ của theme đang được sử dụng (chuỗi JSON)
         $value = $this->dao->value(['is_use' => 1], 'home_data');
         if (!$value) {
-            throw new ApiException('数据不存在');
+            throw new ApiException('Dữ liệu không tồn tại');
         }
 
-        // 初始化导航数据为空数组
+        // Khởi tạo dữ liệu điều hướng là mảng rỗng
         $navigation = [];
 
-        // 若首页数据存在，则进行解析与遍历
+        // Nếu dữ liệu trang chủ tồn tại thì tiến hành phân tích và duyệt qua
         if ($value) {
-            // 将 JSON 字符串解码为数组
+            // Giải mã chuỗi JSON thành mảng
             $value = json_decode($value, true);
-            // 遍历首页组件，查找名称为 pagefoot 的底部导航组件
+            // Duyệt qua các thành phần trang chủ, tìm thành phần điều hướng dưới cùng có tên pagefoot
             foreach ($value['value'] as $item) {
                 if (isset($item['name']) && strtolower($item['name']) === 'pagefoot') {
-                    // 找到后赋值并终止循环
+                    // Tìm thấy thì gán giá trị và dừng vòng lặp
                     $navigation = $item;
                     break;
                 }
             }
         }
 
-        // 返回导航配置（可能为空数组）
+        // Trả về cấu hình điều hướng (có thể là mảng rỗng)
         return $navigation;
     }
 
     /**
-     * 获取微页面列表
+     * Lấy danh sách trang micro
      *
-     * 功能概述:
-     * 分页查询微页面（page_type='micro'）列表数据。
+     * Tổng quan chức năng:
+     * Truy vấn phân trang dữ liệu danh sách trang micro (page_type='micro').
      *
-     * 主要功能:
-     * 1. 分页查询 - 根据系统分页参数获取数据
-     * 2. 数据过滤 - 仅查询未删除且类型为微页面的记录
-     * 3. 格式化 - 转换时间戳为可读日期格式
+     * Chức năng chính:
+     * 1. Truy vấn phân trang - Lấy dữ liệu theo tham số phân trang của hệ thống
+     * 2. Lọc dữ liệu - Chỉ truy vấn các bản ghi chưa bị xóa và có loại là trang micro
+     * 3. Định dạng - Chuyển timestamp sang định dạng ngày dễ đọc
      *
-     * @return array 包含列表数据 list 和总数 count 的数组
+     * @return array Mảng chứa dữ liệu danh sách list và tổng số count
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
@@ -686,29 +686,29 @@ class ThemeServices extends BaseServices
      */
     public function getMicroPageList()
     {
-        [$page, $limit] = $this->getPageValue(); // 获取分页参数
-        $field = 'id,title,info,type,add_time,up_time,page_type'; // 查询字段
-        $order = 'id desc'; // 排序
+        [$page, $limit] = $this->getPageValue(); // Lấy tham số phân trang
+        $field = 'id,title,info,type,add_time,up_time,page_type'; // Các trường cần truy vấn
+        $order = 'id desc'; // Thứ tự sắp xếp
         $where = [
-            'is_del' => 0, // 未删除
-            'page_type' => 'micro', // 微页面类型
+            'is_del' => 0, // Chưa xóa
+            'page_type' => 'micro', // Loại trang micro
         ];
-        $list = $this->dao->themeList($where, $field, $page, $limit, $order); // 查询列表
+        $list = $this->dao->themeList($where, $field, $page, $limit, $order); // Tra cứu danh sách
         foreach ($list as &$item) {
-            // 格式化时间
+            // Định dạng thời gian
             if (isset($item['add_time'])) $item['add_time'] = date('Y-m-d H:i', $item['add_time']);
             if (isset($item['up_time'])) $item['up_time'] = date('Y-m-d H:i', $item['up_time']);
         }
-        $count = $this->dao->themeCount($where); // 获取总数
+        $count = $this->dao->themeCount($where); // Lấy tổng số
         return compact('list', 'count');
     }
 
     /**
-     * 导出主题数据（核心逻辑）
-     * 将主题配置及相关图片打包成 Zip 文件，返回下载地址
+     * Xuất dữ liệu theme (logic cốt lõi)
+     * Đóng gói cấu hình theme và các ảnh liên quan thành file Zip, trả về địa chỉ tải xuống
      *
      * @param $themeInfo
-     * @return string 下载地址
+     * @return string Địa chỉ tải xuống
      * @throws    hinkdbexceptionDataNotFoundException
      * @throws    hinkdbexceptionDbException
      * @throws    hinkdbexceptionModelNotFoundException
@@ -718,10 +718,10 @@ class ThemeServices extends BaseServices
      */
     public function exportThemePackage($info): string
     {
-        // 1. 设置导出临时目录
+        // 1. Thiết lập thư mục tạm để xuất
         $dir = public_path() . 'theme/download/' . $info['id'] . '/';
 
-        // 2. 处理主要图片（首页图、分类图、详情图、个人中心图）
+        // 2. Xử lý các ảnh chính (ảnh trang chủ, ảnh danh mục, ảnh chi tiết, ảnh trang cá nhân)
         $images = ['home_image', 'category_image', 'detail_image', 'user_image'];
         $defaultImages = ['home_default_image', 'category_default_image', 'detail_default_image', 'user_default_image'];
         $i = 1;
@@ -769,7 +769,7 @@ class ThemeServices extends BaseServices
             $i++;
         }
 
-        // 3. 处理 home_data / detail_data / user_data 中的图片
+        // 3. Xử lý ảnh trong home_data / detail_data / user_data
         $imagesDir = $dir . 'images/';
         $index = 1;
         $map = [];
@@ -844,10 +844,10 @@ class ThemeServices extends BaseServices
         $info['user_default_data'] = json_encode($userData, JSON_UNESCAPED_UNICODE);
         $info['theme_data'] = $info['theme_default_data'] = json_decode($info['theme_data'], true);
 
-        // 4. 写入 config.json
+        // 4. Ghi config.json
         file_put_contents($dir . 'config.json', json_encode($info, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
 
-        // 7. 打包成 zip
+        // 7. Đóng gói thành zip
         $zip = new \ZipArchive();
         $zip->open($dir . $info['title'] . '.zip', \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
         $rootPath = realpath($dir);

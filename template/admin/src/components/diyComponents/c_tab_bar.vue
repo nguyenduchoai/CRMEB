@@ -8,25 +8,25 @@
         </div>
         <div class="right-wrapper">
           <div class="img-wrapper">
-            <div class="img-item" v-for="(img, j) in item.imgList" v-db-click @click="modalPicTap('单选', index, j)">
+            <div class="img-item" v-for="(img, j) in item.imgList" v-db-click @click="modalPicTap('Chọn một', index, j)">
               <img :src="img" alt="" v-if="img" />
-              <p class="txt" v-if="img">{{ j == 0 ? '选中' : '未选中' }}</p>
+              <p class="txt" v-if="img">{{ j == 0 ? 'Đã chọn' : 'Chưa chọn' }}</p>
               <div class="empty-img" v-else>
                 <span class="iconfont iconjiahao"></span>
-                <p>{{ j == 0 ? '选中' : '未选中' }}</p>
+                <p>{{ j == 0 ? 'Đã chọn' : 'Chưa chọn' }}</p>
               </div>
             </div>
           </div>
           <div class="c_row-item">
-            <el-col class="label" :span="4"> 名称 </el-col>
+            <el-col class="label" :span="4"> Tên </el-col>
             <el-col :span="19" class="slider-box">
-              <el-input v-model="item.name" placeholder="选填不超过10个字" />
+              <el-input v-model="item.name" placeholder="Không bắt buộc, tối đa 10 ký tự" />
             </el-col>
           </div>
           <div class="c_row-item">
-            <el-col class="label" :span="4"> 链接 </el-col>
+            <el-col class="label" :span="4"> Liên kết </el-col>
             <el-col :span="19" class="slider-box">
-              <el-input v-model="item.link" placeholder="选填不超过10个字" />
+              <el-input v-model="item.link" placeholder="Không bắt buộc, tối đa 10 ký tự" />
             </el-col>
           </div>
         </div>
@@ -42,7 +42,7 @@
         style="width: 100%; height: 40px; border-color: var(--prev-color-primary); color: var(--prev-color-primary)"
         v-db-click
         @click="addMenu"
-        >添加图文导航
+        >Thêm điều hướng hình ảnh
       </el-button>
     </div>
     <div>
@@ -52,7 +52,7 @@
         scrollable
         footer-hide
         :show-close="true"
-        title="上传商品图"
+        title="Tải lên ảnh sản phẩm"
         :mask-closable="false"
         :z-index="888"
       >
@@ -92,7 +92,7 @@ export default {
   data() {
     return {
       modalPic: false,
-      isChoice: '单选',
+      isChoice: 'Chọn một',
       gridBtn: {
         xl: 4,
         lg: 8,
@@ -123,7 +123,7 @@ export default {
     },
   },
   methods: {
-    // 添加模块
+    // Thêm mô-đun
     addMenu() {
       if (this.configData[this.configNum][this.name].list.length == 0) {
         this.configData[this.configNum][this.name].list.push(this.lastObj);
@@ -138,11 +138,11 @@ export default {
     },
     deleteMenu(index) {
       this.$msgbox({
-        title: '提示',
-        message: '是否确定删除该菜单',
+        title: 'Thông báo',
+        message: 'Bạn có chắc chắn muốn xóa menu này không',
         showCancelButton: true,
-        cancelButtonText: '取消',
-        confirmButtonText: '删除',
+        cancelButtonText: 'Hủy',
+        confirmButtonText: 'Xóa',
         iconClass: 'el-icon-warning',
         confirmButtonClass: 'btn-custom-cancel',
       })
@@ -154,13 +154,13 @@ export default {
         })
         .catch(() => {});
     },
-    // 点击图文封面
+    // Click vào ảnh bìa bài viết ảnh-văn
     modalPicTap(title, index, select) {
       this.activeIndex = index;
       this.modalPic = true;
       this.isSelect = select;
     },
-    // 获取图片信息
+    // Lấy thông tin ảnh
     getPic(pc) {
       this.$nextTick(() => {
         this.configData[this.configNum][this.name].list[this.activeIndex].imgList[this.isSelect] = pc.att_dir;

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -42,15 +42,15 @@ class StoreOrderInvoiceServices extends BaseServices
     {
         $where['is_pay'] = 1;
         $where['is_del'] = 0;
-        //全部
+        //Tất cả
         $data['all'] = (string)$this->dao->count($where);
-        //待开
+        //Chờ xuất
         $where['type'] = 1;
         $data['noOpened'] = (string)$this->dao->count($where);
-        //已开
+        //Đã xuất
         $where['type'] = 2;
         $data['opened'] = (string)$this->dao->count($where);
-        //退款
+        //Hoàn tiền
         $where['type'] = 3;
         $data['refund'] = (string)$this->dao->count($where);
         $data['elec_invoice'] = (int)sys_config('elec_invoice', 0);
@@ -58,7 +58,7 @@ class StoreOrderInvoiceServices extends BaseServices
     }
 
     /**
-     * 后台获取开票列表
+     * Lấy danh sách xuất hóa đơn ở trang quản trị
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -90,7 +90,7 @@ class StoreOrderInvoiceServices extends BaseServices
     }
 
     /**
-     * 前端获取开票列表（带商品信息）
+     * Lấy danh sách xuất hóa đơn ở phía người dùng (kèm thông tin sản phẩm)
      * @param $where
      * @return array
      */
@@ -107,7 +107,7 @@ class StoreOrderInvoiceServices extends BaseServices
                 $item['order'] = $storeOrderServices->tidyOrder($item['order'], true);
                 if (isset($item['order']['_status']['_type']) && $item['order']['_status']['_type'] == 3) {
                     foreach ($item['order']['cartInfo'] ?: [] as $key => $product) {
-                        $item['order']['cartInfo'][$key]['add_time'] = isset($product['add_time']) ? date('Y-m-d H:i', (int)$product['add_time']) : '时间错误';
+                        $item['order']['cartInfo'][$key]['add_time'] = isset($product['add_time']) ? date('Y-m-d H:i', (int)$product['add_time']) : 'Thời gian không hợp lệ';
                     }
                 }
             }
@@ -116,7 +116,7 @@ class StoreOrderInvoiceServices extends BaseServices
     }
 
     /**
-     * 订单申请开票
+     * Đơn hàng yêu cầu xuất hóa đơn
      * @param int $uid
      * @param $order_id
      * @param int $invoice_id
@@ -127,8 +127,8 @@ class StoreOrderInvoiceServices extends BaseServices
      */
     public function makeUp(int $uid, $order_id, int $invoice_id)
     {
-        if (!$order_id) throw new AdminException('参数错误');
-        if (!$invoice_id) throw new AdminException('请选择发票');
+        if (!$order_id) throw new AdminException('Tham số không hợp lệ');
+        if (!$invoice_id) throw new AdminException('Vui lòng chọn hóa đơn');
 
         /** @var StoreOrderServices $storeOrderServices */
         $storeOrderServices = app()->make(StoreOrderServices::class);
@@ -136,19 +136,19 @@ class StoreOrderInvoiceServices extends BaseServices
         $userInvoiceServices = app()->make(UserInvoiceServices::class);
         $order = $storeOrderServices->getOne(['order_id|id' => $order_id, 'is_del' => 0]);
         if (!$order) {
-            throw new AdminException('订单不存在');
+            throw new AdminException('Đơn hàng không tồn tại');
         }
-        //检测再带查询
+        //Kiểm tra kèm truy vấn
         $invoice = $userInvoiceServices->checkInvoice($invoice_id, $uid);
 
         if ($this->dao->getOne(['order_id' => $order['id'], 'uid' => $uid])) {
-            throw new AdminException('发票已申请');
+            throw new AdminException('Đã yêu cầu xuất hóa đơn');
         }
         if ($order['refund_status'] == 2) {
-            throw new AdminException('订单已退款');
+            throw new AdminException('Đơn hàng đã được hoàn tiền');
         }
         if ($order['refund_status'] == 1) {
-            throw new AdminException('正在申请退款中');
+            throw new AdminException('Đang yêu cầu hoàn tiền');
         }
         unset($invoice['id'], $invoice['add_time']);
         $data = [];
@@ -159,14 +159,14 @@ class StoreOrderInvoiceServices extends BaseServices
         $data['is_pay'] = $order['paid'] == 1 ? 1 : 0;
         $data = array_merge($data, $invoice);
         if (!$re = $this->dao->save($data)) {
-            throw new AdminException('申请失败');
+            throw new AdminException('Gửi yêu cầu thất bại');
         }
         if (sys_config('elec_invoice', 1) == 1 && sys_config('auto_invoice', 1) == 1 && $data['is_pay'] == 1) {
-            //自动开票
+            //Tự động xuất hóa đơn
             OrderInvoiceJob::dispatchSecs(10, 'autoInvoice', [$re->id]);
         }
 
-        //自定义事件-申请开票
+        //Sự kiện tùy chỉnh - yêu cầu xuất hóa đơn
         event('CustomEventListener', ['order_invoice', [
             'uid' => $uid,
             'order_id' => $order_id,
@@ -182,19 +182,19 @@ class StoreOrderInvoiceServices extends BaseServices
     {
         $orderInvoice = $this->dao->get($id);
         if (!$orderInvoice) {
-            throw new AdminException('数据不存在');
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         if ($data['is_invoice'] == 1) {
             $data['invoice_time'] = time();
         }
         if (!$this->dao->update($id, $data, 'id')) {
-            throw new AdminException('设置失败');
+            throw new AdminException('Cài đặt thất bại');
         }
         return true;
     }
 
     /**
-     * 拆分订单同步拆分申请开票记录
+     * Đồng bộ tách bản ghi yêu cầu xuất hóa đơn khi tách đơn hàng
      * @param int $oid
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
@@ -207,12 +207,12 @@ class StoreOrderInvoiceServices extends BaseServices
         $storeOrderServices = app()->make(StoreOrderServices::class);
         $orderInfo = $storeOrderServices->getOne(['id' => $oid, 'is_del' => 0]);
         if (!$orderInfo) {
-            throw new AdminException('订单不存在');
+            throw new AdminException('Đơn hàng không tồn tại');
         }
         $pid = $orderInfo['pid'] > 0 ? $orderInfo['pid'] : $orderInfo['id'];
-        //查询开票记录
+        //Truy vấn bản ghi xuất hóa đơn
         $orderInvoice = $this->dao->get(['order_id' => $oid]);
-        //查询子订单
+        //Truy vấn đơn hàng con
         $spliteOrder = $storeOrderServices->getColumn(['pid' => $pid, 'is_system_del' => 0], 'id,order_id');
         if ($spliteOrder && $orderInvoice) {
             $data = $orderInvoice->toArray();
@@ -238,7 +238,7 @@ class StoreOrderInvoiceServices extends BaseServices
     }
 
     /**
-     * 开具发票
+     * Xuất hóa đơn
      * @param $id
      * @return bool
      * @throws \ReflectionException
@@ -252,7 +252,7 @@ class StoreOrderInvoiceServices extends BaseServices
     public function invoiceIssuance($id)
     {
         if (sys_config('elec_invoice', 1) != 1) {
-            return app('json')->fail('电子发票功能未开启，请在一号通中开启并且在商城后台一号通配置中开启');
+            return app('json')->fail('Chức năng hóa đơn điện tử chưa được bật, vui lòng bật trong Yihaotong và bật trong mục cấu hình Yihaotong ở trang quản trị cửa hàng');
         }
         $info = $this->dao->getOne(['id' => $id]);
         $orderInfo = app()->make(StoreOrderServices::class)->get($info['order_id']);
@@ -300,13 +300,13 @@ class StoreOrderInvoiceServices extends BaseServices
                 ]);
             }
         } catch (\Exception $e) {
-            Log::error('自动开具发票失败，失败原因：' . $e->getMessage());
+            Log::error('Tự động xuất hóa đơn thất bại, lý do:' . $e->getMessage());
         }
         return true;
     }
 
     /**
-     * 未开发票自动开具电子发票
+     * Chưa xuất hóa đơn thì tự động xuất hóa đơn điện tử
      * @return bool
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -327,7 +327,7 @@ class StoreOrderInvoiceServices extends BaseServices
             ], 'id');
             if ($list) {
                 foreach ($list as $item) {
-                    //自动开票
+                    //Tự động xuất hóa đơn
                     OrderInvoiceJob::dispatchSecs(10, 'autoInvoice', [$item]);
                 }
             }
@@ -336,7 +336,7 @@ class StoreOrderInvoiceServices extends BaseServices
     }
 
     /**
-     * 退款订单自动冲红
+     * Đơn hàng hoàn tiền tự động lập hóa đơn điều chỉnh giảm
      * @return bool
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -358,7 +358,7 @@ class StoreOrderInvoiceServices extends BaseServices
             ], 'id');
             if ($list) {
                 foreach ($list as $item) {
-                    //自动冲红
+                    //Tự động lập hóa đơn điều chỉnh giảm
                     OrderInvoiceJob::dispatchSecs(10, 'autoInvoiceRed', [$item]);
                 }
             }
@@ -367,7 +367,7 @@ class StoreOrderInvoiceServices extends BaseServices
     }
 
     /**
-     * 负数发票开具
+     * Xuất hóa đơn số âm
      * @param $id
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
@@ -381,11 +381,11 @@ class StoreOrderInvoiceServices extends BaseServices
     {
         $invoiceInfo = $this->dao->get($id);
         if ($invoiceInfo['is_pay'] == 0 || $invoiceInfo['is_invoice'] == 0 || $invoiceInfo['unique_num'] == '') {
-            throw new AdminException('发票状态有误，请检查');
+            throw new AdminException('Trạng thái hóa đơn không đúng, vui lòng kiểm tra');
         }
         $invoice = app()->make(ServeServices::class)->invoice();
         $res = $invoice->redInvoiceIssuance(['invoice_num' => $invoiceInfo['invoice_num'], 'apply_type' => '01']);
-        if ($res['status'] != 200) throw new AdminException('开具负数发票失败，请检查');
+        if ($res['status'] != 200) throw new AdminException('Xuất hóa đơn điều chỉnh giảm thất bại, vui lòng kiểm tra');
         $this->dao->update($id, ['red_invoice_num' => 1]);
         return true;
     }

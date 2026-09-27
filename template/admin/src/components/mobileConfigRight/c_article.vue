@@ -1,6 +1,6 @@
 <template>
   <div class="article-box" v-if="defaults[configNme]">
-    <div class="title-bar">文章列表</div>
+    <div class="title-bar">Danh sách bài viết</div>
     <div class="list-box">
       <draggable class="dragArea list-group" :list="defaults[configNme].list" group="peoples" handle=".move-icon">
         <div class="item" v-for="(item, index) in defaults[configNme].list" :key="index">
@@ -20,13 +20,13 @@
         </div>
       </draggable>
       <div class="add-btn" @click="modals = true">
-        <el-button class="btn"><span class="iconfont iconaddto"></span>添加</el-button>
+        <el-button class="btn"><span class="iconfont iconaddto"></span>Thêm</el-button>
       </div>
     </div>
 
     <el-dialog
       :visible.sync="modals"
-      title="文章列表"
+      title="Danh sách bài viết"
       class="paymentFooter"
       width="900px"
       :destroy-on-close="true"
@@ -42,10 +42,10 @@
             @submit.native.prevent
             inline
           >
-            <el-form-item label="文章分类：" label-for="pid">
+            <el-form-item label="Danh mục bài viết:" label-for="pid">
               <el-cascader
                 v-model="artFrom.pid"
-                placeholder="请选择"
+                placeholder="Vui lòng chọn"
                 class="treeSel"
                 @change="handleCheckChange"
                 :options="treeData"
@@ -55,11 +55,11 @@
               >
               </el-cascader>
             </el-form-item>
-            <el-form-item label="文章搜索：" label-for="title">
-              <el-input clearable placeholder="请输入" v-model="artFrom.title" class="form_content_width" />
+            <el-form-item label="Tìm kiếm bài viết:" label-for="title">
+              <el-input clearable placeholder="Vui lòng nhập" v-model="artFrom.title" class="form_content_width" />
             </el-form-item>
             <el-form-item>
-              <el-button type="primary" @click="userSearchs">查询</el-button>
+              <el-button type="primary" @click="userSearchs">Tra cứu</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -69,23 +69,23 @@
           class="mt14"
           v-loading="loading"
           highlight-current-row
-          no-userFrom-text="暂无数据"
-          no-filtered-userFrom-text="暂无筛选结果"
+          no-userFrom-text="Chưa có dữ liệu"
+          no-filtered-userFrom-text="Không có kết quả phù hợp"
           height="400"
           @selection-change="handleSelectionChange"
         >
           <el-table-column type="selection" width="55"> </el-table-column>
           <el-table-column label="ID" width="80" prop="id"> </el-table-column>
-          <el-table-column label="文章图片" min-width="90">
+          <el-table-column label="Hình ảnh bài viết" min-width="90">
             <template slot-scope="scope">
               <div class="tabBox_img" v-if="scope.row.image_input && scope.row.image_input.length">
                 <img :src="scope.row.image_input[0]" />
               </div>
             </template>
           </el-table-column>
-          <el-table-column label="文章名称" min-width="130" prop="title"> </el-table-column>
-          <el-table-column label="分类" min-width="130" prop="catename"> </el-table-column>
-          <el-table-column label="时间" min-width="130">
+          <el-table-column label="Tên bài viết" min-width="130" prop="title"> </el-table-column>
+          <el-table-column label="Danh mục" min-width="130" prop="catename"> </el-table-column>
+          <el-table-column label="Thời gian" min-width="130">
             <template slot-scope="scope">
               <span>{{ scope.row.add_time | formatDate }}</span>
             </template>
@@ -103,8 +103,8 @@
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="modals = false">取 消</el-button>
-        <el-button type="primary" @click="addSelectedArticles">确 定</el-button>
+        <el-button @click="modals = false">Hủy</el-button>
+        <el-button type="primary" @click="addSelectedArticles">Xác nhận</el-button>
       </span>
     </el-dialog>
   </div>
@@ -178,7 +178,7 @@ export default {
     },
     addSelectedArticles() {
       if (this.multipleSelection.length === 0) {
-        return this.$message.warning('请至少选择一篇文章');
+        return this.$message.warning('Vui lòng chọn ít nhất một bài viết');
       }
       let list = this.defaults[this.configNme].list;
       let newItems = [];
@@ -189,13 +189,13 @@ export default {
         }
       });
       if (newItems.length === 0) {
-        return this.$message.warning('您选择的文章已存在');
+        return this.$message.warning('Bài viết bạn chọn đã tồn tại');
       }
       this.defaults[this.configNme].list = list.concat(newItems);
-      this.$message.success('添加成功');
+      this.$message.success('Thêm thành công');
       this.modals = false;
     },
-    // 获取文章列表
+    // Lấy danh sách bài viết
     getList() {
       this.loading = true;
       cmsListApi(this.artFrom)
@@ -209,12 +209,12 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 获取分类
+    // Lấy danh mục
     getClass() {
       categoryListApi({ status: 1, type: 1 })
         .then((res) => {
           this.treeData = this.formatCategory(res.data);
-          this.treeData.unshift({ id: 0, title: '全部' });
+          this.treeData.unshift({ id: 0, title: 'Tất cả' });
         })
         .catch((res) => {
           this.$message.error(res.msg);
@@ -229,35 +229,35 @@ export default {
         };
       });
     },
-    // 选择分类
+    // Chọn danh mục
     handleCheckChange(data) {
       this.artFrom.pid = data ? data : 0;
       this.artFrom.page = 1;
       this.getList();
     },
-    // 搜索
+    // Tìm kiếm
     userSearchs() {
       this.artFrom.page = 1;
       this.getList();
     },
-    // 分页
+    // Phân trang
     pageChange(e) {
       this.artFrom.page = e;
       this.getList();
     },
-    // 选择文章
+    // Chọn bài viết
     selectArticle(row) {
-      // 检查是否已存在
+      // Kiểm tra đã tồn tại chưa
       let list = this.defaults[this.configNme].list;
       let exists = list.some((item) => item.id === row.id);
       if (exists) {
-        this.$message.warning('该文章已添加');
+        this.$message.warning('Bài viết này đã được thêm');
         return;
       }
       this.defaults[this.configNme].list.push(row);
-      this.$message.success('添加成功');
+      this.$message.success('Thêm thành công');
     },
-    // 删除文章
+    // Xóa bài viết
     bindDelete(index) {
       this.defaults[this.configNme].list.splice(index, 1);
     },

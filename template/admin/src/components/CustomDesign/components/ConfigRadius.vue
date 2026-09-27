@@ -1,5 +1,5 @@
 <template>
-  <el-form-item :label="`${labelPrefix}圆角`" class="margin-style-config">
+  <el-form-item :label="`Bo góc ${labelPrefix}`" class="margin-style-config">
     <div class="c_row">
       <div class="c_content">
         <div class="main-setting">

@@ -1,26 +1,26 @@
 // +---------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +---------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +---------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +---------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +---------------------------------------------------------------------
 
 import Cookies from 'js-cookie';
-// cookie保存的天数
+// Số ngày lưu cookie
 import config from '@/config';
 import { forEach, hasOneOf, objEqual } from '@/libs/tools';
 import { cloneDeep } from 'lodash';
 const { title, useI18n } = config;
 import packageConfig from '../../package.json';
-// 设置setCookies；
+// Đặt setCookies;
 // setToken
 export const setCookies = (key, val, cookieExpires) => {
   Cookies.set(`${packageConfig.name}:${key}`, val, { expires: cookieExpires || 1 });
 };
-// 获取getCookies；
+// Lấy getCookies;
 // getToken
 export const getCookies = (key) => {
   return Cookies.get(`${packageConfig.name}:${key}`);
@@ -41,7 +41,7 @@ const showThisMenuEle = (item, access) => {
   } else return true;
 };
 /**
- * @param {Array} list 通过路由列表得到菜单列表
+ * @param {Array} list Lấy danh sách menu từ danh sách route
  * @returns {Array}
  */
 export const getMenuByRouter = (list, access) => {
@@ -64,7 +64,7 @@ export const getMenuByRouter = (list, access) => {
 };
 
 /**
- * @param {Array} routeMetched 当前路由metched
+ * @param {Array} routeMetched matched của route hiện tại
  * @returns {Array}
  */
 export const getBreadCrumbList = (route, homeRoute) => {
@@ -122,13 +122,13 @@ export const showTitle = (item, vm) => {
 };
 
 /**
- * @description 本地存储和获取标签导航列表
+ * @description Lưu và lấy danh sách điều hướng thẻ (tagsView) từ local storage
  */
 export const setTagNavListInLocalstorage = (list) => {
   localStorage.tagNaveList = JSON.stringify(list);
 };
 /**
- * @returns {Array} 其中的每个元素只包含路由原信息中的name, path, meta三项
+ * @returns {Array} Mỗi phần tử trong đó chỉ chứa 3 mục name, path, meta từ thông tin gốc của route
  */
 export const getTagNavListFromLocalstorage = () => {
   const list = localStorage.tagNaveList;
@@ -136,8 +136,8 @@ export const getTagNavListFromLocalstorage = () => {
 };
 
 /**
- * @param {Array} routers 路由列表数组
- * @description 用于找到路由列表中name为home的对象
+ * @param {Array} routers Mảng danh sách route
+ * @description Dùng để tìm đối tượng có name là home trong danh sách route
  */
 export const getHomeRoute = (routers, homeName = 'home') => {
   let i = -1;
@@ -156,9 +156,9 @@ export const getHomeRoute = (routers, homeName = 'home') => {
 };
 
 /**
- * @param {*} list 现有标签导航列表
- * @param {*} newRoute 新添加的路由原信息对象
- * @description 如果该newRoute已经存在则不再添加
+ * @param {*} list Danh sách điều hướng thẻ hiện có
+ * @param {*} newRoute Đối tượng thông tin gốc của route mới được thêm
+ * @description Nếu newRoute đó đã tồn tại thì không thêm nữa
  */
 export const getNewTagList = (list, newRoute) => {
   const { name, path, meta } = newRoute;
@@ -169,8 +169,8 @@ export const getNewTagList = (list, newRoute) => {
 };
 
 /**
- * @param {*} access 用户权限数组，如 ['super_admin', 'admin']
- * @param {*} route 路由列表
+ * @param {*} access Mảng quyền người dùng, ví dụ ['super_admin', 'admin']
+ * @param {*} route Danh sách route
  */
 const hasAccess = (access, route) => {
   if (route.meta && route.meta.access) return hasOneOf(access, route.meta.access);
@@ -178,11 +178,11 @@ const hasAccess = (access, route) => {
 };
 
 /**
- * 权鉴
- * @param {*} name 即将跳转的路由name
- * @param {*} access 用户权限数组
- * @param {*} routes 路由列表
- * @description 用户是否可跳转到该页
+ * Xác thực quyền
+ * @param {*} name Name của route sắp chuyển tới
+ * @param {*} access Mảng quyền người dùng
+ * @param {*} routes Danh sách route
+ * @description Người dùng có thể chuyển tới trang đó hay không
  */
 export const canTurnTo = (name, access, routes) => {
   const routePermissionJudge = (list) => {
@@ -200,7 +200,7 @@ export const canTurnTo = (name, access, routes) => {
 
 /**
  * @param {String} url
- * @description 从URL中解析参数
+ * @description Phân tích tham số từ URL
  */
 export const getParams = (url) => {
   const keyValueArr = url.split('?')[1].split('&');
@@ -213,8 +213,8 @@ export const getParams = (url) => {
 };
 
 /**
- * @param {Array} list 标签列表
- * @param {String} name 当前关闭的标签的name
+ * @param {Array} list Danh sách nhãn
+ * @param {String} name Name của tab đang đóng
  */
 export const getNextRoute = (list, route) => {
   let res = {};
@@ -229,8 +229,8 @@ export const getNextRoute = (list, route) => {
 };
 
 /**
- * @param {Number} times 回调函数需要执行的次数
- * @param {Function} callback 回调函数
+ * @param {Number} times Số lần callback cần thực hiện
+ * @param {Function} callback Hàm callback
  */
 export const doCustomTimes = (times, callback) => {
   let i = -1;
@@ -240,19 +240,19 @@ export const doCustomTimes = (times, callback) => {
 };
 
 /**
- * @param {Object} file 从上传组件得到的文件对象
- * @returns {Promise} resolve参数是解析后的二维数组
- * @description 从Csv文件中解析出表格，解析成二维数组
+ * @param {Object} file Đối tượng file lấy được từ thành phần upload
+ * @returns {Promise} Tham số resolve là mảng 2 chiều sau khi phân tích
+ * @description Phân tích bảng từ file Csv, chuyển thành mảng 2 chiều
  */
 export const getArrayFromFile = (file) => {
   let nameSplit = file.name.split('.');
   let format = nameSplit[nameSplit.length - 1];
   return new Promise((resolve, reject) => {
     let reader = new FileReader();
-    reader.readAsText(file); // 以文本格式读取
+    reader.readAsText(file); // Đọc theo định dạng văn bản
     let arr = [];
     reader.onload = function (evt) {
-      let data = evt.target.result; // 读到的数据
+      let data = evt.target.result; // Dữ liệu đọc được
       let pasteData = data.trim();
       arr = pasteData
         .split(/[\n\u0085\u2028\u2029]|\r\n?/g)
@@ -263,15 +263,15 @@ export const getArrayFromFile = (file) => {
           return item[0].split(',');
         });
       if (format === 'csv') resolve(arr);
-      else reject(new Error('[Format Error]:你上传的不是Csv文件'));
+      else reject(new Error('[Format Error]: Tệp bạn tải lên không phải tệp Csv'));
     };
   });
 };
 
 /**
- * @param {Array} array 表格数据二维数组
+ * @param {Array} array Mảng 2 chiều dữ liệu bảng
  * @returns {Object} { columns, tableData }
- * @description 从二维数组中获取表头和表格数据，将第一行作为表头，用于在表格中展示数据
+ * @description Lấy tiêu đề bảng và dữ liệu bảng từ mảng 2 chiều, lấy dòng đầu làm tiêu đề, dùng để hiển thị dữ liệu trong bảng
  */
 export const getTableDataFromArray = (array) => {
   let columns = [];
@@ -338,9 +338,9 @@ export const showByAccess = (access, canViewAccess) => {
 };
 
 /**
- * @description 根据name/params/query判断两个路由对象是否相等
- * @param {*} route1 路由对象
- * @param {*} route2 路由对象
+ * @description Dựa theo name/params/query để kiểm tra hai đối tượng route có bằng nhau không
+ * @param {*} route1 Đối tượng route
+ * @param {*} route2 Đối tượng route
  */
 export const routeEqual = (route1, route2) => {
   const params1 = route1.params || {};
@@ -351,7 +351,7 @@ export const routeEqual = (route1, route2) => {
 };
 
 /**
- * 判断打开的标签列表里是否已存在这个新添加的路由对象
+ * Kiểm tra trong danh sách tab đang mở đã tồn tại đối tượng route mới thêm này chưa
  */
 export const routeHasExist = (tagNavList, routeItem) => {
   let len = tagNavList.length;
@@ -406,9 +406,9 @@ export const scrollTop = (el, from = 0, to, duration = 500, endCallback) => {
 };
 
 /**
- * @description 根据当前跳转的路由设置显示在浏览器标签的title
- * @param {Object} routeItem 路由对象
- * @param {Object} vm Vue实例
+ * @description Đặt title hiển thị trên tab trình duyệt theo route vừa chuyển tới
+ * @param {Object} routeItem Đối tượng route
+ * @param {Object} vm Instance Vue
  */
 export const setTitle = (routeItem, vm) => {
   let winTitle = localStorage.getItem('ADMIN_TITLE') || title;

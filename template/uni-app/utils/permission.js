@@ -1,14 +1,14 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2024 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 
-/// null = 未请求，1 = 已允许，0 = 拒绝|受限, 2 = 系统未开启
+/// null = chưa yêu cầu, 1 = đã cho phép, 0 = từ chối|hạn chế, 2 = hệ thống chưa mở
 
 var isIOS;
 
@@ -70,20 +70,20 @@ function push() {
     enabledTypes = settings.plusGetAttribute("types");
     if (enabledTypes == 0) {
       result = 0;
-      console.log("推送权限没有开启");
+      console.log("Quyền thông báo đẩy chưa được bật");
     } else {
       result = 1;
-      console.log("已经开启推送功能!");
+      console.log("Đã bật tính năng thông báo đẩy!");
     }
     plus.ios.deleteObject(settings);
   } else {
     enabledTypes = app.enabledRemoteNotificationTypes();
     if (enabledTypes == 0) {
       result = 3;
-      console.log("推送权限没有开启!");
+      console.log("Quyền thông báo đẩy chưa được bật!");
     } else {
       result = 4;
-      console.log("已经开启推送功能!");
+      console.log("Đã bật tính năng thông báo đẩy!");
     }
   }
   plus.ios.deleteObject(app);
@@ -128,9 +128,9 @@ function calendar() {
   var ekAuthStatus = EKEventStore.authorizationStatusForEntityType(0);
   if (ekAuthStatus == 3) {
     result = 1;
-    console.log("日历权限已经开启");
+    console.log("Quyền truy cập lịch đã được bật");
   } else {
-    console.log("日历权限没有开启");
+    console.log("Quyền truy cập lịch chưa được bật");
   }
   plus.ios.deleteObject(EKEventStore);
   return result;
@@ -142,9 +142,9 @@ function memo() {
   var ekAuthStatus = EKEventStore.authorizationStatusForEntityType(1);
   if (ekAuthStatus == 3) {
     result = 1;
-    console.log("备忘录权限已经开启");
+    console.log("Quyền truy cập ghi nhớ đã được bật");
   } else {
-    console.log("备忘录权限没有开启");
+    console.log("Quyền truy cập ghi nhớ chưa được bật");
   }
   plus.ios.deleteObject(EKEventStore);
   return result;
@@ -192,17 +192,17 @@ function requestAndroid(permissionID) {
         var result = 0;
         for (var i = 0; i < resultObj.granted.length; i++) {
           var grantedPermission = resultObj.granted[i];
-          console.log("已获取的权限：" + grantedPermission);
+          console.log("Quyền đã được cấp:" + grantedPermission);
           result = 1;
         }
         for (var i = 0; i < resultObj.deniedPresent.length; i++) {
           var deniedPresentPermission = resultObj.deniedPresent[i];
-          console.log("拒绝本次申请的权限：" + deniedPresentPermission);
+          console.log("Quyền bị từ chối trong lần yêu cầu này:" + deniedPresentPermission);
           result = 0;
         }
         for (var i = 0; i < resultObj.deniedAlways.length; i++) {
           var deniedAlwaysPermission = resultObj.deniedAlways[i];
-          console.log("永久拒绝申请的权限：" + deniedAlwaysPermission);
+          console.log("Quyền bị từ chối vĩnh viễn:" + deniedAlwaysPermission);
           result = -1;
         }
         resolve(result);

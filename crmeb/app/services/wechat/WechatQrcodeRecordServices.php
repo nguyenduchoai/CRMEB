@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -27,7 +27,7 @@ class WechatQrcodeRecordServices extends BaseServices
     }
 
     /**
-     * 获取用户列表
+     * Lấy danh sách người dùng
      * @param $qid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -44,7 +44,7 @@ class WechatQrcodeRecordServices extends BaseServices
     }
 
     /**
-     * 渠道码统计
+     * Thống kê mã kênh
      * @param $where
      * @param $time
      * @return mixed
@@ -60,14 +60,14 @@ class WechatQrcodeRecordServices extends BaseServices
     }
 
     /**
-     * 余额趋势
+     * Xu hướng số dư
      * @param $qid
      * @param $time
      * @return array
      */
     public function getTrend($qid, $time)
     {
-        if (count($time) != 2) throw new AdminException('参数错误');
+        if (count($time) != 2) throw new AdminException('Tham số không hợp lệ');
         $dayCount = (strtotime($time[1]) - strtotime($time[0])) / 86400 + 1;
         $data = [];
         if ($dayCount == 1) {
@@ -83,7 +83,7 @@ class WechatQrcodeRecordServices extends BaseServices
     }
 
     /**
-     * 余额趋势
+     * Xu hướng số dư
      * @param $qid
      * @param $time
      * @param $num
@@ -115,8 +115,8 @@ class WechatQrcodeRecordServices extends BaseServices
         $scan = array_column($this->dao->getRecordTrend($qid, $time, $timeType, 'add_time', 'count(uid)', 'no'), 'num', 'days');
         $data = $series = [];
         foreach ($xAxis as $item) {
-            $data['新增关注'][] = isset($follow[$item]) ? floatval($follow[$item]) : 0;
-            $data['新增参与'][] = isset($scan[$item]) ? floatval($scan[$item]) : 0;
+            $data['Lượt theo dõi mới'][] = isset($follow[$item]) ? floatval($follow[$item]) : 0;
+            $data['Lượt tham gia mới'][] = isset($scan[$item]) ? floatval($scan[$item]) : 0;
         }
         foreach ($data as $key => $item) {
             $series[] = [

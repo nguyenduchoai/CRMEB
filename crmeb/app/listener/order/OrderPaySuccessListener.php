@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -35,7 +35,7 @@ use crmeb\interfaces\ListenerInterface;
 use think\facade\Log;
 
 /**
- * 订单支付成功后
+ * Sau khi đơn hàng thanh toán thành công
  * Class OrderPaySuccessListener
  * @package app\listener\order
  */
@@ -45,42 +45,42 @@ class OrderPaySuccessListener implements ListenerInterface
     {
         [$orderInfo] = $event;
 
-        //写入订单状态事件
+        //Event ghi nhận trạng thái đơn hàng
         /** @var StoreOrderStatusServices $statusService */
         $statusService = app()->make(StoreOrderStatusServices::class);
         $statusService->save([
             'oid' => $orderInfo['id'],
             'change_type' => 'pay_success',
-            'change_message' => '用户付款成功',
+            'change_message' => 'Người dùng thanh toán thành công',
             'change_time' => time()
         ]);
 
-        //赠送购买商品优惠券，仅普通商品订单才会赠送
+        //Tặng phiếu giảm giá cho sản phẩm đã mua, chỉ tặng với đơn hàng sản phẩm thường
         if (!$orderInfo['seckill_id'] && !$orderInfo['bargain_id'] && !$orderInfo['combination_id']) {
             /** @var StoreProductCouponServices $storeProductCouponServices */
             $storeProductCouponServices = app()->make(StoreProductCouponServices::class);
             $storeProductCouponServices->giveOrderProductCoupon((int)$orderInfo['uid'], $orderInfo['id']);
         }
 
-        //修改开票数据支付状态
+        //Cập nhật trạng thái thanh toán của dữ liệu xuất hóa đơn
         $orderInvoiceServices = app()->make(StoreOrderInvoiceServices::class);
         $invoiceInfo = $orderInvoiceServices->get(['order_id' => $orderInfo['id']]);
         if ($invoiceInfo) {
             $invoiceInfo->is_pay = 1;
             if ($invoiceInfo->save() && sys_config('elec_invoice', 1) == 1 && sys_config('auto_invoice', 1) == 1) {
-                //自动开票
+                //Tự động xuất hóa đơn
                 OrderInvoiceJob::dispatchSecs(10, 'autoInvoice', [$invoiceInfo['id']]);
             }
         }
 
-        //虚拟商品自动发货
+        //Tự động giao hàng cho sản phẩm ảo
         if (in_array($orderInfo['virtual_type'], [1, 2]) && $orderInfo['combination_id'] == 0) {
             /** @var StoreOrderDeliveryServices $orderDeliveryServices */
             $orderDeliveryServices = app()->make(StoreOrderDeliveryServices::class);
             $orderDeliveryServices->virtualSend($orderInfo);
         }
 
-        // 写入资金流水
+        // Ghi vào dòng tiền
         if (in_array($orderInfo['pay_type'], ['weixin', 'alipay', 'allinpay'])) {
             /** @var UserServices $userServices */
             $userServices = app()->make(UserServices::class);
@@ -92,16 +92,16 @@ class OrderPaySuccessListener implements ListenerInterface
             $capitalFlowServices->setFlow($orderInfo, 'order');
         }
 
-        //小票打印
+        //In biên lai
         PrintJob::dispatch([$orderInfo['id'], 1]);
 
-        //支付成功后发送消息
+        //Gửi tin nhắn sau khi thanh toán thành công
         OrderJob::dispatch([$orderInfo]);
 
-        //支付成功处理自己、上级分销等级升级
+        //Sau khi thanh toán thành công, xử lý nâng hạng cộng tác viên cho bản thân và cấp trên
         AgentJob::dispatch([(int)$orderInfo['uid']]);
 
-        //商品日志记录支付记录
+        //Ghi log sản phẩm và lịch sử thanh toán
         ProductLogJob::dispatch(['pay', ['uid' => $orderInfo['uid'], 'order_id' => $orderInfo['id']]]);
     }
 }

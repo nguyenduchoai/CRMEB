@@ -3,11 +3,10 @@
     <el-card :bordered="false" shadow="never" class="ivu-mt">
       <el-alert type="warning" :closable="false" class="alert-info">
         <template slot="title">
-          获取访问 Token 的接口:<br />
-          请求 URL: /outapi/access_token 请求方式: POST 请求参数: appid和appsecret 返回数据: access_token: 访问令牌
-          exp_time: 令牌过期时间 auth_info: 授权信息<br />
-          使用获取到的 Token 访问对外接口:<br />
-          在 HTTP 请求头中添加 Authorization 字段 字段值为 Bearer access_token(注意 Bearer 后有一个空格)
+          API lấy Token truy cập:<br />
+          URL yêu cầu: /outapi/access_token Phương thức yêu cầu: POST Tham số yêu cầu: appid và appsecret Dữ liệu trả về: access_token: token truy cập exp_time: thời gian hết hạn token auth_info: thông tin cấp phép<br />
+          Dùng Token đã lấy được để truy cập API bên ngoài:<br />
+          Thêm trường Authorization vào header yêu cầu HTTP, giá trị trường là Bearer access_token (lưu ý sau Bearer có một dấu cách)
         </template>
       </el-alert>
       <el-form
@@ -19,49 +18,49 @@
       >
         <el-row>
           <el-col v-bind="grid">
-            <el-button v-auth="['setting-system_admin-add']" type="primary" v-db-click @click="add">添加账号</el-button>
+            <el-button v-auth="['setting-system_admin-add']" type="primary" v-db-click @click="add">Thêm tài khoản</el-button>
           </el-col>
         </el-row>
       </el-form>
       <el-table
         :data="list"
         class="mt14"
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
         v-loading="loading"
         highlight-current-row
       >
-        <el-table-column label="编号" width="80">
+        <el-table-column label="Mã số" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="账号" min-width="130">
+        <el-table-column label="Tài khoản" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.appid }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="描述" min-width="130">
+        <el-table-column label="Mô tả" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.title }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="添加时间" min-width="130">
+        <el-table-column label="Thời gian thêm" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.add_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="最后登录时间" min-width="130">
+        <el-table-column label="Thời gian đăng nhập cuối" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.last_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="最后登录ip" min-width="130">
+        <el-table-column label="IP đăng nhập gần nhất" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.ip }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="状态" min-width="130">
+        <el-table-column label="Trạng thái" min-width="130">
           <template slot-scope="scope">
             <el-switch
               class="defineSwitch"
@@ -71,19 +70,19 @@
               :value="scope.row.status"
               @change="onchangeIsShow(scope.row)"
               size="large"
-              active-text="开启"
-              inactive-text="关闭"
+              active-text="Bật"
+              inactive-text="Tắt"
             >
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="140">
+        <el-table-column label="Thao tác" fixed="right" width="140">
           <template slot-scope="scope">
-            <a v-db-click @click="setUp(scope.row)">设置</a>
+            <a v-db-click @click="setUp(scope.row)">Cài đặt</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="edit(scope.row)">编辑</a>
+            <a v-db-click @click="edit(scope.row)">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除账号', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'Xóa tài khoản', scope.$index)">Xóa</a>
           </template>
         </el-table-column>
       </el-table>
@@ -99,7 +98,7 @@
     </el-card>
     <el-dialog
       :visible.sync="modals"
-      :title="type == 0 ? '添加账号' : '编辑账号'"
+      :title="type == 0 ? 'Thêm tài khoản' : 'Sửa tài khoản'"
       :close-on-click-modal="false"
       :show-close="true"
       width="720px"
@@ -111,23 +110,23 @@
         label-width="80px"
         label-position="right"
       >
-        <el-form-item label="账号：" prop="appid">
+        <el-form-item label="Tài khoản:" prop="appid">
           <div style="display: flex">
             <el-input type="text" v-model="modalsdate.appid" :disabled="type != 0"></el-input>
           </div>
         </el-form-item>
-        <el-form-item label="密码：" prop="appsecret">
+        <el-form-item label="Mật khẩu:" prop="appsecret">
           <div style="display: flex">
             <el-input type="text" v-model="modalsdate.appsecret" class="input"></el-input>
-            <el-button type="primary" v-db-click @click="reset" class="reset">随机</el-button>
+            <el-button type="primary" v-db-click @click="reset" class="reset">Ngẫu nhiên</el-button>
           </div>
         </el-form-item>
-        <el-form-item label="描述：" prop="title">
+        <el-form-item label="Mô tả:" prop="title">
           <div style="display: flex">
             <el-input type="textarea" v-model="modalsdate.title"></el-input>
           </div>
         </el-form-item>
-        <el-form-item label="接口权限：" prop="title">
+        <el-form-item label="Quyền API:" prop="title">
           <!-- <el-checkbox-group v-model="modalsdate.rules">
             <el-checkbox
               :disabled="[2, 3].includes(item.id)"
@@ -151,14 +150,14 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button v-db-click @click="cancel">取 消</el-button>
-        <el-button type="primary" v-db-click @click="ok('modalsdate')">确 定</el-button>
+        <el-button v-db-click @click="cancel">Hủy</el-button>
+        <el-button type="primary" v-db-click @click="ok('modalsdate')">Xác nhận</el-button>
       </span>
     </el-dialog>
     <el-dialog
       :visible.sync="settingModals"
       scrollable
-      title="设置推送"
+      title="Cài đặt đẩy dữ liệu"
       width="1000px"
       :close-on-click-modal="false"
       :show-close="true"
@@ -171,82 +170,82 @@
         label-width="155px"
         label-position="right"
       >
-        <el-form-item label="推送开关：" prop="switch">
+        <el-form-item label="Bật/tắt đẩy dữ liệu:" prop="switch">
           <el-switch v-model="settingData.push_open" :active-value="1" :inactive-value="0" />
         </el-form-item>
-        <el-form-item label="推送账号：" prop="push_account">
+        <el-form-item label="Tài khoản đẩy dữ liệu:" prop="push_account">
           <div class="form-content">
-            <el-input type="text" v-model="settingData.push_account" placeholder="请输入推送账号"></el-input>
-            <span class="tips-info">接受推送方获取token的账号</span>
+            <el-input type="text" v-model="settingData.push_account" placeholder="Vui lòng nhập tài khoản đẩy dữ liệu"></el-input>
+            <span class="tips-info">Tài khoản để bên nhận dữ liệu đẩy lấy token</span>
           </div>
         </el-form-item>
-        <el-form-item label="推送密码：" prop="push_password">
+        <el-form-item label="Mật khẩu đẩy dữ liệu:" prop="push_password">
           <div class="form-content">
-            <el-input type="text" v-model="settingData.push_password" placeholder="请输入推送密码"></el-input>
-            <span class="tips-info">接受推送方获取token的密码</span>
+            <el-input type="text" v-model="settingData.push_password" placeholder="Vui lòng nhập mật khẩu đẩy dữ liệu"></el-input>
+            <span class="tips-info">Mật khẩu để bên nhận dữ liệu đẩy lấy token</span>
           </div>
         </el-form-item>
-        <el-form-item label="获取TOKEN接口：" prop="push_token_url">
+        <el-form-item label="API lấy TOKEN:" prop="push_token_url">
           <div class="form-content">
             <div class="input-button">
-              <el-input type="text" v-model="settingData.push_token_url" placeholder="请输入获取TOKEN接口"></el-input>
-              <el-button class="ml10" type="primary" v-db-click @click="textOutUrl(settingData.id)">测试链接</el-button>
+              <el-input type="text" v-model="settingData.push_token_url" placeholder="Vui lòng nhập API lấy TOKEN"></el-input>
+              <el-button class="ml10" type="primary" v-db-click @click="textOutUrl(settingData.id)">Kiểm tra liên kết</el-button>
             </div>
             <span class="tips-info"
-              >接受推送方获取token的URL地址，POST方法，传入push_account和push_password，返回token和有效时间time(秒)</span
+              >Địa chỉ URL để bên nhận dữ liệu đẩy lấy token, phương thức POST, truyền vào push_account và push_password, trả về token và thời gian hiệu lực time (giây)</span
             >
           </div>
         </el-form-item>
-        <el-form-item label="用户数据修改推送接口：" prop="user_update_push">
+        <el-form-item label="API đẩy dữ liệu khi sửa thông tin người dùng:" prop="user_update_push">
           <div class="form-content">
             <el-input
               type="text"
               v-model="settingData.user_update_push"
-              placeholder="请输入用户数据修改推送接口"
+              placeholder="Vui lòng nhập API đẩy dữ liệu khi sửa thông tin người dùng"
             ></el-input>
-            <span class="tips-info">用户修改积分，余额，经验等将用户信息推送至该地址，POST方法</span>
+            <span class="tips-info">Khi điểm thưởng, số dư, điểm kinh nghiệm... của người dùng thay đổi, thông tin người dùng sẽ được đẩy đến địa chỉ này, phương thức POST</span>
           </div>
         </el-form-item>
-        <el-form-item label="订单创建推送接口：" prop="order_create_push">
+        <el-form-item label="API đẩy dữ liệu khi tạo đơn hàng:" prop="order_create_push">
           <div class="form-content">
             <el-input
               type="text"
               v-model="settingData.order_create_push"
-              placeholder="请输入订单创建推送接口"
+              placeholder="Vui lòng nhập API đẩy dữ liệu khi tạo đơn hàng"
             ></el-input>
-            <span class="tips-info">订单创建时推送订单信息至该地址，POST方法</span>
+            <span class="tips-info">Khi tạo đơn hàng, thông tin đơn hàng sẽ được đẩy đến địa chỉ này, phương thức POST</span>
           </div>
         </el-form-item>
-        <el-form-item label="订单支付推送接口：" prop="order_pay_push">
+        <el-form-item label="API đẩy dữ liệu khi thanh toán đơn hàng:" prop="order_pay_push">
           <div class="form-content">
-            <el-input type="text" v-model="settingData.order_pay_push" placeholder="请输入订单支付推送接口"></el-input>
-            <span class="tips-info">订单完成支付时推送订单已支付信息至该地址，POST方法</span>
+            <el-input type="text" v-model="settingData.order_pay_push" placeholder="Vui lòng nhập API đẩy dữ liệu khi thanh toán đơn hàng"></el-input>
+            <span class="tips-info">Khi đơn hàng thanh toán xong, thông tin đơn hàng đã thanh toán sẽ được đẩy đến địa chỉ này, phương thức POST</span>
           </div>
         </el-form-item>
-        <el-form-item label="售后订单创建推送接口：" prop="refund_create_push">
+        <el-form-item label="API đẩy dữ liệu khi tạo đơn đổi trả:" prop="refund_create_push">
           <div class="form-content">
             <el-input
               type="text"
               v-model="settingData.refund_create_push"
-              placeholder="请输入售后订单创建推送接口"
+              placeholder="Vui lòng nhập API đẩy dữ liệu khi tạo đơn đổi trả"
             ></el-input>
-            <span class="tips-info">售后订单生成时推送售后单信息至该地址，POST方法</span>
+            <span class="tips-info">Khi đơn đổi trả được tạo, thông tin đơn đổi trả sẽ được đẩy đến địa chỉ này, phương thức POST</span>
           </div>
         </el-form-item>
-        <el-form-item label="售后订单取消推送接口：" prop="refund_cancel_push">
+        <el-form-item label="API đẩy dữ liệu khi hủy đơn đổi trả:" prop="refund_cancel_push">
           <div class="form-content">
             <el-input
               type="text"
               v-model="settingData.refund_cancel_push"
-              placeholder="请输入售后订单取消推送接口"
+              placeholder="Vui lòng nhập API đẩy dữ liệu khi hủy đơn đổi trả"
             ></el-input>
-            <span class="tips-info">售后订单取消时推送售后单取消信息至该地址，POST方法</span>
+            <span class="tips-info">Khi đơn đổi trả bị hủy, thông tin hủy đơn đổi trả sẽ được đẩy đến địa chỉ này, phương thức POST</span>
           </div>
         </el-form-item>
       </el-form>
       <div slot="footer">
-        <el-button type="primary" v-db-click @click="submit('settingData')">确定</el-button>
-        <el-button v-db-click @click="settingModals = false">取消</el-button>
+        <el-button type="primary" v-db-click @click="submit('settingData')">Xác nhận</el-button>
+        <el-button v-db-click @click="settingModals = false">Hủy</el-button>
       </div>
     </el-dialog>
   </div>
@@ -284,8 +283,8 @@ export default {
         roles: '',
         status: '',
         name: '',
-        page: 1, // 当前页
-        limit: 20, // 每页显示条数
+        page: 1, // Trang hiện tại
+        limit: 20, // Số mục hiển thị mỗi trang
       },
       status: '',
       list: [],
@@ -308,12 +307,12 @@ export default {
         name: '',
       },
       ruleValidate: {
-        appid: [{ required: true, message: '请输入正确的账号 (4到30位之间)', trigger: 'blur', min: 4, max: 30 }],
-        appsecret: [{ required: true, message: '请输入正确的密码 (6到32位之间)', trigger: 'blur', min: 6, max: 32 }],
-        title: [{ message: '请输入正确的描述 (不能多于200位数)', trigger: 'blur', max: 200 }],
+        appid: [{ required: true, message: 'Vui lòng nhập tài khoản hợp lệ (từ 4 đến 30 ký tự)', trigger: 'blur', min: 4, max: 30 }],
+        appsecret: [{ required: true, message: 'Vui lòng nhập mật khẩu hợp lệ (từ 6 đến 32 ký tự)', trigger: 'blur', min: 6, max: 32 }],
+        title: [{ message: 'Vui lòng nhập mô tả hợp lệ (không quá 200 ký tự)', trigger: 'blur', max: 200 }],
       },
       editValidate: {
-        appsecret: [{ required: false, message: '请输入正确的密码 (6到32位之间)', trigger: 'blur', min: 6, max: 32 }],
+        appsecret: [{ required: false, message: 'Vui lòng nhập mật khẩu hợp lệ (từ 6 đến 32 ký tự)', trigger: 'blur', min: 6, max: 32 }],
       },
       props: {
         label: 'title',
@@ -335,7 +334,7 @@ export default {
     this.getList();
   },
   methods: {
-    // 开启状态
+    // Trạng thái bật
     onchangeIsShow(row) {
       let data = {
         id: row.id,
@@ -349,11 +348,11 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 请求列表
+    // Yêu cầu danh sách
     submitFail() {
       this.getList();
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       this.formValidate.roles = this.formValidate.roles || '';
@@ -368,7 +367,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 添加
+    // Thêm
     add() {
       this.modals = true;
       this.type = 0;
@@ -435,7 +434,7 @@ export default {
         }
       });
     },
-    // 编辑
+    // Sửa
     edit(row) {
       this.modals = true;
       this.modalsdate.appid = row.appid;
@@ -448,7 +447,7 @@ export default {
       this.type = 1;
       this.getIntList('edit', this.modalsdate.rules);
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -466,12 +465,12 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 编辑
+    // Sửa
     setUp(row) {
       this.settingModals = true;
       this.settingData = row;
     },
-    // 搜索
+    // Tìm kiếm
     userSearchs() {
       this.formValidate.status = this.status === 'all' ? '' : this.status;
       this.formValidate.page = 1;
@@ -519,7 +518,7 @@ export default {
               this.$message.error(err.msg);
             });
         } else {
-          this.$message.warning('请完善数据');
+          this.$message.warning('Vui lòng hoàn thiện dữ liệu');
         }
       });
     },

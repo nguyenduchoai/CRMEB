@@ -6,7 +6,7 @@
           <div class="move-icon">
             <span class="iconfont icondrag"></span>
           </div>
-          <div class="img-box" v-db-click @click="modalPicTap('单选', index)">
+          <div class="img-box" v-db-click @click="modalPicTap('Chọn một', index)">
             <img :src="item.pic" alt="" v-if="item.pic && item.pic != ''" />
             <div class="upload-box" v-else>
               <i class="el-icon-picture-outline" style="font-size: 24px"></i>
@@ -14,22 +14,22 @@
           </div>
           <div class="info">
             <div class="info-item" v-if="item.hasOwnProperty('name')">
-              <span>{{ type == 1 ? '管理名称：' : type == 5 ? '广告名称' : '服务名称：' }}</span>
+              <span>{{ type == 1 ? 'Tên mục quản lý:' : type == 5 ? 'Tên quảng cáo' : 'Tên dịch vụ:' }}</span>
               <div class="input-box">
-                <el-input v-model="item.name" :placeholder="type == 5 ? '请输入名称' : '服务中心'" :maxlength="4" />
+                <el-input v-model="item.name" :placeholder="type == 5 ? 'Vui lòng nhập tên' : 'Trung tâm dịch vụ'" :maxlength="4" />
               </div>
             </div>
             <div class="info-item">
-              <span>链接地址：</span>
+              <span>Địa chỉ liên kết:</span>
               <div class="input-box" v-db-click>
-                <el-input v-model="item.url" placeholder="选择链接">
+                <el-input v-model="item.url" placeholder="Chọn liên kết">
                   <i class="el-icon-link" slot="suffix" @click="getLink(index)" />
                 </el-input>
               </div>
             </div>
-            <!-- 开关是否显示 -->
+            <!-- Công tắc có hiển thị hay không -->
             <div class="info-item">
-              <span>是否显示：</span>
+              <span>Hiển thị:</span>
               <div class="input-box">
                 <el-switch class="defineSwitch" v-model="item.is_show" active-value="1" inactive-value="0" />
               </div>
@@ -41,7 +41,7 @@
         </div>
       </draggable>
       <div>
-        <el-dialog :visible.sync="modalPic" width="950px" title="上传商品图" :close-on-click-modal="false">
+        <el-dialog :visible.sync="modalPic" width="950px" title="Tải lên ảnh sản phẩm" :close-on-click-modal="false">
           <uploadPictures
             :isChoice="isChoice"
             @getPic="getPic"
@@ -55,7 +55,7 @@
     <template v-if="listData">
       <div class="add-btn" v-if="type == 2 || (type == 5 && listData.length < 5)">
         <el-button type="primary" ghost style="width: 100px; color: #fff; font-size: 13px" v-db-click @click="addBox"
-          >添加{{ type == 5 ? '广告' : '服务' }}</el-button
+          >Thêm {{ type == 5 ? 'Quảng cáo' : 'Dịch vụ' }}</el-button
         >
       </div>
     </template>
@@ -85,7 +85,7 @@ export default {
   data() {
     return {
       modalPic: false,
-      isChoice: '单选',
+      isChoice: 'Chọn một',
       gridBtn: {
         xl: 4,
         lg: 8,
@@ -135,12 +135,12 @@ export default {
       }
       // this.$emit('parentFun',this.listData)
     },
-    // 点击图文封面
+    // Click vào ảnh bìa bài viết ảnh-văn
     modalPicTap(title, index) {
       this.activeIndex = index;
       this.modalPic = true;
     },
-    // 添加自定义弹窗
+    // Thêm popup tùy chỉnh
     addCustomDialog(editorId) {
       window.UE.registerUI(
         'test-dialog',
@@ -149,17 +149,17 @@ export default {
             iframeUrl: this.$routeProStr + '/widget.images/index.html?fodder=dialog',
             editor: editor,
             name: uiName,
-            title: '上传图片',
+            title: 'Tải lên ảnh',
             cssRules: 'width:960px;height:550px;padding:20px;',
           });
           this.dialog = dialog;
-          // 参考上面的自定义按钮
+          // Tham khảo nút tùy chỉnh ở trên
           var btn = new window.UE.ui.Button({
             name: 'dialog-button',
-            title: '上传图片',
+            title: 'Tải lên ảnh',
             cssRules: `background-image: url(../../../assets/images/icons.png);background-position: -726px -77px;`,
             onclick: function () {
-              // 渲染dialog
+              // Render dialog
               dialog.render();
               dialog.open();
             },
@@ -170,14 +170,14 @@ export default {
         37,
       );
     },
-    // 获取图片信息
+    // Lấy thông tin ảnh
     getPic(pc) {
       this.$nextTick(() => {
         this.listData[this.activeIndex].pic = pc.att_dir;
         this.modalPic = false;
       });
     },
-    // 删除
+    // Xóa
     bindDelete(item, index) {
       if (this.listData.length == 1) {
         this.lastObj = this.listData[0];

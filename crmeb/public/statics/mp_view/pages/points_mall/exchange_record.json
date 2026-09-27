@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "兑换记录",
+  "navigationBarTitleText": "Lịch sử đổi thưởng",
   "usingComponents": {
     "count-down": "/components/countDown/index",
     "loading": "/components/Loading/index",

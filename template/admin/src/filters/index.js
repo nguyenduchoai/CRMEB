@@ -1,47 +1,47 @@
 // +---------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +---------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +---------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +---------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +---------------------------------------------------------------------
 
 // import parseTime, formatTime and set to filter
 /**
- * 直播状态
+ * Trạng thái livestream
  * @param {String} value
  */
 export function liveReviewStatusFilter(value) {
   const statusMap = {
-    101: '直播中',
-    102: '未开始',
-    103: '已结束',
-    104: '已结束',
-    105: '直播中',
-    106: '直播中',
-    107: '已结束',
+    101: 'Đang livestream',
+    102: 'Chưa bắt đầu',
+    103: 'Đã kết thúc',
+    104: 'Đã kết thúc',
+    105: 'Đang livestream',
+    106: 'Đang livestream',
+    107: 'Đã kết thúc',
   };
   return statusMap[value];
 }
 
 /**
- * 审核状态
+ * Trạng thái duyệt
  * @param {String} value
  */
 export function liveStatusFilter(value) {
   const statusMap = {
-    0: '未审核 ',
-    1: '审核中',
-    2: '审核通过',
-    3: '审核失败',
+    0: 'Chưa duyệt ',
+    1: 'Đang duyệt',
+    2: 'Đã duyệt',
+    3: 'Duyệt thất bại',
   };
   return statusMap[value];
 }
 
 /**
- * 时间戳转时间
+ * Chuyển timestamp thành thời gian
  * @param {String} data
  */
 export function formatDate(data) {
@@ -56,35 +56,35 @@ export function formatDate(data) {
 }
 
 /**
- * @description 直播间类型
+ * @description Loại phòng livestream
  */
 export function broadcastType(type) {
   const typeMap = {
-    0: '手机直播',
-    1: '推流',
+    0: 'Livestream bằng điện thoại',
+    1: 'Đẩy luồng',
   };
   return typeMap[type];
 }
 
 /**
- * @description 是否关闭点赞、评论
+ * @description Có tắt lượt thích, bình luận không
  */
 export function filterClose(value) {
   return value ? '✔' : '✖';
 }
 
 /**
- * @description 直播显示类型
+ * @description Loại hiển thị livestream
  */
 export function broadcastDisplayType(type) {
   const typeMap = {
-    0: '竖屏',
-    1: '横屏',
+    0: 'Màn hình dọc',
+    1: 'Màn hình ngang',
   };
   return typeMap[type];
 }
 
-// 公共过滤器
+// Filter chung
 export function filterEmpty(val) {
   let _result = '-';
   if (!val) {
@@ -95,25 +95,25 @@ export function filterEmpty(val) {
 }
 
 /**
- * @description 用户类型
+ * @description Loại người dùng
  */
 export function userType(type) {
   const typeMap = {
-    routine: '小程序',
-    'wechat ': '微信',
+    routine: 'Mini Program',
+    'wechat ': 'WeChat',
     h5: 'H5',
   };
   return typeMap[type];
 }
 
 /**
- * @description 访问来源类型
+ * @description Loại nguồn truy cập
  */
 export function sourceType(type) {
   const typeMap = {
-    0: 'PC端',
-    1: '公众号',
-    2: '小程序',
+    0: 'PC',
+    1: 'OA WeChat',
+    2: 'Mini Program',
     3: 'H5',
   };
   return typeMap[type];

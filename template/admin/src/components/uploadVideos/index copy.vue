@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mt20 ml20">
-      <el-input class="perW35" v-model="videoLink" placeholder="请输入视频链接" />
+      <el-input class="perW35" v-model="videoLink" placeholder="Vui lòng nhập liên kết video" />
       <input type="file" ref="refid" style="display: none" @change="zh_uploadFile_change" />
       <el-button
         v-if="upload_type !== '1' || videoLink"
@@ -10,7 +10,7 @@
         class="ml10"
         v-db-click
         @click="zh_uploadFile"
-        >{{ videoLink ? '确认添加' : '上传视频' }}</el-button
+        >{{ videoLink ? 'Xác nhận thêm' : 'Tải lên video' }}</el-button
       >
       <el-upload
         v-if="upload_type === '1' && !videoLink"
@@ -24,7 +24,7 @@
         style="display: inline-block"
         accept=".mp4"
       >
-        <el-button type="primary" icon="ios-cloud-upload-outline">上传视频</el-button>
+        <el-button type="primary" icon="ios-cloud-upload-outline">Tải lên video</el-button>
       </el-upload>
       <Progress :percent="progress" :stroke-width="5" v-if="upload.videoIng" />
       <div class="video-style" v-if="formValidate.video_link">
@@ -33,20 +33,20 @@
           :src="formValidate.video_link"
           controls="controls"
         >
-          您的浏览器不支持 video 标签。
+          Trình duyệt của bạn không hỗ trợ thẻ video.
         </video>
         <div class="mark"></div>
         <i class="el-icon-delete iconv" v-db-click @click="delVideo"></i>
       </div>
     </div>
     <div class="mt50 ml20">
-      <el-button type="primary" v-db-click @click="uploads">确认</el-button>
+      <el-button type="primary" v-db-click @click="uploads">Xác nhận</el-button>
     </div>
   </div>
 </template>
 
 <script>
-import { uploadByPieces } from '@/utils/upload'; //引入uploadByPieces方法
+import { uploadByPieces } from '@/utils/upload'; //Import phương thức uploadByPieces
 import { productGetTempKeysApi, uploadType } from '@/api/product';
 import Setting from '@/setting';
 import { getCookies } from '@/libs/util';
@@ -58,9 +58,9 @@ export default {
     return {
       fileUrl: Setting.apiBaseURL + '/file/upload',
       upload: {
-        videoIng: false, // 是否显示进度条；
+        videoIng: false, // Có hiển thị thanh tiến trình không;
       },
-      progress: 0, // 进度条默认0
+      progress: 0, // Thanh tiến trình mặc định 0
       videoLink: '',
       formValidate: {
         video_link: '',
@@ -78,8 +78,8 @@ export default {
     videoSaveToUrl(file) {
       if (isVideoUpload(file))
         uploadByPieces({
-          file: file, // 视频实体
-          pieceSize: 3, // 分片大小
+          file: file, // Đối tượng video
+          pieceSize: 3, // Kích thước từng phần
           success: (data) => {
             this.formValidate.video_link = data.file_path;
             this.progress = 100;
@@ -95,18 +95,18 @@ export default {
         });
       return false;
     },
-    // 删除视频；
+    // Xóa video;
     delVideo() {
       let that = this;
       that.$set(that.formValidate, 'video_link', '');
     },
-    //获取视频上传类型
+    //Lấy loại tải lên video
     uploadType() {
       uploadType().then((res) => {
         this.upload_type = res.data.upload_type;
       });
     },
-    // 上传成功
+    // Tải lên thành công
     handleSuccess(res, file, fileList) {
       if (res.status === 200) {
         this.formValidate.video_link = res.data.src;
@@ -137,7 +137,7 @@ export default {
     zh_uploadFile_change(evfile) {
       let that = this;
       if (evfile.target.files[0].type !== 'video/mp4') {
-        return that.$message.error('只能上传mp4文件');
+        return that.$message.error('Chỉ được tải lên tệp mp4');
       }
       let types = {
         key: evfile.target.files[0].name,
@@ -155,7 +155,7 @@ export default {
           })
           .then((res) => {
             that.formValidate.video_link = res.url;
-            that.$message.success('视频上传成功');
+            that.$message.success('Tải lên video thành công');
           })
           .catch((res) => {
             that.$message.error(res);

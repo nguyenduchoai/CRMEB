@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\activity\integral\StoreIntegralServices;
 use think\facade\App;
 
 /**
- * 积分商城管理
+ * Quản lý cửa hàng đổi điểm
  * Class StoreCombination
  * @package app\admin\controller\store
  */
@@ -33,7 +33,7 @@ class StoreIntegral extends AuthController
     }
 
     /**
-     * 积分商品列表
+     * Danh sách sản phẩm đổi điểm
      * @return mixed
      */
     public function index()
@@ -49,7 +49,7 @@ class StoreIntegral extends AuthController
     }
 
     /**
-     * 保存商品
+     * Lưu sản phẩm
      * @param int $id
      */
     public function save($id = 0)
@@ -74,7 +74,7 @@ class StoreIntegral extends AuthController
         if ($id) {
             $integral = $this->services->get((int)$id);
             if (!$integral) {
-                return app('json')->fail('数据不存在');
+                return app('json')->fail('Dữ liệu không tồn tại');
             }
         }
         if ($data['copy'] == 1) {
@@ -82,11 +82,11 @@ class StoreIntegral extends AuthController
             unset($data['copy']);
         }
         $this->services->saveData($id, $data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     /**
-     * 批量添加商品
+     * Thêm sản phẩm theo lô
      * @return mixed
      */
     public function batch_add()
@@ -96,11 +96,11 @@ class StoreIntegral extends AuthController
             [['is_show', 'd'], 0]
         ]);
         $this->services->saveBatchData($data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     /**
-     * 详情
+     * Chi tiết
      * @param $id
      * @return mixed
      */
@@ -111,7 +111,7 @@ class StoreIntegral extends AuthController
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param $id
      * @param $status
      * @return mixed
@@ -119,20 +119,20 @@ class StoreIntegral extends AuthController
     public function set_show($id, $is_show)
     {
         $this->services->update($id, ['is_show' => $is_show]);
-        return app('json')->success('设置成功');
+        return app('json')->success('Cài đặt thành công');
     }
 
     /**
-     * 删除指定资源
+     * Xóa resource được chỉ định
      *
      * @param int $id
      * @return \think\Response
      */
     public function delete($id)
     {
-        if (!$id) return app('json')->fail('参数错误');
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $this->services->update($id, ['is_del' => 1]);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 
 }

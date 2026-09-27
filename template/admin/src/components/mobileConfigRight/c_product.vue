@@ -14,7 +14,7 @@
               <div style="width: 100%">
                 <el-input v-model="list.val" :placeholder="list.pla">
                   <i
-                    v-if="list.title == '链接'"
+                    v-if="list.title == 'Liên kết'"
                     class="el-icon-link"
                     slot="suffix"
                     @click="getLink(index, key, item)"
@@ -23,7 +23,7 @@
               </div>
             </div>
             <div class="con-item" v-if="configData.type">
-              <span>状态</span>
+              <span>Trạng thái</span>
               <el-switch v-model="item.show" />
             </div>
             <div class="con-item" v-if="item.link">
@@ -46,7 +46,7 @@
     </div>
     <div v-if="configData.list">
       <div class="add-btn" @click="addHotTxt" v-if="configData.list.length < configData.max">
-        <el-button class="btn" type="primary" ghost> <span class="iconfont iconjiahao"></span>添加 </el-button>
+        <el-button class="btn" type="primary" ghost> <span class="iconfont iconjiahao"></span>Thêm </el-button>
       </div>
     </div>
     <linkaddress ref="linkaddres" @linkUrl="linkUrl"></linkaddress>
@@ -126,7 +126,7 @@ export default {
         this.configData.list.push(obj);
       }
     },
-    // 删除数组
+    // Xóa mảng
     bindDelete(index) {
       if (this.configData.list.length == 1) {
         let itemObj = this.configData.list[0];

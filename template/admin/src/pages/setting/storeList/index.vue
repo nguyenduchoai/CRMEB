@@ -10,16 +10,16 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="提货点搜索：">
+          <el-form-item label="Tìm điểm nhận hàng:">
             <el-input
               clearable
-              placeholder="请输入提货点名称,电话"
+              placeholder="Vui lòng nhập tên, số điện thoại điểm nhận hàng"
               v-model="artFrom.keywords"
               class="form_content_width"
             />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="userSearchs">查询</el-button>
+            <el-button type="primary" v-db-click @click="userSearchs">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -35,7 +35,7 @@
       <el-row v-auth="['setting-merchant-system_store-save']">
         <el-col v-bind="grid">
           <el-button v-auth="['setting-merchant-system_store-save']" type="primary" v-db-click @click="add"
-            >添加提货点</el-button
+            >Thêm điểm nhận hàng</el-button
           >
         </el-col>
       </el-row>
@@ -45,42 +45,42 @@
         class="mt14"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column label="ID" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="提货点图片" min-width="90">
+        <el-table-column label="Hình ảnh điểm nhận hàng" min-width="90">
           <template slot-scope="scope">
             <div class="tabBox_img" v-viewer>
               <img v-lazy="scope.row.image" />
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="提货点名称" min-width="130">
+        <el-table-column label="Tên điểm nhận hàng" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="提货点电话" min-width="130">
+        <el-table-column label="Số điện thoại điểm nhận hàng" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.phone }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="地址" min-width="130">
+        <el-table-column label="Địa chỉ" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.detailed_address }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="营业时间" min-width="130">
+        <el-table-column label="Giờ mở cửa" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.day_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="是否显示" min-width="130">
+        <el-table-column label="Hiển thị" min-width="130">
           <template slot-scope="scope">
             <el-switch
               class="defineSwitch"
@@ -90,18 +90,18 @@
               :value="scope.row.is_show"
               @change="onchangeIsShow(scope.row.id, scope.row.is_show)"
               size="large"
-              active-text="显示"
-              inactive-text="隐藏"
+              active-text="Hiện"
+              inactive-text="Ẩn"
             >
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="170">
+        <el-table-column label="Thao tác" fixed="right" width="170">
           <template slot-scope="scope">
-            <a v-db-click @click="edit(scope.row.id)">编辑</a>
+            <a v-db-click @click="edit(scope.row.id)">Sửa</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-if="scope.row.is_del == 0" v-db-click @click="del(scope.row, '删除提货点', scope.$index)">删除</a>
-            <a v-else v-db-click @click="del(scope.row, '恢复提货点', scope.$index)">恢复</a>
+            <a v-if="scope.row.is_del == 0" v-db-click @click="del(scope.row, 'Xóa điểm nhận hàng', scope.$index)">Xóa</a>
+            <a v-else v-db-click @click="del(scope.row, 'Khôi phục điểm nhận hàng', scope.$index)">Khôi phục</a>
           </template>
         </el-table-column>
       </el-table>
@@ -166,7 +166,7 @@ export default {
     this.getList();
   },
   methods: {
-    // 获取表单头部信息；
+    // Lấy thông tin phần đầu biểu mẫu;
     storeHeade() {
       let that = this;
       storeGetHeaderApi()
@@ -190,18 +190,18 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 搜索；
+    // Tìm kiếm;
     userSearchs() {
       this.artFrom.page = 1;
       this.getList();
     },
-    // 切换导航；
+    // Chuyển đổi điều hướng;
     onClickTab() {
       this.artFrom.page = 1;
       this.artFrom.keywords = '';
       this.getList();
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,
@@ -220,7 +220,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 添加提货点；
+    // Thêm điểm nhận hàng;
     add() {
       this.$refs.template.isTemplate = true;
     },

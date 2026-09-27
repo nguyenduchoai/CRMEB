@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2024 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -19,15 +19,15 @@ export default {
   /**
    * opt  object | string
    * to_url object | string
-   * 例:
-   * this.Tips('/pages/test/test'); 跳转不提示
-   * this.Tips({title:'提示'},'/pages/test/test'); 提示并跳转
-   * this.Tips({title:'提示'},{tab:1,url:'/pages/index/index'}); 提示并跳转值table上
-   * tab=1 一定时间后跳转至 table上
-   * tab=2 一定时间后跳转至非 table上
-   * tab=3 一定时间后返回上页面
-   * tab=4 关闭所有页面，打开到应用内的某个页面
-   * tab=5 关闭当前页面，跳转到应用内的某个页面
+   * Ví dụ:
+   * this.Tips('/pages/test/test'); chuyển trang không hiển thị thông báo
+   * this.Tips({title:'Thông báo'},'/pages/test/test'); hiển thị thông báo rồi chuyển trang
+   * this.Tips({title:'Thông báo'},{tab:1,url:'/pages/index/index'}); hiển thị thông báo rồi chuyển đến tab
+   * tab=1 sau một khoảng thời gian sẽ chuyển đến tab
+   * tab=2 sau một khoảng thời gian sẽ chuyển đến trang không phải tab
+   * tab=3 sau một khoảng thời gian sẽ quay lại trang trước
+   * tab=4 đóng tất cả trang, mở đến một trang nào đó trong ứng dụng
+   * tab=5 đóng trang hiện tại, chuyển đến một trang nào đó trong ứng dụng
    */
   Tips: function (opt, to_url) {
     if (typeof opt == "string") {
@@ -51,7 +51,7 @@ export default {
           url = to_url.url || "";
         switch (tab) {
           case 1:
-            //一定时间后跳转至 table
+            //Sau một khoảng thời gian sẽ chuyển đến tab
             setTimeout(function () {
               uni.switchTab({
                 url: url,
@@ -59,7 +59,7 @@ export default {
             }, endtime);
             break;
           case 2:
-            //跳转至非table页面
+            //Chuyển đến trang không phải tab
             setTimeout(function () {
               uni.navigateTo({
                 url: url,
@@ -67,7 +67,7 @@ export default {
             }, endtime);
             break;
           case 3:
-            //返回上页面
+            //Quay lại trang trước
             setTimeout(function () {
               // #ifndef H5
               uni.navigateBack({
@@ -80,7 +80,7 @@ export default {
             }, endtime);
             break;
           case 4:
-            //关闭所有页面，打开到应用内的某个页面
+            //Đóng tất cả trang, mở đến một trang nào đó trong ứng dụng
             setTimeout(function () {
               uni.reLaunch({
                 url: url,
@@ -88,7 +88,7 @@ export default {
             }, endtime);
             break;
           case 5:
-            //关闭当前页面，跳转到应用内的某个页面
+            //Đóng trang hiện tại, chuyển đến một trang nào đó trong ứng dụng
             setTimeout(function () {
               uni.redirectTo({
                 url: url,
@@ -101,7 +101,7 @@ export default {
           to_url && to_url();
         }, endtime);
       } else {
-        //没有提示时跳转不延迟
+        //Khi không có thông báo thì chuyển trang không delay
         setTimeout(
           function () {
             uni.navigateTo({
@@ -114,10 +114,10 @@ export default {
     }
   },
   /**
-   * 移除数组中的某个数组并组成新的数组返回
-   * @param array array 需要移除的数组
-   * @param int index 需要移除的数组的键值
-   * @param string | int 值
+   * Loại bỏ một mảng con nào đó trong mảng và tạo thành mảng mới để trả về
+   * @param array array Mảng cần loại bỏ
+   * @param int index Giá trị khóa (key) của mảng cần loại bỏ
+   * @param string | int Giá trị
    * @return array
    *
    */
@@ -135,9 +135,9 @@ export default {
     return valueArray;
   },
   /**
-   * 生成海报获取文字
-   * @param string text 为传入的文本
-   * @param int num 为单行显示的字节长度
+   * Tạo poster, lấy văn bản
+   * @param string text Là văn bản được truyền vào
+   * @param int num Là độ dài byte hiển thị trên một dòng
    * @return array
    */
   textByteLength: function (text, num) {
@@ -164,30 +164,30 @@ export default {
       }
     }
     arr.push(text.slice(str, text.length));
-    return [strLength, arr, rows]; //  [处理文字的总字节长度，每行显示内容的数组，行数]
+    return [strLength, arr, rows]; //  [Tổng độ dài byte của văn bản xử lý, mảng nội dung hiển thị mỗi dòng, số dòng]
   },
 
   /**
-   * 获取商品分享海报
-   * @param array arr2 海报素材
-   * @param string store_name 素材文字
-   * @param string price 价格
-   * @param string ot_price 原始价格
-   * @param function successFn 回调函数
+   * Lấy poster chia sẻ sản phẩm
+   * @param array arr2 Tư liệu poster
+   * @param string store_name Văn bản tư liệu
+   * @param string price Giá
+   * @param string ot_price Giá gốc
+   * @param function successFn Hàm callback
    *
    *
    */
   PosterCanvas: function (arr2, store_name, price, ot_price, successFn) {
     let that = this;
     uni.showLoading({
-      title: i18n.t(`海报生成中`),
+      title: i18n.t(`Đang tạo poster`),
       mask: true,
     });
     const ctx = uni.createCanvasContext("myCanvas");
     ctx.clearRect(0, 0, 0, 0);
 
     /**
-     * 只能获取合法域名下的图片信息,本地调试无法获取
+     * Chỉ có thể lấy thông tin ảnh thuộc domain hợp lệ, không thể lấy khi debug local
      *
      */
     ctx.fillStyle = "#fff";
@@ -239,7 +239,7 @@ export default {
         ctx.setTextAlign("left");
         ctx.setFontSize(36);
         ctx.setFillStyle("#999");
-        // 商品海报划线价
+        // Giá gốc trên poster sản phẩm
         if (ot_price) {
           ctx.fillText(i18n.t(`￥`) + ot_price, 50, 876 + contentHh);
           var underline = function (
@@ -276,7 +276,7 @@ export default {
         ctx.setTextAlign("left");
         ctx.setFontSize(28);
         ctx.setFillStyle("#999");
-        ctx.fillText(i18n.t(`长按或扫描查看`), 490, 1030 + contentHh);
+        ctx.fillText(i18n.t(`Nhấn giữ hoặc quét mã để xem`), 490, 1030 + contentHh);
         ctx.draw(true, function () {
           uni.canvasToTempFilePath({
             canvasId: "myCanvas",
@@ -293,18 +293,18 @@ export default {
       fail: function (err) {
         uni.hideLoading();
         that.Tips({
-          title: i18n.t(`无法获取图片信息`),
+          title: i18n.t(`Không thể lấy thông tin hình ảnh`),
         });
       },
     });
   },
   /**
-   * 获取砍价/拼团海报
-   * @param array arr2 海报素材 背景图
-   * @param string store_name 素材文字
-   * @param string price 价格
-   * @param string ot_price 原始价格
-   * @param function successFn 回调函数
+   * Lấy poster săn giảm giá/mua chung
+   * @param array arr2 Tư liệu poster: ảnh nền
+   * @param string store_name Văn bản tư liệu
+   * @param string price Giá
+   * @param string ot_price Giá gốc
+   * @param function successFn Hàm callback
    *
    *
    */
@@ -322,7 +322,7 @@ export default {
     const ctx = uni.createCanvasContext("myCanvas");
     ctx.clearRect(0, 0, 0, 0);
     /**
-     * 只能获取合法域名下的图片信息,本地调试无法获取
+     * Chỉ có thể lấy thông tin ảnh thuộc domain hợp lệ, không thể lấy khi debug local
      *
      */
     ctx.fillStyle = "#fff";
@@ -334,16 +334,16 @@ export default {
         const HEIGHT = res.height;
         ctx.drawImage(arr2[0], 0, 0, wd, hg);
 
-        // 保证在不同机型对应坐标准确
-        let labelx = 0.65; //标签x
-        let labely = 0.166; //标签y
-        let pricex = 0.1857; //价格x
-        let pricey = 0.18; //价格x
-        let codex = 0.385; //二维码
+        // Đảm bảo tọa độ chính xác trên các dòng máy khác nhau
+        let labelx = 0.65; //Nhãn x
+        let labely = 0.166; //Nhãn y
+        let pricex = 0.1857; //Giá x
+        let pricey = 0.18; //Giá x
+        let codex = 0.385; //Mã QR
         let codey = 0.77;
-        let picturex = 0.1571; //商品图左上点
+        let picturex = 0.1571; //Điểm trên trái của ảnh sản phẩm
         let picturey = 0.2916;
-        let picturebx = 0.6857; //商品图右下点
+        let picturebx = 0.6857; //Điểm dưới phải của ảnh sản phẩm
         let pictureby = 0.4316;
         let msgx = 0.1036; //msg
         let msgy = 0.2306;
@@ -357,7 +357,7 @@ export default {
         );
         ctx.drawImage(arr2[2], wd * codex, hg * codey, wd * codew, wd * codew);
         ctx.save();
-        //标题
+        //Tiêu đề
         const CONTENT_ROW_LENGTH = 32;
         let [contentLeng, contentArray, contentRows] = that.textByteLength(
           title,
@@ -384,13 +384,13 @@ export default {
             ctx.fillText(contentArray[m], 20, 35, 1100);
           }
         }
-        // 标签内容
+        // Nội dung nhãn
         ctx.setTextAlign("left");
         ctx.setFontSize(16);
         ctx.setFillStyle("#FFF");
         ctx.fillText(label, wd * labelx, hg * labely);
         ctx.save();
-        // 价格
+        // Giá
         ctx.setFillStyle("red");
         ctx.setFontSize(26);
         ctx.fillText(price, wd * pricex, hg * pricey);
@@ -415,17 +415,17 @@ export default {
       fail: function (err) {
         uni.hideLoading();
         that.Tips({
-          title: i18n.t(`无法获取图片信息`),
+          title: i18n.t(`Không thể lấy thông tin hình ảnh`),
         });
       },
     });
   },
   /**
-   * 用户信息分享海报
-   * @param array arr2 海报素材  1背景 0二维码
-   * @param string nickname 昵称
-   * @param string sitename 价格
-   * @param function successFn 回调函数
+   * Poster chia sẻ thông tin người dùng
+   * @param array arr2 Tư liệu poster: 1 nền, 0 mã QR
+   * @param string nickname Biệt danh
+   * @param string sitename Giá
+   * @param function successFn Hàm callback
    *
    *
    */
@@ -442,7 +442,7 @@ export default {
     const ctx = uni.createCanvasContext("myCanvas" + index);
     ctx.clearRect(0, 0, 0, 0);
     /**
-     * 只能获取合法域名下的图片信息,本地调试无法获取
+     * Chỉ có thể lấy thông tin ảnh thuộc domain hợp lệ, không thể lấy khi debug local
      *
      */
     uni.getImageInfo({
@@ -483,7 +483,7 @@ export default {
         } else {
           ctx.setFontSize(10);
         }
-        ctx.fillText(i18n.t(`邀请您加入`) + sitename, w * markx, h * marky);
+        ctx.fillText(i18n.t(`Mời bạn tham gia`) + sitename, w * markx, h * marky);
         ctx.save();
         ctx.draw(true, function () {
           uni.canvasToTempFilePath({
@@ -499,16 +499,16 @@ export default {
       fail: function (err) {
         uni.hideLoading();
         that.Tips({
-          title: i18n.t(`无法获取图片信息`),
+          title: i18n.t(`Không thể lấy thông tin hình ảnh`),
         });
       },
     });
   },
   /*
-   * 单图上传
+   * Tải lên một ảnh
    * @param object opt
-   * @param callable successCallback 成功执行方法 data
-   * @param callable errorCallback 失败执行方法
+   * @param callable successCallback Phương thức thực hiện khi thành công, data
+   * @param callable errorCallback Phương thức thực hiện khi thất bại
    */
   uploadImageOne: function (opt, successCallback, errorCallback) {
     let that = this;
@@ -525,13 +525,13 @@ export default {
       inputName = opt.name || "pics",
       fileType = opt.fileType || "image";
     uni.chooseImage({
-      count: count, //最多可以选择的图片总数
-      sizeType: sizeType, // 可以指定是原图还是压缩图，默认二者都有
-      sourceType: sourceType, // 可以指定来源是相册还是相机，默认二者都有
+      count: count, //Tổng số ảnh tối đa có thể chọn
+      sizeType: sizeType, // Có thể chỉ định là ảnh gốc hay ảnh đã nén, mặc định có cả hai
+      sourceType: sourceType, // Có thể chỉ định nguồn là album hay camera, mặc định có cả hai
       success: function (res) {
-        //启动上传等待中...
+        //Đang bắt đầu tải lên...
         uni.showLoading({
-          title: i18n.t(`图片上传中`),
+          title: i18n.t(`Đang tải ảnh lên`),
         });
         uni.uploadFile({
           url: HTTP_REQUEST_URL + "/api/" + uploadUrl,
@@ -568,7 +568,7 @@ export default {
           fail: function (res) {
             uni.hideLoading();
             that.Tips({
-              title: i18n.t(`上传图片失败`),
+              title: i18n.t(`Tải ảnh lên thất bại`),
             });
           },
         });
@@ -576,10 +576,10 @@ export default {
     });
   },
   /*
-   * 单图上传压缩版
+   * Tải lên một ảnh, bản nén
    * @param object opt
-   * @param callable successCallback 成功执行方法 data
-   * @param callable errorCallback 失败执行方法
+   * @param callable successCallback Phương thức thực hiện khi thành công, data
+   * @param callable errorCallback Phương thức thực hiện khi thất bại
    */
   uploadImageChange: function (
     opt,
@@ -601,17 +601,17 @@ export default {
       inputName = opt.name || "pics",
       fileType = opt.fileType || "image";
     uni.chooseImage({
-      count: count, //最多可以选择的图片总数
-      sizeType: sizeType, // 可以指定是原图还是压缩图，默认二者都有
-      sourceType: sourceType, // 可以指定来源是相册还是相机，默认二者都有
+      count: count, //Tổng số ảnh tối đa có thể chọn
+      sizeType: sizeType, // Có thể chỉ định là ảnh gốc hay ảnh đã nén, mặc định có cả hai
+      sourceType: sourceType, // Có thể chỉ định nguồn là album hay camera, mặc định có cả hai
       success: function (res) {
-        //启动上传等待中...
+        //Đang bắt đầu tải lên...
         let imgSrc;
         uni.getImageInfo({
           src: res.tempFilePaths[0],
           success(ress) {
             uni.showLoading({
-              title: i18n.t(`图片上传中`),
+              title: i18n.t(`Đang tải ảnh lên`),
             });
             if (res.tempFiles[0].size <= 2097152) {
               uploadImg(ress.path);
@@ -622,9 +622,9 @@ export default {
               canvasHeight,
               xs,
               maxWidth = 750;
-            xs = ress.width / ress.height; // 宽高比例
+            xs = ress.width / ress.height; // Tỷ lệ chiều rộng/cao
             if (ress.width > maxWidth) {
-              canvasWidth = maxWidth; // 这里是最大限制宽度
+              canvasWidth = maxWidth; // Đây là chiều rộng giới hạn tối đa
               canvasHeight = maxWidth / xs;
             } else {
               canvasWidth = ress.width;
@@ -641,7 +641,7 @@ export default {
             canvas.clearRect(0, 0, canvasWidth, canvasHeight);
             canvas.drawImage(ress.path, 0, 0, canvasWidth, canvasHeight);
             canvas.save();
-            // 这里的画布drawImage是一种异步属性  可能存在未绘制全就执行了draw的问题  so添加延迟
+            // drawImage của canvas ở đây là thuộc tính bất đồng bộ (async), có thể xảy ra trường hợp chưa vẽ xong đã thực thi draw, so thêm delay
             setTimeout((e) => {
               canvas.draw(true, () => {
                 uni.canvasToTempFilePath({
@@ -697,18 +697,18 @@ export default {
         fail: function (res) {
           uni.hideLoading();
           that.Tips({
-            title: i18n.t(`上传图片失败`),
+            title: i18n.t(`Tải ảnh lên thất bại`),
           });
         },
       });
     }
   },
   /**
-   * 小程序头像获取上传
-   * @param uploadUrl 上传接口地址
-   * @param filePath 上传文件路径
-   * @param successCallback success回调
-   * @param errorCallback err回调
+   * Mini Program lấy và tải lên ảnh đại diện
+   * @param uploadUrl Địa chỉ API tải lên
+   * @param filePath Đường dẫn file tải lên
+   * @param successCallback Callback success
+   * @param errorCallback Callback err
    */
   uploadImgs(uploadUrl, filePath, successCallback, errorCallback) {
     let that = this;
@@ -747,15 +747,15 @@ export default {
       fail: (err) => {
         uni.hideLoading();
         that.Tips({
-          title: i18n.t(`上传图片失败`),
+          title: i18n.t(`Tải ảnh lên thất bại`),
         });
       },
     });
   },
   /**
-   * 小程序比较版本信息
-   * @param v1 当前版本
-   * @param v2 进行比较的版本
+   * So sánh thông tin phiên bản Mini Program
+   * @param v1 Phiên bản hiện tại
+   * @param v2 Phiên bản đem so sánh
    * @return boolen
    *
    */
@@ -785,35 +785,35 @@ export default {
     return 0;
   },
   /*
-   * 获取当前时间
+   * Lấy thời gian hiện tại
    */
   getNowTime() {
     let today = new Date();
-    let year = today.getFullYear(); // 获取当前年份
-    let month = today.getMonth() + 1; // 获取当前月份（注意：月份从 0 开始计数，所以需要加 1）
-    let day = today.getDate(); // 获取当前日（几号）
-    let hour = today.getHours(); // 获取当前小时
-    let minute = today.getMinutes(); // 获取当前分钟
-    let second = today.getSeconds(); // 获取当前秒钟
+    let year = today.getFullYear(); // Lấy năm hiện tại
+    let month = today.getMonth() + 1; // Lấy tháng hiện tại (chú ý: tháng tính từ 0, nên cần +1)
+    let day = today.getDate(); // Lấy ngày hiện tại (ngày mấy)
+    let hour = today.getHours(); // Lấy giờ hiện tại
+    let minute = today.getMinutes(); // Lấy phút hiện tại
+    let second = today.getSeconds(); // Lấy giây hiện tại
 
-    // 格式化输出当前时间
+    // Định dạng và xuất thời gian hiện tại
     let nowTime =
       year + "/" + month + "/" + day + " " + hour + ":" + minute + ":" + second;
     return nowTime;
   },
   /**
-   * 处理服务器扫码带进来的参数
-   * @param string param 扫码携带参数
-   * @param string k 整体分割符 默认为：&
-   * @param string p 单个分隔符 默认为：=
+   * Xử lý tham số được mang vào khi quét mã QR từ server
+   * @param string param Tham số mang theo khi quét mã
+   * @param string k Ký tự phân tách tổng thể, mặc định là: &
+   * @param string p Ký tự phân tách từng cặp, mặc định là: =
    * @return object
    *
    */
   // #ifdef MP
   getUrlParams: function (param, k, p) {
     if (typeof param != "string") return {};
-    k = k ? k : "&"; //整体参数分隔符
-    p = p ? p : "="; //单个参数分隔符
+    k = k ? k : "&"; //Ký tự phân tách tham số tổng thể
+    p = p ? p : "="; //Ký tự phân tách từng tham số
     var value = {};
     if (param.indexOf(k) !== -1) {
       param = param.split(k);
@@ -833,7 +833,7 @@ export default {
   },
   // #endif
   /*
-   * 合并数组
+   * Gộp mảng
    */
   SplitArray(list, sp) {
     if (typeof list != "object") return [];
@@ -847,10 +847,10 @@ export default {
     return String.prototype.trim.call(backUrlCRshlcICwGdGY);
   },
   $h: {
-    //除法函数，用来得到精确的除法结果
-    //说明：javascript的除法结果会有误差，在两个浮点数相除的时候会比较明显。这个函数返回较为精确的除法结果。
-    //调用：$h.Div(arg1,arg2)
-    //返回值：arg1除以arg2的精确结果
+    //Hàm chia, dùng để lấy kết quả chia chính xác
+    //Giải thích: kết quả phép chia của javascript có sai số, thể hiện rõ khi chia hai số thực (float). Hàm này trả về kết quả chia chính xác hơn.
+    //Gọi: $h.Div(arg1,arg2)
+    //Giá trị trả về: kết quả chính xác của arg1 chia cho arg2
     Div: function (arg1, arg2) {
       arg1 = parseFloat(arg1);
       arg2 = parseFloat(arg2);
@@ -868,10 +868,10 @@ export default {
       r2 = Number(arg2.toString().replace(".", ""));
       return this.Mul(r1 / r2, Math.pow(10, t2 - t1));
     },
-    //加法函数，用来得到精确的加法结果
-    //说明：javascript的加法结果会有误差，在两个浮点数相加的时候会比较明显。这个函数返回较为精确的加法结果。
-    //调用：$h.Add(arg1,arg2)
-    //返回值：arg1加上arg2的精确结果
+    //Hàm cộng, dùng để lấy kết quả cộng chính xác
+    //Giải thích: kết quả phép cộng của javascript có sai số, thể hiện rõ khi cộng hai số thực (float). Hàm này trả về kết quả cộng chính xác hơn.
+    //Gọi: $h.Add(arg1,arg2)
+    //Giá trị trả về: kết quả chính xác của arg1 cộng arg2
     Add: function (arg1, arg2) {
       arg2 = parseFloat(arg2);
       var r1, r2, m;
@@ -888,10 +888,10 @@ export default {
       m = Math.pow(100, Math.max(r1, r2));
       return (this.Mul(arg1, m) + this.Mul(arg2, m)) / m;
     },
-    //减法函数，用来得到精确的减法结果
-    //说明：javascript的加法结果会有误差，在两个浮点数相加的时候会比较明显。这个函数返回较为精确的减法结果。
-    //调用：$h.Sub(arg1,arg2)
-    //返回值：arg1减去arg2的精确结果
+    //Hàm trừ, dùng để lấy kết quả trừ chính xác
+    //Giải thích: kết quả phép cộng của javascript có sai số, thể hiện rõ khi cộng hai số thực (float). Hàm này trả về kết quả trừ chính xác hơn.
+    //Gọi: $h.Sub(arg1,arg2)
+    //Giá trị trả về: kết quả chính xác của arg1 trừ arg2
     Sub: function (arg1, arg2) {
       arg1 = parseFloat(arg1);
       arg2 = parseFloat(arg2);
@@ -907,14 +907,14 @@ export default {
         r2 = 0;
       }
       m = Math.pow(10, Math.max(r1, r2));
-      //动态控制精度长度
+      //Điều khiển động độ dài phần chính xác
       n = r1 >= r2 ? r1 : r2;
       return ((this.Mul(arg1, m) - this.Mul(arg2, m)) / m).toFixed(n);
     },
-    //乘法函数，用来得到精确的乘法结果
-    //说明：javascript的乘法结果会有误差，在两个浮点数相乘的时候会比较明显。这个函数返回较为精确的乘法结果。
-    //调用：$h.Mul(arg1,arg2)
-    //返回值：arg1乘以arg2的精确结果
+    //Hàm nhân, dùng để lấy kết quả nhân chính xác
+    //Giải thích: kết quả phép nhân của javascript có sai số, thể hiện rõ khi nhân hai số thực (float). Hàm này trả về kết quả nhân chính xác hơn.
+    //Gọi: $h.Mul(arg1,arg2)
+    //Giá trị trả về: kết quả chính xác của arg1 nhân arg2
     Mul: function (arg1, arg2) {
       arg1 = parseFloat(arg1);
       arg2 = parseFloat(arg2);
@@ -933,7 +933,7 @@ export default {
       );
     },
   },
-  // 获取地理位置;
+  // Lấy vị trí địa lý;
   $L: {
     async getLocation() {
       // #ifdef APP-PLUS
@@ -963,14 +963,14 @@ export default {
         fail: (err) => {
           // #ifdef MP-BAIDU
           if (err.errCode === 202 || err.errCode === 10003) {
-            // 202模拟器 10003真机 user deny
+            // 202 máy giả lập, 10003 máy thật, user deny
             this.openSetting();
           }
           // #endif
           // #ifndef MP-BAIDU
           if (err.errMsg.indexOf("auth deny") >= 0) {
             uni.showToast({
-              title: i18n.t(`访问位置被拒绝`),
+              title: i18n.t(`Quyền truy cập vị trí bị từ chối`),
             });
           } else {
             uni.showToast({
@@ -1019,8 +1019,8 @@ export default {
         status = 1;
       } else if (status === 2) {
         uni.showModal({
-          content: i18n.t(`系统定位已关闭`),
-          confirmText: i18n.t(`确定`),
+          content: i18n.t(`Định vị hệ thống đã tắt`),
+          confirmText: i18n.t(`Xác nhận`),
           showCancel: false,
           success: function (res) {},
         });
@@ -1030,8 +1030,8 @@ export default {
         });
       } else {
         uni.showModal({
-          content: i18n.t(`需要定位权限`),
-          confirmText: i18n.t(`确定`),
+          content: i18n.t(`Cần quyền truy cập vị trí`),
+          confirmText: i18n.t(`Xác nhận`),
           success: function (res) {
             if (res.confirm) {
               permision.gotoAppSetting();
@@ -1043,26 +1043,26 @@ export default {
     },
   },
   /**
-   * 跳转路径封装函数
-   * @param url 跳转路径
+   * Hàm đóng gói đường dẫn chuyển trang
+   * @param url Đường dẫn chuyển hướng
    */
   JumpPath: function (url) {
     let arr = url.split("@APPID=");
     if (arr.length > 1) {
       //#ifdef MP
       uni.navigateToMiniProgram({
-        appId: arr[arr.length - 1], // 此为生活缴费appid
-        path: arr[0], // 此为生活缴费首页路径
+        appId: arr[arr.length - 1], // Đây là appid dịch vụ thanh toán hóa đơn sinh hoạt
+        path: arr[0], // Đây là đường dẫn trang chủ thanh toán hóa đơn sinh hoạt
         envVersion: "release",
         success: (res) => {
-          console.log("打开成功", res);
+          console.log("Mở thành công", res);
         },
         fail: (err) => {},
       });
       //#endif
       //#ifndef MP
       this.Tips({
-        title: "h5与app端不支持跳转外部小程序",
+        title: "Bản h5 và app không hỗ trợ chuyển đến Mini Program bên ngoài",
       });
       //#endif
     } else {
@@ -1090,19 +1090,19 @@ export default {
       }
     }
   },
-  // 计算头部自定义导航高度；
+  // Tính chiều cao thanh điều hướng tùy chỉnh ở đầu trang;
   getWXStatusHeight() {
-    // 获取距上
+    // Lấy khoảng cách phía trên
     const barTop = uni.getWindowInfo().statusBarHeight;
     // #ifdef MP
-    // 获取胶囊按钮位置信息
+    // Lấy thông tin vị trí nút capsule (capsule button)
     const menuButtonInfo = wx.getMenuButtonBoundingClientRect() || 0;
-    // 获取导航栏高度
+    // Lấy chiều cao thanh điều hướng
     const barHeight = menuButtonInfo.height + (menuButtonInfo.top - barTop) * 2;
     let barWidth = menuButtonInfo.width;
     // #endif
     // #ifndef MP
-    // 获取导航栏高度
+    // Lấy chiều cao thanh điều hướng
     const barHeight = parseInt(barTop) + 10;
     let barWidth = "100%";
     // #endif

@@ -3,9 +3,9 @@
 		<view class="head">
 			<image :src="userInfo.avatar" mode=""></image>
 			<view class="big">{{userInfo.nickname}}</view>
-			<view class="small">{{$t(`点击授权登录您的客服工作台`)}}</view>
-			<view class="sub_btn btn" @click="scanLogin">{{$t(`授权登录`)}}</view>
-			<view class="out btn" @click="closePage">{{$t(`取消`)}}</view>
+			<view class="small">{{$t(`Nhấn để cấp quyền đăng nhập bàn làm việc CSKH của bạn`)}}</view>
+			<view class="sub_btn btn" @click="scanLogin">{{$t(`Đăng nhập ủy quyền`)}}</view>
+			<view class="out btn" @click="closePage">{{$t(`Hủy`)}}</view>
 		</view>
 	</view>
 </template>
@@ -38,7 +38,7 @@
 					this.openModel(error)
 				})
 			},
-			// 确认
+			// Xác nhận
 			scanLogin(){
 				if(this.code){
 					kefuScanLogin({
@@ -55,19 +55,19 @@
 						this.openModel(error)
 					})
 				}else{
-					this.openModel(this.$t(`没有登录的code，请重新扫码`))
+					this.openModel(this.$t(`Không có code đăng nhập, vui lòng quét mã lại`))
 				}
 				
 			},
 			openModel(data){
 				uni.showModal({
-					title: this.$t(`提示`),
+					title: this.$t(`Thông báo`),
 					content:data,
 					success: function (res) {
 							if (res.confirm) {
 									WeixinJSBridge.call('closeWindow');
 							} else if (res.cancel) {
-									console.log(this.$t(`用户点击取消`));
+									console.log(this.$t(`Người dùng nhấn Hủy`));
 							}
 					}
 				})
@@ -75,7 +75,7 @@
 			closePage(){
 				WeixinJSBridge.call('closeWindow');
 			},
-			// 获取用户信息
+			// Lấy thông tin người dùng
 			getUserInfo(){
 				getUserInfo().then(res=>{
 					this.userInfo = res.data

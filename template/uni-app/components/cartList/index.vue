@@ -2,9 +2,9 @@
 	<view>
 		<view class="cartList" :class="cartData.iScart?'on':''">
 			<view class="title acea-row row-between-wrapper">
-				<view class="name">{{$t(`已选商品`)}}</view>
+				<view class="name">{{$t(`Sản phẩm đã chọn`)}}</view>
 				<view class="del acea-row row-middle" @click="subDel">
-					<view class="iconfont icon-shanchu1"></view>{{$t(`清空`)}}
+					<view class="iconfont icon-shanchu1"></view>{{$t(`Xóa hết`)}}
 				</view>
 			</view>
 			<view class="list">
@@ -29,10 +29,10 @@
 								</view>
 							</view>
 						</view>
-						<view class="noBnt" v-else-if="!item.attrStatus">{{$t(`已售罄`)}}</view>
-						<view class="noBnt" v-else-if="!item.status">{{$t(`已下架`)}}</view>
+						<view class="noBnt" v-else-if="!item.attrStatus">{{$t(`Đã bán hết`)}}</view>
+						<view class="noBnt" v-else-if="!item.status">{{$t(`Đã ngừng bán`)}}</view>
 						<view class="delTxt acea-row row-right" v-if="!item.status || !item.attrStatus"><text
-								@click="oneDel(item.id,index)">{{$t(`删除`)}}</text></view>
+								@click="oneDel(item.id,index)">{{$t(`Xóa`)}}</text></view>
 					</view>
 				</view>
 			</view>
@@ -91,8 +91,8 @@
 		transform: translate3d(0, 100%, 0);
 		transition: all .3s cubic-bezier(.25, .5, .5, .9);
 		bottom: 0rpx;
-		bottom: calc(0rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-		bottom: calc(0rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+		bottom: calc(0rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+		bottom: calc(0rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 
 		&.on {
 			transform: translate3d(0, 0, 0);

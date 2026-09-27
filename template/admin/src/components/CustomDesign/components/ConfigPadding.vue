@@ -1,5 +1,5 @@
 <template>
-  <el-form-item label="内边距" class="margin-style-config">
+  <el-form-item label="Lề trong" class="margin-style-config">
     <div class="c_content">
       <div class="main-setting">
         <el-slider v-model="paddingMainVal" :max="100" show-input @input="handlePaddingMainChange"></el-slider>

@@ -6,7 +6,7 @@
           <div class="icon">
             <i class="iconfont iconyonghuguanli" style="color: #0256ff"></i>
           </div>
-          <p>用户管理</p>
+          <p>Quản lý người dùng</p>
         </router-link>
       </el-card>
     </el-col>
@@ -16,7 +16,7 @@
           <div class="icon">
             <i class="iconfont iconxitongshezhi" style="color: #9fdb1d"></i>
           </div>
-          <p>系统设置</p>
+          <p>Cài đặt hệ thống</p>
         </router-link>
       </el-card>
     </el-col>
@@ -26,7 +26,7 @@
           <div class="icon">
             <i class="iconfont iconshangpin" style="color: #0fc6c2"></i>
           </div>
-          <p>商品</p>
+          <p>Sản phẩm</p>
         </router-link>
       </el-card>
     </el-col>
@@ -36,7 +36,7 @@
           <div class="icon">
             <i class="iconfont icondingdanguanli" style="color: #b37feb"></i>
           </div>
-          <p>订单管理</p>
+          <p>Quản lý đơn hàng</p>
         </router-link>
       </el-card>
     </el-col>
@@ -46,7 +46,7 @@
           <div class="icon">
             <i class="iconfont iconduanxinpeizhi" style="color: #f7ba1e"></i>
           </div>
-          <p>短信配置</p>
+          <p>Cấu hình SMS</p>
         </router-link>
       </el-card>
     </el-col>
@@ -56,7 +56,7 @@
           <div class="icon">
             <i class="iconfont iconwenzhangguanli" style="color: #7da2ff"></i>
           </div>
-          <p>文章管理</p>
+          <p>Quản lý bài viết</p>
         </router-link>
       </el-card>
     </el-col>
@@ -66,7 +66,7 @@
           <div class="icon">
             <i class="iconfont iconfenxiaoguanli" style="color: #ff7d00"></i>
           </div>
-          <p>分销管理</p>
+          <p>Quản lý tiếp thị liên kết</p>
         </router-link>
       </el-card>
     </el-col>
@@ -76,7 +76,7 @@
           <div class="icon">
             <i class="iconfont iconyouhuiquan4" style="color: #0fc6c2"></i>
           </div>
-          <p>优惠券</p>
+          <p>Phiếu giảm giá</p>
         </router-link>
       </el-card>
     </el-col>

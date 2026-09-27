@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -29,7 +29,7 @@ class MemberCard extends AuthController
     protected $services;
 
     /**
-     * 初始化service层句柄
+     * Khởi tạo handle tầng service
      * MemberCard constructor.
      * @param App $app
      * @param MemberCardServices $memberCardServices
@@ -41,7 +41,7 @@ class MemberCard extends AuthController
     }
 
     /**
-     * 会员卡列表
+     * Danh sách thẻ thành viên
      * @param $card_batch_id
      * @return mixed
      */
@@ -62,7 +62,7 @@ class MemberCard extends AuthController
     }
 
     /**
-     * 会员分类
+     * Danh mục thành viên
      * @return mixed
      */
     public function member_ship()
@@ -74,7 +74,7 @@ class MemberCard extends AuthController
     }
 
     /**
-     * 保存分类
+     * Lưu danh mục
      * @param $id
      * @param MemberShipServices $memberShipServices
      * @return mixed
@@ -90,24 +90,24 @@ class MemberCard extends AuthController
             ['sort', ''],
         ]);
         $memberShipServices->save((int)$id, $data);
-        return app('json')->success($id ? '修改成功' : '添加成功');
+        return app('json')->success($id ? 'Sửa thành công' : 'Thêm thành công');
     }
 
     /**
-     * 删除
+     * Xóa
      * @param $id
      * @param MemberShipServices $memberShipServices
      * @return mixed
      */
     public function delete($id,MemberShipServices $memberShipServices)
     {
-        if (!$id) return app('json')->fail('数据不存在');
+        if (!$id) return app('json')->fail('Dữ liệu không tồn tại');
         $res = $memberShipServices->delete((int)$id);
-        return app('json')->success($res ? '删除成功' : '删除失败');
+        return app('json')->success($res ? 'Xóa thành công' : 'Xóa thất bại');
     }
 
     /**
-     * 获取会员记录
+     * Lấy lịch sử thành viên
      * @return mixed
      */
     public function member_record()
@@ -125,7 +125,7 @@ class MemberCard extends AuthController
     }
 
     /**
-     * 会员权益
+     * Quyền lợi thành viên
      * @return mixed
      */
     public function member_right()
@@ -137,7 +137,7 @@ class MemberCard extends AuthController
     }
 
     /**
-     * 保存会员权益
+     * Lưu quyền lợi thành viên
      * @param $id
      * @param MemberRightServices $memberRightServices
      * @return mixed
@@ -155,11 +155,11 @@ class MemberCard extends AuthController
             ['status', ''],
         ]);
         $memberRightServices->save((int)$id, $data);
-        return app('json')->success('权益编辑成功');
+        return app('json')->success('Sửa quyền lợi thành công');
     }
 
     /**
-     * 会员卡激活冻结状态修改
+     * Sửa trạng thái kích hoạt/khóa thẻ thành viên
      * @return mixed
      */
     public function set_status()
@@ -169,12 +169,12 @@ class MemberCard extends AuthController
             ['status', 0],
         ], true);
         $res = $this->services->setStatus($card_id, $status);
-        if ($res) return app('json')->success('操作成功');
-        return app('json')->fail('操作失败');
+        if ($res) return app('json')->success('Thao tác thành công');
+        return app('json')->fail('Thao tác thất bại');
     }
 
     /**
-     * 付费会员类型启用/禁用
+     * Bật/tắt loại thành viên trả phí
      * @return mixed
      */
     public function set_ship_status()
@@ -186,7 +186,7 @@ class MemberCard extends AuthController
         /** @var MemberShipServices $memberShipService */
         $memberShipService = app()->make(MemberShipServices::class);
         $res = $memberShipService->setStatus($id, $is_del);
-        if ($res) return app('json')->success('操作成功');
-        return app('json')->success('操作失败');
+        if ($res) return app('json')->success('Thao tác thành công');
+        return app('json')->success('Thao tác thất bại');
     }
 }

@@ -3,15 +3,15 @@
 			<view class='merchantsSettled'>
 				<image mode="widthFix" class="merchantBg" :src="headerBg" alt="">
 					<!-- <view class="application-record" @click="jumpToList">
-						申请记录
+						Bản ghi đăng ký
 						<text class="iconfont icon-xiangyou"></text>
 					</view> -->
 					<view class='list' v-if="isAgent">
 						<view class="item">
 							<view class="acea-row row-middle">
 								<!-- <i class="icon iconfont icon-qiye"></i> -->
-								<text class="item-name">{{$t(`代理商名称`)}}</text>
-								<input type="text" maxlength="30" :placeholder="$t(`请输入代理商名称`)"
+								<text class="item-name">{{$t(`Tên đại lý`)}}</text>
+								<input type="text" maxlength="30" :placeholder="$t(`Vui lòng nhập tên đại lý`)"
 									v-model="merchantData.agent_name" @input="validateBtn"
 									placeholder-class='placeholder' />
 							</view>
@@ -19,24 +19,24 @@
 						<view class="item">
 							<view class="acea-row row-middle">
 								<!-- <i class="icon iconfont icon-yonghu3"></i> -->
-								<text class="item-name">{{$t(`用户姓名`)}}</text>
-								<input type="text" :placeholder="$t(`请输入姓名`)" v-model="merchantData.name"
+								<text class="item-name">{{$t(`Họ tên người dùng`)}}</text>
+								<input type="text" :placeholder="$t(`Vui lòng nhập họ tên`)" v-model="merchantData.name"
 									@input="validateBtn" placeholder-class='placeholder' />
 							</view>
 						</view>
 						<view class="item">
 							<view class="acea-row row-middle">
 								<!-- <i class="icon iconfont icon-shoujihao"></i> -->
-								<text class="item-name">{{$t(`联系电话`)}}</text>
-								<input type="text" :placeholder="$t(`请输入手机号`)" v-model="merchantData.phone"
+								<text class="item-name">{{$t(`Số điện thoại liên hệ`)}}</text>
+								<input type="text" :placeholder="$t(`Vui lòng nhập số điện thoại`)" v-model="merchantData.phone"
 									@input="validateBtn" placeholder-class='placeholder' />
 							</view>
 						</view>
 						<view class="item rel">
 							<view class="acea-row row-middle">
 								<!-- <i class="icon iconfont icon-yanzhengma"></i> -->
-								<text class="item-name">{{$t(`验证码`)}}</text>
-								<input type="text" :placeholder="$t(`填写验证码`)" v-model="merchantData.code"
+								<text class="item-name">{{$t(`Mã xác thực`)}}</text>
+								<input type="text" :placeholder="$t(`Nhập mã xác thực`)" v-model="merchantData.code"
 									@input="validateBtn" class="codeIput" placeholder-class='placeholder' />
 								<button class="code" :disabled="disabled" :class="disabled === true ? 'on' : ''"
 									@click="code">
@@ -48,15 +48,15 @@
 						<view class="item">
 							<view class="acea-row row-middle">
 								<!-- <i class="icon iconfont icon-shoujihao"></i> -->
-								<text class="item-name">{{$t(`邀请码`)}}</text>
-								<input type="text" :placeholder="$t(`请输入代理商邀请码`)" v-model="merchantData.division_invite"
+								<text class="item-name">{{$t(`Mã mời`)}}</text>
+								<input type="text" :placeholder="$t(`Vui lòng nhập mã mời của đại lý`)" v-model="merchantData.division_invite"
 									@input="validateBtn" placeholder-class='placeholder' />
 							</view>
 						</view>
 						<view class="item no-border">
 							<view class='acea-row row-middle'>
-								<text class="item-title">{{$t(`请上传营业执照及行业相关资质证明图片`)}}</text>
-								<text class="item-desc">({{$t(`图片最多可上传10张,图片格式支持JPG、PNG、JPEG`)}})</text>
+								<text class="item-title">{{$t(`Vui lòng tải lên ảnh giấy phép kinh doanh và giấy tờ chứng nhận đủ điều kiện liên quan đến ngành nghề`)}}</text>
+								<text class="item-desc">({{$t(`Tải lên tối đa 10 ảnh, hỗ trợ định dạng JPG, PNG, JPEG`)}})</text>
 								<view class="upload">
 									<view class='pictrue' v-for="(item,index) in images" :key="index"
 										:data-index="index" @click="getPhotoClickIdx">
@@ -66,7 +66,7 @@
 									<view class='pictrue acea-row row-center-wrapper row-column' @click='uploadpic'
 										v-if="images.length < 10">
 										<text class='iconfont icon-icon25201'></text>
-										<view>{{$t(`上传图片`)}}</view>
+										<view>{{$t(`Tải lên ảnh`)}}</view>
 									</view>
 								</view>
 							</view>
@@ -74,49 +74,49 @@
 
 						<view class="item no-border acea-row row-middle">
 							<checkbox-group @change='ChangeIsAgree'>
-								<checkbox class="checkbox" :checked="isAgree ? true : false" />{{$t(`已阅读并同意`)}}
+								<checkbox class="checkbox" :checked="isAgree ? true : false" />{{$t(`Đã đọc và đồng ý`)}}
 							</checkbox-group>
-							<button class="settleAgree" @click="getAgentAgreement">《{{$t(`代理商协议`)}}》</button>
+							<button class="settleAgree" @click="getAgentAgreement">《{{$t(`Thỏa thuận đại lý`)}}》</button>
 						</view>
 						<button class='submitBtn' :class="isAgree === true ? 'on':''"
-							@click="formSubmit">{{$t(`提交申请`)}}</button>
+							@click="formSubmit">{{$t(`Gửi đăng ký`)}}</button>
 
 					</view>
 					<view class='list' v-else>
 						<view class="item">
 							<view class="acea-row row-middle row-between">
 								<!-- <i class="icon iconfont icon-qiye"></i> -->
-								<text class="item-name">{{$t(`用户昵称`)}}</text>
+								<text class="item-name">{{$t(`Biệt danh người dùng`)}}</text>
 								<view class="text-right">{{ form.nickname }}</view>
 							</view>
 						</view>
 						<view class="item">
 							<view class="acea-row row-middle row-between">
 								<!-- <i class="icon iconfont icon-yonghu3"></i> -->
-								<text class="item-name">{{$t(`用户ID`)}}</text>
+								<text class="item-name">{{$t(`ID người dùng`)}}</text>
 								<view class="fs-28 text-right">{{ form.uid }}123</view>
 							</view>
 						</view>
 						<view class="item">
 							<view class="acea-row row-middle row-between">
 								<!-- <i class="icon iconfont icon-shoujihao"></i> -->
-								<text class="item-name">{{$t(`分销员姓名`)}}</text>
-								<input class="text-right" type="text" :placeholder="$t(`请输入分销员姓名`)" v-model="form.real_name"
+								<text class="item-name">{{$t(`Họ tên CTV`)}}</text>
+								<input class="text-right" type="text" :placeholder="$t(`Vui lòng nhập họ tên cộng tác viên`)" v-model="form.real_name"
 									@input="validateBtn" placeholder-class='placeholder' />
 							</view>
 						</view><view class="item">
 							<view class="acea-row row-middle row-between">
 								<!-- <i class="icon iconfont icon-shoujihao"></i> -->
-								<text class="item-name">{{$t(`联系电话`)}}</text>
-								<input class="text-right" type="text" :placeholder="$t(`请输入手机号`)" v-model="form.phone"
+								<text class="item-name">{{$t(`Số điện thoại liên hệ`)}}</text>
+								<input class="text-right" type="text" :placeholder="$t(`Vui lòng nhập số điện thoại`)" v-model="form.phone"
 									@input="validateBtn" placeholder-class='placeholder' />
 							</view>
 						</view>
 						<view class="item rel">
 							<view class="acea-row row-middle">
 								<!-- <i class="icon iconfont icon-yanzhengma"></i> -->
-								<text class="item-name">{{$t(`验证码`)}}</text>
-								<input type="text" :placeholder="$t(`填写验证码`)" v-model="form.code"
+								<text class="item-name">{{$t(`Mã xác thực`)}}</text>
+								<input type="text" :placeholder="$t(`Nhập mã xác thực`)" v-model="form.code"
 									@input="validateBtn" class="codeIput" placeholder-class='placeholder' />
 								<button class="code" :disabled="disabled" :class="disabled === true ? 'on' : ''"
 									@click="code">
@@ -128,25 +128,25 @@
 						<view class="item">
 							<view class="acea-row row-middle row-between">
 								<!-- <i class="icon iconfont icon-shoujihao"></i> -->
-								<text class="item-name">{{$t(`申请理由`)}}</text>
-								<textarea class="text-area" :placeholder="$t(`请输入申请理由`)" v-model="form.content" cols="3" rows="4" placeholder-class='placeholder'></textarea>
+								<text class="item-name">{{$t(`Lý do đăng ký`)}}</text>
+								<textarea class="text-area" :placeholder="$t(`Vui lòng nhập lý do đăng ký`)" v-model="form.content" cols="3" rows="4" placeholder-class='placeholder'></textarea>
 							</view>
 						</view>
 						<view class="item no-border  acea-row row-middle">
 							<checkbox-group @change='ChangeIsAgree'>
-								<checkbox class="checkbox" :checked="isAgree ? true : false" />{{$t(`已阅读并同意`)}}
+								<checkbox class="checkbox" :checked="isAgree ? true : false" />{{$t(`Đã đọc và đồng ý`)}}
 							</checkbox-group>
-							<button class="settleAgree" @click="getAgentAgreement">《{{$t(`分销员协议`)}}》</button>
+							<button class="settleAgree" @click="getAgentAgreement">《{{$t(`Thỏa thuận cộng tác viên`)}}》</button>
 						</view>
 						<button class='submitBtn' :class="isAgree === true ? 'on':''"
-							@click="formSpeadSubmit">{{$t(`提交申请`)}}</button>
+							@click="formSpeadSubmit">{{$t(`Gửi đăng ký`)}}</button>
 					</view>
 			</view>
 
 		<view class="settlementAgreement" v-if="showProtocol">
 			<view class="setAgCount">
 				<i class="icon iconfont icon-cha" @click="showProtocol = false"></i>
-				<div class="title">{{ $t(isAgent?`代理商入驻协议`:'分销说明')}}</div>
+				<div class="title">{{ $t(isAgent?`Thỏa thuận đăng ký đại lý`:'Hướng dẫn tiếp thị liên kết')}}</div>
 				<view class="content">
 					<jyf-parser :html="protocol" ref="article" :tag-style="tagStyle"></jyf-parser>
 				</view>
@@ -164,31 +164,31 @@
 	<view class="settledSuccessMain" v-else-if='status == 0'>
 		<view class="settledSuccessful">
 			<image class="image" src="../static/success.png" alt="">
-				<view class="title">{{$t(`恭喜，您的资料提交成功！`)}}</view>
+				<view class="title">{{$t(`Chúc mừng, bạn đã gửi thông tin thành công!`)}}</view>
 				<view class="goHome" hover-class="none" @click="goHome">
-					{{$t(`返回首页`)}}
+					{{$t(`Về trang chủ`)}}
 				</view>
 		</view>
 	</view>
 	<view class="settledSuccessMain" v-else-if='status == 1'>
 		<view class="settledSuccessful">
 			<image class="image" src="../static/success.png" alt="">
-				<view class="title">{{$t(`恭喜，您的资料通过审核！`)}}</view>
+				<view class="title">{{$t(`Chúc mừng, thông tin của bạn đã được duyệt!`)}}</view>
 				<view class="goHome" hover-class="none" @click="goHome">
-					{{$t(`返回首页`)}}
+					{{$t(`Về trang chủ`)}}
 				</view>
 		</view>
 	</view>
 	<view class="settledSuccessMain" v-else-if='status == 2'>
 		<view class="settledSuccessful">
 			<image class="image" src="../static/error.png" alt="">
-				<view class="title">{{$t(`您的申请未通过！`)}}</view>
+				<view class="title">{{$t(`Đơn đăng ký của bạn không được duyệt!`)}}</view>
 				<view class="info" v-if="refusal_reason">{{refusal_reason}}</view>
 				<view class="again" hover-class="none" @click="applyAgain">
-					{{$t(`重新申请`)}}
+					{{$t(`Đăng ký lại`)}}
 				</view>
 				<view class="goHome" hover-class="none" @click="goHome">
-					{{$t(`返回首页`)}}
+					{{$t(`Về trang chủ`)}}
 				</view>
 		</view>
 		
@@ -237,9 +237,9 @@
 				isAgent: false,
 				inloading: true,
 				status: -1,
-				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false, //是否隐藏授权
-				text: this.$t(`获取验证码`),
+				isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+				isShowAuth: false, //Có ẩn ủy quyền hay không
+				text: this.$t(`Lấy mã xác thực`),
 				codeUrl: "",
 				disabled: false,
 				isAgree: false,
@@ -276,7 +276,7 @@
 					table: 'width:100%',
 					video: 'width:100%'
 				},
-				mer_i_id: null, // 代理商申请id
+				mer_i_id: null, // id đăng ký đại lý
 				isType: false,
 				id: 0,
 				refusal_reason: "",
@@ -297,7 +297,7 @@
 			if (options.id) {
 				this.id = id
 				uni.showLoading({
-					title: this.$t(`正在加载中`),
+					title: this.$t(`Đang tải`),
 				});
 			}
 			if (this.isLogin) {
@@ -341,10 +341,10 @@
 				let that = this
 				let phone = this.isAgent ? this.merchantData.phone : this.form.phone
 				if (!phone) return that.$util.Tips({
-					title: that.$t(`请填写手机号码`)
+					title: that.$t(`Vui lòng điền số điện thoại`)
 				});
 				if (!/^1(3|4|5|7|8|9|6)\d{9}$/i.test(phone)) return that.$util.Tips({
-					title: that.$t(`请输入正确的手机号码`)
+					title: that.$t(`Vui lòng nhập đúng số điện thoại`)
 				});
 				this.$refs.verify.show()
 			},
@@ -382,7 +382,7 @@
 						});
 					});
 			},
-			// 获取历史提交数据详情
+			// Lấy chi tiết dữ liệu đã gửi trước đó
 			getHistoryData() {
 				getHistoryData().then(res => {
 					this.status = res.data.status
@@ -400,7 +400,7 @@
 					this.inloading = false
 				})
 			},
-			//获取代理商分类名称
+			//Lấy tên danh mục đại lý
 			getCategoryName(id, arr) {
 				for (let i = 0; i < arr.length; i++) {
 					if (arr[i].merchant_category_id === id) {
@@ -408,35 +408,35 @@
 					}
 				}
 			},
-			// 图片预览
-			// 获得相册 idx
+			// Xem trước hình ảnh
+			// Lấy idx trong album
 			getPhotoClickIdx(e) {
 				let _this = this;
 				let idx = e.currentTarget.dataset.index;
 				_this.imgPreview(_this.images, idx);
 			},
-			// 图片预览
+			// Xem trước hình ảnh
 			imgPreview: function(list, idx) {
-				// list：图片 url 数组
+				// list: mảng url hình ảnh
 				if (list && list.length > 0) {
 					uni.previewImage({
-						current: list[idx], //  传 Number H5端出现不兼容 
+						current: list[idx], //  Truyền Number thì bên H5 bị không tương thích 
 						urls: list
 					});
 				}
 			},
-			// 授权回调
+			// Callback ủy quyền
 			onLoadFun: function() {
 				this.isShowAuth = false;
 			},
-			// 授权关闭
+			// Đóng ủy quyền
 			authColse: function(e) {
 				this.isShowAuth = e
 			},
 			toggleTab(str) {
 				this.$refs[str].show();
 			},
-			// 首页
+			// Trang chủ
 			goHome() {
 				uni.switchTab({
 					url: '/pages/index/index'
@@ -446,7 +446,7 @@
 				this.status = -1
 			},
 			/**
-			 * 上传文件
+			 * Tải lên file
 			 * 
 			 */
 			uploadpic: function() {
@@ -458,7 +458,7 @@
 
 			},
 			/**
-			 * 删除图片
+			 * Xóa ảnh
 			 * 
 			 */
 			DelPic: function(index) {
@@ -471,9 +471,9 @@
 			getcaptcha() {
 				let that = this
 				getCaptcha().then(data => {
-					that.codeUrl = data.data.captcha; //图片路径
-					that.codeVal = data.data.code; //图片验证码
-					that.codeKey = data.data.key //图片验证码key
+					that.codeUrl = data.data.captcha; //Đường dẫn ảnh
+					that.codeVal = data.data.code; //Mã xác thực hình ảnh
+					that.codeKey = data.data.key //Key mã xác thực (OTP) dạng ảnh
 				})
 				that.isShowCode = true;
 			},
@@ -490,7 +490,7 @@
 					this.text = n + "s";
 					if (this.text < 0 + "s") {
 						this.disabled = false;
-						this.text = this.$t(`重新获取`);
+						this.text = this.$t(`Gửi lại mã`);
 					}
 				}, 1000);
 			},
@@ -524,7 +524,7 @@
 			},
 			formSpeadSubmit(){
 				if(!this.isAgree) return that.$util.Tips({
-					title: that.$t(`请阅读并同意分销员协议`)
+					title: that.$t(`Vui lòng đọc và đồng ý với Thỏa thuận cộng tác viên`)
 				});
 				spreadCreateApi(this.id, this.form)
 					.then((res) => {
@@ -587,28 +587,28 @@
 					value = that.merchantData;
 
 				if (!value.agent_name) return that.$util.Tips({
-					title: that.$t(`请输入代理商名称`)
+					title: that.$t(`Vui lòng nhập tên đại lý`)
 				});
 				if (!value.name) return that.$util.Tips({
-					title: that.$t(`请输入姓名`)
+					title: that.$t(`Vui lòng nhập họ tên`)
 				});
 				if (!value.phone) return that.$util.Tips({
-					title: that.$t(`请输入手机号`)
+					title: that.$t(`Vui lòng nhập số điện thoại`)
 				});
 				if (!/^1(3|4|5|7|8|9|6)\d{9}$/i.test(value.phone)) return that.$util.Tips({
-					title: that.$t(`请输入正确的手机号码`)
+					title: that.$t(`Vui lòng nhập đúng số điện thoại`)
 				});
 				if (!value.code) return that.$util.Tips({
-					title: that.$t(`填写验证码`)
+					title: that.$t(`Nhập mã xác thực`)
 				});
 				if (that.isShowCode && !that.codeVal) return that.$util.Tips({
-					title: that.$t(`请填写图片验证码`)
+					title: that.$t(`Vui lòng nhập mã xác thực hình ảnh`)
 				});
 				if (!that.images.length) return that.$util.Tips({
-					title: that.$t(`请上传营业执照`)
+					title: that.$t(`Vui lòng tải lên giấy phép kinh doanh`)
 				});
 				if (!that.isAgree) return that.$util.Tips({
-					title: that.$t(`请勾选并同意入驻协议`)
+					title: that.$t(`Vui lòng đánh dấu và đồng ý với thỏa thuận đăng ký`)
 				});
 				that.validate = true;
 				return true;

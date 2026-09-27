@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,7 +24,7 @@ class StoreManageController
     }
 
     /**
-     * 商家统计
+     * Thống kê cửa hàng
      * @return \think\Response
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -36,7 +36,7 @@ class StoreManageController
     }
 
     /**
-     * 商家商品
+     * Sản phẩm của cửa hàng
      * @param Request $request
      * @return \think\Response
      * @author wuhaotian
@@ -55,7 +55,7 @@ class StoreManageController
     }
 
     /**
-     * 商家商品上下架
+     * Đăng bán/ngừng bán sản phẩm của cửa hàng
      * @param Request $request
      * @return \think\Response
      * @author wuhaotian
@@ -69,11 +69,11 @@ class StoreManageController
             [['is_show', 'd'], 0],
         ], true);
         $this->services->productShow($id, $isShow);
-        return app('json')->success('操作成功');
+        return app('json')->success('Thao tác thành công');
     }
 
     /**
-     * 商家商品标签
+     * Nhãn sản phẩm của cửa hàng
      * @return \think\Response
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -85,7 +85,7 @@ class StoreManageController
     }
 
     /**
-     * 商家商品标签保存
+     * Lưu nhãn sản phẩm của cửa hàng
      * @param Request $request
      * @return \think\Response
      * @author wuhaotian
@@ -100,11 +100,11 @@ class StoreManageController
         ], true);
         if (is_int($ids)) $ids = [$ids];
         $this->services->saveProductLabel($ids, $label_list);
-        return app('json')->success('操作成功');
+        return app('json')->success('Thao tác thành công');
     }
 
     /**
-     * 商家商品分类
+     * Danh mục sản phẩm của cửa hàng
      * @return \think\Response
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -116,7 +116,7 @@ class StoreManageController
     }
 
     /**
-     * 商家商品分类保存
+     * Lưu danh mục sản phẩm của cửa hàng
      * @param Request $request
      * @return \think\Response
      * @author wuhaotian
@@ -131,11 +131,11 @@ class StoreManageController
         ], true);
         if (is_int($ids)) $ids = [$ids];
         $this->services->saveProductCate($ids, $cate_id);
-        return app('json')->success('操作成功');
+        return app('json')->success('Thao tác thành công');
     }
 
     /**
-     * 商家商品属性
+     * Thuộc tính sản phẩm của cửa hàng
      * @param $id
      * @return \think\Response
      * @author wuhaotian
@@ -148,7 +148,7 @@ class StoreManageController
     }
 
     /**
-     * 商家商品属性保存
+     * Lưu thuộc tính sản phẩm của cửa hàng
      * @param Request $request
      * @param $id
      * @return \think\Response
@@ -162,11 +162,11 @@ class StoreManageController
             ['attr_value', []],
         ], true);
         $this->services->saveProductAttr($id, $attr_value);
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
     /**
-     * 商家商品运费模版
+     * Mẫu phí vận chuyển sản phẩm của cửa hàng
      * @return \think\Response
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -177,12 +177,12 @@ class StoreManageController
         /** @var ShippingTemplatesServices $shippingTemplatesServices */
         $shippingTemplatesServices = app()->make(ShippingTemplatesServices::class);
         $data = $shippingTemplatesServices->getSelectList();
-        $data = array_merge([['id' => 0, 'name' => '未选择']], $data);
+        $data = array_merge([['id' => 0, 'name' => 'Chưa chọn']], $data);
         return app('json')->success($data);
     }
 
     /**
-     * 创建商品
+     * Tạo sản phẩm
      * @param Request $request
      * @return \think\Response
      * @author wuhaotian
@@ -205,11 +205,11 @@ class StoreManageController
             ['spec_type', 0],
         ]);
         $this->services->createProduct($data);
-        return app('json')->success('创建成功');
+        return app('json')->success('Tạo thành công');
     }
 
     /**
-     * 商家用户列表
+     * Danh sách người dùng của cửa hàng
      * @param Request $request
      * @return \think\Response
      * @author wuhaotian
@@ -230,7 +230,7 @@ class StoreManageController
     }
 
     /**
-     * 用户信息
+     * Thông tin người dùng
      * @param $uid
      * @return \think\Response
      * @throws \think\db\exception\DataNotFoundException
@@ -246,7 +246,7 @@ class StoreManageController
     }
 
     /**
-     * 用户分组
+     * Nhóm người dùng
      * @return \think\Response
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -261,7 +261,7 @@ class StoreManageController
     }
 
     /**
-     * 用户等级
+     * Hạng người dùng
      * @return \think\Response
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -276,7 +276,7 @@ class StoreManageController
     }
 
     /**
-     * 用户标签
+     * Nhãn người dùng
      * @param int $uid
      * @return \think\Response
      * @throws \think\db\exception\DataNotFoundException
@@ -292,7 +292,7 @@ class StoreManageController
     }
 
     /**
-     * 用户优惠券列表
+     * Danh sách phiếu giảm giá của người dùng
      * @param Request $request
      * @return \think\Response
      * @author wuhaotian
@@ -311,7 +311,7 @@ class StoreManageController
     }
 
     /**
-     * 修改用户信息
+     * Chỉnh sửa thông tin người dùng
      * @param Request $request
      * @param $uid
      * @return \think\Response
@@ -336,7 +336,7 @@ class StoreManageController
             ['label_id', []],
         ]);
         $this->services->userUpdate($uid, $data);
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
 }

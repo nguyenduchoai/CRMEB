@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,14 +16,14 @@ use crmeb\utils\Queue;
 use think\facade\Env;
 
 /**
- * 快捷加入消息队列
+ * Thêm nhanh vào hàng đợi tin nhắn
  * Trait QueueTrait
  * @package crmeb\traits
  */
 trait QueueTrait
 {
     /**
-     * 列名
+     * Tên cột
      * @return null
      */
     protected static function queueName()
@@ -32,7 +32,7 @@ trait QueueTrait
     }
 
     /**
-     * 加入队列
+     * Thêm vào hàng đợi
      * @param $action
      * @param array $data
      * @param string|null $queueName
@@ -65,7 +65,7 @@ trait QueueTrait
     }
 
     /**
-     * 延迟加入消息队列
+     * Thêm vào hàng đợi tin nhắn có độ trễ
      * @param int $secs
      * @param $action
      * @param array $data

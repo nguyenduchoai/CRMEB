@@ -44,12 +44,12 @@ export default {
 			type: Boolean,
 			default: true
 		},
-		// 滚动至下部
+		// Cuộn xuống phía dưới
 		isScrolling: {
 			type: Boolean,
 			default: false
 		},
-		// 是否显示返回icon
+		// Có hiển thị icon quay lại không
 		showBack: {
 			type: Boolean,
 			default: false
@@ -59,37 +59,37 @@ export default {
 			type: String,
 			default: ''
 		},
-		// icon 颜色
+		// Màu icon
 		iconColor: {
 			type: String,
 			default: '#000000'
 		},
-		// icon 字号
+		// Cỡ chữ icon
 		iconSize: {
 			type: String,
 			default: '40rpx'
 		},
-		// icon 字重
+		// Độ đậm icon
 		iconWeight: {
 			type: String,
 			default: 'bold'
 		},
-		// Title 颜色
+		// Màu Title
 		textColor: {
 			type: String,
 			default: '#333'
 		},
-		// Title 字号
+		// Cỡ chữ Title
 		textSize: {
 			type: String,
 			default: '34rpx'
 		},
-		// Title 字重
+		// Độ đậm chữ Title
 		textWeight: {
 			type: String,
 			default: '500'
 		},
-		// 背景色
+		// Màu nền
 		bagColor: {
 			type: String,
 			default: 'transparent'
@@ -106,7 +106,7 @@ export default {
 	},
 	methods: {
 		back() {
-			let pages = getCurrentPages(); // 获取当前打开过的页面路由数，
+			let pages = getCurrentPages(); // Lấy số route của các trang đã mở hiện tại,
 			if (pages.length > 1) {
 				uni.navigateBack()
 			} else {

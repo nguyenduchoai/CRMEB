@@ -2,25 +2,25 @@
 	<view class="orderGoods">
 		<view class='total' v-if="is_gift"><text>
 				<text class="iconfont icon-ic_gift1 mr-8"></text>
-				<text>{{ is_gift== 1 ? '送给好友' : '我的礼物'}}</text>
+				<text>{{ is_gift== 1 ? 'Tặng bạn bè' : 'Quà của tôi'}}</text>
 			</text>
 		</view>
 		<view class='total' v-else-if="is_behalf"><text>
-				{{$t(`代付金额`)}}：
+				{{$t(`Số tiền thanh toán hộ`)}}：
 				<text class="pay-price">￥{{pay_price || 0}}</text>
 			</text>
 		</view>
-		<view class='total' v-else-if="!split && !is_behalf">{{$t(`共`)}}{{totalNmu}}{{$t(`件商品`)}}</view>
+		<view class='total' v-else-if="!split && !is_behalf">{{$t(`Tổng`)}}{{totalNmu}}{{$t(`sản phẩm`)}}</view>
 		<view class='total' v-else-if="split">
-			<text>{{$t(`订单包裹`)}} {{index + 1}}</text>
+			<text>{{$t(`Kiện hàng`)}} {{index + 1}}</text>
 			<view class="rig-btn" v-if="status_type === -1">
-				<view class="refund">{{$t(`申请退款中`)}}</view>
+				<view class="refund">{{$t(`Đang yêu cầu hoàn tiền`)}}</view>
 			</view>
 			<view class="rig-btn" v-else-if="status_type === -2">
-				<view class="refund">{{$t(`已退款`)}}</view>
+				<view class="refund">{{$t(`Đã hoàn tiền`)}}</view>
 			</view>
 			<view class="rig-btn" v-else-if="status_type === 4">
-				<view class="done">{{$t(`已完成`)}}</view>
+				<view class="done">{{$t(`Đã hoàn thành`)}}</view>
 			</view>
 		</view>
 
@@ -43,17 +43,17 @@
 							<text v-show="is_gift != 2" :class="{gray:!item.is_valid}">
 								{{$t(`￥`)}}{{item.productInfo.attrInfo.price}}
 							</text>
-							<view class="refund" v-if="item.refund_num && statusType !=-2">{{item.refund_num}}{{$t(`件退款中`)}}
+							<view class="refund" v-if="item.refund_num && statusType !=-2">{{item.refund_num}}{{$t(`sản phẩm đang hoàn tiền`)}}
 							</view>
-							<text class="valid" v-if="!item.is_valid && shipping_type === 0">{{$t(`不支持配送`)}}</text>
-							<text class="valid" v-if="!item.productInfo.store_mention && shipping_type === 1">{{$t(`不支持自提`)}}</text>
+							<text class="valid" v-if="!item.is_valid && shipping_type === 0">{{$t(`Không hỗ trợ giao hàng`)}}</text>
+							<text class="valid" v-if="!item.productInfo.store_mention && shipping_type === 1">{{$t(`Không hỗ trợ nhận tại cửa hàng`)}}</text>
 						</view>
 						<view class='money font-color pic' v-else>
 							<text :class="{gray:!item.is_valid}">{{$t(`￥`)}}{{item.productInfo.price}}</text>
-							<text class="valid" v-if="!item.is_valid && shipping_type === 0">{{$t(`仅支持到店`)}}</text>
-							<text class="valid" v-if="!item.productInfo.store_mention && shipping_type === 1">{{$t(`仅支持配送`)}}</text>
+							<text class="valid" v-if="!item.is_valid && shipping_type === 0">{{$t(`Chỉ hỗ trợ nhận tại cửa hàng`)}}</text>
+							<text class="valid" v-if="!item.productInfo.store_mention && shipping_type === 1">{{$t(`Chỉ hỗ trợ giao hàng`)}}</text>
 						</view>
-						<view class='evaluate' v-else-if="item.is_reply==1">{{$t(`已评价`)}}</view>
+						<view class='evaluate' v-else-if="item.is_reply==1">{{$t(`Đã đánh giá`)}}</view>
 					</view>
 					
 				</view>
@@ -61,15 +61,15 @@
 				<view class="botton-btn">
 					<view class='logistics' v-if="item.is_reply==0 && evaluate==3 && pid != -1 && isShow"
 						@click.stop="evaluateTap(item.unique,orderId)">
-						{{$t(`评价`)}}</view>
+						{{$t(`Đánh giá`)}}</view>
 					<view class='logistics'
 						v-if="paid === 1 && refund_status === 0 && item.refund_num !=item.cart_num && !is_confirm && is_refund_available && isShow && (virtualType == 0 || (virtualType > 0 && statusType == 1)) && (is_gift != 2) && gift_uid == 0"
 						@click.stop="openSubcribe(item)">
-						{{$t(`申请退款`)}}</view>
+						{{$t(`Yêu cầu hoàn tiền`)}}</view>
 					<view class="rig-btn" v-if="status_type === 2 && index === cartInfo.length - 1 || !split">
-						<view v-if="delivery_type === 'express'" class="logistics" @click.stop="logistics(orderId)">{{$t(`查看物流`)}}
+						<view v-if="delivery_type === 'express'" class="logistics" @click.stop="logistics(orderId)">{{$t(`Xem vận chuyển`)}}
 						</view>
-						<view class="logistics sure" v-if="status_type === 2" @click.stop="confirmOrder(orderId)">{{$t(`确认收货`)}}
+						<view class="logistics sure" v-if="status_type === 2" @click.stop="confirmOrder(orderId)">{{$t(`Xác nhận đã nhận hàng`)}}
 						</view>
 					</view>
 				</view>
@@ -84,7 +84,7 @@
 	export default {
 		computed: mapGetters(['uid']),
 		props: {
-			// 订单状态
+			// Trạng thái đơn hàng
 			statusType: {
 				type: Number,
 				default: 0,
@@ -101,7 +101,7 @@
 				type: Number,
 				default: 0,
 			},
-			// 1已支付 0未支付
+			// 1 đã thanh toán, 0 chưa thanh toán
 			paid: {
 				type: Number,
 				default: 0,
@@ -136,7 +136,7 @@
 				type: Boolean,
 				default: false,
 			},
-			// is_behalf 是否是代付列表
+			// is_behalf có phải là danh sách thanh toán hộ hay không
 			is_behalf: {
 				type: Boolean,
 				default: false,

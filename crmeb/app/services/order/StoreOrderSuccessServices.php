@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -22,7 +22,7 @@ use crmeb\exceptions\ApiException;
 /**
  * Class StoreOrderSuccessServices
  * @package app\services\order
- * @method getOne(array $where, ?string $field = '*', array $with = []) 获取去一条数据
+ * @method getOne(array $where, ?string $field = '*', array $with = []) Lấy một dòng dữ liệu
  */
 class StoreOrderSuccessServices extends BaseServices
 {
@@ -37,7 +37,7 @@ class StoreOrderSuccessServices extends BaseServices
     }
 
     /**
-     * 0元支付
+     * Thanh toán 0đ
      * @param array $orderInfo
      * @param int $uid
      * @return bool
@@ -49,13 +49,13 @@ class StoreOrderSuccessServices extends BaseServices
     public function zeroYuanPayment(array $orderInfo, int $uid, string $payType = PayServices::YUE_PAY)
     {
         if ($orderInfo['paid']) {
-            throw new ApiException('该订单已支付');
+            throw new ApiException('Đơn hàng này đã được thanh toán');
         }
-        return $this->paySuccess($orderInfo, $payType);//余额支付成功
+        return $this->paySuccess($orderInfo, $payType);//Thanh toán bằng số dư thành công
     }
 
     /**
-     * 支付成功
+     * Thanh toán thành công
      * @param array $orderInfo
      * @param string $paytype
      * @param array $other
@@ -83,30 +83,30 @@ class StoreOrderSuccessServices extends BaseServices
             $pinkServices = app()->make(StorePinkServices::class);
             /** @var StoreOrderServices $orderServices */
             $orderServices = app()->make(StoreOrderServices::class);
-            $resPink = $pinkServices->createPink($orderServices->tidyOrder($orderInfo, true));//创建拼团
+            $resPink = $pinkServices->createPink($orderServices->tidyOrder($orderInfo, true));//Tạo mua chung
         }
-        //缓存抽奖次数 除过线下支付
+        //Lưu tạm số lượt quay thưởng, trừ thanh toán ngoại tuyến
         if (isset($orderInfo['pay_type']) && $orderInfo['pay_type'] != 'offline') {
             /** @var LuckLotteryServices $luckLotteryServices */
             $luckLotteryServices = app()->make(LuckLotteryServices::class);
             $luckLotteryServices->setCacheLotteryNum((int)$orderInfo['uid'], 'order');
         }
         $orderInfo['send_name'] = $orderInfo['real_name'];
-        //订单支付成功后置事件
+        //Event sau khi đơn hàng thanh toán thành công
         event('OrderPaySuccessListener', [$orderInfo]);
-        //用户推送消息事件
+        //Sự kiện đẩy tin nhắn cho người dùng
         event('NoticeListener', [$orderInfo, 'order_pay_success']);
-        //支付成功给客服发送消息
+        //Thanh toán thành công thì gửi tin nhắn cho CSKH
         event('NoticeListener', [$orderInfo, 'admin_pay_success_code']);
-        // 推送订单
+        // Đẩy đơn hàng
         event('OutPushListener', ['order_pay_push', ['order_id' => (int)$orderInfo['id']]]);
 
-        //自定义消息-订单支付成功
+        //Tin nhắn tùy chỉnh - đơn hàng thanh toán thành công
         $orderInfo['time'] = date('Y-m-d H:i:s');
         $orderInfo['phone'] = $orderInfo['user_phone'];
         event('CustomNoticeListener', [$orderInfo['uid'], $orderInfo, 'order_pay_success']);
 
-        //自定义事件-订单支付
+        //Sự kiện tùy chỉnh - thanh toán đơn hàng
         event('CustomEventListener', ['order_pay', [
             'uid' => $orderInfo['uid'],
             'id' => (int)$orderInfo['id'],

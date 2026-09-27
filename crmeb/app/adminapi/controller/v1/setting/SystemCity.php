@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,14 +17,14 @@ use crmeb\services\{CacheService};
 
 
 /**
- * 城市数据
+ * Dữ liệu thành phố
  * Class SystemCity
  * @package app\adminapi\controller\v1\setting
  */
 class SystemCity extends AuthController
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * SystemCity constructor.
      * @param App $app
      * @param SystemCityServices $services
@@ -36,7 +36,7 @@ class SystemCity extends AuthController
     }
 
     /**
-     * 城市列表
+     * Danh sách thành phố
      * @return string
      * @throws \Exception
      */
@@ -49,7 +49,7 @@ class SystemCity extends AuthController
     }
 
     /**
-     * 添加城市
+     * Thêm thành phố
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      * @throws \think\db\exception\DataNotFoundException
@@ -65,7 +65,7 @@ class SystemCity extends AuthController
     }
 
     /**
-     * 保存
+     * Lưu
      */
     public function save()
     {
@@ -90,17 +90,17 @@ class SystemCity extends AuthController
             $data['level'] = $data['level'] + 1;
             $data['city_id'] = intval($this->services->getCityIdMax() + 1);
             $this->services->save($data);
-            return app('json')->success('保存成功');
+            return app('json')->success('Lưu thành công');
         } else {
             unset($data['level']);
             unset($data['parent_id']);
             $this->services->update($data['id'], $data);
-            return app('json')->success('修改成功');
+            return app('json')->success('Sửa thành công');
         }
     }
 
     /**
-     * 修改城市
+     * Sửa thành phố
      * @return string
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -115,7 +115,7 @@ class SystemCity extends AuthController
     }
 
     /**
-     * 删除城市
+     * Xóa thành phố
      * @throws \Exception
      */
     public function delete()
@@ -124,24 +124,24 @@ class SystemCity extends AuthController
             [['city_id', 'd'], 0]
         ], true);
         $this->services->deleteCity($id);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 
     /**
-     * 清除城市缓存
+     * Xóa cache thành phố
      * @throws \Psr\SimpleCache\InvalidArgumentException
      */
     public function clean_cache()
     {
         CacheService::delete('CITY_LIST');
         CacheService::delete('CITY_FULL_LIST');
-        return app('json')->success('清除成功');
+        return app('json')->success('Xóa thành công');
     }
 
     /**
-     * 获取城市数据完整列表
+     * Lấy danh sách đầy đủ dữ liệu thành phố
      * @return \think\Response
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/04/10
      */

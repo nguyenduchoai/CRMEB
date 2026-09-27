@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<uni-calendar range @change="change"></uni-calendar>
-		<navigator class="back" open-type="navigateBack" hover-class="none">{{$t(`取消`)}}</navigator>
+		<navigator class="back" open-type="navigateBack" hover-class="none">{{$t(`Hủy`)}}</navigator>
 	</view>
 </template>
 

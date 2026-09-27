@@ -25,7 +25,7 @@ import rightBtn from '@/components/rightBtn/index.vue';
 export default {
   name: 'c_home_goods_list',
   componentsName: 'home_goods_list',
-  cname: '产品列表',
+  cname: 'Danh sách sản phẩm',
   props: {
     activeIndex: {
       type: null,
@@ -393,7 +393,7 @@ export default {
       if (!data) return data;
       if (!data.paddingConfig) {
         data.paddingConfig = {
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           isAll: false,
@@ -408,7 +408,7 @@ export default {
       }
       if (!data.marginConfig) {
         this.$set(data, 'marginConfig', {
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,

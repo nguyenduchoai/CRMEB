@@ -2,7 +2,7 @@
   <div class="" id="shopp-manager" v-loading="spinShow">
     <pages-header
       ref="pageHeader"
-      :title="$route.params.id ? '编辑商品' : '添加商品'"
+      :title="$route.params.id ? 'Sửa sản phẩm' : 'Thêm sản phẩm'"
       :backUrl="$routeProStr + '/product/product_list'"
     ></pages-header>
     <el-card :bordered="false" shadow="never" class="mt16" :body-style="{ padding: '0px 20px' }">
@@ -18,7 +18,7 @@
         :label-position="labelPosition"
         @submit.native.prevent
       >
-        <!-- 基础信息-->
+        <!-- Thông tin cơ bản-->
         <basic-info
           v-show="currentTab === '1'"
           :isCai="type"
@@ -42,7 +42,7 @@
           @addGoodsTag="addGoodsTag"
         ></basic-info>
 
-        <!-- 规格库存-->
+        <!-- Phân loại và tồn kho-->
         <spec-stock
           ref="specStock"
           v-show="currentTab === '2'"
@@ -82,7 +82,7 @@
           @addVirtual="addVirtual"
         ></spec-stock>
 
-        <!-- 商品详情-->
+        <!-- Chi tiết sản phẩm-->
         <product-detail
           v-show="currentTab === '3'"
           :contents="contents"
@@ -90,7 +90,7 @@
           @getEditorContent="getEditorContent"
         ></product-detail>
 
-        <!-- 物流设置-->
+        <!-- Cài đặt vận chuyển-->
         <logistics-setting
           v-show="headTab.length === 7 ? currentTab === '4' : false"
           :formValidate="formValidate"
@@ -99,7 +99,7 @@
           @addTemp="addTemp"
         ></logistics-setting>
 
-        <!-- 会员价/佣金 -->
+        <!-- Giá thành viên/Hoa hồng -->
         <price-commission
           v-show="headTab.length === 7 ? currentTab === '5' : currentTab === '4'"
           :formValidate="formValidate"
@@ -117,7 +117,7 @@
           @brokerageSetUp="brokerageSetUp"
         ></price-commission>
 
-        <!-- 营销设置-->
+        <!-- Cài đặt marketing-->
         <marketing-setting
           v-show="headTab.length === 7 ? currentTab === '6' : currentTab === '5'"
           :formValidate="formValidate"
@@ -134,7 +134,7 @@
           @changeGoods="changeGoods"
         ></marketing-setting>
 
-        <!-- 其他设置-->
+        <!-- Cài đặt khác-->
         <other-setting
           v-show="headTab.length === 7 ? currentTab === '7' : currentTab === '6'"
           :formValidate="formValidate"
@@ -154,20 +154,20 @@
         ></other-setting>
 
         <el-form-item>
-          <el-button v-if="currentTab !== '1'" v-db-click @click="upTab">上一步</el-button>
+          <el-button v-if="currentTab !== '1'" v-db-click @click="upTab">Bước trước</el-button>
           <el-button
             class="submission"
             v-if="currentTab !== '7' && formValidate.virtual_type == 0"
             v-db-click
             @click="downTab"
-            >下一步</el-button
+            >Bước tiếp theo</el-button
           >
           <el-button
             class="submission"
             v-if="currentTab !== '6' && formValidate.virtual_type != 0"
             v-db-click
             @click="downTab"
-            >下一步</el-button
+            >Bước tiếp theo</el-button
           >
           <el-button
             type="primary"
@@ -175,11 +175,11 @@
             v-db-click
             @click="handleSubmit('formValidate')"
             v-if="$route.params.id || currentTab !== '1'"
-            >保存</el-button
+            >Lưu</el-button
           >
         </el-form-item>
       </el-form>
-      <el-dialog :visible.sync="modalPic" width="950px" scrollable title="上传商品图" :close-on-click-modal="false">
+      <el-dialog :visible.sync="modalPic" width="950px" scrollable title="Tải lên ảnh sản phẩm" :close-on-click-modal="false">
         <uploadPictures
           :isChoice="isChoice"
           @getPic="getPic"
@@ -192,7 +192,7 @@
       <el-dialog
         :visible.sync="addVirtualModel"
         width="720px"
-        title="添加卡密"
+        title="Thêm mã thẻ"
         :show-close="true"
         :close-on-click-modal="false"
         @closed="initVirtualData"
@@ -200,46 +200,46 @@
         <div class="trip"></div>
         <div class="type-radio">
           <el-form label-width="85px">
-            <el-form-item label="卡密类型：">
+            <el-form-item label="Loại mã thẻ:">
               <el-radio-group v-model="disk_type" size="large">
-                <el-radio :label="1">固定卡密</el-radio>
-                <el-radio :label="2">一次性卡密</el-radio>
+                <el-radio :label="1">Mã thẻ cố định</el-radio>
+                <el-radio :label="2">Mã thẻ dùng một lần</el-radio>
               </el-radio-group>
               <div v-if="disk_type == 1">
                 <div class="stock-disk">
-                  <el-input v-model="disk_info" size="large" type="textarea" :rows="4" placeholder="填写卡密信息" />
+                  <el-input v-model="disk_info" size="large" type="textarea" :rows="4" placeholder="Nhập thông tin mã thẻ" />
                 </div>
                 <div class="stock-input">
-                  <!-- <el-input type="number" v-model="stock" size="large" :min='0' placeholder="填写库存数量">
-                    <span slot="append">件</span>
+                  <!-- <el-input type="number" v-model="stock" size="large" :min='0' placeholder="Nhập số lượng tồn kho">
+                    <span slot="append">cái</span>
                   </el-input> -->
                   <el-input-number :controls="false" :max="100000" :min="1" :step="1" :precision="0" v-model="stock" />
-                  <span class="pl10">件</span>
+                  <span class="pl10">cái</span>
                 </div>
               </div>
               <div class="scroll-virtual" v-if="disk_type == 2">
                 <div class="virtual-data mb10" v-for="(item, index) in virtualList" :key="index">
-                  <span class="mr10 virtual-title">卡号{{ index + 1 }}：</span>
+                  <span class="mr10 virtual-title">Số thẻ {{ index + 1 }}:</span>
                   <el-input
                     class="mr10"
                     type="text"
                     v-model.trim="item.key"
                     style="width: 150px"
-                    placeholder="请输入卡号(非必填)"
+                    placeholder="Vui lòng nhập số thẻ (không bắt buộc)"
                   ></el-input>
-                  <span class="mr10 virtual-title">卡密{{ index + 1 }}：</span>
+                  <span class="mr10 virtual-title">Mã thẻ {{ index + 1 }}:</span>
                   <el-input
                     class="mr10"
                     type="text"
                     v-model.trim="item.value"
                     style="width: 150px"
-                    placeholder="请输入卡密"
+                    placeholder="Vui lòng nhập mã thẻ"
                   ></el-input>
-                  <span class="deteal-btn" v-db-click @click="removeVirtual(index)">删除</span>
+                  <span class="deteal-btn" v-db-click @click="removeVirtual(index)">Xóa</span>
                 </div>
               </div>
               <div class="add-more" v-if="disk_type == 2">
-                <el-button class="h-33" type="primary" v-db-click @click="handleAdd">新增</el-button>
+                <el-button class="h-33" type="primary" v-db-click @click="handleAdd">Thêm mới</el-button>
                 <el-upload
                   class="ml10"
                   :action="cardUrl"
@@ -248,15 +248,15 @@
                   :on-success="upFile"
                   :before-upload="beforeUpload"
                 >
-                  <el-button>导入卡密</el-button>
+                  <el-button>Nhập mã thẻ</el-button>
                 </el-upload>
               </div>
             </el-form-item>
           </el-form>
         </div>
         <span slot="footer" class="dialog-footer">
-          <el-button v-db-click @click="closeVirtual">取 消</el-button>
-          <el-button type="primary" v-db-click @click="upVirtual">确 定</el-button>
+          <el-button v-db-click @click="closeVirtual">Hủy</el-button>
+          <el-button type="primary" v-db-click @click="upVirtual">Xác nhận</el-button>
         </span>
       </el-dialog>
     </el-card>
@@ -275,34 +275,34 @@
       :updateName="updateName"
     ></coupon-list>
     <coupon-list ref="goodsCoupon" many="one" :luckDraw="true" @getCouponId="goodsCouponId"></coupon-list>
-    <!-- 生成淘宝京东表单-->
+    <!-- Tạo biểu mẫu Taobao, JD-->
     <el-dialog
       :visible.sync="modals"
       @closed="cancel"
       class="Box"
-      title="复制淘宝、天猫、京东、苏宁、1688"
+      title="Sao chép từ Taobao, Tmall, JD, Suning, 1688"
       :close-on-click-modal="false"
       width="720px"
     >
       <tao-bao ref="taobaos" v-if="modals" @on-close="onClose"></tao-bao>
     </el-dialog>
-    <el-dialog :visible.sync="goods_modals" title="商品列表" footerHide class="paymentFooter" scrollable width="1000px">
+    <el-dialog :visible.sync="goods_modals" title="Danh sách sản phẩm" footerHide class="paymentFooter" scrollable width="1000px">
       <goods-list v-if="goods_modals" ref="goodslist" :ischeckbox="true" @getProductId="getProductId"></goods-list>
     </el-dialog>
-    <!-- 用户标签 -->
+    <!-- Nhãn người dùng -->
     <el-dialog
       :visible.sync="labelShow"
-      title="请选择用户标签"
+      title="Vui lòng chọn nhãn người dùng"
       :show-close="true"
       width="540px"
       :close-on-click-modal="false"
     >
       <userLabel ref="userLabel" @activeData="activeData" @close="labelClose"></userLabel>
     </el-dialog>
-    <!-- 商品标签 -->
+    <!-- Nhãn sản phẩm -->
     <el-dialog
       :visible.sync="tagShow"
-      title="请选择商品标签"
+      title="Vui lòng chọn nhãn sản phẩm"
       :show-close="true"
       width="540px"
       :close-on-click-modal="false"
@@ -352,7 +352,7 @@ import {
 } from '@/api/product';
 import Setting from '@/setting';
 import { getCookies } from '@/libs/util';
-import { uploadByPieces } from '@/utils/upload'; //引入uploadByPieces方法
+import { uploadByPieces } from '@/utils/upload'; //Import phương thức uploadByPieces
 import { isFileUpload, isVideoUpload, arraysEqual } from '@/utils';
 import checkArray from '@/libs/permission';
 import {
@@ -399,29 +399,29 @@ export default {
       tagShow: false,
       dataLabel: [],
       headTab: [
-        { tit: '基础信息', name: '1' },
-        { tit: '规格库存', name: '2' },
-        { tit: '商品详情', name: '3' },
-        { tit: '物流设置', name: '4' },
-        { tit: '会员价/佣金', name: '5' },
-        { tit: '营销设置', name: '6' },
-        { tit: '其他设置', name: '7' },
+        { tit: 'Thông tin cơ bản', name: '1' },
+        { tit: 'Phân loại và tồn kho', name: '2' },
+        { tit: 'Chi tiết sản phẩm', name: '3' },
+        { tit: 'Cài đặt vận chuyển', name: '4' },
+        { tit: 'Giá thành viên/Hoa hồng', name: '5' },
+        { tit: 'Cài đặt marketing', name: '6' },
+        { tit: 'Cài đặt khác', name: '7' },
       ],
       virtual: [
-        { tit: '普通商品', id: 0, tit2: '物流发货' },
-        { tit: '卡密/网盘', id: 1, tit2: '自动发货' },
-        { tit: '优惠券', id: 2, tit2: '自动发货' },
-        { tit: '虚拟商品', id: 3, tit2: '虚拟发货' },
+        { tit: 'Sản phẩm thường', id: 0, tit2: 'Giao qua đơn vị vận chuyển' },
+        { tit: 'Mã thẻ/Lưu trữ đám mây', id: 1, tit2: 'Giao hàng tự động' },
+        { tit: 'Phiếu giảm giá', id: 2, tit2: 'Giao hàng tự động' },
+        { tit: 'Sản phẩm ảo', id: 3, tit2: 'Giao hàng ảo' },
       ],
-      seletVideo: 0, //选择视频类型
-      customBtn: 0, //自定义留言开关
+      seletVideo: 0, //Chọn loại video
+      customBtn: 0, //Công tắc lời nhắn tùy chỉnh
       content: '',
       contents: '',
       fileUrl: Setting.apiBaseURL + '/file/upload',
       fileUrl2: Setting.apiBaseURL + '/file/video_upload',
       cardUrl: Setting.apiBaseURL + '/file/upload/1',
-      upload_type: '', //视频上传类型 1 本地上传 2 3 4 OSS上传
-      uploadData: {}, // 上传参数
+      upload_type: '', //Loại tải video lên 1 tải lên local 2 3 4 tải lên OSS
+      uploadData: {}, // Tham số tải lên
       header: {},
       type: 0,
       modals: false,
@@ -434,7 +434,7 @@ export default {
           value: '',
         },
       ],
-      // 批量设置表格data
+      // Thiết lập data bảng theo lô
       oneFormBatch: [
         {
           pic: '',
@@ -450,12 +450,12 @@ export default {
         },
       ],
 
-      // 规格数据
+      // Dữ liệu phân loại
       formDynamic: {
         attrsName: '',
         attrsVal: '',
       },
-      disk_type: 1, //卡密类型
+      disk_type: 1, //Loại mã thẻ
       tabIndex: 0,
       tabName: '',
       formDynamicNameData: [],
@@ -479,25 +479,25 @@ export default {
         sm: 8,
         xs: 8,
       },
-      //自定义留言下拉选择
+      //Lựa chọn thả xuống lời nhắn tùy chỉnh
       CustomList: CustomList,
-      //自定义留言内容
+      //Nội dung lời nhắn tùy chỉnh
       currentIndex: 0,
 
       formValidate: {
-        disk_info: '', //卡密类型
-        logistics: ['1'], //选择物流方式
-        freight: 2, //运费设置
-        postage: 0, //设置运费金额
-        recommend: [], //商品推荐
-        presale_day: 1, //预售发货时间-结束
-        presale: false, //预售商品开关
+        disk_info: '', //Loại mã thẻ
+        logistics: ['1'], //Chọn phương thức vận chuyển
+        freight: 2, //Cài đặt phí vận chuyển
+        postage: 0, //Thiết lập số tiền phí vận chuyển
+        recommend: [], //Đề xuất sản phẩm
+        presale_day: 1, //Thời gian giao hàng đặt trước - Kết thúc
+        presale: false, //Bật/tắt sản phẩm đặt trước
         is_limit: false,
         limit_type: 0,
         limit_num: 0,
-        vip_product: false, //付费会员专属开关
-        vip_product_type: 0, // 0仅付费会员可见 1仅付费会员可购买
-        custom_form: [], //自定义留言
+        vip_product: false, //Công tắc dành riêng cho thành viên trả phí
+        vip_product_type: 0, // 0 chỉ thành viên trả phí mới xem được 1 chỉ thành viên trả phí mới mua được
+        custom_form: [], //Lời nhắn tùy chỉnh
         store_name: '',
         cate_id: [],
         label_id: [],
@@ -512,7 +512,7 @@ export default {
         give_integral: 0,
         sort: 0,
         is_show: 1,
-        is_gift: 0, // 开启送礼品
+        is_gift: 0, // Bật tặng quà
         gift_price: 0,
         is_hot: 0,
         is_benefit: 0,
@@ -522,7 +522,7 @@ export default {
         is_postage: 0,
         is_sub: [],
         recommend_list: [],
-        params_list: [], //商品参数
+        params_list: [], //Thông số sản phẩm
         virtual_type: 0,
         // is_sub: 0,
         id: 0,
@@ -543,7 +543,7 @@ export default {
             bar_code_number: '',
           },
         ],
-        activity: ['默认', '秒杀', '砍价', '拼团'],
+        activity: ['Mặc định', 'Flash sale', 'Săn giảm giá', 'Mua chung'],
         couponName: [],
         header: [],
         selectRule: '',
@@ -558,7 +558,7 @@ export default {
       createBnt: true,
       showIput: false,
       manyFormValidate: [],
-      // 单规格表格data
+      // Data bảng quy cách đơn
       oneFormValidate: [
         {
           pic: '',
@@ -595,15 +595,15 @@ export default {
       manyVipPrice: undefined,
       manyVipDiscount: undefined,
       upload: {
-        videoIng: false, // 是否显示进度条；
+        videoIng: false, // Có hiển thị thanh tiến trình không;
       },
-      videoIng: false, // 是否显示进度条；
-      progress: 0, // 进度条默认0
+      videoIng: false, // Có hiển thị thanh tiến trình không;
+      progress: 0, // Thanh tiến trình mặc định 0
       stock: 0,
       disk_info: '',
       videoLink: '',
       attrs: [],
-      activity: { 默认: 'red', 秒杀: 'blue', 砍价: 'green', 拼团: 'yellow' },
+      activity: { 'Mặc định': 'red', 'Flash sale': 'blue', 'Săn giảm giá': 'green', 'Mua chung': 'yellow' },
       couponName: [],
       updateIds: [],
       updateName: [],
@@ -611,13 +611,13 @@ export default {
       couponNames: [],
       rakeBack: [
         {
-          title: '一级返佣(元)',
+          title: 'Hoa hồng cấp 1 (đ)',
           slot: 'brokerage',
           align: 'center',
           width: 95,
         },
         {
-          title: '二级返佣(元)',
+          title: 'Hoa hồng cấp 2 (đ)',
           slot: 'brokerage_two',
           align: 'center',
           width: 95,
@@ -625,13 +625,13 @@ export default {
       ],
       member: [
         {
-          title: '会员价',
+          title: 'Giá thành viên',
           slot: 'vip_price',
           align: 'center',
           width: 95,
         },
         {
-          title: '会员折扣',
+          title: 'Chiết khấu thành viên',
           slot: 'vip_proportion',
           align: 'center',
           width: 95,
@@ -645,10 +645,10 @@ export default {
       goodsType: [],
       paramsTypeList: [],
       paramsType: null,
-      canSel: true, // 规格图片添加判断
-      changeAttrValue: '', //修改的规格值
+      canSel: true, // Kiểm tra thêm ảnh quy cách
+      changeAttrValue: '', //Giá trị quy cách đã sửa
       tableKey: 0,
-      protectionList: [], // 服务保障
+      protectionList: [], // Đảm bảo dịch vụ
       labelList: [],
       tileLabelList: [],
     };
@@ -668,7 +668,7 @@ export default {
   watch: {
     typeConfig(val) {
       if (val.length) {
-        // 对virtual中的id等于val中的id的
+        // Đối với id trong virtual bằng id trong val
         this.goodsType = this.virtual.filter((item) => {
           return val.includes(item.id + '');
         });
@@ -786,7 +786,7 @@ export default {
     },
     getproductLabelUseListApi() {
       productLabelUseListApi().then((res) => {
-        // 合并数组中所有的list
+        // Hợp nhất tất cả list trong mảng
         this.tileLabelList = res.data.flatMap((item) => item.list);
         let labelList = res.data;
         if (this.formValidate.label_list.length) {
@@ -822,12 +822,12 @@ export default {
     beforeUpload(file) {
       return isFileUpload(file);
     },
-    // 分片上传
+    // Tải lên theo phần (multipart)
     videoSaveToUrl(file) {
       if (isVideoUpload(file)) {
         uploadByPieces({
-          file: file, // 视频实体
-          pieceSize: 3, // 分片大小
+          file: file, // Đối tượng video
+          pieceSize: 3, // Kích thước từng phần
           success: (data) => {
             this.formValidate.video_link = data.file_path;
             this.progress = 100;
@@ -844,10 +844,10 @@ export default {
       }
       return false;
     },
-    // 类型选择/填入内容判断
+    // Chọn loại/kiểm tra nội dung nhập vào
     virtualbtn(index, type) {
       if (type != 1) {
-        if (this.$route.params.id) return this.$message.error('编辑商品不支持切换商品类型');
+        if (this.$route.params.id) return this.$message.error('Không hỗ trợ chuyển loại sản phẩm khi sửa sản phẩm');
         this.formValidate.is_sub = [];
         let id = this.$route.params.id;
         if (id) {
@@ -863,79 +863,79 @@ export default {
           }
         }
       }
-      // 定义基础商品和虚拟商品的标签页配置
+      // Định nghĩa cấu hình tab cho sản phẩm cơ bản và sản phẩm ảo
       const baseHeadTabs = [
-        { tit: '基础信息', name: '1' },
-        { tit: '规格库存', name: '2' },
-        { tit: '商品详情', name: '3' },
-        { tit: '物流设置', name: '4' },
-        { tit: '会员价/佣金', name: '5' },
-        { tit: '营销设置', name: '6' },
-        { tit: '其他设置', name: '7' },
+        { tit: 'Thông tin cơ bản', name: '1' },
+        { tit: 'Phân loại và tồn kho', name: '2' },
+        { tit: 'Chi tiết sản phẩm', name: '3' },
+        { tit: 'Cài đặt vận chuyển', name: '4' },
+        { tit: 'Giá thành viên/Hoa hồng', name: '5' },
+        { tit: 'Cài đặt marketing', name: '6' },
+        { tit: 'Cài đặt khác', name: '7' },
       ];
       const virtualHeadTabs = [
-        { tit: '基础信息', name: '1' },
-        { tit: '规格库存', name: '2' },
-        { tit: '商品详情', name: '3' },
-        { tit: '会员价/佣金', name: '4' },
-        { tit: '营销设置', name: '5' },
-        { tit: '其他设置', name: '6' },
+        { tit: 'Thông tin cơ bản', name: '1' },
+        { tit: 'Phân loại và tồn kho', name: '2' },
+        { tit: 'Chi tiết sản phẩm', name: '3' },
+        { tit: 'Giá thành viên/Hoa hồng', name: '4' },
+        { tit: 'Cài đặt marketing', name: '5' },
+        { tit: 'Cài đặt khác', name: '6' },
       ];
 
       switch (index) {
-        case 0: // 普通商品
+        case 0: // Sản phẩm thường
           this.formValidate.virtual_type = 0;
           this.formValidate.is_virtual = 0;
           this.headTab = baseHeadTabs;
           break;
 
-        case 1: // 卡密/网盘商品
+        case 1: // Sản phẩm mã thẻ/lưu trữ mạng
           this.formValidate.virtual_type = 1;
           this.formValidate.postage = 0;
           this.formValidate.is_virtual = 1;
           this.headTab = virtualHeadTabs;
           break;
 
-        case 2: // 优惠券商品
+        case 2: // Sản phẩm phiếu giảm giá
           this.formValidate.virtual_type = 2;
           this.formValidate.is_virtual = 1;
           this.headTab = virtualHeadTabs;
           break;
 
-        case 3: // 虚拟商品
+        case 3: // Sản phẩm ảo
           this.formValidate.virtual_type = 3;
           this.formValidate.is_virtual = 1;
           this.headTab = virtualHeadTabs;
           break;
       }
     },
-    // 新增分类
+    // Thêm danh mục
     addCate() {
       this.$modalForm(productCreateApi()).then(() => this.goodsCategory());
     },
-    // 物流方式选择
+    // Chọn phương thức vận chuyển
     logisticsBtn(e) {
       this.formValidate.logistics = e;
     },
-    // 新增标签
+    // Thêm nhãn
     addLabel() {
       this.$modalForm(userLabelAddApi(0)).then(() => this.userLabel());
     },
-    // 选择标签
+    // Chọn nhãn
     addGoodsTag() {
       this.tagShow = true;
     },
-    // 自定义留言 开启关闭
+    // Lời nhắn tùy chỉnh Bật tắt
     customMessBtn(e) {
       if (!e) {
         this.formValidate.custom_form = [];
       }
       this.customBtn = e;
     },
-    // 自定义留言 新增表单
+    // Lời nhắn tùy chỉnh Thêm biểu mẫu mới
     addcustom() {
       if (this.formValidate.custom_form.length > 9) {
-        this.$message.warning('最多添加10条');
+        this.$message.warning('Chỉ được thêm tối đa 10 mục');
       } else {
         this.formValidate.custom_form.push({
           title: '',
@@ -945,38 +945,38 @@ export default {
         });
       }
     },
-    // 删除
+    // Xóa
     delcustom(index) {
       this.formValidate.custom_form.splice(index, 1);
     },
-    // 预售具体日期
+    // Ngày cụ thể đặt trước
     onchangeTime(e) {
       this.formValidate.presale_time = e;
     },
-    // 商品详情
+    // Chi tiết sản phẩm
     getEditorContent(data) {
       this.content = data;
     },
     cancel() {
       this.modals = false;
     },
-    // 上传头部token
+    // Token trong header khi tải lên
     getToken() {
       this.header['Authori-zation'] = 'Bearer ' + getCookies('token');
     },
-    // 导入卡密
+    // Nhập mã thẻ
     upFile(res) {
       importCard({ file: res.data.src }).then((res) => {
         this.virtualList = this.virtualList.concat(res.data);
       });
     },
-    //获取视频上传类型
+    //Lấy loại tải lên video
     uploadType() {
       uploadType().then((res) => {
         this.upload_type = res.data.upload_type;
       });
     },
-    // 初始化数据展示
+    // Khởi tạo hiển thị dữ liệu
     infoData(data, isCopy) {
       let cate_id = data.cate_id.map(Number);
       let label_id = data.label_id.map(Number);
@@ -1048,7 +1048,7 @@ export default {
       }, 1000);
       this.watchActivity();
     },
-    //关闭淘宝弹窗并生成数据；
+    //Đóng popup Taobao và tạo dữ liệu;
     onClose(data) {
       this.modals = false;
       this.infoData(data, 1);
@@ -1061,7 +1061,7 @@ export default {
       this.moveIndex = '';
       this.generate(1);
     },
-    // 单独设置会员设置
+    // Thiết lập riêng phần thành viên
     checkAllGroupChange(data) {
       this.checkAllGroup(data);
     },
@@ -1092,12 +1092,12 @@ export default {
         }
       }
     },
-    // 添加优惠券
+    // Thêm phiếu giảm giá
     addCoupon() {
       this.$refs.couponTemplates.isTemplate = true;
       this.$refs.couponTemplates.tableList();
     },
-    // 规格中优惠券查看
+    // Xem phiếu giảm giá trong quy cách
     see(data, name, index) {
       this.tabName = name;
       this.tabIndex = index;
@@ -1117,17 +1117,17 @@ export default {
         this.$refs.goodsCoupon.tableList(3);
       }
     },
-    // 修改分佣比例
+    // Sửa tỷ lệ chia hoa hồng
     changeDiscount(index, type = 'manyFormValidate') {
-      // 根据分佣比例 vip_proportion 修改会员价 保留2位小数
+      // Dựa theo tỷ lệ chia hoa hồng vip_proportion để sửa giá thành viên, giữ 2 chữ số thập phân
       this[type][index].vip_price = (this[type][index].price * (this[type][index].vip_proportion / 100)).toFixed(2);
     },
-    // 修改会员价
+    // Sửa giá thành viên
     changeVipPrice(index, type = 'manyFormValidate') {
-      // 根据会员价计算出分佣比例
+      // Tính tỷ lệ chia hoa hồng dựa theo giá thành viên
       this[type][index].vip_proportion = ((this[type][index].vip_price / this[type][index].price) * 100).toFixed(2);
     },
-    // 添加优惠券
+    // Thêm phiếu giảm giá
     addGoodsCoupon(index, name) {
       this.tabIndex = index;
       this.tabName = name;
@@ -1139,13 +1139,13 @@ export default {
       this.tabName = name;
       this.addVirtualModel = true;
     },
-    // 提交卡密信息
+    // Gửi thông tin mã thẻ
     upVirtual() {
       if (this.disk_type == 2) {
         for (let i = 0; i < this.virtualList.length; i++) {
           const element = this.virtualList[i];
           if (!element.value) {
-            this.$message.error('请输入所有卡密');
+            this.$message.error('Vui lòng nhập tất cả mã thẻ');
             return;
           }
         }
@@ -1160,10 +1160,10 @@ export default {
         this.$set(this[this.tabName][this.tabIndex], 'disk_info', '');
       } else {
         if (!this.disk_info.length) {
-          return this.$message.error('请填写卡密信息');
+          return this.$message.error('Vui lòng nhập thông tin mã thẻ');
         }
         if (!this.stock) {
-          return this.$message.error('请填写库存数量');
+          return this.$message.error('Vui lòng nhập số lượng tồn kho');
         }
         this.$set(this[this.tabName][this.tabIndex], 'stock', Number(this.stock));
         this.$set(this[this.tabName][this.tabIndex], 'stock', Number(this.stock));
@@ -1173,7 +1173,7 @@ export default {
       this.addVirtualModel = false;
       this.closeVirtual();
     },
-    //  初始化卡密数据信息
+    //  Khởi tạo thông tin dữ liệu mã thẻ
     closeVirtual() {
       this.addVirtualModel = false;
       this.virtualList = [
@@ -1185,11 +1185,11 @@ export default {
       this.disk_info = '';
       this.stock = 0;
     },
-    //对象数组去重；
+    //Loại bỏ trùng lặp trong mảng object;
     uniqueArray(arr) {
       const seen = {};
       return arr.filter((item) => {
-        const key = JSON.stringify(item); // 使用 JSON.stringify 生成唯一键
+        const key = JSON.stringify(item); // Dùng JSON.stringify để tạo khóa duy nhất
         if (seen[key]) {
           return false;
         } else {
@@ -1198,12 +1198,12 @@ export default {
         }
       });
     },
-    // 获取优惠券id数据
+    // Lấy dữ liệu id phiếu giảm giá
     nameId(id, names) {
       this.formValidate.coupon_ids = id;
       this.couponName = this.uniqueArray(names);
     },
-    // 获取优惠券信息
+    // Lấy thông tin phiếu giảm giá
     goodsCouponId(data) {
       this.$set(this[this.tabName][this.tabIndex], 'coupon_id', data.id);
       this.$set(this[this.tabName][this.tabIndex], 'coupon_name', data.title);
@@ -1217,7 +1217,7 @@ export default {
       this.updateIds = couponIds;
       this.updateName = this.couponName;
     },
-    // 添加运费模板
+    // Thêm mẫu phí vận chuyển
     addTemp() {
       this.$refs.templates.isTemplate = true;
     },
@@ -1226,7 +1226,7 @@ export default {
         this.formValidate.video_link = e;
       });
     },
-    // 删除视频；
+    // Xóa video;
     delVideo() {
       this.$set(this.formValidate, 'video_link', '');
       this.$set(this, 'progress', 0);
@@ -1240,11 +1240,11 @@ export default {
         this.$refs.refid.click();
       }
     },
-    // 上传视频
+    // Tải lên video
     zh_uploadFile_change(evfile) {
       let suffix = evfile.target.files[0].name.substr(evfile.target.files[0].name.indexOf('.'));
       if (suffix.indexOf('.mp4') === -1) {
-        return this.$message.error('只能上传MP4文件');
+        return this.$message.error('Chỉ có thể tải lên tệp MP4');
       }
       let types = {
         key: evfile.target.files[0].name,
@@ -1266,7 +1266,7 @@ export default {
             })
             .then((res) => {
               this.formValidate.video_link = res.url;
-              this.$message.success('视频上传成功');
+              this.$message.success('Tải lên video thành công');
               this.upload.videoIng = false;
             })
             .catch((res) => {
@@ -1277,39 +1277,39 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 上一页；
+    // Trang trước;
     upTab() {
       this.currentTab = (Number(this.currentTab) - 1).toString();
     },
-    // 下一页；
+    // Trang sau;
     downTab() {
       this.currentTab = (Number(this.currentTab) + 1).toString();
     },
-    // 属性弹窗回调函数；
+    // Hàm callback popup thuộc tính;
     userSearchs() {
       this.productGetRule();
     },
-    // 添加规则；
+    // Thêm quy tắc;
     addRule() {
       this.$refs.addattr.modal = true;
     },
-    // 批量设置分佣；
+    // Thiết lập chia hoa hồng theo lô;
     brokerageSetUp() {
       if (this.formValidate.is_sub.indexOf(1) > -1) {
         if (this.manyBrokerage <= 0 || this.manyBrokerageTwo <= 0) {
-          return this.$message.error('请填写返佣金额后进行批量添加');
+          return this.$message.error('Vui lòng nhập số tiền hoa hồng rồi mới thêm hàng loạt');
         }
       } else if (this.formValidate.is_sub.indexOf(0) > -1) {
         if (this.manyVipPrice <= 0) {
-          return this.$message.error('请填写会员价后进行批量添加');
+          return this.$message.error('Vui lòng nhập giá thành viên rồi mới thêm hàng loạt');
         }
       }
       if (this.formValidate.is_sub.length === 2) {
         if (this.manyBrokerage <= 0 || this.manyBrokerageTwo <= 0) {
-          return this.$message.error('请填写完金额后进行批量添加');
+          return this.$message.error('Vui lòng nhập đầy đủ số tiền rồi mới thêm hàng loạt');
         }
         if (this.manyVipPrice > 0 && this.manyVipDiscount > 0) {
-          return this.$message.error('会员价和会员折扣只能二选一添加');
+          return this.$message.error('Chỉ được chọn thêm một trong hai: giá thành viên hoặc chiết khấu thành viên');
         }
       }
       for (let val of this.manyFormValidate) {
@@ -1324,24 +1324,24 @@ export default {
         }
       }
     },
-    // 批量设置会员价
+    // Thiết lập giá thành viên theo lô
     vipPriceSetUp() {
       if (this.manyVipPrice <= 0) {
-        return this.$message.error('请填写会员价在进行批量添加');
+        return this.$message.error('Vui lòng nhập giá thành viên rồi mới thêm hàng loạt');
       } else {
         for (let val of this.manyFormValidate) {
           this.$set(val, 'vip_price', this.manyVipPrice);
         }
       }
     },
-    // 新增卡密
+    // Thêm mã thẻ
     handleAdd() {
       this.virtualList.push({
         key: '',
         value: '',
       });
     },
-    // 初始化卡密信息
+    // Khởi tạo thông tin mã thẻ
     initVirtualData(status) {
       this.virtualList = [
         {
@@ -1353,7 +1353,7 @@ export default {
     removeVirtual(index) {
       this.virtualList.splice(index, 1);
     },
-    // 清空批量规格信息
+    // Xóa trắng thông tin quy cách theo lô
     batchDel() {
       this.oneFormBatch = [
         {
@@ -1375,7 +1375,7 @@ export default {
       this.formValidate.selectRule = name;
       this.attrs = [];
       if (this.formValidate.selectRule.trim().length <= 0) {
-        return this.$message.error('请选择属性');
+        return this.$message.error('Vui lòng chọn thuộc tính');
       }
       this.ruleList.forEach((item, index) => {
         if (item.rule_name === this.formValidate.selectRule) {
@@ -1385,15 +1385,15 @@ export default {
       this.canSel = true;
       this.generateAttr(this.attrs);
     },
-    // 选择规格模板
+    // Chọn mẫu quy cách
     handleCommand(e) {},
-    // 获取商品属性模板；
+    // Lấy mẫu thuộc tính sản phẩm;
     productGetRule() {
       productGetRuleApi().then((res) => {
         this.ruleList = res.data;
       });
     },
-    // 获取运费模板；
+    // Lấy mẫu phí vận chuyển;
     productGetTemplate() {
       productGetTemplateApi().then((res) => {
         this.templateList = res.data;
@@ -1413,11 +1413,11 @@ export default {
       });
     },
     isSubset(arr1, arr2) {
-      // 将数组转换为 Set，以便进行高效的包含检查
+      // Chuyển mảng thành Set để kiểm tra chứa hiệu quả hơn
       const set1 = new Set(arr1);
       const set2 = new Set(arr2);
 
-      // 检查 set2 中的每个元素是否都在 set1 中
+      // Kiểm tra mỗi phần tử trong set2 có nằm trong set1 hay không
       for (let elem of set2) {
         if (!set1.has(elem)) {
           return false;
@@ -1425,7 +1425,7 @@ export default {
       }
       return true;
     },
-    // 批量添加
+    // Thêm theo lô
     batchAdd() {
       let arr = [];
       for (let val of this.attrs) {
@@ -1434,7 +1434,7 @@ export default {
         }
       }
 
-      // 批量设置商品规格属性
+      // Thiết lập thuộc tính quy cách sản phẩm theo lô
       const batchFields = [
         'pic',
         'price',
@@ -1450,9 +1450,9 @@ export default {
 
       for (let val of this.manyFormValidate) {
         const batch = this.oneFormBatch[0];
-        // 如果存在筛选条件且满足条件,或无筛选条件时
+        // Nếu có điều kiện lọc và thỏa điều kiện, hoặc khi không có điều kiện lọc
         if (!arr.length || this.isSubset(val.attr_arr, arr)) {
-          // 设置有值的批量字段
+          // Thiết lập các trường có giá trị theo lô
           batchFields.forEach((field) => {
             if (batch[field] && batch[field] !== undefined) {
               if (field === 'pic' && batch[field]) {
@@ -1463,7 +1463,7 @@ export default {
             }
           });
 
-          // 设置默认字段
+          // Thiết lập trường mặc định
           // defaultFields.forEach((field) => {
           //   this.$set(val, field, batch[field]);
           // });
@@ -1471,7 +1471,7 @@ export default {
       }
     },
     changeSpecImg(arr, img) {
-      // 判断是否存在规格图
+      // Kiểm tra có tồn tại ảnh quy cách hay không
       let isHas = false;
       for (let i = 1; i < this.manyFormValidate.length; i++) {
         let item = this.manyFormValidate[i];
@@ -1481,9 +1481,9 @@ export default {
         }
       }
       if (isHas) {
-        this.$confirm('可以同步修改下方该规格图片，确定要替换吗？', '提示', {
-          confirmButtonText: '替换',
-          cancelButtonText: '暂不',
+        this.$confirm('Có thể đồng bộ sửa ảnh của phân loại này ở bên dưới, bạn có chắc muốn thay thế?', 'Thông báo', {
+          confirmButtonText: 'Thay thế',
+          cancelButtonText: 'Để sau',
           type: 'warning',
         })
           .then(() => {
@@ -1502,7 +1502,7 @@ export default {
         }
       }
     },
-    // 立即生成
+    // Tạo ngay
     generate(type, isCopy, arr) {
       this.manyFormValidate = [];
       this.formValidate.header = [];
@@ -1512,7 +1512,7 @@ export default {
       this.formDynamic.attrsVal = '';
     },
 
-    // 删除规格
+    // Xóa quy cách
     handleRemoveRole(index) {
       this.attrs.splice(index, 1);
       this.manyFormValidate.splice(index, 1);
@@ -1523,7 +1523,7 @@ export default {
         this.generateAttr(this.attrs);
       }
     },
-    // 删除表格中 对应属性
+    // Xóa thuộc tính tương ứng trong bảng
     delAttrTable(val) {
       for (let i = 0; i < this.manyFormValidate.length; i++) {
         let item = this.manyFormValidate[i];
@@ -1533,14 +1533,14 @@ export default {
         }
       }
     },
-    // 删除属性
+    // Xóa thuộc tính
     handleRemove2(item, index, val) {
-      // 删除 manyFormValidate中 title = item.value 的属性值
+      // Xóa giá trị thuộc tính có title = item.value trong manyFormValidate
       item.splice(index, 1);
       // this.generateAttr(this.attrs);
       this.delAttrTable(val);
     },
-    // 新增规格
+    // Thêm quy cách mới
     handleAddRole() {
       let data = {
         value: this.formDynamic.attrsName,
@@ -1557,9 +1557,9 @@ export default {
       this.formValidate.params_list.push(data);
     },
     handleSaveAsTemplate() {
-      this.$prompt('', '请输入模板名称', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$prompt('', 'Vui lòng nhập tên mẫu', {
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
       })
         .then(({ value }) => {
           let spec = this.attrs.map((item) => {
@@ -1583,7 +1583,7 @@ export default {
         })
         .catch(() => {});
     },
-    // 新增一条属性
+    // Thêm một thuộc tính mới
     addOneAttr(val, val2) {
       this.generateAttr(this.attrs, val2);
     },
@@ -1602,7 +1602,7 @@ export default {
     handleRemoveImg(item) {
       item.pic = '';
     },
-    // 规格名称改变
+    // Tên quy cách thay đổi
     attrChangeValue(i, val) {
       if (val.trim().length && this.attrs[i].detail.length) {
         this.generateHeader(this.attrs);
@@ -1623,7 +1623,7 @@ export default {
         this.generateAttr(this.attrs);
       }
     },
-    // 规格值改变
+    // Giá trị quy cách thay đổi
     attrDetailChangeValue(val, i) {
       if (this.manyFormValidate.length) {
         let key = this.attrs[i].value;
@@ -1641,7 +1641,7 @@ export default {
         this.generateAttr(this.attrs, 1);
       }
     },
-    // 规格图片添加开关
+    // Công tắc thêm ảnh quy cách
     addPic(e, i) {
       if (e) {
         this.attrs.map((item, ii) => {
@@ -1654,14 +1654,14 @@ export default {
         this.canSel = true;
       }
     },
-    // 规格拖拽排序后
+    // Sau khi kéo thả sắp xếp quy cách
     onMoveSpec() {
       this.generateAttr(this.attrs);
     },
     changeCurrentIndex(i) {
       this.currentIndex = i;
     },
-    // 生成商品规格表头
+    // Tạo tiêu đề bảng quy cách sản phẩm
     generateHeader(data) {
       let specificationsColumns = data.map((item) => ({
         title: item.value,
@@ -1672,10 +1672,10 @@ export default {
       let arr;
       if ([1, 2].includes(Number(this.formValidate.virtual_type))) {
         arr = [...specificationsColumns, ...VirtualTableHead];
-        // 找到slot 等于 fictitious 将title改为规格名称
+        // Tìm slot bằng fictitious, đổi title thành tên quy cách
         this.formValidate.header.map((item) => {
           if (item.slot === 'fictitious') {
-            item.title = this.formValidate.virtual_type == 1 ? '添加卡密/网盘' : '选择优惠券';
+            item.title = this.formValidate.virtual_type == 1 ? 'Thêm mã thẻ/lưu trữ đám mây' : 'Chọn phiếu giảm giá';
           }
         });
       } else if (this.formValidate.virtual_type == 3) {
@@ -1688,14 +1688,14 @@ export default {
       this.columnsInstalM = arr;
     },
     /*
-     * 生成属性
-     * @param {Array} data 规格数据
+     * Tạo thuộc tính
+     * @param {Array} data Dữ liệu phân loại
      * */
     generateAttr(data, val) {
       this.generateHeader(data);
       const combinations = this.generateCombinations(data);
       const virtualType = this.formValidate.virtual_type;
-      // 如果combinations数量超过 500，则分批次生成属性
+      // Nếu số lượng combinations vượt quá 500 thì tạo thuộc tính theo từng lô
       let rows = [];
       if (combinations.length > 500) {
         const batchSize = Math.ceil(combinations.length / 500);
@@ -1711,9 +1711,9 @@ export default {
         this.manyFormValidate = [...this.oneFormBatch, ...rows];
       }
     },
-    // 生成属性批次
+    // Tạo thuộc tính theo lô
     generateAttrBatch(data, combinations, val) {
-      const existingItems = this.manyFormValidate.slice(1); // 排除第一项默认数据
+      const existingItems = this.manyFormValidate.slice(1); // Loại trừ dữ liệu mặc định của mục đầu tiên
 
       const rows = combinations.map((combination) => {
         const row = {
@@ -1737,7 +1737,7 @@ export default {
           vip_proportion: 0,
         };
 
-        // 设置虚拟类型相关属性
+        // Thiết lập thuộc tính liên quan đến loại ảo
         if (this.formValidate.virtual_type === 1) {
           row.virtual_list = [];
           row.disk_info = '';
@@ -1746,7 +1746,7 @@ export default {
           row.coupon_name = '';
         }
 
-        // 处理规格属性
+        // Xử lý thuộc tính quy cách
         data.forEach((item, i) => {
           const value = combination[i];
           row[item.value] = value;
@@ -1754,7 +1754,7 @@ export default {
           row.key = item.value;
           row.detail[item.value] = value;
 
-          // 查找匹配的现有规格项
+          // Tìm mục quy cách hiện có khớp
           const matchedItem = existingItems.find((item) => item.attr_arr && arraysEqual(item.attr_arr, combination));
 
           if (matchedItem) {
@@ -1794,9 +1794,9 @@ export default {
       });
       return rows;
     },
-    // 切换默认选中规格
+    // Chuyển đổi quy cách chọn mặc định
     changeDefaultSelect(e, index) {
-      // 一个开启 其他关闭
+      // Một cái bật, cái khác tắt
       this.manyFormValidate.map((item, i) => {
         if (i !== index) {
           item.is_default_select = 0;
@@ -1804,15 +1804,15 @@ export default {
       });
       if (e) this.manyFormValidate[index].is_show = 1;
     },
-    // 改变是否显示
+    // Thay đổi có hiển thị hay không
     changeDefaultShow(index) {
-      // 如果默认选中开启 则不可隐藏
+      // Nếu bật chọn mặc định thì không thể ẩn
       if (this.manyFormValidate[index].is_default_select === 1) {
         this.manyFormValidate[index].is_show = 1;
-        this.$message.error('默认规格不可隐藏');
+        this.$message.error('Không thể ẩn phân loại mặc định');
       }
     },
-    // 生成规格组合
+    // Tạo tổ hợp quy cách
     generateCombinations(arr, prefix = []) {
       if (arr.length === 0) {
         return [prefix];
@@ -1820,13 +1820,13 @@ export default {
       const [first, ...rest] = arr;
       return first.detail.flatMap((detail) => this.generateCombinations(rest, [...prefix, detail.value]));
     },
-    // 添加属性
+    // Thêm thuộc tính
     createAttr(num, idx) {
       if (num) {
-        // 判断是否存在同样熟悉
+        // Kiểm tra có tồn tại thuộc tính giống nhau hay không
         var isExist = this.attrs[idx].detail.some((item) => item.value === num);
         if (isExist) {
-          this.$message.error('规格值已存在');
+          this.$message.error('Giá trị phân loại đã tồn tại');
           return;
         }
         this.attrs[idx].detail.push({ value: num, pic: '' });
@@ -1836,23 +1836,23 @@ export default {
           this.generateAttr(this.attrs);
         }
 
-        this.$refs.specStock.$refs['popoverRef_' + idx][0].doClose(); //关闭的
+        this.$refs.specStock.$refs['popoverRef_' + idx][0].doClose(); //Đóng lại
         this.clearAttr();
         setTimeout(() => {
           if (this.$refs.specStock.$refs['popoverRef_' + idx]) {
-            //重点是以下两句
-            this.$refs.specStock.$refs['popoverRef_' + idx][0].doShow(); //打开的
-            //重点是以上两句
+            //Trọng tâm là hai câu sau
+            this.$refs.specStock.$refs['popoverRef_' + idx][0].doShow(); //Mở ra
+            //Trọng tâm là hai câu trên
           }
         }, 20);
       } else {
-        this.$refs.specStock.$refs['popoverRef_' + idx][0].doClose(); //关闭的
+        this.$refs.specStock.$refs['popoverRef_' + idx][0].doClose(); //Đóng lại
       }
     },
     handleShowPop(index) {
       this.$refs.specStock.$refs['inputRef_' + index][0].focus();
     },
-    // 商品分类；
+    // Danh mục sản phẩm;
     goodsCategory() {
       cascaderListApi(1)
         .then((res) => {
@@ -1862,7 +1862,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 改变规格
+    // Thay đổi quy cách
     changeSpec() {
       this.formValidate.is_sub = [];
       let id = this.$route.params.id;
@@ -1875,7 +1875,7 @@ export default {
           });
       }
     },
-    // 详情
+    // Chi tiết
     getInfo() {
       this.spinShow = true;
       productInfoApi(this.$route.params.id)
@@ -1894,18 +1894,18 @@ export default {
       this.formValidate.slider_image.splice(i, 1);
       this.oneFormValidate[0].pic = this.formValidate.slider_image[0];
     },
-    // 关闭图片上传模态框
+    // Đóng modal tải ảnh lên
     changeCancel(msg) {
       this.modalPic = false;
     },
-    // 点击商品图
+    // Bấm ảnh sản phẩm
     modalPicTap(tit, picTit = '', index = 0) {
       this.modalPic = true;
-      this.isChoice = tit === 'dan' ? '单选' : '多选';
+      this.isChoice = tit === 'dan' ? 'Chọn một' : 'Chọn nhiều';
       this.picTit = picTit;
       this.tableIndex = index;
     },
-    // 获取单张图片信息
+    // Lấy thông tin một ảnh
     getPic(pc) {
       switch (this.picTit) {
         case 'danFrom':
@@ -1938,7 +1938,7 @@ export default {
     deleteRow(index) {
       this.formValidate.params_list.splice(index, 1);
     },
-    // 获取多张图信息
+    // Lấy thông tin nhiều ảnh
     getPicD(pc) {
       this.images = pc;
       this.images.map((item) => {
@@ -1948,7 +1948,7 @@ export default {
       this.oneFormValidate[0].pic = this.formValidate.slider_image[0];
       this.modalPic = false;
     },
-    // 提交
+    // Gửi
     handleSubmit(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
@@ -1956,37 +1956,37 @@ export default {
           let arr = this.formValidate.spec_type === 0 ? this.oneFormValidate : this.manyFormValidate;
           let item = JSON.parse(JSON.stringify(arr));
           if (this.formValidate.spec_type === 1) {
-            if (item.length < 2) return this.$message.warning('商品规格-规格数量最少1个');
-            // 删除第一项
+            if (item.length < 2) return this.$message.warning('Phân loại sản phẩm - số lượng phân loại tối thiểu là 1');
+            // Xóa mục đầu tiên
             item.shift();
           }
           for (let i = 0; i < item.length; i++) {
             if (item[i].stock > 1000000) {
-              return this.$message.error('规格库存-库存超出系统范围(1000000)');
+              return this.$message.error('Phân loại và tồn kho - tồn kho vượt quá giới hạn hệ thống (1000000)');
             }
           }
           if (this.formValidate.is_sub[0] === 1) {
             for (let i = 0; i < item.length; i++) {
               if (item[i].brokerage === null || item[i].brokerage_two === null) {
-                return this.$message.error('营销设置- 一二级返佣不能为空');
+                return this.$message.error('Cài đặt marketing - hoa hồng cấp 1 và cấp 2 không được để trống');
               }
             }
           } else {
             for (let i = 0; i < item.length; i++) {
               if (item[i].vip_price === null) {
-                return this.$message.error('营销设置-会员价不能为空');
+                return this.$message.error('Cài đặt marketing - giá thành viên không được để trống');
               }
             }
           }
           if (this.formValidate.is_sub.length === 2) {
             for (let i = 0; i < item.length; i++) {
               if (item[i].brokerage === null || item[i].brokerage_two === null || item[i].vip_price === null) {
-                return this.$message.error('营销设置- 一二级返佣和会员价不能为空');
+                return this.$message.error('Cài đặt marketing - hoa hồng cấp 1, cấp 2 và giá thành viên không được để trống');
               }
             }
           }
           if (this.formValidate.freight == 3 && !this.formValidate.temp_id) {
-            return this.$message.warning('商品信息-运费模板不能为空');
+            return this.$message.warning('Thông tin sản phẩm - mẫu phí vận chuyển không được để trống');
           }
           let activeIds = [];
           this.dataLabel.forEach((item) => {
@@ -2028,17 +2028,17 @@ export default {
             });
         } else {
           if (!this.formValidate.store_name) {
-            return this.$message.warning('商品信息-商品名称不能为空');
+            return this.$message.warning('Thông tin sản phẩm - tên sản phẩm không được để trống');
           } else if (!this.formValidate.cate_id.length) {
-            return this.$message.warning('商品信息-商品分类不能为空');
+            return this.$message.warning('Thông tin sản phẩm - danh mục sản phẩm không được để trống');
           } else if (!this.formValidate.unit_name) {
-            return this.$message.warning('商品信息-商品单位不能为空');
+            return this.$message.warning('Thông tin sản phẩm - đơn vị sản phẩm không được để trống');
           } else if (!this.formValidate.slider_image.length) {
-            return this.$message.warning('商品信息-商品轮播图不能为空');
+            return this.$message.warning('Thông tin sản phẩm - ảnh trình chiếu sản phẩm không được để trống');
           } else if (!this.formValidate.logistics.length && !this.formValidate.virtual_type) {
-            return this.$message.warning('物流设置-至少选择一种物流方式');
+            return this.$message.warning('Cài đặt vận chuyển - chọn ít nhất một phương thức vận chuyển');
           } else if (!this.formValidate.temp_id && this.formValidate.freight == 3) {
-            return this.$message.warning('商品信息-运费模板不能为空');
+            return this.$message.warning('Thông tin sản phẩm - mẫu phí vận chuyển không được để trống');
           }
         }
       });
@@ -2046,13 +2046,13 @@ export default {
     changeTemplate(msg) {
       this.template = msg;
     },
-    // 表单验证
+    // Kiểm tra form
     validate(prop, status, error) {
       if (status === false) {
         this.$message.warning(error);
       }
     },
-    // 移动
+    // Di chuyển
     handleDragStart(e, item) {
       this.dragging = item;
     },
@@ -2073,58 +2073,58 @@ export default {
       newItems.splice(dst, 0, ...newItems.splice(src, 1));
       this.formValidate.slider_image = newItems;
     },
-    //对象数组去重；
+    //Loại bỏ trùng lặp trong mảng object;
     unique(arr) {
       const res = new Map();
       return arr.filter((arr) => !res.has(arr.product_id) && res.set(arr.product_id, 1));
     },
-    // 商品id
+    // id sản phẩm
     getProductId(data) {
       this.goods_modals = false;
       this.formValidate.recommend_list = this.unique(this.formValidate.recommend_list.concat(data));
     },
-    // 选择推荐商品
+    // Chọn sản phẩm đề xuất
     changeGoods() {
       this.goods_modals = true;
       this.$refs.goodslist.getList();
       this.$refs.goodslist.goodsCategory();
     },
-    // 选择用户标签
+    // Chọn nhãn người dùng
     activeData(dataLabel) {
       this.labelShow = false;
       this.dataLabel = dataLabel;
     },
-    // 选择商品标签
+    // Chọn nhãn sản phẩm
     activeLabel(data) {
       this.tagShow = false;
       this.formValidate.label_list = Array.from(new Set(data));
     },
-    // 标签弹窗关闭
+    // Đóng popup nhãn
     labelClose() {
       this.labelShow = false;
       this.tagShow = false;
     },
-    // 删除用户标签
+    // Xóa nhãn người dùng
     closeLabel(label) {
       let index = this.dataLabel.indexOf(this.dataLabel.filter((d) => d.id == label.id)[0]);
       this.dataLabel.splice(index, 1);
     },
-    // 打开选择用户标签
+    // Mở chọn nhãn người dùng
     openLabel(row) {
       this.labelShow = true;
     },
     handleRemoveRecommend(i) {
       this.formValidate.recommend_list.splice(i, 1);
     },
-    // 打开的营销活动标签
+    // Nhãn hoạt động marketing đã mở
     watchActivity() {
       let marketing = [];
-      // 使用对象映射优化权限判断逻辑
+      // Dùng object mapping để tối ưu logic kiểm tra quyền
       const permissionMap = {
-        默认: true,
-        秒杀: 'seckill',
-        砍价: 'bargain',
-        拼团: 'combination',
+        'Mặc định': true,
+        'Flash sale': 'seckill',
+        'Săn giảm giá': 'bargain',
+        'Mua chung': 'combination',
       };
       this.formValidate.activity.forEach((el) => {
         if (permissionMap[el] === true || (permissionMap[el] && checkArray(permissionMap[el]))) {

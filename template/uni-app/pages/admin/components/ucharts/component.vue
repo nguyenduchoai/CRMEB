@@ -115,7 +115,7 @@
 						min: 10,
 						max: 180,
 						format: (val) => {
-							return val.toFixed(0) + '元'
+							return val.toFixed(0) + 'đ'
 						}
 					},
 					width: this.cWidth * this.pixelRatio,
@@ -127,7 +127,7 @@
 					}
 				});
 			},
-			// 这里仅作为示例传入两个参数，cid为canvas-id,newdata为更新的数据，需要更多参数请自行修改
+			// Ở đây chỉ là ví dụ truyền vào hai tham số, cid là canvas-id, newdata là dữ liệu cập nhật, cần thêm tham số thì tự sửa
 			changeData(cid,newdata) {
 				canvases[cid].updateData({
 					series: newdata.series,

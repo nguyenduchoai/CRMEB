@@ -10,9 +10,9 @@
             mode="heightFix"
           ></image>
           <view class="text-content" :style="{ color: tipsTextColor }">
-            {{ $t(`开通SVIP会员预计省`) }}
+            {{ $t(`Đăng ký thành viên SVIP dự kiến tiết kiệm`) }}
             <text :style="{ color: moneyTextColor }">{{ diff }}</text>
-            {{ $t(`元`) }}
+            {{ $t(`đ`) }}
           </view>
         </view>
         <view class="right-content">
@@ -79,7 +79,7 @@ export default {
     rightBntText() {
       return this.dataConfig.rightBntConfig
         ? this.dataConfig.rightBntConfig.value
-        : this.$t("立即开通");
+        : this.$t("Kích hoạt ngay");
     },
     isCustomTone() {
       return (

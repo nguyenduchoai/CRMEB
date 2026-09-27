@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -45,7 +45,7 @@ class Aliyun extends BaseSms
     }
 
     /**
-     * 发送短信
+     * Gửi SMS
      * @param string $phone
      * @param string $templateId
      * @param array $data
@@ -54,18 +54,18 @@ class Aliyun extends BaseSms
     public function send(string $phone, string $templateId, array $data = [])
     {
         if (empty($phone)) {
-            return $this->setError('电话号码不能为空');
+            return $this->setError('Số điện thoại không được để trống');
         }
 
         $config = new AliConfig([
             "accessKeyId" => $this->AccessKeyId,
             "accessKeySecret" => $this->AccessKeySecret
         ]);
-        // 访问的域名
+        // Domain truy cập
         $config->endpoint = "dysmsapi.aliyuncs.com";
         $client = new Dysmsapi($config);
 
-        if (!$templateId) throw new ApiException('模板不存在：' . $templateId);
+        if (!$templateId) throw new ApiException('Mẫu không tồn tại:' . $templateId);
 
         $sendSmsRequest = new SendSmsRequest([
             "phoneNumbers" => $phone,
@@ -75,10 +75,10 @@ class Aliyun extends BaseSms
         ]);
         $runtime = new RuntimeOptions([]);
         try {
-            // 复制代码运行请自行打印 API 的返回值
+            // Sao chép code để chạy, vui lòng tự in giá trị trả về của API
             $resp = $client->sendSmsWithOptions($sendSmsRequest, $runtime);
             if (isset($resp) && $resp->body->code !== 'OK') {
-                throw new ApiException('【阿里云平台错误提示】：' . $resp->body->message);
+                throw new ApiException('[Thông báo lỗi từ Alibaba Cloud]:' . $resp->body->message);
             }
             return [
                 'id' => $resp->body->requestId,
@@ -86,7 +86,7 @@ class Aliyun extends BaseSms
                 'template' => $templateId,
             ];
         } catch (\Exception $e) {
-            throw new ApiException('【阿里云平台错误提示】：' . $e->getMessage());
+            throw new ApiException('[Thông báo lỗi từ Alibaba Cloud]:' . $e->getMessage());
         }
     }
 

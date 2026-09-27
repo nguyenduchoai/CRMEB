@@ -78,11 +78,11 @@ export default function modalForm(formRequestPromise, config = {}) {
                   request[data.method.toLowerCase()](data.action, formData)
                     .then((res) => {
                       done();
-                      this.$message.success(res.msg || '提交成功');
+                      this.$message.success(res.msg || 'Gửi thành công');
                       resolve(res);
                     })
                     .catch((err) => {
-                      this.$message.error(err.msg || '提交失败');
+                      this.$message.error(err.msg || 'Gửi thất bại');
                       // reject(err);
                     })
                     .finally(() => {

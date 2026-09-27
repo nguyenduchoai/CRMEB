@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2024 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -40,7 +40,7 @@ class Routine {
 			code = await this.getCode();
 		return code;
 	}
-	// 小程序静默授权
+	// Ủy quyền ngầm Mini Program
 	// silenceAuth(code) {
 	// 	const app = getApp();
 	// 	let that = this;
@@ -75,7 +75,7 @@ class Routine {
 	// 	})
 	// }
 	/**
-	 * 获取用户信息
+	 * Lấy thông tin người dùng
 	 */
 	getUserInfo() {
 		let that = this,
@@ -98,13 +98,13 @@ class Routine {
 	}
 
 	/**
-	 * 新版小程序获取用户信息 2021 4.13微信小程序开始正式启用
+	 * Lấy thông tin người dùng phiên bản Mini Program mới, chính thức áp dụng từ 13/4/2021
 	 */
 	getUserProfile(code) {
 		return new Promise((resolve, reject) => {
 			uni.getUserProfile({
 				lang: 'zh_CN',
-				desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+				desc: 'Dùng để hoàn thiện hồ sơ thành viên', // Khai báo mục đích sử dụng sau khi lấy thông tin cá nhân người dùng, nội dung sẽ hiển thị trong popup, vui lòng điền cẩn thận
 				success(user) {
 					if (code) user.code = code;
 					resolve({
@@ -120,7 +120,7 @@ class Routine {
 	}
 
 	/**
-	 * 获取用户信息
+	 * Lấy thông tin người dùng
 	 */
 	authorize() {
 		let that = this;
@@ -164,7 +164,7 @@ class Routine {
 	}
 
 	/**
-	 * 获取服务供应商
+	 * Lấy nhà cung cấp dịch vụ
 	 */
 	getProvider() {
 		return new Promise((resolve, reject) => {
@@ -181,7 +181,7 @@ class Routine {
 	}
 
 	/**
-	 * 是否授权
+	 * Đã cấp phép
 	 */
 	isAuth() {
 		let that = this;
@@ -201,9 +201,9 @@ class Routine {
 		});
 	}
 	/**
-	 * 小程序比较版本信息
-	 * @param v1 当前版本
-	 * @param v2 进行比较的版本 
+	 * So sánh thông tin phiên bản Mini Program
+	 * @param v1 Phiên bản hiện tại
+	 * @param v2 Phiên bản đem so sánh 
 	 * @return boolen
 	 * 
 	 */

@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "订单详情",
+  "navigationBarTitleText": "Chi tiết đơn hàng",
   "usingComponents": {
     "zb-code": "/components/zb-code/zb-code",
     "home": "/components/home/index",

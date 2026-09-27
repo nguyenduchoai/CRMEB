@@ -1,5 +1,5 @@
 <template>
-  <!-- 轮播图 -->
+  <!-- Ảnh trình chiếu -->
   <view v-show="!isSortType">
     <common-wrapper :config="configData">
       <view
@@ -154,10 +154,10 @@ export default {
     swiperChange(e) {
       this.swiperCur = e.detail.current;
     },
-    //替换安全域名
+    //Thay domain an toàn
     setDomain: function (url) {
       url = url ? url.toString() : "";
-      //本地调试打开,生产请注销
+      //Mở khi debug local, khi lên production hãy comment lại
       if (url.indexOf("https://") > -1) return url;
       else return url.replace("http://", "https://");
     },
@@ -179,7 +179,7 @@ export default {
   width: 100%;
   margin: 0 auto;
   border-radius: 10rpx;
-  /* 设置圆角 */
+  /* Đặt góc tròn */
   &.fillet {
     border-radius: 10rpx;
 
@@ -202,7 +202,7 @@ export default {
       transform: scale(1);
     }
   }
-  // 圆形指示点
+  // Chấm chỉ báo hình tròn
   &.circular {
     ::v-deep.uni-swiper-dot {
       width: 10rpx !important;
@@ -213,7 +213,7 @@ export default {
       background: #fff !important;
     }
   }
-  // 方形指示点
+  // Chấm chỉ báo hình vuông
   &.square {
     ::v-deep.uni-swiper-dot {
       width: 20rpx !important;

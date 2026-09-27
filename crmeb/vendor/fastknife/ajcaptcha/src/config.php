@@ -25,7 +25,7 @@ return [
     'watermark' => [
         'fontsize' => 12,
         'color' => '#000000',
-        'text' => '我的水印'
+        'text' => 'Watermark của tôi'
     ],
     'cache' => [
         //若您使用了框架，并且想使用类似于redis这样的缓存驱动，则应换成框架的中的缓存驱动

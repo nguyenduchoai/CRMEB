@@ -3,7 +3,7 @@
     <!-- <div class="i-layout-page-header header-title">
       <div class="fl_header">
         <span>
-          <el-button icon="ios-arrow-back" size="small" type="text" v-db-click @click="$router.go(-1)">返回</el-button>
+          <el-button icon="ios-arrow-back" size="small" type="text" v-db-click @click="$router.go(-1)">Quay lại</el-button>
         </span>
         <el-divider direction="vertical"></el-divider>
         <span class="ivu-page-header-title">{{ $route.meta.title }}</span>
@@ -17,7 +17,7 @@
     <cards-data class="mt16" :cardLists="cardLists" v-if="cardLists.length >= 0"></cards-data>
     <el-card :bordered="false" shadow="never" class="ivu-mt">
       <div class="table-head">
-        <h3>关注趋势</h3>
+        <h3>Xu hướng theo dõi</h3>
         <el-date-picker
           :editable="false"
           clearable
@@ -28,8 +28,8 @@
           type="daterange"
           value-format="yyyy/MM/dd"
           range-separator="-"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          start-placeholder="Ngày bắt đầu"
+          end-placeholder="Ngày kết thúc"
           class="mr20"
         ></el-date-picker>
       </div>
@@ -60,15 +60,15 @@ export default {
       loading: false,
       loading2: false,
       fromList: {
-        title: '选择时间',
+        title: 'Chọn giờ',
         custom: true,
         fromTxt: [
-          { text: '全部', val: '' },
-          { text: '今天', val: 'today' },
-          { text: '本周', val: 'week' },
-          { text: '本月', val: 'month' },
-          { text: '本季度', val: 'quarter' },
-          { text: '本年', val: 'year' },
+          { text: 'Tất cả', val: '' },
+          { text: 'Hôm nay', val: 'today' },
+          { text: 'Tuần này', val: 'week' },
+          { text: 'Tháng này', val: 'month' },
+          { text: 'Quý này', val: 'quarter' },
+          { text: 'Năm nay', val: 'year' },
         ],
       },
       formValidate: {
@@ -78,25 +78,25 @@ export default {
         {
           col: 6,
           count: 0,
-          name: '昨日新增关注',
+          name: 'Lượt theo dõi mới hôm qua',
           className: 'md-rose',
         },
         {
           col: 6,
           count: 0,
-          name: '昨日参与',
+          name: 'Tham gia hôm qua',
           className: 'ios-speedometer-outline',
         },
         {
           col: 6,
           count: 0,
-          name: '总关注',
+          name: 'Tổng lượt theo dõi',
           className: 'ios-speedometer-outline',
         },
         {
           col: 6,
           count: 0,
-          name: '参与总人数',
+          name: 'Tổng số người tham gia',
           className: 'md-rose',
         },
       ],
@@ -145,14 +145,14 @@ export default {
     },
 
     selectChange(e) {},
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e;
       this.formValidate.time = this.timeVal ? this.timeVal.join('-') : '';
       this.name = this.formValidate.time;
       this.wechatQrcodeStatistic();
     },
-    // 统计图
+    // Biểu đồ thống kê
     getTrend(seriesData, xAxisData) {
       this.spinShow = true;
       let legend = seriesData.map((item) => {

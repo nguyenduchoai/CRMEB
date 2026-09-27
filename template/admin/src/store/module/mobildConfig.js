@@ -1,74 +1,74 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2021 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 /**
- * diy自定义组件
+ * Component tùy chỉnh diy
  * */
 
 const bottomMenu = {
-  cname: '底部菜单',
+  cname: 'Menu dưới cùng',
   name: 'bottomMenu',
   isHide: false,
   setUp: {
     tabVal: 0,
   },
   entryConfig: {
-    title: '入口内容',
+    title: 'Nội dung lối vào',
     tabVal: 0,
-    tabList: [{ name: '默认' }, { name: '自定义' }],
+    tabList: [{ name: 'Mặc định' }, { name: 'Tùy chỉnh' }],
   },
-  styleTitle: '样式设置',
+  styleTitle: 'Cài đặt kiểu',
 
   iconColor: {
-    title: '图标颜色',
+    title: 'Màu biểu tượng',
     default: [{ item: '#333' }],
     color: [{ item: '#333' }],
   },
   iconSize: {
-    title: '图标大小',
+    title: 'Kích thước biểu tượng',
     val: 20,
     min: 10,
     max: 50,
   },
   iconRotate: {
-    title: '旋转角度',
+    title: 'Góc xoay',
     val: 0,
     min: 0,
     max: 360,
   },
   padding: {
-    title: '内边距',
+    title: 'Lề trong',
     val: 0,
     min: 0,
     max: 50,
   },
-  contentConfigTitle: '内容设置',
+  contentConfigTitle: 'Cài đặt nội dung',
   showContent: {
-    title: '显示内容',
+    title: 'Nội dung hiển thị',
     name: 'showContent',
     type: [3, 1, 2],
     list: [
-      { id: 3, name: '首页', icon: 'icon-shouye6' },
-      { id: 1, name: '收藏', icon: 'icon-shoucang4' },
-      { id: 2, name: '购物车', icon: 'icon-gouwuche' },
-      { id: 0, name: '客服', icon: 'icon-kefu' },
-      { id: 4, name: '分享', icon: 'icon-fenxiang4' },
+      { id: 3, name: 'Trang chủ', icon: 'icon-shouye6' },
+      { id: 1, name: 'Yêu thích', icon: 'icon-shoucang4' },
+      { id: 2, name: 'Giỏ hàng', icon: 'icon-gouwuche' },
+      { id: 0, name: 'CSKH', icon: 'icon-kefu' },
+      { id: 4, name: 'Chia sẻ', icon: 'icon-fenxiang4' },
     ],
   },
   cartButton: {
-    title: '购物车按钮',
+    title: 'Nút giỏ hàng',
     tabVal: 0,
-    tabList: [{ name: '显示' }, { name: '隐藏' }],
+    tabList: [{ name: 'Hiện' }, { name: 'Ẩn' }],
   },
   menuConfig: {
-    title: '最多可添加1张图片，建议宽度90 * 90px',
-    bnt: '添加',
+    title: 'Có thể thêm tối đa 1 ảnh, kích thước đề xuất 90 * 90px',
+    bnt: 'Thêm',
     type: 1,
     listStyle: 0,
     maxList: 100,
@@ -80,178 +80,178 @@ const bottomMenu = {
         icon: '',
         info: [
           {
-            title: '标题',
-            value: '标题',
-            tips: '选填，不超过4个字',
+            title: 'Tiêu đề',
+            value: 'Tiêu đề',
+            tips: 'Không bắt buộc, tối đa 4 ký tự',
             max: 4,
           },
           {
-            title: '链接',
+            title: 'Liên kết',
             value: '',
-            tips: '请输入链接',
+            tips: 'Vui lòng nhập liên kết',
             max: 100,
           },
         ],
       },
     ],
   },
-  buttonStyleTitle: '按钮设置',
+  buttonStyleTitle: 'Cài đặt nút',
   toneConfig: {
-    title: '按钮色调',
+    title: 'Tông màu nút',
     tabVal: 0, // 0: Follow Theme, 1: Custom
-    tabList: [{ name: '跟随主题风格' }, { name: '自定义' }],
+    tabList: [{ name: 'Theo phong cách chủ đề' }, { name: 'Tùy chỉnh' }],
   },
   cartColor: {
-    title: '购物车按钮',
+    title: 'Nút giỏ hàng',
     default: [{ item: '#FAAD14' }, { item: '#FAAD14' }],
     color: [{ item: '#FAAD14' }, { item: '#FAAD14' }],
   },
   buyColor: {
-    title: '购买按钮',
+    title: 'Nút mua',
     default: [{ item: '#E93323' }, { item: '#E93323' }],
     color: [{ item: '#E93323' }, { item: '#E93323' }],
   },
-  generalStyleTitle: '通用样式',
+  generalStyleTitle: 'Kiểu chung',
   moduleColor: {
-    title: '组件背景',
+    title: 'Nền thành phần',
     default: [{ item: '#fff' }, { item: '#fff' }],
     color: [{ item: '#fff' }, { item: '#fff' }],
   },
   bottomBgColor: {
-    title: '底部背景',
+    title: 'Nền phía dưới',
     default: [{ item: '#F5F5F5' }],
     color: [{ item: '#F5F5F5' }],
   },
   componentBgConfig: {
-    title: '背景设置',
+    title: 'Cài đặt nền',
     tabVal: 0,
-    tabList: [{ name: '颜色' }, { name: '图片' }],
+    tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
     colorConfig: {
-      title: '背景颜色',
+      title: 'Màu nền',
       default: [{ item: '#fff' }, { item: '#fff' }],
       color: [{ item: '#fff' }, { item: '#fff' }],
     },
     colorDirection: {
-      title: '渐变方向',
+      title: 'Hướng chuyển màu',
       tabVal: 0,
-      tabList: [{ name: '横向' }, { name: '纵向' }, { name: '左斜' }, { name: '右斜' }],
+      tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
     },
     imageConfig: {
-      header: '背景图片',
+      header: 'Ảnh nền',
       title: '',
-      name: '上传图片',
+      name: 'Tải lên ảnh',
       type: 'code',
       url: '',
-      info: '建议尺寸：750px * 400px',
+      info: 'Kích thước đề xuất: 750px * 400px',
     },
   },
   zIndexConfig: {
-    title: '组件上浮',
+    title: 'Thứ tự lớp thành phần',
     val: 0,
     min: 0,
   },
   borderConfig: {
-    title: '边框设置',
+    title: 'Cài đặt viền',
     tabVal: 0,
-    tabList: [{ name: '隐藏' }, { name: '显示' }],
+    tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
     val: 0, // 0: Hide, 1: Show
     styleConfig: {
-      title: '边框样式',
+      title: 'Kiểu viền',
       tabVal: 0,
       tabList: [
-        { name: '实线', style: 'solid' },
-        { name: '虚线', style: 'dashed' },
-        { name: '点状', style: 'dotted' },
+        { name: 'Nét liền', style: 'solid' },
+        { name: 'Nét đứt', style: 'dashed' },
+        { name: 'Nét chấm', style: 'dotted' },
       ],
     },
     widthConfig: {
-      title: '边框粗细',
+      title: 'Độ dày viền',
       val: 1,
       min: 1,
     },
     colorConfig: {
-      title: '边框颜色',
+      title: 'Màu viền',
       default: [{ item: '#e5e5e5' }],
       color: [{ item: '#e5e5e5' }],
     },
   },
   shadowConfig: {
-    title: '阴影设置',
+    title: 'Cài đặt đổ bóng',
     tabVal: 0,
-    tabList: [{ name: '隐藏' }, { name: '显示' }],
+    tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
     val: 0, // 0: Off, 1: On
     colorConfig: {
-      title: '阴影颜色',
+      title: 'Màu đổ bóng',
       default: [{ item: 'rgba(0,0,0,0.1)' }],
       color: [{ item: 'rgba(0,0,0,0.1)' }],
     },
     xConfig: {
-      title: 'X轴偏移',
+      title: 'Độ lệch trục X',
       val: 0,
       min: -50,
     },
     yConfig: {
-      title: 'Y轴偏移',
+      title: 'Độ lệch trục Y',
       val: 0,
       min: -50,
     },
     blurConfig: {
-      title: '模糊半径',
+      title: 'Bán kính làm mờ',
       val: 10,
       min: 0,
     },
     spreadConfig: {
-      title: '扩展半径',
+      title: 'Bán kính lan tỏa',
       val: 0,
       min: -50,
     },
   },
   paddingConfig: {
-    title: '内边距',
+    title: 'Lề trong',
     isAll: false,
     val: 0,
     min: 0,
     valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
   },
   marginConfig: {
-    title: '外边距',
+    title: 'Lề ngoài',
     isAll: false,
     val: 0,
     min: 0,
     valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
   },
   fillet: {
-    title: '背景圆角',
+    title: 'Bo góc nền',
     type: 0,
     list: [
       {
-        val: '全部',
+        val: 'Tất cả',
         icon: 'iconcaozuo-zhengti',
       },
       {
-        val: '单个',
+        val: 'Từng góc',
         icon: 'iconcaozuo-bianjiao',
       },
     ],
-    valName: '圆角值',
+    valName: 'Giá trị bo góc',
     val: 0,
     min: 0,
     valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
   },
   menuPcFillet: {
-    title: '圆角设置',
+    title: 'Cài đặt bo góc',
     type: 0,
     list: [
       {
-        val: '全部',
+        val: 'Tất cả',
         icon: 'iconcaozuo-zhengti',
       },
       {
-        val: '单个',
+        val: 'Từng góc',
         icon: 'iconcaozuo-bianjiao',
       },
     ],
-    valName: '圆角值',
+    valName: 'Giá trị bo góc',
     val: 0,
     min: 0,
     valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
@@ -263,142 +263,142 @@ export default {
   state: {
     configName: '',
     pageTitle: '',
-    pageName: '模版名称1',
+    pageName: 'Tên mẫu 1',
     pageShow: 1,
     pageColor: 0,
     pagePic: 0,
     pageColorPicker: '#f5f5f5',
     pageTabVal: 0,
     pagePicUrl: '',
-    // 已知组件列表默认数据 数组
+    // Mảng dữ liệu mặc định của danh sách component đã biết
     defaultArray: {},
     bottomMenu: JSON.parse(JSON.stringify(bottomMenu)),
     pageFooter: {
-      cname: '底部导航',
+      cname: 'Điều hướng dưới cùng',
       name: 'pageFoot',
       setUp: {
         tabVal: 0,
       },
-      titleLeft: '展示设置',
-      titleNav: '导航内容',
-      titleRight: '颜色设置',
-      titleCurrency: '通用样式',
+      titleLeft: 'Cài đặt hiển thị',
+      titleNav: 'Nội dung điều hướng',
+      titleRight: 'Cài đặt màu sắc',
+      titleCurrency: 'Kiểu chung',
       effectConfig: {
-        title: '展示效果',
+        title: 'Hiệu ứng hiển thị',
         tabVal: 1,
         tabList: [
           {
-            name: '系统默认',
+            name: 'Mặc định hệ thống',
           },
           {
-            name: '自定义',
+            name: 'Tùy chỉnh',
           },
         ],
       },
       navConfig: {
-        title: '导航类型',
+        title: 'Loại điều hướng',
         tabVal: 0,
         tabList: [
           {
-            name: '底部固定',
+            name: 'Cố định dưới cùng',
           },
           {
-            name: '底部悬浮',
+            name: 'Nổi dưới cùng',
           },
         ],
       },
       navStyleConfig: {
-        title: '导航样式',
+        title: 'Kiểu điều hướng',
         tabVal: 0,
         tabList: [
           {
-            name: '图片+文字',
+            name: 'Hình ảnh + văn bản',
           },
           {
-            name: '文字',
+            name: 'Văn bản',
           },
           {
-            name: '图片',
+            name: 'Hình ảnh',
           },
         ],
       },
       toneConfig: {
-        title: '色调',
+        title: 'Tông màu',
         tabVal: 1,
         tabList: [
           {
-            name: '跟随主题风格',
+            name: 'Theo phong cách chủ đề',
           },
           {
-            name: '自定义',
+            name: 'Tùy chỉnh',
           },
         ],
       },
       topConfig: {
-        title: '上边距',
+        title: 'Lề trên',
         val: 0,
         min: 0,
       },
       bottomConfig: {
-        title: '下边距',
+        title: 'Lề dưới',
         val: 0,
         min: 0,
       },
       prConfig: {
-        title: '左右边距',
+        title: 'Lề trái phải',
         val: 10,
         min: 0,
       },
       mbConfig: {
-        title: '页面下间距',
+        title: 'Khoảng cách dưới trang',
         val: 25,
         min: 0,
       },
       fillet: {
-        title: '背景圆角',
+        title: 'Bo góc nền',
         type: 0,
         list: [
           {
-            val: '全部',
+            val: 'Tất cả',
             icon: 'iconcaozuo-zhengti',
           },
           {
-            val: '单个',
+            val: 'Từng góc',
             icon: 'iconcaozuo-bianjiao',
           },
         ],
-        valName: '圆角值',
+        valName: 'Giá trị bo góc',
         val: 30,
         min: 0,
         valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
       },
       txtColor: {
-        title: '文字颜色',
+        title: 'Màu chữ',
         name: 'txtColor',
         default: [{ item: '#282828' }],
         color: [{ item: '#282828' }],
       },
       activeTxtColor: {
-        title: '选中文字颜色',
+        title: 'Màu chữ khi được chọn',
         name: 'txtColor',
         default: [{ item: '#F62C2C' }],
         color: [{ item: '#F62C2C' }],
       },
       bgColor: {
-        title: '背景颜色',
+        title: 'Màu nền',
         name: 'bgColor',
         default: [{ item: '#fff' }],
         color: [{ item: '#fff' }],
       },
       bgColor2: {
-        title: '背景颜色',
+        title: 'Màu nền',
         name: 'bgColor2',
         default: [{ item: 'rgba(255,255,255,0.8)' }],
         color: [{ item: 'rgba(255,255,255,0.8)' }],
       },
 
       status: {
-        title: '是否自定义',
+        title: 'Tùy chỉnh',
         name: 'status',
         status: false,
       },
@@ -406,22 +406,22 @@ export default {
       menuList: [
         {
           imgList: [require('@/assets/images/foot-001.png'), require('@/assets/images/foot-002.png')],
-          name: '首页',
+          name: 'Trang chủ',
           link: '/pages/index/index',
         },
         {
           imgList: [require('@/assets/images/foot-003.png'), require('@/assets/images/foot-004.png')],
-          name: '分类',
+          name: 'Danh mục',
           link: '/pages/goods_cate/goods_cate',
         },
         {
           imgList: [require('@/assets/images/foot-005.png'), require('@/assets/images/foot-006.png')],
-          name: '购物车',
+          name: 'Giỏ hàng',
           link: '/pages/order_addcart/order_addcart',
         },
         {
           imgList: [require('@/assets/images/foot-007.png'), require('@/assets/images/foot-008.png')],
-          name: '我的',
+          name: 'Tôi',
           link: '/pages/user/index',
         },
       ],
@@ -436,35 +436,35 @@ export default {
       state.bottomMenu = data;
     },
     /**
-     * @description 默认配置push到数组里面
+     * @description Push cấu hình mặc định vào mảng
      * @param {Object} state vuex state
      * @param {Object} data
-     * 把默认数据添加到默认数组里面，解耦重复组件公用一条配置的问题
+     * Thêm dữ liệu mặc định vào mảng mặc định, giải quyết vấn đề các component trùng lặp dùng chung một cấu hình
      */
     ADDARRAY(state, data) {
       data.val.id = 'id' + data.val.timestamp;
       state.defaultArray[data.num] = data.val;
     },
     /**
-     * @description 删除列表第几个默认数据
+     * @description Xóa dữ liệu mặc định thứ mấy trong danh sách
      * @param {Object} state vuex state
-     * @param {Object} data 数据
+     * @param {Object} data Dữ liệu
      */
     DELETEARRAY(state, data) {
       let tempObj = delete state.defaultArray[data.num];
     },
     /**
-     * @description 删除列表第几个默认数据
+     * @description Xóa dữ liệu mặc định thứ mấy trong danh sách
      * @param {Object} state vuex state
-     * @param {Object} data 数据
+     * @param {Object} data Dữ liệu
      */
     ARRAYREAST(state, data) {
       let tempObj = delete state.defaultArray[data];
     },
     /**
-     * @description 数组排序
+     * @description Sắp xếp mảng
      * @param {Object} state vuex state
-     * @param {Object} data 位置index记录
+     * @param {Object} data Ghi lại index vị trí
      */
     defaultArraySort(state, data) {
       let newArr = objToArr(state.defaultArray);
@@ -503,7 +503,7 @@ export default {
       state.defaultArray = Object.assign({}, newObj);
     },
     /**
-     * @description 更新数组某一组数据
+     * @description Cập nhật một nhóm dữ liệu trong mảng
      * @param {Object} state vuex state
      * @param {Object} data
      */
@@ -517,7 +517,7 @@ export default {
       state.defaultArray = value;
     },
     /**
-     * @description 保存组件名称
+     * @description Lưu tên thành phần
      * @param {Object} state vuex state
      * @param {string} data
      */
@@ -525,7 +525,7 @@ export default {
       state.configName = name;
     },
     /**
-     * @description 默认组件清空
+     * @description Xóa trắng component mặc định
      * @param {Object} state vuex state
      * @param {string} data
      */
@@ -557,7 +557,7 @@ export default {
       state.pagePicUrl = val;
     },
     /**
-     * @description 更新foot菜单配置
+     * @description Cập nhật cấu hình menu foot
      * @param {Object} state vuex state
      * @param {string} data
      */
@@ -566,23 +566,23 @@ export default {
       state.pageFooter.menuList = data;
     },
     /**
-     * @description 更新foot自定义开关
+     * @description Cập nhật công tắc tùy chỉnh foot
      * @param {Object} state vuex state
      * @param {string} data
      */
     footStatus(state, data) {
       // state.pageFooter.status.status = data
     },
-    // 更新导航类型
+    // Cập nhật loại điều hướng
     footType(state, data) {
       state.pageFooter.navConfig.tabVal = data;
     },
-    //底部导航下边距；
+    //Lề dưới của điều hướng dưới cùng;
     footBottom(state, data) {
       state.pageFooter.mbConfig.val = data;
     },
     /**
-     * @description 更新foot配置
+     * @description Cập nhật cấu hình foot
      * @param {Object} state vuex state
      * @param {string} data
      */
@@ -590,7 +590,7 @@ export default {
       state.pageFooter = data;
     },
     /**
-     * @description 更新bottomMenu配置
+     * @description Cập nhật cấu hình bottomMenu
      * @param {Object} state vuex state
      * @param {string} data
      */
@@ -601,7 +601,7 @@ export default {
       state.bottomMenu = JSON.parse(JSON.stringify(bottomMenu));
     },
     /**
-     * @description 更新title配置
+     * @description Cập nhật cấu hình title
      * @param {Object} state vuex state
      * @param {string} data
      */
@@ -609,7 +609,7 @@ export default {
       state.pageTitle = data;
     },
     /**
-     * @description 更新name配置
+     * @description Cập nhật cấu hình name
      * @param {Object} state vuex state
      * @param {string} data
      */

@@ -13,8 +13,8 @@
           </el-select>
         </template>
       </el-input>
-      <el-button class="ml20" type="primary" v-db-click @click="requestData">请求</el-button>
-      <el-button class="ml10 copy-btn" type="success" v-db-click @click="insertCopy()">复制</el-button>
+      <el-button class="ml20" type="primary" v-db-click @click="requestData">Gửi yêu cầu</el-button>
+      <el-button class="ml10 copy-btn" type="success" v-db-click @click="insertCopy()">Sao chép</el-button>
     </div>
     <div class="params">
       <el-tabs class="mt10" v-model="paramsType" @tab-click="changeTab">
@@ -35,17 +35,17 @@
           :tree-config="{ transform: true, rowField: 'id', parentField: 'parentId' }"
           :data="interfaceData.request_params"
         >
-          <vxe-column field="attribute" width="150" title="属性" tree-node :edit-render="{}">
+          <vxe-column field="attribute" width="150" title="Thuộc tính" tree-node :edit-render="{}">
             <template #default="{ row }">
               <vxe-input v-model="row.attribute" type="text"></vxe-input>
             </template>
           </vxe-column>
-          <vxe-column field="value" title="参数值" :edit-render="{}">
+          <vxe-column field="value" title="Giá trị thông số" :edit-render="{}">
             <template #default="{ row }">
               <vxe-input v-model="row.value" type="text"></vxe-input>
             </template>
           </vxe-column>
-          <vxe-column field="type" title="类型" width="120" :edit-render="{}">
+          <vxe-column field="type" title="Loại" width="120" :edit-render="{}">
             <template #default="{ row }">
               <vxe-select v-model="row.type" transfer>
                 <vxe-option
@@ -57,17 +57,17 @@
               </vxe-select>
             </template>
           </vxe-column>
-          <vxe-column field="must" title="必填" width="50" :edit-render="{}">
+          <vxe-column field="must" title="Bắt buộc" width="50" :edit-render="{}">
             <template #default="{ row }">
-              <span>{{ row.must == '1' ? '是' : '否' }}</span>
+              <span>{{ row.must == '1' ? 'Có' : 'Không' }}</span>
             </template>
           </vxe-column>
-          <vxe-column field="trip" width="150" title="说明" :edit-render="{}">
+          <vxe-column field="trip" width="150" title="Mô tả" :edit-render="{}">
             <template #default="{ row }">
               <vxe-input v-model="row.trip" type="text"></vxe-input>
             </template>
           </vxe-column>
-          <vxe-column title="操作" width="120">
+          <vxe-column title="Thao tác" width="120">
             <template #default="{ row }">
               <vxe-button
                 type="text"
@@ -75,13 +75,13 @@
                 status="primary"
                 v-db-click
                 @click="insertRow(row, 'xTable')"
-                >插入</vxe-button
+                >Chèn</vxe-button
               >
-              <vxe-button type="text" status="primary" v-db-click @click="removeRow(row, 'xTable')">删除</vxe-button>
+              <vxe-button type="text" status="primary" v-db-click @click="removeRow(row, 'xTable')">Xóa</vxe-button>
             </template>
           </vxe-column>
         </vxe-table>
-        <el-button class="mt10" type="primary" v-db-click @click="insertEvent('xTable')">添加参数</el-button>
+        <el-button class="mt10" type="primary" v-db-click @click="insertEvent('xTable')">Thêm thông số</el-button>
       </div>
       <div v-show="paramsType === 'Body'">
         <vxe-table
@@ -96,17 +96,17 @@
           :tree-config="{ transform: true, rowField: 'id', parentField: 'parentId' }"
           :data="interfaceData.request_body"
         >
-          <vxe-column field="attribute" width="150" title="属性" tree-node :edit-render="{}">
+          <vxe-column field="attribute" width="150" title="Thuộc tính" tree-node :edit-render="{}">
             <template #default="{ row }">
               <vxe-input v-model="row.attribute" type="text"></vxe-input>
             </template>
           </vxe-column>
-          <vxe-column field="value" title="参数值" :edit-render="{}">
+          <vxe-column field="value" title="Giá trị thông số" :edit-render="{}">
             <template #default="{ row }">
               <vxe-input v-model="row.value" type="text"></vxe-input>
             </template>
           </vxe-column>
-          <vxe-column field="type" title="类型" width="120" :edit-render="{}">
+          <vxe-column field="type" title="Loại" width="120" :edit-render="{}">
             <template #default="{ row }">
               <vxe-select v-model="row.type" transfer>
                 <vxe-option
@@ -118,17 +118,17 @@
               </vxe-select>
             </template>
           </vxe-column>
-          <vxe-column field="must" title="必填" width="50" :edit-render="{}">
+          <vxe-column field="must" title="Bắt buộc" width="50" :edit-render="{}">
             <template #default="{ row }">
-              <span>{{ row.must == '1' ? '是' : '否' }}</span>
+              <span>{{ row.must == '1' ? 'Có' : 'Không' }}</span>
             </template>
           </vxe-column>
-          <vxe-column field="trip" title="说明" width="150" :edit-render="{}">
+          <vxe-column field="trip" title="Mô tả" width="150" :edit-render="{}">
             <template #default="{ row }">
               <vxe-input v-model="row.trip" type="text"></vxe-input>
             </template>
           </vxe-column>
-          <vxe-column title="操作" width="120">
+          <vxe-column title="Thao tác" width="120">
             <template #default="{ row }">
               <vxe-button
                 type="text"
@@ -136,13 +136,13 @@
                 status="primary"
                 v-db-click
                 @click="insertRow(row, 'yTable')"
-                >插入</vxe-button
+                >Chèn</vxe-button
               >
-              <vxe-button type="text" status="primary" v-db-click @click="removeRow(row, 'yTable')">删除</vxe-button>
+              <vxe-button type="text" status="primary" v-db-click @click="removeRow(row, 'yTable')">Xóa</vxe-button>
             </template>
           </vxe-column>
         </vxe-table>
-        <el-button class="mt10" type="primary" v-db-click @click="insertEvent('yTable')">添加参数</el-button>
+        <el-button class="mt10" type="primary" v-db-click @click="insertEvent('yTable')">Thêm thông số</el-button>
       </div>
       <div v-show="paramsType === 'Header'">
         <vxe-table
@@ -157,17 +157,17 @@
           :tree-config="{ transform: true, rowField: 'id', parentField: 'parentId' }"
           :data="interfaceData.headerData"
         >
-          <vxe-column field="attribute" width="300" title="属性" tree-node :edit-render="{}">
+          <vxe-column field="attribute" width="300" title="Thuộc tính" tree-node :edit-render="{}">
             <template #default="{ row }">
               <vxe-input v-model="row.attribute" type="text"></vxe-input>
             </template>
           </vxe-column>
-          <vxe-column field="value" title="参数值" :edit-render="{}">
+          <vxe-column field="value" title="Giá trị thông số" :edit-render="{}">
             <template #default="{ row }">
               <vxe-input v-model="row.value" type="text"></vxe-input>
             </template>
           </vxe-column>
-          <vxe-column field="type" title="类型" width="200" :edit-render="{}">
+          <vxe-column field="type" title="Loại" width="200" :edit-render="{}">
             <template #default="{ row }">
               <vxe-select v-model="row.type" transfer>
                 <vxe-option
@@ -179,7 +179,7 @@
               </vxe-select>
             </template>
           </vxe-column>
-          <vxe-column title="操作" width="100">
+          <vxe-column title="Thao tác" width="100">
             <template #default="{ row }">
               <vxe-button
                 type="text"
@@ -187,14 +187,14 @@
                 status="primary"
                 v-db-click
                 @click="insertRow(row, 'zTable')"
-                >插入</vxe-button
+                >Chèn</vxe-button
               >
-              <vxe-button type="text" status="primary" v-db-click @click="removeRow(row, 'zTable')">删除</vxe-button>
+              <vxe-button type="text" status="primary" v-db-click @click="removeRow(row, 'zTable')">Xóa</vxe-button>
             </template>
           </vxe-column>
         </vxe-table>
-        <el-button class="mt10" type="primary" v-db-click @click="insertEvent('zTable')">添加参数</el-button>
-        <h4 class="mt10 title">全局Header参数</h4>
+        <el-button class="mt10" type="primary" v-db-click @click="insertEvent('zTable')">Thêm thông số</el-button>
+        <h4 class="mt10 title">Tham số Header toàn cục</h4>
         <vxe-table
           class="mt10"
           resizable
@@ -207,22 +207,22 @@
           :tree-config="{ transform: true, rowField: 'id', parentField: 'parentId' }"
           :data="interfaceData.allHeaderData"
         >
-          <vxe-column field="attribute" width="300" title="属性" tree-node :edit-render="{}">
+          <vxe-column field="attribute" width="300" title="Thuộc tính" tree-node :edit-render="{}">
             <template #default="{ row }">
               <span>{{ row.attribute || '' }}</span>
             </template>
           </vxe-column>
-          <vxe-column field="value" title="参数值" :edit-render="{}">
+          <vxe-column field="value" title="Giá trị thông số" :edit-render="{}">
             <template #default="{ row }">
               <span>{{ row.value || '' }}</span>
             </template>
           </vxe-column>
-          <vxe-column field="type" title="类型" width="200" :edit-render="{}">
+          <vxe-column field="type" title="Loại" width="200" :edit-render="{}">
             <template #default="{ row }">
               <span>{{ row.type || '' }}</span>
             </template>
           </vxe-column>
-          <vxe-column field="trip" title="说明" :edit-render="{}">
+          <vxe-column field="trip" title="Mô tả" :edit-render="{}">
             <template #default="{ row }">
               <span>{{ row.trip || '' }}</span>
             </template>
@@ -274,7 +274,7 @@ export default {
     return {
       interfaceData: undefined,
       paramsType: 'Params',
-      editor: '', //当前编辑器对象
+      editor: '', //Đối tượng trình soạn thảo hiện tại
       codes: '',
     };
   },
@@ -287,10 +287,10 @@ export default {
     insertCopy() {
       this.$copyText(this.codes)
         .then((message) => {
-          this.$message.success('复制成功');
+          this.$message.success('Sao chép thành công');
         })
         .catch((err) => {
-          this.$message.error('复制失败');
+          this.$message.error('Sao chép thất bại');
         });
     },
     async requestData() {
@@ -413,9 +413,9 @@ export default {
     },
     async insertRow(currRow, type) {
       const $table = this.$refs[type];
-      // 如果 null 则插入到目标节点顶部
-      // 如果 -1 则插入到目标节点底部
-      // 如果 row 则有插入到效的目标节点该行的位置
+      // Nếu là null thì chèn vào đỉnh của nút đích
+      // Nếu là -1 thì chèn vào đáy của nút đích
+      // Nếu là row thì chèn vào vị trí dòng đó của nút đích
       let record;
       if (type == 'xTable') {
         record = {
@@ -425,7 +425,7 @@ export default {
           value: '',
           trip: '',
           id: Date.now(),
-          parentId: currRow.id, // 需要指定父节点，自动插入该节点中
+          parentId: currRow.id, // Cần chỉ định nút cha, tự động chèn vào nút đó
         };
       } else {
         record = {
@@ -433,12 +433,12 @@ export default {
           value: '',
           solution: '',
           id: Date.now(),
-          parentId: currRow.id, // 需要指定父节点，自动插入该节点中
+          parentId: currRow.id, // Cần chỉ định nút cha, tự động chèn vào nút đó
         };
       }
       const { row: newRow } = await $table.insertAt(record, -1);
-      await $table.setTreeExpand(currRow, true); // 将父节点展开
-      await $table.setActiveRow(newRow); // 插入子节点
+      await $table.setTreeExpand(currRow, true); // Mở rộng nút cha
+      await $table.setActiveRow(newRow); // Chèn nút con
     },
     async removeRow(row, type) {
       const $table = this.$refs[type];

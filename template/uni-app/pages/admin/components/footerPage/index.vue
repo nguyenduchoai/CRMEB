@@ -1,5 +1,5 @@
 <template>
-	<!-- 底部导航 -->
+	<!-- Điều hướng dưới cùng -->
 	<view class="page-footer">
 		<view class="foot-item" :class="item.pagePath == activeRouter?'active':''"
 		v-for="(item,index) in footerList" :key="index" @click="goRouter(item, index)">
@@ -20,8 +20,8 @@
 		name: 'FooterPage',
 		props: {},
 		created() {
-			let routes = getCurrentPages(); //获取当前打开过的页面路由数组
-			let curRoute = routes[routes.length - 1].route //获取当前页面路由
+			let routes = getCurrentPages(); //Lấy mảng route các trang đã từng mở
+			let curRoute = routes[routes.length - 1].route //Lấy route trang hiện tại
 			this.activeRouter = '/' + curRoute
 		},
 		mounted() {},
@@ -33,25 +33,25 @@
 						pagePath: "/pages/admin/manage/index",
 						iconPath: require("../../static/footer1-1.png"),
 						selectedIconPath: require("../../static/footer1-2.png"),
-						text: "工作台"
+						text: "Bàn làm việc"
 					},
 					{
 						pagePath: "/pages/admin/goods/index",
 						iconPath: require("../../static/footer2-1.png"),
 						selectedIconPath: require("../../static/footer2-2.png"),
-						text: "商品"
+						text: "Sản phẩm"
 					},
 					{
 						pagePath: "/pages/admin/orderList/index",
 						iconPath: require("../../static/footer3-1.png"),
 						selectedIconPath: require("../../static/footer3-2.png"),
-						text: "订单"
+						text: "Đơn hàng"
 					},
 					{
 						pagePath: "/pages/admin/user/list",
 						iconPath: require("../../static/footer4-1.png"),
 						selectedIconPath: require("../../static/footer4-2.png"),
-						text: "用户"
+						text: "Người dùng"
 					}
 				]
 			}
@@ -64,7 +64,7 @@
 
 				uni.redirectTo({
 				  url: item.pagePath,
-				  animationType: 'none' // 关闭默认的滑动效果
+				  animationType: 'none' // Tắt hiệu ứng trượt mặc định
 				});
 			}
 		}
@@ -81,14 +81,14 @@
 		align-items: center;
 		justify-content: space-around;
 		width: 100%;
-		height: calc(100rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-		height: calc(100rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+		height: calc(100rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+		height: calc(100rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 		box-sizing: border-box;
 		border-top: solid 1rpx #F3F3F3;
 		background-color: #fff;
 		// box-shadow: 0px 0px 17rpx 1rpx rgba(206, 206, 206, 0.32);
-		padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
-		padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
+		padding-bottom: constant(safe-area-inset-bottom); ///Tương thích IOS<11.2/
+		padding-bottom: env(safe-area-inset-bottom); ///Tương thích IOS>11.2/
 
 		.foot-item {
 			display: flex;

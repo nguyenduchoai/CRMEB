@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -26,14 +26,14 @@ use crmeb\services\HttpService;
 use think\facade\Config;
 
 /**
- * 公共接口基类 主要存放公共接口
+ * Lớp cơ sở API công dùng, chủ yếu chứa các API công dùng
  * Class Common
  * @package app\adminapi\controller
  */
 class Common extends AuthController
 {
     /**
-     * 获取logo
+     * Lấy logo
      * @return mixed
      */
     public function getLogo()
@@ -46,14 +46,14 @@ class Common extends AuthController
     }
 
     /**
-     * 获取授权信息
+     * Lấy thông tin ủy quyền
      * @return mixed
      */
     public function auth()
     {
         $version = get_crmeb_version();
         $host = $this->request->host();
-        // 正常域名
+        // Tên miền bình thường
         $res = HttpService::request('http://authorize.crmeb.net/api/auth_cert_query', 'post', [
             'domain_name' => $host,
             'label' => 34,
@@ -63,7 +63,7 @@ class Common extends AuthController
         $status = $res['data']['status'] ?? -9;
         switch ((int)$status) {
             case 1:
-                //审核成功
+                //Duyệt thành công
                 $authCode = $res['data']['auth_code'] ?? '';
                 $autoContent = $res['data']['auto_content'] ?? '';
                 try {
@@ -79,11 +79,11 @@ class Common extends AuthController
                             'config_tab_id' => 1,
                             'value' => json_encode($autoContent . ',' . $authCode),
                             'status' => 2,
-                            'info' => '授权密钥'
+                            'info' => 'Khóa cấp phép'
                         ]);
                     }
                 } catch (\Throwable $e) {
-                    return app('json')->fail('授权成功，写入数据库失败，请检查数据库链接配置');
+                    return app('json')->fail('Cấp phép thành công nhưng ghi vào cơ sở dữ liệu thất bại, vui lòng kiểm tra cấu hình kết nối cơ sở dữ liệu');
                 }
                 return app('json')->success(['status' => 1, 'copyright' => $res['data']['copyright'], 'authCode' => $authCode, 'day' => 0, 'force_reminder' => $upgradeStatus['force_reminder'] ?? 0]);
             default:
@@ -92,7 +92,7 @@ class Common extends AuthController
     }
 
     /**
-     * 申请授权
+     * Yêu cầu cấp phép
      * @return mixed
      */
     public function auth_apply(SystemAuthServices $services)
@@ -106,28 +106,28 @@ class Common extends AuthController
             ['captcha', ''],
         ]);
         if (!$data['company_name']) {
-            return app('json')->fail('请填写公司名称');
+            return app('json')->fail('Vui lòng điền tên công ty');
         }
         if (!$data['domain_name']) {
-            return app('json')->fail('请填写授权域名');
+            return app('json')->fail('Vui lòng điền tên miền được cấp phép');
         }
 
         if (!$data['phone']) {
-            return app('json')->fail('请填写手机号码');
+            return app('json')->fail('Vui lòng điền số điện thoại');
         }
         if (!$data['order_id']) {
-            return app('json')->fail('请填写订单id');
+            return app('json')->fail('Vui lòng điền ID đơn hàng');
         }
         if (!$data['captcha']) {
-            return app('json')->fail('请填写验证码');
+            return app('json')->fail('Vui lòng điền mã xác thực');
         }
         $services->authApply($data);
-        return app('json')->success('申请授权成功');
+        return app('json')->success('Yêu cầu cấp phép thành công');
 
     }
 
     /**
-     * 首页头部统计数据
+     * Dữ liệu thống kê phần đầu trang chủ
      * @return mixed
      */
     public function homeStatics()
@@ -139,15 +139,15 @@ class Common extends AuthController
     }
 
     /**
-    * 计算增长率
-    * 特殊情况：
-    * 1. 当前值和上期值均为0时，返回0；
-    * 2. 上期值为0时，返回当前值；
-    * 3. 当前值为0时，返回上期值的负数。
+    * Tính tỷ lệ tăng trưởng
+    * Trường hợp đặc biệt:
+    * 1. Khi giá trị hiện tại và giá trị kỳ trước đều là 0, trả về 0;
+    * 2. Khi giá trị kỳ trước là 0, trả về giá trị hiện tại;
+    * 3. Khi giá trị hiện tại là 0, trả về số âm của giá trị kỳ trước.
     *
-    * @param float $nowValue 当前值
-    * @param float $lastValue 上期值
-    * @return float 增长率
+    * @param float $nowValue Giá trị hiện tại
+    * @param float $lastValue Giá trị kỳ trước
+    * @return float Tỷ lệ tăng trưởng
     */
     public function growth($nowValue, $lastValue)
     {
@@ -159,11 +159,11 @@ class Common extends AuthController
 
 
     /**
-     * 订单图表
+     * Biểu đồ đơn hàng
      */
     public function orderChart()
     {
-        $cycle = $this->request->param('cycle') ?: 'thirtyday';//默认30天
+        $cycle = $this->request->param('cycle') ?: 'thirtyday';//Mặc định 30 ngày
         /** @var StoreOrderServices $orderServices */
         $orderServices = app()->make(StoreOrderServices::class);
         $chartdata = $orderServices->orderCharts($cycle);
@@ -171,7 +171,7 @@ class Common extends AuthController
     }
 
     /**
-     * 用户图表
+     * Biểu đồ người dùng
      */
     public function userChart()
     {
@@ -182,7 +182,7 @@ class Common extends AuthController
     }
 
     /**
-     * 交易额排行
+     * Xếp hạng giá trị giao dịch
      * @return mixed
      */
     public function purchaseRanking()
@@ -194,7 +194,7 @@ class Common extends AuthController
     }
 
     /**
-     * 待办事统计
+     * Thống kê việc cần xử lý
      * @return mixed
      */
     public function jnotice()
@@ -206,41 +206,41 @@ class Common extends AuthController
         if ($store_stock < 0) $store_stock = 2;
         /** @var StoreProductServices $storeServices */
         $storeServices = app()->make(StoreProductServices::class);
-        $data['inventory'] = $storeServices->count(['type' => 5, 'store_stock' => $store_stock]);//警戒库存
+        $data['inventory'] = $storeServices->count(['type' => 5, 'store_stock' => $store_stock]);//Ngưỡng cảnh báo tồn kho
         /** @var StoreProductReplyServices $replyServices */
         $replyServices = app()->make(StoreProductReplyServices::class);
         $data['commentnum'] = $replyServices->replyCount();
         /** @var UserExtractServices $extractServices */
         $extractServices = app()->make(UserExtractServices::class);
-        $data['reflectnum'] = $extractServices->userExtractCount();//提现
+        $data['reflectnum'] = $extractServices->userExtractCount();//Rút tiền
         $data['msgcount'] = intval($data['ordernum']) + intval($data['inventory']) + intval($data['commentnum']) + intval($data['reflectnum']);
         $data['newOrderId'] = $orderServices->newOrderId(1);
         if (count($data['newOrderId'])) $orderServices->newOrderUpdate($data['newOrderId']);
         $value = [];
         if ($data['ordernum'] != 0) {
             $value[] = [
-                'title' => "您有$data[ordernum]个待发货的订单",
+                'title' => "Bạn có $data[ordernum] đơn hàng chờ giao hàng",
                 'type' => 1,
                 'url' => '/' . Config::get('app.admin_prefix', 'admin') . '/order/list?status=1'
             ];
         }
         if ($data['inventory'] != 0) {
             $value[] = [
-                'title' => "您有$data[inventory]个商品库存预警",
+                'title' => "Bạn có $data[inventory] sản phẩm cảnh báo tồn kho",
                 'type' => 2,
                 'url' => '/' . Config::get('app.admin_prefix', 'admin') . '/product/product_list?type=5',
             ];
         }
         if ($data['commentnum'] != 0) {
             $value[] = [
-                'title' => "您有$data[commentnum]条评论待回复",
+                'title' => "Bạn có $data[commentnum] đánh giá chờ phản hồi",
                 'type' => 3,
                 'url' => '/' . Config::get('app.admin_prefix', 'admin') . '/product/product_reply?is_reply=0'
             ];
         }
         if ($data['reflectnum'] != 0) {
             $value[] = [
-                'title' => "您有$data[reflectnum]个提现申请待审核",
+                'title' => "Bạn có $data[reflectnum] yêu cầu rút tiền chờ duyệt",
                 'type' => 4,
                 'url' => '/' . Config::get('app.admin_prefix', 'admin') . '/finance/user_extract/index?status=0',
             ];
@@ -249,43 +249,43 @@ class Common extends AuthController
     }
 
     /**
-     * 消息返回格式
+     * Định dạng trả về của thông báo
      * @param array $data
      * @return array
      */
     public function noticeData(array $data): array
     {
-        // 消息图标
+        // Biểu tượng thông báo
         $iconColor = [
-            // 邮件 消息
+            // Thông báo email
             'mail' => [
                 'icon' => 'md-mail',
                 'color' => '#3391e5'
             ],
-            // 普通 消息
+            // Thông báo thông thường
             'bulb' => [
                 'icon' => 'md-bulb',
                 'color' => '#87d068'
             ],
-            // 警告 消息
+            // Thông báo cảnh báo
             'information' => [
                 'icon' => 'md-information',
                 'color' => '#fe5c57'
             ],
-            // 关注 消息
+            // Thông báo theo dõi
             'star' => [
                 'icon' => 'md-star',
                 'color' => '#ff9900'
             ],
-            // 申请 消息
+            // Thông báo yêu cầu
             'people' => [
                 'icon' => 'md-people',
                 'color' => '#f06292'
             ],
         ];
-        // 消息类型
+        // Loại thông báo
         $type = array_keys($iconColor);
-        // 默认数据格式
+        // Định dạng dữ liệu mặc định
         $default = [
             'icon' => 'md-bulb',
             'iconColor' => '#87d068',
@@ -309,7 +309,7 @@ class Common extends AuthController
     }
 
     /**
-     * 格式化菜单
+     * Định dạng menu
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -342,7 +342,7 @@ class Common extends AuthController
     }
 
     /**
-     * 查询购买版权
+     * Truy vấn mua bản quyền
      * @return mixed
      */
     public function copyright()
@@ -353,7 +353,7 @@ class Common extends AuthController
     }
 
     /**
-     * 保存版权
+     * Lưu bản quyền
      * @return mixed
      */
     public function saveCopyright()
@@ -388,55 +388,55 @@ class Common extends AuthController
             ]);
         }
         CacheService::clear();
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     /**
-     * 系统搜索菜单
+     * Menu tìm kiếm hệ thống
      * @return \think\Response
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2024/2/1
      */
     public function menusSearch()
     {
-        // 从请求中获取关键字
+        // Lấy từ khóa từ request
         [$keyword] = $this->request->postMore([
             ['keyword', ''],
         ], true);
         if (empty($keyword)) {
-           return app('json')->fail('请输入关键字', '关键字不能为空');
+           return app('json')->fail('Vui lòng nhập từ khóa', 'Từ khóa không được để trống');
         }
 
-        // 获取系统菜单服务实例
+        // Lấy instance service menu hệ thống
         $menusServices = app()->make(SystemMenusServices::class);
-        // 查询菜单列表
+        // Truy vấn danh sách menu
         $menusList = $menusServices->selectList([['menu_name', 'like', '%' . $keyword . '%'], ['auth_type', '=', 1]], 'menu_name as title,menu_path as path,id')->toArray();
-        // 获取系统配置服务实例
+        // Lấy instance service cấu hình hệ thống
         $configServices = app()->make(SystemConfigServices::class);
-        // 获取系统配置标签服务实例
+        // Lấy instance service nhãn cấu hình hệ thống
         $configTabServices = app()->make(SystemConfigTabServices::class);
-        // 查询配置项列表
+        // Truy vấn danh sách mục cấu hình
         $configList = $configServices->selectList([['info', 'like', '%' . $keyword . '%']], 'info as title,config_tab_id')->toArray();
-        // 查询配置项标签列表
+        // Truy vấn danh sách nhãn mục cấu hình
         $configTabList = $configTabServices->selectList([['title', 'like', '%' . $keyword . '%']], 'title,id as config_tab_id')->toArray();
-        // 合并配置项列表和配置项标签列表
+        // Gộp danh sách mục cấu hình và danh sách nhãn mục cấu hình
         $configAllList = array_merge($configList, $configTabList);
-        // 获取配置项对应的标签ID
+        // Lấy ID nhãn tương ứng của mục cấu hình
         $tabIds = array_unique(array_column($configAllList, 'config_tab_id'));
-        // 查询配置项标签列表
+        // Truy vấn danh sách nhãn mục cấu hình
         $tabList = $configTabServices->getColumn([['id', 'in', $tabIds]], 'menus_id', 'id');
 
-        // 将配置项标签列表中的菜单ID与配置项列表中的菜单ID对应起来
+        // Ánh xạ ID menu trong danh sách nhãn mục cấu hình với ID menu trong danh sách mục cấu hình
         foreach ($configAllList as &$item1) {
             $item1['menus_id'] = $tabList[$item1['config_tab_id']] ?? 0;
         }
-        // 获取配置项标签对应的菜单ID
+        // Lấy ID menu tương ứng của nhãn mục cấu hình
         $configTabIds = array_values($tabList);
-        // 查询配置项标签对应的菜单列表
+        // Truy vấn danh sách menu tương ứng của nhãn mục cấu hình
         $configMenusList = $menusServices->getColumn([['id', 'in', $configTabIds]], 'menu_name as title,menu_path as path,id', 'id');
 
-        // 将配置项列表中的菜单ID与配置项标签对应的菜单ID对应起来
+        // Ánh xạ ID menu trong danh sách mục cấu hình với ID menu tương ứng của nhãn mục cấu hình
         foreach ($configAllList as $item2) {
             if ($item2['menus_id'] == 0) {
                 continue;
@@ -447,7 +447,7 @@ class Common extends AuthController
                 'id' => $configMenusList[$item2['menus_id']]['id']
             ];
         }
-        // 将菜单列表中的路径前缀添加到每个菜单项的 path 属性上
+        // Thêm tiền tố đường dẫn trong danh sách menu vào thuộc tính path của mỗi mục menu
         $adminPrefix = '/' . Config::get('app.admin_prefix', 'admin');
         foreach ($menusList as &$item) {
            if (strpos($item['path'], '/') !== 0) {
@@ -456,7 +456,7 @@ class Common extends AuthController
                $item['path'] = $adminPrefix . $item['path'];
            }
         }
-        // 返回 JSON 格式的菜单列表
+        // Trả về danh sách menu dạng JSON
         return app('json')->success($menusList);
     }
 }

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -14,7 +14,7 @@ use app\dao\BaseDao;
 use app\model\diy\ThemeDownload;
 
 /**
- * 主题下载记录 Dao
+ * Dao bản ghi tải xuống chủ đề
  * @author wuhaotian
  * @email 442384644@qq.com
  * @date 2026/3/10
@@ -22,7 +22,7 @@ use app\model\diy\ThemeDownload;
 class ThemeDownloadDao extends BaseDao
 {
     /**
-     * 获取模型类名
+     * Lấy tên lớp model
      * @return string
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -34,7 +34,7 @@ class ThemeDownloadDao extends BaseDao
     }
 
     /**
-     * 条件查询模型对象
+     * Truy vấn đối tượng model theo điều kiện
      * @param array $where
      * @return \crmeb\basic\BaseModel
      * @author wuhaotian
@@ -53,7 +53,7 @@ class ThemeDownloadDao extends BaseDao
     }
 
     /**
-     * 获取下载记录列表
+     * Lấy danh sách bản ghi tải xuống
      * @param array $where
      * @param string $field
      * @param int $page
@@ -78,7 +78,7 @@ class ThemeDownloadDao extends BaseDao
     }
 
     /**
-     * 获取下载记录数量
+     * Lấy số lượng bản ghi tải xuống
      * @param array $where
      * @return int
      * @author wuhaotian

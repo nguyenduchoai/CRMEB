@@ -7,7 +7,7 @@
         class="sysTitle acea-row row-center-wrapper"
         :style="{ height: getHeight.barHeight + 'px' }"
       >
-        <view>用户管理</view>
+        <view>Quản lý người dùng</view>
         <text class="iconfont icon-ic_leftarrow" @click="goarrow"></text>
       </view>
     </view>
@@ -20,7 +20,7 @@
         <text class="iconfont icon-ic_search"></text>
         <input
           class="inputs"
-          placeholder="请输入用户昵称/ID"
+          placeholder="Vui lòng nhập biệt danh/ID người dùng"
           placeholder-class="placeholder"
           confirm-type="search"
           name="search"
@@ -28,7 +28,7 @@
           @confirm="searchSubmit"
         />
       </view>
-      <!-- <view @click="manageTap" v-if="administer">取消</view>
+      <!-- <view @click="manageTap" v-if="administer">Hủy</view>
       <view class="edit acea-row row-center-wrapper" @click="manageTap" v-else>
         <text class="iconfont icon-ic_batch"></text>
       </view> -->
@@ -94,10 +94,10 @@
               <view class="phone">{{ item.phone }}</view>
               <view class="info acea-row row-middle">
                 <view
-                  >积分：<text>{{ item.integral }}</text></view
+                  >Điểm thưởng:<text>{{ item.integral }}</text></view
                 >
                 <view
-                  >余额：<text>{{ item.now_money }}</text></view
+                  >Số dư:<text>{{ item.now_money }}</text></view
                 >
               </view>
             </view>
@@ -112,7 +112,7 @@
     </view>
     <block v-if="userLists.length == 0 && !loading">
       <emptyPage
-        title="暂无用户信息～"
+        title="Chưa có thông tin người dùng~"
         src="/statics/images/empty-box.gif"
       ></emptyPage>
     </block>
@@ -128,7 +128,7 @@
           activeBackgroundColor="#2A7EFB"
           activeBorderColor="#2A7EFB"
         />
-        <text class="checkAll">全选({{ getIds().length }})</text>
+        <text class="checkAll">Chọn tất cả ({{ getIds().length }})</text>
       </checkbox-group>
       <view class="acea-row row-middle">
         <view class="bnt acea-row row-center-wrapper">
@@ -137,14 +137,14 @@
             :range="groupArray"
             range-key="group_name"
           >
-            <view>修改分组</view>
+            <view>Sửa nhóm</view>
           </picker>
         </view>
         <view class="bnt acea-row row-center-wrapper" @click="editLabels"
-          >添加标签</view
+          >Thêm nhãn</view
         >
         <view class="bnt acea-row row-center-wrapper" @click="sendCoupon"
-          >发送优惠券</view
+          >Gửi phiếu giảm giá</view
         >
       </view>
     </view>
@@ -253,35 +253,35 @@ export default {
       getHeight: this.$util.getWXStatusHeight(),
       editList: [
         {
-          name: "修改余额",
+          name: "Chỉnh sửa số dư",
         },
         {
-          name: "修改积分",
+          name: "Chỉnh sửa điểm thưởng",
         },
         {
-          name: "修改等级",
+          name: "Sửa hạng",
         },
         {
-          name: "赠送会员",
+          name: "Tặng gói thành viên",
         },
         {
-          name: "赠送优惠券",
+          name: "Phiếu giảm giá được tặng",
         },
         {
-          name: "修改分组",
+          name: "Sửa nhóm",
         },
       ],
       administer: 0,
       isAllSelect: false,
       userLists: [],
       visible: false,
-      visibleLable: false, //标签是否显示
-      loadTitle: "加载更多",
+      visibleLable: false, //Có hiển thị nhãn không
+      loadTitle: "Tải thêm",
       loading: false,
       loadend: false,
       limit: 20,
       page: 1,
-      keyword: "", //搜索字段
+      keyword: "", //Trường tìm kiếm
       visibleBalance: false,
       type: 0,
       visibleMember: false,
@@ -324,7 +324,7 @@ export default {
     sendCoupon() {
       if (!this.getIds().length) {
         this.$util.Tips({
-          title: "请选择商品",
+          title: "Vui lòng chọn sản phẩm",
         });
         return;
       }
@@ -384,7 +384,7 @@ export default {
     bindPickerChange(e) {
       if (!this.getIds().length) {
         this.$util.Tips({
-          title: "请选择用户",
+          title: "Vui lòng chọn người dùng",
         });
         return;
       }
@@ -413,11 +413,11 @@ export default {
       this.visibleBalance = false;
       this.init();
     },
-    //批量编辑标签
+    //Sửa nhãn hàng loạt
     editLabels() {
       if (!this.getIds().length) {
         this.$util.Tips({
-          title: "请选择商品",
+          title: "Vui lòng chọn sản phẩm",
         });
         return;
       }
@@ -425,7 +425,7 @@ export default {
       this.visible = false;
       this.$refs.lable.productLabel({}, 1, this.getIds());
     },
-    //批量获取id集合
+    //Lấy tập hợp id hàng loạt
     getIds() {
       let ids = [];
       this.userLists.forEach((item) => {
@@ -470,13 +470,13 @@ export default {
           that.userLists = that.$util.SplitArray(userLists, that.userLists);
           that.$set(that, "userLists", that.userLists);
           that.loadend = loadend;
-          that.loadTitle = loadend ? "没有更多内容啦~" : "加载更多";
+          that.loadTitle = loadend ? "Không còn nội dung nào nữa~" : "Tải thêm";
           that.page = that.page + 1;
           that.loading = false;
         })
         .catch((err) => {
           that.loading = false;
-          that.loadTitle = "加载更多";
+          that.loadTitle = "Tải thêm";
         });
     },
     editInfo(index) {
@@ -550,7 +550,7 @@ export default {
       if (value.length) {
         if (this.userLists.length > 100) {
           this.$util.Tips({
-            title: "每次最多只提交100条数据",
+            title: "Mỗi lần chỉ gửi tối đa 100 bản ghi",
           });
         }
         this.isAllSelect = true;
@@ -761,8 +761,8 @@ export default {
     }
   }
   .footerH {
-    height: calc(constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-    height: calc(env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+    height: calc(constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+    height: calc(env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
   }
   .footer {
     box-sizing: border-box;
@@ -773,10 +773,10 @@ export default {
     position: fixed;
     bottom: 0;
     z-index: 30;
-    height: calc(96rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-    height: calc(96rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
-    padding-bottom: constant(safe-area-inset-bottom); ///兼容 IOS<11.2/
-    padding-bottom: env(safe-area-inset-bottom); ///兼容 IOS>11.2/
+    height: calc(96rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+    height: calc(96rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
+    padding-bottom: constant(safe-area-inset-bottom); ///Tương thích IOS<11.2/
+    padding-bottom: env(safe-area-inset-bottom); ///Tương thích IOS>11.2/
     width: 100%;
     left: 0;
 

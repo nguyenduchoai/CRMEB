@@ -2,7 +2,7 @@
   <view>
     <!-- #ifdef MP || APP-PLUS -->
 <!--    <NavBar
-      titleText="订单详情"
+      titleText="Chi tiết đơn hàng"
       :iconColor="iconColor"
       :textColor="iconColor"
       :isScrolling="isScrolling"
@@ -25,13 +25,13 @@
           "
           class="data acea-row row-middle"
         >
-          需付款：¥{{ orderInfo.pay_price }}
+          Cần thanh toán: ₫{{ orderInfo.pay_price }}
           <countDown
             :isDay="false"
-            tipText="支付剩余："
+            tipText="Thời gian thanh toán còn lại:"
             dayText=" "
-            hourText="时"
-            minuteText="分"
+            hourText="giờ"
+            minuteText="phút"
             secondText=" "
             dotColor="#FFFFFF"
             colors="#FFFFFF"
@@ -41,13 +41,13 @@
           </countDown>
         </view>
         <view v-if="orderInfo._status._type == 1" class="data"
-          >用户已付款，需要您尽快发货哦～</view
+          >Khách hàng đã thanh toán, vui lòng giao hàng sớm nhé~</view
         >
         <view v-if="orderInfo._status._type == 2" class="data"
-          >商家已发货，等待用户收货</view
+          >Cửa hàng đã giao hàng, chờ khách hàng nhận hàng</view
         >
         <view v-if="orderInfo._status._type == 5" class="data"
-          >需用户出示二维码或数字即可核销</view
+          >Khách hàng chỉ cần xuất trình mã QR hoặc mã số là có thể xác nhận sử dụng</view
         >
       </view>
       <view
@@ -57,7 +57,7 @@
       >
         <text class="iconfont icon-ic_notes"></text>
         <view class="p-20 flex-1 fs-28 flex-y-center">{{
-          orderInfo.remark || "订单未备注，点击添加备注信息"
+          orderInfo.remark || "Đơn hàng chưa có ghi chú, nhấn để thêm ghi chú"
         }}</view>
       </view>
       <view class="address" v-if="orderInfo.shipping_type == 1">
@@ -78,11 +78,11 @@
                   orderInfo.user_address,
               )
             "
-            >复制</text
+            >Sao chép</text
           >
         </view>
 
-        <view>地址：{{ orderInfo.user_address }}</view>
+        <view>Địa chỉ: {{ orderInfo.user_address }}</view>
         <view class="line">
           <image src="/static/images/line.jpg" />
         </view>
@@ -105,14 +105,14 @@
           <view v-else class="">ID:{{ userInfo.uid }}</view>
         </view>
       </view>
-      <!-- 拆单时 -->
+      <!-- Khi tách đơn -->
       <view
         v-for="(j, indexw) in orderInfo.split"
         :key="indexw"
         v-if="orderInfo.split && orderInfo.split.length"
       >
         <view class="splitTitle acea-row row-between-wrapper">
-          <view>订单包裹{{ indexw + 1 }}</view>
+          <view>Kiện hàng {{ indexw + 1 }}</view>
           <view class="title">{{ j._status._title }}</view>
         </view>
         <view class="pos-order-goods">
@@ -154,8 +154,8 @@
           </navigator>
         </view>
       </view>
-      <!-- 结束 -->
-      <!-- 未拆单时，正常单 -->
+      <!-- là kết thúc -->
+      <!-- Khi chưa tách đơn, đơn thường -->
       <view
         class="pos-order-goods split"
         v-if="orderInfo.cartInfo && orderInfo.cartInfo.length"
@@ -170,10 +170,10 @@
             (orderInfo.status == 2 && orderInfo.shipping_type == 2)
           "
         >
-          <text>共{{ totalNmu }}件商品</text>
-          <!-- <navigator class="bnt" :url="'/pages/admin/delivery/index?id='+orderInfo.order_id+'&listId='+orderInfo.id+'&totalNum='+orderInfo.total_num+'&orderStatus='+orderInfo.status+'&comeType=2'">去发货</navigator> -->
+          <text>Tổng {{ totalNmu }} sản phẩm</text>
+          <!-- <navigator class="bnt" :url="'/pages/admin/delivery/index?id='+orderInfo.order_id+'&listId='+orderInfo.id+'&totalNum='+orderInfo.total_num+'&orderStatus='+orderInfo.status+'&comeType=2'">Giao hàng</navigator> -->
           <!-- <navigator class="btn" :url="'/pages/admin/writeRecordList/index?id='+orderInfo.id" hover-class="none">
-						核销记录<text class="iconfont icon-ic_rightarrow"></text>
+						Lịch sử xác nhận sử dụng<text class="iconfont icon-ic_rightarrow"></text>
 					</navigator> -->
         </view>
         <navigator
@@ -212,12 +212,12 @@
               integerSize="32"
               decimalSize="20"
             ></BaseMoney>
-            <view class="num">共{{ item.cart_num }}件</view>
+            <view class="num">Tổng {{ item.cart_num }} sản phẩm</view>
             <view class="acea-row row-right">
               <view
                 class="writeOff"
                 v-if="item.refund_num && orderInfo.refund_type != 6"
-                >{{ item.refund_num }}件退款中</view
+                >{{ item.refund_num }} sản phẩm đang hoàn tiền</view
               >
               <view
                 class="writeOff"
@@ -227,16 +227,16 @@
                 "
               >
                 <text v-if="item.refund_num">，</text>
-                <text class="on" v-if="item.is_writeoff">已核销</text>
+                <text class="on" v-if="item.is_writeoff">Đã xác nhận sử dụng</text>
                 <text
                   v-if="!item.is_writeoff && item.surplus_num < item.cart_num"
-                  >已核销{{
+                  >Đã xác nhận sử dụng {{
                     parseInt(item.cart_num) - parseInt(item.surplus_num)
-                  }}件</text
+                  }} sản phẩm</text
                 >
                 <text
                   v-if="!item.is_writeoff && item.surplus_num == item.cart_num"
-                  >未核销</text
+                  >Chưa xác nhận sử dụng</text
                 >
               </view>
             </view>
@@ -258,7 +258,7 @@
               </view>
               <view class="texts">
                 <view class="name line1"
-                  >[赠品]{{ item.productInfo.store_name }}</view
+                  >[Quà tặng] {{ item.productInfo.store_name }}</view
                 >
                 <view class="limit line1" v-if="item.productInfo.attrInfo">{{
                   item.productInfo.attrInfo.suk
@@ -278,7 +278,7 @@
                 <text class="iconfont icon-pc-youhuiquan"></text>
               </view>
               <view class="texts">
-                <view class="line1">[赠品]{{ item.coupon_title }}</view>
+                <view class="line1">[Quà tặng] {{ item.coupon_title }}</view>
               </view>
             </view>
           </view>
@@ -292,14 +292,14 @@
               </view>
               <view class="texts">
                 <view class="line1"
-                  >[赠品]{{ giveData.give_integral }}积分</view
+                  >[Quà tặng] {{ giveData.give_integral }} điểm thưởng</view
                 >
               </view>
             </view>
           </view>
         </view>
         <view class="mark acea-row" v-if="orderInfo.mark">
-          <view class="name">留言</view>
+          <view class="name">Lời nhắn</view>
           <view class="value line1">{{ orderInfo.mark }}</view>
         </view>
       </view>
@@ -313,7 +313,7 @@
           class="item acea-row row-between"
           v-if="orderInfo.fictitious_content"
         >
-          <view>虚拟备注：</view>
+          <view>Ghi chú sản phẩm ảo:</view>
           <view class="conter">{{ orderInfo.fictitious_content }}</view>
         </view>
       </view>
@@ -322,52 +322,52 @@
         v-if="orderInfo.virtual_info && orderInfo.product_type == 1"
       >
         <view class="item acea-row row-between">
-          <view>卡密发货</view>
+          <view>Giao hàng bằng mã thẻ</view>
           <view class="conter">{{ orderInfo.virtual_info }}</view>
         </view>
       </view>
       <customForm :customForm="orderInfo.custom_form"></customForm>
       <view class="wrapper">
         <view class="item acea-row row-between">
-          <view>订单编号</view>
+          <view>Mã đơn hàng</view>
           <view class="conter acea-row row-middle row-right"
             >{{ orderInfo.order_id }}
             <text class="copy-btn" @click="copyNum(orderInfo.order_id)"
-              >复制</text
+              >Sao chép</text
             >
           </view>
         </view>
         <view class="item acea-row row-between">
-          <view>下单时间</view>
+          <view>Thời gian đặt hàng</view>
           <view class="conter">{{ orderInfo._add_time }}</view>
         </view>
         <view class="item acea-row row-between">
-          <view>支付状态</view>
+          <view>Trạng thái thanh toán</view>
           <view class="conter">
-            {{ orderInfo.paid == 1 ? "已支付" : "未支付" }}
+            {{ orderInfo.paid == 1 ? "Đã thanh toán" : "Chưa thanh toán" }}
           </view>
         </view>
         <view class="item acea-row row-between">
-          <view>支付方式</view>
+          <view>Phương thức thanh toán</view>
           <view class="conter">{{ payType }}</view>
         </view>
         <!-- <view class="item acea-row row-between" v-if="orderInfo.mark">
-					<view v-if="statusType == -3">退款留言：</view>
-					<view v-else>买家留言：</view>
+					<view v-if="statusType == -3">Lời nhắn hoàn tiền:</view>
+					<view v-else>Lời nhắn của người mua:</view>
 					<view class="conter">{{ orderInfo.mark }}</view>
 				</view> -->
         <view
           class="item acea-row row-between"
           v-if="orderInfo.refund_goods_explain"
         >
-          <view>退货留言</view>
+          <view>Lời nhắn trả hàng</view>
           <view class="conter">{{ orderInfo.refund_goods_explain }}</view>
         </view>
         <view
           class="item acea-row row-between"
           v-if="orderInfo.refund_img && orderInfo.refund_img.length"
         >
-          <view>退款凭证</view>
+          <view>Chứng từ hoàn tiền</view>
           <view class="conter">
             <view
               class="pictrue"
@@ -386,7 +386,7 @@
           class="item acea-row row-between"
           v-if="orderInfo.refund_goods_img && orderInfo.refund_goods_img.length"
         >
-          <view>退货凭证</view>
+          <view>Chứng từ trả hàng</view>
           <view class="conter">
             <view
               class="pictrue"
@@ -411,33 +411,33 @@
         "
       >
         <view class="item acea-row row-between">
-          <view>配送方式</view>
+          <view>Phương thức giao hàng</view>
           <view class="conter" v-if="orderInfo.delivery_type === 'express'">
-            快递
+            Chuyển phát
           </view>
           <view class="conter" v-if="orderInfo.delivery_type === 'send'"
-            >送货</view
+            >Cửa hàng tự giao</view
           >
         </view>
         <view class="item acea-row row-between">
-          <view v-if="orderInfo.delivery_type === 'express'">快递公司</view>
-          <view v-if="orderInfo.delivery_type === 'send'">送货人</view>
+          <view v-if="orderInfo.delivery_type === 'express'">Đơn vị vận chuyển</view>
+          <view v-if="orderInfo.delivery_type === 'send'">Người giao hàng</view>
           <view class="conter">{{ orderInfo.delivery_name }}</view>
         </view>
         <view class="item acea-row row-between">
-          <view v-if="orderInfo.delivery_type === 'express'">快递单号</view>
-          <view v-if="orderInfo.delivery_type === 'send'">送货人电话</view>
+          <view v-if="orderInfo.delivery_type === 'express'">Mã vận đơn</view>
+          <view v-if="orderInfo.delivery_type === 'send'">Số điện thoại người giao hàng</view>
           <view class="conter">
             {{ orderInfo.delivery_id }}
             <span class="copy-btn" @click="copyNum(orderInfo.delivery_id)"
-              >复制</span
+              >Sao chép</span
             >
           </view>
         </view>
       </view>
       <view class="wrapper">
         <view class="item acea-row row-between">
-          <view>商品总价</view>
+          <view>Tổng giá sản phẩm</view>
           <view class="conter" v-if="statusType == -3">
             ￥{{ orderInfo.total_price }}</view
           >
@@ -454,43 +454,43 @@
           class="item acea-row row-between"
           v-if="orderInfo.pay_postage > 0"
         >
-          <view>配送运费</view>
+          <view>Phí vận chuyển</view>
           <view class="conter">￥{{ orderInfo.pay_postage }}</view>
         </view>
         <view
           v-if="orderInfo.vip_true_price > 0"
           class="item acea-row row-between"
         >
-          <view>会员商品优惠</view>
+          <view>Ưu đãi sản phẩm cho thành viên</view>
           <view class="conter"
             >-￥{{ parseFloat(orderInfo.vip_true_price).toFixed(2) }}</view
           >
         </view>
         <view class="item acea-row row-between" v-if="orderInfo.coupon_id">
-          <view>优惠券抵扣</view>
+          <view>Giảm từ phiếu giảm giá</view>
           <view class="conter">-￥{{ orderInfo.coupon_price }}</view>
         </view>
         <view
           class="item acea-row row-between"
           v-if="orderInfo.use_integral > 0"
         >
-          <view>积分抵扣</view>
+          <view>Khấu trừ bằng điểm thưởng</view>
           <view class="conter"
             >-￥{{ parseFloat(orderInfo.deduction_price).toFixed(2) }}</view
           >
         </view>
         <view class="item acea-row row-between" v-if="orderInfo.yue_price > 0">
-          <view>余额抵扣</view>
+          <view>Khấu trừ số dư</view>
           <view class="conter"
             >-￥{{ parseFloat(orderInfo.yue_price).toFixed(2) }}</view
           >
         </view>
-        <!-- 采购优惠 channel_price -->
+        <!-- Ưu đãi mua hàng channel_price -->
         <view
           class="item acea-row row-between"
           v-if="Number(orderInfo.channel_price) > 0"
         >
-          <text class="fs-28">采购优惠</text>
+          <text class="fs-28">Ưu đãi giá sỉ</text>
           <text class="fs-28">-¥{{ orderInfo.channel_price }}</text>
         </view>
         <view
@@ -505,7 +505,7 @@
           >
         </view>
         <view class="actualPay acea-row row-right">
-          实付款
+          Thực thanh toán
           <BaseMoney
             :money="orderInfo.pay_price"
             symbolSize="24"
@@ -522,10 +522,10 @@
       >
         <view class="more"></view>
         <view class="bnt cancel" @click="modify('0')" v-if="types == 0">
-          一键改价
+          Sửa giá nhanh
         </view>
         <!-- types == -1 -->
-        <view class="bnt cancel" @click="modify('1')">订单备注</view>
+        <view class="bnt cancel" @click="modify('1')">Ghi chú đơn hàng</view>
         <view
           class="bnt cancel"
           @click="modify('2', 1)"
@@ -538,14 +538,14 @@
             parseFloat(orderInfo.pay_price) >= 0
           "
         >
-          立即退款
+          Hoàn tiền ngay
         </view>
         <view
           class="bnt cancel"
           @click="modify('2', 0)"
           v-if="orderInfo.refund_type == 2"
         >
-          同意退货
+          Đồng ý trả hàng
         </view>
 
         <view
@@ -557,7 +557,7 @@
           "
           @click="confirmShow = true"
         >
-          确认付款
+          Xác nhận thanh toán
         </view>
         <view
           class="bnt delivery"
@@ -567,7 +567,7 @@
             (orderInfo.pinkStatus === null || orderInfo.pinkStatus === 2)
           "
           @click="goDelivery(orderInfo)"
-          >发送货</view
+          >Giao hàng</view
         >
         <view
           class="bnt delivery"
@@ -575,7 +575,7 @@
             orderInfo.delivery_type == 'express' && orderInfo._status._type == 2
           "
           @click="goLogistics(orderInfo)"
-          >查看物流
+          >Xem vận chuyển
         </view>
         <view
           v-if="
@@ -586,7 +586,7 @@
           "
           class="bnt delivery"
           @click="verify"
-          >立即核销</view
+          >Xác nhận sử dụng ngay</view
         >
       </view>
       <PriceChange
@@ -601,11 +601,11 @@
     </view>
     <view v-if="confirmShow" class="mask"></view>
     <view v-if="confirmShow" class="confirm-popup">
-      <view class="title">确认付款</view>
-      <view class="info">确认该订单用户已付款</view>
+      <view class="title">Xác nhận thanh toán</view>
+      <view class="info">Xác nhận khách hàng đã thanh toán đơn hàng này</view>
       <view class="acea-row btn-box">
-        <view class="btn" @click="confirmShow = false">取消</view>
-        <view class="btn primary" @click="offlinePay">确认</view>
+        <view class="btn" @click="confirmShow = false">Hủy</view>
+        <view class="btn primary" @click="offlinePay">Xác nhận</view>
       </view>
     </view>
     <home></home>
@@ -667,7 +667,7 @@ export default {
       statusType: "",
       clickNum: 1,
       goname: "",
-      isRefund: 0, //1是仅退款;0是同意退货退款
+      isRefund: 0, //1 là chỉ hoàn tiền; 0 là đồng ý trả hàng hoàn tiền
       iconColor: "#FFFFFF",
       isScrolling: false,
       getHeight: this.$util.getWXStatusHeight(),
@@ -713,8 +713,8 @@ export default {
   methods: {
     verify() {
       uni.showModal({
-        title: '操作提示',
-        content: '是否确认核销该订单？',
+        title: 'Thông báo thao tác',
+        content: 'Bạn có chắc muốn xác nhận sử dụng đơn hàng này không?',
         success: (res) => {
           if (res.confirm) {
             orderVerific(this.orderInfo.verify_code, 1, 1)
@@ -844,7 +844,7 @@ export default {
       if (that.status == 0) {
         if (!isMoney(price)) {
           return that.$util.Tips({
-            title: "请输入正确的金额",
+            title: "Vui lòng nhập số tiền hợp lệ",
           });
         }
         data.price = price;
@@ -852,7 +852,7 @@ export default {
           .then((res) => {
             that.change = false;
             that.$util.Tips({
-              title: "改价成功",
+              title: "Đổi giá thành công",
               icon: "success",
             });
             that.order_id = res.data.order_id;
@@ -861,7 +861,7 @@ export default {
           .catch((err) => {
             that.change = false;
             that.$util.Tips({
-              title: "改价失败",
+              title: "Đổi giá thất bại",
               icon: "none",
             });
           });
@@ -869,7 +869,7 @@ export default {
         if (this.isRefund) {
           if (!isMoney(refund_price)) {
             return that.$util.Tips({
-              title: "请输入正确的金额",
+              title: "Vui lòng nhập số tiền hợp lệ",
             });
           }
           data.price = refund_price;
@@ -900,7 +900,7 @@ export default {
       } else {
         if (!remark) {
           return this.$util.Tips({
-            title: "请输入备注",
+            title: "Vui lòng nhập ghi chú",
           });
         }
         data.remark = remark;
@@ -991,8 +991,8 @@ export default {
 }
 
 .height-add {
-  height: calc(120rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-  height: calc(120rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+  height: calc(120rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+  height: calc(120rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 }
 
 .giveGoods {
@@ -1058,7 +1058,7 @@ export default {
   color: #2291f8;
 }
 
-/*商户管理订单详情*/
+/*Chi tiết đơn hàng quản lý của cửa hàng*/
 
 .pos-order-details .remarks {
   padding-left: 32rpx;
@@ -1150,7 +1150,7 @@ export default {
   height: 100%;
 }
 
-/*订单详情*/
+/*Chi tiết đơn hàng*/
 .order-details .header {
   padding: 48rpx 0 30rpx 12rpx;
 }
@@ -1307,8 +1307,8 @@ export default {
   background-color: #fff;
   padding: 0 30upx;
   border-top: 1px solid #eee;
-  height: calc(100rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-  height: calc(100rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+  height: calc(100rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+  height: calc(100rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
   padding-bottom: constant(safe-area-inset-bottom);
 }
 

@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "修改价格/库存",
+  "navigationBarTitleText": "Sửa giá/tồn kho",
   "navigationBarBackgroundColor": "#F5F5F5",
   "usingComponents": {
     "edit-price": "/pages/admin/goods/components/editPrice/index"

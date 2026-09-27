@@ -1,44 +1,44 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 return [
 
-    // 系统程序接收到发送过来的消息，通过此端口推送给对应的客户或者客服，以及后台新订单弹窗提醒
+    // Chương trình hệ thống nhận tin nhắn được gửi tới, thông qua cổng này để đẩy tới khách hàng hoặc CSKH tương ứng, cùng với thông báo popup đơn hàng mới ở admin
     'channel' => [
-        //内部通讯监听端口
+        //Cổng lắng nghe giao tiếp nội bộ
         'port' => 40003,
-        //内部通讯地址
+        //Địa chỉ giao tiếp nội bộ
         'ip' => '127.0.0.1',
     ],
 
-    // notice 新订单和新退款单发送消息给程序，后台的消息通知
+    // notice gửi tin nhắn cho chương trình khi có đơn hàng mới và đơn hoàn tiền mới, thông báo tin nhắn ở admin
     'admin' => [
-        //协议
+        //Thỏa thuận
         'protocol' => 'websocket',
-        //监听地址
+        //Địa chỉ lắng nghe
         'ip' => '0.0.0.0',
-        //监听端口
+        //Cổng lắng nghe
         'port' => 40001,
-        //设置当前Worker实例启动多少个进程
+        //Đặt số lượng process khởi động cho instance Worker hiện tại
         'serverCount' => 1,
     ],
 
-    // msg 客户或者客服发送消息给程序，客服消息通知
+    // msg khách hàng hoặc CSKH gửi tin nhắn cho chương trình, thông báo tin nhắn CSKH
     'chat' => [
-        //协议
+        //Thỏa thuận
         'protocol' => 'websocket',
-        //监听地址
+        //Địa chỉ lắng nghe
         'ip' => '0.0.0.0',
-        //监听端口
+        //Cổng lắng nghe
         'port' => 40002,
-        //设置当前Worker实例启动多少个进程
+        //Đặt số lượng process khởi động cho instance Worker hiện tại
         'serverCount' => 1,
     ],
 ];

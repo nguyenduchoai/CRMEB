@@ -7,7 +7,7 @@ Math.easeInOutQuad = function (t, b, c, d) {
   return (-c / 2) * (t * (t - 2) - 1) + b;
 };
 
-//requestAnimationFrame用于智能动画 http://goo.gl/sx5sts
+//requestAnimationFrame dùng cho animation thông minh http://goo.gl/sx5sts
 var requestAnimFrame = (function () {
   return (
     window.requestAnimationFrame ||
@@ -20,7 +20,7 @@ var requestAnimFrame = (function () {
 })();
 
 /**
- * 因为要检测滚动元素太难了，把它们都移动就行了
+ * Vì việc phát hiện phần tử cuộn quá khó, chỉ cần di chuyển tất cả chúng là được
  * @param {number} amount
  */
 function move(amount) {
@@ -45,18 +45,18 @@ export function scrollTo(to, duration, callback) {
   let currentTime = 0;
   duration = typeof duration === 'undefined' ? 500 : duration;
   var animateScroll = function () {
-    // 增加次数
+    // Tăng số lần
     currentTime += increment;
-    // 用Math函数找到这个值
+    // Dùng hàm Math để tìm giá trị này
     var val = Math.easeInOutQuad(currentTime, start, change, duration);
-    // 移动这个元素
+    // Di chuyển phần tử này
     move(val);
-    // 动画是否结束
+    // Animation đã kết thúc hay chưa
     if (currentTime < duration) {
       requestAnimFrame(animateScroll);
     } else {
       if (callback && typeof callback === 'function') {
-        //动画已经完成，进行回调
+        //Animation đã hoàn thành, thực hiện callback
         callback();
       }
     }

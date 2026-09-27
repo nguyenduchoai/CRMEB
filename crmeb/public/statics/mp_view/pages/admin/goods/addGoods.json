@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "添加商品",
+  "navigationBarTitleText": "Thêm sản phẩm",
   "usingComponents": {
     "nav-bar": "/components/NavBar",
     "classify": "/pages/admin/goods/components/classify/index"

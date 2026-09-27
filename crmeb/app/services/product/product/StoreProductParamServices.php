@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\BaseServices;
 use crmeb\exceptions\AdminException;
 
 /**
- * 商品参数
+ * Thông số sản phẩm
  * @author wuhaotian
  * @email 442384644@qq.com
  * @date 2024/12/17
@@ -23,7 +23,7 @@ use crmeb\exceptions\AdminException;
 class StoreProductParamServices extends BaseServices
 {
     /**
-     * 设置dao层
+     * Đặt tầng dao
      * @param StoreProductParamDao $dao
      */
     public function __construct(StoreProductParamDao $dao)
@@ -32,7 +32,7 @@ class StoreProductParamServices extends BaseServices
     }
 
     /**
-     * 商品参数列表
+     * Danh sách thông số sản phẩm
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -55,7 +55,7 @@ class StoreProductParamServices extends BaseServices
     }
 
     /**
-     * 商品参数详情
+     * Chi tiết thông số sản phẩm
      * @param $id
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -68,14 +68,14 @@ class StoreProductParamServices extends BaseServices
     public function getParamInfo($id)
     {
         $info = $this->dao->get(['id' => $id]);
-        if (!$info) throw new AdminException('数据不存在');
+        if (!$info) throw new AdminException('Dữ liệu không tồn tại');
         $info = $info->toArray();
         $info['value'] = json_decode($info['value'], true);
         return $info;
     }
 
     /**
-     * 获取商品参数值
+     * Lấy giá trị tham số sản phẩm
      * @param $id
      * @return mixed
      * @author wuhaotian
@@ -89,7 +89,7 @@ class StoreProductParamServices extends BaseServices
     }
 
     /**
-     * 商品参数保存
+     * Lưu tham số sản phẩm
      * @param $id
      * @param $data
      * @return bool
@@ -110,7 +110,7 @@ class StoreProductParamServices extends BaseServices
     }
 
     /**
-     * 商品参数状态修改
+     * Sửa trạng thái tham số sản phẩm
      * @param $id
      * @param $status
      * @return bool
@@ -125,7 +125,7 @@ class StoreProductParamServices extends BaseServices
     }
 
     /**
-     * 商品参数删除
+     * Xóa tham số sản phẩm
      * @param $id
      * @return bool
      * @author wuhaotian

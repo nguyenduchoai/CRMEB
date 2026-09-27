@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- #ifdef MP || APP -->
-		<NavBar titleText="配送员" :iconColor="iconColor" :textColor="iconColor" :isScrolling="isScrolling" showBack></NavBar>
+		<NavBar titleText="Nhân viên giao hàng" :iconColor="iconColor" :textColor="iconColor" :isScrolling="isScrolling" showBack></NavBar>
 		<!-- #endif -->
 		<view class="headerBg"></view>
 		<view class="order-index">
@@ -34,37 +34,37 @@
 							</picker>
 						</view>
 						<view class="tab acea-row">
-							<view class="box" :class="detailtabs== 'today' ? 'on':''" @click="detailtab('today')">今日</view>
-							<view class="box" :class="detailtabs== 'yesterday' ? 'on':''" @click="detailtab('yesterday')">昨日</view>
-							<view class="box" :class="detailtabs== 'month' ? 'on':''" @click="detailtab('month')">本月</view>
+							<view class="box" :class="detailtabs== 'today' ? 'on':''" @click="detailtab('today')">Hôm nay</view>
+							<view class="box" :class="detailtabs== 'yesterday' ? 'on':''" @click="detailtab('yesterday')">Hôm qua</view>
+							<view class="box" :class="detailtabs== 'month' ? 'on':''" @click="detailtab('month')">Tháng này</view>
 						</view>
 					</view>
 					<Loading :loaded="loaded" :loading="loading"></Loading>
 					<view class="list acea-row" v-if="!loading">
 						<view class="item">
 							<view class="num">{{ census.unsend || 0 }}</view>
-							<view>待配送</view>
+							<view>Chờ giao hàng</view>
 						</view>
 						<view class="item">
 							<view class="num">{{ census.send || 0 }}</view>
-							<view>已配送</view>
+							<view>Đã giao hàng</view>
 						</view>
 						<view class="item">
 							<view class="num">{{ census.send_price || 0 }}</view>
-							<view>配送金额</view>
+							<view>Giá trị đơn đã giao</view>
 						</view>
 					</view>
 				</view>
 				<view class="public-wrapper">
 					<view class="title">
 						<view class="uni-list-cell-db" @click="hiddened">
-							详细数据
+							Dữ liệu chi tiết
 						</view>
 					</view>
 					<view class="nav acea-row row-between-wrapper">
-						<view class="data">日期</view>
-						<view class="browse">订单数</view>
-						<view class="turnover">配送金额</view>
+						<view class="data">Ngày</view>
+						<view class="browse">Số đơn hàng</view>
+						<view class="turnover">Giá trị đơn đã giao</view>
 					</view>
 					<Loading :loaded="loaded" :loading="loading"></Loading>
 					<view v-if="list.length" class="conter">
@@ -75,7 +75,7 @@
 						</view>
 					</view>
 					<view v-else class="unconter">
-						<view v-if="!loading">暂无数据</view>
+						<view v-if="!loading">Chưa có dữ liệu</view>
 					</view>
 				</view>
 			</view>
@@ -84,19 +84,19 @@
 					<view class="item" :class="{ active: type == 1 }">
 						<view class="text-box"></view>
 						<view class="item-box"></view>
-						<view class="inner acea-row row-center row-middle" @click="tab('1')">待配送({{ count.unsend }})</view>
+						<view class="inner acea-row row-center row-middle" @click="tab('1')">Chờ giao hàng ({{ count.unsend }})</view>
 					</view>
 					<view class="item" :class="{ active: type == 2 }">
 						<view class="text-box"></view>
 						<view class="item-box"></view>
-						<view class="inner acea-row row-center row-middle" @click="tab('2')">已配送({{ count.send }})</view>
+						<view class="inner acea-row row-center row-middle" @click="tab('2')">Đã giao hàng ({{ count.send }})</view>
 					</view>
 				</view>
 				<view class="content">
 					<view class="item" v-for="(item,index) in orderlist" :key="index" @click="jump(item.id)">
 						<view class="item-top acea-row row-between row-middle">
-							<view class="">订单号：{{ item.order_id }}</view>
-							<view style="color: #FF7E00;">{{type == 1?'待配送':'已配送'}}</view>
+							<view class="">Mã đơn hàng: {{ item.order_id }}</view>
+							<view style="color: #FF7E00;">{{type == 1?'Chờ giao hàng':'Đã giao hàng'}}</view>
 						</view>
 						<view class="item-center acea-row">
 							<scroll-view v-if="item.cart_id.length > 1" class="goods-section scroll-view" scroll-x="true">
@@ -113,30 +113,30 @@
 							</view>
 							<view class="money-section">
 								<baseMoney :money="item.pay_price" symbolSize="20" integerSize="32" decimalSize="20"></baseMoney>
-								<view class="num">共{{ item.total_num }}件</view>
+								<view class="num">Tổng {{ item.total_num }} sản phẩm</view>
 							</view>
 						</view>
 						<view class="item-bottom acea-row">
-							<view>配送地址：</view>
+							<view>Địa chỉ giao hàng:</view>
 							<view class="info">{{ item.user_address }}</view>
 						</view>
 						<!-- <view class="content_box" v-for="(val, key) in item._info" :key="key">
 							<image :src="val.cart_info.productInfo.image" mode=""></image>
 							<view class="content_box_title">
 								<view class="txt">
-									<view class="textbox"><text class="icon-color" v-if="val.cart_info.is_gift">[赠品]</text>{{ val.cart_info.productInfo.store_name }}</view>
+									<view class="textbox"><text class="icon-color" v-if="val.cart_info.is_gift">[Quà tặng]</text>{{ val.cart_info.productInfo.store_name }}</view>
 									<view>x {{ val.cart_info.cart_num }}</view>
 								</view>
-								<p class="attribute">属性：{{ val.cart_info.productInfo.attrInfo.suk }}</p>
+								<p class="attribute">Thuộc tính: {{ val.cart_info.productInfo.attrInfo.suk }}</p>
 								<p>¥ {{ val.cart_info.productInfo.attrInfo.price }} </p>
 							</view>
 						</view> -->
 						<!-- <view class="content_bottom">
 							<view></view>
-							<view>共{{ item.total_num }}件商品，订单实付：<span class="money">￥{{ item.pay_price }}</span></view>
+							<view>Tổng {{ item.total_num }} sản phẩm, đơn hàng thực trả: <span class="money">₫{{ item.pay_price }}</span></view>
 						</view> -->
 					</view>
-					<emptyPage v-if="!orderlist.length && !loading" title="暂无数据～" src="/statics/images/noOrder.gif"></emptyPage>
+					<emptyPage v-if="!orderlist.length && !loading" title="Chưa có dữ liệu~" src="/statics/images/noOrder.gif"></emptyPage>
 				</view>
 				<Loading :loaded="loaded" :loading="loading"></Loading>
 			</view>
@@ -146,12 +146,12 @@
 				<view class="tab acea-row row-column row-center row-middle" :class="footer == 'list'?'on':''" @click="footerTab('list')">
 					<image v-if="footer == 'list'" :src="imgHost+'/statics/images/admin-order-menu2.png'" class="image"></image>
 					<image v-else :src="imgHost+'/statics/images/admin-order-menu1.png'" class="image"></image>
-					<view class="font">订单列表</view>
+					<view class="font">Danh sách đơn hàng</view>
 				</view>
 				<view class="tab acea-row row-column row-center row-middle" :class="footer == 'tongji'?'on':''" @click="footerTab('tongji')">
 					<image v-if="footer == 'tongji'" :src="imgHost+'/statics/images/admin-order-menu4.png'" class="image"></image>
 					<image v-else :src="imgHost+'/statics/images/admin-order-menu3.png'" class="image"></image>
-					<view class="font">数据统计</view>
+					<view class="font">Thống kê dữ liệu</view>
 				</view>
 			</view>
 			<view class="safe-area-inset-bottom"></view>
@@ -195,9 +195,9 @@
 				detailtabs: 'today',
 				footer: 'list',
 				type: '1',
-				arrays: [], //展示下拉时的数据
-				array: [], //下拉时选择的数据
-				storeInfoid: 0, //下拉时选择的数据ID 
+				arrays: [], //Dữ liệu hiển thị khi thả xuống
+				array: [], //Dữ liệu được chọn khi thả xuống
+				storeInfoid: 0, //ID dữ liệu được chọn khi thả xuống 
 				census: {},
 				list: [],
 				orderlist: [],
@@ -237,7 +237,7 @@
 					this.arrays = res.data.store_info.map(a => a.name);
 					let obj = {
 						id: 0,
-						name: '全部'
+						name: 'Tất cả'
 					}
 					this.array.unshift(obj);
 					this.arrays.unshift(obj.name);
@@ -327,18 +327,18 @@
 				});
 				//#endif
 			},
-			// 立即核销
+			// Xác nhận sử dụng ngay
 			codeChange: function() {
 				let self = this
 				let ref = /^[0-9]*$/;
 				if (!this.verify_code) return self.$util.Tips({
-					title: '请输入核销码'
+					title: 'Vui lòng nhập mã xác nhận'
 				});
 				if (!ref.test(this.verify_code)) return self.$util.Tips({
-					title: '请输入正确的核销码'
+					title: 'Vui lòng nhập mã xác nhận hợp lệ'
 				});
 				self.$util.Tips({
-					title: '查询中'
+					title: 'Đang tra cứu'
 				});
 				setTimeout(() => {
 					orderWriteoffInfo(2, {
@@ -471,7 +471,7 @@
 		}
 	}
 
-	/*订单首页*/
+	/*Trang chủ đơn hàng*/
 	.headerBg {
 		position: absolute;
 		top: 0;

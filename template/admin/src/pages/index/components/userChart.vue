@@ -9,7 +9,7 @@
               size="small"
               style="color: var(--prev-color-primary); background-color: #e6f7ff"
             ></el-avatar>
-            <h4 class="ivu-pl-8">用户</h4>
+            <h4 class="ivu-pl-8">Người dùng</h4>
           </div>
           <echarts-from
             ref="userChart"
@@ -28,7 +28,7 @@
               size="small"
               style="color: var(--prev-color-primary); background-color: #e6f7ff"
             ></el-avatar>
-            <h4 class="ivu-pl-8">购买用户统计</h4>
+            <h4 class="ivu-pl-8">Thống kê người mua</h4>
           </div>
           <echarts-from ref="visitChart" :infoList="infoList" :echartsTitle="circle"></echarts-from>
         </el-card>
@@ -58,7 +58,7 @@ export default {
     };
   },
   methods: {
-    // 统计
+    // Thống kê
     getStatistics() {
       userApi()
         .then(async (res) => {
@@ -66,7 +66,7 @@ export default {
           this.series = [
             {
               data: res.data.series,
-              name: '人数（人）',
+              name: 'Số người (người)',
               type: 'line',
               tooltip: true,
               smooth: true,
@@ -95,7 +95,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 监听页面宽度变化，刷新表格
+    // Theo dõi thay đổi chiều rộng trang, làm mới bảng
     handleResize() {
       if (this.infoList && this.series.length !== 0) this.$refs.userChart.handleResize();
       if (this.infoList) this.$refs.visitChart.handleResize();

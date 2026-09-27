@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -27,15 +27,15 @@ use crmeb\utils\Str;
 use think\facade\Log;
 
 /**
- * 订单收货
+ * Xác nhận đã nhận hàng
  * Class StoreOrderTakeServices
  * @package app\services\order
- * @method get(int $id, ?array $field = []) 获取一条
+ * @method get(int $id, ?array $field = []) Lấy một dòng
  */
 class StoreOrderTakeServices extends BaseServices
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * StoreOrderTakeServices constructor.
      * @param StoreOrderDao $dao
      */
@@ -45,7 +45,7 @@ class StoreOrderTakeServices extends BaseServices
     }
 
     /**
-     * 小程序订单服务收货
+     * Service đơn hàng Mini Program - nhận hàng
      * @param $merchant_trade_no
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
@@ -57,13 +57,13 @@ class StoreOrderTakeServices extends BaseServices
      */
     public function miniOrderTakeOrder($merchant_trade_no)
     {
-        //查找订单信息
+        //Tìm thông tin đơn hàng
         $order = $this->dao->getOne(['order_id' => $merchant_trade_no]);
         if (!$order) {
             return true;
         }
-        if ($order['pid'] == -1) {  // 有子订单
-            // 查找待收货的子订单
+        if ($order['pid'] == -1) {  // Có đơn hàng con
+            // Tìm đơn hàng con đang chờ nhận hàng
             $son_order_list = $this->dao->getSubOrderNotSendList((int)$order['id']);
             foreach ($son_order_list as $son_order) {
                 $this->takeOrder($son_order['order_id'], $son_order['uid']);
@@ -76,7 +76,7 @@ class StoreOrderTakeServices extends BaseServices
     }
 
     /**
-     * 用户订单收货
+     * Người dùng xác nhận nhận hàng đơn hàng
      * @param $uni
      * @param $uid
      * @return bool
@@ -85,33 +85,33 @@ class StoreOrderTakeServices extends BaseServices
     {
         $order = $this->dao->getUserOrderDetail($uni, $uid);
         if (!$order) {
-            throw new ApiException('订单不存在');
+            throw new ApiException('Đơn hàng không tồn tại');
         }
         $refundServices = app()->make(StoreOrderRefundServices::class);
         $orderIsRefund = $refundServices->orderIsRefund((int)$order['id']);
         if($orderIsRefund){
-            throw new ApiException('订单退款中，不能收货');
+            throw new ApiException('Đơn hàng đang hoàn tiền, không thể nhận hàng');
         }
         /** @var StoreOrderServices $orderServices */
         $orderServices = app()->make(StoreOrderServices::class);
         $order = $orderServices->tidyOrder($order);
         if ($order['_status']['_type'] != 2) {
-            throw new ApiException('订单状态错误');
+            throw new ApiException('Trạng thái đơn hàng không hợp lệ');
         }
-        //存在拆分发货 需要分开收货
+        //Có giao hàng theo tách đơn thì cần nhận hàng riêng
         if ($this->dao->count(['pid' => $order['id']])) {
-            throw new ApiException('订单状态错误');
+            throw new ApiException('Trạng thái đơn hàng không hợp lệ');
         }
         $order->status = 2;
         $res = $order->save() && $this->storeProductOrderUserTakeDelivery($order);
         if (!$res) {
-            throw new ApiException('收货失败');
+            throw new ApiException('Nhận hàng thất bại');
         }
         return $order;
     }
 
     /**
-     * 订单确认收货
+     * Xác nhận đã nhận hàng cho đơn hàng
      * @param $order
      * @return bool
      */
@@ -120,42 +120,42 @@ class StoreOrderTakeServices extends BaseServices
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
         $userInfo = $userServices->get((int)$order['uid']);
-        //获取购物车内的商品标题
+        //Lấy tên sản phẩm trong giỏ hàng
         /** @var StoreOrderCartInfoServices $orderInfoServices */
         $orderInfoServices = app()->make(StoreOrderCartInfoServices::class);
         $storeName = $orderInfoServices->getCarIdByProductTitle((int)$order['id']);
         $storeTitle = Str::substrUTf8($storeName, 20, 'UTF-8', '');
 
         $res = $this->transaction(function () use ($order, $userInfo, $storeTitle) {
-            //赠送积分
+            //Tặng điểm thưởng
             $res1 = $this->gainUserIntegral($order, $userInfo, $storeTitle);
-            //返佣
+            //Hoa hồng
             $res2 = $this->backOrderBrokerage($order, $userInfo);
-            //经验
+            //điểm kinh nghiệm
             $res3 = $this->gainUserExp($order, $userInfo);
-            //事业部
+            //Đại lý khu vực
             $res4 = $this->divisionBrokerage($order, $userInfo);
             if (!($res1 && $res2 && $res3 && $res4)) {
-                throw new ApiException('收货失败');
+                throw new ApiException('Nhận hàng thất bại');
             }
             return true;
         }, $isTran);
 
         if ($res) {
             try {
-                // 收货成功后置队列
+                // Hàng đợi sau khi nhận hàng thành công
                 event('OrderTakeListener', [$order, $userInfo, $storeTitle]);
-                //收货给用户发送消息
+                //Gửi tin nhắn cho người dùng khi nhận hàng
                 event('NoticeListener', [['order' => $order, 'storeTitle' => $storeTitle], 'order_take']);
-                //收货给客服发送消息
+                //Nhận hàng thì gửi tin nhắn cho CSKH
                 event('NoticeListener', [['order' => $order, 'storeTitle' => $storeTitle], 'send_admin_confirm_take_over']);
-                //自定义消息-订单收货
+                //Tin nhắn tùy chỉnh - nhận hàng đơn hàng
                 $order['storeTitle'] = $storeTitle;
                 $order['time'] = date('Y-m-d H:i:s');
                 $order['phone'] = $order['user_phone'];
                 event('CustomNoticeListener', [$order['uid'], $order, 'order_take']);
 
-                //自定义事件-订单收货/核销
+                //Sự kiện tùy chỉnh - nhận hàng/xác nhận sử dụng đơn hàng
                 event('CustomEventListener', ['order_take', [
                     'uid' => $order['uid'],
                     'id' => (int)$order['id'],
@@ -183,7 +183,7 @@ class StoreOrderTakeServices extends BaseServices
     }
 
     /**
-     * 赠送积分
+     * Tặng điểm thưởng
      * @param $order
      * @param $userInfo
      * @param $storeTitle
@@ -199,7 +199,7 @@ class StoreOrderTakeServices extends BaseServices
         if (!$userInfo) {
             return true;
         }
-        // 营销产品送积分
+        // Sản phẩm marketing tặng điểm thưởng
         if (isset($order['combination_id']) && $order['combination_id']) {
             return true;
         }
@@ -223,9 +223,9 @@ class StoreOrderTakeServices extends BaseServices
 
         $order_give_integral = sys_config('order_give_integral');
         if ($order['pay_price'] && $order_give_integral) {
-            //会员消费返积分翻倍
+            //Thành viên tiêu dùng được nhân đôi điểm thưởng hoàn lại
             if ($userInfo['is_money_level'] > 0) {
-                //看是否开启消费返积分翻倍奖励
+                //Kiểm tra có mở thưởng nhân đôi điểm hoàn khi chi tiêu hay không
                 /** @var MemberCardServices $memberCardService */
                 $memberCardService = app()->make(MemberCardServices::class);
                 $integral_rule_number = $memberCardService->isOpenMemberCard('integral');
@@ -246,7 +246,7 @@ class StoreOrderTakeServices extends BaseServices
             $orderServices->update($order['id'], ['gain_integral' => $give_integral], 'id');
             event('NoticeListener', [['order' => $order, 'storeTitle' => $storeTitle, 'give_integral' => $give_integral, 'integral' => $integral], 'integral_accout']);
 
-            //自定义消息-积分到账
+            //Tin nhắn tùy chỉnh - điểm thưởng vào tài khoản
             event('CustomNoticeListener', [$order['uid'], [
                 'uid' => $order['uid'],
                 'phone' => $userInfo['phone'],
@@ -256,7 +256,7 @@ class StoreOrderTakeServices extends BaseServices
                 'time' => date('Y-m-d H:i:s'),
             ], 'point_received']);
 
-            //自定义事件-积分到账
+            //Sự kiện tùy chỉnh - điểm thưởng vào tài khoản
             event('CustomEventListener', ['order_point', [
                 'uid' => $order['uid'],
                 'order_id' => $order['order_id'],
@@ -273,20 +273,20 @@ class StoreOrderTakeServices extends BaseServices
     }
 
     /**
-     * 事业部返佣
+     * Trả hoa hồng đại lý khu vực
      * @param $orderInfo
      * @param $userInfo
      * @return bool
      */
     public function divisionBrokerage($orderInfo, $userInfo)
     {
-        // 当前订单｜用户不存在  直接返回
+        // Đơn hàng hiện tại | người dùng không tồn tại thì trả về ngay
         if (!$orderInfo || !$userInfo) {
             return true;
         }
-        // 营销产品不返佣金
+        // Sản phẩm marketing không trả hoa hồng
         if (isset($orderInfo['combination_id']) && $orderInfo['combination_id']) {
-            //检测拼团是否参与返佣
+            //Kiểm tra mua chung có tham gia trả hoa hồng không
             /** @var StoreCombinationServices $combinationServices */
             $combinationServices = app()->make(StoreCombinationServices::class);
             $isCommission = $combinationServices->value(['id' => $orderInfo['combination_id']], 'is_commission');
@@ -306,10 +306,10 @@ class StoreOrderTakeServices extends BaseServices
             $spreadPrice = $userServices->value(['uid' => $orderInfo['staff_id']], 'brokerage_price');
             $balance = bcadd($spreadPrice, $orderInfo['staff_brokerage'], 2);
             $userServices->bcInc($orderInfo['staff_id'], 'brokerage_price', $orderInfo['staff_brokerage'], 'uid');
-            //冻结时间
+            //Thời gian đóng băng
             $broken_time = intval(sys_config('extract_time'));
             $frozen_time = time() + $broken_time * 86400;
-            // 添加佣金记录
+            // Thêm bản ghi hoa hồng
             /** @var UserBrokerageServices $userBrokerageServices */
             $userBrokerageServices = app()->make(UserBrokerageServices::class);
             $userBrokerageServices->income('get_staff_brokerage', $orderInfo['staff_id'], [
@@ -323,10 +323,10 @@ class StoreOrderTakeServices extends BaseServices
             $spreadPrice = $userServices->value(['uid' => $orderInfo['agent_id']], 'brokerage_price');
             $balance = bcadd($spreadPrice, $orderInfo['agent_brokerage'], 2);
             $userServices->bcInc($orderInfo['agent_id'], 'brokerage_price', $orderInfo['agent_brokerage'], 'uid');
-            //冻结时间
+            //Thời gian đóng băng
             $broken_time = intval(sys_config('extract_time'));
             $frozen_time = time() + $broken_time * 86400;
-            // 添加佣金记录
+            // Thêm bản ghi hoa hồng
             /** @var UserBrokerageServices $userBrokerageServices */
             $userBrokerageServices = app()->make(UserBrokerageServices::class);
             $userBrokerageServices->income('get_agent_brokerage', $orderInfo['agent_id'], [
@@ -340,10 +340,10 @@ class StoreOrderTakeServices extends BaseServices
             $spreadPrice = $userServices->value(['uid' => $orderInfo['division_id']], 'brokerage_price');
             $balance = bcadd($spreadPrice, $orderInfo['division_brokerage'], 2);
             $userServices->bcInc($orderInfo['division_id'], 'brokerage_price', $orderInfo['division_brokerage'], 'uid');
-            //冻结时间
+            //Thời gian đóng băng
             $broken_time = intval(sys_config('extract_time'));
             $frozen_time = time() + $broken_time * 86400;
-            // 添加佣金记录
+            // Thêm bản ghi hoa hồng
             /** @var UserBrokerageServices $userBrokerageServices */
             $userBrokerageServices = app()->make(UserBrokerageServices::class);
             $userBrokerageServices->income('get_division_brokerage', $orderInfo['division_id'], [
@@ -357,7 +357,7 @@ class StoreOrderTakeServices extends BaseServices
     }
 
     /**
-     * 一级返佣
+     * Hoa hồng cấp 1
      * @param $orderInfo
      * @param $userInfo
      * @return bool
@@ -366,16 +366,16 @@ class StoreOrderTakeServices extends BaseServices
     {
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
-        // 当前订单｜用户不存在  直接返回
+        // Đơn hàng hiện tại | người dùng không tồn tại thì trả về ngay
         if (!$orderInfo || !$userInfo) {
             return true;
         }
-        //商城分销功能是否开启 0关闭1开启
+        //Chức năng phân phối của cửa hàng có mở không, 0 là tắt, 1 là mở
         if (!sys_config('brokerage_func_status')) return true;
 
-        // 营销产品不返佣金
+        // Sản phẩm marketing không trả hoa hồng
         if (isset($orderInfo['combination_id']) && $orderInfo['combination_id']) {
-            //检测拼团是否参与返佣
+            //Kiểm tra mua chung có tham gia trả hoa hồng không
             /** @var StoreCombinationServices $combinationServices */
             $combinationServices = app()->make(StoreCombinationServices::class);
             $combinationInfo = $combinationServices->getOne(['id' => $orderInfo['combination_id']], 'is_commission,head_commission');
@@ -386,13 +386,13 @@ class StoreOrderTakeServices extends BaseServices
                 if ($orderInfo['uid'] == $pinkMasterUid && $userServices->checkUserPromoter($pinkMasterUid)) {
                     $pinkMasterPrice = bcmul((string)$orderInfo['pay_price'], bcdiv((string)$combinationInfo['head_commission'], 100, 2), 2);
                     $userServices->bcInc($pinkMasterUid, 'brokerage_price', $pinkMasterPrice, 'uid');
-                    //冻结时间
+                    //Thời gian đóng băng
                     $broken_time = intval(sys_config('extract_time'));
                     $frozen_time = time() + $broken_time * 86400;
-                    // 添加佣金记录
+                    // Thêm bản ghi hoa hồng
                     /** @var UserBrokerageServices $userBrokerageServices */
                     $userBrokerageServices = app()->make(UserBrokerageServices::class);
-                    //团长返佣
+                    //Trả hoa hồng trưởng nhóm mua chung
                     $userBrokerageServices->income('get_pink_master_brokerage', $pinkMasterUid, [
                         'number' => floatval($pinkMasterPrice),
                         'frozen_time' => $frozen_time
@@ -411,14 +411,14 @@ class StoreOrderTakeServices extends BaseServices
             $bargain_commission = app()->make(StoreBargainServices::class)->value(['id' => $orderInfo['bargain_id']], 'is_commission');
             if (!$bargain_commission) return true;
         }
-        //绑定失效
+        //Liên kết hết hiệu lực
         if (isset($orderInfo['spread_uid']) && $orderInfo['spread_uid'] == -1) {
             return true;
         }
-        //是否开启自购返佣
+        //Có mở trả hoa hồng tự mua không
         $isSelfBrokerage = sys_config('is_self_brokerage', 0);
-        if (!isset($orderInfo['spread_uid']) || !$orderInfo['spread_uid']) {//兼容之前订单表没有spread_uid情况
-            //没开启自购返佣 没有上级 或者 当用用户上级时自己  直接返回
+        if (!isset($orderInfo['spread_uid']) || !$orderInfo['spread_uid']) {//Tương thích trường hợp bảng đơn hàng trước đây không có spread_uid
+            //Không mở trả hoa hồng tự mua, không có cấp trên, hoặc khi cấp trên chính là bản thân thì trả về ngay
             if (!$isSelfBrokerage && (!$userInfo['spread_uid'] || $userInfo['spread_uid'] == $orderInfo['uid'])) {
                 return true;
             }
@@ -426,29 +426,29 @@ class StoreOrderTakeServices extends BaseServices
         } else {
             $one_spread_uid = $orderInfo['spread_uid'];
         }
-        //检测是否是分销员
+        //Kiểm tra có phải cộng tác viên không
         if (!$userServices->checkUserPromoter($one_spread_uid)) {
             return $this->backOrderBrokerageTwo($orderInfo, $userInfo, $isSelfBrokerage);
         }
         $brokeragePrice = $orderInfo['one_brokerage'] ?? 0;
-        // 一级返佣金额小于等于0 直接跳转二级返佣逻辑
+        // Số tiền trả hoa hồng cấp 1 nhỏ hơn hoặc bằng 0 thì chuyển thẳng sang logic trả hoa hồng cấp 2
         if ($brokeragePrice <= 0) {
             $frozen_time = time() + intval(sys_config('extract_time')) * 86400;
             return $this->backOrderBrokerageTwo($orderInfo, $userInfo, $isSelfBrokerage, $frozen_time);
         }
-        // 获取上级推广员信息
+        // Lấy thông tin người giới thiệu cấp trên
         $spreadPrice = $userServices->value(['uid' => $one_spread_uid], 'brokerage_price');
-        // 上级推广员返佣之后的金额
+        // Số tiền sau khi trả hoa hồng cho người giới thiệu cấp trên
         $balance = bcadd($spreadPrice, $brokeragePrice, 2);
-        // 添加用户佣金
+        // Thêm hoa hồng người dùng
         $res1 = $userServices->bcInc($one_spread_uid, 'brokerage_price', $brokeragePrice, 'uid');
         if ($res1) {
-            //冻结时间
+            //Thời gian đóng băng
             $frozen_time = time() + intval(sys_config('extract_time')) * 86400;
-            // 添加佣金记录
+            // Thêm bản ghi hoa hồng
             /** @var UserBrokerageServices $userBrokerageServices */
             $userBrokerageServices = app()->make(UserBrokerageServices::class);
-            //自购返佣 ｜｜ 上级
+            //Trả hoa hồng tự mua || cấp trên
             $type = $one_spread_uid == $orderInfo['uid'] ? 'get_self_brokerage' : 'get_brokerage';
             $userBrokerageServices->income($type, $one_spread_uid, [
                 'nickname' => $userInfo['nickname'],
@@ -457,16 +457,16 @@ class StoreOrderTakeServices extends BaseServices
                 'frozen_time' => $frozen_time
             ], $balance, $orderInfo['id']);
 
-            //给上级发送获得佣金的模板消息
+            //Gửi tin nhắn mẫu nhận hoa hồng cho cấp trên
             $this->sendBackOrderBrokerage($orderInfo, $one_spread_uid, $brokeragePrice);
         }
-        // 一级返佣成功 跳转二级返佣
+        // Trả hoa hồng cấp 1 thành công thì chuyển sang trả hoa hồng cấp 2
         return $res1 && $this->backOrderBrokerageTwo($orderInfo, $userInfo, $isSelfBrokerage, $frozen_time);
     }
 
 
     /**
-     * 二级推广返佣
+     * Trả hoa hồng giới thiệu cấp 2
      * @param $orderInfo
      * @param $userInfo
      * @param $isSelfbrokerage
@@ -475,7 +475,7 @@ class StoreOrderTakeServices extends BaseServices
      */
     public function backOrderBrokerageTwo($orderInfo, $userInfo, $isSelfbrokerage = 0, $frozenTime = 0)
     {
-        //绑定失效
+        //Liên kết hết hiệu lực
         if (isset($orderInfo['spread_two_uid']) && $orderInfo['spread_two_uid'] == -1) {
             return true;
         }
@@ -484,36 +484,36 @@ class StoreOrderTakeServices extends BaseServices
         if (isset($orderInfo['spread_two_uid']) && $orderInfo['spread_two_uid']) {
             $spread_two_uid = $orderInfo['spread_two_uid'];
         } else {
-            // 获取上推广人
+            // Lấy người giới thiệu cấp trên
             $userInfoTwo = $userServices->get((int)$userInfo['spread_uid']);
-            // 订单｜上级推广人不存在   直接返回
+            // Đơn hàng | người giới thiệu cấp trên không tồn tại thì trả về ngay
             if (!$orderInfo || !$userInfoTwo) {
                 return true;
             }
-            //没开启自购返佣 或者 上推广人没有上级  或者 当用用户上上级时自己  直接返回
+            //Không mở trả hoa hồng tự mua, hoặc người giới thiệu cấp trên không có cấp trên, hoặc khi cấp trên của cấp trên chính là bản thân thì trả về ngay
             if (!$isSelfbrokerage && (!$userInfoTwo['spread_uid'] || $userInfoTwo['spread_uid'] == $orderInfo['uid'])) {
                 return true;
             }
             $spread_two_uid = $isSelfbrokerage ? $userInfoTwo['uid'] : $userInfoTwo['spread_uid'];
         }
-        // 获取后台分销类型  1 指定分销 2 人人分销
+        // Lấy loại phân phối ở trang quản trị, 1 là phân phối chỉ định, 2 là phân phối toàn dân
         if (!$userServices->checkUserPromoter($spread_two_uid)) {
             return true;
         }
         $brokeragePrice = $orderInfo['two_brokerage'] ?? 0;
-        // 返佣金额小于等于0 直接返回不返佣金
+        // Số tiền trả hoa hồng nhỏ hơn hoặc bằng 0 thì trả về ngay, không trả hoa hồng
         if ($brokeragePrice <= 0) {
             return true;
         }
-        // 获取上上级推广员信息
+        // Lấy thông tin người giới thiệu cấp trên của cấp trên
         $spreadPrice = $userServices->value(['uid' => $spread_two_uid], 'brokerage_price');
-        // 获取上上级推广员返佣之后余额
+        // Lấy số dư sau khi trả hoa hồng của người giới thiệu cấp trên của cấp trên
         $balance = bcadd($spreadPrice, $brokeragePrice, 2);
 
-        // 添加佣金记录
+        // Thêm bản ghi hoa hồng
         /** @var UserBrokerageServices $userBrokerageServices */
         $userBrokerageServices = app()->make(UserBrokerageServices::class);
-        //冻结时间
+        //Thời gian đóng băng
         $frozenTime = time() + intval(sys_config('extract_time')) * 86400;
         $res1 = $userBrokerageServices->income('get_two_brokerage', $spread_two_uid, [
             'nickname' => $userInfo['nickname'],
@@ -522,15 +522,15 @@ class StoreOrderTakeServices extends BaseServices
             'frozen_time' => $frozenTime
         ], $balance, $orderInfo['id']);
 
-        // 添加用户余额
+        // Thêm số dư người dùng
         $res2 = $userServices->bcInc($spread_two_uid, 'brokerage_price', $brokeragePrice, 'uid');
-        //给上级发送获得佣金的模板消息
+        //Gửi tin nhắn mẫu nhận hoa hồng cho cấp trên
         $this->sendBackOrderBrokerage($orderInfo, $spread_two_uid, $brokeragePrice);
         return $res1 && $res2;
     }
 
     /**
-     * 佣金到账发送模板消息
+     * Gửi tin nhắn mẫu khi hoa hồng vào tài khoản
      * @param $orderInfo
      * @param $spread_uid
      * @param $brokeragePrice
@@ -541,7 +541,7 @@ class StoreOrderTakeServices extends BaseServices
         $userServices = app()->make(UserServices::class);
         $userType = $userServices->value(['uid' => $spread_uid], 'user_type');
         $goodsPrice = 0;
-        $goodsName = '推广用户获取佣金';
+        $goodsName = 'Nhận hoa hồng giới thiệu người dùng';
         if ($type == 'order') {
             /** @var StoreOrderCartInfoServices $storeOrderCartInfoService */
             $storeOrderCartInfoService = app()->make(StoreOrderCartInfoServices::class);
@@ -556,15 +556,15 @@ class StoreOrderTakeServices extends BaseServices
                 }
             }
         } else {
-            $goodsName = '推广用户获取佣金';
+            $goodsName = 'Nhận hoa hồng giới thiệu người dùng';
             $goodsPrice = $brokeragePrice;
         }
-        //提醒推送
+        //Đẩy thông báo nhắc nhở
         event('NoticeListener', [['spread_uid' => $spread_uid, 'userType' => $userType, 'brokeragePrice' => $brokeragePrice, 'goodsName' => $goodsName, 'goodsPrice' => $goodsPrice, 'add_time' => $orderInfo['add_time'] ?? time()], 'order_brokerage']);
 
         $spreadPhone = app()->make(UserServices::class)->value($spread_uid, 'phone');
 
-        //自定义消息-佣金到账
+        //Tin nhắn tùy chỉnh - hoa hồng vào tài khoản
         event('CustomNoticeListener', [$spread_uid, [
             'uid' => $spread_uid,
             'phone' => $spreadPhone,
@@ -574,7 +574,7 @@ class StoreOrderTakeServices extends BaseServices
             'time' => date('Y-m-d H:i:s')
         ], 'brokerage_received']);
 
-        //自定义事件-佣金到账
+        //Sự kiện tùy chỉnh - hoa hồng vào tài khoản
         event('CustomEventListener', ['order_brokerage', [
             'uid' => $spread_uid,
             'order_id' => $orderInfo['order_id'] ?? '',
@@ -588,7 +588,7 @@ class StoreOrderTakeServices extends BaseServices
 
 
     /**
-     * 赠送经验
+     * Tặng điểm kinh nghiệm
      * @param $order
      * @param $userInfo
      * @return bool
@@ -598,7 +598,7 @@ class StoreOrderTakeServices extends BaseServices
         if (!$userInfo) {
             return true;
         }
-        //用户等级是否开启
+        //Hạng người dùng có mở không
         if (!sys_config('member_func_status', 1)) {
             return true;
         }
@@ -619,21 +619,21 @@ class StoreOrderTakeServices extends BaseServices
             $res = $res1 && $res3;
         }
 
-        //用户升级事件
+        //Event nâng cấp người dùng
         event('UserLevelListener', [$order['uid']]);
 
         return $res;
     }
 
     /**
-     * 自动收货
+     * Tự động nhận hàng
      * @return bool
      */
     public function autoTakeOrder()
     {
-        //7天前时间戳
+        //Timestamp 7 ngày trước
         $systemDeliveryTime = sys_config('system_delivery_time', 0);
-        //0为取消自动收货功能
+        //0 là hủy chức năng tự động nhận hàng
         if ($systemDeliveryTime == 0) {
             return true;
         }
@@ -665,23 +665,23 @@ class StoreOrderTakeServices extends BaseServices
                     $res = $this->dao->update($order['id'], $data) && $statusService->save([
                             'oid' => $order['id'],
                             'change_type' => 'take_delivery',
-                            'change_message' => '已收货[自动收货]',
+                            'change_message' => 'Đã nhận hàng [Tự động nhận hàng]',
                             'change_time' => time()
                         ]);
                     $res = $res && $this->storeProductOrderUserTakeDelivery($order, false);
                     if (!$res) {
-                        Log::error('订单号' . $order['order_id'] . '自动收货失败');
+                        Log::error('Mã đơn hàng' . $order['order_id'] . 'tự động nhận hàng thất bại');
                     }
                 });
             } catch (\Throwable $e) {
-                Log::error('自动收货失败,失败原因：' . $e->getMessage() . '|' . $e->getFile() . '|' . $e->getLine());
+                Log::error('Tự động nhận hàng thất bại, lý do:' . $e->getMessage() . '|' . $e->getFile() . '|' . $e->getLine());
             }
 
         }
     }
 
     /**
-     * 检查主订单是否需要修改状态
+     * Kiểm tra đơn hàng chính có cần cập nhật trạng thái không
      * @param $pid
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -690,7 +690,7 @@ class StoreOrderTakeServices extends BaseServices
     public function checkMaster($pid)
     {
         $p_order = $this->dao->get((int)$pid, ['id,pid,status']);
-        //主订单全部发货 且子订单没有待收货 有待评价
+        //Đơn hàng chính đã giao hàng toàn bộ, và đơn hàng con không có chờ nhận hàng nhưng có chờ đánh giá
         if ($p_order['status'] == 1 && !$this->dao->count(['pid' => $pid, 'status' => 2]) && $this->dao->count(['pid' => $pid, 'status' => 3])) {
             $this->dao->update($p_order['id'], ['status' => 2]);
             /** @var StoreOrderStatusServices $statusService */
@@ -698,7 +698,7 @@ class StoreOrderTakeServices extends BaseServices
             $statusService->save([
                 'oid' => $p_order['id'],
                 'change_type' => 'take_delivery',
-                'change_message' => '已收货',
+                'change_message' => 'Đã nhận hàng',
                 'change_time' => time()
             ]);
         }

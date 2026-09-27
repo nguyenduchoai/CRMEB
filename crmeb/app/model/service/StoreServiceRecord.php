@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,7 +18,7 @@ use crmeb\traits\ModelTrait;
 use think\Model;
 
 /**
- * 客服聊天用户记录
+ * Bản ghi người dùng trò chuyện với CSKH
  * Class StoreServiceRecord
  * @package app\model\service
  */
@@ -31,13 +31,13 @@ class StoreServiceRecord extends BaseModel
     protected $pk = 'id';
 
     /**
-     * 更新时间
+     * Thời gian cập nhật
      * @var bool | string | int
      */
     protected $updateTime = false;
 
     /**
-     * 用户关联
+     * Liên kết người dùng
      * @return \think\model\relation\HasOne
      */
     public function user()
@@ -49,7 +49,7 @@ class StoreServiceRecord extends BaseModel
     }
 
     /**
-     * 客服用户
+     * Người dùng CSKH
      * @return \think\model\relation\HasOne
      */
     public function service()
@@ -61,7 +61,7 @@ class StoreServiceRecord extends BaseModel
     }
 
     /**
-     * 发送者id搜索器
+     * Bộ lọc id người gửi
      * @param Model $query
      * @param $value
      */
@@ -71,7 +71,7 @@ class StoreServiceRecord extends BaseModel
     }
 
     /**
-     * 送达人uid搜索器
+     * Bộ lọc uid người nhận
      * @param Model $query
      * @param $value
      */
@@ -81,7 +81,7 @@ class StoreServiceRecord extends BaseModel
     }
 
     /**
-     * 用户昵称搜索器
+     * Bộ lọc biệt danh người dùng
      * @param Model $query
      * @param $value
      */
@@ -95,7 +95,7 @@ class StoreServiceRecord extends BaseModel
     }
 
     /**
-     * 是否游客
+     * Có phải khách vãng lai hay không
      * @param Model $query
      * @param $value
      */

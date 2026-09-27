@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,8 +21,8 @@ use think\facade\Route as Url;
 /**
  * Class StoreProductReplyService
  * @package app\services\product\product
- * @method int count(array $where = []) 获取条数
- * @method save(array $data) 保存数据
+ * @method int count(array $where = []) Lấy số lượng bản ghi
+ * @method save(array $data) Lưu dữ liệu
  */
 class StoreProductReplyServices extends BaseServices
 {
@@ -36,7 +36,7 @@ class StoreProductReplyServices extends BaseServices
     }
 
     /**
-     * 获取评论列表
+     * Lấy danh sách đánh giá
      * @param array $where
      * @return array
      */
@@ -55,7 +55,7 @@ class StoreProductReplyServices extends BaseServices
     }
 
     /**
-     * 创建虚拟评论表单
+     * Tạo form đánh giá ảo
      * @param int $product_id
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -63,22 +63,22 @@ class StoreProductReplyServices extends BaseServices
     public function createForm(int $product_id)
     {
         if ($product_id == 0) {
-            $field[] = Form::frameImage('image', '商品', Url::buildUrl(config('app.admin_prefix', 'admin') . '/store.StoreProduct/index', array('fodder' => 'image')))->icon('el-icon-picture-outline')->width('950px')->height('560px')->Props(['srcKey' => 'image', 'footer' => false]);
+            $field[] = Form::frameImage('image', 'Sản phẩm', Url::buildUrl(config('app.admin_prefix', 'admin') . '/store.StoreProduct/index', array('fodder' => 'image')))->icon('el-icon-picture-outline')->width('950px')->height('560px')->Props(['srcKey' => 'image', 'footer' => false]);
         } else {
             $field[] = Form::hidden('product_id', $product_id);
         }
-        $field[] = Form::frameImage('avatar', '用户头像', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'avatar')))->icon('el-icon-picture-outline')->width('950px')->height('560px')->props(['footer' => false]);
-        $field[] = Form::input('nickname', '用户名称')->col(24);
-        $field[] = Form::input('comment', '评价文字')->type('textarea');
-        $field[] = Form::rate('product_score', '商品分数', 0)->allowHalf(false);
-        $field[] = Form::rate('service_score', '服务分数', 0)->allowHalf(false);
-        $field[] = Form::frameImages('pics', '评价图片', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'pics', 'type' => 'many', 'maxLength' => 8)))->maxLength(8)->icon('el-icon-picture-outline')->width('950px')->height('560px')->props(['closeBtn' => false, 'okBtn' => false, 'footer' => false]);
-        $field[] = Form::dateTime('add_time', '评论时间', '')->placeholder('请选择评论时间(不选择默认当前添加时间)')->style(['width' => '300px']);
-        return create_form('添加虚拟评论', $field, Url::buildUrl('/product/reply/save_fictitious_reply'), 'POST');
+        $field[] = Form::frameImage('avatar', 'Ảnh đại diện người dùng', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'avatar')))->icon('el-icon-picture-outline')->width('950px')->height('560px')->props(['footer' => false]);
+        $field[] = Form::input('nickname', 'Tên người dùng')->col(24);
+        $field[] = Form::input('comment', 'Nội dung đánh giá')->type('textarea');
+        $field[] = Form::rate('product_score', 'Điểm sản phẩm', 0)->allowHalf(false);
+        $field[] = Form::rate('service_score', 'Điểm dịch vụ', 0)->allowHalf(false);
+        $field[] = Form::frameImages('pics', 'Hình ảnh đánh giá', Url::buildUrl(config('app.admin_prefix', 'admin') . '/widget.images/index', array('fodder' => 'pics', 'type' => 'many', 'maxLength' => 8)))->maxLength(8)->icon('el-icon-picture-outline')->width('950px')->height('560px')->props(['closeBtn' => false, 'okBtn' => false, 'footer' => false]);
+        $field[] = Form::dateTime('add_time', 'Thời gian đánh giá', '')->placeholder('Vui lòng chọn thời gian đánh giá (không chọn sẽ mặc định là thời gian thêm hiện tại)')->style(['width' => '300px']);
+        return create_form('Thêm đánh giá ảo', $field, Url::buildUrl('/product/reply/save_fictitious_reply'), 'POST');
     }
 
     /**
-     * 添加虚拟评论
+     * Thêm đánh giá ảo
      * @param array $data
      */
     public function saveReply(array $data)
@@ -93,39 +93,39 @@ class StoreProductReplyServices extends BaseServices
         $data['status'] = 1;
         unset($data['image']);
         if ($data['add_time'] > $time) {
-            throw new AdminException('评论时间应小于当前时间');
+            throw new AdminException('Thời gian đánh giá phải trước thời điểm hiện tại');
         }
         $res = $this->dao->save($data);
-        if (!$res) throw new AdminException('添加虚拟评论失败');
+        if (!$res) throw new AdminException('Thêm đánh giá ảo thất bại');
     }
 
     /**
-     * 回复评论
+     * Trả lời đánh giá
      * @param int $id
      * @param string $content
      */
     public function setReply(int $id, string $content)
     {
-        if ($content == '') throw new AdminException('请输入回复内容');
+        if ($content == '') throw new AdminException('Vui lòng nhập nội dung trả lời');
         $save['merchant_reply_content'] = $content;
         $save['merchant_reply_time'] = time();
         $save['is_reply'] = 1;
         $res = $this->dao->update($id, $save);
-        if (!$res) throw new AdminException('回复失败');
+        if (!$res) throw new AdminException('Trả lời thất bại');
     }
 
     /**
-     * 删除
+     * Xóa
      * @param int $id
      */
     public function del(int $id)
     {
         $res = $this->dao->update($id, ['is_del' => 1]);
-        if (!$res) throw new AdminException('删除失败');
+        if (!$res) throw new AdminException('Xóa thất bại');
     }
 
     /**
-     * 获取最近最好的一条评论
+     * Lấy đánh giá tốt nhất gần đây
      * @param int $productId
      * @return array|\think\Model|null
      */
@@ -143,7 +143,7 @@ class StoreProductReplyServices extends BaseServices
             $res['add_time'] = time_tran($res['add_time']);
             $res['star'] = bcadd($res['product_score'], $res['service_score'], 2);
             $res['star'] = bcdiv($res['star'], '2', 0);
-            $res['comment'] = $res['comment'] ?: '此用户没有填写评价';
+            $res['comment'] = $res['comment'] ?: 'Người dùng này chưa viết đánh giá';
             $res['pics'] = is_string($res['pics']) ? json_decode($res['pics'], true) : $res['pics'];
             unset($res['cartInfo']);
         }
@@ -151,7 +151,7 @@ class StoreProductReplyServices extends BaseServices
     }
 
     /**
-     * 获取评论数据 评论总数 好评总数 好评率
+     * Lấy dữ liệu đánh giá: tổng số đánh giá, tổng số đánh giá tốt, tỷ lệ đánh giá tốt
      * @param int $id
      * @return array
      */
@@ -172,7 +172,7 @@ class StoreProductReplyServices extends BaseServices
         return [$replyCount, $goodReply, $replyChance];
     }
 
-    /**商品评论数量
+    /**Số lượng đánh giá sản phẩm
      * @return int
      */
     public function replyCount()
@@ -181,7 +181,7 @@ class StoreProductReplyServices extends BaseServices
     }
 
     /**
-     * 获取商品评论数量
+     * Lấy số lượng đánh giá sản phẩm
      * @param int $id
      * @return mixed
      */
@@ -204,7 +204,7 @@ class StoreProductReplyServices extends BaseServices
     }
 
     /**
-     * 获取商品评论列表
+     * Lấy danh sách đánh giá sản phẩm
      * @param int $id
      * @param int $type
      * @return array
@@ -223,7 +223,7 @@ class StoreProductReplyServices extends BaseServices
             $item['add_time'] = time_tran($item['add_time']);
             $item['star'] = bcadd($item['product_score'], $item['service_score'], 2);
             $item['star'] = bcdiv($item['star'], 2, 0);
-            $item['comment'] = $item['comment'] ?: '此用户没有填写评价';
+            $item['comment'] = $item['comment'] ?: 'Người dùng này chưa viết đánh giá';
             $item['pics'] = is_string($item['pics']) ? json_decode($item['pics'], true) : $item['pics'];
             unset($item['cart_info']);
         }

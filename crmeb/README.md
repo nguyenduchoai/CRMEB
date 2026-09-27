@@ -1,15 +1,15 @@
-CRMEB-KY v6.0.0 后端程序目录
+Thư mục chương trình backend CRMEB-KY v6.0.0
 ===============
 
-## docker一键运行
+## Chạy bằng một cú nhấp với docker
 
-### 快速启动
+### Khởi động nhanh
 
 ```bash
-# 拉取镜像
+# Tải image về
 docker pull ccr.ccs.tencentyun.com/crmebky_php/crmebky:latest
 
-# 运行容器
+# Chạy container
 docker run -d --name crmeb \
   -p 8080:80 \
   -p 3306:3306 \
@@ -17,39 +17,39 @@ docker run -d --name crmeb \
   ccr.ccs.tencentyun.com/crmebky_php/crmebky:latest
 ```
 
-### 访问服务
-- **网站**: http://localhost:8080 
-- **后台**: http://localhost:8080/admin （账号: admin，密码: crmeb.com）
-- **MySQL**: localhost:3306（账号: root，密码: 123456）
+### Truy cập dịch vụ
+- **Website**: http://localhost:8080 
+- **Trang quản trị**: http://localhost:8080/admin (tài khoản: admin, mật khẩu: crmeb.com)
+- **MySQL**: localhost:3306 (tài khoản: root, mật khẩu: 123456)
 - **Redis**: localhost:6379
-> 详细说明请到 [帮助文档](https://gitee.com/ZhongBangKeJi/CRMEB/blob/master/help/docker/README.md) 查看。
+> Xem hướng dẫn chi tiết tại [tài liệu trợ giúp](https://gitee.com/ZhongBangKeJi/CRMEB/blob/master/help/docker/README.md).
 
 
-> 运行环境要求PHP7.1-7.4。 
+> Môi trường chạy yêu cầu PHP7.1-7.4. 
 
-## 安装
+## Cài đặt
 
-## 一键安装
-上传你的代码，站点入口目录设置/public
-在浏览器中输入你的域名或IP（例如：www.yourdomain.com）,
-安装程序会自动执行安装。期间系统会提醒你输入数据库信息以完成安装，安装完成后建议删除install目录。
+## Cài đặt một cú nhấp
+Tải mã nguồn của bạn lên, thiết lập thư mục gốc (document root) của website là /public
+Nhập tên miền hoặc IP của bạn vào trình duyệt (ví dụ: www.yourdomain.com),
+Trình cài đặt sẽ tự động tiến hành cài đặt. Trong quá trình này, hệ thống sẽ nhắc bạn nhập thông tin cơ sở dữ liệu để hoàn tất cài đặt, sau khi cài đặt xong nên xóa thư mục install.
 
-后台访问地址：
-1.域名/admin
-公众号和H5首页访问地址：
-1.域名/
+Địa chỉ truy cập trang quản trị:
+1.tên-miền/admin
+Địa chỉ truy cập trang chủ OA WeChat và H5:
+1.tên-miền/
 
-安装过程中请牢记您的账号密码！
+Vui lòng ghi nhớ tài khoản và mật khẩu của bạn trong quá trình cài đặt!
 
-## 重新安装
-1. 清除数据库
-2. 删除/public/install.lock 文件
+## Cài đặt lại
+1. Xóa cơ sở dữ liệu
+2. Xóa tệp /public/install.lock
 
-## 手动安装
-1.创建数据库，倒入数据库文件
-数据库文件目录/public/install/crmeb.sql
-2.修改数据库连接文件
-配置文件路径/.env
+## Cài đặt thủ công
+1.Tạo cơ sở dữ liệu, nhập (import) tệp cơ sở dữ liệu
+Tệp cơ sở dữ liệu nằm tại /public/install/crmeb.sql
+2.Sửa tệp kết nối cơ sở dữ liệu
+Tệp cấu hình nằm tại /.env
 ~~~
 APP_DEBUG = true
 
@@ -58,11 +58,11 @@ DEFAULT_TIMEZONE = Asia/Shanghai
 
 [DATABASE]
 TYPE = mysql
-HOSTNAME = 127.0.0.1 #数据库连接地址
-HOSTPORT = 3306 #数据库端口
-DATABASE = test #数据库名称
-USERNAME = username #数据库登录账号
-PASSWORD = password #数据库登录密码
+HOSTNAME = 127.0.0.1 #Địa chỉ kết nối cơ sở dữ liệu
+HOSTPORT = 3306 #Cổng cơ sở dữ liệu
+DATABASE = test #Tên cơ sở dữ liệu
+USERNAME = username #Tài khoản đăng nhập cơ sở dữ liệu
+PASSWORD = password #Mật khẩu đăng nhập cơ sở dữ liệu
 PREFIX = eb_
 CHARSET = utf8mb4
 DEBUG = true
@@ -71,102 +71,102 @@ DEBUG = true
 default_lang = zh-cn
 
 [CACHE]
-DRIVER = file #缓存类型，redis/file
-CACHE_PREFIX = cache_xxxx: #缓存前缀
-CACHE_TAG_PREFIX = cache_tag_xxxx: #缓存类型前缀
+DRIVER = file #Loại bộ nhớ đệm, redis/file
+CACHE_PREFIX = cache_xxxx: #Tiền tố cache
+CACHE_TAG_PREFIX = cache_tag_xxxx: #Tiền tố loại bộ nhớ đệm
 
 [REDIS]
-REDIS_HOSTNAME = 127.0.0.1 #redis链接地址
-PORT = 6379 #端口号
-REDIS_PASSWORD = 123456 #密码
-SELECT = 0 #数据库
+REDIS_HOSTNAME = 127.0.0.1 #Địa chỉ kết nối redis
+PORT = 6379 #Số cổng
+REDIS_PASSWORD = 123456 #Mật khẩu
+SELECT = 0 #Cơ sở dữ liệu
 
 [QUEUE]
-QUEUE_NAME = xxxx #队列前缀
+QUEUE_NAME = xxxx #Tiền tố hàng đợi
 ~~~
-3.修改目录权限（linux系统）777
+3.Sửa quyền thư mục (hệ thống linux) thành 777
 /crmeb
 /template
 
-4.后台登录：
-http://域名/admin
-默认账号：admin 密码：crmeb.com
+4.Đăng nhập trang quản trị:
+http://ten-mien-cua-ban/admin
+Tài khoản mặc định: admin Mật khẩu: crmeb.com
 
 
-## 定时任务
-在自动收货,库存预警等功能使用到
+## Tác vụ định kỳ
+Được sử dụng trong các chức năng như tự động xác nhận đã nhận hàng, cảnh báo tồn kho, v.v.
 ```sh
 php think timer [ status ] [ --d ]
 ```
-参数
-- status: 状态
-  - start: 启动
-  - stop: 关闭
-  - restart: 重启
-- --d : 后台执行
+Tham số
+- status: trạng thái
+  - start: khởi động
+  - stop: dừng
+  - restart: khởi động lại
+- --d : chạy nền
 
-## 长连接服务
-在h5聊天,后台管理员消息通知等功能使用到
+## Dịch vụ kết nối liên tục
+Được sử dụng trong các chức năng như chat trên h5, thông báo tin nhắn cho quản trị viên ở trang quản trị, v.v.
 ```sh
 php think workerman [ status ]  [ --d ]
 ```
-windows环境下需要分三步执行
+Trong môi trường windows cần thực hiện theo ba bước
 ```sh
-# 内部通讯服务
+# Dịch vụ giao tiếp nội bộ
 php think workerman start --d
 ```
-参数
-- status: 状态
-  - start: 启动
-  - stop: 关闭
-  - restart: 重启
-- --d : 后台执行
+Tham số
+- status: trạng thái
+  - start: khởi động
+  - stop: dừng
+  - restart: khởi động lại
+- --d : chạy nền
 
-## 开发规范
-#### 命名规范
-ThinkPHP6.0遵循PSR-2命名规范和PSR-4自动加载规范，并且注意如下规范:
+## Quy chuẩn phát triển
+#### Quy tắc đặt tên
+ThinkPHP6.0 tuân theo chuẩn đặt tên PSR-2 và chuẩn tự động nạp (autoload) PSR-4, đồng thời cần lưu ý các quy tắc sau:
 
-1. 目录和文件
-2. 目录使用小写+下划线；
-3. 类库、函数文件统一以.php为后缀；
-4. 类的文件名均以命名空间定义，并且命名空间的路径和类库文件所在路径一致；
-5. 类（包含接口和Trait）文件采用驼峰法命名（首字母大写），其它文件采用小写+下划线命名；
-6. 类名（包括接口和Trait）和文件名保持一致，统一采用驼峰法命名（首字母大写）；
+1. Thư mục và tệp
+2. Tên thư mục dùng chữ thường + dấu gạch dưới;
+3. Các tệp thư viện lớp và tệp hàm thống nhất dùng hậu tố .php;
+4. Tên tệp của lớp đều được định nghĩa theo namespace, và đường dẫn namespace phải trùng với đường dẫn chứa tệp thư viện lớp;
+5. Tệp lớp (bao gồm interface và Trait) được đặt tên theo kiểu camelCase (viết hoa chữ cái đầu), các tệp khác được đặt tên bằng chữ thường + dấu gạch dưới;
+6. Tên lớp (bao gồm interface và Trait) phải trùng với tên tệp, thống nhất đặt tên theo kiểu camelCase (viết hoa chữ cái đầu);
 
-#### 函数和类、属性命名
+#### Đặt tên hàm, lớp và thuộc tính
 
-1. 类的命名采用驼峰法（首字母大写），例如 User、UserType；
-2. common函数的命名使用小写字母和下划线（小写字母开头）的方式，例如 get_client_ip；
-3. 控制器里面的方法使用小写字母和下划线（小写字母开头）的方式，例如 get_client_ip
-4. 方法的命名使用驼峰法（首字母小写），例如 getUserName；
-5. 属性的命名使用驼峰法（首字母小写），例如 tableName、instance；
-6. 特例：以双下划线__打头的函数或方法作为魔术方法，例如 __call 和 __autoload；
+1. Tên lớp đặt theo kiểu camelCase (viết hoa chữ cái đầu), ví dụ User, UserType;
+2. Tên hàm common dùng chữ thường và dấu gạch dưới (bắt đầu bằng chữ thường), ví dụ get_client_ip;
+3. Các phương thức trong controller dùng chữ thường và dấu gạch dưới (bắt đầu bằng chữ thường), ví dụ get_client_ip
+4. Tên phương thức đặt theo kiểu camelCase (chữ cái đầu viết thường), ví dụ getUserName;
+5. Tên thuộc tính đặt theo kiểu camelCase (chữ cái đầu viết thường), ví dụ tableName, instance;
+6. Ngoại lệ: các hàm hoặc phương thức bắt đầu bằng hai dấu gạch dưới __ được dùng làm phương thức magic, ví dụ __call và __autoload;
 
-#### 常量和配置
-1. 常量以大写字母和下划线命名，例如 APP_PATH；
-2. 配置参数以小写字母和下划线命名，例如 url_route_on 和url_convert；
-3. 环境变量定义使用大写字母和下划线命名，例如APP_DEBUG；
+#### Hằng số và cấu hình
+1. Hằng số được đặt tên bằng chữ in hoa và dấu gạch dưới, ví dụ APP_PATH;
+2. Tham số cấu hình được đặt tên bằng chữ thường và dấu gạch dưới, ví dụ url_route_on và url_convert;
+3. Biến môi trường được đặt tên bằng chữ in hoa và dấu gạch dưới, ví dụ APP_DEBUG;
 
-#### 数据表和字段
-1. 数据表和字段采用小写加下划线方式命名，并注意字段名不要以下划线开头，例如 think_user 表和 user_name字段，不建议使用驼峰和中文作为数据表及字段命名
+#### Bảng dữ liệu và trường
+1. Bảng dữ liệu và trường được đặt tên bằng chữ thường kèm dấu gạch dưới, lưu ý tên trường không được bắt đầu bằng dấu gạch dưới, ví dụ bảng think_user và trường user_name, không khuyến khích dùng kiểu camelCase và tiếng Trung để đặt tên bảng dữ liệu và trường
 
-注意：请理解并尽量遵循以上命名规范，可以减少在开发过程中出现不必要的错误
+Lưu ý: vui lòng hiểu rõ và cố gắng tuân thủ các quy tắc đặt tên trên, điều này giúp giảm thiểu các lỗi không cần thiết trong quá trình phát triển
 
-#### 语法规范
-1. 尽量使用php7新语法
-2. 每个 namespace 命名空间声明语句和 use 声明语句块后面，必须 插入一个空白行
-3. 类的开始花括号（{） 必须 写在类声明后自成一行，结束花括号（}）也 必须 写在类主体后自成一行
-4. 方法的开始花括号（{） 必须 写在函数声明后自成一行，结束花括号（}）也 必须 写在函数主体后自成一行。
-5. 类的属性和方法 必须 添加访问修饰符（private、protected 以及 public），abstract 以及 final 必须 声明在访问修饰符之前，而 static 必须 声明在访问修饰符之后
-6. 控制结构的关键字后 必须 要有一个空格符，而调用方法或函数时则 一定不可 有
-7. 控制结构的开始花括号（{） 必须 写在声明的同一行，而结束花括号（}） 必须 写在主体后自成一行
-8. 纯 PHP 代码文件 必须 省略最后的 ?> 结束标签
-9. 所有方法，类，控制器类，都 必须 添加访问修饰符
+#### Quy chuẩn cú pháp
+1. Ưu tiên sử dụng cú pháp mới của php7
+2. Sau mỗi câu lệnh khai báo namespace và khối câu lệnh khai báo use, PHẢI chèn một dòng trống
+3. Dấu ngoặc nhọn mở ({) của lớp PHẢI được đặt trên một dòng riêng sau phần khai báo lớp, dấu ngoặc nhọn đóng (}) cũng PHẢI được đặt trên một dòng riêng sau phần thân lớp
+4. Dấu ngoặc nhọn mở ({) của phương thức PHẢI được đặt trên một dòng riêng sau phần khai báo hàm, dấu ngoặc nhọn đóng (}) cũng PHẢI được đặt trên một dòng riêng sau phần thân hàm.
+5. Thuộc tính và phương thức của lớp PHẢI có từ khóa phạm vi truy cập (private, protected và public), abstract và final PHẢI được khai báo trước từ khóa phạm vi truy cập, còn static PHẢI được khai báo sau từ khóa phạm vi truy cập
+6. Sau từ khóa của cấu trúc điều khiển PHẢI có một dấu cách, còn khi gọi phương thức hoặc hàm thì KHÔNG ĐƯỢC có
+7. Dấu ngoặc nhọn mở ({) của cấu trúc điều khiển PHẢI được đặt trên cùng một dòng với phần khai báo, còn dấu ngoặc nhọn đóng (}) PHẢI được đặt trên một dòng riêng sau phần thân
+8. Tệp mã PHP thuần PHẢI lược bỏ thẻ đóng ?> ở cuối
+9. Tất cả phương thức, lớp và lớp controller đều PHẢI có từ khóa phạm vi truy cập
     ~~~
 
     /**
-     * 中文注释
-     * @param string $str 声明类型
+     * Chú thích tiếng Việt
+     * @param string $str Khai báo kiểu
      * @param array $arr
      * @return bool
      */
@@ -175,14 +175,14 @@ ThinkPHP6.0遵循PSR-2命名规范和PSR-4自动加载规范，并且注意如�
          return true;
     }
     ~~~
-10. 参数列表中，每个逗号后面 必须 要有一个空格，而逗号前面 一定不可 有空格
+10. Trong danh sách tham số, sau mỗi dấu phẩy PHẢI có một dấu cách, còn trước dấu phẩy KHÔNG ĐƯỢC có dấu cách
     ~~~
      function foo($arg1, &$arg2, $arg3 = [])
      {
             // method body
      }
     ~~~
-11. 参数 可以 分列成多行，此时包括第一个参数在内的每个参数都 尽量 单独成行。
+11. Tham số CÓ THỂ được tách thành nhiều dòng, khi đó mỗi tham số, kể cả tham số đầu tiên, NÊN nằm trên một dòng riêng.
     ~~~
     <?php
     $foo->bar(
@@ -191,8 +191,8 @@ ThinkPHP6.0遵循PSR-2命名规范和PSR-4自动加载规范，并且注意如�
         $muchLongerArgument
     );
     ~~~
-12. 标准的 if 结构如下代码所示，请留意「括号」、「空格」以及「花括号」的位置，
-    注意 else 和 elseif 都与前面的结束花括号在同一行
+12. Cấu trúc if chuẩn như đoạn mã dưới đây, hãy chú ý vị trí của “dấu ngoặc đơn”, “dấu cách” và “dấu ngoặc nhọn”,
+    lưu ý else và elseif đều nằm trên cùng một dòng với dấu ngoặc nhọn đóng phía trước
     ~~~
     <?php
     if ($expr1) {
@@ -203,52 +203,52 @@ ThinkPHP6.0遵循PSR-2命名规范和PSR-4自动加载规范，并且注意如�
         // else body;
     }
     ~~~
-13. 赋值等号前后必须加空格符
+13. Trước và sau dấu bằng của phép gán phải có dấu cách
     ~~~
     <?php
     $arr = [];
     ~~~
 
 
-#### PHP 7.1+ 常用新语法
+#### Các cú pháp mới thường dùng của PHP 7.1+
 
-1. 三元运算符
+1. Toán tử ba ngôi
    ~~~
    <?php
 
    $arr = ['crmeb'=>true];
-   之前
+   Trước đây
    echo isset($arr['crmeb']) ? $arr['crmeb'] : '';
-   之后
+   Hiện nay
    echo $arr['crmeb'] ?? '';
    ~~~
-2.  define() 定义常量数组
+2.  define() định nghĩa mảng hằng số
    ~~~
    <?php
     define('ARR',['a','b']);
    ~~~
-3.  命名空间优化
+3.  Tối ưu namespace
    ~~~
     <?php
-    //PHP7之前语法
+    //Cú pháp trước PHP7
     use FooLibrary\Bar\Baz\ClassA;
     use FooLibrary\Bar\Baz\ClassB;
-    // PHP7新语法写法
+    // Cách viết theo cú pháp mới của PHP7
     use FooLibrary\Bar\Baz\{ ClassA, ClassB};
 
    ~~~
-#### CRMEB PRO规范
- 1. 所有数据验证放在模块下的 validates 目录下
- 2. JSON返回使用父级 AuthController类中的success 和 fail
- 3. 错误判断抛出异常，由一个错误类统一控制输出
+#### Quy chuẩn CRMEB PRO
+ 1. Toàn bộ phần kiểm tra dữ liệu (validate) đặt trong thư mục validates của mô-đun
+ 2. Trả về JSON bằng các phương thức success và fail trong lớp cha AuthController
+ 3. Khi phát hiện lỗi thì ném ngoại lệ (exception), do một lớp lỗi kiểm soát đầu ra một cách thống nhất
     ~~~
     <?php
 
-        throw new AuthException('错误信息',400);
+        throw new AuthException('Thông tin lỗi',400);
     ~~~
- 4. 错误码和错误提示语应该统一管理，方便切换多语言
- 5. 数据库操作使用模型类，不能使用Db::table()
- 6. 获取表单数据使用 app\Request
+ 4. Mã lỗi và thông báo lỗi nên được quản lý tập trung để thuận tiện chuyển đổi đa ngôn ngữ
+ 5. Thao tác cơ sở dữ liệu dùng lớp model, không được dùng Db::table()
+ 6. Lấy dữ liệu biểu mẫu bằng app\Request
     ~~~
     <?php
     use app\Request;
@@ -256,17 +256,17 @@ ThinkPHP6.0遵循PSR-2命名规范和PSR-4自动加载规范，并且注意如�
 
     public function index(Request $request) {
 
-        //获取提交的数据，并以二维数组形式返回
+        //Lấy dữ liệu đã gửi và trả về dưới dạng mảng hai chiều
         $arr = $request->getMore([
             'name',
             'nickname'
         ]);
-        //获取提交的数据，并以二维数组形式返回并附加默认值
+        //Lấy dữ liệu đã gửi, trả về dưới dạng mảng hai chiều kèm giá trị mặc định
         $arr = $request->getMore([
            ['name','123'],
            ['nickname','0']
         ]);
-        //获取提交的数据,并以一维数组形式返回并附加默认值
+        //Lấy dữ liệu đã gửi, trả về dưới dạng mảng một chiều kèm giá trị mặc định
         [$name, $nickname] = $request->getMore([
            ['name','123'],
            ['nickname','0']
@@ -274,30 +274,30 @@ ThinkPHP6.0遵循PSR-2命名规范和PSR-4自动加载规范，并且注意如�
 
     }
     ~~~
- 7. 所有控制器类命令和表名对应，按照大驼峰命名规范
- 8. 所有文件夹命名按照小写字母加下划线定义
- 9. 所有属性名，变量名尽量遵守小驼峰命名规范
- 10. 复杂逻辑，多状态应适当添加行内注释
- 11. 模型里只能写关于搜索条件语句,查出数据得组合书写在services层进行处理,services创建命令:php make:services api@user/User
+ 7. Tất cả các lớp controller được đặt tên tương ứng với tên bảng, theo quy tắc đặt tên PascalCase
+ 8. Tất cả thư mục được đặt tên bằng chữ thường kèm dấu gạch dưới
+ 9. Tất cả tên thuộc tính, tên biến nên tuân theo quy tắc đặt tên camelCase
+ 10. Với logic phức tạp, nhiều trạng thái, nên thêm chú thích trong dòng (inline comment) một cách phù hợp
+ 11. Trong model chỉ được viết các câu lệnh điều kiện tìm kiếm, việc kết hợp dữ liệu truy vấn được phải viết ở tầng services để xử lý, lệnh tạo services: php make:services api@user/User
 
 
-## 文档
+## Tài liệu
 
-[使用手册](https://doc.crmeb.com)
-[TP6开发手册](https://www.kancloud.cn/manual/thinkphp6_0/content)
-
-
-## 参与开发
-
-请参阅 [CRMEB](https://github.com/crmeb/CRMEB)。
-
-## 版权信息
+[Hướng dẫn sử dụng](https://doc.crmeb.com)
+[Tài liệu phát triển TP6](https://www.kancloud.cn/manual/thinkphp6_0/content)
 
 
-本项目包含的第三方源码和二进制文件之版权信息另行标注。
+## Tham gia phát triển
 
-版权所有Copyright © 2017-2026 by CRMEB (http://www.crmeb.com)
+Vui lòng tham khảo [CRMEB](https://github.com/crmeb/CRMEB).
+
+## Thông tin bản quyền
+
+
+Thông tin bản quyền của mã nguồn và tệp nhị phân của bên thứ ba có trong dự án này được ghi chú riêng.
+
+Bản quyền Copyright © 2017-2026 by CRMEB (http://www.crmeb.com)
 
 All rights reserved。
 
-CRMEB® 商标和著作权所有者为西安众邦网络科技有限公司。
+Chủ sở hữu nhãn hiệu và quyền tác giả CRMEB® là Xi'an Zhongbang Network Technology Co., Ltd.

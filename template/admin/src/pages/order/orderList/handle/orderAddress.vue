@@ -1,8 +1,8 @@
-<!-- 修改发送地址 -->
+<!-- Sửa địa chỉ giao hàng -->
 <template>
   <div class="order-address">
     <el-dialog
-      title="修改发送地址"
+      title="Sửa địa chỉ giao hàng"
       :visible.sync="modals"
       width="50%"
       :close-on-click-modal="false"
@@ -10,19 +10,19 @@
       :show-close="false"
     >
       <el-form :model="form" :rules="rules" ref="form" label-width="120px" class="demo-ruleForm">
-        <el-form-item label="收货人" prop="consignee">
+        <el-form-item label="Người nhận hàng" prop="consignee">
           <el-input v-model="form.real_name" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="手机号" prop="mobile">
+        <el-form-item label="Số điện thoại" prop="mobile">
           <el-input v-model="form.user_phone" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="详细地址" prop="address">
+        <el-form-item label="Địa chỉ chi tiết" prop="address">
           <el-input v-model="form.user_address" autocomplete="off" />
         </el-form-item>
       </el-form>
       <div slot="footer">
-        <el-button v-db-click @click="modals = false">取消</el-button>
-        <el-button type="primary" v-db-click @click="submitForm('form')">确定</el-button>
+        <el-button v-db-click @click="modals = false">Hủy</el-button>
+        <el-button type="primary" v-db-click @click="submitForm('form')">Xác nhận</el-button>
       </div>
     </el-dialog>
   </div>
@@ -49,9 +49,9 @@ export default {
   computed: {
     rules() {
       return {
-        real_name: [{ required: true, message: '请输入收货人', trigger: 'blur' }],
-        user_phone: [{ required: true, message: '请输入手机号', trigger: 'blur' }],
-        user_address: [{ required: true, message: '请输入详细地址', trigger: 'blur' }],
+        real_name: [{ required: true, message: 'Vui lòng nhập tên người nhận', trigger: 'blur' }],
+        user_phone: [{ required: true, message: 'Vui lòng nhập số điện thoại', trigger: 'blur' }],
+        user_address: [{ required: true, message: 'Vui lòng nhập địa chỉ chi tiết', trigger: 'blur' }],
       };
     },
   },

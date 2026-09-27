@@ -1,9 +1,9 @@
 // +---------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +---------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +---------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +---------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +---------------------------------------------------------------------
@@ -19,8 +19,8 @@ export default {
   name: 'product',
   header: 'product',
   meta: {
-    title: '商品',
-    // 授权标识
+    title: 'Sản phẩm',
+    // Mã định danh ủy quyền
     auth: ['admin-store-index'],
   },
   redirect: {
@@ -32,7 +32,7 @@ export default {
       path: 'product_list',
       name: `${pre}productList`,
       meta: {
-        title: '商品管理',
+        title: 'Quản lý sản phẩm',
         auth: ['admin-store-storeProuduct-index'],
         keepAlive: true,
       },
@@ -42,7 +42,7 @@ export default {
       path: 'product_classify',
       name: `${pre}productClassify`,
       meta: {
-        title: '商品分类',
+        title: 'Danh mục sản phẩm',
         auth: ['admin-store-storeCategory-index'],
       },
       component: () => import('@/pages/product/productClassify'),
@@ -52,7 +52,7 @@ export default {
       name: `${pre}productAdd`,
       meta: {
         auth: ['admin-store-storeProuduct-index'],
-        title: '商品添加',
+        title: 'Thêm sản phẩm',
         activeMenu: routePre + '/product/product_list',
       },
       component: () => import('@/pages/product/productAdd'),
@@ -62,7 +62,7 @@ export default {
       name: `${pre}productEvaluate`,
       meta: {
         auth: ['admin-store-storeProuduct-index'],
-        title: '商品评论',
+        title: 'Đánh giá sản phẩm',
       },
       component: () => import('@/pages/product/productReply'),
     },
@@ -71,7 +71,7 @@ export default {
       name: `${pre}productAttr`,
       meta: {
         auth: ['admin-store-storeProuduct-index'],
-        title: '商品规格',
+        title: 'Quy cách sản phẩm',
       },
       component: () => import('@/pages/product/productAttr'),
     },
@@ -80,7 +80,7 @@ export default {
       name: `${pre}paramList`,
       meta: {
         auth: ['admin-product-param-list'],
-        title: '商品参数',
+        title: 'Thông số sản phẩm',
       },
       component: () => import('@/pages/product/paramList'),
     },
@@ -89,7 +89,7 @@ export default {
       name: `${pre}labelList`,
       meta: {
         auth: ['admin-product-label-list'],
-        title: '商品标签',
+        title: 'Nhãn sản phẩm',
       },
       component: () => import('@/pages/product/labelList'),
     },
@@ -98,7 +98,7 @@ export default {
       name: `${pre}labelList`,
       meta: {
         auth: ['admin-product-protection-list'],
-        title: '商品保障',
+        title: 'Đảm bảo sản phẩm',
       },
       component: () => import('@/pages/product/protectionList'),
     },

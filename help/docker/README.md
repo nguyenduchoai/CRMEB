@@ -1,12 +1,12 @@
-# 安装docker
-## docker 官网下载
+# Cài đặt docker
+## Tải docker từ trang chính thức
 https://www.docker.com/products/docker-desktop
-## 命令安装
+## Cài đặt bằng lệnh
 ```
 curl -sSL https://get.daocloud.io/docker | sh
 ```
 
-# 方式一：一键启动CRMEB 系统
+# Cách 1: Khởi động hệ thống CRMEB chỉ với một lệnh
 
 ```
 docker run -d \
@@ -20,39 +20,39 @@ docker run -d \
   ccr.ccs.tencentyun.com/zbkj/crmebky:latest
  ``` 
  
-# 方式二：docker-compose 快速运行项目
+# Cách 2: Chạy nhanh dự án bằng docker-compose
 
 
-## 1、安装docker-compose
+## 1、Cài đặt docker-compose
 https://www.runoob.com/docker/docker-compose.html
 
-## 2、下载CRMEB程序
-建议去下载最新开源代码 https://gitee.com/ZhongBangKeJi/CRMEB
-程序放到docker 同级目录下
+## 2、Tải chương trình CRMEB
+Nên tải mã nguồn mở mới nhất tại https://gitee.com/ZhongBangKeJi/CRMEB
+Đặt chương trình vào thư mục ngang cấp với thư mục docker
 
-## 3、启动项目
+## 3、Khởi chạy dự án
 ```
-进入docker-compose目录 cd /docker
+Vào thư mục docker-compose cd /docker
 
-运行命令：
+Chạy lệnh:
 ```
 docker-compose up -d
 
 ```
-## 4、访问CRMEB 系统
-移动端访问地址：http://localhost:8011/
-PC端访问地址：http://localhost:8011/admin
+## 4、Truy cập hệ thống CRMEB
+Địa chỉ truy cập trên di động: http://localhost:8011/
+Địa chỉ truy cập trên PC: http://localhost:8011/admin
 
 
-## 5、安装CRMEB
-### Mysql数据库信息：
+## 5、Cài đặt CRMEB
+### Thông tin cơ sở dữ liệu Mysql:
 ```
 Host:crmeb_mysql
 Post:3306
 user:crmeb
 pwd:123456
 ```
-### Redis信息：
+### Thông tin Redis:
 ```
 Host:crmeb_redis
 Post:6379
@@ -60,76 +60,76 @@ db:0
 pwd:123456
 ```
 
-## 6、常见错误及解决方案
+## 6、Các lỗi thường gặp và cách khắc phục
 
-### 6.1 MySQL 启动失败
-**错误现象**：MySQL 容器启动失败，日志显示 "--initialize specified but the data directory has files in it. Aborting."
+### 6.1 MySQL khởi động thất bại
+**Hiện tượng lỗi**: Container MySQL khởi động thất bại, log hiển thị "--initialize specified but the data directory has files in it. Aborting."
 
-**解决方案**：
-1. 停止所有容器：`docker-compose down`
-2. 清空数据目录：`rm -rf mysql/data/*`
-3. 重新启动服务：`docker-compose up -d`
+**Cách khắc phục**：
+1. Dừng tất cả container:`docker-compose down`
+2. Làm trống thư mục dữ liệu:`rm -rf mysql/data/*`
+3. Khởi động lại dịch vụ:`docker-compose up -d`
 
-**原因**：MySQL 数据目录不为空，导致初始化失败。
+**Nguyên nhân**: Thư mục dữ liệu MySQL không trống, dẫn đến khởi tạo thất bại.
 
-### 6.2 数据目录映射问题
-**错误现象**：数据库无法启动或数据无法持久化
+### 6.2 Sự cố ánh xạ thư mục dữ liệu
+**Hiện tượng lỗi**: Cơ sở dữ liệu không thể khởi động hoặc dữ liệu không thể lưu trữ lâu dài
 
-**解决方案**：
-1. 确保 `mysql/data` 目录存在：`mkdir -p mysql/data`
-2. 确保 `mysql/data` 目录为空
-3. 确保 docker-compose.yml 中正确配置了数据卷映射：
+**Cách khắc phục**：
+1. Đảm bảo thư mục `mysql/data` tồn tại:`mkdir -p mysql/data`
+2. Đảm bảo thư mục `mysql/data` trống
+3. Đảm bảo đã cấu hình đúng ánh xạ volume dữ liệu trong docker-compose.yml:
    ```yaml
    volumes:
      - ./mysql/data:/var/lib/mysql
    ```
 
-**原因**：数据目录未映射或映射不正确，导致数据库无法创建或数据丢失。
+**Nguyên nhân**: Thư mục dữ liệu chưa được ánh xạ hoặc ánh xạ không đúng, dẫn đến không thể tạo cơ sở dữ liệu hoặc bị mất dữ liệu.
 
-## 6.3 常见需要映射的目录说明
+## 6.3 Mô tả các thư mục thường cần ánh xạ
 
-### 6.3.1 MySQL 数据目录
-- **本地路径**：`mysql/data`
-- **容器路径**：`/var/lib/mysql`
-- **用途**：存储 MySQL 数据库的数据文件
-- **注意事项**：必须为空目录，否则 MySQL 初始化会失败
+### 6.3.1 MySQL Thư mục dữ liệu
+- **Đường dẫn cục bộ**：`mysql/data`
+- **Đường dẫn trong container**：`/var/lib/mysql`
+- **Công dụng**: Lưu trữ các tệp dữ liệu của cơ sở dữ liệu MySQL
+- **Lưu ý**: Phải là thư mục trống, nếu không MySQL sẽ khởi tạo thất bại
 
-### 6.2 MySQL 日志目录
-- **本地路径**：`mysql/log`
-- **容器路径**：`/var/log/mysql`
-- **用途**：存储 MySQL 的日志文件
-- **注意事项**：确保目录存在且有读写权限
+### 6.2 MySQL Thư mục log
+- **Đường dẫn cục bộ**：`mysql/log`
+- **Đường dẫn trong container**：`/var/log/mysql`
+- **Công dụng**: Lưu trữ các tệp log của MySQL
+- **Lưu ý**: Đảm bảo thư mục tồn tại và có quyền đọc/ghi
 
-### 6.3.2 PHP 应用目录
-- **本地路径**：`../../crmeb`
-- **容器路径**：`/var/www`
-- **用途**：存储 CRMEB 应用代码
-- **注意事项**：确保目录存在且包含完整的 CRMEB 代码
+### 6.3.2 PHP Thư mục ứng dụng
+- **Đường dẫn cục bộ**：`../../crmeb`
+- **Đường dẫn trong container**：`/var/www`
+- **Công dụng**: Lưu trữ mã nguồn ứng dụng CRMEB
+- **Lưu ý**: Đảm bảo thư mục tồn tại và chứa đầy đủ mã nguồn CRMEB
 
-### 6.3.3 PHP 运行时目录
-- **本地路径**：`../../crmeb/runtime`
-- **容器路径**：`/var/www/runtime`
-- **用途**：存储 PHP 应用的运行时文件，如缓存、日志等
-- **注意事项**：确保目录存在且有读写权限
+### 6.3.3 PHP Thư mục runtime
+- **Đường dẫn cục bộ**：`../../crmeb/runtime`
+- **Đường dẫn trong container**：`/var/www/runtime`
+- **Công dụng**: Lưu trữ các tệp runtime của ứng dụng PHP như bộ nhớ đệm, log, v.v.
+- **Lưu ý**: Đảm bảo thư mục tồn tại và có quyền đọc/ghi
 
-### 6.3.4 Nginx 配置目录
-- **本地路径**：`./nginx/vhost.conf`
-- **容器路径**：`/etc/nginx/conf.d/default.conf`
-- **用途**：Nginx 虚拟主机配置文件
-- **注意事项**：确保配置文件存在且格式正确
+### 6.3.4 Nginx Thư mục cấu hình
+- **Đường dẫn cục bộ**：`./nginx/vhost.conf`
+- **Đường dẫn trong container**：`/etc/nginx/conf.d/default.conf`
+- **Công dụng**: Tệp cấu hình virtual host của Nginx
+- **Lưu ý**: Đảm bảo tệp cấu hình tồn tại và đúng định dạng
 
-### 6.3.5 Nginx 日志目录
-- **本地路径**：`./nginx/log`
-- **容器路径**：`/etc/nginx/log`
-- **用途**：存储 Nginx 的日志文件
-- **注意事项**：确保目录存在且有读写权限
+### 6.3.5 Nginx Thư mục log
+- **Đường dẫn cục bộ**：`./nginx/log`
+- **Đường dẫn trong container**：`/etc/nginx/log`
+- **Công dụng**: Lưu trữ các tệp log của Nginx
+- **Lưu ý**: Đảm bảo thư mục tồn tại và có quyền đọc/ghi
 
-### 6.3.6 目录创建命令
+### 6.3.6 Lệnh tạo thư mục
 ```bash
-# 创建所有必要的目录
+# Tạo tất cả các thư mục cần thiết
 mkdir -p mysql/data mysql/log nginx/log
 
-# 确保 CRMEB 应用目录存在
+# Đảm bảo thư mục ứng dụng CRMEB đã tồn tại
 mkdir -p ../crmeb ../crmeb/runtime
 ```
 

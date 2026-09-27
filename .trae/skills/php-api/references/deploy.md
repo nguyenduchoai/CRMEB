@@ -1,39 +1,39 @@
-# 项目部署文档
+# Tài liệu triển khai dự án
 
-## 1. 概述
+## 1. Tổng quan
 
-本文档描述了 CRMEB 项目的部署流程，包括环境配置、部署步骤、服务管理等，旨在规范项目部署，确保项目能够稳定运行。
+Tài liệu này mô tả quy trình triển khai dự án CRMEB, bao gồm cấu hình môi trường, các bước triển khai, quản lý dịch vụ, v.v., nhằm chuẩn hóa việc triển khai dự án và đảm bảo dự án vận hành ổn định.
 
-## 2. 部署架构
+## 2. Kiến trúc triển khai
 
-### 2.1 系统架构
+### 2.1 Kiến trúc hệ thống
 
-#### 2.1.1 基础架构
+#### 2.1.1 Kiến trúc cơ bản
 
-- **Web 服务器**: Nginx/Apache
-- **应用服务器**: PHP-FPM
-- **数据库服务器**: MySQL
-- **缓存服务器**: Redis
-- **队列服务器**: ThinkPHP 内置队列
-- **长连接服务器**: Workerman
+- **Máy chủ Web**: Nginx/Apache
+- **Máy chủ ứng dụng**: PHP-FPM
+- **Máy chủ cơ sở dữ liệu**: MySQL
+- **Máy chủ bộ nhớ đệm (cache)**: Redis
+- **Máy chủ hàng đợi**: Hàng đợi tích hợp sẵn của ThinkPHP
+- **Máy chủ kết nối liên tục**: Workerman
 
-#### 2.1.2 部署模式
+#### 2.1.2 Mô hình triển khai
 
-##### 2.1.2.1 单机部署
+##### 2.1.2.1 Triển khai trên một máy chủ
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                    服务器                           │
+│                    Máy chủ                           │
 ├──────────────┬──────────────┬──────────────┬─────────┤
 │  Nginx/Apache│   PHP-FPM    │    MySQL     │  Redis  │
 └──────────────┴──────────────┴──────────────┴─────────┘
 ```
 
-##### 2.1.2.2 分布式部署
+##### 2.1.2.2 Triển khai phân tán
 
 ```
 ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
-│  Web 服务器  │────>│ 应用服务器   │────>│ 数据库服务器 │
+│  Web server  │────>│ Máy chủ ứng dụng │────>│ Máy chủ CSDL │
 ├──────────────┤     ├──────────────┤     ├──────────────┤
 │   Nginx      │     │   PHP-FPM    │     │    MySQL     │
 └──────────────┘     └──────────────┘     └──────────────┘
@@ -41,21 +41,21 @@
           └──────────────────┼──────────────────┘
                              ▼
                      ┌──────────────┐
-                     │  缓存服务器  │
+                     │  Máy chủ cache  │
                      ├──────────────┤
                      │    Redis     │
                      └──────────────┘
 ```
 
-### 2.2 网络架构
+### 2.2 Kiến trúc mạng
 
-#### 2.2.1 网络拓扑
+#### 2.2.1 Cấu trúc liên kết mạng (topology)
 
-- **公网**: 外部访问
-- **内网**: 内部服务通信
-- **DMZ**: 边界区域
+- **Mạng công cộng**: Truy cập từ bên ngoài
+- **Mạng nội bộ**: Giao tiếp giữa các dịch vụ nội bộ
+- **DMZ**: Vùng biên
 
-#### 2.2.2 端口规划
+#### 2.2.2 Quy hoạch cổng
 
 - **HTTP**: 80
 - **HTTPS**: 443
@@ -65,34 +65,34 @@
 - **PHP-FPM**: 9000
 - **Workerman**: 8282
 
-## 3. 环境配置
+## 3. Cấu hình môi trường
 
-### 3.1 操作系统
+### 3.1 Hệ điều hành
 
-#### 3.1.1 系统要求
+#### 3.1.1 Yêu cầu hệ thống
 
 - **Linux**: CentOS 7+/Ubuntu 18.04+
 - **Windows**: Windows Server 2016+
 - **macOS**: macOS 10.15+
 
-#### 3.1.2 系统优化
+#### 3.1.2 Tối ưu hệ thống
 
 ```bash
-# 关闭 SELinux
+# Tắt SELinux
 setenforce 0
 sed -i 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/selinux/config
 
-# 关闭防火墙（生产环境建议配置规则）
+# Tắt tường lửa (môi trường production nên cấu hình quy tắc)
 systemctl stop firewalld
 systemctl disable firewalld
 
-# 调整文件描述符
+# Điều chỉnh file descriptor
 cat >> /etc/security/limits.conf << EOF
 * soft nofile 65536
 * hard nofile 65536
 EOF
 
-# 调整内核参数
+# Điều chỉnh tham số kernel
 cat >> /etc/sysctl.conf << EOF
 net.core.somaxconn = 65535
 net.ipv4.tcp_max_syn_backlog = 65535
@@ -103,29 +103,29 @@ EOF
 sysctl -p
 ```
 
-### 3.2 PHP 环境
+### 3.2 Môi trường PHP
 
-#### 3.2.1 版本要求
+#### 3.2.1 Yêu cầu phiên bản
 
 - **PHP**: 7.1~7.4
 
-#### 3.2.2 安装步骤
+#### 3.2.2 Các bước cài đặt
 
 ```bash
-# CentOS 安装 PHP 7.4
+# CentOS Cài đặt PHP 7.4
 rpm -Uvh https://mirror.webtatic.com/yum/el7/epel-release.rpm
 rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
 yum install -y php74w php74w-fpm php74w-cli php74w-mysql php74w-redis php74w-gd php74w-mbstring php74w-xml php74w-zip php74w-opcache
 
-# Ubuntu 安装 PHP 7.4
+# Ubuntu Cài đặt PHP 7.4
 apt update
 apt install -y php7.4 php7.4-fpm php7.4-cli php7.4-mysql php7.4-redis php7.4-gd php7.4-mbstring php7.4-xml php7.4-zip php7.4-opcache
 ```
 
-#### 3.2.3 配置优化
+#### 3.2.3 Tối ưu cấu hình
 
 ```php
-// php.ini 配置
+// php.ini Cấu hình
 memory_limit = 512M
 upload_max_filesize = 20M
 post_max_size = 20M
@@ -138,7 +138,7 @@ opcache.interned_strings_buffer = 8
 opcache.max_accelerated_files = 4000
 opcache.revalidate_freq = 60
 
-// www.conf 配置
+// www.conf Cấu hình
 pm.max_children = 50
 pm.start_servers = 10
 pm.min_spare_servers = 5
@@ -147,9 +147,9 @@ pm.process_idle_timeout = 10s
 pm.max_requests = 1000
 ```
 
-### 3.3 Web 服务器
+### 3.3 Máy chủ Web
 
-#### 3.3.1 Nginx 配置
+#### 3.3.1 Cấu hình Nginx
 
 ```nginx
 # crmeb.conf
@@ -180,34 +180,34 @@ server {
 }
 ```
 
-### 3.4 数据库配置
+### 3.4 Cấu hình cơ sở dữ liệu
 
-#### 3.4.1 MySQL 安装
+#### 3.4.1 Cài đặt MySQL
 
 ```bash
-# CentOS 安装 MySQL 5.7
+# CentOS Cài đặt MySQL 5.7
 yum localinstall -y https://dev.mysql.com/get/mysql57-community-release-el7-11.noarch.rpm
 yum install -y mysql-community-server
 
 systemctl start mysqld
 systemctl enable mysqld
 
-# 获取初始密码
+# Lấy mật khẩu ban đầu
 grep 'temporary password' /var/log/mysqld.log
 
-# 安全配置
+# Cấu hình bảo mật
 mysql_secure_installation
 
-# Ubuntu 安装 MySQL 5.7
+# Ubuntu Cài đặt MySQL 5.7
 apt update
 apt install -y mysql-server
 mysql_secure_installation
 ```
 
-#### 3.4.2 MySQL 配置优化
+#### 3.4.2 Tối ưu cấu hình MySQL
 
 ```ini
-# my.cnf 配置
+# my.cnf Cấu hình
 [mysqld]
 bind-address = 127.0.0.1
 port = 3306
@@ -215,7 +215,7 @@ datadir = /var/lib/mysql
 socket = /var/lib/mysql/mysql.sock
 user = mysql
 
-# 性能优化
+# Tối ưu hiệu năng
 max_connections = 1000
 wait_timeout = 60
 interactive_timeout = 28800
@@ -228,7 +228,7 @@ myisam_sort_buffer_size = 64M
 thread_cache_size = 8
 query_cache_size = 16M
 
-# InnoDB 优化
+# InnoDB tối ưu hóa
 innodb_buffer_pool_size = 1G
 innodb_file_per_table = 1
 innodb_log_file_size = 256M
@@ -236,29 +236,29 @@ innodb_log_buffer_size = 8M
 innodb_flush_method = O_DIRECT
 ```
 
-### 3.5 缓存配置
+### 3.5 Cấu hình bộ nhớ đệm (cache)
 
-#### 3.5.1 Redis 安装
+#### 3.5.1 Cài đặt Redis
 
 ```bash
-# CentOS 安装 Redis
+# CentOS Cài đặt Redis
 yum install -y epel-release
 yum install -y redis
 
 systemctl start redis
 systemctl enable redis
 
-# Ubuntu 安装 Redis
+# Ubuntu Cài đặt Redis
 apt update
 apt install -y redis-server
 systemctl start redis
 systemctl enable redis
 ```
 
-#### 3.5.2 Redis 配置优化
+#### 3.5.2 Tối ưu cấu hình Redis
 
 ```conf
-# redis.conf 配置
+# redis.conf Cấu hình
 bind 127.0.0.1
 port 6379
 databases 16
@@ -271,76 +271,76 @@ save 300 10
 save 60 10000
 ```
 
-## 4. 部署流程
+## 4. Quy trình triển khai
 
-### 4.1 代码部署
+### 4.1 Triển khai mã nguồn
 
-#### 4.1.1 Git 部署
+#### 4.1.1 Triển khai bằng Git
 
 ```bash
-# 克隆代码
+# Clone code
 git clone https://github.com/crmeb/CRMEB.git /data/www/crmeb
 cd /data/www/crmeb
 
-# 切换版本
+# Chuyển phiên bản
 git checkout tags/v5.6.4
 
-# 安装依赖
+# Cài đặt các gói phụ thuộc
 composer install --no-dev
 
-# 配置环境变量
+# Cấu hình biến môi trường
 cp .env.example .env
-# 编辑 .env 文件，配置数据库、Redis 等信息
+# Sửa file .env, cấu hình thông tin cơ sở dữ liệu, Redis, v.v.
 
-# 生成密钥
+# Tạo khóa
 php think key:generate
 
-# 数据库迁移
+# Migration cơ sở dữ liệu
 php think migrate:run
 
-# 生成数据表
+# Tạo bảng dữ liệu
 php think crmeb:install
 
-# 清除缓存
+# Xóa bộ nhớ đệm
 php think clear
 ```
 
-#### 4.1.2 手动部署
+#### 4.1.2 Triển khai thủ công
 
-1. **下载代码**: 从官方网站下载最新版本
-2. **上传代码**: 上传到服务器 `/data/www/` 目录
-3. **解压代码**: `unzip CRMEB_v5.6.4.zip -d /data/www/crmeb`
-4. **安装依赖**: `composer install --no-dev`
-5. **配置环境**: 同 Git 部署步骤
+1. **Tải mã nguồn**: Tải phiên bản mới nhất từ trang web chính thức
+2. **Tải mã nguồn lên**: Tải lên thư mục `/data/www/` trên máy chủ
+3. **Giải nén mã nguồn**: `unzip CRMEB_v5.6.4.zip -d /data/www/crmeb`
+4. **Cài đặt phụ thuộc**: `composer install --no-dev`
+5. **Cấu hình môi trường**: Giống các bước triển khai bằng Git
 
-### 4.2 服务启动
+### 4.2 Khởi động dịch vụ
 
-#### 4.2.1 Web 服务
+#### 4.2.1 Dịch vụ Web
 
 ```bash
-# Nginx 启动
+# Nginx Khởi động
 systemctl start nginx
 systemctl enable nginx
 
-# Apache 启动
+# Apache Khởi động
 systemctl start httpd
 systemctl enable httpd
 ```
 
-#### 4.2.2 PHP-FPM 服务
+#### 4.2.2 Dịch vụ PHP-FPM
 
 ```bash
 systemctl start php-fpm
 systemctl enable php-fpm
 ```
 
-#### 4.2.3 队列服务
+#### 4.2.3 Dịch vụ hàng đợi
 
 ```bash
-# 启动队列（推荐使用 Supervisor 管理）
+# Khởi động hàng đợi (khuyến nghị dùng Supervisor để quản lý)
 supervisorctl start crmeb-queue
 
-# Supervisor 配置
+# Supervisor Cấu hình
 [program:crmeb-queue]
 command=php /data/www/crmeb/think queue:listen --queue=default --timeout=60
 process_name=%(program_name)s_%(process_num)02d
@@ -353,149 +353,149 @@ stdout_logfile=/data/logs/supervisor/crmeb-queue-stdout.log
 stderr_logfile=/data/logs/supervisor/crmeb-queue-stderr.log
 ```
 
-#### 4.2.4 长连接服务
+#### 4.2.4 Dịch vụ kết nối liên tục
 
 ```bash
-# 启动长连接服务
+# Khởi động dịch vụ kết nối liên tục
 php think workerman start --d
 
-# 停止长连接服务
+# Dừng dịch vụ kết nối liên tục
 php think workerman stop
 ```
 
-#### 4.2.5 定时任务
+#### 4.2.5 Tác vụ định kỳ
 
 ```bash
-# 添加定时任务
+# Thêm tác vụ định kỳ
 crontab -e
 
-# 定时任务配置
+# Cấu hình tác vụ định kỳ
 * * * * * php /data/www/crmeb/think timer run
 0 0 * * * php /data/www/crmeb/think crmeb:backup
 ```
 
-### 4.3 部署验证
+### 4.3 Kiểm tra sau khi triển khai
 
-#### 4.3.1 健康检查
+#### 4.3.1 Kiểm tra tình trạng hoạt động (health check)
 
-- **访问首页**: `http://example.com`
-- **访问后台**: `http://example.com/admin`
-- **API 测试**: `http://example.com/api/ping`
-- **数据库连接**: 检查数据库连接状态
-- **Redis 连接**: 检查缓存连接状态
+- **Truy cập trang chủ**: `http://example.com`
+- **Truy cập trang quản trị**: `http://example.com/admin`
+- **Kiểm thử API**: `http://example.com/api/ping`
+- **Kết nối cơ sở dữ liệu**: Kiểm tra trạng thái kết nối cơ sở dữ liệu
+- **Kết nối Redis**: Kiểm tra trạng thái kết nối bộ nhớ đệm
 
-#### 4.3.2 日志检查
+#### 4.3.2 Kiểm tra log
 
 ```bash
-# 检查 Nginx 日志
+# Kiểm tra log Nginx
 tail -f /data/logs/nginx/crmeb.error.log
 
-# 检查 PHP 错误日志
+# Kiểm tra log lỗi PHP
 tail -f /var/log/php-fpm/error.log
 
-# 检查应用日志
+# Kiểm tra log ứng dụng
 tail -f /data/www/crmeb/runtime/log/*.log
 ```
 
-## 5. 服务管理
+## 5. Quản lý dịch vụ
 
-### 5.1 日常运维
+### 5.1 Vận hành hằng ngày
 
-#### 5.1.1 监控检查
+#### 5.1.1 Kiểm tra giám sát
 
-- **服务状态**: 检查所有服务是否正常运行
-- **系统负载**: 监控 CPU、内存、磁盘使用情况
-- **网络状态**: 监控网络连接和带宽使用
-- **应用状态**: 监控应用响应时间和错误率
+- **Trạng thái dịch vụ**: Kiểm tra tất cả dịch vụ có hoạt động bình thường không
+- **Tải hệ thống**: Giám sát tình trạng sử dụng CPU, bộ nhớ, ổ đĩa
+- **Trạng thái mạng**: Giám sát kết nối mạng và mức sử dụng băng thông
+- **Trạng thái ứng dụng**: Giám sát thời gian phản hồi và tỷ lệ lỗi của ứng dụng
 
-#### 5.1.2 日志管理
+#### 5.1.2 Quản lý log
 
-- **日志收集**: 集中收集所有服务日志
-- **日志分析**: 分析日志中的错误和异常
-- **日志清理**: 定期清理过期日志
-- **日志备份**: 重要日志备份到远程存储
+- **Thu thập log**: Thu thập tập trung log của tất cả dịch vụ
+- **Phân tích log**: Phân tích lỗi và ngoại lệ trong log
+- **Dọn dẹp log**: Định kỳ dọn dẹp log đã hết hạn
+- **Sao lưu log**: Sao lưu log quan trọng lên kho lưu trữ từ xa
 
-#### 5.1.3 备份恢复
+#### 5.1.3 Sao lưu và khôi phục
 
-##### 5.1.3.1 数据备份
+##### 5.1.3.1 Sao lưu dữ liệu
 
 ```bash
-# 数据库备份
+# Sao lưu cơ sở dữ liệu
 mysqldump -u username -p database_name > /data/backup/data/$(date +%Y%m%d)_backup.sql
 
-# 代码备份
+# Sao lưu code
 tar -czf /data/backup/code/$(date +%Y%m%d)_crmeb.tar.gz /data/www/crmeb
 
-# 配置文件备份
+# Sao lưu file cấu hình
 tar -czf /data/backup/config/$(date +%Y%m%d)_config.tar.gz /data/www/crmeb/config
 ```
 
-##### 5.1.3.2 数据恢复
+##### 5.1.3.2 Khôi phục dữ liệu
 
 ```bash
-# 数据库恢复
+# Khôi phục cơ sở dữ liệu
 mysql -u username -p database_name < /data/backup/data/20240101_backup.sql
 
-# 代码恢复
+# Khôi phục code
 tar -xzf /data/backup/code/20240101_crmeb.tar.gz -C /data/www/
 
-# 配置文件恢复
+# Khôi phục file cấu hình
 tar -xzf /data/backup/config/20240101_config.tar.gz -C /data/www/crmeb/
 ```
 
-## 6. 常见问题
+## 6. Sự cố thường gặp
 
-### 6.1 部署问题
+### 6.1 Vấn đề khi triển khai
 
-#### 6.1.1 依赖安装失败
+#### 6.1.1 Cài đặt thư viện phụ thuộc thất bại
 
-- **问题**: Composer 安装依赖失败
-- **原因**: 网络问题，PHP 版本不兼容
-- **解决方案**: 使用国内镜像，检查 PHP 版本
+- **Vấn đề**: Composer cài đặt thư viện phụ thuộc thất bại
+- **Nguyên nhân**: Sự cố mạng, phiên bản PHP không tương thích
+- **Giải pháp**: Sử dụng mirror trong nước, kiểm tra phiên bản PHP
 
-#### 6.1.2 数据库连接失败
+#### 6.1.2 Kết nối cơ sở dữ liệu thất bại
 
-- **问题**: 应用无法连接数据库
-- **原因**: 数据库服务未启动，用户名密码错误，网络连接问题
-- **解决方案**: 检查 MySQL 服务，验证用户名密码，检查网络连接
+- **Vấn đề**: Ứng dụng không thể kết nối cơ sở dữ liệu
+- **Nguyên nhân**: Dịch vụ cơ sở dữ liệu chưa khởi động, sai tên đăng nhập hoặc mật khẩu, sự cố kết nối mạng
+- **Giải pháp**: Kiểm tra dịch vụ MySQL, xác minh tên đăng nhập và mật khẩu, kiểm tra kết nối mạng
 
-#### 6.1.3 权限错误
+#### 6.1.3 Lỗi phân quyền
 
-- **问题**: 文件或目录权限错误
-- **原因**: 权限设置不正确，用户组不匹配
-- **解决方案**: 设置正确的文件权限，确保 PHP-FPM 用户有访问权限
+- **Vấn đề**: Lỗi quyền truy cập tệp hoặc thư mục
+- **Nguyên nhân**: Thiết lập quyền không đúng, nhóm người dùng không khớp
+- **Giải pháp**: Thiết lập đúng quyền cho tệp, đảm bảo người dùng PHP-FPM có quyền truy cập
 
-#### 6.1.4 端口占用
+#### 6.1.4 Cổng bị chiếm dụng
 
-- **问题**: 服务启动失败，端口被占用
-- **原因**: 其他服务占用了相同端口
-- **解决方案**: 查找并停止占用端口的服务，或修改服务端口
+- **Vấn đề**: Khởi động dịch vụ thất bại, cổng đã bị chiếm dụng
+- **Nguyên nhân**: Dịch vụ khác đang chiếm dụng cùng cổng
+- **Giải pháp**: Tìm và dừng dịch vụ đang chiếm dụng cổng, hoặc đổi cổng của dịch vụ
 
-### 6.2 运行问题
+### 6.2 Vấn đề khi vận hành
 
-#### 6.2.1 应用响应缓慢
+#### 6.2.1 Ứng dụng phản hồi chậm
 
-- **问题**: 应用响应时间长
-- **原因**: 数据库查询慢，PHP 代码效率低，服务器资源不足
-- **解决方案**: 优化 SQL 查询，优化 PHP 代码，增加服务器资源
+- **Vấn đề**: Thời gian phản hồi của ứng dụng lâu
+- **Nguyên nhân**: Truy vấn cơ sở dữ liệu chậm, mã PHP kém hiệu quả, tài nguyên máy chủ không đủ
+- **Giải pháp**: Tối ưu truy vấn SQL, tối ưu mã PHP, tăng tài nguyên máy chủ
 
-#### 6.2.2 内存溢出
+#### 6.2.2 Tràn bộ nhớ
 
-- **问题**: PHP 内存溢出
-- **原因**: 内存限制过小，代码中存在内存泄漏
-- **解决方案**: 增加 PHP 内存限制，优化代码中的内存使用
+- **Vấn đề**: PHP bị tràn bộ nhớ
+- **Nguyên nhân**: Giới hạn bộ nhớ quá nhỏ, mã nguồn bị rò rỉ bộ nhớ
+- **Giải pháp**: Tăng giới hạn bộ nhớ của PHP, tối ưu việc sử dụng bộ nhớ trong mã nguồn
 
-#### 6.2.3 队列堆积
+#### 6.2.3 Hàng đợi bị tồn đọng
 
-- **问题**: 队列任务堆积
-- **原因**: 队列处理速度慢，任务量过大
-- **解决方案**: 增加队列进程数，优化队列任务处理逻辑
+- **Vấn đề**: Tác vụ hàng đợi bị tồn đọng
+- **Nguyên nhân**: Tốc độ xử lý hàng đợi chậm, khối lượng tác vụ quá lớn
+- **Giải pháp**: Tăng số tiến trình hàng đợi, tối ưu logic xử lý tác vụ hàng đợi
 
-## 7. 参考资源
+## 7. Tài liệu tham khảo
 
-- [CRMEB 官方文档](https://doc.crmeb.com/single_open)
-- [ThinkPHP 6 官方文档](https://www.kancloud.cn/manual/thinkphp6_0)
-- [Nginx 官方文档](https://nginx.org/en/docs/)
-- [PHP 官方文档](https://www.php.net/docs.php)
-- [MySQL 官方文档](https://dev.mysql.com/doc/)
-- [Redis 官方文档](https://redis.io/documentation)
+- [Tài liệu chính thức CRMEB](https://doc.crmeb.com/single_open)
+- [Tài liệu chính thức ThinkPHP 6](https://www.kancloud.cn/manual/thinkphp6_0)
+- [Tài liệu chính thức Nginx](https://nginx.org/en/docs/)
+- [Tài liệu chính thức PHP](https://www.php.net/docs.php)
+- [Tài liệu chính thức MySQL](https://dev.mysql.com/doc/)
+- [Tài liệu chính thức Redis](https://redis.io/documentation)

@@ -1,41 +1,41 @@
 <template>
   <div>
     <el-card :bordered="false" shadow="never" class="ivu-mt">
-      <!-- <el-button type="primary" v-db-click @click="addType">添加类型</el-button> -->
+      <!-- <el-button type="primary" v-db-click @click="addType">Thêm loại</el-button> -->
       <el-table
         class="mt14"
         :data="tbody"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column label="ID" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="会员名" min-width="130">
+        <el-table-column label="Tên loại thành viên" min-width="130">
           <template slot-scope="scope">
             <span>{{ scope.row.title }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="有限期（天）" min-width="130">
+        <el-table-column label="Thời hạn (ngày)" min-width="130">
           <template slot-scope="scope">
-            <span>{{ scope.row.vip_day === -1 ? '永久' : scope.row.vip_day }}</span>
+            <span>{{ scope.row.vip_day === -1 ? 'Vĩnh viễn' : scope.row.vip_day }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="原价" min-width="90">
+        <el-table-column label="Giá gốc" min-width="90">
           <template slot-scope="scope">
             <span>{{ scope.row.price }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="优惠价" min-width="90">
+        <el-table-column label="Giá ưu đãi" min-width="90">
           <template slot-scope="scope">
             <span>{{ scope.row.pre_price }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="是否开启" min-width="100">
+        <el-table-column label="Bật" min-width="100">
           <template slot-scope="scope">
             <el-switch
               :active-value="0"
@@ -48,20 +48,20 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="排序" min-width="90">
+        <el-table-column label="Thứ tự sắp xếp" min-width="90">
           <template slot-scope="scope">
             <span>{{ scope.row.sort }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="170">
+        <el-table-column label="Thao tác" fixed="right" width="170">
           <template slot-scope="scope">
-            <a href="javascript:" v-db-click @click="editType(scope.row)">编辑</a>
+            <a href="javascript:" v-db-click @click="editType(scope.row)">Sửa</a>
             <!-- <el-divider direction="vertical" v-if="scope.row.type !== 'free' && scope.row.type !== 'ever'" />
             <a
               v-if="scope.row.type !== 'free' && scope.row.type !== 'ever'"
               href="javascript:"
-              v-db-click @click="del(scope.row, '删除类型', scope.$index)"
-              >删除</a
+              v-db-click @click="del(scope.row, 'Xóa loại', scope.$index)"
+              >Xóa</a
             > -->
           </template>
         </el-table-column>
@@ -69,7 +69,7 @@
     </el-card>
     <el-dialog
       :visible.sync="modal"
-      :title="`${rowModelType}${rowEdit && rowEdit.title}会员`"
+      :title="`${rowModelType} loại thành viên ${rowEdit && rowEdit.title}`"
       width="540px"
       @closed="cancel"
     >
@@ -89,7 +89,7 @@ export default {
       loading: false,
       modal: false,
       rowEdit: {},
-      rowModelType: '编辑',
+      rowModelType: 'Sửa',
       options: {
         form: {
           labelWidth: '100px',
@@ -109,18 +109,18 @@ export default {
         {
           type: 'input',
           field: 'title',
-          title: '会员名',
+          title: 'Tên loại thành viên',
           value: '',
           props: {
             disabled: false,
-            placeholder: '输入会员名',
+            placeholder: 'Nhập tên loại thành viên',
           },
           validate: [
             {
               type: 'string',
               max: 10,
               min: 1,
-              message: '请输入长度为1-10的名称',
+              message: 'Vui lòng nhập tên dài từ 1-10 ký tự',
               requred: true,
             },
           ],
@@ -128,13 +128,13 @@ export default {
         {
           type: 'InputNumber',
           field: 'vip_day',
-          title: '有限期（天）',
+          title: 'Thời hạn (ngày)',
           value: null,
           props: {
             precision: 0,
             disabled: false,
             type: 'text',
-            placeholder: '输入有限期',
+            placeholder: 'Nhập thời hạn',
             controls: false,
           },
           style: {
@@ -145,7 +145,7 @@ export default {
               type: 'number',
               max: 1000000,
               min: 0,
-              message: '最大只能输入1000000,最小为0',
+              message: 'Chỉ được nhập tối đa 1000000, tối thiểu là 0',
               requred: true,
             },
           ],
@@ -153,12 +153,12 @@ export default {
         {
           type: 'InputNumber',
           field: 'price',
-          title: '原价',
+          title: 'Giá gốc',
           value: null,
           props: {
             min: 0,
             disabled: false,
-            placeholder: '输入原价',
+            placeholder: 'Nhập giá gốc',
             controls: false,
           },
           style: {
@@ -169,7 +169,7 @@ export default {
               type: 'number',
               max: 1000000,
               min: 0,
-              message: '最大只能输入1000000,最小为0',
+              message: 'Chỉ được nhập tối đa 1000000, tối thiểu là 0',
               requred: true,
             },
           ],
@@ -177,12 +177,12 @@ export default {
         {
           type: 'InputNumber',
           field: 'pre_price',
-          title: '优惠价',
+          title: 'Giá ưu đãi',
           value: null,
           props: {
             min: 0,
             disabled: false,
-            placeholder: '输入优惠价',
+            placeholder: 'Nhập giá ưu đãi',
             controls: false,
           },
           style: {
@@ -193,7 +193,7 @@ export default {
               type: 'number',
               max: 1000000,
               min: 0,
-              message: '最大只能输入1000000,最小为0',
+              message: 'Chỉ được nhập tối đa 1000000, tối thiểu là 0',
               requred: true,
             },
           ],
@@ -201,13 +201,13 @@ export default {
         {
           type: 'InputNumber',
           field: 'sort',
-          title: '排序',
+          title: 'Thứ tự sắp xếp',
           value: 0,
           props: {
             min: 1,
             max: 1000000,
             disabled: false,
-            placeholder: '请输入排序',
+            placeholder: 'Vui lòng nhập thứ tự sắp xếp',
             controls: false,
           },
           style: {
@@ -218,7 +218,7 @@ export default {
               type: 'number',
               max: 1000000,
               min: 0,
-              message: '最大只能输入1000000,最小为0',
+              message: 'Chỉ được nhập tối đa 1000000, tối thiểu là 0',
               requred: true,
             },
           ],
@@ -284,7 +284,7 @@ export default {
     },
     addType() {
       this.rowEdit.id = 0;
-      this.rowModelType = '新增';
+      this.rowModelType = 'Thêm mới';
       this.rule[1].value = 'owner';
       this.rule[3].props.disabled = false;
       this.rule[5].props.disabled = false;
@@ -314,10 +314,10 @@ export default {
           if (row.hasOwnProperty(key)) {
             if (item.field === key) {
               if (key === 'vip_day') {
-                if (row[key] === -1 || row[key] == '永久') {
+                if (row[key] === -1 || row[key] == 'Vĩnh viễn') {
                   item.type = 'input';
                   item.props.disabled = true;
-                  row[key] = '永久';
+                  row[key] = 'Vĩnh viễn';
                   item.validate = [{ type: 'string', message: '', requred: true }];
                 } else {
                   item.props.disabled = false;
@@ -341,7 +341,7 @@ export default {
           }
         }
       });
-      this.rowModelType = '编辑';
+      this.rowModelType = 'Sửa';
       this.rowEdit = JSON.parse(JSON.stringify(row));
       this.modal = true;
     },

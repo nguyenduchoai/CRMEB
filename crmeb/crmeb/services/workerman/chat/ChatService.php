@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -39,7 +39,7 @@ class ChatService
     protected $user = [];
 
     /**
-     * 在线客服
+     * CSKH trực tuyến
      * @var TcpConnection[]
      */
     protected $kefuUser = [];
@@ -72,7 +72,7 @@ class ChatService
     }
 
     /**
-     * 获得当前在线客服
+     * Lấy CSKH đang online hiện tại
      * @return TcpConnection[]
      */
     public function kefuUser()
@@ -81,7 +81,7 @@ class ChatService
     }
 
     /**
-     * 设置当前在线客服
+     * Thiết lập CSKH đang online hiện tại
      * @param TcpConnection $connection
      */
     public function setKefuUser(TcpConnection $connection, bool $isUser = true)
@@ -145,14 +145,14 @@ class ChatService
             $time_now = time();
             foreach ($worker->connections as $connection) {
                 if ($time_now - $connection->lastMessageTime > 120) {
-                    //定时器判断当前用户是否下线
+                    //Timer kiểm tra người dùng hiện tại có offline không
                     if (isset($connection->user->uid) && !isset($connection->user->isTourist)) {
                         /** @var StoreServiceRecordServices $service */
                         $service = app()->make(StoreServiceRecordServices::class);
                         $service->updateRecord(['to_uid' => $connection->user->uid], ['online' => 0]);
                     }
                     $this->response->connection($connection)->close('timeout');
-                    //广播给客服谁下线了
+                    //Broadcast cho CSKH biết ai đã offline
                     foreach ($this->kefuUser as $uid => &$conn) {
                         if (isset($connection->user->uid) && $connection->user->uid != $uid) {
                             if (isset($conn->onlineUids) && ($key = array_search($connection->user->uid, $conn->onlineUids)) !== false) {
@@ -173,7 +173,7 @@ class ChatService
                 }
             }
             if ($uids) {
-                //除了当前在线的其他全部都下线
+                //Ngoài người đang online hiện tại, tất cả còn lại đều offline
                 /** @var StoreServiceRecordServices $service */
                 $service = app()->make(StoreServiceRecordServices::class);
                 $service->updateOnline(['notUid' => $uids], ['online' => 0]);

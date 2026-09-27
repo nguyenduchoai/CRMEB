@@ -7,7 +7,7 @@
         class="sysTitle acea-row row-center-wrapper"
         :style="{ height: getHeight.barHeight + 'px' }"
       >
-        <view>用户详情</view>
+        <view>Chi tiết người dùng</view>
         <text class="iconfont icon-ic_leftarrow" @click="goarrow"></text>
       </view>
     </view>
@@ -44,12 +44,12 @@
       </view>
       <view class="bottom acea-row row-middle">
         <view class="item"
-          >消费金额<text class="num">{{
+          >Số tiền chi tiêu<text class="num">{{
             infoData.order_total_price
           }}</text></view
         >
         <view class="item"
-          >消费笔数<text class="num">{{
+          >Số lần mua hàng<text class="num">{{
             infoData.order_total_count
           }}</text></view
         >
@@ -57,9 +57,9 @@
     </view>
     <view class="list">
       <view class="title acea-row row-between-wrapper">
-        <view class="name">用户信息</view>
+        <view class="name">Thông tin người dùng</view>
         <view class="tip" @click="openTap"
-          >{{ isShow ? "展开" : "收起"
+          >{{ isShow ? "Mở rộng" : "Thu gọn"
           }}<text
             class="iconfont"
             :class="isShow ? 'icon-ic_downarrow' : 'icon-ic_uparrow'"
@@ -67,7 +67,7 @@
         ></view>
       </view>
       <view class="item acea-row row-between-wrapper">
-        <view>分组</view>
+        <view>Nhóm</view>
         <view>
           <picker
             @change="bindPickerChange"
@@ -77,7 +77,7 @@
           >
             <view class="acea-row row-middle">
               <view v-if="groupArray.length">
-                <text class="not" v-if="groupIndex == -1">无</text>
+                <text class="not" v-if="groupIndex == -1">Không có</text>
                 <text v-else>{{ groupArray[groupIndex].group_name }}</text>
               </view>
               <text class="iconfont icon-ic_rightarrow"></text>
@@ -86,7 +86,7 @@
         </view>
       </view>
       <view class="item acea-row row-between-wrapper">
-        <view>等级</view>
+        <view>Cấp bậc</view>
         <view>
           <picker
             @change="bindLevelChange"
@@ -96,7 +96,7 @@
           >
             <view class="acea-row row-middle">
               <view v-if="levelArray.length">
-                <text class="not" v-if="levelIndex == -1">无</text>
+                <text class="not" v-if="levelIndex == -1">Không có</text>
                 <text v-else>{{ levelArray[levelIndex].name }}</text>
               </view>
               <text class="iconfont icon-ic_rightarrow"></text>
@@ -106,9 +106,9 @@
       </view>
       <view class="item">
         <view class="acea-row row-between-wrapper">
-          <view>标签</view>
+          <view>Nhãn</view>
           <view class="add" @click="editLabels"
-            ><text class="iconfont icon-ic_increase"></text>添加标签</view
+            ><text class="iconfont icon-ic_increase"></text>Thêm nhãn</view
           >
         </view>
         <view
@@ -128,45 +128,45 @@
           class="item acea-row row-between-wrapper"
           v-if="infoData.real_name"
         >
-          <view>姓名</view>
+          <view>Họ tên</view>
           <view class="info">{{ infoData.real_name }}</view>
         </view>
         <view
           class="item acea-row row-between-wrapper"
           v-if="infoData.birthday"
         >
-          <view>出生年月</view>
+          <view>Ngày sinh</view>
           <view class="info">{{ infoData.birthday }}</view>
         </view>
         <view class="item acea-row row-between-wrapper" v-if="infoData.card_id">
-          <view>身份证号</view>
+          <view>Số CCCD/CMND</view>
           <view class="info">{{ infoData.card_id }}</view>
         </view>
         <view class="item acea-row row-between" v-if="infoData.addres">
-          <view>地址</view>
+          <view>Địa chỉ</view>
           <view class="info">{{ infoData.addres }}</view>
         </view>
         <view
           class="item acea-row row-between-wrapper"
           v-if="infoData._add_time"
         >
-          <view>注册时间</view>
+          <view>Thời gian đăng ký</view>
           <view class="info">{{ infoData._add_time }}</view>
         </view>
       </view>
     </view>
     <view class="property">
-      <view class="title">资产信息</view>
+      <view class="title">Thông tin tài sản</view>
       <view class="info acea-row">
         <view class="item" @click="balanceTap(1)">
-          <view>积分</view>
+          <view>Điểm thưởng</view>
           <view class="bottom acea-row row-between-wrapper">
             <view class="num">{{ infoData.integral }}</view>
             <view class="iconfont icon-ic_edit"></view>
           </view>
         </view>
         <view class="item" @click="balanceTap(0)">
-          <view>余额</view>
+          <view>Số dư</view>
           <view class="bottom acea-row row-between-wrapper">
             <view class="num">{{ infoData.now_money }}</view>
             <view class="iconfont icon-ic_edit"></view>
@@ -176,24 +176,24 @@
       <view class="info acea-row">
         <view class="item">
           <view class="acea-row row-between-wrapper">
-            <view>优惠券</view>
+            <view>Phiếu giảm giá</view>
             <view
               class="iconfont icon-ic_rightarrow"
               @click="couponSeeTap"
             ></view>
           </view>
           <view class="bottom acea-row row-between-wrapper">
-            <view class="num">{{ infoData.coupon_num }}张</view>
-            <view class="give" @click="couponTap">赠送</view>
+            <view class="num">{{ infoData.coupon_num }} phiếu</view>
+            <view class="give" @click="couponTap">Tặng</view>
           </view>
         </view>
         <view class="item" @click="memberTap">
-          <view>会员</view>
+          <view>Thành viên</view>
           <view class="bottom acea-row row-between-wrapper">
             <view class="num" v-if="infoData.svip_over_day">{{
-              "剩余" + infoData.svip_over_day + "天"
+              "Còn lại" + infoData.svip_over_day + "ngày"
             }}</view>
-            <view class="num" v-else>已过期/暂未开通</view>
+            <view class="num" v-else>Đã hết hạn/Chưa kích hoạt</view>
             <view class="iconfont icon-ic_edit"></view>
           </view>
         </view>
@@ -437,8 +437,8 @@ export default {
   padding-bottom: 1rpx;
   padding-bottom: calc(
     1rpx + constant(safe-area-inset-bottom)
-  ); ///兼容 IOS<11.2/
-  padding-bottom: calc(1rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+  ); ///Tương thích IOS<11.2/
+  padding-bottom: calc(1rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
   .header {
     background: linear-gradient(
       270deg,

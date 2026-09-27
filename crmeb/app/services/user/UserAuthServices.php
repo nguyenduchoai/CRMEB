@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -36,7 +36,7 @@ class UserAuthServices extends BaseServices
     }
 
     /**
-     * 获取授权信息
+     * Lấy thông tin ủy quyền
      * @param $token
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -48,18 +48,18 @@ class UserAuthServices extends BaseServices
         $md5Token = is_null($token) ? '' : md5($token);
 
         if ($token === 'undefined') {
-            throw new AuthException('请登录', [], 401);
+            throw new AuthException('Vui lòng đăng nhập', [], 401);
         }
         if (!$token || !$tokenData = CacheService::get($md5Token))
-            throw new AuthException('请登录', [], 401);
+            throw new AuthException('Vui lòng đăng nhập', [], 401);
 
         if (!is_array($tokenData) || empty($tokenData) || !isset($tokenData['uid'])) {
-            throw new AuthException('请登录', [], 401);
+            throw new AuthException('Vui lòng đăng nhập', [], 401);
         }
 
         /** @var JwtAuth $jwtAuth */
         $jwtAuth = app()->make(JwtAuth::class);
-        //设置解析token
+        //Đặt phân tích token
         [$id, $type] = $jwtAuth->parseToken($token);
 
 
@@ -67,14 +67,14 @@ class UserAuthServices extends BaseServices
             $jwtAuth->verifyToken();
         } catch (\Throwable $e) {
             if (!request()->isCli()) CacheService::delete($md5Token);
-            throw new AuthException('登录已过期,请重新登录', [], 401);
+            throw new AuthException('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại', [], 401);
         }
 
         $user = $this->dao->get(['uid' => $id, 'is_del' => 0, 'status' => 1]);
 
         if (!$user || $user->uid != $tokenData['uid']) {
             if (!request()->isCli()) CacheService::delete($md5Token);
-            throw new AuthException('登录状态有误,请重新登录', [], 401);
+            throw new AuthException('Trạng thái đăng nhập không hợp lệ, vui lòng đăng nhập lại', [], 401);
         }
 
         $this->dao->update(['uid' => $id], ['last_time' => time()]);

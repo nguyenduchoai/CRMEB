@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -14,14 +14,14 @@ namespace crmeb\services\upload\extend\cos;
 
 class Sts
 {
-// 临时密钥计算样例
+// Ví dụ tính khóa tạm thời
     function _hex2bin($data)
     {
         $len = strlen($data);
         return pack("H" . $len, $data);
     }
 
-    // obj 转 query string
+    // Chuyển obj thành query string
     function json2str($obj, $notEncode = false)
     {
         ksort($obj);
@@ -35,7 +35,7 @@ class Sts
         return join('&', $arr);
     }
 
-    // 计算临时密钥用的签名
+    // Chữ ký dùng để tính khóa tạm thời
     function getSignature($opt, $key, $method, $config)
     {
         $host = "sts.tencentcloudapi.com";
@@ -54,7 +54,7 @@ class Sts
         return $sign;
     }
 
-    // v2接口的key首字母小写，v3改成大写，此处做了向下兼容
+    // Chữ đầu của key trong API v2 viết thường, v3 đổi thành viết hoa, ở đây đã làm tương thích ngược
     function backwardCompat($result)
     {
         if (!is_array($result)) {
@@ -73,7 +73,7 @@ class Sts
         return $compat;
     }
 
-    // 获取临时密钥
+    // Lấy khóa tạm thời
     function getTempKeys($config)
     {
         $result = null;
@@ -179,7 +179,7 @@ class Sts
         }
     }
 
-    //申请角色授权
+    //Đăng ký ủy quyền vai trò
     function getRoleCredential($config)
     {
         $result = null;

@@ -20,9 +20,9 @@
 											</view>
 										</view>
 									</view>
-									<!-- 		<view v-if="item.grade === levelInfo.grade" class="state">当前等级</view>
+									<!-- 		<view v-if="item.grade === levelInfo.grade" class="state">Hạng hiện tại</view>
 									<view v-else-if="item.grade > levelInfo.grade" class="state">
-										暂未解锁
+										Chưa mở khóa
 									</view> -->
 									<view v-if="item.grade > (levelInfo.grade || 0)" class="state">
 										<image class="lock" src="../static/lock.png" mode=""></image>
@@ -32,14 +32,14 @@
 									<view class="level-grow-wrap">
 										<view class="level-info"
 											:class="{'lock-sty':item.grade > (levelInfo.grade || 0)}">
-											<view class="level-info-title">{{$t(`一级分佣比例`)}}</view>
+											<view class="level-info-title">{{$t(`Tỷ lệ hoa hồng cấp 1`)}}</view>
 											<view class="num">{{item.one_brokerage_percent}}
 												<text class="percent">%</text>
 											</view>
 										</view>
 										<view class="level-info"
 											:class="{'lock-sty':item.grade > (levelInfo.grade || 0)}">
-											<view class="level-info-title">{{$t(`二级分佣比例`)}}</view>
+											<view class="level-info-title">{{$t(`Tỷ lệ hoa hồng cấp 2`)}}</view>
 											<view class="num">{{item.two_brokerage_percent}}<text class="percent">%</text>
 											</view>
 										</view>
@@ -57,7 +57,7 @@
 						<view class="line-left">
 						</view>
 						<text>
-							{{$t(`快速升级技巧`)}}
+							{{$t(`Mẹo lên hạng nhanh`)}}
 						</text>
 					</view>
 					<view class="task">
@@ -78,7 +78,7 @@
 									<text class="iconfont icon-wenti" @click="opHelp(index)"></text>
 								</view>
 
-								<text class="mark">{{item.finish?$t(`已完成`):$t(`未完成`)}}</text>
+								<text class="mark">{{item.finish?$t(`Đã hoàn thành`):$t(`Chưa hoàn thành`)}}</text>
 							</view>
 							<view class="process">
 								<view
@@ -133,9 +133,9 @@
 				distributionLevel: [],
 				swiperIndex: 0,
 				growthValue: true,
-				task: [], //任务列表
-				illustrate: '', //任务说明
-				level_id: 0, //任务id,
+				task: [], //Danh sách tác vụ
+				illustrate: '', //Mô tả nhiệm vụ
+				level_id: 0, //ID nhiệm vụ,
 				hostProduct: [],
 				grade: 0,
 				hotScroll: false,
@@ -180,9 +180,9 @@
 			}
 			this.get_host_product();
 		},
-		// 滚动监听
+		// Theo dõi cuộn (scroll listener)
 		onPageScroll(e) {
-			// 传入scrollTop值并触发所有easy-loadimage组件下的滚动监听事件
+			// Truyền vào giá trị scrollTop và kích hoạt sự kiện theo dõi cuộn của tất cả component easy-loadimage
 			uni.$emit('scroll');
 		},
 		methods: {
@@ -216,7 +216,7 @@
 				});
 			},
 			/**
-			 * 获取我的推荐
+			 * Lấy gợi ý của tôi
 			 */
 			get_host_product: function() {
 				let that = this;
@@ -231,7 +231,7 @@
 				});
 			},
 			/**
-			 * 会员切换
+			 * Chuyển đổi thành viên
 			 * 
 			 */
 			swiperChange(e) {
@@ -244,20 +244,20 @@
 				this.getTask();
 			},
 			/**
-			 * 关闭说明
+			 * Đóng phần giải thích
 			 */
 			growthValueClose: function() {
 				this.growthValue = true;
 			},
 			/**
-			 * 打开说明
+			 * Mở phần giải thích
 			 */
 			opHelp: function(index) {
 				this.growthValue = false;
 				this.illustrate = this.task[index].desc;
 			},
 			/**
-			 * 获取任务要求
+			 * Lấy yêu cầu nhiệm vụ
 			 */
 			getTask: function() {
 				let that = this;

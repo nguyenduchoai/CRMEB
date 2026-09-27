@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,39 +20,39 @@
 use think\facade\Env;
 
 // +----------------------------------------------------------------------
-// | 日志设置
+// | Cài đặt log
 // +----------------------------------------------------------------------
 return [
-    // 默认日志记录通道
+    // Kênh ghi log mặc định
     'default'      => Env::get('log.channel', 'file'),
-    // 日志记录级别
+    // Cấp độ ghi log
     'level'        => ['error', 'warning', 'fail', 'success', 'info', 'notice', 'crontab', 'crmeb', 'listener'],
-    // 日志类型记录的通道 ['error'=>'email',...]
+    // Kênh ghi theo loại log ['error'=>'email',...]
     'type_channel' => [],
-    //是否开启业务成功日志
+    //Có mở log nghiệp vụ thành công không
     'success_log'  => false,
-    //是否开启业务失败日志
+    //Có mở log nghiệp vụ thất bại không
     'fail_log'     => false,
-    //是否开启定时任务日志
+    //Có mở log tác vụ định kỳ không
     'timer_log'    => false,
-    //是否开启自定事件日志
+    //Có mở log sự kiện tùy chỉnh không
     'listener_log'    => false,
-    // 日志通道列表
+    // Danh sách kênh log
     'channels'     => [
         'file' => [
-            // 日志记录方式
+            // Cách ghi log
             'type'        => 'File',
-            // 日志保存目录
+            // Thư mục lưu log
             'path'        => app()->getRuntimePath() . 'log' . DIRECTORY_SEPARATOR,
-            // 单文件日志写入
+            // Ghi log vào một file
             'single'      => false,
-            // 独立日志级别
+            // Cấp độ log riêng
             'apart_level' => ['error', 'fail', 'success', 'crontab', 'crmeb', 'listener'],
-            // 最大日志文件数量
+            // Số lượng file log tối đa
             'max_files'   => 60,
             'time_format' => 'Y-m-d H:i:s',
             'format'      => '%s|%s|%s'
         ],
-        // 其它日志通道配置
+        // Cấu hình kênh log khác
     ],
 ];

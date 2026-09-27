@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -11,7 +11,7 @@
 import request from '@/libs/request';
 
 /*
- * 登录
+ * Đăng nhập
  * */
 export function AccountLogin(data) {
   return request({
@@ -22,7 +22,7 @@ export function AccountLogin(data) {
 }
 
 /**
- * 退出登录
+ * Đăng xuất
  * @constructor
  */
 export function AccountLogout() {
@@ -33,7 +33,7 @@ export function AccountLogout() {
 }
 
 /**
- * 获取轮播图和logo
+ * Lấy banner và logo
  */
 export function loginInfoApi() {
   return request({
@@ -43,7 +43,7 @@ export function loginInfoApi() {
 }
 
 /**
- * 获取菜单数据
+ * Lấy dữ liệu menu
  */
 export function menusApi() {
   return request({
@@ -53,7 +53,7 @@ export function menusApi() {
 }
 
 /**
- * 搜索菜单数据
+ * Tìm kiếm dữ liệu menu
  */
 export function menusListApi() {
   return request({

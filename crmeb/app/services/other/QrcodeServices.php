@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -40,7 +40,7 @@ class QrcodeServices extends BaseServices
     }
 
     /**
-     * 获取临时二维码
+     * Lấy mã QR tạm thời
      * @param $type
      * @param $id
      * @throws \think\db\exception\DataNotFoundException
@@ -59,12 +59,12 @@ class QrcodeServices extends BaseServices
             $this->createTemporaryQrcode($id, $type, $res['id']);
             $res = $this->getTemporaryQrcode($type, $id);
         }
-        if (!$res['ticket']) throw new AdminException('临时二维码获取错误');
+        if (!$res['ticket']) throw new AdminException('Lỗi khi lấy mã QR tạm thời');
         return $res;
     }
 
     /**
-     * 临时二维码生成
+     * Tạo mã QR tạm thời
      * @param $id
      * @param $type
      * @param string $qrcode_id
@@ -88,7 +88,7 @@ class QrcodeServices extends BaseServices
     }
 
     /**
-     * 获取永久二维码
+     * Lấy mã QR vĩnh viễn
      * @param $type
      * @param $id
      * @return array|mixed|\think\Model
@@ -105,12 +105,12 @@ class QrcodeServices extends BaseServices
             $this->createForeverQrcode($id, $type);
             $res = $this->getForeverQrcode($type, $id);
         }
-        if (!$res['ticket']) throw new AdminException('永久二维码获取错误');
+        if (!$res['ticket']) throw new AdminException('Lỗi khi lấy mã QR vĩnh viễn');
         return $res;
     }
 
     /**
-     * 永久二维码生成
+     * Tạo mã QR vĩnh viễn
      * @param $id
      * @param $type
      */
@@ -129,11 +129,11 @@ class QrcodeServices extends BaseServices
     }
 
     /**
-     * 获取二维码完整路径，不存在则自动生成
-     * @param string $name 路径名
-     * @param string $link 需要生成二维码的跳转路径
+     * Lấy đường dẫn đầy đủ của mã QR, nếu không có thì tự động tạo
+     * @param string $name Tên đường dẫn
+     * @param string $link Đường dẫn chuyển hướng cần tạo mã QR
      * @param int $type https 1 = http , 0 = https
-     * @param bool $force 是否返回false
+     * @param bool $force Có trả về false không
      * @return bool|mixed|string
      */
     public function getWechatQrcodePathAgent(string $name, string $link, bool $force = false)
@@ -144,7 +144,7 @@ class QrcodeServices extends BaseServices
             $imageInfo = $systemAttchment->getInfo(['name' => $name]);
             $siteUrl = sys_config('site_url');
             if (!$imageInfo) {
-                $codeUrl = PosterServices::setHttpType($siteUrl . $link, request()->isSsl() ? 0 : 1);//二维码链接
+                $codeUrl = PosterServices::setHttpType($siteUrl . $link, request()->isSsl() ? 0 : 1);//Liên kết mã QR
                 $imageInfo = PosterServices::getQRCodePath($codeUrl, $name);
                 if (is_string($imageInfo) && $force)
                     return false;
@@ -167,7 +167,7 @@ class QrcodeServices extends BaseServices
     }
 
     /**
-     * 获取二维码完整路径，不存在则自动生成
+     * Lấy đường dẫn đầy đủ của mã QR, nếu không có thì tự động tạo
      * @param string $name
      * @param string $link
      * @param bool $force
@@ -185,7 +185,7 @@ class QrcodeServices extends BaseServices
             }
             $siteUrl = sys_config('site_url');
             if (!$imageInfo) {
-                $codeUrl = PosterServices::setHttpType($siteUrl . $link, request()->isSsl() ? 0 : 1);//二维码链接
+                $codeUrl = PosterServices::setHttpType($siteUrl . $link, request()->isSsl() ? 0 : 1);//Liên kết mã QR
                 $imageInfo = PosterServices::getQRCodePath($codeUrl, $name);
                 if (is_string($imageInfo) && $force)
                     return false;
@@ -221,7 +221,7 @@ class QrcodeServices extends BaseServices
     }
 
     /**
-     * 获取小程序分享二维码
+     * Lấy mã QR chia sẻ Mini Program
      * @param int $id
      * @param int $uid
      * @param int $type
@@ -321,7 +321,7 @@ class QrcodeServices extends BaseServices
     }
 
     /**
-     * TODO 添加二维码  存在直接获取
+     * TODO thêm mã QR, nếu đã có thì lấy trực tiếp
      * @param int $thirdId
      * @param string $thirdType
      * @param string $page
@@ -342,7 +342,7 @@ class QrcodeServices extends BaseServices
     }
 
     /**
-     * 添加二维码记录
+     * Thêm bản ghi mã QR
      * @param string $thirdType
      * @param int $thirdId
      * @return object
@@ -357,13 +357,13 @@ class QrcodeServices extends BaseServices
         $data['url_time'] = '';
         $data['qrcode_url'] = $qrCodeLink;
         if (!$re = $this->dao->save($data)) {
-            throw new AdminException('二维码生成失败');
+            throw new AdminException('Tạo mã QR thất bại');
         }
         return $re;
     }
 
     /**
-     * 修改二维码地址
+     * Sửa địa chỉ mã QR
      * @param int $id
      * @param array $data
      * @return bool
@@ -372,16 +372,16 @@ class QrcodeServices extends BaseServices
     {
         if (!$id) return false;
         if (!$this->dao->get((int)$id)) {
-            throw new AdminException('数据不存在');
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         if (!$re = $this->dao->update($id, $data, 'id')) {
-            throw new AdminException('修改失败');
+            throw new AdminException('Sửa thất bại');
         }
         return $re;
     }
 
     /**
-     * 检测是否存在
+     * Kiểm tra có tồn tại không
      * @param int $thirdId
      * @param string $thirdType
      * @return bool

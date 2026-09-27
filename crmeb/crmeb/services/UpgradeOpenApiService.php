@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -12,7 +12,7 @@
 namespace crmeb\services;
 
 /**
- * 升级服务
+ * Dịch vụ nâng cấp
  * Class UpgradeOpenApiService
  */
 class UpgradeOpenApiService
@@ -20,7 +20,7 @@ class UpgradeOpenApiService
     const BASE_URL = 'http://shop.crmeb.net/';
 
     /**
-     * 系统提供的appid，不要修改
+     * appid do hệ thống cung cấp, không được sửa
      * @var string
      */
     protected $appid = 'ze7x9rxsv09l6pvsyo';
@@ -31,7 +31,7 @@ class UpgradeOpenApiService
     protected $baseHeader = [];
 
     /**
-     * 构造函数
+     * Hàm khởi tạo
      */
     public function __construct()
     {
@@ -44,7 +44,7 @@ class UpgradeOpenApiService
     }
 
     /**
-     * 请求接口
+     * API yêu cầu
      * @param string $url
      * @param string $method
      * @param array $data
@@ -77,7 +77,7 @@ class UpgradeOpenApiService
     }
 
     /**
-     * 获取升级列表
+     * Lấy danh sách nâng cấp
      * @param int $page
      * @param int $limit
      * @return array|mixed
@@ -89,7 +89,7 @@ class UpgradeOpenApiService
     }
 
     /**
-     * 保存升级日志
+     * Lưu nhật ký nâng cấp
      * @param array $data
      * @return array|mixed
      * @throws \Exception
@@ -100,7 +100,7 @@ class UpgradeOpenApiService
     }
 
     /**
-     * 获取指定升级详情
+     * Lấy chi tiết bản nâng cấp chỉ định
      * @param int $id
      * @return array|mixed
      * @throws \Exception
@@ -111,7 +111,7 @@ class UpgradeOpenApiService
     }
 
     /**
-     * 获取当前版本后可以升级数量
+     * Lấy số bản có thể nâng cấp sau phiên bản hiện tại
      * @return array|mixed
      * @throws \Exception
      */
@@ -121,7 +121,7 @@ class UpgradeOpenApiService
     }
 
     /**
-     * 获取当前域名的升级权限
+     * Lấy quyền nâng cấp của tên miền hiện tại
      * @return array|mixed
      * @throws \Exception
      */
@@ -131,14 +131,14 @@ class UpgradeOpenApiService
     }
 
     /**
-     * 检查远程文件是否存在,并进行下载
+     * Kiểm tra tệp từ xa có tồn tại không, rồi tiến hành tải xuống
      * @param $url
      * @param $savefile
      * @return false|mixed
      */
     public function checkRemoteFileExists(string $url, string $savefile)
     {
-        //阿里云oss地址检测不到直接进行下载
+        //Địa chỉ oss của Alibaba Cloud không kiểm tra được nên tải xuống trực tiếp
         if (strpos($url, 'aliyuncs.com') !== false || strpos($url, 'oss.') !== false) {
             return FileService::downRemoteFile($url, $savefile);
         }
@@ -147,12 +147,12 @@ class UpgradeOpenApiService
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_NOBODY, true);
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'GET');
-        // 发送请求
+        // Gửi yêu cầu
         $result = curl_exec($curl);
         $found = false;
-        // 如果请求没有发送失败
+        // Nếu gửi yêu cầu không thất bại
         if ($result !== false) {
-            // 再检查http响应码是否为200
+            // Sau đó kiểm tra mã phản hồi http có phải 200 không
             $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
             if ($statusCode == 200) {
                 curl_close($curl);

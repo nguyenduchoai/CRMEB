@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -48,7 +48,7 @@ class UserExtractServices extends BaseServices
     }
 
     /**
-     * 获取一条提现记录
+     * Lấy một bản ghi rút tiền
      * @param int $id
      * @param array $field
      * @return array|\think\Model|null
@@ -59,7 +59,7 @@ class UserExtractServices extends BaseServices
     }
 
     /**
-     * 获取某个用户提现总数
+     * Lấy tổng số lần rút tiền của một người dùng
      * @param int $uid
      * @return float
      */
@@ -69,7 +69,7 @@ class UserExtractServices extends BaseServices
     }
 
     /**
-     * 获取某些用户的提现总数列表
+     * Lấy danh sách tổng số lần rút tiền của một số người dùng
      * @param array $uids
      */
     public function getUsersSumList(array $uids)
@@ -83,7 +83,7 @@ class UserExtractServices extends BaseServices
     }
 
     /**
-     * 获取提现列表
+     * Lấy danh sách rút tiền
      * @param array $where
      * @param string $field
      * @return array
@@ -104,7 +104,7 @@ class UserExtractServices extends BaseServices
     }
 
     /**
-     * 获取提现总数
+     * Lấy tổng số lần rút tiền
      * @param array $where
      */
     public function getExtractSum(array $where)
@@ -113,7 +113,7 @@ class UserExtractServices extends BaseServices
     }
 
     /**
-     * 拒绝提现申请
+     * Từ chối yêu cầu rút tiền
      * @param $id
      * @param $fail_msg
      * @return bool
@@ -125,28 +125,28 @@ class UserExtractServices extends BaseServices
     {
         $fail_time = time();
         $extract_number = $userExtract['extract_price'];
-        $mark = '提现失败,退回佣金' . $extract_number . '元';
+        $mark = 'Rút tiền thất bại, hoàn lại hoa hồng' . $extract_number . 'đ';
         $uid = $userExtract['uid'];
         $status = -1;
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
         $user = $userServices->getUserInfo($uid);
         $this->transaction(function () use ($user, $uid, $id, $extract_number, $message, $userServices, $status, $fail_time) {
-            //增加佣金记录
+            //Thêm bản ghi hoa hồng
             /** @var UserBrokerageServices $userBrokerageServices */
             $userBrokerageServices = app()->make(UserBrokerageServices::class);
             $now_brokerage = bcadd((string)$user['brokerage_price'], (string)$extract_number, 2);
             $userBrokerageServices->income('extract_fail', $uid, $extract_number, $now_brokerage, $id);
             if (!$userServices->update($uid, ['brokerage_price' => bcadd((string)$user['brokerage_price'], (string)$extract_number, 2)], 'uid'))
-                throw new AdminException('增加用户佣金失败');
+                throw new AdminException('Cộng hoa hồng cho người dùng thất bại');
             if (!$this->dao->update($id, ['fail_time' => $fail_time, 'fail_msg' => $message, 'status' => $status])) {
-                throw new AdminException('修改失败');
+                throw new AdminException('Sửa thất bại');
             }
         });
 
         event('NoticeListener', [['uid' => $uid, 'userType' => strtolower($user['user_type']), 'extract_number' => $extract_number, 'nickname' => $user['nickname'], 'message' => $message], 'user_balance_change']);
 
-        //自定义通知-用户提现失败
+        //Thông báo tùy chỉnh - Người dùng rút tiền thất bại
         $userExtract['nickname'] = $user['nickname'];
         $userExtract['message'] = $message;
         $userExtract['time'] = date('Y-m-d H:i:s');
@@ -154,7 +154,7 @@ class UserExtractServices extends BaseServices
         $userExtract['phone'] = app()->make(UserServices::class)->value($userExtract['uid'], 'phone');
         event('CustomNoticeListener', [$userExtract['uid'], $userExtract, 'extract_fail']);
 
-        //自定义事件-用户提现失败
+        //Sự kiện tùy chỉnh - Người dùng rút tiền thất bại
         event('CustomEventListener', ['admin_extract_fail', [
             'uid' => $userExtract['uid'],
             'price' => $userExtract['price'],
@@ -168,7 +168,7 @@ class UserExtractServices extends BaseServices
     }
 
     /**
-     * 通过提现申请
+     * Duyệt yêu cầu rút tiền
      * @param int $id
      * @param $userExtract
      * @return bool
@@ -189,7 +189,7 @@ class UserExtractServices extends BaseServices
         $order_id = $userExtract['wechat_order_id'] != '' ? $userExtract['wechat_order_id'] : app()->make(StoreOrderCreateServices::class)->getNewOrderId('tx');
         $insertData = ['wechat_order_id' => $order_id, 'nickname' => $nickname, 'phone' => $phone];
 
-        //微信自动提现到零钱
+        //Tự động rút tiền về ví WeChat
         if (sys_config('weixin_extract_type', 0) && $userExtract['extract_type'] == 'weixin') {
             $type = '';
             $openid = $wechatServices->uidToOpenid($userExtract['uid'], $userExtract['channel_type']);
@@ -213,9 +213,9 @@ class UserExtractServices extends BaseServices
                 $type = Order::APP;
             }
             if (!$openid) {
-                throw new ValidateException('该用户暂不支持自动转账到零钱，请手动转账');
+                throw new ValidateException('Người dùng này hiện chưa hỗ trợ tự động chuyển khoản vào ví WeChat, vui lòng chuyển khoản thủ công');
             }
-            //v3商家转账
+            //Chuyển tiền cho merchant v3
             if (sys_config('pay_wechat_type')) {
                 $pay = new Pay('v3_wechat_pay');
                 if (sys_config('v3_pay_public_key') != '') {
@@ -226,17 +226,17 @@ class UserExtractServices extends BaseServices
                         $openid,
                         $userExtract['real_name'],
                         bcmul($extractNumber, '100', 0),
-                        '佣金提现到零钱',
+                        'Rút hoa hồng về ví WeChat',
                         sys_config('site_url') . '/api/transfer/notify/' . $type,
-                        '劳务报酬',
+                        'Thù lao lao động',
                         [
                             [
-                                'info_type' => '岗位类型',
-                                'info_content' => '推广员奖励'
+                                'info_type' => 'Loại vị trí công việc',
+                                'info_content' => 'Thưởng cộng tác viên'
                             ],
                             [
-                                'info_type' => '报酬说明',
-                                'info_content' => '推广订单奖励提现'
+                                'info_type' => 'Mô tả thù lao',
+                                'info_content' => 'Rút tiền thưởng đơn hàng giới thiệu'
                             ],
                         ]
                     );
@@ -253,53 +253,53 @@ class UserExtractServices extends BaseServices
                 } else {
                     $res = $pay->merchantPay($openid, $order_id, $extractNumber, [
                         'type' => $type,
-                        'batch_name' => '提现佣金到零钱',
-                        'batch_remark' => '您于' . date('Y-m-d H:i:s') . '提现.' . $extractNumber . '元'
+                        'batch_name' => 'Rút hoa hồng về ví WeChat',
+                        'batch_remark' => 'Vào lúc' . date('Y-m-d H:i:s') . 'bạn đã rút tiền.' . $extractNumber . 'đ'
                     ]);
                     $this->dao->update($id, ['wechat_order_id' => $order_id]);
                 }
 
             } else {
-                // 微信提现
-                $res = WechatService::merchantPay($openid, $order_id, (string)$extractNumber, '提现佣金到零钱');
+                // Rút tiền qua WeChat
+                $res = WechatService::merchantPay($openid, $order_id, (string)$extractNumber, 'Rút hoa hồng về ví WeChat');
             }
 
             if (!$res) {
-                throw new ApiException('企业付款到零钱失败，请稍后再试');
+                throw new ApiException('Chuyển tiền doanh nghiệp vào ví WeChat thất bại, vui lòng thử lại sau');
             }
         }
         if (sys_config('alipay_extract_type', 0) && $userExtract['extract_type'] == 'alipay') {
-            // 构造支付宝提现参数
+            // Xây dựng tham số rút tiền Alipay
             $alipaySignType = sys_config('alipay_sign_type');
             if ($alipaySignType == 0) {
                 $bizParams = [
-                    'payee_type' => 'ALIPAY_LOGONID', // 收款方账户类型，ALIPAY_LOGONID-支付宝登录账号
-                    'payee_account' => $userExtract['real_name'], // 收款方账户，实名认证的支付宝账号
-                    'amount' => $extractNumber, // 提现金额
-                    'payer_show_name' => sys_config('site_name'), // 付款方姓名/个人名称
-                    'payee_real_name' => $userExtract['user_name'], // 收款方真实姓名/个人名称
-                    'remark' => '提现 ¥' . $extractNumber . ' 到支付宝', // 业务备注
+                    'payee_type' => 'ALIPAY_LOGONID', // Loại tài khoản người nhận, ALIPAY_LOGONID - tài khoản đăng nhập Alipay
+                    'payee_account' => $userExtract['real_name'], // Tài khoản người nhận, tài khoản Alipay đã xác thực danh tính thực
+                    'amount' => $extractNumber, // Số tiền rút
+                    'payer_show_name' => sys_config('site_name'), // Họ tên người thanh toán/tên cá nhân
+                    'payee_real_name' => $userExtract['user_name'], // Họ tên thật của người nhận/tên cá nhân
+                    'remark' => 'Rút tiền ₫' . $extractNumber . ' về Alipay', // Ghi chú nghiệp vụ
                 ];
             } else {
                 $bizParams = [
-                    'out_biz_no' => $order_id, // 商户订单号
+                    'out_biz_no' => $order_id, // Mã đơn hàng của merchant
                     'trans_amount' => $extractNumber,
                     'biz_scene' => 'DIRECT_TRANSFER',
                     'product_code' => 'TRANS_ACCOUNT_NO_PWD',
-                    'order_title' => sys_config('site_name') . '提现',
+                    'order_title' => sys_config('site_name') . 'Rút tiền',
                     'payee_info' => [
                         'identity' => $userExtract['alipay_code'],
                         'identity_type' => 'ALIPAY_LOGON_ID',
                         'name' => $userExtract['user_name'],
                     ],
-                    'remark' => '提现 ¥' . $extractNumber . ' 到支付宝', // 业务备注
+                    'remark' => 'Rút tiền ₫' . $extractNumber . ' về Alipay', // Ghi chú nghiệp vụ
                 ];
             }
-            // 调用支付宝服务发起支付宝提现请求
+            // Gọi service Alipay để gửi yêu cầu rút tiền Alipay
             $res = AliPayService::instance()->merchantPay($bizParams, $alipaySignType);
-            // 如果支付宝提现请求失败，则抛出异常
+            // Nếu yêu cầu rút tiền Alipay thất bại thì ném ngoại lệ (exception)
             if (!$res) {
-                throw new ApiException('提现失败，请稍查看日志！');
+                throw new ApiException('Rút tiền thất bại, vui lòng kiểm tra nhật ký sau!');
             }
         }
 
@@ -321,18 +321,18 @@ class UserExtractServices extends BaseServices
         ], 'extract');
 
         if (!$this->dao->update($id, ['status' => 1])) {
-            throw new AdminException('修改失败');
+            throw new AdminException('Sửa thất bại');
         }
         event('NoticeListener', [['uid' => $userExtract['uid'], 'userType' => strtolower($userType), 'extractNumber' => $extractNumber, 'nickname' => $nickname], 'user_extract']);
 
-        //自定义通知-用户提现成功
+        //Thông báo tùy chỉnh - rút tiền người dùng thành công
         $userExtract['nickname'] = $nickname;
         $userExtract['phone'] = $phone;
         $userExtract['time'] = date('Y-m-d H:i:s');
         $userExtract['price'] = $extractNumber;
         event('CustomNoticeListener', [$userExtract['uid'], $userExtract, 'extract_success']);
 
-        //自定义事件-用户提现成功
+        //Sự kiện tùy chỉnh - rút tiền người dùng thành công
         event('CustomEventListener', ['admin_extract_success', [
             'uid' => $userExtract['uid'],
             'price' => $extractNumber,
@@ -346,7 +346,7 @@ class UserExtractServices extends BaseServices
     }
 
     /**
-     * 显示资源列表
+     * Hiển thị danh sách resource
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -358,10 +358,10 @@ class UserExtractServices extends BaseServices
         $list = $this->getUserExtractList($where);
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
-        //待提现金额
+        //Số tiền chờ rút
         $where['status'] = 0;
         $extract_statistics['price'] = $this->getExtractSum($where);
-        //已提现金额
+        //Số tiền đã rút
         $where['status'] = 1;
         $extract_statistics['priced'] = $this->getExtractSum($where);
         /** @var UserBrokerageServices $userBrokerageServices */
@@ -370,13 +370,13 @@ class UserExtractServices extends BaseServices
         $brokerage_count = $userBrokerageServices->getUsersBokerageSum($where);
         $refund_brokerage = $userBrokerageServices->sum(['type' => 'refund'], 'number');
         $extract_statistics['brokerage_count'] = bcsub((string)$brokerage_count, (string)$refund_brokerage, 2);
-        //未提现金额
+        //Số tiền chưa rút
         $extract_statistics['brokerage_not'] = $extract_statistics['brokerage_count'] > $extract_statistics['priced'] ? bcsub((string)$extract_statistics['brokerage_count'], (string)$extract_statistics['priced'], 2) : 0.00;
         return compact('extract_statistics', 'list');
     }
 
     /**
-     * 显示编辑资源表单页.
+     * Hiển thị trang form sửa resource.
      *
      * @param int $id
      * @return \think\Response
@@ -385,34 +385,34 @@ class UserExtractServices extends BaseServices
     {
         $UserExtract = $this->getExtract($id);
         if (!$UserExtract) {
-            throw new AdminException('数据不存在');
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         $f = array();
-        $f[] = Form::input('real_name', '姓名', $UserExtract['real_name']);
-        $f[] = Form::number('extract_price', '提现金额', (float)$UserExtract['extract_price'])->precision(2)->disabled(true);
+        $f[] = Form::input('real_name', 'Họ tên', $UserExtract['real_name']);
+        $f[] = Form::number('extract_price', 'Số tiền rút', (float)$UserExtract['extract_price'])->precision(2)->disabled(true);
         if ($UserExtract['extract_type'] == 'alipay') {
-            $f[] = Form::input('alipay_code', '支付宝账号', $UserExtract['alipay_code']);
+            $f[] = Form::input('alipay_code', 'Tài khoản Alipay', $UserExtract['alipay_code']);
         } else if ($UserExtract['extract_type'] == 'weixin') {
-            $f[] = Form::input('wechat', '微信号', $UserExtract['wechat']);
+            $f[] = Form::input('wechat', 'ID WeChat', $UserExtract['wechat']);
         } else if ($UserExtract['extract_type'] == 'balance') {
         } else {
-            $f[] = Form::input('bank_code', '银行卡号', $UserExtract['bank_code']);
-            $f[] = Form::input('bank_address', '开户行', $UserExtract['bank_address']);
+            $f[] = Form::input('bank_code', 'Số thẻ ngân hàng', $UserExtract['bank_code']);
+            $f[] = Form::input('bank_address', 'Ngân hàng mở tài khoản', $UserExtract['bank_address']);
         }
-        $f[] = Form::input('mark', '备注', $UserExtract['mark'])->type('textarea');
-        return create_form('编辑', $f, Url::buildUrl('/finance/extract/' . $id), 'PUT');
+        $f[] = Form::input('mark', 'Ghi chú', $UserExtract['mark'])->type('textarea');
+        return create_form('Sửa', $f, Url::buildUrl('/finance/extract/' . $id), 'PUT');
     }
 
     public function update(int $id, array $data)
     {
         if (!$this->dao->update($id, $data))
-            throw new AdminException('修改失败');
+            throw new AdminException('Sửa thất bại');
         else
             return true;
     }
 
     /**
-     * 拒绝
+     * Từ chối
      * @param $id
      * @return mixed
      */
@@ -420,24 +420,24 @@ class UserExtractServices extends BaseServices
     {
         $extract = $this->getExtract($id);
         if (!$extract) {
-            throw new AdminException('数据不存在');
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         if ($extract->status == 1) {
-            throw new AdminException('已经提现');
+            throw new AdminException('Đã rút tiền');
         }
         if ($extract->status == -1) {
-            throw new AdminException('您的提现申请已被拒绝');
+            throw new AdminException('Yêu cầu rút tiền của bạn đã bị từ chối');
         }
         $res = $this->changeFail($id, $extract, $message);
         if ($res) {
             return true;
         } else {
-            throw new AdminException('操作失败');
+            throw new AdminException('Thao tác thất bại');
         }
     }
 
     /**
-     * 通过
+     * Duyệt
      * @param int $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -447,23 +447,23 @@ class UserExtractServices extends BaseServices
     {
         $extract = $this->getExtract($id);
         if (!$extract) {
-            throw new AdminException('数据不存在');
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         if ($extract->status == 1) {
-            throw new AdminException('已经提现');
+            throw new AdminException('Đã rút tiền');
         }
         if ($extract->status == -1) {
-            throw new AdminException('您的提现申请已被拒绝');
+            throw new AdminException('Yêu cầu rút tiền của bạn đã bị từ chối');
         }
         $res = $this->changeSuccess($id, $extract);
         if ($res) {
             return $res;
         } else {
-            throw new AdminException('操作失败');
+            throw new AdminException('Thao tác thất bại');
         }
     }
 
-    /**待提现的数量
+    /**Số lượng chờ rút tiền
      * @return int
      */
     public function userExtractCount()
@@ -472,7 +472,7 @@ class UserExtractServices extends BaseServices
     }
 
     /**
-     * 银行卡提现
+     * Rút tiền về thẻ ngân hàng
      * @param int $uid
      * @return mixed
      */
@@ -482,7 +482,7 @@ class UserExtractServices extends BaseServices
         $userService = app()->make(UserServices::class);
         $user = $userService->getUserInfo($uid, 'brokerage_price,uid');
         if (!$user) {
-            throw new ApiException('数据不存在');
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         /** @var UserBrokerageServices $services */
         $services = app()->make(UserBrokerageServices::class);
@@ -490,20 +490,20 @@ class UserExtractServices extends BaseServices
         if ($data['broken_commission'] < 0)
             $data['broken_commission'] = '0';
         $data['brokerage_price'] = $user['brokerage_price'];
-        //可提现佣金
+        //Hoa hồng có thể rút
         $data['commissionCount'] = bcsub((string)$data['brokerage_price'], (string)$data['broken_commission'], 2);
-        $extractBank = sys_config('user_extract_bank') ?? []; //提现银行
-        $extractBank = str_replace("\r\n", "\n", $extractBank);//防止不兼容
+        $extractBank = sys_config('user_extract_bank') ?? []; //Ngân hàng rút tiền
+        $extractBank = str_replace("\r\n", "\n", $extractBank);//Ngăn không tương thích
         $data['extractBank'] = explode("\n", is_array($extractBank) ? ($extractBank[0] ?? $extractBank) : $extractBank);
-        $data['minPrice'] = sys_config('user_extract_min_price');//提现最低金额
-        $data['weixinExtractType'] = (int)sys_config('weixin_extract_type', 0);//微信到账方式
-        $data['alipayExtractType'] = (int)sys_config('alipay_extract_type', 0);//支付宝到账方式
-        $data['withdrawal_fee'] = sys_config('withdrawal_fee', 0);//提现手续费
+        $data['minPrice'] = sys_config('user_extract_min_price');//Số tiền rút tối thiểu
+        $data['weixinExtractType'] = (int)sys_config('weixin_extract_type', 0);//Cách nhận tiền qua WeChat
+        $data['alipayExtractType'] = (int)sys_config('alipay_extract_type', 0);//Cách nhận tiền qua Alipay
+        $data['withdrawal_fee'] = sys_config('withdrawal_fee', 0);//Phí rút tiền
         return $data;
     }
 
     /**
-     * 提现申请
+     * Yêu cầu rút tiền
      * @param int $uid
      * @param array $data
      */
@@ -513,15 +513,15 @@ class UserExtractServices extends BaseServices
         $userService = app()->make(UserServices::class);
         $user = $userService->getUserInfo($uid);
         if (!$user) {
-            throw new ApiException('数据不存在');
+            throw new ApiException('Dữ liệu không tồn tại');
         }
 
         if ($data['extract_type'] == 'weixin' && !sys_config('weixin_extract_type', 0) && !$data['weixin']) {
-            throw new ApiException('请输入微信账号');
+            throw new ApiException('Vui lòng nhập tài khoản WeChat');
         }
 
         if ($data['extract_type'] == 'weixin' && bccomp($data['money'], '0.1', 2) < 0) {
-            throw new ApiException('微信提现最低不能小于0.1元');
+            throw new ApiException('Số tiền rút qua WeChat không được nhỏ hơn 0.1đ');
         }
 
         /** @var WechatUserServices $wechatServices */
@@ -530,7 +530,7 @@ class UserExtractServices extends BaseServices
         if (!$openid) $openid = $wechatServices->uidToOpenid($uid, 'routine');
 
         if ($data['extract_type'] == 'weixin' && sys_config('weixin_extract_type', 0) && !$openid) {
-            throw new ApiException('请先关注公众号');
+            throw new ApiException('Vui lòng theo dõi OA WeChat trước');
         }
 
         /** @var UserBrokerageServices $services */
@@ -539,25 +539,25 @@ class UserExtractServices extends BaseServices
         if ($data['broken_commission'] < 0)
             $data['broken_commission'] = 0;
         $data['brokerage_price'] = $user['brokerage_price'];
-        //可提现佣金
+        //Hoa hồng có thể rút
         $commissionCount = bcsub((string)$data['brokerage_price'], (string)$data['broken_commission'], 2);
         if ($data['money'] > $commissionCount) {
-            throw new ApiException('可提现佣金不足');
+            throw new ApiException('Hoa hồng có thể rút không đủ');
         }
 
         $extractPrice = $user['brokerage_price'];
         $userExtractMinPrice = sys_config('user_extract_min_price');
         if ($data['money'] < $userExtractMinPrice) {
-            throw new ApiException('提现金额不能小于{:money}元', ['money' => $userExtractMinPrice]);
+            throw new ApiException('Số tiền rút không được nhỏ hơn {:money}đ', ['money' => $userExtractMinPrice]);
         }
         if ($extractPrice < 0) {
-            throw new ApiException('提现佣金不足{:money}元', ['money' => $data['money']]);
+            throw new ApiException('Hoa hồng không đủ để rút {:money}đ', ['money' => $data['money']]);
         }
         if ($data['money'] > $extractPrice) {
-            throw new ApiException('提现佣金不足{:money}元', ['money' => $data['money']]);
+            throw new ApiException('Hoa hồng không đủ để rút {:money}đ', ['money' => $data['money']]);
         }
         if ($data['money'] <= 0) {
-            throw new ApiException('提现佣金大于0');
+            throw new ApiException('Hoa hồng rút phải lớn hơn 0');
         }
         $data['extract_price'] = bcmul($data['money'], '1', 2);
         $insertData = [
@@ -580,36 +580,36 @@ class UserExtractServices extends BaseServices
         if (isset($data['weixin'])) $insertData['wechat'] = $data['weixin'];
         else $insertData['wechat'] = $user['nickname'];
         $mark = '';
-        $feeMark = sys_config('withdrawal_fee', 0) == 0 ? '' : '，手续费' . $insertData['extract_fee'] . '元';
+        $feeMark = sys_config('withdrawal_fee', 0) == 0 ? '' : ', phí thủ tục' . $insertData['extract_fee'] . 'đ';
         if ($data['extract_type'] == 'alipay') {
             $insertData['alipay_code'] = $data['alipay_code'];
             $insertData['qrcode_url'] = $data['qrcode_url'];
             $insertData['user_name'] = $data['user_name'];
             $insertData['real_name'] = $data['user_name'];
-            $mark = '使用支付宝提现' . $insertData['extract_price'] . '元' . $feeMark;
+            $mark = 'Rút tiền qua Alipay' . $insertData['extract_price'] . 'đ' . $feeMark;
         } else if ($data['extract_type'] == 'bank') {
-            $mark = '使用银联卡' . $insertData['bank_code'] . '提现' . $insertData['extract_price'] . '元' . $feeMark;
+            $mark = 'Dùng thẻ UnionPay' . $insertData['bank_code'] . 'Rút tiền' . $insertData['extract_price'] . 'đ' . $feeMark;
         } else if ($data['extract_type'] == 'weixin') {
             $insertData['user_name'] = $data['user_name'];
             $insertData['real_name'] = $data['user_name'];
             $insertData['qrcode_url'] = $data['qrcode_url'];
-            $mark = '使用微信提现' . $insertData['extract_price'] . '元' . $feeMark;
+            $mark = 'Rút tiền qua WeChat' . $insertData['extract_price'] . 'đ' . $feeMark;
             if (sys_config('weixin_extract_type', 0) && $openid) {
                 if ($data['extract_price'] < 0.1) {
-                    throw new ApiException('企业微信付款到零钱最低金额为1元');
+                    throw new ApiException('Số tiền tối thiểu khi chuyển tiền doanh nghiệp vào ví WeChat là 1đ');
                 }
             }
         }
         $res1 = $this->transaction(function () use ($insertData, $data, $uid, $userService, $user, $mark) {
             if (!$res1 = $this->dao->save($insertData)) {
-                throw new ApiException('申请提现失败');
+                throw new ApiException('Gửi yêu cầu rút tiền thất bại');
             }
             $balance = bcsub((string)$user['brokerage_price'], $data['extract_price'], 2) ?? 0;
             if (!$userService->update($uid, ['brokerage_price' => $balance], 'uid')) {
-                throw new ApiException('申请提现失败');
+                throw new ApiException('Gửi yêu cầu rút tiền thất bại');
             }
 
-            //保存佣金记录
+            //Lưu bản ghi hoa hồng
             /** @var UserBrokerageServices $userBrokerageServices */
             $userBrokerageServices = app()->make(UserBrokerageServices::class);
             $userBrokerageServices->income('extract', $uid, ['mark' => $mark, 'number' => $data['extract_price']], $balance, $res1['id']);
@@ -623,10 +623,10 @@ class UserExtractServices extends BaseServices
         /** @var SystemAdminServices $systemAdmin */
         $systemAdmin = app()->make(SystemAdminServices::class);
         $systemAdmin->adminNewPush();
-        //消息
+        //Tin nhắn
         event('NoticeListener', [['nickname' => $user['nickname'], 'money' => $data['extract_price']], 'kefu_send_extract_application']);
 
-        //自定义事件-用户提现
+        //Sự kiện tùy chỉnh - Người dùng rút tiền
         event('CustomEventListener', ['user_extract', [
             'uid' => $insertData['uid'],
             'phone' => $user['phone'],

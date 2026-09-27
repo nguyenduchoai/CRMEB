@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,7 +18,7 @@ use crmeb\services\oauth\OAuthException;
 use crmeb\services\oauth\OAuthInterface;
 
 /**
- * 小程序登录
+ * Đăng nhập Mini Program
  * Class MiniProgram
  * @package crmeb\services\oauth\storage
  */
@@ -40,7 +40,7 @@ class MiniProgram extends BaseStorage implements OAuthInterface
     }
 
     /**
-     * 授权登录
+     * Đăng nhập ủy quyền
      * @param string|null $code
      * @param array $options
      * @return mixed
@@ -48,7 +48,7 @@ class MiniProgram extends BaseStorage implements OAuthInterface
     public function oauth(string $code = null, array $options = [])
     {
         if (!$code) {
-            throw new OAuthException('缺少code');
+            throw new OAuthException('Thiếu code');
         }
 
         try {
@@ -59,24 +59,24 @@ class MiniProgram extends BaseStorage implements OAuthInterface
         }
 
         if (!isset($userInfoCong['openid'])) {
-            throw new OAuthException('openid获取失败');
+            throw new OAuthException('Lấy openid thất bại');
         }
 
-        //是否静默授权
+        //Có ủy quyền âm thầm (silent) không
         if (isset($options['silence']) && $options['silence'] === true) {
             return $userInfoCong;
         }
 
         if (empty($options['iv']) || empty($options['encryptedData'])) {
-            throw new OAuthException('参数错误');
+            throw new OAuthException('Tham số không hợp lệ');
         }
 
         try {
-            //解密获取用户信息
+            //Giải mã để lấy thông tin người dùng
             $userInfo = MiniProgramService::encryptor($session_key, $options['iv'], $options['encryptedData']);
         } catch (\Exception $e) {
             if ($e->getCode() == '-41003') {
-                throw new OAuthException('获取会话密匙失败');
+                throw new OAuthException('Lấy khóa phiên thất bại');
             }
         }
 

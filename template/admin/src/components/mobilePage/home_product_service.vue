@@ -1,25 +1,25 @@
 <template>
   <common_wrapper :config="configObj" v-if="!isHide">
     <div class="product-service">
-      <!-- 活动 -->
+      <!-- Chương trình -->
       <div class="item" v-if="checkList.includes(0)">
-        <div class="label" :style="{ color: titleColor }">活动</div>
+        <div class="label" :style="{ color: titleColor }">Chương trình</div>
         <div class="content">
           <div class="tags">
             <span class="tag" :style="tagStyle"
-              ><span class="mb-iconfont icon-ic_user1"></span>二人拼团<span
+              ><span class="mb-iconfont icon-ic_user1"></span>Mua chung 2 người<span
                 class="iconfont iconyou"
                 :style="{ color: activityColor }"
               ></span
             ></span>
             <span class="tag" :style="tagStyle"
-              ><span class="mb-iconfont icon-miaosha1"></span>限时秒杀<span
+              ><span class="mb-iconfont icon-miaosha1"></span>Flash sale giờ vàng<span
                 class="iconfont iconyou"
                 :style="{ color: activityColor }"
               ></span
             ></span>
             <span class="tag" :style="tagStyle"
-              ><span class="mb-iconfont icon-ic_sale"></span>参与砍价<span
+              ><span class="mb-iconfont icon-ic_sale"></span>Tham gia săn giảm giá<span
                 class="iconfont iconyou"
                 :style="{ color: activityColor }"
               ></span
@@ -28,27 +28,27 @@
           <span class="iconfont iconyou" :style="{ color: contentColor }"></span>
         </div>
       </div>
-      <!-- 选择 -->
+      <!-- Chọn -->
       <div class="item" v-if="checkList.includes(1)">
-        <div class="label" :style="{ color: titleColor }">选择</div>
+        <div class="label" :style="{ color: titleColor }">Chọn</div>
         <div class="content">
-          <span :style="{ color: contentColor }">黑色,80ml</span>
+          <span :style="{ color: contentColor }">Đen, 80ml</span>
           <span class="iconfont iconyou" :style="{ color: contentColor }"></span>
         </div>
       </div>
-      <!-- 参数 -->
+      <!-- Tham số -->
       <div class="item" v-if="checkList.includes(2)">
-        <div class="label" :style="{ color: titleColor }">参数</div>
+        <div class="label" :style="{ color: titleColor }">Tham số</div>
         <div class="content">
-          <span :style="{ color: contentColor }">充绒量85% · 聚酯纤维面料</span>
+          <span :style="{ color: contentColor }">Hàm lượng lông vũ 85% · Vải polyester</span>
           <span class="iconfont iconyou" :style="{ color: contentColor }"></span>
         </div>
       </div>
-      <!-- 服务 -->
+      <!-- Dịch vụ -->
       <div class="item" v-if="checkList.includes(3)">
-        <div class="label" :style="{ color: titleColor }">服务</div>
+        <div class="label" :style="{ color: titleColor }">Dịch vụ</div>
         <div class="content">
-          <span :style="{ color: contentColor }">正品保障 · 七天无理由退换货 · 退货运费险...</span>
+          <span :style="{ color: contentColor }">Cam kết chính hãng · Đổi trả 7 ngày không cần lý do · Bảo hiểm phí vận chuyển trả hàng...</span>
           <span class="iconfont iconyou" :style="{ color: contentColor }"></span>
         </div>
       </div>
@@ -60,10 +60,10 @@
 import { mapState } from 'vuex';
 export default {
   name: 'home_product_service',
-  cname: '商品服务',
+  cname: 'Dịch vụ sản phẩm',
   configName: 'c_product_service',
   icon: '#iconzujian-shangpinfuwu', // Need a suitable icon, using placeholder
-  type: 3, // 0 基础组件 1 营销组件 2工具组件 3 商品组件 4 用户组件
+  type: 3, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ 3 thành phần sản phẩm 4 thành phần người dùng
   defaultName: 'productService',
   props: {
     index: {
@@ -139,86 +139,86 @@ export default {
   data() {
     return {
       defaultConfig: {
-        cname: '商品服务',
+        cname: 'Dịch vụ sản phẩm',
         name: 'productService',
         timestamp: this.num,
-        openService: '开启服务',
+        openService: 'Bật dịch vụ',
         isHide: false,
         setUp: {
           tabVal: 0,
         },
         checkBoxConfig: {
-          title: '展示信息',
+          title: 'Thông tin hiển thị',
           type: [0, 1, 2, 3],
           list: [
-            { id: 0, name: '活动' },
-            { id: 1, name: '选择' },
-            { id: 2, name: '参数' },
-            { id: 3, name: '服务' },
+            { id: 0, name: 'Chương trình' },
+            { id: 1, name: 'Chọn' },
+            { id: 2, name: 'Tham số' },
+            { id: 3, name: 'Dịch vụ' },
           ],
         },
-        serviceStyleTitle: '服务样式',
-        generalStyleTitle: '通用样式',
+        serviceStyleTitle: 'Kiểu dịch vụ',
+        generalStyleTitle: 'Kiểu chung',
         titleColor: {
-          title: '标题文字',
+          title: 'Chữ tiêu đề',
           default: [{ item: '#999999' }],
           color: [{ item: '#999999' }],
         },
         contentColor: {
-          title: '内容文字',
+          title: 'Chữ nội dung',
           default: [{ item: '#333333' }],
           color: [{ item: '#333333' }],
         },
         toneConfig: {
-          title: '色调',
+          title: 'Tông màu',
           tabVal: 0,
-          tabList: [{ name: '跟随主题风格' }, { name: '自定义' }],
+          tabList: [{ name: 'Theo phong cách chủ đề' }, { name: 'Tùy chỉnh' }],
         },
         activityColor: {
-          title: '活动内容',
+          title: 'Nội dung chương trình',
           default: [{ item: '#E93323' }],
           color: [{ item: '#E93323' }],
         },
         activityBgColor: {
-          title: '活动背景',
+          title: 'Nền chương trình',
           default: [{ item: '#FDEBE9' }],
           color: [{ item: '#FDEBE9' }],
         },
         zIndexConfig: {
-          title: '组件上浮',
+          title: 'Thứ tự lớp thành phần',
           val: 0,
           min: 0,
         },
         componentBgConfig: {
-          title: '组件背景',
+          title: 'Nền thành phần',
           tabVal: 0,
-          tabList: [{ name: '颜色' }, { name: '图片' }],
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
           colorConfig: {
-            title: '背景颜色',
+            title: 'Màu nền',
             default: [{ item: '#fff' }, { item: '#fff' }],
             color: [{ item: '#fff' }, { item: '#fff' }],
           },
           colorDirection: {
-            title: '渐变方向',
+            title: 'Hướng chuyển màu',
             tabVal: 0,
-            tabList: [{ name: '横向' }, { name: '纵向' }, { name: '左斜' }, { name: '右斜' }],
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
           },
           imageConfig: {
-            header: '背景图片',
+            header: 'Ảnh nền',
             title: '',
-            name: '上传图片',
+            name: 'Tải lên ảnh',
             type: 'code',
             url: '',
-            info: '建议尺寸：750px * 400px',
+            info: 'Kích thước đề xuất: 750px * 400px',
           },
         },
         bottomBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           default: [{ item: '#F5F5F5' }],
           color: [{ item: '#F5F5F5' }],
         },
         paddingConfig: {
-          title: '内边距',
+          title: 'Lề trong',
           val: 10,
           min: 0,
           max: 100,
@@ -226,7 +226,7 @@ export default {
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         marginConfig: {
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,
@@ -234,75 +234,75 @@ export default {
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         fillet: {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 8,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         borderConfig: {
-          title: '边框设置',
+          title: 'Cài đặt viền',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0,
           styleConfig: {
-            title: '边框样式',
+            title: 'Kiểu viền',
             tabVal: 0,
             tabList: [
-              { name: '实线', style: 'solid' },
-              { name: '虚线', style: 'dashed' },
-              { name: '点状', style: 'dotted' },
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
             ],
           },
           widthConfig: {
-            title: '边框粗细',
+            title: 'Độ dày viền',
             val: 1,
             min: 1,
           },
           colorConfig: {
-            title: '边框颜色',
+            title: 'Màu viền',
             default: [{ item: '#e5e5e5' }],
             color: [{ item: '#e5e5e5' }],
           },
         },
         shadowConfig: {
-          title: '阴影设置',
+          title: 'Cài đặt đổ bóng',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0,
           colorConfig: {
-            title: '阴影颜色',
+            title: 'Màu đổ bóng',
             default: [{ item: 'rgba(0,0,0,0.1)' }],
             color: [{ item: 'rgba(0,0,0,0.1)' }],
           },
           xConfig: {
-            title: 'X轴偏移',
+            title: 'Độ lệch trục X',
             val: 0,
             min: -50,
           },
           yConfig: {
-            title: 'Y轴偏移',
+            title: 'Độ lệch trục Y',
             val: 0,
             min: -50,
           },
           blurConfig: {
-            title: '模糊半径',
+            title: 'Bán kính làm mờ',
             val: 10,
             min: 0,
           },
           spreadConfig: {
-            title: '扩展半径',
+            title: 'Bán kính lan tỏa',
             val: 0,
             min: -50,
           },
@@ -323,7 +323,7 @@ export default {
         }
       }
 
-      // 兼容旧数据：组件背景
+      // Tương thích dữ liệu cũ: nền thành phần
       if (!data.componentBgConfig && data.componentBgColor) {
         dataClone.componentBgConfig.colorConfig.color[0].item = data.componentBgColor.color[0].item;
         if (data.componentBgColor.color[1]) {

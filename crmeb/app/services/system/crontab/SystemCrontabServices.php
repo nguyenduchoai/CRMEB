@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -25,7 +25,7 @@ class SystemCrontabServices extends BaseServices
     }
 
     /**
-     * 定时任务列表
+     * Danh sách tác vụ định kỳ
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -38,14 +38,14 @@ class SystemCrontabServices extends BaseServices
         $list = $this->dao->selectList($where, '*', $page, $limit, 'id desc', [], true);
         foreach ($list as &$item) {
             $item['next_execution_time'] = date('Y-m-d H:i:s', $item['next_execution_time']);
-            $item['last_execution_time'] = $item['last_execution_time'] != 0 ? date('Y-m-d H:i:s', $item['last_execution_time']) : '暂未执行';
+            $item['last_execution_time'] = $item['last_execution_time'] != 0 ? date('Y-m-d H:i:s', $item['last_execution_time']) : 'Chưa thực thi';
         }
         $count = $this->dao->count($where);
         return compact('list', 'count');
     }
 
     /**
-     * 定时任务详情
+     * Chi tiết tác vụ định kỳ
      * @param $id
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -56,12 +56,12 @@ class SystemCrontabServices extends BaseServices
     {
         $info = $this->dao->get($id);
         $info['customCode'] = "<?php\n\n" . json_decode($info['customCode']);
-        if (!$info) throw new AdminException('数据不存在');
+        if (!$info) throw new AdminException('Dữ liệu không tồn tại');
         return $info->toArray();
     }
 
     /**
-     * 定时任务类型
+     * Loại tác vụ định kỳ
      * @return string[]
      */
     public function getMarkList(): array
@@ -70,7 +70,7 @@ class SystemCrontabServices extends BaseServices
     }
 
     /**
-     * 保存定时任务
+     * Lưu tác vụ định kỳ
      * @param array $data
      * @return bool
      * @throws \ReflectionException
@@ -81,7 +81,7 @@ class SystemCrontabServices extends BaseServices
     public function saveTimer(array $data = [])
     {
         if (!$data['id'] && $this->dao->getCount(['mark' => $data['mark'], 'is_del' => 0]) && $data['mark'] != 'customTimer') {
-            throw new AdminException('该定时任务已存在，请勿重复添加');
+            throw new AdminException('Tác vụ định kỳ này đã tồn tại, vui lòng không thêm trùng lặp');
         }
         if ($data['mark'] != 'customTimer') $data['name'] = $this->getMarkList()[$data['mark']];
         $data['customCode'] = json_encode(preg_replace('/<\?php\s*\n/', '', $data['customCode']));
@@ -102,14 +102,14 @@ class SystemCrontabServices extends BaseServices
             $data['update_time'] = time();
             $res = $this->dao->update(['id' => $data['id']], $data);
         }
-        if (!$res) throw new AdminException('保存失败');
+        if (!$res) throw new AdminException('Lưu thất bại');
         Cache::delete('crontabCache');
         Cache::set('crontabCache', $this->dao->selectList(['is_open' => 1, 'is_del' => 0])->toArray());
         return true;
     }
 
     /**
-     * 删除定时任务
+     * Xóa tác vụ định kỳ
      * @param $id
      * @return bool
      * @throws \ReflectionException
@@ -122,14 +122,14 @@ class SystemCrontabServices extends BaseServices
         $data['update_time'] = time();
         $data['is_del'] = 1;
         $res = $this->dao->update(['id' => $id], $data);
-        if (!$res) throw new AdminException('删除失败');
+        if (!$res) throw new AdminException('Xóa thất bại');
         Cache::delete('crontabCache');
         Cache::set('crontabCache', $this->dao->selectList(['is_open' => 1, 'is_del' => 0])->toArray());
         return true;
     }
 
     /**
-     * 设置定时任务状态
+     * Thiết lập trạng thái tác vụ định kỳ
      * @param $id
      * @param $is_open
      * @return bool
@@ -143,14 +143,14 @@ class SystemCrontabServices extends BaseServices
         $data['update_time'] = time();
         $data['is_open'] = $is_open;
         $res = $this->dao->update(['id' => $id], $data);
-        if (!$res) throw new AdminException('设置成功');
+        if (!$res) throw new AdminException('Cài đặt thành công');
         Cache::delete('crontabCache');
         Cache::set('crontabCache', $this->dao->selectList(['is_open' => 1, 'is_del' => 0])->toArray());
         return true;
     }
 
     /**
-     * 计算定时任务下次执行时间
+     * Tính thời gian thực thi lần sau của tác vụ định kỳ
      * @param $data
      * @param int $time
      * @return false|float|int|mixed
@@ -159,25 +159,25 @@ class SystemCrontabServices extends BaseServices
     {
         if (!$time) $time = time();
         switch ($data['type']) {
-            case 1: // 每隔几秒
+            case 1: // Cách mấy giây
                 $cycle_time = $time + $data['second'];
                 break;
-            case 2: // 每隔几分
+            case 2: // Cách mấy phút
                 $cycle_time = $time + ($data['minute'] * 60);
                 break;
-            case 3: // 每隔几时
+            case 3: // Cách mấy giờ
                 $cycle_time = $time + ($data['hour'] * 3600) + ($data['minute'] * 60);
                 break;
-            case 4: // 每隔几日
+            case 4: // Cách mấy ngày
                 $cycle_time = $time + ($data['day'] * 86400) + ($data['hour'] * 3600) + ($data['minute'] * 60);
                 break;
-            case 5: // 每日几时几分几秒
+            case 5: // Mỗi ngày vào giờ:phút:giây nào
                 $cycle_time = strtotime(date('Y-m-d ' . $data['hour'] . ':' . $data['minute'] . ':' . $data['second'], time()));
                 if ($time >= $cycle_time) {
                     $cycle_time = $cycle_time + 86400;
                 }
                 break;
-            case 6: // 每周周几几时几分几秒
+            case 6: // Mỗi tuần vào thứ mấy, giờ:phút:giây nào
                 $todayStart = strtotime(date('Y-m-d 00:00:00', time()));
                 $w = date("w");
                 if ($w > $data['week']) {
@@ -191,7 +191,7 @@ class SystemCrontabServices extends BaseServices
                     $cycle_time = $todayStart + (($data['week'] - $w) * 86400) + ($data['hour'] * 3600) + ($data['minute'] * 60) + $data['second'];
                 }
                 break;
-            case 7: // 每月几日几时几分几秒
+            case 7: // Mỗi tháng vào ngày mấy, giờ:phút:giây nào
                 $currentMonth = date("n");
                 $currentYear = date("Y");
                 if ($currentMonth == 12) {
@@ -203,7 +203,7 @@ class SystemCrontabServices extends BaseServices
                 }
                 $cycle_time = mktime($data['hour'], $data['minute'], $data['second'], $nextMonth, $data['day'], $nextYear);
                 break;
-            case 8: // 每年几月几日几时几分几秒
+            case 8: // Mỗi năm vào tháng mấy ngày mấy, giờ:phút:giây nào
                 $cycle_time = mktime($data['hour'], $data['minute'], $data['second'], $data['month'], $data['day'], date("Y") + 1);
                 break;
             default:
@@ -214,11 +214,11 @@ class SystemCrontabServices extends BaseServices
     }
 
     /**
-     * 接口执行执行任务
+     * Interface thực thi tác vụ
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/02/17
      */
@@ -226,74 +226,74 @@ class SystemCrontabServices extends BaseServices
     {
         $crontabRunServices = app()->make(CrontabRunServices::class);
         $time = time();
-        file_put_contents(root_path() . 'runtime/.timer', $time); //检测定时任务是否正常
+        file_put_contents(root_path() . 'runtime/.timer', $time); //Kiểm tra tác vụ định kỳ có bình thường không
         $list = $this->dao->selectList(['is_open' => 1, 'is_del' => 0])->toArray();
         foreach ($list as $item) {
             if ($item['next_execution_time'] < $time) {
-                //转化小驼峰方法名
+                //Chuyển tên phương thức sang camelCase
                 $functionName = Str::camel($item['mark']);
-                //执行定时任务
+                //Thực thi tác vụ định kỳ
                 if (strpos($functionName, 'customTimer') === 0) {
                     $crontabRunServices->customTimer(json_decode($item['customCode']));
                 } else {
                     $crontabRunServices->$functionName();
                 }
-                //写入本次执行时间和下次执行时间
+                //Ghi thời gian thực thi lần này và lần sau
                 $this->dao->update(['mark' => $item['mark']], ['last_execution_time' => $time, 'next_execution_time' => $this->getTimerCycleTime($item)]);
             }
         }
     }
 
     /**
-     * 运行定时任务
+     * Chạy tác vụ định kỳ
      *
-     * @param object $task 任务对象
+     * @param object $task Đối tượng tác vụ
      * @return void
      */
     public function crontabCommandRun($task)
     {
         file_put_contents(root_path() . 'runtime/.timer', time());
-        // 获取 CrontabRunServices 实例
+        // Lấy instance của CrontabRunServices
         $crontabRunServices = app()->make(CrontabRunServices::class);
-        // 创建一个每秒钟执行一次的定时任务
+        // Tạo một tác vụ định kỳ thực thi mỗi giây một lần
         new Crontab('*/1 * * * * *', function () use ($task, $crontabRunServices) {
-            // 写入时间戳，用于检测定时任务是否正常执行
+            // Ghi timestamp, dùng để kiểm tra tác vụ định kỳ có thực thi bình thường không
             $timerTime = file_get_contents(root_path() . 'runtime/.timer');
             if ($timerTime < (time() - 60)) {
                 file_put_contents(root_path() . 'runtime/.timer', time());
             }
-            // 从缓存中获取定时任务列表
+            // Lấy danh sách tác vụ định kỳ từ cache
             $list = Cache::get('crontabCache');
             if (!$list) {
                 $list = $this->dao->selectList(['is_open' => 1, 'is_del' => 0])->toArray();
                 Cache::set('crontabCache', $list);
             }
-            // 遍历定时任务列表
+            // Duyệt qua danh sách tác vụ định kỳ
             foreach ($list as &$item) {
-                // 获取函数名
+                // Lấy tên hàm
                 $functionName = Str::camel($item['mark']);
                 if ($functionName == 'customTimer') {
                     $functionName = 'customTimer_' . $item['id'];
                 }
-                // 如果更新时间不存在，则将其设置为添加时间
+                // Nếu thời gian cập nhật không tồn tại thì đặt bằng thời gian thêm
                 $item['update_time'] = $item['update_time'] ?: $item['add_time'];
-                // 如果任务已经被执行过，则跳过此次循环
+                // Nếu tác vụ đã được thực thi thì bỏ qua vòng lặp này
                 if (isset($task->task_ids[$functionName]) && $task->task_ids[$functionName]['time'] == $item['update_time']) {
                     continue;
                 }
-                // 获取定时器字符串
+                // Lấy chuỗi bộ đếm thời gian
                 $timeStr = $item['timeStr'] != '' ? $item['timeStr'] : $this->getTimerStr($item);
-                // 获取自定义代码
+                // Lấy mã tùy chỉnh
                 $customCode = json_decode($item['customCode']);
-                // 如果任务已经被执行过，并且当前时间和上次执行时间不同，则销毁之前的定时任务
+                // Nếu tác vụ đã được thực thi và thời gian hiện tại khác thời gian thực thi lần trước thì hủy tác vụ định kỳ trước đó
                 if (isset($task->task_ids[$functionName]) && $task->task_ids[$functionName]['time'] != $item['update_time'] && isset($task->task_ids[$functionName]['crontab']) && $task->task_ids[$functionName]['crontab'] instanceof Crontab) {
                     $task->task_ids[$functionName]['crontab']->destroy();
                     unset($task->task_ids[$functionName]);
                 }
-                // 如果任务是开启状态，则创建一个新的定时任务
+                // Nếu tác vụ đang ở trạng thái mở thì tạo một tác vụ định kỳ mới
                 if ($item['is_open'] == 1) {
                     $crontab = new Crontab($timeStr, function () use ($crontabRunServices, $functionName, $customCode) {
-                        // 根据函数名调用相应的方法
+                        // Theo tên hàm, gọi phương thức tương ứng
                         if (strpos($functionName, 'customTimer_') === 0) {
                             $crontabRunServices->customTimer($customCode);
                         } else {
@@ -307,7 +307,7 @@ class SystemCrontabServices extends BaseServices
     }
 
     /**
-     * 获取定时任务时间表达式
+     * Lấy biểu thức thời gian của tác vụ định kỳ
      * 0   1   2   3   4   5
      * |   |   |   |   |   |
      * |   |   |   |   |   +------ day of week (0 - 6) (Sunday=0)
@@ -315,7 +315,7 @@ class SystemCrontabServices extends BaseServices
      * |   |   |   +-------- day of month (1 - 31)
      * |   |   +---------- hour (0 - 23)
      * |   +------------ min (0 - 59)
-     * +-------------- sec (0-59)[可省略，如果没有0位,则最小时间粒度是分钟]
+     * +-------------- sec (0-59)[có thể bỏ qua, nếu không có vị trí 0 thì độ chi tiết thời gian nhỏ nhất là phút]
      * @param $data
      * @return string
      */
@@ -323,28 +323,28 @@ class SystemCrontabServices extends BaseServices
     {
         $timeStr = '';
         switch ($data['type']) {
-            case 1:// 每隔几秒
+            case 1:// Cách mấy giây
                 $timeStr = '*/' . $data['second'] . ' * * * * *';
                 break;
-            case 2:// 每隔几分
+            case 2:// Cách mấy phút
                 $timeStr = '0 */' . $data['minute'] . ' * * * *';
                 break;
-            case 3:// 每隔几时第几分钟执行
+            case 3:// Cách mấy giờ thì thực thi vào phút thứ mấy
                 $timeStr = '0 ' . $data['minute'] . ' */' . $data['hour'] . ' * * *';
                 break;
-            case 4:// 每隔几日第几小时第几分钟执行
+            case 4:// Cách mấy ngày thì thực thi vào giờ thứ mấy phút thứ mấy
                 $timeStr = '0 ' . $data['minute'] . ' ' . $data['hour'] . ' */' . $data['day'] . ' * *';
                 break;
-            case 5:// 每日几时几分几秒
+            case 5:// Mỗi ngày vào giờ:phút:giây nào
                 $timeStr = $data['second'] . ' ' . $data['minute'] . ' ' . $data['hour'] . ' * * *';
                 break;
-            case 6:// 每周周几几时几分几秒
+            case 6:// Mỗi tuần vào thứ mấy, giờ:phút:giây nào
                 $timeStr = $data['second'] . ' ' . $data['minute'] . ' ' . $data['hour'] . ' * * ' . ($data['week'] == 7 ? 0 : $data['week']);
                 break;
-            case 7:// 每月几日几时几分几秒
+            case 7:// Mỗi tháng vào ngày mấy, giờ:phút:giây nào
                 $timeStr = $data['second'] . ' ' . $data['minute'] . ' ' . $data['hour'] . ' ' . $data['day'] . ' * *';
                 break;
-            case 8:// 每年几月几日几时几分几秒
+            case 8:// Mỗi năm vào tháng mấy ngày mấy, giờ:phút:giây nào
                 $timeStr = $data['second'] . ' ' . $data['minute'] . ' ' . $data['hour'] . ' ' . $data['day'] . ' ' . $data['month'] . ' *';
                 break;
         }

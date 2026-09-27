@@ -13,9 +13,9 @@
       ></component>
     </div>
     <rightBtn :activeIndex="activeIndex" :configObj="configObj"></rightBtn>
-    <el-dialog :visible.sync="modals" title="设计组件" width="60%">
+    <el-dialog :visible.sync="modals" title="Thiết kế thành phần" width="60%">
       <!-- Placeholder for custom content -->
-      <div>这里是设计组件内容</div>
+      <div>Đây là nội dung thành phần thiết kế</div>
     </el-dialog>
   </div>
 </template>
@@ -26,7 +26,7 @@ import { mapState, mapMutations, mapActions } from 'vuex';
 import rightBtn from '@/components/rightBtn/index.vue';
 export default {
   name: 'c_home_menu',
-  cname: '导航组',
+  cname: 'Nhóm điều hướng',
   componentsName: 'home_menu',
   props: {
     activeIndex: {
@@ -142,11 +142,11 @@ export default {
           configNme: 'commonStyle',
         },
       ],
-      type: 0, //展示样式索引
-      setUp: 0, //0：内容；1：样式
-      type2: 0, //导航样式索引
-      type3: 0, //色调索引
-      headerEnable: false, //头部开关状态
+      type: 0, //Chỉ mục kiểu hiển thị
+      setUp: 0, //0: nội dung; 1: kiểu
+      type2: 0, //Chỉ mục kiểu điều hướng
+      type3: 0, //Chỉ mục tông màu
+      headerEnable: false, //Trạng thái bật/tắt phần đầu
       modals: false,
     };
   },
@@ -225,7 +225,7 @@ export default {
       if (!data.paddingConfig) {
         this.$set(data, 'paddingConfig', {
           isAll: false,
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           max: 100,
@@ -241,7 +241,7 @@ export default {
       if (!data.marginConfig) {
         this.$set(data, 'marginConfig', {
           isAll: false,
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,
@@ -251,12 +251,12 @@ export default {
       }
       if (!data.customBtnConfig) {
         this.$set(data, 'customBtnConfig', {
-          title: '设计组件',
+          title: 'Thiết kế thành phần',
         });
       }
       if (!data.fillet) {
         this.$set(data, 'fillet', {
-          title: '圆角设置',
+          title: 'Cài đặt bo góc',
           type: 0,
           val: 0,
           min: 0,
@@ -265,7 +265,7 @@ export default {
       }
       if (!data.bgColor) {
         this.$set(data, 'bgColor', {
-          title: '背景颜色',
+          title: 'Màu nền',
           color: [
             {
               item: '#fff',
@@ -280,7 +280,7 @@ export default {
       }
       if (!data.headerStyle) {
         this.$set(data, 'headerStyle', {
-          title: '头部样式',
+          title: 'Kiểu phần đầu',
           fontSize: 16,
           rightFontSize: 12,
           leftColor: '#333',
@@ -298,7 +298,7 @@ export default {
       return data;
     },
 
-    // 统一生成配置方法
+    // Phương thức tạo cấu hình thống nhất
     generateContentConfig() {
       let config = [
         {
@@ -320,7 +320,7 @@ export default {
         },
       ];
 
-      // 头部开启时显示头部文字配置
+      // Khi bật phần đầu thì hiển thị cấu hình chữ phần đầu
       if (this.headerEnable) {
         config.push(
           {
@@ -334,16 +334,16 @@ export default {
         );
       }
 
-      // 列表样式不显示单行数量和宫格样式
+      // Kiểu danh sách không hiển thị số lượng mỗi hàng và kiểu lưới
       if (this.type2 !== 2) {
-        // 排列展示显示单行数量
+        // Hiển thị dạng xếp hàng thì hiện số lượng mỗi hàng
         if (this.type2 === 0) {
           config.splice(3, 0, {
             components: toolCom.c_radio,
             configNme: 'number',
           });
         }
-        // 宫格展示显示宫格样式
+        // Hiển thị dạng lưới thì hiện kiểu lưới
         if (this.type2 === 1) {
           config.splice(3, 0, {
             components: toolCom.c_radio,
@@ -360,11 +360,11 @@ export default {
       return config;
     },
 
-    // 生成样式设置配置
+    // Tạo cấu hình cài đặt kiểu
     generateStyleConfig() {
       let config = [];
 
-      // 头部开启时显示头部样式配置
+      // Khi bật phần đầu thì hiển thị cấu hình kiểu phần đầu
       if (this.headerEnable) {
         config.push({
           components: toolCom.c_header_style,
@@ -372,7 +372,7 @@ export default {
         });
       }
 
-      // 宫格展示时显示宫格项样式配置
+      // Khi hiển thị dạng lưới thì hiện cấu hình kiểu ô lưới
       if (this.type2 === 1) {
         config = config.concat(this.gridItemStyleConfig);
       }
@@ -380,7 +380,7 @@ export default {
       return config;
     },
 
-    // 更新内容配置
+    // Cập nhật cấu hình nội dung
     updateContentConfig() {
       var arr = [
         {
@@ -404,7 +404,7 @@ export default {
           this.rCom = rCom2.concat(this.twoContent);
         }
       } else {
-        // 样式设置
+        // Cài đặt kiểu
         let styleConfig = this.generateStyleConfig();
         let listStyle = this.configObj.menuConfig ? this.configObj.menuConfig.listStyle : 0;
         let middleStyle = [];

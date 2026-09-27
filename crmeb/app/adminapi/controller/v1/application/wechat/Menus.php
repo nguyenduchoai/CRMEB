@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,14 +15,14 @@ use app\services\wechat\WechatMenuServices;
 use think\facade\App;
 
 /**
- * 微信菜单  控制器
+ * Controller menu WeChat
  * Class Menus
  * @package app\admin\controller\wechat
  */
 class Menus extends AuthController
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * Menus constructor.
      * @param App $app
      * @param WechatMenuServices $services
@@ -34,7 +34,7 @@ class Menus extends AuthController
     }
 
     /**
-     * 获取菜单
+     * Lấy menu
      * @return mixed
      */
     public function index()
@@ -44,15 +44,15 @@ class Menus extends AuthController
     }
 
     /**
-     * 保存菜单
+     * Lưu menu
      * @return mixed
      */
     public function save()
     {
         $buttons = request()->post('button/a', []);
-        if(strlen($buttons[0]['name']) > 15) return app('json')->fail('菜单名称不能大于5个字');
-        if (!count($buttons)) return app('json')->fail('请添加至少一个按钮');
+        if(strlen($buttons[0]['name']) > 15) return app('json')->fail('Tên menu không được vượt quá 5 ký tự');
+        if (!count($buttons)) return app('json')->fail('Vui lòng thêm ít nhất một nút');
         $this->services->saveMenu($buttons);
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 }

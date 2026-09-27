@@ -77,7 +77,7 @@ abstract class Service
     {
         $result = $this->factory->getCacheInstance()->get($encryptCode);
         if(empty($result)){
-            throw new ParamException('参数错误！');
+            throw new ParamException('Tham số không hợp lệ!');
         }
 
         $this->validate($result['token'], $result['point'], function () use ($result,$encryptCode) {
@@ -98,7 +98,7 @@ abstract class Service
     {
         $pointJson = AesUtils::decrypt($point, $secretKey);
         if ($pointJson == false) {
-            throw new ParamException('aes验签失败！');
+            throw new ParamException('Xác minh chữ ký aes thất bại!');
         }
         return json_decode($pointJson, true);
     }
@@ -107,7 +107,7 @@ abstract class Service
         $cacheEntity = $this->factory->getCacheInstance();
         $this->originData = $cacheEntity->get($token);
         if (empty($this->originData)) {
-            throw new ParamException('参数校验失败：token');
+            throw new ParamException('Kiểm tra tham số thất bại: token');
         }
     }
 }

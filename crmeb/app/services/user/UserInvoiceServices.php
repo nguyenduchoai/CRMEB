@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -34,7 +34,7 @@ class UserInvoiceServices extends BaseServices
     }
 
     /**
-     * 检测系统设置发票功能
+     * Kiểm tra chức năng hóa đơn trong cài đặt hệ thống
      * @param bool $is_speclial
      * @return bool|array
      */
@@ -49,7 +49,7 @@ class UserInvoiceServices extends BaseServices
     }
 
     /**
-     * 获取单个发票信息
+     * Lấy thông tin một hóa đơn
      * @param int $id
      * @param int $uid
      * @return array
@@ -67,7 +67,7 @@ class UserInvoiceServices extends BaseServices
     }
 
     /**
-     * 检测该发票是否可用
+     * Kiểm tra hóa đơn này có dùng được không
      * @param int $id
      * @param int $uid
      * @return bool
@@ -79,16 +79,16 @@ class UserInvoiceServices extends BaseServices
     {
         $invoice = $this->getInvoice($id, $uid);
         if (!$invoice) {
-            throw new ApiException('数据不存在');
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         $invoice_func = $this->invoiceFuncStatus();
         if (!$invoice_func['invoice_func']) {
-            throw new ApiException('暂未开启发票');
+            throw new ApiException('Chưa bật tính năng hóa đơn');
         }
-        //专用发票
+        //Hóa đơn chuyên dùng
         if ($invoice['type'] == 2) {
             if (!$invoice_func['special_invoice']) {
-                throw new ApiException('暂未开启专用发票');
+                throw new ApiException('Chưa bật tính năng hóa đơn chuyên dụng');
             }
         }
         return $invoice;
@@ -96,7 +96,7 @@ class UserInvoiceServices extends BaseServices
 
 
     /**
-     * 获取某个用户发票列表
+     * Lấy danh sách hóa đơn của một người dùng
      * @param int $uid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -112,7 +112,7 @@ class UserInvoiceServices extends BaseServices
     }
 
     /**
-     * 获取某个用户默认发票
+     * Lấy hóa đơn mặc định của một người dùng
      * @param int $uid
      * @param string $field
      * @return array|\think\Model|null
@@ -126,7 +126,7 @@ class UserInvoiceServices extends BaseServices
     }
 
     /**
-     * 添加|修改
+     * Thêm|Sửa
      * @param int $uid
      * @param array $data
      * @return array
@@ -142,34 +142,34 @@ class UserInvoiceServices extends BaseServices
         $invoice = $this->dao->get(['uid' => $uid, 'name' => $data['name'], 'drawer_phone' => $data['drawer_phone'], 'is_del' => 0]);
         if ($id) {
             if ($invoice && $id != $invoice['id']) {
-                throw new ApiException('该发票已经存在');
+                throw new ApiException('Hóa đơn này đã tồn tại');
             }
             if ($this->dao->update($id, $data, 'id')) {
                 if ($data['is_default']) {
                     $this->setDefaultInvoice($uid, $id);
                 }
-                return ['type' => 'edit', 'msg' => '修改发票成功', 'data' => []];
+                return ['type' => 'edit', 'msg' => 'Sửa hóa đơn thành công', 'data' => []];
             } else {
-                throw new ApiException('修改失败');
+                throw new ApiException('Sửa thất bại');
             }
         } else {
             if ($invoice) {
-                throw new ApiException('该发票已经存在');
+                throw new ApiException('Hóa đơn này đã tồn tại');
             }
             if ($add_invoice = $this->dao->save($data)) {
                 $id = (int)$add_invoice['id'];
                 if ($data['is_default']) {
                     $this->setDefaultInvoice($uid, $id);
                 }
-                return ['type' => 'add', 'msg' => '添加发票成功', 'data' => ['id' => $id]];
+                return ['type' => 'add', 'msg' => 'Thêm hóa đơn thành công', 'data' => ['id' => $id]];
             } else {
-                throw new ApiException('添加失败');
+                throw new ApiException('Thêm thất bại');
             }
         }
     }
 
     /**
-     * 设置默认发票
+     * Đặt hóa đơn mặc định
      * @param int $id
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
@@ -179,19 +179,19 @@ class UserInvoiceServices extends BaseServices
     public function setDefaultInvoice(int $uid, int $id)
     {
         if (!$invoice = $this->getInvoice($id)) {
-            throw new ApiException('数据不存在');
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         if ($invoice['uid'] != $uid) {
-            throw new ApiException('非法操作');
+            throw new ApiException('Thao tác không hợp lệ');
         }
         if (!$this->dao->setDefault($uid, $id, $invoice['header_type'], $invoice['type'])) {
-            throw new ApiException('设置默认发票失败');
+            throw new ApiException('Đặt hóa đơn mặc định thất bại');
         }
         return true;
     }
 
     /**
-     * 删除
+     * Xóa
      * @param $id
      * @throws \Exception
      */
@@ -199,10 +199,10 @@ class UserInvoiceServices extends BaseServices
     {
         if ($invoice = $this->getInvoice($id)) {
             if ($invoice['uid'] != $uid) {
-                throw new ApiException('非法操作');
+                throw new ApiException('Thao tác không hợp lệ');
             }
             if (!$this->dao->update($id, ['is_del' => 1])) {
-                throw new ApiException('删除失败');
+                throw new ApiException('Xóa thất bại');
             }
         }
         return true;

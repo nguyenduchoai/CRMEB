@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -36,8 +36,8 @@ class PinkJob extends BaseJobs
             $virtual = $pinkService->virtualCombination($pinkId);
             if ($virtual) return true;
             $refundData = [
-                'refund_reason' => '拼团时间超时',
-                'refund_explain' => '拼团时间超时',
+                'refund_reason' => 'Hết thời gian mua chung',
+                'refund_explain' => 'Hết thời gian mua chung',
                 'refund_img' => json_encode([]),
             ];
             foreach ($orderIds as $key => $item) {

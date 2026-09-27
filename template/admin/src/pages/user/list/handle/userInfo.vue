@@ -1,98 +1,98 @@
 <template>
   <div class="user-info">
     <div class="section">
-      <div class="section-hd">基本信息</div>
+      <div class="section-hd">Thông tin cơ bản</div>
       <div class="section-bd">
         <div class="item">
-          <div>用户ID：</div>
+          <div>ID người dùng:</div>
           <div class="value">{{ psInfo.uid }}</div>
         </div>
         <div class="item">
-          <div>真实姓名：</div>
+          <div>Họ tên:</div>
           <div class="value">{{ psInfo.real_name || '-' }}</div>
         </div>
         <div class="item">
-          <div>手机号码：</div>
+          <div>Số điện thoại:</div>
           <div class="value">{{ psInfo.phone || '-' }}</div>
         </div>
         <div class="item">
-          <div>生日：</div>
+          <div>Ngày sinh:</div>
           <div class="value">{{ psInfo.birthday | timeFormat('birthday') }}</div>
         </div>
         <!-- <div class="item">
-          <div>性别：</div>
-          <div v-if="psInfo.sex" class="value">{{ psInfo.sex == 1 ? '男' : '女' }}</div>
-          <div v-else class="value">保密</div>
+          <div>Giới tính:</div>
+          <div v-if="psInfo.sex" class="value">{{ psInfo.sex == 1 ? 'Nam' : 'Nữ' }}</div>
+          <div v-else class="value">Bí mật</div>
         </div> -->
         <div class="item">
-          <div>身份证号：</div>
+          <div>Số CCCD/CMND:</div>
           <div class="value">{{ psInfo.card_id || '-' }}</div>
         </div>
         <div class="item">
-          <div>用户地址：</div>
+          <div>Địa chỉ người dùng:</div>
           <div class="value">{{ `${psInfo.addres}` || '-' }}</div>
         </div>
       </div>
     </div>
     <div class="section">
-      <div class="section-hd">密码</div>
+      <div class="section-hd">Mật khẩu</div>
       <div class="section-bd">
         <div class="item">
-          <div>登录密码：</div>
+          <div>Mật khẩu đăng nhập:</div>
           <div class="value">********</div>
         </div>
       </div>
     </div>
     <div class="section">
-      <div class="section-hd">用户概况</div>
+      <div class="section-hd">Tổng quan người dùng</div>
       <div class="section-bd">
         <div class="item">
-          <div>推广资格：</div>
-          <div class="value">{{ psInfo.spread_open ? '开启' : '关闭' }}</div>
+          <div>Tư cách cộng tác viên:</div>
+          <div class="value">{{ psInfo.spread_open ? 'Bật' : 'Tắt' }}</div>
         </div>
         <div class="item">
-          <div>用户状态：</div>
-          <div class="value">{{ psInfo.status ? '开启' : '锁定' }}</div>
+          <div>Trạng thái người dùng:</div>
+          <div class="value">{{ psInfo.status ? 'Bật' : 'Khóa' }}</div>
         </div>
         <div class="item">
-          <div>用户等级：</div>
+          <div>Hạng người dùng:</div>
           <div class="value">{{ psInfo.vip_name || '-' }}</div>
         </div>
         <div class="item">
-          <div>用户标签：</div>
+          <div>Nhãn người dùng:</div>
           <div class="value">{{ psInfo.label_list || '-' }}</div>
         </div>
         <div class="item">
-          <div>用户分组：</div>
+          <div>Nhóm người dùng:</div>
           <div class="value">{{ psInfo.group_name || '-' }}</div>
         </div>
         <div class="item">
-          <div>推广人：</div>
+          <div>Người giới thiệu:</div>
           <div class="value">{{ psInfo.spread_uid_nickname || '-' }}</div>
         </div>
         <div class="item">
-          <div>注册时间：</div>
+          <div>Thời gian đăng ký:</div>
           <div class="value">{{ psInfo.add_time | timeFormat }}</div>
         </div>
         <div class="item">
-          <div>登录时间：</div>
+          <div>Thời gian đăng nhập:</div>
           <div class="value">{{ psInfo.last_time | timeFormat }}</div>
         </div>
         <div v-if="psInfo.is_money_level" class="item">
-          <div>付费会员：</div>
+          <div>Thành viên trả phí:</div>
           <div class="value">
             {{
-              psInfo.is_ever_level == 1 ? '永久会员' : psInfo.overdue_time ? `${psInfo.overdue_time} 到期` : '已过期'
+              psInfo.is_ever_level == 1 ? 'Thành viên vĩnh viễn' : psInfo.overdue_time ? `${psInfo.overdue_time} hết hạn` : 'Đã hết hạn'
             }}
           </div>
         </div>
       </div>
     </div>
     <div class="section">
-      <div class="section-hd">用户备注</div>
+      <div class="section-hd">Ghi chú của người dùng</div>
       <div class="section-bd">
         <div class="item">
-          <div>备注：</div>
+          <div>Ghi chú:</div>
           <div class="value">{{ psInfo.mark || '-' }}</div>
         </div>
       </div>
@@ -118,11 +118,11 @@ export default {
     },
     gender(value) {
       if (value == 1) {
-        return '男';
+        return 'Nam';
       } else if (value == 2) {
-        return '女';
+        return 'Nữ';
       } else {
-        return '未知';
+        return 'Không xác định';
       }
     },
   },

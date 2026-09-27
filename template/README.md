@@ -1,50 +1,50 @@
-# Template 目录说明文档
+# Tài liệu mô tả thư mục Template
 
-## 目录结构
+## Cấu trúc thư mục
 
-`template` 目录包含 CRMEB 系统的前端项目代码，主要分为两个子项目：
+`template` là thư mục chứa mã nguồn các dự án frontend của hệ thống CRMEB, gồm hai dự án con chính:
 
 ```
 template/
-├── admin/         # 管理端前端项目（Vue.js + Element UI）
-└── uni-app/       # 移动端前端项目（UniApp）
+├── admin/         # Dự án frontend trang quản trị（Vue.js + Element UI）
+└── uni-app/       # Dự án frontend cho di động（UniApp）
 ```
 
-## 项目说明
+## Giới thiệu dự án
 
-### 1. 管理端前端项目 (admin/)
+### 1. Dự án frontend trang quản trị (admin/)
 
-管理端前端项目基于 Vue.js + Element UI 开发，用于后台管理系统的操作界面。
+Dự án frontend trang quản trị được phát triển trên nền Vue.js + Element UI, dùng làm giao diện thao tác của hệ thống quản trị.
 
-#### 主要目录结构
+#### Cấu trúc thư mục chính
 
 ```
 admin/
-├── public/        # 静态资源目录
-├── src/           # 源代码目录
-│   ├── api/       # API 接口定义
-│   ├── assets/    # 静态资源文件
-│   ├── components/ # 通用组件
-│   ├── config/    # 配置文件
-│   ├── directive/ # 自定义指令
-│   ├── filters/   # 过滤器
-│   ├── layout/    # 布局组件
-│   ├── libs/      # 工具库
-│   ├── pages/     # 页面组件
-│   ├── router/    # 路由配置
-│   ├── store/     # 状态管理
-│   ├── styles/    # 样式文件
-│   ├── utils/     # 工具函数
-│   ├── App.vue    # 根组件
-│   └── main.js    # 入口文件
-├── .env.dev       # 开发环境配置
-├── .env.production # 生产环境配置
-├── package.json   # 项目依赖
-├── vue.config.js  # Vue 配置
-└── README.md      # 项目说明
+├── public/        # Thư mục tài nguyên tĩnh
+├── src/           # Thư mục mã nguồn
+│   ├── api/       # API định nghĩa
+│   ├── assets/    # File tài nguyên tĩnh
+│   ├── components/ # Thành phần dùng chung
+│   ├── config/    # Tệp cấu hình
+│   ├── directive/ # Directive tùy chỉnh
+│   ├── filters/   # Filter
+│   ├── layout/    # Thành phần layout
+│   ├── libs/      # Thư viện công cụ
+│   ├── pages/     # Thành phần trang
+│   ├── router/    # Cấu hình route
+│   ├── store/     # Quản lý trạng thái
+│   ├── styles/    # File style
+│   ├── utils/     # Hàm tiện ích (utility)
+│   ├── App.vue    # Thành phần gốc
+│   └── main.js    # File điểm vào
+├── .env.dev       # Cấu hình môi trường phát triển
+├── .env.production # Cấu hình môi trường production
+├── package.json   # Phụ thuộc của dự án
+├── vue.config.js  # Vue Cấu hình
+└── README.md      # Giới thiệu dự án
 ```
 
-#### 技术栈
+#### Công nghệ sử dụng
 - Vue.js 2.x
 - Element UI
 - Vue Router
@@ -52,139 +52,139 @@ admin/
 - Axios
 - ECharts
 
-#### 开发命令
-- 安装依赖：`npm install`
-- 开发环境运行：`npm run dev`
-- 生产环境构建：`npm run build`
-- 代码检查：`npm run lint`
+#### Lệnh phát triển
+- Cài đặt phụ thuộc: `npm install`
+- Chạy ở môi trường phát triển: `npm run dev`
+- Build cho môi trường production: `npm run build`
+- Kiểm tra code: `npm run lint`
 
-### 2. 移动端前端项目 (uni-app/)
+### 2. Dự án frontend di động (uni-app/)
 
-移动端前端项目基于 UniApp 开发，支持多端发布（微信小程序、H5、App 等）。
+Dự án frontend di động được phát triển trên nền UniApp, hỗ trợ phát hành đa nền tảng (WeChat Mini Program, H5, App, v.v.).
 
-#### 主要目录结构
+#### Cấu trúc thư mục chính
 
 ```
 uni-app/
-├── api/           # API 接口定义
-├── components/    # 通用组件
-├── config/        # 配置文件
-├── libs/          # 工具库
-├── mixins/        # 混合器
-├── pages/         # 页面组件
-├── static/        # 静态资源
-├── App.vue        # 根组件
-├── main.js        # 入口文件
-├── manifest.json  # 应用配置
-├── pages.json     # 页面配置
-└── package.json   # 项目依赖
+├── api/           # API định nghĩa
+├── components/    # Thành phần dùng chung
+├── config/        # Tệp cấu hình
+├── libs/          # Thư viện công cụ
+├── mixins/        # Mixin
+├── pages/         # Thành phần trang
+├── static/        # Tài nguyên tĩnh
+├── App.vue        # Thành phần gốc
+├── main.js        # File điểm vào
+├── manifest.json  # Cấu hình ứng dụng
+├── pages.json     # Cấu hình trang
+└── package.json   # Phụ thuộc của dự án
 ```
 
-#### 技术栈
+#### Công nghệ sử dụng
 - UniApp
 - Vue.js 2.x
-- uView UI (UniApp 组件库)
+- uView UI (thư viện component cho UniApp)
 - Vuex
 - Axios
 
-#### 开发命令
-- 安装依赖：`npm install`
-- 开发环境运行：使用 HBuilderX 运行到对应平台
-- 生产环境构建：使用 HBuilderX 发行到对应平台
+#### Lệnh phát triển
+- Cài đặt phụ thuộc: `npm install`
+- Chạy ở môi trường phát triển: dùng HBuilderX để chạy trên nền tảng tương ứng
+- Build cho môi trường production: dùng HBuilderX để phát hành lên nền tảng tương ứng
 
-## 前端与后端交互
+## Tương tác giữa frontend và backend
 
-前端项目通过 API 接口与后端进行交互，主要配置如下：
+Các dự án frontend tương tác với backend thông qua API, cấu hình chính như sau:
 
-### 管理端 API 配置
-- 开发环境：`admin/.env.dev` 文件中的 `VUE_APP_API_URL`
-- 生产环境：`admin/.env.production` 文件中的 `VUE_APP_API_URL`
+### Cấu hình API cho trang quản trị
+- Môi trường phát triển: `VUE_APP_API_URL` trong tệp `admin/.env.dev`
+- Môi trường production: `VUE_APP_API_URL` trong tệp `admin/.env.production`
 
-### 移动端 API 配置
-- 配置文件：`uni-app/config/api.js`
-- API 基础路径：`baseURL` 变量
+### Cấu hình API cho di động
+- Tệp cấu hình: `uni-app/config/api.js`
+- Đường dẫn gốc của API: biến `baseURL`
 
-## 部署说明
+## Hướng dẫn triển khai
 
-### 管理端部署
-1. 执行构建命令：`npm run build`
-2. 将 `admin/dist` 目录下的文件部署到 Web 服务器
-3. 配置 Nginx 或 Apache 服务器，指向构建后的静态文件
+### Triển khai trang quản trị
+1. Chạy lệnh build: `npm run build`
+2. Triển khai các tệp trong thư mục `admin/dist` lên máy chủ Web
+3. Cấu hình máy chủ Nginx hoặc Apache trỏ tới các tệp tĩnh sau khi build
 
-### 移动端部署
-1. 使用 HBuilderX 打开 `uni-app` 目录
-2. 根据需要发行到对应平台：
-   - 微信小程序：发行 -> 小程序-微信
-   - H5：发行 -> H5
-   - App：发行 -> 原生 App-云打包
+### Triển khai ứng dụng di động
+1. Dùng HBuilderX mở thư mục `uni-app`
+2. Phát hành lên nền tảng tương ứng theo nhu cầu:
+   - WeChat Mini Program: Phát hành -> Mini Program - WeChat
+   - H5: Phát hành -> H5
+   - App: Phát hành -> App native - Đóng gói trên đám mây
 
-## 开发规范
+## Quy chuẩn phát triển
 
-### 代码风格
-- 遵循 Vue 官方风格指南
-- 使用 ESLint 进行代码检查
-- 组件名使用 PascalCase
-- 方法和变量名使用 camelCase
+### Phong cách code
+- Tuân thủ hướng dẫn phong cách (style guide) chính thức của Vue
+- Dùng ESLint để kiểm tra code
+- Tên component dùng PascalCase
+- Tên phương thức và tên biến dùng camelCase
 
-### 命名规范
-- 文件和目录名使用 kebab-case
-- 组件名使用 PascalCase
-- 常量使用全大写，单词间用下划线分隔
+### Quy tắc đặt tên
+- Tên tệp và tên thư mục dùng kebab-case
+- Tên component dùng PascalCase
+- Hằng số viết hoa toàn bộ, các từ phân tách bằng dấu gạch dưới
 
-### 目录使用
-- `api/`：按模块组织 API 接口
-- `components/`：存放可复用组件
-- `pages/`：存放页面组件
-- `utils/`：存放工具函数
-- `styles/`：存放全局样式
+### Cách dùng thư mục
+- `api/`: Tổ chức API theo module
+- `components/`: Chứa các component có thể tái sử dụng
+- `pages/`: Chứa các component trang
+- `utils/`: Chứa các hàm tiện ích
+- `styles/`: Chứa style toàn cục
 
-## 注意事项
+## Lưu ý
 
-1. **API 接口**：前端项目需要与后端 API 接口保持一致，如有接口变更，需要同步修改前端代码。
+1. **API**: Dự án frontend cần giữ nhất quán với API backend, nếu API có thay đổi thì cần sửa code frontend đồng bộ theo.
 
-2. **环境配置**：不同环境下的 API 地址需要在对应配置文件中修改。
+2. **Cấu hình môi trường**: Địa chỉ API ở từng môi trường cần được sửa trong tệp cấu hình tương ứng.
 
-3. **依赖管理**：使用 npm 管理项目依赖，确保依赖版本的一致性。
+3. **Quản lý phụ thuộc**: Dùng npm để quản lý các phụ thuộc của dự án, đảm bảo tính nhất quán của phiên bản phụ thuộc.
 
-4. **构建优化**：生产环境构建时会自动进行代码压缩和优化。
+4. **Tối ưu build**: Khi build cho môi trường production, code sẽ được tự động nén và tối ưu.
 
-5. **跨域处理**：开发环境下使用 Vue CLI 的代理配置处理跨域问题，生产环境需要在服务器端配置 CORS。
+5. **Xử lý cross-domain**: Ở môi trường phát triển, dùng cấu hình proxy của Vue CLI để xử lý vấn đề cross-domain, còn ở môi trường production cần cấu hình CORS phía máy chủ.
 
-6. **性能优化**：
-   - 合理使用组件懒加载
-   - 优化图片资源
-   - 减少不必要的 API 请求
-   - 使用缓存减少重复数据获取
+6. **Tối ưu hiệu năng**:
+   - Sử dụng hợp lý lazy load component
+   - Tối ưu tài nguyên hình ảnh
+   - Giảm các API request không cần thiết
+   - Dùng cache để giảm việc lấy dữ liệu lặp lại
 
-## 常见问题
+## Sự cố thường gặp
 
-### 1. 开发环境 API 调用失败
-- 检查 `.env.dev` 文件中的 API 地址是否正确
-- 检查后端服务是否正常运行
-- 检查网络连接是否正常
+### 1. Gọi API ở môi trường phát triển thất bại
+- Kiểm tra địa chỉ API trong tệp `.env.dev` có đúng không
+- Kiểm tra dịch vụ backend có đang chạy bình thường không
+- Kiểm tra kết nối mạng có bình thường không
 
-### 2. 构建后页面空白
-- 检查路由配置是否正确
-- 检查是否有未捕获的错误
-- 检查静态资源路径是否正确
+### 2. Trang bị trắng sau khi build
+- Kiểm tra cấu hình route có đúng không
+- Kiểm tra xem có lỗi nào chưa được bắt (uncaught) không
+- Kiểm tra đường dẫn tài nguyên tĩnh có đúng không
 
-### 3. 移动端适配问题
-- 使用 Flex 布局进行响应式设计
-- 针对不同设备尺寸进行适配
-- 测试不同设备的显示效果
+### 3. Vấn đề tương thích trên di động
+- Dùng bố cục Flex để thiết kế responsive
+- Tương thích theo từng kích thước thiết bị
+- Kiểm thử hiển thị trên các thiết bị khác nhau
 
-## 联系与支持
+## Liên hệ và hỗ trợ
 
-- 官方文档：https://doc.crmeb.com
-- 技术社区：https://www.crmeb.com/ask
-- 官方 QQ 群：请参考官方网站
+- Tài liệu chính thức: https://doc.crmeb.com
+- Cộng đồng kỹ thuật: https://www.crmeb.com/ask
+- Nhóm QQ chính thức: vui lòng tham khảo website chính thức
 
-## 版本信息
+## Thông tin phiên bản
 
-- CRMEB 版本：5.6.4
-- 管理端前端：Vue 2.x + Element UI
-- 移动端前端：UniApp
+- Phiên bản CRMEB: 5.6.4
+- Frontend trang quản trị: Vue 2.x + Element UI
+- Frontend di động: UniApp
 
 ---
 
-**说明**：本目录为前端项目代码，后端代码位于项目根目录的 `crmeb/` 目录中。
+**Ghi chú**: Thư mục này chứa mã nguồn các dự án frontend, mã nguồn backend nằm trong thư mục `crmeb/` ở thư mục gốc của dự án.

@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -11,8 +11,8 @@
 import request from '@/libs/request';
 
 /**
- * @description 权限--列表
- * @param {Object} param data {Object} 传值参数
+ * @description Quyền -- Danh sách
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function getTable(data) {
   return request({
@@ -22,8 +22,8 @@ export function getTable(data) {
   });
 }
 /**
- * @description 权限--刷新菜单及权限
- * @param {Object} param data {Object} 传值参数
+ * @description Quyền -- Làm mới menu và quyền
+ * @param {Object} param data {Object} Tham số truyền giá trị
  */
 export function getMenusUnique(data) {
   return request({
@@ -34,7 +34,7 @@ export function getMenusUnique(data) {
 }
 
 /**
- * 权限 -- 添加
+ * Quyền -- Thêm
  */
 export function addMenus() {
   return request({
@@ -44,7 +44,7 @@ export function addMenus() {
 }
 
 /**
- * 权限 -- 编辑
+ * Quyền -- Sửa
  * @param id
  */
 export function editMenus(id) {
@@ -55,11 +55,11 @@ export function editMenus(id) {
 }
 
 /**
- * @description 添加 编辑
- * @param {Object} param data {Object} 集合
- * @param {String} param data.url {String} 地址
- * @param {String} param data.method {String} 请求方式
- * @param {Object} param data.datas {Object} 传值参数
+ * @description Thêm, sửa
+ * @param {Object} param data {Object} Tập hợp (collection)
+ * @param {String} param data.url {String} Địa chỉ
+ * @param {String} param data.method {String} Phương thức yêu cầu
+ * @param {Object} param data.datas {Object} Tham số truyền giá trị
  */
 export function addMenusApi(data) {
   return request({
@@ -70,8 +70,8 @@ export function addMenusApi(data) {
 }
 
 /**
- * @description 表单详情
- * @param {Number} param id {Number} 规则id
+ * @description Chi tiết form
+ * @param {Number} param id {Number} ID quy tắc
  */
 export function menusDetailsApi(id) {
   return request({
@@ -81,9 +81,9 @@ export function menusDetailsApi(id) {
 }
 
 /**
- * @description 修改显示
- * @param {Number} param data.id {Number} 规则id
- * @param {Number} param data.is_show {Number} 状态值
+ * @description Sửa hiển thị
+ * @param {Number} param data.id {Number} ID quy tắc
+ * @param {Number} param data.is_show {Number} Giá trị trạng thái
  */
 export function isShowApi(data) {
   return request({
@@ -94,7 +94,7 @@ export function isShowApi(data) {
 }
 
 /**
- * @description 权限列表
+ * @description Danh sách quyền
  */
 export function getRuleList(cate_id) {
   return request({
@@ -103,7 +103,7 @@ export function getRuleList(cate_id) {
   });
 }
 /**
- * @description 权限列表
+ * @description Danh sách quyền
  */
 export function menusBatch(data) {
   return request({
@@ -114,7 +114,7 @@ export function menusBatch(data) {
 }
 
 /**
- * @description 权限分类树列表
+ * @description Danh sách cây danh mục quyền
  */
 export function menusRuleCate(data) {
   return request({

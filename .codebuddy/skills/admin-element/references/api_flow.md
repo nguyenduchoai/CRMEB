@@ -1,21 +1,21 @@
-# Admin-Element 接口请求流程文档
+# Tài liệu quy trình request API của Admin-Element
 
-## 1 API 请求流程概述
+## 1 Tổng quan quy trình request API
 
-Admin-Element 项目的 API 请求流程遵循以下步骤：
+Quy trình request API của dự án Admin-Element tuân theo các bước sau:
 
-1. **接口定义**: 在 `src/api/` 目录下按模块定义 API 接口
-2. **请求封装**: 使用 `axios` 封装网络请求，添加拦截器
-3. **接口调用**: 在组件或业务逻辑中调用 API 接口
-4. **响应处理**: 统一处理 API 响应，包括成功和失败情况
-5. **错误处理**: 统一处理网络错误、业务错误等异常情况
-6. **数据管理**: 将获取的数据存储到状态管理或组件中
+1. **Định nghĩa API**: Định nghĩa API theo module trong thư mục `src/api/`
+2. **Đóng gói request**: Dùng `axios` để đóng gói request mạng, thêm interceptor
+3. **Gọi API**: Gọi API trong component hoặc logic nghiệp vụ
+4. **Xử lý response**: Xử lý thống nhất response của API, bao gồm cả trường hợp thành công và thất bại
+5. **Xử lý lỗi**: Xử lý thống nhất các tình huống bất thường như lỗi mạng, lỗi nghiệp vụ, v.v.
+6. **Quản lý dữ liệu**: Lưu dữ liệu lấy được vào kho quản lý trạng thái hoặc vào component
 
-## 2 网络请求封装
+## 2 Đóng gói request mạng
 
-### 2.1 axios 实例创建
+### 2.1 Tạo instance axios
 
-在 `src/utils/request.js` 中创建 axios 实例并配置：
+Tạo instance axios và cấu hình trong `src/utils/request.js`:
 
 ```javascript
 import axios from 'axios'
@@ -23,28 +23,28 @@ import { Message, Loading } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
-// 创建 axios 实例
+// Tạo instance axios
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // API 基础路径
-  timeout: 10000, // 请求超时时间
+  baseURL: process.env.VUE_APP_BASE_API, // API đường dẫn gốc
+  timeout: 10000, // Thời gian timeout của request
   headers: {
     'Content-Type': 'application/json;charset=utf-8'
   }
 })
 ```
 
-### 2.2 请求拦截器
+### 2.2 Request interceptor
 
 ```javascript
-// 请求拦截器
+// Interceptor cho request
 service.interceptors.request.use(
   config => {
-    // 显示加载动画
+    // Hiển thị hiệu ứng đang tải
     if (config.loading !== false) {
       store.dispatch('app/showLoading')
     }
     
-    // 自动添加 token
+    // Tự động thêm token
     if (store.getters.token) {
       config.headers['Authorization'] = `Bearer ${getToken()}`
     }
@@ -52,82 +52,82 @@ service.interceptors.request.use(
     return config
   },
   error => {
-    // 隐藏加载动画
+    // Ẩn hiệu ứng đang tải
     store.dispatch('app/hideLoading')
-    console.error('请求错误:', error)
+    console.error('Lỗi request:', error)
     return Promise.reject(error)
   }
 )
 ```
 
-### 2.3 响应拦截器
+### 2.3 Response interceptor
 
 ```javascript
-// 响应拦截器
+// Interceptor cho response
 service.interceptors.response.use(
   response => {
-    // 隐藏加载动画
+    // Ẩn hiệu ứng đang tải
     store.dispatch('app/hideLoading')
     
     const res = response.data
     
-    // 检查响应状态
+    // Kiểm tra trạng thái response
     if (res.code !== 200) {
-      // 显示错误消息
+      // Hiển thị thông báo lỗi
       Message.error({
-        message: res.message || '操作失败',
+        message: res.message || 'Thao tác thất bại',
         duration: 3000
       })
       
-      // 处理 token 过期等特殊情况
+      // Xử lý các trường hợp đặc biệt như token hết hạn
       if (res.code === 401) {
-        // 跳转到登录页面
+        // Chuyển đến trang đăng nhập
         store.dispatch('user/logout').then(() => {
           location.reload()
         })
       }
       
-      return Promise.reject(new Error(res.message || '操作失败'))
+      return Promise.reject(new Error(res.message || 'Thao tác thất bại'))
     } else {
       return res
     }
   },
   error => {
-    // 隐藏加载动画
+    // Ẩn hiệu ứng đang tải
     store.dispatch('app/hideLoading')
     
-    // 处理网络错误
-    let message = '网络请求失败'
+    // Xử lý lỗi mạng
+    let message = 'Yêu cầu mạng thất bại'
     if (error.response) {
       const status = error.response.status
       switch (status) {
         case 400:
-          message = '请求参数错误'
+          message = 'Tham số request không hợp lệ'
           break
         case 401:
-          message = '未授权，请重新登录'
-          // 跳转到登录页面
+          message = 'Chưa được ủy quyền, vui lòng đăng nhập lại'
+          // Chuyển đến trang đăng nhập
           store.dispatch('user/logout').then(() => {
             location.reload()
           })
           break
         case 403:
-          message = '拒绝访问'
+          message = 'Từ chối truy cập'
           break
         case 404:
-          message = '请求地址不存在'
+          message = 'Địa chỉ yêu cầu không tồn tại'
           break
         case 500:
-          message = '服务器内部错误'
+          message = 'Lỗi máy chủ nội bộ'
           break
         default:
-          message = `请求失败 (${status})`
+          message = `Yêu cầu thất bại (${status})`
       }
     } else if (error.message.includes('timeout')) {
-      message = '请求超时'
+      message = 'Request quá thời gian chờ'
     }
     
-    // 显示错误消息
+    // Hiển thị thông báo lỗi
     Message.error({
       message: message,
       duration: 3000
@@ -140,30 +140,30 @@ service.interceptors.response.use(
 export default service
 ```
 
-## 3 API 接口定义
+## 3 Định nghĩa API
 
-### 3.1 接口文件组织
+### 3.1 Tổ chức file API
 
-API 接口按模块组织，存放在 `src/api/` 目录下：
+API được tổ chức theo module, đặt trong thư mục `src/api/`:
 
 ```
 src/api/
-├── index.js          # API 入口文件
-├── user.js           # 用户相关接口
-├── goods.js          # 商品相关接口
-├── order.js          # 订单相关接口
-└── ...               # 其他模块接口
+├── index.js          # API File điểm vào
+├── user.js           # API liên quan đến người dùng
+├── goods.js          # API liên quan đến sản phẩm
+├── order.js          # API liên quan đến đơn hàng
+└── ...               # API của các module khác
 ```
 
-### 3.2 接口定义示例
+### 3.2 Ví dụ định nghĩa API
 
-在 `src/api/user.js` 中定义用户相关接口：
+Định nghĩa các API liên quan đến người dùng trong `src/api/user.js`:
 
 ```javascript
 import request from '@/utils/request'
 
 export default {
-  // 登录
+  // Đăng nhập
   login(data) {
     return request({
       url: '/admin/login',
@@ -172,7 +172,7 @@ export default {
     })
   },
   
-  // 获取用户信息
+  // Lấy thông tin người dùng
   getUserInfo() {
     return request({
       url: '/admin/user/info',
@@ -180,7 +180,7 @@ export default {
     })
   },
   
-  // 获取用户列表
+  // Lấy danh sách người dùng
   getUserList(params) {
     return request({
       url: '/admin/user/list',
@@ -189,7 +189,7 @@ export default {
     })
   },
   
-  // 修改用户信息
+  // Chỉnh sửa thông tin người dùng
   updateUser(data) {
     return request({
       url: '/admin/user/update',
@@ -198,7 +198,7 @@ export default {
     })
   },
   
-  // 删除用户
+  // Xóa người dùng
   deleteUser(id) {
     return request({
       url: `/admin/user/delete/${id}`,
@@ -208,16 +208,16 @@ export default {
 }
 ```
 
-### 3.3 API 入口文件
+### 3.3 File entry của API
 
-在 `src/api/index.js` 中导出所有 API 模块：
+Export toàn bộ module API trong `src/api/index.js`:
 
 ```javascript
 import user from './user'
 import goods from './goods'
 import order from './order'
 
-// 导出 API 模块
+// Export module API
 export default {
   user,
   goods,
@@ -225,14 +225,14 @@ export default {
 }
 ```
 
-## 4 请求和响应处理
+## 4 Xử lý request và response
 
-### 4.1 请求参数处理
+### 4.1 Xử lý tham số request
 
-#### 4.1.1 GET 请求
+#### 4.1.1 Request GET
 
 ```javascript
-// 带查询参数的 GET 请求
+// Request GET kèm tham số truy vấn
 api.user.getUserList({
   page: 1,
   limit: 10,
@@ -240,50 +240,50 @@ api.user.getUserList({
 })
 ```
 
-#### 4.1.2 POST 请求
+#### 4.1.2 Request POST
 
 ```javascript
-// 带请求体的 POST 请求
+// Request POST kèm request body
 api.user.login({
   username: 'admin',
   password: '123456'
 })
 ```
 
-#### 4.1.3 PUT 请求
+#### 4.1.3 Request PUT
 
 ```javascript
-// 带请求体的 PUT 请求
+// Request PUT kèm request body
 api.user.updateUser({
   id: 1,
   username: 'newadmin',
-  nickname: '新管理员'
+  nickname: 'Quản trị viên mới'
 })
 ```
 
-#### 4.1.4 DELETE 请求
+#### 4.1.4 Request DELETE
 
 ```javascript
-// 路径参数的 DELETE 请求
+// Request DELETE với tham số đường dẫn
 api.user.deleteUser(1)
 ```
 
-### 4.2 响应数据结构
+### 4.2 Cấu trúc dữ liệu response
 
-后端 API 响应数据结构应遵循以下规范：
+Cấu trúc dữ liệu response của API backend cần tuân theo quy chuẩn sau:
 
 ```javascript
 {
-  "code": 200, // 状态码，200 表示成功
-  "message": "操作成功", // 响应消息
-  "data": { ... } // 响应数据
+  "code": 200, // Mã trạng thái, 200 nghĩa là thành công
+  "message": "Thao tác thành công", // Thông điệp phản hồi
+  "data": { ... } // Dữ liệu phản hồi
 }
 ```
 
-### 4.3 响应处理示例
+### 4.3 Ví dụ xử lý response
 
 ```javascript
-// 在组件中调用 API
+// Trong thành phần, gọi API
 import api from '@/api'
 
 export default {
@@ -295,50 +295,50 @@ export default {
           limit: this.limit
         })
         
-        // 处理成功响应
+        // Xử lý response thành công
         this.userList = res.data.list
         this.total = res.data.total
       } catch (error) {
-        // 错误已在拦截器中处理，这里可以做额外处理
-        console.error('获取用户列表失败:', error)
+        // Lỗi đã được xử lý trong interceptor, ở đây có thể xử lý thêm
+        console.error('Lấy danh sách người dùng thất bại:', error)
       }
     }
   }
 }
 ```
 
-## 5 错误处理机制
+## 5 Cơ chế xử lý lỗi
 
-### 5.1 网络错误
+### 5.1 Lỗi mạng
 
-- 网络连接失败
-- 请求超时
-- 服务器无响应
+- Kết nối mạng thất bại
+- Request quá thời gian chờ
+- Máy chủ không phản hồi
 
-### 5.2 业务错误
+### 5.2 Lỗi nghiệp vụ
 
-- 参数错误 (400)
-- 未授权 (401)
-- 拒绝访问 (403)
-- 请求地址不存在 (404)
-- 服务器内部错误 (500)
+- Tham số không hợp lệ (400)
+- Chưa được ủy quyền (401)
+- Từ chối truy cập (403)
+- Địa chỉ request không tồn tại (404)
+- Lỗi máy chủ nội bộ (500)
 
-### 5.3 业务逻辑错误
+### 5.3 Lỗi logic nghiệp vụ
 
-- 状态码非 200 的响应
-- 业务规则验证失败
+- Response có mã trạng thái khác 200
+- Kiểm tra quy tắc nghiệp vụ thất bại
 
-### 5.4 错误处理最佳实践
+### 5.4 Thực tiễn tốt nhất khi xử lý lỗi
 
-1. **统一错误处理**: 在响应拦截器中统一处理错误
-2. **友好的错误提示**: 向用户显示清晰的错误消息
-3. **错误日志记录**: 记录错误信息，便于排查问题
-4. **特殊错误处理**: 对 token 过期等特殊情况进行处理
-5. **降级处理**: 网络错误时提供合理的降级方案
+1. **Xử lý lỗi thống nhất**: Xử lý lỗi tập trung trong response interceptor
+2. **Thông báo lỗi thân thiện**: Hiển thị thông báo lỗi rõ ràng cho người dùng
+3. **Ghi log lỗi**: Ghi lại thông tin lỗi để thuận tiện truy vết sự cố
+4. **Xử lý lỗi đặc biệt**: Xử lý các trường hợp đặc biệt như token hết hạn
+5. **Xử lý dự phòng (fallback)**: Cung cấp phương án dự phòng hợp lý khi có lỗi mạng
 
-## 6 接口调用最佳实践
+## 6 Thực tiễn tốt nhất khi gọi API
 
-### 6.1 使用 async/await
+### 6.1 Sử dụng async/await
 
 ```javascript
 async fetchData() {
@@ -347,12 +347,12 @@ async fetchData() {
     this.goodsList = res.data.list
     this.total = res.data.total
   } catch (error) {
-    // 错误处理
+    // Xử lý lỗi
   }
 }
 ```
 
-### 6.2 加载状态管理
+### 6.2 Quản lý trạng thái tải (loading)
 
 ```javascript
 export default {
@@ -369,7 +369,7 @@ export default {
         const res = await api.goods.getGoodsList(this.queryParams)
         this.goodsList = res.data.list
       } catch (error) {
-        // 错误处理
+        // Xử lý lỗi
       } finally {
         this.loading = false
       }
@@ -378,31 +378,31 @@ export default {
 }
 ```
 
-### 6.3 防抖和节流
+### 6.3 Debounce và throttle
 
-对于频繁触发的请求，使用防抖或节流优化：
+Với các request được kích hoạt thường xuyên, hãy tối ưu bằng debounce hoặc throttle:
 
 ```javascript
 import { debounce } from 'lodash'
 
 export default {
   methods: {
-    // 使用防抖优化搜索请求
+    // Dùng debounce để tối ưu request tìm kiếm
     search: debounce(async function(query) {
       try {
         const res = await api.goods.searchGoods({ keyword: query })
         this.searchResults = res.data
       } catch (error) {
-        // 错误处理
+        // Xử lý lỗi
       }
     }, 300)
   }
 }
 ```
 
-### 6.4 请求取消
+### 6.4 Hủy request
 
-对于可能重复触发的请求，使用取消令牌避免重复请求：
+Với các request có thể bị kích hoạt lặp lại, dùng cancel token để tránh gửi request trùng lặp:
 
 ```javascript
 import axios from 'axios'
@@ -415,12 +415,12 @@ export default {
   },
   methods: {
     async fetchData() {
-      // 取消之前的请求
+      // Hủy request trước đó
       if (this.cancelToken) {
-        this.cancelToken.cancel('取消重复请求')
+        this.cancelToken.cancel('Hủy request trùng lặp')
       }
       
-      // 创建新的取消令牌
+      // Tạo cancel token mới
       this.cancelToken = axios.CancelToken.source()
       
       try {
@@ -433,9 +433,9 @@ export default {
         this.goodsList = res.data.list
       } catch (error) {
         if (axios.isCancel(error)) {
-          console.log('请求已取消:', error.message)
+          console.log('Request đã bị hủy:', error.message)
         } else {
-          // 错误处理
+          // Xử lý lỗi
         }
       }
     }
@@ -443,72 +443,72 @@ export default {
 }
 ```
 
-## 7 接口安全
+## 7 Bảo mật API
 
-### 7.1 认证与授权
+### 7.1 Xác thực và phân quyền
 
-- 使用 JWT 令牌进行身份认证
-- 请求头中携带 Authorization 字段
-- 定期刷新令牌，避免过期
+- Dùng token JWT để xác thực danh tính
+- Gửi kèm trường Authorization trong header của request
+- Làm mới token định kỳ để tránh hết hạn
 
-### 7.2 数据加密
+### 7.2 Mã hóa dữ liệu
 
-- 敏感数据传输加密
-- 密码等敏感信息使用 HTTPS 传输
+- Mã hóa dữ liệu nhạy cảm khi truyền tải
+- Truyền các thông tin nhạy cảm như mật khẩu qua HTTPS
 
-### 7.3 防止 CSRF 攻击
+### 7.3 Phòng chống tấn công CSRF
 
-- 使用 CSRF Token
-- 验证请求来源
+- Sử dụng CSRF Token
+- Xác minh nguồn gốc request
 
-### 7.4 接口速率限制
+### 7.4 Giới hạn tần suất gọi API
 
-- 后端实现接口速率限制
-- 前端避免频繁请求
+- Backend triển khai giới hạn tần suất gọi API (rate limit)
+- Frontend tránh gửi request quá thường xuyên
 
-## 8 性能优化
+## 8 Tối ưu hiệu năng
 
-### 8.1 请求合并
+### 8.1 Gộp request
 
-对于多个相同类型的请求，合并为一个请求：
+Với nhiều request cùng loại, gộp chúng thành một request:
 
 ```javascript
-// 批量获取数据
+// Lấy dữ liệu hàng loạt
 api.goods.batchGetGoodsInfo(ids)
 ```
 
-### 8.2 缓存策略
+### 8.2 Chiến lược bộ nhớ đệm (cache)
 
-- 对不常变化的数据进行缓存
-- 使用 localStorage 或 sessionStorage 缓存数据
+- Cache những dữ liệu ít thay đổi
+- Dùng localStorage hoặc sessionStorage để cache dữ liệu
 
-### 8.3 懒加载
+### 8.3 Lazy load
 
-- 按需加载数据
-- 滚动到底部加载更多数据
+- Tải dữ liệu theo nhu cầu
+- Cuộn xuống cuối để tải thêm dữ liệu
 
-### 8.4 预加载
+### 8.4 Tải trước (preload)
 
-- 预加载可能需要的数据
-- 提升用户体验
+- Tải trước những dữ liệu có thể sẽ cần dùng
+- Nâng cao trải nghiệm người dùng
 
-## 9 调试技巧
+## 9 Mẹo gỡ lỗi
 
-### 9.1 接口调试工具
+### 9.1 Công cụ gỡ lỗi API
 
-- 使用 Chrome DevTools 的 Network 面板
-- 使用 Postman 等 API 调试工具
+- Dùng panel Network của Chrome DevTools
+- Dùng các công cụ gỡ lỗi API như Postman
 
-### 9.2 日志记录
+### 9.2 Ghi log
 
-- 在开发环境下打印详细的请求和响应信息
-- 在生产环境下只记录错误信息
+- Ở môi trường phát triển, in chi tiết thông tin request và response
+- Ở môi trường production, chỉ ghi log thông tin lỗi
 
-### 9.3 模拟数据
+### 9.3 Dữ liệu giả lập (mock)
 
-- 使用 Mock 数据进行前端开发
-- 减少对后端接口的依赖
+- Dùng dữ liệu Mock để phát triển frontend
+- Giảm sự phụ thuộc vào API backend
 
-## 10 总结
+## 10 Tổng kết
 
-Admin-Element 项目的 API 请求流程采用了统一的封装和处理机制，通过 axios 拦截器实现了请求和响应的统一处理，提高了代码的可维护性和可扩展性。开发者应遵循接口定义规范和最佳实践，确保 API 调用的安全性、可靠性和性能。
+Quy trình request API của dự án Admin-Element áp dụng cơ chế đóng gói và xử lý thống nhất, dùng interceptor của axios để xử lý tập trung request và response, giúp nâng cao khả năng bảo trì và khả năng mở rộng của code. Lập trình viên cần tuân thủ quy chuẩn định nghĩa API và các thực tiễn tốt nhất để đảm bảo tính bảo mật, độ tin cậy và hiệu năng của các lệnh gọi API.

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -28,7 +28,7 @@ class MemberCardServices extends BaseServices
      */
     protected $dao;
 
-    /** 初始化，获得dao层句柄
+    /** Khởi tạo, lấy handle tầng dao
      * MemberCardServices constructor.
      * @param MemberCardDao $memberCardDao
      */
@@ -62,23 +62,23 @@ class MemberCardServices extends BaseServices
                 $list[$k]['phone'] = $userList[$v['use_uid']] ? $userList[$v['use_uid']]['phone'] : "";
             }
             $list[$k]['add_time'] = date('Y-m-d H:i:s', $v['add_time']);
-            $list[$k]['use_time'] = $v['use_time'] != 0 ? date('Y-m-d H:i:s', $v['use_time']) : "未使用";
+            $list[$k]['use_time'] = $v['use_time'] != 0 ? date('Y-m-d H:i:s', $v['use_time']) : "Chưa sử dụng";
         }
         $count = $this->dao->count($where);
         return compact('list', 'count');
 
     }
 
-    /** 生成免费会员卡
+    /** Tạo thẻ thành viên miễn phí
      * @param array $data
      */
     public function addCard(array $data)
     {
         if (!isset($data['card_batch_id']) || !$data['card_batch_id'] || $data['card_batch_id'] == 0 || !isset($data['total_num']) || !$data['total_num'] || $data['total_num'] == 0) {
-            throw new AdminException('参数错误');
+            throw new AdminException('Tham số không hợp lệ');
         }
         try {
-            if (!isset($data['total_num'])) throw new AdminException('参数错误');
+            if (!isset($data['total_num'])) throw new AdminException('Tham số không hợp lệ');
             $num = $data['total_num'];
             unset($data['total_num']);
             $res = [];
@@ -89,18 +89,18 @@ class MemberCardServices extends BaseServices
                 $data['add_time'] = time();
                 $res[] = $data;
             }
-            //数据切片批量插入，提高性能。
+            //Cắt dữ liệu thành từng phần để insert theo lô, giúp tăng hiệu năng.
             $chunk_inster_card = array_chunk($res, 100, true);
             foreach ($chunk_inster_card as $v) {
                 $this->dao->saveAll($v);
             }
             return true;
         } catch (\Exception $exception) {
-            throw new AdminException('生成卡失败');
+            throw new AdminException('Tạo thẻ thất bại');
         }
     }
 
-    /**获取制卡卡号随机数
+    /**Lấy số ngẫu nhiên để tạo mã thẻ
      * @param bool $prefix
      * @param bool $random
      * @return string
@@ -125,38 +125,38 @@ class MemberCardServices extends BaseServices
         }
     }
 
-    /** 领取会员卡
+    /** Nhận thẻ thành viên
      * @param array $data
      * @param int $uid
      */
     public function drawMemberCard(array $data, int $uid)
     {
-        if (!$uid || !$data) throw new ApiException('参数错误');
+        if (!$uid || !$data) throw new ApiException('Tham số không hợp lệ');
         $isOpenMember = $this->isOpenMemberCard();
-        if (!$isOpenMember) throw new ApiException('会员功能暂未开启');
-        if (!isset($data['member_card_code']) || !$data['member_card_code']) throw new ApiException('请输入会员卡号');
-        if (!isset($data['member_card_code']) || !$data['member_card_pwd']) throw new ApiException('请输入领取卡密');
+        if (!$isOpenMember) throw new ApiException('Tính năng thành viên chưa được bật');
+        if (!isset($data['member_card_code']) || !$data['member_card_code']) throw new ApiException('Vui lòng nhập số thẻ thành viên');
+        if (!isset($data['member_card_code']) || !$data['member_card_pwd']) throw new ApiException('Vui lòng nhập mật khẩu thẻ để nhận');
         $card_info = $this->dao->getOneByWhere(['card_number' => trim($data['member_card_code'])]);
-        if (!$card_info) throw new ApiException('会员卡不存在');
+        if (!$card_info) throw new ApiException('Thẻ thành viên không tồn tại');
         /** @var MemberCardBatchServices $memberBatchServices */
         $memberBatchServices = app()->make(MemberCardBatchServices::class);
         $batch_info = $memberBatchServices->getOne($card_info['card_batch_id']);
-        if (!$batch_info) throw new ApiException('会员卡未激活，暂无法使用');
-        if ($batch_info->status != 1) throw new ApiException('会员卡未激活，暂无法使用');
-        if ($card_info['status'] == 0) throw new ApiException('会员卡未激活，暂无法使用');
-        if ($card_info['card_password'] != trim($data['member_card_pwd'])) throw new ApiException('会员卡密码有误');
-        if ($card_info['use_uid'] && $card_info['use_time']) throw new ApiException('会员卡已使用');
+        if (!$batch_info) throw new ApiException('Thẻ thành viên chưa được kích hoạt, tạm thời không thể sử dụng');
+        if ($batch_info->status != 1) throw new ApiException('Thẻ thành viên chưa được kích hoạt, tạm thời không thể sử dụng');
+        if ($card_info['status'] == 0) throw new ApiException('Thẻ thành viên chưa được kích hoạt, tạm thời không thể sử dụng');
+        if ($card_info['card_password'] != trim($data['member_card_pwd'])) throw new ApiException('Mật khẩu thẻ thành viên không đúng');
+        if ($card_info['use_uid'] && $card_info['use_time']) throw new ApiException('Thẻ thành viên đã được sử dụng');
         /** @var UserServices $userServices */
         $userServices = app()->make(UserServices::class);
         $user_info = $userServices->getUserInfo($uid);
-        if (!$user_info) throw new ApiException('用户不存在');
-        if ($user_info->is_money_level > 0 && $user_info->is_ever_level == 1) throw new ApiException('您已是永久会员，无需再领取，可以将此卡转送亲朋好友，一起享受优惠');
+        if (!$user_info) throw new ApiException('Người dùng không tồn tại');
+        if ($user_info->is_money_level > 0 && $user_info->is_ever_level == 1) throw new ApiException('Bạn đã là thành viên vĩnh viễn, không cần nhận thêm, có thể tặng thẻ này cho người thân, bạn bè để cùng hưởng ưu đãi');
 
 
         /**
-         * 批次卡具体使用期限，业务需要打开即可，勿删。
+         * Thời hạn sử dụng cụ thể của lô thẻ, khi nghiệp vụ cần thì mở lên, không xóa.
          */
-        if ($card_info->status != 1) throw new ApiException('会员卡未激活，暂无法使用');
+        if ($card_info->status != 1) throw new ApiException('Thẻ thành viên chưa được kích hoạt, tạm thời không thể sử dụng');
         $this->transaction(function () use ($card_info, $user_info, $batch_info, $memberBatchServices, $userServices, $data) {
             $res1 = $this->dao->update($card_info->id, ['use_uid' => $user_info->uid, 'use_time' => time(), 'update_time' => time()], 'id');
             if ($res1) {
@@ -201,18 +201,18 @@ class MemberCardServices extends BaseServices
 
     }
 
-    /**  验证是否存在此类型会员卡
+    /**  Kiểm tra có tồn tại loại thẻ thành viên này không
      * @param string $member_type
      * @return bool
      */
     public function checkmemberType(string $member_type)
     {
         $member_type_arr = $this->getMemberTypeInfo();
-        if (!array_key_exists($member_type, $member_type_arr)) throw new ApiException('暂无此类型会员卡');
+        if (!array_key_exists($member_type, $member_type_arr)) throw new ApiException('Chưa có loại thẻ thành viên này');
         return true;
     }
 
-    /** 获取会员权益和说明配置
+    /** Lấy cấu hình quyền lợi và mô tả thành viên
      * @return array
      */
     public function getMemberRightsInfo()
@@ -225,17 +225,17 @@ class MemberCardServices extends BaseServices
                 $v['title'] = $v['show_title'];
                 $v['pic'] = $v['image'];
                 $v['right'] = $v['explain'];
-                if ($v['right_type'] == 'offline') $v['explain'] = '线下支付打' . floatval(bcdiv((string)$v['number'], '10', 1)) . '折';
-                if ($v['right_type'] == 'sign') $v['explain'] = '签到多得' . (int)$v['number'] . '倍积分';
-                if ($v['right_type'] == 'express') $v['explain'] = '运费打' . floatval(bcdiv((string)$v['number'], '10', 1)) . '折';
-                if ($v['right_type'] == 'integral') $v['explain'] = '消费多返' . (int)$v['number'] . '倍积分';
+                if ($v['right_type'] == 'offline') $v['explain'] = 'Thanh toán ngoại tuyến chỉ trả ' . floatval(bcdiv((string)$v['number'], '10', 1)) . '/10 giá';
+                if ($v['right_type'] == 'sign') $v['explain'] = 'Điểm danh nhận gấp ' . (int)$v['number'] . ' lần điểm thưởng';
+                if ($v['right_type'] == 'express') $v['explain'] = 'Phí vận chuyển chỉ tính ' . floatval(bcdiv((string)$v['number'], '10', 1)) . '/10 giá';
+                if ($v['right_type'] == 'integral') $v['explain'] = 'Mua sắm nhận gấp ' . (int)$v['number'] . ' lần điểm thưởng';
             }
         }
 
         return ['member_right' => $memberRight['list']];
     }
 
-    /**获取会员卡配置
+    /**Lấy cấu hình thẻ thành viên
      * @return array
      */
     public function getMemberTypeInfo()
@@ -249,7 +249,7 @@ class MemberCardServices extends BaseServices
         return $data;
     }
 
-    /**会员卡数据处理
+    /**Xử lý dữ liệu thẻ thành viên
      * @return array
      */
     public function DoMemberType()
@@ -271,7 +271,7 @@ class MemberCardServices extends BaseServices
         return $data;
     }
 
-    /**会员类型数据
+    /**Dữ liệu loại thành viên
      * @return bool
      */
     public function getMemberTypeValue()
@@ -285,7 +285,7 @@ class MemberCardServices extends BaseServices
         return $new_member_data;
     }
 
-    /**导出会员卡
+    /**Xuất thẻ thành viên
      * @param $where
      * @return \think\Collection
      * @throws \think\db\exception\DataNotFoundException
@@ -315,7 +315,7 @@ class MemberCardServices extends BaseServices
         return $dataArray;
     }
 
-    /**获取会员记录
+    /**Lấy lịch sử thành viên
      * @param array $where
      * @return array
      */
@@ -327,7 +327,7 @@ class MemberCardServices extends BaseServices
     }
 
     /**
-     * 看是否开启会员功能
+     * Xem chức năng thành viên có được mở không
      * @param string $rightType
      * @param bool $get_number
      * @return bool|mixed
@@ -338,7 +338,7 @@ class MemberCardServices extends BaseServices
     public function isOpenMemberCard(string $rightType = '', bool $get_number = true)
     {
         $isOpen = sys_config('member_card_status', 1);
-        //如果传入权益类别，查看是否具有某权益
+        //Nếu truyền vào loại quyền lợi, kiểm tra có quyền lợi đó không
         if (!$rightType) {
             if ($isOpen) return true;
             return false;
@@ -360,7 +360,7 @@ class MemberCardServices extends BaseServices
     }
 
     /**
-     * 修改会员卡状态
+     * Sửa trạng thái thẻ thành viên
      * @param $id
      * @param $status
      * @return bool
@@ -370,7 +370,7 @@ class MemberCardServices extends BaseServices
         $card_batch_id = $this->dao->value(['id' => $id], 'card_batch_id');
         $card_batch_status = app()->make(MemberCardBatchServices::class)->value(['id' => $card_batch_id], 'status');
         if ($card_batch_status == 0) {
-            throw new AdminException('批次未激活，暂无法使用');
+            throw new AdminException('Lô thẻ chưa được kích hoạt, tạm thời không thể sử dụng');
         }
         $res = $this->dao->update($id, ['status' => $status]);
         if ($res) return true;

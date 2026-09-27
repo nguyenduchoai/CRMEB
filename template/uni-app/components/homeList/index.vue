@@ -66,31 +66,31 @@ export default {
     return {
       selectNavList: [
         {
-          name: this.$t(`首页`),
+          name: this.$t(`Trang chủ`),
           icon: "icon-shouye8",
           url: "/pages/index/index",
           after: "dialog_after",
         },
         {
-          name: this.$t(`搜索`),
+          name: this.$t(`Tìm kiếm`),
           icon: "icon-sousuo6",
           url: "/pages/goods/goods_search/index",
           after: "dialog_after",
         },
         {
-          name: this.$t(`购物车`),
+          name: this.$t(`Giỏ hàng`),
           icon: "icon-gouwuche7",
           url: "/pages/order_addcart/order_addcart",
           after: "dialog_after",
         },
         {
-          name: this.$t(`我的收藏`),
+          name: this.$t(`Yêu thích của tôi`),
           icon: "icon-shoucang3",
           url: "/pages/users/user_goods_collection/index",
           after: "dialog_after",
         },
         {
-          name: this.$t(`个人中心`),
+          name: this.$t(`Trang cá nhân`),
           icon: "icon-gerenzhongxin1",
           url: "/pages/user/index",
         },

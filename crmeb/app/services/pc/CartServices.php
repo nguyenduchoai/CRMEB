@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -23,7 +23,7 @@ use app\services\user\UserServices;
 class CartServices extends BaseServices
 {
     /**
-     * PC端购物车列表
+     * Danh sách giỏ hàng bản PC
      * @param int $uid
      * @return array[]
      */
@@ -40,7 +40,7 @@ class CartServices extends BaseServices
         /** @var UserServices $user */
         $user = app()->make(UserServices::class);
         $userInfo = $user->getUserInfo($uid);
-        //用户等级是否开启
+        //Hạng người dùng có mở không
         $discount = 100;
         if (sys_config('member_func_status', 1)) {
             /** @var SystemUserLevelServices $systemLevel */

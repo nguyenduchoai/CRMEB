@@ -3,18 +3,18 @@
     <el-form ref="formValidate" :model="formValidate" label-width="120px" label-position="right" class="tabform">
       <el-row :gutter="24">
         <el-col v-bind="grid">
-          <el-form-item label="商品分类：" label-for="pid">
+          <el-form-item label="Danh mục sản phẩm:" label-for="pid">
             <el-select v-model="formValidate.pid" style="width: 230px" clearable @change="userSearchs">
               <el-option v-for="item in treeSelect" :value="item.id" :key="item.id" :label="item.cate_name"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
         <el-col v-bind="grid">
-          <el-form-item label="商品搜索：" label-for="store_name">
+          <el-form-item label="Tìm kiếm sản phẩm:" label-for="store_name">
             <el-input
               search
               enter-button
-              placeholder="请输入商品分类,id"
+              placeholder="Vui lòng nhập danh mục sản phẩm, id"
               v-model="formValidate.name"
               style="width: 80%"
               @on-search="userSearchs"
@@ -25,26 +25,26 @@
     </el-form>
     <el-table
       ref="table"
-      empty-text="暂无数据"
+      empty-text="Chưa có dữ liệu"
       max-height="400"
       :data="tableList"
       v-loading="loading"
       @select="selectionGood"
     >
       <el-table-column type="selection" width="55"> </el-table-column>
-      <el-table-column label="商品ID" width="80">
+      <el-table-column label="ID sản phẩm" width="80">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="图片" min-width="90">
+      <el-table-column label="Hình ảnh" min-width="90">
         <template slot-scope="scope">
           <div class="tabBox_img" v-viewer>
             <img v-lazy="scope.row.pic" />
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="商品分类" min-width="130">
+      <el-table-column label="Danh mục sản phẩm" min-width="130">
         <template slot-scope="scope">
           <span>{{ scope.row.cate_name }}</span>
         </template>
@@ -83,15 +83,15 @@ export default {
           align: 'center',
         },
         {
-          title: '商品ID',
+          title: 'ID sản phẩm',
           key: 'id',
         },
         {
-          title: '图片',
+          title: 'Hình ảnh',
           slot: 'image',
         },
         {
-          title: '商品分类',
+          title: 'Danh mục sản phẩm',
           key: 'cate_name',
           minWidth: 150,
         },
@@ -109,7 +109,7 @@ export default {
     selectionGood(e) {
       this.$emit('getProductDiy', e);
     },
-    // 商品一级分类；
+    // Danh mục sản phẩm cấp 1;
     goodsCategory() {
       getByCategory()
         .then((res) => {
@@ -119,7 +119,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       getByCategory(this.formValidate)
@@ -132,7 +132,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.getList();
     },

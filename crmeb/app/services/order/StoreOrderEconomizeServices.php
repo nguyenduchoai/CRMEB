@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -31,13 +31,13 @@ class StoreOrderEconomizeServices extends BaseServices
         $this->dao = $dao;
     }
 
-    /**添加节省金额数据
+    /**Thêm dữ liệu số tiền tiết kiệm được
      * @param array $add
      * @return mixed
      */
     public function addEconomize(array $add)
     {
-        if (!$add) throw new ApiException('数据不存在');
+        if (!$add) throw new ApiException('Dữ liệu không tồn tại');
         return $this->dao->save($add);
     }
 
@@ -50,11 +50,11 @@ class StoreOrderEconomizeServices extends BaseServices
      */
     public function getOne(array $where)
     {
-        if (!$where) throw new ApiException('参数错误');
+        if (!$where) throw new ApiException('Tham số không hợp lệ');
         return $this->dao->getOne($where);
     }
 
-    /**汇总付费会员节省金额
+    /**Tổng hợp số tiền tiết kiệm được của thành viên trả phí
      * @param $uid
      * @return bool|float
      * @throws \think\db\exception\DataNotFoundException

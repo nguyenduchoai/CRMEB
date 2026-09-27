@@ -108,7 +108,7 @@
 			change: function(e) {
 				this.$set(this, 'currents', e.detail.current + 1);
 			},
-			// 查看图片详情
+			// Xem chi tiết hình ảnh
 			openImage(index) {
 				this.$emit('showSwiperImg', index)
 			}

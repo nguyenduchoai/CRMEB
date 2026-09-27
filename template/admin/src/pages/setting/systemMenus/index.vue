@@ -10,15 +10,15 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="按钮名称：" prop="status2" label-for="status2">
-            <el-input clearable v-model="roleData.keyword" placeholder="请输入按钮名称" class="form_content_width" />
+          <el-form-item label="Tên nút:" prop="status2" label-for="status2">
+            <el-input clearable v-model="roleData.keyword" placeholder="Vui lòng nhập tên nút" class="form_content_width" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="getData">查询</el-button>
+            <el-button type="primary" v-db-click @click="getData">Tra cứu</el-button>
           </el-form-item>
           <!-- <el-row >
             <el-col v-bind="grid">
-              <el-button type="primary" v-db-click @click="menusAdd('添加规则')">添加规则 </el-button>
+              <el-button type="primary" v-db-click @click="menusAdd('Thêm quy tắc')">Thêm quy tắc </el-button>
             </el-col>
           </el-row> -->
         </el-form>
@@ -37,16 +37,16 @@
         :data="tableData"
         row-id="id"
       >
-        <vxe-table-column field="menu_name" tree-node title="按钮名称" min-width="100"></vxe-table-column>
-        <vxe-table-column field="menu_path" title="类型" min-width="240" tooltip="true">
+        <vxe-table-column field="menu_name" tree-node title="Tên nút" min-width="100"></vxe-table-column>
+        <vxe-table-column field="menu_path" title="Loại" min-width="240" tooltip="true">
           <template v-slot="{ row }">
-            <span v-if="row.auth_type == 1">菜单：{{ row.menu_path }}</span>
-            <span v-if="row.auth_type == 3">按钮</span>
-            <span v-if="row.auth_type == 2">数据权限</span>
+            <span v-if="row.auth_type == 1">Menu: {{ row.menu_path }}</span>
+            <span v-if="row.auth_type == 3">Nút</span>
+            <span v-if="row.auth_type == 2">Quyền dữ liệu</span>
           </template>
         </vxe-table-column>
-        <vxe-table-column field="sort" title="排序" width="150"></vxe-table-column>
-        <vxe-table-column field="flag" title="是否显示" width="150">
+        <vxe-table-column field="sort" title="Thứ tự sắp xếp" width="150"></vxe-table-column>
+        <vxe-table-column field="flag" title="Hiển thị" width="150">
           <template v-slot="{ row }">
             <el-switch
               :active-value="1"
@@ -59,9 +59,9 @@
             </el-switch>
           </template>
         </vxe-table-column>
-        <vxe-table-column field="date" title="操作" align="center" width="150" fixed="right">
+        <vxe-table-column field="date" title="Thao tác" align="center" width="150" fixed="right">
           <template v-slot="{ row }">
-            <a v-db-click @click="edit(row, '编辑')">编辑</a>
+            <a v-db-click @click="edit(row, 'Sửa')">Sửa</a>
           </template>
         </vxe-table-column>
       </vxe-table>
@@ -74,23 +74,23 @@
       ref="menusFrom"
       @clearFrom="clearFrom"
     ></menus-from>
-    <el-dialog :visible.sync="ruleModal" width="1100px" title="权限列表" @closed="modalchange">
+    <el-dialog :visible.sync="ruleModal" width="1100px" title="Danh sách quyền" @closed="modalchange">
       <div class="search-rule">
         <el-alert
-          title="基础接口，可多选，并且添加后不会再展示出现；删除权限后才会出现；公共接口，可多选，并且添加后会继续展示；"
+          title="API cơ bản, có thể chọn nhiều, sau khi thêm sẽ không hiển thị lại; chỉ hiển thị lại sau khi xóa quyền; API dùng chung, có thể chọn nhiều, sau khi thêm vẫn tiếp tục hiển thị;"
         ></el-alert>
         <el-input
           class="mr10"
           v-model="searchRule"
-          placeholder="输入关键词搜索"
+          placeholder="Nhập từ khóa để tìm kiếm"
           clearable
           style="width: 300px"
           ref="search"
           @on-enter="searchRules"
           @on-clear="searchRules"
         />
-        <el-button type="primary" v-db-click @click="searchRules">搜索</el-button>
-        <el-button v-db-click @click="init">重置</el-button>
+        <el-button type="primary" v-db-click @click="searchRules">Tìm kiếm</el-button>
+        <el-button v-db-click @click="init">Đặt lại</el-button>
       </div>
       <div class="route-list">
         <div class="tree">
@@ -115,9 +115,9 @@
             v-db-click
             @click="selectRule(item)"
           >
-            <div>接口名称：{{ item.name }}</div>
-            <div>请求方式：{{ item.method }}</div>
-            <div>接口地址：{{ item.path }}</div>
+            <div>Tên API: {{ item.name }}</div>
+            <div>Phương thức yêu cầu: {{ item.method }}</div>
+            <div>Địa chỉ API: {{ item.path }}</div>
           </div>
         </div>
       </div>
@@ -125,8 +125,8 @@
         <el-tab-pane :label="item.name" :name="'' + index" v-for="(item, index) in foundationList" :key="item"></el-tab-pane>
       </el-tabs> -->
       <span slot="footer" class="dialog-footer">
-        <el-button v-db-click @click="ruleModal = false">取 消</el-button>
-        <el-button type="primary" v-db-click @click="addRouters">确 定</el-button>
+        <el-button v-db-click @click="ruleModal = false">Hủy</el-button>
+        <el-button type="primary" v-db-click @click="addRouters">Xác nhận</el-button>
       </span>
     </el-dialog>
   </div>
@@ -174,7 +174,7 @@ export default {
         children: 'children',
         label: 'name',
       },
-      ruleCateList: [], //权限树
+      ruleCateList: [], //Cây quyền
       loading: false,
       tableData: [],
       FromData: null,
@@ -184,12 +184,12 @@ export default {
       modalTitleSs: '',
       routeType: '0',
       arrs: [],
-      foundationList: [], // 基础接口列表
-      openList: [], // 公开接口列表
-      seletRoute: [], // 选中路由
-      seletRouteIds: [], // 选中id
-      menusId: 0, // 选中分类id
-      nodeKey: 0, // 选中节点
+      foundationList: [], // Danh sách API cơ bản
+      openList: [], // Danh sách API công khai
+      seletRoute: [], // Route được chọn
+      seletRouteIds: [], // Id được chọn
+      menusId: 0, // Id danh mục được chọn
+      nodeKey: 0, // Nút được chọn
       openId: '',
     };
   },
@@ -245,7 +245,7 @@ export default {
       this.children = this.foundationList[index] ? this.foundationList[index].children : [];
       this.searchRules();
     },
-    // 搜索规则
+    // Tìm kiếm quy tắc
     searchRules() {
       if (this.searchRule.trim()) {
         this.arrs = [];
@@ -283,7 +283,7 @@ export default {
       this.seletRouteIds = [];
       this.seletRoute = [];
     },
-    // 获取权限列表
+    // Lấy danh sách quyền
     getRuleList(cate_id) {
       getRuleList(cate_id).then((res) => {
         this.foundationList = res.data;
@@ -295,7 +295,7 @@ export default {
         // this.seletRoute = [];
       });
     },
-    // 修改规则状态
+    // Sửa trạng thái quy tắc
     onchangeIsShow(row) {
       let data = {
         id: row.id,
@@ -311,17 +311,17 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 请求列表
+    // Yêu cầu danh sách
     getList() {
       this.formValidate = Object.assign({}, this.$options.data().formValidate);
       this.getData();
     },
 
-    // 清除表单数据
+    // Xóa dữ liệu biểu mẫu
     clearFrom() {
       this.formValidate = Object.assign({}, this.$options.data().formValidate);
     },
-    // 添加子菜单
+    // Thêm menu con
     addE(row, title) {
       this.formValidate = {};
       let pid = row.id.toString();
@@ -357,7 +357,7 @@ export default {
       // this.formValidate.auth_type = 1;
       // this.formValidate.is_show = '0';
     },
-    // 删除
+    // Xóa
     del(row, tit) {
       let delfromData = {
         title: tit,
@@ -377,7 +377,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 规则详情
+    // Chi tiết quy tắc
     menusDetails(id) {
       menusDetailsApi(id)
         .then(async (res) => {
@@ -388,7 +388,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 编辑
+    // Sửa
     edit(row, title, index) {
       this.openId = row.id;
       this.formValidate = {};
@@ -397,7 +397,7 @@ export default {
       this.$refs.menusFrom.valids = false;
       this.$refs.menusFrom.getAddFrom(row.id);
     },
-    // 添加
+    // Thêm
     menusAdd(title) {
       this.formValidate = {};
       this.$refs.menusFrom.modals = true;
@@ -408,7 +408,7 @@ export default {
       this.formValidate.is_show = 0;
       this.formValidate.is_show_path = 0;
     },
-    // 新增页面表单
+    // Biểu mẫu thêm trang mới
     // getAddFrom () {
     //     this.spinShow = true;
     //     addMenus(this.roleData).then(async res => {
@@ -420,7 +420,7 @@ export default {
     //         this.$message.error(res.msg);
     //     })
     // },
-    // 列表
+    // Danh sách
     getData() {
       this.loading = true;
       getTable(this.roleData)
@@ -475,7 +475,7 @@ export default {
       });
       return newArr;
     },
-    // 关闭按钮
+    // Nút đóng
     cancel() {
       this.$emit('onCancel');
     },
@@ -508,20 +508,20 @@ export default {
   width: 2px;
   background-color: #f5f5f5;
 }
-/*定义滚动条高宽及背景 高宽分别对应横竖滚动条的尺寸*/
+/*Định nghĩa chiều cao, chiều rộng và nền thanh cuộn; chiều cao, chiều rộng tương ứng kích thước thanh cuộn ngang, dọc*/
 .rule::-webkit-scrollbar {
   width: 10px;
   height: 10px;
   background-color: #f5f5f5;
 }
 
-/*定义滚动条轨道 内阴影+圆角*/
+/*Định nghĩa rãnh thanh cuộn: bóng đổ trong + góc tròn*/
 .rule::-webkit-scrollbar-track {
   border-radius: 4px;
   background-color: #f5f5f5;
 }
 
-/*定义滑块 内阴影+圆角*/
+/*Định nghĩa thanh trượt: đổ bóng trong + góc tròn*/
 .rule::-webkit-scrollbar-thumb {
   border-radius: 4px;
   background-color: #ccc;

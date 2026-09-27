@@ -46,7 +46,7 @@ export default {
           components: toolCom.c_set_up,
           configNme: 'setUp',
         },
-      ], // 当前页面组件
+      ], // Thành phần (component) của trang hiện tại
     };
   },
   watch: {
@@ -116,7 +116,7 @@ export default {
       if (!config.paddingConfig) {
         config.paddingConfig = {
           isAll: false,
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           max: 100,
@@ -131,7 +131,7 @@ export default {
       if (!config.marginConfig) {
         config.marginConfig = {
           isAll: false,
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,
@@ -141,17 +141,17 @@ export default {
       if (!config.c_common_style) {
         config.c_common_style = {
           color: {
-            title: '背景颜色',
+            title: 'Màu nền',
             val: '',
             name: 'bgColor',
           },
           color2: {
-            title: '线条颜色',
+            title: 'Màu đường kẻ',
             val: '',
             name: 'lineColor',
           },
           lr: {
-            title: '左右边距',
+            title: 'Lề trái phải',
             val: 0,
             min: 0,
             max: 100,
@@ -161,7 +161,7 @@ export default {
       }
       return config;
     },
-    // 获取组件参数
+    // Lấy tham số thành phần (component)
     getConfig(data) {},
   },
 };

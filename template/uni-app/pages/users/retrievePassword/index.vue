@@ -6,19 +6,19 @@
 			</div>
 		</div>
 		<div class="whiteBg">
-			<div class="title">{{$t(`找回密码`)}}</div>
+			<div class="title">{{$t(`Lấy lại mật khẩu`)}}</div>
 			<div class="list">
 				<div class="item">
 					<div class="acea-row row-middle">
 						<image src="../static/phone_1.png"></image>
-						<input type="text" :placeholder="$t(`输入手机号码`)" v-model="account" />
+						<input type="text" :placeholder="$t(`Nhập số điện thoại`)" v-model="account" />
 					</div>
 				</div>
 				<div class="item">
 
 					<div class="acea-row row-middle">
 						<image src="../static/code_2.png"></image>
-						<input type="text" :placeholder="$t(`填写验证码`)" class="codeIput" v-model="captcha" />
+						<input type="text" :placeholder="$t(`Nhập mã xác thực`)" class="codeIput" v-model="captcha" />
 						<button class="code" :disabled="disabled" :class="disabled === true ? 'on' : ''" @click="code">
 							{{ text }}
 						</button>
@@ -27,19 +27,19 @@
 				<div class="item">
 					<div class="acea-row row-middle">
 						<image src="../static//code_2.png"></image>
-						<input type="password" :placeholder="$t(`填写您的新密码`)" v-model="password" />
+						<input type="password" :placeholder="$t(`Nhập mật khẩu mới của bạn`)" v-model="password" />
 					</div>
 				</div>
 				<div class="item" v-if="isShowCode">
 					<div class="align-left">
-						<input type="text" :placeholder="$t(`填写验证码`)" class="codeIput" v-model="codeVal" />
+						<input type="text" :placeholder="$t(`Nhập mã xác thực`)" class="codeIput" v-model="codeVal" />
 						<div class="code" @click="again"><img :src="codeUrl" /></div>
 					</div>
 				</div>
 			</div>
-			<div class="logon" @click="registerReset">{{$t(`确认`)}}</div>
+			<div class="logon" @click="registerReset">{{$t(`Xác nhận`)}}</div>
 			<div class="tip">
-				<span class="font-color-red" @click="back">{{$t(`立即登录`)}}</span>
+				<span class="font-color-red" @click="back">{{$t(`Đăng nhập ngay`)}}</span>
 			</div>
 		</div>
 		<div class="bottom"></div>
@@ -89,20 +89,20 @@
 					})
 					.catch(res => {
 						this.$util.Tips({
-							title: res.msg.msg || this.$t(`加载失败`)
+							title: res.msg.msg || this.$t(`Tải thất bại`)
 						})
 					});
 			},
 			async registerReset() {
 				var that = this;
 				if (!that.account) return that.$util.Tips({
-					title: that.$t(`请填写手机号码`)
+					title: that.$t(`Vui lòng điền số điện thoại`)
 				});
 				if (!/^1(3|4|5|7|8|9|6)\d{9}$/i.test(that.account)) return that.$util.Tips({
-					title: that.$t(`请输入正确的手机号码`)
+					title: that.$t(`Vui lòng nhập đúng số điện thoại`)
 				});
 				if (!that.captcha) return that.$util.Tips({
-					title: that.$t(`请填写验证码`)
+					title: that.$t(`Vui lòng điền mã xác thực`)
 				});
 				registerReset({
 						account: that.account,
@@ -126,10 +126,10 @@
 			async code() {
 				let that = this;
 				if (!that.account) return that.$util.Tips({
-					title: that.$t(`请填写手机号码`)
+					title: that.$t(`Vui lòng điền số điện thoại`)
 				});
 				if (!/^1(3|4|5|7|8|9|6)\d{9}$/i.test(that.account)) return that.$util.Tips({
-					title: that.$t(`请输入正确的手机号码`)
+					title: that.$t(`Vui lòng nhập đúng số điện thoại`)
 				});
 				if (that.formItem == 2) that.type = "register";
 				await registerVerify({
@@ -140,7 +140,7 @@
 					})
 					.then(res => {
 						this.$util.Tips({
-							title: res.msg || that.$t(`加载失败`)
+							title: res.msg || that.$t(`Tải thất bại`)
 						})
 						that.sendCode();
 					})

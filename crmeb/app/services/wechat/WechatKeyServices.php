@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,19 +16,19 @@ use app\dao\wechat\WechatKeyDao;
 use app\services\BaseServices;
 
 /**
- * 微信菜单
+ * Menu WeChat
  * Class WechatMenuServices
  * @package app\services\wechat
- * @method delete($id, ?string $key = null)  删除
- * @method getOne(array $where)  获取一条数据
- * @method count(array $where)  读取数据条数
- * @method saveAll(array $where)  插入数据
- * @method getColumn($where,$key)  获取某个字段数组
+ * @method delete($id, ?string $key = null)  Xóa
+ * @method getOne(array $where)  Lấy một dòng dữ liệu
+ * @method count(array $where)  Đọc số lượng dữ liệu
+ * @method saveAll(array $where)  Thêm dữ liệu
+ * @method getColumn($where,$key)  Lấy mảng của một trường
  */
 class WechatKeyServices extends BaseServices
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * WechatMenuServices constructor.
      * @param WechatKeyDao $dao
      */

@@ -1,23 +1,23 @@
 @use './index.scss' as *;
 
-/* 页面宽度小于576px
+/* Chiều rộng trang nhỏ hơn 576px
 ------------------------------- */
 @media screen and (max-width: $xs) {
-  // MessageBox 弹框
+  // Popup MessageBox
   .el-message-box {
     width: 80% !important;
   }
 }
 
-/* 页面宽度小于768px
+/* Chiều rộng trang nhỏ hơn 768px
 ------------------------------- */
 @media screen and (max-width: $sm) {
-  // Breadcrumb 面包屑
+  // Breadcrumb
   .layout-navbars-breadcrumb-hide {
     display: none;
   }
 
-  // 外链视图
+  // View liên kết ngoài
   .layout-view-link {
     a {
       max-width: 80%;
@@ -25,7 +25,7 @@
     }
   }
 
-  // 菜单搜索
+  // Tìm kiếm menu
   .layout-search-dialog {
   }
 
@@ -34,15 +34,15 @@
   }
 }
 
-/* 页面宽度小于1000px
+/* Chiều rộng trang nhỏ hơn 1000px
 ------------------------------- */
 @media screen and (max-width: 1000px) {
-  // 布局配置
+  // Cấu hình bố cục
   .layout-drawer-content-flex {
     position: relative;
 
     &::after {
-      content: '手机版不支持切换布局';
+      content: 'Phiên bản di động không hỗ trợ chuyển đổi bố cục';
       position: absolute;
       top: 0;
       right: 0;

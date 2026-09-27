@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,14 +16,14 @@ use app\services\user\UserServices;
 use think\facade\App;
 
 /**
- * 核销订单
+ * Đơn hàng xác nhận sử dụng
  * Class SystemVerifyOrder
  * @package app\adminapi\controller\v1\merchant
  */
 class SystemVerifyOrder extends AuthController
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * SystemVerifyOrder constructor.
      * @param App $app
      * @param StoreOrderServices $services
@@ -35,7 +35,7 @@ class SystemVerifyOrder extends AuthController
     }
 
     /**
-     * 获取核销订单列表
+     * Lấy danh sách đơn hàng xác nhận sử dụng
      * return json
      */
     public function list()
@@ -52,7 +52,7 @@ class SystemVerifyOrder extends AuthController
     }
 
     /**
-     * 未使用,获取核销订单头部
+     * Không dùng, lấy phần đầu đơn hàng xác nhận sử dụng
      * @return mixed
      */
     public function getVerifyBadge()
@@ -61,7 +61,7 @@ class SystemVerifyOrder extends AuthController
     }
 
     /**
-     * 订单列表推荐人详细
+     * Chi tiết người giới thiệu trong danh sách đơn hàng
      * @param $uid
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException

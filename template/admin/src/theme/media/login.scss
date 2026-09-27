@@ -1,6 +1,6 @@
 @use './index.scss' as *;
 
-/* 页面宽度小于576px
+/* Chiều rộng trang nhỏ hơn 576px
 ------------------------------- */
 @media screen and (max-width: $xs) {
   .login-weaper {
@@ -19,7 +19,7 @@
   }
 }
 
-/* 页面宽度大于576px小于992px
+/* Chiều rộng trang lớn hơn 576px nhỏ hơn 992px
 ------------------------------- */
 @media screen and (min-width: $xs) and (max-width: $md) {
   .login-left {

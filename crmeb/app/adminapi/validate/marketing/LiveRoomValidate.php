@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,8 +16,8 @@ class LiveRoomValidate extends Validate
 {
 
     /**
-     * 定义验证规则
-     * 格式：'字段名'    =>    ['规则1','规则2'...]
+     * Định nghĩa quy tắc xác thực
+     * Định dạng: 'tên trường'    =>    ['quy tắc 1','quy tắc 2'...]
      *
      * @var array
      */
@@ -31,20 +31,20 @@ class LiveRoomValidate extends Validate
     ];
 
     /**
-     * 定义错误信息
-     * 格式：'字段名.规则名'    =>    '错误信息'
+     * Định nghĩa thông báo lỗi
+     * Định dạng: 'tên trường.tên quy tắc'    =>    'thông báo lỗi'
      *
      * @var array
      */
     protected $message = [
-        'name.require' => '请输入直播间名称',
-        'cover_img.require' => '请选择背景图',
-        'share_img.require' => '请选择分享图',
-        'anchor_wechat.require' => '请选择主播',
-        'start_time.require' => '请选择直播开始、结束时间',
-        'start_time.checkStartTime' => '请选择直播开始、结束时间',
-        'phone.require' => '请填写手机号码',
-        'phone.checkPhone' => '手机号格式错误',
+        'name.require' => 'Vui lòng nhập tên phòng livestream',
+        'cover_img.require' => 'Vui lòng chọn ảnh nền',
+        'share_img.require' => 'Vui lòng chọn ảnh chia sẻ',
+        'anchor_wechat.require' => 'Vui lòng chọn streamer',
+        'start_time.require' => 'Vui lòng chọn thời gian bắt đầu, kết thúc livestream',
+        'start_time.checkStartTime' => 'Vui lòng chọn thời gian bắt đầu, kết thúc livestream',
+        'phone.require' => 'Vui lòng điền số điện thoại',
+        'phone.checkPhone' => 'Số điện thoại sai định dạng',
     ];
 
     protected function checkPhone($value): bool

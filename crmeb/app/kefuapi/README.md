@@ -1,33 +1,33 @@
-crmeb/app/kefuapi这个目录是用来放置客服相关接口的。
+Thư mục crmeb/app/kefuapi dùng để chứa các API liên quan đến chăm sóc khách hàng (CSKH).
 
-主要作用和特征:
+Vai trò và đặc điểm chính:
 
-1. 提供客服系统与商城前后端交互的API接口。
+1. Cung cấp các API để hệ thống CSKH tương tác với front-end và back-end của cửa hàng trực tuyến.
 
-2. 接口主要用于聊天记录的增删改查以及发送消息等功能。
+2. Các API chủ yếu dùng cho các chức năng như thêm, xóa, sửa, truy vấn lịch sử trò chuyện và gửi tin nhắn.
 
-3. 使用ThinkPHP的Restful风格定义接口请求方式和参数。
+3. Sử dụng phong cách Restful của ThinkPHP để định nghĩa phương thức yêu cầu và tham số của API.
 
-4. 接口供移动端APP和PC网站调用实现客服聊天功能。
+4. Các API được APP di động và website PC gọi để triển khai chức năng trò chuyện CSKH.
 
-5. 后台也可以调用相关接口对客服记录进行管理。
+5. Trang quản trị cũng có thể gọi các API liên quan để quản lý các bản ghi CSKH.
 
-具体包含:
+Cụ thể bao gồm:
 
-- 控制器定义各API接口方法接受请求。
+- Controller định nghĩa các phương thức API để tiếp nhận yêu cầu.
 
-- 业务处理逻辑以及与数据库的交互。
+- Logic xử lý nghiệp vụ và tương tác với cơ sở dữ liệu.
 
-- 数据验证和结果输出。
+- Xác thực dữ liệu và xuất kết quả.
 
-使用这个目录定义的客服API,可以:
+Sử dụng các API CSKH được định nghĩa trong thư mục này, có thể:
 
-- 商城各端实现在线客服功能。
+- Triển khai chức năng CSKH trực tuyến trên mọi nền tảng của cửa hàng.
 
-- 查看历史记录。
+- Xem lịch sử trò chuyện.
 
-- 服务端管理客服信息。
+- Phía máy chủ quản lý thông tin CSKH.
 
-- 第三方也可以实现其它客服系统对接。
+- Bên thứ ba cũng có thể thực hiện kết nối với các hệ thống CSKH khác.
 
-所以总之,此目录主要对客服系统开放API接口,便于商城多端整合用户支持体系。
+Tóm lại, thư mục này chủ yếu mở API cho hệ thống CSKH, giúp cửa hàng dễ dàng tích hợp hệ thống hỗ trợ người dùng trên nhiều nền tảng.

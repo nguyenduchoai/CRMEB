@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -22,29 +22,29 @@ use crmeb\exceptions\AdminException;
  */
 class Express extends BaseExpress
 {
-    //注册服务
+    //Đăng ký dịch vụ
     const EXPRESS_OPEN = 'v2/expr/open';
-    //电子面单模版
+    //Mẫu vận đơn điện tử
     const EXPRESS_TEMP = 'v2/expr_dump/temp';
-    //快递公司
+    //Đơn vị vận chuyển
     const EXPRESS_LIST = 'v2/expr/express';
-    //快递查询
+    //Tra cứu vận đơn
     const EXPRESS_QUERY = 'v2/expr/query';
-    //面单打印
+    //In vận đơn
     const EXPRESS_DUMP = 'v2/expr/dump';
-    //获取物流公司信息
+    //Lấy thông tin đơn vị vận chuyển
     const SHIPMENT_KUAIDI_NUMS = 'v2/shipment/get_kuaidi_coms';
-    //创建商家寄件订单
+    //Tạo đơn gửi hàng của merchant
     const SHIPMENT_CREATE_ORDER = 'v2/shipment/create_order';
-    //取消商家寄件
+    //Hủy yêu cầu gửi hàng của người bán
     const SHIPMENT_CANCEL_ORDER = 'v2/shipment/cancel_order';
-    //获取商家寄件订单列表
+    //Lấy danh sách đơn gửi hàng của merchant
     const SHIPMENT_INDEX = 'v2/shipment/index';
-    //获取商家寄件订单预扣金额
+    //Lấy số tiền tạm giữ của đơn gửi hàng merchant
     const SHIPMENT_PRICE = 'v2/shipment/price';
 
     /**
-     * 初始化
+     * Khởi tạo
      * @param array $config
      * @return mixed|void
      */
@@ -54,9 +54,9 @@ class Express extends BaseExpress
     }
 
     /**
-     * 商家寄件获取快递公司
+     * Lấy đơn vị vận chuyển cho gửi hàng merchant
      * @return array|mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/15
      */
@@ -68,7 +68,7 @@ class Express extends BaseExpress
             $item['value'] = $item['label'];
             $num = 1;
             foreach ($item['list'] as &$value) {
-                $value['title'] = $item['label'] . '模版' . $num;
+                $value['title'] = $item['label'] . 'mẫu' . $num;
                 $num++;
             }
         }
@@ -76,10 +76,10 @@ class Express extends BaseExpress
     }
 
     /**
-     * 商家寄件创建订单
+     * Tạo đơn gửi hàng merchant
      * @param array $data
      * @return array|mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/15
      */
@@ -108,28 +108,28 @@ class Express extends BaseExpress
     }
 
     /**
-     * 取消商家寄件订单
+     * Hủy đơn gửi hàng merchant
      * @param array $data
      * @return array|mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/15
      */
     public function shipmentCancelOrder(array $data)
     {
         $param = [
-            'task_id' => $data['task_id'],//快递100商家寄件任务id
-            'order_id' => $data['order_id'],//快递100商家寄件发起的订单号。并不是系统中的订单号
-            'cancel_msg' => $data['cancel_msg'],//取消原因
+            'task_id' => $data['task_id'],//id nhiệm vụ gửi hàng merchant của Kuaidi100
+            'order_id' => $data['order_id'],//Mã đơn hàng do gửi hàng merchant của Kuaidi100 khởi tạo. Không phải mã đơn hàng trong hệ thống
+            'cancel_msg' => $data['cancel_msg'],//Lý do hủy
         ];
         return $this->accessToken->httpRequest(self::SHIPMENT_CANCEL_ORDER, $param);
     }
 
     /**
-     * 获取商家寄件订单列表
+     * Lấy danh sách đơn gửi hàng của merchant
      * @param array $data
      * @return array|mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/15
      */
@@ -148,20 +148,20 @@ class Express extends BaseExpress
     /**
      * @param array $data
      * @return array|mixed
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/6/16
      */
     public function getPrice(array $data)
     {
         if (empty($data['kuaidicom'])) {
-            throw new ApiException('快递编码必须填写');
+            throw new ApiException('Mã đơn vị vận chuyển là bắt buộc');
         }
         if (empty($data['send_address'])) {
-            throw new ApiException('寄件地址必须填写');
+            throw new ApiException('Địa chỉ gửi hàng là bắt buộc');
         }
         if (empty($data['address'])) {
-            throw new ApiException('收件地址必须填写');
+            throw new ApiException('Địa chỉ nhận hàng là bắt buộc');
         }
         $param = [
             'kuaidicom' => $data['kuaidicom'],
@@ -175,7 +175,7 @@ class Express extends BaseExpress
     }
 
     /**
-     * 开通物流服务
+     * Mở dịch vụ vận chuyển
      * @return bool|mixed
      */
     public function open()
@@ -184,8 +184,8 @@ class Express extends BaseExpress
     }
 
     /**
-     * 获取电子面单模版
-     * @param $com 快递公司编号
+     * Lấy mẫu vận đơn điện tử
+     * @param $com Mã đơn vị vận chuyển
      * @param int $page
      * @param int $limit
      * @return bool|mixed
@@ -204,8 +204,8 @@ class Express extends BaseExpress
     }
 
     /**
-     * 获取物流公司列表
-     * @param int $type 快递类型：1，国内运输商；2，国际运输商；3，国际邮政
+     * Lấy danh sách đơn vị vận chuyển
+     * @param int $type Loại vận chuyển: 1, đơn vị vận chuyển nội địa; 2, đơn vị vận chuyển quốc tế; 3, bưu chính quốc tế
      * @return bool|mixed
      */
     public function express(int $type = 0, int $page = 0, int $limit = 20)
@@ -224,13 +224,13 @@ class Express extends BaseExpress
     }
 
     /**
-     * 查询物流信息
+     * Truy vấn thông tin vận chuyển
      * @param $com
      * @param $num
      * @return bool|mixed
-     * @return 是否签收 ischeck
-     * @return 物流状态：status 0在途，1揽收，2疑难，3签收，4退签，5派件，6退回，7转单，10待清关，11清关中，12已清关，13清关异常，14收件人拒签
-     * @return 物流详情 content
+     * @return Có ký nhận không - ischeck
+     * @return Trạng thái vận chuyển: status 0 đang vận chuyển, 1 đã lấy hàng, 2 gặp vấn đề, 3 đã ký nhận, 4 từ chối ký nhận, 5 đang phát hàng, 6 hoàn trả, 7 chuyển đơn, 10 chờ thông quan, 11 đang thông quan, 12 đã thông quan, 13 thông quan bất thường, 14 người nhận từ chối ký nhận
+     * @return Chi tiết vận chuyển - content
      */
     public function query(string $num, string $com = '', $phone = '')
     {
@@ -246,8 +246,8 @@ class Express extends BaseExpress
     }
 
     /**
-     * 电子面单打印
-     * @param array $data 必需参数: com(快递公司编码)、to_name(寄件人)、to_tel（寄件人电话）、to_addr（寄件人详细地址）、from_name（收件人）、from_tel（收件人电话)、from_addr（收件人地址）、temp_id（电子面单模板ID）、siid（云打印机编号）、count（商品数量）
+     * In vận đơn điện tử
+     * @param array $data Tham số bắt buộc: com (mã đơn vị vận chuyển), to_name (người gửi), to_tel (điện thoại người gửi), to_addr (địa chỉ chi tiết người gửi), from_name (người nhận), from_tel (điện thoại người nhận), from_addr (địa chỉ người nhận), temp_id (ID mẫu vận đơn điện tử), siid (mã máy in cloud), count (số lượng sản phẩm)
      * @return bool|mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -257,28 +257,28 @@ class Express extends BaseExpress
     {
         $param = $data;
         $param['com'] = $data['com'] ?? '';
-        if (!$param['com']) throw new AdminException('快递公司编码缺失');
+        if (!$param['com']) throw new AdminException('Thiếu mã đơn vị vận chuyển');
         $param['to_name'] = $data['to_name'] ?? '';
         $param['to_tel'] = $data['to_tel'] ?? '';
         $param['order_id'] = $data['order_id'] ?? '';
         $param['to_addr'] = $data['to_addr'] ?? '';
-        if (!$param['to_addr'] || !$param['to_tel'] || !$param['to_name']) throw new AdminException('寄件人信息缺失');
+        if (!$param['to_addr'] || !$param['to_tel'] || !$param['to_name']) throw new AdminException('Thiếu thông tin người gửi');
         $param['from_name'] = $data['from_name'] ?? '';
         $param['from_tel'] = $data['from_tel'] ?? '';
         $param['from_addr'] = $data['from_addr'] ?? '';
-        if (!$param['from_name'] || !$param['from_tel'] || !$param['from_addr']) throw new AdminException('收件人信息缺失');
+        if (!$param['from_name'] || !$param['from_tel'] || !$param['from_addr']) throw new AdminException('Thiếu thông tin người nhận');
         $param['temp_id'] = $data['temp_id'] ?? '';
         if (!$param['temp_id']) {
-            throw new AdminException('电子面单模板ID缺失');
+            throw new AdminException('Thiếu ID mẫu vận đơn điện tử');
         }
         $param['siid'] = sys_config('config_export_siid');
 //        if (!$param['siid']) {
-//            throw new AdminException('云打印机编号缺失');
+//            throw new AdminException('Thiếu mã máy in đám mây');
 //        }
         $param['count'] = $data['count'] ?? '';
         $param['cargo'] = $data['cargo'] ?? '';
         if (!$param['count']) {
-            throw new AdminException('商品数量缺失');
+            throw new AdminException('Thiếu số lượng sản phẩm');
         }
         /** @var ExpressServices $expressServices */
         $expressServices = app()->make(ExpressServices::class);

@@ -1,6 +1,6 @@
 @use './index.scss' as *;
 
-/* 页面宽度小于768px
+/* Chiều rộng trang nhỏ hơn 768px
 ------------------------------- */
 @media screen and (max-width: $sm) {
   .error {
@@ -24,7 +24,7 @@
   }
 }
 
-/* 页面宽度大于768px小于992px
+/* Chiều rộng trang lớn hơn 768px nhỏ hơn 992px
 ------------------------------- */
 @media screen and (min-width: $sm) and (max-width: $md) {
   .error {

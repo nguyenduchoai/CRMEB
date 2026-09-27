@@ -1,235 +1,235 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 use think\facade\Route;
 
 /**
- * 优惠卷，砍价，拼团，秒杀 路由
+ * Route phiếu giảm giá, săn giảm giá, mua chung, flash sale
  */
 Route::group('marketing', function () {
 
-    /** 优惠券 */
+    /** Phiếu giảm giá */
     Route::group(function () {
-        //已发布优惠券列表
-        Route::get('coupon/released', 'v1.marketing.StoreCouponIssue/index')->option(['real_name' => '已发布优惠券列表']);
-        //添加优惠券
-        Route::post('coupon/save_coupon', 'v1.marketing.StoreCouponIssue/saveCoupon')->option(['real_name' => '添加优惠券']);
-        //修改优惠券状态
-        Route::get('coupon/status/:id/:status', 'v1.marketing.StoreCouponIssue/status')->option(['real_name' => '修改优惠券状态']);
-        //一键复制优惠券
-        Route::get('coupon/copy/:id', 'v1.marketing.StoreCouponIssue/copy')->option(['real_name' => '一键复制优惠券']);
-        //发送优惠券列表
-        Route::get('coupon/grant', 'v1.marketing.StoreCouponIssue/index')->option(['real_name' => '发送优惠券列表']);
-        //已发布优惠券删除
-        Route::delete('coupon/released/:id', 'v1.marketing.StoreCouponIssue/delete')->option(['real_name' => '已发布优惠券删除']);
-        //已发布优惠券修改状态表单
-        Route::get('coupon/released/:id/status', 'v1.marketing.StoreCouponIssue/edit')->option(['real_name' => '已发布优惠券修改状态表单']);
-        //已发布优惠券修改状态
-        Route::put('coupon/released/status/:id', 'v1.marketing.StoreCouponIssue/status')->option(['real_name' => '已发布优惠券修改状态']);
-        //已发布优惠券领取记录
-        Route::get('coupon/released/issue_log/:id', 'v1.marketing.StoreCouponIssue/issue_log')->option(['real_name' => '已发布优惠券领取记录']);
-        //会员领取记录
-        Route::get('coupon/user', 'v1.marketing.StoreCouponUser/index')->option(['real_name' => '会员领取记录']);
-        //发送优惠券
-        Route::post('coupon/user/grant', 'v1.marketing.StoreCouponUser/grant')->option(['real_name' => '发送优惠券']);
-    })->option(['parent' => 'marketing', 'cate_name' => '优惠券']);
+        //Danh sách phiếu giảm giá đã phát hành
+        Route::get('coupon/released', 'v1.marketing.StoreCouponIssue/index')->option(['real_name' => 'Danh sách phiếu giảm giá đã phát hành']);
+        //Thêm phiếu giảm giá
+        Route::post('coupon/save_coupon', 'v1.marketing.StoreCouponIssue/saveCoupon')->option(['real_name' => 'Thêm phiếu giảm giá']);
+        //Sửa trạng thái phiếu giảm giá
+        Route::get('coupon/status/:id/:status', 'v1.marketing.StoreCouponIssue/status')->option(['real_name' => 'Sửa trạng thái phiếu giảm giá']);
+        //Sao chép nhanh phiếu giảm giá
+        Route::get('coupon/copy/:id', 'v1.marketing.StoreCouponIssue/copy')->option(['real_name' => 'Sao chép nhanh phiếu giảm giá']);
+        //Danh sách phiếu giảm giá để gửi
+        Route::get('coupon/grant', 'v1.marketing.StoreCouponIssue/index')->option(['real_name' => 'Danh sách phiếu giảm giá để gửi']);
+        //Xóa phiếu giảm giá đã phát hành
+        Route::delete('coupon/released/:id', 'v1.marketing.StoreCouponIssue/delete')->option(['real_name' => 'Xóa phiếu giảm giá đã phát hành']);
+        //Biểu mẫu sửa trạng thái phiếu giảm giá đã phát hành
+        Route::get('coupon/released/:id/status', 'v1.marketing.StoreCouponIssue/edit')->option(['real_name' => 'Biểu mẫu sửa trạng thái phiếu giảm giá đã phát hành']);
+        //Sửa trạng thái phiếu giảm giá đã phát hành
+        Route::put('coupon/released/status/:id', 'v1.marketing.StoreCouponIssue/status')->option(['real_name' => 'Sửa trạng thái phiếu giảm giá đã phát hành']);
+        //Lịch sử nhận phiếu giảm giá đã phát hành
+        Route::get('coupon/released/issue_log/:id', 'v1.marketing.StoreCouponIssue/issue_log')->option(['real_name' => 'Lịch sử nhận phiếu giảm giá đã phát hành']);
+        //Lịch sử nhận của thành viên
+        Route::get('coupon/user', 'v1.marketing.StoreCouponUser/index')->option(['real_name' => 'Lịch sử nhận của thành viên']);
+        //Gửi phiếu giảm giá
+        Route::post('coupon/user/grant', 'v1.marketing.StoreCouponUser/grant')->option(['real_name' => 'Gửi phiếu giảm giá']);
+    })->option(['parent' => 'marketing', 'cate_name' => 'Phiếu giảm giá']);
 
-    /** 砍价活动 */
+    /** Hoạt động săn giảm giá */
     Route::group(function () {
-        //砍价商品列表
-        Route::get('bargain', 'v1.marketing.StoreBargain/index')->option(['real_name' => '砍价商品列表']);
-        //砍价详情
-        Route::get('bargain/:id', 'v1.marketing.StoreBargain/read')->option(['real_name' => '砍价商品详情']);
-        //保存新增或编辑砍价
-        Route::post('bargain/:id', 'v1.marketing.StoreBargain/save')->option(['real_name' => '新增或编辑砍价商品']);
-        //删除砍价
-        Route::delete('bargain/:id', 'v1.marketing.StoreBargain/delete')->option(['real_name' => '删除砍价商品']);
-        //修改砍价状态
-        Route::put('bargain/set_status/:id/:status', 'v1.marketing.StoreBargain/set_status')->option(['real_name' => '修改砍价商品状态']);
-        //砍价列表
-        Route::get('bargain_list', 'v1.marketing.StoreBargain/bargainList')->option(['real_name' => '参与砍价列表']);
-        //砍价人列表
-        Route::get('bargain_list_info/:id', 'v1.marketing.StoreBargain/bargainListInfo')->option(['real_name' => '砍价人列表']);
-        //砍价统计
-        Route::get('bargain/statistics/head/:id', 'v1.marketing.StoreBargain/bargainStatistics')->option(['real_name' => '砍价统计']);
-        //砍价列表
-        Route::get('bargain/statistics/list/:id', 'v1.marketing.StoreBargain/bargainStatisticsList')->option(['real_name' => '砍价统计列表']);
-        //砍价订单
-        Route::get('bargain/statistics/order/:id', 'v1.marketing.StoreBargain/bargainStatisticsOrder')->option(['real_name' => '砍价统计订单']);
-    })->option(['parent' => 'marketing', 'cate_name' => '砍价活动']);
+        //Danh sách sản phẩm săn giảm giá
+        Route::get('bargain', 'v1.marketing.StoreBargain/index')->option(['real_name' => 'Danh sách sản phẩm săn giảm giá']);
+        //Chi tiết săn giảm giá
+        Route::get('bargain/:id', 'v1.marketing.StoreBargain/read')->option(['real_name' => 'Chi tiết sản phẩm săn giảm giá']);
+        //Lưu khi thêm mới hoặc sửa săn giảm giá
+        Route::post('bargain/:id', 'v1.marketing.StoreBargain/save')->option(['real_name' => 'Thêm mới hoặc sửa sản phẩm săn giảm giá']);
+        //Xóa săn giảm giá
+        Route::delete('bargain/:id', 'v1.marketing.StoreBargain/delete')->option(['real_name' => 'Xóa sản phẩm săn giảm giá']);
+        //Sửa trạng thái săn giảm giá
+        Route::put('bargain/set_status/:id/:status', 'v1.marketing.StoreBargain/set_status')->option(['real_name' => 'Sửa trạng thái sản phẩm săn giảm giá']);
+        //Danh sách săn giảm giá
+        Route::get('bargain_list', 'v1.marketing.StoreBargain/bargainList')->option(['real_name' => 'Danh sách tham gia săn giảm giá']);
+        //Danh sách người giúp săn giảm giá
+        Route::get('bargain_list_info/:id', 'v1.marketing.StoreBargain/bargainListInfo')->option(['real_name' => 'Danh sách người giúp săn giảm giá']);
+        //Thống kê săn giảm giá
+        Route::get('bargain/statistics/head/:id', 'v1.marketing.StoreBargain/bargainStatistics')->option(['real_name' => 'Thống kê săn giảm giá']);
+        //Danh sách săn giảm giá
+        Route::get('bargain/statistics/list/:id', 'v1.marketing.StoreBargain/bargainStatisticsList')->option(['real_name' => 'Danh sách thống kê săn giảm giá']);
+        //Đơn săn giảm giá
+        Route::get('bargain/statistics/order/:id', 'v1.marketing.StoreBargain/bargainStatisticsOrder')->option(['real_name' => 'Đơn hàng thống kê săn giảm giá']);
+    })->option(['parent' => 'marketing', 'cate_name' => 'Hoạt động săn giảm giá']);
 
-    /** 拼团活动 */
+    /** Hoạt động mua chung */
     Route::group(function () {
-        //拼团商品列表
-        Route::get('combination', 'v1.marketing.StoreCombination/index')->option(['real_name' => '拼团商品列表']);
-        //拼团统计
-        Route::get('combination/statistics', 'v1.marketing.StoreCombination/statistics')->option(['real_name' => '拼团商品统计']);
-        //拼团商品详情
-        Route::get('combination/:id', 'v1.marketing.StoreCombination/read')->option(['real_name' => '拼团商品详情']);
-        //保存新疆或编辑
-        Route::post('combination/:id', 'v1.marketing.StoreCombination/save')->option(['real_name' => '新增或编辑拼团商品']);
-        //删除
-        Route::delete('combination/:id', 'v1.marketing.StoreCombination/delete')->option(['real_name' => '删除拼团商品']);
-        //修改拼团状态
-        Route::put('combination/set_status/:id/:status', 'v1.marketing.StoreCombination/set_status')->option(['real_name' => '修改拼团商品状态']);
-        //拼团列表
-        Route::get('combination/combine/list', 'v1.marketing.StoreCombination/combine_list')->option(['real_name' => '参与拼团列表']);
-        //拼团人列表
-        Route::get('combination/order_pink/:id', 'v1.marketing.StoreCombination/order_pink')->option(['real_name' => '拼团人列表']);
-        //拼团统计
-        Route::get('combination/statistics/head/:id', 'v1.marketing.StoreCombination/combinationStatistics')->option(['real_name' => '拼团统计']);
-        //拼团列表
-        Route::get('combination/statistics/list/:id', 'v1.marketing.StoreCombination/combinationStatisticsList')->option(['real_name' => '拼团统计列表']);
-        //拼团订单
-        Route::get('combination/statistics/order/:id', 'v1.marketing.StoreCombination/combinationStatisticsOrder')->option(['real_name' => '拼团统计订单']);
-        //立即成团
-        Route::get('combination/immediately/:id', 'v1.marketing.StoreCombination/immediatelyCombination')->option(['real_name' => '立即成团']);
+        //Danh sách sản phẩm mua chung
+        Route::get('combination', 'v1.marketing.StoreCombination/index')->option(['real_name' => 'Danh sách sản phẩm mua chung']);
+        //Thống kê mua chung
+        Route::get('combination/statistics', 'v1.marketing.StoreCombination/statistics')->option(['real_name' => 'Thống kê sản phẩm mua chung']);
+        //Chi tiết sản phẩm mua chung
+        Route::get('combination/:id', 'v1.marketing.StoreCombination/read')->option(['real_name' => 'Chi tiết sản phẩm mua chung']);
+        //Lưu khi thêm mới hoặc sửa
+        Route::post('combination/:id', 'v1.marketing.StoreCombination/save')->option(['real_name' => 'Thêm mới hoặc sửa sản phẩm mua chung']);
+        //Xóa
+        Route::delete('combination/:id', 'v1.marketing.StoreCombination/delete')->option(['real_name' => 'Xóa sản phẩm mua chung']);
+        //Sửa trạng thái mua chung
+        Route::put('combination/set_status/:id/:status', 'v1.marketing.StoreCombination/set_status')->option(['real_name' => 'Sửa trạng thái sản phẩm mua chung']);
+        //Danh sách mua chung
+        Route::get('combination/combine/list', 'v1.marketing.StoreCombination/combine_list')->option(['real_name' => 'Danh sách tham gia mua chung']);
+        //Danh sách người mua chung
+        Route::get('combination/order_pink/:id', 'v1.marketing.StoreCombination/order_pink')->option(['real_name' => 'Danh sách người mua chung']);
+        //Thống kê mua chung
+        Route::get('combination/statistics/head/:id', 'v1.marketing.StoreCombination/combinationStatistics')->option(['real_name' => 'Thống kê mua chung']);
+        //Danh sách mua chung
+        Route::get('combination/statistics/list/:id', 'v1.marketing.StoreCombination/combinationStatisticsList')->option(['real_name' => 'Danh sách thống kê mua chung']);
+        //Đơn mua chung
+        Route::get('combination/statistics/order/:id', 'v1.marketing.StoreCombination/combinationStatisticsOrder')->option(['real_name' => 'Đơn hàng thống kê mua chung']);
+        //Thành nhóm ngay
+        Route::get('combination/immediately/:id', 'v1.marketing.StoreCombination/immediatelyCombination')->option(['real_name' => 'Thành nhóm ngay']);
 
-    })->option(['parent' => 'marketing', 'cate_name' => '拼团活动']);
+    })->option(['parent' => 'marketing', 'cate_name' => 'Hoạt động mua chung']);
 
-    /** 秒杀活动 */
+    /** Hoạt động flash sale */
     Route::group(function () {
-        //秒杀列表
-        Route::get('seckill', 'v1.marketing.StoreSeckill/index')->option(['real_name' => '秒杀商品列表']);
-        //秒杀时间段列表
-        Route::get('seckill/time_list', 'v1.marketing.StoreSeckill/time_list')->option(['real_name' => '秒杀时间段列表']);
-        //秒杀详情
-        Route::get('seckill/:id', 'v1.marketing.StoreSeckill/read')->option(['real_name' => '秒杀商品详情']);
-        //秒杀保存新增或编辑
-        Route::post('seckill/:id', 'v1.marketing.StoreSeckill/save')->option(['real_name' => '新增或编辑秒杀商品']);
-        //秒杀删除
-        Route::delete('seckill/:id', 'v1.marketing.StoreSeckill/delete')->option(['real_name' => '删除秒杀商品']);
-        //修改秒杀状态
-        Route::put('seckill/set_status/:id/:status', 'v1.marketing.StoreSeckill/set_status')->option(['real_name' => '修改秒杀商品状态']);
-        //秒杀统计
-        Route::get('seckill/statistics/head/:id', 'v1.marketing.StoreSeckill/seckillStatistics')->option(['real_name' => '秒杀统计']);
-        //参与活动人员
-        Route::get('seckill/statistics/people/:id', 'v1.marketing.StoreSeckill/seckillPeople')->option(['real_name' => '秒杀参与人']);
-        //秒杀订单
-        Route::get('seckill/statistics/order/:id', 'v1.marketing.StoreSeckill/seckillOrder')->option(['real_name' => '秒杀参与人']);
+        //Danh sách flash sale
+        Route::get('seckill', 'v1.marketing.StoreSeckill/index')->option(['real_name' => 'Danh sách sản phẩm flash sale']);
+        //Danh sách khung giờ flash sale
+        Route::get('seckill/time_list', 'v1.marketing.StoreSeckill/time_list')->option(['real_name' => 'Danh sách khung giờ flash sale']);
+        //Chi tiết flash sale
+        Route::get('seckill/:id', 'v1.marketing.StoreSeckill/read')->option(['real_name' => 'Chi tiết sản phẩm flash sale']);
+        //Lưu khi thêm mới hoặc sửa flash sale
+        Route::post('seckill/:id', 'v1.marketing.StoreSeckill/save')->option(['real_name' => 'Thêm mới hoặc sửa sản phẩm flash sale']);
+        //Xóa flash sale
+        Route::delete('seckill/:id', 'v1.marketing.StoreSeckill/delete')->option(['real_name' => 'Xóa sản phẩm flash sale']);
+        //Sửa trạng thái flash sale
+        Route::put('seckill/set_status/:id/:status', 'v1.marketing.StoreSeckill/set_status')->option(['real_name' => 'Sửa trạng thái sản phẩm flash sale']);
+        //Thống kê flash sale
+        Route::get('seckill/statistics/head/:id', 'v1.marketing.StoreSeckill/seckillStatistics')->option(['real_name' => 'Thống kê flash sale']);
+        //Người tham gia hoạt động
+        Route::get('seckill/statistics/people/:id', 'v1.marketing.StoreSeckill/seckillPeople')->option(['real_name' => 'Người tham gia flash sale']);
+        //Đơn flash sale
+        Route::get('seckill/statistics/order/:id', 'v1.marketing.StoreSeckill/seckillOrder')->option(['real_name' => 'Người tham gia flash sale']);
 
-        Route::get('seckill_activity/list', 'v1.marketing.StoreSeckill/seckillActivityList')->option(['real_name' => '秒杀活动列表']);
-        Route::get('seckill_activity/info/:id', 'v1.marketing.StoreSeckill/seckillActivityInfo')->option(['real_name' => '秒杀活动详情']);
-        Route::post('seckill_activity/save/:id', 'v1.marketing.StoreSeckill/seckillActivitySave')->option(['real_name' => '新增或修改秒杀活动']);
-        Route::delete('seckill_activity/del/:id', 'v1.marketing.StoreSeckill/seckillActivityDel')->option(['real_name' => '删除秒杀活动']);
-        Route::put('seckill_activity/status/:id/:status', 'v1.marketing.StoreSeckill/seckillActivityStatus')->option(['real_name' => '修改秒杀活动状态']);
+        Route::get('seckill_activity/list', 'v1.marketing.StoreSeckill/seckillActivityList')->option(['real_name' => 'Danh sách hoạt động flash sale']);
+        Route::get('seckill_activity/info/:id', 'v1.marketing.StoreSeckill/seckillActivityInfo')->option(['real_name' => 'Chi tiết hoạt động flash sale']);
+        Route::post('seckill_activity/save/:id', 'v1.marketing.StoreSeckill/seckillActivitySave')->option(['real_name' => 'Thêm mới hoặc sửa hoạt động flash sale']);
+        Route::delete('seckill_activity/del/:id', 'v1.marketing.StoreSeckill/seckillActivityDel')->option(['real_name' => 'Xóa hoạt động flash sale']);
+        Route::put('seckill_activity/status/:id/:status', 'v1.marketing.StoreSeckill/seckillActivityStatus')->option(['real_name' => 'Sửa trạng thái hoạt động flash sale']);
 
 
 
-    })->option(['parent' => 'marketing', 'cate_name' => '秒杀活动']);
+    })->option(['parent' => 'marketing', 'cate_name' => 'Hoạt động flash sale']);
 
-    /** 积分活动 */
+    /** Hoạt động điểm thưởng */
     Route::group(function () {
-        //积分日志列表
-        Route::get('integral', 'v1.marketing.UserPoint/index')->option(['real_name' => '积分日志列表']);
-        //积分日志头部数据
-        Route::get('integral/statistics', 'v1.marketing.UserPoint/integral_statistics')->option(['real_name' => '积分日志头部数据']);
-        //积分配置编辑表单
-        Route::get('integral_config/edit_basics', 'v1.setting.SystemConfig/edit_basics')->option(['real_name' => '积分配置编辑表单']);
-        //积分配置保存数据
-        Route::post('integral_config/save_basics', 'v1.setting.SystemConfig/save_basics')->option(['real_name' => '积分配置保存数据']);
-        //积分商品列表
-        Route::get('integral_product', 'v1.marketing.integral.StoreIntegral/index')->option(['real_name' => '积分商品列表']);
-        //积分商品新增或编辑
-        Route::post('integral/:id', 'v1.marketing.integral.StoreIntegral/save')->option(['real_name' => '积分商品新增或编辑']);
-        //积分商品详情
-        Route::get('integral/:id', 'v1.marketing.integral.StoreIntegral/read')->option(['real_name' => '积分商品详情']);
-        //积分商品删除
-        Route::delete('integral/:id', 'v1.marketing.integral.StoreIntegral/delete')->option(['real_name' => '积分商品删除']);
-        //修改积分商品状态
-        Route::put('integral/set_show/:id/:is_show', 'v1.marketing.integral.StoreIntegral/set_show')->option(['real_name' => '修改积分商品状态']);
-        //积分商城订单列表
-        Route::get('integral/order/list', 'v1.marketing.integral.StoreIntegralOrder/lst')->option(['real_name' => '积分商城订单列表']);
-        //积分商城订单数据
-        Route::get('integral/order/chart', 'v1.marketing.integral.StoreIntegralOrder/chart')->option(['real_name' => '积分商城订单数据']);
-        //积分商城订单详情数据
-        Route::get('integral/order/info/:id', 'v1.marketing.integral.StoreIntegralOrder/order_info')->option(['real_name' => '积分商城订单详情数据']);
-        //修改积分商品订单备注信息
-        Route::put('integral/order/remark/:id', 'v1.marketing.integral.StoreIntegralOrder/remark')->option(['real_name' => '修改积分商品订单备注信息']);
-        //获取积分订单状态
-        Route::get('integral/order/status/:id', 'v1.marketing.integral.StoreIntegralOrder/status')->option(['real_name' => '获取积分订单状态']);
-        //删除积分订单
-        Route::delete('integral/order/del/:id', 'v1.marketing.integral.StoreIntegralOrder/del')->option(['real_name' => '删除积分订单']);
-        //积分订单发送货
-        Route::put('integral/order/delivery/:id', 'v1.marketing.integral.StoreIntegralOrder/update_delivery')->option(['real_name' => '积分订单发送货']);
-        //获取积分订单配送信息表单
-        Route::get('integral/order/distribution/:id', 'v1.marketing.integral.StoreIntegralOrder/distribution')->option(['real_name' => '获取积分订单配送信息表单']);
-        //修改积分订单配送信息
-        Route::put('integral/order/distribution/:id', 'v1.marketing.integral.StoreIntegralOrder/update_distribution')->option(['real_name' => '修改积分订单配送信息']);
-        //积分订单确认收货
-        Route::put('integral/order/take/:id', 'v1.marketing.integral.StoreIntegralOrder/take_delivery')->option(['real_name' => '积分订单确认收货']);
-        //积分订单获取物流公司
-        Route::get('integral/order/express_list', 'v1.marketing.integral.StoreIntegralOrder/express')->option(['real_name' => '积分订单获取物流公司']);
-        //积分订单快递公司电子面单模版
-        Route::get('integral/order/express/temp', 'v1.marketing.integral.StoreIntegralOrder/express_temp')->option(['real_name' => '积分订单快递公司电子面单模版']);
-        //积分订单获取物流信息
-        Route::get('integral/order/express/:id', 'v1.marketing.integral.StoreIntegralOrder/get_express')->option(['real_name' => '积分订单获取物流信息']);
-        //打印积分订单
-        Route::get('integral/order/print/:id', 'v1.marketing.integral.StoreIntegralOrder/order_print')->option(['real_name' => '打印积分订单']);
-        //积分订单列表获取配送员
-        Route::get('integral/order/delivery/list', 'v1.order.DeliveryService/get_delivery_list')->option(['real_name' => '积分订单列表获取配送员']);
-        //积分订单获取面单默认配置信息
-        Route::get('integral/order/sheet_info', 'v1.marketing.integral.StoreIntegralOrder/getDeliveryInfo')->option(['real_name' => '积分订单获取面单默认配置信息']);
-        //积分记录
-        Route::get('point_record', 'v1.marketing.integral.StorePointRecord/pointRecord')->option(['real_name' => '积分记录列表']);
-        Route::post('point_record/remark/:id', 'v1.marketing.integral.StorePointRecord/pointRecordRemark')->option(['real_name' => '积分记录列表备注']);
-        Route::get('point/get_basic', 'v1.marketing.integral.StorePointRecord/getBasic')->option(['real_name' => '积分统计基本信息']);
-        Route::get('point/get_trend', 'v1.marketing.integral.StorePointRecord/getTrend')->option(['real_name' => '积分统计趋势图']);
-        //积分来源统计
-        Route::get('point/get_channel', 'v1.marketing.integral.StorePointRecord/getChannel')->option(['real_name' => '积分来源统计']);
-        //积分消耗统计
-        Route::get('point/get_type', 'v1.marketing.integral.StorePointRecord/getType')->option(['real_name' => '积分消耗统计']);
-    })->option(['parent' => 'marketing', 'cate_name' => '积分活动']);
+        //Danh sách nhật ký điểm thưởng
+        Route::get('integral', 'v1.marketing.UserPoint/index')->option(['real_name' => 'Danh sách nhật ký điểm thưởng']);
+        //Dữ liệu phần đầu nhật ký điểm thưởng
+        Route::get('integral/statistics', 'v1.marketing.UserPoint/integral_statistics')->option(['real_name' => 'Dữ liệu phần đầu nhật ký điểm thưởng']);
+        //Biểu mẫu sửa cấu hình điểm thưởng
+        Route::get('integral_config/edit_basics', 'v1.setting.SystemConfig/edit_basics')->option(['real_name' => 'Biểu mẫu sửa cấu hình điểm thưởng']);
+        //Lưu dữ liệu cấu hình điểm thưởng
+        Route::post('integral_config/save_basics', 'v1.setting.SystemConfig/save_basics')->option(['real_name' => 'Lưu dữ liệu cấu hình điểm thưởng']);
+        //Danh sách sản phẩm đổi điểm
+        Route::get('integral_product', 'v1.marketing.integral.StoreIntegral/index')->option(['real_name' => 'Danh sách sản phẩm đổi điểm']);
+        //Thêm mới hoặc sửa sản phẩm đổi điểm
+        Route::post('integral/:id', 'v1.marketing.integral.StoreIntegral/save')->option(['real_name' => 'Thêm mới hoặc sửa sản phẩm đổi điểm']);
+        //Chi tiết sản phẩm đổi điểm
+        Route::get('integral/:id', 'v1.marketing.integral.StoreIntegral/read')->option(['real_name' => 'Chi tiết sản phẩm đổi điểm']);
+        //Xóa sản phẩm đổi điểm
+        Route::delete('integral/:id', 'v1.marketing.integral.StoreIntegral/delete')->option(['real_name' => 'Xóa sản phẩm đổi điểm']);
+        //Sửa trạng thái sản phẩm đổi điểm
+        Route::put('integral/set_show/:id/:is_show', 'v1.marketing.integral.StoreIntegral/set_show')->option(['real_name' => 'Sửa trạng thái sản phẩm đổi điểm']);
+        //Danh sách đơn hàng cửa hàng đổi điểm
+        Route::get('integral/order/list', 'v1.marketing.integral.StoreIntegralOrder/lst')->option(['real_name' => 'Danh sách đơn hàng cửa hàng đổi điểm']);
+        //Dữ liệu đơn hàng cửa hàng đổi điểm
+        Route::get('integral/order/chart', 'v1.marketing.integral.StoreIntegralOrder/chart')->option(['real_name' => 'Dữ liệu đơn hàng cửa hàng đổi điểm']);
+        //Dữ liệu chi tiết đơn hàng cửa hàng đổi điểm
+        Route::get('integral/order/info/:id', 'v1.marketing.integral.StoreIntegralOrder/order_info')->option(['real_name' => 'Dữ liệu chi tiết đơn hàng cửa hàng đổi điểm']);
+        //Sửa ghi chú đơn hàng sản phẩm đổi điểm
+        Route::put('integral/order/remark/:id', 'v1.marketing.integral.StoreIntegralOrder/remark')->option(['real_name' => 'Sửa ghi chú đơn hàng sản phẩm đổi điểm']);
+        //Lấy trạng thái đơn đổi điểm
+        Route::get('integral/order/status/:id', 'v1.marketing.integral.StoreIntegralOrder/status')->option(['real_name' => 'Lấy trạng thái đơn đổi điểm']);
+        //Xóa đơn đổi điểm
+        Route::delete('integral/order/del/:id', 'v1.marketing.integral.StoreIntegralOrder/del')->option(['real_name' => 'Xóa đơn đổi điểm']);
+        //Giao đơn đổi điểm
+        Route::put('integral/order/delivery/:id', 'v1.marketing.integral.StoreIntegralOrder/update_delivery')->option(['real_name' => 'Giao đơn đổi điểm']);
+        //Lấy biểu mẫu thông tin giao hàng đơn đổi điểm
+        Route::get('integral/order/distribution/:id', 'v1.marketing.integral.StoreIntegralOrder/distribution')->option(['real_name' => 'Lấy biểu mẫu thông tin giao hàng đơn đổi điểm']);
+        //Sửa thông tin giao hàng đơn đổi điểm
+        Route::put('integral/order/distribution/:id', 'v1.marketing.integral.StoreIntegralOrder/update_distribution')->option(['real_name' => 'Sửa thông tin giao hàng đơn đổi điểm']);
+        //Xác nhận đã nhận hàng đơn đổi điểm
+        Route::put('integral/order/take/:id', 'v1.marketing.integral.StoreIntegralOrder/take_delivery')->option(['real_name' => 'Xác nhận đã nhận hàng đơn đổi điểm']);
+        //Lấy đơn vị vận chuyển cho đơn đổi điểm
+        Route::get('integral/order/express_list', 'v1.marketing.integral.StoreIntegralOrder/express')->option(['real_name' => 'Lấy đơn vị vận chuyển cho đơn đổi điểm']);
+        //Mẫu vận đơn điện tử của đơn vị vận chuyển cho đơn đổi điểm
+        Route::get('integral/order/express/temp', 'v1.marketing.integral.StoreIntegralOrder/express_temp')->option(['real_name' => 'Mẫu vận đơn điện tử của đơn vị vận chuyển cho đơn đổi điểm']);
+        //Lấy thông tin vận chuyển đơn đổi điểm
+        Route::get('integral/order/express/:id', 'v1.marketing.integral.StoreIntegralOrder/get_express')->option(['real_name' => 'Lấy thông tin vận chuyển đơn đổi điểm']);
+        //In đơn đổi điểm
+        Route::get('integral/order/print/:id', 'v1.marketing.integral.StoreIntegralOrder/order_print')->option(['real_name' => 'In đơn đổi điểm']);
+        //Lấy nhân viên giao hàng cho danh sách đơn đổi điểm
+        Route::get('integral/order/delivery/list', 'v1.order.DeliveryService/get_delivery_list')->option(['real_name' => 'Lấy nhân viên giao hàng cho danh sách đơn đổi điểm']);
+        //Lấy thông tin cấu hình vận đơn mặc định cho đơn đổi điểm
+        Route::get('integral/order/sheet_info', 'v1.marketing.integral.StoreIntegralOrder/getDeliveryInfo')->option(['real_name' => 'Lấy thông tin cấu hình vận đơn mặc định cho đơn đổi điểm']);
+        //Lịch sử điểm thưởng
+        Route::get('point_record', 'v1.marketing.integral.StorePointRecord/pointRecord')->option(['real_name' => 'Danh sách lịch sử điểm thưởng']);
+        Route::post('point_record/remark/:id', 'v1.marketing.integral.StorePointRecord/pointRecordRemark')->option(['real_name' => 'Ghi chú danh sách lịch sử điểm thưởng']);
+        Route::get('point/get_basic', 'v1.marketing.integral.StorePointRecord/getBasic')->option(['real_name' => 'Thông tin cơ bản thống kê điểm thưởng']);
+        Route::get('point/get_trend', 'v1.marketing.integral.StorePointRecord/getTrend')->option(['real_name' => 'Biểu đồ xu hướng thống kê điểm thưởng']);
+        //Thống kê nguồn điểm thưởng
+        Route::get('point/get_channel', 'v1.marketing.integral.StorePointRecord/getChannel')->option(['real_name' => 'Thống kê nguồn điểm thưởng']);
+        //Thống kê điểm thưởng đã dùng
+        Route::get('point/get_type', 'v1.marketing.integral.StorePointRecord/getType')->option(['real_name' => 'Thống kê điểm thưởng đã dùng']);
+    })->option(['parent' => 'marketing', 'cate_name' => 'Hoạt động điểm thưởng']);
 
-    /** 抽奖活动 */
+    /** Hoạt động quay thưởng */
     Route::group(function () {
-        //抽奖活动列表
-        Route::get('lottery/list', 'v1.marketing.lottery.LuckLottery/index')->option(['real_name' => '抽奖活动列表']);
-        //抽奖活动详情
-        Route::get('lottery/detail/:id', 'v1.marketing.lottery.LuckLottery/detail')->option(['real_name' => '抽奖活动详情']);
-        //添加抽奖活动
-        Route::post('lottery/add', 'v1.marketing.lottery.LuckLottery/add')->option(['real_name' => '添加抽奖活动']);
-        //修改抽奖活动数据
-        Route::put('lottery/edit/:id', 'v1.marketing.lottery.LuckLottery/edit')->option(['real_name' => '修改抽奖活动数据']);
-        //删除抽奖活动
-        Route::delete('lottery/del/:id', 'v1.marketing.lottery.LuckLottery/delete')->option(['real_name' => '删除抽奖活动']);
-        //设置抽奖活动是否显示
-        Route::put('lottery/set_status/:id/:status', 'v1.marketing.lottery.LuckLottery/setStatus')->option(['real_name' => '设置抽奖活动是否显示']);
-        //抽奖记录列表
-        Route::get('lottery/record/list', 'v1.marketing.lottery.LuckLotteryRecord/index')->option(['real_name' => '抽奖记录列表']);
-        //抽奖中奖发货、备注处理
-        Route::post('lottery/record/deliver', 'v1.marketing.lottery.LuckLotteryRecord/deliver')->option(['real_name' => '抽奖中奖发货、备注处理']);
-        //分类抽奖列表
-        Route::get('lottery/factor/list', 'v1.marketing.lottery.LuckLottery/factorList')->option(['real_name' => '分类抽奖列表']);
-        //保存抽奖配置
-        Route::post('lottery/factor/use', 'v1.marketing.lottery.LuckLottery/factorUse')->option(['real_name' => '保存抽奖使用状态']);
+        //Danh sách hoạt động quay thưởng
+        Route::get('lottery/list', 'v1.marketing.lottery.LuckLottery/index')->option(['real_name' => 'Danh sách hoạt động quay thưởng']);
+        //Chi tiết hoạt động quay thưởng
+        Route::get('lottery/detail/:id', 'v1.marketing.lottery.LuckLottery/detail')->option(['real_name' => 'Chi tiết hoạt động quay thưởng']);
+        //Thêm hoạt động quay thưởng
+        Route::post('lottery/add', 'v1.marketing.lottery.LuckLottery/add')->option(['real_name' => 'Thêm hoạt động quay thưởng']);
+        //Sửa dữ liệu hoạt động quay thưởng
+        Route::put('lottery/edit/:id', 'v1.marketing.lottery.LuckLottery/edit')->option(['real_name' => 'Sửa dữ liệu hoạt động quay thưởng']);
+        //Xóa hoạt động quay thưởng
+        Route::delete('lottery/del/:id', 'v1.marketing.lottery.LuckLottery/delete')->option(['real_name' => 'Xóa hoạt động quay thưởng']);
+        //Đặt hiện/ẩn hoạt động quay thưởng
+        Route::put('lottery/set_status/:id/:status', 'v1.marketing.lottery.LuckLottery/setStatus')->option(['real_name' => 'Đặt hiện/ẩn hoạt động quay thưởng']);
+        //Danh sách lịch sử quay thưởng
+        Route::get('lottery/record/list', 'v1.marketing.lottery.LuckLotteryRecord/index')->option(['real_name' => 'Danh sách lịch sử quay thưởng']);
+        //Xử lý giao hàng, ghi chú cho giải trúng thưởng
+        Route::post('lottery/record/deliver', 'v1.marketing.lottery.LuckLotteryRecord/deliver')->option(['real_name' => 'Xử lý giao hàng, ghi chú cho giải trúng thưởng']);
+        //Danh sách quay thưởng theo loại
+        Route::get('lottery/factor/list', 'v1.marketing.lottery.LuckLottery/factorList')->option(['real_name' => 'Danh sách quay thưởng theo loại']);
+        //Lưu cấu hình vòng quay may mắn
+        Route::post('lottery/factor/use', 'v1.marketing.lottery.LuckLottery/factorUse')->option(['real_name' => 'Lưu trạng thái sử dụng quay thưởng']);
 
-    })->option(['parent' => 'marketing', 'cate_name' => '抽奖活动']);
+    })->option(['parent' => 'marketing', 'cate_name' => 'Hoạt động quay thưởng']);
 
-    /** 每日签到 */
+    /** Điểm danh hằng ngày */
     Route::group(function () {
-        //签到奖励列表
-        Route::get('sign/rewards', 'v1.marketing.SignRewards/index')->option(['real_name' => '签到奖励列表']);
-        //添加签到奖励
-        Route::get('sign/add_rewards', 'v1.marketing.SignRewards/addRewards')->option(['real_name' => '添加签到奖励']);
-        //编辑签到奖励
-        Route::get('sign/edit_rewards/:id', 'v1.marketing.SignRewards/editRewards')->option(['real_name' => '保存签到奖励']);
-        //保存签到奖励
-        Route::post('sign/save_rewards/:id', 'v1.marketing.SignRewards/saveRewards')->option(['real_name' => '保存签到奖励']);
-        //删除签到奖励
-        Route::delete('sign/del_rewards/:id', 'v1.marketing.SignRewards/delRewards')->option(['real_name' => '删除签到奖励']);
-    })->option(['parent' => 'marketing', 'cate_name' => '每日签到']);
+        //Danh sách phần thưởng điểm danh
+        Route::get('sign/rewards', 'v1.marketing.SignRewards/index')->option(['real_name' => 'Danh sách phần thưởng điểm danh']);
+        //Thêm phần thưởng điểm danh
+        Route::get('sign/add_rewards', 'v1.marketing.SignRewards/addRewards')->option(['real_name' => 'Thêm phần thưởng điểm danh']);
+        //Sửa thưởng điểm danh
+        Route::get('sign/edit_rewards/:id', 'v1.marketing.SignRewards/editRewards')->option(['real_name' => 'Lưu phần thưởng điểm danh']);
+        //Lưu phần thưởng điểm danh
+        Route::post('sign/save_rewards/:id', 'v1.marketing.SignRewards/saveRewards')->option(['real_name' => 'Lưu phần thưởng điểm danh']);
+        //Xóa phần thưởng điểm danh
+        Route::delete('sign/del_rewards/:id', 'v1.marketing.SignRewards/delRewards')->option(['real_name' => 'Xóa phần thưởng điểm danh']);
+    })->option(['parent' => 'marketing', 'cate_name' => 'Điểm danh hằng ngày']);
 
 })->middleware([
     \app\http\middleware\AllowOriginMiddleware::class,
     \app\adminapi\middleware\AdminAuthTokenMiddleware::class,
     \app\adminapi\middleware\AdminCheckRoleMiddleware::class,
     \app\adminapi\middleware\AdminLogMiddleware::class
-])->option(['mark' => 'marketing', 'mark_name' => '营销活动']);
+])->option(['mark' => 'marketing', 'mark_name' => 'Hoạt động marketing']);

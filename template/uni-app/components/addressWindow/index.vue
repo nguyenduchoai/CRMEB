@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<view class="address-window" :class="address.address==true?'on':''">
-			<view class='title'>{{$t(`选择地址`)}}<text class='iconfont icon-guanbi' @tap='close'></text></view>
+			<view class='title'>{{$t(`Chọn địa chỉ`)}}<text class='iconfont icon-guanbi' @tap='close'></text></view>
 			<view class='list'>
 				<view class='item acea-row row-between-wrapper' :class='active==index?"font-num":""'
 					v-for="(item,index) in addressList" @tap='tapAddress(index,item.id)' :key='index'>
@@ -14,11 +14,11 @@
 					<text class='iconfont icon-complete' :class='active==index?"font-num":""'></text>
 				</view>
 			</view>
-			<!-- 无地址 -->
+			<!-- Không có địa chỉ -->
 			<view class='pictrue' v-if="!is_loading && !addressList.length">
 				<image :src="imgHost + '/statics/images/noAddress.png'"></image>
 			</view>
-			<view class='addressBnt bg-color' @tap='goAddressPages'>{{$t(`选择其它地址`)}}</view>
+			<view class='addressBnt bg-color' @tap='goAddressPages'>{{$t(`Chọn địa chỉ khác`)}}</view>
 		</view>
 		<view class='mask' catchtouchmove="true" :hidden='address.address==false' @tap='close'></view>
 	</view>
@@ -55,7 +55,7 @@
 			return {
 				imgHost: HTTP_REQUEST_URL,
 				active: 0,
-				//地址列表
+				//Danh sách địa chỉ
 				addressList: [],
 				is_loading: true
 			};
@@ -84,7 +84,7 @@
 					limit: 5
 				}).then(res => {
 					let addressList = res.data;
-					//处理默认选中项
+					//Xử lý mục được chọn mặc định
 					for (let i = 0, leng = addressList.length; i < leng; i++) {
 						if (addressList[i].id == that.address.addressId) {
 							that.active = i;

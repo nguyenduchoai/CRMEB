@@ -25,7 +25,7 @@ import { mapMutations } from 'vuex';
 export default {
   name: 'c_news_roll',
   componentsName: 'home_news_roll',
-  cname: '新闻公告',
+  cname: 'Thông báo tin tức',
   props: {
     activeIndex: {
       type: null,
@@ -44,13 +44,13 @@ export default {
   data() {
     return {
       hotIndex: 1,
-      configObj: {}, // 配置对象
+      configObj: {}, // Đối tượng cấu hình
       rCom: [
         {
           components: toolCom.c_card_select,
           configNme: 'styleConfig',
         },
-      ], // 当前页面组件
+      ], // Thành phần (component) của trang hiện tại
       rComContent: [
         {
           components: toolCom.c_set_up,
@@ -729,7 +729,7 @@ export default {
       if (!config.paddingConfig) {
         config.paddingConfig = {
           isAll: false,
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           max: 100,
@@ -744,7 +744,7 @@ export default {
       if (!config.marginConfig) {
         config.marginConfig = {
           isAll: false,
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,
@@ -761,7 +761,7 @@ export default {
       }
       return config;
     },
-    // 获取组件参数
+    // Lấy tham số thành phần (component)
     getConfig(data) {},
   },
 };

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -25,13 +25,13 @@ class UserLevel extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'user_level';
@@ -42,7 +42,7 @@ class UserLevel extends BaseModel
     }
 
     /**
-     * 用户uid
+     * uid người dùng
      * @param Model $query
      * @param $value
      */
@@ -52,7 +52,7 @@ class UserLevel extends BaseModel
     }
 
     /**
-     * 是否永久
+     * Vĩnh viễn
      * @param Model $query
      * @param $value
      */
@@ -62,7 +62,7 @@ class UserLevel extends BaseModel
     }
 
     /**
-     * 过期时间
+     * Thời gian hết hạn
      * @param Model $query
      * @param $value
      */
@@ -72,7 +72,7 @@ class UserLevel extends BaseModel
     }
 
     /**
-     * 状态
+     * Trạng thái
      * @param Model $query
      * @param $value
      */
@@ -82,7 +82,7 @@ class UserLevel extends BaseModel
     }
 
     /**
-     * 是否通知
+     * Có thông báo hay không
      * @param Model $query
      * @param $value
      */
@@ -92,7 +92,7 @@ class UserLevel extends BaseModel
     }
 
     /**
-     * 是否删除
+     * Đã xóa
      * @param Model $query
      * @param $value
      */

@@ -1,45 +1,45 @@
 <template>
   <div class="routine-ci-upload">
-    <!-- 页面头部 -->
+    <!-- Phần đầu trang -->
     <div class="page-header">
       <div class="header-content">
         <div class="header-icon">
           <i class="el-icon-upload"></i>
         </div>
         <div class="header-text">
-          <h1>小程序一键上传</h1>
-          <p>使用 miniprogram-ci 自动化部署小程序代码到微信服务器</p>
+          <h1>Tải lên Mini Program nhanh</h1>
+          <p>Dùng miniprogram-ci để tự động triển khai mã nguồn Mini Program lên máy chủ WeChat</p>
         </div>
       </div>
     </div>
 
-    <!-- 进度指示器 -->
+    <!-- Chỉ báo tiến trình -->
     <div class="progress-steps">
       <div class="step" :class="{ active: true, completed: envStatus.ready }">
         <div class="step-number">1</div>
-        <div class="step-label">环境配置</div>
+        <div class="step-label">Cấu hình môi trường</div>
       </div>
       <div class="step-line" :class="{ completed: envStatus.ready }"></div>
       <div class="step"
         :class="{ active: envStatus.ready, completed: uploadConfig.app_id_configured && uploadConfig.private_key_exists }">
         <div class="step-number">2</div>
-        <div class="step-label">上传配置</div>
+        <div class="step-label">Cấu hình tải lên</div>
       </div>
       <div class="step-line" :class="{ completed: uploadConfig.app_id_configured && uploadConfig.private_key_exists }">
       </div>
       <div class="step"
         :class="{ active: envStatus.ready && uploadConfig.app_id_configured && uploadConfig.private_key_exists }">
         <div class="step-number">3</div>
-        <div class="step-label">上传代码</div>
+        <div class="step-label">Tải lên code</div>
       </div>
     </div>
 
-    <!-- 使用须知 - 可折叠 -->
+    <!-- Lưu ý sử dụng - có thể thu gọn -->
     <div class="notice-banner" :class="{ expanded: showNotice }">
       <div class="notice-header" @click="showNotice = !showNotice">
         <div class="notice-title">
           <i class="el-icon-info"></i>
-          <span>使用前准备</span>
+          <span>Chuẩn bị trước khi sử dụng</span>
         </div>
         <i :class="showNotice ? 'el-icon-arrow-up' : 'el-icon-arrow-down'"></i>
       </div>
@@ -48,30 +48,29 @@
           <div class="notice-item">
             <div class="notice-step">1</div>
             <div class="notice-text">
-              <strong>生成代码上传密钥</strong>
-              <p>访问 <a href="https://mp.weixin.qq.com/" target="_blank" rel="noopener">微信公众平台</a> → 开发管理 → 开发设置 →
-                小程序代码上传 → 生成密钥</p>
+              <strong>Tạo khóa tải lên mã nguồn</strong>
+              <p>Truy cập <a href="https://mp.weixin.qq.com/" target="_blank" rel="noopener">nền tảng WeChat Official Accounts</a> → Quản lý phát triển → Cài đặt phát triển → Tải lên mã nguồn Mini Program → Tạo khóa</p>
             </div>
           </div>
           <div class="notice-item">
             <div class="notice-step">2</div>
             <div class="notice-text">
-              <strong>配置 IP 白名单</strong>
-              <p>在同一页面将服务器公网 IP 添加到白名单中</p>
+              <strong>Cấu hình danh sách trắng IP</strong>
+              <p>Trên cùng trang đó, thêm IP công khai của máy chủ vào danh sách trắng</p>
             </div>
           </div>
         </div>
       </transition>
     </div>
 
-    <!-- 主内容区域 -->
+    <!-- Vùng nội dung chính -->
     <div class="main-content">
-      <!-- 环境状态卡片 -->
+      <!-- Thẻ trạng thái môi trường -->
       <div class="card env-card" :class="{ 'card-success': envStatus.ready, 'card-warning': !envStatus.ready }">
         <div class="card-header">
           <div class="card-title">
             <i class="el-icon-cpu"></i>
-            <span>运行环境</span>
+            <span>Môi trường chạy</span>
           </div>
           <button class="refresh-btn" @click="checkEnvironment" :disabled="loading.environment">
             <i :class="loading.environment ? 'el-icon-loading' : 'el-icon-refresh'"></i>
@@ -79,22 +78,22 @@
         </div>
 
         <div class="card-body" v-loading="loading.environment">
-          <!-- 环境状态概览 -->
+          <!-- Tổng quan trạng thái môi trường -->
           <div class="status-overview">
             <div class="status-badge" :class="envStatus.ready ? 'success' : 'warning'">
               <i :class="envStatus.ready ? 'el-icon-check' : 'el-icon-warning'"></i>
-              {{ envStatus.ready ? '环境就绪' : '环境未就绪' }}
+              {{ envStatus.ready ? 'Môi trường đã sẵn sàng' : 'Môi trường chưa sẵn sàng' }}
             </div>
           </div>
 
-          <!-- 环境详情 -->
+          <!-- Chi tiết môi trường -->
           <div class="env-grid">
             <div class="env-item">
               <div class="env-icon os">
                 <i class="el-icon-monitor"></i>
               </div>
               <div class="env-info">
-                <span class="env-label">操作系统</span>
+                <span class="env-label">Hệ điều hành</span>
                 <span class="env-value">{{ envStatus.os?.type || '-' }} {{ envStatus.os?.version || '' }}</span>
               </div>
             </div>
@@ -105,7 +104,7 @@
               <div class="env-info">
                 <span class="env-label">Node.js</span>
                 <span class="env-value" :class="envStatus.node?.installed ? 'text-success' : 'text-error'">
-                  {{ envStatus.node?.installed ? 'v' + envStatus.node.version : '未安装' }}
+                  {{ envStatus.node?.installed ? 'v' + envStatus.node.version : 'Chưa cài đặt' }}
                 </span>
               </div>
             </div>
@@ -116,132 +115,132 @@
               <div class="env-info">
                 <span class="env-label">miniprogram-ci</span>
                 <span class="env-value" :class="envStatus.miniprogram_ci?.installed ? 'text-success' : 'text-error'">
-                  {{ envStatus.miniprogram_ci?.installed ? 'v' + envStatus.miniprogram_ci.version : '未安装' }}
+                  {{ envStatus.miniprogram_ci?.installed ? 'v' + envStatus.miniprogram_ci.version : 'Chưa cài đặt' }}
                 </span>
               </div>
             </div>
           </div>
 
-          <!-- exec 被禁用的警告 -->
+          <!-- Cảnh báo exec bị vô hiệu hóa -->
           <div v-if="envStatus.exec_enabled === false" class="alert alert-error">
             <i class="el-icon-warning"></i>
             <div class="alert-content">
-              <strong>无法使用小程序上传功能</strong>
-              <p>服务器禁用了 <code>exec</code> 函数。请在 PHP 配置中启用该函数。</p>
-              <p class="alert-hint">宝塔面板：软件商店 → PHP → 设置 → 禁用函数 → 删除 exec</p>
+              <strong>Không thể dùng tính năng tải lên Mini Program</strong>
+              <p>Máy chủ đã vô hiệu hóa hàm <code>exec</code> — vui lòng bật hàm này trong cấu hình PHP.</p>
+              <p class="alert-hint">BT Panel: App Store → PHP → Cài đặt → Hàm bị vô hiệu hóa → Xóa exec</p>
             </div>
           </div>
 
-          <!-- 安装按钮 -->
+          <!-- Nút cài đặt -->
           <div v-if="!envStatus.ready && envStatus.exec_enabled !== false" class="action-buttons">
 
             <button class="btn btn-secondary" @click="showGuide = true">
               <i class="el-icon-document"></i>
-              <span>手动安装指南</span>
+              <span>Hướng dẫn cài đặt thủ công</span>
             </button>
           </div>
         </div>
       </div>
 
-      <!-- 上传配置卡片 -->
+      <!-- Thẻ cấu hình tải lên -->
       <div v-if="envStatus.ready" class="card config-card">
         <div class="card-header">
           <div class="card-title">
             <i class="el-icon-setting"></i>
-            <span>上传配置</span>
+            <span>Cấu hình tải lên</span>
           </div>
         </div>
 
         <div class="card-body">
           <div class="config-grid">
-            <!-- AppId 配置 -->
+            <!-- Cấu hình AppId -->
             <div class="config-item">
               <div class="config-icon">
                 <i class="el-icon-key"></i>
               </div>
               <div class="config-info">
-                <span class="config-label">小程序 AppId</span>
+                <span class="config-label">AppId Mini Program</span>
                 <div class="config-value">
                   <template v-if="uploadConfig.app_id_configured">
                     <span class="value-text">{{ uploadConfig.app_id }}</span>
                     <span class="status-dot success"></span>
                   </template>
                   <template v-else>
-                    <span class="value-text text-muted">未配置</span>
+                    <span class="value-text text-muted">Chưa cấu hình</span>
                     <router-link :to="{ path: $routeProStr + '/setting/routine_config/2/7' }" class="config-link">
-                      去配置 <i class="el-icon-arrow-right"></i>
+                      Cấu hình ngay <i class="el-icon-arrow-right"></i>
                     </router-link>
                   </template>
                 </div>
               </div>
             </div>
 
-            <!-- 上传密钥配置 -->
+            <!-- Cấu hình khóa tải lên -->
             <div class="config-item">
               <div class="config-icon">
                 <i class="el-icon-lock"></i>
               </div>
               <div class="config-info">
-                <span class="config-label">上传密钥</span>
+                <span class="config-label">Khóa tải lên</span>
                 <div class="config-value">
                   <template v-if="uploadConfig.private_key_exists">
-                    <span class="value-text">已配置</span>
+                    <span class="value-text">Đã cấu hình</span>
                     <span class="status-dot success"></span>
-                    <button class="link-btn" @click="showKeyUpload = true">重新上传</button>
+                    <button class="link-btn" @click="showKeyUpload = true">Tải lên lại</button>
                   </template>
                   <template v-else>
-                    <span class="value-text text-muted">未配置</span>
+                    <span class="value-text text-muted">Chưa cấu hình</span>
                     <button class="btn btn-sm btn-primary" @click="showKeyUpload = true">
-                      <i class="el-icon-upload2"></i> 上传密钥
+                      <i class="el-icon-upload2"></i> Khóa tải lên
                     </button>
                   </template>
                 </div>
               </div>
               <div class="config-hint">
-                <a href="https://mp.weixin.qq.com/" target="_blank" rel="noopener">前往微信公众平台获取</a>
+                <a href="https://mp.weixin.qq.com/" target="_blank" rel="noopener">Truy cập nền tảng WeChat Official Accounts để lấy</a>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- 一键上传卡片 -->
+      <!-- Thẻ tải lên một cú nhấp -->
       <div v-if="envStatus.ready && uploadConfig.app_id_configured && uploadConfig.private_key_exists" class="card upload-card">
         <div class="card-header">
           <div class="card-title">
             <i class="el-icon-upload"></i>
-            <span>一键上传</span>
+            <span>Tải lên nhanh</span>
           </div>
-          <span class="badge badge-success">无需开发者工具</span>
+          <span class="badge badge-success">Không cần công cụ nhà phát triển</span>
         </div>
 
         <div class="card-body">
-          <!-- 提示信息 -->
+          <!-- Thông báo -->
           <div class="info-banner">
             <i class="el-icon-info"></i>
-            <span>系统将自动生成小程序代码包并上传到微信服务器</span>
+            <span>Hệ thống sẽ tự động tạo gói mã nguồn Mini Program và tải lên máy chủ WeChat</span>
           </div>
 
-          <!-- 上传表单 -->
+          <!-- Biểu mẫu tải lên -->
           <el-form :model="uploadForm" :rules="uploadRules" ref="uploadForm" class="upload-form" label-position="top">
             <div class="form-row">
-              <el-form-item label="版本号" prop="version" class="form-item-half">
-                <el-input v-model="uploadForm.version" placeholder="例如：1.0.0" prefix-icon="el-icon-price-tag">
+              <el-form-item label="Số phiên bản" prop="version" class="form-item-half">
+                <el-input v-model="uploadForm.version" placeholder="Ví dụ: 1.0.0" prefix-icon="el-icon-price-tag">
                 </el-input>
               </el-form-item>
 
-              <el-form-item label="直播功能" class="form-item-half">
+              <el-form-item label="Tính năng livestream" class="form-item-half">
                 <!-- <el-radio-group v-model="uploadForm.is_live" class="radio-group-custom">
-                  <el-radio-button :label="0">未开通</el-radio-button>
-                  <el-radio-button :label="1">已开通</el-radio-button>
+                  <el-radio-button :label="0">Chưa kích hoạt</el-radio-button>
+                  <el-radio-button :label="1">Đã kích hoạt</el-radio-button>
                 </el-radio-group> -->
                 <el-switch v-model="uploadForm.is_live" :active-value="1" :inactive-value="0" class="defineSwitch"
-                  size="large" width=200 active-text="已开通" inactive-text="未开通" />
+                  size="large" width=200 active-text="Đã kích hoạt" inactive-text="Chưa kích hoạt" />
               </el-form-item>
             </div>
 
-            <el-form-item label="版本描述">
-              <el-input v-model="uploadForm.desc" type="textarea" :rows="3" placeholder="简要描述本次更新内容（可选）">
+            <el-form-item label="Mô tả phiên bản">
+              <el-input v-model="uploadForm.desc" type="textarea" :rows="3" placeholder="Mô tả ngắn nội dung cập nhật lần này (không bắt buộc)">
               </el-input>
             </el-form-item>
 
@@ -249,27 +248,27 @@
               <button type="button" class="btn btn-primary btn-lg" :class="{ loading: loading.upload }"
                 :disabled="loading.upload" @click="handleUpload">
                 <i :class="loading.upload ? 'el-icon-loading' : 'el-icon-upload2'"></i>
-                <span>上传到微信</span>
+                <span>Tải lên WeChat</span>
               </button>
               <button type="button" class="btn btn-outline btn-lg" :class="{ loading: loading.preview }"
                 :disabled="loading.preview" @click="handlePreview">
                 <i :class="loading.preview ? 'el-icon-loading' : 'el-icon-mobile-phone'"></i>
-                <span>获取预览码</span>
+                <span>Lấy mã xem trước</span>
               </button>
             </div>
           </el-form>
 
-          <!-- 预览二维码 -->
+          <!-- Mã QR xem trước -->
           <transition name="fade-slide">
             <div v-if="previewQrcode" class="preview-section">
               <div class="preview-card">
-                <img :src="previewQrcode" alt="预览二维码" />
-                <p>使用微信扫码预览</p>
+                <img :src="previewQrcode" alt="Mã QR xem trước" />
+                <p>Dùng WeChat quét mã để xem trước</p>
               </div>
             </div>
           </transition>
 
-          <!-- 上传结果 -->
+          <!-- Kết quả tải lên -->
           <transition name="fade-slide">
             <div v-if="uploadResult" class="result-section">
               <div class="result-card" :class="uploadResult.success ? 'success' : 'error'">
@@ -277,10 +276,10 @@
                   <i :class="uploadResult.success ? 'el-icon-check' : 'el-icon-close'"></i>
                 </div>
                 <div class="result-content">
-                  <h4>{{ uploadResult.success ? '上传成功' : '上传失败' }}</h4>
-                  <p v-if="uploadResult.success">版本 {{ uploadResult.version }} 已上传到微信服务器</p>
+                  <h4>{{ uploadResult.success ? 'Tải lên thành công' : 'Tải lên thất bại' }}</h4>
+                  <p v-if="uploadResult.success">Phiên bản {{ uploadResult.version }} đã được tải lên máy chủ WeChat</p>
                   <p v-if="uploadResult.success">
-                    请前往 <a href="https://mp.weixin.qq.com/" target="_blank" rel="noopener">微信公众平台</a> 提交审核
+                    Vui lòng truy cập <a href="https://mp.weixin.qq.com/" target="_blank" rel="noopener">nền tảng WeChat Official Accounts</a> Gửi duyệt
                   </p>
                   <p v-else class="error-msg">{{ uploadResult.message }}</p>
                 </div>
@@ -291,26 +290,26 @@
       </div>
     </div>
 
-    <!-- 手动安装指南弹窗 -->
-    <el-dialog title="手动安装指南" :visible.sync="showGuide" width="650px" custom-class="custom-dialog">
+    <!-- Hộp thoại hướng dẫn cài đặt thủ công -->
+    <el-dialog title="Hướng dẫn cài đặt thủ công" :visible.sync="showGuide" width="650px" custom-class="custom-dialog">
       <div v-if="installGuide" class="install-guide">
-        <!-- 一键安装脚本 -->
+        <!-- Script cài đặt một cú nhấp -->
         <div v-if="installGuide.script_url" class="guide-section recommended">
           <div class="section-badge">
             <i class="el-icon-star-on"></i>
-            <span>推荐方式</span>
+            <span>Cách được đề xuất</span>
           </div>
           <div class="section-header">
             <div class="header-icon">
               <i class="el-icon-magic-stick"></i>
             </div>
             <div class="header-text">
-              <h3>一键自动安装</h3>
-              <p>最简单的方式，自动完成所有配置</p>
+              <h3>Cài đặt tự động nhanh</h3>
+              <p>Cách đơn giản nhất, tự động hoàn tất mọi cấu hình</p>
             </div>
           </div>
           <div class="install-instruction">
-            <span class="instruction-label">在服务器终端执行：</span>
+            <span class="instruction-label">Chạy lệnh sau trên terminal của máy chủ:</span>
           </div>
           <div class="code-block">
             <div class="code-content">
@@ -318,20 +317,20 @@
               <code>curl -fsSL {{ installGuide.script_url }} | bash</code>
             </div>
             <button class="copy-btn" @click="copyToClipboard(`curl -fsSL ${installGuide.script_url} | bash`)"
-              title="复制命令">
+              title="Sao chép lệnh">
               <i class="el-icon-document-copy"></i>
-              <span class="copy-text">复制</span>
+              <span class="copy-text">Sao chép</span>
             </button>
           </div>
           <div class="section-footer">
             <i class="el-icon-download"></i>
-            <span>或 <a :href="installGuide.script_url" target="_blank" rel="noopener">下载脚本文件</a> 后手动执行</span>
+            <span>Hoặc <a :href="installGuide.script_url" target="_blank" rel="noopener">tải xuống tệp script</a> rồi chạy thủ công</span>
           </div>
         </div>
 
         <div class="divider-section">
           <div class="divider-line"></div>
-          <span class="divider-text">或者手动安装</span>
+          <span class="divider-text">Hoặc cài đặt thủ công</span>
           <div class="divider-line"></div>
         </div>
 
@@ -341,8 +340,8 @@
               <i class="el-icon-document"></i>
             </div>
             <div class="header-text">
-              <h3>{{ installGuide.title || '手动安装步骤' }}</h3>
-              <p>按照以下步骤逐一执行</p>
+              <h3>{{ installGuide.title || 'Các bước cài đặt thủ công' }}</h3>
+              <p>Thực hiện lần lượt theo các bước sau</p>
             </div>
           </div>
           <div class="guide-steps">
@@ -351,7 +350,7 @@
               <div class="step-content">
                 <code>{{ step }}</code>
               </div>
-              <button class="step-copy-btn" @click="copyToClipboard(step)" title="复制">
+              <button class="step-copy-btn" @click="copyToClipboard(step)" title="Sao chép">
                 <i class="el-icon-document-copy"></i>
               </button>
             </div>
@@ -359,49 +358,46 @@
         </div>
       </div>
       <span slot="footer">
-        <button class="btn btn-secondary" @click="showGuide = false">关闭</button>
+        <button class="btn btn-secondary" @click="showGuide = false">Tắt</button>
       </span>
     </el-dialog>
 
-    <!-- 上传密钥弹窗 -->
-    <el-dialog title="上传代码上传密钥" :visible.sync="showKeyUpload" width="650px" custom-class="custom-dialog">
+    <!-- Hộp thoại tải lên khóa -->
+    <el-dialog title="Tải lên khóa tải lên mã nguồn" :visible.sync="showKeyUpload" width="650px" custom-class="custom-dialog">
       <div class="key-upload-content">
         <div class="info-card">
           <div class="info-card-header">
             <i class="el-icon-info"></i>
-            <span>密钥获取方式</span>
+            <span>Cách lấy khóa</span>
           </div>
           <ol class="info-steps">
-            <li>登录 <a href="https://mp.weixin.qq.com/" target="_blank" rel="noopener">微信公众平台</a></li>
-            <li>进入 开发管理 → 开发设置 → 小程序代码上传</li>
-            <li>点击「生成」按钮，下载 private.key 文件</li>
-            <li>用文本编辑器打开，复制全部内容粘贴到下方</li>
+            <li>Đăng nhập <a href="https://mp.weixin.qq.com/" target="_blank" rel="noopener">nền tảng WeChat Official Accounts</a></li>
+            <li>Vào Quản lý phát triển → Cài đặt phát triển → Tải lên mã nguồn Mini Program</li>
+            <li>Nhấn nút “Tạo”, tải xuống tệp private.key</li>
+            <li>Mở bằng trình soạn thảo văn bản, sao chép toàn bộ nội dung và dán vào bên dưới</li>
           </ol>
         </div>
 
         <div class="info-card warning">
           <div class="info-card-header">
             <i class="el-icon-warning"></i>
-            <span>IP 白名单配置</span>
+            <span>Cấu hình danh sách trắng IP</span>
           </div>
-          <p>在同一页面将服务器公网 IP 添加到白名单</p>
+          <p>Trên cùng trang đó, thêm IP công khai của máy chủ vào danh sách trắng</p>
         </div>
 
         <div class="key-input-section">
-          <label>密钥内容</label>
-          <textarea v-model="keyContent" rows="10" placeholder="请粘贴 private.key 文件的完整内容
------BEGIN RSA PRIVATE KEY-----
-...
------END RSA PRIVATE KEY-----" class="key-textarea">
+          <label>Nội dung khóa</label>
+          <textarea v-model="keyContent" rows="10" placeholder="Vui lòng dán toàn bộ nội dung tệp private.key -----BEGIN RSA PRIVATE KEY----- ... -----END RSA PRIVATE KEY-----" class="key-textarea">
       </textarea>
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <button class="btn btn-secondary" @click="showKeyUpload = false">取消</button>
+        <button class="btn btn-secondary" @click="showKeyUpload = false">Hủy</button>
         <button class="btn btn-primary" :class="{ loading: loading.saveKey }" :disabled="loading.saveKey"
           @click="savePrivateKey">
           <i :class="loading.saveKey ? 'el-icon-loading' : 'el-icon-check'"></i>
-          <span>保存密钥</span>
+          <span>Lưu khóa</span>
         </button>
       </span>
     </el-dialog>
@@ -423,13 +419,13 @@ export default {
   name: 'RoutineCIUpload',
   data() {
     return {
-      // 页面状态
+      // Trạng thái trang
       showNotice: false,
       envStatus: {},
       uploadConfig: {},
       installGuide: null,
 
-      // 加载状态
+      // Trạng thái tải
       loading: {
         environment: false,
         saveKey: false,
@@ -437,11 +433,11 @@ export default {
         preview: false,
       },
 
-      // 弹窗状态
+      // Trạng thái hộp thoại
       showGuide: false,
       showKeyUpload: false,
 
-      // 表单数据
+      // Dữ liệu biểu mẫu
       keyContent: '',
       uploadForm: {
         version: '',
@@ -450,12 +446,12 @@ export default {
       },
       uploadRules: {
         version: [
-          { required: true, message: '请输入版本号', trigger: 'blur' },
-          { pattern: /^\d+\.\d+\.\d+$/, message: '版本号格式错误，请使用 x.x.x 格式', trigger: 'blur' },
+          { required: true, message: 'Vui lòng nhập số phiên bản', trigger: 'blur' },
+          { pattern: /^\d+\.\d+\.\d+$/, message: 'Số phiên bản sai định dạng, vui lòng dùng định dạng x.x.x', trigger: 'blur' },
         ],
       },
 
-      // 结果数据
+      // Dữ liệu kết quả
       previewQrcode: '',
       uploadResult: null,
     };
@@ -466,17 +462,17 @@ export default {
   },
 
   methods: {
-    // 复制到剪贴板
+    // Sao chép vào bộ nhớ tạm
     async copyToClipboard(text) {
       try {
         await navigator.clipboard.writeText(text);
-        this.$message.success('已复制到剪贴板');
+        this.$message.success('Đã sao chép vào bộ nhớ tạm');
       } catch (err) {
-        this.$message.error('复制失败');
+        this.$message.error('Sao chép thất bại');
       }
     },
 
-    // 检查环境
+    // Kiểm tra môi trường
     async checkEnvironment() {
       this.loading.environment = true;
       try {
@@ -489,62 +485,62 @@ export default {
           this.getInstallGuide();
         }
       } catch (err) {
-        this.$message.error(err.msg || '检查环境失败');
+        this.$message.error(err.msg || 'Kiểm tra môi trường thất bại');
       } finally {
         this.loading.environment = false;
       }
     },
 
-    // 获取上传配置
+    // Lấy cấu hình tải lên
     async getUploadConfig() {
       try {
         const res = await routineCIConfig();
         this.uploadConfig = res.data;
       } catch (err) {
-        console.error('获取上传配置失败', err);
+        console.error('Lấy cấu hình tải lên thất bại', err);
       }
     },
 
-    // 获取安装指南
+    // Lấy hướng dẫn cài đặt
     async getInstallGuide() {
       try {
         const res = await routineCIGuide();
         this.installGuide = res.data;
       } catch (err) {
-        console.error('获取安装指南失败', err);
+        console.error('Lấy hướng dẫn cài đặt thất bại', err);
       }
     },
 
-    // 保存密钥
+    // Lưu khóa
     async savePrivateKey() {
       if (!this.keyContent.trim()) {
-        this.$message.warning('请输入密钥内容');
+        this.$message.warning('Vui lòng nhập nội dung khóa');
         return;
       }
 
       this.loading.saveKey = true;
       try {
         await routineCISaveKey({ key_content: this.keyContent });
-        this.$message.success('密钥保存成功');
+        this.$message.success('Lưu khóa thành công');
         this.showKeyUpload = false;
         this.keyContent = '';
         this.getUploadConfig();
       } catch (err) {
-        this.$message.error(err.msg || '保存失败');
+        this.$message.error(err.msg || 'Lưu thất bại');
       } finally {
         this.loading.saveKey = false;
       }
     },
 
-    // 上传代码
+    // Tải lên code
     async handleUpload() {
       this.$refs.uploadForm.validate(async (valid) => {
         if (!valid) return;
 
         try {
-          await this.$confirm('确定要上传小程序代码吗？', '确认上传', {
-            confirmButtonText: '确定上传',
-            cancelButtonText: '取消',
+          await this.$confirm('Bạn có chắc muốn tải lên mã nguồn Mini Program không?', 'Xác nhận tải lên', {
+            confirmButtonText: 'Xác nhận tải lên',
+            cancelButtonText: 'Hủy',
             type: 'info',
           });
 
@@ -556,17 +552,17 @@ export default {
           this.uploadResult = {
             success: true,
             version: this.uploadForm.version,
-            message: res.data?.message || '上传成功',
+            message: res.data?.message || 'Tải lên thành công',
           };
 
-          this.$message.success('上传成功');
+          this.$message.success('Tải lên thành công');
         } catch (err) {
           if (err !== 'cancel') {
             this.uploadResult = {
               success: false,
-              message: err.msg || '上传失败',
+              message: err.msg || 'Tải lên thất bại',
             };
-            this.$message.error(err.msg || '上传失败');
+            this.$message.error(err.msg || 'Tải lên thất bại');
           }
         } finally {
           this.loading.upload = false;
@@ -574,15 +570,15 @@ export default {
       });
     },
 
-    // 获取预览码
+    // Lấy mã xem trước
     async handlePreview() {
       this.loading.preview = true;
       try {
         const res = await routineCIPreview({});
         this.previewQrcode = res.data.qrcode_url;
-        this.$message.success('预览二维码生成成功');
+        this.$message.success('Tạo mã QR xem trước thành công');
       } catch (err) {
-        this.$message.error(err.msg || '获取预览码失败');
+        this.$message.error(err.msg || 'Lấy mã xem trước thất bại');
       } finally {
         this.loading.preview = false;
       }
@@ -595,7 +591,7 @@ export default {
 @use 'sass:color';
 
 // ========================================
-// 设计系统变量 (SaaS 配色方案)
+// Biến design system (bảng màu SaaS)
 // ========================================
 $primary: #2563EB;
 $primary-light: #3B82F6;
@@ -628,14 +624,14 @@ $transition-normal: 200ms ease;
 $transition-slow: 300ms ease;
 
 // ========================================
-// 基础布局
+// Bố cục cơ bản
 // ========================================
 .routine-ci-upload {
   min-height: 100vh;
   background: $bg-primary;
   padding: 24px;
 
-  // 页面头部
+  // Phần đầu trang
   .page-header {
     margin-bottom: 24px;
 
@@ -678,7 +674,7 @@ $transition-slow: 300ms ease;
     }
   }
 
-  // 进度步骤
+  // Các bước tiến trình
   .progress-steps {
     display: flex;
     align-items: center;
@@ -747,7 +743,7 @@ $transition-slow: 300ms ease;
     }
   }
 
-  // 使用须知横幅
+  // Banner lưu ý sử dụng
   .notice-banner {
     background: $bg-card;
     border: 1px solid $border-color;
@@ -845,14 +841,14 @@ $transition-slow: 300ms ease;
     }
   }
 
-  // 主内容区域
+  // Vùng nội dung chính
   .main-content {
     display: flex;
     flex-direction: column;
     gap: 24px;
   }
 
-  // 卡片基础样式
+  // Kiểu cơ bản của thẻ
   .card {
     background: $bg-card;
     border-radius: $radius-lg;
@@ -925,7 +921,7 @@ $transition-slow: 300ms ease;
     }
   }
 
-  // 环境状态卡片
+  // Thẻ trạng thái môi trường
   .env-card {
     .status-overview {
       display: flex;
@@ -1048,7 +1044,7 @@ $transition-slow: 300ms ease;
     }
   }
 
-  // 警告样式
+  // Kiểu cảnh báo
   .alert {
     display: flex;
     gap: 14px;
@@ -1100,7 +1096,7 @@ $transition-slow: 300ms ease;
     }
   }
 
-  // 操作按钮区域
+  // Vùng nút thao tác
   .action-buttons {
     display: flex;
     gap: 12px;
@@ -1109,7 +1105,7 @@ $transition-slow: 300ms ease;
     border-top: 1px solid $border-color;
   }
 
-  // 配置卡片
+  // Thẻ cấu hình
   .config-card {
     .config-grid {
       display: flex;
@@ -1221,7 +1217,7 @@ $transition-slow: 300ms ease;
     }
   }
 
-  // 上传卡片
+  // Thẻ tải lên
   .upload-card {
     .badge {
       display: inline-flex;
@@ -1314,7 +1310,7 @@ $transition-slow: 300ms ease;
     }
   }
 
-  // 预览区域
+  // Vùng xem trước
   .preview-section {
     margin-top: 24px;
     padding-top: 24px;
@@ -1345,7 +1341,7 @@ $transition-slow: 300ms ease;
     }
   }
 
-  // 结果区域
+  // Vùng kết quả
   .result-section {
     margin-top: 24px;
 
@@ -1423,7 +1419,7 @@ $transition-slow: 300ms ease;
 }
 
 // ========================================
-// 按钮组件
+// Thành phần nút
 // ========================================
 .btn {
   display: inline-flex;
@@ -1542,7 +1538,7 @@ $transition-slow: 300ms ease;
 }
 
 // ========================================
-// 弹窗样式
+// Kiểu hộp thoại
 // ========================================
 ::v-deep .custom-dialog {
   border-radius: $radius-lg;
@@ -1576,7 +1572,7 @@ $transition-slow: 300ms ease;
   }
 }
 
-// 安装指南弹窗
+// Hộp thoại hướng dẫn cài đặt
 .install-guide {
   .guide-section {
     padding: 24px;
@@ -1908,7 +1904,7 @@ $transition-slow: 300ms ease;
   }
 }
 
-// 密钥上传弹窗
+// Hộp thoại tải lên khóa
 .key-upload-content {
   .info-card {
     padding: 16px 20px;
@@ -2006,7 +2002,7 @@ $transition-slow: 300ms ease;
 }
 
 // ========================================
-// 动画
+// Hiệu ứng động
 // ========================================
 .slide-fade-enter-active,
 .slide-fade-leave-active {

@@ -1,8 +1,8 @@
 <template>
-  <!-- 基础信息 -->
+  <!-- Thông tin cơ bản -->
   <el-row :gutter="24">
     <el-col :span="24">
-      <el-form-item label="商品类型：" props="is_virtual">
+      <el-form-item label="Loại sản phẩm:" props="is_virtual">
         <div
           class="virtual"
           :class="formValidate.virtual_type == item.id ? 'virtual_boder' : 'virtual_boder2'"
@@ -25,11 +25,11 @@
     </el-col>
 
     <el-col :span="24">
-      <el-form-item label="商品名称：" prop="store_name">
+      <el-form-item label="Tên sản phẩm:" prop="store_name">
         <el-input
           class="content_width"
           v-model="formValidate.store_name"
-          placeholder="请输入商品名称"
+          placeholder="Vui lòng nhập tên sản phẩm"
           maxlength="80"
           show-word-limit
         />
@@ -37,18 +37,18 @@
     </el-col>
 
     <el-col :span="24">
-      <el-form-item label="单位：" prop="unit_name">
+      <el-form-item label="Đơn vị:" prop="unit_name">
         <el-input
           class="input_width"
           v-model="formValidate.unit_name"
-          placeholder="请输入单位"
+          placeholder="Vui lòng nhập đơn vị"
           maxlength="5"
           show-word-limit
         />
       </el-form-item>
     </el-col>
     <el-col :span="24">
-      <el-form-item label="商品轮播图：" prop="slider_image">
+      <el-form-item label="Ảnh trình chiếu sản phẩm:" prop="slider_image">
         <div class="acea-row">
           <div
             class="pictrue"
@@ -74,29 +74,29 @@
           <el-input v-model="formValidate.slider_image[0]" style="display: none"></el-input>
         </div>
 
-        <div class="tips-info">建议尺寸：800*800，可拖拽改变图片顺序，默认首张图为主图，最多上传10张</div>
+        <div class="tips-info">Kích thước đề xuất: 800*800, có thể kéo thả để thay đổi thứ tự ảnh, mặc định ảnh đầu tiên là ảnh chính, tải lên tối đa 10 ảnh</div>
 
-        <!-- <div class="tips">(最多10张<br />750*750)</div> -->
+        <!-- <div class="tips">(Tối đa 10 ảnh<br />750*750)</div> -->
       </el-form-item>
     </el-col>
     <el-col :span="24" id="selectvideo">
-      <el-form-item label="添加视频：" prop="video_link">
+      <el-form-item label="Thêm video:" prop="video_link">
         <div v-if="!formValidate.video_link" class="videbox" @click="addVideo">
           <i class="el-icon-video-camera"></i>
         </div>
         <div class="box-video-style" v-if="formValidate.video_link">
           <video style="width: 100%; height: 100%" :src="formValidate.video_link" controls="controls">
-            您的浏览器不支持 video 标签。
+            Trình duyệt của bạn không hỗ trợ thẻ video.
           </video>
           <div class="mark"></div>
           <i class="el-icon-delete iconv" v-db-click @click="delVideo"></i>
         </div>
         <Progress class="progress" :percent="progress" :stroke-width="5" v-if="upload.videoIng" />
-        <div class="tips-info">建议时长：9～30秒，视频宽高比16:9</div>
+        <div class="tips-info">Thời lượng đề xuất: 9~30 giây, tỷ lệ khung hình video 16:9</div>
       </el-form-item>
     </el-col>
     <el-col :span="24">
-      <el-form-item label="商品分类：" prop="cate_id">
+      <el-form-item label="Danh mục sản phẩm:" prop="cate_id">
         <el-cascader
           class="content_width"
           v-model="formValidate.cate_id"
@@ -106,26 +106,26 @@
           :props="{ multiple: true, checkStrictly: true, emitPath: false }"
           clearable
         ></el-cascader>
-        <span class="addfont" v-db-click @click="addCate">新增分类</span>
+        <span class="addfont" v-db-click @click="addCate">Thêm danh mục</span>
       </el-form-item>
     </el-col>
     <el-col :span="24">
-      <el-form-item label="商品标签：">
+      <el-form-item label="Nhãn sản phẩm:">
         <div class="flex">
           <useLabel
             v-if="tileLabelList.length"
             :activeId.sync="formValidate.label_list"
             :listData="tileLabelList"
           ></useLabel>
-          <el-button v-db-click @click="addGoodsTag">选择标签</el-button>
+          <el-button v-db-click @click="addGoodsTag">Chọn nhãn</el-button>
         </div>
       </el-form-item>
     </el-col>
     <el-col :span="24">
-      <el-form-item label="商品状态：">
+      <el-form-item label="Trạng thái sản phẩm:">
         <el-radio-group v-model="formValidate.is_show">
-          <el-radio :label="1" class="radio">上架</el-radio>
-          <el-radio :label="0">下架</el-radio>
+          <el-radio :label="1" class="radio">Đang bán</el-radio>
+          <el-radio :label="0">Ngừng bán</el-radio>
         </el-radio-group>
       </el-form-item>
     </el-col>

@@ -5,7 +5,7 @@
     <title><?php echo $Title; ?> - <?php echo $Powered; ?></title>
     <link rel="stylesheet" href="./css/install.css?v=9.0"/>
     <link rel="stylesheet" href="./css/step3.css"/>
-    <!-- 引入样式 -->
+    <!-- Import style -->
     <link rel="stylesheet" href="./css/theme-chalk.css">
     <!-- import Vue before Element -->
     <script src="./js/vue2.6.11.js"></script>
@@ -15,41 +15,41 @@
 <body>
 <div class="wrap" id="step3">
     <div class="title">
-        创建数据
+        Tạo dữ liệu
     </div>
     <section class="section">
         <form id="J_install_form" action="index.php?step=4" method="post">
             <div class="server"  ref="mianscroll">
                 <table width="100%">
                     <tr>
-                        <td class="td1" width="100">数据库信息</td>
+                        <td class="td1" width="100">Thông tin cơ sở dữ liệu</td>
                         <td class="td1" width="200">&nbsp;</td>
                         <td class="td1">&nbsp;</td>
                     </tr>
 
                     <tr>
-                        <td class="tar">数据库用户名：</td>
+                        <td class="tar">Tên người dùng cơ sở dữ liệu:</td>
                         <td><input type="text" name="dbuser" id="dbuser" value="<?php echo $MYSQL_USER; ?>" class="input"></td>
                         <td>
                             <div id="J_install_tip_dbuser"></div>
                         </td>
                     </tr>
                     <tr>
-                        <td class="tar">数据库密码：</td>
+                        <td class="tar">Mật khẩu cơ sở dữ liệu:</td>
                         <td><input type="password" name="dbpw" id="dbpw" value="<?php echo $MYSQL_PASSWORD; ?>" class="input" autoComplete="off"></td>
                         <td>
                             <div id="J_install_tip_dbpw"></div>
                         </td>
                     </tr>
                     <tr>
-                        <td class="tar">数据库名：</td>
+                        <td class="tar">Tên cơ sở dữ liệu:</td>
                         <td><input type="text" name="dbname" id="dbname" value="<?php echo $MYSQL_DATABASE; ?>" class="input"></td>
                         <td>
                             <div id="J_install_tip_dbname"></div>
                         </td>
                     </tr>
                     <tr>
-                        <td class="tar">高级设置：</td>
+                        <td class="tar">Cài đặt nâng cao:</td>
                         <td colspan="2">
                             <el-switch
                                     v-model="value"
@@ -61,14 +61,14 @@
                         </td>
                     </tr>
                     <tr v-show="value">
-                        <td class="tar">数据库服务器：</td>
+                        <td class="tar">Máy chủ cơ sở dữ liệu:</td>
                         <td><input type="text" name="dbhost" id="dbhost" value="<?php echo $MYSQL_HOST_IP; ?>" class="input"></td>
                         <td>
                             <div id="J_install_tip_dbhost"></div>
                         </td>
                     </tr>
                     <tr v-show="value">
-                        <td class="tar">数据库端口：</td>
+                        <td class="tar">Cổng cơ sở dữ liệu:</td>
                         <td><input type="text" name="dbport" id="dbport" value="<?php echo $MYSQL_PORT; ?>" class="input"
                                    onBlur="mysqlDbPwd(0)"></td>
                         <td>
@@ -77,7 +77,7 @@
                     </tr>
 
                     <tr v-show="value">
-                        <td class="tar">数据库表前缀：</td>
+                        <td class="tar">Tiền tố bảng cơ sở dữ liệu:</td>
                         <td><input type="text" name="dbprefix" id="dbprefix" value="eb_" class="input"></td>
                         <td></td>
                     </tr>
@@ -85,12 +85,12 @@
                 </table>
                 <table width="100%">
                     <tr>
-                        <td class="td1" width="100">管理员信息</td>
+                        <td class="td1" width="100">Thông tin quản trị viên</td>
                         <td class="td1" width="200">&nbsp;</td>
                         <td class="td1">&nbsp;</td>
                     </tr>
                     <tr>
-                        <td class="tar">管理员帐号：</td>
+                        <td class="tar">Tài khoản quản trị viên:</td>
                         <td><input type="text" name="manager" id="manager" value="admin" class="input"
                                    onblur="checkForm()"></td>
                         <td>
@@ -98,24 +98,24 @@
                         </td>
                     </tr>
                     <tr>
-                        <td class="tar">管理员密码：</td>
+                        <td class="tar">Mật khẩu quản trị viên:</td>
                         <td><input type="password" name="manager_pwd" id="manager_pwd" class="input" autoComplete="off"
-                                   placeholder="请输入密码(至少6个字符)"  placeholder-class="pl-style" onblur="checkForm()">
+                                   placeholder="Vui lòng nhập mật khẩu (ít nhất 6 ký tự)"  placeholder-class="pl-style" onblur="checkForm()">
                         </td>
                         <td>
-                            <div id="J_install_tip_manager_pwd"><span class="gray">请输入至少6个字符密码</span></div>
+                            <div id="J_install_tip_manager_pwd"><span class="gray">Vui lòng nhập mật khẩu có ít nhất 6 ký tự</span></div>
                         </td>
                     </tr>
                     <tr>
-                        <td class="tar">重复密码：</td>
+                        <td class="tar">Nhập lại mật khẩu:</td>
                         <td><input type="password" name="manager_ckpwd" id="manager_ckpwd" class="input"
-                                   autoComplete="off" placeholder="请再次输入密码" onkeyup="checkForm()"></td>
+                                   autoComplete="off" placeholder="Vui lòng nhập lại mật khẩu" onkeyup="checkForm()"></td>
                         <td>
                             <div id="J_install_tip_manager_ckpwd"></div>
                         </td>
                     </tr>
                     <tr>
-                        <td class="tar">演示数据：</td>
+                        <td class="tar">Dữ liệu mẫu:</td>
                         <td colspan="2"><input style="width:14px;height:14px;" type="checkbox" id="demo" name="demo"
                                                value="demo" checked></td>
                     </tr>
@@ -123,56 +123,56 @@
                 </table>
                 <table>
                     <tr>
-                        <td class="td1" width="100">缓存设置</td>
+                        <td class="td1" width="100">Cài đặt bộ nhớ đệm</td>
                         <td class="td1" width="200">&nbsp;</td>
                         <td class="td1">&nbsp;</td>
                     </tr>
                     <tr>
-                        <td class="tar">缓存方式：</td>
+                        <td class="tar">Phương thức bộ nhớ đệm:</td>
                         <td>
-                            <el-radio v-model="radio" :label="0" name="cache_type" id="cache_type1">文件缓存</el-radio>
-                            <el-radio v-model="radio" :label="1" name="cache_type" id="cache_type2">redis缓存</el-radio>
+                            <el-radio v-model="radio" :label="0" name="cache_type" id="cache_type1">Bộ nhớ đệm dạng tệp</el-radio>
+                            <el-radio v-model="radio" :label="1" name="cache_type" id="cache_type2">Bộ nhớ đệm redis</el-radio>
                         </td>
                         <td></td>
                     </tr>
                     <tr v-show="radio == 1">
-                        <td class="tar">服务器地址：</td>
+                        <td class="tar">Địa chỉ máy chủ:</td>
                         <td><input type="text" name="rbhost" id="rbhost" value="<?php echo $REDIS_HOST_IP; ?>" class="input"></td>
                         <td>
-                            <div id="J_install_redis_host"><span class="gray">redis服务器地址，一般为127.0.0.1</span></div>
+                            <div id="J_install_redis_host"><span class="gray">Địa chỉ máy chủ redis, thường là 127.0.0.1</span></div>
                         </td>
                     </tr>
                     <tr v-show="radio == 1">
-                        <td class="tar">端口号：</td>
+                        <td class="tar">Số cổng:</td>
                         <td><input type="text" name="rbport" id="rbport" value="<?php echo $REDIS_PORT; ?>" class="input" autoComplete="off">
                         </td>
                         <td>
-                            <div id="J_install_redis_port"><span class="gray">redis端口,默认为6379</span></div>
+                            <div id="J_install_redis_port"><span class="gray">Cổng redis, mặc định là 6379</span></div>
                         </td>
                     </tr>
                     <tr v-show="radio == 1">
-                        <td class="tar">数据库：</td>
+                        <td class="tar">Cơ sở dữ liệu:</td>
                         <td><input type="text" name="rbselect" id="rbselect" value="<?php echo $REDIS_DATABASE; ?>" class="input" autoComplete="off">
                         </td>
                         <td>
-                            <div id="J_install_redis_select"><span class="gray">redis数据库，默认为0,一般不做更改</span></div>
+                            <div id="J_install_redis_select"><span class="gray">Cơ sở dữ liệu redis, mặc định là 0, thường không cần thay đổi</span></div>
                         </td>
                     </tr>
                     <tr v-show="radio == 1" id="scrollBtn">
-                        <td class="tar">数据库密码：</td>
+                        <td class="tar">Mật khẩu cơ sở dữ liệu:</td>
                         <td><input type="text" name="rbpw" id="rbpw" value="<?php echo $REDIS_PASSWORD; ?>" class="input" autoComplete="off"></td>
                         <td>
-                            <div id="J_install_redis_dbpw"><span class="gray">redis数据库密码</span></div>
+                            <div id="J_install_redis_dbpw"><span class="gray">Mật khẩu cơ sở dữ liệu redis</span></div>
                         </td>
                     </tr>
                 </table>
             </div>
             <div class="bottom-btn">
                 <div class="bottom tac up-btn">
-                    <a href="./index.php?step=2" class="btn">上一步</a>
+                    <a href="./index.php?step=2" class="btn">Bước trước</a>
                 </div>
                 <div class="bottom tac next">
-                    <a @click="submitForm();" class="btn">下一步</a>
+                    <a @click="submitForm();" class="btn">Bước tiếp theo</a>
                 </div>
             </div>
         </form>
@@ -182,32 +182,32 @@
     <script src="./js/validate.js?v=9.0"></script>
     <script src="./js/ajaxForm.js?v=9.0"></script>
     <script>
-        //验证管理员信息
+        //Xác thực thông tin quản trị viên
         function checkForm() {
-            let manager = $.trim($('#manager').val());				//用户名表单
-            let manager_pwd = $.trim($('#manager_pwd').val());				//密码表单
-            let manager_ckpwd = $.trim($('#manager_ckpwd').val());		//密码提示区
+            let manager = $.trim($('#manager').val());				//Form tên đăng nhập
+            let manager_pwd = $.trim($('#manager_pwd').val());				//Form mật khẩu
+            let manager_ckpwd = $.trim($('#manager_ckpwd').val());		//Khu vực gợi ý mật khẩu
             if (manager.length == 0) {
-                $('#J_install_tip_manager').html('<span for="dbname" generated="true" class="tips_error" style="">请输入管理账号</span>');
+                $('#J_install_tip_manager').html('<span for="dbname" generated="true" class="tips_error" style="">Vui lòng nhập tài khoản quản trị</span>');
                 return false;
             }
             if (!(/^[a-zA-Z0-9]{0,32}$/.test(manager))) {
-                $('#J_install_tip_manager').html('<span generated="true" class="tips_error" style="">账号必须为英文或者数字</span>');
+                $('#J_install_tip_manager').html('<span generated="true" class="tips_error" style="">Tài khoản chỉ được gồm chữ cái tiếng Anh hoặc chữ số</span>');
                 return false;
             } else {
-                $('#J_install_tip_manager').html('<span generated="true" class="tips_success" style="">用户名可用</span>');
+                $('#J_install_tip_manager').html('<span generated="true" class="tips_success" style="">Tên người dùng hợp lệ</span>');
             }
             if (manager_pwd.length < 6) {
-                $('#J_install_tip_manager_pwd').html('<span for="dbname" generated="true" class="tips_error" style="">管理员密码必须5位数以上</span>');
+                $('#J_install_tip_manager_pwd').html('<span for="dbname" generated="true" class="tips_error" style="">Mật khẩu quản trị viên phải có từ 5 ký tự trở lên</span>');
                 return false;
             } else {
-                $('#J_install_tip_manager_pwd').html('<span generated="true" class="tips_success" style="">密码可用</span>');
+                $('#J_install_tip_manager_pwd').html('<span generated="true" class="tips_success" style="">Mật khẩu hợp lệ</span>');
             }
             if (manager_ckpwd != manager_pwd) {
-                $('#J_install_tip_manager_ckpwd').html('<span for="dbname" generated="true" class="tips_error" style="">两次密码不一致</span>');
+                $('#J_install_tip_manager_ckpwd').html('<span for="dbname" generated="true" class="tips_error" style="">Mật khẩu nhập lại không khớp</span>');
                 return false;
             } else {
-                $('#J_install_tip_manager_ckpwd').html('<span generated="true" class="tips_success" style="">密码正确</span>');
+                $('#J_install_tip_manager_ckpwd').html('<span generated="true" class="tips_success" style="">Mật khẩu chính xác</span>');
             }
             return true;
         }
@@ -280,95 +280,95 @@
                     this.mysqlDbPwd().then(res => {
                         if (res == 2002) {
                             this.value = true
-                            $('#J_install_tip_dbhost').html('<span for="dbname" generated="true" class="tips_error" >地址或端口错误</span>');
-                            $('#J_install_tip_dbport').html('<span for="dbname" generated="true" class="tips_error" >地址或端口错误</span>');
+                            $('#J_install_tip_dbhost').html('<span for="dbname" generated="true" class="tips_error" >Địa chỉ hoặc cổng không đúng</span>');
+                            $('#J_install_tip_dbport').html('<span for="dbname" generated="true" class="tips_error" >Địa chỉ hoặc cổng không đúng</span>');
                             return false;
                         } else if (res == -1) {
                             $('#J_install_tip_dbhost').html('');
                             $('#J_install_tip_dbport').html('');
-                            $('#J_install_tip_dbname').html('<span for="dbname" generated="true" class="tips_error" >数据库链接配置失败</span>');
+                            $('#J_install_tip_dbname').html('<span for="dbname" generated="true" class="tips_error" >Cấu hình kết nối cơ sở dữ liệu thất bại</span>');
                             return false;
                         } else if (res == -2) {
                             $('#J_install_tip_dbhost').html('');
                             $('#J_install_tip_dbport').html('');
-                            $('#J_install_tip_dbname').html('<span for="dbname" generated="true" class="tips_error" >请在mysql配置文件修sql-mode或sql_mode为NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION</span><a href="https://doc.crmeb.com/web/single/crmeb_v4/936" target="_blank">查看文档</a>');
+                            $('#J_install_tip_dbname').html('<span for="dbname" generated="true" class="tips_error" >Vui lòng sửa sql-mode hoặc sql_mode trong tệp cấu hình mysql thành NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION</span><a href="https://doc.crmeb.com/web/single/crmeb_v4/936" target="_blank">Xem tài liệu</a>');
                             return false;
                         } else if (res == 1045) {
                             $('#J_install_tip_dbhost').html('');
                             $('#J_install_tip_dbport').html('');
                             $('#J_install_tip_dbname').html('');
-                            $('#J_install_tip_dbuser').html('<span for="dbname" generated="true" class="tips_error" >用户名或密码错误</span>');
-                            $('#J_install_tip_dbpw').html('<span for="dbname" generated="true" class="tips_error" >用户名或密码错误</span>');
+                            $('#J_install_tip_dbuser').html('<span for="dbname" generated="true" class="tips_error" >Tên người dùng hoặc mật khẩu không đúng</span>');
+                            $('#J_install_tip_dbpw').html('<span for="dbname" generated="true" class="tips_error" >Tên người dùng hoặc mật khẩu không đúng</span>');
                             return false;
                         } else if (res == -4) {
                             $('#J_install_tip_dbhost').html('');
                             $('#J_install_tip_dbport').html('');
                             $('#J_install_tip_dbuser').html('');
                             $('#J_install_tip_dbpw').html('');
-                            $('#J_install_tip_dbname').html('<span for="dbname" generated="true" class="tips_error" >无权限创建数据，请先手动创建数据库</span>');
+                            $('#J_install_tip_dbname').html('<span for="dbname" generated="true" class="tips_error" >Không có quyền tạo dữ liệu, vui lòng tạo cơ sở dữ liệu thủ công trước</span>');
                             return false;
                         } else if (res == -3) {
                             $('#J_install_tip_dbhost').html('');
                             $('#J_install_tip_dbport').html('');
                             $('#J_install_tip_dbuser').html('');
                             $('#J_install_tip_dbpw').html('');
-                            $('#J_install_tip_dbname').html('<span for="dbname" generated="true" class="tips_error" >数据库不为空，请更换一个数据库</span>');
+                            $('#J_install_tip_dbname').html('<span for="dbname" generated="true" class="tips_error" >Cơ sở dữ liệu không trống, vui lòng dùng cơ sở dữ liệu khác</span>');
                             return false;
                         } else if (res == -5) {
                             $('#J_install_tip_dbhost').html('');
                             $('#J_install_tip_dbport').html('');
                             $('#J_install_tip_dbuser').html('');
                             $('#J_install_tip_dbpw').html('');
-                            $('#J_install_tip_dbname').html('<span for="dbname" generated="true" class="tips_error" >MySql数据库必须是5.6及以上版本</span>');
+                            $('#J_install_tip_dbname').html('<span for="dbname" generated="true" class="tips_error" >Cơ sở dữ liệu MySql phải là phiên bản 5.6 trở lên</span>');
                             return false;
                         } else if (res == 1) {
                             $('#J_install_tip_dbhost').html('');
                             $('#J_install_tip_dbport').html('');
                             $('#J_install_tip_dbuser').html('');
                             $('#J_install_tip_dbpw').html('');
-                            $('#J_install_tip_dbname').html('<span generated="true" class="tips_success" style="">数据库配置成功</span>');
+                            $('#J_install_tip_dbname').html('<span generated="true" class="tips_success" style="">Cấu hình cơ sở dữ liệu thành công</span>');
                         } else {
                             $('#J_install_tip_dbhost').html('');
                             $('#J_install_tip_dbport').html('');
                             $('#J_install_tip_dbuser').html('');
                             $('#J_install_tip_dbpw').html('');
-                            $('#J_install_tip_dbname').html('<span for="dbname" generated="true" class="tips_error" >未知错误</span>');
+                            $('#J_install_tip_dbname').html('<span for="dbname" generated="true" class="tips_error" >Lỗi không xác định</span>');
                             return false;
                         }
                         let redisStatus = $("input[name='cache_type']:checked").val();
                         if (redisStatus == 1) {
                             this.redisDbPwd().then(msg => {
                                 if (msg == -1) {
-                                    $('#J_install_redis_host').html('<span for="dbname" generated="true" class="tips_error" style="">Redis扩展没有安装</span>');
+                                    $('#J_install_redis_host').html('<span for="dbname" generated="true" class="tips_error" style="">Chưa cài đặt tiện ích mở rộng Redis</span>');
                                     this.$nextTick(() => {this.jumpButton()});
                                     return false;
                                 } else if (msg == -3) {
                                     $('#J_install_redis_host').html('');
-                                    $('#J_install_redis_dbpw').html('<span for="dbname" generated="true" class="tips_error" style="">Redis数据库没有启动或者配置错误</span>');
+                                    $('#J_install_redis_dbpw').html('<span for="dbname" generated="true" class="tips_error" style="">Cơ sở dữ liệu Redis chưa khởi động hoặc cấu hình sai</span>');
                                     this.$nextTick(() => {this.jumpButton()});
 
                                     return false;
                                 } else if (msg == 1) {
                                     $('#J_install_redis_host').html('');
-                                    $('#J_install_redis_dbpw').html('<span generated="true" class="tips_success" style="">Redis配置成功</span>');
+                                    $('#J_install_redis_dbpw').html('<span generated="true" class="tips_success" style="">Cấu hình Redis thành công</span>');
                                 } else {
                                     $('#J_install_redis_host').html('');
-                                    $('#J_install_redis_dbpw').html('<span for="dbname" generated="true" class="tips_error" style="">Redis配置失败</span>');
+                                    $('#J_install_redis_dbpw').html('<span for="dbname" generated="true" class="tips_error" style="">Cấu hình Redis thất bại</span>');
                                     this.$nextTick(() => {this.jumpButton()});
                                     return false;
                                 }
                                 if (checkForm()) {
-                                    $("#J_install_form").submit(); // ajax 验证通过后再提交表单
+                                    $("#J_install_form").submit(); // Sau khi xác thực ajax thành công mới submit form
                                 }
                             }).catch(err => {
                                 $('#J_install_redis_host').html('');
-                                $('#J_install_redis_dbpw').html('<span for="dbname" generated="true" class="tips_error" >未知错误</span>');
+                                $('#J_install_redis_dbpw').html('<span for="dbname" generated="true" class="tips_error" >Lỗi không xác định</span>');
                                 this.$nextTick(() => {this.jumpButton()});
                                 return false;
                             })
                         } else {
                             if (checkForm()) {
-                                $("#J_install_form").submit(); // ajax 验证通过后再提交表单
+                                $("#J_install_form").submit(); // Sau khi xác thực ajax thành công mới submit form
                             }
                         }
                     }).catch(err => {
@@ -376,7 +376,7 @@
                         $('#J_install_tip_dbport').html('');
                         $('#J_install_tip_dbuser').html('');
                         $('#J_install_tip_dbpw').html('');
-                        $('#J_install_tip_dbname').html('<span for="dbname" generated="true" class="tips_error" >未知错误1</span>');
+                        $('#J_install_tip_dbname').html('<span for="dbname" generated="true" class="tips_error" >Lỗi không xác định 1</span>');
                         return false;
                     })
                 }

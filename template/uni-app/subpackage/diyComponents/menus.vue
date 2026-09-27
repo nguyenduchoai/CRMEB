@@ -31,7 +31,7 @@
           </view>
         </view>
 
-        <!-- 列表样式 -->
+        <!-- Kiểu danh sách -->
         <view class="list-menu" v-if="menuStyleConfig === 2">
           <view class="list-item" v-for="(item, index) in menus" :key="index">
             <view
@@ -123,7 +123,7 @@
           </view>
         </view>
 
-        <!-- 宫格/排列样式 -->
+        <!-- Kiểu lưới/xếp hàng -->
         <view v-else>
           <view class="swiper" v-if="isShowConfig">
             <swiper
@@ -283,7 +283,7 @@
                           :class="['iconfont', item.icon]"
                           :style="[iconContentStyle]"
                         ></view>
-                        <!-- 角标数量 -->
+                        <!-- Số lượng trên badge -->
                         <text v-if="item.num" class="num">{{ item.num }}</text>
                       </view>
                     </block>
@@ -326,7 +326,7 @@
                             :class="['iconfont', item.icon]"
                             :style="[iconContentStyle]"
                           ></view>
-                          <!-- 角标数量 -->
+                          <!-- Số lượng trên badge -->
                           <text v-if="item.num" class="num">{{
                             item.num
                           }}</text>
@@ -449,7 +449,7 @@ export default {
       }
       return borderRadius;
     },
-    //分几行展示，一行展示多少个
+    //Hiển thị mấy dòng, mỗi dòng hiển thị bao nhiêu sản phẩm
     gridColumns() {
       if (this.dataConfig.number.tabVal == 0) {
         return {
@@ -606,8 +606,8 @@ export default {
   },
   methods: {
     getSwiperCount() {
-      /* rowsNum 显示行数  0: 1行  1: 2行 2: 3行 3 4行 */
-      /* number  单行显示  0: 3个  1: 4个 2: 5个 */
+      /* rowsNum: số dòng hiển thị  0: 1 dòng  1: 2 dòng  2: 3 dòng  3: 4 dòng */
+      /* number: hiển thị một dòng  0: 3 sản phẩm  1: 4 sản phẩm  2: 5 sản phẩm */
       this.pageNum((this.rowsNum + 1) * (this.number + 3));
     },
     bannerfun(e) {

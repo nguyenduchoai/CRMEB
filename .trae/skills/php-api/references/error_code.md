@@ -1,273 +1,273 @@
-# 错误码文档
+# Tài liệu mã lỗi
 
-## 1. 概述
+## 1. Tổng quan
 
-本文档描述了 CRMEB 项目的错误码规范，包括错误码的分类、定义、使用方法等，旨在统一错误码格式，提高错误处理的一致性和可维护性。
+Tài liệu này mô tả quy chuẩn mã lỗi của dự án CRMEB, bao gồm cách phân loại, định nghĩa, cách sử dụng mã lỗi, v.v., nhằm thống nhất định dạng mã lỗi, nâng cao tính nhất quán và khả năng bảo trì của việc xử lý lỗi.
 
-## 2. 错误码分类
+## 2. Phân loại mã lỗi
 
-### 2.1 HTTP 状态码
+### 2.1 Mã trạng thái HTTP
 
-- **1xx**: 信息性状态码，表示请求已接收，继续处理
-- **2xx**: 成功状态码，表示请求已成功处理
-- **3xx**: 重定向状态码，表示需要进一步操作以完成请求
-- **4xx**: 客户端错误状态码，表示请求包含语法错误或无法完成请求
-- **5xx**: 服务器错误状态码，表示服务器在处理请求时发生错误
+- **1xx**: Mã trạng thái thông tin, cho biết yêu cầu đã được tiếp nhận và đang tiếp tục xử lý
+- **2xx**: Mã trạng thái thành công, cho biết yêu cầu đã được xử lý thành công
+- **3xx**: Mã trạng thái chuyển hướng, cho biết cần thao tác thêm để hoàn tất yêu cầu
+- **4xx**: Mã trạng thái lỗi phía client, cho biết yêu cầu có lỗi cú pháp hoặc không thể hoàn tất yêu cầu
+- **5xx**: Mã trạng thái lỗi máy chủ, cho biết máy chủ gặp lỗi khi xử lý yêu cầu
 
-### 2.2 业务错误码
+### 2.2 Mã lỗi nghiệp vụ
 
-业务错误码由 5 位数字组成，格式为 `XXXXX`，其中：
+Mã lỗi nghiệp vụ gồm 5 chữ số, có định dạng `XXXXX`, trong đó:
 
-- **第一位**: 错误类型标识
-  - `1`: 系统错误
-  - `2`: 业务错误
-  - `3`: 参数错误
-  - `4`: 权限错误
-  - `5`: 资源错误
-  - `6`: 数据库错误
-  - `7`: 第三方服务错误
-  - `8`: 其他错误
+- **Chữ số đầu tiên**: Ký hiệu loại lỗi
+  - `1`: Lỗi hệ thống
+  - `2`: Lỗi nghiệp vụ
+  - `3`: Lỗi tham số
+  - `4`: Lỗi phân quyền
+  - `5`: Lỗi tài nguyên
+  - `6`: Lỗi cơ sở dữ liệu
+  - `7`: Lỗi dịch vụ bên thứ ba
+  - `8`: Lỗi khác
 
-- **后四位**: 具体错误编码，从 0000 开始递增
+- **Bốn chữ số cuối**: Mã lỗi cụ thể, tăng dần bắt đầu từ 0000
 
-## 3. 系统错误码
+## 3. Mã lỗi hệ thống
 
-### 3.1 系统错误 (1xxxxx)
+### 3.1 Lỗi hệ thống (1xxxxx)
 
-| 错误码 | 描述 | HTTP 状态码 |
+| Mã lỗi | Mô tả | Mã trạng thái HTTP |
 |-------|------|-------------|
-| 10001 | 系统内部错误 | 500 |
-| 10002 | 系统维护中 | 503 |
-| 10003 | 系统繁忙 | 503 |
-| 10004 | 服务不可用 | 503 |
-| 10005 | 网关错误 | 502 |
+| 10001 | Lỗi nội bộ hệ thống | 500 |
+| 10002 | Hệ thống đang bảo trì | 503 |
+| 10003 | Hệ thống đang bận | 503 |
+| 10004 | Dịch vụ không khả dụng | 503 |
+| 10005 | Lỗi gateway | 502 |
 
-### 3.2 业务错误 (2xxxxx)
+### 3.2 Lỗi nghiệp vụ (2xxxxx)
 
-| 错误码 | 描述 | HTTP 状态码 |
+| Mã lỗi | Mô tả | Mã trạng thái HTTP |
 |-------|------|-------------|
-| 20001 | 操作失败 | 400 |
-| 20002 | 业务逻辑错误 | 400 |
-| 20003 | 数据已存在 | 400 |
-| 20004 | 数据不存在 | 404 |
-| 20005 | 操作不允许 | 403 |
+| 20001 | Thao tác thất bại | 400 |
+| 20002 | Lỗi logic nghiệp vụ | 400 |
+| 20003 | Dữ liệu đã tồn tại | 400 |
+| 20004 | Dữ liệu không tồn tại | 404 |
+| 20005 | Thao tác không được phép | 403 |
 
-### 3.3 参数错误 (3xxxxx)
+### 3.3 Lỗi tham số (3xxxxx)
 
-| 错误码 | 描述 | HTTP 状态码 |
+| Mã lỗi | Mô tả | Mã trạng thái HTTP |
 |-------|------|-------------|
-| 30001 | 参数不能为空 | 400 |
-| 30002 | 参数格式错误 | 400 |
-| 30003 | 参数类型错误 | 400 |
-| 30004 | 参数超出范围 | 400 |
-| 30005 | 参数验证失败 | 422 |
+| 30001 | Tham số không được để trống | 400 |
+| 30002 | Tham số sai định dạng | 400 |
+| 30003 | Tham số sai kiểu dữ liệu | 400 |
+| 30004 | Tham số vượt quá phạm vi | 400 |
+| 30005 | Xác thực tham số thất bại | 422 |
 
-### 3.4 权限错误 (4xxxxx)
+### 3.4 Lỗi phân quyền (4xxxxx)
 
-| 错误码 | 描述 | HTTP 状态码 |
+| Mã lỗi | Mô tả | Mã trạng thái HTTP |
 |-------|------|-------------|
-| 40001 | 未登录 | 401 |
-| 40002 | 登录已过期 | 401 |
-| 40003 | 无权限访问 | 403 |
-| 40004 | 权限不足 | 403 |
-| 40005 | 令牌无效 | 401 |
+| 40001 | Chưa đăng nhập | 401 |
+| 40002 | Phiên đăng nhập đã hết hạn | 401 |
+| 40003 | Không có quyền truy cập | 403 |
+| 40004 | Không đủ quyền | 403 |
+| 40005 | Token không hợp lệ | 401 |
 
-### 3.5 资源错误 (5xxxxx)
+### 3.5 Lỗi tài nguyên (5xxxxx)
 
-| 错误码 | 描述 | HTTP 状态码 |
+| Mã lỗi | Mô tả | Mã trạng thái HTTP |
 |-------|------|-------------|
-| 50001 | 资源不存在 | 404 |
-| 50002 | 资源已删除 | 404 |
-| 50003 | 资源已锁定 | 400 |
-| 50004 | 资源不足 | 400 |
-| 50005 | 资源已过期 | 400 |
+| 50001 | Tài nguyên không tồn tại | 404 |
+| 50002 | Tài nguyên đã bị xóa | 404 |
+| 50003 | Tài nguyên đã bị khóa | 400 |
+| 50004 | Không đủ tài nguyên | 400 |
+| 50005 | Tài nguyên đã hết hạn | 400 |
 
-### 3.6 数据库错误 (6xxxxx)
+### 3.6 Lỗi cơ sở dữ liệu (6xxxxx)
 
-| 错误码 | 描述 | HTTP 状态码 |
+| Mã lỗi | Mô tả | Mã trạng thái HTTP |
 |-------|------|-------------|
-| 60001 | 数据库连接失败 | 500 |
-| 60002 | 数据库查询失败 | 500 |
-| 60003 | 数据库更新失败 | 500 |
-| 60004 | 数据库插入失败 | 500 |
-| 60005 | 数据库删除失败 | 500 |
-| 60006 | 数据库事务失败 | 500 |
+| 60001 | Kết nối cơ sở dữ liệu thất bại | 500 |
+| 60002 | Truy vấn cơ sở dữ liệu thất bại | 500 |
+| 60003 | Cập nhật cơ sở dữ liệu thất bại | 500 |
+| 60004 | Chèn dữ liệu vào cơ sở dữ liệu thất bại | 500 |
+| 60005 | Xóa dữ liệu trong cơ sở dữ liệu thất bại | 500 |
+| 60006 | Giao dịch cơ sở dữ liệu (transaction) thất bại | 500 |
 
-### 3.7 第三方服务错误 (7xxxxx)
+### 3.7 Lỗi dịch vụ bên thứ ba (7xxxxx)
 
-| 错误码 | 描述 | HTTP 状态码 |
+| Mã lỗi | Mô tả | Mã trạng thái HTTP |
 |-------|------|-------------|
-| 70001 | 第三方服务连接失败 | 500 |
-| 70002 | 第三方服务超时 | 504 |
-| 70003 | 第三方服务返回错误 | 500 |
-| 70004 | 第三方服务认证失败 | 401 |
-| 70005 | 第三方服务限流 | 429 |
+| 70001 | Kết nối dịch vụ bên thứ ba thất bại | 500 |
+| 70002 | Hết thời gian chờ dịch vụ bên thứ ba | 504 |
+| 70003 | Dịch vụ bên thứ ba trả về lỗi | 500 |
+| 70004 | Xác thực dịch vụ bên thứ ba thất bại | 401 |
+| 70005 | Dịch vụ bên thứ ba giới hạn tần suất truy cập (rate limit) | 429 |
 
-## 4. 模块错误码
+## 4. Mã lỗi theo module
 
-### 4.1 用户模块 (801xx)
+### 4.1 Module người dùng (801xx)
 
-| 错误码 | 描述 | HTTP 状态码 |
+| Mã lỗi | Mô tả | Mã trạng thái HTTP |
 |-------|------|-------------|
-| 80101 | 用户名或密码错误 | 401 |
-| 80102 | 用户不存在 | 404 |
-| 80103 | 用户已存在 | 400 |
-| 80104 | 用户状态异常 | 400 |
-| 80105 | 验证码错误 | 400 |
-| 80106 | 验证码已过期 | 400 |
-| 80107 | 手机号格式错误 | 400 |
-| 80108 | 邮箱格式错误 | 400 |
+| 80101 | Tên đăng nhập hoặc mật khẩu không đúng | 401 |
+| 80102 | Người dùng không tồn tại | 404 |
+| 80103 | Người dùng đã tồn tại | 400 |
+| 80104 | Trạng thái người dùng bất thường | 400 |
+| 80105 | Mã xác thực không đúng | 400 |
+| 80106 | Mã xác thực đã hết hạn | 400 |
+| 80107 | Số điện thoại sai định dạng | 400 |
+| 80108 | Email sai định dạng | 400 |
 
-### 4.2 商品模块 (802xx)
+### 4.2 Module sản phẩm (802xx)
 
-| 错误码 | 描述 | HTTP 状态码 |
+| Mã lỗi | Mô tả | Mã trạng thái HTTP |
 |-------|------|-------------|
-| 80201 | 商品不存在 | 404 |
-| 80202 | 商品已下架 | 400 |
-| 80203 | 商品库存不足 | 400 |
-| 80204 | 商品价格异常 | 400 |
-| 80205 | 商品分类不存在 | 404 |
+| 80201 | Sản phẩm không tồn tại | 404 |
+| 80202 | Sản phẩm đã ngừng bán | 400 |
+| 80203 | Sản phẩm không đủ tồn kho | 400 |
+| 80204 | Giá sản phẩm bất thường | 400 |
+| 80205 | Danh mục sản phẩm không tồn tại | 404 |
 
-### 4.3 订单模块 (803xx)
+### 4.3 Module đơn hàng (803xx)
 
-| 错误码 | 描述 | HTTP 状态码 |
+| Mã lỗi | Mô tả | Mã trạng thái HTTP |
 |-------|------|-------------|
-| 80301 | 订单不存在 | 404 |
-| 80302 | 订单状态异常 | 400 |
-| 80303 | 订单已取消 | 400 |
-| 80304 | 订单已完成 | 400 |
-| 80305 | 订单支付失败 | 400 |
-| 80306 | 订单支付超时 | 400 |
+| 80301 | Đơn hàng không tồn tại | 404 |
+| 80302 | Trạng thái đơn hàng bất thường | 400 |
+| 80303 | Đơn hàng đã bị hủy | 400 |
+| 80304 | Đơn hàng đã hoàn thành | 400 |
+| 80305 | Thanh toán đơn hàng thất bại | 400 |
+| 80306 | Đơn hàng quá hạn thanh toán | 400 |
 
-### 4.4 支付模块 (804xx)
+### 4.4 Module thanh toán (804xx)
 
-| 错误码 | 描述 | HTTP 状态码 |
+| Mã lỗi | Mô tả | Mã trạng thái HTTP |
 |-------|------|-------------|
-| 80401 | 支付方式不支持 | 400 |
-| 80402 | 支付金额异常 | 400 |
-| 80403 | 支付参数错误 | 400 |
-| 80404 | 支付失败 | 400 |
-| 80405 | 支付超时 | 400 |
-| 80406 | 支付已完成 | 400 |
+| 80401 | Phương thức thanh toán không được hỗ trợ | 400 |
+| 80402 | Số tiền thanh toán bất thường | 400 |
+| 80403 | Tham số thanh toán không hợp lệ | 400 |
+| 80404 | Thanh toán thất bại | 400 |
+| 80405 | Hết thời gian thanh toán | 400 |
+| 80406 | Thanh toán đã hoàn tất | 400 |
 
-## 5. 错误码使用规范
+## 5. Quy chuẩn sử dụng mã lỗi
 
-### 5.1 错误响应格式
+### 5.1 Định dạng phản hồi lỗi
 
 ```json
 {
   "code": 20001,
-  "msg": "操作失败",
+  "msg": "Thao tác thất bại",
   "data": []
 }
 ```
 
-### 5.2 成功响应格式
+### 5.2 Định dạng phản hồi thành công
 
 ```json
 {
   "code": 200,
-  "msg": "操作成功",
+  "msg": "Thao tác thành công",
   "data": {...}
 }
 ```
 
-### 5.3 错误处理流程
+### 5.3 Quy trình xử lý lỗi
 
-1. **捕获异常**: 在控制器或中间件中捕获异常
-2. **确定错误码**: 根据异常类型确定对应的错误码
-3. **构建响应**: 按照统一格式构建错误响应
-4. **返回响应**: 返回错误响应给客户端
+1. **Bắt ngoại lệ**: Bắt ngoại lệ trong controller hoặc middleware
+2. **Xác định mã lỗi**: Xác định mã lỗi tương ứng dựa trên loại ngoại lệ
+3. **Tạo phản hồi**: Tạo phản hồi lỗi theo định dạng thống nhất
+4. **Trả về phản hồi**: Trả phản hồi lỗi về cho client
 
-### 5.4 错误日志记录
+### 5.4 Ghi log lỗi
 
-- **记录内容**: 错误码、错误信息、请求参数、请求路径、用户信息、时间戳等
-- **记录级别**: 根据错误严重程度选择合适的日志级别
-- **记录位置**: 系统日志文件
-- **监控告警**: 对于严重错误，触发告警机制
+- **Nội dung ghi log**: Mã lỗi, thông báo lỗi, tham số yêu cầu, đường dẫn yêu cầu, thông tin người dùng, timestamp, v.v.
+- **Mức ghi log**: Chọn mức log phù hợp theo mức độ nghiêm trọng của lỗi
+- **Vị trí ghi log**: Tệp log hệ thống
+- **Giám sát và cảnh báo**: Đối với lỗi nghiêm trọng, kích hoạt cơ chế cảnh báo
 
-## 6. 错误码管理
+## 6. Quản lý mã lỗi
 
-### 6.1 错误码定义
+### 6.1 Định nghĩa mã lỗi
 
-错误码定义在配置文件中，便于统一管理和维护：
+Mã lỗi được định nghĩa trong tệp cấu hình để thuận tiện cho việc quản lý và bảo trì tập trung:
 
 ```php
 // config/error_code.php
 return [
-    // 系统错误
-    10001 => '系统内部错误',
-    10002 => '系统维护中',
-    // 业务错误
-    20001 => '操作失败',
-    20002 => '业务逻辑错误',
-    // 参数错误
-    30001 => '参数不能为空',
-    30002 => '参数格式错误',
+    // Lỗi hệ thống
+    10001 => 'Lỗi nội bộ hệ thống',
+    10002 => 'Hệ thống đang bảo trì',
+    // Lỗi nghiệp vụ
+    20001 => 'Thao tác thất bại',
+    20002 => 'Lỗi logic nghiệp vụ',
+    // Tham số không hợp lệ
+    30001 => 'Tham số không được để trống',
+    30002 => 'Tham số sai định dạng',
     // ...
 ];
 ```
 
-### 6.2 错误码使用
+### 6.2 Sử dụng mã lỗi
 
-在代码中使用错误码时，应直接引用配置文件中的定义：
+Khi sử dụng mã lỗi trong code, nên tham chiếu trực tiếp đến định nghĩa trong tệp cấu hình:
 
 ```php
-// 控制器中使用
+// Dùng trong controller
 return $this->fail(config('error_code.20001'));
 
-// 或直接使用错误码
-return $this->fail('操作失败', [], 20001);
+// Hoặc dùng trực tiếp mã lỗi
+return $this->fail('Thao tác thất bại', [], 20001);
 ```
 
-### 6.3 错误码更新
+### 6.3 Cập nhật mã lỗi
 
-当需要添加新的错误码时，应遵循以下流程：
+Khi cần thêm mã lỗi mới, cần tuân theo quy trình sau:
 
-1. **确定错误类型**: 根据错误性质确定错误类型
-2. **分配错误码**: 从对应类型的错误码范围中分配一个未使用的错误码
-3. **更新配置**: 在 `error_code.php` 配置文件中添加错误码定义
-4. **更新文档**: 更新错误码文档
-5. **通知团队**: 通知团队成员新添加的错误码
+1. **Xác định loại lỗi**: Xác định loại lỗi dựa trên bản chất của lỗi
+2. **Cấp mã lỗi**: Cấp một mã lỗi chưa được sử dụng trong dải mã lỗi của loại tương ứng
+3. **Cập nhật cấu hình**: Thêm định nghĩa mã lỗi vào tệp cấu hình `error_code.php`
+4. **Cập nhật tài liệu**: Cập nhật tài liệu mã lỗi
+5. **Thông báo cho nhóm**: Thông báo cho các thành viên trong nhóm về mã lỗi mới được thêm
 
-## 7. 错误码最佳实践
+## 7. Thực tiễn tốt nhất về mã lỗi
 
-### 7.1 设计原则
+### 7.1 Nguyên tắc thiết kế
 
-- **唯一性**: 每个错误码唯一对应一种错误情况
-- **可读性**: 错误码应易于理解和记忆
-- **可扩展性**: 错误码应具有良好的扩展性，便于添加新的错误码
-- **一致性**: 错误码格式和使用方法应保持一致
-- **详细性**: 错误信息应清晰、准确，便于调试和定位问题
+- **Tính duy nhất**: Mỗi mã lỗi chỉ tương ứng với duy nhất một trường hợp lỗi
+- **Tính dễ đọc**: Mã lỗi cần dễ hiểu và dễ nhớ
+- **Khả năng mở rộng**: Mã lỗi cần có khả năng mở rộng tốt, thuận tiện cho việc thêm mã lỗi mới
+- **Tính nhất quán**: Định dạng và cách sử dụng mã lỗi cần được giữ nhất quán
+- **Tính chi tiết**: Thông báo lỗi cần rõ ràng, chính xác, thuận tiện cho việc debug và xác định vấn đề
 
-### 7.2 使用建议
+### 7.2 Khuyến nghị sử dụng
 
-- **避免硬编码**: 错误码应定义在配置文件中，避免直接硬编码在代码中
-- **统一处理**: 使用统一的错误处理中间件处理错误
-- **详细日志**: 记录详细的错误日志，便于调试和分析
-- **友好提示**: 向客户端返回友好的错误信息，避免暴露系统内部细节
-- **定期清理**: 定期清理不再使用的错误码，保持错误码的简洁性
+- **Tránh hardcode**: Mã lỗi cần được định nghĩa trong tệp cấu hình, tránh hardcode trực tiếp trong code
+- **Xử lý thống nhất**: Dùng middleware xử lý lỗi thống nhất để xử lý lỗi
+- **Log chi tiết**: Ghi log lỗi chi tiết, thuận tiện cho việc debug và phân tích
+- **Thông báo thân thiện**: Trả về cho client thông báo lỗi thân thiện, tránh để lộ chi tiết nội bộ của hệ thống
+- **Dọn dẹp định kỳ**: Định kỳ loại bỏ các mã lỗi không còn sử dụng, giữ cho bộ mã lỗi gọn gàng
 
-### 7.3 常见问题
+### 7.3 Vấn đề thường gặp
 
-#### 7.3.1 错误码冲突
+#### 7.3.1 Xung đột mã lỗi
 
-- **问题**: 不同模块使用了相同的错误码
-- **解决方案**: 严格按照模块划分错误码范围，避免冲突
+- **Vấn đề**: Các module khác nhau dùng cùng một mã lỗi
+- **Giải pháp**: Phân chia dải mã lỗi nghiêm ngặt theo module để tránh xung đột
 
-#### 7.3.2 错误信息不明确
+#### 7.3.2 Thông báo lỗi không rõ ràng
 
-- **问题**: 错误信息过于简洁，无法定位问题
-- **解决方案**: 提供详细的错误信息，包含必要的上下文
+- **Vấn đề**: Thông báo lỗi quá sơ sài, không thể xác định được vấn đề
+- **Giải pháp**: Cung cấp thông báo lỗi chi tiết, kèm theo ngữ cảnh cần thiết
 
-#### 7.3.3 错误码未及时更新
+#### 7.3.3 Mã lỗi không được cập nhật kịp thời
 
-- **问题**: 新增功能时未及时添加对应的错误码
-- **解决方案**: 在开发新功能时，同步更新错误码定义和文档
+- **Vấn đề**: Khi thêm chức năng mới, không bổ sung kịp thời mã lỗi tương ứng
+- **Giải pháp**: Khi phát triển chức năng mới, đồng thời cập nhật định nghĩa mã lỗi và tài liệu
 
-## 8. 参考资源
+## 8. Tài liệu tham khảo
 
-- [HTTP 状态码](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status)
-- [RESTful API 错误处理](https://restfulapi.net/http-status-codes/)
-- [错误码设计最佳实践](https://www.thoughtworks.com/insights/blog/error-handling-microservices)
-- [API 错误码规范](https://cloud.google.com/apis/design/errors)
+- [Mã trạng thái HTTP](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Status)
+- [Xử lý lỗi RESTful API](https://restfulapi.net/http-status-codes/)
+- [Thực tiễn tốt nhất khi thiết kế mã lỗi](https://www.thoughtworks.com/insights/blog/error-handling-microservices)
+- [Quy chuẩn mã lỗi API](https://cloud.google.com/apis/design/errors)

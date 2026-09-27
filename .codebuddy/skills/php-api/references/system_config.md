@@ -1,54 +1,54 @@
-# 系统配置文档
+# Tài liệu cấu hình hệ thống
 
-## 1. 概述
+## 1. Tổng quan
 
-本文档描述了 CRMEB 项目的系统配置，包括配置文件、环境变量、配置项说明等，旨在帮助开发者理解和配置项目，确保项目能够正常运行。
+Tài liệu này mô tả cấu hình hệ thống của dự án CRMEB, bao gồm tệp cấu hình, biến môi trường, giải thích các mục cấu hình, v.v., nhằm giúp lập trình viên hiểu và cấu hình dự án, đảm bảo dự án vận hành bình thường.
 
-## 2. 配置文件结构
+## 2. Cấu trúc tệp cấu hình
 
-### 2.1 配置目录结构
+### 2.1 Cấu trúc thư mục cấu hình
 
 ```
 config/
-├── app.php               # 应用配置
-├── cache.php             # 缓存配置
-├── captcha.php           # 验证码配置
-├── console.php           # 控制台配置
-├── cookie.php            # Cookie 配置
-├── database.php          # 数据库配置
-├── filesystem.php        # 文件系统配置
-├── lang.php              # 语言配置
-├── log.php               # 日志配置
-├── queue.php             # 队列配置
-├── route.php             # 路由配置
-├── session.php           # Session 配置
-├── template.php          # 模板配置
-└── trace.php             # 调试配置
+├── app.php               # Cấu hình ứng dụng
+├── cache.php             # Cấu hình bộ nhớ đệm
+├── captcha.php           # Cấu hình captcha
+├── console.php           # Cấu hình console
+├── cookie.php            # Cookie Cấu hình
+├── database.php          # Cấu hình cơ sở dữ liệu
+├── filesystem.php        # Cấu hình hệ thống file
+├── lang.php              # Cấu hình ngôn ngữ
+├── log.php               # Cấu hình log
+├── queue.php             # Cấu hình hàng đợi
+├── route.php             # Cấu hình route
+├── session.php           # Session Cấu hình
+├── template.php          # Cấu hình template
+└── trace.php             # Cấu hình debug
 ```
 
-### 2.2 配置加载顺序
+### 2.2 Thứ tự nạp cấu hình
 
-1. **框架默认配置**：ThinkPHP 框架自带的默认配置
-2. **应用配置**：项目根目录下的 `config/` 目录中的配置文件
-3. **环境配置**：根据当前环境加载对应的环境配置文件
-4. **动态配置**：运行时动态设置的配置
-5. **环境变量**：通过 `.env` 文件或系统环境变量设置的配置
+1. **Cấu hình mặc định của framework**: Cấu hình mặc định đi kèm framework ThinkPHP
+2. **Cấu hình ứng dụng**: Các tệp cấu hình trong thư mục `config/` ở thư mục gốc của dự án
+3. **Cấu hình môi trường**: Nạp tệp cấu hình môi trường tương ứng với môi trường hiện tại
+4. **Cấu hình động**: Cấu hình được thiết lập động trong lúc chạy
+5. **Biến môi trường**: Cấu hình được thiết lập qua tệp `.env` hoặc biến môi trường hệ thống
 
-## 3. 环境变量配置
+## 3. Cấu hình biến môi trường
 
-### 3.1 环境变量文件 (.env)
+### 3.1 Tệp biến môi trường (.env)
 
-环境变量文件 `.env` 用于存储敏感配置信息，如数据库密码、API 密钥等。该文件不应提交到版本控制系统。
+Tệp biến môi trường `.env` dùng để lưu thông tin cấu hình nhạy cảm như mật khẩu cơ sở dữ liệu, khóa API, v.v. Không nên commit tệp này lên hệ thống quản lý phiên bản.
 
 ```ini
-# 应用配置
+# Cấu hình ứng dụng
 APP_NAME=CRMEB
 APP_ENV=local
 APP_KEY=base64:your_app_key
 APP_DEBUG=true
 APP_URL=http://localhost
 
-# 数据库配置
+# Cấu hình cơ sở dữ liệu
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -56,19 +56,19 @@ DB_DATABASE=crmeb
 DB_USERNAME=root
 DB_PASSWORD=your_password
 
-# Redis 配置
+# Redis Cấu hình
 REDIS_HOST=127.0.0.1
 REDIS_PASSWORD=null
 REDIS_PORT=6379
 REDIS_DB=0
 
-# 缓存配置
+# Cấu hình bộ nhớ đệm
 CACHE_DRIVER=file
 
-# 队列配置
+# Cấu hình hàng đợi
 QUEUE_CONNECTION=sync
 
-# 邮件配置
+# Cấu hình email
 MAIL_MAILER=smtp
 MAIL_HOST=smtp.example.com
 MAIL_PORT=587
@@ -78,26 +78,26 @@ MAIL_ENCRYPTION=tls
 MAIL_FROM_ADDRESS=your_email@example.com
 MAIL_FROM_NAME="CRMEB"
 
-# 阿里云配置
+# Cấu hình Alibaba Cloud
 ALIYUN_ACCESS_KEY_ID=your_access_key_id
 ALIYUN_ACCESS_KEY_SECRET=your_access_key_secret
 
-# 腾讯云配置
+# Cấu hình Tencent Cloud
 TENCENTCLOUD_SECRET_ID=your_secret_id
 TENCENTCLOUD_SECRET_KEY=your_secret_key
 ```
 
-### 3.2 环境变量加载
+### 3.2 Nạp biến môi trường
 
-环境变量可以通过以下方式加载：
+Biến môi trường có thể được nạp theo các cách sau:
 
-1. **.env 文件**：在项目根目录下创建 `.env` 文件，根据环境需要配置相关变量
-2. **系统环境变量**：在服务器上设置系统环境变量
-3. **命令行参数**：在运行命令时通过参数设置环境变量
+1. **Tệp .env**: Tạo tệp `.env` trong thư mục gốc của dự án, cấu hình các biến liên quan theo nhu cầu của môi trường
+2. **Biến môi trường hệ thống**: Thiết lập biến môi trường hệ thống trên máy chủ
+3. **Tham số dòng lệnh**: Thiết lập biến môi trường qua tham số khi chạy lệnh
 
-### 3.3 环境变量使用
+### 3.3 Sử dụng biến môi trường
 
-在配置文件中可以使用 `env()` 函数获取环境变量：
+Trong tệp cấu hình có thể dùng hàm `env()` để lấy biến môi trường:
 
 ```php
 // config/database.php
@@ -119,190 +119,190 @@ return [
 ];
 ```
 
-## 4. 核心配置项
+## 4. Các mục cấu hình cốt lõi
 
-### 4.1 应用配置 (app.php)
+### 4.1 Cấu hình ứng dụng (app.php)
 
-| 配置项 | 类型 | 默认值 | 描述 |
+| Mục cấu hình | Loại | Giá trị mặc định | Mô tả |
 |-------|------|--------|------|
-| app_debug | bool | true | 应用调试模式 |
-| app_trace | bool | false | 应用跟踪模式 |
-| app_status | string | 'dev' | 应用状态 |
-| app_namespace | string | 'app' | 应用命名空间 |
-| default_return_type | string | 'json' | 默认返回类型 |
-| default_timezone | string | 'Asia/Shanghai' | 默认时区 |
-| lang_switch_on | bool | false | 语言切换开关 |
-| default_lang | string | 'zh-cn' | 默认语言 |
-| auto_bind_module | bool | true | 自动绑定模块 |
-| controller_suffix | bool | false | 控制器后缀 |
-| url_route_on | bool | true | URL 路由开关 |
-| url_route_must | bool | false | URL 路由必须 |
-| var_pathinfo | string | 's' | PATH_INFO 变量名 |
-| pathinfo_depr | string | '/' | PATH_INFO 分隔符 |
-| url_html_suffix | string | '' | URL HTML 后缀 |
-| url_common_param | bool | false | URL 普通参数模式 |
-| url_param_type | int | 1 | URL 参数类型 |
-| request_cache_on | bool | false | 请求缓存开关 |
-| request_cache_expire | int | null | 请求缓存有效期 |
+| app_debug | bool | true | Chế độ debug của ứng dụng |
+| app_trace | bool | false | Chế độ trace của ứng dụng |
+| app_status | string | 'dev' | Trạng thái ứng dụng |
+| app_namespace | string | 'app' | Namespace của ứng dụng |
+| default_return_type | string | 'json' | Kiểu trả về mặc định |
+| default_timezone | string | 'Asia/Shanghai' | Múi giờ mặc định |
+| lang_switch_on | bool | false | Bật/tắt chuyển đổi ngôn ngữ |
+| default_lang | string | 'zh-cn' | Ngôn ngữ mặc định |
+| auto_bind_module | bool | true | Tự động gắn (bind) module |
+| controller_suffix | bool | false | Hậu tố controller |
+| url_route_on | bool | true | Bật/tắt route URL |
+| url_route_must | bool | false | Bắt buộc dùng route cho URL |
+| var_pathinfo | string | 's' | Tên biến PATH_INFO |
+| pathinfo_depr | string | '/' | Ký tự phân tách PATH_INFO |
+| url_html_suffix | string | '' | Hậu tố HTML của URL |
+| url_common_param | bool | false | Chế độ tham số URL thông thường |
+| url_param_type | int | 1 | Kiểu tham số URL |
+| request_cache_on | bool | false | Bật/tắt bộ nhớ đệm yêu cầu (request cache) |
+| request_cache_expire | int | null | Thời hạn cache request |
 
-### 4.2 数据库配置 (database.php)
+### 4.2 Cấu hình cơ sở dữ liệu (database.php)
 
-| 配置项 | 类型 | 默认值 | 描述 |
+| Mục cấu hình | Loại | Giá trị mặc định | Mô tả |
 |-------|------|--------|------|
-| default | string | 'mysql' | 默认数据库连接 |
-| connections | array | [] | 数据库连接配置 |
-| connections.mysql.type | string | 'mysql' | 数据库类型 |
-| connections.mysql.hostname | string | '127.0.0.1' | 数据库主机名 |
-| connections.mysql.database | string | '' | 数据库名 |
-| connections.mysql.username | string | '' | 数据库用户名 |
-| connections.mysql.password | string | '' | 数据库密码 |
-| connections.mysql.hostport | string | '3306' | 数据库端口 |
-| connections.mysql.charset | string | 'utf8mb4' | 数据库字符集 |
-| connections.mysql.prefix | string | '' | 数据库表前缀 |
-| connections.mysql.debug | bool | true | 数据库调试模式 |
-| connections.mysql.deploy | array | [] | 数据库部署方式 |
-| connections.mysql.rw_separate | bool | false | 数据库读写分离 |
-| connections.mysql.master_num | int | 1 | 主数据库数量 |
-| connections.mysql.slave_no | int | '' | 从数据库编号 |
-| connections.mysql.read_master | bool | false | 是否从主服务器读取 |
-| connections.mysql.deploy_type | int | 0 | 数据库部署类型 |
-| connections.mysql.failover | array | [] | 数据库故障转移 |
-| connections.mysql.break_reconnect | bool | false | 断开重连 |
-| connections.mysql.pdo_type | string | '' | PDO 类型 |
-| connections.mysql.max_conn | int | 0 | 最大连接数 |
-| connections.mysql.strict_type | bool | false | 严格模式 |
-| connections.mysql.auto_timestamp | bool | false | 自动时间戳 |
-| connections.mysql.datetime_format | string | 'Y-m-d H:i:s' | 日期时间格式 |
-| connections.mysql.date_format | string | 'Y-m-d' | 日期格式 |
-| connections.mysql.time_format | string | 'H:i:s' | 时间格式 |
-| connections.mysql.sql_build_cache | bool | false | SQL 构建缓存 |
-| connections.mysql.builder | string | '' | 查询构建器 |
-| connections.mysql.query | string | '' | 查询类 |
-| connections.mysql.break_match_str | string | '' | 断开匹配字符串 |
-| connections.mysql.params | array | [] | 连接参数 |
-| connections.mysql.pk_convert | bool | false | 主键转换 |
-| connections.mysql.resultset_type | string | 'array' | 结果集类型 |
-| connections.mysql.return_collection | bool | false | 返回集合 |
-| connections.mysql.identifier_quote | string | '' | 标识符引号 |
-| connections.mysql.cache | array | [] | 缓存配置 |
-| connections.mysql.trace_sql | bool | false | SQL 跟踪 |
+| default | string | 'mysql' | Kết nối cơ sở dữ liệu mặc định |
+| connections | array | [] | Cấu hình kết nối cơ sở dữ liệu |
+| connections.mysql.type | string | 'mysql' | Loại cơ sở dữ liệu |
+| connections.mysql.hostname | string | '127.0.0.1' | Tên máy chủ (hostname) cơ sở dữ liệu |
+| connections.mysql.database | string | '' | Tên cơ sở dữ liệu |
+| connections.mysql.username | string | '' | Tên đăng nhập cơ sở dữ liệu |
+| connections.mysql.password | string | '' | Mật khẩu cơ sở dữ liệu |
+| connections.mysql.hostport | string | '3306' | Cổng cơ sở dữ liệu |
+| connections.mysql.charset | string | 'utf8mb4' | Bộ ký tự (charset) của cơ sở dữ liệu |
+| connections.mysql.prefix | string | '' | Tiền tố bảng cơ sở dữ liệu |
+| connections.mysql.debug | bool | true | Chế độ debug cơ sở dữ liệu |
+| connections.mysql.deploy | array | [] | Cách triển khai cơ sở dữ liệu |
+| connections.mysql.rw_separate | bool | false | Tách đọc/ghi cơ sở dữ liệu |
+| connections.mysql.master_num | int | 1 | Số lượng cơ sở dữ liệu chính (master) |
+| connections.mysql.slave_no | int | '' | Số thứ tự cơ sở dữ liệu phụ (slave) |
+| connections.mysql.read_master | bool | false | Có đọc từ máy chủ chính (master) không |
+| connections.mysql.deploy_type | int | 0 | Kiểu triển khai cơ sở dữ liệu |
+| connections.mysql.failover | array | [] | Chuyển đổi dự phòng (failover) cơ sở dữ liệu |
+| connections.mysql.break_reconnect | bool | false | Tự kết nối lại khi mất kết nối |
+| connections.mysql.pdo_type | string | '' | Kiểu PDO |
+| connections.mysql.max_conn | int | 0 | Số kết nối tối đa |
+| connections.mysql.strict_type | bool | false | Chế độ nghiêm ngặt |
+| connections.mysql.auto_timestamp | bool | false | Tự động ghi timestamp |
+| connections.mysql.datetime_format | string | 'Y-m-d H:i:s' | Định dạng ngày giờ |
+| connections.mysql.date_format | string | 'Y-m-d' | Định dạng ngày |
+| connections.mysql.time_format | string | 'H:i:s' | Định dạng giờ |
+| connections.mysql.sql_build_cache | bool | false | Bộ nhớ đệm tạo câu lệnh SQL |
+| connections.mysql.builder | string | '' | Trình tạo truy vấn (query builder) |
+| connections.mysql.query | string | '' | Lớp truy vấn |
+| connections.mysql.break_match_str | string | '' | Chuỗi so khớp khi mất kết nối |
+| connections.mysql.params | array | [] | Tham số kết nối |
+| connections.mysql.pk_convert | bool | false | Chuyển đổi khóa chính |
+| connections.mysql.resultset_type | string | 'array' | Kiểu tập kết quả (resultset) |
+| connections.mysql.return_collection | bool | false | Trả về collection |
+| connections.mysql.identifier_quote | string | '' | Dấu bao định danh (identifier quote) |
+| connections.mysql.cache | array | [] | Cấu hình bộ nhớ đệm |
+| connections.mysql.trace_sql | bool | false | Theo dõi (trace) SQL |
 
-### 4.3 缓存配置 (cache.php)
+### 4.3 Cấu hình bộ nhớ đệm (cache.php)
 
-| 配置项 | 类型 | 默认值 | 描述 |
+| Mục cấu hình | Loại | Giá trị mặc định | Mô tả |
 |-------|------|--------|------|
-| default | string | 'file' | 默认缓存驱动 |
-| stores | array | [] | 缓存驱动配置 |
-| stores.file.type | string | 'file' | 文件缓存驱动 |
-| stores.file.path | string | '' | 文件缓存路径 |
-| stores.file.prefix | string | '' | 文件缓存前缀 |
-| stores.file.expire | int | 0 | 文件缓存有效期 |
-| stores.redis.type | string | 'redis' | Redis 缓存驱动 |
-| stores.redis.host | string | '127.0.0.1' | Redis 主机名 |
-| stores.redis.port | int | 6379 | Redis 端口 |
-| stores.redis.password | string | '' | Redis 密码 |
-| stores.redis.select | int | 0 | Redis 数据库 |
-| stores.redis.timeout | int | 0 | Redis 超时时间 |
-| stores.redis.persistent | bool | false | Redis 持久连接 |
-| stores.redis.prefix | string | '' | Redis 缓存前缀 |
-| stores.redis.serializer | int | 0 | Redis 序列化方式 |
-| stores.memcache.type | string | 'memcache' | Memcache 缓存驱动 |
-| stores.memcache.host | string | '127.0.0.1' | Memcache 主机名 |
-| stores.memcache.port | int | 11211 | Memcache 端口 |
-| stores.memcache.persistent | bool | false | Memcache 持久连接 |
-| stores.memcache.timeout | int | 0 | Memcache 超时时间 |
-| stores.memcache.prefix | string | '' | Memcache 缓存前缀 |
-| stores.wincache.type | string | 'wincache' | WinCache 缓存驱动 |
-| stores.wincache.prefix | string | '' | WinCache 缓存前缀 |
-| stores.xcache.type | string | 'xcache' | XCache 缓存驱动 |
-| stores.xcache.prefix | string | '' | XCache 缓存前缀 |
-| stores.apc.type | string | 'apc' | APC 缓存驱动 |
-| stores.apc.prefix | string | '' | APC 缓存前缀 |
-| prefix | string | '' | 缓存前缀 |
+| default | string | 'file' | Driver cache mặc định |
+| stores | array | [] | Cấu hình các driver cache |
+| stores.file.type | string | 'file' | Driver cache dạng file |
+| stores.file.path | string | '' | Đường dẫn cache dạng file |
+| stores.file.prefix | string | '' | Tiền tố cache dạng file |
+| stores.file.expire | int | 0 | Thời hạn hiệu lực của cache dạng file |
+| stores.redis.type | string | 'redis' | Driver cache Redis |
+| stores.redis.host | string | '127.0.0.1' | Tên máy chủ Redis |
+| stores.redis.port | int | 6379 | Cổng Redis |
+| stores.redis.password | string | '' | Mật khẩu Redis |
+| stores.redis.select | int | 0 | Cơ sở dữ liệu Redis |
+| stores.redis.timeout | int | 0 | Thời gian chờ (timeout) của Redis |
+| stores.redis.persistent | bool | false | Kết nối liên tục (persistent) của Redis |
+| stores.redis.prefix | string | '' | Tiền tố cache Redis |
+| stores.redis.serializer | int | 0 | Phương thức tuần tự hóa (serialize) của Redis |
+| stores.memcache.type | string | 'memcache' | Driver cache Memcache |
+| stores.memcache.host | string | '127.0.0.1' | Tên máy chủ Memcache |
+| stores.memcache.port | int | 11211 | Cổng Memcache |
+| stores.memcache.persistent | bool | false | Kết nối liên tục (persistent) của Memcache |
+| stores.memcache.timeout | int | 0 | Thời gian chờ (timeout) của Memcache |
+| stores.memcache.prefix | string | '' | Tiền tố cache Memcache |
+| stores.wincache.type | string | 'wincache' | Driver cache WinCache |
+| stores.wincache.prefix | string | '' | Tiền tố cache WinCache |
+| stores.xcache.type | string | 'xcache' | Driver cache XCache |
+| stores.xcache.prefix | string | '' | Tiền tố cache XCache |
+| stores.apc.type | string | 'apc' | Driver cache APC |
+| stores.apc.prefix | string | '' | Tiền tố cache APC |
+| prefix | string | '' | Tiền tố cache |
 
-### 4.4 队列配置 (queue.php)
+### 4.4 Cấu hình hàng đợi (queue.php)
 
-| 配置项 | 类型 | 默认值 | 描述 |
+| Mục cấu hình | Loại | Giá trị mặc định | Mô tả |
 |-------|------|--------|------|
-| default | string | 'sync' | 默认队列驱动 |
-| connections | array | [] | 队列连接配置 |
-| connections.sync.driver | string | 'sync' | 同步队列驱动 |
-| connections.database.driver | string | 'database' | 数据库队列驱动 |
-| connections.database.table | string | 'jobs' | 队列表名 |
-| connections.database.queue | string | 'default' | 默认队列名 |
-| connections.database.expire | int | 60 | 任务过期时间 |
-| connections.redis.driver | string | 'redis' | Redis 队列驱动 |
-| connections.redis.connection | string | 'default' | Redis 连接名 |
-| connections.redis.queue | string | 'default' | 默认队列名 |
-| connections.redis.expire | int | 60 | 任务过期时间 |
-| failed | array | [] | 失败队列配置 |
-| failed.driver | string | 'database' | 失败队列驱动 |
-| failed.table | string | 'failed_jobs' | 失败队列表名 |
+| default | string | 'sync' | Driver hàng đợi mặc định |
+| connections | array | [] | Cấu hình kết nối hàng đợi |
+| connections.sync.driver | string | 'sync' | Driver hàng đợi đồng bộ (sync) |
+| connections.database.driver | string | 'database' | Driver hàng đợi dùng cơ sở dữ liệu |
+| connections.database.table | string | 'jobs' | Tên bảng hàng đợi |
+| connections.database.queue | string | 'default' | Tên hàng đợi mặc định |
+| connections.database.expire | int | 60 | Thời gian hết hạn của tác vụ |
+| connections.redis.driver | string | 'redis' | Driver hàng đợi Redis |
+| connections.redis.connection | string | 'default' | Tên kết nối Redis |
+| connections.redis.queue | string | 'default' | Tên hàng đợi mặc định |
+| connections.redis.expire | int | 60 | Thời gian hết hạn của tác vụ |
+| failed | array | [] | Cấu hình hàng đợi tác vụ thất bại |
+| failed.driver | string | 'database' | Driver hàng đợi tác vụ thất bại |
+| failed.table | string | 'failed_jobs' | Tên bảng hàng đợi tác vụ thất bại |
 
-### 4.5 日志配置 (log.php)
+### 4.5 Cấu hình log (log.php)
 
-| 配置项 | 类型 | 默认值 | 描述 |
+| Mục cấu hình | Loại | Giá trị mặc định | Mô tả |
 |-------|------|--------|------|
-| default | array | ['file'] | 默认日志通道 |
-| channels | array | [] | 日志通道配置 |
-| channels.file.type | string | 'file' | 文件日志驱动 |
-| channels.file.path | string | '' | 文件日志路径 |
-| channels.file.level | string | 'debug' | 日志级别 |
-| channels.file.days | int | 15 | 日志保留天数 |
-| channels.file.json | bool | false | 是否 JSON 格式 |
-| channels.syslog.type | string | 'syslog' | Syslog 日志驱动 |
-| channels.syslog.ident | string | 'think' | Syslog 标识 |
-| channels.syslog.facility | int | 8 | Syslog 设备 |
-| channels.syslog.level | string | 'debug' | 日志级别 |
-| channels.mail.type | string | 'mail' | 邮件日志驱动 |
-| channels.mail.to | string | '' | 邮件接收地址 |
-| channels.mail.subject | string | 'Log message' | 邮件主题 |
-| channels.mail.level | string | 'error' | 日志级别 |
+| default | array | ['file'] | Kênh log mặc định |
+| channels | array | [] | Cấu hình kênh log |
+| channels.file.type | string | 'file' | Driver log dạng file |
+| channels.file.path | string | '' | Đường dẫn log dạng file |
+| channels.file.level | string | 'debug' | Cấp độ log |
+| channels.file.days | int | 15 | Số ngày lưu giữ log |
+| channels.file.json | bool | false | Có dùng định dạng JSON hay không |
+| channels.syslog.type | string | 'syslog' | Driver log Syslog |
+| channels.syslog.ident | string | 'think' | Định danh Syslog |
+| channels.syslog.facility | int | 8 | Thiết bị (facility) của Syslog |
+| channels.syslog.level | string | 'debug' | Cấp độ log |
+| channels.mail.type | string | 'mail' | Driver log qua email |
+| channels.mail.to | string | '' | Địa chỉ email người nhận |
+| channels.mail.subject | string | 'Log message' | Tiêu đề email |
+| channels.mail.level | string | 'error' | Cấp độ log |
 
-## 4. 核心配置说明
+## 4. Giải thích các cấu hình cốt lõi
 
-### 4.1 应用配置 (app.php)
+### 4.1 Cấu hình ứng dụng (app.php)
 
-- **app_debug**: 应用调试模式，开发环境设置为 `true`，生产环境设置为 `false`
-- **app_trace**: 应用跟踪模式，用于调试，开发环境设置为 `true`，生产环境设置为 `false`
-- **app_status**: 应用状态，用于加载不同的配置文件
-- **default_return_type**: 默认返回类型，API 应用通常设置为 `json`
-- **default_timezone**: 默认时区，中国地区设置为 `Asia/Shanghai`
+- **app_debug**: Chế độ debug của ứng dụng, môi trường phát triển đặt là `true`, môi trường production đặt là `false`
+- **app_trace**: Chế độ theo vết (trace) của ứng dụng, dùng để gỡ lỗi, môi trường phát triển đặt là `true`, môi trường production đặt là `false`
+- **app_status**: Trạng thái ứng dụng, dùng để tải các file cấu hình khác nhau
+- **default_return_type**: Kiểu trả về mặc định, ứng dụng API thường đặt là `json`
+- **default_timezone**: Múi giờ mặc định, khu vực Trung Quốc đặt là `Asia/Shanghai`
 
-### 4.2 数据库配置 (database.php)
+### 4.2 Cấu hình cơ sở dữ liệu (database.php)
 
-- **default**: 默认数据库连接，通常使用 `mysql`
-- **connections.mysql.hostname**: 数据库主机名，通常为 `127.0.0.1` 或数据库服务器 IP 地址
-- **connections.mysql.database**: 数据库名，根据实际情况设置
-- **connections.mysql.username**: 数据库用户名，根据实际情况设置
-- **connections.mysql.password**: 数据库密码，根据实际情况设置
-- **connections.mysql.charset**: 数据库字符集，通常使用 `utf8mb4`
-- **connections.mysql.prefix**: 数据库表前缀，根据实际情况设置
+- **default**: Kết nối cơ sở dữ liệu mặc định, thường dùng `mysql`
+- **connections.mysql.hostname**: Tên máy chủ cơ sở dữ liệu, thường là `127.0.0.1` hoặc địa chỉ IP của máy chủ cơ sở dữ liệu
+- **connections.mysql.database**: Tên cơ sở dữ liệu, thiết lập theo thực tế
+- **connections.mysql.username**: Tên người dùng cơ sở dữ liệu, thiết lập theo thực tế
+- **connections.mysql.password**: Mật khẩu cơ sở dữ liệu, thiết lập theo thực tế
+- **connections.mysql.charset**: Bộ ký tự (charset) của cơ sở dữ liệu, thường dùng `utf8mb4`
+- **connections.mysql.prefix**: Tiền tố bảng cơ sở dữ liệu, thiết lập theo thực tế
 
-### 4.3 缓存配置 (cache.php)
+### 4.3 Cấu hình bộ nhớ đệm (cache.php)
 
-- **default**: 默认缓存驱动，开发环境通常使用 `file`，生产环境通常使用 `redis`
-- **stores.redis.host**: Redis 主机名，通常为 `127.0.0.1` 或 Redis 服务器 IP 地址
-- **stores.redis.password**: Redis 密码，根据实际情况设置
-- **stores.redis.port**: Redis 端口，默认为 `6379`
-- **stores.redis.select**: Redis 数据库编号，默认使用 `0`
+- **default**: Driver cache mặc định, môi trường phát triển thường dùng `file`, môi trường production thường dùng `redis`
+- **stores.redis.host**: Tên máy chủ Redis, thường là `127.0.0.1` hoặc địa chỉ IP của máy chủ Redis
+- **stores.redis.password**: Mật khẩu Redis, thiết lập theo thực tế
+- **stores.redis.port**: Cổng Redis, mặc định là `6379`
+- **stores.redis.select**: Số hiệu cơ sở dữ liệu Redis, mặc định dùng `0`
 
-### 4.4 队列配置 (queue.php)
+### 4.4 Cấu hình hàng đợi (queue.php)
 
-- **default**: 默认队列驱动，开发环境通常使用 `sync`，生产环境通常使用 `redis` 或 `database`
-- **connections.redis.queue**: 默认队列名，根据实际情况设置
-- **failed.table**: 失败队列表名，默认为 `failed_jobs`
+- **default**: Driver hàng đợi mặc định, môi trường phát triển thường dùng `sync`, môi trường production thường dùng `redis` hoặc `database`
+- **connections.redis.queue**: Tên hàng đợi mặc định, thiết lập theo thực tế
+- **failed.table**: Tên bảng hàng đợi tác vụ thất bại, mặc định là `failed_jobs`
 
-### 4.5 日志配置 (log.php)
+### 4.5 Cấu hình log (log.php)
 
-- **default**: 默认日志通道，通常使用 `file`
-- **channels.file.path**: 文件日志路径，默认使用 `runtime/log`
-- **channels.file.level**: 日志级别，开发环境通常使用 `debug`，生产环境通常使用 `info` 或 `error`
-- **channels.file.days**: 日志保留天数，根据实际情况设置
+- **default**: Kênh log mặc định, thường dùng `file`
+- **channels.file.path**: Đường dẫn log dạng file, mặc định dùng `runtime/log`
+- **channels.file.level**: Cấp độ log, môi trường phát triển thường dùng `debug`, môi trường production thường dùng `info` hoặc `error`
+- **channels.file.days**: Số ngày lưu giữ log, thiết lập theo thực tế
 
-## 5. 配置最佳实践
+## 5. Thực tiễn tốt nhất khi cấu hình
 
-### 5.1 开发环境配置
+### 5.1 Cấu hình môi trường phát triển
 
 - **app_debug**: `true`
 - **app_trace**: `true`
@@ -313,7 +313,7 @@ return [
 - **queue.default**: `sync`
 - **log.channels.file.level**: `debug`
 
-### 5.2 测试环境配置
+### 5.2 Cấu hình môi trường kiểm thử
 
 - **app_debug**: `false`
 - **app_trace**: `false`
@@ -324,7 +324,7 @@ return [
 - **queue.default**: `redis`
 - **log.channels.file.level**: `info`
 
-### 5.3 生产环境配置
+### 5.3 Cấu hình môi trường production
 
 - **app_debug**: `false`
 - **app_trace**: `false`
@@ -338,43 +338,43 @@ return [
 - **log.channels.file.level**: `error`
 - **log.channels.file.days**: `30`
 
-## 6. 常见配置问题
+## 6. Các vấn đề cấu hình thường gặp
 
-### 6.1 数据库连接失败
+### 6.1 Kết nối cơ sở dữ liệu thất bại
 
-- **问题**: 无法连接到数据库
-- **原因**: 数据库配置错误，如主机名、端口、用户名或密码错误
-- **解决方案**: 检查数据库配置，确保配置正确
+- **Vấn đề**: Không thể kết nối tới cơ sở dữ liệu
+- **Nguyên nhân**: Cấu hình cơ sở dữ liệu sai, ví dụ sai tên máy chủ, cổng, tên người dùng hoặc mật khẩu
+- **Giải pháp**: Kiểm tra cấu hình cơ sở dữ liệu, đảm bảo cấu hình chính xác
 
-### 6.2 缓存无法使用
+### 6.2 Không sử dụng được cache
 
-- **问题**: 缓存无法正常使用
-- **原因**: 缓存配置错误，如 Redis 主机名、端口或密码错误
-- **解决方案**: 检查缓存配置，确保配置正确
+- **Vấn đề**: Cache không hoạt động bình thường
+- **Nguyên nhân**: Cấu hình cache sai, ví dụ sai tên máy chủ, cổng hoặc mật khẩu Redis
+- **Giải pháp**: Kiểm tra cấu hình cache, đảm bảo cấu hình chính xác
 
-### 6.3 队列无法正常工作
+### 6.3 Hàng đợi không hoạt động bình thường
 
-- **问题**: 队列任务无法执行
-- **原因**: 队列配置错误，如 Redis 连接错误或队列驱动配置错误
-- **解决方案**: 检查队列配置，确保配置正确
+- **Vấn đề**: Tác vụ trong hàng đợi không thể thực thi
+- **Nguyên nhân**: Cấu hình hàng đợi sai, ví dụ lỗi kết nối Redis hoặc cấu hình driver hàng đợi sai
+- **Giải pháp**: Kiểm tra cấu hình hàng đợi, đảm bảo cấu hình chính xác
 
-### 6.4 日志无法写入
+### 6.4 Không ghi được log
 
-- **问题**: 日志无法写入到文件
-- **原因**: 日志目录没有写权限
-- **解决方案**: 为日志目录添加写权限
+- **Vấn đề**: Không thể ghi log vào file
+- **Nguyên nhân**: Thư mục log không có quyền ghi
+- **Giải pháp**: Cấp quyền ghi cho thư mục log
 
-### 6.5 环境变量不生效
+### 6.5 Biến môi trường không có hiệu lực
 
-- **问题**: 环境变量配置不生效
-- **原因**: 环境变量文件 `.env` 不存在或配置错误
-- **解决方案**: 创建 `.env` 文件，确保配置正确
+- **Vấn đề**: Cấu hình biến môi trường không có hiệu lực
+- **Nguyên nhân**: File biến môi trường `.env` không tồn tại hoặc cấu hình sai
+- **Giải pháp**: Tạo file `.env`, đảm bảo cấu hình chính xác
 
-## 7. 参考资源
+## 7. Tài liệu tham khảo
 
-- [ThinkPHP 6 配置](https://www.kancloud.cn/manual/thinkphp6_0/1037478)
-- [环境变量配置](https://www.kancloud.cn/manual/thinkphp6_0/1037479)
-- [数据库配置](https://www.kancloud.cn/manual/thinkphp6_0/1037480)
-- [缓存配置](https://www.kancloud.cn/manual/thinkphp6_0/1037481)
-- [队列配置](https://www.kancloud.cn/manual/thinkphp6_0/1037482)
-- [日志配置](https://www.kancloud.cn/manual/thinkphp6_0/1037483)
+- [Cấu hình ThinkPHP 6](https://www.kancloud.cn/manual/thinkphp6_0/1037478)
+- [Cấu hình biến môi trường](https://www.kancloud.cn/manual/thinkphp6_0/1037479)
+- [Cấu hình cơ sở dữ liệu](https://www.kancloud.cn/manual/thinkphp6_0/1037480)
+- [Cấu hình cache](https://www.kancloud.cn/manual/thinkphp6_0/1037481)
+- [Cấu hình hàng đợi](https://www.kancloud.cn/manual/thinkphp6_0/1037482)
+- [Cấu hình log](https://www.kancloud.cn/manual/thinkphp6_0/1037483)

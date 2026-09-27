@@ -37,9 +37,9 @@
 		},
 		data() {
 			return {
-				tabClick: 0, //导航栏被点击
-				isLeft: 0, //导航栏下划线位置
-				isWidth: 0, //每个导航栏占位
+				tabClick: 0, //Thanh điều hướng bị click
+				isLeft: 0, //Vị trí gạch chân của thanh điều hướng
+				isWidth: 0, //Vị trí chiếm chỗ của mỗi tab điều hướng
 				tabLeft:0,
 				swiperIndex:0,
 				childIndex:0,
@@ -49,7 +49,7 @@
 		created() {
 			
 			var that = this
-			// 获取设备宽度
+			// Lấy chiều rộng thiết bị
 			uni.getSystemInfo({
 				success(e) {
 					that.isWidth = e.windowWidth / 5 
@@ -57,30 +57,30 @@
 			})
 		},
 		methods: {
-			// 导航栏点击
+			// Click thanh điều hướng
 			longClick(index){
 				this.childIndex = 0;
 				if(this.tabTitle.length>5){
 					var tempIndex = index - 2;
 					tempIndex = tempIndex<=0 ? 0 : tempIndex;
-					this.tabLeft = (index-2) * this.isWidth //设置下划线位置
+					this.tabLeft = (index-2) * this.isWidth //Đặt vị trí gạch chân
 				}
-				this.tabClick = index //设置导航点击了哪一个
-				this.isLeft = index * this.isWidth //设置下划线位置
+				this.tabClick = index //Đặt tab điều hướng nào đã được click
+				this.isLeft = index * this.isWidth //Đặt vị trí gạch chân
 				let obj = {
-					type:'big',  //大标题
+					type:'big',  //Tiêu đề lớn
 					index:index
 				}
 				this.parentEmit(obj)
-				// this.$parent.currentTab = index //设置swiper的第几页
+				// this.$parent.currentTab = index //đặt swiper ở trang thứ mấy
 			},
-			// 导航子类点击
+			// Click danh mục con điều hướng
 			childTab(tabClick,index){
 				this.childIndex = index
 				let obj = {
 					parentIndex:tabClick,
 					childIndex:index,
-					type:'small' //小标题
+					type:'small' //Tiêu đề nhỏ
 				}
 				this.parentEmit(obj)
 			},

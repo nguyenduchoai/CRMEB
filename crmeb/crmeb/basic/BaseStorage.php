@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,28 +20,28 @@ abstract class BaseStorage
 {
 
     /**
-     * 驱动名称
+     * Tên driver
      * @var string
      */
     protected $name;
 
     /**
-     * 驱动配置文件名
+     * Tên file cấu hình driver
      * @var string
      */
     protected $configFile;
 
     /**
-     * 错误信息
+     * Thông tin lỗi
      * @var string
      */
     protected $error;
 
     /**
      * BaseStorage constructor.
-     * @param string $name 驱动名
-     * @param string $configFile 驱动配置名
-     * @param array $config 其他配置
+     * @param string $name Tên driver
+     * @param string $configFile Tên cấu hình driver
+     * @param array $config Cấu hình khác
      */
     public function __construct(string $name, array $config = [], string $configFile = null)
     {
@@ -52,18 +52,18 @@ abstract class BaseStorage
 
 
     /**
-     * 设置错误信息
+     * Đặt thông tin lỗi
      * @param string|null $error
      * @return bool
      */
     protected function setError(?string $error = null)
     {
-        $this->error = $error ?: '未知错误';
+        $this->error = $error ?: 'Lỗi không xác định';
         return false;
     }
 
     /**
-     * 获取错误信息
+     * Lấy thông tin lỗi
      * @return string
      */
     public function getError()
@@ -74,7 +74,7 @@ abstract class BaseStorage
     }
 
     /**
-     * 初始化
+     * Khởi tạo
      * @param array $config
      * @return mixed
      */

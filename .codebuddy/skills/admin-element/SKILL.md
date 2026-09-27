@@ -1,458 +1,458 @@
 ---
-name: 管理端前端说明
-description: 管理端前端开发skill说明
+name: Mô tả frontend trang quản trị
+description: Mô tả skill phát triển frontend trang quản trị
 ---
 
-# 管理端前端说明
+# Mô tả frontend trang quản trị
 
-## 0. 自动触发说明
+## 0. Mô tả cơ chế tự động kích hoạt
 
-### 0.1 触发条件
+### 0.1 Điều kiện kích hoạt
 
-#### 0.1.1 操作触发
-- **文件浏览时**: 当浏览管理端前端相关目录时自动调用
-  - 打开 `public/admin/` 目录时触发
-  - 打开前端组件目录时触发
-  - 浏览前端代码文件时触发
-- **文件操作时**: 当对管理端前端文件进行操作时自动调用
-  - 创建新前端文件时触发
-  - 修改前端组件时触发
-  - 删除前端文件时触发
-- **目录操作时**: 当对管理端前端目录进行操作时自动调用
-  - 创建新前端目录时触发
-  - 重命名前端目录时触发
-  - 删除前端目录时触发
+#### 0.1.1 Kích hoạt theo thao tác
+- **Khi duyệt tệp**: Tự động được gọi khi duyệt các thư mục liên quan đến frontend trang quản trị
+  - Kích hoạt khi mở thư mục `public/admin/`
+  - Kích hoạt khi mở thư mục component frontend
+  - Kích hoạt khi duyệt tệp mã frontend
+- **Khi thao tác tệp**: Tự động được gọi khi thao tác với các tệp frontend trang quản trị
+  - Kích hoạt khi tạo tệp frontend mới
+  - Kích hoạt khi chỉnh sửa component frontend
+  - Kích hoạt khi xóa tệp frontend
+- **Khi thao tác thư mục**: Tự động được gọi khi thao tác với các thư mục frontend trang quản trị
+  - Kích hoạt khi tạo thư mục frontend mới
+  - Kích hoạt khi đổi tên thư mục frontend
+  - Kích hoạt khi xóa thư mục frontend
 
-#### 0.1.2 内容触发
-- **关键词触发**: 当文件内容包含以下关键词时自动调用
-  - 管理端关键词: `管理端`、`后台`、`admin`、`后台管理`
-  - 前端关键词: `前端`、`Vue`、`组件`、`页面`、`路由`
-  - 功能关键词: `登录`、`权限`、`菜单`、` dashboard`、`统计`
-- **代码触发**: 当查看特定类型前端代码时自动调用
-  - Vue 组件代码 (`*.vue`)
-  - 前端路由代码 (`router`)
-  - 前端状态管理代码 (`store`)
-  - 前端 API 调用代码 (`api`)
+#### 0.1.2 Kích hoạt theo nội dung
+- **Kích hoạt theo từ khóa**: Tự động được gọi khi nội dung tệp chứa các từ khóa sau
+  - Từ khóa trang quản trị: `trang quản trị`, `quản trị`, `admin`, `trang quản trị`
+  - Từ khóa frontend: `frontend`, `Vue`, `component`, `trang`, `route`
+  - Từ khóa chức năng: `đăng nhập`, `quyền`, `menu`, ` dashboard`, `thống kê`
+- **Kích hoạt theo mã nguồn**: Tự động được gọi khi xem mã frontend thuộc loại cụ thể
+  - Mã component Vue (`*.vue`)
+  - Mã route frontend (`router`)
+  - Mã quản lý trạng thái frontend (`store`)
+  - Mã gọi API frontend (`api`)
 
-#### 0.1.3 命令触发
-- **终端命令触发**: 当执行以下命令时自动调用
-  - `npm run dev` (启动开发服务器)
-  - `npm run build` (构建前端项目)
-  - `npm run lint` (代码检查)
-  - `vue` 相关命令
+#### 0.1.3 Kích hoạt theo lệnh
+- **Kích hoạt bằng lệnh terminal**: Tự động được gọi khi thực thi các lệnh sau
+  - `npm run dev` (khởi động máy chủ phát triển)
+  - `npm run build` (build dự án frontend)
+  - `npm run lint` (kiểm tra mã)
+  - `vue` và các lệnh liên quan
 
-### 0.2 适用场景
+### 0.2 Tình huống áp dụng
 
-#### 0.2.1 核心场景
-- **管理端开发**: 开发管理端前端功能时
-- **组件开发**: 创建或修改管理端组件时
-- **页面开发**: 开发管理端页面时
-- **功能集成**: 集成新功能到管理端时
+#### 0.2.1 Tình huống cốt lõi
+- **Phát triển trang quản trị**: Khi phát triển chức năng frontend của trang quản trị
+- **Phát triển component**: Khi tạo hoặc chỉnh sửa component của trang quản trị
+- **Phát triển trang**: Khi phát triển các trang quản trị
+- **Tích hợp chức năng**: Khi tích hợp chức năng mới vào trang quản trị
 
-#### 0.2.2 辅助场景
-- **前端调试**: 调试管理端前端问题时
-- **性能优化**: 优化管理端前端性能时
-- **样式调整**: 调整管理端界面样式时
-- **权限配置**: 配置管理端权限时
+#### 0.2.2 Tình huống hỗ trợ
+- **Gỡ lỗi frontend**: Khi gỡ lỗi các vấn đề frontend của trang quản trị
+- **Tối ưu hiệu năng**: Khi tối ưu hiệu năng frontend của trang quản trị
+- **Điều chỉnh giao diện**: Khi điều chỉnh style giao diện của trang quản trị
+- **Cấu hình quyền**: Khi cấu hình quyền cho trang quản trị
 
-### 0.3 触发机制
+### 0.3 Cơ chế kích hoạt
 
-#### 0.3.1 调用时机
-- **实时触发**: 前端文件操作时立即触发
-- **延迟触发**: 复杂前端构建时延迟1秒触发
-- **批量触发**: 批量前端文件操作时合并触发
+#### 0.3.1 Thời điểm gọi
+- **Kích hoạt tức thì**: Kích hoạt ngay khi thao tác tệp frontend
+- **Kích hoạt trễ**: Kích hoạt trễ 1 giây khi build frontend phức tạp
+- **Kích hoạt hàng loạt**: Gộp thành một lần kích hoạt khi thao tác hàng loạt tệp frontend
 
-#### 0.3.2 调用频率
-- 文件浏览: 最多每10秒触发一次
-- 文件操作: 最多每5秒触发一次
-- 命令执行: 最多每3秒触发一次
+#### 0.3.2 Tần suất gọi
+- Duyệt tệp: kích hoạt tối đa một lần mỗi 10 giây
+- Thao tác tệp: kích hoạt tối đa một lần mỗi 5 giây
+- Thực thi lệnh: kích hoạt tối đa một lần mỗi 3 giây
 
-#### 0.3.3 调用优先级
-- **优先级等级**: 中优先级 (3/5)
-- **竞争处理**: 当多个技能同时触发时
-  - 最高优先级: 系统核心技能
-  - 高优先级: 代码结构技能
-  - 中等优先级: 管理端前端技能、文档规范技能
-  - 低优先级: 辅助工具技能
-- **触发限制**: 仅在管理端前端相关操作时被触发，不影响其他技能的正常使用
+#### 0.3.3 Mức ưu tiên gọi
+- **Mức ưu tiên**: Ưu tiên trung bình (3/5)
+- **Xử lý tranh chấp**: Khi nhiều skill được kích hoạt cùng lúc
+  - Ưu tiên cao nhất: skill cốt lõi của hệ thống
+  - Ưu tiên cao: skill cấu trúc mã nguồn
+  - Ưu tiên trung bình: skill frontend trang quản trị, skill quy chuẩn tài liệu
+  - Ưu tiên thấp: skill công cụ hỗ trợ
+- **Giới hạn kích hoạt**: Chỉ được kích hoạt khi có thao tác liên quan đến frontend trang quản trị, không ảnh hưởng đến việc sử dụng bình thường của các skill khác
 
-### 0.4 触发后行为
+### 0.4 Hành vi sau khi kích hoạt
 
-#### 0.4.1 自动分析
-- **结构分析**: 分析管理端前端目录结构
-- **组件分析**: 分析前端组件依赖关系
-- **路由分析**: 分析前端路由配置
-- **性能分析**: 分析前端性能瓶颈
+#### 0.4.1 Tự động phân tích
+- **Phân tích cấu trúc**: Phân tích cấu trúc thư mục frontend trang quản trị
+- **Phân tích component**: Phân tích quan hệ phụ thuộc giữa các component frontend
+- **Phân tích route**: Phân tích cấu hình route frontend
+- **Phân tích hiệu năng**: Phân tích điểm nghẽn hiệu năng frontend
 
-#### 0.4.2 自动展示
-- **目录结构**: 展示管理端前端目录结构
-- **组件说明**: 展示核心组件功能说明
-- **技术栈**: 展示管理端前端技术栈
-- **开发规范**: 展示前端开发规范
+#### 0.4.2 Tự động hiển thị
+- **Cấu trúc thư mục**: Hiển thị cấu trúc thư mục frontend trang quản trị
+- **Mô tả component**: Hiển thị mô tả chức năng của các component cốt lõi
+- **Bộ công nghệ**: Hiển thị bộ công nghệ (tech stack) của frontend trang quản trị
+- **Quy chuẩn phát triển**: Hiển thị quy chuẩn phát triển frontend
 
-#### 0.4.3 自动建议
-- **开发建议**: 提供管理端前端开发建议
-- **优化建议**: 提供前端性能优化建议
-- **规范建议**: 提供代码规范遵循建议
-- **安全建议**: 提供前端安全防护建议
+#### 0.4.3 Tự động đề xuất
+- **Đề xuất phát triển**: Đưa ra đề xuất phát triển frontend trang quản trị
+- **Đề xuất tối ưu**: Đưa ra đề xuất tối ưu hiệu năng frontend
+- **Đề xuất quy chuẩn**: Đưa ra đề xuất về việc tuân thủ quy chuẩn mã nguồn
+- **Đề xuất bảo mật**: Đưa ra đề xuất bảo mật cho frontend
 
-## 1. 管理端前端架构
+## 1. Kiến trúc frontend trang quản trị
 
-### 1.1 整体架构
-- **单页应用**: 基于 Vue 2.x 的单页应用
-- **前后端分离**: 与后端通过 RESTful API 交互
-- **模块化设计**: 功能模块化，易于扩展
-- **响应式布局**: 适配不同屏幕尺寸
+### 1.1 Kiến trúc tổng thể
+- **Ứng dụng một trang (SPA)**: Ứng dụng một trang xây dựng trên Vue 2.x
+- **Tách biệt frontend và backend**: Giao tiếp với backend qua RESTful API
+- **Thiết kế mô-đun hóa**: Chức năng được mô-đun hóa, dễ mở rộng
+- **Bố cục responsive**: Thích ứng với các kích thước màn hình khác nhau
 
-### 1.2 技术栈
-- **核心框架**: Vue 2.x
-- **UI 组件库**: Element UI
-- **状态管理**: Vuex
-- **路由管理**: Vue Router
-- **HTTP 客户端**: Axios
-- **构建工具**: Webpack
-- **包管理器**: npm/yarn
-- **代码规范**: ESLint + Prettier
+### 1.2 Bộ công nghệ
+- **Framework cốt lõi**: Vue 2.x
+- **Thư viện UI component**: Element UI
+- **Quản lý trạng thái**: Vuex
+- **Quản lý route**: Vue Router
+- **HTTP client**: Axios
+- **Công cụ build**: Webpack
+- **Trình quản lý gói**: npm/yarn
+- **Quy chuẩn mã nguồn**: ESLint + Prettier
 
-### 1.3 目录结构
+### 1.3 Cấu trúc thư mục
 
-#### 1.3.1 核心目录
+#### 1.3.1 Thư mục cốt lõi
 ```
 public/admin/
-├── index.html           # 入口 HTML 文件
-├── static/              # 静态资源
-│   ├── css/             # 样式文件
-│   ├── js/              # JavaScript 文件
-│   └── img/             # 图片资源
-├── favicon.ico          # 网站图标
-└── manifest.json        # PWA 配置文件
+├── index.html           # File HTML điểm vào
+├── static/              # Tài nguyên tĩnh
+│   ├── css/             # File style
+│   ├── js/              # JavaScript Tệp
+│   └── img/             # Tài nguyên hình ảnh
+├── favicon.ico          # Biểu tượng website
+└── manifest.json        # PWA Tệp cấu hình
 ```
 
-#### 1.3.2 源代码目录 (src)
+#### 1.3.2 Thư mục mã nguồn (src)
 ```
 src/
-├── api/                 # API 接口定义
-├── assets/              # 静态资源
-├── components/          # 公共组件
-├── layout/              # 布局组件
-├── pages/               # 页面组件
-├── router/              # 路由配置
-├── store/               # 状态管理
-├── utils/               # 工具函数
-├── directive/           # 自定义指令
-├── filters/             # 自定义过滤器
-├── mixins/              # 混合器
-├── App.vue              # 根组件
-└── main.js              # 入口文件
+├── api/                 # API định nghĩa
+├── assets/              # Tài nguyên tĩnh
+├── components/          # Thành phần (component) dùng chung
+├── layout/              # Thành phần layout
+├── pages/               # Thành phần trang
+├── router/              # Cấu hình route
+├── store/               # Quản lý trạng thái
+├── utils/               # Hàm tiện ích (utility)
+├── directive/           # Directive tùy chỉnh
+├── filters/             # Filter tùy chỉnh
+├── mixins/              # Mixin
+├── App.vue              # Thành phần gốc
+└── main.js              # File điểm vào
 ```
 
-## 2. 核心模块
+## 2. Các mô-đun cốt lõi
 
-### 2.1 登录认证模块
-- **功能**: 用户登录、权限验证、会话管理
-- **关键组件**: `Login.vue`、`Auth.vue`
-- **核心功能**: 
-  - 用户名密码登录
-  - 验证码验证
-  - 记住密码
-  - 登录状态管理
-  - 权限令牌管理
+### 2.1 Mô-đun đăng nhập và xác thực
+- **Chức năng**: Đăng nhập người dùng, xác thực quyền, quản lý phiên (session)
+- **Component chính**: `Login.vue`, `Auth.vue`
+- **Chức năng cốt lõi**: 
+  - Đăng nhập bằng tên đăng nhập và mật khẩu
+  - Kiểm tra mã xác thực (captcha)
+  - Ghi nhớ mật khẩu
+  - Quản lý trạng thái đăng nhập
+  - Quản lý token phân quyền
 
-### 2.2 菜单导航模块
-- **功能**: 管理端菜单展示、权限控制、路由导航
-- **关键组件**: `Sidebar.vue`、`Topbar.vue`
-- **核心功能**: 
-  - 动态菜单生成
-  - 菜单权限控制
-  - 面包屑导航
-  - 标签页管理
-  - 菜单折叠/展开
+### 2.2 Mô-đun menu điều hướng
+- **Chức năng**: Hiển thị menu trang quản trị, kiểm soát quyền, điều hướng route
+- **Component chính**: `Sidebar.vue`, `Topbar.vue`
+- **Chức năng cốt lõi**: 
+  - Sinh menu động
+  - Kiểm soát quyền menu
+  - Điều hướng breadcrumb
+  - Quản lý tab
+  - Thu gọn/mở rộng menu
 
-### 2.3 仪表盘模块
-- **功能**: 系统概览、数据统计、关键指标展示
-- **关键组件**: `Dashboard.vue`、`Statistics.vue`
-- **核心功能**: 
-  - 销售数据统计
-  - 订单数据统计
-  - 用户数据统计
-  - 商品数据统计
-  - 系统状态监控
+### 2.3 Module bảng điều khiển
+- **Chức năng**: Tổng quan hệ thống, thống kê dữ liệu, hiển thị các chỉ số chính
+- **Component chính**: `Dashboard.vue`, `Statistics.vue`
+- **Chức năng cốt lõi**: 
+  - Thống kê dữ liệu bán hàng
+  - Thống kê dữ liệu đơn hàng
+  - Thống kê dữ liệu người dùng
+  - Thống kê dữ liệu sản phẩm
+  - Giám sát trạng thái hệ thống
 
-### 2.4 用户管理模块
-- **功能**: 管理员账号管理、权限分配、角色管理
-- **关键组件**: `UserList.vue`、`RoleList.vue`、`PermissionList.vue`
-- **核心功能**: 
-  - 用户增删改查
-  - 角色管理
-  - 权限分配
-  - 密码重置
-  - 登录日志查看
+### 2.4 Module quản lý người dùng
+- **Chức năng**: Quản lý tài khoản quản trị viên, phân quyền, quản lý vai trò
+- **Component chính**: `UserList.vue`, `RoleList.vue`, `PermissionList.vue`
+- **Chức năng cốt lõi**: 
+  - Thêm/xóa/sửa/tra cứu người dùng
+  - Quản lý vai trò
+  - Phân quyền
+  - Đặt lại mật khẩu
+  - Xem nhật ký đăng nhập
 
-### 2.5 系统设置模块
-- **功能**: 系统配置、参数设置、数据备份
-- **关键组件**: `SystemConfig.vue`、`Backup.vue`
-- **核心功能**: 
-  - 系统基本设置
-  - 支付配置
-  - 邮件配置
-  - 短信配置
-  - 数据备份/恢复
+### 2.5 Module cài đặt hệ thống
+- **Chức năng**: Cấu hình hệ thống, cài đặt tham số, sao lưu dữ liệu
+- **Component chính**: `SystemConfig.vue`, `Backup.vue`
+- **Chức năng cốt lõi**: 
+  - Cài đặt cơ bản của hệ thống
+  - Cấu hình thanh toán
+  - Cấu hình email
+  - Cấu hình SMS
+  - Sao lưu/khôi phục dữ liệu
 
-## 3. 技术特点
+## 3. Đặc điểm kỹ thuật
 
-### 3.1 组件化开发
-- **可复用组件**: 封装常用 UI 组件
-- **组件通信**: Props/Events、Vuex、EventBus
-- **组件生命周期**: 合理使用生命周期钩子
-- **组件命名规范**: 遵循 PascalCase 命名
+### 3.1 Phát triển theo hướng component
+- **Component tái sử dụng**: Đóng gói các component UI thường dùng
+- **Giao tiếp giữa các component**: Props/Events, Vuex, EventBus
+- **Vòng đời component**: Sử dụng hợp lý các lifecycle hook
+- **Quy tắc đặt tên component**: Đặt tên theo PascalCase
 
-### 3.2 状态管理
-- **Vuex 模块化**: 按功能模块划分 store
-- **状态持久化**: 使用 localStorage/sessionStorage
-- **异步操作**: 使用 Actions 处理异步请求
-- **getters**: 派生状态计算
+### 3.2 Quản lý trạng thái
+- **Module hóa Vuex**: Chia store theo module chức năng
+- **Lưu trạng thái bền vững (persistence)**: Sử dụng localStorage/sessionStorage
+- **Thao tác bất đồng bộ**: Dùng Actions để xử lý request bất đồng bộ
+- **getters**: Tính toán trạng thái dẫn xuất
 
-### 3.3 路由管理
-- **动态路由**: 根据权限生成路由
-- **路由守卫**: 全局/局部路由守卫
-- **路由懒加载**: 提高首屏加载速度
-- **嵌套路由**: 实现复杂页面结构
+### 3.3 Quản lý định tuyến
+- **Route động**: Tạo route dựa trên quyền
+- **Route guard**: Route guard toàn cục/cục bộ
+- **Lazy load route**: Tăng tốc độ tải màn hình đầu tiên
+- **Route lồng nhau**: Xây dựng cấu trúc trang phức tạp
 
-### 3.4 API 调用
-- **Axios 封装**: 统一 API 调用方式
-- **请求拦截器**: 添加认证令牌
-- **响应拦截器**: 统一错误处理
-- **API 模块化**: 按功能模块划分 API
+### 3.4 Gọi API
+- **Đóng gói Axios**: Thống nhất cách gọi API
+- **Request interceptor**: Thêm token xác thực
+- **Response interceptor**: Xử lý lỗi thống nhất
+- **Module hóa API**: Chia API theo module chức năng
 
-## 4. 开发规范
+## 4. Quy chuẩn phát triển
 
-### 4.1 代码规范
-- **Vue 风格指南**: 遵循 Vue 官方风格指南
-- **ESLint 规则**: 严格遵循 ESLint 规则
-- **代码缩进**: 4空格缩进
-- **命名规范**: 
-  - 组件名: PascalCase
-  - 方法/变量: camelCase
-  - 常量: 全大写
-  - 文件名: kebab-case 或 PascalCase
+### 4.1 Quy chuẩn code
+- **Hướng dẫn phong cách Vue**: Tuân thủ hướng dẫn phong cách (Style Guide) chính thức của Vue
+- **Quy tắc ESLint**: Tuân thủ nghiêm ngặt các quy tắc ESLint
+- **Thụt lề code**: Thụt lề 4 dấu cách
+- **Quy tắc đặt tên**: 
+  - Tên component: PascalCase
+  - Phương thức/biến: camelCase
+  - Hằng số: Viết hoa toàn bộ
+  - Tên file: kebab-case hoặc PascalCase
 
-### 4.2 目录规范
-- **组件目录**: 按功能模块组织组件
-- **页面目录**: 按路由结构组织页面
-- **资源目录**: 分类存放静态资源
-- **工具目录**: 按功能分类工具函数
+### 4.2 Quy chuẩn thư mục
+- **Thư mục component**: Tổ chức component theo module chức năng
+- **Thư mục trang**: Tổ chức trang theo cấu trúc route
+- **Thư mục tài nguyên**: Lưu tài nguyên tĩnh theo từng loại
+- **Thư mục tiện ích**: Phân loại hàm tiện ích theo chức năng
 
-### 4.3 命名规范
-- **组件命名**: 使用语义化的组件名称
-- **路由命名**: 与页面组件名称对应
-- **store 命名**: 与功能模块名称对应
-- **API 命名**: 与后端接口名称对应
+### 4.3 Quy tắc đặt tên
+- **Đặt tên component**: Dùng tên component có ngữ nghĩa rõ ràng
+- **Đặt tên route**: Tương ứng với tên component của trang
+- **Đặt tên store**: Tương ứng với tên module chức năng
+- **Đặt tên API**: Tương ứng với tên API phía backend
 
-### 4.4 注释规范
-- **组件注释**: 组件功能、props、events 说明
-- **方法注释**: 方法功能、参数、返回值说明
-- **复杂逻辑注释**: 关键逻辑步骤说明
-- **TODO 注释**: 待完成功能标记
+### 4.4 Quy chuẩn chú thích
+- **Chú thích component**: Mô tả chức năng, props, events của component
+- **Chú thích phương thức**: Mô tả chức năng, tham số, giá trị trả về của phương thức
+- **Chú thích logic phức tạp**: Giải thích các bước logic quan trọng
+- **Chú thích TODO**: Đánh dấu chức năng chưa hoàn thành
 
-## 5. 性能优化
+## 5. Tối ưu hiệu năng
 
-### 5.1 加载优化
-- **路由懒加载**: 按需加载页面组件
-- **组件懒加载**: 按需加载大型组件
-- **图片优化**: 图片压缩、懒加载
-- **资源压缩**: JS/CSS 压缩
-- **CDN 加速**: 静态资源使用 CDN
+### 5.1 Tối ưu tốc độ tải
+- **Lazy load route**: Tải component trang theo nhu cầu
+- **Lazy load component**: Tải các component lớn theo nhu cầu
+- **Tối ưu hình ảnh**: Nén ảnh, lazy load
+- **Nén tài nguyên**: Nén JS/CSS
+- **Tăng tốc bằng CDN**: Dùng CDN cho tài nguyên tĩnh
 
-### 5.2 渲染优化
-- **虚拟列表**: 长列表使用虚拟滚动
-- **计算属性缓存**: 使用 computed 缓存计算结果
-- **避免频繁更新**: 使用 v-once、v-memo
-- **合理使用 key**: 列表渲染时使用唯一 key
-- **减少 DOM 操作**: 批量更新 DOM
+### 5.2 Tối ưu render
+- **Danh sách ảo**: Dùng cuộn ảo (virtual scrolling) cho danh sách dài
+- **Cache thuộc tính computed**: Dùng computed để cache kết quả tính toán
+- **Tránh cập nhật quá thường xuyên**: Sử dụng v-once, v-memo
+- **Sử dụng key hợp lý**: Dùng key duy nhất khi render danh sách
+- **Giảm thao tác DOM**: Cập nhật DOM theo lô
 
-### 5.3 网络优化
-- **API 请求合并**: 合并相同请求
-- **请求缓存**: 缓存重复请求结果
-- **防抖节流**: 优化频繁触发的事件
-- **WebSocket**: 实时数据使用 WebSocket
-- **HTTP/2**: 启用 HTTP/2 协议
+### 5.3 Tối ưu mạng
+- **Gộp request API**: Gộp các request giống nhau
+- **Cache request**: Cache kết quả của các request lặp lại
+- **Debounce và throttle**: Tối ưu các sự kiện được kích hoạt thường xuyên
+- **WebSocket**: Dùng WebSocket cho dữ liệu thời gian thực
+- **HTTP/2**: Bật giao thức HTTP/2
 
-### 5.4 构建优化
-- **Tree Shaking**: 移除未使用的代码
-- **代码分割**: 按路由分割代码
-- **预加载**: 预加载关键资源
-- **环境变量**: 区分开发/生产环境
+### 5.4 Tối ưu build
+- **Tree Shaking**: Loại bỏ code không sử dụng
+- **Tách code (code splitting)**: Tách code theo route
+- **Tải trước (preload)**: Tải trước các tài nguyên quan trọng
+- **Biến môi trường**: Phân biệt môi trường phát triển/production
 
-## 6. 安全防护
+## 6. Bảo mật
 
-### 6.1 XSS 防护
-- **输入验证**: 验证用户输入
-- **输出编码**: 对输出进行 HTML 编码
-- **CSP**: 配置内容安全策略
-- **Vue 自动转义**: 利用 Vue 的 HTML 转义功能
+### 6.1 Phòng chống XSS
+- **Kiểm tra đầu vào**: Kiểm tra dữ liệu người dùng nhập
+- **Mã hóa đầu ra**: Mã hóa HTML (HTML encoding) cho dữ liệu đầu ra
+- **CSP**: Cấu hình chính sách bảo mật nội dung (Content Security Policy)
+- **Tự động escape của Vue**: Tận dụng tính năng escape HTML của Vue
 
-### 6.2 CSRF 防护
-- **Token 验证**: 使用 CSRF Token
-- **同源策略**: 遵循浏览器同源策略
-- **请求头验证**: 验证请求来源
+### 6.2 Phòng chống CSRF
+- **Xác thực Token**: Sử dụng CSRF Token
+- **Chính sách cùng nguồn gốc**: Tuân thủ chính sách cùng nguồn gốc (same-origin policy) của trình duyệt
+- **Kiểm tra header của request**: Xác minh nguồn gốc request
 
-### 6.3 权限控制
-- **前端权限验证**: 路由权限控制
-- **后端权限验证**: 接口权限验证
-- **按钮级别权限**: 细粒度权限控制
-- **敏感操作验证**: 重要操作二次确认
+### 6.3 Kiểm soát quyền
+- **Kiểm tra quyền ở frontend**: Kiểm soát quyền truy cập route
+- **Kiểm tra quyền ở backend**: Kiểm tra quyền truy cập API
+- **Phân quyền cấp nút bấm**: Kiểm soát quyền chi tiết
+- **Xác minh thao tác nhạy cảm**: Yêu cầu xác nhận lại với các thao tác quan trọng
 
-### 6.4 数据安全
-- **敏感数据加密**: 加密存储敏感信息
-- **本地存储安全**: 合理使用 localStorage
-- **API 接口安全**: HTTPS、接口签名
+### 6.4 An toàn dữ liệu
+- **Mã hóa dữ liệu nhạy cảm**: Mã hóa thông tin nhạy cảm khi lưu trữ
+- **An toàn lưu trữ cục bộ**: Sử dụng localStorage hợp lý
+- **An toàn API**: HTTPS, chữ ký API
 
-## 7. 最佳实践
+## 7. Thực tiễn tốt nhất
 
-### 7.1 开发流程
-1. **需求分析**: 明确功能需求
-2. **设计阶段**: 设计页面结构和组件
-3. **编码实现**: 遵循开发规范编码
-4. **测试验证**: 功能测试和性能测试
-5. **代码审查**: 代码质量检查
-6. **部署上线**: 构建和部署
+### 7.1 Quy trình phát triển
+1. **Phân tích yêu cầu**: Làm rõ yêu cầu chức năng
+2. **Giai đoạn thiết kế**: Thiết kế cấu trúc trang và component
+3. **Lập trình**: Viết code theo quy chuẩn phát triển
+4. **Kiểm thử**: Kiểm thử chức năng và kiểm thử hiệu năng
+5. **Rà soát code (code review)**: Kiểm tra chất lượng code
+6. **Triển khai và phát hành**: Build và triển khai
 
-### 7.2 组件开发
-- **单一职责**: 组件功能单一
-- **可配置性**: 组件参数可配置
-- **文档完善**: 组件使用文档
-- **测试覆盖**: 组件单元测试
+### 7.2 Phát triển component
+- **Trách nhiệm đơn nhất**: Mỗi component chỉ đảm nhận một chức năng
+- **Khả năng cấu hình**: Tham số của component có thể cấu hình
+- **Tài liệu đầy đủ**: Có tài liệu hướng dẫn sử dụng component
+- **Độ phủ kiểm thử**: Unit test cho component
 
-### 7.3 页面开发
-- **布局规范**: 遵循统一布局规范
-- **响应式设计**: 适配不同屏幕尺寸
-- **用户体验**: 优化交互体验
-- **性能考虑**: 页面加载和渲染性能
+### 7.3 Phát triển trang
+- **Quy chuẩn bố cục**: Tuân thủ quy chuẩn bố cục thống nhất
+- **Thiết kế responsive**: Tương thích với các kích thước màn hình khác nhau
+- **Trải nghiệm người dùng**: Tối ưu trải nghiệm tương tác
+- **Cân nhắc hiệu năng**: Hiệu năng tải và render trang
 
-### 7.4 调试技巧
-- **Vue DevTools**: 使用 Vue 开发工具
-- **控制台调试**: 合理使用 console 方法
-- **网络调试**: 分析 API 请求和响应
-- **性能分析**: 使用浏览器性能分析工具
+### 7.4 Mẹo gỡ lỗi
+- **Vue DevTools**: Sử dụng công cụ phát triển của Vue
+- **Gỡ lỗi bằng console**: Sử dụng hợp lý các phương thức console
+- **Gỡ lỗi mạng**: Phân tích request và response của API
+- **Phân tích hiệu năng**: Sử dụng công cụ phân tích hiệu năng của trình duyệt
 
-## 8. 常见问题
+## 8. Sự cố thường gặp
 
-### 8.1 登录问题
-- **令牌过期**: 处理令牌过期逻辑
-- **权限不足**: 权限验证失败处理
-- **登录状态保持**: 持久化登录状态
+### 8.1 Vấn đề đăng nhập
+- **Token hết hạn**: Xử lý logic khi token hết hạn
+- **Không đủ quyền**: Xử lý khi kiểm tra quyền thất bại
+- **Duy trì trạng thái đăng nhập**: Lưu bền vững trạng thái đăng nhập
 
-### 8.2 路由问题
-- **404 页面**: 配置 404 路由
-- **路由重定向**: 合理配置路由重定向
-- **路由权限**: 动态路由权限控制
+### 8.2 Vấn đề định tuyến
+- **Trang 404**: Cấu hình route 404
+- **Chuyển hướng route**: Cấu hình chuyển hướng route hợp lý
+- **Quyền truy cập route**: Kiểm soát quyền cho route động
 
-### 8.3 性能问题
-- **首屏加载慢**: 优化首屏加载速度
-- **页面卡顿**: 优化页面渲染性能
-- **内存泄漏**: 避免内存泄漏
+### 8.3 Vấn đề hiệu năng
+- **Màn hình đầu tiên tải chậm**: Tối ưu tốc độ tải màn hình đầu tiên
+- **Trang bị giật lag**: Tối ưu hiệu năng render trang
+- **Rò rỉ bộ nhớ**: Tránh rò rỉ bộ nhớ
 
-### 8.4 兼容性问题
-- **浏览器兼容**: 支持主流浏览器
-- **分辨率兼容**: 适配不同分辨率
-- **设备兼容**: 适配不同设备
+### 8.4 Vấn đề tương thích
+- **Tương thích trình duyệt**: Hỗ trợ các trình duyệt phổ biến
+- **Tương thích độ phân giải**: Thích ứng với các độ phân giải khác nhau
+- **Tương thích thiết bị**: Thích ứng với các thiết bị khác nhau
 
-## 9. 部署与发布
+## 9. Triển khai và phát hành
 
-### 9.1 构建流程
-- **开发环境**: `npm run dev`
-- **测试环境**: `npm run build:test`
-- **生产环境**: `npm run build:prod`
+### 9.1 Quy trình build
+- **Môi trường phát triển**: `npm run dev`
+- **Môi trường kiểm thử**: `npm run build:test`
+- **Môi trường production**: `npm run build:prod`
 
-### 9.2 部署方式
-- **静态部署**: 部署到静态文件服务器
-- **容器部署**: 使用 Docker 容器部署
-- **CDN 加速**: 静态资源使用 CDN
+### 9.2 Phương thức triển khai
+- **Triển khai tĩnh**: Triển khai lên máy chủ file tĩnh
+- **Triển khai bằng container**: Triển khai bằng container Docker
+- **Tăng tốc bằng CDN**: Dùng CDN cho tài nguyên tĩnh
 
-### 9.3 发布流程
-1. **代码提交**: 提交代码到版本控制系统
-2. **构建测试**: 构建并测试
-3. **部署上线**: 部署到生产环境
-4. **监控运行**: 监控系统运行状态
+### 9.3 Quy trình phát hành
+1. **Commit code**: Commit code lên hệ thống quản lý phiên bản
+2. **Build và kiểm thử**: Build rồi chạy kiểm thử
+3. **Triển khai và phát hành**: Triển khai lên môi trường production
+4. **Giám sát vận hành**: Giám sát trạng thái vận hành của hệ thống
 
-## 10. 开发工具推荐
+## 10. Công cụ phát triển khuyên dùng
 
-### 10.1 IDE 推荐
-- **VS Code**: 轻量级编辑器，丰富的插件
-- **WebStorm**: 专业的前端 IDE
-- **Sublime Text**: 快速的代码编辑器
+### 10.1 IDE khuyên dùng
+- **VS Code**: Trình soạn thảo nhẹ, kho plugin phong phú
+- **WebStorm**: IDE frontend chuyên nghiệp
+- **Sublime Text**: Trình soạn thảo code tốc độ cao
 
-### 10.2 插件推荐
-- **Vetur**: Vue 开发插件
-- **ESLint**: 代码检查插件
-- **Prettier**: 代码格式化插件
-- **GitLens**: Git 增强插件
-- **Debugger for Chrome**: 浏览器调试插件
+### 10.2 Plugin khuyên dùng
+- **Vetur**: Plugin phát triển Vue
+- **ESLint**: Plugin kiểm tra code
+- **Prettier**: Plugin định dạng code
+- **GitLens**: Plugin mở rộng tính năng Git
+- **Debugger for Chrome**: Plugin gỡ lỗi trên trình duyệt
 
-### 10.3 工具推荐
-- **Postman**: API 测试工具
-- **Charles**: 网络调试工具
-- **Figma/Sketch**: UI 设计工具
-- **Zeplin**: 设计协作工具
-- **Lighthouse**: 性能分析工具
+### 10.3 Công cụ khuyên dùng
+- **Postman**: Công cụ kiểm thử API
+- **Charles**: Công cụ gỡ lỗi mạng
+- **Figma/Sketch**: Công cụ thiết kế UI
+- **Zeplin**: Công cụ cộng tác thiết kế
+- **Lighthouse**: Công cụ phân tích hiệu năng
 
-## 11. 参考资源
+## 11. Tài liệu tham khảo
 
-### 11.1 官方文档
-- [Vue 2 官方文档](https://v2.vuejs.org/)
-- [Element UI 官方文档](https://element.eleme.io/#/zh-CN)
-- [Vuex 官方文档](https://vuex.vuejs.org/zh/)
-- [Vue Router 官方文档](https://router.vuejs.org/zh/)
-- [Axios 官方文档](https://axios-http.com/zh/docs/intro)
+### 11.1 Tài liệu chính thức
+- [Tài liệu chính thức Vue 2](https://v2.vuejs.org/)
+- [Tài liệu chính thức Element UI](https://element.eleme.io/#/zh-CN)
+- [Tài liệu chính thức Vuex](https://vuex.vuejs.org/zh/)
+- [Tài liệu chính thức Vue Router](https://router.vuejs.org/zh/)
+- [Tài liệu chính thức Axios](https://axios-http.com/zh/docs/intro)
 
-### 11.2 学习资源
+### 11.2 Tài nguyên học tập
 - [Vue Mastery](https://www.vuemastery.com/)
 - [Vue School](https://vueschool.io/)
 - [MDN Web Docs](https://developer.mozilla.org/zh-CN/)
 - [CSS-Tricks](https://css-tricks.com/)
 
-### 11.3 社区资源
-- [Vue 论坛](https://forum.vuejs.org/)
-- [Element UI 社区](https://github.com/ElemeFE/element)
+### 11.3 Tài nguyên cộng đồng
+- [Diễn đàn Vue](https://forum.vuejs.org/)
+- [Cộng đồng Element UI](https://github.com/ElemeFE/element)
 - [GitHub](https://github.com/)
 - [Stack Overflow](https://stackoverflow.com/)
 
-## 12. 版本管理
+## 12. Quản lý phiên bản
 
-### 12.1 版本控制
-- **Git**: 使用 Git 进行版本控制
-- **分支管理**: 主分支、开发分支、功能分支
-- **提交规范**: 语义化提交信息
+### 12.1 Quản lý phiên bản
+- **Git**: Dùng Git để quản lý phiên bản
+- **Quản lý nhánh**: Nhánh chính, nhánh phát triển, nhánh tính năng
+- **Quy chuẩn commit**: Commit message có ngữ nghĩa rõ ràng
 
-### 12.2 版本发布
-- **语义化版本**: 遵循 SemVer 规范
-- **发布日志**: 记录版本变更内容
-- **回滚方案**: 版本回滚策略
+### 12.2 Phát hành phiên bản
+- **Đánh số phiên bản theo ngữ nghĩa**: Tuân thủ quy chuẩn SemVer
+- **Nhật ký phát hành**: Ghi lại nội dung thay đổi của từng phiên bản
+- **Phương án rollback**: Chiến lược rollback phiên bản
 
-## 13. 团队协作
+## 13. Cộng tác nhóm
 
-### 13.1 协作流程
-- **需求评审**: 团队评审需求
-- **任务分配**: 合理分配开发任务
-- **代码审查**: 代码质量检查
-- **测试协作**: 开发与测试协作
+### 13.1 Quy trình cộng tác
+- **Đánh giá yêu cầu**: Cả nhóm cùng đánh giá yêu cầu
+- **Phân công công việc**: Phân công nhiệm vụ phát triển hợp lý
+- **Rà soát code (code review)**: Kiểm tra chất lượng code
+- **Phối hợp kiểm thử**: Phối hợp giữa bộ phận phát triển và kiểm thử
 
-### 13.2 规范约定
-- **代码规范**: 统一代码风格
-- **命名规范**: 统一命名规则
-- **文档规范**: 统一文档格式
-- **提交规范**: 统一提交信息格式
+### 13.2 Quy ước chung
+- **Quy chuẩn code**: Thống nhất phong cách code
+- **Quy tắc đặt tên**: Thống nhất quy tắc đặt tên
+- **Quy chuẩn tài liệu**: Thống nhất định dạng tài liệu
+- **Quy chuẩn commit**: Thống nhất định dạng commit message
 
-### 13.3 工具协作
-- **项目管理**: 使用项目管理工具
-- **代码托管**: 使用代码托管平台
-- **CI/CD**: 持续集成/持续部署
-- **文档协作**: 团队文档协作工具
+### 13.3 Công cụ cộng tác
+- **Quản lý dự án**: Sử dụng công cụ quản lý dự án
+- **Lưu trữ mã nguồn**: Sử dụng nền tảng lưu trữ mã nguồn
+- **CI/CD**: Tích hợp liên tục/triển khai liên tục
+- **Cộng tác tài liệu**: Công cụ cộng tác tài liệu cho nhóm
 
-### 14 其他资源
-- 开发流程文档 /references/development_flow.md
-- 代码规范文档 /references/code_style.md
-- 项目部署文档 /references/deploy.md
-- 目录结构文档 /references/directory_structure.md
-- 接口请求流程文档 /references/api_flow.md
-- 系统配置文档 /references/system_config.md
+### 14 Tài nguyên khác
+- Tài liệu quy trình phát triển /references/development_flow.md
+- Tài liệu quy chuẩn code /references/code_style.md
+- Tài liệu triển khai dự án /references/deploy.md
+- Tài liệu cấu trúc thư mục /references/directory_structure.md
+- Tài liệu quy trình request API /references/api_flow.md
+- Tài liệu cấu hình hệ thống /references/system_config.md

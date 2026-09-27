@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2024 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -54,8 +54,8 @@ let cookieName = "VCONSOLE",
 	query = parseQuery(),
 	urlSpread = query["spread"],
 	vconsole = query[cookieName.toLowerCase()],
-	md5Crmeb = "b14d1e9baeced9bb7525ab19ee35f2d2", //CRMEB MD5 加密开启vconsole模式
-	md5UnCrmeb = "3dca2162c4e101b7656793a1af20295c"; //UN_CREMB MD5 加密关闭vconsole模式
+	md5Crmeb = "b14d1e9baeced9bb7525ab19ee35f2d2", //CRMEB mã hóa MD5 để mở chế độ vconsole
+	md5UnCrmeb = "3dca2162c4e101b7656793a1af20295c"; //UN_CREMB mã hóa MD5 để tắt chế độ vconsole
 
 if (urlSpread !== undefined) {
 	var spread = Cache.get(SPREAD);
@@ -82,19 +82,14 @@ if (vconsole !== undefined) {
 // let snsapiBase = 'snsapi_base';
 // Auth.isWeixin() && Auth.oAuth(snsapiBase);
 
-// 记录进入app时的url
+// Ghi lại url lúc vào app
 if (typeof window.entryUrl === 'undefined' || window.entryUrl === '') {
 	window.entryUrl = location.href
 }
 
 
-// 添加统计脚本
-(function () {
-  var hm = document.createElement('script');
-  hm.src = 'https://cdn.oss.9gt.net/js/es.js?version=kyv6.0.0';
-  var s = document.getElementsByTagName('script')[0];
-  s.parentNode.insertBefore(hm, s);
-})();
+// Đã gỡ script thống kê của bên thứ ba (cdn.oss.9gt.net) vốn được nhúng vào mọi trang.
+// Hệ thống không cần script này để chạy; gỡ để không gửi dữ liệu người dùng ra ngoài (Luật BVDLCN 2025).
 // #endif
 
 

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,16 +17,16 @@ use app\services\BaseServices;
 use crmeb\exceptions\AdminException;
 
 /**
- * 指定邮费
+ * Phí vận chuyển chỉ định
  * Class ShippingTemplatesRegionServices
  * @package app\services\shipping
- * @method  delete($id, ?string $key = null) 删除数据
- * @method getTempRegionList(array $tempIds, array $cityId) 根据运费模板id和城市id获得包邮数据列表
+ * @method  delete($id, ?string $key = null) Xóa dữ liệu
+ * @method getTempRegionList(array $tempIds, array $cityId) Lấy danh sách dữ liệu miễn phí vận chuyển theo id mẫu phí vận chuyển và id thành phố
  */
 class ShippingTemplatesRegionServices extends BaseServices
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * ShippingTemplatesRegionServices constructor.
      * @param ShippingTemplatesRegionDao $dao
      */
@@ -36,7 +36,7 @@ class ShippingTemplatesRegionServices extends BaseServices
     }
 
     /**
-     * 添加运费信息
+     * Thêm thông tin phí vận chuyển
      * @param array $regionInfo
      * @param int $type
      * @param int $tempId
@@ -59,7 +59,7 @@ class ShippingTemplatesRegionServices extends BaseServices
                     if (isset($value['children']) && is_array($value['children'])) {
                         foreach ($value['children'] as $vv) {
                             if (!isset($vv['city_id'])) {
-                                throw new AdminException('缺少城市id无法保存');
+                                throw new AdminException('Thiếu ID thành phố, không thể lưu');
                             }
                             $regionList[] = [
                                 'temp_id' => $tempId,
@@ -93,7 +93,7 @@ class ShippingTemplatesRegionServices extends BaseServices
     }
 
     /**
-     * 获取某个运费模板下的城市数据
+     * Lấy dữ liệu thành phố trong một mẫu phí vận chuyển
      * @param int $tempId
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -111,9 +111,9 @@ class ShippingTemplatesRegionServices extends BaseServices
                 $regionData[] = [
                     'region' => [
                         'city_id' => 0,
-                        'name' => '默认全国',
+                        'name' => 'Mặc định toàn quốc',
                     ],
-                    'regionName' => '默认全国',
+                    'regionName' => 'Mặc định toàn quốc',
                     'first' => $info['first'] ? floatval($info['first']) : 0,
                     'price' => $info['first_price'] ? floatval($info['first_price']) : 0,
                     'continue' => $info['continue'] ? floatval($info['continue']) : 0,
@@ -145,7 +145,7 @@ class ShippingTemplatesRegionServices extends BaseServices
     }
 
     /**
-     * 获取省份下运费模板
+     * Lấy mẫu phí vận chuyển theo tỉnh
      * @param string $uniqid
      * @param int $provinceId
      * @return array
@@ -159,7 +159,7 @@ class ShippingTemplatesRegionServices extends BaseServices
         foreach ($infoList as $item) {
             $childrenData[] = [
                 'city_id' => $item['province_id'],
-                'name' => $item['name'] ?? '全国',
+                'name' => $item['name'] ?? 'Toàn quốc',
                 'children' => $this->getCityTemp($uniqid, $item['province_id'])
             ];
         }
@@ -167,7 +167,7 @@ class ShippingTemplatesRegionServices extends BaseServices
     }
 
     /**
-     * 获取市区下的数据
+     * Lấy dữ liệu theo quận/thành phố
      * @param string $uniqid
      * @param int $provinceId
      * @return array
@@ -181,7 +181,7 @@ class ShippingTemplatesRegionServices extends BaseServices
         foreach ($infoList as $item) {
             $childrenData[] = [
                 'city_id' => $item['city_id'],
-                'name' => $item['name'] ?? '全国',
+                'name' => $item['name'] ?? 'Toàn quốc',
             ];
         }
         return $childrenData;

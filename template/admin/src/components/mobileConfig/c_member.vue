@@ -77,7 +77,7 @@ export default {
         if (nVal == 3 || nVal == 4) {
           if (this.configObj.nameColor.color[0].item == '#fff') this.configObj.nameColor.color[0].item = '#333';
           if (this.configObj.numColor.color[0].item == '#fff') this.configObj.numColor.color[0].item = '#333';
-          // 背景色也修改为 333
+          // Màu nền cũng đổi thành 333
           if (this.configObj.compo.img - box - girdnentBgConfig.colorConfig.color[0].item == '#E93323')
             this.configObj.componentBgConfig.colorConfig.color[0].item = '#333';
           if (this.configObj.componentBgConfig.colorConfig.color[1].item == '#E93323')
@@ -491,14 +491,14 @@ export default {
       if (!data) return data;
       if (!data.assetIconColor) {
         this.$set(data, 'assetIconColor', {
-          title: '图标颜色',
+          title: 'Màu biểu tượng',
           default: [{ item: '#fff' }],
           color: [{ item: '#fff' }],
         });
       }
       if (!data.assetIconSize) {
         this.$set(data, 'assetIconSize', {
-          title: '图标大小',
+          title: 'Kích thước biểu tượng',
           val: 24,
           min: 10,
           max: 32,
@@ -506,32 +506,32 @@ export default {
       }
       if (!data.assetTextColor) {
         this.$set(data, 'assetTextColor', {
-          title: '文字颜色',
+          title: 'Màu chữ',
           default: [{ item: '#fff' }],
           color: [{ item: '#fff' }],
         });
       }
       if (!data.assetTextSize) {
         this.$set(data, 'assetTextSize', {
-          title: '文字大小',
+          title: 'Cỡ chữ',
           val: 12,
           min: 10,
           max: 32,
         });
       }
       if (data.styleConfig && data.styleConfig.tabList.length < 5) {
-        data.styleConfig.tabList.push({ name: '样式五' });
+        data.styleConfig.tabList.push({ name: 'Kiểu 5' });
       }
       if (!data.nameColor) {
         this.$set(data, 'nameColor', {
-          title: '昵称颜色',
+          title: 'Màu biệt danh',
           default: [{ item: '#fff' }],
           color: [{ item: '#fff' }],
         });
       }
       if (!data.nameSize) {
         this.$set(data, 'nameSize', {
-          title: '昵称文字',
+          title: 'Chữ biệt danh',
           val: 16,
           min: 10,
           max: 30,
@@ -539,14 +539,14 @@ export default {
       }
       if (!data.numColor) {
         this.$set(data, 'numColor', {
-          title: 'ID/手机号',
+          title: 'ID/Số điện thoại',
           default: [{ item: '#fff' }],
           color: [{ item: '#fff' }],
         });
       }
       if (!data.numSize) {
         this.$set(data, 'numSize', {
-          title: '文字大小',
+          title: 'Cỡ chữ',
           val: 10,
           min: 10,
           max: 30,
@@ -554,42 +554,42 @@ export default {
       }
       if (!data.userInfoConfig) {
         this.$set(data, 'userInfoConfig', {
-          title: '用户信息',
+          title: 'Thông tin người dùng',
           tabVal: 0,
-          tabList: [{ name: '手机号' }, { name: 'ID' }],
+          tabList: [{ name: 'Số điện thoại' }, { name: 'ID' }],
         });
       }
       if (!data.memberStyleConfig) {
         this.$set(data, 'memberStyleConfig', {
-          title: '会员样式',
+          title: 'Kiểu thành viên',
           tabVal: 0,
-          tabList: [{ name: '样式一' }, { name: '样式二' }, { name: '样式三' }, { name: '样式四' }],
+          tabList: [{ name: 'Kiểu 1' }, { name: 'Kiểu 2' }, { name: 'Kiểu 3' }, { name: 'Kiểu 4' }],
         });
       }
       if (!data.iconStyleConfig) {
         this.$set(data, 'iconStyleConfig', {
-          title: '图标样式',
+          title: 'Kiểu biểu tượng',
           name: 'iconStyleConfig',
           type: 1,
           color: {
-            title: '颜色',
+            title: 'Màu sắc',
             default: [{ item: '#fff' }],
             color: [{ item: '#fff' }],
           },
           size: {
-            title: '大小',
+            title: 'Kích thước',
             val: 20,
             min: 12,
             max: 100,
           },
           padding: {
-            title: '内边距',
+            title: 'Lề trong',
             val: 0,
             min: 0,
             max: 100,
           },
           rotate: {
-            title: '旋转',
+            title: 'Xoay',
             val: 0,
             min: 0,
             max: 360,
@@ -598,72 +598,72 @@ export default {
       }
       if (!data.dataTitleColor) {
         this.$set(data, 'dataTitleColor', {
-          title: '标题颜色',
+          title: 'Màu tiêu đề',
           default: [{ item: '#fff' }],
           color: [{ item: '#fff' }],
         });
       }
       if (!data.dataNumColor) {
         this.$set(data, 'dataNumColor', {
-          title: '数字颜色',
+          title: 'Màu số',
           default: [{ item: '#fff' }],
           color: [{ item: '#fff' }],
         });
       }
       if (!data.zIndexConfig) {
         this.$set(data, 'zIndexConfig', {
-          title: '组件上浮',
+          title: 'Thứ tự lớp thành phần',
           val: 0,
           min: 0,
         });
       }
       if (!data.componentBgConfig) {
         this.$set(data, 'componentBgConfig', {
-          title: '背景设置',
+          title: 'Cài đặt nền',
           tabVal: 0,
-          tabList: [{ name: '颜色' }, { name: '图片' }],
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
           colorConfig: {
-            title: '背景颜色',
+            title: 'Màu nền',
             default: [{ item: '#fff' }, { item: '#fff' }],
             color: [{ item: '#fff' }, { item: '#fff' }],
           },
           colorDirection: {
-            title: '渐变方向',
+            title: 'Hướng chuyển màu',
             tabVal: 0,
-            tabList: [{ name: '横向' }, { name: '纵向' }, { name: '左斜' }, { name: '右斜' }],
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
           },
           imageConfig: {
-            header: '背景图片',
+            header: 'Ảnh nền',
             title: '',
-            name: '上传图片',
+            name: 'Tải lên ảnh',
             type: 'code',
             url: '',
-            info: '建议尺寸：750px * 400px',
+            info: 'Kích thước đề xuất: 750px * 400px',
           },
         });
       }
       if (!data.borderConfig) {
         this.$set(data, 'borderConfig', {
-          title: '边框设置',
+          title: 'Cài đặt viền',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0,
           styleConfig: {
-            title: '边框样式',
+            title: 'Kiểu viền',
             tabVal: 0,
             tabList: [
-              { name: '实线', style: 'solid' },
-              { name: '虚线', style: 'dashed' },
-              { name: '点状', style: 'dotted' },
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
             ],
           },
           widthConfig: {
-            title: '边框粗细',
+            title: 'Độ dày viền',
             val: 1,
             min: 1,
           },
           colorConfig: {
-            title: '边框颜色',
+            title: 'Màu viền',
             default: [{ item: '#e5e5e5' }],
             color: [{ item: '#e5e5e5' }],
           },
@@ -671,43 +671,43 @@ export default {
       }
       if (data.borderConfig && data.borderConfig.styleConfig && !data.borderConfig.styleConfig.tabList) {
         this.$set(data.borderConfig, 'styleConfig', {
-          title: '边框样式',
+          title: 'Kiểu viền',
           tabVal: 0,
           tabList: [
-            { name: '实线', style: 'solid' },
-            { name: '虚线', style: 'dashed' },
-            { name: '点状', style: 'dotted' },
+            { name: 'Nét liền', style: 'solid' },
+            { name: 'Nét đứt', style: 'dashed' },
+            { name: 'Nét chấm', style: 'dotted' },
           ],
         });
       }
       if (!data.shadowConfig) {
         this.$set(data, 'shadowConfig', {
-          title: '阴影设置',
+          title: 'Cài đặt đổ bóng',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0,
           colorConfig: {
-            title: '阴影颜色',
+            title: 'Màu đổ bóng',
             default: [{ item: 'rgba(0,0,0,0.1)' }],
             color: [{ item: 'rgba(0,0,0,0.1)' }],
           },
           xConfig: {
-            title: 'X轴偏移',
+            title: 'Độ lệch trục X',
             val: 0,
             min: -50,
           },
           yConfig: {
-            title: 'Y轴偏移',
+            title: 'Độ lệch trục Y',
             val: 0,
             min: -50,
           },
           blurConfig: {
-            title: '模糊半径',
+            title: 'Bán kính làm mờ',
             val: 10,
             min: 0,
           },
           spreadConfig: {
-            title: '扩展半径',
+            title: 'Bán kính lan tỏa',
             val: 0,
             min: -50,
           },
@@ -715,9 +715,9 @@ export default {
       }
       if (!data.menuConfig) {
         this.$set(data, 'menuConfig', {
-          title: '操作内容设置',
-          listStyleName: '展示样式',
-          bnt: '添加',
+          title: 'Cài đặt nội dung thao tác',
+          listStyleName: 'Kiểu hiển thị',
+          bnt: 'Thêm',
           type: 1,
           listStyle: 0,
           maxList: 2,
@@ -729,15 +729,15 @@ export default {
               icon: '',
               info: [
                 {
-                  title: '标题',
-                  value: '标题',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Tiêu đề',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -749,15 +749,15 @@ export default {
               icon: '',
               info: [
                 {
-                  title: '标题',
-                  value: '标题',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Tiêu đề',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -768,46 +768,46 @@ export default {
 
       if (!data.assetMode) {
         this.$set(data, 'assetMode', {
-          title: '展示模式',
+          title: 'Chế độ hiển thị',
           tabVal: 0,
-          tabList: [{ name: '数据展示' }, { name: '图文展示' }],
+          tabList: [{ name: 'Hiển thị dữ liệu' }, { name: 'Hiển thị ảnh kèm chữ' }],
         });
       }
       if (!data.dataStyle) {
         this.$set(data, 'dataStyle', {
-          title: '数据布局',
+          title: 'Bố cục dữ liệu',
           tabVal: 0,
-          tabList: [{ name: '数字-文字(纵)' }, { name: '文字-数字(横)' }, { name: '文字-数字(纵)' }],
+          tabList: [{ name: 'Số - chữ (dọc)' }, { name: 'Chữ - số (ngang)' }, { name: 'Chữ - số (dọc)' }],
         });
       }
       if (!data.checkboxInfo) {
         this.$set(data, 'checkboxInfo', {
-          title: '数据选择',
+          title: 'Chọn dữ liệu',
           name: 'checkboxInfo',
           maxList: 5,
           type: [1, 2, 3],
           list: [
-            { id: 1, name: '余额' },
-            { id: 2, name: '积分' },
-            { id: 3, name: '优惠券' },
-            { id: 4, name: '收藏' },
-            { id: 5, name: '浏览记录' },
+            { id: 1, name: 'Số dư' },
+            { id: 2, name: 'Điểm thưởng' },
+            { id: 3, name: 'Phiếu giảm giá' },
+            { id: 4, name: 'Yêu thích' },
+            { id: 5, name: 'Lịch sử xem' },
           ],
         });
       }
       if (!data.ms3BgMode) {
         this.$set(data, 'ms3BgMode', {
-          title: '背景设置',
+          title: 'Cài đặt nền',
           tabVal: 0,
           tabList: [
-            { name: '背景颜色', val: 0 },
-            { name: '背景图片', val: 1 },
+            { name: 'Màu nền', val: 0 },
+            { name: 'Ảnh nền', val: 1 },
           ],
         });
       }
       if (!data.ms3BgColor) {
         this.$set(data, 'ms3BgColor', {
-          title: '背景颜色',
+          title: 'Màu nền',
           default: [{ item: '#fff' }, { item: '#fff' }],
           color: [{ item: '#fff' }, { item: '#fff' }],
         });
@@ -820,17 +820,17 @@ export default {
       }
       if (!data.ms4BgMode) {
         this.$set(data, 'ms4BgMode', {
-          title: '背景设置',
+          title: 'Cài đặt nền',
           tabVal: 0,
           tabList: [
-            { name: '背景颜色', val: 0 },
-            { name: '背景图片', val: 1 },
+            { name: 'Màu nền', val: 0 },
+            { name: 'Ảnh nền', val: 1 },
           ],
         });
       }
       if (!data.ms4BgColor) {
         this.$set(data, 'ms4BgColor', {
-          title: '背景颜色',
+          title: 'Màu nền',
           default: [{ item: '#fff' }, { item: '#fff' }],
           color: [{ item: '#fff' }, { item: '#fff' }],
         });
@@ -844,49 +844,49 @@ export default {
 
       if (!data.assetConfig) {
         this.$set(data, 'assetConfig', {
-          title: '快捷入口',
+          title: 'Lối tắt',
           listStyle: 0,
           maxList: 5,
-          bnt: '添加',
+          bnt: 'Thêm',
           list: [
             {
               img: '',
               icon: 'icon-yue',
               info: [
-                { title: '标题', value: '余额', tips: '选填，不超过4个字', max: 4 },
-                { title: '链接', value: '/pages/users/user_money/index', tips: '请输入链接', max: 100 },
+                { title: 'Tiêu đề', value: 'Số dư', tips: 'Không bắt buộc, tối đa 4 ký tự', max: 4 },
+                { title: 'Liên kết', value: '/pages/users/user_money/index', tips: 'Vui lòng nhập liên kết', max: 100 },
               ],
             },
             {
               img: '',
               icon: 'icon-jifen',
               info: [
-                { title: '标题', value: '积分', tips: '选填，不超过4个字', max: 4 },
-                { title: '链接', value: '/pages/users/user_integral/index', tips: '请输入链接', max: 100 },
+                { title: 'Tiêu đề', value: 'Điểm thưởng', tips: 'Không bắt buộc, tối đa 4 ký tự', max: 4 },
+                { title: 'Liên kết', value: '/pages/users/user_integral/index', tips: 'Vui lòng nhập liên kết', max: 100 },
               ],
             },
             {
               img: '',
               icon: 'icon-youhuiquan',
               info: [
-                { title: '标题', value: '优惠券', tips: '选填，不超过4个字', max: 4 },
-                { title: '链接', value: '/pages/users/user_coupon/index', tips: '请输入链接', max: 100 },
+                { title: 'Tiêu đề', value: 'Phiếu giảm giá', tips: 'Không bắt buộc, tối đa 4 ký tự', max: 4 },
+                { title: 'Liên kết', value: '/pages/users/user_coupon/index', tips: 'Vui lòng nhập liên kết', max: 100 },
               ],
             },
             {
               img: '',
               icon: 'icon-shoucang',
               info: [
-                { title: '标题', value: '收藏', tips: '选填，不超过4个字', max: 4 },
-                { title: '链接', value: '/pages/users/user_goods_collection/index', tips: '请输入链接', max: 100 },
+                { title: 'Tiêu đề', value: 'Yêu thích', tips: 'Không bắt buộc, tối đa 4 ký tự', max: 4 },
+                { title: 'Liên kết', value: '/pages/users/user_goods_collection/index', tips: 'Vui lòng nhập liên kết', max: 100 },
               ],
             },
             {
               img: '',
               icon: 'icon-zuji',
               info: [
-                { title: '标题', value: '浏览记录', tips: '选填，不超过4个字', max: 4 },
-                { title: '链接', value: '/pages/users/user_visit/index', tips: '请输入链接', max: 100 },
+                { title: 'Tiêu đề', value: 'Lịch sử xem', tips: 'Không bắt buộc, tối đa 4 ký tự', max: 4 },
+                { title: 'Liên kết', value: '/pages/users/user_visit/index', tips: 'Vui lòng nhập liên kết', max: 100 },
               ],
             },
           ],
@@ -896,7 +896,7 @@ export default {
       if (!data.paddingConfig) {
         this.$set(data, 'paddingConfig', {
           isAll: false,
-          title: '内边距',
+          title: 'Lề trong',
           val: 15,
           min: 0,
           max: 100,
@@ -906,7 +906,7 @@ export default {
       if (!data.marginConfig) {
         this.$set(data, 'marginConfig', {
           isAll: false,
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,
@@ -915,9 +915,9 @@ export default {
       }
       if (!data.rightEntryConfig) {
         this.$set(data, 'rightEntryConfig', {
-          title: '右侧入口',
-          listStyleName: '展示样式',
-          bnt: '添加',
+          title: 'Lối vào bên phải',
+          listStyleName: 'Kiểu hiển thị',
+          bnt: 'Thêm',
           type: 1,
           listStyle: -1,
           maxList: 1,
@@ -929,21 +929,21 @@ export default {
               icon: '',
               info: [
                 {
-                  title: '标题',
-                  value: '积分商城',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Cửa hàng đổi điểm',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '描述',
-                  value: '积分可换好物',
-                  tips: '选填，不超过6个字',
+                  title: 'Mô tả',
+                  value: 'Dùng điểm đổi quà hay',
+                  tips: 'Không bắt buộc, tối đa 6 ký tự',
                   max: 6,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -953,9 +953,9 @@ export default {
       }
       if (!data.leftMenuConfig) {
         this.$set(data, 'leftMenuConfig', {
-          title: '左侧内容',
-          listStyleName: '展示样式',
-          bnt: '添加',
+          title: 'Nội dung bên trái',
+          listStyleName: 'Kiểu hiển thị',
+          bnt: 'Thêm',
           type: 1,
           listStyle: 1,
           maxList: 3,
@@ -967,15 +967,15 @@ export default {
               icon: 'icon-yue',
               info: [
                 {
-                  title: '标题',
-                  value: '余额',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Số dư',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -987,15 +987,15 @@ export default {
               icon: 'icon-jifen',
               info: [
                 {
-                  title: '标题',
-                  value: '积分',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Điểm thưởng',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -1007,15 +1007,15 @@ export default {
               icon: 'icon-youhuiquan',
               info: [
                 {
-                  title: '标题',
-                  value: '优惠券',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Phiếu giảm giá',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -1025,8 +1025,8 @@ export default {
       }
       if (!data.memberConfig) {
         this.$set(data, 'memberConfig', {
-          listStyleName: '展示样式',
-          bnt: '添加',
+          listStyleName: 'Kiểu hiển thị',
+          bnt: 'Thêm',
           type: 1,
           listStyle: -1,
           maxList: 2,
@@ -1038,21 +1038,21 @@ export default {
               icon: '',
               info: [
                 {
-                  title: '标题',
-                  value: '会员中心',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Trung tâm thành viên',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '描述',
-                  value: '查看新权益',
-                  tips: '选填，不超过6个字',
+                  title: 'Mô tả',
+                  value: 'Xem quyền lợi mới',
+                  tips: 'Không bắt buộc, tối đa 6 ký tự',
                   max: 6,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -1064,21 +1064,21 @@ export default {
               icon: '',
               info: [
                 {
-                  title: '标题',
-                  value: '积分商城',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Cửa hàng đổi điểm',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '描述',
-                  value: '限量兑神券',
-                  tips: '选填，不超过6个字',
+                  title: 'Mô tả',
+                  value: 'Đổi phiếu siêu hời, số lượng có hạn',
+                  tips: 'Không bắt buộc, tối đa 6 ký tự',
                   max: 6,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -1090,21 +1090,21 @@ export default {
       // Member Style 2 Configs
       if (!data.ms2TitleType) {
         this.$set(data, 'ms2TitleType', {
-          title: '标题类型',
+          title: 'Loại tiêu đề',
           tabVal: 0,
-          tabList: [{ name: '文字' }, { name: '图片' }],
+          tabList: [{ name: 'Văn bản' }, { name: 'Hình ảnh' }],
         });
       }
       if (!data.ms2TitleText) {
         this.$set(data, 'ms2TitleText', {
-          title: '标题文字',
-          value: 'SVIP 会员',
+          title: 'Chữ tiêu đề',
+          value: 'Thành viên SVIP',
           max: 10,
         });
       }
       if (!data.ms2TitleColor) {
         this.$set(data, 'ms2TitleColor', {
-          title: '标题颜色',
+          title: 'Màu tiêu đề',
           default: [{ item: '#8B572A' }],
           color: [{ item: '#8B572A' }],
         });
@@ -1113,31 +1113,31 @@ export default {
         this.$set(data, 'ms2TitleImage', {
           header: '',
           title: '',
-          name: '标题图片',
+          name: 'Ảnh tiêu đề',
           type: 'code',
           url: '',
-          info: '建议尺寸：162px * 36px',
+          info: 'Kích thước đề xuất: 162px * 36px',
         });
       }
       if (!data.ms2IntroText) {
         this.$set(data, 'ms2IntroText', {
-          title: '简介文字',
-          value: '商城购物可享98折',
+          title: 'Chữ mô tả ngắn',
+          value: 'Mua sắm tại cửa hàng được giảm 2%',
           max: 20,
         });
       }
       if (!data.ms2IntroColor) {
         this.$set(data, 'ms2IntroColor', {
-          title: '简介颜色',
+          title: 'Màu mô tả ngắn',
           default: [{ item: '#8B572A' }],
           color: [{ item: '#8B572A' }],
         });
       }
       if (!data.ms2RightsList) {
         this.$set(data, 'ms2RightsList', {
-          title: '权益图标',
-          listStyleName: '建议：40px*40px；鼠标拖拽版块可调整图片顺序',
-          bnt: '添加',
+          title: 'Biểu tượng quyền lợi',
+          listStyleName: 'Đề xuất: 40px*40px; kéo thả khối để điều chỉnh thứ tự ảnh',
+          bnt: 'Thêm',
           type: 1,
           listStyle: -1,
           maxList: 2,
@@ -1146,16 +1146,16 @@ export default {
               img: '',
               icon: 'icon-zk',
               info: [
-                { title: '标题', value: '购物折扣', tips: '选填，不超过4个字', max: 6 },
-                { title: '链接', value: '', tips: '请输入链接', max: 100 },
+                { title: 'Tiêu đề', value: 'Chiết khấu mua sắm', tips: 'Không bắt buộc, tối đa 4 ký tự', max: 6 },
+                { title: 'Liên kết', value: '', tips: 'Vui lòng nhập liên kết', max: 100 },
               ],
             },
             {
               img: '',
               icon: 'icon-mz',
               info: [
-                { title: '标题', value: '专属徽章', tips: '选填，不超过4个字', max: 6 },
-                { title: '链接', value: '', tips: '请输入链接', max: 100 },
+                { title: 'Tiêu đề', value: 'Huy hiệu độc quyền', tips: 'Không bắt buộc, tối đa 4 ký tự', max: 6 },
+                { title: 'Liên kết', value: '', tips: 'Vui lòng nhập liên kết', max: 100 },
               ],
             },
           ],
@@ -1165,37 +1165,37 @@ export default {
         this.$set(data, 'ms2ExplainIcons', {
           header: '',
           title: '',
-          name: '说明图片',
+          name: 'Ảnh chú thích',
           type: 'code',
           url: '',
           delType: 1,
-          info: '建议：94px * 32px',
+          info: 'Đề xuất: 94px * 32px',
         });
       }
       if (!data.ms2ExplainText) {
         this.$set(data, 'ms2ExplainText', {
-          title: '说明文字',
-          value: '掌握更多快速升级技巧',
+          title: 'Chữ chú thích',
+          value: 'Nắm thêm nhiều mẹo lên hạng nhanh',
           max: 20,
         });
       }
       if (!data.ms2ExplainColor) {
         this.$set(data, 'ms2ExplainColor', {
-          title: '说明颜色',
+          title: 'Màu chú thích',
           default: [{ item: '#8B572A' }],
           color: [{ item: '#8B572A' }],
         });
       }
       if (!data.ms2ButtonText) {
         this.$set(data, 'ms2ButtonText', {
-          title: '按钮文字',
-          value: '去获取',
+          title: 'Chữ trên nút',
+          value: 'Nhận ngay',
           max: 6,
         });
       }
       if (!data.ms2ButtonLink) {
         this.$set(data, 'ms2ButtonLink', {
-          title: '按钮链接',
+          title: 'Liên kết nút',
           value: '/pages/users/user_vip/index',
           max: 100,
           type: 'link',
@@ -1203,52 +1203,52 @@ export default {
       }
       if (!data.ms2ButtonColor) {
         this.$set(data, 'ms2ButtonColor', {
-          title: '文字颜色',
+          title: 'Màu chữ',
           default: [{ item: '#5A350C' }],
           color: [{ item: '#5A350C' }],
         });
       }
       if (!data.ms2ButtonBgColor) {
         this.$set(data, 'ms2ButtonBgColor', {
-          title: '背景颜色',
+          title: 'Màu nền',
           default: [{ item: '#F6D99D' }],
           color: [{ item: '#F6D99D' }],
         });
       }
       if (!data.ms2RightsColor) {
         this.$set(data, 'ms2RightsColor', {
-          title: '权益文字',
+          title: 'Chữ quyền lợi',
           default: [{ item: '#8B572A' }],
           color: [{ item: '#8B572A' }],
         });
       }
 
       if (!data.moduleStyleText) {
-        this.$set(data, 'moduleStyleText', '模块样式');
+        this.$set(data, 'moduleStyleText', 'Kiểu mô-đun');
       }
       if (!data.moduleBgColor) {
         this.$set(data, 'moduleBgColor', {
-          title: '模块背景',
+          title: 'Nền mô-đun',
           default: [{ item: '#fff' }, { item: '#fff' }],
           color: [{ item: '#fff' }, { item: '#fff' }],
         });
       }
       if (!data.moduleTextColor) {
         this.$set(data, 'moduleTextColor', {
-          title: '模块文字',
+          title: 'Chữ mô-đun',
           default: [{ item: '#333' }],
           color: [{ item: '#333' }],
         });
       }
       if (!data.moduleRadius) {
         this.$set(data, 'moduleRadius', {
-          title: '模块圆角',
+          title: 'Bo góc mô-đun',
           type: 0,
           list: [
-            { val: '全部', icon: 'iconcaozuo-zhengti' },
-            { val: '单个', icon: 'iconcaozuo-bianjiao' },
+            { val: 'Tất cả', icon: 'iconcaozuo-zhengti' },
+            { val: 'Từng góc', icon: 'iconcaozuo-bianjiao' },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 8,
           min: 0,
           max: 100,
@@ -1257,20 +1257,20 @@ export default {
       }
       if (!data.cardBgColor) {
         this.$set(data, 'cardBgColor', {
-          title: '会员背景色',
+          title: 'Màu nền thành viên',
           default: [{ item: '#fff' }, { item: '#fff' }],
           color: [{ item: '#fff' }, { item: '#fff' }],
         });
       }
       if (!data.cardBgRadius) {
         this.$set(data, 'cardBgRadius', {
-          title: '会员背景圆角',
+          title: 'Bo góc nền thành viên',
           type: 0,
           list: [
-            { val: '全部', icon: 'iconcaozuo-zhengti' },
-            { val: '单个', icon: 'iconcaozuo-bianjiao' },
+            { val: 'Tất cả', icon: 'iconcaozuo-zhengti' },
+            { val: 'Từng góc', icon: 'iconcaozuo-bianjiao' },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 10,
           min: 0,
           max: 100,
@@ -1280,35 +1280,35 @@ export default {
       // Member Style 3 Configs
       if (!data.ms3TitleText) {
         this.$set(data, 'ms3TitleText', {
-          title: '说明文字',
-          value: '开通会员，尊享更多权益',
+          title: 'Chữ chú thích',
+          value: 'Đăng ký thành viên, tận hưởng thêm nhiều quyền lợi',
           max: 20,
         });
       }
       if (!data.ms3TitleColor) {
         this.$set(data, 'ms3TitleColor', {
-          title: '说明颜色',
+          title: 'Màu chú thích',
           default: [{ item: '#333' }],
           color: [{ item: '#333' }],
         });
       }
       if (!data.ms3ButtonText) {
         this.$set(data, 'ms3ButtonText', {
-          title: '按钮文字',
-          value: '立即开通',
+          title: 'Chữ trên nút',
+          value: 'Kích hoạt ngay',
           max: 10,
         });
       }
       if (!data.ms3ButtonColor) {
         this.$set(data, 'ms3ButtonColor', {
-          title: '按钮颜色',
+          title: 'Màu nút',
           default: [{ item: '#e93323' }],
           color: [{ item: '#e93323' }],
         });
       }
       if (!data.ms3PaddingConfig) {
         this.$set(data, 'ms3PaddingConfig', {
-          title: '内边距',
+          title: 'Lề trong',
           val: 10,
           min: 0,
           max: 100,
@@ -1319,25 +1319,25 @@ export default {
         this.$set(data, 'ms3BackgroundImage', {
           header: '',
           title: '',
-          name: '上传图片',
+          name: 'Tải lên ảnh',
           type: 'code',
           url: '',
-          info: '建议：宽662px*92px',
+          info: 'Đề xuất: rộng 662px*92px',
         });
       }
       if (!data.ms4BackgroundImage) {
         this.$set(data, 'ms4BackgroundImage', {
           header: '',
           title: '',
-          name: '上传图片',
+          name: 'Tải lên ảnh',
           type: 'code',
           url: '',
-          info: '建议：750px * 200px',
+          info: 'Đề xuất: 750px * 200px',
         });
       }
       return data;
     },
-    // 获取组件参数
+    // Lấy tham số thành phần (component)
     getConfig(data) {},
   },
 };

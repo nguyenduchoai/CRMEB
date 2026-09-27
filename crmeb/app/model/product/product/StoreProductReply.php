@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,7 +18,7 @@ use crmeb\traits\ModelTrait;
 use think\Model;
 
 /**
- *  商品评价Model
+ *  Model đánh giá sản phẩm
  * Class StoreProductReply
  * @package app\model\product\product
  */
@@ -27,20 +27,20 @@ class StoreProductReply extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'store_product_reply';
 
     /**
-     * 一对一关联
-     * 商品评论关联商品
+     * Liên kết một-một
+     * Đánh giá sản phẩm liên kết sản phẩm
      * @return \think\model\relation\HasOne
      */
     public function productInfo()
@@ -49,8 +49,8 @@ class StoreProductReply extends BaseModel
     }
 
     /**
-     * 一对一关联
-     * 商品评论关联订单
+     * Liên kết một-một
+     * Đánh giá sản phẩm liên kết đơn hàng
      * @return \think\model\relation\HasOne
      */
     public function cartInfo()
@@ -59,8 +59,8 @@ class StoreProductReply extends BaseModel
     }
 
     /**
-     * 一对一关联
-     * 商品评论关联订单
+     * Liên kết một-một
+     * Đánh giá sản phẩm liên kết đơn hàng
      * @return \think\model\relation\HasOne
      */
     public function userInfo()
@@ -70,7 +70,7 @@ class StoreProductReply extends BaseModel
 
 
     /**
-     * 评价图片修改器
+     * Setter hình ảnh đánh giá
      * @param $value
      * @return false|string
      */
@@ -80,7 +80,7 @@ class StoreProductReply extends BaseModel
     }
 
     /**
-     * 评价图片获取器
+     * Getter hình ảnh đánh giá
      * @param $value
      * @return mixed
      */
@@ -90,7 +90,7 @@ class StoreProductReply extends BaseModel
     }
 
     /**
-     * 用户搜索器
+     * Bộ lọc người dùng
      * @param Model $query
      * @param $value
      */
@@ -100,7 +100,7 @@ class StoreProductReply extends BaseModel
     }
 
     /**
-     * 商品搜索器
+     * Bộ lọc sản phẩm
      * @param Model $query
      * @param $value
      */
@@ -110,7 +110,7 @@ class StoreProductReply extends BaseModel
     }
 
     /**
-     * 是否删除搜索器
+     * Bộ lọc đã xóa hay chưa
      * @param Model $query
      * @param $value
      */
@@ -120,7 +120,7 @@ class StoreProductReply extends BaseModel
     }
 
     /**
-     * 是否回复搜索器
+     * Bộ lọc đã trả lời hay chưa
      * @param Model $query
      * @param $value
      */
@@ -143,7 +143,7 @@ class StoreProductReply extends BaseModel
     }
 
     /**
-     * oid订单id搜索器
+     * Bộ lọc oid id đơn hàng
      * @param Model $query
      * @param $value
      */
@@ -153,7 +153,7 @@ class StoreProductReply extends BaseModel
     }
 
     /**
-     * 商品分数搜索器
+     * Bộ lọc điểm đánh giá sản phẩm
      * @param Model $query
      * @param $value
      */
@@ -163,7 +163,7 @@ class StoreProductReply extends BaseModel
     }
 
     /**
-     * 状态搜索器
+     * Bộ lọc trạng thái
      * @param Model $query
      * @param $value
      */

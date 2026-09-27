@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,7 +21,7 @@ class ProductStockJob extends BaseJobs
     use QueueTrait;
 
     /**
-     * 拆分计算
+     * Tính toán tách đơn
      * @param array $data
      * @return bool
      */
@@ -32,13 +32,13 @@ class ProductStockJob extends BaseJobs
                 ProductStockJob::dispatch('calcValueStock', [$key]);
             }
         } catch (\Exception $e) {
-            Log::error(['msg' => '拆分计算失败,错误原因:' . $e->getMessage(), 'data' => $data]);
+            Log::error(['msg' => 'Tính toán tách thất bại, nguyên nhân lỗi:' . $e->getMessage(), 'data' => $data]);
         }
         return true;
     }
 
     /**
-     * 计算库存
+     * Tính tồn kho
      * @param int $id
      * @return bool
      */
@@ -49,7 +49,7 @@ class ProductStockJob extends BaseJobs
             $services = app()->make(OutStoreProductServices::class);
             $services->calcStockByAttrValue($id);
         } catch (\Exception $e) {
-            Log::error(['msg' => '计算商品库存失败,错误原因:' . $e->getMessage(), 'data' => $id]);
+            Log::error(['msg' => 'Tính tồn kho sản phẩm thất bại, nguyên nhân lỗi:' . $e->getMessage(), 'data' => $id]);
         }
         return true;
     }

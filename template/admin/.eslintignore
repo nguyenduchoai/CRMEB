@@ -1,12 +1,12 @@
-# 忽略目录
+# Thư mục bỏ qua
 build/
 tests/
 node_modules/
 src/
 public/
-# node 覆盖率文件
+# File coverage của node
 coverage/
 
-# 忽略文件
+# File bỏ qua
 **/*-min.js
 **/*.min.js

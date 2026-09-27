@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,7 +24,7 @@ use think\facade\Log;
 class StoreProductDao extends BaseDao
 {
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -33,7 +33,7 @@ class StoreProductDao extends BaseDao
     }
 
     /**
-     * 条件获取数量
+     * Lấy số lượng theo điều kiện
      * @param array $where
      * @return int
      */
@@ -71,7 +71,7 @@ class StoreProductDao extends BaseDao
     }
 
     /**
-     * 获取商品列表
+     * Lấy danh sách sản phẩm
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -98,7 +98,7 @@ class StoreProductDao extends BaseDao
     }
 
     /**
-     * 获取商品详情
+     * Lấy chi tiết sản phẩm
      * @param int $id
      * @return array|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
@@ -111,7 +111,7 @@ class StoreProductDao extends BaseDao
     }
 
     /**
-     * 条件获取商品列表
+     * Lấy danh sách sản phẩm theo điều kiện
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -190,7 +190,7 @@ class StoreProductDao extends BaseDao
         })->order('sort desc')->field($field)->select()->toArray();
     }
 
-    /**商品列表
+    /**Danh sách sản phẩm
      * @param array $where
      * @param $limit
      * @param $field
@@ -206,7 +206,7 @@ class StoreProductDao extends BaseDao
     }
 
     /**
-     * 根据id获取商品数据
+     * Lấy dữ liệu sản phẩm theo id
      * @param array $ids
      * @param string $field
      * @return array
@@ -220,7 +220,7 @@ class StoreProductDao extends BaseDao
     }
 
     /**
-     * 获取推荐商品
+     * Lấy sản phẩm đề xuất
      * @param string $field
      * @param int $num
      * @param int $page
@@ -257,7 +257,7 @@ class StoreProductDao extends BaseDao
     }
 
     /**
-     * 获取加入购物车的商品
+     * Lấy sản phẩm đã thêm vào giỏ hàng
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -276,7 +276,7 @@ class StoreProductDao extends BaseDao
     }
 
     /**
-     * 获取用户购买热销榜单
+     * Lấy bảng xếp hạng sản phẩm bán chạy người dùng đã mua
      * @param array $where
      * @param int $limit
      * @return array
@@ -299,7 +299,7 @@ class StoreProductDao extends BaseDao
     }
 
     /**
-     * 通过商品id获取商品分类
+     * Lấy danh mục sản phẩm theo id sản phẩm
      * @param array $productIds
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -325,7 +325,7 @@ class StoreProductDao extends BaseDao
     }
 
     /**
-     * 获取预售列表
+     * Lấy danh sách đặt trước
      * @param $where
      * @param $page
      * @param $limit
@@ -357,7 +357,7 @@ class StoreProductDao extends BaseDao
     }
 
     /**
-     * 预售商品自动到期下架
+     * Sản phẩm đặt trước tự động gỡ bán khi hết hạn
      */
     public function downAdvance()
     {
@@ -365,7 +365,7 @@ class StoreProductDao extends BaseDao
     }
 
     /**
-     * 自定义组件-商品
+     * Thành phần tùy chỉnh - sản phẩm
      * @param $where
      * @param $order
      * @param $limit

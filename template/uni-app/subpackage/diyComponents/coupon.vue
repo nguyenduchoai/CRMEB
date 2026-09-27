@@ -1,5 +1,5 @@
 <template>
-  <!-- 优惠券 -->
+  <!-- Phiếu giảm giá -->
   <view v-show="!isSortType">
     <common-wrapper :config="configData">
       <view :style="[couponWrapStyle]">
@@ -22,24 +22,24 @@
                     </view>
                     <view class="info">
                       <text v-if="item.use_min_price"
-                        >{{ $t(`满`) }}{{ item.use_min_price
-                        }}{{ $t(`可用`) }}</text
+                        >{{ $t(`Đơn từ`) }}{{ item.use_min_price
+                        }}{{ $t(`Khả dụng`) }}</text
                       >
-                      <text v-else>{{ $t(`无门槛券`) }}</text>
+                      <text v-else>{{ $t(`Phiếu không điều kiện`) }}</text>
                     </view>
                   </view>
                   <view
                     v-if="item.is_use >= item.receive_limit"
                     class="button"
                     :style="[bntBgColor]"
-                    >{{ $t(`已领取`) }}</view
+                    >{{ $t(`Đã nhận`) }}</view
                   >
                   <view
                     v-else
                     class="button"
                     :style="[bntBgColor]"
                     @click="receiveCoupon(item)"
-                    >{{ $t(`去领取`) }}</view
+                    >{{ $t(`Nhận ngay`) }}</view
                   >
                 </view>
               </view>
@@ -62,24 +62,24 @@
                     </view>
                     <view class="info">
                       <text v-if="item.use_min_price"
-                        >{{ $t(`满`) }}{{ item.use_min_price
-                        }}{{ $t(`可用`) }}</text
+                        >{{ $t(`Đơn từ`) }}{{ item.use_min_price
+                        }}{{ $t(`Khả dụng`) }}</text
                       >
-                      <text v-else>{{ $t(`无门槛券`) }}</text>
+                      <text v-else>{{ $t(`Phiếu không điều kiện`) }}</text>
                     </view>
                   </view>
                   <view
                     v-if="item.is_use >= item.receive_limit"
                     class="button"
                     :style="[bntBgColor]"
-                    >{{ $t(`已领取`) }}</view
+                    >{{ $t(`Đã nhận`) }}</view
                   >
                   <view
                     v-else
                     class="button"
                     :style="[bntBgColor]"
                     @click="receiveCoupon(item)"
-                    >{{ $t(`去领取`) }}</view
+                    >{{ $t(`Nhận ngay`) }}</view
                   >
                 </view>
               </view>
@@ -105,22 +105,22 @@
                       </view>
                       <view class="info">
                         <text v-if="item.use_min_price"
-                          >{{ $t(`满`) }}{{ item.use_min_price
-                          }}{{ $t(`可用`) }}</text
+                          >{{ $t(`Đơn từ`) }}{{ item.use_min_price
+                          }}{{ $t(`Khả dụng`) }}</text
                         >
-                        <text v-else>{{ $t(`无门槛券`) }}</text>
+                        <text v-else>{{ $t(`Phiếu không điều kiện`) }}</text>
                       </view>
                     </view>
                     <view
                       v-if="item.is_use >= item.receive_limit"
                       class="button acea-row row-middle"
-                      >{{ $t(`已领取`) }}</view
+                      >{{ $t(`Đã nhận`) }}</view
                     >
                     <view
                       v-else
                       class="button acea-row row-middle"
                       @click="receiveCoupon(item)"
-                      >{{ $t(`立即领取`) }}</view
+                      >{{ $t(`Nhận ngay`) }}</view
                     >
                   </view>
                 </view>
@@ -153,10 +153,10 @@
                       </view>
                       <view class="info">
                         <text v-if="item.use_min_price"
-                          >{{ $t(`满`) }}{{ item.use_min_price
-                          }}{{ $t(`可用`) }}</text
+                          >{{ $t(`Đơn từ`) }}{{ item.use_min_price
+                          }}{{ $t(`Khả dụng`) }}</text
                         >
-                        <text v-else>{{ $t(`无门槛券`) }}</text>
+                        <text v-else>{{ $t(`Phiếu không điều kiện`) }}</text>
                       </view>
                     </view>
                   </view>
@@ -166,12 +166,12 @@
                 class="station acea-row row-column row-middle row-center"
                 :style="[bntBgColor]"
               >
-                <view class="station-name">{{ $t(`先领券 再购物`) }}</view>
+                <view class="station-name">{{ $t(`Nhận phiếu trước, mua sắm sau`) }}</view>
                 <view class="station-info">{{
-                  $t(`领券下单·享购物优惠`)
+                  $t(`Nhận phiếu rồi đặt hàng · Hưởng ưu đãi mua sắm`)
                 }}</view>
                 <view class="button" @click="goCoupon">{{
-                  $t(`立即领取`)
+                  $t(`Nhận ngay`)
                 }}</view>
               </view>
             </view>
@@ -197,22 +197,22 @@
                     </view>
                     <view class="info">
                       <text v-if="item.use_min_price"
-                        >{{ $t(`满`) }}{{ item.use_min_price
-                        }}{{ $t(`可用`) }}</text
+                        >{{ $t(`Đơn từ`) }}{{ item.use_min_price
+                        }}{{ $t(`Khả dụng`) }}</text
                       >
-                      <text v-else>{{ $t(`无门槛券`) }}</text>
+                      <text v-else>{{ $t(`Phiếu không điều kiện`) }}</text>
                     </view>
                   </view>
                   <view
                     v-if="item.is_use >= item.receive_limit"
                     class="button acea-row row-middle"
-                    >{{ $t(`已领取`) }}</view
+                    >{{ $t(`Đã nhận`) }}</view
                   >
                   <view
                     v-else
                     class="button acea-row row-middle"
                     @click="receiveCoupon(item)"
-                    >{{ $t(`领取`) }}</view
+                    >{{ $t(`Nhận`) }}</view
                   >
                 </view>
               </view>
@@ -253,18 +253,18 @@ export default {
   filters: {
     typeFilter(val) {
       let obj = {
-        0: "通用券",
-        1: "品类券",
-        2: "商品券",
-        3: "品牌券",
+        0: "Phiếu toàn cửa hàng",
+        1: "Phiếu theo danh mục",
+        2: "Phiếu theo sản phẩm",
+        3: "Phiếu theo thương hiệu",
       };
       return obj[val];
     },
   },
   data() {
     return {
-      isAuto: false, //没有授权的不会自动授权
-      isShowAuth: false, //是否隐藏授权
+      isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+      isShowAuth: false, //Có ẩn ủy quyền hay không
       couponList: [],
     };
   },
@@ -451,7 +451,7 @@ export default {
             item.is_use = true;
             that.$set(that, "couponList", that.couponList);
             that.$util.Tips({
-              title: "领取成功",
+              title: "Nhận thành công",
             });
           })
           .catch(function (err) {

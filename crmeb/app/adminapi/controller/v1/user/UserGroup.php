@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\user\UserGroupServices;
 use think\facade\App;
 
 /**
- * 会员设置
+ * Cài đặt thành viên
  * Class UserLevel
  * @package app\admin\controller\user
  */
@@ -33,7 +33,7 @@ class UserGroup extends AuthController
     }
 
     /**
-     * 分组列表
+     * Danh sách nhóm
      */
     public function index()
     {
@@ -41,7 +41,7 @@ class UserGroup extends AuthController
     }
 
     /**
-     * 添加/修改分组页面
+     * Trang thêm/sửa nhóm
      * @param int $id
      * @return string
      */
@@ -65,14 +65,14 @@ class UserGroup extends AuthController
             ['group_name', ''],
         ]);
         if (!$data['group_name']) {
-            return app('json')->fail('请输入分组名称');
+            return app('json')->fail('Vui lòng nhập tên nhóm');
         }
         $this->services->save((int)$data['id'], $data);
-        return app('json')->success('提交成功');
+        return app('json')->success('Gửi thành công');
     }
 
     /**
-     * 删除
+     * Xóa
      * @param $id
      * @throws \Exception
      */
@@ -81,7 +81,7 @@ class UserGroup extends AuthController
         $data = $this->request->getMore([
             ['id', 0],
         ]);
-        if (!$data['id']) return app('json')->fail('参数错误');
+        if (!$data['id']) return app('json')->fail('Tham số không hợp lệ');
         return app('json')->success($this->services->delGroup((int)$data['id']));
     }
 }

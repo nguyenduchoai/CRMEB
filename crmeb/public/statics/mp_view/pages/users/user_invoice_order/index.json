@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "发票详情",
+  "navigationBarTitleText": "Chi tiết hóa đơn",
   "usingComponents": {
     "payment": "/components/payment/index",
     "home": "/components/home/index",

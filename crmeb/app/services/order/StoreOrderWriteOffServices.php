@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,7 +20,7 @@ use app\services\user\UserServices;
 use crmeb\exceptions\ApiException;
 
 /**
- * 核销订单
+ * Đơn hàng xác nhận sử dụng
  * Class StoreOrderWriteOffServices
  * @package app\sservices\order
  */
@@ -28,7 +28,7 @@ class StoreOrderWriteOffServices extends BaseServices
 {
 
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * StoreOrderWriteOffServices constructor.
      * @param StoreOrderDao $dao
      */
@@ -38,7 +38,7 @@ class StoreOrderWriteOffServices extends BaseServices
     }
 
     /**
-     * 订单核销
+     * Xác nhận sử dụng đơn hàng
      * @param string $code
      * @param int $confirm
      * @param int $uid
@@ -57,28 +57,28 @@ class StoreOrderWriteOffServices extends BaseServices
             ['pid', '>=', 0]
         ]);
         if (!$orderInfo) {
-            throw new ApiException('订单不存在');
+            throw new ApiException('Đơn hàng không tồn tại');
         }
         if (($orderInfo['status'] > 0 && $orderInfo->shipping_type == 2) || ($orderInfo['status'] > 1 && $orderInfo->delivery_type == 'send')) {
-            throw new ApiException('该订单已被核销');
+            throw new ApiException('Đơn hàng này đã được xác nhận sử dụng');
         }
         if (!$orderInfo['verify_code'] || ($orderInfo->shipping_type != 2 && $orderInfo->delivery_type != 'send')) {
-            throw new ApiException('此订单不能被核销');
+            throw new ApiException('Đơn hàng này không thể xác nhận sử dụng');
         }
         /** @var StoreOrderRefundServices $storeOrderRefundServices */
         $storeOrderRefundServices = app()->make(StoreOrderRefundServices::class);
         if ($storeOrderRefundServices->count(['store_order_id' => $orderInfo['id'], 'refund_type' => [1, 2, 4, 5], 'is_cancel' => 0, 'is_del' => 0])) {
-            throw new ApiException('订单有售后申请请先处理');
+            throw new ApiException('Đơn hàng có yêu cầu đổi trả, vui lòng xử lý trước');
         }
         if ($uid) {
             $isAuth = true;
             switch ($orderInfo['shipping_type']) {
-                case 1://配送订单
+                case 1://Đơn hàng giao tận nơi
                     /** @var DeliveryServiceServices $deliverServiceServices */
                     $deliverServiceServices = app()->make(DeliveryServiceServices::class);
                     $isAuth = $deliverServiceServices->getCount(['uid' => $uid, 'status' => 1]) > 0;
                     break;
-                case 2://自提订单
+                case 2://Đơn hàng nhận tại cửa hàng
                     /** @var SystemStoreStaffServices $storeStaffServices */
                     $storeStaffServices = app()->make(SystemStoreStaffServices::class);
                     $staffInfo = $storeStaffServices->get(['uid' => $uid, 'verify_status' => 1, 'status' => 1]);
@@ -91,11 +91,11 @@ class StoreOrderWriteOffServices extends BaseServices
                     break;
             }
             if (!$isAuth && $auth == 0) {
-                throw new ApiException('您无权限核销此订单，请联系管理员');
+                throw new ApiException('Bạn không có quyền xác nhận sử dụng đơn hàng này, vui lòng liên hệ quản trị viên');
             }
         }
         if ($orderInfo->status == 2) {
-            throw new ApiException('订单已核销');
+            throw new ApiException('Đơn hàng đã được xác nhận sử dụng');
         }
         /** @var StoreOrderCartInfoServices $orderCartInfo */
         $orderCartInfo = app()->make(StoreOrderCartInfoServices::class);
@@ -105,14 +105,14 @@ class StoreOrderWriteOffServices extends BaseServices
         if ($cartInfo) $orderInfo['image'] = $cartInfo['cart_info']['productInfo']['image'];
         if ($orderInfo->shipping_type == 2) {
             if ($orderInfo->status > 0) {
-                throw new ApiException('订单已核销');
+                throw new ApiException('Đơn hàng đã được xác nhận sử dụng');
             }
         }
         if ($orderInfo->combination_id && $orderInfo->pink_id) {
             /** @var StorePinkServices $services */
             $services = app()->make(StorePinkServices::class);
             $res = $services->getCount([['id', '=', $orderInfo->pink_id], ['status', '<>', 2]]);
-            if ($res) throw new ApiException('拼团订单暂未成功无法核销');
+            if ($res) throw new ApiException('Đơn mua chung chưa thành công, không thể xác nhận sử dụng');
         }
         if ($confirm == 0) {
             /** @var UserServices $services */
@@ -131,14 +131,14 @@ class StoreOrderWriteOffServices extends BaseServices
             $storeOrderTask = app()->make(StoreOrderTakeServices::class);
             $re = $storeOrderTask->storeProductOrderUserTakeDelivery($orderInfo);
             if (!$re) {
-                throw new ApiException('核销失败');
+                throw new ApiException('Xác nhận sử dụng thất bại');
             }
             if ($orderInfo['shipping_type'] == 2) {
                 event('OrderShippingListener', ['product', $orderInfo, 4, '', '']);
             }
             return $orderInfo->toArray();
         } else {
-            throw new ApiException('核销失败');
+            throw new ApiException('Xác nhận sử dụng thất bại');
         }
     }
 }

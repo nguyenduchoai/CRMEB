@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -27,7 +27,7 @@ class CapitalFlowServices extends BaseServices
     }
 
     /**
-     * 添加资金流水
+     * Thêm giao dịch tài chính
      * @param $orderInfo
      * @param string $type
      */
@@ -101,7 +101,7 @@ class CapitalFlowServices extends BaseServices
     }
 
     /**
-     * 获取资金流水
+     * Lấy giao dịch tài chính
      * @param $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -113,18 +113,18 @@ class CapitalFlowServices extends BaseServices
         $export = $where['export'] ?? 0;
         unset($where['export']);
         [$page, $limit] = $this->getPageValue();
-        $status = ['全部', '支付订单', '订单退款', '充值订单', '充值退款', '抽奖红包', '佣金提现', '购买会员', '线下收银'];
+        $status = ['Tất cả', 'Thanh toán đơn hàng', 'Hoàn tiền đơn hàng', 'Đơn nạp tiền', 'Hoàn tiền nạp', 'Lì xì quay thưởng', 'Rút tiền hoa hồng', 'Mua gói thành viên', 'Thu ngân tại quầy'];
         $list = $this->dao->getList($where, $page, $limit);
         foreach ($list as &$item) {
             $item['add_time'] = date('Y-m-d H:i:s', $item['add_time']);
             $item['trading_type'] = $status[$item['trading_type']];
-            $item['pay_type_name'] = PayServices::PAY_TYPE[$item['pay_type'] != 'routine' ? $item['pay_type'] : 'weixin'] ?? '其他方式';
+            $item['pay_type_name'] = PayServices::PAY_TYPE[$item['pay_type'] != 'routine' ? $item['pay_type'] : 'weixin'] ?? 'Phương thức khác';
         }
         $count = $this->dao->count($where);
         if ($export) {
             $fileKey = ['flow_id', 'order_id', 'nickname', 'phone', 'price', 'trading_type', 'pay_type_name', 'add_time', 'mark'];
-            $header = ['交易单号', '关联订单', '用户', '电话', '金额', '订单类型', '支付类型', '交易时间', '备注'];
-            $fileName = '账单导出' . date('YmdHis') . rand(1000, 9999);
+            $header = ['Mã giao dịch', 'Đơn hàng liên quan', 'Người dùng', 'Điện thoại', 'Số tiền', 'Loại đơn hàng', 'Loại thanh toán', 'Thời gian giao dịch', 'Ghi chú'];
+            $fileName = 'Xuất sao kê' . date('YmdHis') . rand(1000, 9999);
             return compact('list', 'fileKey', 'header', 'fileName');
         } else {
             return compact('list', 'count', 'status');
@@ -132,7 +132,7 @@ class CapitalFlowServices extends BaseServices
     }
 
     /**
-     * 添加备注
+     * Thêm ghi chú
      * @param $id
      * @param $data
      * @return bool
@@ -143,12 +143,12 @@ class CapitalFlowServices extends BaseServices
         if ($res) {
             return true;
         } else {
-            throw new AdminException('备注失败');
+            throw new AdminException('Ghi chú thất bại');
         }
     }
 
     /**
-     * 获取账单记录
+     * Lấy bản ghi hóa đơn/sao kê
      * @param $where
      * @return array
      */
@@ -163,15 +163,15 @@ class CapitalFlowServices extends BaseServices
             $item['entry_price'] = bcadd($item['income_price'], $item['exp_price'], 2);
             switch ($where['type']) {
                 case "day" :
-                    $item['title'] = "日账单";
+                    $item['title'] = "Sao kê ngày";
                     $item['add_time'] = date('Y-m-d', $item['add_time']);
                     break;
                 case "week" :
-                    $item['title'] = "周账单";
-                    $item['add_time'] = '第' . $item['day'] . '周(' . date('m', $item['add_time']) . '月)';
+                    $item['title'] = "Sao kê tuần";
+                    $item['add_time'] = 'Tuần thứ' . $item['day'] . '(tháng' . date('m', $item['add_time']) . ')';
                     break;
                 case "month" :
-                    $item['title'] = "月账单";
+                    $item['title'] = "Sao kê tháng";
                     $item['add_time'] = date('Y-m', $item['add_time']);
                     break;
             }

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -23,7 +23,7 @@ use crmeb\services\sms\Sms;
 use think\facade\Config;
 
 /**
- * 平台服务入口
+ * Cổng service nền tảng
  * Class ServeServices
  * @package crmeb\services
  */
@@ -45,7 +45,7 @@ class ServeServices extends BaseServices
     }
 
     /**
-     * 获取配置
+     * Lấy cấu hình
      * @param array $config
      * @return array
      */
@@ -59,7 +59,7 @@ class ServeServices extends BaseServices
 
 
     /**
-     * 根据类型获取短信发送配置
+     * Lấy cấu hình gửi SMS theo loại
      * @param $type
      * @param array $configDefault
      * @return array
@@ -82,7 +82,7 @@ class ServeServices extends BaseServices
     }
 
     /**
-     * 短信
+     * SMS
      * @param string|null $type
      * @param array $config
      * @return Sms
@@ -93,7 +93,7 @@ class ServeServices extends BaseServices
     }
 
     /**
-     * 复制商品
+     * Sao chép sản phẩm
      * @param string|null $type
      * @param array $config
      * @return CopyProduct
@@ -104,7 +104,7 @@ class ServeServices extends BaseServices
     }
 
     /**
-     * 电子面单
+     * Vận đơn điện tử
      * @param array $config
      * @return Express
      */
@@ -114,7 +114,7 @@ class ServeServices extends BaseServices
     }
 
     /**
-     * 小票打印
+     * In biên lai
      * @param array $config
      * @return Express
      */
@@ -124,7 +124,7 @@ class ServeServices extends BaseServices
     }
 
     /**
-     * 用户
+     * Người dùng
      * @param array $config
      * @return Serve
      */
@@ -134,7 +134,7 @@ class ServeServices extends BaseServices
     }
 
     /**
-     * 电子发票
+     * Hóa đơn điện tử
      * @param array $config
      * @return Serve
      */
@@ -144,7 +144,7 @@ class ServeServices extends BaseServices
     }
 
     /**
-     * 获取短信模板
+     * Lấy mẫu SMS
      * @param int $page
      * @param int $limit
      * @param int $type
@@ -157,13 +157,13 @@ class ServeServices extends BaseServices
             $item['templateid'] = $item['temp_id'];
             switch ((int)$item['temp_type']) {
                 case 1:
-                    $item['type'] = '验证码';
+                    $item['type'] = 'Mã xác thực';
                     break;
                 case 2:
-                    $item['type'] = '通知';
+                    $item['type'] = 'Thông báo';
                     break;
                 case 30:
-                    $item['type'] = '营销短信';
+                    $item['type'] = 'SMS marketing';
                     break;
             }
         }
@@ -171,27 +171,27 @@ class ServeServices extends BaseServices
     }
 
     /**
-     * 创建短信模板表单
+     * Tạo form mẫu SMS
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
      */
     public function createSmsTemplateForm()
     {
         $field = [
-            $this->builder->input('title', '模板名称')->placeholder('模板名称,如：订单支付成功'),
-            $this->builder->input('content', '模板内容')->type('textarea')->placeholder('模板内容，如：您购买的商品已支付成功，支付金额{$pay_price}元，订单号{$order_id},感谢您的光临！（注：模板内容不要添加短信签名）'),
-            $this->builder->radio('type', '模板类型', 1)->options([['label' => '验证码', 'value' => 1], ['label' => '通知', 'value' => 2], ['label' => '营销', 'value' => 3]])
+            $this->builder->input('title', 'Tên mẫu')->placeholder('Tên mẫu, ví dụ: Thanh toán đơn hàng thành công'),
+            $this->builder->input('content', 'Nội dung mẫu')->type('textarea')->placeholder('Nội dung mẫu, ví dụ: Sản phẩm bạn mua đã thanh toán thành công, số tiền thanh toán {$pay_price}đ, mã đơn hàng {$order_id}, cảm ơn bạn đã mua hàng! (Lưu ý: không thêm chữ ký SMS vào nội dung mẫu)'),
+            $this->builder->radio('type', 'Loại mẫu', 1)->options([['label' => 'Mã xác thực', 'value' => 1], ['label' => 'Thông báo', 'value' => 2], ['label' => 'Marketing', 'value' => 3]])
         ];
         return $field;
     }
 
     /**
-     * 获取短信申请模板
+     * Lấy mẫu đăng ký SMS
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
      */
     public function getSmsTemplateForm()
     {
-        return create_form('申请短信模板', $this->createSmsTemplateForm(), $this->url('/notify/sms/temp'), 'POST');
+        return create_form('Đăng ký mẫu SMS', $this->createSmsTemplateForm(), $this->url('/notify/sms/temp'), 'POST');
     }
 }

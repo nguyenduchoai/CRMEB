@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,7 +20,7 @@ use think\Request;
 
 /**
  * Class SystemRouteCate
- * @author 等风来
+ * @author Deng Fenglai
  * @email 136327134@qq.com
  * @date 2023/4/6
  * @package app\adminapi\controller\v1\setting
@@ -41,7 +41,7 @@ class SystemRouteCate extends AuthController
 
     /**
      * @return \think\Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/6
      */
@@ -52,7 +52,7 @@ class SystemRouteCate extends AuthController
 
     /**
      * @return \think\Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/6
      */
@@ -64,7 +64,7 @@ class SystemRouteCate extends AuthController
     /**
      * @param Request $request
      * @return \think\Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/6
      */
@@ -78,7 +78,7 @@ class SystemRouteCate extends AuthController
         ]);
 
         if (!$data['name']) {
-            return app('json')->fail('接口分类名称不能为空');
+            return app('json')->fail('Tên danh mục API không được để trống');
         }
 
         $data['add_time'] = time();
@@ -86,14 +86,14 @@ class SystemRouteCate extends AuthController
         $this->services->save($data);
 
 
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
 
     }
 
     /**
      * @param $id
      * @return \think\Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/6
      */
@@ -106,7 +106,7 @@ class SystemRouteCate extends AuthController
      * @param Request $request
      * @param $id
      * @return \think\Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/6
      */
@@ -120,35 +120,35 @@ class SystemRouteCate extends AuthController
         ]);
 
         if (!$data['name']) {
-            return app('json')->fail('接口分类名称不能为空');
+            return app('json')->fail('Tên danh mục API không được để trống');
         }
 
         $data['pid'] = $data['path'][count($data['path']) - 1] ?? 0;
         $this->services->update($id, $data);
 
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
     /**
      * @param SystemRouteServices $service
      * @param $id
      * @return \think\Response
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/6
      */
     public function delete(SystemRouteServices $service, $id)
     {
         if (!$id) {
-            return app('json')->fail('接口不存在');
+            return app('json')->fail('API không tồn tại');
         }
 
         if ($service->count(['cate_id' => $id])) {
-            return app('json')->fail('该分类下有接口，无法删除');
+            return app('json')->fail('Danh mục này có API, không thể xóa');
         }
 
         $this->services->delete($id);
 
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 }

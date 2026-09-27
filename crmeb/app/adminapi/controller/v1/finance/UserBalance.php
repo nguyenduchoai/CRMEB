@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -28,7 +28,7 @@ class UserBalance extends AuthController
     }
 
     /**
-     * 余额记录
+     * Lịch sử số dư
      * @return mixed
      */
     public function balanceList()
@@ -42,7 +42,7 @@ class UserBalance extends AuthController
     }
 
     /**
-     * 余额记录备注
+     * Ghi chú lịch sử số dư
      * @return mixed
      */
     public function balanceRecordRemark($id = 0)
@@ -50,9 +50,9 @@ class UserBalance extends AuthController
         [$mark] = $this->request->postMore([
             ['mark', '']
         ], true);
-        if (!$id) return app('json')->fail('参数错误');
-        if ($mark === '') return app('json')->fail('备注不能为空');
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
+        if ($mark === '') return app('json')->fail('Ghi chú không được để trống');
         $this->services->recordRemark($id, $mark);
-        return app('json')->success('备注成功');
+        return app('json')->success('Ghi chú thành công');
     }
 }

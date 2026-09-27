@@ -1,15 +1,15 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 
 /**
- * diy配置
+ * Cấu hình diy
  * */
 
 import toolCom from '@/components/diyComponents/index.js';
@@ -24,23 +24,23 @@ export default {
           val: true,
         },
         imgList: {
-          title: '最多可添加10张图片，建议宽度750px',
+          title: 'Có thể thêm tối đa 10 ảnh, chiều rộng đề xuất 750px',
           max: 10,
           list: [
             {
               img: 'http://kaifa.crmeb.net/uploads/attach/2020/03/20200319/a32307fd1043c350932a462839288d38.jpg',
               info: [
                 {
-                  title: '标题',
+                  title: 'Tiêu đề',
                   value: '',
                   maxlength: 10,
-                  tips: '选填，不超过十个字',
+                  tips: 'Không bắt buộc, tối đa 10 ký tự',
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
                   maxlength: 999,
-                  tips: '请填写链接',
+                  tips: 'Vui lòng nhập liên kết',
                 },
               ],
             },
@@ -48,16 +48,16 @@ export default {
               img: 'http://kaifa.crmeb.net/uploads/attach/2020/03/20200319/906d46eb6f734eaf1fd820601893af0d.jpg',
               info: [
                 {
-                  title: '标题',
+                  title: 'Tiêu đề',
                   value: '',
                   maxlength: 10,
-                  tips: '选填，不超过十个字',
+                  tips: 'Không bắt buộc, tối đa 10 ký tự',
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
                   maxlength: 999,
-                  tips: '请填写链接',
+                  tips: 'Vui lòng nhập liên kết',
                 },
               ],
             },
@@ -69,23 +69,23 @@ export default {
           val: true,
         },
         imgList: {
-          title: '建议宽度750px',
+          title: 'Chiều rộng đề xuất 750px',
           max: '',
           list: [
             {
               img: 'http://kaifa.crmeb.net/uploads/attach/2020/03/20200319/a32307fd1043c350932a462839288d38.jpg',
               info: [
                 {
-                  title: '标题',
+                  title: 'Tiêu đề',
                   value: '',
                   maxlength: 10,
-                  tips: '选填，不超过十个字',
+                  tips: 'Không bắt buộc, tối đa 10 ký tự',
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
                   maxlength: 999,
-                  tips: '请填写链接',
+                  tips: 'Vui lòng nhập liên kết',
                 },
               ],
             },
@@ -93,16 +93,16 @@ export default {
               img: 'http://kaifa.crmeb.net/uploads/attach/2020/03/20200319/906d46eb6f734eaf1fd820601893af0d.jpg',
               info: [
                 {
-                  title: '标题',
+                  title: 'Tiêu đề',
                   value: '',
                   maxlength: 10,
-                  tips: '选填，不超过十个字',
+                  tips: 'Không bắt buộc, tối đa 10 ký tự',
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
                   maxlength: 999,
-                  tips: '请填写链接',
+                  tips: 'Vui lòng nhập liên kết',
                 },
               ],
             },
@@ -119,30 +119,30 @@ export default {
       },
       tabBar: {
         tabBarList: {
-          title: '图片建议宽度81*81px',
+          title: 'Kích thước ảnh đề xuất 81*81px',
           list: [
             {
-              name: '首页',
+              name: 'Trang chủ',
               imgList: [require('@/assets/images/foo1-01.png'), require('@/assets/images/foo1-02.png')],
               link: '/pages/index/index',
             },
             {
-              name: '分类',
+              name: 'Danh mục',
               imgList: [require('@/assets/images/foo2-01.png'), require('@/assets/images/foo2-02.png')],
               link: '/pages/goods_cate/goods_cate',
             },
             // {
-            //     name:'周边',
+            //     name:'Xung quanh',
             //     imgList:[require('@/assets/images/foo3-01.png'),require('@/assets/images/foo3-02.png')],
             //     pagePath: ''
             // },
             {
-              name: '购物车',
+              name: 'Giỏ hàng',
               imgList: [require('@/assets/images/foo4-01.png'), require('@/assets/images/foo4-02.png')],
               link: '/pages/order_addcart/order_addcart',
             },
             {
-              name: '我的',
+              name: 'Tôi',
               imgList: [require('@/assets/images/foo5-01.png'), require('@/assets/images/foo5-02.png')],
               link: '/pages/user/index',
             },
@@ -199,7 +199,7 @@ export default {
   },
   mutations: {
     /**
-     * @description 设置选中name
+     * @description Đặt name được chọn
      * @param {Object} state vuex state
      * @param {String} name
      */
@@ -207,7 +207,7 @@ export default {
       state.activeName = name;
     },
     /**
-     * @description 更新默认数据
+     * @description Cập nhật dữ liệu mặc định
      * @param {Object} state vuex state
      * @param {Object} data
      */

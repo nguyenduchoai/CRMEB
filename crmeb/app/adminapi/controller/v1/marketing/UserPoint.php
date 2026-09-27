@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\user\UserBillServices;
 use think\facade\App;
 
 /**
- * 积分控制器
+ * Controller điểm thưởng
  * Class StoreCategory
  * @package app\admin\controller\system
  */
@@ -34,7 +34,7 @@ class UserPoint extends AuthController
     }
 
     /**
-     * 积分记录列表
+     * Danh sách lịch sử điểm thưởng
      * @return mixed
      */
     public function index()
@@ -50,7 +50,7 @@ class UserPoint extends AuthController
     }
 
     /**
-     * 获取积分日志头部信息
+     * Lấy thông tin phần đầu log điểm thưởng
      * @return mixed
      */
     public function integral_statistics()

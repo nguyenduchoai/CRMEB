@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use crmeb\traits\ModelTrait;
 use think\Model;
 
 /**
- * 附件管理分类模型
+ * Model danh mục quản lý tệp đính kèm
  * Class SystemAttachmentCategory
  * @package app\model\system\attachment
  */
@@ -25,20 +25,20 @@ class SystemAttachmentCategory extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'system_attachment_category';
 
 
     /**
-     * 附件分类昵称搜索器
+     * Bộ lọc biệt danh danh mục tệp đính kèm
      * @param Model $query
      * @param $value
      */
@@ -48,7 +48,7 @@ class SystemAttachmentCategory extends BaseModel
     }
 
     /**
-     * pid搜索器
+     * Bộ lọc pid
      * @param Model $query
      * @param $value
      */

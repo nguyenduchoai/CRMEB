@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,7 +17,7 @@ use crmeb\traits\ModelTrait;
 use think\Model;
 
 /**
- *  商品Model
+ *  Model sản phẩm
  * Class StoreProduct
  * @package app\model\product\product
  */
@@ -26,20 +26,20 @@ class StoreProduct extends BaseModel
     use  ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'store_product';
 
     /**
-     * 一对一关联
-     * 商品关联商品商品详情
+     * Liên kết một-một
+     * Sản phẩm liên kết chi tiết sản phẩm
      * @return \think\model\relation\HasOne
      */
     public function description()
@@ -48,8 +48,8 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 一对多关联
-     * 商品关联优惠卷模板id
+     * Liên kết một-nhiều
+     * Sản phẩm liên kết id mẫu phiếu giảm giá
      * @return \think\model\relation\HasMany
      */
     public function couponId()
@@ -58,7 +58,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 优惠券名称一对多
+     * Tên phiếu giảm giá (liên kết một-nhiều)
      * @return \think\model\relation\HasMany
      */
     public function coupons()
@@ -67,7 +67,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 评论一对多
+     * Đánh giá (liên kết một-nhiều)
      * @return \think\model\relation\HasMany
      */
     public function star()
@@ -76,7 +76,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 分类一对多
+     * Danh mục (liên kết một-nhiều)
      * @return \think\model\relation\HasMany
      */
     public function cateName()
@@ -91,7 +91,7 @@ class StoreProduct extends BaseModel
 
 
     /**
-     * 轮播图获取器
+     * Getter ảnh trình chiếu
      * @param $value
      * @return array|mixed
      */
@@ -101,7 +101,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 是否显示搜索器
+     * Bộ lọc có hiển thị hay không
      * @param $query
      * @param $value
      */
@@ -124,7 +124,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 是否删除搜索器
+     * Bộ lọc đã xóa hay chưa
      * @param Model $query
      * @param $value
      */
@@ -134,7 +134,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 商户ID搜索器
+     * Bộ lọc ID cửa hàng
      * @param Model $query
      * @param $value
      */
@@ -144,7 +144,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * keyword搜索器
+     * Bộ lọc keyword
      * @param Model $query
      * @param $value
      * @param $data
@@ -168,7 +168,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 新品商品搜索器
+     * Bộ lọc sản phẩm mới
      * @param Model $query
      * @param int $value
      */
@@ -178,7 +178,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 优惠商品搜索器
+     * Bộ lọc sản phẩm ưu đãi
      * @param Model $query
      * @param int $value
      */
@@ -188,7 +188,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 热卖商品搜索器
+     * Bộ lọc sản phẩm bán chạy
      * @param Model $query
      * @param int $value
      */
@@ -198,7 +198,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 精品商品搜索器
+     * Bộ lọc sản phẩm cao cấp
      * @param Model $query
      * @param int $value
      */
@@ -208,7 +208,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 精品商品搜索器
+     * Bộ lọc sản phẩm cao cấp
      * @param Model $query
      * @param int $value
      */
@@ -218,7 +218,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 标签商品搜索器
+     * Bộ lọc sản phẩm theo nhãn
      * @param Model $query
      * @param int $value
      */
@@ -228,7 +228,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * SPU搜索器
+     * Bộ lọc SPU
      * @param Model $query
      * @param int $value
      */
@@ -238,7 +238,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 库存搜索器
+     * Bộ lọc tồn kho
      * @param Model $query
      * @param int $value
      */
@@ -248,7 +248,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 会员专属商品搜索器
+     * Bộ lọc sản phẩm riêng cho thành viên
      * @param Model $query
      * @param int $value
      */
@@ -262,7 +262,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 是否虚拟商品搜索器
+     * Bộ lọc có phải sản phẩm ảo hay không
      * @param $query
      * @param $value
      */
@@ -274,7 +274,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 是否预售商品
+     * Có phải sản phẩm đặt trước hay không
      * @param $query
      * @param $value
      */
@@ -286,7 +286,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 分类搜索器
+     * Bộ lọc danh mục
      * @param Model $query
      * @param int $value
      */
@@ -304,7 +304,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 商品数量条件搜索器
+     * Bộ lọc điều kiện số lượng sản phẩm
      * @param Model $query
      * @param $value
      * @param $data
@@ -348,7 +348,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 在当前id中查询
+     * Truy vấn trong id hiện tại
      * @param $query
      * @param $value
      */
@@ -365,7 +365,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 不在当前id中查询
+     * Truy vấn không thuộc id hiện tại
      * @param $query
      * @param $value
      */
@@ -375,7 +375,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 自定义表单搜索器
+     * Bộ lọc form tùy chỉnh
      * @param $query
      * @param $value
      * @author wuhaotian
@@ -388,7 +388,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 虚拟类型搜索器
+     * Bộ lọc loại ảo
      * @param $query
      * @param $value
      * @author wuhaotian
@@ -401,7 +401,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 规格类型搜索器
+     * Bộ lọc loại phân loại
      * @param $query
      * @param $value
      * @author wuhaotian
@@ -414,7 +414,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 是否礼品搜索器
+     * Bộ lọc có phải quà tặng hay không
      * @param $query
      * @param $value
      * @author wuhaotian
@@ -427,7 +427,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 会员专属商品搜索器
+     * Bộ lọc sản phẩm riêng cho thành viên
      * @param $query
      * @param $value
      * @author wuhaotian
@@ -440,7 +440,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 价格区间搜索器
+     * Bộ lọc khoảng giá
      * @param $query
      * @param $value
      * @author wuhaotian
@@ -461,7 +461,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 库存区间搜索器
+     * Bộ lọc khoảng tồn kho
      * @param $query
      * @param $value
      * @author wuhaotian
@@ -482,7 +482,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 销量区间搜索器
+     * Bộ lọc khoảng lượt bán
      * @param $query
      * @param $value
      * @author wuhaotian
@@ -503,7 +503,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 标签搜索器
+     * Bộ lọc nhãn
      * @param $query
      * @param $value
      * @author wuhaotian
@@ -522,7 +522,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 配送方式搜索器
+     * Bộ lọc hình thức vận chuyển
      * @param $query
      * @param $value
      * @author wuhaotian
@@ -535,7 +535,7 @@ class StoreProduct extends BaseModel
     }
 
     /**
-     * 商品类型搜索器
+     * Bộ lọc loại sản phẩm
      * @param $query
      * @param $value
      * @author wuhaotian

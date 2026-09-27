@@ -25,13 +25,13 @@
     </el-row>
     <!-- <el-row class="mb10 content">
       <el-button class="bnt" type="primary" v-db-click @click="save" :loading="loadingExist"
-        >保存</el-button
+        >Lưu</el-button
       >
     </el-row> -->
 
     <el-card :bordered="false" shadow="never" class="fixed-card" :style="{ left: `${fixBottomWidth}` }">
       <div class="acea-row row-center">
-        <el-button class="bnt" type="primary" v-db-click @click="save" :loading="loadingExist">保存</el-button>
+        <el-button class="bnt" type="primary" v-db-click @click="save" :loading="loadingExist">Lưu</el-button>
       </div>
     </el-card>
   </div>
@@ -49,13 +49,13 @@ export default {
       loadingExist: false,
       currentTab: '1',
       headerList: [
-        { label: '付费会员协议', value: '1' },
-        { label: '代理商协议', value: '2' },
-        { label: '隐私协议', value: '3' },
-        { label: '用户协议', value: '4' },
-        { label: '注销协议', value: '5' },
-        { label: '积分协议', value: '6' },
-        { label: '分销协议', value: '8' },
+        { label: 'Thỏa thuận thành viên trả phí', value: '1' },
+        { label: 'Thỏa thuận đại lý', value: '2' },
+        { label: 'Chính sách bảo mật', value: '3' },
+        { label: 'Thỏa thuận người dùng', value: '4' },
+        { label: 'Thỏa thuận hủy tài khoản', value: '5' },
+        { label: 'Thỏa thuận điểm thưởng', value: '6' },
+        { label: 'Thỏa thuận tiếp thị liên kết', value: '8' },
       ],
       ueConfig: {
         autoHeightEnabled: false,
@@ -73,7 +73,7 @@ export default {
     };
   },
   computed: {
-    // 设置是否显示 tagsView
+    // Đặt có hiển thị tagsView hay không
     fixBottomWidth() {
       let { layout, isCollapse } = this.$store.state.themeConfig.themeConfig;
       let w;

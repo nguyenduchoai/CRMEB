@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -19,11 +19,11 @@ use crmeb\services\FormBuilder;
 use think\Model;
 
 /**
- * 话术
+ * Câu trả lời mẫu
  * Class StoreServiceSpeechcraftServices
  * @package app\services\kefu\service
- * @method array|Model|null get($id, ?array $field = [], ?array $with = []) 获取一条数据
- * @method update($id, array $data, ?string $key = null) 更新数据
+ * @method array|Model|null get($id, ?array $field = [], ?array $with = []) Lấy một dòng dữ liệu
+ * @method update($id, array $data, ?string $key = null) Cập nhật dữ liệu
  */
 class StoreServiceSpeechcraftServices extends BaseServices
 {
@@ -49,19 +49,19 @@ class StoreServiceSpeechcraftServices extends BaseServices
         [$page, $limit] = $this->getPageValue();
         $list = $this->dao->getSpeechcraftList($where, $page, $limit);
         foreach ($list as &$item) {
-            if (!$item['cate_name']) $item['cate_name'] = '系统默认';
+            if (!$item['cate_name']) $item['cate_name'] = 'Mặc định hệ thống';
         }
         $count = $this->dao->count($where);
         return compact('list', 'count');
     }
 
     /**
-     * 创建form表单
+     * Tạo form
      * @return mixed
      */
     public function createForm()
     {
-        return create_form('添加话术', $this->speechcraftForm(), $this->url('/app/wechat/speechcraft'), 'POST');
+        return create_form('Thêm câu trả lời mẫu', $this->speechcraftForm(), $this->url('/app/wechat/speechcraft'), 'POST');
     }
 
     /**
@@ -76,9 +76,9 @@ class StoreServiceSpeechcraftServices extends BaseServices
     {
         $info = $this->dao->get($id);
         if (!$info) {
-            throw new AdminException('您修改的话术内容不存在');
+            throw new AdminException('Câu trả lời mẫu bạn muốn sửa không tồn tại');
         }
-        return create_form('编辑话术', $this->speechcraftForm($info->toArray()), $this->url('/app/wechat/speechcraft/' . $id), 'PUT');
+        return create_form('Sửa câu trả lời mẫu', $this->speechcraftForm($info->toArray()), $this->url('/app/wechat/speechcraft/' . $id), 'PUT');
     }
 
     /**
@@ -91,14 +91,14 @@ class StoreServiceSpeechcraftServices extends BaseServices
         $services = app()->make(StoreServiceSpeechcraftCateServices::class);
         $cateList = $services->getCateList(['owner_id' => 0, 'type' => 1]);
         $data = [];
-        $data[] = ['value' => 0, 'label' => '默认分类'];
+        $data[] = ['value' => 0, 'label' => 'Danh mục mặc định'];
         foreach ($cateList['data'] as $item) {
             $data[] = ['value' => $item['id'], 'label' => $item['name']];
         }
-        $form[] = FormBuilder::select('cate_id', '话术分类', $infoData['cate_id'] ?? '')->setOptions($data);
-        $form[] = FormBuilder::textarea('title', '话术标题', $infoData['title'] ?? '')->required();
-        $form[] = FormBuilder::textarea('message', '话术内容', $infoData['message'] ?? '')->required();
-        $form[] = FormBuilder::number('sort', '排序', (int)($infoData['sort'] ?? 0));
+        $form[] = FormBuilder::select('cate_id', 'Danh mục câu trả lời mẫu', $infoData['cate_id'] ?? '')->setOptions($data);
+        $form[] = FormBuilder::textarea('title', 'Tiêu đề câu trả lời mẫu', $infoData['title'] ?? '')->required();
+        $form[] = FormBuilder::textarea('message', 'Nội dung câu trả lời mẫu', $infoData['message'] ?? '')->required();
+        $form[] = FormBuilder::number('sort', 'Thứ tự sắp xếp', (int)($infoData['sort'] ?? 0));
         return $form;
     }
 }

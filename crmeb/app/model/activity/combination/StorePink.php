@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,20 +17,20 @@ use crmeb\traits\ModelTrait;
 use think\Model;
 
 /**
- * TODO 拼团Model
+ * TODO Model mua chung
  * Class StorePink
  * @package app\model\activity
  */
 class StorePink extends BaseModel
 {
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'store_pink';
@@ -38,7 +38,7 @@ class StorePink extends BaseModel
     use ModelTrait;
 
     /**
-     * 用户一对一关联
+     * Liên kết một-một với người dùng
      * @return \think\model\relation\HasOne
      */
     public function getUser()
@@ -52,7 +52,7 @@ class StorePink extends BaseModel
     }
 
     /**
-     * 订单号搜索器
+     * Bộ lọc mã đơn hàng
      * @param Model $query
      * @param $value
      * @param $data
@@ -63,7 +63,7 @@ class StorePink extends BaseModel
     }
 
     /**
-     * 订单编号搜索器
+     * Bộ lọc mã đơn hàng
      * @param Model $query
      * @param $value
      * @param $data
@@ -74,7 +74,7 @@ class StorePink extends BaseModel
     }
 
     /**
-     * 拼团商品ID搜索器
+     * Bộ lọc ID sản phẩm mua chung
      * @param Model $query
      * @param $value
      * @param $data
@@ -85,7 +85,7 @@ class StorePink extends BaseModel
     }
 
     /**
-     * 商品ID搜索器
+     * Bộ lọc ID sản phẩm
      * @param Model $query
      * @param $value
      * @param $data
@@ -96,7 +96,7 @@ class StorePink extends BaseModel
     }
 
     /**
-     * 是否团长搜索器
+     * Bộ lọc có là trưởng nhóm hay không
      * @param Model $query
      * @param $value
      * @param $data
@@ -107,7 +107,7 @@ class StorePink extends BaseModel
     }
 
     /**
-     * 是否退款搜索器
+     * Bộ lọc có hoàn tiền hay không
      * @param Model $query
      * @param $value
      * @param $data
@@ -118,7 +118,7 @@ class StorePink extends BaseModel
     }
 
     /**
-     * 状态搜索器
+     * Bộ lọc trạng thái
      * @param Model $query
      * @param $value
      * @param $data

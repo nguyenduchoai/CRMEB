@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use crmeb\services\app\MiniProgramService;
 use think\facade\Log;
 
 /**
- * 订阅消息
+ * Tin nhắn đăng ký
  * Class Subscribe
  * @package crmeb\services\template\storage
  */
@@ -39,7 +39,7 @@ class Subscribe extends BaseMessage
     }
 
     /**
-     * 发送订阅消息
+     * Gửi tin nhắn đăng ký
      * @param string $tempid
      * @param array $data
      * @return bool|\EasyWeChat\Support\Collection|mixed|null
@@ -57,7 +57,7 @@ class Subscribe extends BaseMessage
             $this->clear();
             return $res;
         } catch (\Throwable $e) {
-            Log::error('发送给openid为:' . $this->openId . '小程序订阅消息失败,模板id为:' . $tempid . ';错误原因为:' . $e->getMessage());
+            Log::error('Gửi đến openid:' . $this->openId . 'tin nhắn đăng ký Mini Program thất bại, ID mẫu:' . $tempid . '; lý do lỗi:' . $e->getMessage());
             return $this->setError($e->getMessage());
         }
     }
@@ -78,18 +78,18 @@ class Subscribe extends BaseMessage
     }
 
     /**
-     * 设置错误信息
+     * Đặt thông tin lỗi
      * @param string|null $error
      * @return bool
      */
     protected function setError(?string $error = null)
     {
-        $this->error = $error ?: '未知错误';
+        $this->error = $error ?: 'Lỗi không xác định';
         return false;
     }
 
     /**
-     * 获取错误信息
+     * Lấy thông tin lỗi
      * @return string
      */
     public function getError()

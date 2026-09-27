@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,19 +18,19 @@ class LangCode extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'lang_code';
 
     /**
-     * type_id搜索器
+     * Bộ lọc type_id
      * @param $query
      * @param $value
      */
@@ -40,7 +40,7 @@ class LangCode extends BaseModel
     }
 
     /**
-     * code搜索器
+     * Bộ lọc code
      * @param $query
      * @param $value
      */
@@ -50,7 +50,7 @@ class LangCode extends BaseModel
     }
 
     /**
-     * remarks搜索器
+     * Bộ lọc remarks
      * @param $query
      * @param $value
      */
@@ -60,7 +60,7 @@ class LangCode extends BaseModel
     }
 
     /**
-     * is_admin搜索器
+     * Bộ lọc is_admin
      * @param $query
      * @param $value
      */

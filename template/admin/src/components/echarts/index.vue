@@ -36,14 +36,14 @@ export default {
         this.infoLists = newVal;
         this.handleSetVisitChart();
       },
-      deep: true, // 对象内部属性的监听，关键。
+      deep: true, // Theo dõi (watch) thuộc tính bên trong object, quan trọng.
     },
     series: {
       handler(newVal, oldVal) {
         this.seriesArray = newVal;
         this.handleSetVisitChart();
       },
-      deep: true, // 对象内部属性的监听，关键。
+      deep: true, // Theo dõi (watch) thuộc tính bên trong object, quan trọng.
     },
   },
   computed: {
@@ -78,7 +78,7 @@ export default {
           },
           series: [
             {
-              name: '访问来源',
+              name: 'Nguồn truy cập',
               type: 'pie',
               radius: '70%',
               center: ['50%', '60%'],
@@ -168,7 +168,7 @@ export default {
           series: this.seriesArray,
         };
       }
-      // 基于准备好的dom，初始化echarts实例
+      // Dựa trên dom đã chuẩn bị, khởi tạo instance echarts
       this.myChart.setOption(option, true);
     },
     handleResize() {

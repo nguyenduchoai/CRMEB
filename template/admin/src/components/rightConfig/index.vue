@@ -1,6 +1,6 @@
 <template>
   <div class="right-box" v-if="rCom.length">
-    <div class="title-bar">模块配置</div>
+    <div class="title-bar">Cấu hình mô-đun</div>
     <div class="mobile-config" v-if="rCom.length">
       <div v-for="(item, key) in rCom" :key="key">
         <component
@@ -13,7 +13,7 @@
       </div>
       <div style="text-align: center" v-if="rCom.length">
         <el-button type="primary" style="width: 100%; margin: 0 auto; height: 40px" v-db-click @click="saveConfig"
-          >保存</el-button
+          >Lưu</el-button
         >
       </div>
     </div>
@@ -118,7 +118,7 @@ export default {
         this.bus.$emit('upData', data);
       });
     },
-    //获取二级分类
+    //Lấy danh mục cấp 2
     getByCategory() {
       getByCategory().then((res) => {
         let data = [];
@@ -133,7 +133,7 @@ export default {
         this.bus.$emit('upData', data);
       });
     },
-    // 保存数据
+    // Lưu dữ liệu
     saveConfig() {
       let data = this.$store.state.moren.defaultConfig;
       if (this.name.name == 'tabBar') {
@@ -141,22 +141,22 @@ export default {
           let list = data.tabBar.default.tabBarList.list;
           for (let i = 0; i < list.length; i++) {
             if (list[i].link == '/pages/storeList/index' || list[i].link == 'pages/storeList/index') {
-              return this.$message.error('请先开启您的周边功能(/pages/storeList/index)');
+              return this.$message.error('Vui lòng bật tính năng cửa hàng lân cận trước (/pages/storeList/index)');
             }
           }
         }
         if (data.tabBar.default.tabBarList.list.length < 2) {
-          return this.$message.error('您最少应添加2个导航');
+          return this.$message.error('Bạn cần thêm ít nhất 2 mục điều hướng');
         }
       }
 
       diySave(this.pageId, {
         value: data,
       }).then((res) => {
-        this.$message.success('保存成功');
+        this.$message.success('Lưu thành công');
       });
     },
-    // 对象转数组
+    // Chuyển object thành mảng
     objToArray(array) {
       var arr = [];
       for (var i in array) {
@@ -177,18 +177,18 @@ export default {
   height: 700px;
   overflow-y: scroll;
   &::-webkit-scrollbar {
-    /* 滚动条整体样式 */
-    width: 4px; /* 高宽分别对应横竖滚动条的尺寸 */
+    /* Kiểu tổng thể của thanh cuộn */
+    width: 4px; /* Chiều cao/rộng tương ứng với kích thước thanh cuộn ngang/dọc */
     height: 1px;
   }
   &::-webkit-scrollbar-thumb {
-    /* 滚动条里面小方块 */
+    /* Ô vuông nhỏ bên trong thanh cuộn */
     border-radius: 4px;
     box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
     background: #535353;
   }
   &::-webkit-scrollbar-track {
-    /* 滚动条里面轨道 */
+    /* Đường trượt bên trong thanh cuộn */
     box-shadow: inset 0 0 5px #fff;
     border-radius: 4px;
     background: #fff;

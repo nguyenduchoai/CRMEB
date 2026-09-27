@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -31,7 +31,7 @@ class WechatUserDao extends BaseDao
     }
 
     /**
-     * 获取wechat_user表数据
+     * Lấy dữ liệu bảng wechat_user
      * @param array $where
      * @param string $field
      * @param string $order
@@ -50,7 +50,7 @@ class WechatUserDao extends BaseDao
     }
 
     /**
-     * 获取微信用户统计数据
+     * Lấy dữ liệu thống kê người dùng WeChat
      * @param $time
      * @param $where
      * @param $timeType
@@ -73,7 +73,7 @@ class WechatUserDao extends BaseDao
     }
 
     /**
-     * 地域全部用户
+     * Toàn bộ người dùng theo khu vực
      * @param $time
      * @param $userType
      * @return mixed
@@ -89,7 +89,7 @@ class WechatUserDao extends BaseDao
     }
 
     /**
-     * 地域新增用户
+     * Người dùng mới theo khu vực
      * @param $time
      * @param $userType
      * @return mixed
@@ -110,7 +110,7 @@ class WechatUserDao extends BaseDao
     }
 
     /**
-     * 获取用户性别
+     * Lấy giới tính người dùng
      * @param $time
      * @param $userType
      * @return mixed
@@ -131,7 +131,7 @@ class WechatUserDao extends BaseDao
     }
 
     /**
-     * 获取公众号或者小程序的openid
+     * Lấy openid của OA WeChat hoặc Mini Program
      * @param int $uid
      * @return mixed
      */

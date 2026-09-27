@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,15 +17,15 @@ use app\services\BaseServices;
 use crmeb\exceptions\AdminException;
 
 /**
- * 不送达
+ * Không giao đến
  * Class ShippingTemplatesNoDeliveryServices
  * @package app\services\shipping
- * @method isNoDelivery($tempId, $cityid) 是否不送达
+ * @method isNoDelivery($tempId, $cityid) Có thuộc khu vực không giao đến hay không
  */
 class ShippingTemplatesNoDeliveryServices extends BaseServices
 {
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * ShippingTemplatesNoDeliveryServices constructor.
      * @param ShippingTemplatesNoDeliveryDao $dao
      */
@@ -35,7 +35,7 @@ class ShippingTemplatesNoDeliveryServices extends BaseServices
     }
 
     /**
-     * 添加不送达信息
+     * Thêm thông tin không giao tới
      * @param array $noDeliveryInfo
      * @param int $tempId
      * @return bool|mixed
@@ -57,7 +57,7 @@ class ShippingTemplatesNoDeliveryServices extends BaseServices
                     if (isset($value['children']) && is_array($value['children'])) {
                         foreach ($value['children'] as $vv) {
                             if (!isset($vv['city_id'])) {
-                                throw new AdminException('缺少城市id无法保存');
+                                throw new AdminException('Thiếu ID thành phố, không thể lưu');
                             }
                             $placeList [] = [
                                 'temp_id' => $tempId,
@@ -78,7 +78,7 @@ class ShippingTemplatesNoDeliveryServices extends BaseServices
     }
 
     /**
-     * 获得指定包邮城市地址
+     * Lấy địa chỉ thành phố miễn phí vận chuyển chỉ định
      * @param int $tempId
      * @return array
      */
@@ -98,7 +98,7 @@ class ShippingTemplatesNoDeliveryServices extends BaseServices
     }
 
     /**
-     * 获取不送达的省份
+     * Lấy tỉnh không giao tới
      * @param string $uniqid
      * @return array
      */
@@ -111,7 +111,7 @@ class ShippingTemplatesNoDeliveryServices extends BaseServices
         foreach ($infoList as $item) {
             $childrenData[] = [
                 'city_id' => $item['province_id'],
-                'name' => $item['name'] ?? '全国',
+                'name' => $item['name'] ?? 'Toàn quốc',
                 'children' => $this->getCityTemp($uniqid, $item['province_id'])
             ];
         }
@@ -119,7 +119,7 @@ class ShippingTemplatesNoDeliveryServices extends BaseServices
     }
 
     /**
-     * 获取市区数据
+     * Lấy dữ liệu quận/thành phố
      * @param string $uniqid
      * @param int $provinceId
      * @return array
@@ -133,7 +133,7 @@ class ShippingTemplatesNoDeliveryServices extends BaseServices
         foreach ($infoList as $item) {
             $childrenData[] = [
                 'city_id' => $item['city_id'],
-                'name' => $item['name'] ?? '全国',
+                'name' => $item['name'] ?? 'Toàn quốc',
             ];
         }
         return $childrenData;

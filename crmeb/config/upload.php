@@ -1,22 +1,22 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 
 return [
-    //默认上传模式,后台配置优先,添加类型一定索引要和驱动名一致 用小写字母
+    //Chế độ upload mặc định, cấu hình admin ưu tiên hơn, khi thêm loại thì chỉ số phải khớp với tên driver, dùng chữ thường
     'default' => 'local',
-    //上传文件大小 50M
+    //Dung lượng tệp tải lên 50M
     'filesize' => 52428800,
-    //上传文件后缀类型
+    //Loại hậu tố file upload
     'fileExt' => ['jpg', 'jpeg', 'png', 'gif', 'pem', 'mp3', 'wma', 'wav', 'amr', 'mp4', 'key', 'xlsx', 'xls', 'txt', 'ico', 'crt', 'webp', 'zip'],
-    //上传文件类型
+    //Loại file upload
     'fileMime' => [
         'image/jpg',
         'image/jpeg',
@@ -36,48 +36,48 @@ return [
         'application/x-x509-ca-cert',
         'image/webp',
         'application/x-zip-compressed',
-        // 补充缺失
+        // Bổ sung phần còn thiếu
         'audio/x-ms-wma',              // wma
         'audio/wav',                   // wav
         'audio/amr',                   // amr
         'application/x-pem-file',      // pem
-        // Windows 兼容
+        // Tương thích Windows
         'audio/mp3',                   // mp3 Windows
         'audio/wave',                  // wav Windows Chrome
         'audio/x-wav',                 // wav Windows IE/Edge
         'application/msexcel',         // xls Windows
     ],
-    //驱动模式，此配置优先与后台配置，后台添加配置请加前缀，例如添加七牛云配置：accessKey 后台添加变量名 qiniu_accessKey
+    //Chế độ driver, cấu hình này ưu tiên hơn cấu hình admin, khi thêm cấu hình ở admin hãy thêm tiền tố, ví dụ thêm cấu hình Qiniu Cloud: accessKey thì ở admin thêm tên biến qiniu_accessKey
     'stores' => [
-        //本地上传配置
+        //Cấu hình upload cục bộ
         'local' => [],
-        //七牛云上传配置
+        //Cấu hình upload Qiniu Cloud
         'qiniu' => [
             'AccessKeyId' => '', // sys_config('qiniu_accessKey')
             'AccessKeySecret' => '', // sys_config('qiniu_secretKey')
         ],
-        //oss 阿里云上传配置
+        //oss Cấu hình upload Alibaba Cloud
         'oss' => [
             'AccessKeyId' => '', // sys_config('accessKey')
             'AccessKeySecret' => '', // sys_config('secretKey')
         ],
-        //cos 腾讯云上传配置
+        //cos Cấu hình upload Tencent Cloud
         'cos' => [
             'AccessKeyId' => '', //sys_config('tengxun_accessKey')
             'AccessKeySecret' => '', //sys_config('tengxun_secretKey')
             'APPID' => '', //sys_config('tengxun_appid')
         ],
-        //oss 京东云
+        //oss JD Cloud
         'jdoss' => [
             'AccessKeyId' => '', // sys_config('accessKey')
             'AccessKeySecret' => '', // sys_config('secretKey')
         ],
-        //oss 华为云
+        //oss Huawei Cloud
         'obs' => [
             'AccessKeyId' => '', // sys_config('accessKey')
             'AccessKeySecret' => '', // sys_config('secretKey')
         ],
-        //oss 天翼云
+        //oss Tianyi Cloud
         'tyoss' => [
             'AccessKeyId' => '', // sys_config('accessKey')
             'AccessKeySecret' => '', // sys_config('secretKey')

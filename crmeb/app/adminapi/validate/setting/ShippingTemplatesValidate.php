@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,8 +15,8 @@ use think\Validate;
 class ShippingTemplatesValidate extends Validate
 {
     /**
-     * 定义验证规则
-     * 格式：'字段名'    =>    ['规则1','规则2'...]
+     * Định nghĩa quy tắc xác thực
+     * Định dạng: 'tên trường'    =>    ['quy tắc 1','quy tắc 2'...]
      *
      * @var array
      */
@@ -32,20 +32,20 @@ class ShippingTemplatesValidate extends Validate
     ];
 
     /**
-     * 定义错误信息
-     * 格式：'字段名.规则名'    =>    '错误信息'
+     * Định nghĩa thông báo lỗi
+     * Định dạng: 'tên trường.tên quy tắc'    =>    'thông báo lỗi'
      *
      * @var array
      */
     protected $message = [
-        'name.require' => '请填写运费模板名称',
-        'region_info.array' => '运费信息必须为数组',
-        'appoint_info.array' => '包邮信息必须为数组',
-        'no_delivery_info.array' => '不送达信息必须为数组',
-        'type.number' => 'type数据格式错误，应为1或2或3',
-        'appoint.number' => 'appoint数据格式错误，应为0或1',
-        'no_delivery.number' => 'no_delivery数据格式错误，应为0或1',
-        'sort.number' => 'sort数据格式错误，应为整数',
+        'name.require' => 'Vui lòng điền tên mẫu phí vận chuyển',
+        'region_info.array' => 'Thông tin phí vận chuyển phải là mảng',
+        'appoint_info.array' => 'Thông tin miễn phí vận chuyển phải là mảng',
+        'no_delivery_info.array' => 'Thông tin khu vực không giao hàng phải là mảng',
+        'type.number' => 'Dữ liệu type sai định dạng, phải là 1, 2 hoặc 3',
+        'appoint.number' => 'Dữ liệu appoint sai định dạng, phải là 0 hoặc 1',
+        'no_delivery.number' => 'Dữ liệu no_delivery sai định dạng, phải là 0 hoặc 1',
+        'sort.number' => 'Dữ liệu sort sai định dạng, phải là số nguyên',
     ];
 
     protected $scene = [

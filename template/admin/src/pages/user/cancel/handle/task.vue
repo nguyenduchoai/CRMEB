@@ -1,5 +1,5 @@
 <template>
-  <el-dialog :visible.sync="modals" title="等级任务" :close-on-click-modal="false" width="1000px" @closed="handleReset">
+  <el-dialog :visible.sync="modals" title="Nhiệm vụ lên hạng" :close-on-click-modal="false" width="1000px" @closed="handleReset">
     <el-form
       ref="levelFrom"
       :model="levelFrom"
@@ -9,20 +9,20 @@
     >
       <el-row :gutter="24">
         <el-col v-bind="grid">
-          <el-form-item label="等级状态：">
-            <el-select v-model="levelFrom.is_show" placeholder="是否显示" clearable @change="userSearchs">
-              <el-option value="1" label="显示"></el-option>
-              <el-option value="0" label="不显示"></el-option>
+          <el-form-item label="Trạng thái hạng:">
+            <el-select v-model="levelFrom.is_show" placeholder="Hiển thị" clearable @change="userSearchs">
+              <el-option value="1" label="Hiện"></el-option>
+              <el-option value="0" label="Không hiển thị"></el-option>
             </el-select>
           </el-form-item>
         </el-col>
         <el-col v-bind="grid">
-          <el-form-item label="等级名称：" prop="status2" label-for="status2">
+          <el-form-item label="Tên cấp độ:" prop="status2" label-for="status2">
             <el-input
               search
               enter-button
               v-model="levelFrom.name"
-              placeholder="请输入等级名称"
+              placeholder="Vui lòng nhập tên cấp độ"
               @on-search="userSearchs"
               style="width: 100%"
             />
@@ -33,12 +33,12 @@
     <el-divider direction="vertical" dashed />
     <el-row>
       <el-col v-bind="grid" class="mb15">
-        <el-button type="primary" v-db-click @click="add">添加等级任务</el-button>
+        <el-button type="primary" v-db-click @click="add">Thêm nhiệm vụ cấp bậc</el-button>
       </el-col>
       <el-col :span="24" class="userAlert">
         <el-alert show-icon closable>
           <template slot="title">
-            添加等级任务,任务类型中的{$num}会自动替换成限定数量+系统预设的单位生成任务名
+            Thêm nhiệm vụ lên hạng, {$num} trong loại nhiệm vụ sẽ tự động được thay bằng số lượng giới hạn + đơn vị mặc định của hệ thống để tạo tên nhiệm vụ
           </template>
         </el-alert>
       </el-col>
@@ -48,25 +48,25 @@
       :data="levelLists"
       ref="table"
       v-loading="loading"
-      no-userFrom-text="暂无数据"
-      no-filtered-userFrom-text="暂无筛选结果"
+      no-userFrom-text="Chưa có dữ liệu"
+      no-filtered-userFrom-text="Không có kết quả phù hợp"
     >
       <el-table-column label="ID" width="80">
         <template slot-scope="scope">
           <span>{{ scope.row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="等级名称" min-width="130">
+      <el-table-column label="Tên cấp bậc" min-width="130">
         <template slot-scope="scope">
           <span>{{ scope.row.level_name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="任务名称" min-width="130">
+      <el-table-column label="Tên nhiệm vụ" min-width="130">
         <template slot-scope="scope">
           <span>{{ scope.row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="是否显示" min-width="130">
+      <el-table-column label="Hiển thị" min-width="130">
         <template slot-scope="scope">
           <el-switch
             class="defineSwitch"
@@ -76,13 +76,13 @@
             :value="scope.row.is_show"
             size="large"
             @change="onchangeIsShow(scope.row)"
-            active-text="显示"
-            inactive-text="隐藏"
+            active-text="Hiện"
+            inactive-text="Ẩn"
           >
           </el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="务必达成" min-width="130">
+      <el-table-column label="Bắt buộc đạt được" min-width="130">
         <template slot-scope="scope">
           <el-switch
             class="defineSwitch"
@@ -94,21 +94,21 @@
             :false-value="0"
             size="large"
             @change="onchangeIsMust(scope.row)"
-            active-text="全部"
-            inactive-text="其一"
+            active-text="Tất cả"
+            inactive-text="Bất kỳ"
           >
           </el-switch>
         </template>
       </el-table-column>
-      <el-table-column label="任务说明" min-width="130">
+      <el-table-column label="Mô tả nhiệm vụ" min-width="130">
         <template slot-scope="scope">
           <span>{{ scope.row.illustrate }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" fixed="right" width="170">
+      <el-table-column label="Thao tác" fixed="right" width="170">
         <template slot-scope="scope">
-          <a v-db-click @click="edit(scope.row)">编辑 | </a>
-          <a v-db-click @click="del(scope.row, '删除等级任务', index)"> 删除</a>
+          <a v-db-click @click="edit(scope.row)">Sửa | </a>
+          <a v-db-click @click="del(scope.row, 'Xóa nhiệm vụ cấp độ', index)"> Xóa</a>
         </template>
       </el-table-column>
     </el-table>
@@ -121,7 +121,7 @@
         @pagination="getList"
       />
     </div>
-    <!-- 新建 编辑表单-->
+    <!-- Form tạo mới / sửa-->
     <edit-from ref="edits" :FromData="FromData" @submitFail="submitFail" :titleType="titleType"></edit-from>
   </el-dialog>
 </template>
@@ -169,12 +169,12 @@ export default {
   },
   methods: {
     ...mapMutations('userLevel', ['getTaskId', 'getlevelId']),
-    // 添加
+    // Thêm
     add() {
       this.ids = '';
       this.getFrom();
     },
-    // 新建 编辑表单
+    // Form tạo mới / sửa
     getFrom() {
       let data = {
         id: this.ids,
@@ -182,20 +182,20 @@ export default {
       };
       this.$modalForm(createTaskApi(data)).then(() => this.getList());
     },
-    // 编辑
+    // Sửa
     edit(row) {
       this.ids = row.id;
       this.getFrom();
     },
-    // 关闭模态框
+    // Đóng modal
     handleReset() {
       this.modals = false;
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.getList();
     },
-    // 任务列表
+    // Danh sách tác vụ
     getList() {
       this.loading = true;
       this.levelFrom.is_show = this.levelFrom.is_show || '';
@@ -211,7 +211,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 修改显示隐藏
+    // Sửa hiện/ẩn
     onchangeIsShow(row) {
       let data = {
         id: row.id,
@@ -225,7 +225,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 设置任务是否达成
+    // Đặt nhiệm vụ có hoàn thành hay không
     onchangeIsMust(row) {
       let data = {
         id: row.id,
@@ -239,11 +239,11 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 新建编辑提交成功
+    // Tạo mới / sửa gửi thành công
     submitFail() {
       this.getList();
     },
-    // 删除任务
+    // Xóa nhiệm vụ
     del(row, tit, num) {
       let delfromData = {
         title: tit,

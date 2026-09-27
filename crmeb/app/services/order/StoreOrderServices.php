@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -51,31 +51,31 @@ use think\facade\Log;
 /**
  * Class StoreOrderServices
  * @package app\services\order
- * @method getOrderIdsCount(array $ids) 获取订单id下没有删除的订单数量
- * @method StoreOrderDao getUserOrderDetail(string $key, int $uid, array $with) 获取订单详情
- * @method chartTimePrice($start, $stop) 获取当前时间到指定时间的支付金额 管理员
- * @method chartTimeNumber($start, $stop) 获取当前时间到指定时间的支付订单数 管理员
- * @method together(array $where, string $field, string $together = 'sum') 聚合查询
- * @method getBuyCount($uid, $type, $typeId) 获取用户已购买此活动商品的个数
+ * @method getOrderIdsCount(array $ids) Lấy số lượng đơn hàng chưa xóa theo id đơn hàng
+ * @method StoreOrderDao getUserOrderDetail(string $key, int $uid, array $with) Lấy chi tiết đơn hàng
+ * @method chartTimePrice($start, $stop) Lấy số tiền thanh toán từ thời điểm hiện tại đến thời điểm chỉ định (quản trị viên)
+ * @method chartTimeNumber($start, $stop) Lấy số đơn hàng đã thanh toán từ thời điểm hiện tại đến thời điểm chỉ định (quản trị viên)
+ * @method together(array $where, string $field, string $together = 'sum') Truy vấn tổng hợp
+ * @method getBuyCount($uid, $type, $typeId) Lấy số lượng sản phẩm của hoạt động này mà người dùng đã mua
  * @method getDistinctCount(array $where, $field, ?bool $search = true)
- * @method getTrendData($time, $type, $timeType, $str) 用户趋势
- * @method getRegion($time, $channelType) 地域统计
- * @method getProductTrend($time, $timeType, $field, $str) 商品趋势
+ * @method getTrendData($time, $type, $timeType, $str) Xu hướng người dùng
+ * @method getRegion($time, $channelType) Thống kê theo khu vực
+ * @method getProductTrend($time, $timeType, $field, $str) Xu hướng sản phẩm
  * @method getList(array $where, array $field, int $page = 0, int $limit = 0, array $with = [])
  */
 class StoreOrderServices extends BaseServices
 {
 
     /**
-     * 发货类型
+     * Hình thức giao hàng
      * @var string[]
      */
     public $deliveryType = [
-        'send' => '商家配送',
-        'express' => '快递配送',
-        'fictitious' => '虚拟发货',
-        'delivery_part_split' => '拆分部分发货',
-        'delivery_split' => '拆分发货完成'
+        'send' => 'Cửa hàng tự giao',
+        'express' => 'Giao qua đơn vị vận chuyển',
+        'fictitious' => 'Giao hàng ảo',
+        'delivery_part_split' => 'Tách đơn, đã giao một phần',
+        'delivery_split' => 'Tách đơn, đã giao xong'
     ];
 
     /**
@@ -88,7 +88,7 @@ class StoreOrderServices extends BaseServices
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @param array $where
      * @param array $field
      * @param array $with
@@ -119,7 +119,7 @@ class StoreOrderServices extends BaseServices
     }
 
     /**
-     * 前端订单列表
+     * Danh sách đơn hàng phía trước
      * @param array $where
      * @param array|string[] $field
      * @param array $with
@@ -136,7 +136,7 @@ class StoreOrderServices extends BaseServices
             $item = $this->tidyOrder($item, true);
             foreach ($item['cartInfo'] ?: [] as $key => $product) {
                 if ($item['_status']['_type'] == 3) {
-                    $item['cartInfo'][$key]['add_time'] = isset($product['add_time']) ? date('Y-m-d H:i', (int)$product['add_time']) : '时间错误';
+                    $item['cartInfo'][$key]['add_time'] = isset($product['add_time']) ? date('Y-m-d H:i', (int)$product['add_time']) : 'Thời gian không hợp lệ';
                 }
                 $item['cartInfo'][$key]['productInfo']['price'] = $product['truePrice'] ?? 0;
             }
@@ -152,7 +152,7 @@ class StoreOrderServices extends BaseServices
     }
 
     /**
-     * 获取订单数量
+     * Lấy số lượng đơn hàng
      * @param int $uid
      * @return array
      * @throws \ReflectionException
@@ -184,19 +184,19 @@ class StoreOrderServices extends BaseServices
         $data['no_refund_count'] = (string)$storeOrderRefundServices->count($refund_where + ['refund_type' => 3]);
         $data['refunded_count'] = (string)$storeOrderRefundServices->count($refund_where + ['refund_type' => 6]);
         $data['refund_count'] = bcadd(bcadd($data['refunding_count'], $data['refunded_count'], 0), $data['no_refund_count'], 0);
-        $data['yue_pay_status'] = (int)sys_config('balance_func_status') && (int)sys_config('yue_pay_status') == 1 ? (int)1 : (int)2;//余额支付 1 开启 2 关闭
+        $data['yue_pay_status'] = (int)sys_config('balance_func_status') && (int)sys_config('yue_pay_status') == 1 ? (int)1 : (int)2;//Thanh toán bằng số dư: 1 là bật, 2 là tắt
         $data['pc_order_count'] = $data['order_count'] + $data['refunding_count'] + $data['refunded_count'];
-        $data['pay_weixin_open'] = sys_config('pay_weixin_open', '0') != '0';//微信支付 1 开启 0 关闭
-        $data['ali_pay_status'] = sys_config('ali_pay_status', '0') != '0';//支付包支付 1 开启 0 关闭
-        $data['friend_pay_status'] = (int)sys_config('friend_pay_status') ?? 0;//好友代付 1 开启 0 关闭
+        $data['pay_weixin_open'] = sys_config('pay_weixin_open', '0') != '0';//WeChat Pay: 1 là bật, 0 là tắt
+        $data['ali_pay_status'] = sys_config('ali_pay_status', '0') != '0';//Thanh toán Alipay, 1 là mở, 0 là tắt
+        $data['friend_pay_status'] = (int)sys_config('friend_pay_status') ?? 0;//Bạn bè thanh toán giúp, 1 là mở, 0 là tắt
         return $data;
     }
 
     /**
-     * 订单详情数据格式化
+     * Định dạng dữ liệu chi tiết đơn hàng
      * @param $order
-     * @param bool $detail 是否需要订单商品详情
-     * @param bool $isPic 是否需要订单状态图片
+     * @param bool $detail Có cần chi tiết sản phẩm trong đơn hàng không
+     * @param bool $isPic Có cần hình ảnh trạng thái đơn hàng không
      * @return mixed
      */
     public function tidyOrder($order, bool $detail = false, $isPic = false)
@@ -215,13 +215,13 @@ class StoreOrderServices extends BaseServices
                 $cart['refund_num'] = $cartInfo['refund_num'];
                 $cart['surplus_refund_num'] = $cartInfo['surplus_num'] - $cartInfo['refund_num'];
                 $cart['unique'] = $k;
-                //新增是否评价字段
+                //Thêm trường có đánh giá hay không
                 $cart['is_reply'] = $replyServices->count(['unique' => $k]);
                 if (isset($cart['productInfo']['attrInfo'])) {
                     $cart['productInfo']['attrInfo'] = get_thumb_water($cart['productInfo']['attrInfo']);
                 }
                 $cart['productInfo'] = get_thumb_water($cart['productInfo']);
-                //一种商品买多件  计算总优惠
+                //Mua nhiều sản phẩm cùng loại thì tính tổng ưu đãi
                 $cart['vip_sum_truePrice'] = bcmul($cart['vip_truePrice'], $cart['cart_num'] ? $cart['cart_num'] : 1, 2);
                 $cart['is_valid'] = 1;
                 array_push($info, $cart);
@@ -234,81 +234,81 @@ class StoreOrderServices extends BaseServices
         $status = [];
         if ($order['is_cancel']) {
             $status['_type'] = 4;
-            $status['_title'] = '已取消';
-            $status['_msg'] = '您已取消订单,感谢您的使用';
+            $status['_title'] = 'Đã hủy';
+            $status['_msg'] = 'Bạn đã hủy đơn hàng, cảm ơn bạn đã sử dụng';
             $status['_class'] = 'nobuy';
         } else {
             if (!$order['paid'] && $order['pay_type'] == 'offline' && !$order['status'] >= 2) {
                 $status['_type'] = 9;
-                $status['_title'] = '线下付款,未支付';
-                $status['_msg'] = '等待商家处理,请耐心等待';
+                $status['_title'] = 'Thanh toán ngoại tuyến, chưa thanh toán';
+                $status['_msg'] = 'Chờ người bán xử lý, vui lòng kiên nhẫn chờ đợi';
                 $status['_class'] = 'nobuy';
             } else if (!$order['paid']) {
                 $status['_type'] = 0;
-                $status['_title'] = '未支付';
-                //系统预设取消订单时间段
+                $status['_title'] = 'Chưa thanh toán';
+                //Khoảng thời gian hủy đơn hàng do hệ thống định trước
                 $keyValue = ['order_cancel_time', 'order_activity_time', 'order_bargain_time', 'order_seckill_time', 'order_pink_time'];
-                //获取配置
+                //Lấy cấu hình
                 $systemValue = SystemConfigService::more($keyValue);
-                //格式化数据
+                //Định dạng dữ liệu
                 $systemValue = Arr::setValeTime($keyValue, is_array($systemValue) ? $systemValue : []);
                 if ($order['pink_id'] || $order['combination_id']) {
                     $order_pink_time = $systemValue['order_pink_time'] ?: $systemValue['order_activity_time'];
                     $time = $order['add_time'] + $order_pink_time * 3600;
-                    $status['_msg'] = '请在' . date('m-d H:i:s', $time) . '前完成支付!';
+                    $status['_msg'] = 'Vui lòng hoàn tất thanh toán trước' . date('m-d H:i:s', $time) . '!';
                 } else if ($order['seckill_id']) {
                     $order_seckill_time = $systemValue['order_seckill_time'] ?: $systemValue['order_activity_time'];
                     $time = $order['add_time'] + $order_seckill_time * 3600;
-                    $status['_msg'] = '请在' . date('m-d H:i:s', $time) . '前完成支付!';
+                    $status['_msg'] = 'Vui lòng hoàn tất thanh toán trước' . date('m-d H:i:s', $time) . '!';
                 } else if ($order['bargain_id']) {
                     $order_bargain_time = $systemValue['order_bargain_time'] ?: $systemValue['order_activity_time'];
                     $time = $order['add_time'] + $order_bargain_time * 3600;
-                    $status['_msg'] = '请在' . date('m-d H:i:s', $time) . '前完成支付!';
+                    $status['_msg'] = 'Vui lòng hoàn tất thanh toán trước' . date('m-d H:i:s', $time) . '!';
                 } else {
                     $time = $order['add_time'] + $systemValue['order_cancel_time'] * 3600;
-                    $status['_msg'] = '请在' . date('m-d H:i:s', (int)$time) . '前完成支付!';
+                    $status['_msg'] = 'Vui lòng hoàn tất thanh toán trước' . date('m-d H:i:s', (int)$time) . '!';
                 }
                 $status['_class'] = 'nobuy';
             } else if ($order['status'] == 4) {
-                if ($order['delivery_type'] == 'send') {//TODO 送货
+                if ($order['delivery_type'] == 'send') {//TODO giao hàng
                     $status['_type'] = 1;
-                    $status['_title'] = '待收货';
-                    $status['_msg'] = date('m月d日H时i分', $statusServices->value(['oid' => $order['id'], 'change_type' => 'delivery'], 'change_time')) . '服务商已送货';
+                    $status['_title'] = 'Chờ nhận hàng';
+                    $status['_msg'] = date('d/m H:i', $statusServices->value(['oid' => $order['id'], 'change_type' => 'delivery'], 'change_time')) . 'người bán đã cử nhân viên giao hàng';
                     $status['_class'] = 'state-ysh';
-                } elseif ($order['delivery_type'] == 'express') {//TODO  发货
+                } elseif ($order['delivery_type'] == 'express') {//TODO giao hàng
                     $status['_type'] = 1;
-                    $status['_title'] = '待收货';
-                    $status['_msg'] = date('m月d日H时i分', $statusServices->value(['oid' => $order['id'], 'change_type' => 'delivery_goods'], 'change_time')) . '服务商已发货';
+                    $status['_title'] = 'Chờ nhận hàng';
+                    $status['_msg'] = date('d/m H:i', $statusServices->value(['oid' => $order['id'], 'change_type' => 'delivery_goods'], 'change_time')) . 'người bán đã giao hàng';
                     $status['_class'] = 'state-ysh';
-                } elseif ($order['delivery_type'] == 'split') {//拆分发货
+                } elseif ($order['delivery_type'] == 'split') {//Giao hàng theo phần tách đơn
                     $status['_type'] = 1;
-                    $status['_title'] = '待收货';
-                    $status['_msg'] = date('m月d日H时i分', $statusServices->value(['oid' => $order['id'], 'change_type' => 'delivery_part_split'], 'change_time')) . '服务商已拆分多个包裹发货';
+                    $status['_title'] = 'Chờ nhận hàng';
+                    $status['_msg'] = date('d/m H:i', $statusServices->value(['oid' => $order['id'], 'change_type' => 'delivery_part_split'], 'change_time')) . 'người bán đã tách thành nhiều kiện để giao hàng';
                     $status['_class'] = 'state-ysh';
                 } else {
                     $status['_type'] = 1;
-                    $status['_title'] = '待收货';
-                    $status['_msg'] = date('m月d日H时i分', $statusServices->value(['oid' => $order['id'], 'change_type' => 'delivery_fictitious'], 'change_time')) . '服务商已虚拟发货';
+                    $status['_title'] = 'Chờ nhận hàng';
+                    $status['_msg'] = date('d/m H:i', $statusServices->value(['oid' => $order['id'], 'change_type' => 'delivery_fictitious'], 'change_time')) . 'người bán đã giao hàng ảo';
                     $status['_class'] = 'state-ysh';
                 }
             } else if ($order['refund_status'] == 1) {
                 if (in_array($order['refund_type'], [0, 1, 2])) {
                     $status['_type'] = -1;
-                    $status['_title'] = '申请退款中';
-                    $status['_msg'] = '商家审核中,请耐心等待';
+                    $status['_title'] = 'Đang yêu cầu hoàn tiền';
+                    $status['_msg'] = 'Người bán đang xét duyệt, vui lòng kiên nhẫn chờ đợi';
                     $status['_class'] = 'state-sqtk';
                 } elseif ($order['refund_type'] == 4) {
                     $status['_type'] = -1;
-                    $status['_title'] = '申请退款中';
-                    $status['_msg'] = '商家同意退款,请填写退货订单号';
+                    $status['_title'] = 'Đang yêu cầu hoàn tiền';
+                    $status['_msg'] = 'Người bán đã đồng ý hoàn tiền, vui lòng nhập mã vận đơn trả hàng';
                     $status['_class'] = 'state-sqtk';
                     $status['refund_name'] = sys_config('refund_name', '');
                     $status['refund_phone'] = sys_config('refund_phone', '');
                     $status['refund_address'] = sys_config('refund_address', '');
                 } elseif ($order['refund_type'] == 5) {
                     $status['_type'] = -1;
-                    $status['_title'] = '申请退款中';
-                    $status['_msg'] = '等待商家收货';
+                    $status['_title'] = 'Đang yêu cầu hoàn tiền';
+                    $status['_msg'] = 'Chờ người bán nhận hàng';
                     $status['_class'] = 'state-sqtk';
                     $status['refund_name'] = sys_config('refund_name', '');
                     $status['refund_phone'] = sys_config('refund_phone', '');
@@ -316,18 +316,18 @@ class StoreOrderServices extends BaseServices
                 }
             } else if ($order['refund_status'] == 2 || $order['refund_type'] == 6) {
                 $status['_type'] = -2;
-                $status['_title'] = '已退款';
-                $status['_msg'] = '已为您退款,感谢您的支持';
+                $status['_title'] = 'Đã hoàn tiền';
+                $status['_msg'] = 'Đã hoàn tiền cho bạn, cảm ơn bạn đã ủng hộ';
                 $status['_class'] = 'state-sqtk';
             } else if ($order['refund_status'] == 3) {
                 $status['_type'] = -1;
-                $status['_title'] = '部分退款（子订单）';
-                $status['_msg'] = '拆分发货，部分退款';
+                $status['_title'] = 'Hoàn tiền một phần (đơn con)';
+                $status['_msg'] = 'Tách đơn giao hàng, hoàn tiền một phần';
                 $status['_class'] = 'state-sqtk';
             } else if ($order['refund_status'] == 4) {
                 $status['_type'] = -1;
-                $status['_title'] = '子订单已全部申请退款中';
-                $status['_msg'] = '拆分发货，全部退款';
+                $status['_title'] = 'Tất cả đơn con đều đang yêu cầu hoàn tiền';
+                $status['_msg'] = 'Tách đơn giao hàng, hoàn tiền toàn bộ';
                 $status['_class'] = 'state-sqtk';
             } else if (!$order['status']) {
                 if ($order['pink_id']) {
@@ -335,84 +335,84 @@ class StoreOrderServices extends BaseServices
                     $pinkServices = app()->make(StorePinkServices::class);
                     if ($pinkServices->getCount(['id' => $order['pink_id'], 'status' => 1])) {
                         $status['_type'] = 1;
-                        $status['_title'] = '拼团中';
-                        $status['_msg'] = '等待其他人参加拼团';
+                        $status['_title'] = 'Đang mua chung';
+                        $status['_msg'] = 'Chờ người khác tham gia mua chung';
                         $status['_class'] = 'state-nfh';
                     } else {
                         $status['_type'] = 1;
-                        $status['_title'] = '未发货';
-                        $status['_msg'] = '商家未发货,请耐心等待';
+                        $status['_title'] = 'Chưa giao hàng';
+                        $status['_msg'] = 'Người bán chưa giao hàng, vui lòng kiên nhẫn chờ đợi';
                         $status['_class'] = 'state-nfh';
                     }
                 } else {
                     if ($order['shipping_type'] === 1) {
                         $status['_type'] = 1;
-                        $status['_title'] = '未发货';
+                        $status['_title'] = 'Chưa giao hàng';
                         if ($order['advance_id']) {
-                            $status['_msg'] = date('Y-m-d', $order['cartInfo'][0]['productInfo']['presale_end_time']) . '预售结束后' . $order['cartInfo'][0]['productInfo']['presale_day'] . '天内发货,请耐心等待';
+                            $status['_msg'] = date('Y-m-d', $order['cartInfo'][0]['productInfo']['presale_end_time']) . 'Sau khi kết thúc đặt trước' . $order['cartInfo'][0]['productInfo']['presale_day'] . 'ngày sẽ giao hàng, vui lòng kiên nhẫn chờ đợi';
                         } else {
-                            $status['_msg'] = '商家未发货,请耐心等待';
+                            $status['_msg'] = 'Người bán chưa giao hàng, vui lòng kiên nhẫn chờ đợi';
                         }
                         $status['_class'] = 'state-nfh';
                     } elseif ($order['shipping_type'] === 2) {
                         $status['_type'] = 1;
-                        $status['_title'] = '待核销';
-                        $status['_msg'] = '待核销,请到核销点进行核销';
+                        $status['_title'] = 'Chờ xác nhận sử dụng';
+                        $status['_msg'] = 'Chờ xác nhận sử dụng, vui lòng đến điểm nhận hàng để quét mã xác nhận';
                         $status['_class'] = 'state-nfh';
                     } else {
                         $status['_type'] = 1;
-                        $status['_title'] = '待领取';
-                        $status['_msg'] = '待领取，将礼品转赠给好友吧!';
+                        $status['_title'] = 'Chờ nhận quà';
+                        $status['_msg'] = 'Chờ nhận quà, hãy tặng món quà này cho bạn bè nhé!';
                         $status['_class'] = 'state-nfh';
                     }
                 }
             } else if ($order['status'] == 1) {
-                if ($order['delivery_type'] == 'send') {//TODO 送货
+                if ($order['delivery_type'] == 'send') {//TODO giao hàng
                     $status['_type'] = 2;
-                    $status['_title'] = '待收货';
-                    $status['_msg'] = date('m月d日H时i分', $statusServices->value(['oid' => $order['id'], 'change_type' => 'delivery'], 'change_time')) . '服务商已送货';
+                    $status['_title'] = 'Chờ nhận hàng';
+                    $status['_msg'] = date('d/m H:i', $statusServices->value(['oid' => $order['id'], 'change_type' => 'delivery'], 'change_time')) . 'người bán đã cử nhân viên giao hàng';
                     $status['_class'] = 'state-ysh';
-                } elseif ($order['delivery_type'] == 'express') {//TODO  发货
+                } elseif ($order['delivery_type'] == 'express') {//TODO giao hàng
                     $status['_type'] = 2;
-                    $status['_title'] = '待收货';
-                    $status['_msg'] = date('m月d日H时i分', $statusServices->value(['oid' => $order['id'], 'change_type' => 'delivery_goods'], 'change_time')) . '服务商已发货';
+                    $status['_title'] = 'Chờ nhận hàng';
+                    $status['_msg'] = date('d/m H:i', $statusServices->value(['oid' => $order['id'], 'change_type' => 'delivery_goods'], 'change_time')) . 'người bán đã giao hàng';
                     $status['_class'] = 'state-ysh';
-                } elseif ($order['delivery_type'] == 'split') {//拆分发货
+                } elseif ($order['delivery_type'] == 'split') {//Giao hàng theo phần tách đơn
                     $status['_type'] = 2;
-                    $status['_title'] = '待收货';
-                    $status['_msg'] = date('m月d日H时i分', $statusServices->value(['oid' => $order['id'], 'change_type' => 'delivery_split'], 'change_time')) . '服务商已拆分多个包裹发货';
+                    $status['_title'] = 'Chờ nhận hàng';
+                    $status['_msg'] = date('d/m H:i', $statusServices->value(['oid' => $order['id'], 'change_type' => 'delivery_split'], 'change_time')) . 'người bán đã tách thành nhiều kiện để giao hàng';
                     $status['_class'] = 'state-ysh';
                 } else {
                     $status['_type'] = 2;
-                    $status['_title'] = '待收货';
-                    $status['_msg'] = date('m月d日H时i分', $statusServices->value(['oid' => $order['id'], 'change_type' => 'delivery_fictitious'], 'change_time')) . '服务商已虚拟发货';
+                    $status['_title'] = 'Chờ nhận hàng';
+                    $status['_msg'] = date('d/m H:i', $statusServices->value(['oid' => $order['id'], 'change_type' => 'delivery_fictitious'], 'change_time')) . 'người bán đã giao hàng ảo';
                     $status['_class'] = 'state-ysh';
                 }
             } else if ($order['status'] == 2) {
                 $status['_type'] = 3;
-                $status['_title'] = '待评价';
-                $status['_msg'] = '已收货,快去评价一下吧';
+                $status['_title'] = 'Chờ đánh giá';
+                $status['_msg'] = 'Đã nhận hàng, hãy đánh giá ngay nhé';
                 $status['_class'] = 'state-ypj';
             } else if ($order['status'] == 3) {
                 $status['_type'] = 4;
-                $status['_title'] = '交易完成';
-                $status['_msg'] = '交易完成,感谢您的支持';
+                $status['_title'] = 'Giao dịch hoàn tất';
+                $status['_msg'] = 'Giao dịch hoàn tất, cảm ơn bạn đã ủng hộ';
                 $status['_class'] = 'state-ytk';
             }
         }
         if (isset($order['pay_type']))
-            $status['_payType'] = $status['_type'] == 0 ? '' : PayServices::PAY_TYPE[$order['pay_type']] ?? '其他方式';
+            $status['_payType'] = $status['_type'] == 0 ? '' : PayServices::PAY_TYPE[$order['pay_type']] ?? 'Phương thức khác';
         if (isset($order['delivery_type']))
-            $status['_deliveryType'] = $this->deliveryType[$order['delivery_type']] ?? '其他方式';
+            $status['_deliveryType'] = $this->deliveryType[$order['delivery_type']] ?? 'Phương thức khác';
         $order['_status'] = $status;
         $order['_pay_time'] = isset($order['pay_time']) && $order['pay_time'] != null ? date('Y-m-d H:i:s', $order['pay_time']) : '';
         $order['_add_time'] = isset($order['add_time']) ? (strstr((string)$order['add_time'], '-') === false ? date('Y-m-d H:i:s', $order['add_time']) : $order['add_time']) : '';
 
-        //系统预设取消订单时间段
+        //Khoảng thời gian hủy đơn hàng do hệ thống định trước
         $keyValue = ['order_cancel_time', 'order_activity_time', 'order_bargain_time', 'order_seckill_time', 'order_pink_time'];
-        //获取配置
+        //Lấy cấu hình
         $systemValue = SystemConfigService::more($keyValue);
-        //格式化数据
+        //Định dạng dữ liệu
         $systemValue = Arr::setValeTime($keyValue, is_array($systemValue) ? $systemValue : []);
         if ($order['seckill_id']) {
             $secs = $systemValue['order_seckill_time'] ? $systemValue['order_seckill_time'] : $systemValue['order_activity_time'];
@@ -425,7 +425,7 @@ class StoreOrderServices extends BaseServices
         }
         $order['stop_time'] = $secs * 3600 + $order['add_time'];
         $order['status_pic'] = '';
-        //获取商品状态图片
+        //Lấy hình ảnh trạng thái sản phẩm
         if ($isPic) {
             $order_details_images = sys_data('order_details_images') ?: [];
             foreach ($order_details_images as $image) {
@@ -479,7 +479,7 @@ class StoreOrderServices extends BaseServices
     }
 
     /**
-     * 数据转换
+     * Chuyển đổi dữ liệu
      * @param array $data
      * @return array
      */
@@ -495,68 +495,68 @@ class StoreOrderServices extends BaseServices
             if (($item['pink_id'] || $item['combination_id']) && isset($item['pinkStatus'])) {
                 switch ($item['pinkStatus']) {
                     case 1:
-                        $item['pink_name'] = '[拼团订单]正在进行中';
+                        $item['pink_name'] = '[Đơn mua chung] Đang diễn ra';
                         $item['color'] = '#f00';
                         break;
                     case 2:
-                        $item['pink_name'] = '[拼团订单]已完成';
+                        $item['pink_name'] = '[Đơn mua chung] Đã hoàn thành';
                         $item['color'] = '#00f';
                         break;
                     case 3:
-                        $item['pink_name'] = '[拼团订单]未完成';
+                        $item['pink_name'] = '[Đơn mua chung] Chưa hoàn thành';
                         $item['color'] = '#f0f';
                         break;
                     default:
-                        $item['pink_name'] = '[拼团订单]历史订单';
+                        $item['pink_name'] = '[Đơn mua chung] Đơn hàng cũ';
                         $item['color'] = '#FF7D00';
                         break;
                 }
             } elseif ($item['combination_id']) {
-                $item['pink_name'] = '[拼团订单]';
+                $item['pink_name'] = '[Đơn mua chung]';
                 $item['color'] = '#FF7D00';
             } elseif ($item['seckill_id']) {
-                $item['pink_name'] = '[秒杀订单]';
+                $item['pink_name'] = '[Đơn flash sale]';
                 $item['color'] = '#3491FA';
             } elseif ($item['bargain_id']) {
-                $item['pink_name'] = '[砍价订单]';
+                $item['pink_name'] = '[Đơn săn giảm giá]';
                 $item['color'] = '#F7BA1E';
             } elseif ($item['advance_id']) {
-                $item['pink_name'] = '[预售订单]';
+                $item['pink_name'] = '[Đơn đặt trước]';
                 $item['color'] = '#B27FEB';
             } else {
                 if ($item['shipping_type'] == 1) {
-                    $item['pink_name'] = '[普通订单]';
+                    $item['pink_name'] = '[Đơn thường]';
                     $item['color'] = '#333';
                 } else if ($item['shipping_type'] == 2) {
-                    $item['pink_name'] = '[核销订单]';
+                    $item['pink_name'] = '[Đơn xác nhận sử dụng]';
                     $item['color'] = '#8956E8';
                 }
             }
             if ($item['paid'] == 1) {
                 switch ($item['pay_type']) {
                     case PayServices::WEIXIN_PAY:
-                        $item['pay_type_name'] = '微信支付';
+                        $item['pay_type_name'] = 'WeChat Pay';
                         break;
                     case PayServices::YUE_PAY:
-                        $item['pay_type_name'] = '余额支付';
+                        $item['pay_type_name'] = 'Thanh toán bằng số dư';
                         break;
                     case PayServices::OFFLINE_PAY:
-                        $item['pay_type_name'] = '线下支付';
+                        $item['pay_type_name'] = 'Thanh toán ngoại tuyến';
                         break;
                     case PayServices::ALIAPY_PAY:
-                        $item['pay_type_name'] = '支付宝支付';
+                        $item['pay_type_name'] = 'Thanh toán Alipay';
                         break;
                     case PayServices::ALLIN_PAY:
-                        $item['pay_type_name'] = '通联支付';
+                        $item['pay_type_name'] = 'Allinpay';
                         break;
                     default:
-                        $item['pay_type_name'] = '其他支付';
+                        $item['pay_type_name'] = 'Thanh toán khác';
                         break;
                 }
             } else {
                 switch ($item['pay_type']) {
                     case 'offline':
-                        $item['pay_type_name'] = '线下支付';
+                        $item['pay_type_name'] = 'Thanh toán ngoại tuyến';
                         $item['pay_type_info'] = 1;
                         break;
                     default:
@@ -566,21 +566,21 @@ class StoreOrderServices extends BaseServices
             }
             $status_name = ['status_name' => '', 'pics' => []];
             if ($item['paid'] == 0 && $item['status'] == 0) {
-                $status_name['status_name'] = $item['is_cancel'] == 0 ? '未支付' : '已取消';
+                $status_name['status_name'] = $item['is_cancel'] == 0 ? 'Chưa thanh toán' : 'Đã hủy';
             } else if ($item['paid'] == 1 && $item['status'] == 0 && $item['shipping_type'] == 1 && $item['refund_status'] == 0) {
-                $status_name['status_name'] = $item['combination_id'] && isset($item['pinkStatus']) && $item['pinkStatus'] == 1 ? '未发货(拼团中)' : '未发货';
+                $status_name['status_name'] = $item['combination_id'] && isset($item['pinkStatus']) && $item['pinkStatus'] == 1 ? 'Chưa giao hàng (đang mua chung)' : 'Chưa giao hàng';
             } else if ($item['paid'] == 1 && $item['status'] == 4 && $item['shipping_type'] == 1 && $item['refund_status'] == 0) {
-                $status_name['status_name'] = '部分发货';
+                $status_name['status_name'] = 'Giao một phần';
             } else if ($item['paid'] == 1 && $item['status'] == 0 && $item['shipping_type'] == 2 && $item['refund_status'] == 0) {
-                $status_name['status_name'] = '未核销';
+                $status_name['status_name'] = 'Chưa xác nhận sử dụng';
             } else if ($item['paid'] == 1 && $item['status'] == 1 && $item['shipping_type'] == 1 && $item['refund_status'] == 0) {
-                $status_name['status_name'] = '待收货';
+                $status_name['status_name'] = 'Chờ nhận hàng';
             } else if ($item['paid'] == 1 && $item['status'] == 1 && $item['shipping_type'] == 2 && $item['refund_status'] == 0) {
-                $status_name['status_name'] = '未核销';
+                $status_name['status_name'] = 'Chưa xác nhận sử dụng';
             } else if ($item['paid'] == 1 && $item['status'] == 2 && $item['refund_status'] == 0) {
-                $status_name['status_name'] = '待评价';
+                $status_name['status_name'] = 'Chờ đánh giá';
             } else if ($item['paid'] == 1 && $item['status'] == 3 && $item['refund_status'] == 0) {
-                $status_name['status_name'] = '已完成';
+                $status_name['status_name'] = 'Đã hoàn thành';
             } else if ($item['paid'] == 1 && $item['refund_status'] == 1) {
                 $refundReasonTime = date('Y-m-d H:i', $item['refund_reason_time']);
                 $refundReasonWapImg = json_decode($item['refund_reason_wap_img'], true);
@@ -592,45 +592,45 @@ class StoreOrderServices extends BaseServices
                             $img[] = $itemImg;
                     }
                 }
-                $status_name['status_name'] = '退款中';
+                $status_name['status_name'] = 'Đang hoàn tiền';
                 $status_name['pics'] = $img;
             } else if ($item['paid'] == 1 && $item['refund_status'] == 2) {
-                $status_name['status_name'] = '已退款';
+                $status_name['status_name'] = 'Đã hoàn tiền';
             } else if ($item['paid'] == 1 && $item['refund_status'] == 3) {
                 $status_name['status_name'] = <<<HTML
-<b style="color:#f124c7">部分退款</b><br/>
+<b style="color:#f124c7">Hoàn tiền một phần</b><br/>
 HTML;
             } else if ($item['paid'] == 1 && $item['refund_status'] == 4) {
                 $status_name['status_name'] = <<<HTML
-<b style="color:#f124c7">退款中</b><br/>
+<b style="color:#f124c7">Đang hoàn tiền</b><br/>
 HTML;
             }
             $item['status_name'] = $status_name;
             if ($item['paid'] == 0 && $item['status'] == 0 && $item['refund_status'] == 0) {
-                $item['_status'] = 1;//未支付
+                $item['_status'] = 1;//Chưa thanh toán
             } else if ($item['paid'] == 1 && $item['status'] == 0 && $item['refund_status'] == 0) {
-                $item['_status'] = 2;//已支付 未发货
+                $item['_status'] = 2;//Đã thanh toán, chưa giao hàng
             } else if ($item['paid'] == 1 && $item['status'] == 4 && $item['refund_status'] == 0) {
-                $item['_status'] = 8;//已支付 部分发货
+                $item['_status'] = 8;//Đã thanh toán, giao hàng một phần
             } else if ($item['paid'] == 1 && $item['refund_status'] == 1) {
-                $item['_status'] = 3;//已支付 申请退款中
+                $item['_status'] = 3;//Đã thanh toán, đang yêu cầu hoàn tiền
             } else if ($item['paid'] == 1 && $item['status'] == 1 && $item['refund_status'] == 0) {
-                $item['_status'] = 4;//已支付 待收货
+                $item['_status'] = 4;//Đã thanh toán, chờ nhận hàng
             } else if ($item['paid'] == 1 && $item['status'] == 2 && $item['refund_status'] == 0) {
-                $item['_status'] = 5;//已支付 待评价
+                $item['_status'] = 5;//Đã thanh toán, chờ đánh giá
             } else if ($item['paid'] == 1 && $item['status'] == 3 && $item['refund_status'] == 0) {
-                $item['_status'] = 6;//已支付 已完成
+                $item['_status'] = 6;//Đã thanh toán, đã hoàn thành
             } else if ($item['paid'] == 1 && $item['refund_status'] == 2) {
-                $item['_status'] = 7;//已支付 已退款
+                $item['_status'] = 7;//Đã thanh toán, đã hoàn tiền
             } else if ($item['paid'] == 1 && $item['refund_status'] == 3 && $item['status'] == 4) {
-                $item['_status'] = 9;//拆单发货 部分申请退款
+                $item['_status'] = 9;//Giao hàng theo tách đơn, yêu cầu hoàn tiền một phần
             } else if ($item['paid'] == 1 && $item['refund_status'] == 4) {
-                $item['_status'] = 10;//拆单发货 已全部申请退款
+                $item['_status'] = 10;//Giao hàng theo tách đơn, đã yêu cầu hoàn tiền toàn bộ
             } else if ($item['paid'] == 1 && $item['refund_status'] == 3 && $item['status'] == 0) {
-                $item['_status'] = 11;//拆单退款 未发货
+                $item['_status'] = 11;//Hoàn tiền theo tách đơn, chưa giao hàng
             }
             if ($item['clerk_id'] == 0 && !isset($item['clerk_name'])) {
-                $item['clerk_name'] = '总平台';
+                $item['clerk_name'] = 'Nền tảng chính';
             }
 
             if ($item['store_id']) {
@@ -639,7 +639,7 @@ HTML;
                 if ($storeOne) $item['store_name'] = $storeOne;
             }
 
-            //根据核销员更改store_name
+            //Đổi store_name theo nhân viên xác nhận sử dụng
             if ($item['clerk_id'] && isset($item['staff_store_id']) && $item['staff_store_id']) {
                 /** @var SystemStoreServices $store */
                 $store = app()->make(SystemStoreServices::class);
@@ -651,27 +651,27 @@ HTML;
     }
 
     /**
-     * 处理订单金额
+     * Xử lý số tiền đơn hàng
      * @param $where
      * @return array
      */
     public function getOrderPrice($where)
     {
         if (isset($where['refund_type']) && $where['refund_type']) unset($where['refund_type']);
-        $where['is_del'] = 0;//删除订单不统计
-        $price['today_pay_price'] = 0;//今日支付金额
-        $price['pay_price'] = 0;//支付金额
-        $price['refund_price'] = 0;//退款金额
-        $price['pay_price_wx'] = 0;//微信支付金额
-        $price['pay_price_yue'] = 0;//余额支付金额
-        $price['pay_price_offline'] = 0;//线下支付金额
-        $price['pay_price_other'] = 0;//其他支付金额
-        $price['use_integral'] = 0;//用户使用积分
-        $price['back_integral'] = 0;//退积分总数
-        $price['deduction_price'] = 0;//抵扣金额
-        $price['total_num'] = 0; //商品总数
-        $price['today_count_sum'] = 0; //今日订单总数
-        $price['count_sum'] = 0; //订单总数
+        $where['is_del'] = 0;//Đơn hàng đã xóa thì không thống kê
+        $price['today_pay_price'] = 0;//Số tiền thanh toán hôm nay
+        $price['pay_price'] = 0;//Số tiền thanh toán
+        $price['refund_price'] = 0;//Số tiền hoàn
+        $price['pay_price_wx'] = 0;//Số tiền thanh toán WeChat Pay
+        $price['pay_price_yue'] = 0;//Số tiền thanh toán bằng số dư
+        $price['pay_price_offline'] = 0;//Số tiền thanh toán ngoại tuyến
+        $price['pay_price_other'] = 0;//Số tiền thanh toán khác
+        $price['use_integral'] = 0;//Điểm thưởng người dùng đã dùng
+        $price['back_integral'] = 0;//Tổng số điểm thưởng hoàn lại
+        $price['deduction_price'] = 0;//Số tiền khấu trừ
+        $price['total_num'] = 0; //Tổng số sản phẩm
+        $price['today_count_sum'] = 0; //Tổng số đơn hàng hôm nay
+        $price['count_sum'] = 0; //Tổng số đơn hàng
         $price['brokerage'] = 0;
         $price['pay_postage'] = 0;
         $whereData = ['is_del' => 0];
@@ -728,7 +728,7 @@ HTML;
     }
 
     /**
-     * 获取订单列表页面统计数据
+     * Lấy dữ liệu thống kê trang danh sách đơn hàng
      * @param $where
      * @return array
      */
@@ -737,29 +737,29 @@ HTML;
         $price = $this->getOrderPrice($where);
         return [
             [
-                'name' => '订单数量',
-                'field' => '件',
+                'name' => 'Số lượng đơn hàng',
+                'field' => 'cái',
                 'count' => $price['count_sum'],
                 'className' => 'md-basket',
                 'col' => 6
             ],
             [
-                'name' => '订单金额',
-                'field' => '元',
+                'name' => 'Số tiền đơn hàng',
+                'field' => 'đ',
                 'count' => $price['pay_price'],
                 'className' => 'md-pricetags',
                 'col' => 6
             ],
             [
-                'name' => '今日订单数量',
-                'field' => '件',
+                'name' => 'Số lượng đơn hàng hôm nay',
+                'field' => 'cái',
                 'count' => $price['today_count_sum'],
                 'className' => 'ios-chatbubbles',
                 'col' => 6
             ],
             [
-                'name' => '今日支付金额',
-                'field' => '元',
+                'name' => 'Số tiền thanh toán hôm nay',
+                'field' => 'đ',
                 'count' => $price['today_pay_price'],
                 'className' => 'ios-cash',
                 'col' => 6
@@ -790,7 +790,7 @@ HTML;
     }
 
     /**
-     * 创建修改订单表单
+     * Tạo form sửa đơn hàng
      * @param int $id
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -799,19 +799,19 @@ HTML;
     {
         $product = $this->dao->get($id);
         if (!$product) {
-            throw new AdminException('数据不存在');
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         $f = [];
-        $f[] = Form::input('order_id', '订单编号', $product->getData('order_id'))->disabled(true);
+        $f[] = Form::input('order_id', 'Mã đơn hàng', $product->getData('order_id'))->disabled(true);
         $f[] = Form::hidden('total_price', (float)$product->getData('total_price'));
         $f[] = Form::hidden('pay_postage', (float)$product->getData('pay_postage') ?: 0);
-        $f[] = Form::number('pay_price', '实际支付金额', (float)$product->getData('pay_price'))->min(0);
-        $f[] = Form::number('gain_integral', '赠送积分', (float)$product->getData('gain_integral') ?: 0)->min(0);
-        return create_form('修改订单', $f, $this->url('/order/update/' . $id), 'PUT');
+        $f[] = Form::number('pay_price', 'Số tiền thanh toán thực tế', (float)$product->getData('pay_price'))->min(0);
+        $f[] = Form::number('gain_integral', 'Tặng điểm thưởng', (float)$product->getData('gain_integral') ?: 0)->min(0);
+        return create_form('Chỉnh sửa đơn hàng', $f, $this->url('/order/update/' . $id), 'PUT');
     }
 
     /**
-     * 修改订单
+     * Chỉnh sửa đơn hàng
      * @param int $id
      * @param array $data
      * @return mixed
@@ -821,7 +821,7 @@ HTML;
     {
         $order = $this->dao->getOne(['id' => $id, 'is_del' => 0]);
         if (!$order) {
-            throw new AdminException('订单不存在');
+            throw new AdminException('Đơn hàng không tồn tại');
         }
         /** @var StoreOrderCreateServices $createServices */
         $createServices = app()->make(StoreOrderCreateServices::class);
@@ -852,25 +852,25 @@ HTML;
                     'oid' => $id,
                     'change_type' => 'order_edit',
                     'change_time' => time(),
-                    'change_message' => '修改商品总价为：' . $data['total_price'] . ' 实际支付金额' . $data['pay_price']
+                    'change_message' => 'Sửa tổng giá sản phẩm thành:' . $data['total_price'] . ' số tiền thanh toán thực tế' . $data['pay_price']
                 ]);
             if (isset($data['gain_integral'])) {
                 $res = $res && $services->save([
                         'oid' => $id,
                         'change_type' => 'order_edit',
                         'change_time' => time(),
-                        'change_message' => '修改订单赠送积分为：' . $data['gain_integral']
+                        'change_message' => 'Sửa điểm thưởng tặng của đơn hàng thành:' . $data['gain_integral']
                     ]);
             }
             if ($res) {
                 $order = $this->dao->getOne(['id' => $id, 'is_del' => 0]);
-                //改价短信提醒
+                //Nhắc nhở SMS khi đổi giá
                 event('NoticeListener', [['order' => $order, 'pay_price' => $data['pay_price']], 'price_revision']);
-                //自定义消息-订单改价
+                //Tin nhắn tùy chỉnh - đổi giá đơn hàng
                 $order['change_price'] = $data['pay_price'];
                 event('NoticeListener', [$order['uid'], $order, 'price_change_price']);
 
-                //自定义事件-订单改价
+                //Sự kiện tùy chỉnh - đổi giá đơn hàng
                 event('CustomEventListener', ['admin_order_change', [
                     'uid' => $order['uid'],
                     'order_id' => $data['order_id'],
@@ -881,13 +881,13 @@ HTML;
 
                 return $data['order_id'];
             } else {
-                throw new AdminException('修改失败');
+                throw new AdminException('Sửa thất bại');
             }
         });
     }
 
     /**
-     * 订单图表
+     * Biểu đồ đơn hàng
      * @param $cycle
      * @return array
      */
@@ -898,7 +898,7 @@ HTML;
             case 'thirtyday':
                 $datebefor = date('Y-m-d', strtotime('-30 day'));
                 $dateafter = date('Y-m-d 23:59:59');
-                //上期
+                //Kỳ trước
                 $pre_datebefor = date('Y-m-d', strtotime('-60 day'));
                 $pre_dateafter = date('Y-m-d', strtotime('-30 day'));
                 for ($i = -29; $i <= 0; $i++) {
@@ -918,20 +918,20 @@ HTML;
                     }
                 }
                 $chartdata = [];
-                $data = [];//临时
-                $chartdata['yAxis']['maxnum'] = 0;//最大值数量
-                $chartdata['yAxis']['maxprice'] = 0;//最大值金额
+                $data = [];//Tạm thời
+                $chartdata['yAxis']['maxnum'] = 0;//Số lượng giá trị lớn nhất
+                $chartdata['yAxis']['maxprice'] = 0;//Số tiền giá trị lớn nhất
                 foreach ($cycle_list as $k => $v) {
                     $data['day'][] = $v['day'];
                     $data['count'][] = $v['count'];
                     $data['price'][] = round($v['price'], 2);
                     if ($chartdata['yAxis']['maxnum'] < $v['count'])
-                        $chartdata['yAxis']['maxnum'] = $v['count'];//日最大订单数
+                        $chartdata['yAxis']['maxnum'] = $v['count'];//Số đơn hàng tối đa trong ngày
                     if ($chartdata['yAxis']['maxprice'] < $v['price'])
-                        $chartdata['yAxis']['maxprice'] = $v['price'];//日最大金额
+                        $chartdata['yAxis']['maxprice'] = $v['price'];//Số tiền tối đa trong ngày
                 }
-                $chartdata['legend'] = ['订单金额', '订单数'];//分类
-                $chartdata['xAxis'] = $data['day'];//X轴值
+                $chartdata['legend'] = ['Số tiền đơn hàng', 'Số đơn hàng'];//Danh mục
+                $chartdata['xAxis'] = $data['day'];//Giá trị trục X
                 $series1 = ['normal' => ['color' => [
                     'x' => 0, 'y' => 0, 'x2' => 0, 'y2' => 1,
                     'colorStops' => [
@@ -968,9 +968,9 @@ HTML;
                     ]
                 ]]
                 ];
-                $chartdata['series'][] = ['name' => $chartdata['legend'][0], 'type' => 'bar', 'itemStyle' => $series1, 'data' => $data['price']];//分类1值
-                $chartdata['series'][] = ['name' => $chartdata['legend'][1], 'type' => 'line', 'itemStyle' => $series2, 'data' => $data['count'], 'yAxisIndex' => 1];//分类2值
-                //统计总数上期
+                $chartdata['series'][] = ['name' => $chartdata['legend'][0], 'type' => 'bar', 'itemStyle' => $series1, 'data' => $data['price']];//Giá trị nhóm 1
+                $chartdata['series'][] = ['name' => $chartdata['legend'][1], 'type' => 'line', 'itemStyle' => $series2, 'data' => $data['count'], 'yAxisIndex' => 1];//Giá trị nhóm 2
+                //Thống kê tổng số kỳ trước
                 $pre_total = $this->dao->preTotalFind($pre_datebefor, $pre_dateafter);
                 if ($pre_total) {
                     $chartdata['pre_cycle']['count'] = [
@@ -980,7 +980,7 @@ HTML;
                         'data' => $pre_total['price'] ?: 0
                     ];
                 }
-                //统计总数
+                //Tổng số thống kê
                 $total = $this->dao->preTotalFind($datebefor, $dateafter);
                 if ($total) {
                     $cha_count = intval($pre_total['count']) - intval($total['count']);
@@ -1000,11 +1000,11 @@ HTML;
                 }
                 return $chartdata;
             case 'week':
-                $weekarray = array(['周日'], ['周一'], ['周二'], ['周三'], ['周四'], ['周五'], ['周六']);
+                $weekarray = array(['Chủ nhật'], ['Thứ 2'], ['Thứ 3'], ['Thứ 4'], ['Thứ 5'], ['Thứ 6'], ['Thứ 7']);
                 $datebefor = date('Y-m-d', strtotime('-1 week Monday'));
                 $dateafter = date('Y-m-d', strtotime('-1 week Sunday'));
 //                $order_list = $this->dao->orderAddTimeList($datebefor, $dateafter, 'week');
-                //数据查询重新处理
+                //Xử lý lại truy vấn dữ liệu
                 $new_order_list = [];
 //                foreach ($order_list as $k => $v) {
 //                    $new_order_list[$v['day']] = $v;
@@ -1012,7 +1012,7 @@ HTML;
                 $now_datebefor = date('Y-m-d', (time() - ((date('w') == 0 ? 7 : date('w')) - 1) * 24 * 3600));
                 $now_dateafter = date('Y-m-d', strtotime("+1 day"));
                 $now_order_list = $this->dao->nowOrderList($now_datebefor, $now_dateafter, 'week');
-                //数据查询重新处理 key 变为当前值
+                //Xử lý lại truy vấn dữ liệu, key chuyển thành giá trị hiện tại
                 $new_now_order_list = [];
                 foreach ($now_order_list as $k => $v) {
                     $new_now_order_list[$v['day']] = $v;
@@ -1030,9 +1030,9 @@ HTML;
                     }
                 }
                 $chartdata = [];
-                $data = [];//临时
-                $chartdata['yAxis']['maxnum'] = 0;//最大值数量
-                $chartdata['yAxis']['maxprice'] = 0;//最大值金额
+                $data = [];//Tạm thời
+                $chartdata['yAxis']['maxnum'] = 0;//Số lượng giá trị lớn nhất
+                $chartdata['yAxis']['maxprice'] = 0;//Số tiền giá trị lớn nhất
                 foreach ($weekarray as $k => $v) {
                     $data['day'][] = $v[0];
                     $data['pre']['count'][] = $v['pre']['count'];
@@ -1040,14 +1040,14 @@ HTML;
                     $data['now']['count'][] = $v['now']['count'];
                     $data['now']['price'][] = round($v['now']['price'], 2);
                     if ($chartdata['yAxis']['maxnum'] < $v['pre']['count'] || $chartdata['yAxis']['maxnum'] < $v['now']['count']) {
-                        $chartdata['yAxis']['maxnum'] = $v['pre']['count'] > $v['now']['count'] ? $v['pre']['count'] : $v['now']['count'];//日最大订单数
+                        $chartdata['yAxis']['maxnum'] = $v['pre']['count'] > $v['now']['count'] ? $v['pre']['count'] : $v['now']['count'];//Số đơn hàng tối đa trong ngày
                     }
                     if ($chartdata['yAxis']['maxprice'] < $v['pre']['price'] || $chartdata['yAxis']['maxprice'] < $v['now']['price']) {
-                        $chartdata['yAxis']['maxprice'] = $v['pre']['price'] > $v['now']['price'] ? $v['pre']['price'] : $v['now']['price'];//日最大金额
+                        $chartdata['yAxis']['maxprice'] = $v['pre']['price'] > $v['now']['price'] ? $v['pre']['price'] : $v['now']['price'];//Số tiền tối đa trong ngày
                     }
                 }
-                $chartdata['legend'] = ['上周金额', '本周金额', '上周订单数', '本周订单数'];//分类
-                $chartdata['xAxis'] = $data['day'];//X轴值
+                $chartdata['legend'] = ['Số tiền tuần trước', 'Số tiền tuần này', 'Số đơn hàng tuần trước', 'Số đơn hàng tuần này'];//Danh mục
+                $chartdata['xAxis'] = $data['day'];//Giá trị trục X
                 $series1 = ['normal' => ['color' => [
                     'x' => 0, 'y' => 0, 'x2' => 0, 'y2' => 1,
                     'colorStops' => [
@@ -1120,12 +1120,12 @@ HTML;
                     ]
                 ]]
                 ];
-                $chartdata['series'][] = ['name' => $chartdata['legend'][0], 'type' => 'bar', 'itemStyle' => $series1, 'data' => $data['pre']['price']];//分类1值
-                $chartdata['series'][] = ['name' => $chartdata['legend'][1], 'type' => 'bar', 'itemStyle' => $series2, 'data' => $data['now']['price']];//分类1值
-                $chartdata['series'][] = ['name' => $chartdata['legend'][2], 'type' => 'line', 'itemStyle' => $series3, 'data' => $data['pre']['count'], 'yAxisIndex' => 1];//分类2值
-                $chartdata['series'][] = ['name' => $chartdata['legend'][3], 'type' => 'line', 'itemStyle' => $series4, 'data' => $data['now']['count'], 'yAxisIndex' => 1];//分类2值
+                $chartdata['series'][] = ['name' => $chartdata['legend'][0], 'type' => 'bar', 'itemStyle' => $series1, 'data' => $data['pre']['price']];//Giá trị nhóm 1
+                $chartdata['series'][] = ['name' => $chartdata['legend'][1], 'type' => 'bar', 'itemStyle' => $series2, 'data' => $data['now']['price']];//Giá trị nhóm 1
+                $chartdata['series'][] = ['name' => $chartdata['legend'][2], 'type' => 'line', 'itemStyle' => $series3, 'data' => $data['pre']['count'], 'yAxisIndex' => 1];//Giá trị nhóm 2
+                $chartdata['series'][] = ['name' => $chartdata['legend'][3], 'type' => 'line', 'itemStyle' => $series4, 'data' => $data['now']['count'], 'yAxisIndex' => 1];//Giá trị nhóm 2
 
-                //统计总数上期
+                //Thống kê tổng số kỳ trước
                 $pre_total = $this->dao->preTotalFind($datebefor, $dateafter);
                 if ($pre_total) {
                     $chartdata['pre_cycle']['count'] = [
@@ -1135,7 +1135,7 @@ HTML;
                         'data' => $pre_total['price'] ?: 0
                     ];
                 }
-                //统计总数
+                //Tổng số thống kê
                 $total = $this->dao->preTotalFind($now_datebefor, $now_dateafter);
                 if ($total) {
                     $cha_count = intval($pre_total['count']) - intval($total['count']);
@@ -1160,7 +1160,7 @@ HTML;
                 $datebefor = date('Y-m-01', strtotime('-1 month'));
                 $dateafter = date('Y-m-d', strtotime(date('Y-m-01')));
                 $order_list = $this->dao->orderAddTimeList($datebefor, $dateafter, "month");
-                //数据查询重新处理
+                //Xử lý lại truy vấn dữ liệu
                 $new_order_list = [];
                 foreach ($order_list as $k => $v) {
                     $new_order_list[$v['day']] = $v;
@@ -1168,7 +1168,7 @@ HTML;
                 $now_datebefor = date('Y-m-01');
                 $now_dateafter = date('Y-m-d', strtotime("+1 day"));
                 $now_order_list = $this->dao->nowOrderList($now_datebefor, $now_dateafter, "month");
-                //数据查询重新处理 key 变为当前值
+                //Xử lý lại truy vấn dữ liệu, key chuyển thành giá trị hiện tại
                 $new_now_order_list = [];
                 foreach ($now_order_list as $k => $v) {
                     $new_now_order_list[$v['day']] = $v;
@@ -1186,9 +1186,9 @@ HTML;
                     }
                 }
                 $chartdata = [];
-                $data = [];//临时
-                $chartdata['yAxis']['maxnum'] = 0;//最大值数量
-                $chartdata['yAxis']['maxprice'] = 0;//最大值金额
+                $data = [];//Tạm thời
+                $chartdata['yAxis']['maxnum'] = 0;//Số lượng giá trị lớn nhất
+                $chartdata['yAxis']['maxprice'] = 0;//Số tiền giá trị lớn nhất
                 foreach ($weekarray as $k => $v) {
                     $data['day'][] = $v[0];
                     $data['pre']['count'][] = $v['pre']['count'];
@@ -1196,15 +1196,15 @@ HTML;
                     $data['now']['count'][] = $v['now']['count'];
                     $data['now']['price'][] = round($v['now']['price'], 2);
                     if ($chartdata['yAxis']['maxnum'] < $v['pre']['count'] || $chartdata['yAxis']['maxnum'] < $v['now']['count']) {
-                        $chartdata['yAxis']['maxnum'] = $v['pre']['count'] > $v['now']['count'] ? $v['pre']['count'] : $v['now']['count'];//日最大订单数
+                        $chartdata['yAxis']['maxnum'] = $v['pre']['count'] > $v['now']['count'] ? $v['pre']['count'] : $v['now']['count'];//Số đơn hàng tối đa trong ngày
                     }
                     if ($chartdata['yAxis']['maxprice'] < $v['pre']['price'] || $chartdata['yAxis']['maxprice'] < $v['now']['price']) {
-                        $chartdata['yAxis']['maxprice'] = $v['pre']['price'] > $v['now']['price'] ? $v['pre']['price'] : $v['now']['price'];//日最大金额
+                        $chartdata['yAxis']['maxprice'] = $v['pre']['price'] > $v['now']['price'] ? $v['pre']['price'] : $v['now']['price'];//Số tiền tối đa trong ngày
                     }
 
                 }
-                $chartdata['legend'] = ['上月金额', '本月金额', '上月订单数', '本月订单数'];//分类
-                $chartdata['xAxis'] = $data['day'];//X轴值
+                $chartdata['legend'] = ['Số tiền tháng trước', 'Số tiền tháng này', 'Số đơn hàng tháng trước', 'Số đơn hàng tháng này'];//Danh mục
+                $chartdata['xAxis'] = $data['day'];//Giá trị trục X
                 $series1 = ['normal' => ['color' => [
                     'x' => 0, 'y' => 0, 'x2' => 0, 'y2' => 1,
                     'colorStops' => [
@@ -1277,12 +1277,12 @@ HTML;
                     ]
                 ]]
                 ];
-                $chartdata['series'][] = ['name' => $chartdata['legend'][0], 'type' => 'bar', 'itemStyle' => $series1, 'data' => $data['pre']['price']];//分类1值
-                $chartdata['series'][] = ['name' => $chartdata['legend'][1], 'type' => 'bar', 'itemStyle' => $series2, 'data' => $data['now']['price']];//分类1值
-                $chartdata['series'][] = ['name' => $chartdata['legend'][2], 'type' => 'line', 'itemStyle' => $series3, 'data' => $data['pre']['count'], 'yAxisIndex' => 1];//分类2值
-                $chartdata['series'][] = ['name' => $chartdata['legend'][3], 'type' => 'line', 'itemStyle' => $series4, 'data' => $data['now']['count'], 'yAxisIndex' => 1];//分类2值
+                $chartdata['series'][] = ['name' => $chartdata['legend'][0], 'type' => 'bar', 'itemStyle' => $series1, 'data' => $data['pre']['price']];//Giá trị nhóm 1
+                $chartdata['series'][] = ['name' => $chartdata['legend'][1], 'type' => 'bar', 'itemStyle' => $series2, 'data' => $data['now']['price']];//Giá trị nhóm 1
+                $chartdata['series'][] = ['name' => $chartdata['legend'][2], 'type' => 'line', 'itemStyle' => $series3, 'data' => $data['pre']['count'], 'yAxisIndex' => 1];//Giá trị nhóm 2
+                $chartdata['series'][] = ['name' => $chartdata['legend'][3], 'type' => 'line', 'itemStyle' => $series4, 'data' => $data['now']['count'], 'yAxisIndex' => 1];//Giá trị nhóm 2
 
-                //统计总数上期
+                //Thống kê tổng số kỳ trước
                 $pre_total = $this->dao->preTotalFind($datebefor, $dateafter);
                 if ($pre_total) {
                     $chartdata['pre_cycle']['count'] = [
@@ -1292,7 +1292,7 @@ HTML;
                         'data' => $pre_total['price'] ?: 0
                     ];
                 }
-                //统计总数
+                //Tổng số thống kê
                 $total = $this->dao->preTotalFind($now_datebefor, $now_dateafter);
                 if ($total) {
                     $cha_count = intval($pre_total['count']) - intval($total['count']);
@@ -1312,11 +1312,11 @@ HTML;
                 }
                 return $chartdata;
             case 'year':
-                $weekarray = array('01' => ['一月'], '02' => ['二月'], '03' => ['三月'], '04' => ['四月'], '05' => ['五月'], '06' => ['六月'], '07' => ['七月'], '08' => ['八月'], '09' => ['九月'], '10' => ['十月'], '11' => ['十一月'], '12' => ['十二月']);
+                $weekarray = array('01' => ['Tháng 1'], '02' => ['Tháng 2'], '03' => ['Tháng 3'], '04' => ['Tháng 4'], '05' => ['Tháng 5'], '06' => ['Tháng 6'], '07' => ['Tháng 7'], '08' => ['Tháng 8'], '09' => ['Tháng 9'], '10' => ['Tháng 10'], '11' => ['Tháng 11'], '12' => ['Tháng 12']);
                 $datebefor = date('Y-01-01', strtotime('-1 year'));
                 $dateafter = date('Y-12-31', strtotime('-1 year'));
                 $order_list = $this->dao->orderAddTimeList($datebefor, $dateafter, 'year');
-                //数据查询重新处理
+                //Xử lý lại truy vấn dữ liệu
                 $new_order_list = [];
                 foreach ($order_list as $k => $v) {
                     $new_order_list[$v['day']] = $v;
@@ -1324,7 +1324,7 @@ HTML;
                 $now_datebefor = date('Y-01-01');
                 $now_dateafter = date('Y-12-31 23:59:59');
                 $now_order_list = $this->dao->nowOrderList($now_datebefor, $now_dateafter, 'year');
-                //数据查询重新处理 key 变为当前值
+                //Xử lý lại truy vấn dữ liệu, key chuyển thành giá trị hiện tại
                 $new_now_order_list = [];
                 foreach ($now_order_list as $k => $v) {
                     $new_now_order_list[$v['day']] = $v;
@@ -1342,9 +1342,9 @@ HTML;
                     }
                 }
                 $chartdata = [];
-                $data = [];//临时
-                $chartdata['yAxis']['maxnum'] = 0;//最大值数量
-                $chartdata['yAxis']['maxprice'] = 0;//最大值金额
+                $data = [];//Tạm thời
+                $chartdata['yAxis']['maxnum'] = 0;//Số lượng giá trị lớn nhất
+                $chartdata['yAxis']['maxprice'] = 0;//Số tiền giá trị lớn nhất
                 foreach ($weekarray as $k => $v) {
                     $data['day'][] = $v[0];
                     $data['pre']['count'][] = $v['pre']['count'];
@@ -1352,14 +1352,14 @@ HTML;
                     $data['now']['count'][] = $v['now']['count'];
                     $data['now']['price'][] = round($v['now']['price'], 2);
                     if ($chartdata['yAxis']['maxnum'] < $v['pre']['count'] || $chartdata['yAxis']['maxnum'] < $v['now']['count']) {
-                        $chartdata['yAxis']['maxnum'] = $v['pre']['count'] > $v['now']['count'] ? $v['pre']['count'] : $v['now']['count'];//日最大订单数
+                        $chartdata['yAxis']['maxnum'] = $v['pre']['count'] > $v['now']['count'] ? $v['pre']['count'] : $v['now']['count'];//Số đơn hàng tối đa trong ngày
                     }
                     if ($chartdata['yAxis']['maxprice'] < $v['pre']['price'] || $chartdata['yAxis']['maxprice'] < $v['now']['price']) {
-                        $chartdata['yAxis']['maxprice'] = $v['pre']['price'] > $v['now']['price'] ? $v['pre']['price'] : $v['now']['price'];//日最大金额
+                        $chartdata['yAxis']['maxprice'] = $v['pre']['price'] > $v['now']['price'] ? $v['pre']['price'] : $v['now']['price'];//Số tiền tối đa trong ngày
                     }
                 }
-                $chartdata['legend'] = ['去年金额', '今年金额', '去年订单数', '今年订单数'];//分类
-                $chartdata['xAxis'] = $data['day'];//X轴值
+                $chartdata['legend'] = ['Số tiền năm ngoái', 'Số tiền năm nay', 'Số đơn hàng năm ngoái', 'Số đơn hàng năm nay'];//Danh mục
+                $chartdata['xAxis'] = $data['day'];//Giá trị trục X
                 $series1 = ['normal' => ['color' => [
                     'x' => 0, 'y' => 0, 'x2' => 0, 'y2' => 1,
                     'colorStops' => [
@@ -1432,12 +1432,12 @@ HTML;
                     ]
                 ]]
                 ];
-                $chartdata['series'][] = ['name' => $chartdata['legend'][0], 'type' => 'bar', 'itemStyle' => $series1, 'data' => $data['pre']['price']];//分类1值
-                $chartdata['series'][] = ['name' => $chartdata['legend'][1], 'type' => 'bar', 'itemStyle' => $series2, 'data' => $data['now']['price']];//分类1值
-                $chartdata['series'][] = ['name' => $chartdata['legend'][2], 'type' => 'line', 'itemStyle' => $series3, 'data' => $data['pre']['count'], 'yAxisIndex' => 1];//分类2值
-                $chartdata['series'][] = ['name' => $chartdata['legend'][3], 'type' => 'line', 'itemStyle' => $series4, 'data' => $data['now']['count'], 'yAxisIndex' => 1];//分类2值
+                $chartdata['series'][] = ['name' => $chartdata['legend'][0], 'type' => 'bar', 'itemStyle' => $series1, 'data' => $data['pre']['price']];//Giá trị nhóm 1
+                $chartdata['series'][] = ['name' => $chartdata['legend'][1], 'type' => 'bar', 'itemStyle' => $series2, 'data' => $data['now']['price']];//Giá trị nhóm 1
+                $chartdata['series'][] = ['name' => $chartdata['legend'][2], 'type' => 'line', 'itemStyle' => $series3, 'data' => $data['pre']['count'], 'yAxisIndex' => 1];//Giá trị nhóm 2
+                $chartdata['series'][] = ['name' => $chartdata['legend'][3], 'type' => 'line', 'itemStyle' => $series4, 'data' => $data['now']['count'], 'yAxisIndex' => 1];//Giá trị nhóm 2
 
-                //统计总数上期
+                //Thống kê tổng số kỳ trước
                 $pre_total = $this->dao->preTotalFind($datebefor, $dateafter);
                 if ($pre_total) {
                     $chartdata['pre_cycle']['count'] = [
@@ -1447,7 +1447,7 @@ HTML;
                         'data' => $pre_total['price'] ?: 0
                     ];
                 }
-                //统计总数
+                //Tổng số thống kê
                 $total = $this->dao->preTotalFind($now_datebefor, $now_dateafter);
                 if ($total) {
                     $cha_count = intval($pre_total['count']) - intval($total['count']);
@@ -1472,7 +1472,7 @@ HTML;
     }
 
     /**
-     * 获取订单数量
+     * Lấy số lượng đơn hàng
      * @return int
      */
     public function storeOrderCount()
@@ -1481,7 +1481,7 @@ HTML;
     }
 
     /**
-     * 新订单ID
+     * ID đơn hàng mới
      * @param $status
      * @return array
      */
@@ -1491,7 +1491,7 @@ HTML;
     }
 
     /**
-     * 新订单修改
+     * Sửa đơn hàng mới
      * @param $newOrderId
      * @return \crmeb\basic\BaseModel
      */
@@ -1501,7 +1501,7 @@ HTML;
     }
 
     /**
-     * 增长率
+     * Tỷ lệ tăng trưởng
      * @param $left
      * @param $right
      * @return int|string
@@ -1515,9 +1515,9 @@ HTML;
     }
 
     /**
-     * 后台首页顶部统计
+     * Thống kê phần đầu trang chủ ở trang quản trị
      * @return array
-     * @author 吴汐
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/04/03
      */
@@ -1527,84 +1527,84 @@ HTML;
         $userService = app()->make(UserServices::class);
         /** @var StoreProductLogServices $productLogServices */
         $productLogServices = app()->make(StoreProductLogServices::class);
-        //TODO 销售额
-        //今日销售额
+        //TODO doanh số
+        //Doanh số hôm nay
         $today_sales = $this->dao->todaySales('today');
-        //昨日销售额
+        //Doanh số hôm qua
         $yesterday_sales = $this->dao->todaySales('yesterday');
-        //日同比
+        //So sánh cùng kỳ theo ngày
         $sales_today_ratio = $this->growth($today_sales, $yesterday_sales);
-        //总销售额
+        //Tổng doanh thu
         $total_sales = $this->dao->totalSales('month');
         $sales = [
             'today' => $today_sales,
             'yesterday' => $yesterday_sales,
             'today_ratio' => $sales_today_ratio,
-            'total' => $total_sales . '元',
-            'date' => '今日'
+            'total' => $total_sales . 'đ',
+            'date' => 'Hôm nay'
         ];
-        //TODO:用户访问量
-        //今日访问量
+        //TODO: lượt truy cập người dùng
+        //Lượt truy cập hôm nay
         $today_visits = $productLogServices->count(['time' => 'today', 'type' => 'visit']);
-        //昨日访问量
+        //Lượt truy cập hôm qua
         $yesterday_visits = $productLogServices->count(['time' => 'yesterday', 'type' => 'visit']);
-        //日同比
+        //So sánh cùng kỳ theo ngày
         $visits_today_ratio = $this->growth($today_visits, $yesterday_visits);
-        //总访问量
+        //Tổng lượt truy cập
         $total_visits = $productLogServices->count(['time' => 'month', 'type' => 'visit']);
         $visits = [
             'today' => $today_visits,
             'yesterday' => $yesterday_visits,
             'today_ratio' => $visits_today_ratio,
             'total' => $total_visits . 'Pv',
-            'date' => '今日'
+            'date' => 'Hôm nay'
         ];
-        //TODO 订单量
-        //今日订单量
+        //TODO số lượng đơn hàng
+        //Số đơn hàng hôm nay
         $today_order = $this->dao->todayOrderVisit('today', 1);
-        //昨日订单量
+        //Số đơn hàng hôm qua
         $yesterday_order = $this->dao->todayOrderVisit('yesterday', 1);
-        //订单日同比
+        //So sánh cùng kỳ theo ngày của đơn hàng
         $order_today_ratio = $this->growth($today_order, $yesterday_order);
-        //总订单量
+        //Tổng số đơn hàng
         $total_order = $this->dao->count(['time' => 'month', 'paid' => 1, 'refund_status' => 0, 'pid' => 0]);
         $order = [
             'today' => $today_order,
             'yesterday' => $yesterday_order,
             'today_ratio' => $order_today_ratio,
-            'total' => $total_order . '单',
-            'date' => '今日'
+            'total' => $total_order . 'đơn',
+            'date' => 'Hôm nay'
         ];
-        //TODO 用户
-        //今日新增用户
+        //TODO người dùng
+        //Người dùng mới hôm nay
         $today_user = $userService->todayAddVisits('today', 1);
-        //昨日新增用户
+        //Người dùng mới hôm qua
         $yesterday_user = $userService->todayAddVisits('yesterday', 1);
-        //新增用户日同比
+        //So sánh cùng kỳ theo ngày của người dùng mới
         $user_today_ratio = $this->growth($today_user, $yesterday_user);
-        //所有用户
+        //Tất cả người dùng
         $total_user = $userService->count(['time' => 'month']);
         $user = [
             'today' => $today_user,
             'yesterday' => $yesterday_user,
             'today_ratio' => $user_today_ratio,
-            'total' => $total_user . '人',
-            'date' => '今日'
+            'total' => $total_user . 'người',
+            'date' => 'Hôm nay'
         ];
         $info = array_values(compact('sales', 'visits', 'order', 'user'));
-        $info[0]['title'] = '销售额';
-        $info[1]['title'] = '用户访问量';
-        $info[2]['title'] = '订单量';
-        $info[3]['title'] = '新增用户';
-        $info[0]['total_name'] = '本月销售额';
-        $info[1]['total_name'] = '本月访问量';
-        $info[2]['total_name'] = '本月订单量';
-        $info[3]['total_name'] = '本月新增用户';
+        $info[0]['title'] = 'Doanh số';
+        $info[1]['title'] = 'Lượt truy cập của người dùng';
+        $info[2]['title'] = 'Số đơn hàng';
+        $info[3]['title'] = 'Thêm người dùng';
+        $info[0]['total_name'] = 'Doanh số tháng này';
+        $info[1]['total_name'] = 'Lượt truy cập tháng này';
+        $info[2]['total_name'] = 'Số đơn hàng tháng này';
+        $info[3]['total_name'] = 'Người dùng mới tháng này';
         return $info;
     }
 
     /**
-     * 订单小票打印
+     * In biên nhận đơn hàng
      * @param int $id
      * @param bool $start
      * @return bool|void
@@ -1617,17 +1617,17 @@ HTML;
     {
         $order = $this->get($id);
         if (!$order) {
-            throw new AdminException('订单不存在');
+            throw new AdminException('Đơn hàng không tồn tại');
         }
         /** @var StoreOrderCartInfoServices $cartServices */
         $cartServices = app()->make(StoreOrderCartInfoServices::class);
         $product = $cartServices->getCartInfoPrintProduct($order['id']);
         if (!$product) {
-            throw new AdminException('订单商品获取失败,无法打印');
+            throw new AdminException('Lấy sản phẩm trong đơn hàng thất bại, không thể in');
         }
 //        $switch = (bool)sys_config('pay_success_printing_switch');
 //        if (!$switch) {
-//            throw new AdminException('小票打印未开启');
+//            throw new AdminException('Chưa bật in biên lai');
 //        }
 
         app()->make(SystemTicketServices::class)->startPrint(
@@ -1646,7 +1646,7 @@ HTML;
 //                'terminal' => sys_config('terminal_number', '')
 //            ];
 //            if (!$configData['clientId'] || !$configData['apiKey'] || !$configData['partner'] || !$configData['terminal']) {
-//                throw new AdminException('请先配置小票打印开发者');
+//                throw new AdminException('Vui lòng cấu hình thông tin nhà phát triển in biên lai trước');
 //            }
 //        } else {
 //            $name = 'fei_e_yun';
@@ -1656,7 +1656,7 @@ HTML;
 //                'feySn' => sys_config('fey_sn', '')
 //            ];
 //            if (!$configData['feyUser'] || !$configData['feyUkey'] || !$configData['feySn']) {
-//                throw new AdminException('请先配置小票打印开发者');
+//                throw new AdminException('Vui lòng cấu hình thông tin nhà phát triển in biên lai trước');
 //            }
 //        }
 //        $printer = new Printer($name, $configData);
@@ -1673,7 +1673,7 @@ HTML;
     }
 
     /**
-     * 获取订单确认数据
+     * Lấy dữ liệu xác nhận đơn hàng
      * @param array $user
      * @param $cartId
      * @param bool $new
@@ -1693,7 +1693,7 @@ HTML;
         if ($addressId) {
             $addr = $addressServices->getAddress($addressId);
         }
-        //没传地址id或地址已删除未找到 ||获取默认地址
+        //Không gửi address id hoặc địa chỉ đã xóa không tìm thấy || lấy địa chỉ mặc định
         if (!$addr) {
             $addr = $addressServices->getUserDefaultAddress((int)$user['uid']);
         }
@@ -1711,7 +1711,7 @@ HTML;
         $cartServices = app()->make(StoreCartServices::class);
         $cartGroup = $cartServices->getUserProductCartListV1($user['uid'], $cartId, $new, $addr, $shipping_type, $is_gift);
         $data = [];
-        $data['storeFreePostage'] = $storeFreePostage = floatval(sys_config('store_free_postage')) ?: 0;//满额包邮金额
+        $data['storeFreePostage'] = $storeFreePostage = floatval(sys_config('store_free_postage')) ?: 0;//Số tiền đơn tối thiểu để miễn phí vận chuyển
         $validCartInfo = $cartGroup['valid'];
         /** @var StoreOrderComputedServices $computedServices */
         $computedServices = app()->make(StoreOrderComputedServices::class);
@@ -1758,17 +1758,17 @@ HTML;
         $data['userInfo'] = $user;
         $data['integralRatio'] = $other['integralRatio'];
         $data['offline_pay_status'] = (int)sys_config('offline_pay_status') ?? (int)2;
-        $data['yue_pay_status'] = (int)sys_config('balance_func_status') && (int)sys_config('yue_pay_status') == 1 ? (int)1 : (int)2;//余额支付 1 开启 2 关闭
-        $data['pay_weixin_open'] = sys_config('pay_weixin_open', '0') != '0';//微信支付 1 开启 0 关闭
-        $data['friend_pay_status'] = (int)sys_config('friend_pay_status') ?? 0;//好友代付 1 开启 0 关闭
-        $data['store_self_mention'] = (int)sys_config('store_self_mention') ?? 0;//门店自提是否开启
+        $data['yue_pay_status'] = (int)sys_config('balance_func_status') && (int)sys_config('yue_pay_status') == 1 ? (int)1 : (int)2;//Thanh toán bằng số dư: 1 là bật, 2 là tắt
+        $data['pay_weixin_open'] = sys_config('pay_weixin_open', '0') != '0';//WeChat Pay: 1 là bật, 0 là tắt
+        $data['friend_pay_status'] = (int)sys_config('friend_pay_status') ?? 0;//Bạn bè thanh toán giúp, 1 là mở, 0 là tắt
+        $data['store_self_mention'] = (int)sys_config('store_self_mention') ?? 0;//Nhận tại cửa hàng có mở không
         /** @var SystemStoreServices $systemStoreServices */
         $systemStoreServices = app()->make(SystemStoreServices::class);
         $store_count = $systemStoreServices->count(['type' => 0]);
         $data['store_self_mention'] = $data['store_self_mention'] && $store_count;
 
-        $data['ali_pay_status'] = sys_config('ali_pay_status', '0') != '0';//支付包支付 1 开启 0 关闭
-        $data['system_store'] = [];//门店信息
+        $data['ali_pay_status'] = sys_config('ali_pay_status', '0') != '0';//Thanh toán Alipay, 1 là mở, 0 là tắt
+        $data['system_store'] = [];//Thông tin cửa hàng
         /** @var UserInvoiceServices $userInvoice */
         $userInvoice = app()->make(UserInvoiceServices::class);
         $invoice_func = $userInvoice->invoiceFuncStatus();
@@ -1780,13 +1780,13 @@ HTML;
         $data['usable_integral'] = bcsub((string)$user['integral'], (string)$userBillServices->getBillSum(['uid' => $user['uid'], 'is_frozen' => 1]), 0);
         $data['integral_open'] = sys_config('integral_ratio', 0) > 0;
 
-        //自动领取优惠券
+        //Tự động nhận phiếu giảm giá
         app()->make(StoreCouponUserServices::class)->autoReceiveCoupon($user['uid'], $cartGroup);
         return $data;
     }
 
     /**
-     * 缓存订单信息
+     * Lưu tạm thông tin đơn hàng
      * @param $uid
      * @param $cartInfo
      * @param $priceGroup
@@ -1803,14 +1803,14 @@ HTML;
     }
 
     /**
-     * 使用雪花算法生成订单ID
+     * Dùng thuật toán Snowflake để tạo ID đơn hàng
      * @return string
      * @throws \Exception
      */
     public function getCacheKey(string $prefix = '')
     {
         $snowflake = new \Godruoyi\Snowflake\Snowflake();
-        //32位
+        //32-bit
         if (PHP_INT_SIZE == 4) {
             $id = abs($snowflake->id());
         } else {
@@ -1819,7 +1819,7 @@ HTML;
         return $prefix . $id;
     }
 
-    /**获取用户购买活动产品的次数
+    /**Lấy số lần người dùng mua sản phẩm chương trình
      * @param $uid
      * @param $seckill_id
      * @return int
@@ -1830,7 +1830,7 @@ HTML;
     }
 
     /**
-     * 获取订单缓存信息
+     * Lấy thông tin đơn hàng đã lưu tạm
      * @param int $uid
      * @param string $key
      * @return |null
@@ -1843,7 +1843,7 @@ HTML;
     }
 
     /**
-     * 获取拼团的订单id
+     * Lấy id đơn hàng mua chung
      * @param int $pid
      * @param int $uid
      * @return mixed
@@ -1854,7 +1854,7 @@ HTML;
     }
 
     /**
-     * 判断当前订单中是否有拼团
+     * Kiểm tra đơn hàng hiện tại có mua chung không
      * @param int $pid
      * @param int $uid
      * @return int
@@ -1865,7 +1865,7 @@ HTML;
     }
 
     /**
-     * 判断支付方式是否开启
+     * Kiểm tra phương thức thanh toán có mở không
      * @param $payType
      * @return bool
      */
@@ -1896,7 +1896,7 @@ HTML;
 
 
     /**
-     * 修改支付方式为线下支付
+     * Đổi phương thức thanh toán thành thanh toán ngoại tuyến
      * @param string $orderId
      * @return bool|\crmeb\basic\BaseModel
      */
@@ -1924,7 +1924,7 @@ HTML;
     }
 
     /**
-     * 删除订单
+     * Xóa đơn hàng
      * @param string $uni
      * @param int $uid
      * @return bool
@@ -1934,11 +1934,11 @@ HTML;
     {
         $order = $this->getUserOrderDetail($uni, $uid);
         if (!$order) {
-            throw new ApiException('订单不存在');
+            throw new ApiException('Đơn hàng không tồn tại');
         }
         $order = $this->tidyOrder($order);
         if ($order['_status']['_type'] != 0 && $order['_status']['_type'] != -2 && $order['_status']['_type'] != 4)
-            throw new ApiException('该订单无法删除');
+            throw new ApiException('Không thể xóa đơn hàng này');
 
         $order->is_del = 1;
         /** @var StoreOrderStatusServices $statusService */
@@ -1946,17 +1946,17 @@ HTML;
         $res = $statusService->save([
             'oid' => $order['id'],
             'change_type' => 'remove_order',
-            'change_message' => '删除订单',
+            'change_message' => 'Xóa đơn hàng',
             'change_time' => time()
         ]);
         if ($order->save() && $res) {
             return true;
         } else
-            throw new ApiException('取消失败');
+            throw new ApiException('Hủy thất bại');
     }
 
     /**
-     * 取消订单
+     * Hủy đơn hàng
      * @param $order_id
      * @param $uid
      * @return bool|void
@@ -1968,13 +1968,13 @@ HTML;
     {
         $order = $this->dao->getOne(['order_id' => $order_id, 'uid' => $uid, 'is_del' => 0]);
         if (!$order) {
-            throw new ApiException('订单不存在');
+            throw new ApiException('Đơn hàng không tồn tại');
         }
         if ($order->is_cancel == 1) {
-            throw new ApiException('订单已取消，请勿重复操作！');
+            throw new ApiException('Đơn hàng đã bị hủy, vui lòng không thao tác lại!');
         }
         if ($order->paid) {
-            throw new ApiException('订单已经支付无法取消');
+            throw new ApiException('Đơn hàng đã được thanh toán, không thể hủy');
         }
         /** @var StoreOrderRefundServices $refundServices */
         $refundServices = app()->make(StoreOrderRefundServices::class);
@@ -1983,11 +1983,11 @@ HTML;
             $res = $refundServices->integralAndCouponBack($order, 'cancel') && $refundServices->regressionStock($order);
             $order->is_cancel = 1;
             if (!($res && $order->save())) {
-                throw new ApiException('取消失败');
+                throw new ApiException('Hủy thất bại');
             }
         });
 
-        //自定义事件-订单取消
+        //Sự kiện tùy chỉnh - hủy đơn hàng
         event('CustomEventListener', ['order_cancel', [
             'uid' => $uid,
             'id' => $order['id'],
@@ -2006,7 +2006,7 @@ HTML;
     }
 
     /**
-     * 判断订单完成
+     * Kiểm tra đơn hàng hoàn thành
      * @param StoreProductReplyServices $replyServices
      * @param array $uniqueList
      * @param $oid
@@ -2014,29 +2014,29 @@ HTML;
      */
     public function checkOrderOver($replyServices, array $uniqueList, $oid)
     {
-        //订单商品全部评价完成
+        //Tất cả sản phẩm trong đơn hàng đã đánh giá xong
         $replyServices->count(['unique' => $uniqueList, 'oid' => $oid]);
         if ($replyServices->count(['unique' => $uniqueList, 'oid' => $oid]) >= count($uniqueList)) {
             $res = $this->dao->update(['id' => $oid, 'status' => 2], ['status' => 3]);
-            if (!$res) throw new ApiException('修改失败');
+            if (!$res) throw new ApiException('Sửa thất bại');
             /** @var StoreOrderStatusServices $statusService */
             $statusService = app()->make(StoreOrderStatusServices::class);
             $statusService->save([
                 'oid' => $oid,
                 'change_type' => 'check_order_over',
-                'change_message' => '用户评价',
+                'change_message' => 'Người dùng đánh giá',
                 'change_time' => time()
             ]);
             $order = $this->dao->get((int)$oid, ['id,pid,status']);
             if ($order && $order['pid'] > 0) {
                 $p_order = $this->dao->get((int)$order['pid'], ['id,pid,status']);
-                //主订单全部收货 且子订单没有待评价 有已完成
+                //Đơn hàng chính đã nhận hàng toàn bộ, và đơn hàng con không có chờ đánh giá nhưng có đã hoàn thành
                 if ($p_order['status'] == 2 && !$this->dao->count(['pid' => $order['pid'], 'status' => 3]) && $this->dao->count(['pid' => $order['pid'], 'status' => 4])) {
                     $this->dao->update($p_order['id'], ['status' => 3]);
                     $statusService->save([
                         'oid' => $p_order['id'],
                         'change_type' => 'check_order_over',
-                        'change_message' => '用户评价',
+                        'change_message' => 'Người dùng đánh giá',
                         'change_time' => time()
                     ]);
                 }
@@ -2045,7 +2045,7 @@ HTML;
     }
 
     /**
-     * 某个用户订单
+     * Đơn hàng của một người dùng
      * @param int $uid
      * @param UserServices $userServices
      * @return array
@@ -2059,7 +2059,7 @@ HTML;
         $userServices = app()->make(UserServices::class);
         $user = $userServices->getUserInfo($uid, 'uid');
         if (!$user) {
-            throw new AdminException('数据不存在');
+            throw new AdminException('Dữ liệu không tồn tại');
         }
         [$page, $limit] = $this->getPageValue();
         $where = ['uid' => $uid, 'paid' => 1, 'refund_status' => 0, 'pid' => 0];
@@ -2070,7 +2070,7 @@ HTML;
 
 
     /**
-     * 获取推广订单列表
+     * Lấy danh sách đơn hàng giới thiệu
      * @param int $uid
      * @param $where
      * @return array
@@ -2106,7 +2106,7 @@ HTML;
         if (isset($where['order_id']) && $where['order_id']) {
             $where_data['order_id'] = $where['order_id'];
         }
-        //推广订单只显示支付过并且未退款的订单
+        //Đơn hàng giới thiệu chỉ hiển thị đơn hàng đã thanh toán và chưa hoàn tiền
         $where_data['paid'] = 1;
         $where_data['refund_status'] = 0;
         $where_data['pid'] = 0;
@@ -2117,7 +2117,7 @@ HTML;
     }
 
     /**
-     * 订单导出
+     * Xuất đơn hàng
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -2147,34 +2147,34 @@ HTML;
                 $pinkStatus = $pinkService->value(['order_id_key' => $item['id']], 'status');
                 switch ($pinkStatus) {
                     case 1:
-                        $item['pink_name'] = '[拼团订单]正在进行中';
+                        $item['pink_name'] = '[Đơn mua chung] Đang diễn ra';
                         $item['color'] = '#f00';
                         break;
                     case 2:
-                        $item['pink_name'] = '[拼团订单]已完成';
+                        $item['pink_name'] = '[Đơn mua chung] Đã hoàn thành';
                         $item['color'] = '#00f';
                         break;
                     case 3:
-                        $item['pink_name'] = '[拼团订单]未完成';
+                        $item['pink_name'] = '[Đơn mua chung] Chưa hoàn thành';
                         $item['color'] = '#f0f';
                         break;
                     default:
-                        $item['pink_name'] = '[拼团订单]历史订单';
+                        $item['pink_name'] = '[Đơn mua chung] Đơn hàng cũ';
                         $item['color'] = '#457856';
                         break;
                 }
             } elseif ($item['seckill_id']) {
-                $item['pink_name'] = '[秒杀订单]';
+                $item['pink_name'] = '[Đơn flash sale]';
                 $item['color'] = '#32c5e9';
             } elseif ($item['bargain_id']) {
-                $item['pink_name'] = '[砍价订单]';
+                $item['pink_name'] = '[Đơn săn giảm giá]';
                 $item['color'] = '#12c5e9';
             } else {
                 if ($item['shipping_type'] == 1) {
-                    $item['pink_name'] = '[普通订单]';
+                    $item['pink_name'] = '[Đơn thường]';
                     $item['color'] = '#895612';
                 } else if ($item['shipping_type'] == 2) {
-                    $item['pink_name'] = '[核销订单]';
+                    $item['pink_name'] = '[Đơn xác nhận sử dụng]';
                     $item['color'] = '#8956E8';
                 }
             }
@@ -2183,7 +2183,7 @@ HTML;
     }
 
     /**
-     * 自动取消订单
+     * Tự động hủy đơn hàng
      * @return bool
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -2191,11 +2191,11 @@ HTML;
      */
     public function orderUnpaidCancel()
     {
-        //系统预设取消订单时间段
+        //Khoảng thời gian hủy đơn hàng do hệ thống định trước
         $keyValue = ['order_cancel_time', 'order_activity_time', 'order_bargain_time', 'order_seckill_time', 'order_pink_time'];
-        //获取配置
+        //Lấy cấu hình
         $systemValue = SystemConfigService::more($keyValue);
-        //格式化数据
+        //Định dạng dữ liệu
         $systemValue = Arr::setValeTime($keyValue, is_array($systemValue) ? $systemValue : []);
         $list = $this->dao->getOrderUnPaidList();
         /** @var StoreOrderRefundServices $refundServices */
@@ -2214,14 +2214,14 @@ HTML;
             if (($order['add_time'] + bcmul($secs, '3600', 0)) < time()) {
                 try {
                     $this->transaction(function () use ($order, $refundServices) {
-                        //回退积分和优惠卷
+                        //Hoàn trả điểm thưởng và phiếu giảm giá
                         $res = $refundServices->integralAndCouponBack($order, 'cancel');
-                        //回退库存和销量
+                        //Hoàn trả tồn kho và lượt bán
                         $res = $res && $refundServices->regressionStock($order);
-                        //修改订单状态
-                        $res = $res && $this->dao->update($order['id'], ['is_cancel' => 1, 'mark' => '订单未支付已超过系统预设时间']);
+                        //Sửa trạng thái đơn hàng
+                        $res = $res && $this->dao->update($order['id'], ['is_cancel' => 1, 'mark' => 'Đơn hàng chưa thanh toán đã quá thời gian hệ thống quy định']);
                         if (!$res) {
-                            Log::error('订单号' . $order['order_id'] . '自动取消订单失败');
+                            Log::error('Mã đơn hàng' . $order['order_id'] . 'tự động hủy đơn hàng thất bại');
                         }
                         return true;
                     });
@@ -2231,13 +2231,13 @@ HTML;
                     $cartInfo = $cartServices->getOrderCartInfo((int)$order['id']);
 
                 } catch (\Throwable $e) {
-                    Log::error('自动取消订单失败,失败原因:' . $e->getMessage(), $e->getTrace());
+                    Log::error('Tự động hủy đơn hàng thất bại, nguyên nhân:' . $e->getMessage(), $e->getTrace());
                 }
             }
         }
     }
 
-    /**根据时间获取当天或昨天订单营业额
+    /**Lấy doanh thu đơn hàng của hôm nay hoặc hôm qua theo thời gian
      * @param array $where
      * @return float|int
      */
@@ -2252,7 +2252,7 @@ HTML;
         }
     }
 
-    /**统计时间段订单数
+    /**Thống kê số đơn hàng theo khoảng thời gian
      * @param array $where
      * @param string $sum_field
      */
@@ -2261,7 +2261,7 @@ HTML;
         return $this->dao->getDayOrderCount($where);
     }
 
-    /**分组统计时间段订单数
+    /**Thống kê số đơn hàng theo khoảng thời gian, nhóm theo
      * @param $where
      * @return mixed
      */
@@ -2270,7 +2270,7 @@ HTML;
         return $this->dao->getOrderGroupCount($where);
     }
 
-    /** 时间段支付订单人数
+    /** Số người thanh toán đơn hàng theo khoảng thời gian
      * @param $where
      * @return mixed
      */
@@ -2279,7 +2279,7 @@ HTML;
         return $this->dao->getPayOrderPeople($where);
     }
 
-    /**时间段分组统计支付订单人数
+    /**Thống kê số người thanh toán đơn hàng theo nhóm khoảng thời gian
      * @param $where
      * @return mixed
      */
@@ -2289,7 +2289,7 @@ HTML;
     }
 
     /**
-     * 退款订单列表
+     * Danh sách đơn hoàn tiền
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -2303,19 +2303,19 @@ HTML;
         $data = $this->dao->getRefundList($where, $page, $limit);
         if ($data['list']) $data['list'] = $this->tidyOrderList($data['list']);
         $data['num'] = [
-            0 => ['name' => '全部', 'num' => $this->dao->count(['refund_type' => 0, 'is_system_del' => 0])],
-            1 => ['name' => '仅退款', 'num' => $this->dao->count(['refund_type' => 1, 'is_system_del' => 0])],
-            2 => ['name' => '退货退款', 'num' => $this->dao->count(['refund_type' => 2, 'is_system_del' => 0])],
-            3 => ['name' => '拒绝退款', 'num' => $this->dao->count(['refund_type' => 3, 'is_system_del' => 0])],
-            4 => ['name' => '商品待退货', 'num' => $this->dao->count(['refund_type' => 4, 'is_system_del' => 0])],
-            5 => ['name' => '退货待收货', 'num' => $this->dao->count(['refund_type' => 5, 'is_system_del' => 0])],
-            6 => ['name' => '已退款', 'num' => $this->dao->count(['refund_type' => 6, 'is_system_del' => 0])]
+            0 => ['name' => 'Tất cả', 'num' => $this->dao->count(['refund_type' => 0, 'is_system_del' => 0])],
+            1 => ['name' => 'Chỉ hoàn tiền', 'num' => $this->dao->count(['refund_type' => 1, 'is_system_del' => 0])],
+            2 => ['name' => 'Trả hàng hoàn tiền', 'num' => $this->dao->count(['refund_type' => 2, 'is_system_del' => 0])],
+            3 => ['name' => 'Từ chối hoàn tiền', 'num' => $this->dao->count(['refund_type' => 3, 'is_system_del' => 0])],
+            4 => ['name' => 'Chờ trả hàng', 'num' => $this->dao->count(['refund_type' => 4, 'is_system_del' => 0])],
+            5 => ['name' => 'Chờ nhận hàng trả', 'num' => $this->dao->count(['refund_type' => 5, 'is_system_del' => 0])],
+            6 => ['name' => 'Đã hoàn tiền', 'num' => $this->dao->count(['refund_type' => 6, 'is_system_del' => 0])]
         ];
         return $data;
     }
 
     /**
-     * 商家同意退款，等待客户退货
+     * Cửa hàng đồng ý hoàn tiền, chờ khách hàng trả hàng
      * @param $order_id
      * @return bool
      */
@@ -2327,11 +2327,11 @@ HTML;
         $statusService->save([
             'oid' => $order_id,
             'change_type' => 'refund_express',
-            'change_message' => '等待用户退货',
+            'change_message' => 'Chờ người dùng trả hàng',
             'change_time' => time()
         ]);
         if ($res) return true;
-        throw new AdminException('操作失败');
+        throw new AdminException('Thao tác thất bại');
     }
 
     /**
@@ -2356,7 +2356,7 @@ HTML;
     }
 
     /**
-     * 代付详情
+     * Chi tiết thanh toán hộ
      * @param $orderId
      * @param $uid
      * @return array
@@ -2370,7 +2370,7 @@ HTML;
         if ($orderInfo) {
             $orderInfo = $orderInfo->toArray();
         } else {
-            throw new ApiException('订单不存在');
+            throw new ApiException('Đơn hàng không tồn tại');
         }
         $orderInfo = $this->tidyOrder($orderInfo, true);
         /** @var UserServices $userServices */
@@ -2396,7 +2396,7 @@ HTML;
     }
 
     /**
-     * 获取退货商品列表
+     * Lấy danh sách sản phẩm trả hàng
      * @param array $cart_ids
      * @param int $id
      * @return array
@@ -2408,7 +2408,7 @@ HTML;
     {
         $orderInfo = $this->dao->get($id);
         if (!$orderInfo) {
-            throw new ApiException('订单不存在');
+            throw new ApiException('Đơn hàng không tồn tại');
         }
         $orderInfo = $this->tidyOrder($orderInfo, true);
         $cartInfo = $orderInfo['cartInfo'] ?? [];
@@ -2416,7 +2416,7 @@ HTML;
         if ($cart_ids) {
             foreach ($cart_ids as $cart) {
                 if (!isset($cart['cart_id']) || !$cart['cart_id'] || !isset($cart['cart_num']) || !$cart['cart_num'] || $cart['cart_num'] <= 0) {
-                    throw new ApiException('请重新选择退款商品或件数');
+                    throw new ApiException('Vui lòng chọn lại sản phẩm hoặc số lượng cần hoàn tiền');
                 }
             }
             $cart_ids = array_combine(array_column($cart_ids, 'cart_id'), $cart_ids);
@@ -2436,32 +2436,32 @@ HTML;
     }
 
     /**
-     * 再次下单
+     * Đặt hàng lại
      * @param string $uni
      * @param int $uid
      * @return array
      */
     public function againOrder(StoreCartServices $services, string $uni, int $uid): array
     {
-        if (!$uni) throw new ApiException('参数错误');
+        if (!$uni) throw new ApiException('Tham số không hợp lệ');
         $order = $this->getUserOrderDetail($uni, $uid);
-        if (!$order) throw new ApiException('订单不存在');
+        if (!$order) throw new ApiException('Đơn hàng không tồn tại');
         $order = $this->tidyOrder($order, true);
         $cateId = [];
 
         foreach ($order['cartInfo'] as $v) {
-            if ($v['combination_id']) throw new ApiException('拼团商品不能再来一单，请在拼团商品内自行下单');
-            elseif ($v['bargain_id']) throw new ApiException('砍价商品不能再来一单，请在砍价商品内自行下单');
-            elseif ($v['seckill_id']) throw new ApiException('秒杀商品不能再来一单，请在秒杀商品内自行下单');
-            elseif ($v['advance_id']) throw new ApiException('预售商品不能再来一单，请在预售商品内自行下单');
+            if ($v['combination_id']) throw new ApiException('Sản phẩm mua chung không thể dùng “Mua lại”, vui lòng tự đặt hàng tại trang sản phẩm mua chung');
+            elseif ($v['bargain_id']) throw new ApiException('Sản phẩm săn giảm giá không thể dùng “Mua lại”, vui lòng tự đặt hàng tại trang sản phẩm săn giảm giá');
+            elseif ($v['seckill_id']) throw new ApiException('Sản phẩm flash sale không thể dùng “Mua lại”, vui lòng tự đặt hàng tại trang sản phẩm flash sale');
+            elseif ($v['advance_id']) throw new ApiException('Sản phẩm đặt trước không thể dùng “Mua lại”, vui lòng tự đặt hàng tại trang sản phẩm đặt trước');
             else $cateId[] = $services->setCart($uid, (int)$v['product_id'], (int)$v['cart_num'], $v['productInfo']['attrInfo']['unique'] ?? '', '0', true);
         }
-        if (!$cateId) throw new ApiException('再来一单失败，请重新下单');
+        if (!$cateId) throw new ApiException('Mua lại thất bại, vui lòng đặt hàng lại');
         return $cateId;
     }
 
     /**
-     * 支付宝单独支付
+     * Thanh toán riêng bằng Alipay
      * @param OrderPayServices $payServices
      * @param OtherOrderServices $services
      * @param string $key
@@ -2474,15 +2474,15 @@ HTML;
     public function aliPayOrder(OrderPayServices $payServices, OtherOrderServices $services, string $key, string $quitUrl)
     {
         if (!$key) {
-            throw new ApiException('参数错误');
+            throw new ApiException('Tham số không hợp lệ');
         }
         if (!$quitUrl) {
-            throw new ApiException('参数错误');
+            throw new ApiException('Tham số không hợp lệ');
         }
 
         $orderCache = CacheService::get($key);
         if (!$orderCache || !isset($orderCache['order_id'])) {
-            throw new ApiException('该订单无法支付');
+            throw new ApiException('Không thể thanh toán đơn hàng này');
         }
 
         $payType = isset($orderCache['other_pay_type']) && $orderCache['other_pay_type'] == true;
@@ -2493,13 +2493,13 @@ HTML;
         }
 
         if (!$orderInfo) {
-            throw new ApiException('订单支付状态有误，无法进行支付');
+            throw new ApiException('Trạng thái thanh toán đơn hàng không hợp lệ, không thể thanh toán');
         }
         return $payServices->beforePay($orderInfo->toArray(), PayServices::ALIAPY_PAY, ['quitUrl' => $quitUrl]);
     }
 
     /**
-     * 用户订单信息
+     * Thông tin đơn hàng người dùng
      * @param StoreOrderEconomizeServices $services
      * @param string $uni
      * @param int $uid
@@ -2511,12 +2511,12 @@ HTML;
     public function getUserOrderByKey(StoreOrderEconomizeServices $services, string $uni, int $uid): array
     {
         $order = $this->getUserOrderDetail($uni, $uid, ['split', 'invoice', 'user']);
-        if (!$order) throw new ApiException('商品不存在');
+        if (!$order) throw new ApiException('Sản phẩm không tồn tại');
         $order = $order->toArray();
         $splitNum = [];
-        //是否开启门店自提
+        //Bật nhận tại cửa hàng
         $store_self_mention = sys_config('store_self_mention');
-        //关闭门店自提后 订单隐藏门店信息
+        //Sau khi tắt nhận tại cửa hàng, ẩn thông tin cửa hàng trong đơn hàng
         if ($store_self_mention == 0) $order['shipping_type'] = 1;
         if ($order['verify_code']) {
             $verify_code = $order['verify_code'];
@@ -2559,17 +2559,17 @@ HTML;
                 $siteUrl = sys_config('site_url');
                 if (!$imageInfo) {
                     $res = MiniProgramService::appCodeUnlimitService($data, 'pages/admin/order_cancellation/index', 280);
-                    if (!$res) throw new ApiException('小程序核销码生成失败');
+                    if (!$res) throw new ApiException('Tạo mã xác nhận Mini Program thất bại');
                     $uploadType = (int)sys_config('upload_type', 1);
                     $upload = UploadService::init();
                     $res = (string)EntityBody::factory($res);
                     $res = $upload->to('routine/product')->validate()->setAuthThumb(false)->stream($res, $verifyName);
-                    if ($res === false) throw new ApiException('小程序核销码生成失败');
+                    if ($res === false) throw new ApiException('Tạo mã xác nhận Mini Program thất bại');
                     $imageInfo = $upload->getUploadInfo();
                     $imageInfo['image_type'] = $uploadType;
                     if ($imageInfo['image_type'] == 1) $remoteImage = PosterServices::remoteImage($siteUrl . $imageInfo['dir']);
                     else $remoteImage = PosterServices::remoteImage($imageInfo['dir']);
-                    if (!$remoteImage['status']) throw new ApiException('小程序核销码生成失败');
+                    if (!$remoteImage['status']) throw new ApiException('Tạo mã xác nhận Mini Program thất bại');
                     $systemAttachmentService->save([
                         'name' => $imageInfo['name'],
                         'att_dir' => $imageInfo['dir'],
@@ -2590,10 +2590,10 @@ HTML;
             }
         }
         $order['mapKey'] = sys_config('tengxun_map_key');
-        $order['yue_pay_status'] = (int)sys_config('balance_func_status') && (int)sys_config('yue_pay_status') == 1 ? (int)1 : (int)2;//余额支付 1 开启 2 关闭
-        $order['pay_weixin_open'] = sys_config('pay_weixin_open') != '0';//微信支付 1 开启 0 关闭
-        $order['ali_pay_status'] = sys_config('ali_pay_status', '0') != '0';//支付包支付 1 开启 0 关闭
-        $order['friend_pay_status'] = (int)sys_config('friend_pay_status') ?? 0;//好友代付 1 开启 0 关闭
+        $order['yue_pay_status'] = (int)sys_config('balance_func_status') && (int)sys_config('yue_pay_status') == 1 ? (int)1 : (int)2;//Thanh toán bằng số dư: 1 là bật, 2 là tắt
+        $order['pay_weixin_open'] = sys_config('pay_weixin_open') != '0';//WeChat Pay: 1 là bật, 0 là tắt
+        $order['ali_pay_status'] = sys_config('ali_pay_status', '0') != '0';//Thanh toán Alipay, 1 là mở, 0 là tắt
+        $order['friend_pay_status'] = (int)sys_config('friend_pay_status') ?? 0;//Bạn bè thanh toán giúp, 1 là mở, 0 là tắt
         $orderData = $this->tidyOrder($order, true, true);
         $vipTruePrice = $memberPrice = $levelPrice = 0;
         foreach ($orderData['cartInfo'] ?? [] as $key => $cart) {
@@ -2659,10 +2659,10 @@ HTML;
                 'gift_avatar' => $giftUser['avatar'],
             ];
         }
-        // 判断是否开启小程序订单管理
+        // Kiểm tra có mở quản lý đơn hàng Mini Program không
         $orderData['order_shipping_open'] = false;
         if (sys_config('order_shipping_open', 0) && $order['pay_price'] > 0 && $order['is_channel'] == 1 && $order['pay_type'] == 'weixin' && MiniOrderService::isManaged()) {
-            // 判断是否存在子未收货子订单
+            // Kiểm tra có đơn hàng con chưa nhận hàng hay không
             if ($order['pid'] > 0) {
                 if ($this->checkSubOrderNotTake((int)$order['pid'], (int)$order['id'])) {
                     $orderData['order_shipping_open'] = true;
@@ -2686,10 +2686,10 @@ HTML;
     }
 
     /**
-     * 检测订单是否能退款
+     * Kiểm tra đơn hàng có thể hoàn tiền không
      * @param $oid
      * @return bool
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/10/11
      */
@@ -2707,7 +2707,7 @@ HTML;
     }
 
     /**
-     * 获取确认订单页面是否展示快递配送和到店自提
+     * Lấy trạng thái hiển thị giao hàng và nhận tại cửa hàng trên trang xác nhận đơn hàng
      * @param $uid
      * @param $cartIds
      * @param $new
@@ -2731,7 +2731,7 @@ HTML;
             $cartInfo = $cartServices->getCartList(['uid' => $uid, 'status' => 1, 'id' => $cartIds], 0, 0, ['productInfo', 'attrInfo']);
         }
         if (!$cartInfo) {
-            throw new ApiException('数据不存在');
+            throw new ApiException('Dữ liệu không tồn tại');
         }
         $arr = [];
         foreach ($cartInfo as $item) {
@@ -2749,14 +2749,14 @@ HTML;
     }
 
     /**
-     * 自动评价
+     * Tự động đánh giá
      * @return bool
      */
     public function autoComment()
     {
-        //自动评价天数
+        //Số ngày tự động đánh giá
         $systemCommentTime = sys_config('system_comment_time', 0);
-        //0为取消自动默认好评功能
+        //0 là hủy chức năng tự động đánh giá tốt mặc định
         if ($systemCommentTime == 0) {
             return true;
         }
@@ -2784,13 +2784,13 @@ HTML;
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/2/13
      */
     public function getCashierInfo(int $uid, string $orderId, string $type)
     {
-        //支付类型开关
+        //Công tắc loại thanh toán
         $data = [
             'ali_pay_status' => sys_config('ali_pay_status', '0') != '0',
             'wechat_pay_status' => sys_config('pay_weixin_open', '0') != '0',
@@ -2807,7 +2807,7 @@ HTML;
             case 'order':
                 $info = $this->dao->get(['order_id' => $orderId], ['id', 'pay_price', 'add_time', 'combination_id', 'seckill_id', 'bargain_id', 'pay_postage', 'is_gift']);
                 if (!$info) {
-                    throw new PayException('您支付的订单不存在');
+                    throw new PayException('Đơn hàng bạn thanh toán không tồn tại');
                 }
                 $orderCancelTime = sys_config('order_cancel_time', 0);
                 $orderActivityTime = sys_config('order_activity_time', 0);
@@ -2836,7 +2836,7 @@ HTML;
             case 'svip':
                 $info = app()->make(OtherOrderServices::class)->get(['order_id' => $orderId], ['id', 'pay_price', 'add_time']);
                 if (!$info) {
-                    throw new PayException('您支付的订单不存在');
+                    throw new PayException('Đơn hàng bạn thanh toán không tồn tại');
                 }
                 $data['pay_price'] = $info['pay_price'];
                 $data['invalid_time'] = $info->add_time + 86400;
@@ -2844,27 +2844,27 @@ HTML;
             case 'recharge':
                 $info = app()->make(UserRechargeServices::class)->get(['order_id' => $orderId], ['id', 'price', 'add_time']);
                 if (!$info) {
-                    throw new PayException('您支付的订单不存在');
+                    throw new PayException('Đơn hàng bạn thanh toán không tồn tại');
                 }
                 $data['pay_price'] = $info['price'];
                 $data['invalid_time'] = $info->add_time + 86400;
                 break;
             default:
-                throw new PayException('暂不支持其他类型订单支付');
+                throw new PayException('Tạm thời chưa hỗ trợ thanh toán cho loại đơn hàng khác');
         }
 
         return $data;
     }
 
     /**
-     * 取消商家寄件
+     * Hủy yêu cầu gửi hàng của người bán
      * @param int $id
      * @param string $msg
      * @return array|mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/5/15
      */
@@ -2872,29 +2872,29 @@ HTML;
     {
         $orderInfo = $this->dao->get($id);
         if (!$orderInfo) {
-            throw new AdminException('取消的订单不存在');
+            throw new AdminException('Đơn hàng cần hủy không tồn tại');
         }
         if (!$orderInfo->kuaidi_task_id || !$orderInfo->kuaidi_order_id) {
-            throw new AdminException('商家寄件订单信息不存在，无法取消');
+            throw new AdminException('Thông tin đơn người bán gửi hàng không tồn tại, không thể hủy');
         }
         if ($orderInfo->is_stock_up != 1) {
-            throw new AdminException('订单状态不正确，无法取消寄件');
+            throw new AdminException('Trạng thái đơn hàng không đúng, không thể hủy gửi hàng');
         }
 
-        //发起取消商家寄件
+        //Gửi yêu cầu hủy gửi hàng của cửa hàng
         app()->make(ServeServices::class)->express()->shipmentCancelOrder([
             'task_id' => $orderInfo->kuaidi_task_id,
             'order_id' => $orderInfo->kuaidi_order_id,
             'cancel_msg' => $msg,
         ]);
 
-        //订单返回原状态
+        //Đơn hàng trở về trạng thái gốc
         $this->transaction(function () use ($id, $msg, $orderInfo) {
             app()->make(StoreOrderStatusServices::class)->save([
                 'oid' => $id,
                 'change_time' => time(),
                 'change_type' => 'delivery_goods_cancel',
-                'change_message' => '已取消发货，取消原因：' . $msg
+                'change_message' => 'Đã hủy giao hàng, lý do hủy:' . $msg
             ]);
 
             $orderInfo->status = 0;
@@ -2914,11 +2914,11 @@ HTML;
     }
 
     /**
-     * 判断订单是否全部发货
+     * Kiểm tra đơn hàng đã giao hết hàng chưa
      * @param int $pid
      * @param int $order_id
      * @return bool
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/31
      */
@@ -2933,11 +2933,11 @@ HTML;
     }
 
     /**
-     * 判断是否存在子未收货子订单
+     * Kiểm tra có đơn hàng con chưa nhận hàng hay không
      * @param int $pid
      * @param int $order_id
      * @return bool
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/8/31
      */
@@ -2952,13 +2952,13 @@ HTML;
     }
 
     /**
-     * 配货单数据
+     * Dữ liệu phiếu soạn hàng
      * @param $oid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
      * @throws \think\db\exception\ModelNotFoundException
-     * @author: 吴汐
+     * @author: Wu Xi
      * @email: 442384644@qq.com
      * @date: 2023/10/11
      */
@@ -2966,7 +2966,7 @@ HTML;
     {
         $orderInfo = $this->dao->get(['order_id' => $order_id]);
         if (!$orderInfo) {
-            throw new AdminException('订单不存在');
+            throw new AdminException('Đơn hàng không tồn tại');
         }
         $orderInfo = $this->tidyOrder($orderInfo->toArray(), true);
         $data['user_name'] = $orderInfo['real_name'];
@@ -3001,7 +3001,7 @@ HTML;
         if ($orderInfo) {
             $orderInfo = $orderInfo->toArray();
         } else {
-            throw new ApiException('订单不存在');
+            throw new ApiException('Đơn hàng không tồn tại');
         }
         $orderInfo = $this->tidyOrder($orderInfo, true);
         /** @var UserServices $userServices */
@@ -3036,7 +3036,7 @@ HTML;
             'gift_uid' => $orderInfo['gift_uid'],
             'refund_status' => $orderInfo['refund_status'],
             'type' => $type,
-            'store_self_mention' => (int)sys_config('store_self_mention') ?? 0,//门店自提是否开启
+            'store_self_mention' => (int)sys_config('store_self_mention') ?? 0,//Nhận tại cửa hàng có mở không
         ];
     }
 
@@ -3044,16 +3044,16 @@ HTML;
     {
         $orderInfo = $this->dao->get($oid);
         if (!$orderInfo) {
-            throw new AdminException('订单不存在');
+            throw new AdminException('Đơn hàng không tồn tại');
         }
         if ($gift_key != md5($orderInfo['id'] . '_' . $orderInfo['order_id'] . '_' . $orderInfo['uid'])) {
-            throw new AdminException('领取失败');
+            throw new AdminException('Nhận thất bại');
         }
         if ($orderInfo['refund_status'] != 0) {
-            throw new AdminException('订单已退款');
+            throw new AdminException('Đơn hàng đã được hoàn tiền');
         }
         if ($orderInfo['uid'] == $uid) {
-            throw new AdminException('不能领取自己的礼物');
+            throw new AdminException('Không thể nhận quà của chính mình');
         }
         if ($orderInfo['gift_uid'] != 0 && $orderInfo['gift_uid'] != $uid) {
             return false;
@@ -3068,7 +3068,7 @@ HTML;
         $verify_code = '';
         if ($shipping_type == 2 && $store_id) {
             $store_id = app()->make(SystemStoreServices::class)->getStoreDispose($store_id, 'id');
-            if (!$store_id) throw new ApiException('门店选择错误');
+            if (!$store_id) throw new ApiException('Cửa hàng được chọn không hợp lệ');
             $verify_code = app()->make(StoreOrderCreateServices::class)->getStoreCode();
         }
         $orderData = [
@@ -3085,7 +3085,7 @@ HTML;
     }
 
     /**
-     * 修改订单地址
+     * Sửa địa chỉ đơn hàng
      * @param $id
      * @param $data
      * @return bool
@@ -3100,10 +3100,10 @@ HTML;
     {
         $orderInfo = $this->dao->getOne(['id' => $id, 'is_del' => 0]);
         if (!$orderInfo) {
-            throw new ApiException('订单不存在');
+            throw new ApiException('Đơn hàng không tồn tại');
         }
         if ($orderInfo['status'] > 0) {
-            throw new ApiException('订单已发货，不能修改地址');
+            throw new ApiException('Đơn hàng đã được giao, không thể sửa địa chỉ');
         }
         $this->dao->update($id, [
             'real_name' => $data['real_name'],

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,10 +18,10 @@ use app\services\BaseServices;
 use crmeb\exceptions\AdminException;
 
 /**
- * 商品访问记录日志
+ * Log bản ghi truy cập sản phẩm
  * Class StoreProductLogServices
  * @package app\services\product\product
- * @method getProductTrend($time, $timeType, $str) 商品趋势
+ * @method getProductTrend($time, $timeType, $str) Xu hướng sản phẩm
  */
 class StoreProductLogServices extends BaseServices
 {
@@ -35,7 +35,7 @@ class StoreProductLogServices extends BaseServices
     }
 
     /**
-     * 创建各种访问日志
+     * Tạo các loại log truy cập
      * @param string $type
      * @param array $data
      * @return bool
@@ -43,10 +43,10 @@ class StoreProductLogServices extends BaseServices
     public function createLog(string $type, array $data)
     {
         if (!in_array($type, ['order', 'pay', 'refund']) && (!isset($data['product_id']) || !$data['product_id'])) {
-            throw new AdminException('缺少商品ID');
+            throw new AdminException('Thiếu ID sản phẩm');
         }
         if ($type != 'visit' && (!isset($data['uid']) || !$data['uid'])) {
-            throw new AdminException('缺少用户UID');
+            throw new AdminException('Thiếu UID người dùng');
         }
         $log_data = $log_data_all = [];
         $log_data['type'] = $type;
@@ -54,18 +54,18 @@ class StoreProductLogServices extends BaseServices
         $log_data['uid'] = $data['uid'] ?? 0;
         $log_data['add_time'] = time();
         switch ($type) {
-            case 'visit'://访问
+            case 'visit'://Truy cập
                 $log_data['visit_num'] = isset($data['visit_num']) && $data['visit_num'] ? $data['visit_num'] : 1;
                 break;
-            case 'cart'://加入购物车
+            case 'cart'://Thêm vào giỏ hàng
                 $log_data['cart_num'] = isset($data['cart_num']) && $data['cart_num'] ? $data['cart_num'] : 1;
                 break;
-            case 'collect'://收藏
+            case 'collect'://Yêu thích
                 $log_data['collect_num'] = isset($data['collect_num']) && $data['collect_num'] ? $data['collect_num'] : 1;
                 break;
-            case 'order'://下单
+            case 'order'://Đặt hàng
                 if (!isset($data['order_id']) || !$data['order_id']) {
-                    throw new AdminException('缺少订单ID');
+                    throw new AdminException('Thiếu ID đơn hàng');
                 }
                 /** @var StoreOrderCartInfoServices $cartInfoServices */
                 $cartInfoServices = app()->make(StoreOrderCartInfoServices::class);
@@ -77,9 +77,9 @@ class StoreProductLogServices extends BaseServices
                     $log_data_all[] = $log_data;
                 }
                 break;
-            case 'pay'://支付
+            case 'pay'://Thanh toán
                 if (!isset($data['order_id']) || !$data['order_id']) {
-                    throw new AdminException('缺少订单ID');
+                    throw new AdminException('Thiếu ID đơn hàng');
                 }
                 /** @var StoreOrderCartInfoServices $cartInfoServices */
                 $cartInfoServices = app()->make(StoreOrderCartInfoServices::class);
@@ -94,9 +94,9 @@ class StoreProductLogServices extends BaseServices
                     $log_data_all[] = $log_data;
                 }
                 break;
-            case 'refund'://退款
+            case 'refund'://Hoàn tiền
                 if (!isset($data['order_id']) || !$data['order_id']) {
-                    throw new AdminException('缺少订单ID');
+                    throw new AdminException('Thiếu ID đơn hàng');
                 }
                 /** @var StoreOrderCartInfoServices $cartInfoServices */
                 $cartInfoServices = app()->make(StoreOrderCartInfoServices::class);
@@ -112,7 +112,7 @@ class StoreProductLogServices extends BaseServices
                 }
                 break;
             default:
-                throw new AdminException('暂不支持该类型记录');
+                throw new AdminException('Tạm thời chưa hỗ trợ loại bản ghi này');
         }
         if ($log_data_all) {
             $res = $this->dao->saveAll($log_data_all);
@@ -120,13 +120,13 @@ class StoreProductLogServices extends BaseServices
             $res = $this->dao->save($log_data);
         }
         if (!$res) {
-            throw new AdminException('添加商品记录失败');
+            throw new AdminException('Thêm bản ghi sản phẩm thất bại');
         }
         return true;
     }
 
     /**
-     * 查找购买商品排行
+     * Tìm xếp hạng sản phẩm đã mua
      * @param $where
      * @return mixed
      */
@@ -146,7 +146,7 @@ class StoreProductLogServices extends BaseServices
     }
 
     /**
-     * 浏览商品列表
+     * Danh sách sản phẩm đã xem
      * @param array $where
      * @param string $group
      * @param string $field

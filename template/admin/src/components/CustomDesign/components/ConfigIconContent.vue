@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-form-item label="图标">
+    <el-form-item label="Biểu tượng">
       <div class="upload-box" @click="openIconModal">
         <div
           v-if="curComponent.propValue.class"

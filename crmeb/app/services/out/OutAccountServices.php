@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -22,12 +22,12 @@ use crmeb\utils\JwtAuth;
 use Firebase\JWT\ExpiredException;
 
 /**
- * 获取token
+ * Lấy token
  * Class LoginServices
  * @package app\services\kefu
- * @method get($id, ?array $field = [], ?array $with = []) 获取一条数据
+ * @method get($id, ?array $field = [], ?array $with = []) Lấy một dòng dữ liệu
  * @method update($id, array $data, ?string $key = null)
- * @method save(array $data)保存
+ * @method save(array $data) lưu
  */
 class OutAccountServices extends BaseServices
 {
@@ -41,7 +41,7 @@ class OutAccountServices extends BaseServices
     }
 
     /**
-     * 账号密码登录
+     * Đăng nhập bằng tài khoản và mật khẩu
      * @param string $appid
      * @param string $appsecret
      * @return array
@@ -53,13 +53,13 @@ class OutAccountServices extends BaseServices
     {
         $autInfo = $this->dao->get(['appid' => $appid, 'is_del' => 0]);
         if (!$autInfo) {
-            throw new AuthException('没有此用户');
+            throw new AuthException('Không có người dùng này');
         }
         if ($appsecret && !password_verify($appsecret, $autInfo->appsecret)) {
-            throw new AuthException('appid或appsecret错误');
+            throw new AuthException('Sai appid hoặc appsecret');
         }
         if ($autInfo->status == 0) {
-            throw new AuthException('您已被禁止登录');
+            throw new AuthException('Bạn đã bị cấm đăng nhập');
         }
         $token = $this->createToken($autInfo->id, 'out');
         $data['last_time'] = time();
@@ -73,7 +73,7 @@ class OutAccountServices extends BaseServices
     }
 
     /**
-     * 解析token
+     * Phân tích token
      * @param string $token
      * @return array
      * @throws \Psr\SimpleCache\InvalidArgumentException
@@ -89,17 +89,17 @@ class OutAccountServices extends BaseServices
         /** @var JwtAuth $jwtAuth */
         $jwtAuth = app()->make(JwtAuth::class);
 
-        //获取token信息
+        //Lấy thông tin token
         [$md5Token, $id, $type] = $this->verifyToken($token, $jwtAuth, $cacheService);
 
-        //获取对外账号
+        //Lấy tài khoản đối ngoại
         $authInfo = $this->dao->getOne(['id' => $id, 'is_del' => 0]);
         $this->checkAuth($authInfo, $md5Token, $cacheService);
         return $authInfo->hidden(['appsecret', 'ip', 'is_del', 'add_time', 'status', 'last_time'])->toArray();
     }
 
     /**
-     * 获取一条
+     * Lấy một dòng
      * @return array|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -112,7 +112,7 @@ class OutAccountServices extends BaseServices
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -127,8 +127,8 @@ class OutAccountServices extends BaseServices
         $count = $this->dao->count($where);
         if ($list) {
             foreach ($list as &$item) {
-                $item['add_time'] = $item['add_time'] ? date('Y-m-d H:i:s', $item['add_time']) : '暂无';
-                $item['last_time'] = $item['last_time'] ? date('Y-m-d H:i:s', $item['last_time']) : '暂无';
+                $item['add_time'] = $item['add_time'] ? date('Y-m-d H:i:s', $item['add_time']) : 'Chưa có';
+                $item['last_time'] = $item['last_time'] ? date('Y-m-d H:i:s', $item['last_time']) : 'Chưa có';
                 $item['rules'] = is_null($item['rules']) ? [] : explode(',', $item['rules']);
             }
         }
@@ -136,7 +136,7 @@ class OutAccountServices extends BaseServices
     }
 
     /**
-     * 刷新token
+     * Làm mới token
      * @param string $token
      * @return array
      * @throws \Psr\SimpleCache\InvalidArgumentException
@@ -152,10 +152,10 @@ class OutAccountServices extends BaseServices
         /** @var JwtAuth $jwtAuth */
         $jwtAuth = app()->make(JwtAuth::class);
 
-        //获取token信息
+        //Lấy thông tin token
         [$md5Token, $id, $type] = $this->verifyToken($token, $jwtAuth, $cacheService);
 
-        //获取对外账号
+        //Lấy tài khoản đối ngoại
         $authInfo = $this->dao->getOne(['id' => $id, 'is_del' => 0]);
         $this->checkAuth($authInfo, $md5Token, $cacheService);
 
@@ -172,7 +172,7 @@ class OutAccountServices extends BaseServices
     }
 
     /**
-     * 核对用户
+     * Đối chiếu người dùng
      * @param $authInfo
      * @param string $md5Token
      * @param CacheService $cacheService
@@ -184,20 +184,20 @@ class OutAccountServices extends BaseServices
             if (!request()->isCli()) {
                 $cacheService->delete($md5Token);
             }
-            throw new AuthException('登录已过期,请重新登录');
+            throw new AuthException('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại');
         }
 
         if ($authInfo->status == 2) {
             if (!request()->isCli()) {
                 $cacheService->delete($md5Token);
             }
-            throw new AuthException('您已被禁止登录');
+            throw new AuthException('Bạn đã bị cấm đăng nhập');
         }
         return true;
     }
 
     /**
-     * 获取token
+     * Lấy token
      * @param string $token
      * @param JwtAuth $jwtAuth
      * @param CacheService $cacheService
@@ -207,19 +207,19 @@ class OutAccountServices extends BaseServices
     protected function verifyToken(string $token, JwtAuth $jwtAuth, CacheService $cacheService): array
     {
         if (!$token || $token === 'undefined') {
-            throw new AuthException('登录失败');
+            throw new AuthException('Đăng nhập thất bại');
         }
 
         $md5Token = md5($token);
 
         if (!$cacheService->has($md5Token) || !($cacheToken = $cacheService->get($md5Token, '', NULL, 'out'))) {
-            throw new AuthException('登录已过期,请重新登录');
+            throw new AuthException('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại');
         }
 
-        //解析token
+        //Phân tích token
         [$id, $type] = $jwtAuth->parseToken($token);
         if (!$id || $type != 'out') {
-            throw new AuthException('登录失败');
+            throw new AuthException('Đăng nhập thất bại');
         }
 
         try {
@@ -228,14 +228,14 @@ class OutAccountServices extends BaseServices
             if (!request()->isCli()) {
                 $cacheService->delete($md5Token);
             }
-            throw new AuthException('登录失败');
+            throw new AuthException('Đăng nhập thất bại');
         }
 
         return [$md5Token, $id, $type];
     }
 
     /**
-     * 设置账号推送接口
+     * Cài đặt API đẩy dữ liệu cho tài khoản
      * @param $id
      * @param $data
      * @return \crmeb\basic\BaseModel
@@ -246,18 +246,18 @@ class OutAccountServices extends BaseServices
     }
 
     /**
-     * 测试获取token接口
+     * Kiểm thử API lấy token
      * @param $data
      * @return int[]|mixed
      */
     public function textOutUrl($data)
     {
-        if (!$data['push_account'] || !$data['push_password'] || !$data['push_token_url']) throw new AdminException('参数错误');
+        if (!$data['push_account'] || !$data['push_password'] || !$data['push_token_url']) throw new AdminException('Tham số không hợp lệ');
         $param = ['push_account' => $data['push_account'], 'push_password' => $data['push_password']];
         $res = HttpService::getRequest($data['push_token_url'], $param);
         $res = $res ? json_decode($res, true) : ['status' => 400];
         if (!isset($res['status']) && $res['status'] != 200) {
-            throw new AdminException('设置失败');
+            throw new AdminException('Cài đặt thất bại');
         } else {
             return $res['data'];
         }

@@ -15,19 +15,19 @@
 		<!-- #endif -->
 		<view class="page-msg">
 			<view class="title">
-				{{pageType == 1?$t('绑定手机号'):$t('手机号登录')}}
+				{{pageType == 1?$t('Liên kết số điện thoại'):$t('Đăng nhập bằng số điện thoại')}}
 			</view>
 			<view class="tip">
-				{{pageType == 1?$t('登录注册需绑定手机号'):$t('首次登录会自动注册')}}
+				{{pageType == 1?$t('Đăng nhập/đăng ký cần liên kết số điện thoại'):$t('Lần đầu đăng nhập sẽ tự động đăng ký')}}
 			</view>
 		</view>
 		<view class="page-form">
 			<view class="item">
-				<input type='number' :placeholder='$t(`填写手机号码`)' placeholder-class='placeholder' v-model="phone"
+				<input type='number' :placeholder='$t(`Nhập số điện thoại`)' placeholder-class='placeholder' v-model="phone"
 					:maxlength="11"></input>
 			</view>
 			<view class="item acea-row row-between-wrapper">
-				<input type='number' :placeholder='$t(`填写验证码`)' placeholder-class='placeholder' :maxlength="6"
+				<input type='number' :placeholder='$t(`Nhập mã xác thực`)' placeholder-class='placeholder' :maxlength="6"
 					class="codeIput" v-model="captcha"></input>
 				<view class="line">
 
@@ -37,15 +37,15 @@
 				</button>
 			</view>
 			<view class="btn" @click="submitData">
-				{{$t(`${pageType == 1 ? '绑定手机号' : '立即登录'}`)}}
+				{{$t(`${pageType == 1 ? 'Liên kết số điện thoại' : 'Đăng nhập ngay'}`)}}
 			</view>
 		</view>
 		<view class="protocol" v-if="pageType == 0 && !canGetPrivacySetting">
 			<checkbox-group @click.stop='ChangeIsDefault'>
 				<checkbox :class="inAnimation?'trembling':''" @animationend='inAnimation=false'
-					:checked="protocol ? true : false" /> <text @click.stop='ChangeIsDefault'>{{$t(`已阅读并同意`)}}</text>
-				<text class="main-color" @click.stop="privacy(4)">{{$t(`《用户协议》`)}}</text>
-				{{$t(`与`)}}<text class="main-color" @click.stop="privacy(3)">{{$t(`《隐私协议》`)}}</text>
+					:checked="protocol ? true : false" /> <text @click.stop='ChangeIsDefault'>{{$t(`Đã đọc và đồng ý`)}}</text>
+				<text class="main-color" @click.stop="privacy(4)">{{$t(`“Thỏa thuận người dùng”`)}}</text>
+				{{$t(`và`)}}<text class="main-color" @click.stop="privacy(3)">{{$t(`“Chính sách bảo mật”`)}}</text>
 			</checkbox-group>
 		</view>
 		<Verify @success="success" :captchaType="'clickWord'" :imgSize="{ width: '330px', height: '155px' }"
@@ -96,16 +96,16 @@
 		data() {
 			return {
 				statusBarHeight: statusBarHeight,
-				pageType: 1, // 0 登录 1 绑定手机
+				pageType: 1, // 0 đăng nhập  1 liên kết số điện thoại
 				phone: '',
 				captcha: '',
-				text: '获取验证码',
+				text: 'Lấy mã xác thực',
 				isShow: false,
 				protocol: false,
 				inAnimation: false,
 				authKey: "",
 				backUrl: "",
-				pageTitle: '绑定手机号',
+				pageTitle: 'Liên kết số điện thoại',
 				configData: Cache.get('BASIC_CONFIG'),
 				canGetPrivacySetting: false,
 			}
@@ -123,7 +123,7 @@
 			this.backUrl = options.backUrl || ''
 			if (options.pageType) {
 				this.pageType = options.pageType || 1
-				this.pageTitle = options.pageType == 1 ? '绑定手机号' : '手机号登录'
+				this.pageTitle = options.pageType == 1 ? 'Liên kết số điện thoại' : 'Đăng nhập bằng số điện thoại'
 			}
 			let pages = getCurrentPages();
 			let prePage = pages[pages.length - 2];
@@ -155,7 +155,7 @@
 				let that = this;
 				if (!this.protocol && this.pageType == 0) {
 					uni.showToast({
-						title: this.$t('请先阅读并同意协议'),
+						title: this.$t('Vui lòng đọc và đồng ý với thỏa thuận trước'),
 						icon: 'none',
 						duration: 2000
 					});
@@ -163,19 +163,19 @@
 				}
 				if (!that.phone) {
 					that.$util.Tips({
-						title: that.$t(`请填写手机号码`)
+						title: that.$t(`Vui lòng điền số điện thoại`)
 					});
 					return false
 				}
 				if (!(/^1(3|4|5|7|8|9|6)\d{9}$/i.test(that.phone))) {
 					that.$util.Tips({
-						title: that.$t(`请输入正确的手机号码`)
+						title: that.$t(`Vui lòng nhập đúng số điện thoại`)
 					});
 					return false
 				}
 				if (!that.captcha) {
 					return that.$util.Tips({
-						title: that.$t(`请填写验证码`)
+						title: that.$t(`Vui lòng điền mã xác thực`)
 					});
 					return false
 				}
@@ -185,7 +185,7 @@
 				if (!this.rules()) return
 
 				uni.showLoading({
-					title: this.$t(`正在登录中`)
+					title: this.$t(`Đang đăng nhập`)
 				});
 				Routine.getCode()
 					.then(code => {
@@ -219,7 +219,7 @@
 			},
 			phoneAuth(key) {
 				uni.showLoading({
-					title: this.$t(`正在登录中`)
+					title: this.$t(`Đang đăng nhập`)
 				});
 				let met
 				// #ifdef MP
@@ -247,7 +247,7 @@
 				})
 			},
 			/**
-			 * 获取个人用户信息
+			 * Lấy thông tin người dùng cá nhân
 			 */
 			getUserInfo(new_user) {
 				let that = this;
@@ -261,7 +261,7 @@
 					} else {
 						// #ifdef MP
 						that.$util.Tips({
-							title: that.$t(`登录成功`),
+							title: that.$t(`Đăng nhập thành công`),
 							icon: 'success'
 						}, {
 							tab: 3,
@@ -270,7 +270,7 @@
 						// #endif
 						// #ifndef MP
 						that.$util.Tips({
-							title: that.$t(`登录成功`),
+							title: that.$t(`Đăng nhập thành công`),
 							icon: 'success'
 						}, {
 							tab: 4,
@@ -299,16 +299,16 @@
 				});
 			},
 			/**
-			 * 发送验证码
+			 * Gửi mã xác thực
 			 *
 			 */
 			async code() {
 				let that = this;
 				if (!that.phone) return that.$util.Tips({
-					title: that.$t(`请填写手机号码`)
+					title: that.$t(`Vui lòng điền số điện thoại`)
 				});
 				if (!(/^1(3|4|5|7|8|9|6)\d{9}$/i.test(that.phone))) return that.$util.Tips({
-					title: that.$t(`请输入正确的手机号码`)
+					title: that.$t(`Vui lòng nhập đúng số điện thoại`)
 				});
 				this.$refs.verify.show();
 				return;
@@ -319,7 +319,7 @@
 			closeEdit() {
 				this.isShow = false
 				this.$util.Tips({
-					title: this.$t(`登录成功`),
+					title: this.$t(`Đăng nhập thành công`),
 					icon: 'success'
 				}, {
 					tab: 3,
@@ -477,8 +477,8 @@
 		font-size: 24rpx;
 		line-height: 22rpx;
 		text-align: center;
-		bottom: calc(52rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-		bottom: calc(52rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+		bottom: calc(52rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+		bottom: calc(52rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 
 		.main-color {
 			color: var(--view-theme);
@@ -502,18 +502,18 @@
 		margin-bottom: 1px;
 	}
 
-	/*checkbox 选项框大小  */
+	/*Kích thước ô checkbox  */
 	::v-deep checkbox .wx-checkbox-input {
 		width: 28rpx;
 		height: 28rpx;
 	}
 
-	/*checkbox选中后样式  */
+	/*Style checkbox sau khi chọn  */
 	::v-deep checkbox .wx-checkbox-input.wx-checkbox-input-checked {
 		background: white;
 	}
 
-	/*checkbox选中后图标样式  */
+	/*Style icon checkbox sau khi chọn  */
 	::v-deep checkbox .wx-checkbox-input.wx-checkbox-input-checked::before {
 		width: 28rpx;
 		height: 28rpx;

@@ -8,7 +8,7 @@
         <view
           class="sys-title"
           :style="member_style == 3 ? 'color:#333' : ''"
-          >{{ $t("个人中心") }}</view
+          >{{ $t("Trang cá nhân") }}</view
         >
         <!-- #endif -->
         <view
@@ -98,7 +98,7 @@ export default {
       var nowTime = new Date();
       var rest = setTime - nowTime.getTime();
       var day = parseInt(rest / (60 * 60 * 24 * 1000));
-      // var hour = parseInt(rest/(60*60*1000)%24) //小时
+      // var hour = parseInt(rest/(60*60*1000)%24) //giờ
       return day + this.$t("day");
     },
     dateFormat: function (value) {
@@ -109,32 +109,32 @@ export default {
   data() {
     return {
       currentDiyData: {},
-      editModal: false, // 编辑头像信息
-      storeMenu: [], // 商家管理
+      editModal: false, // Sửa thông tin ảnh đại diện
+      storeMenu: [], // Quản lý cửa hàng
       orderMenu: [
         {
           img: "icon-daifukuan",
-          title: "待付款",
+          title: "Chờ thanh toán",
           url: "/pages/goods/order_list/index?status=0",
         },
         {
           img: "icon-daifahuo",
-          title: "待发货",
+          title: "Chờ giao hàng",
           url: "/pages/goods/order_list/index?status=1",
         },
         {
           img: "icon-daishouhuo",
-          title: "待收货",
+          title: "Chờ nhận hàng",
           url: "/pages/goods/order_list/index?status=2",
         },
         {
           img: "icon-daipingjia",
-          title: "待评价",
+          title: "Chờ đánh giá",
           url: "/pages/goods/order_list/index?status=3",
         },
         {
           img: "icon-a-shouhoutuikuan",
-          title: "售后/退款",
+          title: "Đổi trả/Hoàn tiền",
           url: "/pages/users/user_return_list/index",
         },
       ],
@@ -143,8 +143,8 @@ export default {
       circular: true,
       interval: 3000,
       duration: 500,
-      isAuto: false, //没有授权的不会自动授权
-      isShowAuth: false, //是否隐藏授权
+      isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+      isShowAuth: false, //Có ẩn ủy quyền hay không
       orderStatusNum: {},
       userInfo: {},
       MyMenus: [],
@@ -168,7 +168,7 @@ export default {
       member_style: 0,
       my_banner_status: 0,
       is_diy: uni.getStorageSync("is_diy"),
-      copyRightPic: require("static/images/support.png"), //版权图片
+      copyRightPic: require("static/images/support.png"), //Ảnh bản quyền
       belongIndex: 0,
       isScrolled: false,
       isFixed: false,
@@ -194,7 +194,7 @@ export default {
     uni.hideTabBar();
     let that = this;
     // #ifdef MP
-    // 小程序静默授权
+    // Ủy quyền ngầm Mini Program
     if (!this.$store.getters.isLogin) {
       // Routine.getCode()
       // 	.then(code => {
@@ -212,7 +212,7 @@ export default {
     // if (that.isLogin == false) {
     // 	toLogin();
     // }
-    //获取用户信息回来后授权
+    //Sau khi lấy thông tin người dùng về thì ủy quyền
     let cacheCode = this.$Cache.get("snsapi_userinfo_code");
     let res1 = cacheCode ? option.code != cacheCode : true;
     if (
@@ -233,8 +233,8 @@ export default {
     that.$set(that, "pageHeight", app.globalData.windowHeight);
     // #endif
 
-    let routes = getCurrentPages(); // 获取当前打开过的页面路由数组
-    let curRoute = routes[routes.length - 1].route; //获取当前页面路由
+    let routes = getCurrentPages(); // Lấy mảng route các trang đã từng mở
+    let curRoute = routes[routes.length - 1].route; //Lấy route trang hiện tại
     this.activeRouter = "/" + curRoute;
     this.getCopyRight();
   },
@@ -244,7 +244,7 @@ export default {
     let info = uni.createSelectorQuery().select(".sys-head");
     info
       .boundingClientRect(function (data) {
-        //data - 各种参数
+        //data - các loại tham số
         self.mpHeight = data.height;
       })
       .exec();
@@ -279,7 +279,7 @@ export default {
         uni.navigateTo({
           url: `/pages/goods/goods_list/index?cid=${data.classPage.id}&title=${data.classPage.name}`,
         });
-      } else if (data.text.val == '首页') {
+      } else if (data.text.val == 'Trang chủ') {
         uni.switchTab({
           url: `/pages/index/index`,
         });
@@ -371,17 +371,17 @@ export default {
     closeEdit() {
       this.editModal = false;
     },
-    // 记录会员访问
+    // Ghi lại lượt truy cập của thành viên
     setVisit() {
       setVisit({
         url: "/pages/user/index",
       }).then((res) => {});
     },
-    // 打开授权
+    // Mở ủy quyền
     openAuto() {
       toLogin();
     },
-    // 授权回调
+    // Callback ủy quyền
     onLoadFun() {
       this.getUserInfo();
       this.getMyMenus();
@@ -393,11 +393,11 @@ export default {
         success: function (res) {},
       });
     },
-    // 授权关闭
+    // Đóng ủy quyền
     authColse: function (e) {
       this.isShowAuth = e;
     },
-    // 绑定手机
+    // Liên kết số điện thoại
     bindPhone() {
       uni.navigateTo({
         url: "/pages/users/user_phone/index",
@@ -432,7 +432,7 @@ export default {
       }
     },
     /**
-     * 获取个人用户信息
+     * Lấy thông tin người dùng cá nhân
      */
     getUserInfo: function () {
       let that = this;
@@ -442,19 +442,19 @@ export default {
         that.$store.commit("SETUID", res.data.uid);
         that.orderMenu.forEach((item, index) => {
           switch (item.title) {
-            case "待付款":
+            case "Chờ thanh toán":
               item.num = res.data.orderStatusNum.unpaid_count;
               break;
-            case "待发货":
+            case "Chờ giao hàng":
               item.num = res.data.orderStatusNum.unshipped_count;
               break;
-            case "待收货":
+            case "Chờ nhận hàng":
               item.num = res.data.orderStatusNum.received_count;
               break;
-            case "待评价":
+            case "Chờ đánh giá":
               item.num = res.data.orderStatusNum.evaluated_count;
               break;
-            case "售后/退款":
+            case "Đổi trả/Hoàn tiền":
               item.num = res.data.orderStatusNum.refunding_count;
               break;
           }
@@ -462,30 +462,30 @@ export default {
         uni.stopPullDownRefresh();
       });
     },
-    //小程序授权api替换 getUserInfo
+    //API ủy quyền Mini Program thay thế getUserInfo
     getUserProfile() {
       toLogin();
     },
     /**
      *
-     * 获取个人中心图标
+     * Lấy icon trang cá nhân
      */
     switchTab(order) {
       this.orderMenu.forEach((item, index) => {
         switch (item.title) {
-          case "待付款":
+          case "Chờ thanh toán":
             item.img = order.dfk;
             break;
-          case "待发货":
+          case "Chờ giao hàng":
             item.img = order.dfh;
             break;
-          case "待收货":
+          case "Chờ nhận hàng":
             item.img = order.dsh;
             break;
-          case "待评价":
+          case "Chờ đánh giá":
             item.img = order.dpj;
             break;
-          case "售后/退款":
+          case "Đổi trả/Hoàn tiền":
             item.img = order.sh;
             break;
         }
@@ -506,7 +506,7 @@ export default {
             el.url == "/pages/admin/order/index" ||
             el.url == "/pages/admin/order_cancellation/index" ||
             el.url == "/pages/admin/manage/index" ||
-            el.name == "客服接待"
+            el.name == "Tiếp nhận CSKH"
           ) {
             storeMenu.push(el);
           } else {

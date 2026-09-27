@@ -2,7 +2,7 @@
   <div id="app">
     <router-view />
     <Setings ref="setingsRef" />
-    <!-- 检测版本更新 -->
+    <!-- Kiểm tra cập nhật phiên bản -->
     <!-- <Upgrade v-if="isVersion" /> -->
   </div>
 </template>
@@ -53,13 +53,13 @@ export default {
         this.isRouterAlive = true;
       });
     },
-    // 布局配置弹窗打开
+    // Mở popup cấu hình bố cục (layout)
     openSetingsDrawer() {
       this.bus.$on('openSetingsDrawer', () => {
         this.$refs.setingsRef.openDrawer();
       });
     },
-    // 获取缓存中的布局配置
+    // Lấy cấu hình bố cục trong cache
     getLayoutThemeConfig() {
       if (Local.get('themeConfigPrev')) {
         this.$store.dispatch('themeConfig/setThemeConfig', Local.get('themeConfigPrev'));

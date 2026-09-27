@@ -4,9 +4,9 @@
 			<view class="user-img">
 				<image class="" :src="resData.avatar" mode=""></image>
 			</view>
-			<!-- paid: 0 未支付 1 已支付 type:0 本人 1 好友-->
+			<!-- paid: 0 chưa thanh toán  1 đã thanh toán  type: 0 bản thân  1 bạn bè-->
 			<view class="order-status" v-if="!resData.paid && !resData.type">
-				{{ $t(`代付订单创建成功，发给好友帮你付款吧~`) }}
+				{{ $t(`Tạo đơn thanh toán hộ thành công, gửi cho bạn bè để nhờ thanh toán nhé~`) }}
 			</view>
 		</view>
 		<view class="head-other" v-else>
@@ -18,26 +18,26 @@
 					{{ resData.paid && !resData.type && resData.pay_uid === $store.state.app.uid ? resData.pay_nickname : resData.nickname }}
 				</view>
 				<view class="head-other-trip" v-if="!resData.paid && resData.type">
-					{{ $t(`帮我付一下这件商品了，谢谢~`) }}
+					{{ $t(`Thanh toán giúp mình sản phẩm này nhé, cảm ơn~`) }}
 				</view>
 				<view class="head-other-trip" v-if="resData.pay_uid !== $store.state.app.uid && resData.paid && resData.type">
-					{{ $t(`已经有人替我代付，谢谢啦~`) }}
+					{{ $t(`Đã có người thanh toán hộ mình rồi, cảm ơn nhé~`) }}
 				</view>
 				<view class="head-other-trip" v-if="resData.pay_uid === $store.state.app.uid && resData.paid && resData.type">
-					{{ $t(`谢谢你帮我支付，么么哒~`) }}
+					{{ $t(`Cảm ơn bạn đã thanh toán giúp mình, thương bạn nhiều~`) }}
 				</view>
 				<view class="head-other-trip" v-if="resData.pay_uid !== resData.uid && resData.paid && !resData.type">
-					{{ $t(`我已为你代付成功，商家正在努力发货中~`) }}
+					{{ $t(`Mình đã thanh toán hộ bạn thành công, người bán đang khẩn trương giao hàng~`) }}
 				</view>
 			</view>
 		</view>
 		<view class="order-msg">
 			<view class="pay-success" v-if="resData.paid && !resData.type">
-				{{ $t(`好友代付成功，商家正在努力发货中~`) }}
+				{{ $t(`Bạn bè đã thanh toán hộ thành công, người bán đang khẩn trương giao hàng~`) }}
 			</view>
 			<view v-else class="pay--box">
 				<view class="order-top">
-					{{ $t(`代付金额`) }}
+					{{ $t(`Số tiền thanh toán hộ`) }}
 				</view>
 				<view class="order-num">
 					<text class="icon">{{ $t(`￥`) }}</text>
@@ -46,27 +46,27 @@
 			</view>
 			<!-- #ifdef APP-PLUS -->
 			<view v-if="!resData.paid && !resData.type" class="order-btn" @click="appShare('WXSceneSession')">
-				{{ $t(`发送给微信好友`) }}
+				{{ $t(`Gửi cho bạn bè WeChat`) }}
 			</view>
 			<!-- #endif -->
 			<!-- #ifdef H5 -->
 			<view v-if="!resData.paid && !resData.type" class="order-btn" @click="shareFriend">
-				{{ $t(`发送给微信好友`) }}
+				{{ $t(`Gửi cho bạn bè WeChat`) }}
 			</view>
 			<!-- #endif -->
 			<!-- #ifdef MP -->
 			<button v-if="!resData.paid && !resData.type" class="order-btn" open-type="share" hover-class="none" @click="shareModal = false">
-				{{ $t(`发送给微信好友`) }}
+				{{ $t(`Gửi cho bạn bè WeChat`) }}
 			</button>
 			<!-- #endif -->
 			<button v-if="!resData.paid && !resData.type" class="order-btn detail" @click="goOrderDetail()">
-				{{ $t(`查看订单详情`) }}
+				{{ $t(`Xem chi tiết đơn hàng`) }}
 			</button>
-			<button class="order-btn" v-if="!resData.paid && resData.type" @tap="payOpen()">{{ $t(`立即付款`) }}</button>
-			<button class="order-btn on-pay" v-if="resData.paid && resData.type">{{ $t(`订单已支付`) }}</button>
-			<button class="order-btn" v-if="resData.paid && !resData.type" @tap="goOrderDetail()">{{ $t(`查看订单详情`) }}</button>
+			<button class="order-btn" v-if="!resData.paid && resData.type" @tap="payOpen()">{{ $t(`Thanh toán ngay`) }}</button>
+			<button class="order-btn on-pay" v-if="resData.paid && resData.type">{{ $t(`Đơn hàng đã được thanh toán`) }}</button>
+			<button class="order-btn" v-if="resData.paid && !resData.type" @tap="goOrderDetail()">{{ $t(`Xem chi tiết đơn hàng`) }}</button>
 			<view class="order-trip" v-if="resData.pay_uid === $store.state.app.uid && resData.type">
-				{{ $t(`如果订单申请退款，已支付金额将原路退还给您`) }}
+				{{ $t(`Nếu đơn hàng được yêu cầu hoàn tiền, số tiền đã thanh toán sẽ được hoàn lại cho bạn theo phương thức thanh toán ban đầu`) }}
 			</view>
 		</view>
 		<view class="order-list">
@@ -107,18 +107,18 @@ export default {
 			resData: {},
 			payMode: [
 				{
-					name: this.$t(`微信支付`),
+					name: this.$t(`WeChat Pay`),
 					icon: 'icon-weixinzhifu',
 					value: 'weixin',
-					title: this.$t(`使用微信快捷支付`),
+					title: this.$t(`Thanh toán nhanh qua WeChat`),
 					payStatus: true
 				}
 				// #ifdef H5 || APP-PLUS
 				// {
-				// 	name: '支付宝支付',
+				// 	name: 'Thanh toán Alipay',
 				// 	icon: 'icon-zhifubao',
 				// 	value: 'alipay',
-				// 	title: '使用线上支付宝支付',
+				// 	title: 'Sử dụng thanh toán Alipay online',
 				// 	payStatus: true
 				// },
 				// #endif
@@ -140,7 +140,7 @@ export default {
 	},
 	onReady() {
 		// uni.setNavigationBarTitle({
-		// 	title: '好友代付' || '支付成功'
+		// 	title: 'Bạn bè thanh toán hộ' || 'Thanh toán thành công'
 		// });
 	},
 	onLoad(option) {
@@ -165,7 +165,7 @@ export default {
 	// #endif
 	methods: {
 		/**
-		 * 打开支付组件
+		 * Mở component thanh toán
 		 *
 		 */
 		payOpen() {
@@ -201,8 +201,8 @@ export default {
 			let href = location.href;
 			if (this.$wechat.isWeixin()) {
 				let configAppMessage = {
-					desc: this.$t(`帮我付一下这件商品了，谢谢~`),
-					title: this.$t(`好友代付`),
+					desc: this.$t(`Thanh toán giúp mình sản phẩm này nhé, cảm ơn~`),
+					title: this.$t(`Bạn bè thanh toán hộ`),
 					link: href,
 					imgUrl: data.avatar
 				};
@@ -216,26 +216,26 @@ export default {
 		// #ifdef APP-PLUS
 		appShare(scene) {
 			let that = this;
-			let routes = getCurrentPages(); // 获取当前打开过的页面路由数组
-			let curRoute = routes[routes.length - 1].$page.fullPath; // 获取当前页面路由，也就是最后一个打开的页面路由
+			let routes = getCurrentPages(); // Lấy mảng route các trang đã từng mở
+			let curRoute = routes[routes.length - 1].$page.fullPath; // Lấy route trang hiện tại, tức route trang được mở cuối cùng
 			uni.share({
 				provider: 'weixin',
 				scene: scene,
 				type: 0,
 				href: `${HTTP_REQUEST_URL}${curRoute}`,
-				title: that.$t(`好友代付`),
-				summary: that.$t(`帮我付一下这件商品了，谢谢~`),
+				title: that.$t(`Bạn bè thanh toán hộ`),
+				summary: that.$t(`Thanh toán giúp mình sản phẩm này nhé, cảm ơn~`),
 				imageUrl: that.resData.paid && !that.resData.type && that.resData.pay_uid === that.$store.state.app.uid ? that.resData.pay_avatar : that.resData.avatar,
 				success: function (res) {
 					uni.showToast({
-						title: that.$t(`分享成功`),
+						title: that.$t(`Chia sẻ thành công`),
 						icon: 'success',
 						duration: 2000
 					});
 				},
 				fail: function (err) {
 					uni.showToast({
-						title: that.$t(`分享失败`),
+						title: that.$t(`Chia sẻ thất bại`),
 						icon: 'none',
 						duration: 2000
 					});
@@ -249,7 +249,7 @@ export default {
 			// #endif
 		},
 		/**
-		 * 事件回调
+		 * Callback sự kiện
 		 *
 		 */
 		onChangeFun(e) {
@@ -259,19 +259,19 @@ export default {
 			action && this[action] && this[action](value);
 		},
 		/**
-		 * 关闭支付组件
+		 * Đóng component thanh toán
 		 */
 		payClose() {
 			this.pay_close = false;
 		},
 		/**
-		 * 支付失败回调
+		 * Callback thanh toán thất bại
 		 */
 		pay_fail() {
 			this.pay_close = false;
 		},
 		/**
-		 * 支付成功回调
+		 * Callback thanh toán thành công
 		 */
 		pay_complete() {
 			this.pay_close = false;

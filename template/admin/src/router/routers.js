@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -30,7 +30,7 @@ import crud from './modules/crud';
 const modulesFiles = require.context('./modules/crud', true, /\.js$/);
 
 const routers = [];
-// 将扫描到的路由信息加入路由数组中
+// Thêm thông tin route quét được vào mảng route
 modulesFiles.keys().forEach((modulePath) => {
   const value = modulesFiles(modulePath);
   routers.push(value.default);
@@ -38,7 +38,7 @@ modulesFiles.keys().forEach((modulePath) => {
 
 let routePre = settings.routePre;
 /**
- * 在主框架内显示
+ * Hiển thị trong khung chính
  */
 
 const frameIn = [
@@ -56,7 +56,7 @@ const frameIn = [
       //   path: '/admin/system/log',
       //   name: 'log',
       //   meta: {
-      //     title: '前端日志',
+      //     title: 'Log frontend',
       //     auth: true
       //   },
       //   component: () => import('@/pages/system/log')
@@ -66,7 +66,7 @@ const frameIn = [
         name: `systemUser`,
         meta: {
           auth: true,
-          title: '个人中心',
+          title: 'Trang cá nhân',
         },
         component: () => import('@/pages/setting/user/index'),
       },
@@ -75,11 +75,11 @@ const frameIn = [
         name: `systemFiles`,
         meta: {
           auth: ['admin-setting-files'],
-          title: '文件管理',
+          title: 'Quản lý tệp',
         },
         component: () => import('@/pages/setting/userFile/index'),
       },
-      // 刷新页面 必须保留
+      // Làm mới trang, phải giữ lại
       {
         path: 'refresh',
         name: 'refresh',
@@ -91,7 +91,7 @@ const frameIn = [
           render: (h) => h(),
         },
       },
-      // 页面重定向 必须保留
+      // Chuyển hướng trang, phải giữ lại
       {
         path: 'redirect/:route*',
         name: 'redirect',
@@ -120,7 +120,7 @@ const frameIn = [
     name: `images`,
     meta: {
       auth: ['admin-user-user-index'],
-      title: '上传图片',
+      title: 'Tải lên ảnh',
     },
     component: () => import('@/components/uploadPictures/widgetImg'),
   },
@@ -129,7 +129,7 @@ const frameIn = [
     name: `imagesIcon`,
     meta: {
       auth: ['admin-user-user-index'],
-      title: '上传图标',
+      title: 'Tải lên biểu tượng',
     },
     component: () => import('@/components/iconFrom/index'),
   },
@@ -137,7 +137,7 @@ const frameIn = [
     path: routePre + '/store.StoreProduct/index.html',
     name: `storeProduct`,
     meta: {
-      title: '选择商品',
+      title: 'Chọn sản phẩm',
     },
     component: () => import('@/components/goodsList/index'),
   },
@@ -145,7 +145,7 @@ const frameIn = [
     path: routePre + '/system.User/list.html',
     name: `changeUser`,
     meta: {
-      title: '选择用户',
+      title: 'Chọn người dùng',
     },
     component: () => import('@/components/customerInfo/index'),
   },
@@ -153,7 +153,7 @@ const frameIn = [
     path: routePre + '/widget.video/index.html',
     name: `video`,
     meta: {
-      title: '上传视频',
+      title: 'Tải lên video',
     },
     component: () => import('@/components/uploadVideo/index'),
   },
@@ -175,13 +175,13 @@ const frameIn = [
 ];
 
 /**
- * 在主框架之外显示
+ * Hiển thị ngoài khung chính
  */
 
 const frameOuts = frameOut;
 
 /**
- * 错误页面
+ * Trang lỗi
  */
 
 const errorPage = [
@@ -211,8 +211,8 @@ const errorPage = [
   },
 ];
 
-// 导出需要显示菜单的
+// Xuất ra những menu cần hiển thị
 export const frameInRoutes = frameIn;
 
-// 重新组织后导出
+// Tổ chức lại rồi xuất ra
 export default [...frameIn, ...frameOuts, ...errorPage];

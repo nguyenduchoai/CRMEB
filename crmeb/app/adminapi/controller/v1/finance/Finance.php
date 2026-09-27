@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -32,7 +32,7 @@ class Finance extends AuthController
     }
 
     /**
-     * 筛选类型
+     * Loại bộ lọc
      */
     public function bill_type()
     {
@@ -40,7 +40,7 @@ class Finance extends AuthController
     }
 
     /**
-     * 资金记录
+     * Lịch sử dòng tiền
      */
     public function list()
     {
@@ -56,7 +56,7 @@ class Finance extends AuthController
     }
 
     /**
-     * 佣金记录
+     * Lịch sử hoa hồng
      * @return mixed
      */
     public function get_commission_list()
@@ -73,7 +73,7 @@ class Finance extends AuthController
     }
 
     /**
-     * 佣金详情用户信息
+     * Thông tin người dùng trong chi tiết hoa hồng
      * @param $id
      * @return mixed
      */
@@ -83,11 +83,11 @@ class Finance extends AuthController
     }
 
     /**
-     * 佣金提现记录个人列表
+     * Danh sách lịch sử rút hoa hồng của cá nhân
      */
     public function get_extract_list($id = '')
     {
-        if ($id == '') return app('json')->fail('参数错误');
+        if ($id == '') return app('json')->fail('Tham số không hợp lệ');
         $where = $this->request->getMore([
             ['start_time', ''],
             ['end_time', ''],

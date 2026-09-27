@@ -24,28 +24,28 @@
 								<view class='name line2'>{{item.store_name || ''}}</view>
 								<view class='booking'>
 									<text v-if="item.presell_type != 0 && active != 1" class="count"
-										style="color: #999;">{{$t(`已预定`)}}{{item.sales ? item.sales : 0}}{{item.unit_name || ''}}</text>
-									<text v-else style="color: #999; font-size: 24rpx;">{{$t(`未开始`)}}</text>
+										style="color: #999;">{{$t(`Đã đặt trước`)}}{{item.sales ? item.sales : 0}}{{item.unit_name || ''}}</text>
+									<text v-else style="color: #999; font-size: 24rpx;">{{$t(`Chưa bắt đầu`)}}</text>
 								</view>
 								<view v-if="item.coupon" class='coupon acea-row row-between-wrapper'
 									style="margin-top: 14rpx;">
 									<view class='hide line1 acea-row'>
 										<view class='activity'>
-											<!-- 满{{item.coupon.use_min_price}}减{{item.coupon.coupon_price}} -->
+											<!-- Đơn từ {{item.coupon.use_min_price}} giảm {{item.coupon.coupon_price}} -->
 										</view>
 									</view>
 								</view>
 								<view class="progress">
 									<view class='presell_price'>
-										<text class="presell_text">{{$t(`预售价`)}}</text>
+										<text class="presell_text">{{$t(`Giá đặt trước`)}}</text>
 										<text class="price">{{$t(`￥`)}} <text>{{ item.price }}</text></text>
 									</view>
 									<text class="iconfont icon-yushouanniu"></text>
 									<view v-if="active != 1" class='order_btn'>
-										{{ active === 2  ? $t(`立即预定`) : $t(`已结束`) }}
+										{{ active === 2  ? $t(`Đặt trước ngay`) : $t(`Đã kết thúc`) }}
 									</view>
 									<view v-else class="unStartBtn">
-										<text>{{$t(`开售时间`)}}</text>
+										<text>{{$t(`Thời gian mở bán`)}}</text>
 										<view>
 											{{ new Date(item.presale_start_time*1000).getMonth()+1 }}/{{ new Date(item.presale_start_time*1000).getDate() }}
 											{{ new Date(item.presale_start_time*1000).getHours()<10?'0'+ 
@@ -61,7 +61,7 @@
 					<view class='noCommodity' v-if="presellList.length == 0">
 						<view class='emptyBox'>
 							<image :src="imgHost + '/statics/images/no-thing.png'"></image>
-							<view class="tips">{{$t(`暂无商品，去看点别的吧`)}}</view>
+							<view class="tips">{{$t(`Chưa có sản phẩm, hãy xem thứ khác nhé`)}}</view>
 						</view>
 					</view>
 				</view>
@@ -98,13 +98,13 @@
 				topImage: '',
 				presellList: [],
 				timeList: [{
-					name: this.$t(`未开始`),
+					name: this.$t(`Chưa bắt đầu`),
 					key: 1
 				}, {
-					name: this.$t(`抢购中`),
+					name: this.$t(`Đang diễn ra`),
 					key: 2
 				}, {
-					name: this.$t(`已结束`),
+					name: this.$t(`Đã kết thúc`),
 					key: 3
 				}, ],
 				active: 2,
@@ -128,7 +128,7 @@
 			}
 		},
 		/**
-		 * 用户点击右上角分享
+		 * Người dùng click chia sẻ ở góc trên phải
 		 */
 		// #ifdef MP
 		onShareAppMessage: function() {
@@ -137,13 +137,13 @@
 				menus: ['shareAppMessage', 'shareTimeline']
 			})
 			return {
-				title: this.$t(`预售活动`),
+				title: this.$t(`Hoạt động đặt trước`),
 				path: 'pages/activity/presell/index',
 			}
 		},
 		onShareTimeline: function() {
 			return {
-				title: this.$t(`预售活动`),
+				title: this.$t(`Hoạt động đặt trước`),
 				query: {
 					key: ''
 				},
@@ -216,7 +216,7 @@
 			}
 		},
 		/**
-		 * 页面上拉触底事件的处理函数
+		 * Hàm xử lý sự kiện kéo lên đến đáy trang
 		 */
 		onReachBottom: function() {
 			this.getPresellProductList();

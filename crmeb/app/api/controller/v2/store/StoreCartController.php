@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -25,7 +25,7 @@ class StoreCartController
     }
 
     /**
-     * 购物车重选
+     * Chọn lại giỏ hàng
      * @param Request $request
      * @return mixed
      */
@@ -38,11 +38,11 @@ class StoreCartController
             ['product_id', 0]
         ], true);
         $this->services->resetCart($id, $request->uid(), $product_id, $unique, $num);
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
     /**
-     * 获取用户购物车
+     * Lấy giỏ hàng của người dùng
      * @param Request $request
      * @return mixed
      */
@@ -55,7 +55,7 @@ class StoreCartController
     }
 
     /**
-     * 首页加入购物车
+     * Thêm vào giỏ hàng từ trang chủ
      * @param Request $request
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -72,9 +72,9 @@ class StoreCartController
         ], true);
         /** @var StoreCartServices $cartService */
         $cartService = app()->make(StoreCartServices::class);
-        if (!$product_id || !is_numeric($product_id)) return app('json')->fail('参数错误');
+        if (!$product_id || !is_numeric($product_id)) return app('json')->fail('Tham số không hợp lệ');
         $res = $cartService->setCartNum($request->uid(), $product_id, $num, $unique, $type);
-        if ($res) return app('json')->success('加入购物车成功!');
-        return app('json')->fail('加入购物车失败!');
+        if ($res) return app('json')->success('Thêm vào giỏ hàng thành công!');
+        return app('json')->fail('Thêm vào giỏ hàng thất bại!');
     }
 }

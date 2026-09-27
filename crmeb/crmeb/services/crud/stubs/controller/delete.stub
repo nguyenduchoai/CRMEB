@@ -1,5 +1,5 @@
     /**
-     * 删除
+     * Xóa
      * @param $id
      * @return \think\Response
      * @date {%DATE%}
@@ -7,12 +7,12 @@
     public function delete($id)
     {
         if (!$id) {
-            return app('json')->fail('参数错误');
+            return app('json')->fail('Tham số không hợp lệ');
         }
 
         if ($this->service->destroy((int)$id)) {
-            return app('json')->success('删除成功');
+            return app('json')->success('Xóa thành công');
         } else {
-            return app('json')->fail('删除失败');
+            return app('json')->fail('Xóa thất bại');
         }
     }

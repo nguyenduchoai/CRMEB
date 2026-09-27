@@ -39,7 +39,7 @@ trait CallPropsRule
             $this->props[$name] = $value;
             return $this;
         } else {
-            throw new FormBuilderException($name . '方法不存在');
+            throw new FormBuilderException($name . 'phương thức không tồn tại');
         }
     }
 }

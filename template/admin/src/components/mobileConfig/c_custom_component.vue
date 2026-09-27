@@ -152,24 +152,24 @@ export default {
       }
       if (!data.customBtnConfig) {
         this.$set(data, 'customBtnConfig', {
-          title: '设计组件',
+          title: 'Thiết kế thành phần',
         });
       }
       if (!data.fillet) {
         this.$set(data, 'fillet', {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 0,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
@@ -177,19 +177,19 @@ export default {
       }
       if (!data.filletDataConfig) {
         this.$set(data, 'filletDataConfig', {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 0,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
@@ -197,11 +197,11 @@ export default {
       }
       if (!data.componentBgConfig) {
         this.$set(data, 'componentBgConfig', {
-          title: '背景样式',
+          title: 'Kiểu nền',
           tabVal: 0,
-          tabList: [{ name: '颜色' }, { name: '图片' }],
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
           colorConfig: {
-            title: '背景颜色',
+            title: 'Màu nền',
             color: [
               {
                 item: '#fff',
@@ -214,23 +214,23 @@ export default {
             ],
           },
           imageConfig: {
-            title: '背景图片',
+            title: 'Ảnh nền',
             url: '',
           },
           colorDirection: {
-            title: '渐变方向',
+            title: 'Hướng chuyển màu',
             tabVal: 0,
-            tabList: [{ name: '横向' }, { name: '纵向' }, { name: '左斜' }, { name: '右斜' }],
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
           },
         });
       }
       if (!data.componentBgDataConfig) {
         this.$set(data, 'componentBgDataConfig', {
-          title: '背景样式',
+          title: 'Kiểu nền',
           tabVal: 0,
-          tabList: [{ name: '颜色' }, { name: '图片' }],
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
           colorConfig: {
-            title: '背景颜色',
+            title: 'Màu nền',
             color: [
               {
                 item: '#fff',
@@ -243,19 +243,19 @@ export default {
             ],
           },
           imageConfig: {
-            title: '背景图片',
+            title: 'Ảnh nền',
             url: '',
           },
           colorDirection: {
-            title: '渐变方向',
+            title: 'Hướng chuyển màu',
             tabVal: 0,
-            tabList: [{ name: '横向' }, { name: '纵向' }, { name: '左斜' }, { name: '右斜' }],
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
           },
         });
       }
       if (!data.marginConfig) {
         this.$set(data, 'marginConfig', {
-          title: '边距设置',
+          title: 'Cài đặt lề',
           val: 0,
           min: 0,
           max: 100,
@@ -265,7 +265,7 @@ export default {
       }
       if (!data.marginDataConfig) {
         this.$set(data, 'marginDataConfig', {
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,
@@ -275,7 +275,7 @@ export default {
       }
       if (!data.paddingConfig) {
         this.$set(data, 'paddingConfig', {
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           max: 100,
@@ -285,7 +285,7 @@ export default {
       }
       if (!data.paddingDataConfig) {
         this.$set(data, 'paddingDataConfig', {
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           max: 100,
@@ -295,42 +295,42 @@ export default {
       }
       if (!data.borderConfig) {
         this.$set(data, 'borderConfig', {
-          title: '边框设置',
+          title: 'Cài đặt viền',
           tabVal: 0,
           tabList: [
             {
-              name: '隐藏',
+              name: 'Ẩn',
             },
             {
-              name: '显示',
+              name: 'Hiện',
             },
           ],
           val: 0,
           styleConfig: {
-            title: '边框样式',
+            title: 'Kiểu viền',
             tabVal: 0,
             tabList: [
               {
-                name: '实线',
+                name: 'Nét liền',
                 style: 'solid',
               },
               {
-                name: '虚线',
+                name: 'Nét đứt',
                 style: 'dashed',
               },
               {
-                name: '点状',
+                name: 'Nét chấm',
                 style: 'dotted',
               },
             ],
           },
           widthConfig: {
-            title: '边框粗细',
+            title: 'Độ dày viền',
             val: 1,
             min: 1,
           },
           colorConfig: {
-            title: '边框颜色',
+            title: 'Màu viền',
             default: [
               {
                 item: '#e5e5e5',
@@ -346,42 +346,42 @@ export default {
       }
       if (!data.borderDataConfig) {
         this.$set(data, 'borderDataConfig', {
-          title: '边框设置',
+          title: 'Cài đặt viền',
           tabVal: 0,
           tabList: [
             {
-              name: '隐藏',
+              name: 'Ẩn',
             },
             {
-              name: '显示',
+              name: 'Hiện',
             },
           ],
           val: 0,
           styleConfig: {
-            title: '边框样式',
+            title: 'Kiểu viền',
             tabVal: 0,
             tabList: [
               {
-                name: '实线',
+                name: 'Nét liền',
                 style: 'solid',
               },
               {
-                name: '虚线',
+                name: 'Nét đứt',
                 style: 'dashed',
               },
               {
-                name: '点状',
+                name: 'Nét chấm',
                 style: 'dotted',
               },
             ],
           },
           widthConfig: {
-            title: '边框粗细',
+            title: 'Độ dày viền',
             val: 1,
             min: 1,
           },
           colorConfig: {
-            title: '边框颜色',
+            title: 'Màu viền',
             default: [
               {
                 item: '#e5e5e5',
@@ -397,32 +397,32 @@ export default {
       }
       if (!data.shadowConfig) {
         this.$set(data, 'shadowConfig', {
-          title: '阴影设置',
+          title: 'Cài đặt đổ bóng',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0,
           colorConfig: {
-            title: '阴影颜色',
+            title: 'Màu đổ bóng',
             default: [{ item: 'rgba(0,0,0,0.1)' }],
             color: [{ item: 'rgba(0,0,0,0.1)' }],
           },
           xConfig: {
-            title: 'X轴偏移',
+            title: 'Độ lệch trục X',
             val: 0,
             min: -50,
           },
           yConfig: {
-            title: 'Y轴偏移',
+            title: 'Độ lệch trục Y',
             val: 0,
             min: -50,
           },
           blurConfig: {
-            title: '模糊半径',
+            title: 'Bán kính làm mờ',
             val: 10,
             min: 0,
           },
           spreadConfig: {
-            title: '扩展半径',
+            title: 'Bán kính lan tỏa',
             val: 0,
             min: -50,
           },
@@ -430,32 +430,32 @@ export default {
       }
       if (!data.shadowDataConfig) {
         this.$set(data, 'shadowDataConfig', {
-          title: '阴影设置',
+          title: 'Cài đặt đổ bóng',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0,
           colorConfig: {
-            title: '阴影颜色',
+            title: 'Màu đổ bóng',
             default: [{ item: 'rgba(0,0,0,0.1)' }],
             color: [{ item: 'rgba(0,0,0,0.1)' }],
           },
           xConfig: {
-            title: 'X轴偏移',
+            title: 'Độ lệch trục X',
             val: 0,
             min: -50,
           },
           yConfig: {
-            title: 'Y轴偏移',
+            title: 'Độ lệch trục Y',
             val: 0,
             min: -50,
           },
           blurConfig: {
-            title: '模糊半径',
+            title: 'Bán kính làm mờ',
             val: 10,
             min: 0,
           },
           spreadConfig: {
-            title: '扩展半径',
+            title: 'Bán kính lan tỏa',
             val: 0,
             min: -50,
           },
@@ -463,7 +463,7 @@ export default {
       }
       if (!data.bottomBgColor) {
         this.$set(data, 'bottomBgColor', {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           color: [
             {
               item: '#f5f5f5',
@@ -478,13 +478,13 @@ export default {
       }
       if (!data.selectType) {
         this.$set(data, 'selectType', {
-          title: '选择信息',
+          title: 'Chọn thông tin',
           activeValue: 'user',
           list: [
-            { activeValue: 'user', title: '用户' },
-            { activeValue: 'article', title: '文章' },
-            { activeValue: 'coupon', title: '优惠券' },
-            { activeValue: 'goods', title: '商品' },
+            { activeValue: 'user', title: 'Người dùng' },
+            { activeValue: 'article', title: 'Bài viết' },
+            { activeValue: 'coupon', title: 'Phiếu giảm giá' },
+            { activeValue: 'goods', title: 'Sản phẩm' },
           ],
         });
       }

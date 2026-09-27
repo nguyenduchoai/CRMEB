@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -30,11 +30,11 @@ class StoreOutAccountValidate extends Validate
      * @var string[]
      */
     protected $message = [
-        'appid.require' => '请填写账号',
-        'appid.account' => '账号必须为数字或者字母的组合4-30位',
-        'appsecret.min' => '密码必须是在6到16位之间',
-        'appsecret.max' => '密码必须是在6到16位之间',
-        'title.max' => '描述内容不能超过120字',
+        'appid.require' => 'Vui lòng điền tài khoản',
+        'appid.account' => 'Tài khoản phải gồm 4-30 ký tự chữ số hoặc chữ cái',
+        'appsecret.min' => 'Mật khẩu phải dài từ 6 đến 16 ký tự',
+        'appsecret.max' => 'Mật khẩu phải dài từ 6 đến 16 ký tự',
+        'title.max' => 'Nội dung mô tả không được vượt quá 120 ký tự',
     ];
 
     protected $scene = [

@@ -1,39 +1,39 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2021 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 import { imageBase64 } from "@/api/public";
 import {
-  getProductCode, // 普通商品小程序code
+  getProductCode, // Code Mini Program của sản phẩm thường
 } from "@/api/store.js";
 import {
-  scombinationCode, // 拼团code
-  seckillCode, // 秒杀
+  scombinationCode, // Code mua chung
+  seckillCode, // Flash sale
 } from "@/api/activity.js";
 import i18n from "../utils/lang.js";
 let sysHeight = uni.getWindowInfo().statusBarHeight + "px";
 export const sharePoster = {
   data() {
     return {
-      //二维码参数
+      //Tham số mã QR
       codeShow: false,
       cid: "1",
-      codeVal: "", // 要生成的二维码值
-      size: 200, // 二维码大小
-      unit: "upx", // 单位
-      background: "#FFF", // 背景色
-      foreground: "#000", // 前景色
-      pdground: "#000", // 角标色
-      codeIcon: "", // 二维码图标
-      iconsize: 40, // 二维码图标大小
-      lv: 3, // 二维码容错级别 ， 一般不用设置，默认就行
-      onval: true, // val值变化时自动重新生成二维码
-      loadMake: true, // 组件加载完成后自动生成二维码
+      codeVal: "", // Giá trị mã QR cần tạo
+      size: 200, // Kích thước mã QR
+      unit: "upx", // Đơn vị
+      background: "#FFF", // Màu nền
+      foreground: "#000", // Màu nền trước (foreground)
+      pdground: "#000", // Màu badge góc
+      codeIcon: "", // Icon mã QR
+      iconsize: 40, // Kích thước icon mã QR
+      lv: 3, // Mức chịu lỗi mã QR, thường không cần đặt, để mặc định là được
+      onval: true, // Khi giá trị val thay đổi thì tự tạo lại mã QR
+      loadMake: true, // Sau khi component tải xong thì tự tạo mã QR
       base64Show: 0,
       shareQrcode: 0,
       followCode: "",
@@ -73,12 +73,12 @@ export const sharePoster = {
         src: that.PromotionCode,
         success() {
           if (arr2[2] == "") {
-            //海报二维码不存在则从新下载
+            //Nếu mã QR trên poster không tồn tại thì tải lại
             that.downloadFilePromotionCode(function (msgPromotionCode) {
               arr2[2] = msgPromotionCode;
               if (arr2[2] == "")
                 return that.$util.Tips({
-                  title: i18n.t(`海报二维码生成失败`),
+                  title: i18n.t(`Tạo mã QR cho poster thất bại`),
                 });
               that.$util.PosterCanvas(
                 arr2,
@@ -94,7 +94,7 @@ export const sharePoster = {
               );
             });
           } else {
-            //生成推广海报
+            //Tạo poster giới thiệu
             that.$nextTick((e) => {
               that.$util.PosterCanvas(
                 arr2,
@@ -119,14 +119,14 @@ export const sharePoster = {
           // #endif
           // #ifdef MP
           return that.$util.Tips({
-            title: i18n.t(`正在下载海报,请稍后再试`),
+            title: i18n.t(`Đang tải poster, vui lòng thử lại sau`),
           });
           // #endif
         },
       });
     },
     /**
-     * 生成海报
+     * Tạo poster
      */
     async goPoster(type) {
       let that = this;
@@ -170,19 +170,19 @@ export const sharePoster = {
       arr2 = [that.posterbackgd, that.storeImageBase64, that.PromotionCode];
       if (!that.storeImageBase64)
         return that.$util.Tips({
-          title: i18n.t(`正在下载海报,请稍后再试`),
+          title: i18n.t(`Đang tải poster, vui lòng thử lại sau`),
         });
       that.initPoster(arr2);
       // #endif
     },
-    //替换安全域名
+    //Thay domain an toàn
     setDomain(url) {
       url = url ? url.toString() : "";
-      //本地调试打开,生产请注销
+      //Mở khi debug local, khi lên production hãy comment lại
       if (url.indexOf("https://") > -1) return url;
       else return url.replace("http://", "https://");
     },
-    //获取海报产品图
+    //Lấy ảnh sản phẩm trên poster
     downloadFilestoreImage() {
       let that = this;
       uni.downloadFile({
@@ -200,8 +200,8 @@ export const sharePoster = {
       });
     },
     /**
-     * 获取产品分销二维码
-     * @param function successFn 下载完成回调
+     * Lấy mã QR tiếp thị liên kết của sản phẩm
+     * @param function successFn Callback khi tải xong
      *
      */
     downloadFilePromotionCode(successFn) {

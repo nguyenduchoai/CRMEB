@@ -3,11 +3,11 @@
     <el-dialog :visible.sync="modals" :title="FromData.title" width="720px" @closed="cancel">
       <template>
         <div class="radio acea-row row-middle" v-if="FromData.action === '/marketing/coupon/save.html'">
-          <div class="name ivu-form-item-content">优惠券类型</div>
+          <div class="name ivu-form-item-content">Loại phiếu giảm giá</div>
           <el-radio-group v-model="type" @input="couponsType">
-            <el-radio :label="0">通用券</el-radio>
-            <el-radio :label="1">品类券</el-radio>
-            <el-radio :label="2">商品券</el-radio>
+            <el-radio :label="0">Phiếu toàn cửa hàng</el-radio>
+            <el-radio :label="1">Phiếu theo danh mục</el-radio>
+            <el-radio :label="2">Phiếu theo sản phẩm</el-radio>
           </el-radio-group>
         </div>
       </template>
@@ -21,8 +21,8 @@
         handleIcon="false"
       ></form-create>
       <span slot="footer" class="dialog-footer">
-        <el-button v-db-click @click="modals = false">取 消</el-button>
-        <el-button type="primary" v-db-click @click="formSubmit">确 定</el-button>
+        <el-button v-db-click @click="modals = false">Hủy</el-button>
+        <el-button type="primary" v-db-click @click="formSubmit">Xác nhận</el-button>
       </span>
     </el-dialog>
   </div>
@@ -92,7 +92,7 @@ export default {
     formSubmit() {
       this.fapi.submit();
     },
-    // 提交表单 group
+    // Submit form, group
     onSubmit(formData) {
       let datas = {};
       datas = formData;
@@ -117,7 +117,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 关闭按钮
+    // Nút đóng
     cancel() {
       this.type = 0;
       // this.$emit('onCancel')

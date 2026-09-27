@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use crmeb\traits\ModelTrait;
 use think\Model;
 
 /**
- * TODO 发布优惠券Model
+ * TODO Model phát hành phiếu giảm giá
  * Class StoreCouponIssue
  * @package app\model\coupon
  */
@@ -25,19 +25,19 @@ class StoreCouponIssue extends BaseModel
     use ModelTrait;
 
     /**
-     * 数据表主键
+     * Khóa chính bảng dữ liệu
      * @var string
      */
     protected $pk = 'id';
 
     /**
-     * 模型名称
+     * Tên model
      * @var string
      */
     protected $name = 'store_coupon_issue';
 
     /**
-     * 用户是否拥有
+     * Người dùng có sở hữu hay không
      * @return \think\model\relation\HasOne
      */
     public function used()
@@ -59,7 +59,7 @@ class StoreCouponIssue extends BaseModel
     }
 
     /**
-     * 优惠券模板搜索器
+     * Bộ lọc mẫu phiếu giảm giá
      * @param Model $query
      * @param $value
      * @param $data
@@ -70,7 +70,7 @@ class StoreCouponIssue extends BaseModel
     }
 
     /**
-     * 优惠券是否不限量
+     * Phiếu giảm giá có không giới hạn số lượng hay không
      * @param Model $query
      * @param $value
      * @param $data
@@ -81,7 +81,7 @@ class StoreCouponIssue extends BaseModel
     }
 
     /**
-     * 优惠券是否新人券
+     * Phiếu giảm giá có phải phiếu cho người mới hay không
      * @param Model $query
      * @param $value
      * @param $data
@@ -92,7 +92,7 @@ class StoreCouponIssue extends BaseModel
     }
 
     /**
-     * 优惠券是否满赠
+     * Phiếu giảm giá có phải tặng theo đơn tối thiểu hay không
      * @param Model $query
      * @param $value
      * @param $data
@@ -103,7 +103,7 @@ class StoreCouponIssue extends BaseModel
     }
 
     /**
-     * 优惠券状态
+     * Trạng thái phiếu giảm giá
      * @param Model $query
      * @param $value
      * @param $data
@@ -114,7 +114,7 @@ class StoreCouponIssue extends BaseModel
     }
 
     /**
-     * 优惠券是否删除
+     * Phiếu giảm giá đã xóa hay chưa
      * @param Model $query
      * @param $value
      * @param $data
@@ -125,7 +125,7 @@ class StoreCouponIssue extends BaseModel
     }
 
     /**
-     * 优惠券名称
+     * Tên phiếu giảm giá
      * @param Model $query
      * @param $value
      * @param $data
@@ -136,7 +136,7 @@ class StoreCouponIssue extends BaseModel
     }
 
     /**
-     * 优惠券类型
+     * Loại phiếu giảm giá
      * @param Model $query
      * @param $value
      */

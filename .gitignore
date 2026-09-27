@@ -5,21 +5,21 @@
 *.DS_Store
 *.iml
 
-# CRMEB运行时
+# Runtime của CRMEB
 /crmeb/runtime/*
 /crmeb/backup/*
 /crmeb/public/install.lock
 crmeb/public/uploads/*
 
 
-# Docker数据
+# Dữ liệu Docker
 /docker-compose/mysql/data/
 /docker-compose/mysql/log/
 /docker-compose/nginx/log/
 /docker-compose-universal/*/mysql/
 /docker-compose-universal/*/data/
 
-# 构建产物
+# Kết quả build
 /template/admin/dist/
 /template/admin/node_modules/
 /template/uni-app/node_modules/
@@ -27,14 +27,14 @@ crmeb/public/uploads/*
 /template/uni-app/.hbuilderx/
 /crmeb/.idea/
 
-# 备份文件
+# File sao lưu
 *_backup/
 
 # Docker Compose
 /docker-compose-dev/
 /help/docker/mysql/data/
 
-# 配置文件(敏感信息)
+# File cấu hình (thông tin nhạy cảm)
 crmeb/.env
 crmeb/.constant
 crmeb/supervisord.log
@@ -48,7 +48,7 @@ crmeb/vhost.conf
 crmeb/php-ini-overrides.ini
 crmeb/php-fpm.conf
 
-# 代码助手规则文件
+# File quy tắc cho trợ lý code
 .codebuddy/rules/dockerfile-buid.mdc
 .codebuddy/rules/docker-compose-buid.mdc
 

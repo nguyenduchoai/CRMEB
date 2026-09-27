@@ -2,7 +2,7 @@
   <view class="deliver-goods">
     <header class="header">
       <view class="order-num">
-        <view class="num line1">订单号：{{ order_id }}</view>
+        <view class="num line1">Mã đơn hàng: {{ order_id }}</view>
       </view>
       <view class="address">
         <view class="name">
@@ -10,7 +10,7 @@
           {{ delivery.real_name }}
           <text class="phone">{{ delivery.user_phone }}</text>
         </view>
-        <view>地址：{{ delivery.user_address }}</view>
+        <view>Địa chỉ: {{ delivery.user_address }}</view>
       </view>
       <view class="line">
         <image src="@/static/images/line.jpg" />
@@ -18,7 +18,7 @@
     </header>
     <view class="wrapper">
       <view class="item acea-row row-between-wrapper">
-        <view>发货方式</view>
+        <view>Hình thức giao hàng</view>
         <view class="mode acea-row row-middle row-right">
           <template v-for="(item, index) in types">
             <view
@@ -45,7 +45,7 @@
             class="item acea-row row-middle"
             v-if="delivery.config_export_open == 1"
           >
-            <view>发货类型</view>
+            <view>Hình thức giao hàng</view>
             <view class="mode acea-row row-middle row-right">
               <view
                 class="goods"
@@ -68,7 +68,7 @@
           </view>
           <block v-if="curExpress == 1">
             <view class="item acea-row row-middle">
-              <view>快递公司</view>
+              <view>Đơn vị vận chuyển</view>
               <view class="select-box">
                 <picker
                   class="pickerBox"
@@ -83,10 +83,10 @@
               <text class="iconfont icon-ic_rightarrow"></text>
             </view>
             <view class="item acea-row row-middle">
-              <view>快递单号</view>
+              <view>Mã vận đơn</view>
               <input
                 type="text"
-                placeholder="请输入"
+                placeholder="Vui lòng nhập"
                 v-model="delivery_id"
                 class="mode"
               />
@@ -103,43 +103,43 @@
             </view>
             <view class="item">
               <view class="trip" v-if="curExpress == 1"
-                >顺丰请输入单号 :收件人或寄件人手机号后四位</view
+                >Với SF Express, vui lòng nhập mã vận đơn: 4 số cuối số điện thoại người nhận hoặc người gửi</view
               >
               <view class="trip" v-if="curExpress == 1"
-                >例如：SF000000000000:3941</view
+                >Ví dụ: SF000000000000:3941</view
               >
             </view>
           </block>
           <block v-if="curExpress == 2">
             <view class="item acea-row row-between-wrapper">
-              <view>寄件人姓名</view>
+              <view>Họ tên người gửi</view>
               <input
                 type="text"
-                placeholder="填写寄件人姓名"
+                placeholder="Điền họ tên người gửi"
                 v-model="to_name"
                 class="mode"
               />
             </view>
             <view class="item acea-row row-between-wrapper">
-              <view>寄件人电话</view>
+              <view>Số điện thoại người gửi</view>
               <input
                 type="text"
-                placeholder="填写寄件人电话"
+                placeholder="Điền số điện thoại người gửi"
                 v-model="to_tel"
                 class="mode"
               />
             </view>
             <view class="item acea-row row-between-wrapper">
-              <view>寄件人地址</view>
+              <view>Địa chỉ người gửi</view>
               <input
                 type="text"
-                placeholder="填写寄件人地址"
+                placeholder="Điền địa chỉ người gửi"
                 v-model="to_addr"
                 class="mode"
               />
             </view>
             <view class="item acea-row row-between-wrapper">
-              <view>快递公司</view>
+              <view>Đơn vị vận chuyển</view>
               <view class="select-box">
                 <picker
                   class="pickerBox"
@@ -157,7 +157,7 @@
               class="item acea-row row-between-wrapper"
               v-if="expTemp.length > 0"
             >
-              <view>电子面单</view>
+              <view>Vận đơn điện tử</view>
               <view class="picker-add">
                 <picker
                   class="pickerBox"
@@ -168,7 +168,7 @@
                 >
                   <view class="uni-input">{{ expTemp[expIndex].title }}</view>
                 </picker>
-                <view class="look" @click="previewImage">预览</view>
+                <view class="look" @click="previewImage">Xem trước</view>
               </view>
             </view>
           </block>
@@ -177,7 +177,7 @@
 
       <view class="list" v-show="active === 1">
         <view class="item acea-row row-between-wrapper">
-          <view>送货人</view>
+          <view>Người giao hàng</view>
           <view class="select-box" v-if="postPeople.length > 0">
             <picker
               class="pickerBox"
@@ -199,7 +199,7 @@
           class="item acea-row row-between-wrapper"
           v-if="postPeople[postIndex]"
         >
-          <view>手机号</view>
+          <view>Số điện thoại</view>
           <view class="select-box acea-row row-middle row-right">{{
             postPeople[postIndex].phone
           }}</view>
@@ -210,14 +210,14 @@
         v-model="fictitious_content"
         class="textarea"
         @blur="bindTextAreaBlur"
-        placeholder="备注"
+        placeholder="Ghi chú"
         :maxlength="500"
         auto-height
       />
     </view>
     <!-- <view class="split-wrapper" v-if="totalNum > 1">
       <view class="split-switch acea-row row-between-wrapper">
-        <view>分单发货</view>
+        <view>Giao hàng tách đơn</view>
         <view
           class="switch"
           :class="{ on: curGoods }"
@@ -233,7 +233,7 @@
     </view> -->
     <view class="height-add"></view>
     <view class="confirm-wrapper">
-      <view class="confirm" @click="saveInfo">确认提交</view>
+      <view class="confirm" @click="saveInfo">Xác nhận gửi</view>
     </view>
   </view>
 </template>
@@ -260,40 +260,40 @@ export default {
       types: [
         {
           type: "express",
-          title: "发货",
+          title: "Giao hàng",
           key: 1,
           show: true,
         },
         {
           type: "send",
-          title: "送货",
+          title: "Cửa hàng tự giao",
           key: 2,
           show: true,
         },
         {
           type: "fictitious",
-          title: "无需物流",
+          title: "Không cần vận chuyển",
           key: 3,
           show: true,
         },
       ],
       expressType: [
         {
-          title: "手动填写",
+          title: "Điền thủ công",
           key: 1,
         },
         {
-          title: "电子面单打印",
+          title: "In vận đơn điện tử",
           key: 2,
         },
       ],
       orderGoods: [
         {
-          title: "开启",
+          title: "Bật",
           key: 1,
         },
         {
-          title: "关闭",
+          title: "Tắt",
           key: 0,
         },
       ],
@@ -307,11 +307,11 @@ export default {
       delivery_id: "",
       seIndex: 0,
       expIndex: 0,
-      expTemp: [], // 快递模板
-      to_name: "", // 发货人名称
-      to_tel: "", // 发货人电话
-      to_addr: "", // 发货人地址
-      postPeople: [], //配送人
+      expTemp: [], // Mẫu vận đơn
+      to_name: "", // Tên người gửi hàng
+      to_tel: "", // Số điện thoại người gửi hàng
+      to_addr: "", // Địa chỉ người gửi hàng
+      postPeople: [], //Người giao hàng
       postIndex: 0,
       fictitious_content: "",
       listId: 0,
@@ -398,14 +398,14 @@ export default {
           });
         });
     },
-    // 点击获取拆单列表
+    // Nhấn để lấy danh sách tách đơn
     changeGoods() {
       this.curGoods = this.curGoods ? 0 : 1;
       if (this.curGoods) {
         this.splitList();
       }
     },
-    // 扫描快递单号一维码
+    // Quét mã 1D mã vận đơn
     scanCode() {
       // #ifdef MP
       let that = this;
@@ -430,7 +430,7 @@ export default {
       }
       // #endif
     },
-    // 预览图片
+    // Xem trước hình ảnh
     previewImage() {
       uni.previewImage({
         urls: [this.expTemp[this.expIndex].pic],
@@ -438,17 +438,17 @@ export default {
         fail: function (error) {},
       });
     },
-    // 获取配送员列表
+    // Lấy danh sách nhân viên giao hàng
     geTorderOrderDelivery() {
       orderOrderDelivery().then((res) => {
         this.postPeople = res.data;
       });
     },
-    // 配送员选择
+    // Chọn nhân viên giao hàng
     bindPostChange(e) {
       this.postIndex = e.detail.value;
     },
-    // 选择发货类型
+    // Chọn loại giao hàng
     changeExpTpe(item, index) {
       this.curExpress = item.key;
       this.getLogistics(index || "");
@@ -500,7 +500,7 @@ export default {
       if (delivery_type == 1 && this.curExpress == 1) {
         if (!delivery_id) {
           return this.$util.Tips({
-            title: "请填写快递单号",
+            title: "Vui lòng nhập mã vận đơn",
           });
         }
         save.express_record_type = that.curExpress;
@@ -515,27 +515,27 @@ export default {
       if (delivery_type == 1 && this.curExpress == 2) {
         if (!that.to_name) {
           return this.$util.Tips({
-            title: "请填写寄件人姓名",
+            title: "Vui lòng điền họ tên người gửi",
           });
         }
         if (!that.to_tel) {
           return this.$util.Tips({
-            title: "请填写寄件人手机号码",
+            title: "Vui lòng điền số điện thoại người gửi",
           });
         }
         if (!/^1[3456789]\d{9}$/.test(that.to_tel)) {
           return this.$util.Tips({
-            title: "请填写寄件人手机号码",
+            title: "Vui lòng điền số điện thoại người gửi",
           });
         }
         if (!that.to_addr) {
           return this.$util.Tips({
-            title: "请填写寄件人地址",
+            title: "Vui lòng điền địa chỉ người gửi",
           });
         }
         if (that.expTemp.length == 0) {
           return this.$util.Tips({
-            title: "请选择电子面单",
+            title: "Vui lòng chọn vận đơn điện tử",
           });
         }
         save.express_record_type = that.curExpress;
@@ -552,7 +552,7 @@ export default {
       if (delivery_type == 2) {
         if (!that.postPeople.length) {
           return this.$util.Tips({
-            title: "请在平台后台添加送货人",
+            title: "Vui lòng thêm người giao hàng trong trang quản trị",
           });
         }
         let obj = this.postPeople[this.postIndex];
@@ -609,7 +609,7 @@ export default {
     setSplitInfo(item) {
       if (!this.cartIds.length) {
         return this.$util.Tips({
-          title: "请选择发货商品",
+          title: "Vui lòng chọn sản phẩm cần giao",
         });
       }
       item.cart_ids = this.cartIds;
@@ -652,7 +652,7 @@ export default {
         this.expTemp = res.data.data;
       });
     },
-    // 获取订单打印默认配置
+    // Lấy cấu hình in đơn hàng mặc định
     orderDeliveryInfo() {
       orderDeliveryInfo().then((res) => {
         this.to_name = res.data.to_name;
@@ -674,7 +674,7 @@ export default {
   height: 120upx;
 }
 
-/*发货*/
+/*Giao hàng*/
 .deliver-goods {
   padding: 22rpx 20rpx;
 }

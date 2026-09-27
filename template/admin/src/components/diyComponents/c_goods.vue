@@ -33,8 +33,8 @@
         v-if="modals && type != 1"
       ></goods-list>
       <span slot="footer" class="dialog-footer">
-        <el-button v-db-click @click="cancel">取 消</el-button>
-        <el-button type="primary" v-db-click @click="ok">确 定</el-button>
+        <el-button v-db-click @click="cancel">Hủy</el-button>
+        <el-button type="primary" v-db-click @click="ok">Xác nhận</el-button>
       </span>
     </el-dialog>
   </div>
@@ -75,19 +75,19 @@ export default {
           : 0;
         switch (this.type) {
           case 0:
-            this.titles = '商品列表';
+            this.titles = 'Danh sách sản phẩm';
             break;
           case 1:
-            this.titles = '分类列表';
+            this.titles = 'Danh sách danh mục';
             break;
           case 8:
-            this.titles = '砍价列表';
+            this.titles = 'Danh sách săn giảm giá';
             break;
           case 2:
-            this.titles = '秒杀列表';
+            this.titles = 'Danh sách flash sale';
             break;
           case 3:
-            this.titles = '拼团列表';
+            this.titles = 'Danh sách mua chung';
             break;
           default:
         }
@@ -120,14 +120,14 @@ export default {
     cancel() {
       this.tempGoods = [];
     },
-    //对象数组去重；
+    //Loại bỏ trùng lặp trong mảng object;
     unique(arr) {
       const res = new Map();
       return arr.filter((arr) => !res.has(arr.id) && res.set(arr.id, 1));
     },
     ok() {
       if (!this.tempGoods.length) {
-        return this.$message.warning('请先选择商品');
+        return this.$message.warning('Vui lòng chọn sản phẩm trước');
       }
       let list = this.defaults.goodsList.list;
       list.push.apply(list, this.tempGoods);

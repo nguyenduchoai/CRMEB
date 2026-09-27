@@ -1,26 +1,26 @@
 .
 ├── app.php //
-├── cache.php //缓存配置
-├── captcha.php //验证码配置
-├── console.php //命令行配置
-├── cookie.php //cookie配置
-├── database.php //数据库配置
-├── filesystem.php //系统文件目录配置
-├── lang.php //多语言配置
-├── log.php //日志配置
-├── pay.php //支付配置
-├── plat.php //对接平台配置
-├── printer.php //小票打印机配置
-├── qrcode.php //二维码配置
-├── queue.php //队列配置
-├── route.php //路由配置
-├── session.php //session配置
-├── sms.php //短信发送配置
-├── template.php //微信模版消息配置
-├── trace.php //调试配置
-├── upload.php //上传配置
-├── view.php //模版配置
-├── workerman.php //workerman配置
-└── filetree.txt //目录文件说明
+├── cache.php //Cấu hình bộ nhớ đệm (cache)
+├── captcha.php //Cấu hình mã xác thực (captcha)
+├── console.php //Cấu hình dòng lệnh
+├── cookie.php //Cấu hình cookie
+├── database.php //Cấu hình cơ sở dữ liệu
+├── filesystem.php //Cấu hình thư mục tệp hệ thống
+├── lang.php //Cấu hình đa ngôn ngữ
+├── log.php //Cấu hình nhật ký (log)
+├── pay.php //Cấu hình thanh toán
+├── plat.php //Cấu hình kết nối nền tảng
+├── printer.php //Cấu hình máy in biên lai
+├── qrcode.php //Cấu hình mã QR
+├── queue.php //Cấu hình hàng đợi
+├── route.php //Cấu hình định tuyến
+├── session.php //Cấu hình session
+├── sms.php //Cấu hình gửi SMS
+├── template.php //Cấu hình tin nhắn mẫu WeChat
+├── trace.php //Cấu hình gỡ lỗi (debug)
+├── upload.php //Cấu hình tải lên
+├── view.php //Cấu hình mẫu giao diện (template)
+├── workerman.php //Cấu hình workerman
+└── filetree.txt //Mô tả các tệp trong thư mục
 
 0 directories, 23 files

@@ -10,7 +10,7 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="订单时间：">
+          <el-form-item label="Thời gian đơn hàng:">
             <el-date-picker
               clearable
               v-model="timeVal"
@@ -19,14 +19,14 @@
               @change="onchangeTime"
               format="yyyy/MM/dd"
               value-format="yyyy/MM/dd"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              start-placeholder="Ngày bắt đầu"
+              end-placeholder="Ngày kết thúc"
               :picker-options="pickerOptions"
               style="width: 250px"
               class="mr20"
             ></el-date-picker>
           </el-form-item>
-          <el-form-item label="交易类型：">
+          <el-form-item label="Loại giao dịch:">
             <el-select
               type="button"
               v-model="formValidate.trading_type"
@@ -46,46 +46,46 @@
       </div>
     </el-card>
     <el-card :bordered="false" shadow="never" class="mt16">
-      <el-table ref="table" :data="tabList" class="ivu-mt" v-loading="loading" empty-text="暂无数据">
+      <el-table ref="table" :data="tabList" class="ivu-mt" v-loading="loading" empty-text="Chưa có dữ liệu">
         <el-table-column label="ID" min-width="70">
           <template slot-scope="scope">
             <div>{{ scope.row.id }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="关联订单" min-width="100">
+        <el-table-column label="Đơn hàng liên quan" min-width="100">
           <template slot-scope="scope">
             <div>{{ scope.row.relation }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="交易时间" min-width="100">
+        <el-table-column label="Thời gian giao dịch" min-width="100">
           <template slot-scope="scope">
             <div>{{ scope.row.add_time }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="交易积分" min-width="80">
+        <el-table-column label="Điểm giao dịch" min-width="80">
           <template slot-scope="scope">
             <div v-if="scope.row.pm" class="z-price">+ {{ scope.row.number }}</div>
             <div v-else class="f-price">- {{ scope.row.number }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="用户" min-width="80">
+        <el-table-column label="Người dùng" min-width="80">
           <template slot-scope="scope">
             <div>{{ scope.row.nickname }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="交易类型" min-width="100">
+        <el-table-column label="Loại giao dịch" min-width="100">
           <template slot-scope="scope">
             <div>{{ scope.row.type_name }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="备注" min-width="100">
+        <el-table-column label="Ghi chú" min-width="100">
           <template slot-scope="scope">
             <div>{{ scope.row.mark }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="备注" width="100">
+        <el-table-column label="Ghi chú" width="100">
           <template slot-scope="scope">
-            <a class="item" v-db-click @click="setMark(scope.row)">修改备注</a>
+            <a class="item" v-db-click @click="setMark(scope.row)">Sửa ghi chú</a>
           </template>
         </el-table-column>
       </el-table>
@@ -99,11 +99,11 @@
         />
       </div>
     </el-card>
-    <!-- 拒绝通过-->
-    <el-dialog :visible.sync="modals" title="备注" :close-on-click-modal="false" width="470px">
-      <el-input v-model="mark_msg.mark" type="textarea" :rows="4" placeholder="请输入备注" />
+    <!-- Từ chối duyệt-->
+    <el-dialog :visible.sync="modals" title="Ghi chú" :close-on-click-modal="false" width="470px">
+      <el-input v-model="mark_msg.mark" type="textarea" :rows="4" placeholder="Vui lòng nhập ghi chú" />
       <div slot="footer">
-        <el-button type="primary" size="small" v-db-click @click="oks">确定</el-button>
+        <el-button type="primary" size="small" v-db-click @click="oks">Xác nhận</el-button>
       </div>
     </el-dialog>
   </div>
@@ -140,23 +140,23 @@ export default {
       selectIndexTime: '',
       payment: [
         {
-          title: '全部',
+          title: 'Tất cả',
           value: '',
         },
         {
-          title: '微信',
+          title: 'WeChat',
           value: 'weixin',
         },
         {
-          title: '支付宝',
+          title: 'Alipay',
           value: 'alipay',
         },
         {
-          title: '银行卡',
+          title: 'Thẻ ngân hàng',
           value: 'bank',
         },
         {
-          title: '线下支付',
+          title: 'Thanh toán ngoại tuyến',
           value: 'offline',
         },
       ],
@@ -185,7 +185,7 @@ export default {
     this.getList();
   },
   methods: {
-    // 确定
+    // Xác nhận
     oks() {
       this.modal_loading = true;
       this.mark_msg.mark = this.mark_msg.mark.trim();
@@ -201,7 +201,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 备注
+    // Ghi chú
     setMark(row) {
       this.modals = true;
       this.extractId = row.id;
@@ -216,20 +216,20 @@ export default {
       let result = new Date(date).getTime();
       return result;
     },
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e;
       this.formValidate.time = this.timeVal ? this.timeVal.join('-') : '';
       this.formValidate.page = 1;
       this.getList();
     },
-    // 选择
+    // Chọn
     selChange(e) {
       this.formValidate.page = 1;
       this.formValidate.trading_type = e;
       this.getList();
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       pointRecordList(this.formValidate)
@@ -245,7 +245,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 编辑提交成功
+    // Sửa gửi thành công
     submitFail() {
       this.getList();
     },

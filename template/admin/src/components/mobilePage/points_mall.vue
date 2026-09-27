@@ -73,7 +73,7 @@
                   : themeColor,
               }"
             >
-              68880积分
+              68880 điểm
             </div>
           </div>
         </div>
@@ -116,7 +116,7 @@
               color: styleConfig ? goodsNameColor2 : goodsNameColor,
             }"
           >
-            小米蓝牙耳机...
+            Tai nghe Bluetooth Xiaomi...
           </div>
         </div>
       </div>
@@ -143,7 +143,7 @@
               color: styleConfig ? goodsNameColor2 : goodsNameColor,
             }"
           >
-            小米蓝牙耳机你值得拥有
+            Tai nghe Bluetooth Xiaomi, bạn xứng đáng sở hữu
           </div>
           <div class="money acea-row row-middle">
             <img src="../../assets/images/points.png" /><span
@@ -172,11 +172,11 @@ import { mapState, mapMutations } from 'vuex';
 import Setting from '@/setting';
 export default {
   name: 'points_mall',
-  cname: '积分商城',
+  cname: 'Cửa hàng đổi điểm',
   configName: 'c_points_mall',
   icon: '#iconzujian-jifenshangcheng',
-  type: 1, // 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'pointsMall', // 外面匹配名称
+  type: 1, // 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'pointsMall', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -217,101 +217,101 @@ export default {
   // mixins: [theme],
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       configObj: null,
       defaultConfig: {
-        cname: '积分商城',
+        cname: 'Cửa hàng đổi điểm',
         name: 'pointsMall',
         timestamp: this.num,
         isHide: false,
         setUp: {
           tabVal: 0,
         },
-        titleLeft: '头部设置',
-        titleGoodsList: '商品列表',
-        titleGoods: '商品设置',
-        titleRight: '头部样式',
-        titleGoodsStyle: '商品样式',
-        titleCurrency: '通用样式',
+        titleLeft: 'Cài đặt phần đầu',
+        titleGoodsList: 'Danh sách sản phẩm',
+        titleGoods: 'Cài đặt sản phẩm',
+        titleRight: 'Kiểu phần đầu',
+        titleGoodsStyle: 'Kiểu sản phẩm',
+        titleCurrency: 'Kiểu chung',
         styleConfig: {
-          title: '选择风格',
+          title: 'Chọn phong cách',
           tabVal: 1,
           tabList: [
             {
-              name: '背景色',
+              name: 'Màu nền',
             },
             {
-              name: '背景图片',
+              name: 'Ảnh nền',
             },
           ],
         },
         titleConfig: {
-          title: '标题类型',
+          title: 'Loại tiêu đề',
           tabVal: 0,
           tabList: [
             {
-              name: '图片',
+              name: 'Hình ảnh',
             },
             {
-              name: '文字',
+              name: 'Văn bản',
             },
           ],
         },
         imgBgConfig: {
-          info: '建议：710px * 96px',
+          info: 'Đề xuất: 710px * 96px',
           url: Setting.apiBaseURL.replace(/adminapi/, '') + 'statics/images/pointsBg.png',
           type: 'code',
           delType: 0,
-          name: '背景图片',
+          name: 'Ảnh nền',
         },
         imgConfig: {
-          info: '建议：154px * 32px',
+          info: 'Đề xuất: 154px * 32px',
           url: require('@/assets/images/points01.png'),
           type: 'code',
           delType: 0,
-          name: '标题图片',
+          name: 'Ảnh tiêu đề',
         },
         imgConfig2: {
-          info: '建议：154px * 32px',
+          info: 'Đề xuất: 154px * 32px',
           url: require('@/assets/images/points02.png'),
           type: 'code',
           delType: 0,
-          name: '标题图片',
+          name: 'Ảnh tiêu đề',
         },
         titleTxtConfig: {
-          title: '标题文字',
-          value: '积分兑好礼',
-          place: '请输入标题文字',
+          title: 'Chữ tiêu đề',
+          value: 'Đổi điểm nhận quà',
+          place: 'Vui lòng nhập chữ tiêu đề',
           max: 10,
         },
         rightBntConfig: {
-          title: '右侧按钮',
-          value: '更多',
-          place: '请输入右侧按钮',
+          title: 'Nút bên phải',
+          value: 'Xem thêm',
+          place: 'Vui lòng nhập chữ nút bên phải',
           max: 6,
         },
         numberConfig: {
-          title: '商品数量',
+          title: 'Số lượng sản phẩm',
           val: 3,
           min: 1,
         },
         goodStyleConfig: {
-          title: '选择风格',
+          title: 'Chọn phong cách',
           tabVal: 0,
           tabList: [
             {
-              name: '样式1',
+              name: 'Kiểu 1',
             },
             {
-              name: '样式2',
+              name: 'Kiểu 2',
             },
             {
-              name: '样式3',
+              name: 'Kiểu 3',
             },
           ],
         },
         headerBgColor: {
-          title: '背景颜色',
+          title: 'Màu nền',
           name: 'headerBgColor',
           default: [
             {
@@ -331,25 +331,25 @@ export default {
           ],
         },
         titleText: {
-          title: '标题文字',
+          title: 'Chữ tiêu đề',
           tabVal: 0,
           tabList: [
             {
-              name: '加粗',
+              name: 'In đậm',
               style: 'bold',
             },
             {
-              name: '正常',
+              name: 'Bình thường',
               style: 'normal',
             },
             {
-              name: '倾斜',
+              name: 'In nghiêng',
               style: 'italic',
             },
           ],
         },
         titleColor: {
-          title: '标题颜色',
+          title: 'Màu tiêu đề',
           name: 'titleColor',
           default: [
             {
@@ -363,12 +363,12 @@ export default {
           ],
         },
         titleNumber: {
-          title: '标题字号',
+          title: 'Cỡ chữ tiêu đề',
           val: 16,
           min: 0,
         },
         headerBntColor: {
-          title: '按钮颜色',
+          title: 'Màu nút',
           name: 'headerBntColor',
           default: [
             {
@@ -382,7 +382,7 @@ export default {
           ],
         },
         headerBntColor2: {
-          title: '按钮颜色',
+          title: 'Màu nút',
           name: 'headerBntColor2',
           default: [
             {
@@ -396,30 +396,30 @@ export default {
           ],
         },
         bntNumber: {
-          title: '按钮字号',
+          title: 'Cỡ chữ nút',
           val: 12,
           min: 0,
         },
         filletImg: {
-          title: '商品圆角',
+          title: 'Bo góc sản phẩm',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 5,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         goodsNameColor: {
-          title: '商品名称',
+          title: 'Tên sản phẩm',
           name: 'goodsNameColor',
           default: [
             {
@@ -433,7 +433,7 @@ export default {
           ],
         },
         goodsNameColor2: {
-          title: '商品名称',
+          title: 'Tên sản phẩm',
           name: 'goodsNameColor2',
           default: [
             {
@@ -447,7 +447,7 @@ export default {
           ],
         },
         goodsUnitPriceColor2: {
-          title: '价格单位',
+          title: 'Đơn vị giá',
           name: 'goodsUnitPriceColor2',
           default: [
             {
@@ -461,7 +461,7 @@ export default {
           ],
         },
         goodsUnitPriceColor: {
-          title: '价格单位',
+          title: 'Đơn vị giá',
           name: 'goodsUnitPriceColor',
           default: [
             {
@@ -475,19 +475,19 @@ export default {
           ],
         },
         toneConfig: {
-          title: '色调',
+          title: 'Tông màu',
           tabVal: 0,
           tabList: [
             {
-              name: '跟随主题风格',
+              name: 'Theo phong cách chủ đề',
             },
             {
-              name: '自定义',
+              name: 'Tùy chỉnh',
             },
           ],
         },
         goodsPriceColor: {
-          title: '商品价格',
+          title: 'Giá sản phẩm',
           name: 'goodsPriceColor',
           default: [
             {
@@ -501,7 +501,7 @@ export default {
           ],
         },
         goodsPriceColor2: {
-          title: '商品价格',
+          title: 'Giá sản phẩm',
           name: 'goodsPriceColor2',
           default: [
             {
@@ -515,7 +515,7 @@ export default {
           ],
         },
         priceBgColor: {
-          title: '价格背景',
+          title: 'Nền giá',
           name: 'priceBgColor',
           default: [
             {
@@ -535,7 +535,7 @@ export default {
           ],
         },
         moduleColor: {
-          title: '组件背景',
+          title: 'Nền thành phần',
           name: 'moduleColor',
           default: [
             {
@@ -555,7 +555,7 @@ export default {
           ],
         },
         moduleColor2: {
-          title: '组件背景',
+          title: 'Nền thành phần',
           name: 'moduleColor',
           default: [
             {
@@ -575,7 +575,7 @@ export default {
           ],
         },
         bottomBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           name: 'bgColor',
           default: [
             {
@@ -589,86 +589,86 @@ export default {
           ],
         },
         componentBgConfig: {
-          title: '组件背景',
+          title: 'Nền thành phần',
           tabVal: 0,
-          tabList: [{ name: '颜色' }, { name: '图片' }],
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
           colorConfig: {
-            title: '背景颜色',
+            title: 'Màu nền',
             default: [{ item: '#f5f5f5' }, { item: '#f5f5f5' }],
             color: [{ item: '#f5f5f5' }, { item: '#f5f5f5' }],
           },
           colorDirection: {
-            title: '渐变方向',
+            title: 'Hướng chuyển màu',
             tabVal: 0,
-            tabList: [{ name: '横向' }, { name: '纵向' }, { name: '左斜' }, { name: '右斜' }],
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
           },
           imageConfig: {
-            header: '背景图片',
+            header: 'Ảnh nền',
             title: '',
-            name: '上传图片',
+            name: 'Tải lên ảnh',
             type: 'code',
             url: '',
-            info: '建议尺寸：750px * 400px',
+            info: 'Kích thước đề xuất: 750px * 400px',
           },
         },
         borderConfig: {
-          title: '边框设置',
+          title: 'Cài đặt viền',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0, // 0: Hide, 1: Show
           styleConfig: {
-            title: '边框样式',
+            title: 'Kiểu viền',
             tabVal: 0,
             tabList: [
-              { name: '实线', style: 'solid' },
-              { name: '虚线', style: 'dashed' },
-              { name: '点状', style: 'dotted' },
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
             ],
           },
           widthConfig: {
-            title: '边框粗细',
+            title: 'Độ dày viền',
             val: 1,
             min: 1,
           },
           colorConfig: {
-            title: '边框颜色',
+            title: 'Màu viền',
             default: [{ item: '#e5e5e5' }],
             color: [{ item: '#e5e5e5' }],
           },
         },
         shadowConfig: {
-          title: '阴影设置',
+          title: 'Cài đặt đổ bóng',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0, // 0: Off, 1: On
           colorConfig: {
-            title: '阴影颜色',
+            title: 'Màu đổ bóng',
             default: [{ item: 'rgba(0,0,0,0.1)' }],
             color: [{ item: 'rgba(0,0,0,0.1)' }],
           },
           xConfig: {
-            title: 'X轴偏移',
+            title: 'Độ lệch trục X',
             val: 0,
             min: -50,
           },
           yConfig: {
-            title: 'Y轴偏移',
+            title: 'Độ lệch trục Y',
             val: 0,
             min: -50,
           },
           blurConfig: {
-            title: '模糊半径',
+            title: 'Bán kính làm mờ',
             val: 10,
             min: 0,
           },
           spreadConfig: {
-            title: '扩展半径',
+            title: 'Bán kính lan tỏa',
             val: 0,
             min: -50,
           },
         },
         paddingConfig: {
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           max: 100,
@@ -676,7 +676,7 @@ export default {
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         marginConfig: {
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,
@@ -684,44 +684,44 @@ export default {
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         topConfig: {
-          title: '上边距',
+          title: 'Lề trên',
           val: 0,
           min: 0,
         },
         bottomConfig: {
-          title: '下边距',
+          title: 'Lề dưới',
           val: 0,
           min: 0,
         },
         prConfig: {
-          title: '左右边距',
+          title: 'Lề trái phải',
           val: 10,
           min: 0,
         },
         mbConfig: {
-          title: '页面上间距',
+          title: 'Lề trên trang',
           val: 0,
           min: 0,
         },
         zIndexConfig: {
-          title: '组件上浮',
+          title: 'Thứ tự lớp thành phần',
           val: 0,
           min: 0,
         },
         fillet: {
-          title: '背景圆角',
+          title: 'Bo góc nền',
           type: 0,
           list: [
             {
-              val: '全部',
+              val: 'Tất cả',
               icon: 'iconcaozuo-zhengti',
             },
             {
-              val: '单个',
+              val: 'Từng góc',
               icon: 'iconcaozuo-bianjiao',
             },
           ],
-          valName: '圆角值',
+          valName: 'Giá trị bo góc',
           val: 8,
           min: 0,
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
@@ -730,7 +730,7 @@ export default {
       pageData: {},
       bottomBgColor: '',
       paddingConfig: {
-        title: '内边距',
+        title: 'Lề trong',
         val: 0,
         min: 0,
         max: 100,
@@ -738,7 +738,7 @@ export default {
         valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
       },
       marginConfig: {
-        title: '外边距',
+        title: 'Lề ngoài',
         val: 0,
         min: 0,
         max: 100,

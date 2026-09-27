@@ -24,7 +24,7 @@ import { getProProduct } from '@/api/diy';
 export default {
   name: 'c_home_product',
   componentsName: 'home_product',
-  cname: '商品选项卡',
+  cname: 'Tab sản phẩm',
   props: {
     activeIndex: {
       type: null,
@@ -289,7 +289,7 @@ export default {
       if (!data) return data;
       if (!data.paddingConfig) {
         data.paddingConfig = {
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           isAll: false,
@@ -304,7 +304,7 @@ export default {
       }
       if (!data.marginConfig) {
         data.marginConfig = {
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           isAll: false,

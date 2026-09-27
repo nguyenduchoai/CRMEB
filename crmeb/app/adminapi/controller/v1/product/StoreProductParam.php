@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use app\services\product\product\StoreProductParamServices;
 use think\facade\App;
 
 /**
- * 商品参数
+ * Thông số sản phẩm
  * @author wuhaotian
  * @email 442384644@qq.com
  * @date 2024/12/17
@@ -33,7 +33,7 @@ class StoreProductParam extends AuthController
     }
 
     /**
-     * 获取参数列表
+     * Lấy danh sách tham số
      * @return \think\Response
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -51,7 +51,7 @@ class StoreProductParam extends AuthController
     }
 
     /**
-     * 获取参数详情
+     * Lấy chi tiết tham số
      * @param $id
      * @return \think\Response
      * @throws \think\db\exception\DataNotFoundException
@@ -63,13 +63,13 @@ class StoreProductParam extends AuthController
      */
     public function getParamInfo($id)
     {
-        if (!$id) return app('json')->fail('参数错误');
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $info = $this->services->getParamInfo($id);
         return app('json')->success($info);
     }
 
     /**
-     * 获取参数值
+     * Lấy giá trị tham số
      * @param $id
      * @return \think\Response
      * @author wuhaotian
@@ -78,13 +78,13 @@ class StoreProductParam extends AuthController
      */
     public function getParamValue($id)
     {
-        if (!$id) return app('json')->fail('参数错误');
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $info = $this->services->getParamValue($id);
         return app('json')->success($info);
     }
 
     /**
-     * 保存参数
+     * Lưu tham số
      * @param $id
      * @return \think\Response
      * @author wuhaotian
@@ -99,14 +99,14 @@ class StoreProductParam extends AuthController
             ['sort', 0],
             ['status', 1]
         ]);
-        if (!$data['name']) return app('json')->fail('请输入参数名称');
-        if (!count($data['value'])) return app('json')->fail('请输入参数值');
+        if (!$data['name']) return app('json')->fail('Vui lòng nhập tên thông số');
+        if (!count($data['value'])) return app('json')->fail('Vui lòng nhập giá trị thông số');
         $this->services->saveParamData($id, $data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     /**
-     * 修改参数状态
+     * Sửa trạng thái tham số
      * @param $id
      * @param $status
      * @return \think\Response
@@ -116,13 +116,13 @@ class StoreProductParam extends AuthController
      */
     public function setParamStatus($id, $status)
     {
-        if (!$id) return app('json')->fail('参数错误');
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $this->services->setParamStatus($id, $status);
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
     /**
-     * 删除参数
+     * Xóa thông số
      * @param $id
      * @return \think\Response
      * @author wuhaotian
@@ -131,8 +131,8 @@ class StoreProductParam extends AuthController
      */
     public function delParamData($id)
     {
-        if (!$id) return app('json')->fail('参数错误');
+        if (!$id) return app('json')->fail('Tham số không hợp lệ');
         $this->services->delParamData($id);
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 }

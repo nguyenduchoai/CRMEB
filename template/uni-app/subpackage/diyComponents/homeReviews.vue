@@ -6,7 +6,7 @@
         <view class="header acea-row row-between-wrapper">
           <view class="left acea-row row-middle">
             <text class="title" :style="{ color: titleColor }">{{
-              $t("评价")
+              $t("Đánh giá")
             }}</text>
             <text
               class="count"
@@ -28,7 +28,7 @@
           >
             <text class="rate" :style="{ color: rateColor }"
               >{{ replyChance }}% </text
-            >{{ $t("好评率") }}
+            >{{ $t("Tỷ lệ đánh giá tốt") }}
             <text class="iconfont icon-jiantou"></text>
           </navigator>
         </view>

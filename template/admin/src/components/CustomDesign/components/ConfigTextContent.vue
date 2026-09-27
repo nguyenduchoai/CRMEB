@@ -1,7 +1,7 @@
 <template>
   <div>
-    <el-form-item label="文本标题">
-      <el-input v-model="curComponent.propValue.text" placeholder="请填写文本" @change="onChange"></el-input>
+    <el-form-item label="Tiêu đề văn bản">
+      <el-input v-model="curComponent.propValue.text" placeholder="Vui lòng nhập văn bản" @change="onChange"></el-input>
     </el-form-item>
     <ConfigLink
       :curComponent="curComponent"

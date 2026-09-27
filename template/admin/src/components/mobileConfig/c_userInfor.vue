@@ -157,7 +157,7 @@ export default {
       if (!data) return data;
       if (!data.paddingConfig) {
         this.$set(data, 'paddingConfig', {
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           max: 100,
@@ -172,7 +172,7 @@ export default {
       }
       if (!data.marginConfig) {
         this.$set(data, 'marginConfig', {
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,
@@ -190,7 +190,7 @@ export default {
       }
       return data;
     },
-    // 获取组件参数
+    // Lấy tham số thành phần (component)
     getConfig(data) {},
     handleSubmit(name) {
       let obj = {};

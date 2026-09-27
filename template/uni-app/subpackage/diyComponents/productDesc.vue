@@ -2,7 +2,7 @@
   <view class="product-intro" v-if="productData.description">
     <common-wrapper :config="dataConfig">
       <view class="title" v-if="titleShow" :style="[titleStyle]">{{
-        $t(`产品介绍`)
+        $t(`Giới thiệu sản phẩm`)
       }}</view>
       <view class="conter">
         <!-- #ifndef APP-PLUS -->

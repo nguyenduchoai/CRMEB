@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -18,12 +18,12 @@ use Pimple\ServiceProviderInterface;
 use think\facade\Request;
 
 /**
- * 微信网页授权
+ * Ủy quyền trang web WeChat
  * Class WechatOauthProvider
  * @package crmeb\services\easywechat\oauth\wechat
- * @method oauth(string $code = '') code授权获取acces_token openid
- * @method getUserInfo($openId, $lang = 'zh_CN') openid 获取用户信息
- * @method  setRequest(Request $request) 设置request对象
+ * @method oauth(string $code = '') Dùng code ủy quyền để lấy acces_token, openid
+ * @method getUserInfo($openId, $lang = 'zh_CN') openid Lấy thông tin người dùng
+ * @method  setRequest(Request $request) Đặt object request
  */
 class WechatOauth2Provider implements ServiceProviderInterface
 {

@@ -1,85 +1,85 @@
 ---
-name: CRMEB电商系统Agent
-description: 专为CRMEB电商系统设计的智能开发助手,帮助开发者理解架构、快速开发功能、解决问题
+name: Agent hệ thống thương mại điện tử CRMEB
+description: Trợ lý phát triển thông minh được thiết kế riêng cho hệ thống thương mại điện tử CRMEB, giúp lập trình viên hiểu kiến trúc, phát triển tính năng nhanh chóng và giải quyết vấn đề
 ---
 
-# CRMEB电商系统Agent
+# Agent hệ thống thương mại điện tử CRMEB
 
-## 0. 自动触发说明
+## 0. Mô tả cơ chế tự động kích hoạt
 
-### 0.1 触发条件
+### 0.1 Điều kiện kích hoạt
 
-#### 0.1.1 操作触发
-- **文件浏览时**: 当浏览CRMEB项目核心目录时自动调用
-  - 打开 `crmeb/app/` 应用目录时触发
-  - 打开 `crmeb/crmeb/` 核心库目录时触发
-  - 打开 `template/` 前端目录时触发
-  - 浏览配置文件目录时触发
-- **文件操作时**: 当对CRMEB项目文件进行操作时自动调用
-  - 创建控制器、服务、模型时触发
-  - 修改核心业务代码时触发
-  - 修改配置文件时触发
-- **目录操作时**: 当对项目目录进行操作时自动调用
-  - 创建新模块目录时触发
-  - 重命名业务目录时触发
+#### 0.1.1 Kích hoạt theo thao tác
+- **Khi duyệt file**: Tự động được gọi khi duyệt các thư mục cốt lõi của dự án CRMEB
+  - Kích hoạt khi mở thư mục ứng dụng `crmeb/app/`
+  - Kích hoạt khi mở thư mục thư viện lõi `crmeb/crmeb/`
+  - Kích hoạt khi mở thư mục frontend `template/`
+  - Kích hoạt khi duyệt thư mục chứa file cấu hình
+- **Khi thao tác file**: Tự động được gọi khi thao tác trên các file của dự án CRMEB
+  - Kích hoạt khi tạo controller, service, model
+  - Kích hoạt khi sửa code nghiệp vụ cốt lõi
+  - Kích hoạt khi sửa file cấu hình
+- **Khi thao tác thư mục**: Tự động được gọi khi thao tác trên các thư mục của dự án
+  - Kích hoạt khi tạo thư mục module mới
+  - Kích hoạt khi đổi tên thư mục nghiệp vụ
 
-#### 0.1.2 内容触发
-- **关键词触发**: 当文件内容包含以下关键词时自动调用
-  - 电商关键词: `订单`、`商品`、`用户`、`支付`、`购物车`
-  - 营销关键词: `优惠券`、`拼团`、`砍价`、`秒杀`、`积分`
-  - 系统关键词: `CRMEB`、`ThinkPHP`、`后台管理`、`移动端`
-- **代码触发**: 当查看特定类型代码时自动调用
-  - 控制器代码 (`Controller`)
-  - 服务层代码 (`Services`)
-  - 模型代码 (`Model`)
-  - 前端Vue组件 (`*.vue`)
+#### 0.1.2 Kích hoạt theo nội dung
+- **Kích hoạt theo từ khóa**: Tự động được gọi khi nội dung tệp chứa các từ khóa sau
+  - Từ khóa thương mại điện tử: `đơn hàng`, `sản phẩm`, `người dùng`, `thanh toán`, `giỏ hàng`
+  - Từ khóa marketing: `phiếu giảm giá`, `mua chung`, `săn giảm giá`, `flash sale`, `điểm thưởng`
+  - Từ khóa hệ thống: `CRMEB`, `ThinkPHP`, `trang quản trị`, `di động`
+- **Kích hoạt theo code**: Tự động được gọi khi xem code thuộc các loại cụ thể
+  - Code controller (`Controller`)
+  - Code tầng service (`Services`)
+  - Code model (`Model`)
+  - Component Vue phía frontend (`*.vue`)
 
-#### 0.1.3 命令触发
-- **终端命令触发**: 当执行以下命令时自动调用
-  - `php think` (ThinkPHP命令)
-  - `composer install/update` (依赖管理)
-  - `npm run dev/build` (前端构建)
-  - `php think queue:listen` (队列启动)
-  - `php think workerman` (WebSocket启动)
+#### 0.1.3 Kích hoạt theo lệnh
+- **Kích hoạt bằng lệnh terminal**: Tự động được gọi khi thực thi các lệnh sau
+  - `php think` (lệnh ThinkPHP)
+  - `composer install/update` (quản lý dependency)
+  - `npm run dev/build` (build frontend)
+  - `php think queue:listen` (khởi động hàng đợi)
+  - `php think workerman` (khởi động WebSocket)
 
-### 0.2 适用场景
+### 0.2 Tình huống áp dụng
 
-#### 0.2.1 核心场景
-- **功能开发**: 开发新的电商功能模块时
-- **API开发**: 开发前后端接口时
-- **数据库设计**: 设计数据表结构时
-- **问题排查**: 解决系统运行问题时
+#### 0.2.1 Tình huống cốt lõi
+- **Phát triển tính năng**: Khi phát triển module tính năng thương mại điện tử mới
+- **Phát triển API**: Khi phát triển API giữa frontend và backend
+- **Thiết kế cơ sở dữ liệu**: Khi thiết kế cấu trúc bảng dữ liệu
+- **Khắc phục sự cố**: Khi xử lý các sự cố trong quá trình vận hành hệ thống
 
-#### 0.2.2 辅助场景
-- **代码审查**: 审查代码质量时
-- **性能优化**: 优化系统性能时
-- **安全加固**: 增强系统安全性时
-- **部署运维**: 部署和维护系统时
+#### 0.2.2 Tình huống hỗ trợ
+- **Rà soát code**: Khi rà soát chất lượng code
+- **Tối ưu hiệu năng**: Khi tối ưu hiệu năng hệ thống
+- **Tăng cường bảo mật**: Khi nâng cao tính bảo mật của hệ thống
+- **Triển khai và vận hành**: Khi triển khai và bảo trì hệ thống
 
-## 1. CRMEB系统架构
+## 1. Kiến trúc hệ thống CRMEB
 
-### 1.1 整体架构
-- **框架**: ThinkPHP 6.x (PHP后端) + Vue 2.x (前端)
-- **架构模式**: 前后端分离 + MVC + Service + DAO分层架构
-- **数据库**: MySQL 5.7-8.0 (使用eb_前缀)
-- **缓存**: Redis (可选,用于缓存和队列)
-- **消息队列**: ThinkPHP Queue + Workerman
-- **实时通信**: Workerman WebSocket
+### 1.1 Kiến trúc tổng thể
+- **Framework**: ThinkPHP 6.x (backend PHP) + Vue 2.x (frontend)
+- **Mô hình kiến trúc**: Tách biệt frontend và backend + MVC + kiến trúc phân tầng Service + DAO
+- **Cơ sở dữ liệu**: MySQL 5.7-8.0 (dùng tiền tố eb_)
+- **Bộ nhớ đệm (cache)**: Redis (tùy chọn, dùng làm bộ nhớ đệm và hàng đợi)
+- **Hàng đợi tin nhắn**: ThinkPHP Queue + Workerman
+- **Giao tiếp thời gian thực**: Workerman WebSocket
 
-### 1.2 技术栈
+### 1.2 Bộ công nghệ
 
-#### 后端技术栈
+#### Bộ công nghệ backend
 ```
 - PHP: 7.1-7.4
 - ThinkPHP: 6.x
-- Composer: 依赖管理
-- Workerman: 长连接服务
-- PHPUnit: 单元测试(可选)
+- Composer: Quản lý phụ thuộc
+- Workerman: Dịch vụ kết nối liên tục
+- PHPUnit: Kiểm thử đơn vị (tùy chọn)
 ```
 
-#### 前端技术栈
+#### Bộ công nghệ frontend
 ```
-管理端:
+Trang quản trị:
 - Vue.js 2.x
 - Element UI 2.15.6
 - Vuex 3.0
@@ -87,321 +87,321 @@ description: 专为CRMEB电商系统设计的智能开发助手,帮助开发者�
 - Axios
 - ECharts 4.8.0
 
-移动端:
+Di động:
 - UniApp
 - uView UI
 ```
 
-#### 第三方服务
+#### Dịch vụ bên thứ ba
 ```
-- 支付: 微信支付、支付宝支付
-- 存储: 阿里云OSS、腾讯云COS、七牛云
-- 短信: 阿里云短信
-- 微信: 公众号、小程序
+- Thanh toán: WeChat Pay, Alipay
+- Lưu trữ: Alibaba Cloud OSS, Tencent Cloud COS, Qiniu Cloud
+- SMS: Alibaba Cloud SMS
+- WeChat: OA WeChat, Mini Program
 ```
 
-### 1.3 目录结构
+### 1.3 Cấu trúc thư mục
 
-#### 1.3.1 后端目录结构
+#### 1.3.1 Cấu trúc thư mục backend
 ```
 crmeb/
-├── app/                          # 应用目录
-│   ├── adminapi/                 # 后台管理API (多应用模式)
-│   │   ├── controller/           # 控制器层
-│   │   │   ├── system/           # 系统管理
-│   │   │   ├── product/          # 商品管理
-│   │   │   ├── order/            # 订单管理
-│   │   │   ├── user/             # 用户管理
-│   │   │   └── marketing/        # 营销管理
-│   │   ├── middleware/           # 中间件
-│   │   ├── route/                # 路由定义
-│   │   └── validate/             # 验证器
-│   ├── api/                      # 移动端API
-│   ├── kefuapi/                  # 客服端API
-│   ├── outapi/                   # 外部接口API
-│   ├── dao/                      # 数据访问层
+├── app/                          # Thư mục ứng dụng
+│   ├── adminapi/                 # API trang quản trị (chế độ đa ứng dụng)
+│   │   ├── controller/           # Tầng controller
+│   │   │   ├── system/           # Quản lý hệ thống
+│   │   │   ├── product/          # Quản lý sản phẩm
+│   │   │   ├── order/            # Quản lý đơn hàng
+│   │   │   ├── user/             # Quản lý người dùng
+│   │   │   └── marketing/        # Quản lý marketing
+│   │   ├── middleware/           # Middleware
+│   │   ├── route/                # Định nghĩa route
+│   │   └── validate/             # Validator
+│   ├── api/                      # API di động
+│   ├── kefuapi/                  # API phía CSKH
+│   ├── outapi/                   # API bên ngoài
+│   ├── dao/                      # Tầng truy cập dữ liệu
 │   │   ├── UserDao.php
 │   │   ├── StoreOrderDao.php
 │   │   └── ...
-│   ├── model/                    # 数据模型层
+│   ├── model/                    # Tầng mô hình dữ liệu
 │   │   ├── User.php
 │   │   ├── StoreOrder.php
 │   │   └── ...
-│   ├── services/                 # 业务服务层
-│   │   ├── user/                 # 用户服务
-│   │   ├── product/              # 商品服务
-│   │   ├── order/                # 订单服务
-│   │   ├── activity/             # 营销服务
-│   │   ├── agent/                # 分销服务
-│   │   └── system/               # 系统服务
-│   ├── jobs/                     # 队列任务
-│   ├── listener/                 # 事件监听器
-│   ├── http/                     # HTTP中间件
-│   └── common.php                # 公共方法
-├── crmeb/                        # 核心框架目录
-│   ├── basic/                    # 基础类库
-│   │   ├── BaseServices.php      # 服务基类
-│   │   ├── BaseDao.php           # DAO基类
-│   │   ├── BaseModel.php         # 模型基类
-│   │   └── BaseController.php    # 控制器基类
-│   ├── command/                  # 命令行命令
-│   │   ├── Timer.php             # 定时任务
-│   │   └── Swoole.php            # Swoole服务
-│   ├── services/                 # 核心服务
-│   ├── traits/                   # Trait集合
-│   ├── utils/                    # 工具类
-│   └── exceptions/               # 异常类
-├── config/                       # 配置文件
-│   ├── app.php                   # 应用配置
-│   ├── database.php              # 数据库配置
-│   ├── cache.php                 # 缓存配置
-│   ├── queue.php                 # 队列配置
-│   ├── workerman.php             # Workerman配置
+│   ├── services/                 # Tầng service nghiệp vụ
+│   │   ├── user/                 # Service người dùng
+│   │   ├── product/              # Dịch vụ sản phẩm
+│   │   ├── order/                # Service đơn hàng
+│   │   ├── activity/             # Service marketing
+│   │   ├── agent/                # Service tiếp thị liên kết
+│   │   └── system/               # Service hệ thống
+│   ├── jobs/                     # Tác vụ hàng đợi
+│   ├── listener/                 # Event listener
+│   ├── http/                     # Middleware HTTP
+│   └── common.php                # Phương thức dùng chung
+├── crmeb/                        # Thư mục framework lõi
+│   ├── basic/                    # Thư viện lớp cơ sở
+│   │   ├── BaseServices.php      # Lớp cơ sở của service
+│   │   ├── BaseDao.php           # Lớp cơ sở DAO
+│   │   ├── BaseModel.php         # Lớp cơ sở model
+│   │   └── BaseController.php    # Lớp cơ sở của controller
+│   ├── command/                  # Lệnh CLI
+│   │   ├── Timer.php             # Tác vụ định kỳ
+│   │   └── Swoole.php            # Service Swoole
+│   ├── services/                 # Service cốt lõi
+│   ├── traits/                   # Tập hợp Trait
+│   ├── utils/                    # Công cụ tiện ích
+│   └── exceptions/               # Lớp ngoại lệ
+├── config/                       # Tệp cấu hình
+│   ├── app.php                   # Cấu hình ứng dụng
+│   ├── database.php              # Cấu hình cơ sở dữ liệu
+│   ├── cache.php                 # Cấu hình bộ nhớ đệm
+│   ├── queue.php                 # Cấu hình hàng đợi
+│   ├── workerman.php             # Cấu hình Workerman
 │   └── ...
-├── route/                        # 主路由文件
-├── public/                       # Web入口
-│   ├── index.php                 # 前端入口
-│   └── admin/                    # 后台前端文件
-├── runtime/                      # 运行时文件
-├── composer.json                 # Composer依赖
-├── .env                          # 环境配置
-└── think                         # ThinkPHP命令行工具
+├── route/                        # File route chính
+├── public/                       # Điểm vào Web
+│   ├── index.php                 # Điểm vào frontend
+│   └── admin/                    # File frontend trang quản trị
+├── runtime/                      # File runtime
+├── composer.json                 # Phụ thuộc Composer
+├── .env                          # Cấu hình môi trường
+└── think                         # Công cụ dòng lệnh ThinkPHP
 ```
 
-#### 1.3.2 前端目录结构
+#### 1.3.2 Cấu trúc thư mục frontend
 ```
 template/
-├── admin/                        # 管理后台 (Vue + ElementUI)
+├── admin/                        # Trang quản trị (Vue + ElementUI)
 │   ├── src/
-│   │   ├── api/                  # API接口定义
-│   │   ├── components/           # 通用组件
-│   │   ├── pages/                # 页面组件
-│   │   ├── router/               # 路由配置
-│   │   ├── store/                # Vuex状态管理
-│   │   └── utils/                # 工具函数
+│   │   ├── api/                  # Định nghĩa API
+│   │   ├── components/           # Thành phần dùng chung
+│   │   ├── pages/                # Thành phần trang
+│   │   ├── router/               # Cấu hình route
+│   │   ├── store/                # Quản lý trạng thái Vuex
+│   │   └── utils/                # Hàm tiện ích (utility)
 │   ├── package.json
 │   └── vue.config.js
-└── uni-app/                      # 移动端 (UniApp)
-    ├── api/                      # API接口
-    ├── components/               # 组件
-    ├── pages/                    # 页面
-    ├── manifest.json             # 应用配置
-    └── pages.json                # 页面路由配置
+└── uni-app/                      # Di động (UniApp)
+    ├── api/                      # Các API
+    ├── components/               # Thành phần
+    ├── pages/                    # Trang
+    ├── manifest.json             # Cấu hình ứng dụng
+    └── pages.json                # Cấu hình route trang
 ```
 
-## 2. 核心业务模块
+## 2. Các module nghiệp vụ cốt lõi
 
-### 2.1 用户模块 (`app/services/user/`)
+### 2.1 Module người dùng (`app/services/user/`)
 
-#### 核心服务
-- **UserServices**: 用户主服务,管理用户基础信息
-- **LoginServices**: 登录服务,处理多种登录方式
-- **UserLevelServices**: 用户等级管理
-- **UserMoneyServices**: 用户余额管理
-- **UserBillServices**: 账单流水管理
-- **UserExtractServices**: 提现管理
-- **UserRechargeServices**: 充值管理
-- **UserGroupServices**: 用户分组
-- **UserLabelServices**: 用户标签
+#### Service cốt lõi
+- **UserServices**: Service chính của người dùng, quản lý thông tin cơ bản của người dùng
+- **LoginServices**: Service đăng nhập, xử lý nhiều phương thức đăng nhập
+- **UserLevelServices**: Quản lý hạng người dùng
+- **UserMoneyServices**: Quản lý số dư người dùng
+- **UserBillServices**: Quản lý sao kê giao dịch
+- **UserExtractServices**: Quản lý rút tiền
+- **UserRechargeServices**: Quản lý nạp tiền
+- **UserGroupServices**: Nhóm người dùng
+- **UserLabelServices**: Nhãn người dùng
 
-#### 数据表
+#### Bảng dữ liệu
 ```sql
-eb_user                  # 用户表
-eb_user_bill             # 账单表
-eb_user_extract          # 提现表
-eb_user_recharge         # 充值表
-eb_user_level            # 用户等级表
-eb_user_group            # 用户分组表
-eb_user_label            # 用户标签表
+eb_user                  # Bảng người dùng
+eb_user_bill             # Bảng giao dịch
+eb_user_extract          # Bảng rút tiền
+eb_user_recharge         # Bảng nạp tiền
+eb_user_level            # Bảng hạng người dùng
+eb_user_group            # Bảng nhóm người dùng
+eb_user_label            # Bảng nhãn người dùng
 ```
 
-#### 开发要点
-- 用户登录支持多种方式: 账号密码、手机验证码、微信授权
-- 用户余额变动必须记录到账单表
-- 用户等级可以设置升级条件
-- 用户分组和标签用于精准营销
+#### Lưu ý khi phát triển
+- Đăng nhập người dùng hỗ trợ nhiều phương thức: tài khoản và mật khẩu, mã xác thực qua số điện thoại, ủy quyền WeChat
+- Mọi thay đổi số dư của người dùng đều phải được ghi vào bảng sao kê
+- Hạng người dùng có thể thiết lập điều kiện nâng hạng
+- Nhóm và nhãn người dùng được dùng để marketing đúng đối tượng
 
-### 2.2 商品模块 (`app/services/product/`)
+### 2.2 Module sản phẩm (`app/services/product/`)
 
-#### 核心服务
-- **StoreProductServices**: 商品主服务
-- **StoreCategoryServices**: 商品分类
-- **StoreProductAttrServices**: 商品属性
-- **StoreProductReplyServices**: 商品评价
-- **CopyTaobaoServices**: 淘宝商品采集
+#### Service cốt lõi
+- **StoreProductServices**: Service chính của sản phẩm
+- **StoreCategoryServices**: Danh mục sản phẩm
+- **StoreProductAttrServices**: Thuộc tính sản phẩm
+- **StoreProductReplyServices**: Đánh giá sản phẩm
+- **CopyTaobaoServices**: Thu thập sản phẩm từ Taobao
 
-#### 数据表
+#### Bảng dữ liệu
 ```sql
-eb_store_product        # 商品表
-eb_store_category       # 商品分类表
-eb_store_product_attr   # 商品属性表
-eb_store_product_reply  # 商品评价表
-eb_store_product_description  # 商品详情表
+eb_store_product        # Bảng sản phẩm
+eb_store_category       # Bảng danh mục sản phẩm
+eb_store_product_attr   # Bảng thuộc tính sản phẩm
+eb_store_product_reply  # Bảng đánh giá sản phẩm
+eb_store_product_description  # Bảng chi tiết sản phẩm
 ```
 
-#### 开发要点
-- 商品支持多规格(SKU),需要处理库存和价格
-- 商品可以设置为普通商品、积分商品、预售商品等
-- 商品分类支持多级分类
-- 商品属性支持自定义规格
+#### Lưu ý khi phát triển
+- Sản phẩm hỗ trợ nhiều quy cách (SKU), cần xử lý tồn kho và giá
+- Sản phẩm có thể được thiết lập là sản phẩm thường, sản phẩm đổi điểm, sản phẩm đặt trước, v.v.
+- Danh mục sản phẩm hỗ trợ nhiều cấp
+- Thuộc tính sản phẩm hỗ trợ quy cách tùy chỉnh
 
-### 2.3 订单模块 (`app/services/order/`)
+### 2.3 Module đơn hàng (`app/services/order/`)
 
-#### 核心服务
-- **StoreOrderServices**: 订单主服务
-- **StoreOrderCreateServices**: 订单创建
-- **StoreOrderDeliveryServices**: 订单发货
-- **StoreOrderRefundServices**: 订单退款
-- **StoreCartServices**: 购物车
-- **OtherOrderServices**: 其他订单(积分订单等)
-- **OutStoreOrderServices**: 外部订单
+#### Service cốt lõi
+- **StoreOrderServices**: Service chính của đơn hàng
+- **StoreOrderCreateServices**: Tạo đơn hàng
+- **StoreOrderDeliveryServices**: Giao hàng cho đơn hàng
+- **StoreOrderRefundServices**: Hoàn tiền đơn hàng
+- **StoreCartServices**: Giỏ hàng
+- **OtherOrderServices**: Đơn hàng khác (đơn đổi điểm, v.v.)
+- **OutStoreOrderServices**: Đơn hàng bên ngoài
 
-#### 数据表
+#### Bảng dữ liệu
 ```sql
-eb_store_order          # 订单表
-eb_store_order_cart     # 订单商品表
-eb_store_order_status   # 订单状态变更记录
-eb_store_refund         # 退款表
-eb_store_cart           # 购物车表
+eb_store_order          # Bảng đơn hàng
+eb_store_order_cart     # Bảng sản phẩm trong đơn hàng
+eb_store_order_status   # Lịch sử thay đổi trạng thái đơn hàng
+eb_store_refund         # Bảng hoàn tiền
+eb_store_cart           # Bảng giỏ hàng
 ```
 
-#### 开发要点
-- 订单状态流转: 未支付 → 待发货 → 待收货 → 已完成 (或取消/退款)
-- 订单创建时需要扣减库存
-- 支付成功后触发后续流程(发货通知、积分增加等)
-- 订单退款需要恢复库存
-- 订单相关操作建议使用队列异步处理
+#### Lưu ý khi phát triển
+- Luồng chuyển trạng thái đơn hàng: Chưa thanh toán → Chờ giao hàng → Chờ nhận hàng → Đã hoàn thành (hoặc hủy/hoàn tiền)
+- Khi tạo đơn hàng cần trừ tồn kho
+- Sau khi thanh toán thành công sẽ kích hoạt các quy trình tiếp theo (thông báo giao hàng, cộng điểm thưởng, v.v.)
+- Khi hoàn tiền đơn hàng cần hoàn lại tồn kho
+- Nên dùng hàng đợi để xử lý bất đồng bộ các thao tác liên quan đến đơn hàng
 
-#### 订单状态流转图
+#### Sơ đồ chuyển trạng thái đơn hàng
 ```
-未支付 (status=0)
-   ↓ 支付成功
-待发货 (status=1)
-   ↓ 发货
-待收货 (status=2)
-   ↓ 确认收货
-已完成 (status=3)
+Chưa thanh toán (status=0)
+   ↓ Thanh toán thành công
+Chờ giao hàng (status=1)
+   ↓ Giao hàng
+Chờ nhận hàng (status=2)
+   ↓ Xác nhận đã nhận hàng
+Đã hoàn thành (status=3)
 
-分支流程:
-- 未支付 → 已取消 (status=-1)
-- 待发货 → 申请退款 → 退款中 (status=-2) → 已退款 (status=-3)
-- 待收货 → 申请退款 → 退款中 (status=-2) → 已退款 (status=-3)
+Luồng rẽ nhánh:
+- Chưa thanh toán → Đã hủy (status=-1)
+- Chờ giao hàng → Yêu cầu hoàn tiền → Đang hoàn tiền (status=-2) → Đã hoàn tiền (status=-3)
+- Chờ nhận hàng → Yêu cầu hoàn tiền → Đang hoàn tiền (status=-2) → Đã hoàn tiền (status=-3)
 ```
 
-### 2.4 支付模块 (`app/services/pay/`)
+### 2.4 Module thanh toán (`app/services/pay/`)
 
-#### 核心服务
-- **PayServices**: 支付服务
-- **WechatPayServices**: 微信支付
-- **AlipayServices**: 支付宝支付
+#### Service cốt lõi
+- **PayServices**: Service thanh toán
+- **WechatPayServices**: WeChat Pay
+- **AlipayServices**: Thanh toán Alipay
 
-#### 数据表
+#### Bảng dữ liệu
 ```sql
-eb_pay                  # 支付记录表
+eb_pay                  # Bảng lịch sử thanh toán
 ```
 
-#### 开发要点
-- 支付方式: 微信支付(公众号/小程序/H5)、支付宝支付、余额支付
-- 支付流程: 创建订单 → 调起支付 → 支付回调 → 更新订单状态
-- 支付回调需要验证签名防止伪造
-- 支付成功后触发事件,可以扩展后续业务逻辑
+#### Lưu ý khi phát triển
+- Phương thức thanh toán: WeChat Pay (OA WeChat/Mini Program/H5), thanh toán Alipay, thanh toán bằng số dư
+- Quy trình thanh toán: Tạo đơn hàng → Gọi thanh toán → Callback thanh toán → Cập nhật trạng thái đơn hàng
+- Callback thanh toán cần xác minh chữ ký để chống giả mạo
+- Sau khi thanh toán thành công sẽ kích hoạt sự kiện, có thể mở rộng logic nghiệp vụ tiếp theo
 
-### 2.5 营销模块 (`app/services/activity/`)
+### 2.5 Module marketing (`app/services/activity/`)
 
-#### 核心服务
-- **拼团**: StoreCombinationServices, StorePinkServices
-- **砍价**: StoreBargainServices
-- **秒杀**: StoreSeckillServices
-- **优惠券**: StoreCouponService, StoreCouponUserServices
-- **积分**: StoreIntegralServices
-- **直播**: LiveRoomServices, LiveGoodsServices
-- **抽奖**: LuckLotteryServices
+#### Service cốt lõi
+- **Mua chung**: StoreCombinationServices, StorePinkServices
+- **Săn giảm giá (bargain)**: StoreBargainServices
+- **Flash sale**: StoreSeckillServices
+- **Phiếu giảm giá (coupon)**: StoreCouponService, StoreCouponUserServices
+- **Điểm thưởng**: StoreIntegralServices
+- **Livestream**: LiveRoomServices, LiveGoodsServices
+- **Vòng quay may mắn**: LuckLotteryServices
 
-#### 数据表
+#### Bảng dữ liệu
 ```sql
-eb_store_combination    # 拼团商品表
-eb_store_pink           # 拼团记录表
-eb_store_bargain        # 砍价商品表
-eb_store_bargain_user   # 砍价记录表
-eb_store_seckill        # 秒杀商品表
-eb_store_coupon         # 优惠券表
-eb_store_coupon_user    # 用户优惠券表
-eb_integral_product     # 积分商品表
+eb_store_combination    # Bảng sản phẩm mua chung
+eb_store_pink           # Bảng lịch sử mua chung
+eb_store_bargain        # Bảng sản phẩm săn giảm giá
+eb_store_bargain_user   # Bảng lịch sử săn giảm giá
+eb_store_seckill        # Bảng sản phẩm flash sale
+eb_store_coupon         # Bảng phiếu giảm giá
+eb_store_coupon_user    # Bảng phiếu giảm giá của người dùng
+eb_integral_product     # Bảng sản phẩm đổi điểm
 ```
 
-#### 开发要点
-- 营销活动都需要设置时间范围
-- 优惠券可以设置使用条件和适用商品
-- 拼团需要处理拼团成功/失败的逻辑
-- 砍价需要处理砍价进度和完成时间
-- 秒杀商品需要限制库存和购买数量
+#### Lưu ý khi phát triển
+- Mọi hoạt động marketing đều cần thiết lập khoảng thời gian
+- Phiếu giảm giá có thể thiết lập điều kiện sử dụng và sản phẩm áp dụng
+- Mua chung cần xử lý logic mua chung thành công/thất bại
+- Săn giảm giá cần xử lý tiến độ săn giảm giá và thời gian hoàn thành
+- Sản phẩm flash sale cần giới hạn tồn kho và số lượng mua
 
-### 2.6 分销模块 (`app/services/agent/`)
+### 2.6 Module tiếp thị liên kết (`app/services/agent/`)
 
-#### 核心服务
-- **AgentLevelServices**: 分销等级管理
-- **AgentLevelTaskServices**: 分销任务系统
-- **DivisionServices**: 事业部/代理管理
-- **SpreadApplyServices**: 分销申请
+#### Service cốt lõi
+- **AgentLevelServices**: Quản lý cấp độ CTV
+- **AgentLevelTaskServices**: Hệ thống nhiệm vụ CTV
+- **DivisionServices**: Quản lý đại lý khu vực/đại lý
+- **SpreadApplyServices**: Đăng ký làm CTV
 
-#### 数据表
+#### Bảng dữ liệu
 ```sql
-eb_agent_level          # 分销等级表
-eb_agent_level_task     # 分销任务表
-eb_division             # 事业部表
-eb_spread_apply         # 分销申请表
+eb_agent_level          # Bảng hạng CTV
+eb_agent_level_task     # Bảng nhiệm vụ CTV
+eb_division             # Bảng đại lý khu vực
+eb_spread_apply         # Bảng đăng ký CTV
 ```
 
-#### 开发要点
-- 分销系统支持多级分销
-- 分销员等级通过完成任务自动升级
-- 分销佣金结算需要计算各级佣金
-- 分销申请需要管理员审核
+#### Lưu ý khi phát triển
+- Hệ thống tiếp thị liên kết hỗ trợ nhiều cấp
+- CTV được tự động thăng cấp khi hoàn thành nhiệm vụ
+- Khi thanh toán hoa hồng CTV cần tính hoa hồng cho từng cấp
+- Đơn đăng ký làm CTV cần được quản trị viên duyệt
 
-### 2.7 系统管理模块 (`app/services/system/`)
+### 2.7 Module quản lý hệ thống (`app/services/system/`)
 
-#### 核心服务
-- **SystemCrudServices**: CRUD代码生成器
-- **SystemConfigServices**: 系统配置
-- **SystemEventServices**: 系统事件管理
-- **SystemCrontabServices**: 定时任务管理
-- **SystemMenusServices**: 菜单管理
-- **SystemAdminServices**: 管理员管理
-- **SystemLogServices**: 操作日志
-- **SystemFileServices**: 文件管理
-- **SystemUpgradeServices**: 系统升级
+#### Service cốt lõi
+- **SystemCrudServices**: Trình sinh code CRUD
+- **SystemConfigServices**: Cấu hình hệ thống
+- **SystemEventServices**: Quản lý sự kiện hệ thống
+- **SystemCrontabServices**: Quản lý tác vụ định kỳ
+- **SystemMenusServices**: Quản lý menu
+- **SystemAdminServices**: Quản lý quản trị viên
+- **SystemLogServices**: Nhật ký thao tác
+- **SystemFileServices**: Quản lý file
+- **SystemUpgradeServices**: Nâng cấp hệ thống
 
-#### 开发要点
-- **代码生成器**: 可以快速生成Controller、Service、DAO、Model、Validate
-- **系统配置**: 支持后台动态配置,存储在数据库中
-- **事件系统**: 定义了30+系统事件锚点,可以扩展业务逻辑
-- **定时任务**: 基于Workerman,支持Cron表达式
-- **权限管理**: 基于RBAC模型,可以控制到菜单和按钮级别
+#### Lưu ý khi phát triển
+- **Trình sinh code**: Có thể nhanh chóng tạo Controller, Service, DAO, Model, Validate
+- **Cấu hình hệ thống**: Hỗ trợ cấu hình động từ trang quản trị, lưu trong cơ sở dữ liệu
+- **Hệ thống sự kiện**: Đã định nghĩa 30+ điểm neo sự kiện hệ thống, có thể mở rộng logic nghiệp vụ
+- **Tác vụ định kỳ**: Dựa trên Workerman, hỗ trợ biểu thức Cron
+- **Quản lý quyền**: Dựa trên mô hình RBAC, có thể kiểm soát tới cấp menu và nút bấm
 
-## 3. 开发规范
+## 3. Quy chuẩn phát triển
 
-### 3.1 命名规范
+### 3.1 Quy tắc đặt tên
 
-#### 类命名
-- **控制器**: 模块名 + Controller,如 `UserController`
-- **服务**: 模块名 + Services,如 `UserServices`
-- **DAO**: 模块名 + Dao,如 `UserDao`
-- **模型**: 模块名,如 `User`
-- **验证器**: 模块名 + Validate,如 `UserValidate`
+#### Đặt tên lớp
+- **Controller**: Tên module + Controller, ví dụ `UserController`
+- **Service**: Tên module + Services, ví dụ `UserServices`
+- **DAO**: Tên module + Dao, ví dụ `UserDao`
+- **Model**: Tên module, ví dụ `User`
+- **Validator**: Tên module + Validate, ví dụ `UserValidate`
 
-#### 方法命名
-- **控制器方法**: 小写+下划线,如 `get_list`, `save_data`
-- **服务方法**: 驼峰法,如 `getUserList`, `saveData`
-- **DAO方法**: 数据库操作相关,如 `selectList`, `insert`, `update`, `delete`
+#### Đặt tên phương thức
+- **Phương thức controller**: Chữ thường + dấu gạch dưới, ví dụ `get_list`, `save_data`
+- **Phương thức service**: Kiểu camelCase, ví dụ `getUserList`, `saveData`
+- **Phương thức DAO**: Liên quan đến thao tác cơ sở dữ liệu, ví dụ `selectList`, `insert`, `update`, `delete`
 
-#### 变量命名
-- **普通变量**: 驼峰法,如 `$userName`, `$orderId`
-- **数组变量**: 复数形式,如 `$users`, `$products`
-- **布尔变量**: is/has/can开头,如 `$isPaid`, `$hasStock`
+#### Đặt tên biến
+- **Biến thông thường**: Kiểu camelCase, ví dụ `$userName`, `$orderId`
+- **Biến mảng**: Dạng số nhiều, ví dụ `$users`, `$products`
+- **Biến boolean**: Bắt đầu bằng is/has/can, ví dụ `$isPaid`, `$hasStock`
 
-### 3.2 代码规范
+### 3.2 Quy chuẩn code
 
-#### 控制器层
+#### Tầng controller
 ```php
 <?php
 namespace app\adminapi\controller\system;
@@ -410,7 +410,7 @@ use think\facade\App;
 use app\services\system\SystemAdminServices;
 
 /**
- * 管理员控制器
+ * Controller quản trị viên
  */
 class SystemAdminController
 {
@@ -422,7 +422,7 @@ class SystemAdminController
     }
 
     /**
-     * 获取管理员列表
+     * Lấy danh sách quản trị viên
      * @return mixed
      */
     public function get_list()
@@ -436,7 +436,7 @@ class SystemAdminController
     }
 
     /**
-     * 保存管理员
+     * Lưu quản trị viên
      * @return mixed
      */
     public function save()
@@ -449,12 +449,12 @@ class SystemAdminController
             ['status', 1]
         ]);
         $this->services->saveAdmin($data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 }
 ```
 
-#### 服务层
+#### Tầng service
 ```php
 <?php
 namespace app\services\system;
@@ -465,19 +465,19 @@ use crmeb\exceptions\AdminException;
 class SystemAdminServices extends BaseServices
 {
     /**
-     * 获取管理员列表
+     * Lấy danh sách quản trị viên
      * @param array $where
      * @return array
      */
     public function getAdminList(array $where): array
     {
-        // 构建查询条件
+        // Xây dựng điều kiện truy vấn
         $query = $this->dao->search($where);
 
-        // 获取列表
+        // Lấy danh sách
         $list = $query->select()->toArray();
 
-        // 处理数据
+        // Xử lý dữ liệu
         foreach ($list as &$item) {
             $item['role_names'] = $this->getRoleNames($item['roles']);
         }
@@ -486,32 +486,32 @@ class SystemAdminServices extends BaseServices
     }
 
     /**
-     * 保存管理员
+     * Lưu quản trị viên
      * @param array $data
      * @return int
      */
     public function saveAdmin(array $data): int
     {
-        // 验证数据
+        // Xác thực dữ liệu
         if (empty($data['account'])) {
-            throw new AdminException('账号不能为空');
+            throw new AdminException('Tài khoản không được để trống');
         }
 
-        // 密码加密
+        // Mã hóa mật khẩu
         if (!empty($data['pwd'])) {
             $data['pwd'] = password_hash($data['pwd'], PASSWORD_DEFAULT);
         } else {
             unset($data['pwd']);
         }
 
-        // 保存数据
+        // Lưu dữ liệu
         if (isset($data['id']) && $data['id']) {
-            // 更新
+            // Cập nhật
             $id = $data['id'];
             unset($data['id']);
             $this->dao->update($id, $data);
         } else {
-            // 新增
+            // Thêm mới
             $id = $this->dao->save($data);
         }
 
@@ -520,7 +520,7 @@ class SystemAdminServices extends BaseServices
 }
 ```
 
-#### DAO层
+#### Tầng DAO
 ```php
 <?php
 namespace app\dao\system;
@@ -531,7 +531,7 @@ use app\model\system\SystemAdmin;
 class SystemAdminDao extends BaseDao
 {
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -540,7 +540,7 @@ class SystemAdminDao extends BaseDao
     }
 
     /**
-     * 搜索条件
+     * Điều kiện tìm kiếm
      * @param array $where
      * @return \think\Model
      */
@@ -549,12 +549,12 @@ class SystemAdminDao extends BaseDao
         $query = $this->getModel()
             ->where('is_del', 0);
 
-        // 账号搜索
+        // Tìm kiếm theo tài khoản
         if (!empty($where['keywords'])) {
             $query = $query->whereLike('account|real_name', "%{$where['keywords']}%");
         }
 
-        // 状态筛选
+        // Lọc theo trạng thái
         if ($where['status'] !== '') {
             $query = $query->where('status', $where['status']);
         }
@@ -564,7 +564,7 @@ class SystemAdminDao extends BaseDao
 }
 ```
 
-#### 模型层
+#### Tầng model
 ```php
 <?php
 namespace app\model\system;
@@ -578,7 +578,7 @@ class SystemAdmin extends BaseModel
     protected $pk = 'id';
 
     /**
-     * 关联角色
+     * Liên kết vai trò
      * @return \think\model\relation\BelongsToMany
      */
     public function roles()
@@ -587,7 +587,7 @@ class SystemAdmin extends BaseModel
     }
 
     /**
-     * 密码修改器
+     * Setter mật khẩu
      * @param $value
      * @return string
      */
@@ -597,75 +597,75 @@ class SystemAdmin extends BaseModel
     }
 
     /**
-     * 状态获取器
+     * Getter trạng thái
      * @param $value
      * @return string
      */
     public function getStatusTextAttr($value, $data)
     {
         $status = [
-            0 => '禁用',
-            1 => '启用'
+            0 => 'Vô hiệu hóa',
+            1 => 'Kích hoạt'
         ];
         return $status[$data['status']] ?? '';
     }
 }
 ```
 
-### 3.3 数据库规范
+### 3.3 Quy chuẩn cơ sở dữ liệu
 
-#### 表命名
-- 使用小写字母和下划线
-- 统一使用 `eb_` 前缀
-- 表名使用复数形式或明确含义
+#### Đặt tên bảng
+- Dùng chữ thường và dấu gạch dưới
+- Thống nhất dùng tiền tố `eb_`
+- Tên bảng dùng dạng số nhiều hoặc có ý nghĩa rõ ràng
 
-#### 字段命名
-- 使用小写字母和下划线
-- 字段名不以下划线开头
-- 主键统一命名为 `id`
-- 外键命名为 `表名_id`,如 `user_id`
-- 时间字段命名为 `create_time`, `update_time`
-- 状态字段命名为 `status`,默认值0
-- 删除标记命名为 `is_del`,0未删除1已删除
+#### Đặt tên trường
+- Dùng chữ thường và dấu gạch dưới
+- Tên trường không bắt đầu bằng dấu gạch dưới
+- Khóa chính thống nhất đặt tên là `id`
+- Khóa ngoại đặt tên là `{tên_bảng}_id`, ví dụ `user_id`
+- Trường thời gian đặt tên là `create_time`, `update_time`
+- Trường trạng thái đặt tên là `status`, giá trị mặc định là 0
+- Cờ đánh dấu xóa đặt tên là `is_del`, 0 là chưa xóa, 1 là đã xóa
 
-#### 字段类型
-- 整型: 使用 `int`,如 `tinyint`, `smallint`, `int`, `bigint`
-- 字符串: 使用 `varchar`,如 `varchar(255)`
-- 文本: 使用 `text`
-- 金额: 使用 `decimal(10,2)`
-- 时间: 使用 `int`(时间戳)或 `datetime`
+#### Loại trường
+- Số nguyên: Dùng `int`, ví dụ `tinyint`, `smallint`, `int`, `bigint`
+- Chuỗi: Dùng `varchar`, ví dụ `varchar(255)`
+- Văn bản: Dùng `text`
+- Số tiền: Dùng `decimal(10,2)`
+- Thời gian: Dùng `int` (timestamp) hoặc `datetime`
 
-### 3.4 API规范
+### 3.4 Quy chuẩn API
 
-#### 请求方式
-- **GET**: 查询数据
-- **POST**: 创建数据
-- **PUT**: 更新数据
-- **DELETE**: 删除数据
+#### Phương thức yêu cầu
+- **GET**: Truy vấn dữ liệu
+- **POST**: Tạo dữ liệu
+- **PUT**: Cập nhật dữ liệu
+- **DELETE**: Xóa dữ liệu
 
-#### 响应格式
+#### Định dạng phản hồi
 ```json
 {
     "code": 200,
-    "msg": "操作成功",
+    "msg": "Thao tác thành công",
     "data": {}
 }
 ```
 
-#### 错误响应
+#### Phản hồi lỗi
 ```json
 {
     "code": 400,
-    "msg": "错误信息",
+    "msg": "Thông tin lỗi",
     "data": null
 }
 ```
 
-#### 分页响应
+#### Phản hồi phân trang
 ```json
 {
     "code": 200,
-    "msg": "操作成功",
+    "msg": "Thao tác thành công",
     "data": {
         "list": [],
         "count": 100,
@@ -675,124 +675,124 @@ class SystemAdmin extends BaseModel
 }
 ```
 
-## 4. 自动化功能
+## 4. Tính năng tự động hóa
 
-### 4.1 代码生成器
+### 4.1 Trình sinh code
 
-#### 使用方式
-1. 在后台管理中进入"系统管理" > "代码生成"
-2. 选择数据表
-3. 配置生成参数(字段类型、搜索类型、表单类型等)
-4. 生成代码
+#### Cách sử dụng
+1. Trong trang quản trị, vào “Quản lý hệ thống” > “Tạo mã nguồn”
+2. Chọn bảng dữ liệu
+3. Cấu hình tham số sinh code (kiểu trường, kiểu tìm kiếm, kiểu form, v.v.)
+4. Sinh code
 
-#### 支持的表单类型
-- **input**: 普通输入框
-- **textarea**: 文本域
-- **select**: 下拉选择
-- **radio**: 单选框
-- **checkbox**: 复选框
-- **date**: 日期选择
-- **datetime**: 日期时间选择
-- **image**: 图片上传
-- **file**: 文件上传
-- **editor**: 富文本编辑器
-- **number**: 数字输入
-- **switch**: 开关
-- 等等
+#### Các kiểu form được hỗ trợ
+- **input**: Ô nhập liệu thông thường
+- **textarea**: Vùng nhập văn bản nhiều dòng
+- **select**: Danh sách thả xuống
+- **radio**: Ô chọn một
+- **checkbox**: Ô chọn nhiều
+- **date**: Chọn ngày
+- **datetime**: Chọn ngày giờ
+- **image**: Tải lên ảnh
+- **file**: Tải lên tệp
+- **editor**: Trình soạn thảo văn bản định dạng
+- **number**: Nhập số
+- **switch**: Công tắc
+- v.v.
 
-#### 支持的搜索类型
-- **普通搜索**: 普通文本搜索
-- **日期范围**: 日期区间搜索
-- **时间范围**: 时间区间搜索
-- **下拉选择**: 下拉筛选
+#### Các kiểu tìm kiếm được hỗ trợ
+- **Tìm kiếm thường**: Tìm kiếm văn bản thông thường
+- **Khoảng ngày**: Tìm kiếm theo khoảng ngày
+- **Khoảng thời gian**: Tìm kiếm theo khoảng thời gian
+- **Danh sách thả xuống**: Lọc bằng danh sách thả xuống
 
-### 4.2 定时任务
+### 4.2 Tác vụ định kỳ
 
-#### 启动命令
+#### Lệnh khởi động
 ```bash
-# 启动定时任务(守护进程)
+# Khởi động tác vụ định kỳ (tiến trình daemon)
 php think timer start --d
 
-# 停止定时任务
+# Dừng tác vụ định kỳ
 php think timer stop
 
-# 重启定时任务
+# Khởi động lại tác vụ định kỳ
 php think timer restart
 
-# 查看定时任务状态
+# Xem trạng thái tác vụ định kỳ
 php think timer status
 ```
 
-#### 系统预置定时任务
-1. 自动取消未支付订单
-2. 自动确认收货
-3. 自动评价
-4. 自动关闭拼团
-5. 自动关闭砍价
-6. 积分到期处理
-7. 优惠券过期处理
-8. 分销佣金结算
-9. 统计数据汇总
-10. 系统日志清理
+#### Các tác vụ định kỳ có sẵn của hệ thống
+1. Tự động hủy đơn hàng chưa thanh toán
+2. Tự động xác nhận đã nhận hàng
+3. Tự động đánh giá
+4. Tự động đóng nhóm mua chung
+5. Tự động đóng lượt săn giảm giá
+6. Xử lý điểm thưởng hết hạn
+7. Xử lý phiếu giảm giá hết hạn
+8. Thanh toán hoa hồng CTV
+9. Tổng hợp dữ liệu thống kê
+10. Dọn dẹp nhật ký hệ thống
 
-### 4.3 队列任务
+### 4.3 Tác vụ hàng đợi
 
-#### 启动命令
+#### Lệnh khởi động
 ```bash
-# 启动队列消费者
+# Khởi động consumer của hàng đợi
 php think queue:listen --queue
 
-# 或者使用Workerman
+# Hoặc dùng Workerman
 php think queue:work --queue
 ```
 
-#### 主要队列任务
-- **OrderJob**: 订单相关任务(创建、支付、发货等)
-- **PinkJob**: 拼团任务
-- **BargainJob**: 砍价任务
-- **SeckillJob**: 秒杀任务
-- **AutoCommentJob**: 自动评价
-- **PosterJob**: 海报生成
-- **AgentJob**: 分销等级升级检测
-- **UnpaidOrderCancelJob**: 未支付订单取消
-- 等等
+#### Các tác vụ hàng đợi chính
+- **OrderJob**: Tác vụ liên quan đến đơn hàng (tạo, thanh toán, giao hàng, v.v.)
+- **PinkJob**: Tác vụ mua chung
+- **BargainJob**: Tác vụ săn giảm giá
+- **SeckillJob**: Tác vụ flash sale
+- **AutoCommentJob**: Tự động đánh giá
+- **PosterJob**: Tạo poster
+- **AgentJob**: Kiểm tra thăng cấp CTV
+- **UnpaidOrderCancelJob**: Hủy đơn hàng chưa thanh toán
+- v.v.
 
-### 4.4 事件系统
+### 4.4 Hệ thống sự kiện
 
-#### 系统事件锚点
+#### Điểm neo sự kiện hệ thống
 
-**用户事件**:
-- 用户注册 (user.register)
-- 用户登录 (user.login)
-- 用户注销 (user.logout)
-- 用户修改信息 (user.update)
-- 用户绑定推广 (user.bind_spread)
-- 用户签到 (user.sign)
-- 用户充值 (user.recharge)
+**Sự kiện người dùng**:
+- Người dùng đăng ký (user.register)
+- Người dùng đăng nhập (user.login)
+- Người dùng đăng xuất (user.logout)
+- Người dùng sửa thông tin (user.update)
+- Người dùng liên kết người giới thiệu (user.bind_spread)
+- Người dùng điểm danh (user.sign)
+- Người dùng nạp tiền (user.recharge)
 
-**订单事件**:
-- 订单创建 (order.create)
-- 订单支付成功 (order.pay_success)
-- 订单发货 (order.delivery)
-- 订单收货 (order.confirm)
-- 订单取消 (order.cancel)
-- 订单退款 (order.refund)
+**Sự kiện đơn hàng**:
+- Tạo đơn hàng (order.create)
+- Đơn hàng thanh toán thành công (order.pay_success)
+- Giao hàng cho đơn hàng (order.delivery)
+- Xác nhận đã nhận hàng (order.confirm)
+- Hủy đơn hàng (order.cancel)
+- Hoàn tiền đơn hàng (order.refund)
 
-**商品事件**:
-- 商品上架 (product.on_shelf)
-- 商品下架 (product.off_shelf)
-- 商品评价 (product.comment)
+**Sự kiện sản phẩm**:
+- Đăng bán sản phẩm (product.on_shelf)
+- Ngừng bán sản phẩm (product.off_shelf)
+- Đánh giá sản phẩm (product.comment)
 
-**支付事件**:
-- 支付成功 (pay.success)
-- 支付失败 (pay.fail)
+**Sự kiện thanh toán**:
+- Thanh toán thành công (pay.success)
+- Thanh toán thất bại (pay.fail)
 
-**营销事件**:
-- 领取优惠券 (coupon.receive)
-- 参与拼团 (combination.join)
-- 参与砍价 (bargain.join)
+**Sự kiện marketing**:
+- Nhận phiếu giảm giá (coupon.receive)
+- Tham gia mua chung (combination.join)
+- Tham gia săn giảm giá (bargain.join)
 
-#### 事件监听器开发
+#### Phát triển trình lắng nghe sự kiện (listener)
 ```php
 <?php
 namespace app\listener\order;
@@ -800,55 +800,55 @@ namespace app\listener\order;
 use think\Container;
 
 /**
- * 订单支付成功监听器
+ * Listener thanh toán đơn hàng thành công
  */
 class OrderPaySuccessListener
 {
     /**
-     * 订单支付成功事件处理
+     * Xử lý sự kiện thanh toán đơn hàng thành công
      * @param $event
      * @return void
      */
     public function handle($event)
     {
-        // $event 包含订单信息
+        // $event chứa thông tin đơn hàng
         $order = $event['order'];
 
-        // 业务逻辑
-        // 1. 发送通知
-        // 2. 增加积分
-        // 3. 更新库存
-        // 4. 触发分销佣金计算
+        // Logic nghiệp vụ
+        // 1. Gửi thông báo
+        // 2. Tăng điểm thưởng
+        // 3. Cập nhật tồn kho
+        // 4. Kích hoạt tính hoa hồng tiếp thị liên kết
         // ...
     }
 }
 ```
 
-### 4.5 WebSocket实时通信
+### 4.5 Giao tiếp thời gian thực qua WebSocket
 
-#### 启动命令
+#### Lệnh khởi động
 ```bash
-# 启动WebSocket服务
+# Khởi động dịch vụ WebSocket
 php think workerman start --d
 ```
 
-#### 服务配置
+#### Cấu hình dịch vụ
 ```php
 // config/workerman.php
 return [
-    // 管理后台通知
+    // Thông báo trang quản trị
     'admin' => [
         'protocol' => 'websocket',
         'port' => 40001,
         'ip' => '0.0.0.0',
     ],
-    // 客服消息
+    // Tin nhắn CSKH
     'chat' => [
         'protocol' => 'websocket',
         'port' => 40002,
         'ip' => '0.0.0.0',
     ],
-    // 内部通讯
+    // Giao tiếp nội bộ
     'channel' => [
         'port' => 40003,
         'ip' => '127.0.0.1',
@@ -856,36 +856,36 @@ return [
 ];
 ```
 
-#### 使用场景
-- 新订单实时通知
-- 客服在线聊天
-- 系统消息推送
-- 实时数据统计
+#### Tình huống sử dụng
+- Thông báo đơn hàng mới theo thời gian thực
+- Chat trực tuyến với CSKH
+- Đẩy thông báo hệ thống
+- Thống kê dữ liệu theo thời gian thực
 
-## 5. 常见开发场景
+## 5. Các tình huống phát triển thường gặp
 
-### 5.1 创建新功能模块
+### 5.1 Tạo module tính năng mới
 
-#### 步骤1: 创建数据表
+#### Bước 1: Tạo bảng dữ liệu
 ```sql
 CREATE TABLE `eb_example` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL DEFAULT '' COMMENT '名称',
-  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT '状态 0禁用 1启用',
-  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT '创建时间',
-  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `is_del` tinyint(1) NOT NULL DEFAULT '0' COMMENT '是否删除',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT 'Tên',
+  `status` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Trạng thái 0 tắt 1 bật',
+  `create_time` int(11) NOT NULL DEFAULT '0' COMMENT 'Thời gian tạo',
+  `update_time` int(11) NOT NULL DEFAULT '0' COMMENT 'Thời gian cập nhật',
+  `is_del` tinyint(1) NOT NULL DEFAULT '0' COMMENT 'Đã xóa',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='示例表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Bảng mẫu';
 ```
 
-#### 步骤2: 创建模型
+#### Bước 2: Tạo model
 ```bash
-# 使用命令行生成模型
+# Dùng dòng lệnh để tạo model
 php think make:model Example
 ```
 
-#### 步骤3: 创建DAO
+#### Bước 3: Tạo DAO
 ```php
 <?php
 namespace app\dao;
@@ -902,7 +902,7 @@ class ExampleDao extends BaseDao
 }
 ```
 
-#### 步骤4: 创建服务
+#### Bước 4: Tạo service
 ```php
 <?php
 namespace app\services;
@@ -929,7 +929,7 @@ class ExampleServices extends BaseServices
 }
 ```
 
-#### 步骤5: 创建控制器
+#### Bước 5: Tạo controller
 ```php
 <?php
 namespace app\adminapi\controller;
@@ -962,14 +962,14 @@ class ExampleController
             ['status', 1]
         ]);
         $this->services->save($data);
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 }
 ```
 
-#### 步骤6: 创建路由
+#### Bước 6: Tạo route
 ```php
-// route/app.php 或 route/adminapi.php
+// route/app.php Hoặc route/adminapi.php
 use think\facade\Route;
 
 Route::group('example', function () {
@@ -978,303 +978,303 @@ Route::group('example', function () {
 });
 ```
 
-#### 步骤7: 使用代码生成器(可选)
-直接在后台管理系统配置代码生成,自动生成前后端代码
+#### Bước 7: Dùng trình sinh code (tùy chọn)
+Cấu hình sinh code ngay trong trang quản trị, tự động tạo code frontend và backend
 
-### 5.2 开发订单功能
+### 5.2 Phát triển tính năng đơn hàng
 
-#### 订单创建流程
-1. 校验商品库存和状态
-2. 计算订单金额
-3. 创建订单记录
-4. 创建订单商品记录
-5. 扣减商品库存
-6. 清空购物车
-7. 触发订单创建事件
+#### Quy trình tạo đơn hàng
+1. Kiểm tra tồn kho và trạng thái sản phẩm
+2. Tính số tiền đơn hàng
+3. Tạo bản ghi đơn hàng
+4. Tạo bản ghi sản phẩm của đơn hàng
+5. Trừ tồn kho sản phẩm
+6. Làm trống giỏ hàng
+7. Kích hoạt sự kiện tạo đơn hàng
 
-#### 订单支付流程
-1. 调起支付(微信/支付宝/余额)
-2. 接收支付回调
-3. 验证签名
-4. 更新订单状态为"待发货"
-5. 扣减优惠券
-6. 增加用户积分
-7. 触发支付成功事件(分销、通知等)
+#### Quy trình thanh toán đơn hàng
+1. Gọi thanh toán (WeChat/Alipay/số dư)
+2. Nhận callback thanh toán
+3. Xác minh chữ ký
+4. Cập nhật trạng thái đơn hàng thành “Chờ giao hàng”
+5. Khấu trừ phiếu giảm giá
+6. Tăng điểm thưởng người dùng
+7. Kích hoạt sự kiện thanh toán thành công (tiếp thị liên kết, thông báo, v.v.)
 
-#### 订单发货流程
-1. 获取订单信息
-2. 填写物流信息
-3. 更新订单状态为"待收货"
-4. 发送发货通知
-5. 触发发货事件
+#### Quy trình giao hàng
+1. Lấy thông tin đơn hàng
+2. Điền thông tin vận chuyển
+3. Cập nhật trạng thái đơn hàng thành “Chờ nhận hàng”
+4. Gửi thông báo giao hàng
+5. Kích hoạt sự kiện giao hàng
 
-#### 订单收货流程
-1. 用户确认收货或系统自动收货(7天未收货)
-2. 更新订单状态为"已完成"
-3. 结算分销佣金
-4. 增加用户积分
-5. 触发收货事件
+#### Quy trình nhận hàng
+1. Người dùng xác nhận đã nhận hàng hoặc hệ thống tự động xác nhận nhận hàng (sau 7 ngày chưa xác nhận)
+2. Cập nhật trạng thái đơn hàng thành “Đã hoàn thành”
+3. Thanh toán hoa hồng CTV
+4. Tăng điểm thưởng người dùng
+5. Kích hoạt sự kiện nhận hàng
 
-### 5.3 开发营销活动
+### 5.3 Phát triển hoạt động marketing
 
-#### 优惠券功能开发要点
-1. 创建优惠券模板(面额、门槛、使用条件等)
-2. 用户领取优惠券
-3. 下单时选择优惠券
-4. 计算优惠金额
-5. 支付后核销优惠券
-6. 过期自动失效
+#### Lưu ý khi phát triển tính năng phiếu giảm giá
+1. Tạo mẫu phiếu giảm giá (mệnh giá, giá trị đơn tối thiểu, điều kiện sử dụng, v.v.)
+2. Người dùng nhận phiếu giảm giá
+3. Chọn phiếu giảm giá khi đặt hàng
+4. Tính số tiền được giảm
+5. Xác nhận sử dụng phiếu giảm giá sau khi thanh toán
+6. Tự động mất hiệu lực khi hết hạn
 
-#### 拼团功能开发要点
-1. 创建拼团商品(拼团价、成团人数、拼团时长)
-2. 用户发起拼团
-3. 其他人参与拼团
-4. 拼团成功/失败判断
-5. 成团后按拼团价计算订单
-6. 失败后退款
+#### Lưu ý khi phát triển tính năng mua chung
+1. Tạo sản phẩm mua chung (giá mua chung, số người để thành nhóm, thời lượng mua chung)
+2. Người dùng tạo nhóm mua chung
+3. Người khác tham gia mua chung
+4. Xác định mua chung thành công/thất bại
+5. Sau khi thành nhóm, tính đơn hàng theo giá mua chung
+6. Hoàn tiền khi thất bại
 
-#### 秒杀功能开发要点
-1. 创建秒杀活动(时间、商品、库存、限购)
-2. 用户参与秒杀
-3. 检查库存和限购
-4. 创建秒杀订单
-5. 未支付订单自动取消
-6. 活动结束后更新库存
+#### Lưu ý khi phát triển tính năng flash sale
+1. Tạo chương trình flash sale (thời gian, sản phẩm, tồn kho, giới hạn mua)
+2. Người dùng tham gia flash sale
+3. Kiểm tra tồn kho và giới hạn mua
+4. Tạo đơn hàng flash sale
+5. Tự động hủy đơn hàng chưa thanh toán
+6. Cập nhật tồn kho sau khi chương trình kết thúc
 
-### 5.4 开发分销功能
+### 5.4 Phát triển tính năng tiếp thị liên kết
 
-#### 分销流程
-1. 用户申请成为分销员
-2. 管理员审核通过
-3. 分销员分享推广链接
-4. 新用户通过链接注册成为下级
-5. 下级用户下单
-6. 系统计算分销佣金
-7. 佣金结算到分销员余额
+#### Quy trình tiếp thị liên kết
+1. Người dùng đăng ký làm CTV
+2. Quản trị viên duyệt đơn đăng ký
+3. CTV chia sẻ liên kết giới thiệu
+4. Người dùng mới đăng ký qua liên kết và trở thành cấp dưới
+5. Người dùng cấp dưới đặt hàng
+6. Hệ thống tính hoa hồng CTV
+7. Hoa hồng được thanh toán vào số dư của CTV
 
-#### 分销等级升级
-1. 创建分销等级(等级名称、佣金比例)
-2. 设置升级任务(订单数、金额等)
-3. 定时任务检测分销员任务完成情况
-4. 达到条件自动升级
+#### Thăng cấp CTV
+1. Tạo cấp độ CTV (tên cấp độ, tỷ lệ hoa hồng)
+2. Thiết lập nhiệm vụ thăng cấp (số đơn hàng, số tiền, v.v.)
+3. Tác vụ định kỳ kiểm tra tình trạng hoàn thành nhiệm vụ của CTV
+4. Tự động thăng cấp khi đạt điều kiện
 
-## 6. 问题排查指南
+## 6. Hướng dẫn khắc phục sự cố
 
-### 6.1 常见错误
+### 6.1 Lỗi thường gặp
 
-#### 数据库连接错误
+#### Lỗi kết nối cơ sở dữ liệu
 ```php
-// 错误信息
+// Thông tin lỗi
 SQLSTATE[HY000] [2002] Connection refused
 
-// 排查步骤
-1. 检查数据库服务是否启动
-2. 检查 .env 配置文件中的数据库配置
-3. 检查数据库用户权限
-4. 检查防火墙设置
+// Các bước xử lý sự cố
+1. Kiểm tra dịch vụ cơ sở dữ liệu đã khởi động chưa
+2. Kiểm tra cấu hình cơ sở dữ liệu trong file cấu hình .env
+3. Kiểm tra quyền của người dùng cơ sở dữ liệu
+4. Kiểm tra cài đặt tường lửa
 ```
 
-#### 队列任务不执行
+#### Tác vụ hàng đợi không chạy
 ```php
-// 排查步骤
-1. 检查队列消费者是否启动: php think queue:work
-2. 检查队列配置: config/queue.php
-3. 检查Redis连接: redis-cli ping
-4. 查看队列日志: runtime/log/
+// Các bước xử lý sự cố
+1. Kiểm tra consumer của hàng đợi đã khởi động chưa: php think queue:work
+2. Kiểm tra cấu hình hàng đợi: config/queue.php
+3. Kiểm tra kết nối Redis: redis-cli ping
+4. Xem log hàng đợi: runtime/log/
 ```
 
-#### 定时任务不执行
+#### Tác vụ định kỳ không chạy
 ```bash
-# 排查步骤
-1. 检查定时任务是否启动: php think timer status
-2. 检查定时任务配置
-3. 检查Cron表达式是否正确
-4. 查看定时任务日志
+# Các bước xử lý sự cố
+1. Kiểm tra tác vụ định kỳ đã khởi động chưa: php think timer status
+2. Kiểm tra cấu hình tác vụ định kỳ
+3. Kiểm tra biểu thức Cron có đúng không
+4. Xem log tác vụ định kỳ
 ```
 
-#### WebSocket连接失败
+#### Kết nối WebSocket thất bại
 ```bash
-# 排查步骤
-1. 检查WebSocket服务是否启动: php think workerman status
-2. 检查端口是否被占用: netstat -tlnp | grep 40001
-3. 检查防火墙设置
-4. 检查客户端连接地址是否正确
+# Các bước xử lý sự cố
+1. Kiểm tra dịch vụ WebSocket đã khởi động chưa: php think workerman status
+2. Kiểm tra cổng có bị chiếm dụng không: netstat -tlnp | grep 40001
+3. Kiểm tra cài đặt tường lửa
+4. Kiểm tra địa chỉ kết nối của client có đúng không
 ```
 
-### 6.2 性能优化
+### 6.2 Tối ưu hiệu năng
 
-#### 数据库优化
-- 为常用查询字段添加索引
-- 避免使用 `SELECT *`,只查询需要的字段
-- 使用 `EXPLAIN` 分析SQL执行计划
-- 合理使用缓存减少数据库查询
+#### Tối ưu cơ sở dữ liệu
+- Thêm chỉ mục (index) cho các trường thường dùng để truy vấn
+- Tránh dùng `SELECT *`, chỉ truy vấn các trường cần thiết
+- Dùng `EXPLAIN` để phân tích kế hoạch thực thi SQL
+- Sử dụng cache hợp lý để giảm truy vấn cơ sở dữ liệu
 
-#### 缓存优化
-- 使用Redis缓存热点数据
-- 设置合理的缓存过期时间
-- 使用缓存前缀防止冲突
+#### Tối ưu cache
+- Dùng Redis để cache dữ liệu nóng (hot data)
+- Đặt thời gian hết hạn cache hợp lý
+- Dùng tiền tố cache để tránh xung đột
 
-#### 代码优化
-- 减少循环嵌套
-- 优化算法复杂度
-- 使用队列处理耗时操作
-- 异步处理非关键业务
+#### Tối ưu mã nguồn
+- Giảm vòng lặp lồng nhau
+- Tối ưu độ phức tạp thuật toán
+- Dùng hàng đợi để xử lý các thao tác tốn thời gian
+- Xử lý bất đồng bộ các nghiệp vụ không then chốt
 
-### 6.3 安全加固
+### 6.3 Tăng cường bảo mật
 
-#### SQL注入防护
-- 使用参数绑定,不要直接拼接SQL
-- 使用ThinkPHP的查询构造器
-- 对用户输入进行验证
+#### Phòng chống SQL injection
+- Dùng tham số ràng buộc (parameter binding), không nối chuỗi SQL trực tiếp
+- Dùng Query Builder của ThinkPHP
+- Kiểm tra tính hợp lệ của dữ liệu người dùng nhập vào
 
-#### XSS防护
-- 对用户输入进行过滤
-- 输出时进行HTML转义
-- 使用CSP(内容安全策略)
+#### Phòng chống XSS
+- Lọc dữ liệu người dùng nhập vào
+- Escape HTML khi xuất dữ liệu
+- Dùng CSP (chính sách bảo mật nội dung)
 
-#### CSRF防护
-- 使用CSRF Token
-- 验证请求来源
-- 重要操作二次确认
+#### Phòng chống CSRF
+- Dùng CSRF Token
+- Xác minh nguồn gốc request
+- Xác nhận hai lần với các thao tác quan trọng
 
-#### 权限控制
-- 严格的权限验证
-- 基于RBAC的权限模型
-- 敏感操作记录日志
+#### Kiểm soát quyền
+- Kiểm tra quyền nghiêm ngặt
+- Mô hình phân quyền dựa trên RBAC
+- Ghi log các thao tác nhạy cảm
 
-## 7. 部署与运维
+## 7. Triển khai và vận hành
 
-### 7.1 环境要求
+### 7.1 Yêu cầu môi trường
 - PHP >= 7.1
 - MySQL >= 5.7
-- Redis >= 5.0 (可选)
+- Redis >= 5.0 (tùy chọn)
 - Nginx/Apache
 - Composer
 
-### 7.2 部署步骤
+### 7.2 Các bước triển khai
 
-#### 1. 安装依赖
+#### 1. Cài đặt các gói phụ thuộc
 ```bash
 composer install
 ```
 
-#### 2. 配置环境
+#### 2. Cấu hình môi trường
 ```bash
 cp .env.example .env
-# 修改 .env 文件中的配置
+# Sửa cấu hình trong file .env
 ```
 
-#### 3. 数据库初始化
+#### 3. Khởi tạo cơ sở dữ liệu
 ```bash
-# 导入数据库
+# Nhập cơ sở dữ liệu
 mysql -u root -p crmeb < database.sql
 ```
 
-#### 4. 设置目录权限
+#### 4. Thiết lập quyền thư mục
 ```bash
 chmod -R 755 runtime
 chmod -R 755 public/uploads
 ```
 
-#### 5. 启动服务
+#### 5. Khởi động dịch vụ
 ```bash
-# 启动队列
+# Khởi động hàng đợi
 php think queue:listen --queue
 
-# 启动定时任务
+# Khởi động tác vụ định kỳ
 php think timer start --d
 
-# 启动WebSocket
+# Khởi động WebSocket
 php think workerman start --d
 ```
 
-#### 6. 前端构建
+#### 6. Build frontend
 ```bash
 cd template/admin
 npm install
 npm run build
 ```
 
-### 7.3 Docker部署
+### 7.3 Triển khai bằng Docker
 
-#### 使用docker-compose
+#### Dùng docker-compose
 ```bash
 cd docker-compose
 docker-compose up -d
 ```
 
-### 7.4 监控与日志
+### 7.4 Giám sát và log
 
-#### 日志位置
-- 应用日志: `runtime/log/`
-- 错误日志: `runtime/log/error/`
-- SQL日志: 开启数据库SQL日志记录
+#### Vị trí log
+- Log ứng dụng: `runtime/log/`
+- Log lỗi: `runtime/log/error/`
+- Log SQL: Bật ghi log SQL của cơ sở dữ liệu
 
-#### 监控指标
-- 服务器资源: CPU、内存、磁盘
-- 应用性能: 响应时间、吞吐量
-- 数据库: 慢查询、连接数
-- 队列: 队列长度、处理速度
+#### Chỉ số giám sát
+- Tài nguyên máy chủ: CPU, bộ nhớ, ổ đĩa
+- Hiệu năng ứng dụng: thời gian phản hồi, thông lượng
+- Cơ sở dữ liệu: truy vấn chậm, số kết nối
+- Hàng đợi: độ dài hàng đợi, tốc độ xử lý
 
-## 8. 参考资源
+## 8. Tài liệu tham khảo
 
-### 8.1 官方文档
-- [ThinkPHP 6 官方文档](https://www.kancloud.cn/manual/thinkphp6_0)
-- [Vue 2 官方文档](https://v2.vuejs.org/)
-- [Element UI 官方文档](https://element.eleme.io/)
-- [UniApp 官方文档](https://uniapp.dcloud.net.cn/)
+### 8.1 Tài liệu chính thức
+- [Tài liệu chính thức ThinkPHP 6](https://www.kancloud.cn/manual/thinkphp6_0)
+- [Tài liệu chính thức Vue 2](https://v2.vuejs.org/)
+- [Tài liệu chính thức Element UI](https://element.eleme.io/)
+- [Tài liệu chính thức UniApp](https://uniapp.dcloud.net.cn/)
 
-### 8.2 项目文档
-- `/dev-docs/AI代码理解指南.md` - 代码理解指南
-- `/dev-docs/错误码说明文档.md` - 错误码说明
-- `.codebuddy/skills/php-api/SKILL.md` - 后端开发规范
-- `.codebuddy/skills/admin-element/SKILL.md` - 前端开发规范
+### 8.2 Tài liệu dự án
+- `/dev-docs/huong-dan-ai-doc-hieu-ma-nguon.md` - Hướng dẫn đọc hiểu mã nguồn
+- `/dev-docs/ma-loi.md` - Giải thích mã lỗi
+- `.codebuddy/skills/php-api/SKILL.md` - Quy chuẩn phát triển backend
+- `.codebuddy/skills/admin-element/SKILL.md` - Quy chuẩn phát triển frontend
 
-### 8.3 工具推荐
+### 8.3 Công cụ khuyên dùng
 - **IDE**: PhpStorm / VS Code
-- **API测试**: Postman / Apifox
-- **数据库**: Navicat / phpMyAdmin
+- **Kiểm thử API**: Postman / Apifox
+- **Cơ sở dữ liệu**: Navicat / phpMyAdmin
 - **Redis**: Redis Desktop Manager
 
-## 9. 常用命令速查
+## 9. Tra cứu nhanh các lệnh thường dùng
 
-### 9.1 ThinkPHP命令
+### 9.1 Lệnh ThinkPHP
 ```bash
-php think                     # 查看所有命令
-php think make:controller      # 创建控制器
-php think make:model           # 创建模型
-php think make:middleware      # 创建中间件
-php think make:validate        # 创建验证器
-php think clear                # 清除缓存
-php think run                  # 启动内置服务器
+php think                     # Xem tất cả lệnh
+php think make:controller      # Tạo controller
+php think make:model           # Tạo model
+php think make:middleware      # Tạo middleware
+php think make:validate        # Tạo validator
+php think clear                # Xóa bộ nhớ đệm
+php think run                  # Khởi động máy chủ tích hợp sẵn
 ```
 
-### 9.2 队列命令
+### 9.2 Lệnh hàng đợi
 ```bash
-php think queue:listen        # 监听队列
-php think queue:work           # 处理队列任务
-php think queue:restart        # 重启队列
-php think queue:fail           # 查看失败任务
-php think queue:retry          # 重试失败任务
+php think queue:listen        # Lắng nghe hàng đợi
+php think queue:work           # Xử lý tác vụ trong hàng đợi
+php think queue:restart        # Khởi động lại hàng đợi
+php think queue:fail           # Xem tác vụ thất bại
+php think queue:retry          # Thử lại tác vụ thất bại
 ```
 
-### 9.3 定时任务命令
+### 9.3 Lệnh tác vụ định kỳ
 ```bash
-php think timer start          # 启动定时任务
-php think timer stop           # 停止定时任务
-php think timer restart        # 重启定时任务
-php think timer status         # 查看状态
+php think timer start          # Khởi động tác vụ định kỳ
+php think timer stop           # Dừng tác vụ định kỳ
+php think timer restart        # Khởi động lại tác vụ định kỳ
+php think timer status         # Xem trạng thái
 ```
 
-### 9.4 Workerman命令
+### 9.4 Lệnh Workerman
 ```bash
-php think workerman start      # 启动
-php think workerman stop       # 停止
-php think workerman restart    # 重启
-php think workerman reload     # 平滑重启
-php think workerman status     # 查看状态
+php think workerman start      # Khởi động
+php think workerman stop       # Dừng
+php think workerman restart    # Khởi động lại
+php think workerman reload     # Khởi động lại mượt (graceful)
+php think workerman status     # Xem trạng thái
 ```
 
 ---
 
-> **提示**: 本Agent专为CRMEB电商系统设计,帮助您快速开发和理解系统。如有疑问,请参考官方文档或查看项目源码。
+> **Gợi ý**: Agent này được thiết kế riêng cho hệ thống thương mại điện tử CRMEB, giúp bạn nhanh chóng phát triển và hiểu rõ hệ thống. Nếu có thắc mắc, vui lòng tham khảo tài liệu chính thức hoặc xem mã nguồn dự án.

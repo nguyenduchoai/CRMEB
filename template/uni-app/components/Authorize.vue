@@ -2,15 +2,15 @@
 	<view>
 		<view class="Popup" v-if="isShowAuth">
 			<image :src="logoUrl"></image>
-			<view class="title">授权提醒</view>
-			<view class="tip">请授权头像等信息，以便为您提供更好的服务</view>
+			<view class="title">Thông báo ủy quyền</view>
+			<view class="tip">Vui lòng ủy quyền ảnh đại diện và các thông tin khác để chúng tôi phục vụ bạn tốt hơn</view>
 			<view class="bottom flex">
-				<view class="item" @click="close">随便逛逛</view>
+				<view class="item" @click="close">Dạo xem trước</view>
 				<!-- #ifdef APP-PLUS -->
-				<button class="item grant" @click="setUserInfo">去授权</button>
+				<button class="item grant" @click="setUserInfo">Ủy quyền ngay</button>
 				<!-- #endif -->
 				<!-- #ifdef MP -->
-				<button class="item grant" type="primary" open-type="getPhoneNumber" lang="zh_CN" @getphonenumber="setUserInfo">去授权</button>
+				<button class="item grant" type="primary" open-type="getPhoneNumber" lang="zh_CN" @getphonenumber="setUserInfo">Ủy quyền ngay</button>
 				<!-- #endif -->
 			</view>
 		</view>
@@ -101,8 +101,8 @@ export default {
 				.then(res => {
 					let userInfo = res.userInfo;
 					userInfo.code = code;
-					userInfo.spread_spid = app.globalData.spid; //获取推广人ID
-					userInfo.spread_code = app.globalData.code; //获取推广人分享二维码ID
+					userInfo.spread_spid = app.globalData.spid; //Lấy ID người giới thiệu
+					userInfo.spread_code = app.globalData.code; //Lấy ID mã QR chia sẻ của người giới thiệu
 					Routine.authUserInfo(userInfo)
 						.then(res => {
 							uni.hideLoading();
@@ -145,7 +145,7 @@ export default {
 				});
 		},
 		setUserInfo(e) {
-			uni.showLoading({ title: '正在登录中' });
+			uni.showLoading({ title: 'Đang đăng nhập' });
 			Routine.getCode()
 				.then(code => {
 					this.getUserPhoneNumber(e.detail.encryptedData, e.detail.iv, code);

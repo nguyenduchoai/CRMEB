@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "商品列表",
+  "navigationBarTitleText": "Danh sách sản phẩm",
   "usingComponents": {
     "recommend": "/components/recommend/index",
     "home": "/components/home/index"

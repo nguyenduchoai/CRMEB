@@ -4,11 +4,11 @@
 		<view class="mobile-mask animated" :class="{slideInUp:isUp}">
 			<view class="info-box">
 				<image :src="logoUrl"></image>
-				<view class="title">{{$t(`获取授权`)}}</view>
-				<view class="txt">{{$t(`获取手机号授权`)}}</view>
+				<view class="title">{{$t(`Yêu cầu ủy quyền`)}}</view>
+				<view class="txt">{{$t(`Cấp quyền lấy số điện thoại`)}}</view>
 			</view>
 			<button class="sub_btn" open-type="getPhoneNumber"
-				@getphonenumber="getphonenumber">{{$t(`获取手机号`)}}</button>
+				@getphonenumber="getphonenumber">{{$t(`Lấy số điện thoại`)}}</button>
 		</view>
 	</view>
 </template>
@@ -53,10 +53,10 @@
 		mounted() {},
 		methods: {
 			// #ifdef MP
-			// 小程序获取手机号码
+			// Mini Program lấy số điện thoại
 			getphonenumber(e) {
 				uni.showLoading({
-					title: this.$t(`正在登录中`)
+					title: this.$t(`Đang đăng nhập`)
 				});
 				Routine.getCode()
 					.then(code => {
@@ -66,7 +66,7 @@
 						uni.hideLoading();
 					});
 			},
-			// 小程序获取手机号码回调
+			// Callback Mini Program lấy số điện thoại
 			getUserPhoneNumber(encryptedData, iv, code) {
 				routineBindingPhone({
 						encryptedData: encryptedData,
@@ -93,7 +93,7 @@
 					});
 			},
 			/**
-			 * 获取个人用户信息
+			 * Lấy thông tin người dùng cá nhân
 			 */
 			getUserInfo: function() {
 				let that = this;

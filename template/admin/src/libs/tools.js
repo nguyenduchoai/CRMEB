@@ -1,9 +1,9 @@
 // +---------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +---------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +---------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +---------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +---------------------------------------------------------------------
@@ -21,7 +21,7 @@ export const forEach = (arr, fn) => {
 /**
  * @param {Array} arr1
  * @param {Array} arr2
- * @description 得到两个数组的交集, 两个数组的元素为数值或字符串
+ * @description Lấy giao của hai mảng, phần tử của hai mảng là số hoặc chuỗi
  */
 export const getIntersection = (arr1, arr2) => {
   let len = Math.min(arr1.length, arr2.length);
@@ -37,24 +37,24 @@ export const getIntersection = (arr1, arr2) => {
 /**
  * @param {Array} arr1
  * @param {Array} arr2
- * @description 得到两个数组的并集, 两个数组的元素为数值或字符串
+ * @description Lấy hợp của hai mảng, phần tử của hai mảng là số hoặc chuỗi
  */
 export const getUnion = (arr1, arr2) => {
   return Array.from(new Set([...arr1, ...arr2]));
 };
 
 /**
- * @param {Array} target 目标数组
- * @param {Array} arr 需要查询的数组
- * @description 判断要查询的数组是否至少有一个元素包含在目标数组中
+ * @param {Array} target Mảng mục tiêu
+ * @param {Array} arr Mảng cần kiểm tra
+ * @description Kiểm tra mảng cần kiểm tra có ít nhất một phần tử nằm trong mảng mục tiêu không
  */
 export const hasOneOf = (targetarr, arr) => {
   return targetarr.some((_) => arr.indexOf(_) > -1);
 };
 
 /**
- * @param {String|Number} value 要验证的字符串或数值
- * @param {*} validList 用来验证的列表
+ * @param {String|Number} value Chuỗi hoặc số cần kiểm tra
+ * @param {*} validList Danh sách dùng để kiểm tra
  */
 export function oneOf(value, validList) {
   for (let i = 0; i < validList.length; i++) {
@@ -66,7 +66,7 @@ export function oneOf(value, validList) {
 }
 
 /**
- * @param {Number} timeStamp 判断时间戳格式是否是毫秒
+ * @param {Number} timeStamp Kiểm tra định dạng timestamp có phải là milli giây không
  * @returns {Boolean}
  */
 const isMillisecond = (timeStamp) => {
@@ -75,26 +75,26 @@ const isMillisecond = (timeStamp) => {
 };
 
 /**
- * @param {Number} timeStamp 传入的时间戳
- * @param {Number} currentTime 当前时间时间戳
- * @returns {Boolean} 传入的时间戳是否早于当前时间戳
+ * @param {Number} timeStamp Timestamp truyền vào
+ * @param {Number} currentTime Timestamp thời gian hiện tại
+ * @returns {Boolean} Timestamp truyền vào có sớm hơn timestamp hiện tại không
  */
 const isEarly = (timeStamp, currentTime) => {
   return timeStamp < currentTime;
 };
 
 /**
- * @param {Number} num 数值
- * @returns {String} 处理后的字符串
- * @description 如果传入的数值小于10，即位数只有1位，则在前面补充0
+ * @param {Number} num Giá trị số
+ * @returns {String} Chuỗi sau khi xử lý
+ * @description Nếu giá trị truyền vào nhỏ hơn 10, tức chỉ có 1 chữ số, thì thêm 0 ở phía trước
  */
 const getHandledValue = (num) => {
   return num < 10 ? '0' + num : num;
 };
 
 /**
- * @param {Number} timeStamp 传入的时间戳
- * @param {Number} startType 要返回的时间字符串的格式类型，传入'year'则返回年开头的完整时间
+ * @param {Number} timeStamp Timestamp truyền vào
+ * @param {Number} startType Loại định dạng chuỗi thời gian cần trả về, truyền 'year' thì trả về thời gian đầy đủ bắt đầu bằng năm
  */
 const getDate = (timeStamp, startType) => {
   const d = new Date(timeStamp * 1000);
@@ -111,42 +111,42 @@ const getDate = (timeStamp, startType) => {
 };
 
 /**
- * @param {String|Number} timeStamp 时间戳
- * @returns {String} 相对时间字符串
+ * @param {String|Number} timeStamp Dấu thời gian
+ * @returns {String} Chuỗi thời gian tương đối
  */
 export const getRelativeTime = (timeStamp) => {
-  // 判断当前传入的时间戳是秒格式还是毫秒
+  // Kiểm tra timestamp truyền vào là định dạng giây hay milli giây
   const IS_MILLISECOND = isMillisecond(timeStamp);
-  // 如果是毫秒格式则转为秒格式
+  // Nếu là định dạng milli giây thì chuyển sang định dạng giây
   if (IS_MILLISECOND) Math.floor((timeStamp /= 1000));
-  // 传入的时间戳可以是数值或字符串类型，这里统一转为数值类型
+  // Timestamp truyền vào có thể là kiểu số hoặc chuỗi, ở đây thống nhất chuyển sang kiểu số
   timeStamp = Number(timeStamp);
-  // 获取当前时间时间戳
+  // Lấy timestamp thời gian hiện tại
   const currentTime = Math.floor(Date.parse(new Date()) / 1000);
-  // 判断传入时间戳是否早于当前时间戳
+  // Kiểm tra timestamp truyền vào có sớm hơn timestamp hiện tại không
   const IS_EARLY = isEarly(timeStamp, currentTime);
-  // 获取两个时间戳差值
+  // Lấy hiệu giữa hai timestamp
   let diff = currentTime - timeStamp;
-  // 如果IS_EARLY为false则差值取反
+  // Nếu IS_EARLY là false thì đảo dấu hiệu số
   if (!IS_EARLY) diff = -diff;
   let resStr = '';
-  const dirStr = IS_EARLY ? '前' : '后';
-  // 少于等于59秒
-  if (diff <= 59) resStr = diff + '秒' + dirStr;
-  // 多于59秒，少于等于59分钟59秒
-  else if (diff > 59 && diff <= 3599) resStr = Math.floor(diff / 60) + '分钟' + dirStr;
-  // 多于59分钟59秒，少于等于23小时59分钟59秒
-  else if (diff > 3599 && diff <= 86399) resStr = Math.floor(diff / 3600) + '小时' + dirStr;
-  // 多于23小时59分钟59秒，少于等于29天59分钟59秒
-  else if (diff > 86399 && diff <= 2623859) resStr = Math.floor(diff / 86400) + '天' + dirStr;
-  // 多于29天59分钟59秒，少于364天23小时59分钟59秒，且传入的时间戳早于当前
+  const dirStr = IS_EARLY ? 'trước' : ' nữa';
+  // Nhỏ hơn hoặc bằng 59 giây
+  if (diff <= 59) resStr = diff + 'giây' + dirStr;
+  // Nhiều hơn 59 giây, nhỏ hơn hoặc bằng 59 phút 59 giây
+  else if (diff > 59 && diff <= 3599) resStr = Math.floor(diff / 60) + 'phút' + dirStr;
+  // Nhiều hơn 59 phút 59 giây, nhỏ hơn hoặc bằng 23 giờ 59 phút 59 giây
+  else if (diff > 3599 && diff <= 86399) resStr = Math.floor(diff / 3600) + 'giờ' + dirStr;
+  // Nhiều hơn 23 giờ 59 phút 59 giây, nhỏ hơn hoặc bằng 29 ngày 59 phút 59 giây
+  else if (diff > 86399 && diff <= 2623859) resStr = Math.floor(diff / 86400) + 'ngày' + dirStr;
+  // Nhiều hơn 29 ngày 59 phút 59 giây, nhỏ hơn 364 ngày 23 giờ 59 phút 59 giây, và timestamp truyền vào sớm hơn hiện tại
   else if (diff > 2623859 && diff <= 31567859 && IS_EARLY) resStr = getDate(timeStamp);
   else resStr = getDate(timeStamp, 'year');
   return resStr;
 };
 
 /**
- * @returns {String} 当前浏览器名称
+ * @returns {String} Tên trình duyệt hiện tại
  */
 export const getExplorer = () => {
   const ua = window.navigator.userAgent;
@@ -161,7 +161,7 @@ export const getExplorer = () => {
 };
 
 /**
- * @description 绑定事件 on(element, event, handler)
+ * @description Gắn sự kiện on(element, event, handler)
  */
 export const on = (function () {
   if (document.addEventListener) {
@@ -180,7 +180,7 @@ export const on = (function () {
 })();
 
 /**
- * @description 解绑事件 off(element, event, handler)
+ * @description Gỡ sự kiện off(element, event, handler)
  */
 export const off = (function () {
   if (document.removeEventListener) {
@@ -199,8 +199,8 @@ export const off = (function () {
 })();
 
 /**
- * 判断一个对象是否存在key，如果传入第二个参数key，则是判断这个obj对象是否存在key这个属性
- * 如果没有传入key这个参数，则判断obj对象是否有键值对
+ * Kiểm tra một đối tượng có tồn tại key không, nếu truyền tham số thứ hai là key thì kiểm tra đối tượng obj đó có thuộc tính key này không
+ * Nếu không truyền tham số key, thì kiểm tra đối tượng obj có cặp key-value nào không
  */
 export const hasKey = (obj, key) => {
   if (key) return key in obj;
@@ -211,9 +211,9 @@ export const hasKey = (obj, key) => {
 };
 
 /**
- * @param {*} obj1 对象
- * @param {*} obj2 对象
- * @description 判断两个对象是否相等，这两个对象的值只能是数字或字符串
+ * @param {*} obj1 Đối tượng
+ * @param {*} obj2 Đối tượng
+ * @description Kiểm tra hai đối tượng có bằng nhau không, giá trị của hai đối tượng này chỉ có thể là số hoặc chuỗi
  */
 export const objEqual = (obj1, obj2) => {
   const keysArr1 = Object.keys(obj1);
@@ -224,8 +224,8 @@ export const objEqual = (obj1, obj2) => {
 };
 
 /**
- * 去除乘法计算出现多位小数
- * @param arg1返回值，arg2乘以的参数
+ * Loại bỏ trường hợp phép nhân sinh ra nhiều chữ số thập phân
+ * @param arg1 giá trị trả về, arg2 tham số dùng để nhân
  */
 export const accMul = (arg1, arg2) => {
   var m = 0,

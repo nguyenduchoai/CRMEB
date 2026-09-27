@@ -1,180 +1,180 @@
-// 导出TableHead 数据
+// Xuất dữ liệu TableHead
 export const GoodsTableHead = [
   {
-    title: '图片',
+    title: 'Hình ảnh',
     slot: 'pic',
     align: 'center',
     minWidth: '80px',
   },
   {
-    title: '售价',
+    title: 'Giá bán',
     slot: 'price',
     align: 'center',
     minWidth: '120px',
   },
   {
-    title: '成本价',
+    title: 'Giá vốn',
     slot: 'cost',
     align: 'center',
     minWidth: '120px',
   },
   {
-    title: '划线价',
+    title: 'Giá gốc',
     slot: 'ot_price',
     align: 'center',
     minWidth: '120px',
   },
   {
-    title: '库存',
+    title: 'Tồn kho',
     slot: 'stock',
     align: 'center',
     minWidth: '120px',
   },
   {
-    title: '商品编码',
+    title: 'Mã sản phẩm',
     slot: 'bar_code',
     align: 'center',
     minWidth: '120px',
   },
   {
-    title: '条形码',
+    title: 'Mã vạch',
     slot: 'bar_code_number',
     align: 'center',
     minWidth: '120px',
   },
   {
-    title: '重量（KG）',
+    title: 'Trọng lượng (KG)',
     slot: 'weight',
     align: 'center',
     minWidth: '95px',
   },
   {
-    title: '体积(m³)',
+    title: 'Thể tích (m³)',
     slot: 'volume',
     align: 'center',
     minWidth: '95px',
   },
   {
-    title: '默认选中规格',
+    title: 'Phân loại được chọn mặc định',
     slot: 'selected_spec',
     fixed: 'right',
     align: 'center',
     minWidth: '100px',
   },
   {
-    title: '操作',
+    title: 'Thao tác',
     slot: 'action',
     fixed: 'right',
     align: 'center',
     minWidth: '120px',
   },
 ];
-//   虚拟商品-卡密 优惠券
+//   Sản phẩm ảo - Mã thẻ, phiếu giảm giá
 export const VirtualTableHead = [
   {
-    title: '图片',
+    title: 'Hình ảnh',
     slot: 'pic',
     align: 'center',
     minWidth: 80,
   },
   {
-    title: '售价',
+    title: 'Giá bán',
     slot: 'price',
     align: 'center',
     minWidth: 120,
   },
   {
-    title: '成本价',
+    title: 'Giá vốn',
     slot: 'cost',
     align: 'center',
     minWidth: 120,
   },
   {
-    title: '原价',
+    title: 'Giá gốc',
     slot: 'ot_price',
     align: 'center',
     minWidth: 120,
   },
   {
-    title: '库存',
+    title: 'Tồn kho',
     slot: 'stock',
     align: 'center',
     minWidth: 120,
   },
   {
-    title: '产品编号',
+    title: 'Mã số sản phẩm',
     slot: 'bar_code',
     align: 'center',
     minWidth: 120,
   },
   {
-    title: '虚拟商品',
+    title: 'Sản phẩm ảo',
     slot: 'fictitious',
     align: 'center',
     minWidth: 120,
   },
   {
-    title: '默认选中规格',
+    title: 'Phân loại được chọn mặc định',
     slot: 'selected_spec',
     fixed: 'right',
     align: 'center',
     minWidth: 90,
   },
   {
-    title: '操作',
+    title: 'Thao tác',
     slot: 'action',
     fixed: 'right',
     align: 'center',
     minWidth: 120,
   },
 ];
-//   虚拟商品
+//   Sản phẩm ảo
 export const VirtualTableHead2 = [
   {
-    title: '图片',
+    title: 'Hình ảnh',
     slot: 'pic',
     align: 'center',
     minWidth: 80,
   },
   {
-    title: '售价',
+    title: 'Giá bán',
     slot: 'price',
     align: 'center',
     minWidth: 120,
   },
   {
-    title: '成本价',
+    title: 'Giá vốn',
     slot: 'cost',
     align: 'center',
     minWidth: 120,
   },
   {
-    title: '原价',
+    title: 'Giá gốc',
     slot: 'ot_price',
     align: 'center',
     minWidth: 120,
   },
   {
-    title: '库存',
+    title: 'Tồn kho',
     slot: 'stock',
     align: 'center',
     minWidth: 120,
   },
   {
-    title: '产品编号',
+    title: 'Mã số sản phẩm',
     slot: 'bar_code',
     align: 'center',
     minWidth: 120,
   },
   {
-    title: '默认选中规格',
+    title: 'Phân loại được chọn mặc định',
     slot: 'selected_spec',
     fixed: 'right',
     align: 'center',
     minWidth: 90,
   },
   {
-    title: '操作',
+    title: 'Thao tác',
     slot: 'action',
     fixed: 'right',
     align: 'center',
@@ -184,61 +184,61 @@ export const VirtualTableHead2 = [
 
 export const columns2 = [
   {
-    title: '图片',
+    title: 'Hình ảnh',
     slot: 'pic',
     align: 'center',
     minWidth: 80,
   },
   {
-    title: '售价',
+    title: 'Giá bán',
     slot: 'price',
     align: 'center',
     minWidth: 95,
   },
   {
-    title: '成本价',
+    title: 'Giá vốn',
     slot: 'cost',
     align: 'center',
     minWidth: 95,
   },
   {
-    title: '划线价',
+    title: 'Giá gốc',
     slot: 'ot_price',
     align: 'center',
     minWidth: 95,
   },
   {
-    title: '库存',
+    title: 'Tồn kho',
     slot: 'stock',
     align: 'center',
     minWidth: 95,
   },
   {
-    title: '商品编码',
+    title: 'Mã sản phẩm',
     slot: 'bar_code',
     align: 'center',
     minWidth: 120,
   },
   {
-    title: '条形码',
+    title: 'Mã vạch',
     slot: 'bar_code_number',
     align: 'center',
     minWidth: 120,
   },
   {
-    title: '重量（KG）',
+    title: 'Trọng lượng (KG)',
     slot: 'weight',
     align: 'center',
     minWidth: 95,
   },
   {
-    title: '体积(m³)',
+    title: 'Thể tích (m³)',
     slot: 'volume',
     align: 'center',
     minWidth: 95,
   },
   {
-    title: '操作',
+    title: 'Thao tác',
     slot: 'action',
     fixed: 'right',
     align: 'center',
@@ -248,49 +248,49 @@ export const columns2 = [
 
 export const columns3 = [
   {
-    title: '图片',
+    title: 'Hình ảnh',
     slot: 'pic',
     align: 'center',
     minWidth: 80,
   },
   {
-    title: '售价',
+    title: 'Giá bán',
     slot: 'price',
     align: 'center',
     minWidth: 95,
   },
   {
-    title: '成本价',
+    title: 'Giá vốn',
     slot: 'cost',
     align: 'center',
     minWidth: 95,
   },
   {
-    title: '原价',
+    title: 'Giá gốc',
     slot: 'ot_price',
     align: 'center',
     minWidth: 95,
   },
   {
-    title: '库存',
+    title: 'Tồn kho',
     slot: 'stock',
     align: 'center',
     minWidth: 95,
   },
   {
-    title: '商品编码',
+    title: 'Mã sản phẩm',
     slot: 'bar_code',
     align: 'center',
     minWidth: 120,
   },
   {
-    title: '条形码',
+    title: 'Mã vạch',
     slot: 'bar_code_number',
     align: 'center',
     minWidth: 120,
   },
   {
-    title: '操作',
+    title: 'Thao tác',
     slot: 'action',
     fixed: 'right',
     align: 'center',
@@ -298,69 +298,69 @@ export const columns3 = [
   },
 ];
 
-//自定义留言下拉选择
+//Lựa chọn thả xuống lời nhắn tùy chỉnh
 export const CustomList = [
   {
     value: 'text',
-    label: '文本框',
+    label: 'Ô văn bản',
   },
   {
     value: 'number',
-    label: '数字',
+    label: 'Số',
   },
   {
     value: 'email',
-    label: '邮件',
+    label: 'Email',
   },
   {
     value: 'data',
-    label: '日期',
+    label: 'Ngày',
   },
   {
     value: 'time',
-    label: '时间',
+    label: 'Thời gian',
   },
   {
     value: 'id',
-    label: '身份证',
+    label: 'CCCD/CMND',
   },
   {
     value: 'phone',
-    label: '手机号',
+    label: 'Số điện thoại',
   },
   {
     value: 'img',
-    label: '图片',
+    label: 'Hình ảnh',
   },
 ];
 
 export const RuleValidate = {
-  store_name: [{ required: true, message: '请输入商品名称', trigger: 'blur' }],
+  store_name: [{ required: true, message: 'Vui lòng nhập tên sản phẩm', trigger: 'blur' }],
   cate_id: [
     {
       required: true,
-      message: '请选择商品分类',
+      message: 'Vui lòng chọn danh mục sản phẩm',
       trigger: 'change',
       type: 'array',
       min: '1',
     },
   ],
-  unit_name: [{ required: true, message: '请输入单位', trigger: 'blur' }],
+  unit_name: [{ required: true, message: 'Vui lòng nhập đơn vị', trigger: 'blur' }],
   slider_image: [
     {
       required: true,
-      message: '请上传商品轮播图',
+      message: 'Vui lòng tải lên ảnh trình chiếu sản phẩm',
       type: 'array',
       trigger: 'change',
     },
   ],
-  spec_type: [{ required: true, message: '请选择商品规格', trigger: 'change' }],
-  is_virtual: [{ required: true, message: '请选择商品类型', trigger: 'change' }],
-  selectRule: [{ required: true, message: '请选择商品规格属性', trigger: 'change' }],
+  spec_type: [{ required: true, message: 'Vui lòng chọn phân loại sản phẩm', trigger: 'change' }],
+  is_virtual: [{ required: true, message: 'Vui lòng chọn loại sản phẩm', trigger: 'change' }],
+  selectRule: [{ required: true, message: 'Vui lòng chọn thuộc tính phân loại sản phẩm', trigger: 'change' }],
   temp_id: [
     {
       required: true,
-      message: '请选择运费模板',
+      message: 'Vui lòng chọn mẫu phí vận chuyển',
       trigger: 'change',
       type: 'number',
     },
@@ -369,7 +369,7 @@ export const RuleValidate = {
     {
       required: true,
       type: 'array',
-      message: '请选择活动时间',
+      message: 'Vui lòng chọn thời gian chương trình',
       trigger: 'change',
     },
   ],
@@ -378,15 +378,15 @@ export const RuleValidate = {
       required: true,
       type: 'array',
       min: 1,
-      message: '请选择物流方式',
+      message: 'Vui lòng chọn phương thức vận chuyển',
       trigger: 'change',
     },
     {
       type: 'array',
       max: 2,
-      message: '请选择物流方式',
+      message: 'Vui lòng chọn phương thức vận chuyển',
       trigger: 'change',
     },
   ],
-  give_integral: [{ type: 'integer', message: '请输入整数' }],
+  give_integral: [{ type: 'integer', message: 'Vui lòng nhập số nguyên' }],
 };

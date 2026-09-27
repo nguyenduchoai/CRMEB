@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -11,7 +11,7 @@
 import request from '@/libs/request';
 
 /**
- * 用户列表导出
+ * Xuất danh sách người dùng
  */
 export function exportUserList(data) {
   return request({
@@ -22,7 +22,7 @@ export function exportUserList(data) {
 }
 
 /**
- * 订单列表导出
+ * Xuất danh sách đơn hàng
  */
 export function exportOrderList(data) {
   return request({
@@ -33,7 +33,7 @@ export function exportOrderList(data) {
 }
 
 /**
- * 发货订单列表导出
+ * Xuất danh sách đơn hàng cần giao
  */
 export function exportOrderDeliveryList(data) {
   return request({
@@ -44,7 +44,7 @@ export function exportOrderDeliveryList(data) {
 }
 
 /**
- * 商品列表导出
+ * Xuất danh sách sản phẩm
  */
 export function exportProductList(data) {
   return request({
@@ -54,7 +54,7 @@ export function exportProductList(data) {
   });
 }
 /**
- * 商品迁移导出
+ * Xuất dữ liệu di chuyển sản phẩm
  */
 export function exportProductExport(data) {
   return request({
@@ -64,7 +64,7 @@ export function exportProductExport(data) {
   });
 }
 /**
- * 商品迁移导入
+ * Nhập dữ liệu sản phẩm di chuyển
  */
 export function importProductImport(data) {
   return request({
@@ -75,7 +75,7 @@ export function importProductImport(data) {
 }
 
 /**
- * 砍价列表导出
+ * Xuất danh sách săn giảm giá
  */
 export function exportBargainList(data) {
   return request({
@@ -86,7 +86,7 @@ export function exportBargainList(data) {
 }
 
 /**
- * 拼团列表导出
+ * Xuất danh sách mua chung
  */
 export function exportCombinationList(data) {
   return request({
@@ -97,7 +97,7 @@ export function exportCombinationList(data) {
 }
 
 /**
- * 秒杀列表导出
+ * Xuất danh sách flash sale
  */
 export function exportSeckillList(data) {
   return request({
@@ -108,7 +108,7 @@ export function exportSeckillList(data) {
 }
 
 /**
- * 会员卡导出
+ * Xuất thẻ thành viên
  */
 export function exportmberCardList(id) {
   return request({
@@ -118,7 +118,7 @@ export function exportmberCardList(id) {
 }
 
 /**
- * @description 核销订单导出；
+ * @description Xuất đơn hàng xác nhận sử dụng;
  */
 export function exportverifyOrderApi(data) {
   return request({

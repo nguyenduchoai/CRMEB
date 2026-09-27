@@ -2,7 +2,7 @@
   <div v-loading="spinShow">
     <el-card :bordered="false" shadow="never" class="ivu-mb-16">
       <div class="acea-row row-middle">
-        <span class="label_text">时间选择：</span>
+        <span class="label_text">Chọn thời gian:</span>
         <el-date-picker
           clearable
           v-model="timeVal"
@@ -11,8 +11,8 @@
           @change="onchangeTime"
           format="yyyy/MM/dd"
           value-format="yyyy/MM/dd"
-          start-placeholder="开始日期"
-          end-placeholder="结束日期"
+          start-placeholder="Ngày bắt đầu"
+          end-placeholder="Ngày kết thúc"
           :picker-options="pickerOptions"
           style="width: 250px"
           class="mr20"
@@ -21,14 +21,14 @@
     </el-card>
     <cards-data :cardLists="cardLists" v-if="cardLists.length >= 0"></cards-data>
     <el-card :bordered="false" shadow="never">
-      <h4 class="statics-header-title">积分使用趋势</h4>
+      <h4 class="statics-header-title">Xu hướng sử dụng điểm thưởng</h4>
       <echarts-new :option-data="optionData" :styles="style" height="100%" width="100%" v-if="optionData"></echarts-new>
     </el-card>
     <div class="code-row-bg">
       <el-card :bordered="false" shadow="never" class="ivu-mt mt16 mr16">
         <div class="acea-row row-between-wrapper">
-          <h4 class="statics-header-title">积分来源分析</h4>
-          <div class="change-style" v-db-click @click="echartLeft = !echartLeft">切换样式</div>
+          <h4 class="statics-header-title">Phân tích nguồn điểm thưởng</h4>
+          <div class="change-style" v-db-click @click="echartLeft = !echartLeft">Đổi kiểu hiển thị</div>
         </div>
         <div class="ech-box">
           <echarts-from v-if="echartLeft" ref="visitChart" :infoList="infoList" echartsTitle="circle"></echarts-from>
@@ -37,21 +37,21 @@
             ref="selection"
             :data="tabList"
             v-loading="loading"
-            empty-text="暂无数据"
+            empty-text="Chưa có dữ liệu"
             highlight-current-row
           >
             <el-table-column type="index" width="60"> </el-table-column>
-            <el-table-column label="来源" min-width="80">
+            <el-table-column label="Nguồn" min-width="80">
               <template slot-scope="scope">
                 <span>{{ scope.row.name }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="金额" width="180">
+            <el-table-column label="Số tiền" width="180">
               <template slot-scope="scope">
                 <span>{{ scope.row.value }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="占比率" min-width="100">
+            <el-table-column label="Tỷ lệ" min-width="100">
               <template slot-scope="scope">
                 <div class="percent-box">
                   <div class="line">
@@ -67,8 +67,8 @@
       </el-card>
       <el-card :bordered="false" shadow="never" class="ivu-mt mt16">
         <div class="acea-row row-between-wrapper">
-          <h4 class="statics-header-title">积分消耗</h4>
-          <div class="change-style" v-db-click @click="echartRight = !echartRight">切换样式</div>
+          <h4 class="statics-header-title">Điểm thưởng đã dùng</h4>
+          <div class="change-style" v-db-click @click="echartRight = !echartRight">Đổi kiểu hiển thị</div>
         </div>
         <div class="ech-box">
           <echarts-from v-if="echartRight" ref="visitChart" :infoList="infoList2" echartsTitle="circle"></echarts-from>
@@ -77,21 +77,21 @@
             ref="selection"
             :data="tabList2"
             v-loading="loading"
-            empty-text="暂无数据"
+            empty-text="Chưa có dữ liệu"
             highlight-current-row
           >
             <el-table-column type="index" width="60"> </el-table-column>
-            <el-table-column label="来源" min-width="80">
+            <el-table-column label="Nguồn" min-width="80">
               <template slot-scope="scope">
                 <span>{{ scope.row.name }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="金额" width="180">
+            <el-table-column label="Số tiền" width="180">
               <template slot-scope="scope">
                 <span>{{ scope.row.value }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="占比率" min-width="100">
+            <el-table-column label="Tỷ lệ" min-width="100">
               <template slot-scope="scope">
                 <div class="percent-box">
                   <div class="line">
@@ -137,19 +137,19 @@ export default {
         {
           col: 8,
           count: 0,
-          name: '当前积分',
+          name: 'Điểm thưởng hiện tại',
           className: 'icondangqianjifen',
         },
         {
           col: 8,
           count: 0,
-          name: '累计总积分',
+          name: 'Tổng điểm thưởng tích lũy',
           className: 'iconleijijifen',
         },
         {
           col: 8,
           count: 0,
-          name: '累计消耗积分',
+          name: 'Tổng điểm thưởng đã dùng',
           className: 'iconxiaohaojifen',
         },
       ],
@@ -203,7 +203,7 @@ export default {
         this.loading2 = false;
       });
     },
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e;
       this.formValidate.time = this.timeVal ? this.timeVal.join('-') : '';
@@ -211,7 +211,7 @@ export default {
       this.getPointBasic();
       this.getPointTrend();
     },
-    // 统计图
+    // Biểu đồ thống kê
     getPointTrend() {
       this.spinShow = true;
       getPointTrend(this.formValidate)

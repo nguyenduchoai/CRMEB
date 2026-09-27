@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,14 +16,14 @@ use app\dao\BaseDao;
 use app\model\shipping\SystemCity;
 
 /**
- * 城市数据
+ * Dữ liệu thành phố
  * Class SystemCityDao
  * @package app\dao\shipping
  */
 class SystemCityDao extends BaseDao
 {
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -32,7 +32,7 @@ class SystemCityDao extends BaseDao
     }
 
     /**
-     * 获取城市数据列表
+     * Lấy danh sách dữ liệu thành phố
      * @param array $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -45,7 +45,7 @@ class SystemCityDao extends BaseDao
     }
 
     /**
-     * 获取城市数据以数组形式返回
+     * Lấy dữ liệu thành phố, trả về dạng mảng
      * @param array $where
      * @param string $field
      * @param string $key
@@ -57,7 +57,7 @@ class SystemCityDao extends BaseDao
     }
 
     /**
-     * 删除上级城市和当前城市id
+     * Xóa id thành phố cấp trên và thành phố hiện tại
      * @param int $cityId
      * @return bool
      * @throws \Exception
@@ -68,7 +68,7 @@ class SystemCityDao extends BaseDao
     }
 
     /**
-     * 获取city_id的最大值
+     * Lấy giá trị lớn nhất của city_id
      * @return mixed
      */
     public function getCityIdMax()
@@ -77,7 +77,7 @@ class SystemCityDao extends BaseDao
     }
 
     /**
-     * 获取运费模板城市选择
+     * Lấy lựa chọn thành phố của mẫu phí vận chuyển
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -89,8 +89,8 @@ class SystemCityDao extends BaseDao
     }
 
     /**
-     * 获取城市数据完整列表
-     * @author 吴汐
+     * Lấy danh sách đầy đủ dữ liệu thành phố
+     * @author Wu Xi
      * @email 442384644@qq.com
      * @date 2023/04/10
      */

@@ -11,9 +11,9 @@ require '../vendor/autoload.php';
 $action = '/save.php';
 $method = 'POST';
 
-$input = Elm::input('goods_name', '商品名称')->required();
-$textarea = Elm::textarea('goods_info', '商品简介');
-$switch = Elm::switches('is_open', '是否开启')->activeText('开启')->inactiveText('关闭');
+$input = Elm::input('goods_name', 'Tên sản phẩm')->required();
+$textarea = Elm::textarea('goods_info', 'Mô tả ngắn sản phẩm');
+$switch = Elm::switches('is_open', 'Bật')->activeText('Bật')->inactiveText('Tắt');
 
 //创建表单
 $form = (new IviewForm($action))->setMethod($method);

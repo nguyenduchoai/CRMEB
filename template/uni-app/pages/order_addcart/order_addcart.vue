@@ -4,20 +4,20 @@
       <view class="labelNav acea-row row-around row-middle">
         <view class="item">
           <text class="iconfont icon-xuanzhong"></text>
-          {{ $t(`100%正品保证`) }}
+          {{ $t(`Cam kết 100% chính hãng`) }}
         </view>
         <view class="item">
           <text class="iconfont icon-xuanzhong"></text>
-          {{ $t(`所有商品精挑细选`) }}
+          {{ $t(`Mọi sản phẩm đều được tuyển chọn kỹ lưỡng`) }}
         </view>
         <view class="item">
           <text class="iconfont icon-xuanzhong"></text>
-          {{ $t(`售后无忧`) }}
+          {{ $t(`Hậu mãi an tâm`) }}
         </view>
       </view>
       <view class="nav acea-row row-between-wrapper">
         <view>
-          {{ $t(`购物数量`) }}
+          {{ $t(`Số lượng mua`) }}
           <text class="num font-num">{{ cartCount }}</text>
         </view>
         <view
@@ -25,7 +25,7 @@
           class="administrate acea-row row-center-wrapper"
           @click="manage"
         >
-          {{ footerswitch ? $t(`管理`) : $t(`取消`) }}
+          {{ footerswitch ? $t(`Quản lý`) : $t(`Hủy`) }}
         </view>
       </view>
       <view
@@ -72,7 +72,7 @@
                       {{ item.productInfo.store_name }}
                     </view>
                     <view class="infor line1" v-if="item.productInfo.attrInfo"
-                      >{{ $t(`属性`) }}：{{
+                      >{{ $t(`Thuộc tính`) }}：{{
                         item.productInfo.attrInfo.suk
                       }}</view
                     >
@@ -83,11 +83,11 @@
                       class="reElection acea-row row-between-wrapper"
                       v-else
                     >
-                      <view class="title">{{ $t(`请重新选择商品规格`) }}</view>
+                      <view class="title">{{ $t(`Vui lòng chọn lại phân loại sản phẩm`) }}</view>
                       <view
                         class="reBnt cart-color acea-row row-center-wrapper"
                         @click.stop="reElection(item)"
-                        >{{ $t(`重选`) }}</view
+                        >{{ $t(`Chọn lại`) }}</view
                       >
                     </view>
                   </view>
@@ -127,17 +127,17 @@
                   goodsHidden == true ? 'icon-xiangxia' : 'icon-xiangshang'
                 "
               ></text>
-              {{ $t(`失效商品`) }}
+              {{ $t(`Sản phẩm không còn hiệu lực`) }}
             </view>
             <view class="del" @click="unsetCart">
               <text class="iconfont icon-shanchu1"></text>
-              {{ $t(`清空`) }}
+              {{ $t(`Xóa hết`) }}
             </view>
           </view>
           <view class="goodsList" :hidden="goodsHidden">
             <block v-for="(item, index) in cartList.invalid" :key="index">
               <view class="item acea-row row-between-wrapper">
-                <view class="invalid">{{ $t(`失效`) }}</view>
+                <view class="invalid">{{ $t(`Hết hiệu lực`) }}</view>
                 <view class="pictrue">
                   <image
                     v-if="item.productInfo.attrInfo"
@@ -150,11 +150,11 @@
                     item.productInfo.store_name
                   }}</view>
                   <view class="infor line1" v-if="item.productInfo.attrInfo"
-                    >{{ $t(`属性`) }}：{{ item.productInfo.attrInfo.suk }}</view
+                    >{{ $t(`Thuộc tính`) }}：{{ item.productInfo.attrInfo.suk }}</view
                   >
                   <view class="acea-row row-between-wrapper">
                     <!-- <view>￥{{item.truePrice}}</view> -->
-                    <view class="end">{{ $t(`该商品已失效`) }}</view>
+                    <view class="end">{{ $t(`Sản phẩm này không còn hiệu lực`) }}</view>
                   </view>
                 </view>
               </view>
@@ -183,7 +183,7 @@
       >
         <view class="emptyBox">
           <image :src="imgHost + '/statics/images/no-thing.png'"></image>
-          <view class="tips">{{ $t(`暂无商品`) }}</view>
+          <view class="tips">{{ $t(`Chưa có sản phẩm`) }}</view>
         </view>
         <recommend
           v-if="hostProduct.length"
@@ -201,7 +201,7 @@
           <checkbox-group @change="checkboxAllChange">
             <checkbox value="all" :checked="!!isAllSelect" />
             <text class="checkAll"
-              >{{ $t(`全选`) }}({{ selectValue.length }})</text
+              >{{ $t(`Chọn tất cả`) }}({{ selectValue.length }})</text
             >
           </checkbox-group>
         </view>
@@ -209,17 +209,17 @@
           <text class="font-color">{{ $t(`￥`) }}{{ selectCountPrice }}</text>
           <form @submit="subOrder">
             <button class="placeOrder bg-color" formType="submit">
-              {{ $t(`立即下单`) }}
+              {{ $t(`Đặt hàng ngay`) }}
             </button>
           </form>
         </view>
         <view class="button acea-row row-middle" v-else>
           <form @submit="subCollect">
-            <button class="bnt" formType="submit">{{ $t(`收藏`) }}</button>
+            <button class="bnt" formType="submit">{{ $t(`Yêu thích`) }}</button>
           </form>
           <form @submit="subDel">
             <button class="bnt cart-color" formType="submit">
-              {{ $t(`删除`) }}
+              {{ $t(`Xóa`) }}
             </button>
           </form>
         </view>
@@ -297,22 +297,22 @@ export default {
         valid: [],
         invalid: [],
       },
-      isAllSelect: false, //全选
-      selectValue: [], //选中的数据
+      isAllSelect: false, //Chọn tất cả
+      selectValue: [], //Dữ liệu đã chọn
       selectCountPrice: 0.0,
-      isAuto: false, //没有授权的不会自动授权
-      isShowAuth: false, //是否隐藏授权
+      isAuto: false, //Chưa ủy quyền thì sẽ không tự động ủy quyền
+      isShowAuth: false, //Có ẩn ủy quyền hay không
       hotScroll: false,
       hotPage: 1,
       hotLimit: 10,
       loading: false,
       loadend: false,
-      loadTitle: this.$t(`我也是有底线的`), //提示语
+      loadTitle: this.$t(`Đã đến cuối danh sách`), //Câu thông báo
       page: 1,
       limit: 20,
       loadingInvalid: false,
       loadendInvalid: false,
-      loadTitleInvalid: this.$t(`加载更多`), //提示语
+      loadTitleInvalid: this.$t(`Tải thêm`), //Câu thông báo
       pageInvalid: 1,
       limitInvalid: 20,
       attr: {
@@ -320,10 +320,10 @@ export default {
         productAttr: [],
         productSelect: {},
       },
-      productValue: [], //系统属性
+      productValue: [], //Thuộc tính hệ thống
       storeInfo: {},
-      attrValue: "", //已选属性
-      attrTxt: this.$t(`请选择`), //属性页面提示
+      attrValue: "", //Thuộc tính đã chọn
+      attrTxt: this.$t(`Vui lòng chọn`), //Gợi ý trên trang thuộc tính
       cartId: 0,
       product_id: 0,
       sysHeight: sysHeight,
@@ -334,7 +334,7 @@ export default {
       disabledChangeNumber: false,
       isFooter: false,
       btmNum: 0,
-      pdHeight: 0, //自定义底部导航上下边距和
+      pdHeight: 0, //Tổng margin trên dưới tùy chỉnh của thanh điều hướng dưới
     };
   },
   computed: {
@@ -360,8 +360,8 @@ export default {
   onLoad(options) {
     uni.hideTabBar();
     let that = this;
-    let routes = getCurrentPages(); // 获取当前打开过的页面路由数组
-    let curRoute = routes[routes.length - 1].route; //获取当前页面路由
+    let routes = getCurrentPages(); // Lấy mảng route các trang đã từng mở
+    let curRoute = routes[routes.length - 1].route; //Lấy route trang hiện tại
     this.activeRouter = "/" + curRoute;
   },
   onShow() {
@@ -394,8 +394,8 @@ export default {
         valid: [],
         invalid: [],
       }),
-        (this.isAllSelect = false); //全选
-      this.selectValue = []; //选中的数据
+        (this.isAllSelect = false); //Chọn tất cả
+      this.selectValue = []; //Dữ liệu đã chọn
       this.selectCountPrice = 0.0;
       this.cartCount = 0;
       this.isShowAuth = false;
@@ -411,7 +411,7 @@ export default {
     }
   },
   methods: {
-    // 授权关闭
+    // Đóng ủy quyền
     authColse: function (e) {
       this.isShowAuth = e;
     },
@@ -420,14 +420,14 @@ export default {
       this.pdHeight = num;
       this.btmNum = btmNum;
     },
-    // 修改购物车
+    // Sửa giỏ hàng
     reGoCat: function () {
       let that = this,
         productSelect = that.productValue[this.attrValue];
-      //如果有属性,没有选择,提示用户选择
+      //Nếu có thuộc tính mà chưa chọn, nhắc người dùng chọn
       if (that.attr.productAttr.length && productSelect === undefined)
         return that.$util.Tips({
-          title: that.$t(`产品库存不足，请选择其它`),
+          title: that.$t(`Sản phẩm không đủ tồn kho, vui lòng chọn sản phẩm khác`),
         });
 
       let q = {
@@ -443,7 +443,7 @@ export default {
         .then(function (res) {
           that.attr.cartAttr = false;
           that.$util.Tips({
-            title: that.$t(`添加购物车成功`),
+            title: that.$t(`Đã thêm vào giỏ hàng`),
             success: () => {
               that.loadend = false;
               that.page = 1;
@@ -466,12 +466,12 @@ export default {
       this.getGoodsDetails(item);
     },
     /**
-     * 获取产品详情
+     * Lấy chi tiết sản phẩm
      *
      */
     getGoodsDetails: function (item) {
       uni.showLoading({
-        title: this.$t(`加载中`),
+        title: this.$t(`Đang tải`),
         mask: true,
       });
       let that = this;
@@ -492,7 +492,7 @@ export default {
         });
     },
     /**
-     * 属性变动赋值
+     * Gán giá trị khi thuộc tính thay đổi
      *
      */
     ChangeAttr: function (res) {
@@ -504,7 +504,7 @@ export default {
         this.$set(this.attr.productSelect, "unique", productSelect.unique);
         this.$set(this.attr.productSelect, "cart_num", 1);
         this.$set(this, "attrValue", res);
-        this.$set(this, "attrTxt", this.$t(`已选择`));
+        this.$set(this, "attrTxt", this.$t(`Đã chọn`));
       } else {
         this.$set(this.attr.productSelect, "image", this.storeInfo.image);
         this.$set(this.attr.productSelect, "price", this.storeInfo.price);
@@ -512,11 +512,11 @@ export default {
         this.$set(this.attr.productSelect, "unique", "");
         this.$set(this.attr.productSelect, "cart_num", 0);
         this.$set(this, "attrValue", "");
-        this.$set(this, "attrTxt", this.$t(`请选择`));
+        this.$set(this, "attrTxt", this.$t(`Vui lòng chọn`));
       }
     },
     /**
-     * 默认选中属性
+     * Thuộc tính được chọn mặc định
      *
      */
     DefaultSelect: function () {
@@ -531,7 +531,7 @@ export default {
       for (let i = 0; i < productAttr.length; i++) {
         this.$set(productAttr[i], "index", value[i]);
       }
-      //sort();排序函数:数字-英文-汉字；
+      //sort(); hàm sắp xếp: số - chữ Anh - chữ Hán;
       let productSelect = this.productValue[value.sort().join(",")];
       if (productSelect && productAttr.length) {
         this.$set(
@@ -545,7 +545,7 @@ export default {
         this.$set(this.attr.productSelect, "unique", productSelect.unique);
         this.$set(this.attr.productSelect, "cart_num", 1);
         this.$set(this, "attrValue", value.sort().join(","));
-        this.$set(this, "attrTxt", this.$t(`已选择`));
+        this.$set(this, "attrTxt", this.$t(`Đã chọn`));
       } else if (!productSelect && productAttr.length) {
         this.$set(
           this.attr.productSelect,
@@ -558,7 +558,7 @@ export default {
         this.$set(this.attr.productSelect, "unique", "");
         this.$set(this.attr.productSelect, "cart_num", 0);
         this.$set(this, "attrValue", "");
-        this.$set(this, "attrTxt", this.$t(`请选择`));
+        this.$set(this, "attrTxt", this.$t(`Vui lòng chọn`));
       } else if (!productSelect && !productAttr.length) {
         this.$set(
           this.attr.productSelect,
@@ -575,7 +575,7 @@ export default {
         );
         this.$set(this.attr.productSelect, "cart_num", 1);
         this.$set(this, "attrValue", "");
-        this.$set(this, "attrTxt", this.$t(`请选择`));
+        this.$set(this, "attrTxt", this.$t(`Vui lòng chọn`));
       }
     },
     attrVal(val) {
@@ -586,17 +586,17 @@ export default {
       );
     },
     /**
-     * 购物车数量加和数量减
+     * Tăng và giảm số lượng giỏ hàng
      *
      */
     ChangeCartNum: function (changeValue) {
-      //changeValue:是否 加|减
-      //获取当前变动属性
+      //changeValue: có tăng hay giảm
+      //Lấy thuộc tính vừa thay đổi hiện tại
       let productSelect = this.productValue[this.attrValue];
-      //如果没有属性,赋值给商品默认库存
+      //Nếu không có thuộc tính, gán bằng tồn kho mặc định của sản phẩm
       if (productSelect === undefined && !this.attr.productAttr.length)
         productSelect = this.attr.productSelect;
-      //无属性值即库存为0；不存在加减；
+      //Không có giá trị thuộc tính thì tồn kho là 0; không có tăng giảm;
       if (productSelect === undefined) return;
       let stock = productSelect.stock || 0;
       let num = this.attr.productSelect;
@@ -615,7 +615,7 @@ export default {
       }
     },
     /**
-     * 购物车手动填写
+     * Điền thủ công vào giỏ hàng
      *
      */
     iptCartNum: function (e) {
@@ -634,7 +634,7 @@ export default {
         });
       else
         return that.$util.Tips({
-          title: that.$t(`请选择产品`),
+          title: that.$t(`Vui lòng chọn sản phẩm`),
         });
     },
     getSelectValueProductId: function () {
@@ -670,7 +670,7 @@ export default {
           });
       } else {
         return that.$util.Tips({
-          title: that.$t(`请选择产品`),
+          title: that.$t(`Vui lòng chọn sản phẩm`),
         });
       }
     },
@@ -684,7 +684,7 @@ export default {
         });
       } else {
         return that.$util.Tips({
-          title: that.$t(`请选择产品`),
+          title: that.$t(`Vui lòng chọn sản phẩm`),
         });
       }
     },
@@ -803,7 +803,7 @@ export default {
       }
     },
     /**
-     * 购物车手动填写
+     * Điền thủ công vào giỏ hàng
      *
      */
     iptCartNum: function (index) {
@@ -832,10 +832,10 @@ export default {
       cart_num = Number(item.cart_num) - 1;
       if (cart_num < 1 || cart_num < item.min_qty) {
         status = true;
-        // 弹出确认框
+        // Hiện hộp thoại xác nhận
         uni.showModal({
-          title: "提示",
-          content: "确定删除吗？",
+          title: "Thông báo",
+          content: "Xác nhận xóa?",
           success: (res) => {
             if (res.confirm) {
               this.cartCount = this.cartCount - item.cart_num;
@@ -844,7 +844,7 @@ export default {
                 that.cartList.valid.splice(index, 1);
                 this.$store.commit("indexData/setCartNum", that.cartCount);
               });
-              // 删除选中中的数据
+              // Xóa dữ liệu khỏi danh sách đã chọn
               this.selectValue = this.selectValue.filter((i) => i != item.id);
               this.switchSelect();
             }
@@ -967,7 +967,7 @@ export default {
     },
     async getCartList(init) {
       uni.showLoading({
-        title: this.$t(`加载中`),
+        title: this.$t(`Đang tải`),
         mask: true,
       });
       let that = this;
@@ -1082,14 +1082,14 @@ export default {
           that.$set(that.cartList, "invalid", invalidList);
           that.loadendInvalid = loadendInvalid;
           that.loadTitleInvalid = loadendInvalid
-            ? that.$t(`我也是有底线的`)
-            : that.$t(`加载更多`);
+            ? that.$t(`Đã đến cuối danh sách`)
+            : that.$t(`Tải thêm`);
           that.pageInvalid = that.pageInvalid + 1;
           that.loadingInvalid = false;
         })
         .catch((res) => {
           that.loadingInvalid = false;
-          that.loadTitleInvalid = that.$t(`加载更多`);
+          that.loadTitleInvalid = that.$t(`Tải thêm`);
         });
     },
     getHostProduct: function () {
@@ -1158,7 +1158,7 @@ export default {
       cartDel(ids)
         .then((res) => {
           that.$util.Tips({
-            title: that.$t(`清除成功`),
+            title: that.$t(`Xóa thành công`),
           });
           that.$set(that.cartList, "invalid", []);
           that.getCartNum();
@@ -1175,9 +1175,9 @@ export default {
       that.getHostProduct();
     }
   },
-  // 滚动监听
+  // Theo dõi cuộn (scroll listener)
   onPageScroll(e) {
-    // 传入scrollTop值并触发所有easy-loadimage组件下的滚动监听事件
+    // Truyền vào giá trị scrollTop và kích hoạt sự kiện theo dõi cuộn của tất cả component easy-loadimage
     uni.$emit("scroll");
   },
 };
@@ -1450,8 +1450,8 @@ export default {
   box-sizing: border-box;
   border-top: 1rpx solid #eee;
   bottom: 98rpx;
-  bottom: calc(98rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-  bottom: calc(98rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+  bottom: calc(98rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+  bottom: calc(98rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 }
 
 .shoppingCart .footer.on {
@@ -1503,9 +1503,9 @@ export default {
 
 .uni-p-b-98 {
   height: 100rpx;
-  /* 兼容 IOS<11.2 */
+  /* Tương thích IOS<11.2 */
   height: calc(100rpx + constant(safe-area-inset-bottom));
-  /* 兼容 IOS>11.2 */
+  /* Tương thích IOS>11.2 */
   height: calc(100rpx + env(safe-area-inset-bottom));
 }
 

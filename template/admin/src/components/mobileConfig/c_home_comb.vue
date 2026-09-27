@@ -231,7 +231,7 @@ export default {
       if (!value.paddingConfig) {
         this.$set(value, 'paddingConfig', {
           isAll: false,
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           max: 100,
@@ -247,7 +247,7 @@ export default {
       if (!value.marginConfig) {
         this.$set(value, 'marginConfig', {
           isAll: false,
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,
@@ -392,7 +392,7 @@ export default {
       if (!value.paddingConfig) {
         this.$set(value, 'paddingConfig', {
           isAll: false,
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           max: 100,
@@ -408,7 +408,7 @@ export default {
       if (!value.marginConfig) {
         this.$set(value, 'marginConfig', {
           isAll: false,
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,

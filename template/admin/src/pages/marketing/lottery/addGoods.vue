@@ -1,33 +1,33 @@
 <template>
   <div>
     <el-form ref="formValidate" :model="formValidate" :rules="ruleValidate" label-width="90px">
-      <el-form-item label="奖品：" prop="type">
+      <el-form-item label="Giải thưởng:" prop="type">
         <el-radio-group v-model="formValidate.type">
-          <el-radio :label="1">未中奖</el-radio>
-          <el-radio :label="5">优惠券</el-radio>
-          <el-radio :label="2">积分</el-radio>
-          <el-radio :label="6">商品</el-radio>
-          <el-radio :label="4">红包</el-radio>
-          <el-radio :label="3">余额</el-radio>
+          <el-radio :label="1">Không trúng thưởng</el-radio>
+          <el-radio :label="5">Phiếu giảm giá</el-radio>
+          <el-radio :label="2">Điểm thưởng</el-radio>
+          <el-radio :label="6">Sản phẩm</el-radio>
+          <el-radio :label="4">Lì xì</el-radio>
+          <el-radio :label="3">Số dư</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="赠送优惠券：" v-if="formValidate.type == 5">
+      <el-form-item label="Tặng phiếu giảm giá:" v-if="formValidate.type == 5">
         <div v-if="couponName.length" class="mb20">
           <el-tag closable v-for="(item, index) in couponName" :key="index" @close="handleClose(item)">{{
             item.title
           }}</el-tag>
         </div>
-        <el-button type="primary" v-db-click @click="addCoupon" v-if="!couponName.length">添加优惠券</el-button>
+        <el-button type="primary" v-db-click @click="addCoupon" v-if="!couponName.length">Thêm phiếu giảm giá</el-button>
       </el-form-item>
       <el-form-item
-        :label="[3, 4].includes(formValidate.type) ? '金额信息' : '积分数量'"
+        :label="[3, 4].includes(formValidate.type) ? 'Thông tin số tiền' : 'Số điểm thưởng'"
         prop="num"
         v-if="[2, 3, 4].includes(formValidate.type)"
       >
         <el-input-number
           :controls="false"
           v-model="formValidate.num"
-          placeholder="请输入金额数量"
+          placeholder="Vui lòng nhập số tiền"
           :max="9999999999"
           :min="0.1"
           style="width: 300px"
@@ -35,14 +35,14 @@
         <div class="ml100 grey">
           {{
             formValidate.type == 3
-              ? '用户领取余额后会自动到账余额账户'
+              ? 'Sau khi người dùng nhận, số tiền sẽ tự động được cộng vào tài khoản số dư'
               : formValidate.type == 4
-              ? '用户抽到之后需要在抽奖列表中手动领取，需要开通微信支付的商家转账功能，金额不能小于0.1元'
+              ? 'Sau khi trúng thưởng, người dùng cần nhận thủ công trong danh sách quay thưởng, cần bật tính năng chuyển khoản của người bán (merchant transfer) trên WeChat Pay, số tiền không được nhỏ hơn 0.1đ'
               : ''
           }}
         </div>
       </el-form-item>
-      <el-form-item v-if="formValidate.type == 6" label="商品：" prop="goods_image">
+      <el-form-item v-if="formValidate.type == 6" label="Sản phẩm:" prop="goods_image">
         <template v-if="formValidate.goods_image">
           <div class="upload-list">
             <img :src="formValidate.goods_image" />
@@ -53,15 +53,15 @@
           <i class="el-icon-picture-outline" style="font-size: 24px"></i>
         </div>
       </el-form-item>
-      <el-form-item label="奖品名称：" prop="name">
+      <el-form-item label="Tên giải thưởng:" prop="name">
         <el-input
           v-model="formValidate.name"
           :maxlength="10"
-          placeholder="请输入奖品名称"
+          placeholder="Vui lòng nhập tên giải thưởng"
           style="width: 300px"
         ></el-input>
       </el-form-item>
-      <el-form-item label="奖品图片：" prop="image">
+      <el-form-item label="Hình ảnh giải thưởng:" prop="image">
         <template v-if="formValidate.image">
           <div class="upload-list">
             <img :src="formValidate.image" />
@@ -71,47 +71,47 @@
         <div v-else class="upLoad pictrueTab acea-row row-center-wrapper">
           <i class="el-icon-picture-outline" style="font-size: 24px" v-db-click @click="modalPic = true"></i>
         </div>
-        <!-- <div class="info">选择商品</div> -->
+        <!-- <div class="info">Chọn sản phẩm</div> -->
       </el-form-item>
-      <el-form-item label="奖品数量：" prop="total">
+      <el-form-item label="Số lượng giải thưởng:" prop="total">
         <el-input-number
           :controls="false"
           v-model="formValidate.total"
-          placeholder="请输入奖品数量"
+          placeholder="Vui lòng nhập số lượng giải thưởng"
           :max="9999999999"
           :min="0"
           :precision="0"
           style="width: 300px"
         ></el-input-number>
       </el-form-item>
-      <el-form-item label="奖品概率(%)：" prop="percent">
+      <el-form-item label="Tỷ lệ trúng giải (%):" prop="percent">
         <el-input-number
           :controls="false"
           v-model="formValidate.percent"
-          placeholder="请输入奖品概率"
+          placeholder="Vui lòng nhập tỷ lệ trúng giải"
           :max="100"
           :min="0"
           :precision="2"
           style="width: 300px"
         ></el-input-number>
       </el-form-item>
-      <el-form-item label="提示语：" prop="prompt">
+      <el-form-item label="Câu thông báo:" prop="prompt">
         <el-input
           v-model="formValidate.prompt"
           :maxlength="15"
-          placeholder="请输入提示语"
+          placeholder="Vui lòng nhập câu thông báo"
           style="width: 300px"
         ></el-input>
       </el-form-item>
       <!-- <el-form-item>
-        <el-button type="primary" v-db-click @click="handleSubmit('formValidate')">提交</el-button>
+        <el-button type="primary" v-db-click @click="handleSubmit('formValidate')">Gửi</el-button>
       </el-form-item> -->
     </el-form>
-    <!-- 上传图片-->
-    <el-dialog :visible.sync="modalPic" :modal="false" width="1024px" title="上传图片" :close-on-click-modal="false">
+    <!-- Tải lên ảnh-->
+    <el-dialog :visible.sync="modalPic" :modal="false" width="1024px" title="Tải lên ảnh" :close-on-click-modal="false">
       <uploadPictures :isChoice="isChoice" @getPic="getPic" v-if="modalPic"></uploadPictures>
     </el-dialog>
-    <el-dialog :visible.sync="modals" :modal="false" title="商品列表" class="paymentFooter" width="1000px">
+    <el-dialog :visible.sync="modals" :modal="false" title="Danh sách sản phẩm" class="paymentFooter" width="1000px">
       <goods-list ref="goodslist" @getProductId="getProductId"></goods-list>
     </el-dialog>
     <coupon-list ref="couponTemplates" :luckDraw="true" @getCouponId="getCouponId"></coupon-list>
@@ -135,7 +135,7 @@ export default {
     return {
       modalPic: false,
       modals: false,
-      isChoice: '单选',
+      isChoice: 'Chọn một',
       updateIds: [],
       updateName: [],
       goodsData: {
@@ -145,30 +145,30 @@ export default {
         coverImg: '',
       },
       formValidate: {
-        type: 5, //类型 1：未中奖2：积分  3:余额  4：红包 5:优惠券 6：站内商品
-        name: '', //活动名称
-        num: 0, //奖品数量
-        image: '', //奖品图片
-        chance: 1, //中奖权重
-        product_id: 0, //商品id
-        coupon_id: 0, //优惠券id
-        total: 0, //奖品数量
-        prompt: '', //提示语
-        goods_image: '', //自用商品图
-        coupon_title: '', //优惠券名称
+        type: 5, //Loại 1: không trúng thưởng 2: điểm thưởng 3: số dư 4: lì xì 5: phiếu giảm giá 6: sản phẩm trong hệ thống
+        name: '', //Tên chương trình
+        num: 0, //Số lượng giải thưởng
+        image: '', //Ảnh giải thưởng
+        chance: 1, //Trọng số trúng thưởng
+        product_id: 0, //id sản phẩm
+        coupon_id: 0, //ID phiếu giảm giá
+        total: 0, //Số lượng giải thưởng
+        prompt: '', //Câu thông báo
+        goods_image: '', //Ảnh sản phẩm tự dùng
+        coupon_title: '', //Tên phiếu giảm giá
       },
       ruleValidate: {
         name: [
           {
             required: true,
-            message: '商品名称',
+            message: 'Tên sản phẩm',
             trigger: 'blur',
           },
         ],
         goods_image: [
           {
             required: true,
-            message: '请添加商品',
+            message: 'Vui lòng thêm sản phẩm',
             trigger: 'blur',
           },
         ],
@@ -176,7 +176,7 @@ export default {
           {
             required: true,
             type: 'number',
-            message: '请输入金额数量',
+            message: 'Vui lòng nhập số tiền',
             trigger: 'blur',
           },
         ],
@@ -184,21 +184,21 @@ export default {
           {
             required: true,
             type: 'number',
-            message: '请输入商品权重',
+            message: 'Vui lòng nhập trọng số sản phẩm',
             trigger: 'blur',
           },
         ],
         image: [
           {
             required: true,
-            message: '请选择奖品图片',
+            message: 'Vui lòng chọn hình ảnh giải thưởng',
             trigger: 'blur',
           },
         ],
         prompt: [
           {
             required: true,
-            message: '请输入提示语',
+            message: 'Vui lòng nhập câu thông báo',
             trigger: 'blur',
           },
         ],
@@ -228,7 +228,7 @@ export default {
     });
   },
   methods: {
-    // 选择商品
+    // Chọn sản phẩm
     changeGoods() {
       this.modals = true;
       this.$refs.goodslist.getList();
@@ -245,28 +245,28 @@ export default {
       this.$refs[name].validate((valid) => {
         if (valid) {
           this.$emit('addGoodsData', this.formValidate);
-          this.$message.success('添加成功');
+          this.$message.success('Thêm thành công');
         } else {
-          this.$message.warning('请完善数据');
+          this.$message.warning('Vui lòng hoàn thiện dữ liệu');
         }
       });
     },
-    // 获取单张图片信息
+    // Lấy thông tin một ảnh
     getPic(pc) {
       this.formValidate.image = pc.att_dir;
       this.modalPic = false;
     },
-    // 点击商品图
+    // Bấm ảnh sản phẩm
     modalPicTap() {
       this.modalPic = true;
     },
     cancel() {
       this.modals = false;
     },
-    // 选择的商品
+    // Sản phẩm đã chọn
     getProductId(productList) {
       // if (productList.length > 1) {
-      //   this.$message.warning("最多添加一个商品");
+      //   this.$message.warning("Chỉ được thêm tối đa một sản phẩm");
       //   return;
       // }
       this.formValidate.product_id = productList.id;
@@ -284,7 +284,7 @@ export default {
     remove() {
       this.formValidate.image = '';
     },
-    // 添加优惠券
+    // Thêm phiếu giảm giá
     addCoupon() {
       this.$refs.couponTemplates.isTemplate = true;
       this.$refs.couponTemplates.tableList();
@@ -293,7 +293,7 @@ export default {
       this.couponName.splice(0, 1);
       this.formValidate.coupon_id = 0;
     },
-    //对象数组去重；
+    //Loại bỏ trùng lặp trong mảng object;
     unique(arr) {
       const res = new Map();
       return arr.filter((arr) => !res.has(arr.id) && res.set(arr.id, 1));

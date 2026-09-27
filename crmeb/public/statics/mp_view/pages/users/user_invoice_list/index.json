@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "发票管理",
+  "navigationBarTitleText": "Quản lý hóa đơn",
   "usingComponents": {
     "home": "/components/home/index"
   }

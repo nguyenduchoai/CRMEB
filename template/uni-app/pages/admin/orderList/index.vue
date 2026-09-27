@@ -1,11 +1,11 @@
 <template>
 	<view class="pos-order-list pb-safe" ref="container">
-		<!-- 固定在顶部的搜索栏和导航栏 -->
+		<!-- Thanh tìm kiếm và thanh điều hướng cố định ở trên cùng -->
 		<view class="fixed-header">
 			<view class="searchCon acea-row">
 				<view class="search acea-row row-middle">
 					<text class="iconfont icon-ic_search"></text>
-					<input class="inputs" placeholder='请输入用户手机号/用户昵称/订单号/商品名称' placeholder-class='placeholder' confirm-type='search' name="search" v-model="where.keyword" @confirm="searchSubmit"></input>
+					<input class="inputs" placeholder='Vui lòng nhập số điện thoại/biệt danh khách hàng/mã đơn hàng/tên sản phẩm' placeholder-class='placeholder' confirm-type='search' name="search" v-model="where.keyword" @confirm="searchSubmit"></input>
 				</view>
 				<view class="btn" @click="filterShow = true">
 					<text class="iconfont icon-a-icon_filter1x"></text>
@@ -13,41 +13,41 @@
 			</view>
 			<view class="nav acea-row row-around row-middle" id="nav">
 				<view class="item" :class="state == -1 ? 'on' : ''" @click="changeStatus(-1)">
-					全部
+					Tất cả
 					<image src="../static/adorn.png" v-if="state == -1"></image>
 				</view>
 				<view class="item" :class="state == 0 ? 'on' : ''" @click="changeStatus(0)">
-					待付款
+					Chờ thanh toán
 					<image src="../static/adorn.png" v-if="state == 0"></image>
 				</view>
 				<view class="item" :class="state == 1 ? 'on' : ''" @click="changeStatus(1)">
-					待发货/核销
+					Chờ giao hàng/xác nhận sử dụng
 					<image src="../static/adorn.png" v-if="state == 1"></image>
 				</view>
 				<view class="item" :class="state == 2 ? 'on' : ''" @click="changeStatus(2)">
-					待收货
+					Chờ nhận hàng
 					<image src="../static/adorn.png" v-if="state == 2"></image>
 				</view>
 				<view class="item" :class="state == 3 ? 'on' : ''" @click="changeStatus(3)">
-					待评价
+					Chờ đánh giá
 					<image src="../static/adorn.png" v-if="state == 3"></image>
 				</view>
 			</view>
 		</view>
-		<!-- 可滚动的列表区域 -->
+		<!-- Vùng danh sách có thể cuộn -->
 		<scroll-view class="list-scroll" scroll-y @scrolltolower="getIndex">
 			<view class="list" v-if="list.length">
 				<view class="item" v-for="(item, index) in list" :key="index">
 				<view class="order-num acea-row row-between-wrapper" @click="toDetail(item)">
 					<view>
-						<!-- <countDown v-if="item.status == 0 && item.paid == 0 && item.pay_type != 'offline'" tipText="剩余：" dayText=" " hourText="小时" minuteText="分钟" secondText=" " dotColor="#FF7E00"
+						<!-- <countDown v-if="item.status == 0 && item.paid == 0 && item.pay_type != 'offline'" tipText="Còn lại:" dayText=" " hourText="giờ" minuteText="phút" secondText=" " dotColor="#FF7E00"
 							colors="#FF7E00" :datatime="item.stop_time" :isSecond="false">
 						</countDown> -->
-						<view>订单号：{{ item.order_id }}</view>
+						<view>Mã đơn hàng: {{ item.order_id }}</view>
 					</view>
 					<view class="state" :class="(item.refund_status==0 && where.status != 0 && item.refund.length)?'on':''">
-						{{item.refund_status==1?'退款中':item.refund_status==2?'已退款':item.refund_status==3?'拒绝退款':item.status_name.status_name}}
-						<text v-if="item.refund_status==0 && where.status != 0 && item.refund.length">{{item.is_all_refund?'，退款中':'，部分退款中'}}</text>
+						{{item.refund_status==1?'Đang hoàn tiền':item.refund_status==2?'Đã hoàn tiền':item.refund_status==3?'Từ chối hoàn tiền':item.status_name.status_name}}
+						<text v-if="item.refund_status==0 && where.status != 0 && item.refund.length">{{item.is_all_refund?', đang hoàn tiền':', đang hoàn tiền một phần'}}</text>
 					</view>
 				</view>
 				<view class="pos-order-goods">
@@ -64,7 +64,7 @@
 								</view>
 								<view class="text">
 									<view class="info line2">
-										<!-- <text v-if="val.cart_info.is_gift == 1" class="label">[赠品]</text> -->
+										<!-- <text v-if="val.cart_info.is_gift == 1" class="label">[Quà tặng]</text> -->
 										{{ val.cart_info.productInfo.store_name }}
 									</view>
 									<view class="attr" v-if="val.cart_info.productInfo.attrInfo">
@@ -76,7 +76,7 @@
 						<view class="money">
 							<!-- <view class="x-money">￥{{ item.pay_price }}</view> -->
 							<BaseMoney :money="item.pay_price" symbolSize="20" integerSize="32" decimalSize="20"></BaseMoney>
-							<view class="num">共{{ item.total_num }}件</view>
+							<view class="num">Tổng {{ item.total_num }} sản phẩm</view>
 						</view>
 					</view>
 				</view>
@@ -84,30 +84,30 @@
 					<view class="more">
 					</view>
 					<view class="acea-row row-middle">
-						<view class="bnt" @click="modify(item, 1)">订单备注</view>
+						<view class="bnt" @click="modify(item, 1)">Ghi chú đơn hàng</view>
 						<view class="bnt" :class="openErp?'on':''" @click="modify(item, 0)" v-if="item._status == 1 && item.is_cancel == 0">
-							一键改价
+							Sửa giá nhanh
 						</view>
 						<view class="bnt primary" :class="openErp?'on':''" v-if="item.status == 0 && item.paid == 0 && item.is_cancel == 0" @click="confirmPay(item)">
-							确认付款
+							Xác nhận thanh toán
 						</view>
 						<view class="bnt primary" :class="openErp?'on':''"
 							v-if="item._status == 2 && item.shipping_type == 1 && (item.pink_id == 0 || (item.pink_id > 0 && item.pinkStatus == 2))"
-							@click="goDelivery(item)">发送货
+							@click="goDelivery(item)">Giao hàng
 						</view>
 						<navigator class="bnt primary" :url="'/pages/admin/logistics/index?orderId='+item.order_id" 
-							v-if="item._status == 4 && item.delivery_type == 'express'">查看物流
+							v-if="item._status == 4 && item.delivery_type == 'express'">Xem vận chuyển
 						</navigator>
 						<view class="bnt primary" v-if="item.shipping_type == 2 &&
                 (item.status == 0 || item.status == 5) &&
                 item.paid == 1 &&
-                item.refund_status === 0" @click="verify(item)">订单核销</view>
+                item.refund_status === 0" @click="verify(item)">Xác nhận sử dụng đơn hàng</view>
 					</view>
 				</view>
 				</view>
 			</view>
 			<view v-else class="px-20 mt-20 empty-wrapper">
-				<emptyPage title="暂无订单～" src="/statics/images/noOrder.gif"></emptyPage>
+				<emptyPage title="Chưa có đơn hàng~" src="/statics/images/noOrder.gif"></emptyPage>
 			</view>
 		</scroll-view>
 		<Loading :loaded="loaded" :loading="loading"></Loading>
@@ -118,18 +118,18 @@
 			<view class="search-box">
 				<view class="search acea-row row-middle">
 					<text class="iconfont icon-ic_search"></text>
-					<input class="input" placeholder='请输入要查询的订单' placeholder-class='placeholder' confirm-type='search' name="search" v-model="where.keyword" @confirm="searchSubmit"></input>
+					<input class="input" placeholder='Vui lòng nhập đơn hàng cần tra cứu' placeholder-class='placeholder' confirm-type='search' name="search" v-model="where.keyword" @confirm="searchSubmit"></input>
 				</view>
 			</view>
 			<view class="content">
 				<view class="item">
-					<view class="title">按下单时间</view>
+					<view class="title">Theo thời gian đặt hàng</view>
 					<view class="acea-row list">
 						<view class="cell" v-for="(item, index) in dateList" :key="index" :class="{ on: item.val == dateSelected }" @click="dateChange(item.val)">{{ item.label }}</view>
 					</view>
 				</view>
 				<view class="item">
-					<view class="title">按支付方式</view>
+					<view class="title">Theo phương thức thanh toán</view>
 					<view class="acea-row list">
 						<view class="cell" v-for="(item, index) in payList" :key="index" :class="{ on: item.val == where.pay_type }" @click="payChange(item.val)">{{ item.label }}</view>
 					</view>
@@ -138,11 +138,11 @@
 		</view>
 		<view v-if="confirmShow" class="mask"></view>
 		<view v-if="confirmShow" class="confirm-popup">
-			<view class="title">确认付款</view>
-			<view class="info">确认该订单用户已付款</view>
+			<view class="title">Xác nhận thanh toán</view>
+			<view class="info">Xác nhận khách hàng đã thanh toán đơn hàng này</view>
 			<view class="acea-row btn-box">
-				<view class="btn" @click="confirmShow = false">取消</view>
-				<view class="btn primary" @click="offlinePay">确认</view>
+				<view class="btn" @click="confirmShow = false">Hủy</view>
+				<view class="btn primary" @click="offlinePay">Xác nhận</view>
 			</view>
 		</view>
 		<view class="footerH"></view>
@@ -209,9 +209,9 @@
 					limit: 10,
 					status: '',
 					keyword: '',
-					data: '', // 时间筛选
-					type: '', // 订单类型
-					pay_type: '', // 支付方式
+					data: '', // Lọc theo thời gian
+					type: '', // Loại đơn hàng
+					pay_type: '', // Phương thức thanh toán
 				},
 				list: [],
 				loaded: false,
@@ -219,48 +219,48 @@
 				orderInfo: {},
 				status: "",
 				state: -1,
-				isRefund: 0, //1是仅退款;0是退货退款
+				isRefund: 0, //1 là chỉ hoàn tiền; 0 là trả hàng hoàn tiền
 				imgHost: HTTP_REQUEST_URL,
 				dateSelected: '',
 				dateList: [{
-						label: '全部',
+						label: 'Tất cả',
 						val: '',
 					},
 					{
-						label: '三天内',
+						label: 'Trong 3 ngày',
 						val: '1',
 					},
 					{
-						label: '一个月内',
+						label: 'Trong 1 tháng',
 						val: '2',
 					},
 					{
-						label: '三个月内',
+						label: 'Trong 3 tháng',
 						val: '3',
 					},
 					{
-						label: '半年内',
+						label: 'Trong 6 tháng',
 						val: '4',
 					},
 				],
 				payList: [{
-						label: '全部',
+						label: 'Tất cả',
 						val: '',
 					},
 					{
-						label: '微信支付',
+						label: 'WeChat Pay',
 						val: '1'
 					},
 					{
-						label: '支付宝支付',
+						label: 'Thanh toán Alipay',
 						val: '4'
 					},
 					{
-						label: '余额支付',
+						label: 'Thanh toán bằng số dư',
 						val: '2'
 					},
 					{
-						label: '线下支付',
+						label: 'Thanh toán ngoại tuyến',
 						val: '3'
 					},
 				],
@@ -301,8 +301,8 @@
 		methods: {
 			verify(item) {
 				uni.showModal({
-					title: '操作提示',
-					content: '是否确认核销该订单？',
+					title: 'Thông báo thao tác',
+					content: 'Bạn có chắc muốn xác nhận sử dụng đơn hàng này không?',
 					success: (res) => {
 						if (res.confirm) {
 							orderVerific(item.verify_code, 1, 1)
@@ -344,7 +344,7 @@
 					})
 				})
 			},
-			// 获取数据
+			// Lấy dữ liệu
 			getIndex: function() {
 				let that = this;
 				if (that.loading || that.loaded) return;
@@ -369,7 +369,7 @@
 					}
 				);
 			},
-			// 初始化
+			// Khởi tạo
 			init: function() {
 				this.list = [];
 				this.where.page = 1;
@@ -381,7 +381,7 @@
 			searchSubmit() {
 				this.init();
 			},
-			// 导航切换
+			// Chuyển tab điều hướng
 			changeStatus(val) {
 				if (this.state != val) {
 					this.state = val;
@@ -389,7 +389,7 @@
 					this.init();
 				}
 			},
-			// 商品操作
+			// Thao tác sản phẩm
 			modify: function(item, status, type) {
 				if (this.openErp && status != 1) return
 				this.change = true;
@@ -431,7 +431,7 @@
 				if (that.status == 0) {
 					if (!isMoney(price)) {
 						return that.$util.Tips({
-							title: '请输入正确的金额'
+							title: 'Vui lòng nhập số tiền hợp lệ'
 						});
 					}
 					data.price = price;
@@ -439,7 +439,7 @@
 						res => {
 							that.change = false;
 							that.$util.Tips({
-								title: '改价成功',
+								title: 'Đổi giá thành công',
 								icon: 'success'
 							})
 							that.init();
@@ -447,7 +447,7 @@
 						err => {
 							that.change = false;
 							that.$util.Tips({
-								title: '改价失败',
+								title: 'Đổi giá thất bại',
 								icon: 'none'
 							})
 						}
@@ -456,7 +456,7 @@
 					if (this.isRefund) {
 						if (!isMoney(refund_price)) {
 							return that.$util.Tips({
-								title: '请输入正确的金额'
+								title: 'Vui lòng nhập số tiền hợp lệ'
 							});
 						}
 						data.price = refund_price;
@@ -501,7 +501,7 @@
 				} else {
 					if (!remark) {
 						return this.$util.Tips({
-							title: '请输入备注'
+							title: 'Vui lòng nhập ghi chú'
 						})
 					}
 					data.remark = remark;
@@ -1006,8 +1006,8 @@
 
 	.footerH {
 		height: 110rpx;
-		height: calc(110rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-		height: calc(110rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+		height: calc(110rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+		height: calc(110rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 	}
 
 	.mask {

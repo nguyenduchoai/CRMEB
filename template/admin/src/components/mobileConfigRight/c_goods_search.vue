@@ -1,14 +1,14 @@
 <template>
-  <!-- 此组件目前没用，留着方便以后开发再用 -->
+  <!-- Thành phần này hiện chưa dùng, giữ lại để sau này phát triển tiếp có thể dùng -->
   <div class="acea-row row-top" style="margin-bottom: 20px" v-if="configData">
     <el-checkbox-group v-model="configData.type" @change="checkboxChange">
       <div>
         <el-checkbox :label="1">
-          <span>商品分类</span>
+          <span>Danh mục sản phẩm</span>
         </el-checkbox>
         <el-cascader
           :data="configData.list"
-          placeholder="请选择商品分类"
+          placeholder="Vui lòng chọn danh mục sản phẩm"
           :props="{ multiple: true, checkStrictly: true, emitPath: false }"
           v-model="configData.activeValue"
           filterable

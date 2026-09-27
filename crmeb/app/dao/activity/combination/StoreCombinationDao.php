@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -24,7 +24,7 @@ class StoreCombinationDao extends BaseDao
 {
 
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -33,7 +33,7 @@ class StoreCombinationDao extends BaseDao
     }
 
     /**
-     * 搜索
+     * Tìm kiếm
      * @param array $where
      * @param bool $search
      * @return \crmeb\basic\BaseModel|mixed|\think\Model
@@ -65,7 +65,7 @@ class StoreCombinationDao extends BaseDao
     }
 
     /**
-     * 获取指定条件下的条数
+     * Lấy số lượng bản ghi theo điều kiện chỉ định
      * @param array $where
      * @param bool $search
      * @return int
@@ -77,7 +77,7 @@ class StoreCombinationDao extends BaseDao
     }
 
     /**
-     * 拼团商品列表
+     * Danh sách sản phẩm mua chung
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -109,7 +109,7 @@ class StoreCombinationDao extends BaseDao
             })->order('sort desc,id desc')->select()->toArray();
     }
 
-    /**获取列表
+    /**Lấy danh sách
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -149,8 +149,8 @@ class StoreCombinationDao extends BaseDao
     }
 
     /**
-     * 获取正在进行拼团的商品以数组形式返回
-     * @param array $ids ids 为空返回所有
+     * Lấy các sản phẩm đang mua chung, trả về dạng mảng
+     * @param array $ids ids Rỗng thì trả về tất cả
      * @param array $field
      * @return array
      * @throws \ReflectionException
@@ -164,7 +164,7 @@ class StoreCombinationDao extends BaseDao
     }
 
     /**
-     * 获取拼团列表
+     * Lấy danh sách mua chung
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -176,7 +176,7 @@ class StoreCombinationDao extends BaseDao
     }
 
     /**
-     * 条件获取数量
+     * Lấy số lượng theo điều kiện
      * @param array $where
      * @return int
      * @throws \ReflectionException
@@ -187,7 +187,7 @@ class StoreCombinationDao extends BaseDao
     }
 
     /**
-     * 页面设计获取商拼团列表
+     * Trang thiết kế giao diện lấy danh sách mua chung sản phẩm
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -202,7 +202,7 @@ class StoreCombinationDao extends BaseDao
     }
 
     /**
-     * 根据id获取拼团数据
+     * Lấy dữ liệu mua chung theo id
      * @param array $ids
      * @param string $field
      * @return array
@@ -216,7 +216,7 @@ class StoreCombinationDao extends BaseDao
     }
 
     /**
-     * 获取一条拼团数据
+     * Lấy một bản ghi dữ liệu mua chung
      * @param int $id
      * @param string $field
      * @return array|\think\Model|null
@@ -231,7 +231,7 @@ class StoreCombinationDao extends BaseDao
     }
 
     /**
-     * 获取推荐拼团
+     * Lấy mua chung được đề xuất
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException

@@ -942,11 +942,11 @@ export default {
         if (field === "coupon_time") return dataItem.coupon_time;
         if (field === "type")
           return dataItem.type === 1
-            ? "品类券"
+            ? "Phiếu theo danh mục"
             : dataItem.type === 2
-              ? "商品券"
-              : "通用券";
-        if (field === "status") return dataItem.status === 1 ? "开启" : "关闭";
+              ? "Phiếu theo sản phẩm"
+              : "Phiếu toàn cửa hàng";
+        if (field === "status") return dataItem.status === 1 ? "Bật" : "Tắt";
         if (field === "receive_time") return dataItem.receive_time;
         if (field === "use_time") return dataItem.use_time;
         if (field === "receive_count") return dataItem.receive_count;
@@ -1017,7 +1017,7 @@ export default {
       }
       setCouponReceive(item.id)
         .then(() => {
-          uni.showToast({ title: "领取成功", icon: "success" });
+          uni.showToast({ title: "Nhận thành công", icon: "success" });
         })
         .catch((err) => {
           uni.showToast({ title: err, icon: "none" });

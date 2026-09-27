@@ -1,5 +1,5 @@
 <template>
-	<!-- 自定义组件 -->
+	<!-- Thành phần tùy chỉnh -->
 	<view class='wrapper card' v-if="customForm && customForm.length && isShow">
 		<view class='item acea-row row-between' v-for="(item,index) in customForm" :key="index" v-if="(item.value && ['uploadPicture','dateranges'].indexOf(item.name) == -1) || (item.value.length && ['uploadPicture','dateranges'].indexOf(item.name) != -1)">
 			<view class="title">{{item.titleConfig.value}}：</view>

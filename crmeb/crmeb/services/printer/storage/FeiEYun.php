@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,14 +16,14 @@ class FeiEYun extends BasePrinter
 {
 
     /**
-     * 初始化
+     * Khởi tạo
      * @param array $config
      * @return mixed|void
      */
     protected function initialize(array $config){}
 
     /**
-     * 开始打印
+     * Bắt đầu in
      * @return bool|mixed|string
      * @throws \Exception
      */
@@ -58,7 +58,7 @@ class FeiEYun extends BasePrinter
     }
 
 //    /**
-//     * 设置打印内容
+//     * Đặt nội dung in
 //     * @param array $config
 //     * @return YiLianYun
 //     */
@@ -70,16 +70,16 @@ class FeiEYun extends BasePrinter
 //        $orderTime = date('Y-m-d H:i:s', $orderInfo['pay_time']);
 //        $this->printerContent = '<CB>**' . $config['name'] . '**</CB><BR>';
 //        $this->printerContent .= '--------------------------------<BR>';
-//        $this->printerContent .= '订单编号：' . $orderInfo['order_id'] . '<BR>';
-//        $this->printerContent .= '打印时间: ' . $printTime . '<BR>';
-//        $this->printerContent .= '付款时间: ' . $orderTime . '<BR>';
-//        $this->printerContent .= '姓   名: ' . $orderInfo['real_name'] . '<BR>';
-//        $this->printerContent .= '电   话: ' . $orderInfo['user_phone'] . '<BR>';
-//        $this->printerContent .= '地   址: ' . $orderInfo['user_address'] . '<BR>';
-//        $this->printerContent .= '赠送积分: ' . $orderInfo['gain_integral'] . '<BR>';
-//        $this->printerContent .= '订单备注：' . $orderInfo['mark'] . '<BR>';
-//        $this->printerContent .= '**************商品**************<BR>';
-//        $this->printerContent .= '名称           单价  数量 金额<BR>';
+//        $this->printerContent .= 'Mã đơn hàng: ' . $orderInfo['order_id'] . '<BR>';
+//        $this->printerContent .= 'Thời gian in: ' . $printTime . '<BR>';
+//        $this->printerContent .= 'Thời gian thanh toán: ' . $orderTime . '<BR>';
+//        $this->printerContent .= 'Họ tên: ' . $orderInfo['real_name'] . '<BR>';
+//        $this->printerContent .= 'Điện thoại: ' . $orderInfo['user_phone'] . '<BR>';
+//        $this->printerContent .= 'Địa chỉ: ' . $orderInfo['user_address'] . '<BR>';
+//        $this->printerContent .= 'Điểm thưởng tặng: ' . $orderInfo['gain_integral'] . '<BR>';
+//        $this->printerContent .= 'Ghi chú đơn hàng: ' . $orderInfo['mark'] . '<BR>';
+//        $this->printerContent .= '**************Sản phẩm**************<BR>';
+//        $this->printerContent .= 'Tên           Đơn giá  SL Thành tiền<BR>';
 //        $this->printerContent .= '--------------------------------<BR>';
 //        foreach ($product as $item) {
 //            $name = $item['productInfo']['store_name'] . " | " . $item['productInfo']['attrInfo']['suk'];
@@ -91,7 +91,7 @@ class FeiEYun extends BasePrinter
 //            $kw2 = '';
 //            $kw4 = '';
 //            $str = $name;
-//            $blankNum = 14;//名称控制为14个字节
+//            $blankNum = 14;//tên giới hạn 14 byte
 //            $lan = mb_strlen($str, 'utf-8');
 //            $m = 0;
 //            $j = 1;
@@ -163,12 +163,12 @@ class FeiEYun extends BasePrinter
 //            unset($price);
 //        }
 //        $this->printerContent .= '--------------------------------<BR>';
-//        $this->printerContent .= '合计：' . number_format($orderInfo['total_price'], 2) . '元<BR>';
-//        $this->printerContent .= '邮费：' . number_format($orderInfo['pay_postage'], 2) . '元<BR>';
-//        $this->printerContent .= '优惠：' . number_format($orderInfo['coupon_price'], 2) . '元<BR>';
-//        $this->printerContent .= '抵扣：' . number_format($orderInfo['deduction_price'], 2) . '元<BR>';
-//        $this->printerContent .= '实际支付：' . number_format($orderInfo['pay_price'], 2) . '元<BR>';
-//        $this->printerContent .= '<QR>' . $config['url'] . '</QR>';//把解析后的二维码生成的字符串用标签套上即可自动生成二维码
+//        $this->printerContent .= 'Tổng cộng: ' . number_format($orderInfo['total_price'], 2) . 'đ<BR>';
+//        $this->printerContent .= 'Phí vận chuyển: ' . number_format($orderInfo['pay_postage'], 2) . 'đ<BR>';
+//        $this->printerContent .= 'Ưu đãi: ' . number_format($orderInfo['coupon_price'], 2) . 'đ<BR>';
+//        $this->printerContent .= 'Khấu trừ: ' . number_format($orderInfo['deduction_price'], 2) . 'đ<BR>';
+//        $this->printerContent .= 'Thực tế thanh toán: ' . number_format($orderInfo['pay_price'], 2) . 'đ<BR>';
+//        $this->printerContent .= '<QR>' . $config['url'] . '</QR>';//dùng thẻ bao chuỗi mã QR đã phân giải là tự động tạo ra mã QR
 //        return $this;
 //    }
 }

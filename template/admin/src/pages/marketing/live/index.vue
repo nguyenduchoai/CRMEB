@@ -11,7 +11,7 @@
           @submit.native.prevent
           class="tabform"
         >
-          <el-form-item label="直播状态：">
+          <el-form-item label="Trạng thái livestream:">
             <el-select v-model="formValidate.status" clearable @change="selChange" class="form_content_width">
               <el-option
                 v-for="(item, index) in treeData.withdrawal"
@@ -21,26 +21,26 @@
               ></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="搜索：">
+          <el-form-item label="Tìm kiếm:">
             <el-input
               clearable
-              placeholder="请输入直播间名称/ID/主播昵称/微信号"
+              placeholder="Vui lòng nhập tên phòng livestream/ID/biệt danh streamer/ID WeChat"
               v-model="formValidate.kerword"
               class="form_content_width"
             />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="selChange">查询</el-button>
+            <el-button type="primary" v-db-click @click="selChange">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
     </el-card>
     <el-card :bordered="false" shadow="never" class="ivu-mt mt16">
-      <el-button v-auth="['setting-system_menus-add']" type="primary" v-db-click @click="menusAdd('添加直播间')"
-        >添加直播间</el-button
+      <el-button v-auth="['setting-system_menus-add']" type="primary" v-db-click @click="menusAdd('Thêm phòng livestream')"
+        >Thêm phòng livestream</el-button
       >
       <el-button v-auth="['setting-system_menus-add']" v-db-click @click="syncRoom" style="margin-left: 20px"
-        >同步直播间</el-button
+        >Đồng bộ phòng livestream</el-button
       >
       <el-table
         :data="tabList"
@@ -48,45 +48,45 @@
         class="mt14"
         v-loading="loading"
         highlight-current-row
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
-        <el-table-column label="直播间ID" width="80">
+        <el-table-column label="ID phòng livestream" width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.id }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="直播间名称" min-width="35">
+        <el-table-column label="Tên phòng livestream" min-width="35">
           <template slot-scope="scope">
             <span>{{ scope.row.name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="主播昵称" min-width="35">
+        <el-table-column label="Biệt danh streamer" min-width="35">
           <template slot-scope="scope">
             <span>{{ scope.row.anchor_name }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="主播微信号" min-width="35">
+        <el-table-column label="ID WeChat của streamer" min-width="35">
           <template slot-scope="scope">
             <span>{{ scope.row.anchor_wechat }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="直播开始时间" min-width="35">
+        <el-table-column label="Thời gian bắt đầu livestream" min-width="35">
           <template slot-scope="scope">
             <span>{{ scope.row.start_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="计划结束时间" min-width="35">
+        <el-table-column label="Thời gian kết thúc dự kiến" min-width="35">
           <template slot-scope="scope">
             <span>{{ scope.row.end_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="创建时间" min-width="35">
+        <el-table-column label="Thời gian tạo" min-width="35">
           <template slot-scope="scope">
             <span>{{ scope.row.add_time }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="显示状态" min-width="35">
+        <el-table-column label="Trạng thái hiển thị" min-width="35">
           <template slot-scope="scope">
             <el-switch
               class="defineSwitch"
@@ -96,29 +96,29 @@
               :value="scope.row.is_show"
               @change="onchangeIsShow(scope.row)"
               size="large"
-              active-text="开启"
-              inactive-text="关闭"
+              active-text="Bật"
+              inactive-text="Tắt"
             >
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="直播状态" min-width="35">
+        <el-table-column label="Trạng thái livestream" min-width="35">
           <template slot-scope="scope">
             <div>{{ scope.row.live_status | liveReviewStatusFilter }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="排序" min-width="35">
+        <el-table-column label="Thứ tự sắp xếp" min-width="35">
           <template slot-scope="scope">
             <div>{{ scope.row.sort }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="170">
+        <el-table-column label="Thao tác" fixed="right" width="170">
           <template slot-scope="scope">
-            <a v-db-click @click="detail(scope.row, '详情')">详情</a>
+            <a v-db-click @click="detail(scope.row, 'Chi tiết')">Chi tiết</a>
             <el-divider direction="vertical"></el-divider>
-            <a v-db-click @click="del(scope.row, '删除这条信息', scope.$index)">删除</a>
+            <a v-db-click @click="del(scope.row, 'xóa thông tin này', scope.$index)">Xóa</a>
             <el-divider direction="vertical" v-if="scope.row.live_status == 102" />
-            <a v-if="scope.row.live_status == 102" v-db-click @click="addGoods(scope.row)">添加商品</a>
+            <a v-if="scope.row.live_status == 102" v-db-click @click="addGoods(scope.row)">Thêm sản phẩm</a>
           </template>
         </el-table-column>
       </el-table>
@@ -132,12 +132,12 @@
         />
       </div>
     </el-card>
-    <!--详情-->
-    <el-dialog :visible.sync="modals" title="直播间详情" class="paymentFooter" width="720px">
+    <!--Chi tiết-->
+    <el-dialog :visible.sync="modals" title="Chi tiết phòng livestream" class="paymentFooter" width="720px">
       <details-from ref="studioDetail" />
     </el-dialog>
-    <!-- 添加商品 -->
-    <el-dialog :visible.sync="isShowBox" title="添加商品" class="paymentFooter" width="720px">
+    <!-- Thêm sản phẩm -->
+    <el-dialog :visible.sync="isShowBox" title="Thêm sản phẩm" class="paymentFooter" width="720px">
       <!--            <addGoods :datas="activeItem" @getData="getData" ref="liveAdd"></addGoods>-->
       <goods-list
         ref="goodslist"
@@ -185,35 +185,35 @@ export default {
       treeData: {
         withdrawal: [
           {
-            title: '全部',
+            title: 'Tất cả',
             value: '',
           },
           {
-            title: '直播中',
+            title: 'Đang livestream',
             value: 1,
           },
           {
-            title: '未开始',
+            title: 'Chưa bắt đầu',
             value: 2,
           },
           {
-            title: '已结束',
+            title: 'Đã kết thúc',
             value: 3,
           },
         ],
       },
       columns1: [
-        { key: 'id', title: '直播间ID', minWidth: 35 },
-        { key: 'name', minWidth: 35, title: '直播间名称' },
-        { key: 'anchor_name', minWidth: 35, title: '主播昵称' },
-        { key: 'anchor_wechat', minWidth: 35, title: '主播微信号' },
-        { key: 'start_time', minWidth: 35, title: '直播开始时间' },
-        { key: 'end_time', minWidth: 35, title: '计划结束时间' },
-        { key: 'add_time', minWidth: 35, title: '创建时间' },
-        { slot: 'is_mer_show', title: '显示状态', minWidth: 80 },
-        { slot: 'status', minWidth: 35, title: '直播状态' },
-        { key: 'sort', minWidth: 35, title: '排序' },
-        { slot: 'action', fixed: 'right', title: '操作', minWidth: 120 },
+        { key: 'id', title: 'ID phòng livestream', minWidth: 35 },
+        { key: 'name', minWidth: 35, title: 'Tên phòng livestream' },
+        { key: 'anchor_name', minWidth: 35, title: 'Biệt danh streamer' },
+        { key: 'anchor_wechat', minWidth: 35, title: 'ID WeChat của streamer' },
+        { key: 'start_time', minWidth: 35, title: 'Thời gian bắt đầu livestream' },
+        { key: 'end_time', minWidth: 35, title: 'Thời gian kết thúc dự kiến' },
+        { key: 'add_time', minWidth: 35, title: 'Thời gian tạo' },
+        { slot: 'is_mer_show', title: 'Trạng thái hiển thị', minWidth: 80 },
+        { slot: 'status', minWidth: 35, title: 'Trạng thái livestream' },
+        { key: 'sort', minWidth: 35, title: 'Thứ tự sắp xếp' },
+        { slot: 'action', fixed: 'right', title: 'Thao tác', minWidth: 120 },
       ],
       tabList: [],
       loading: false,
@@ -234,7 +234,7 @@ export default {
     this.getList();
   },
   methods: {
-    // 获取直播列表
+    // Lấy danh sách livestream
     getList() {
       this.loading = true;
       liveList(this.formValidate).then((res) => {
@@ -243,18 +243,18 @@ export default {
         this.loading = false;
       });
     },
-    // 选择
+    // Chọn
     selChange() {
       this.formValidate.page = 1;
       this.getList();
     },
-    // 添加直播间
+    // Thêm phòng livestream
     menusAdd() {
       this.$router.push({
         path: this.$routeProStr + '/marketing/live/add_live_room',
       });
     },
-    // 直播间显示隐藏
+    // Hiện/ẩn phòng livestream
     onchangeIsShow({ id, is_show }) {
       liveShow(id, is_show)
         .then((res) => {
@@ -264,12 +264,12 @@ export default {
           this.$message.error(error.msg);
         });
     },
-    //  详情
+    //  Chi tiết
     detail(row) {
       this.modals = true;
       this.$refs.studioDetail.getData(row.id);
     },
-    // 直播间添加商品
+    // Thêm sản phẩm vào phòng livestream
     addGoods(row) {
       this.selectIds = row.product_ids;
       this.activeItem = row;
@@ -291,7 +291,7 @@ export default {
           this.$refs.liveAdd.goodsList = [];
         });
     },
-    // 同步直播间
+    // Đồng bộ phòng livestream
     syncRoom() {
       liveSyncRoom()
         .then((res) => {
@@ -302,7 +302,7 @@ export default {
           this.$message.error(error.msg);
         });
     },
-    // 删除
+    // Xóa
     del(row, tit, num) {
       let delfromData = {
         title: tit,

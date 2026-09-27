@@ -1,9 +1,9 @@
 <template>
   <div class="mall-theme-page">
-    <!-- 顶部标题栏 -->
+    <!-- Thanh tiêu đề trên cùng -->
     <div class="page-header">
       <div class="header-left">
-        <span class="page-title">当前主题：{{ title }}</span>
+        <span class="page-title">Chủ đề hiện tại: {{ title }}</span>
         <div class="theme-colors" v-if="themeColors.length">
           <span
             class="color-dot"
@@ -13,33 +13,33 @@
           ></span>
         </div>
         <span class="status-tag" v-if="confuse">
-          <span class="text">混搭使用中</span>
+          <span class="text">Đang dùng kết hợp nhiều chủ đề</span>
         </span>
       </div>
       <div class="header-right">
         <i class="el-icon-refresh-left icon"></i>
-        <span @click="handleRestore">还原主题</span>
+        <span @click="handleRestore">Khôi phục chủ đề</span>
       </div>
     </div>
 
-    <!-- 页面列表 -->
+    <!-- Danh sách trang -->
     <div class="theme-list">
       <div class="list-wrapper">
         <div class="list-item" v-for="(item, index) in pageList" :key="index">
           <div class="theme-card">
             <div class="card-header">
-              <span class="card-title">{{ item.name || '未命名主题' }}</span>
+              <span class="card-title">{{ item.name || 'Chủ đề chưa đặt tên' }}</span>
               <div class="card-actions">
-                <span class="action-btn" @click="handleEdit(item)">编辑</span>
+                <span class="action-btn" @click="handleEdit(item)">Sửa</span>
                 <el-divider direction="vertical"></el-divider>
                 <span class="action-btn" @click="handleReplace(item, ['home', 'category', 'detail', 'user'][index])"
-                  >更换</span
+                  >Thay đổi</span
                 >
               </div>
             </div>
             <div class="card-info">
               <div class="theme-name line1">{{ item.themeName }}</div>
-              <div class="last-modified">上次修改：{{ item.updateTime }}</div>
+              <div class="last-modified">Sửa gần nhất: {{ item.updateTime }}</div>
             </div>
             <div class="card-preview">
               <div class="phone-mockup" :class="{ 'has-image': item.image }">
@@ -50,12 +50,12 @@
                 <div class="empty-container" v-else>
                   <img src="@/assets/images/no-theme-poster.png" class="empty-poster" alt="no poster" />
                   <div class="empty-text">
-                    暂无主题封面
-                    <el-tooltip content="请前往设计页面保存封面" placement="top">
+                    Chưa có ảnh bìa chủ đề
+                    <el-tooltip content="Vui lòng vào trang thiết kế để lưu ảnh bìa" placement="top">
                       <i class="el-icon-question"></i>
                     </el-tooltip>
                   </div>
-                  <el-button type="primary" size="small" @click="handleEdit(item)">去编辑</el-button>
+                  <el-button type="primary" size="small" @click="handleEdit(item)">Chỉnh sửa ngay</el-button>
                 </div>
               </div>
             </div>
@@ -64,7 +64,7 @@
       </div>
     </div>
 
-    <!-- 更换主题弹窗 -->
+    <!-- Hộp thoại đổi chủ đề -->
     <theme-select-dialog
       :visible.sync="dialogVisible"
       activeTab="mall"
@@ -89,7 +89,7 @@ export default {
   data() {
     return {
       pageList: [],
-      themeColors: [], // 模拟后端返回的主题色值
+      themeColors: [], // Mô phỏng giá trị màu chủ đề do backend trả về
       dialogVisible: false,
       title: '',
       is_diy: false,
@@ -123,15 +123,15 @@ export default {
     },
     getPageName(key) {
       const names = {
-        home: '商城首页',
-        category: '商品分类页',
-        detail: '商品详情页',
-        user: '个人中心页',
+        home: 'Trang chủ cửa hàng',
+        category: 'Trang danh mục sản phẩm',
+        detail: 'Trang chi tiết sản phẩm',
+        user: 'Trang cá nhân',
       };
       return names[key] || key;
     },
     handleEdit(item) {
-      // 跳转到编辑页面，假设路由结构
+      // Chuyển đến trang chỉnh sửa, giả định cấu trúc route
       this.$router.push({
         path: this.$routeProStr + '/setting/edit_theme',
         query: { type: item.type, id: this.id },
@@ -142,15 +142,15 @@ export default {
       this.dialogVisible = true;
     },
     handleRestore() {
-      this.$confirm('确定要还原主题吗？所有自定义修改将丢失。', '提示', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm('Bạn có chắc muốn khôi phục chủ đề không? Mọi thay đổi tùy chỉnh sẽ bị mất.', 'Thông báo', {
+        confirmButtonText: 'Xác nhận',
+        cancelButtonText: 'Hủy',
         type: 'warning',
       })
         .then(() => {
-          // 调用还原接口
+          // Gọi API khôi phục
           restoreTheme(this.id).then((res) => {
-            this.$message.success('主题已还原');
+            this.$message.success('Đã khôi phục chủ đề');
             this.getThemeUsing();
           });
         })
@@ -370,7 +370,7 @@ body .v-modal {
           }
         }
       }
-      // 隐藏滚动条
+      // Ẩn thanh cuộn
       ::-webkit-scrollbar {
         display: none;
       }

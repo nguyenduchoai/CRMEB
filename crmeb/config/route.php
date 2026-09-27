@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -19,56 +19,56 @@
 // +----------------------------------------------------------------------
 
 // +----------------------------------------------------------------------
-// | 应用设置
+// | Cài đặt ứng dụng
 // +----------------------------------------------------------------------
 
 return [
-    // pathinfo分隔符
+    // Ký tự phân tách pathinfo
     'pathinfo_depr'         => '/',
-    // URL伪静态后缀
+    // Hậu tố URL giả tĩnh (pseudo-static)
     'url_html_suffix'       => 'html',
-    // URL普通方式参数 用于自动生成
+    // Tham số URL kiểu thông thường, dùng để tự động tạo
     'url_common_param'      => true,
-    // 是否开启路由延迟解析
+    // Có mở phân giải route trễ (lazy) không
     'url_lazy_route'        => false,
-    // 是否强制使用路由
+    // Có bắt buộc dùng route không
     'url_route_must'        => true,
-    // 合并路由规则
+    // Gộp quy tắc route
     'route_rule_merge'      => false,
-    // 路由是否完全匹配
+    // Route có khớp hoàn toàn không
     'route_complete_match'  => true,
-    // 使用注解路由
+    // Dùng route bằng annotation
     'route_annotation'      => false,
-    // 是否开启路由缓存
+    // Có mở cache route không
     'route_check_cache'     => false,
-    // 路由缓存连接参数
+    // Tham số kết nối cache route
     'route_cache_option'    => [],
-    // 路由缓存Key
+    // Key cache route
     'route_check_cache_key' => '',
-    // 访问控制器层名称
+    // Tên tầng truy cập controller
     'controller_layer'      => 'controller',
-    // 空控制器名
+    // Tên controller trống
     'empty_controller'      => 'Error',
-    // 是否使用控制器后缀
+    // Có dùng hậu tố controller không
     'controller_suffix'     => false,
-    // 默认的路由变量规则
+    // Quy tắc biến route mặc định
     'default_route_pattern' => '[\w\.]+',
-    // 是否自动转换URL中的控制器和操作名
+    // Có tự động chuyển đổi tên controller và action trong URL không
     'url_convert'           => true,
-    // 是否开启请求缓存 true自动缓存 支持设置请求缓存规则
+    // Có mở cache request không, true là tự động cache, hỗ trợ đặt quy tắc cache request
     'request_cache'         => false,
-    // 请求缓存有效期
+    // Thời hạn cache request
     'request_cache_expire'  => null,
-    // 全局请求缓存排除规则
+    // Quy tắc loại trừ cache request toàn cục
     'request_cache_except'  => [],
-    // 默认控制器名
+    // Tên controller mặc định
     'default_controller'    => 'Index',
-    // 默认操作名
+    // Tên action mặc định
     'default_action'        => 'index',
-    // 操作方法后缀
+    // Hậu tố phương thức action
     'action_suffix'         => '',
-    // 默认JSONP格式返回的处理方法
+    // Phương thức xử lý trả về định dạng JSONP mặc định
     'default_jsonp_handler' => 'jsonpReturn',
-    // 默认JSONP处理方法
+    // Phương thức xử lý JSONP mặc định
     'var_jsonp_handler'     => 'callback',
 ];

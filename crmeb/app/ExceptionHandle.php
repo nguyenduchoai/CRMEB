@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -21,12 +21,12 @@ use think\Response;
 use Throwable;
 
 /**
- * 应用异常处理类
+ * Lớp xử lý ngoại lệ của ứng dụng
  */
 class ExceptionHandle extends Handle
 {
     /**
-     * 不需要记录信息（日志）的异常类列表
+     * Danh sách lớp ngoại lệ không cần ghi thông tin (log)
      * @var array
      */
     protected $ignoreReport = [
@@ -38,7 +38,7 @@ class ExceptionHandle extends Handle
     ];
 
     /**
-     * 记录异常信息（包括日志或者其它方式记录）
+     * Ghi lại thông tin ngoại lệ (bao gồm log hoặc cách ghi khác)
      *
      * @access public
      * @param  Throwable $exception
@@ -46,7 +46,7 @@ class ExceptionHandle extends Handle
      */
     public function report(Throwable $exception): void
     {
-        // 使用内置的方式记录异常日志
+        // Dùng cách ghi log có sẵn (built-in) để ghi log ngoại lệ
         parent::report($exception);
     }
 
@@ -60,9 +60,9 @@ class ExceptionHandle extends Handle
      */
     public function render($request, Throwable $e): Response
     {
-        // 添加自定义异常处理机制
+        // Thêm cơ chế xử lý ngoại lệ tùy chỉnh
 
-        // 其他错误交给系统处理
+        // Các lỗi khác giao cho hệ thống xử lý
         return parent::render($request, $e);
     }
 }

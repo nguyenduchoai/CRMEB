@@ -1,5 +1,5 @@
     /**
-     * {%NAME%}一对一关联
+     * Liên kết một-một {%NAME%}
      * @date {%DATE%}
      * @return \think\model\relation\HasOne
      */

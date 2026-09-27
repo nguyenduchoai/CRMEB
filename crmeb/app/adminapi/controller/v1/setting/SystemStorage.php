@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -45,7 +45,7 @@ class SystemStorage extends AuthController
     }
 
     /**
-     * 获取创建数据表单
+     * Lấy form tạo dữ liệu
      * @param $type
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -53,13 +53,13 @@ class SystemStorage extends AuthController
     public function create($type)
     {
         if (!$type) {
-            return app('json')->fail('参数错误');
+            return app('json')->fail('Tham số không hợp lệ');
         }
         return app('json')->success($this->services->getFormStorage((int)$type));
     }
 
     /**
-     * 获取配置表单
+     * Lấy form cấu hình
      * @param $type
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -70,7 +70,7 @@ class SystemStorage extends AuthController
     }
 
     /**
-     * 获取配置类型
+     * Lấy loại cấu hình
      * @return mixed
      */
     public function getConfig()
@@ -94,7 +94,7 @@ class SystemStorage extends AuthController
 
         $this->services->saveConfig((int)$type, $data);
 
-        return app('json')->success('保存成功');
+        return app('json')->success('Lưu thành công');
     }
 
     /**
@@ -104,11 +104,11 @@ class SystemStorage extends AuthController
     public function synch($type)
     {
         $this->services->synchronization((int)$type);
-        return app('json')->success('同步成功');
+        return app('json')->success('Đồng bộ thành công');
     }
 
     /**
-     * 保存类型
+     * Lưu loại
      * @param $type
      * @return mixed
      */
@@ -125,7 +125,7 @@ class SystemStorage extends AuthController
         $type = (int)$type;
         if ($type === 4) {
             if (!$data['appid'] && !sys_config('tengxun_appid')) {
-                return app('json')->fail('缺少APPID');
+                return app('json')->fail('Thiếu APPID');
             }
         }
         if (!$data['accessKey']) {
@@ -133,11 +133,11 @@ class SystemStorage extends AuthController
         }
         $this->services->saveStorage((int)$type, $data);
 
-        return app('json')->success('添加成功');
+        return app('json')->success('Thêm thành công');
     }
 
     /**
-     * 修改状态
+     * Sửa trạng thái
      * @param SystemConfigServices $services
      * @param $id
      * @return mixed
@@ -145,18 +145,18 @@ class SystemStorage extends AuthController
     public function status(SystemConfigServices $services, $id)
     {
         if (!$id) {
-            return app('json')->fail('参数错误');
+            return app('json')->fail('Tham số không hợp lệ');
         }
 
         $info = $this->services->get($id);
         $info->status = 1;
         if (!$info->domain) {
-            return app('json')->fail('请先设置空间域名');
+            return app('json')->fail('Vui lòng cài đặt tên miền không gian lưu trữ trước');
         }
 //        $services->update('upload_type', ['value' => json_encode($info->type)], 'menu_name');
         \crmeb\services\CacheService::clear();
 
-        //设置跨域规则
+        //Thiết lập quy tắc CORS
         try {
             $upload = UploadService::init($info->type);
             $res = $upload->setBucketCors($info->name, $info->region);
@@ -166,13 +166,13 @@ class SystemStorage extends AuthController
         } catch (\Throwable $e) {
         }
 
-        //修改状态
+        //Sửa trạng thái
         $this->services->transaction(function () use ($id, $info) {
 //            $this->services->update(['status' => 1, 'is_delete' => 0], ['status' => 0]);
             $this->services->update(['type' => $info->type], ['status' => 0]);
             $info->save();
         });
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
     /**
@@ -201,23 +201,23 @@ class SystemStorage extends AuthController
             ['ca', '']
         ]);
         if (!$domain) {
-            return app('json')->fail('参数错误');
+            return app('json')->fail('Tham số không hợp lệ');
         }
         if (strstr($domain, 'https://') === false && strstr($domain, 'http://') === false) {
-            return app('json')->fail('格式错误，请输入格式为：http://域名');
+            return app('json')->fail('Sai định dạng, vui lòng nhập theo định dạng: http://tên miền');
 
         }
 //        if (strstr($domain, 'https://') !== false && !$data['pri']) {
-//            return app('json')->fail('域名为HTTPS访问时，必须填写证书');
+//            return app('json')->fail('Khi tên miền truy cập bằng HTTPS, phải điền chứng chỉ');
 //        }
 
         $this->services->updateDomain($id, $domain, ['cdn' => $cdn]);
 
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
     /**
-     * 删除
+     * Xóa
      * @param $id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -227,18 +227,18 @@ class SystemStorage extends AuthController
     public function delete($id)
     {
         if (!$id) {
-            return app('json')->fail('参数错误');
+            return app('json')->fail('Tham số không hợp lệ');
         }
 
         if ($this->services->deleteStorage($id)) {
-            return app('json')->success('删除成功');
+            return app('json')->success('Xóa thành công');
         } else {
-            return app('json')->fail('删除失败');
+            return app('json')->fail('Xóa thất bại');
         }
     }
 
     /**
-     * 切换存储类型
+     * Chuyển đổi loại lưu trữ
      * @param SystemConfigServices $services
      * @param $type
      * @return mixed
@@ -247,14 +247,14 @@ class SystemStorage extends AuthController
     {
         $status = $this->services->count(['type' => $type, 'status' => 1]);
         if (!$status && $type != 1) {
-            return app('json')->success('未有正在使用的存储空间');
+            return app('json')->success('Không có không gian lưu trữ nào đang được sử dụng');
         }
         $services->update('upload_type', ['value' => json_encode($type)], 'menu_name');
         \crmeb\services\CacheService::clear();
         if ($type != 1) {
-            $msg = '切换云存储成功,请检查是否开启使用了存储空间';
+            $msg = 'Chuyển sang lưu trữ đám mây thành công, vui lòng kiểm tra đã bật sử dụng không gian lưu trữ chưa';
         } else {
-            $msg = '切换本地存储成功';
+            $msg = 'Chuyển sang lưu trữ cục bộ thành công';
         }
         return app('json')->success($msg);
     }

@@ -1,64 +1,64 @@
 <?php
-//文件签名
+//Chữ ký file
 $fileValue = '';
-//最低php版本要求
+//Yêu cầu phiên bản PHP tối thiểu
 define('PHP_EDITION', '7.1.0');
-//服务环境检测
+//Kiểm tra môi trường server
 if (function_exists('saeAutoLoader') || isset($_SERVER['HTTP_BAE_ENV_APPID'])) {
-    showHtml('对不起，当前环境不支持本系统，请使用独立服务或云主机！');
+    showHtml('Xin lỗi, môi trường hiện tại không hỗ trợ hệ thống này, vui lòng sử dụng máy chủ riêng hoặc máy chủ đám mây!');
 }
 
-define('APP_DIR', _dir_path(substr(dirname(__FILE__), 0, -15)));//项目目录
-define('SITE_DIR', _dir_path(substr(dirname(__FILE__), 0, -8)));//入口文件目录
+define('APP_DIR', _dir_path(substr(dirname(__FILE__), 0, -15)));//Thư mục project
+define('SITE_DIR', _dir_path(substr(dirname(__FILE__), 0, -8)));//Thư mục file khởi điểm (entry)
 
 if (file_exists('../install.lock')) {
-    showHtml('你已经安装过该系统，如果想重新安装，请先删除public目录下的 install.lock 文件，然后再安装。');
+    showHtml('Bạn đã cài đặt hệ thống này, nếu muốn cài đặt lại, vui lòng xóa tệp install.lock trong thư mục public trước, sau đó cài đặt lại.');
 }
 
 @set_time_limit(1000);
 
 if ('7.1.0' > phpversion()) {
-    exit('您的php版本过低，不能安装本软件，兼容php版本7.1~7.4，谢谢！');
+    exit('Phiên bản php của bạn quá thấp, không thể cài đặt phần mềm này, phiên bản php tương thích là 7.1~7.4, xin cảm ơn!');
 }
 if (phpversion() >= '8.0.0') {
-    exit('您的php版本太高，不能安装本软件，兼容php版本7.1~7.4，谢谢！');
+    exit('Phiên bản php của bạn quá cao, không thể cài đặt phần mềm này, phiên bản php tương thích là 7.1~7.4, xin cảm ơn!');
 }
 
-date_default_timezone_set('PRC');
+date_default_timezone_set('Asia/Ho_Chi_Minh');
 error_reporting(E_ALL & ~E_NOTICE);
 header('Content-Type: text/html; charset=UTF-8');
 
-//mysql数据库配置容器中获取
+//Lấy cấu hình cơ sở dữ liệu mysql từ container
 $MYSQL_HOST_IP = getenv('MYSQL_HOST_IP') ?: '127.0.0.1';
 $MYSQL_PORT = getenv('MYSQL_PORT') ?: '3306';
 $MYSQL_USER = getenv('MYSQL_USER') ?: 'root';
 $MYSQL_PASSWORD = getenv('MYSQL_PASSWORD') ?: '123456';
 $MYSQL_DATABASE = getenv('MYSQL_DATABASE') ?: 'crmeb';
-//redis配置容器中获取
+//Lấy cấu hình redis từ container
 $REDIS_HOST_IP = getenv('REDIS_HOST_IP') ?: '127.0.0.1';
 $REDIS_PORT = getenv('REDIS_PORT') ?: '6379';
 $REDIS_DATABASE = getenv('REDIS_DATABASE') ?: 0;
 $REDIS_PASSWORD = getenv('REDIS_PASSWORD') ?: '';
 
-//数据库
+//Cơ sở dữ liệu
 $sqlFile = 'crmeb.sql';
 $configFile = '.env';
 if (!file_exists(SITE_DIR . 'install/' . $sqlFile) || !file_exists(SITE_DIR . 'install/' . $configFile)) {
-    echo '缺少必要的安装文件!';
+    echo 'Thiếu tệp cài đặt cần thiết!';
     exit;
 }
-$Title = "CRMEB安装向导";
+$Title = "Trình hướng dẫn cài đặt CRMEB";
 $Powered = "Powered by CRMEB";
 $steps = array(
-    '1' => '安装许可协议',
-    '2' => '运行环境检测',
-    '3' => '安装参数设置',
-    '4' => '安装详细过程',
-    '5' => '安装完成',
+    '1' => 'Thỏa thuận cấp phép cài đặt',
+    '2' => 'Kiểm tra môi trường chạy',
+    '3' => 'Thiết lập tham số cài đặt',
+    '4' => 'Chi tiết quá trình cài đặt',
+    '5' => 'Cài đặt hoàn tất',
 );
 $step = $_GET['step'] ?? 1;
 
-//地址
+//Địa chỉ
 $scriptName = !empty($_SERVER["REQUEST_URI"]) ? $scriptName = $_SERVER["REQUEST_URI"] : $scriptName = $_SERVER["PHP_SELF"];
 $rootPath = @preg_replace("/\/(I|i)nstall\/index\.php(.*)$/", "", $scriptName);
 [$request_scheme, $request_host] = getSchemeAndHost();
@@ -70,7 +70,7 @@ switch ($step) {
 
     case '2':
         if (phpversion() < '7.1.0' || phpversion() >= '8.0.0') {
-            die('本系统需要PHP为 7.1~7.4 版本，当前PHP版本为：' . phpversion());
+            die('Hệ thống này yêu cầu PHP phiên bản 7.1~7.4, phiên bản PHP hiện tại là:' . phpversion());
         }
 
         $passOne = $passTwo = 'yes';
@@ -78,53 +78,53 @@ switch ($step) {
         $server = $_SERVER["SERVER_SOFTWARE"];
         $phpv = phpversion();
         if (ini_get('file_uploads')) {
-            $uploadSize = '<img class="yes" src="images/install/yes.png" alt="对">' . ini_get('upload_max_filesize');
+            $uploadSize = '<img class="yes" src="images/install/yes.png" alt="Đạt">' . ini_get('upload_max_filesize');
         } else {
             $passOne = 'no';
-            $uploadSize = '<img class="no" src="images/install/warring.png" alt="错">禁止上传';
+            $uploadSize = '<img class="no" src="images/install/warring.png" alt="Lỗi">Không cho phép tải lên';
         }
         if (function_exists('session_start')) {
-            $session = '<img class="yes" src="images/install/yes.png" alt="对">启用';
+            $session = '<img class="yes" src="images/install/yes.png" alt="Đạt">Bật';
         } else {
             $passOne = 'no';
-            $session = '<img class="no" src="images/install/warring.png" alt="错">关闭';
+            $session = '<img class="no" src="images/install/warring.png" alt="Lỗi">Tắt';
         }
         if (!ini_get('safe_mode')) {
-            $safe_mode = '<img class="yes" src="images/install/yes.png" alt="对">启用';
+            $safe_mode = '<img class="yes" src="images/install/yes.png" alt="Đạt">Bật';
         } else {
             $passOne = 'no';
-            $safe_mode = '<img class="no" src="images/install/warring.png" alt="错">关闭';
+            $safe_mode = '<img class="no" src="images/install/warring.png" alt="Lỗi">Tắt';
         }
         $tmp = function_exists('gd_info') ? gd_info() : array();
         if (!empty($tmp['GD Version'])) {
-            $gd = '<img class="yes" src="images/install/yes.png" alt="对">' . $tmp['GD Version'];
+            $gd = '<img class="yes" src="images/install/yes.png" alt="Đạt">' . $tmp['GD Version'];
         } else {
             $passOne = 'no';
-            $gd = '<img class="no" src="images/install/warring.png" alt="错">未安装';
+            $gd = '<img class="no" src="images/install/warring.png" alt="Lỗi">Chưa cài đặt';
         }
         if (function_exists('mysqli_connect')) {
-            $mysql = '<img class="yes" src="images/install/yes.png" alt="对">已安装';
+            $mysql = '<img class="yes" src="images/install/yes.png" alt="Đạt">Đã cài đặt';
         } else {
             $passOne = 'no';
-            $mysql = '<img class="no" src="images/install/warring.png" alt="错">请安装mysqli扩展';
+            $mysql = '<img class="no" src="images/install/warring.png" alt="Lỗi">Vui lòng cài đặt extension mysqli';
         }
         if (function_exists('curl_init')) {
-            $curl = '<img class="yes" src="images/install/yes.png" alt="对">启用';
+            $curl = '<img class="yes" src="images/install/yes.png" alt="Đạt">Bật';
         } else {
             $passOne = 'no';
-            $curl = '<img class="no" src="images/install/warring.png" alt="错">关闭';
+            $curl = '<img class="no" src="images/install/warring.png" alt="Lỗi">Tắt';
         }
         if (function_exists('bcadd')) {
-            $bcmath = '<img class="yes" src="images/install/yes.png" alt="对">启用';
+            $bcmath = '<img class="yes" src="images/install/yes.png" alt="Đạt">Bật';
         } else {
             $passOne = 'no';
-            $bcmath = '<img class="no" src="images/install/warring.png" alt="错">关闭';
+            $bcmath = '<img class="no" src="images/install/warring.png" alt="Lỗi">Tắt';
         }
         if (function_exists('openssl_encrypt')) {
-            $openssl = '<img class="yes" src="images/install/yes.png" alt="对">启用';
+            $openssl = '<img class="yes" src="images/install/yes.png" alt="Đạt">Bật';
         } else {
             $passOne = 'no';
-            $openssl = '<img class="no" src="images/install/warring.png" alt="错">关闭';
+            $openssl = '<img class="no" src="images/install/warring.png" alt="Lỗi">Tắt';
         }
 
         $folder = array(
@@ -166,48 +166,48 @@ switch ($step) {
             @mysqli_real_connect($conn, $dbHost, $_POST['dbUser'], $_POST['dbPwd'], NULL, $_POST['dbport']);
             if ($error = mysqli_connect_errno($conn)) {
                 if ($error == 2002) {
-                    die(json_encode(2002));//地址或端口错误
+                    die(json_encode(2002));//Địa chỉ hoặc cổng (port) không đúng
                 } else if ($error == 1045) {
-                    die(json_encode(1045));//用户名或密码错误
+                    die(json_encode(1045));//Tên đăng nhập hoặc mật khẩu không đúng
                 } else {
-                    die(json_encode(-1));//链接失败
+                    die(json_encode(-1));//Kết nối thất bại
                 }
             } else {
                 if (mysqli_get_server_info($conn) < 5.1) {
-                    die(json_encode(-5));//版本过低
+                    die(json_encode(-5));//Phiên bản quá thấp
                 }
                 $result = mysqli_query($conn, "SELECT @@global.sql_mode");
                 $result = $result->fetch_array();
                 $version = mysqli_get_server_info($conn);
                 if ($version >= 5.7) {
                     if (strstr($result[0], 'STRICT_TRANS_TABLES') || strstr($result[0], 'STRICT_ALL_TABLES') || strstr($result[0], 'TRADITIONAL') || strstr($result[0], 'ANSI'))
-                        exit(json_encode(-2));//数据库配置需要修改
+                        exit(json_encode(-2));//Cần chỉnh sửa cấu hình cơ sở dữ liệu
                 }
                 $result = mysqli_query($conn, "select count(table_name) as c from information_schema.`TABLES` where table_schema='$dbName'");
                 $result = $result->fetch_array();
                 if ($result['c'] > 0) {
                     mysqli_close($conn);
-                    exit(json_encode(-3));//数据库存在
+                    exit(json_encode(-3));//Cơ sở dữ liệu đã tồn tại
                 } else {
                     if (!mysqli_select_db($conn, $dbName)) {
-                        //创建数据时同时设置编码
+                        //Thiết lập encoding cùng lúc khi tạo dữ liệu
                         if (!mysqli_query($conn, "CREATE DATABASE IF NOT EXISTS `" . $dbName . "` DEFAULT CHARACTER SET utf8;")) {
-                            exit(json_encode(-4));//无权限创建数据库
+                            exit(json_encode(-4));//Không có quyền tạo cơ sở dữ liệu
                         } else {
                             mysqli_query($conn, "DROP DATABASE `" . $dbName . "` ;");
                             mysqli_close($conn);
-                            exit(json_encode(1));//数据库配置成功
+                            exit(json_encode(1));//Cấu hình cơ sở dữ liệu thành công
                         }
                     } else {
                         mysqli_close($conn);
-                        exit(json_encode(1));//数据库配置成功
+                        exit(json_encode(1));//Cấu hình cơ sở dữ liệu thành công
                     }
                 }
             }
         }
         if ($_GET['redisdbpwd']) {
 
-            //redis数据库信息
+            //Thông tin cơ sở dữ liệu redis
             $rbhost = $_POST['rbhost'] ?? '127.0.0.1';
             $rbport = $_POST['rbport'] ?? 6379;
             $rbpw = $_POST['rbpw'] ?? '';
@@ -259,42 +259,42 @@ switch ($step) {
             $password = trim($_POST['manager_pwd']) ?: 'crmeb.com';
 
             if (!function_exists('mysqli_connect')) {
-                $arr['msg'] = "请安装 mysqli 扩展!";
+                $arr['msg'] = "Vui lòng cài đặt extension mysqli!";
                 exit(json_encode($arr));
             }
             $conn = @mysqli_connect($dbHost, $dbUser, $dbPwd, NULL, $_POST['dbport']);
             if (mysqli_connect_errno($conn)) {
-                $arr['msg'] = "连接数据库失败!" . mysqli_connect_error($conn);
+                $arr['msg'] = "Kết nối cơ sở dữ liệu thất bại!" . mysqli_connect_error($conn);
                 exit(json_encode($arr));
             }
             mysqli_set_charset($conn, "utf8"); //,character_set_client=binary,sql_mode='';
             $version = mysqli_get_server_info($conn);
             if ($version < 5.1) {
-                $arr['msg'] = '数据库版本太低! 必须5.1以上';
+                $arr['msg'] = 'Phiên bản cơ sở dữ liệu quá thấp! Phải từ 5.1 trở lên';
                 exit(json_encode($arr));
             }
 
             if (!mysqli_select_db($conn, $dbName)) {
-                //创建数据时同时设置编码
+                //Thiết lập encoding cùng lúc khi tạo dữ liệu
                 if (!mysqli_query($conn, "CREATE DATABASE IF NOT EXISTS `" . $dbName . "` DEFAULT CHARACTER SET utf8;")) {
-                    $arr['msg'] = '数据库 ' . $dbName . ' 不存在，也没权限创建新的数据库！';
+                    $arr['msg'] = 'Cơ sở dữ liệu ' . $dbName . ' không tồn tại và cũng không có quyền tạo cơ sở dữ liệu mới!';
                     exit(json_encode($arr));
                 }
                 if ($n == -1) {
                     $arr['n'] = 0;
-                    $arr['msg'] = "成功创建数据库:{$dbName}";
+                    $arr['msg'] = "Tạo cơ sở dữ liệu thành công:{$dbName}";
                     exit(json_encode($arr));
                 }
                 mysqli_select_db($conn, $dbName);
             }
 
-            //读取数据文件
+            //Đọc file dữ liệu
             $sqldata = file_get_contents(SITE_DIR . 'install/' . $sqlFile);
             $sqlFormat = sql_split($sqldata, $dbPrefix);
-            //创建写入sql数据库文件到库中 结束
+            //Tạo và ghi file cơ sở dữ liệu sql vào database - kết thúc
 
             /**
-             * 执行SQL语句
+             * Thực thi câu lệnh SQL
              */
             $counts = count($sqlFormat);
             for ($i = $n; $i < $counts; $i++) {
@@ -302,13 +302,13 @@ switch ($step) {
                 if (strstr($sql, 'CREATE TABLE')) {
                     preg_match('/CREATE TABLE (IF NOT EXISTS)? `eb_([^ ]*)`/is', $sql, $matches);
                     mysqli_query($conn, "DROP TABLE IF EXISTS `$matches[2]`");
-                    $sql = str_replace('`eb_', '`' . $dbPrefix, $sql);//替换表前缀
+                    $sql = str_replace('`eb_', '`' . $dbPrefix, $sql);//Thay thế tiền tố bảng (table prefix)
                     $ret = mysqli_query($conn, $sql);
                     if ($ret) {
-                        $message = '创建数据表[' . $dbPrefix . $matches[2] . ']完成!';
+                        $message = 'Tạo bảng dữ liệu [' . $dbPrefix . $matches[2] . '] hoàn tất!';
                     } else {
                         $err = mysqli_error($conn);
-                        $message = '创建数据表[' . $dbPrefix . $matches[2] . ']失败!失败原因：' . $err;
+                        $message = 'Tạo bảng dữ liệu [' . $dbPrefix . $matches[2] . '] thất bại! Lý do:' . $err;
                     }
                     $i++;
                     $arr = array('n' => $i, 'count' => $counts, 'msg' => $message, 'time' => date('Y-m-d H:i:s'));
@@ -316,9 +316,9 @@ switch ($step) {
                 } else {
                     if (trim($sql) == '')
                         continue;
-                    $sql = str_replace('`eb_', '`' . $dbPrefix, $sql);//替换表前缀
-                    $sql = str_replace('http://demo.crmeb.com', $request_scheme . '://' . $request_host, $sql);//替换图片域名
-                    $sql = str_replace('http:\\\\/\\\\/demo.crmeb.com', $request_scheme . ':\\\\/\\\\/' . $request_host, $sql);//替换图片域名
+                    $sql = str_replace('`eb_', '`' . $dbPrefix, $sql);//Thay thế tiền tố bảng (table prefix)
+                    $sql = str_replace('http://demo.crmeb.com', $request_scheme . '://' . $request_host, $sql);//Thay thế domain ảnh
+                    $sql = str_replace('http:\\\\/\\\\/demo.crmeb.com', $request_scheme . ':\\\\/\\\\/' . $request_host, $sql);//Thay thế domain ảnh
                     $ret = mysqli_query($conn, $sql);
                     $message = '';
                     $arr = array('n' => $i, 'count' => $counts, 'msg' => $message, 'time' => date('Y-m-d H:i:s'));
@@ -326,10 +326,10 @@ switch ($step) {
             }
 
 
-            // 清空测试数据
+            // Xóa sạch dữ liệu test
             if (!$_POST['demo']) {
                 $result = mysqli_query($conn, "show tables");
-                $tables = mysqli_fetch_all($result);//参数MYSQL_ASSOC、MYSQLI_NUM、MYSQLI_BOTH规定产生数组类型
+                $tables = mysqli_fetch_all($result);//Tham số MYSQL_ASSOC, MYSQLI_NUM, MYSQLI_BOTH quy định loại mảng được tạo ra
                 $bl_table = array(
                     'eb_agent_level',
                     'eb_agreement',
@@ -374,7 +374,7 @@ switch ($step) {
 
             $unique = uniqid();
 
-            //读取配置文件，并替换真实配置数据1
+            //Đọc file cấu hình, và thay thế bằng dữ liệu cấu hình thực tế 1
             $strConfig = file_get_contents(SITE_DIR . 'install/' . $configFile);
             $strConfig = str_replace('#DB_HOST#', $dbHost, $strConfig);
             $strConfig = str_replace('#DB_NAME#', $dbName, $strConfig);
@@ -384,13 +384,13 @@ switch ($step) {
             $strConfig = str_replace('#DB_PREFIX#', $dbPrefix, $strConfig);
             $strConfig = str_replace('#DB_CHARSET#', 'utf8', $strConfig);
 
-            //缓存配置
+            //Cấu hình bộ nhớ đệm
             $cachetype = $_POST['cache_type'] == 0 ? 'file' : 'redis';
             $strConfig = str_replace('#CACHE_TYPE#', $cachetype, $strConfig);
             $strConfig = str_replace('#CACHE_PREFIX#', 'cache_' . $unique . ':', $strConfig);
             $strConfig = str_replace('#CACHE_TAG_PREFIX#', 'cache_tag_' . $unique . ':', $strConfig);
 
-            //redis数据库信息
+            //Thông tin cơ sở dữ liệu redis
             $rbhost = $_POST['rbhost'] ?? '127.0.0.1';
             $rbport = $_POST['rbport'] ?? '6379';
             $rbpw = $_POST['rbpw'] ?? '';
@@ -400,13 +400,13 @@ switch ($step) {
             $strConfig = str_replace('#RB_PWD#', $rbpw, $strConfig);
             $strConfig = str_replace('#RB_SELECT#', $rbselect, $strConfig);
 
-            //需改队列名称
+            //Cần đổi tên hàng đợi
             $strConfig = str_replace('#QUEUE_NAME#', $unique, $strConfig);
 
-            @chmod(APP_DIR . '/.env', 0777); //数据库配置文件的地址
-            @file_put_contents(APP_DIR . '/.env', $strConfig); //数据库配置文件的地址
+            @chmod(APP_DIR . '/.env', 0777); //Đường dẫn file cấu hình cơ sở dữ liệu
+            @file_put_contents(APP_DIR . '/.env', $strConfig); //Đường dẫn file cấu hình cơ sở dữ liệu
 
-            //插入管理员表字段tp_admin表
+            //Chèn field vào bảng quản trị viên tp_admin
             $time = time();
             $ip = get_client_ip();
             $ip = empty($ip) ? "0.0.0.0" : $ip;
@@ -420,7 +420,7 @@ switch ($step) {
                 $site_url = '\'"' . $request_scheme . '://' . $request_host . '"\'';
                 $res2 = mysqli_query($conn, 'UPDATE `' . $dbPrefix . 'system_config` SET `value`=' . $site_url . ' WHERE `menu_name`="site_url"');
             }
-            $arr = array('n' => 999999, 'count' => $counts, 'msg' => '安装完成', 'time' => date('Y-m-d H:i:s'));
+            $arr = array('n' => 999999, 'count' => $counts, 'msg' => 'Cài đặt hoàn tất', 'time' => date('Y-m-d H:i:s'));
             exit(json_encode($arr));
 
         }
@@ -439,7 +439,7 @@ switch ($step) {
         @touch('../install.lock');
         exit();
 }
-//读取版本号
+//Đọc số phiên bản
 function getversion()
 {
     $version_arr = [];
@@ -458,7 +458,7 @@ function getUid()
     return $config['stores']['sms']['template_id']['ADMIN_ORDER_UID'] ?? 0;
 }
 
-//写入安装信息
+//Ghi thông tin cài đặt
 function installlog()
 {
     $mt_rand_str = sp_random_string(6);
@@ -466,7 +466,7 @@ function installlog()
     @file_put_contents(APP_DIR . '.constant', $str_constant);
 }
 
-//判断权限
+//Kiểm tra quyền
 function testwrite($d)
 {
     if (is_file($d)) {
@@ -527,7 +527,7 @@ function _dir_path($path)
     return $path;
 }
 
-// 获取客户端IP地址
+// Lấy địa chỉ IP client
 function get_client_ip()
 {
     static $ip = NULL;
@@ -544,7 +544,7 @@ function get_client_ip()
     } elseif (isset($_SERVER['REMOTE_ADDR'])) {
         $ip = $_SERVER['REMOTE_ADDR'];
     }
-    // IP地址合法验证
+    // Kiểm tra tính hợp lệ của địa chỉ IP
     $ip = (false !== ip2long($ip)) ? $ip : '0.0.0.0';
     return $ip;
 }
@@ -594,7 +594,7 @@ function sp_random_string($len = 8)
         "3", "4", "5", "6", "7", "8", "9"
     );
     $charsLen = count($chars) - 1;
-    shuffle($chars);    // 将数组打乱
+    shuffle($chars);    // Xáo trộn mảng (shuffle)
     $output = "";
     for ($i = 0; $i < $len; $i++) {
         $output .= $chars[mt_rand(0, $charsLen)];
@@ -602,12 +602,12 @@ function sp_random_string($len = 8)
     return $output;
 }
 
-// 递归删除文件夹
+// Xóa thư mục theo kiểu đệ quy
 function delFile($dir, $file_type = '')
 {
     if (is_dir($dir)) {
         $files = scandir($dir);
-        //打开目录 //列出目录中的所有文件并去掉 . 和 ..
+        //Mở thư mục // liệt kê toàn bộ file trong thư mục và bỏ qua . và ..
         foreach ($files as $filename) {
             if ($filename != '.' && $filename != '..') {
                 if (!is_dir($dir . '/' . $filename)) {
@@ -615,12 +615,12 @@ function delFile($dir, $file_type = '')
                         unlink($dir . '/' . $filename);
                     } else {
                         if (is_array($file_type)) {
-                            //正则匹配指定文件
+                            //Dùng regex khớp file chỉ định
                             if (preg_match($file_type[0], $filename)) {
                                 unlink($dir . '/' . $filename);
                             }
                         } else {
-                            //指定包含某些字符串的文件
+                            //Chỉ định file có chứa một số chuỗi nào đó
                             if (false != stristr($filename, $file_type)) {
                                 unlink($dir . '/' . $filename);
                             }
@@ -637,7 +637,7 @@ function delFile($dir, $file_type = '')
     }
 }
 
-//错误提示方法
+//Phương thức thông báo lỗi
 function showHtml($str)
 {
     echo '
@@ -653,7 +653,7 @@ function showHtml($str)
 }
 
 /**
- * 计算签名
+ * Tính chữ ký
  * @param string $path
  * @throws Exception
  */
@@ -677,28 +677,28 @@ function getFileSignature(string $path)
 
 function getSchemeAndHost()
 {
-    // 检查反向代理设置的头信息
+    // Kiểm tra header do reverse proxy thiết lập
     $request_scheme = $_SERVER['HTTP_X_FORWARDED_PROTO'] ?? 'http';
     $request_host = $_SERVER['HTTP_X_FORWARDED_HOST'] ?? '';
 
-    // 如果没有反向代理头信息，则使用标准的 HTTP 头信息
+    // Nếu không có header reverse proxy thì dùng header HTTP chuẩn
     if (empty($request_host)) {
         $request_scheme = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
         $request_host = $_SERVER['HTTP_HOST'] ?? '';
     }
 
-    // 如果仍然没有获取到域名，则使用服务器变量作为备选
+    // Nếu vẫn không lấy được domain thì dùng biến server làm phương án dự phòng
     if (empty($request_host)) {
         $request_host = $_SERVER['SERVER_NAME'] ?? 'localhost';
 
-        // 如果使用了端口号（非标准端口），则添加端口号
+        // Nếu có dùng số cổng (không phải cổng chuẩn) thì thêm số cổng vào
         $port = $_SERVER['SERVER_PORT'] ?? '';
         if (($request_scheme === 'https' && $port !== '443') || ($request_scheme === 'http' && $port !== '80')) {
             $request_host .= ':' . $port;
         }
     }
 
-    // 构建并返回scheme和host
+    // Xây dựng và trả về scheme và host
     return [$request_scheme, $request_host];
 }
 

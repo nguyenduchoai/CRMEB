@@ -17,37 +17,37 @@ export default {
       tabs: [
         {
           type: '',
-          label: '全部订单',
+          label: 'Tất cả đơn hàng',
           value: Number(this.tablists?.all) || 0,
           max: 999999,
         },
         {
           type: '1',
-          label: '普通订单',
+          label: 'Đơn hàng thường',
           value: Number(this.tablists?.general) || 0,
           max: 999999,
         },
         {
           type: '2',
-          label: '拼团订单',
+          label: 'Đơn mua chung',
           value: Number(this.tablists?.pink) || 0,
           max: 999999,
         },
         {
           type: '3',
-          label: '秒杀订单',
+          label: 'Đơn flash sale',
           value: Number(this.tablists?.seckill) || 0,
           max: 999999,
         },
         {
           type: '4',
-          label: '砍价订单',
+          label: 'Đơn săn giảm giá',
           value: Number(this.tablists?.bargain) || 0,
           max: 999999,
         },
         {
           type: '5',
-          label: '预售订单',
+          label: 'Đơn đặt trước',
           value: Number(this.tablists?.advance) || 0,
           max: 999999,
         },

@@ -32,26 +32,26 @@
                     <div class="layui-progress-bar layui-bg-blue" lay-percent="100%"></div>
                 </div>
             </div>
-            <div class="layui-card-header">升级系统</div>
+            <div class="layui-card-header">Nâng cấp hệ thống</div>
             <div class="layui-card-body">
                 <div class="layui-row">
-                    <p style="font-size: 18px;">版本更迭: <span style="color: red">{$version_now} - {$version_new}</span></p>
+                    <p style="font-size: 18px;">Cập nhật phiên bản: <span style="color: red">{$version_now} - {$version_new}</span></p>
                     <div class="layui-form-item" style="margin-top: 10px">
-                        <label class="layui-form-label" style="font-size: 18px;padding-left: 0;">表前缀</label>
+                        <label class="layui-form-label" style="font-size: 18px;padding-left: 0;">Tiền tố bảng</label>
                         <div class="layui-input-block">
                             <input type="text" style="width: 10%" v-model="prefix" name="title" lay-verify="title"
-                                   autocomplete="off" placeholder="请输入表前缀" class="layui-input">
+                                   autocomplete="off" placeholder="Vui lòng nhập tiền tố bảng" class="layui-input">
                         </div>
                     </div>
                 </div>
                 <div class="centered">
                     <button type="button" class="layui-btn layui-btn-normal layui-btn-radius" v-if="isUpgrade && executeIng">
-                        正在升级中
+                        Đang nâng cấp
                     </button>
                     <button type="button" class="layui-btn layui-btn-normal layui-btn-radius" v-if="isUpgrade && !executeIng"
-                            @click="startUpgrade">立即升级
+                            @click="startUpgrade">Nâng cấp ngay
                     </button>
-                    <button type="button" class="layui-btn layui-btn-normal layui-btn-radius" v-else-if="isUpgrade == false">无需升级</button>
+                    <button type="button" class="layui-btn layui-btn-normal layui-btn-radius" v-else-if="isUpgrade == false">Không cần nâng cấp</button>
                 </div>
             </div>
             <div class="layui-card-body">
@@ -59,20 +59,20 @@
                     <table class="layui-table">
                         <thead>
                         <tr>
-                            <th>表名</th>
-                            <th>执行状态</th>
-                            <th width="40%">错误原因</th>
-                            <th>执行时间</th>
-                            <th width="12%">操作</th>
+                            <th>Tên bảng</th>
+                            <th>Trạng thái thực thi</th>
+                            <th width="40%">Nguyên nhân lỗi</th>
+                            <th>Thời gian thực thi</th>
+                            <th width="12%">Thao tác</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr v-for="(item,index) in upgradeData">
                             <td>{{item.table}}</td>
-                            <td>{{item.status ? '执行成功':'执行失败'}}</td>
+                            <td>{{item.status ? 'Thực thi thành công':'Thực thi thất bại'}}</td>
                             <td>{{item.error}}</td>
                             <td>{{item.add_time}}</td>
-                            <td>无操作</td>
+                            <td>Không có thao tác</td>
                         </tr>
                         </tbody>
                     </table>
@@ -100,7 +100,7 @@
             startUpgrade: function () {
                 var that = this;
                 if (!that.prefix) {
-                    return that.showMsg('请填写表前缀');
+                    return that.showMsg('Vui lòng điền tiền tố bảng');
                 }
                 this.requestGet('upgrade/run', {
                     sleep: this.sleep,
@@ -121,7 +121,7 @@
                         that.isUpgrade = false;
                         that.nextAction = true;
                         that.executeIng = false;
-                        return that.showMsg('执行完毕');
+                        return that.showMsg('Đã thực thi xong');
                     }
                 }).catch(function (res) {
                     return that.showMsg(res.msg);

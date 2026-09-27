@@ -3,7 +3,7 @@
     <div class="i-layout-page-header header_top">
       <div class="i-layout-page-header fl_header">
         <router-link :to="{ path: $routeProStr + '/setting/sms/sms_config/index' }"
-          ><el-button size="small" type="text">返回</el-button></router-link
+          ><el-button size="small" type="text">Quay lại</el-button></router-link
         >
         <el-divider direction="vertical"></el-divider>
         <span class="ivu-page-header-title mr20" style="padding: 0">{{ $route.meta.title }}</span>
@@ -19,37 +19,37 @@
       >
         <el-row :gutter="24" v-if="$route.path === $routeProStr + '/setting/sms/sms_template_apply/index'">
           <!--                    <el-col v-bind="grid">-->
-          <!--                        <el-form-item label="模板类型：">-->
-          <!--                            <el-select v-model="levelFrom.type" placeholder="请选择" clearable  @change="userSearchs">-->
-          <!--                                <el-option value="1">验证码</el-option>-->
-          <!--                                <el-option value="2">通知</el-option>-->
-          <!--                                <el-option value="3">推广</el-option>-->
+          <!--                        <el-form-item label="Loại mẫu:">-->
+          <!--                            <el-select v-model="levelFrom.type" placeholder="Vui lòng chọn" clearable  @change="userSearchs">-->
+          <!--                                <el-option value="1">Mã xác thực</el-option>-->
+          <!--                                <el-option value="2">Thông báo</el-option>-->
+          <!--                                <el-option value="3">Quảng bá</el-option>-->
           <!--                            </el-select>-->
           <!--                        </el-form-item>-->
           <!--                    </el-col>-->
           <!--                    <el-col v-bind="grid">-->
-          <!--                        <el-form-item label="模板状态：">-->
-          <!--                            <el-select v-model="levelFrom.status" placeholder="请选择" clearable  @change="userSearchs">-->
-          <!--                                <el-option value="1">可用</el-option>-->
-          <!--                                <el-option value="0">不可用</el-option>-->
+          <!--                        <el-form-item label="Trạng thái mẫu:">-->
+          <!--                            <el-select v-model="levelFrom.status" placeholder="Vui lòng chọn" clearable  @change="userSearchs">-->
+          <!--                                <el-option value="1">Khả dụng</el-option>-->
+          <!--                                <el-option value="0">Không khả dụng</el-option>-->
           <!--                            </el-select>-->
           <!--                        </el-form-item>-->
           <!--                    </el-col>-->
           <!--                    <el-col v-bind="grid">-->
-          <!--                        <el-form-item label="模板名称：" >-->
-          <!--                            <el-input search enter-button  v-model="levelFrom.title" placeholder="请输入模板名称" @on-search="userSearchs"/>-->
+          <!--                        <el-form-item label="Tên mẫu:" >-->
+          <!--                            <el-input search enter-button  v-model="levelFrom.title" placeholder="Vui lòng nhập tên mẫu" @on-search="userSearchs"/>-->
           <!--                        </el-form-item>-->
           <!--                    </el-col>-->
           <el-col :span="24">
-            <el-button type="primary" v-db-click @click="add">申请模板</el-button>
+            <el-button type="primary" v-db-click @click="add">Đăng ký mẫu</el-button>
           </el-col>
         </el-row>
         <el-row :gutter="24" v-else>
           <el-col v-bind="grid">
-            <el-form-item label="是否拥有：">
-              <el-select v-model="levelFrom.is_have" placeholder="请选择" clearable @change="userSearchs">
-                <el-option value="1" label="有"></el-option>
-                <el-option value="0" label="没有"></el-option>
+            <el-form-item label="Đã sở hữu:">
+              <el-select v-model="levelFrom.is_have" placeholder="Vui lòng chọn" clearable @change="userSearchs">
+                <el-option value="1" label="Có"></el-option>
+                <el-option value="0" label="Không"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -60,8 +60,8 @@
         ref="table"
         class="mt14"
         v-loading="loading"
-        no-userFrom-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        no-userFrom-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
       >
         <el-table-column :label="item.title" :min-width="item.minWidth" v-for="(item, index) in columns" :key="index">
           <template slot-scope="scope">
@@ -71,16 +71,16 @@
               </div>
             </template>
             <template v-else-if="item.slot === 'status'">
-              <span v-show="scope.row.status === 1">可用</span>
-              <span v-show="scope.row.status === 0">不可用</span>
+              <span v-show="scope.row.status === 1">Khả dụng</span>
+              <span v-show="scope.row.status === 0">Không khả dụng</span>
             </template>
             <template
               v-else-if="
                 item.slot === 'is_have' && $route.path === $routeProStr + '/setting/sms/sms_template_apply/commons'
               "
             >
-              <span v-show="scope.row.status === 1">有</span>
-              <span v-show="scope.row.status === 0">没有</span>
+              <span v-show="scope.row.status === 1">Có</span>
+              <span v-show="scope.row.status === 0">Không</span>
             </template>
           </template>
         </el-table-column>
@@ -96,7 +96,7 @@
       </div>
     </el-card>
 
-    <!-- 新建表单-->
+    <!-- Tạo biểu mẫu mới-->
     <edit-from ref="edits" :FromData="FromData" @submitFail="submitFail"></edit-from>
   </div>
 </template>
@@ -161,14 +161,14 @@ export default {
     },
   },
   methods: {
-    // 查看是否登录
+    // Kiểm tra đã đăng nhập chưa
     onIsLogin() {
       this.spinShow = true;
       isLoginApi()
         .then(async (res) => {
           let data = res.data;
           if (!data.status) {
-            this.$message.warning('请先登录');
+            this.$message.warning('Vui lòng đăng nhập trước');
             this.$router.push(this.$routeProStr + '/setting/sms/sms_config/index?url=' + this.$route.path);
           } else {
             this.getList();
@@ -178,7 +178,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 等级列表
+    // Danh sách hạng
     getList() {
       this.loading = true;
       this.levelFrom.status = this.levelFrom.status || '';
@@ -201,27 +201,27 @@ export default {
           minWidth: 80,
         },
         {
-          title: '模板ID',
+          title: 'ID mẫu',
           key: 'templateid',
           minWidth: 110,
         },
         {
-          title: '模板名称',
+          title: 'Tên mẫu',
           key: 'title',
           minWidth: 150,
         },
         {
-          title: '模板内容',
+          title: 'Nội dung mẫu',
           key: 'content',
           minWidth: 550,
         },
         {
-          title: '模板类型',
+          title: 'Loại mẫu',
           key: 'type',
           minWidth: 100,
         },
         {
-          title: '模板状态',
+          title: 'Trạng thái mẫu',
           slot: 'status',
           minWidth: 100,
         },
@@ -231,7 +231,7 @@ export default {
           .slice(0, 6)
           .concat([
             {
-              title: '是否拥有',
+              title: 'Đã sở hữu',
               slot: 'is_have',
               minWidth: 110,
             },
@@ -251,7 +251,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 添加
+    // Thêm
     add() {
       tempCreateApi()
         .then(async (res) => {
@@ -262,12 +262,12 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 表格搜索
+    // Tìm kiếm bảng
     userSearchs() {
       this.levelFrom.page = 1;
       this.getList();
     },
-    // 修改成功
+    // Sửa thành công
     submitFail() {
       this.getList();
     },

@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -11,7 +11,7 @@
 import request from '@/libs/request';
 
 /**
- * @description 资金监控 -- 筛选类型
+ * @description Giám sát dòng tiền -- Loại lọc
  */
 export function billTypeApi() {
   return request({
@@ -21,8 +21,8 @@ export function billTypeApi() {
 }
 
 /**
- * @description 资金监控 -- 列表
- * @param {Object} param data {Object} 传值
+ * @description Giám sát dòng tiền -- Danh sách
+ * @param {Object} param data {Object} Truyền giá trị
  */
 export function billListApi(data) {
   return request({
@@ -33,8 +33,8 @@ export function billListApi(data) {
 }
 
 /**
- * @description 佣金记录 -- 列表
- * @param {Object} param data {Object} 传值
+ * @description Lịch sử hoa hồng -- Danh sách
+ * @param {Object} param data {Object} Truyền giá trị
  */
 export function commissionListApi(data) {
   return request({
@@ -45,8 +45,8 @@ export function commissionListApi(data) {
 }
 
 /**
- * @description 佣金记录 -- 详情
- * @param {Number} param id {Number} 佣金记录ID
+ * @description Lịch sử hoa hồng -- Chi tiết
+ * @param {Number} param id {Number} ID lịch sử hoa hồng
  */
 export function commissionDetailApi(id) {
   return request({
@@ -56,8 +56,8 @@ export function commissionDetailApi(id) {
 }
 
 /**
- * @description 佣金记录 -- 个人提现列表
- * @param {Number} param id {Number} 佣金记录 用户ID
+ * @description Lịch sử hoa hồng -- Danh sách rút tiền cá nhân
+ * @param {Number} param id {Number} Lịch sử hoa hồng, ID người dùng
  */
 export function extractlistApi(id, data) {
   return request({
@@ -68,8 +68,8 @@ export function extractlistApi(id, data) {
 }
 
 /**
- * @description 提现申请 -- 列表
- * @param {Object} param data {Object} 提现申请传值
+ * @description Yêu cầu rút tiền -- Danh sách
+ * @param {Object} param data {Object} Truyền giá trị yêu cầu rút tiền
  */
 export function cashListApi(data) {
   return request({
@@ -80,8 +80,8 @@ export function cashListApi(data) {
 }
 
 /**
- * @description 提现申请 -- 编辑表单
- * @param {Number} param id {Number} 提现申请id
+ * @description Yêu cầu rút tiền -- Form sửa
+ * @param {Number} param id {Number} ID yêu cầu rút tiền
  */
 export function cashEditApi(id) {
   return request({
@@ -91,8 +91,8 @@ export function cashEditApi(id) {
 }
 
 /**
- * @description 提现申请 -- 拒绝申请
- * @param {Number} param id {Number} 提现申请id
+ * @description Yêu cầu rút tiền -- Từ chối yêu cầu
+ * @param {Number} param id {Number} ID yêu cầu rút tiền
  */
 export function refuseApi(id, data) {
   return request({
@@ -103,8 +103,8 @@ export function refuseApi(id, data) {
 }
 
 /**
- * @description 提现申请 -- 通过申请
- * @param {Number} param id {Number} 提现申请id
+ * @description Yêu cầu rút tiền -- Duyệt yêu cầu
+ * @param {Number} param id {Number} ID yêu cầu rút tiền
  */
 export function adoptApi(id, data) {
   return request({
@@ -115,8 +115,8 @@ export function adoptApi(id, data) {
 }
 
 /**
- * @description 充值记录 -- 列表
- * @param {Object} param data {Object} 充值记录传值
+ * @description Lịch sử nạp tiền -- Danh sách
+ * @param {Object} param data {Object} Truyền giá trị lịch sử nạp tiền
  */
 export function rechargelistApi(data) {
   return request({
@@ -127,8 +127,8 @@ export function rechargelistApi(data) {
 }
 
 /**
- * @description 充值记录 -- 用户充值数据
- * @param {Object} param data {Object} 用户充值数据传值
+ * @description Lịch sử nạp tiền -- Dữ liệu nạp tiền của người dùng
+ * @param {Object} param data {Object} Truyền giá trị dữ liệu nạp tiền người dùng
  */
 export function userRechargeApi(data) {
   return request({
@@ -139,8 +139,8 @@ export function userRechargeApi(data) {
 }
 
 /**
- * @description 充值记录 -- 退款表单
- * @param {Number} param data {Number} 充值记录id
+ * @description Lịch sử nạp tiền -- Form hoàn tiền
+ * @param {Number} param data {Number} ID lịch sử nạp tiền
  */
 export function refundEditApi(id) {
   return request({
@@ -150,8 +150,8 @@ export function refundEditApi(id) {
 }
 
 /**
- * @description 财务记录 -- 用户资金导出
- * @param {Number} param data {Number} 请求参数data
+ * @description Ghi chép tài chính -- Xuất dữ liệu tiền của người dùng
+ * @param {Number} param data {Number} Tham số request data
  */
 export function userFinanceApi(data) {
   return request({
@@ -162,8 +162,8 @@ export function userFinanceApi(data) {
 }
 
 /**
- * @description 佣金记录 -- 用户佣金导出
- * @param {Number} param data {Number} 请求参数data
+ * @description Lịch sử hoa hồng -- Xuất hoa hồng người dùng
+ * @param {Number} param data {Number} Tham số request data
  */
 export function userCommissionApi(data) {
   return request({
@@ -174,8 +174,8 @@ export function userCommissionApi(data) {
 }
 
 /**
- * @description 用户充值记录 -- 用户充值记录导出
- * @param {Number} param data {Number} 请求参数data
+ * @description Lịch sử nạp tiền người dùng -- Xuất lịch sử nạp tiền người dùng
+ * @param {Number} param data {Number} Tham số request data
  */
 export function exportUserRechargeApi(data) {
   return request({
@@ -186,8 +186,8 @@ export function exportUserRechargeApi(data) {
 }
 
 /**
- * @description 财务管理 -- 资金流水统计
- * @param {Number} param data {Number} 请求参数data
+ * @description Quản lý tài chính -- Thống kê dòng tiền
+ * @param {Number} param data {Number} Tham số request data
  */
 export function getFlowList(data) {
   return request({
@@ -197,8 +197,8 @@ export function getFlowList(data) {
   });
 }
 /**
- * @description 资金流水 -- 备注
- * @param {Number} param id {Number} 提现申请id
+ * @description Dòng tiền -- Ghi chú
+ * @param {Number} param id {Number} ID yêu cầu rút tiền
  */
 export function setMarks(id, data) {
   return request({
@@ -208,8 +208,8 @@ export function setMarks(id, data) {
   });
 }
 /**
- * @description 财务管理 -- 余额列表
- * @param {Number} param data {Number} 请求参数data
+ * @description Quản lý tài chính -- Danh sách số dư
+ * @param {Number} param data {Number} Tham số request data
  */
 export function getBalanceList(data) {
   return request({
@@ -219,8 +219,8 @@ export function getBalanceList(data) {
   });
 }
 /**
- * @description 余额列表-- 备注
- * @param {Number} balanceMark id {Number} 提现申请id
+ * @description Danh sách số dư -- Ghi chú
+ * @param {Number} balanceMark id {Number} ID yêu cầu rút tiền
  */
 export function setBalanceMark(id, data) {
   return request({

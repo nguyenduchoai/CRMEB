@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -25,7 +25,7 @@ use EasyWeChat\Support\Collection;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * 微信支付
+ * WeChat Pay
  * Class WechatPay
  * @package crmeb\services\pay\storage
  */
@@ -38,7 +38,7 @@ class WechatPay extends BasePay implements PayInterface
     }
 
     /**
-     * 创建订单进行支付
+     * Tạo đơn hàng để thanh toán
      * @param string $orderId
      * @param string $totalFee
      * @param string $attach
@@ -58,10 +58,10 @@ class WechatPay extends BasePay implements PayInterface
                 return WechatService::appPay($options['openid'], $orderId, $totalFee, $attach, $body, $detail);
             case Order::JSAPI:
                 if (empty($options['openid'])) {
-                    throw new PayException('缺少openid');
+                    throw new PayException('Thiếu openid');
                 }
                 if (request()->isRoutine()) {
-                    // 获取配置  判断是否为新支付
+                    // Lấy cấu hình, kiểm tra có phải thanh toán mới không
                     if ($options['pay_new_weixin_open']) {
                         return MiniProgramService::newJsPay($options['openid'], $orderId, $totalFee, $attach, $body, $detail, $options);
                     }
@@ -71,12 +71,12 @@ class WechatPay extends BasePay implements PayInterface
             case 'h5':
                 return WechatService::paymentPrepare(null, $orderId, $totalFee, $attach, $body, $detail, 'MWEB');
             default:
-                throw new PayException('微信支付:支付类型错误');
+                throw new PayException('WeChat Pay: loại thanh toán không hợp lệ');
         }
     }
 
     /**
-     * 支付到零钱
+     * Thanh toán vào số dư
      * @param string $openid
      * @param string $orderId
      * @param string $amount
@@ -89,14 +89,14 @@ class WechatPay extends BasePay implements PayInterface
     }
 
     /**
-     * 退款
+     * Hoàn tiền
      * @param string $outTradeNo
      * @param array $opt
      * @return Collection|mixed|ResponseInterface
      */
     public function refund(string $outTradeNo, array $opt = [])
     {
-        if (!isset($opt['pay_price'])) throw new PayException('缺少pay_price');
+        if (!isset($opt['pay_price'])) throw new PayException('Thiếu pay_price');
         $totalFee = floatval(bcmul($opt['pay_price'], 100, 0));
         $refundFee = isset($opt['refund_price']) ? floatval(bcmul($opt['refund_price'], 100, 0)) : null;
         $refundReason = $opt['desc'] ?? '';
@@ -104,9 +104,9 @@ class WechatPay extends BasePay implements PayInterface
         $opUserId = $opt['op_user_id'] ?? null;
         $type = $opt['type'] ?? 'out_trade_no';
         /**
-         * 仅针对老资金流商户使用
-         * REFUND_SOURCE_UNSETTLED_FUNDS---未结算资金退款（默认使用未结算资金退款）
-         * REFUND_SOURCE_RECHARGE_FUNDS---可用余额退款
+         * Chỉ dùng cho merchant dòng tiền cũ
+         * REFUND_SOURCE_UNSETTLED_FUNDS---hoàn tiền từ quỹ chưa thanh toán (mặc định dùng quỹ chưa thanh toán để hoàn tiền)
+         * REFUND_SOURCE_RECHARGE_FUNDS---hoàn tiền từ số dư khả dụng
          */
         $refundAccount = $opt['refund_account'] ?? 'REFUND_SOURCE_UNSETTLED_FUNDS';
         if (isset($opt['wechat'])) {
@@ -128,7 +128,7 @@ class WechatPay extends BasePay implements PayInterface
     }
 
     /**
-     * 查询退款订单
+     * Tra cứu đơn hàng hoàn tiền
      * @param string $outTradeNo
      * @param string $outRequestNo
      * @param array $other
@@ -140,7 +140,7 @@ class WechatPay extends BasePay implements PayInterface
     }
 
     /**
-     * 异步回调
+     * Callback bất đồng bộ
      * @return mixed|\Symfony\Component\HttpFoundation\Response
      * @throws \EasyWeChat\Core\Exceptions\FaultException
      */

@@ -1,5 +1,5 @@
 /**
- * 删除数据
+ * Xóa dữ liệu
  * @param id
  * @return {*}
  */

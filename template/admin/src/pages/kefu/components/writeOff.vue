@@ -5,12 +5,12 @@
       <div class="num acea-row row-center-wrapper">
         {{ orderInfo.order_id }}
         <div class="views" v-db-click @click="toDetail(orderInfo)">
-          查看<span class="iconfont icon-jiantou views-jian"></span>
+          Xem<span class="iconfont icon-jiantou views-jian"></span>
         </div>
       </div>
-      <div class="tip">确定要核销此订单吗？</div>
-      <div class="sure" v-db-click @click="confirm">确定核销</div>
-      <div class="sure cancel" v-db-click @click="cancel">取消</div>
+      <div class="tip">Bạn có chắc muốn xác nhận sử dụng đơn hàng này?</div>
+      <div class="sure" v-db-click @click="confirm">Xác nhận sử dụng</div>
+      <div class="sure cancel" v-db-click @click="cancel">Hủy</div>
     </div>
     <div class="maskModel" @touchmove.prevent></div>
   </div>

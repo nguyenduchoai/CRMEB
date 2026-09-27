@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,8 +17,8 @@ use think\Validate;
 class MealValidata extends Validate
 {
     /**
-     * 定义验证规则
-     * 格式：'字段名'    =>    ['规则1','规则2'...]
+     * Định nghĩa quy tắc xác thực
+     * Định dạng: 'tên trường'    =>    ['quy tắc 1','quy tắc 2'...]
      *
      * @var array
      */
@@ -30,18 +30,18 @@ class MealValidata extends Validate
     ];
 
     /**
-     * 定义错误信息
-     * 格式：'字段名.规则名'    =>    '错误信息'
+     * Định nghĩa thông báo lỗi
+     * Định dạng: 'tên trường.tên quy tắc'    =>    'thông báo lỗi'
      *
      * @var array
      */
     protected $message = [
-        'meal_id.require' => '请传入套餐id',
-        'meal_id.number' => '套餐id必须为数字',
-        'price.require' => '请填写套餐金额',
-        'num.require' => '请填写购买数量',
-        'num.number' => '购买数量必须为数字',
-        'type.require' => '请填写购买套餐类型'
+        'meal_id.require' => 'Vui lòng truyền vào ID gói dịch vụ',
+        'meal_id.number' => 'ID gói dịch vụ phải là số',
+        'price.require' => 'Vui lòng điền số tiền gói dịch vụ',
+        'num.require' => 'Vui lòng điền số lượng mua',
+        'num.number' => 'Số lượng mua phải là số',
+        'type.require' => 'Vui lòng điền loại gói dịch vụ cần mua'
     ];
 
 }

@@ -3,7 +3,7 @@
     <div class="acea-row row-middle">
       <div v-if="backUrl" class="font-sm after-line" v-db-click @click="goBack">
         <span class="el-icon-arrow-left"></span>
-        <span class="pl10">返回</span>
+        <span class="pl10">Quay lại</span>
       </div>
       <span class="ht_title ml10">{{ title }}</span>
     </div>

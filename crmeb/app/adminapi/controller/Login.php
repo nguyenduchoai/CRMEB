@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,7 +16,7 @@ use crmeb\utils\Captcha;
 use app\services\system\admin\SystemAdminServices;
 
 /**
- * 后台登陆
+ * Đăng nhập quản trị
  * Class Login
  * @package app\adminapi\controller
  */
@@ -45,7 +45,7 @@ class Login extends AuthController
     }
 
     /**
-     * 验证码
+     * Mã xác thực
      * @return $this|\think\Response
      */
     public function captcha()
@@ -63,7 +63,7 @@ class Login extends AuthController
     }
 
     /**
-     * 一次验证
+     * Xác minh lần đầu
      * @return mixed
      */
     public function ajcheck()
@@ -77,12 +77,12 @@ class Login extends AuthController
             aj_captcha_check_one($captchaType, $token, $pointJson);
             return app('json')->success();
         } catch (\Throwable $e) {
-            return app('json')->fail('验证码错误');
+            return app('json')->fail('Mã xác thực không đúng');
         }
     }
 
     /**
-     * 登陆
+     * Đăng nhập
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -102,12 +102,12 @@ class Login extends AuthController
             try {
                 aj_captcha_check_two($captchaType, $captchaVerification);
             } catch (\Throwable $e) {
-                return app('json')->fail('验证码错误');
+                return app('json')->fail('Mã xác thực không đúng');
             }
         }
 
         if (strlen(trim($password)) < 6 || strlen(trim($password)) > 32) {
-            return app('json')->fail('账号密码必须是在6到32位之间');
+            return app('json')->fail('Tài khoản và mật khẩu phải dài từ 6 đến 32 ký tự');
         }
 
         $this->validate(['account' => $account, 'pwd' => $password], \app\adminapi\validate\setting\SystemAdminValidata::class, 'get');
@@ -115,17 +115,17 @@ class Login extends AuthController
         if (!$result) {
             $num = CacheService::get('login_captcha', 1);
             if ($num > 1) {
-                return app('json')->fail('账号或密码错误', ['login_captcha' => 1]);
+                return app('json')->fail('Tài khoản hoặc mật khẩu không đúng', ['login_captcha' => 1]);
             }
             CacheService::set('login_captcha', $num + 1, 60);
-            return app('json')->fail('账号或密码错误', ['login_captcha' => 0]);
+            return app('json')->fail('Tài khoản hoặc mật khẩu không đúng', ['login_captcha' => 0]);
         }
         CacheService::delete('login_captcha');
         return app('json')->success($result);
     }
 
     /**
-     * 获取后台登录页轮播图以及LOGO
+     * Lấy ảnh trình chiếu (banner) và LOGO trang đăng nhập quản trị
      * @return mixed
      */
     public function info()

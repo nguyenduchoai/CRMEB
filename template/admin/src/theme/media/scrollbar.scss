@@ -1,6 +1,6 @@
 @use './index.scss' as *;
 
-/* 页面宽度小于768px
+/* Chiều rộng trang nhỏ hơn 768px
 ------------------------------- */
 @media screen and (max-width: $sm) {
   // element plus scrollbar

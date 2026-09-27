@@ -10,7 +10,7 @@
           @submit.native.prevent
           inline
         >
-          <el-form-item label="时间范围：">
+          <el-form-item label="Khoảng thời gian:">
             <el-date-picker
               clearable
               v-model="timeVal"
@@ -18,15 +18,15 @@
               @change="onchangeTime"
               format="yyyy/MM/dd"
               value-format="yyyy/MM/dd"
-              start-placeholder="开始日期"
-              end-placeholder="结束日期"
+              start-placeholder="Ngày bắt đầu"
+              end-placeholder="Ngày kết thúc"
               :picker-options="pickerOptions"
               style="width: 250px"
               class="mr20"
             ></el-date-picker>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" v-db-click @click="userSearchs">查询</el-button>
+            <el-button type="primary" v-db-click @click="userSearchs">Tra cứu</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -47,23 +47,23 @@
             ref="table"
             v-loading="loading"
             highlight-current-row
-            no-formValidate-text="暂无数据"
-            no-filtered-formValidate-text="暂无筛选结果"
+            no-formValidate-text="Chưa có dữ liệu"
+            no-filtered-formValidate-text="Không có kết quả phù hợp"
             @sort-change="handleSortChange"
           >
-            <el-table-column label="用户UID" width="150">
+            <el-table-column label="UID người dùng" width="150">
               <template slot-scope="scope">
                 <span>{{ scope.row.uid }}</span>
               </template>
             </el-table-column>
-            <el-table-column label="头像" min-width="120">
+            <el-table-column label="Ảnh đại diện" min-width="120">
               <template slot-scope="scope">
                 <div class="tabBox_img" v-viewer>
                   <img v-lazy="scope.row.avatar" />
                 </div>
               </template>
             </el-table-column>
-            <el-table-column label="名称" min-width="130">
+            <el-table-column label="Tên" min-width="130">
               <template slot-scope="scope">
                 <div class="acea-row">
                   <div v-text="scope.row.name"></div>
@@ -72,7 +72,7 @@
             </el-table-column>
             <!-- <el-table-column
               v-if="formValidate.type == 1"
-              label="代理商数量"
+              label="Số lượng đại lý"
               min-width="150"
               sortable="custom"
               :sort-orders="['ascending', 'descending']"
@@ -84,7 +84,7 @@
             </el-table-column>
             <el-table-column
               v-if="formValidate.type == 1 || formValidate.type == 2"
-              label="员工数量"
+              label="Số lượng nhân viên"
               min-width="150"
               sortable="custom"
               :sort-orders="['ascending', 'descending']"
@@ -95,7 +95,7 @@
               </template>
             </el-table-column> -->
             <el-table-column
-              label="订单数"
+              label="Số đơn hàng"
               min-width="150"
               sortable="custom"
               :sort-orders="['ascending', 'descending']"
@@ -106,7 +106,7 @@
               </template>
             </el-table-column>
             <el-table-column
-              label="订单金额"
+              label="Số tiền đơn hàng"
               min-width="150"
               sortable="custom"
               :sort-orders="['ascending', 'descending']"
@@ -153,15 +153,15 @@ export default {
       total2: 0,
       statusList: [
         {
-          status_name: '事业部',
+          status_name: 'Đại lý khu vực',
           id: '1',
         },
         {
-          status_name: '代理商',
+          status_name: 'Đại lý',
           id: '2',
         },
         {
-          status_name: '员工',
+          status_name: 'Nhân viên',
           id: '3',
         },
       ],
@@ -181,8 +181,8 @@ export default {
         limit: 15,
         time: '',
         type: '1',
-        sort: '', // 排序字段
-        order: '', // 排序方式
+        sort: '', // Trường sắp xếp
+        order: '', // Kiểu sắp xếp
       },
       staffModal: false,
       clerkReqData: {
@@ -215,7 +215,7 @@ export default {
     this.getList();
   },
   methods: {
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e) {
       this.timeVal = e || [];
       this.getList();
@@ -224,7 +224,7 @@ export default {
       this.formValidate.page = 1;
       this.getList();
     },
-    // 列表
+    // Danh sách
     getList() {
       this.loading = true;
       this.formValidate.time = this.timeVal[0] ? (this.timeVal ? this.timeVal.join('-') : '') : '';
@@ -244,7 +244,7 @@ export default {
       this.formValidate.page = index;
       this.getList();
     },
-    // 添加排序方法
+    // Thêm phương thức sắp xếp
     handleSortChange({ prop, order }) {
       this.formValidate.sort = prop;
       this.formValidate.order = order === 'ascending' ? 'asc' : 'desc';

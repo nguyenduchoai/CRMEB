@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -16,13 +16,13 @@ use app\dao\user\UserBrokerageFrozenDao;
 use app\services\BaseServices;
 
 /**
- * 佣金冻结
+ * Đóng băng hoa hồng
  * Class UserBrokerageFrozenServices
  * @package app\services\user
- * @method getUserFrozenPrice(int $uid, bool $isFrozen) 获取某个账户下冻结过期的佣金
- * @method updateFrozen(string $orderId) 修改佣金冻结状态
- * @method getFrozenBrokerage() 获取用户的冻结佣金数组
- * @method getSumFrozenBrokerage() 获取冻结佣金金额
+ * @method getUserFrozenPrice(int $uid, bool $isFrozen) Lấy hoa hồng bị đóng băng đã hết hạn của một tài khoản
+ * @method updateFrozen(string $orderId) Cập nhật trạng thái đóng băng hoa hồng
+ * @method getFrozenBrokerage() Lấy mảng hoa hồng bị đóng băng của người dùng
+ * @method getSumFrozenBrokerage() Lấy số tiền hoa hồng bị đóng băng
  */
 class UserBrokerageFrozenServices extends BaseServices
 {
@@ -36,7 +36,7 @@ class UserBrokerageFrozenServices extends BaseServices
     }
 
     /**
-     * 保存冻结金额
+     * Lưu số tiền đóng băng
      * @param int $uid
      * @param string $price
      * @param int $uillId

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -20,7 +20,7 @@ use think\console\input\Option;
 
 /**
  * Class Npm
- * @author 等风来
+ * @author Deng Fenglai
  * @email 136327134@qq.com
  * @date 2023/4/13
  * @package crmeb\command
@@ -28,20 +28,20 @@ use think\console\input\Option;
 class Npm extends Command
 {
     /**
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/13
      */
     protected function configure()
     {
         $this->setName('npm')
-            ->addOption('path', 'dp', Option::VALUE_OPTIONAL, '默认路径')
-            ->addOption('build', 'bu', Option::VALUE_OPTIONAL, '打包存放路径')
-            ->setDescription('NPM打包工具');
+            ->addOption('path', 'dp', Option::VALUE_OPTIONAL, 'Đường dẫn mặc định')
+            ->addOption('build', 'bu', Option::VALUE_OPTIONAL, 'Đường dẫn lưu bản đóng gói')
+            ->setDescription('Công cụ đóng gói NPM');
     }
 
     /**
-     * @author 等风来
+     * @author Deng Fenglai
      * @email 136327134@qq.com
      * @date 2023/4/13
      */
@@ -61,9 +61,9 @@ class Npm extends Command
         $adminPath = dirname($adminPath);
 
         if (is_dir($adminPath . DS . 'dist')) {
-            $question = $this->output->confirm($this->input, '检测到已经生成打包文件是否重新打包?', false);
+            $question = $this->output->confirm($this->input, 'Phát hiện tệp đóng gói đã được tạo, có đóng gói lại không?', false);
             if (!$question) {
-                $this->output->info('已退出打包程序');
+                $this->output->info('Đã thoát chương trình đóng gói');
                 return;
             }
         }
@@ -77,12 +77,12 @@ class Npm extends Command
         $terminal->run('npm-build');
 
         if (!is_dir($adminPath . DS . 'dist')) {
-            $this->output->error('打包失败');
+            $this->output->error('Đóng gói thất bại');
             return;
         }
 
         $this->app->make(FileService::class)->copyDir($adminPath . DS . 'dist', $build);
 
-        $this->output->info('执行成功');
+        $this->output->info('Thực thi thành công');
     }
 }

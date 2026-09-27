@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -34,7 +34,7 @@ use crmeb\exceptions\ApiException;
 class StoreManageServices extends BaseServices
 {
     /**
-     * 商家统计
+     * Thống kê cửa hàng
      * @return array
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -46,7 +46,7 @@ class StoreManageServices extends BaseServices
         $userVisitServices = app()->make(UserVisitServices::class);
         $storeOrderRefundServices = app()->make(StoreOrderRefundServices::class);
         $storeProductServices = app()->make(StoreProductServices::class);
-        // 今日订单金额，去除用户取消，删除的订单，并且是已支付的订单
+        // Tổng tiền đơn hàng hôm nay, loại trừ đơn hàng người dùng đã hủy, đơn đã xóa, và phải là đơn hàng đã thanh toán
         $todayOrderPrice = $storeOrderServices->sum([
             ['add_time', '>', strtotime(date('Y-m-d'))],
             ['is_del', '=', 0],
@@ -54,14 +54,14 @@ class StoreManageServices extends BaseServices
             ['paid', '=', 1],
             ['pid', '>=', 0],
         ], 'pay_price', false);
-        // 今日订单总数，去除用户取消，删除的订单
+        // Tổng số đơn hàng hôm nay, loại trừ đơn hàng người dùng đã hủy, đơn đã xóa
         $todayOrderCount = $storeOrderServices->count([
             ['add_time', '>', strtotime(date('Y-m-d'))],
             ['is_del', '=', 0],
             ['is_cancel', '=', 0],
             ['pid', '>=', 0],
         ]);
-        // 今日支付人数，去除用户取消，删除的订单，并且是已支付的订单，去重
+        // Số người thanh toán hôm nay, loại trừ đơn hàng người dùng đã hủy, đơn đã xóa, phải là đơn hàng đã thanh toán, loại bỏ trùng lặp
         $todayOrderUserCount = $storeOrderServices->getDistinctCount([
             ['add_time', '>', strtotime(date('Y-m-d'))],
             ['is_del', '=', 0],
@@ -69,21 +69,21 @@ class StoreManageServices extends BaseServices
             ['paid', '=', 1],
             ['pid', '<=', 0],
         ], 'uid', false);
-        // 今日浏览量
+        // Lượt xem hôm nay
         $todayVisitCount = $userVisitServices->count([['add_time', '>', strtotime(date('Y-m-d'))]]);
-        // 待发货的订单数量，全部时间
+        // Số đơn hàng chờ giao hàng, toàn bộ thời gian
         $unDeliveryOrderCount = $storeOrderServices->count(['status' => 1, 'shipping_type' => 1, 'pid' => 0]);
-        // 今日退款申请数量，全部时间
+        // Số yêu cầu hoàn tiền hôm nay, toàn bộ thời gian
         $refundingCount = $storeOrderRefundServices->count(['is_cancel' => 0, 'refund_type' => [1, 2, 4, 5]]);
-        // 已售罄的商品数量
+        // Số sản phẩm đã hết hàng
         $outOfStock = $storeProductServices->getCount(['type' => 4]);
-        // 警戒库存商品数量
+        // Số sản phẩm chạm ngưỡng cảnh báo tồn kho
         $policeForce = $storeProductServices->getCount(['type' => 5, 'store_stock' => sys_config('store_stock') > 0 ? sys_config('store_stock') : 2]);
         return compact('todayOrderCount', 'todayOrderPrice', 'todayOrderUserCount', 'todayVisitCount', 'unDeliveryOrderCount', 'refundingCount', 'outOfStock', 'policeForce');
     }
 
     /**
-     * 商品列表
+     * Danh sách sản phẩm
      * @param $where
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -101,7 +101,7 @@ class StoreManageServices extends BaseServices
     }
 
     /**
-     * 商品上下架
+     * Đăng bán/ngừng bán sản phẩm
      * @param $id
      * @param $isShow
      * @return bool
@@ -113,13 +113,13 @@ class StoreManageServices extends BaseServices
     {
         $storeProductServices = app()->make(StoreProductServices::class);
         $del = $storeProductServices->value(['id' => $id], 'is_del');
-        if ($del == 1) throw new ApiException('商品已删除');
+        if ($del == 1) throw new ApiException('Sản phẩm đã bị xóa');
         $storeProductServices->setShow([$id], $isShow);
         return true;
     }
 
     /**
-     * 商品标签列表
+     * Danh sách nhãn sản phẩm
      * @return array
      * @author wuhaotian
      * @email 442384644@qq.com
@@ -132,7 +132,7 @@ class StoreManageServices extends BaseServices
     }
 
     /**
-     * 商品标签保存
+     * Lưu nhãn sản phẩm
      * @param $ids
      * @param $label_list
      * @return bool
@@ -152,7 +152,7 @@ class StoreManageServices extends BaseServices
     }
 
     /**
-     * 商品分类列表
+     * Danh sách danh mục sản phẩm
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -168,7 +168,7 @@ class StoreManageServices extends BaseServices
     }
 
     /**
-     * 商品分类保存
+     * Lưu danh mục sản phẩm
      * @param $ids
      * @param $cate_id
      * @return bool
@@ -188,7 +188,7 @@ class StoreManageServices extends BaseServices
     }
 
     /**
-     * 商品属性
+     * Thuộc tính sản phẩm
      * @param $id
      * @return array
      * @author wuhaotian
@@ -202,7 +202,7 @@ class StoreManageServices extends BaseServices
     }
 
     /**
-     * 商品属性保存
+     * Lưu thuộc tính sản phẩm
      * @param $id
      * @param $attr_value
      * @return bool|\think\Response
@@ -216,18 +216,18 @@ class StoreManageServices extends BaseServices
         $storeProductAttrValueServices = app()->make(StoreProductAttrValueServices::class);
 
         if (!$id) {
-            return app('json')->fail('请选择商品');
+            return app('json')->fail('Vui lòng chọn sản phẩm');
         }
         if (!$attr_value) {
-            return app('json')->fail('请填写属性值');
+            return app('json')->fail('Vui lòng nhập giá trị thuộc tính');
         }
 
-        //判断规格的属性值是否存在
+        //Kiểm tra giá trị thuộc tính của quy cách có tồn tại không
         $requiredKeys = ['unique', 'price', 'stock', 'cost', 'ot_price'];
         foreach ($attr_value as $attr) {
             $missingKeys = array_diff($requiredKeys, array_keys($attr));
             if (!empty($missingKeys)) {
-                throw new ApiException('请重新修改规格库存');
+                throw new ApiException('Vui lòng sửa lại tồn kho của phân loại');
             }
         }
 
@@ -246,16 +246,16 @@ class StoreManageServices extends BaseServices
             }
 
             $product_array = $attr ?: $item;
-            // 计算商品库存
+            // Tính tồn kho sản phẩm
             $product_stock = bcadd((string)$product_stock, (string)$product_array['stock'], 0);
-            // 更新商品价格
+            // Cập nhật giá sản phẩm
             $product_price = max($product_price, $product_array['price']);
-            // 更新商品原价
+            // Cập nhật giá gốc sản phẩm
             $product_ot_price = max($product_ot_price, $product_array['ot_price']);
-            // 更新商品成本
+            // Cập nhật giá vốn sản phẩm
             $product_cost = max($product_cost, $product_array['cost']);
         }
-        // 修改商品库存等信息
+        // Sửa tồn kho và các thông tin khác của sản phẩm
         $storeProductServices->update($id, [
             'stock' => $product_stock,
             'price' => $product_price,
@@ -266,7 +266,7 @@ class StoreManageServices extends BaseServices
     }
 
     /**
-     * 商品创建
+     * Tạo sản phẩm
      * @param $data
      * @return bool
      * @author wuhaotian
@@ -307,7 +307,7 @@ class StoreManageServices extends BaseServices
             'vip_product_type' => 0,
             'is_sub' => [],
             'recommend' => [],
-            'activity' => ['默认', '秒杀', '砍价', '拼团'],
+            'activity' => ['Mặc định', 'Flash sale', 'Săn giảm giá', 'Mua chung'],
             'recommend_list' => [],
             'coupon_ids' => [],
             'label_id' => [],
@@ -336,7 +336,7 @@ class StoreManageServices extends BaseServices
     }
 
     /**
-     * 用户列表
+     * Danh sách người dùng
      * @param $where
      * @return array
      * @author wuhaotian
@@ -350,7 +350,7 @@ class StoreManageServices extends BaseServices
     }
 
     /**
-     * 用户信息详情
+     * Chi tiết thông tin người dùng
      * @param $uid
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -364,13 +364,13 @@ class StoreManageServices extends BaseServices
     {
         $userServices = app()->make(UserServices::class);
         $userInfo = $userServices->get($uid);
-        if (!$userInfo) throw new ApiException('用户不存在');
+        if (!$userInfo) throw new ApiException('Người dùng không tồn tại');
         $userInfo = $userInfo->toArray();
         $userInfo['avatar'] = set_file_url($userInfo['avatar']);
         $userInfo['birthday'] = $userInfo['birthday'] != 0 ? date('Y-m-d', $userInfo['birthday']) : '';
-        // 优惠券数量
+        // Số lượng phiếu giảm giá
         $userInfo['coupon_num'] = app()->make(StoreCouponUserServices::class)->getUserValidCouponCount((int)$uid);
-        // 用户标签
+        // Nhãn người dùng
         $label_list = app()->make(UserLabelRelationServices::class)->getUserLabelList([$uid]);
         $label_id = [];
         $userInfo['label_list'] = '';
@@ -384,14 +384,14 @@ class StoreManageServices extends BaseServices
             }
         }
         $userInfo['label_id'] = $label_id;
-        // 用户订单金额及数量
+        // Tổng tiền và số lượng đơn hàng của người dùng
         $orderServices = app()->make(StoreOrderServices::class);
         $userInfo['order_total_price'] = $orderServices->sum(['uid' => $uid, 'paid' => 1, 'refund_status' => 0], 'pay_price');
         $userInfo['order_total_count'] = $orderServices->count(['uid' => $uid, 'paid' => 1, 'refund_status' => 0]);
-        // 会员
+        // Thành viên
         $userInfo['isMember'] = $userInfo['is_money_level'] > 0 ? 1 : 0;
         if ($userInfo['is_ever_level'] == 1) {
-            $userInfo['svip_overdue_time'] = $userInfo['svip_over_day'] = '永久';
+            $userInfo['svip_overdue_time'] = $userInfo['svip_over_day'] = 'Vĩnh viễn';
         } else {
             if ($userInfo['is_money_level'] > 0 && $userInfo['overdue_time'] > 0) {
                 $userInfo['svip_over_day'] = ceil(($userInfo['overdue_time'] - time()) / 86400);
@@ -402,7 +402,7 @@ class StoreManageServices extends BaseServices
     }
 
     /**
-     * 用户分组
+     * Nhóm người dùng
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -418,7 +418,7 @@ class StoreManageServices extends BaseServices
     }
 
     /**
-     * 用户等级
+     * Hạng người dùng
      * @return array
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -434,7 +434,7 @@ class StoreManageServices extends BaseServices
     }
 
     /**
-     * 用户标签
+     * Nhãn người dùng
      * @param $uid
      * @return array
      * @throws \think\db\exception\DataNotFoundException
@@ -451,7 +451,7 @@ class StoreManageServices extends BaseServices
     }
 
     /**
-     * 用户优惠券
+     * Phiếu giảm giá của người dùng
      * @param $where
      * @return mixed
      * @author wuhaotian
@@ -474,7 +474,7 @@ class StoreManageServices extends BaseServices
     }
 
     /**
-     * 用户数据修改
+     * Sửa dữ liệu người dùng
      * @param $uid
      * @param $data
      * @return bool
@@ -491,13 +491,13 @@ class StoreManageServices extends BaseServices
         $userServices = app()->make(UserServices::class);
         $userInfo = $userServices->getUserInfo($uid);
         switch ($data['type']) {
-            case 0: // 余额
+            case 0: // Số dư
                 /** @var UserMoneyServices $userMoneyServices */
                 $userMoneyServices = app()->make(UserMoneyServices::class);
-                if ($data['status'] == 1) { //增加
+                if ($data['status'] == 1) { //Tăng
                     $edit['now_money'] = bcadd($userInfo['now_money'], $data['number'], 2);
-                    $userMoneyServices->income('system_add', $uid, $data['number'], $edit['now_money'], 0, '移动端商家管理增加余额');
-                    //增加充值记录
+                    $userMoneyServices->income('system_add', $uid, $data['number'], $edit['now_money'], 0, 'Quản lý cửa hàng trên di động cộng số dư');
+                    //Thêm bản ghi nạp tiền
                     $recharge_data = [
                         'order_id' => app()->make(StoreOrderCreateServices::class)->getNewOrderId('cz'),
                         'uid' => $uid,
@@ -510,57 +510,57 @@ class StoreManageServices extends BaseServices
                         'pay_time' => time(),
                     ];
                     app()->make(UserRechargeServices::class)->save($recharge_data);
-                } else { //减少
+                } else { //Giảm
                     if ($userInfo['now_money'] > $data['number']) {
                         $edit['now_money'] = bcsub($userInfo['now_money'], $data['number'], 2);
                     } else {
                         $edit['now_money'] = 0;
                         $data['number'] = $userInfo['now_money'];
                     }
-                    $userMoneyServices->income('system_sub', $uid, $data['number'], $edit['now_money'], 0, '移动端商家管理减少余额');
+                    $userMoneyServices->income('system_sub', $uid, $data['number'], $edit['now_money'], 0, 'Quản lý cửa hàng trên di động trừ số dư');
                 }
                 $userServices->update($uid, $edit);
                 break;
-            case 1: // 积分
+            case 1: // Điểm thưởng
                 /** @var UserBillServices $userBill */
                 $userBill = app()->make(UserBillServices::class);
                 $integral_data = ['link_id' => 0, 'number' => $data['number']];
-                if ($data['status'] == 1) { //增加
+                if ($data['status'] == 1) { //Tăng
                     $edit['integral'] = bcadd($userInfo['integral'], $data['number'], 2);
                     $integral_data['balance'] = $edit['integral'];
-                    $integral_data['title'] = '系统增加积分';
-                    $integral_data['mark'] = '系统增加了' . floatval($data['number']) . '积分';
+                    $integral_data['title'] = 'Hệ thống cộng điểm thưởng';
+                    $integral_data['mark'] = 'Hệ thống đã cộng' . floatval($data['number']) . 'Điểm thưởng';
                     $userBill->incomeIntegral($uid, 'system_add', $integral_data);
-                } else { //减少
+                } else { //Giảm
                     $edit['integral'] = bcsub($userInfo['integral'], $data['number'], 2);
                     $integral_data['balance'] = $edit['integral'];
-                    $integral_data['title'] = '系统减少积分';
-                    $integral_data['mark'] = '系统扣除了' . floatval($data['number']) . '积分';
+                    $integral_data['title'] = 'Hệ thống trừ điểm thưởng';
+                    $integral_data['mark'] = 'Hệ thống đã trừ' . floatval($data['number']) . 'Điểm thưởng';
                     $userBill->expendIntegral($uid, 'system_sub', $integral_data);
                 }
                 $userServices->update($uid, $edit);
                 break;
-            case 2: // 等级
+            case 2: // Cấp bậc
                 $userServices->saveGiveLevel((int)$uid, (int)$data['level']);
                 break;
-            case 3: // 付费会员
+            case 3: // Thành viên trả phí
                 $userServices->saveGiveLevelTime((int)$uid, (int)$data['days']);
                 break;
-            case 4: // 优惠券
+            case 4: // Phiếu giảm giá
                 /** @var StoreCouponIssueServices $issueService */
                 $issueService = app()->make(StoreCouponIssueServices::class);
                 $coupon = $issueService->get($data['coupon_id']);
                 if (!$coupon) {
-                    throw new ApiException('优惠券不存在');
+                    throw new ApiException('Phiếu giảm giá không tồn tại');
                 } else {
                     $coupon = $coupon->toArray();
                 }
                 $issueService->setCoupon($coupon, [$uid]);
                 break;
-            case 5: // 分组
+            case 5: // Nhóm
                 $userServices->saveSetGroup([$uid], $data['group_id']);
                 break;
-            case 6: // 用户标签
+            case 6: // Nhãn người dùng
                 $userServices->saveSetLabel([$uid], $data['label_id'], 0);
                 break;
         }

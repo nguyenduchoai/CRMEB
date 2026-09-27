@@ -33,11 +33,11 @@
 import { mapState } from 'vuex';
 export default {
   name: 'home_hot',
-  cname: '活动魔方',
+  cname: 'Lưới khuyến mãi',
   icon: 'iconhuodongmofang1',
   configName: 'c_home_hot',
-  type: -1, // -1 doing 0 基础组件 1 营销组件 2工具组件
-  defaultName: 'activeParty', // 外面匹配名称
+  type: -1, // -1 doing 0 thành phần cơ bản 1 thành phần marketing 2 thành phần công cụ
+  defaultName: 'activeParty', // Tên khớp bên ngoài
   props: {
     index: {
       type: null,
@@ -73,7 +73,7 @@ export default {
   },
   data() {
     return {
-      // 默认初始化数据禁止修改
+      // Dữ liệu khởi tạo mặc định, không được sửa
       defaultConfig: {
         name: 'activeParty',
         timestamp: this.num,
@@ -81,40 +81,40 @@ export default {
           tabVal: 0,
         },
         titleConfig: {
-          title: '促销标题',
-          value: '超值爆款',
-          place: '请输入标题',
+          title: 'Tiêu đề khuyến mãi',
+          value: 'Hàng hot giá tốt',
+          place: 'Vui lòng nhập tiêu đề',
           max: 10,
         },
         desConfig: {
-          title: '促销简介',
-          value: '美好生活由此开始',
-          place: '请输入简介',
+          title: 'Mô tả khuyến mãi',
+          value: 'Cuộc sống tươi đẹp bắt đầu từ đây',
+          place: 'Vui lòng nhập mô tả ngắn',
           max: 8,
         },
         menuConfig: {
-          title: '最多可添加4个版块，图片建议尺寸140 * 140px；鼠标拖拽左侧圆点可 调整版块顺序',
+          title: 'Có thể thêm tối đa 4 khối, kích thước ảnh đề xuất 140 * 140px; kéo thả chấm tròn bên trái để điều chỉnh thứ tự khối',
           maxList: 4,
           list: [
             {
               img: '',
               info: [
                 {
-                  title: '标题',
-                  value: '今日推荐',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Gợi ý hôm nay',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '简介',
-                  value: '店主诚意推荐 品质商品',
-                  tips: '选填，不超过20个字',
+                  title: 'Mô tả ngắn',
+                  value: 'Chủ shop tận tâm gợi ý sản phẩm chất lượng',
+                  tips: 'Không bắt buộc, tối đa 20 ký tự',
                   max: 20,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -123,21 +123,21 @@ export default {
               img: '',
               info: [
                 {
-                  title: '标题',
-                  value: '热门榜单',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Top bán chạy',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '简介',
-                  value: '店主诚意推荐 品质商品',
-                  tips: '选填，不超过20个字',
+                  title: 'Mô tả ngắn',
+                  value: 'Chủ shop tận tâm gợi ý sản phẩm chất lượng',
+                  tips: 'Không bắt buộc, tối đa 20 ký tự',
                   max: 20,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -146,21 +146,21 @@ export default {
               img: '',
               info: [
                 {
-                  title: '标题',
-                  value: '首发新品',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Hàng mới ra mắt',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '简介',
-                  value: '新品上架等 你来拿',
-                  tips: '选填，不超过20个字',
+                  title: 'Mô tả ngắn',
+                  value: 'Hàng mới lên kệ, chờ bạn rinh về',
+                  tips: 'Không bắt buộc, tối đa 20 ký tự',
                   max: 20,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -169,21 +169,21 @@ export default {
               img: '',
               info: [
                 {
-                  title: '标题',
-                  value: '促销单品',
-                  tips: '选填，不超过4个字',
+                  title: 'Tiêu đề',
+                  value: 'Sản phẩm khuyến mãi',
+                  tips: 'Không bắt buộc, tối đa 4 ký tự',
                   max: 4,
                 },
                 {
-                  title: '简介',
-                  value: '综合评选好 产品',
-                  tips: '选填，不超过20个字',
+                  title: 'Mô tả ngắn',
+                  value: 'Sản phẩm tốt qua bình chọn tổng hợp',
+                  tips: 'Không bắt buộc, tối đa 20 ký tự',
                   max: 20,
                 },
                 {
-                  title: '链接',
+                  title: 'Liên kết',
                   value: '',
-                  tips: '请输入链接',
+                  tips: 'Vui lòng nhập liên kết',
                   max: 100,
                 },
               ],
@@ -191,7 +191,7 @@ export default {
           ],
         },
         themeColor: {
-          title: '主题颜色',
+          title: 'Màu chủ đề',
           name: 'themeColor',
           default: [
             {
@@ -205,7 +205,7 @@ export default {
           ],
         },
         bgColor: {
-          title: '标签背景颜色',
+          title: 'Màu nền nhãn',
           name: 'bgColor',
           default: [
             {
@@ -225,7 +225,7 @@ export default {
           ],
         },
         boxColor: {
-          title: '背景颜色',
+          title: 'Màu nền',
           name: 'boxColor',
           default: [
             {
@@ -238,9 +238,9 @@ export default {
             },
           ],
         },
-        titleCurrency: '通用样式',
+        titleCurrency: 'Kiểu chung',
         bottomBgColor: {
-          title: '底部背景',
+          title: 'Nền phía dưới',
           default: [
             {
               item: '#F5F5F5',
@@ -253,7 +253,7 @@ export default {
           ],
         },
         paddingConfig: {
-          title: '内边距',
+          title: 'Lề trong',
           val: 0,
           min: 0,
           max: 100,
@@ -261,7 +261,7 @@ export default {
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         marginConfig: {
-          title: '外边距',
+          title: 'Lề ngoài',
           val: 0,
           min: 0,
           max: 100,
@@ -269,85 +269,85 @@ export default {
           valList: [{ val: 0 }, { val: 0 }, { val: 0 }, { val: 0 }],
         },
         componentBgConfig: {
-          title: '背景设置',
+          title: 'Cài đặt nền',
           tabVal: 0,
-          tabList: [{ name: '颜色' }, { name: '图片' }],
+          tabList: [{ name: 'Màu sắc' }, { name: 'Hình ảnh' }],
           colorConfig: {
-            title: '背景颜色',
+            title: 'Màu nền',
             default: [{ item: '#FFFFFF' }, { item: '#FFFFFF' }],
             color: [{ item: '#FFFFFF' }, { item: '#FFFFFF' }],
           },
           colorDirection: {
-            title: '渐变方向',
+            title: 'Hướng chuyển màu',
             tabVal: 0,
-            tabList: [{ name: '横向' }, { name: '纵向' }, { name: '左斜' }, { name: '右斜' }],
+            tabList: [{ name: 'Ngang' }, { name: 'Dọc' }, { name: 'Chéo trái' }, { name: 'Chéo phải' }],
           },
           imageConfig: {
-            header: '背景图片',
+            header: 'Ảnh nền',
             title: '',
-            name: '上传图片',
+            name: 'Tải lên ảnh',
             type: 'code',
             url: '',
-            info: '建议尺寸：750px * 400px',
+            info: 'Kích thước đề xuất: 750px * 400px',
           },
         },
         zIndexConfig: {
-          title: '组件上浮',
+          title: 'Thứ tự lớp thành phần',
           val: 0,
           min: 0,
         },
         borderConfig: {
-          title: '边框设置',
+          title: 'Cài đặt viền',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0, // 0: Hide, 1: Show
           styleConfig: {
-            title: '边框样式',
+            title: 'Kiểu viền',
             tabVal: 0,
             tabList: [
-              { name: '实线', style: 'solid' },
-              { name: '虚线', style: 'dashed' },
-              { name: '点状', style: 'dotted' },
+              { name: 'Nét liền', style: 'solid' },
+              { name: 'Nét đứt', style: 'dashed' },
+              { name: 'Nét chấm', style: 'dotted' },
             ],
           },
           widthConfig: {
-            title: '边框粗细',
+            title: 'Độ dày viền',
             val: 1,
             min: 1,
           },
           colorConfig: {
-            title: '边框颜色',
+            title: 'Màu viền',
             default: [{ item: '#e5e5e5' }],
             color: [{ item: '#e5e5e5' }],
           },
         },
         shadowConfig: {
-          title: '阴影设置',
+          title: 'Cài đặt đổ bóng',
           tabVal: 0,
-          tabList: [{ name: '隐藏' }, { name: '显示' }],
+          tabList: [{ name: 'Ẩn' }, { name: 'Hiện' }],
           val: 0, // 0: Off, 1: On
           colorConfig: {
-            title: '阴影颜色',
+            title: 'Màu đổ bóng',
             default: [{ item: 'rgba(0,0,0,0.1)' }],
             color: [{ item: 'rgba(0,0,0,0.1)' }],
           },
           xConfig: {
-            title: 'X轴偏移',
+            title: 'Độ lệch trục X',
             val: 0,
             min: -50,
           },
           yConfig: {
-            title: 'Y轴偏移',
+            title: 'Độ lệch trục Y',
             val: 0,
             min: -50,
           },
           blurConfig: {
-            title: '模糊半径',
+            title: 'Bán kính làm mờ',
             val: 10,
             min: 0,
           },
           spreadConfig: {
-            title: '扩展半径',
+            title: 'Bán kính lan tỏa',
             val: 0,
             min: -50,
           },
@@ -389,7 +389,7 @@ export default {
       // this.bottomBgColor = data.bottomBgColor ? data.bottomBgColor.color[0].item : '#F5F5F5';
       if (!this.configObj.paddingConfig) {
         this.$set(this.configObj, 'paddingConfig', {
-          title: '内边距',
+          title: 'Lề trong',
           isAll: false,
           val: 0,
           min: 0,
@@ -399,7 +399,7 @@ export default {
       }
       if (!this.configObj.marginConfig) {
         this.$set(this.configObj, 'marginConfig', {
-          title: '外边距',
+          title: 'Lề ngoài',
           isAll: false,
           val: 0,
           min: 0,

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -58,7 +58,7 @@ class CustomNoticeListener implements ListenerInterface
             $MessageSystemServices = app()->make(MessageSystemServices::class);
             $MessageSystemServices->save($data);
         } catch (\Exception $e) {
-            Log::error('发送站内信失败,失败原因:' . $e->getMessage());
+            Log::error('Gửi thông báo nội bộ thất bại, nguyên nhân:' . $e->getMessage());
             return true;
         }
     }
@@ -81,7 +81,7 @@ class CustomNoticeListener implements ListenerInterface
             app()->make(ServeServices::class)->sms($type)->send($infoData['phone'], $noticeData['sms_id'], $sendData);
             return true;
         } catch (\Exception $e) {
-            Log::error('发送短信失败,失败原因:' . $e->getMessage());
+            Log::error('Gửi SMS thất bại, nguyên nhân:' . $e->getMessage());
             return true;
         }
     }
@@ -108,7 +108,7 @@ class CustomNoticeListener implements ListenerInterface
             }
             return true;
         } catch (\Exception $e) {
-            Log::error('发送微信模版消息失败,失败原因:' . $e->getMessage());
+            Log::error('Gửi tin nhắn mẫu WeChat thất bại, nguyên nhân:' . $e->getMessage());
             return true;
         }
     }
@@ -135,7 +135,7 @@ class CustomNoticeListener implements ListenerInterface
             }
             return true;
         } catch (\Exception $e) {
-            Log::error('发送小程序订阅消息失败,失败原因:' . $e->getMessage());
+            Log::error('Gửi tin nhắn đăng ký Mini Program thất bại, nguyên nhân:' . $e->getMessage());
             return true;
         }
     }
@@ -161,7 +161,7 @@ class CustomNoticeListener implements ListenerInterface
                 'markdown' => ['content' => $d]
             ]));
         } catch (\Throwable $e) {
-            Log::error('发送企业群消息失败,失败原因:' . $e->getMessage());
+            Log::error('Gửi tin nhắn nhóm WeCom thất bại, nguyên nhân:' . $e->getMessage());
         }
     }
 }

@@ -1,6 +1,6 @@
 {
   "navigationStyle": "custom",
-  "navigationBarTitleText": "用户管理",
+  "navigationBarTitleText": "Quản lý người dùng",
   "usingComponents": {
     "edit-lable": "/pages/admin/user/components/userLable/index",
     "edit-balance": "/pages/admin/user/components/editBalance/index",

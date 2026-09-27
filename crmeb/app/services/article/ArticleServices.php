@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -32,7 +32,7 @@ class ArticleServices extends BaseServices
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -60,7 +60,7 @@ class ArticleServices extends BaseServices
     }
 
     /**
-     * 新增编辑文章
+     * Thêm sửa bài viết
      * @param array $data
      * @return mixed
      */
@@ -84,7 +84,7 @@ class ArticleServices extends BaseServices
                 $res = $info && $articleContentService->save($content);
             }
             if (!$res) {
-                throw new AdminException('保存失败');
+                throw new AdminException('Lưu thất bại');
             } else {
                 return $info;
             }
@@ -93,7 +93,7 @@ class ArticleServices extends BaseServices
     }
 
     /**
-     * 获取文章详情
+     * Lấy chi tiết bài viết
      * @param int $id
      * @return array
      * @throws \ReflectionException
@@ -110,7 +110,7 @@ class ArticleServices extends BaseServices
     }
 
     /**
-     * 删除文章
+     * Xóa bài viết
      * @param int $id
      */
     public function del(int $id)
@@ -121,13 +121,13 @@ class ArticleServices extends BaseServices
             $res = $this->dao->delete($id);
             $res = $res && $articleContentService->del($id);
             if (!$res) {
-                throw new AdminException('删除失败');
+                throw new AdminException('Xóa thất bại');
             }
         });
     }
 
     /**
-     * 文章关联商品
+     * Liên kết sản phẩm với bài viết
      * @param int $id
      * @param int $product_id
      * @return mixed
@@ -138,7 +138,7 @@ class ArticleServices extends BaseServices
     }
 
     /**
-     * 获取数量
+     * Lấy số lượng
      * @param array $where
      * @param bool $search
      * @return int
@@ -149,7 +149,7 @@ class ArticleServices extends BaseServices
     }
 
     /**
-     * 获取一条数据
+     * Lấy một dòng dữ liệu
      * @param int $id
      * @return mixed
      * @throws \ReflectionException
@@ -162,7 +162,7 @@ class ArticleServices extends BaseServices
         $info = $this->dao->read($id);
         $info->visit = intval($info['visit']) + 1;
         if (!$info->save())
-            throw new AdminException('请稍后查看');
+            throw new AdminException('Vui lòng xem lại sau');
         if ($info) {
             $info = $info->toArray();
             $info['visit'] = (int)$info['visit'];
@@ -173,7 +173,7 @@ class ArticleServices extends BaseServices
     }
 
     /**
-     * 获取文章列表
+     * Lấy danh sách bài viết
      * @param $new_id
      * @return int
      * @throws \think\db\exception\DataNotFoundException
@@ -186,7 +186,7 @@ class ArticleServices extends BaseServices
     }
 
     /**
-     * 图文详情
+     * Chi tiết tin bài
      * @param $new_id
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
@@ -199,7 +199,7 @@ class ArticleServices extends BaseServices
     }
 
     /**
-     * 自定义组件-文章
+     * Thành phần tùy chỉnh - bài viết
      * @param $where
      * @return array
      * @throws \ReflectionException
@@ -246,10 +246,10 @@ class ArticleServices extends BaseServices
             ];
         }
         if (empty($where['in_ids'])) return $data;
-        // 将$list转换为以id为键的数组
+        // Chuyển $list thành mảng lấy id làm khóa
         $list = array_column($data, null, 'id');
         $data = [];
-        // 遍历where中的ids，按顺序取出对应文章
+        // Duyệt qua ids trong where, lấy ra bài viết tương ứng theo thứ tự
         foreach ($where['in_ids'] as $id) {
             if (isset($list[$id])) {
                 $data[] = $list[$id];

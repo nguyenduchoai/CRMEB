@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,7 +17,7 @@ use app\model\user\UserMoney;
 class UserMoneyDao extends BaseDao
 {
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -26,7 +26,7 @@ class UserMoneyDao extends BaseDao
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @param array $where
      * @param string $field
      * @param int $page
@@ -42,7 +42,7 @@ class UserMoneyDao extends BaseDao
     }
 
     /**
-     * 余额趋势
+     * Xu hướng số dư
      * @param $time
      * @param $timeType
      * @param $field
@@ -67,7 +67,7 @@ class UserMoneyDao extends BaseDao
     }
 
     /**
-     * 获取某个字段总和
+     * Lấy tổng giá trị của một trường
      * @param array $where
      * @param string $field
      * @return float
@@ -82,7 +82,7 @@ class UserMoneyDao extends BaseDao
     }
 
     /**
-     * 根据某字段分组查询
+     * Truy vấn nhóm theo một trường
      * @param array $where
      * @param string $field
      * @param string $group

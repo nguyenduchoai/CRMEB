@@ -17,7 +17,7 @@
               url="/pages/index/index"
             >
               <view class="iconfont icon-shouye6"></view>
-              <view class="p_center">{{ $t(`首页`) }}</view>
+              <view class="p_center">{{ $t(`Trang chủ`) }}</view>
             </navigator>
             <view v-if="item_id === 1" @click="setCollect" class="item">
               <view
@@ -25,7 +25,7 @@
                 v-if="storeInfo.userCollect"
               ></view>
               <view class="iconfont icon-shoucang4" v-else></view>
-              <view class="p_center">{{ $t(`收藏`) }}</view>
+              <view class="p_center">{{ $t(`Yêu thích`) }}</view>
             </view>
             <view
               v-if="item_id === 2"
@@ -38,7 +38,7 @@
                   CartCount || 0
                 }}</text>
               </view>
-              <view class="p_center">{{ $t(`购物车`) }}</view>
+              <view class="p_center">{{ $t(`Giỏ hàng`) }}</view>
             </view>
             <!-- #ifdef APP-PLUS || H5 -->
             <view
@@ -47,7 +47,7 @@
               @click="goCustomer"
             >
               <view class="iconfont icon-kefu"></view>
-              <view class="p_center">{{ $t(`客服`) }}</view>
+              <view class="p_center">{{ $t(`CSKH`) }}</view>
             </view>
             <!-- #endif -->
             <!-- #ifdef MP -->
@@ -57,7 +57,7 @@
               @click="goCustomer"
             >
               <view class="iconfont icon-kefu"></view>
-              <view class="p_center">{{ $t(`客服`) }}</view>
+              <view class="p_center">{{ $t(`CSKH`) }}</view>
             </view>
             <button
               v-else-if="item_id === 0 && routineContact == 1"
@@ -70,12 +70,12 @@
               hover-class="none"
             >
               <view class="iconfont icon-kefu"></view>
-              <view class="p_center">{{ $t(`客服`) }}</view>
+              <view class="p_center">{{ $t(`CSKH`) }}</view>
             </button>
             <!-- #endif -->
             <view v-if="item_id === 4" class="item" @click="goShare">
               <view class="iconfont icon-fenxiang4"></view>
-              <view class="p_center">{{ $t(`分享`) }}</view>
+              <view class="p_center">{{ $t(`Chia sẻ`) }}</view>
             </view>
           </block>
           <view v-if="is_gift" @click="goGift()" class="item">
@@ -84,7 +84,7 @@
               src="@/static/images/gift-icon.png"
               mode=""
             ></image>
-            <view class="p_center">{{ $t(`送礼物`) }}</view>
+            <view class="p_center">{{ $t(`Tặng quà`) }}</view>
           </view>
         </block>
         <block v-else>
@@ -115,7 +115,7 @@
               src="@/static/images/gift-icon.png"
               mode=""
             ></image>
-            <view class="p_center">{{ $t(`送礼物`) }}</view>
+            <view class="p_center">{{ $t(`Tặng quà`) }}</view>
           </view>
         </block>
       </div>
@@ -123,7 +123,7 @@
         <view class="acea-row">
           <form class="bnts bg-color-hui">
             <button class="bnts bg-color-hui" form-type="submit">
-              {{ $t(`暂无产品`) }}
+              {{ $t(`Sản phẩm không khả dụng`) }}
             </button>
           </form>
         </view>
@@ -146,7 +146,7 @@
                 form-type="submit"
                 :style="cartBtnStyle"
               >
-                {{ $t(`加入购物车`) }}
+                {{ $t(`Thêm vào giỏ hàng`) }}
               </button>
             </form>
             <form class="buy bnts bg-color-hui">
@@ -155,7 +155,7 @@
                 form-type="submit"
                 :class="!isCartButtonVisible ? 'virbnt' : ''"
               >
-                {{ $t(`已售罄`) }}
+                {{ $t(`Đã bán hết`) }}
               </button>
             </form>
           </view>
@@ -170,7 +170,7 @@
                 form-type="submit"
                 :style="cartBtnStyle"
               >
-                {{ $t(`加入购物车`) }}
+                {{ $t(`Thêm vào giỏ hàng`) }}
               </button>
             </form>
             <form
@@ -184,7 +184,7 @@
                 form-type="submit"
                 :style="buyBtnStyle"
               >
-                {{ $t(`立即购买`) }}
+                {{ $t(`Mua ngay`) }}
               </button>
             </form>
           </view>
@@ -196,7 +196,7 @@
           >
             <form class="bnts bg-color-hui">
               <button class="bnts bg-color-hui" form-type="submit">
-                {{ presale_pay_status === 1 ? $t(`未开始`) : $t(`已结束`) }}
+                {{ presale_pay_status === 1 ? $t(`Chưa bắt đầu`) : $t(`Đã kết thúc`) }}
               </button>
             </form>
           </view>
@@ -209,14 +209,14 @@
           >
             <form class="bnts bg-color-hui">
               <button class="bnts bg-color-hui" form-type="submit">
-                {{ $t(`已售罄`) }}
+                {{ $t(`Đã bán hết`) }}
               </button>
             </form>
           </view>
           <view class="bnts acea-row" v-else-if="presale_pay_status === 2">
             <form @submit="goBuy" class="bnts">
               <button class="bnts" form-type="submit" :style="buyBtnStyle">
-                {{ $t(`立即购买`) }}
+                {{ $t(`Mua ngay`) }}
               </button>
             </form>
           </view>
@@ -431,10 +431,10 @@ export default {
   width: 100%;
   box-sizing: border-box;
   z-index: 277;
-  border-top: 1rpx solid #f0f0f0; // 保留默认边框作为兜底
+  border-top: 1rpx solid #f0f0f0; // Giữ viền mặc định làm phương án dự phòng
   height: 100rpx;
-  height: calc(100rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-  height: calc(100rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+  height: calc(100rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+  height: calc(100rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
   transform: translate3d(0, 100%, 0);
   transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
 

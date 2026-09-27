@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,7 +15,7 @@ use think\facade\Log;
 use think\Response;
 
 /**
- * 请求结束事件
+ * Event kết thúc request
  * Class Create
  * @package app\listener\http
  */
@@ -24,19 +24,19 @@ class HttpEndListener
     public function handle(Response $response): void
     {
         if (!is_array($response->getData())) return;
-        //业务成功和失败分开存储
+        //Lưu riêng thành công và thất bại của nghiệp vụ
         $status = $response->getData()["status"] ?? 0;
         if ($status == 200) {
-            //业务成功日志开关
+            //Công tắc log khi nghiệp vụ thành công
             if (!config("log.success_log")) return;
             $type = "success";
         } else {
-            //业务失败日志开关
+            //Công tắc log khi nghiệp vụ thất bại
             if (!config("log.fail_log")) return;
             $type = "fail";
         }
 
-        //当前用户身份标识
+        //Định danh người dùng hiện tại
         if (!empty(request()->uid())) {
             $uid = request()->uid();
         } elseif (!empty(request()->adminId())) {
@@ -47,16 +47,16 @@ class HttpEndListener
             $uid = 0;
         }
 
-        //日志内容
+        //Nội dung log
         $log = [
-            $uid,                                                                                 //用户ID
-            request()->ip(),                                                                      //客户ip
-            ceil(msectime() - (request()->time(true) * 1000)),                                    //耗时（毫秒）
-            request()->rule()->getMethod(),                                                       //请求类型
-            str_replace("/", "", request()->rootUrl()),                                           //应用
-            request()->baseUrl(),                                                                 //路由
-            json_encode(request()->param(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),     //请求参数
-            json_encode($response->getData(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),   //响应数据
+            $uid,                                                                                 //ID người dùng
+            request()->ip(),                                                                      //IP khách hàng
+            ceil(msectime() - (request()->time(true) * 1000)),                                    //Thời gian xử lý (mili giây)
+            request()->rule()->getMethod(),                                                       //Loại request
+            str_replace("/", "", request()->rootUrl()),                                           //Ứng dụng
+            request()->baseUrl(),                                                                 //Đường dẫn
+            json_encode(request()->param(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),     //Tham số request
+            json_encode($response->getData(), JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES),   //Dữ liệu phản hồi
 
         ];
         Log::write(implode("|", $log), $type);

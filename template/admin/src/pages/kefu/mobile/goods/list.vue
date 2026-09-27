@@ -16,7 +16,7 @@
       <div class="search-box">
         <el-input
           type="text"
-          placeholder="搜索商品名称/ID"
+          placeholder="Tìm kiếm tên sản phẩm/ID"
           v-model="searchTxt"
           style="border-radius: 0.39rem; background: #f5f6f9"
           :search="true"
@@ -31,20 +31,20 @@
           <div class="info">
             <div class="title line2 mb15">{{ item.store_name }}</div>
             <div class="num">
-              <span class="mr15">库存 {{ item.stock }}</span>
-              <span>销量 {{ item.sales }}</span>
+              <span class="mr15">Tồn kho {{ item.stock }}</span>
+              <span>Lượt bán {{ item.sales }}</span>
             </div>
           </div>
           <div class="right">
             <div class="price">￥{{ item.price }}</div>
-            <div class="btn" v-db-click @click="bingGoods(item)">推送</div>
+            <div class="btn" v-db-click @click="bingGoods(item)">Gửi</div>
           </div>
         </div>
         <div class="slot-load" slot="load-deactive"></div>
-        <div class="slot-load" slot="load-active">下滑加载更多</div>
+        <div class="slot-load" slot="load-active">Kéo xuống để tải thêm</div>
       </vue-scroll>
     </div>
-    <empty v-else msg="暂无商品信息"></empty>
+    <empty v-else msg="Chưa có thông tin sản phẩm"></empty>
   </div>
 </template>
 
@@ -72,17 +72,17 @@ export default {
       tabList: [
         {
           key: 0,
-          title: '购买',
+          title: 'Mua',
           api: 'productCart',
         },
         {
           key: 1,
-          title: '足迹',
+          title: 'Lịch sử xem',
           api: 'productHot',
         },
         {
           key: 2,
-          title: '热销',
+          title: 'Bán chạy',
           api: 'productVisit',
         },
       ],
@@ -100,13 +100,13 @@ export default {
   },
   created() {
     serviceInfo().then((res) => {
-      window.document.title = `${res.data.site_name} - 商品列表`;
+      window.document.title = `${res.data.site_name} - Danh sách sản phẩm`;
     });
     this.toUid = this.$route.query.toUid;
     this.getBuyList();
   },
   methods: {
-    // 购买记录
+    // Lịch sử mua hàng
     getBuyList() {
       productCart(this.toUid, {
         store_name: this.searchTxt,
@@ -114,7 +114,7 @@ export default {
         this.list = res.data;
       });
     },
-    // 热销商品
+    // Sản phẩm bán chạy
     getProductHot() {
       productHot(this.toUid, {
         store_name: this.searchTxt,
@@ -122,7 +122,7 @@ export default {
         this.list = res.data;
       });
     },
-    // 足迹
+    // Lịch sử xem
     getVisit() {
       productVisit(this.toUid, {
         store_name: this.searchTxt,
@@ -130,7 +130,7 @@ export default {
         this.list = res.data;
       });
     },
-    // 推送
+    // Gửi
     bingGoods(item) {
       let obj = {
         type: 'chat',
@@ -146,11 +146,11 @@ export default {
       // this.bus.$emit('selectGoods',item)
       this.$router.go(-1);
     },
-    // 顶部选项卡切换
+    // Chuyển đổi tab phía trên
     bindTab(item) {
       this.tabCur = item.key;
     },
-    // 搜索
+    // Tìm kiếm
     bindSearch() {
       if (this.tabCur == 0) return this.getBuyList();
       if (this.tabCur == 1) return this.getVisit();

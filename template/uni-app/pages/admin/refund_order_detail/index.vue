@@ -1,7 +1,7 @@
 <template>
 	<view>
 		<!-- #ifdef MP || APP-PLUS -->
-<!-- 		<NavBar titleText="订单详情" :iconColor="iconColor" :textColor="iconColor" :isScrolling="isScrolling" showBack></NavBar> -->
+<!-- 		<NavBar titleText="Chi tiết đơn hàng" :iconColor="iconColor" :textColor="iconColor" :isScrolling="isScrolling" showBack></NavBar> -->
 		<!-- #endif -->
 		<view class="headerBg">
 			<view :style="{ height: `${getHeight.barTop}px` }"></view>
@@ -12,12 +12,12 @@
 			<view class="header">
 				<view class="state">{{ title }}</view>
 				<view class="data">
-					订单号：{{ orderInfo.store_order_sn }}
+					Mã đơn hàng: {{ orderInfo.store_order_sn }}
 				</view>
 			</view>
 			<view class="remarks acea-row row-middle  h-100" v-if="goname != 'looks'" @click="modify('1')">
 				<text class="iconfont icon-ic_notes mr-10"></text>
-				<text class="line1" style="text-align: left;">{{ orderInfo.remark ? orderInfo.remark : '订单未备注，点击添加备注信息' }}</text>
+				<text class="line1" style="text-align: left;">{{ orderInfo.remark ? orderInfo.remark : 'Đơn hàng chưa có ghi chú, nhấn để thêm ghi chú' }}</text>
 			</view>
 			<!-- <view class="orderingUser acea-row row-middle" v-if="orderInfo.nickname">
 				<span class="iconfont icon-yonghu2"></span>{{ orderInfo.nickname }}
@@ -34,10 +34,10 @@
 					<view v-else class="">ID:{{userInfo.uid}}</view>
 				</view>
 			</view>
-			<!-- 拆单时 -->
+			<!-- Khi tách đơn -->
 			<view v-for="(j, indexw) in orderInfo.split" :key="indexw" v-if="orderInfo.split && orderInfo.split.length">
 				<view class="splitTitle acea-row row-between-wrapper">
-					<view>订单包裹{{indexw + 1}}</view>
+					<view>Kiện hàng {{indexw + 1}}</view>
 					<view class="title">{{j._status._title}}</view>
 				</view>
 				<view class="pos-order-goods">
@@ -76,14 +76,14 @@
 					<view class="money">
 						<!-- <view class="x-money">￥{{ item.productInfo.attrInfo?item.productInfo.attrInfo.price:item.productInfo.price }}</view> -->
 						<BaseMoney :money="item.productInfo.attrInfo?item.productInfo.attrInfo.price :item.productInfo.price" symbolSize="20" integerSize="32" decimalSize="20"></BaseMoney>
-						<view class="num">共{{ item.cart_num }}件</view>
+						<view class="num">Tổng {{ item.cart_num }} sản phẩm</view>
 						<view class="acea-row row-right">
-							<view class="writeOff" v-if="item.refund_num  && orderInfo.refund_type != 6">{{item.refund_num}}件退款中</view>
+							<view class="writeOff" v-if="item.refund_num  && orderInfo.refund_type != 6">{{item.refund_num}} sản phẩm đang hoàn tiền</view>
 							<view class="writeOff" v-if="orderInfo._status._type==2 && orderInfo.delivery_type == 'send'">
 								<text v-if="item.refund_num">，</text>
-								<text class="on" v-if="item.is_writeoff">已核销</text>
-								<text v-if="!item.is_writeoff && item.surplus_num<item.cart_num">已核销{{parseInt(item.cart_num)-parseInt(item.surplus_num)}}件</text>
-								<text v-if="!item.is_writeoff && item.surplus_num==item.cart_num">未核销</text>
+								<text class="on" v-if="item.is_writeoff">Đã xác nhận sử dụng</text>
+								<text v-if="!item.is_writeoff && item.surplus_num<item.cart_num">Đã xác nhận sử dụng {{parseInt(item.cart_num)-parseInt(item.surplus_num)}} sản phẩm</text>
+								<text v-if="!item.is_writeoff && item.surplus_num==item.cart_num">Chưa xác nhận sử dụng</text>
 							</view>
 						</view>
 					</view>
@@ -96,7 +96,7 @@
 								<image :src="item.productInfo.image" v-else></image>
 							</view>
 							<view class="texts">
-								<view class="name line1">[赠品]{{item.productInfo.store_name}}</view>
+								<view class="name line1">[Quà tặng] {{item.productInfo.store_name}}</view>
 								<view class="limit line1" v-if="item.productInfo.attrInfo">{{item.productInfo.attrInfo.suk}}</view>
 							</view>
 						</view>
@@ -108,7 +108,7 @@
 								<text class="iconfont icon-pc-youhuiquan"></text>
 							</view>
 							<view class="texts">
-								<view class="line1">[赠品]{{item.coupon_title}}</view>
+								<view class="line1">[Quà tặng] {{item.coupon_title}}</view>
 							</view>
 						</view>
 					</view>
@@ -118,78 +118,78 @@
 								<text class="iconfont icon-pc-jifen"></text>
 							</view>
 							<view class="texts">
-								<view class="line1">[赠品]{{giveData.give_integral}}积分</view>
+								<view class="line1">[Quà tặng] {{giveData.give_integral}} điểm thưởng</view>
 							</view>
 						</view>
 					</view>
 				</view>
 			</view>
 			<!-- <view class="public-total" v-if="!orderInfo.split || !orderInfo.split.length">
-				共{{ orderInfo.total_num }}件商品，实付款
-				<span class="money">￥{{ orderInfo.pay_price }}</span> ( 邮费 ¥{{
+				Tổng {{ orderInfo.total_num }} sản phẩm, thực thanh toán
+				<span class="money">₫{{ orderInfo.pay_price }}</span> ( phí vận chuyển ₫{{
 		    orderInfo.pay_postage
 		  }}
 				)
 			</view> -->
-			<!-- 结束 -->
+			<!-- là kết thúc -->
 			<view class='wrapper'>
 				<view class='item acea-row row-between'>
-					<view>退款原因</view>
+					<view>Lý do hoàn tiền</view>
 					<view class='conter'>{{orderInfo.refund_reason}}</view>
 				</view>
 				<view class='item acea-row row-between'>
-					<view>退款金额</view>
+					<view>Số tiền hoàn</view>
 					<view class='conter'>¥{{orderInfo.refund_price}}</view>
 				</view>
 				<view class='item acea-row row-between'>
-					<view>申请件数</view>
+					<view>Số lượng yêu cầu</view>
 					<view class='conter'>{{orderInfo.refund_num}}</view>
 				</view>
 			</view>
 			<customForm :customForm="orderInfo.custom_form"></customForm>
 			<view class="wrapper">
 				<view class="item acea-row row-between">
-					<view>订单编号：</view>
+					<view>Mã đơn hàng:</view>
 					<view class="conter acea-row row-middle row-right">
 						{{ orderInfo.store_order_sn}}
-						<text class="copy copy-data" @click="copyNum(orderInfo.store_order_sn)">复制</text>
+						<text class="copy copy-data" @click="copyNum(orderInfo.store_order_sn)">Sao chép</text>
 					</view>
 				</view>
 				<view class="item acea-row row-between">
-					<view>申请时间</view>
+					<view>Thời gian đăng ký</view>
 					<view class="conter">{{ orderInfo.add_time_y }} {{ orderInfo.add_time_h }}</view>
 				</view>
 				<view class="item acea-row row-between" v-show="[1,2,4,5].includes(orderInfo.refund_type)">
-					<view>售后类型</view>
-					<view class="conter" v-if="orderInfo.refund_type == 1">仅退款</view>
-					<view class="conter" v-if="[2,4,5].includes(orderInfo.refund_type)">退货退款</view>
+					<view>Loại hậu mãi</view>
+					<view class="conter" v-if="orderInfo.refund_type == 1">Chỉ hoàn tiền</view>
+					<view class="conter" v-if="[2,4,5].includes(orderInfo.refund_type)">Trả hàng hoàn tiền</view>
 				</view>
 				<view class="item acea-row row-between">
-					<view>售后单号</view>
+					<view>Mã đơn hậu mãi</view>
 					<view class="conter">
 						{{ orderInfo.order_id }}
-						<text class="copy copy-data" @click="copyNum(orderInfo.order_id)">复制</text>
+						<text class="copy copy-data" @click="copyNum(orderInfo.order_id)">Sao chép</text>
 					</view>
 				</view>
 				<view class="item acea-row row-between" v-if="orderInfo.refund_type == 5">
-					<view>物流单号</view>
+					<view>Mã vận đơn</view>
 					<view class="conter">{{ orderInfo.refund_express }}</view>
 				</view>
 				<view class="item acea-row row-between">
-					<view>备注说明</view>
+					<view>Ghi chú</view>
 					<view class="conter">{{ orderInfo.mark }}</view>
 				</view>
 				<!-- <view class="item acea-row row-between" v-if="orderInfo.mark">
-					<view v-if="statusType == -3">退款留言：</view>
-					<view v-else>买家留言：</view>
+					<view v-if="statusType == -3">Lời nhắn hoàn tiền:</view>
+					<view v-else>Lời nhắn của người mua:</view>
 					<view class="conter">{{ orderInfo.mark }}</view>
 				</view>
 				<view class="item acea-row row-between" v-if="orderInfo.refund_goods_explain">
-					<view>退货留言：</view>
+					<view>Lời nhắn trả hàng:</view>
 					<view class='conter'>{{orderInfo.refund_goods_explain}}</view>
 				</view> -->
 				<view class="item acea-row row-between" v-if="orderInfo.refund_img && orderInfo.refund_img.length">
-					<view>退款凭证：</view>
+					<view>Chứng từ hoàn tiền:</view>
 					<view class="conter">
 						<view class="pictrue" v-for="(item,index) in orderInfo.refund_img" :key="index">
 							<image :src="item" mode="aspectFill" @click='getpreviewImage(index,1)'></image>
@@ -197,7 +197,7 @@
 					</view>
 				</view>
 				<view class="item acea-row row-between" v-if="orderInfo.refund_goods_img && orderInfo.refund_goods_img.length">
-					<view>退货凭证：</view>
+					<view>Chứng từ trả hàng:</view>
 					<view class="conter">
 						<view class="pictrue" v-for="(item,index) in orderInfo.refund_goods_img" :key="index">
 							<image :src="item" mode="aspectFill" @click='getpreviewImage(index,0)'></image>
@@ -209,52 +209,52 @@
 		    orderInfo.delivery_type != 'fictitious' && orderInfo._status._type === 2 && (!orderInfo.split || !orderInfo.split.length)
 		  ">
 				<view class="item acea-row row-between">
-					<view>配送方式：</view>
+					<view>Phương thức giao hàng:</view>
 					<view class="conter" v-if="orderInfo.delivery_type === 'express'">
-						快递
+						Chuyển phát
 					</view>
-					<view class="conter" v-if="orderInfo.delivery_type === 'send'">送货</view>
+					<view class="conter" v-if="orderInfo.delivery_type === 'send'">Cửa hàng tự giao</view>
 				</view>
 				<view class="item acea-row row-between">
-					<view v-if="orderInfo.delivery_type === 'express'">快递公司：</view>
-					<view v-if="orderInfo.delivery_type === 'send'">送货人：</view>
+					<view v-if="orderInfo.delivery_type === 'express'">Đơn vị vận chuyển:</view>
+					<view v-if="orderInfo.delivery_type === 'send'">Người giao hàng:</view>
 					<view class="conter">{{ orderInfo.delivery_name }}</view>
 				</view>
 				<view class="item acea-row row-between">
-					<view v-if="orderInfo.delivery_type === 'express'">快递单号：</view>
-					<view v-if="orderInfo.delivery_type === 'send'">送货人电话：</view>
+					<view v-if="orderInfo.delivery_type === 'express'">Mã vận đơn:</view>
+					<view v-if="orderInfo.delivery_type === 'send'">Số điện thoại người giao hàng:</view>
 					<view class="conter">
 						{{ orderInfo.delivery_id}}
-						<span class="copy copy-data" @click="copyNum(orderInfo.delivery_id)">复制</span>
+						<span class="copy copy-data" @click="copyNum(orderInfo.delivery_id)">Sao chép</span>
 					</view>
 				</view>
 			</view>
 			<view class="wrapper" v-if="orderInfo.refund_type == 5">
 				<view class='item acea-row row-between'>
-					<view>退货方式</view>
-					<view class='conter'>快递退回</view>
+					<view>Hình thức trả hàng</view>
+					<view class='conter'>Gửi trả qua chuyển phát</view>
 				</view>
 				<view class="item acea-row row-between" v-if="orderInfo.refund_express_name">
-					<view>物流公司</view>
+					<view>Đơn vị vận chuyển</view>
 					<view class="conter">{{ orderInfo.refund_express_name }}</view>
 				</view>
 				<view class='item acea-row row-between' v-if="orderInfo.refund_express">
-					<view>物流单号</view>
+					<view>Mã vận đơn</view>
 					<view class='conter'>{{ orderInfo.refund_express }}</view>
 				</view>
 				<view class="item acea-row row-between" v-if="orderInfo.refund_phone">
-					<view>联系电话</view>
+					<view>Số điện thoại liên hệ</view>
 					<view class="conter">{{ orderInfo.refund_phone }}</view>
 				</view>
 			</view>
 			<view class="height-add"></view>
 			<view class="footer acea-row row-right row-middle" v-if="goname != 'looks'">
 				<view class="more"></view>
-				<view class="btn cancel" @click="modify('1')">订单备注</view>
-				<view class="btn delivery" v-if="orderInfo.refund_type == 1" @click="modify('2',1)">退款审核</view>
-				<view class="btn delivery" v-if="orderInfo.refund_type == 2" @click="modify('2',0)">退款审核</view>
-				<view class="btn" v-if="orderInfo.refund_type == 5" @click="goLogistics(orderInfo)">查看物流</view>
-				<view class="btn delivery" v-if="orderInfo.refund_type == 5" @click="modify('2',1)">确认收货</view>
+				<view class="btn cancel" @click="modify('1')">Ghi chú đơn hàng</view>
+				<view class="btn delivery" v-if="orderInfo.refund_type == 1" @click="modify('2',1)">Duyệt hoàn tiền</view>
+				<view class="btn delivery" v-if="orderInfo.refund_type == 2" @click="modify('2',0)">Duyệt hoàn tiền</view>
+				<view class="btn" v-if="orderInfo.refund_type == 5" @click="goLogistics(orderInfo)">Xem vận chuyển</view>
+				<view class="btn delivery" v-if="orderInfo.refund_type == 5" @click="modify('2',1)">Xác nhận đã nhận hàng</view>
 			</view>
 			<PriceChange :change="change" :orderInfo="orderInfo" :isRefund="isRefund" @closechange="changeclose" @savePrice="savePrice" :status="status">
 			</PriceChange>
@@ -314,7 +314,7 @@
 				statusType: -3,
 				clickNum: 1,
 				goname: '',
-				isRefund: 0, //1是仅退款;0是同意退货退款
+				isRefund: 0, //1 là chỉ hoàn tiền; 0 là đồng ý trả hàng hoàn tiền
 				// #ifdef MP || APP-PLUS
 				iconColor: '#FFFFFF',
 				isScrolling: false,
@@ -457,7 +457,7 @@
 				if (that.status == 0) {
 					if (!isMoney(price)) {
 						return that.$util.Tips({
-							title: '请输入正确的金额'
+							title: 'Vui lòng nhập số tiền hợp lệ'
 						});
 					}
 					data.price = price;
@@ -465,7 +465,7 @@
 						function() {
 							that.change = false;
 							that.$util.Tips({
-								title: '改价成功',
+								title: 'Đổi giá thành công',
 								icon: 'success'
 							})
 							that.getIndex();
@@ -473,7 +473,7 @@
 						function() {
 							that.change = false;
 							that.$util.Tips({
-								title: '改价失败',
+								title: 'Đổi giá thất bại',
 								icon: 'none'
 							})
 						}
@@ -482,7 +482,7 @@
 					if (this.isRefund) {
 						if (!isMoney(refund_price)) {
 							return that.$util.Tips({
-								title: '请输入正确的金额'
+								title: 'Vui lòng nhập số tiền hợp lệ'
 							});
 						}
 						data.price = refund_price;
@@ -516,7 +516,7 @@
 				} else {
 					if (!remark) {
 						return this.$util.Tips({
-							title: '请输入备注'
+							title: 'Vui lòng nhập ghi chú'
 						})
 					}
 					data.remark = remark;
@@ -614,8 +614,8 @@
 	}
 
 	.height-add {
-		height: calc(120rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-		height: calc(120rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+		height: calc(120rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+		height: calc(120rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 	}
 
 	.giveGoods {
@@ -681,7 +681,7 @@
 		color: #2291f8;
 	}
 
-	/*商户管理订单详情*/
+	/*Chi tiết đơn hàng quản lý của cửa hàng*/
 	.pos-order-details .header {
 		// background: linear-gradient(270deg, #1cd1dc 0%, #2291f8 100%);
 	}
@@ -801,7 +801,7 @@
 		height: 100%;
 	}
 
-	/*订单详情*/
+	/*Chi tiết đơn hàng*/
 	.order-details .header {
 		padding: 48rpx 0 30rpx 12rpx;
 	}
@@ -996,10 +996,10 @@
 		background-color: #fff;
 		padding: 0 30upx;
 		border-top: 1px solid #eee;
-		height: calc(100rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-		height: calc(100rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
-		padding-bottom: calc(0rpx + constant(safe-area-inset-bottom)); ///兼容 IOS<11.2/
-		padding-bottom: calc(0rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+		height: calc(100rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+		height: calc(100rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
+		padding-bottom: calc(0rpx + constant(safe-area-inset-bottom)); ///Tương thích IOS<11.2/
+		padding-bottom: calc(0rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 	}
 
 	.order-details .footer .wait {

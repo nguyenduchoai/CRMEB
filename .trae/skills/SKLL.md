@@ -1,114 +1,114 @@
-# CRMEB 技能说明文档
+# Tài liệu mô tả skill của CRMEB
 
-## 技能列表
+## Danh sách skill
 
-### 1. 现有技能
+### 1. Các skill hiện có
 
-| 技能名称 | 目录 | 描述 |
+| Tên skill | Thư mục | Mô tả |
 |---------|------|------|
-| 管理端前端说明 | admin-element/ | 管理端前端开发skill说明 |
-| 开发文档AI生成说明 | dev-docs-generate/ | 开发文档AI生成skill说明 |
-| Git提交规范 | git-commit/ | 规范git提交信息格式，确保不同目录下的文件提交时添加正确的前缀 |
-| PHP后端开发说明 | php-api/ | PHP后端开发skill说明，包含API接口开发、数据库设计等 |
-| 移动端开发说明 | uniapp/ | 移动端uniapp开发说明 |
+| Mô tả frontend trang quản trị | admin-element/ | Mô tả skill phát triển frontend trang quản trị |
+| Hướng dẫn tạo tài liệu phát triển bằng AI | dev-docs-generate/ | Mô tả skill tạo tài liệu phát triển bằng AI |
+| Quy ước commit Git | git-commit/ | Chuẩn hóa định dạng thông điệp commit git, đảm bảo thêm đúng tiền tố khi commit tệp ở các thư mục khác nhau |
+| Hướng dẫn phát triển backend PHP | php-api/ | Mô tả skill phát triển backend PHP, bao gồm phát triển API, thiết kế cơ sở dữ liệu, v.v. |
+| Hướng dẫn phát triển phía di động | uniapp/ | Mô tả phát triển uniapp cho di động |
 
-## 技能文档规范
+## Quy chuẩn tài liệu skill
 
-### 1. 文件结构
+### 1. Cấu trúc file
 
 ```
 .trae/skills/
-├── 技能目录/
-│   ├── SKILL.md           # 技能说明文档
-│   └── references/        # 参考文档目录（可选）
-│       └── *.md           # 相关参考文档
-└── SKLL.md               # 技能列表文档
+├── Thư mục skill/
+│   ├── SKILL.md           # Tài liệu mô tả skill
+│   └── references/        # Thư mục tài liệu tham khảo (tùy chọn)
+│       └── *.md           # Tài liệu tham khảo liên quan
+└── SKLL.md               # Tài liệu danh sách skill
 ```
 
-### 2. SKILL.md 格式规范
+### 2. Quy chuẩn định dạng SKILL.md
 
-#### 2.1 文档头部
+#### 2.1 Phần đầu tài liệu
 
 ```yaml
 ---
-name: 技能名称
-description: 技能描述
+name: Tên skill
+description: Mô tả skill
 ---
 ```
 
-#### 2.2 文档结构
+#### 2.2 Cấu trúc tài liệu
 
-1. **标题**：技能名称
-2. **自动触发说明**：
-   - 触发条件（操作触发、内容触发、命令触发）
-   - 适用场景（核心场景、辅助场景）
-   - 触发机制（调用时机、频率、优先级）
-   - 触发后行为（自动分析、展示、建议）
-3. **核心内容**：技能相关的技术文档
-4. **最佳实践**：开发、使用建议
-5. **常见问题**：常见问题及解决方案
-6. **参考资源**：相关文档、工具等
+1. **Tiêu đề**: Tên skill
+2. **Mô tả cơ chế tự động kích hoạt**:
+   - Điều kiện kích hoạt (kích hoạt theo thao tác, kích hoạt theo nội dung, kích hoạt theo lệnh)
+   - Tình huống áp dụng (tình huống cốt lõi, tình huống hỗ trợ)
+   - Cơ chế kích hoạt (thời điểm gọi, tần suất, mức ưu tiên)
+   - Hành vi sau khi kích hoạt (tự động phân tích, hiển thị, đề xuất)
+3. **Nội dung cốt lõi**: Tài liệu kỹ thuật liên quan đến skill
+4. **Thực tiễn tốt nhất**: Khuyến nghị về phát triển và sử dụng
+5. **Vấn đề thường gặp**: Các vấn đề thường gặp và giải pháp
+6. **Tài liệu tham khảo**: Tài liệu, công cụ liên quan, v.v.
 
-### 3. 技能触发机制
+### 3. Cơ chế kích hoạt skill
 
-#### 3.1 触发方式
+#### 3.1 Cách thức kích hoạt
 
-- **操作触发**：文件/目录操作时触发
-- **内容触发**：文件内容包含关键词时触发
-- **命令触发**：执行特定命令时触发
+- **Kích hoạt theo thao tác**: Kích hoạt khi thao tác với tệp/thư mục
+- **Kích hoạt theo nội dung**: Kích hoạt khi nội dung tệp chứa từ khóa
+- **Kích hoạt theo lệnh**: Kích hoạt khi thực thi lệnh cụ thể
 
-#### 3.2 触发优先级
+#### 3.2 Mức ưu tiên kích hoạt
 
-- **最高优先级**：系统核心技能
-- **高优先级**：代码结构技能
-- **中等优先级**：开发技能（前端、后端、移动端）
-- **低优先级**：辅助工具技能
+- **Ưu tiên cao nhất**: Skill cốt lõi của hệ thống
+- **Ưu tiên cao**: Skill về cấu trúc mã nguồn
+- **Ưu tiên trung bình**: Skill phát triển (frontend, backend, di động)
+- **Ưu tiên thấp**: Skill công cụ hỗ trợ
 
-## 技能使用指南
+## Hướng dẫn sử dụng skill
 
-### 1. 开发人员使用
+### 1. Dành cho lập trình viên
 
-1. **浏览触发**：浏览相关目录时自动触发对应技能
-2. **编辑触发**：编辑相关文件时自动触发对应技能
-3. **命令触发**：执行相关命令时自动触发对应技能
-4. **手动调用**：通过IDE插件手动调用对应技能
+1. **Kích hoạt khi duyệt**: Tự động kích hoạt skill tương ứng khi duyệt thư mục liên quan
+2. **Kích hoạt khi chỉnh sửa**: Tự động kích hoạt skill tương ứng khi chỉnh sửa tệp liên quan
+3. **Kích hoạt theo lệnh**: Tự động kích hoạt skill tương ứng khi thực thi lệnh liên quan
+4. **Gọi thủ công**: Gọi thủ công skill tương ứng thông qua plugin của IDE
 
-### 2. 技能维护
+### 2. Bảo trì skill
 
-1. **定期更新**：根据项目变化更新技能文档
-2. **技能扩展**：根据新功能添加新技能
-3. **技能优化**：优化技能触发机制和内容
+1. **Cập nhật định kỳ**: Cập nhật tài liệu skill theo thay đổi của dự án
+2. **Mở rộng skill**: Thêm skill mới theo tính năng mới
+3. **Tối ưu skill**: Tối ưu cơ chế kích hoạt và nội dung của skill
 
-## 技能目录说明
+## Mô tả thư mục skill
 
 ### 1. admin-element/
-- **功能**：管理端前端开发相关技能
-- **触发场景**：浏览或编辑管理端前端文件时触发
-- **核心内容**：前端组件开发、页面布局、交互逻辑等
+- **Chức năng**: Skill liên quan đến phát triển frontend trang quản trị
+- **Tình huống kích hoạt**: Kích hoạt khi duyệt hoặc chỉnh sửa tệp frontend trang quản trị
+- **Nội dung cốt lõi**: Phát triển component frontend, bố cục trang, logic tương tác, v.v.
 
 ### 2. dev-docs-generate/
-- **功能**：开发文档AI生成相关技能
-- **触发场景**：需要生成开发文档时触发
-- **核心内容**：文档结构设计、内容生成、格式规范等
+- **Chức năng**: Skill liên quan đến tạo tài liệu phát triển bằng AI
+- **Tình huống kích hoạt**: Kích hoạt khi cần tạo tài liệu phát triển
+- **Nội dung cốt lõi**: Thiết kế cấu trúc tài liệu, tạo nội dung, quy chuẩn định dạng, v.v.
 
 ### 3. git-commit/
-- **功能**：Git提交规范相关技能
-- **触发场景**：执行Git提交操作时触发
-- **核心内容**：提交信息格式、目录前缀规范、最佳实践等
+- **Chức năng**: Skill liên quan đến quy ước commit Git
+- **Tình huống kích hoạt**: Kích hoạt khi thực hiện thao tác commit Git
+- **Nội dung cốt lõi**: Định dạng thông điệp commit, quy ước tiền tố thư mục, thực tiễn tốt nhất, v.v.
 
 ### 4. php-api/
-- **功能**：PHP后端开发相关技能
-- **触发场景**：浏览或编辑后端代码时触发
-- **核心内容**：API接口开发、数据库设计、业务逻辑实现等
-- **参考文档**：包含API开发流程、数据库设计、代码规范等详细文档
+- **Chức năng**: Skill liên quan đến phát triển backend PHP
+- **Tình huống kích hoạt**: Kích hoạt khi duyệt hoặc chỉnh sửa mã nguồn backend
+- **Nội dung cốt lõi**: Phát triển API, thiết kế cơ sở dữ liệu, hiện thực logic nghiệp vụ, v.v.
+- **Tài liệu tham khảo**: Bao gồm các tài liệu chi tiết về quy trình phát triển API, thiết kế cơ sở dữ liệu, quy chuẩn mã nguồn, v.v.
 
 ### 5. uniapp/
-- **功能**：移动端开发相关技能
-- **触发场景**：浏览或编辑移动端代码时触发
-- **核心内容**：UniApp组件开发、页面路由、数据交互等
+- **Chức năng**: Skill liên quan đến phát triển phía di động
+- **Tình huống kích hoạt**: Kích hoạt khi duyệt hoặc chỉnh sửa mã nguồn phía di động
+- **Nội dung cốt lõi**: Phát triển component UniApp, route trang, tương tác dữ liệu, v.v.
 
-## 总结
+## Tổng kết
 
-技能系统是CRMEB项目开发的重要辅助工具，通过规范的技能文档和触发机制，可以帮助开发人员更快地了解项目结构、开发规范和最佳实践，提高开发效率和代码质量。
+Hệ thống skill là công cụ hỗ trợ quan trọng trong phát triển dự án CRMEB. Nhờ tài liệu skill chuẩn hóa và cơ chế kích hoạt, hệ thống giúp lập trình viên nhanh chóng nắm được cấu trúc dự án, quy chuẩn phát triển và các thực tiễn tốt nhất, nâng cao hiệu suất phát triển và chất lượng mã nguồn.
 
-建议定期维护和更新技能文档，确保其与项目发展保持同步，为开发人员提供持续的支持和指导。
+Nên định kỳ bảo trì và cập nhật tài liệu skill, đảm bảo luôn đồng bộ với sự phát triển của dự án, mang lại sự hỗ trợ và hướng dẫn liên tục cho lập trình viên.

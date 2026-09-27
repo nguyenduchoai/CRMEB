@@ -1,18 +1,18 @@
 @charset "UTF-8";
 
-/* 颜色变量 */
-/* 行为相关颜色 */
-/* 文字基本颜色 */
-/* 背景颜色 */
-/* 边框颜色 */
-/* 尺寸变量 */
-/* 文字尺寸 */
-/* 图片尺寸 */
+/* Biến màu */
+/* Màu liên quan hành vi */
+/* Màu chữ cơ bản */
+/* Màu nền */
+/* Màu viền */
+/* Biến kích thước */
+/* Kích thước chữ */
+/* Kích thước hình ảnh */
 /* Border Radius */
-/* 水平间距 */
-/* 垂直间距 */
-/* 透明度 */
-/* 文章场景相关 */
+/* Khoảng cách ngang */
+/* Khoảng cách dọc */
+/* Độ trong suốt */
+/* Liên quan đến kịch bản bài viết */
 li {
 	list-style: none;
 }

@@ -27,7 +27,7 @@
           </view>
           <view class="money font-color">
             <view class="acea-row row-middle">
-              {{ $t(`到手价`) }}
+              {{ $t(`Giá cuối cùng`) }}
               <baseMoney
                 class="mr-12"
                 :money="attr.productSelect.price"
@@ -45,15 +45,15 @@
             </view>
 
             <text class="stock" v-if="isShow && !type"
-              >{{ $t(`库存`) }}
+              >{{ $t(`Tồn kho`) }}
               {{ attr.productSelect.stock || 0 + unitName }}</text
             >
             <text class="stock" v-if="limitNum && type"
-              >{{ $t(`库存`) }}
+              >{{ $t(`Tồn kho`) }}
               {{ attr.productSelect.quota || 0 + unitName }}</text
             >
             <text class="stock" v-if="minQty > 1 && is_virtual"
-              >{{ $t(`起购`) }} {{ minQty + unitName }}</text
+              >{{ $t(`Mua tối thiểu`) }} {{ minQty + unitName }}</text
             >
           </view>
         </view>
@@ -88,16 +88,16 @@
           </view>
         </view>
         <view class="cart acea-row row-between-wrapper" v-if="!is_virtual">
-          <view class="title">{{ $t(`数量`) }}</view>
+          <view class="title">{{ $t(`Số lượng`) }}</view>
           <view class="carnum acea-row row-left">
             <text class="stock" v-if="limitNum && !type"
-              >{{ $t(`限购`) }}{{ limitNum + unitName }}</text
+              >{{ $t(`Giới hạn mua`) }}{{ limitNum + unitName }}</text
             >
             <text class="stock line" v-if="limitNum && !type && minQty > 1">
               |
             </text>
             <text class="stock" v-if="minQty > 1"
-              >{{ $t(`起购`) }}{{ minQty + unitName }}</text
+              >{{ $t(`Mua tối thiểu`) }}{{ minQty + unitName }}</text
             >
             <view
               class="item reduce acea-row row-center-wrapper"
@@ -165,7 +165,7 @@
         "
         @click="goCat"
       >
-        {{ $t(`我要参团`) }}
+        {{ $t(`Tham gia nhóm`) }}
       </view>
       <view
         class="joinBnt on"
@@ -174,18 +174,18 @@
           (iSbnt && attr.productSelect.product_stock <= 0)
         "
       >
-        {{ $t(`已售罄`) }}
+        {{ $t(`Đã bán hết`) }}
       </view>
       <view
         class="joinBnt bg-color"
         v-if="iScart && attr.productSelect.stock"
         @click="goCat"
-        >{{ $t(`确定`) }}</view
+        >{{ $t(`Xác nhận`) }}</view
       >
       <view
         class="joinBnt on"
         v-else-if="iScart && !attr.productSelect.stock"
-        >{{ $t(`已售罄`) }}</view
+        >{{ $t(`Đã bán hết`) }}</view
       >
     </view>
     <view
@@ -274,7 +274,7 @@ export default {
       this.$emit("goCat");
     },
     /**
-     * 购物车手动输入数量
+     * Nhập số lượng thủ công trong giỏ hàng
      *
      */
     bindCode: function (e) {
@@ -310,7 +310,7 @@ export default {
         }
       }
     },
-    //获取被选中属性；
+    //Lấy thuộc tính đã chọn;
     getCheckedValue: function () {
       let productAttr = this.attr.productAttr;
       let value = [];
@@ -361,8 +361,8 @@ export default {
   padding-bottom: 140rpx;
   padding-bottom: calc(
     140rpx + constant(safe-area-inset-bottom)
-  ); ///兼容 IOS<11.2/
-  padding-bottom: calc(140rpx + env(safe-area-inset-bottom)); ///兼容 IOS>11.2/
+  ); ///Tương thích IOS<11.2/
+  padding-bottom: calc(140rpx + env(safe-area-inset-bottom)); ///Tương thích IOS>11.2/
 }
 
 .product-window.on {

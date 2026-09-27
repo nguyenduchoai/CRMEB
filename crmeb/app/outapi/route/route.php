@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -17,87 +17,87 @@ use think\Response;
 Route::group(function () {
 
     Route::group(function () {
-        //获取token
-        Route::post('access_token', 'Login/getToken')->name('getToken')->option(['real_name' => '登录获取token']);
-        //刷新token
-        Route::post('refresh_token', 'Login/refreshToken')->name('refreshToken')->option(['real_name' => '刷新token']);
-    })->option(['mark' => 'common', 'mark_name' => '公共接口']);
+        //Lấy token
+        Route::post('access_token', 'Login/getToken')->name('getToken')->option(['real_name' => 'Đăng nhập để lấy token']);
+        //Làm mới token
+        Route::post('refresh_token', 'Login/refreshToken')->name('refreshToken')->option(['real_name' => 'Làm mới token']);
+    })->option(['mark' => 'common', 'mark_name' => 'API chung']);
 
     Route::group(function () {
         Route::group(function () {
-            //商品分类
-            Route::get('category/list', 'StoreCategory/index')->option(['real_name' => '分类列表']);
-            Route::get('category/:id', 'StoreCategory/read')->option(['real_name' => '获取分类']);
-            Route::post('category', 'StoreCategory/save')->option(['real_name' => '新增分类']);
-            Route::put('category/:id', 'StoreCategory/update')->option(['real_name' => '修改分类']);
-            Route::delete('category/:id', 'StoreCategory/delete')->option(['real_name' => '删除分类']);
-            Route::put('category/set_show/:id/:is_show', 'StoreCategory/set_show')->option(['real_name' => '修改分类状态']);
-        })->option(['mark' => 'category', 'mark_name' => '商品分类']);
+            //Danh mục sản phẩm
+            Route::get('category/list', 'StoreCategory/index')->option(['real_name' => 'Danh sách danh mục']);
+            Route::get('category/:id', 'StoreCategory/read')->option(['real_name' => 'Lấy danh mục']);
+            Route::post('category', 'StoreCategory/save')->option(['real_name' => 'Thêm danh mục']);
+            Route::put('category/:id', 'StoreCategory/update')->option(['real_name' => 'Sửa danh mục']);
+            Route::delete('category/:id', 'StoreCategory/delete')->option(['real_name' => 'Xóa danh mục']);
+            Route::put('category/set_show/:id/:is_show', 'StoreCategory/set_show')->option(['real_name' => 'Chỉnh sửa trạng thái danh mục']);
+        })->option(['mark' => 'category', 'mark_name' => 'Danh mục sản phẩm']);
 
         Route::group(function () {
-            //商品
-            Route::get('product/list', 'StoreProduct/index')->option(['real_name' => '商品列表']);
-            Route::post('product', 'StoreProduct/save')->option(['real_name' => '新增商品']);
-            Route::put('product/:id', 'StoreProduct/update')->option(['real_name' => '修改商品']);
-            Route::get('product/:id', 'StoreProduct/read')->option(['real_name' => '获取商品']);
-            Route::put('product/set_show/:id/:is_show', 'StoreProduct/set_show')->option(['real_name' => '修改商品状态']);
-            Route::put('product/stock/upload', 'StoreProduct/uploadStock')->option(['real_name' => '同步商品库存']);
-        })->option(['mark' => 'product', 'mark_name' => '商品']);
+            //Sản phẩm
+            Route::get('product/list', 'StoreProduct/index')->option(['real_name' => 'Danh sách sản phẩm']);
+            Route::post('product', 'StoreProduct/save')->option(['real_name' => 'Thêm sản phẩm']);
+            Route::put('product/:id', 'StoreProduct/update')->option(['real_name' => 'Chỉnh sửa sản phẩm']);
+            Route::get('product/:id', 'StoreProduct/read')->option(['real_name' => 'Lấy sản phẩm']);
+            Route::put('product/set_show/:id/:is_show', 'StoreProduct/set_show')->option(['real_name' => 'Sửa trạng thái sản phẩm']);
+            Route::put('product/stock/upload', 'StoreProduct/uploadStock')->option(['real_name' => 'Đồng bộ tồn kho sản phẩm']);
+        })->option(['mark' => 'product', 'mark_name' => 'Sản phẩm']);
 
         Route::group(function () {
-            //订单
-            Route::get('order/list', 'StoreOrder/lst')->name('StoreOrderList')->option(['real_name' => '订单列表']);
-            Route::get('order/:order_id', 'StoreOrder/read')->name('StoreOrderInfo')->option(['real_name' => '订单详情']);
-            Route::put('order/remark/:order_id', 'StoreOrder/remark')->name('StoreOrderRemark')->option(['real_name' => '修改备注信息']);
-            Route::put('order/receive/:order_id', 'StoreOrder/receive')->name('StoreOrderReceive')->option(['real_name' => '确认收货']);
-            Route::get('order/express_list', 'StoreOrder/express')->name('StoreOrderExpress')->option(['real_name' => '获取物流公司']);
-            Route::put('order/delivery/:order_id', 'StoreOrder/delivery')->name('StoreOrderDelivery')->option(['real_name' => '订单发货']);
-            Route::put('order/distribution/:order_id', 'StoreOrder/updateDistribution')->name('StoreOrderDistribution')->option(['real_name' => '修改配送信息']);
-            Route::get('order/split_cart_info/:order_id', 'StoreOrder/splitCartInfo')->name('StoreOrderSplitCartInfo')->option(['real_name' => '获取订单可拆分商品列表']);
-            Route::put('order/split_delivery/:order_id', 'StoreOrder/splitDelivery')->name('StoreOrderSplitDelivery')->option(['real_name' => '拆单发送货']);
-            Route::put('order/invoice/:order_id', 'StoreOrder/setInvoice')->option(['real_name' => '修改订单发票']);
-            Route::put('order/invoice_status/:order_id', 'StoreOrder/setInvoiceStatus')->option(['real_name' => '修改订单发票状态']);
-        })->option(['mark' => 'order', 'mark_name' => '订单']);
+            //Đơn hàng
+            Route::get('order/list', 'StoreOrder/lst')->name('StoreOrderList')->option(['real_name' => 'Danh sách đơn hàng']);
+            Route::get('order/:order_id', 'StoreOrder/read')->name('StoreOrderInfo')->option(['real_name' => 'Chi tiết đơn hàng']);
+            Route::put('order/remark/:order_id', 'StoreOrder/remark')->name('StoreOrderRemark')->option(['real_name' => 'Sửa thông tin ghi chú']);
+            Route::put('order/receive/:order_id', 'StoreOrder/receive')->name('StoreOrderReceive')->option(['real_name' => 'Xác nhận đã nhận hàng']);
+            Route::get('order/express_list', 'StoreOrder/express')->name('StoreOrderExpress')->option(['real_name' => 'Lấy đơn vị vận chuyển']);
+            Route::put('order/delivery/:order_id', 'StoreOrder/delivery')->name('StoreOrderDelivery')->option(['real_name' => 'Giao đơn hàng']);
+            Route::put('order/distribution/:order_id', 'StoreOrder/updateDistribution')->name('StoreOrderDistribution')->option(['real_name' => 'Sửa thông tin giao hàng']);
+            Route::get('order/split_cart_info/:order_id', 'StoreOrder/splitCartInfo')->name('StoreOrderSplitCartInfo')->option(['real_name' => 'Lấy danh sách sản phẩm có thể tách của đơn hàng']);
+            Route::put('order/split_delivery/:order_id', 'StoreOrder/splitDelivery')->name('StoreOrderSplitDelivery')->option(['real_name' => 'Tách đơn để giao hàng']);
+            Route::put('order/invoice/:order_id', 'StoreOrder/setInvoice')->option(['real_name' => 'Chỉnh sửa hóa đơn của đơn hàng']);
+            Route::put('order/invoice_status/:order_id', 'StoreOrder/setInvoiceStatus')->option(['real_name' => 'Chỉnh sửa trạng thái hóa đơn của đơn hàng']);
+        })->option(['mark' => 'order', 'mark_name' => 'Đơn hàng']);
 
         Route::group(function () {
-            //售后订单
-            Route::get('refund/list', 'RefundOrder/lst')->option(['real_name' => '售后订单列表']);
-            Route::put('refund/remark/:order_id', 'RefundOrder/remark')->option(['real_name' => '售后订单备注']);
-            Route::put('refund/:order_id', 'RefundOrder/refundPrice')->option(['real_name' => '售后订单退款']);
-            Route::put('refund/agree/:order_id', 'RefundOrder/agree')->option(['real_name' => '商家同意退款']);
-            Route::put('refund/refuse/:order_id', 'RefundOrder/refuse')->option(['real_name' => '商家拒绝退款']);
-            Route::get('refund/:order_id', 'RefundOrder/read')->option(['real_name' => '售后订单详情']);
-        })->option(['mark' => 'refund', 'mark_name' => '售后']);
+            //Đơn đổi trả
+            Route::get('refund/list', 'RefundOrder/lst')->option(['real_name' => 'Danh sách đơn hậu mãi']);
+            Route::put('refund/remark/:order_id', 'RefundOrder/remark')->option(['real_name' => 'Ghi chú đơn đổi trả']);
+            Route::put('refund/:order_id', 'RefundOrder/refundPrice')->option(['real_name' => 'Hoàn tiền đơn đổi trả']);
+            Route::put('refund/agree/:order_id', 'RefundOrder/agree')->option(['real_name' => 'Người bán đồng ý hoàn tiền']);
+            Route::put('refund/refuse/:order_id', 'RefundOrder/refuse')->option(['real_name' => 'Cửa hàng từ chối hoàn tiền']);
+            Route::get('refund/:order_id', 'RefundOrder/read')->option(['real_name' => 'Chi tiết đơn hậu mãi']);
+        })->option(['mark' => 'refund', 'mark_name' => 'Đổi trả']);
 
         Route::group(function () {
-            //优惠券
-            Route::get('coupon/list', 'StoreCoupon/lst')->option(['real_name' => '优惠券列表']);
-            Route::post('coupon', 'StoreCoupon/save')->option(['real_name' => '新增优惠券']);
-            Route::put('coupon/status/:id/:status', 'StoreCoupon/status')->option(['real_name' => '修改优惠券状态']);
-            Route::delete('coupon/:id', 'StoreCoupon/delete')->option(['real_name' => '删除优惠券']);
-        })->option(['mark' => 'coupon', 'mark_name' => '优惠卷']);
+            //Phiếu giảm giá
+            Route::get('coupon/list', 'StoreCoupon/lst')->option(['real_name' => 'Danh sách phiếu giảm giá']);
+            Route::post('coupon', 'StoreCoupon/save')->option(['real_name' => 'Thêm phiếu giảm giá']);
+            Route::put('coupon/status/:id/:status', 'StoreCoupon/status')->option(['real_name' => 'Sửa trạng thái phiếu giảm giá']);
+            Route::delete('coupon/:id', 'StoreCoupon/delete')->option(['real_name' => 'Xóa phiếu giảm giá']);
+        })->option(['mark' => 'coupon', 'mark_name' => 'Phiếu giảm giá']);
 
         Route::group(function () {
-            //用户等级
-            Route::get('user_level/list', 'UserLevel/lst')->option(['real_name' => '用户等级列表']);
+            //Hạng người dùng
+            Route::get('user_level/list', 'UserLevel/lst')->option(['real_name' => 'Danh sách hạng người dùng']);
 
-            //用户
-            Route::get('user/list', 'User/lst')->option(['real_name' => '用户列表']);
-            Route::get('user/info/:uid', 'User/info')->option(['real_name' => '用户详情']);
-            Route::post('user', 'User/save')->option(['real_name' => '新增用户']);
-            Route::put('user/:uid', 'User/update')->option(['real_name' => '修改用户']);
-            Route::put('user/give_balance/:uid', 'User/giveBalance')->option(['real_name' => '赠送余额']);
-            Route::put('user/give_point/:uid', 'User/givePoint')->option(['real_name' => '赠送积分']);
-            Route::put('user/change_balance/:uid', 'User/changeBalance')->option(['real_name' => '修改余额']);
-            Route::put('user/change_point/:uid', 'User/changePoint')->option(['real_name' => '修改积分']);
-        })->option(['mark' => 'user', 'mark_name' => '用户']);
+            //Người dùng
+            Route::get('user/list', 'User/lst')->option(['real_name' => 'Danh sách người dùng']);
+            Route::get('user/info/:uid', 'User/info')->option(['real_name' => 'Chi tiết người dùng']);
+            Route::post('user', 'User/save')->option(['real_name' => 'Thêm người dùng']);
+            Route::put('user/:uid', 'User/update')->option(['real_name' => 'Sửa người dùng']);
+            Route::put('user/give_balance/:uid', 'User/giveBalance')->option(['real_name' => 'Tặng số dư']);
+            Route::put('user/give_point/:uid', 'User/givePoint')->option(['real_name' => 'Tặng điểm thưởng']);
+            Route::put('user/change_balance/:uid', 'User/changeBalance')->option(['real_name' => 'Chỉnh sửa số dư']);
+            Route::put('user/change_point/:uid', 'User/changePoint')->option(['real_name' => 'Chỉnh sửa điểm thưởng']);
+        })->option(['mark' => 'user', 'mark_name' => 'Người dùng']);
 
     })->middleware(AuthTokenMiddleware::class);
 
-    // MCP 接口（支持 appid + appsecret 认证，不走 Token 中间件）
+    // API MCP (hỗ trợ xác thực appid + appsecret, không đi qua middleware Token)
     Route::group(function () {
-        Route::post('mcp', 'Mcp/index')->option(['real_name' => 'MCP接口']);
-    })->option(['mark' => 'mcp', 'mark_name' => 'MCP接口']);
+        Route::post('mcp', 'Mcp/index')->option(['real_name' => 'API MCP']);
+    })->option(['mark' => 'mcp', 'mark_name' => 'API MCP']);
 
 })->middleware(AllowOriginMiddleware::class);
 

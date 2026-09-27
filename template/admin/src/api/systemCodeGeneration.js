@@ -1,9 +1,9 @@
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2023 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -11,7 +11,7 @@
 import request from '@/libs/request';
 
 /**
- * @description 代码生成 - 菜单选择列表
+ * @description Sinh mã (code generation) - Danh sách chọn menu
  */
 export function crudMenus() {
   return request({
@@ -20,7 +20,7 @@ export function crudMenus() {
   });
 }
 /**
- * @description 代码生成 - sql表选择列表
+ * @description Sinh mã - Danh sách chọn bảng sql
  */
 export function crudColumnType() {
   return request({
@@ -29,7 +29,7 @@ export function crudColumnType() {
   });
 }
 /**
- * @description 代码生成 - 第一步提交
+ * @description Sinh mã - Submit bước 1
  */
 export function crudFilePath(data) {
   return request({
@@ -40,7 +40,7 @@ export function crudFilePath(data) {
 }
 
 /**
- * @description 代码生成 - 列表
+ * @description Sinh mã - Danh sách
  */
 export function crudList(data) {
   return request({
@@ -50,7 +50,7 @@ export function crudList(data) {
   });
 }
 /**
- * @description 代码生成 - 列表查看文件
+ * @description Sinh mã - Danh sách xem file
  */
 export function crudDet(id) {
   return request({
@@ -60,7 +60,7 @@ export function crudDet(id) {
 }
 
 /**
- * @description 代码生成 - 下载
+ * @description Sinh mã - Tải xuống
  */
 export function crudDownload(id) {
   return request({
@@ -69,7 +69,7 @@ export function crudDownload(id) {
   });
 }
 /**
- * @description 数据字典列表
+ * @description Danh sách từ điển dữ liệu
  */
 export function crudDataDictionary(where) {
   return request({
@@ -79,7 +79,7 @@ export function crudDataDictionary(where) {
   });
 }
 /**
- * @description 获取可以进行关联的表名
+ * @description Lấy tên các bảng có thể liên kết
  */
 export function crudAssociationTable() {
   return request({
@@ -88,7 +88,7 @@ export function crudAssociationTable() {
   });
 }
 /**
- * @description 获取表的详细信息
+ * @description Lấy thông tin chi tiết của bảng
  */
 export function crudAssociationTableName(tableName) {
   return request({
@@ -97,7 +97,7 @@ export function crudAssociationTableName(tableName) {
   });
 }
 /**
- * @description 查看数据字典
+ * @description Xem từ điển dữ liệu
  */
 export function crudDataDictionaryList(id) {
   return request({
@@ -106,7 +106,7 @@ export function crudDataDictionaryList(id) {
   });
 }
 /**
- * @description 保存数据字典
+ * @description Lưu từ điển dữ liệu
  */
 export function saveCrudDataDictionaryList(id, data) {
   return request({
@@ -116,7 +116,7 @@ export function saveCrudDataDictionaryList(id, data) {
   });
 }
 /**
- * @description 代码生成 - 文件编辑
+ * @description Sinh mã - Sửa file
  */
 export function crudSaveFile(id, data) {
   return request({
@@ -127,7 +127,7 @@ export function crudSaveFile(id, data) {
 }
 
 /**
- * @description 获取数据字典列表
+ * @description Lấy danh sách từ điển dữ liệu
  */
 export function getDataDictionaryList(data) {
   return request({
@@ -137,7 +137,7 @@ export function getDataDictionaryList(data) {
   });
 }
 /**
- * @description 获取数据字典添加修改表单
+ * @description Lấy biểu mẫu thêm/sửa từ điển dữ liệu
  */
 export function getDataDictionaryForm(id) {
   return request({
@@ -147,7 +147,7 @@ export function getDataDictionaryForm(id) {
 }
 
 /**
- * @description 查看数据字典内容列表
+ * @description Xem danh sách nội dung từ điển dữ liệu
  */
 export function getDataDictionaryInfoList(data) {
   return request({
@@ -158,7 +158,7 @@ export function getDataDictionaryInfoList(data) {
 }
 
 /**
- * @description 查看数据字典内容
+ * @description Xem nội dung từ điển dữ liệu
  */
 export function getDataDictionaryInfo(cid, id, pid) {
   return request({

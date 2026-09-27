@@ -2,16 +2,16 @@
   <div>
     <el-row class="expand-row">
       <el-col :span="8">
-        <span class="expand-key">下单时间：</span>
+        <span class="expand-key">Thời gian đặt hàng:</span>
         <span class="expand-value" v-text="row.add_time"></span>
       </el-col>
       <el-col :span="8">
-        <span class="expand-key">用户备注：</span>
-        <span class="expand-value" v-text="row.mark ? row.mark : '无'"></span>
+        <span class="expand-key">Ghi chú người dùng:</span>
+        <span class="expand-value" v-text="row.mark ? row.mark : 'Không có'"></span>
       </el-col>
       <el-col :span="8">
-        <span class="expand-key">商家备注：</span>
-        <span class="expand-value" v-text="row.remark ? row.remark : '无'"></span>
+        <span class="expand-key">Ghi chú của người bán:</span>
+        <span class="expand-value" v-text="row.remark ? row.remark : 'Không có'"></span>
       </el-col>
     </el-row>
   </div>

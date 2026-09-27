@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -30,17 +30,17 @@ use think\facade\Event;
 use think\Model;
 
 /**
- * 管理员service
+ * Service quản trị viên
  * Class SystemAdminServices
  * @package app\services\system\admin
- * @method getAdminIds(int $level) 根据管理员等级获取管理员id
- * @method getOrdAdmin(string $field, int $level) 获取低于等级的管理员名称和id
+ * @method getAdminIds(int $level) Lấy ID quản trị viên theo hạng quản trị viên
+ * @method getOrdAdmin(string $field, int $level) Lấy tên và id quản trị viên có cấp thấp hơn
  */
 class SystemAdminServices extends BaseServices
 {
 
     /**
-     * form表单创建
+     * Tạo biểu mẫu (form)
      * @var FormBuilder
      */
     protected $builder;
@@ -56,7 +56,7 @@ class SystemAdminServices extends BaseServices
     }
 
     /**
-     * 管理员登陆
+     * Quản trị viên đăng nhập
      * @param string $account
      * @param string $password
      * @return array|bool|Model
@@ -69,7 +69,7 @@ class SystemAdminServices extends BaseServices
         $adminInfo = $this->dao->accountByAdmin($account);
         if (!$adminInfo || !password_verify($password, $adminInfo->pwd)) return false;
         if (!$adminInfo->status) {
-            throw new AdminException('您已被禁止登录');
+            throw new AdminException('Bạn đã bị cấm đăng nhập');
         }
         $adminInfo->last_time = time();
         $adminInfo->last_ip = app('request')->ip();
@@ -80,7 +80,7 @@ class SystemAdminServices extends BaseServices
     }
 
     /**
-     * 文件管理员登陆
+     * Đăng nhập quản trị viên quản lý file
      * @param string $account
      * @param string $password
      * @return array|Model
@@ -92,13 +92,13 @@ class SystemAdminServices extends BaseServices
     {
         $adminInfo = $this->dao->accountByAdmin($account);
         if (!$adminInfo) {
-            throw new AdminException('管理员不存在');
+            throw new AdminException('Quản trị viên không tồn tại');
         }
         if (!$adminInfo->status) {
-            throw new AdminException('您已被禁止登录');
+            throw new AdminException('Bạn đã bị cấm đăng nhập');
         }
         if (!password_verify($password, $adminInfo->file_pwd)) {
-            throw new AdminException('账号或密码错误');
+            throw new AdminException('Tài khoản hoặc mật khẩu không đúng');
         }
         $adminInfo->last_time = time();
         $adminInfo->last_ip = app('request')->ip();
@@ -109,7 +109,7 @@ class SystemAdminServices extends BaseServices
     }
 
     /**
-     * 后台登陆获取菜单获取token
+     * Đăng nhập admin, lấy menu, lấy token
      * @param string $account
      * @param string $password
      * @param string $type
@@ -131,7 +131,7 @@ class SystemAdminServices extends BaseServices
             [$queue, $timer] = Event::until('AdminLoginListener', [$key]);
         }
 
-        //自定义事件-管理员登录
+        //Sự kiện tùy chỉnh - Quản trị viên đăng nhập
         event('CustomEventListener', ['admin_login', [
             'id' => $adminInfo->getData('id'),
             'account' => $adminInfo->getData('account'),
@@ -165,7 +165,7 @@ class SystemAdminServices extends BaseServices
     }
 
     /**
-     * 获取登陆前的login等信息
+     * Lấy thông tin login... trước khi đăng nhập
      * @return array
      */
     public function getLoginInfo()
@@ -174,9 +174,9 @@ class SystemAdminServices extends BaseServices
         CheckQueueJob::dispatchSecs(1, [$key]);
         $data = [
             'slide' => sys_data('admin_login_slide') ?? [],
-            'logo_square' => sys_config('site_logo_square'), //透明
-            'logo_rectangle' => sys_config('site_logo'), //方形
-            'login_logo' => sys_config('login_logo'), //登陆
+            'logo_square' => sys_config('site_logo_square'), //Trong suốt
+            'logo_rectangle' => sys_config('site_logo'), //Hình vuông
+            'login_logo' => sys_config('login_logo'), //Đăng nhập
             'site_name' => sys_config('site_name'),
             'copyright' => sys_config('nncnL_crmeb_copyright', ''),
             'version' => get_crmeb_version(),
@@ -187,7 +187,7 @@ class SystemAdminServices extends BaseServices
         try {
             $cacheServices = app()->make(CacheServices::class);
             if (!$cacheServices->checkDbCache('write_md5', get_crmeb_version_vode())) {
-                // 执行写入数据
+                // Thực hiện ghi dữ liệu
                 app()->make(SystemFileServices::class)->writeMd5();
                 $cacheServices->setDbCache('write_md5', get_crmeb_version_vode());
             }
@@ -201,7 +201,7 @@ class SystemAdminServices extends BaseServices
     }
 
     /**
-     * 管理员列表
+     * Danh sách quản trị viên
      * @param array $where
      * @return array
      */
@@ -233,7 +233,7 @@ class SystemAdminServices extends BaseServices
     }
 
     /**
-     * 创建管理员表单
+     * Tạo biểu mẫu quản trị viên
      * @param int $level
      * @param array $formData
      * @return mixed
@@ -241,15 +241,15 @@ class SystemAdminServices extends BaseServices
      */
     public function createAdminForm(int $level, array $formData = [])
     {
-        $f[] = $this->builder->input('account', '管理员账号', $formData['account'] ?? '')->required('请填写管理员账号');
+        $f[] = $this->builder->input('account', 'Tài khoản quản trị viên', $formData['account'] ?? '')->required('Vui lòng điền tài khoản quản trị viên');
         if (empty($formData)) {
-            $f[] = $this->builder->input('pwd', '管理员密码')->type('password')->required('请填写管理员密码');
-            $f[] = $this->builder->input('conf_pwd', '确认密码')->type('password')->required('请输入确认密码');
+            $f[] = $this->builder->input('pwd', 'Mật khẩu quản trị viên')->type('password')->required('Vui lòng nhập mật khẩu quản trị viên');
+            $f[] = $this->builder->input('conf_pwd', 'Xác nhận mật khẩu')->type('password')->required('Vui lòng nhập mật khẩu xác nhận');
         } else {
-            $f[] = $this->builder->input('pwd', '管理员密码')->type('password');
-            $f[] = $this->builder->input('conf_pwd', '确认密码')->type('password');
+            $f[] = $this->builder->input('pwd', 'Mật khẩu quản trị viên')->type('password');
+            $f[] = $this->builder->input('conf_pwd', 'Xác nhận mật khẩu')->type('password');
         }
-        $f[] = $this->builder->input('real_name', '管理员姓名', $formData['real_name'] ?? '')->required('请输入管理员姓名');
+        $f[] = $this->builder->input('real_name', 'Họ tên quản trị viên', $formData['real_name'] ?? '')->required('Vui lòng nhập họ tên quản trị viên');
 
         /** @var SystemRoleServices $service */
         $service = app()->make(SystemRoleServices::class);
@@ -259,40 +259,40 @@ class SystemAdminServices extends BaseServices
                 $item = intval($item);
             }
         }
-        $f[] = $this->builder->select('roles', '管理员角色', $formData['roles'] ?? [])->setOptions(FormBuilder::setOptions($options))->multiple(true)->required('请选择管理员角色');
-        $f[] = $this->builder->radio('status', '状态', $formData['status'] ?? 1)->options([['label' => '开启', 'value' => 1], ['label' => '关闭', 'value' => 0]]);
+        $f[] = $this->builder->select('roles', 'Vai trò quản trị viên', $formData['roles'] ?? [])->setOptions(FormBuilder::setOptions($options))->multiple(true)->required('Vui lòng chọn vai trò quản trị viên');
+        $f[] = $this->builder->radio('status', 'Trạng thái', $formData['status'] ?? 1)->options([['label' => 'Bật', 'value' => 1], ['label' => 'Tắt', 'value' => 0]]);
         return $f;
     }
 
     /**
-     * 添加管理员form表单获取
+     * Lấy biểu mẫu (form) thêm quản trị viên
      * @param int $level
      * @return array
      * @throws \FormBuilder\Exception\FormBuilderException
      */
     public function createForm(int $level)
     {
-        return create_form('管理员添加', $this->createAdminForm($level), $this->url('/setting/admin'));
+        return create_form('Thêm quản trị viên', $this->createAdminForm($level), $this->url('/setting/admin'));
     }
 
     /**
-     * 创建管理员
+     * Tạo quản trị viên
      * @param array $data
      * @return bool
      */
     public function create(array $data)
     {
         if ($data['conf_pwd'] != $data['pwd']) {
-            throw new AdminException('两次输入的密码不一致');
+            throw new AdminException('Hai mật khẩu đã nhập không khớp');
         }
         unset($data['conf_pwd']);
 
         if (strlen(trim($data['pwd'])) < 6 || strlen(trim($data['pwd'])) > 32) {
-            throw new AdminException('账号密码必须是在6到32位之间');
+            throw new AdminException('Tài khoản và mật khẩu phải dài từ 6 đến 32 ký tự');
         }
 
         if ($this->dao->count(['account' => $data['account'], 'is_del' => 0])) {
-            throw new AdminException('管理员账号已存在');
+            throw new AdminException('Tài khoản quản trị viên đã tồn tại');
         }
 
         $data['pwd'] = $this->passwordHash($data['pwd']);
@@ -304,13 +304,13 @@ class SystemAdminServices extends BaseServices
             if ($this->dao->save($data)) {
                 return true;
             } else {
-                throw new AdminException('添加失败');
+                throw new AdminException('Thêm thất bại');
             }
         });
     }
 
     /**
-     * 修改管理员表单
+     * Biểu mẫu sửa quản trị viên
      * @param int $level
      * @param int $id
      * @return array
@@ -320,16 +320,16 @@ class SystemAdminServices extends BaseServices
     {
         $adminInfo = $this->dao->get($id);
         if (!$adminInfo) {
-            throw new AdminException('管理员不存在');
+            throw new AdminException('Quản trị viên không tồn tại');
         }
         if ($adminInfo->is_del) {
-            throw new AdminException('管理员已经删除');
+            throw new AdminException('Quản trị viên đã bị xóa');
         }
-        return create_form('管理员修改', $this->createAdminForm($level, $adminInfo->toArray()), $this->url('/setting/admin/' . $id), 'PUT');
+        return create_form('Sửa quản trị viên', $this->createAdminForm($level, $adminInfo->toArray()), $this->url('/setting/admin/' . $id), 'PUT');
     }
 
     /**
-     * 修改管理员
+     * Sửa quản trị viên
      * @param int $id
      * @param array $data
      * @return bool
@@ -337,31 +337,31 @@ class SystemAdminServices extends BaseServices
     public function save(int $id, array $data)
     {
         if (!$adminInfo = $this->dao->get($id)) {
-            throw new AdminException('管理员不存在');
+            throw new AdminException('Quản trị viên không tồn tại');
         }
         if ($adminInfo->is_del) {
-            throw new AdminException('管理员已经删除');
+            throw new AdminException('Quản trị viên đã bị xóa');
         }
-        //修改密码
+        //Đổi mật khẩu
         if ($data['pwd']) {
 
             if (!$data['conf_pwd']) {
-                throw new AdminException('请输入确认密码');
+                throw new AdminException('Vui lòng nhập mật khẩu xác nhận');
             }
 
             if ($data['conf_pwd'] != $data['pwd']) {
-                throw new AdminException('两次输入的密码不一致');
+                throw new AdminException('Hai mật khẩu đã nhập không khớp');
             }
 
             if (strlen(trim($data['pwd'])) < 6 || strlen(trim($data['pwd'])) > 32) {
-                throw new AdminException('账号密码必须是在6到32位之间');
+                throw new AdminException('Tài khoản và mật khẩu phải dài từ 6 đến 32 ký tự');
             }
 
             $adminInfo->pwd = $this->passwordHash($data['pwd']);
         }
-        //修改账号
+        //Sửa tài khoản
         if (isset($data['account']) && $data['account'] != $adminInfo->account && $this->dao->isAccountUsable($data['account'], $id)) {
-            throw new AdminException('管理员账号已存在');
+            throw new AdminException('Tài khoản quản trị viên đã tồn tại');
         }
         if (isset($data['roles'])) {
             $adminInfo->roles = implode(',', $data['roles']);
@@ -377,7 +377,7 @@ class SystemAdminServices extends BaseServices
     }
 
     /**
-     * 修改当前管理员信息
+     * Sửa thông tin quản trị viên hiện tại
      * @param int $id
      * @param array $data
      * @return bool
@@ -386,21 +386,21 @@ class SystemAdminServices extends BaseServices
     {
         $adminInfo = $this->dao->get($id);
         if (!$adminInfo)
-            throw new AdminException('管理员信息未查到');
+            throw new AdminException('Không tìm thấy thông tin quản trị viên');
         if ($adminInfo->is_del) {
-            throw new AdminException('管理员已经删除');
+            throw new AdminException('Quản trị viên đã bị xóa');
         }
         if (!$data['real_name'])
-            throw new AdminException('管理员姓名不能为空');
+            throw new AdminException('Họ tên quản trị viên không được để trống');
         if ($data['pwd']) {
             if (!password_verify($data['pwd'], $adminInfo['pwd']))
-                throw new AdminException('原始密码错误');
+                throw new AdminException('Mật khẩu cũ không đúng');
             if (!$data['new_pwd'])
-                throw new AdminException('请输入新密码');
+                throw new AdminException('Vui lòng nhập mật khẩu mới');
             if (!$data['conf_pwd'])
-                throw new AdminException('请输入确认密码');
+                throw new AdminException('Vui lòng nhập mật khẩu xác nhận');
             if ($data['new_pwd'] != $data['conf_pwd'])
-                throw new AdminException('两次输入的密码不一致');
+                throw new AdminException('Hai mật khẩu đã nhập không khớp');
             $adminInfo->pwd = $this->passwordHash($data['new_pwd']);
         }
 
@@ -415,7 +415,7 @@ class SystemAdminServices extends BaseServices
     }
 
     /**
-     * 设置当前管理员文件管理密码
+     * Đặt mật khẩu quản lý file cho quản trị viên hiện tại
      * @param int $id
      * @param array $data
      * @return bool
@@ -424,16 +424,16 @@ class SystemAdminServices extends BaseServices
     {
         $adminInfo = $this->dao->get($id);
         if (!$adminInfo)
-            throw new AdminException('管理员信息未查到');
+            throw new AdminException('Không tìm thấy thông tin quản trị viên');
         if ($adminInfo->is_del) {
-            throw new AdminException('管理员已经删除');
+            throw new AdminException('Quản trị viên đã bị xóa');
         }
         if ($data['file_pwd']) {
-            if ($adminInfo->level != 0) throw new AdminException('没有权限');
+            if ($adminInfo->level != 0) throw new AdminException('Không có quyền');
             if (!$data['conf_file_pwd'])
-                throw new AdminException('请输入确认密码');
+                throw new AdminException('Vui lòng nhập mật khẩu xác nhận');
             if ($data['file_pwd'] != $data['conf_file_pwd'])
-                throw new AdminException('两次输入的密码不一致');
+                throw new AdminException('Hai mật khẩu đã nhập không khớp');
             $adminInfo->file_pwd = $this->passwordHash($data['file_pwd']);
         }
         if ($adminInfo->save())
@@ -443,7 +443,7 @@ class SystemAdminServices extends BaseServices
     }
 
 
-    /** 后台订单下单，评论，支付成功，后台消息提醒
+    /** Admin: đặt đơn, bình luận, thanh toán thành công, nhắc nhở tin nhắn admin
      * @param $event
      */
     public function adminNewPush()
@@ -460,7 +460,7 @@ class SystemAdminServices extends BaseServices
             $data['commentnum'] = $replyServices->count(['is_reply' => 0]);
             /** @var UserExtractServices $extractServices */
             $extractServices = app()->make(UserExtractServices::class);
-            $data['reflectnum'] = $extractServices->getCount(['status' => 0]); //提现
+            $data['reflectnum'] = $extractServices->getCount(['status' => 0]); //Rút tiền
             $data['msgcount'] = intval($data['ordernum']) + intval($data['inventory']) + intval($data['commentnum']) + intval($data['reflectnum']);
             ChannelService::instance()->send('ADMIN_NEW_PUSH', $data);
         } catch (\Exception $e) {

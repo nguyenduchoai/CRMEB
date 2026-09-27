@@ -16,33 +16,33 @@
       >
         <div v-if="uploadLoading" class="flex-column">
           <i class="el-icon-loading" style="font-size: 40px; color: #ccc"></i>
-          <div class="el-upload__text">正在上传中...</div>
+          <div class="el-upload__text">Đang tải lên...</div>
         </div>
         <template v-else>
           <img class="el-upload-dragger__icon mb20" src="@/assets/images/upload-theme-icon.png" alt="" />
-          <div class="el-upload__text">将文件拖到此处，或<em>点击添加</em></div>
-          <div class="el-upload__trip">支持 .zip，限50M以内</div>
+          <div class="el-upload__text">Kéo tệp vào đây, hoặc<em>nhấn để thêm</em></div>
+          <div class="el-upload__trip">Hỗ trợ .zip, tối đa 50M</div>
         </template>
       </el-upload>
       <div v-show="fileUrl && !importStatus" class="file-info">
         <img class="el-upload-dragger__icon mb20" src="@/assets/images/upload-theme-icon.png" alt="" />
         <div class="el-upload__text">{{ fileName }}</div>
         <div class="flex mt12" v-if="fileUrl && !importLoading">
-          <div class="active-btn" @click="selectFile">重新上传</div>
-          <div class="active-btn" @click="fileUrl = ''">删除</div>
+          <div class="active-btn" @click="selectFile">Tải lên lại</div>
+          <div class="active-btn" @click="fileUrl = ''">Xóa</div>
         </div>
         <div class="el-upload__trip" v-if="importLoading">
-          正在导入，您可关闭当前弹窗，稍候可在列表查看导入结果
+          Đang nhập, bạn có thể đóng cửa sổ này, lát nữa có thể xem kết quả nhập trong danh sách
           <i class="el-icon-loading"></i>
         </div>
-        <el-button v-else class="btn-import" type="primary" size="small" @click="importThemePkg">立即导入</el-button>
+        <el-button v-else class="btn-import" type="primary" size="small" @click="importThemePkg">Nhập ngay</el-button>
       </div>
       <div v-show="fileUrl && importStatus" class="file-info">
         <img class="el-upload-dragger__icon mb20" :src="statusImage" alt="" />
-        <div class="el-upload__text">导入成功</div>
+        <div class="el-upload__text">Nhập thành công</div>
         <div>
-          <el-button class="btn-import" size="small" @click="selectFile">再次导入</el-button>
-          <el-button type="primary" class="btn-import" @click="close">完成</el-button>
+          <el-button class="btn-import" size="small" @click="selectFile">Nhập lại</el-button>
+          <el-button type="primary" class="btn-import" @click="close">Hoàn thành</el-button>
         </div>
       </div>
     </div>
@@ -74,12 +74,12 @@ export default {
     fileChange(file, fileList) {
       const isZip = file.name.endsWith('.zip');
       if (!isZip) {
-        this.$message.error('请上传 .zip 格式的文件');
+        this.$message.error('Vui lòng tải lên tệp định dạng .zip');
         return false;
       }
-      // 限制50M
+      // Giới hạn 50M
       if (file.size >= 52428800) {
-        this.$message.error('文件大小不能超过50MB');
+        this.$message.error('Kích thước tệp không được vượt quá 50MB');
         return false;
       } else {
         this.uploadLoading = true;
@@ -91,7 +91,7 @@ export default {
       this.importStatus = false;
       this.importLoading = false;
       this.uploadLoading = false;
-      // 调起选择文件
+      // Gọi mở chọn file
       this.$refs['upload'].$refs['upload-inner'].handleClick();
     },
     handleSuccess(res, file, fileList) {
@@ -104,7 +104,7 @@ export default {
     },
     handleError(err, file, fileList) {
       this.uploadLoading = false;
-      this.$message.error('上传失败');
+      this.$message.error('Tải lên thất bại');
     },
     importThemePkg() {
       this.importLoading = true;
@@ -113,11 +113,11 @@ export default {
         url: this.fileUrl,
       })
         .then((res) => {
-          // 返回导入结果
+          // Trả về kết quả nhập
           this.importStatus = true;
           this.importLoading = false;
           this.statusImage = require('@/assets/images/file-success.png');
-          this.$message.success('导入成功');
+          this.$message.success('Nhập thành công');
           this.$emit('success');
         })
         .catch((err) => {

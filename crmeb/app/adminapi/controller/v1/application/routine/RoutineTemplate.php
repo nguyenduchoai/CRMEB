@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -31,7 +31,7 @@ class RoutineTemplate extends AuthController
     protected $cacheTag = '_system_wechat';
 
     /**
-     * 构造方法
+     * Phương thức khởi tạo
      * WechatTemplate constructor.
      * @param App $app
      * @param SystemNotificationServices $services
@@ -43,7 +43,7 @@ class RoutineTemplate extends AuthController
     }
 
     /**
-     * 同步订阅消息
+     * Đồng bộ tin nhắn đăng ký
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -52,7 +52,7 @@ class RoutineTemplate extends AuthController
     public function syncSubscribe()
     {
         if (!sys_config('routine_appId') || !sys_config('routine_appsecret')) {
-            throw new AdminException('请先配置小程序appid、appSecret等参数');
+            throw new AdminException('Vui lòng cấu hình appid, appSecret và các tham số khác của Mini Program trước');
         }
 
         $list = MiniProgramService::getSubscribeTemplateList();
@@ -65,11 +65,11 @@ class RoutineTemplate extends AuthController
             SyncMessageJob::dispatch('SyncSubscribe', [$key, $content]);
         }
 
-        return app('json')->success('同步成功');
+        return app('json')->success('Đồng bộ thành công');
     }
 
     /**
-     * 下载小程序
+     * Tải Mini Program
      * @return mixed
      */
     public function downloadTemp()
@@ -78,20 +78,20 @@ class RoutineTemplate extends AuthController
             ['name', ''],
             ['is_live', 0]
         ], true);
-        if (sys_config('routine_appId', '') == '') throw new AdminException('请先配置小程序appid、appSecret等参数');
+        if (sys_config('routine_appId', '') == '') throw new AdminException('Vui lòng cấu hình appid, appSecret và các tham số khác của Mini Program trước');
         try {
             @unlink(public_path() . 'statics/download/routine.zip');
-            //拷贝源文件
+            //Sao chép file gốc
             /** @var FileService $fileService */
             $fileService = app(FileService::class);
             $fileService->copyDir(public_path() . 'statics/mp_view', public_path() . 'statics/download');
-            //替换appid和名称
+            //Thay thế appid và tên
             $this->updateConfigJson(sys_config('routine_appId'), $name != '' ? $name : sys_config('routine_name'));
-            //是否开启直播
+            //Có mở livestream không
             if ($is_live == 0) $this->updateAppJson();
-            //替换url
+            //Thay thế url
             $this->updateUrl('https://' . $_SERVER['HTTP_HOST']);
-            //压缩文件
+            //Nén file
             $fileService->addZip(public_path() . 'statics/download', public_path() . 'statics/download/routine.zip', public_path() . 'statics/download');
             $data['url'] = sys_config('site_url') . '/statics/download/routine.zip';
             return app('json')->success($data);
@@ -101,27 +101,27 @@ class RoutineTemplate extends AuthController
     }
 
     /**
-     * 替换url
+     * Thay thế url
      * @param $url
      */
     public function updateUrl($url)
     {
         $fileUrl = app()->getRootPath() . "public/statics/download/common/vendor.js";
-        $string = file_get_contents($fileUrl); //加载配置文件
-        $string = str_replace('https://demo.crmeb.com', $url, $string); // 正则查找然后替换
+        $string = file_get_contents($fileUrl); //Tải file cấu hình
+        $string = str_replace('https://demo.crmeb.com', $url, $string); // Dùng regex tìm rồi thay thế
         $newFileUrl = app()->getRootPath() . "public/statics/download/common/vendor.js";
-        @file_put_contents($newFileUrl, $string); // 写入配置文件
+        @file_put_contents($newFileUrl, $string); // Ghi file cấu hình
 
     }
 
     /**
-     * 判断是否开启直播(弃用)
+     * Kiểm tra có mở livestream không (đã ngừng dùng)
      * @param int $iszhibo
      */
     public function updateAppJson()
     {
         $fileUrl = app()->getRootPath() . "public/statics/download/app.json";
-        $string = file_get_contents($fileUrl); //加载配置文件
+        $string = file_get_contents($fileUrl); //Tải file cấu hình
         $pats = '/,
       "plugins": \{
         "live-player-plugin": \{
@@ -129,34 +129,34 @@ class RoutineTemplate extends AuthController
           "provider": "(.*?)"
         }
       }/';
-        $string = preg_replace($pats, '', $string); // 正则查找然后替换
+        $string = preg_replace($pats, '', $string); // Dùng regex tìm rồi thay thế
         $newFileUrl = app()->getRootPath() . "public/statics/download/app.json";
-        @file_put_contents($newFileUrl, $string); // 写入配置文件
+        @file_put_contents($newFileUrl, $string); // Ghi file cấu hình
     }
 
     /**
-     * 替换appid
+     * Thay thế appid
      * @param string $appid
      * @param string $projectanme
      */
     public function updateConfigJson($appId = '', $projectName = '')
     {
         $fileUrl = app()->getRootPath() . "public/statics/download/project.config.json";
-        $string = file_get_contents($fileUrl); //加载配置文件
-        // 替换appid
+        $string = file_get_contents($fileUrl); //Tải file cấu hình
+        // Thay thế appid
         $appIdOld = '/"appid"(.*?),/';
         $appIdNew = '"appid"' . ': ' . '"' . $appId . '",';
-        $string = preg_replace($appIdOld, $appIdNew, $string); // 正则查找然后替换
-        // 替换小程序名称
+        $string = preg_replace($appIdOld, $appIdNew, $string); // Dùng regex tìm rồi thay thế
+        // Thay thế tên Mini Program
         $projectNameOld = '/"projectname"(.*?),/';
         $projectNameNew = '"projectname"' . ': ' . '"' . $projectName . '",';
-        $string = preg_replace($projectNameOld, $projectNameNew, $string); // 正则查找然后替换
+        $string = preg_replace($projectNameOld, $projectNameNew, $string); // Dùng regex tìm rồi thay thế
         $newFileUrl = app()->getRootPath() . "public/statics/download/project.config.json";
-        @file_put_contents($newFileUrl, $string); // 写入配置文件
+        @file_put_contents($newFileUrl, $string); // Ghi file cấu hình
     }
 
     /**
-     * 获取小程序码
+     * Lấy mã Mini Program
      * @return string
      * @throws \think\Exception
      * @throws \think\db\exception\DataNotFoundException
@@ -183,7 +183,7 @@ class RoutineTemplate extends AuthController
                 } else {
                     $res = false;
                 }
-                if (!$res) throw new ValidateException('二维码生成失败');
+                if (!$res) throw new ValidateException('Tạo mã QR thất bại');
                 $upload = UploadService::init(1);
                 if ($upload->to('routine/code')->setAuthThumb(false)->stream((string)$res['res'], $name) === false) {
                     return $upload->getError();

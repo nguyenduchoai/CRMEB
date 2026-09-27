@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -15,14 +15,14 @@ use app\dao\BaseDao;
 use app\model\other\Express;
 
 /**
- * 物流信息
+ * Thông tin vận chuyển
  * Class ExpressDao
  * @package app\dao\other
  */
 class ExpressDao extends BaseDao
 {
     /**
-     * 设置模型
+     * Thiết lập model
      * @return string
      */
     protected function setModel(): string
@@ -31,7 +31,7 @@ class ExpressDao extends BaseDao
     }
 
     /**
-     * 获取物流列表
+     * Lấy danh sách vận chuyển
      * @param array $where
      * @param int $page
      * @param int $limit
@@ -49,7 +49,7 @@ class ExpressDao extends BaseDao
     }
 
     /**
-     * 指定的条件获取物流信息以数组返回
+     * Lấy thông tin vận chuyển theo điều kiện chỉ định, trả về dạng mảng
      * @param array $where
      * @param string $field
      * @param string $key
@@ -61,7 +61,7 @@ class ExpressDao extends BaseDao
     }
 
     /**
-     * 通过code获取一条信息
+     * Lấy một thông tin theo code
      * @param string $code
      * @param string $field
      * @return array|\think\Model|null

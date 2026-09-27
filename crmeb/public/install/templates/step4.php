@@ -13,12 +13,12 @@
 <body>
 <div class="wrap" id="step4">
     <div class="title">
-        安装进度
+        Tiến trình cài đặt
     </div>
     <!--  --><?php //require './templates/header.php';?>
     <section class="section">
         <div class="title">
-            <h1>系统安装中，请稍等片刻...</h1>
+            <h1>Hệ thống đang được cài đặt, vui lòng chờ trong giây lát...</h1>
         </div>
         <div class="progress">
             <el-progress :percentage="percentage" color="#37CA71" define-back-color="rgba(255,255,255,0.5)"
@@ -26,7 +26,7 @@
                          status="success"></el-progress>
             <div class="progress-msg" v-if="!isShow">
                 <div id="loginner_item" class="msg p8">{{installList[installList.length]}}</div>
-                <!--                <div class="open" @click="openList">查看详情</div>-->
+                <!--                <div class="open" @click="openList">Xem chi tiết</div>-->
             </div>
         </div>
         <div class="install" ref="install" id="log" v-show="isShow">
@@ -36,7 +36,7 @@
             </div>
         </div>
         <div class="bottom tac"><a href="javascript:;" class="btn_old mid"><img class="shuaxin" src="./images/install/shuaxin.png"
-                                                                            align="absmiddle"/>&nbsp;正在安装...</a></div>
+                                                                            align="absmiddle"/>&nbsp;Đang cài đặt...</a></div>
     </section>
     <script type="text/javascript">
         var n = -1;
@@ -82,7 +82,7 @@
                                 }
 
                             } else {
-                                //alert('指定的数据库不存在，系统也无法创建，请先通过其他方式建立好数据库！');
+                                //alert('Cơ sở dữ liệu chỉ định không tồn tại, hệ thống cũng không thể tạo, vui lòng tạo cơ sở dữ liệu bằng cách khác trước!');
                                 alert(msg.msg);
                             }
 

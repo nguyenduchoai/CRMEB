@@ -1,6 +1,6 @@
 <template>
   <div class="edit-theme-layout">
-    <!-- 左侧导航 -->
+    <!-- Điều hướng bên trái -->
     <div class="layout-sidebar" :class="{ collapsed }" v-if="!isMicroPage">
       <sidebar
         :active-menu="activeMenu"
@@ -12,9 +12,9 @@
       ></sidebar>
     </div>
 
-    <!-- 右侧主体 -->
+    <!-- Phần thân bên phải -->
     <div class="layout-main">
-      <!-- 顶部栏 -->
+      <!-- Thanh trên cùng -->
       <page-header
         :theme-name="themeName"
         :theme-info="themeInfo"
@@ -26,7 +26,7 @@
         @update-info="handleUpdateInfo"
       ></page-header>
 
-      <!-- 内容区域 -->
+      <!-- Vùng nội dung -->
       <div class="layout-content">
         <style-config ref="styleConfig" v-if="activeMenu === 'theme'"></style-config>
         <home-editor ref="homeEditor" v-else-if="activeMenu === 'home'"></home-editor>
@@ -61,11 +61,11 @@ export default {
   },
   data() {
     return {
-      themeName: '请设置页面名称',
+      themeName: 'Vui lòng đặt tên trang',
       themeInfo: '',
-      activeMenu: 'home', // 默认选中商城首页
+      activeMenu: 'home', // Mặc định chọn trang chủ cửa hàng
       collapsed: false,
-      isDirty: false, // 是否有未保存的修改
+      isDirty: false, // Có thay đổi chưa lưu không
     };
   },
   provide() {
@@ -97,12 +97,12 @@ export default {
     getThemeBaseInfo() {
       const id = this.$route.query.id || 0;
       if (!id) {
-        this.themeName = '请设置页面名称';
+        this.themeName = 'Vui lòng đặt tên trang';
         return;
       }
       themeInfo(id, 'base')
         .then((res) => {
-          this.themeName = res.data.title || '请设置页面名称';
+          this.themeName = res.data.title || 'Vui lòng đặt tên trang';
           this.themeInfo = res.data.info;
         })
         .catch((err) => {
@@ -127,11 +127,11 @@ export default {
       let id = this.$route.query.id || 0;
       saveThemeTitle(id, data)
         .then((res) => {
-          this.$message.success('保存成功');
+          this.$message.success('Lưu thành công');
           if (id == 0) {
             let query = { ...this.$route.query, id: res.data.id };
             if (query.tid) {
-              delete query.tid; // 保存后移除 tid
+              delete query.tid; // Xóa tid sau khi lưu
             }
             this.$router.replace({ query });
             // Update active component's pageId

@@ -1,10 +1,10 @@
 <?php
 // +----------------------------------------------------------------------
-// | CRMEB [ CRMEB赋能开发者，助力企业发展 ]
+// | CRMEB [ CRMEB tiếp sức cho nhà phát triển, hỗ trợ doanh nghiệp phát triển ]
 // +----------------------------------------------------------------------
 // | Copyright (c) 2016~2026 https://www.crmeb.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Licensed CRMEB并不是自由软件，未经许可不能去掉CRMEB相关版权
+// | Licensed CRMEB không phải là phần mềm tự do, không được phép gỡ bỏ bản quyền liên quan đến CRMEB khi chưa được cho phép
 // +----------------------------------------------------------------------
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
@@ -36,7 +36,7 @@ class StoreServiceSpeechcraftCate extends AuthController
     }
 
     /**
-     * 获取列表
+     * Lấy danh sách
      * @return mixed
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\DbException
@@ -53,7 +53,7 @@ class StoreServiceSpeechcraftCate extends AuthController
     }
 
     /**
-     * 获取创建表单
+     * Lấy form tạo
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
      */
@@ -63,7 +63,7 @@ class StoreServiceSpeechcraftCate extends AuthController
     }
 
     /**
-     * 保存数据
+     * Lưu dữ liệu
      * @return mixed
      */
     public function save()
@@ -74,22 +74,22 @@ class StoreServiceSpeechcraftCate extends AuthController
         ]);
 
         if (!$data['name']) {
-            return app('json')->fail('请填写分类名称');
+            return app('json')->fail('Vui lòng điền tên danh mục');
         }
 
         if ($this->services->count(['name' => $data['name'], 'type' => 1, 'owner_id' => 0])) {
-            return app('json')->fail('该分类已存在');
+            return app('json')->fail('Danh mục này đã tồn tại');
         }
 
         $data['add_time'] = time();
         $data['type'] = 1;
 
         $this->services->save($data);
-        return app('json')->success('添加成功');
+        return app('json')->success('Thêm thành công');
     }
 
     /**
-     * 获取修改表单
+     * Lấy form sửa
      * @param $id
      * @return mixed
      * @throws \FormBuilder\Exception\FormBuilderException
@@ -103,7 +103,7 @@ class StoreServiceSpeechcraftCate extends AuthController
     }
 
     /**
-     * 修改保存
+     * Sửa và lưu
      * @param Request $request
      * @param $id
      * @return mixed
@@ -115,32 +115,32 @@ class StoreServiceSpeechcraftCate extends AuthController
             [['sort', 'd'], 0],
         ]);
         if (!$data['name']) {
-            return app('json')->fail('请填写分类名称');
+            return app('json')->fail('Vui lòng điền tên danh mục');
         }
 
         $cateInfo = $this->services->get($id);
         if (!$cateInfo) {
-            return app('json')->fail('分类不存在');
+            return app('json')->fail('Danh mục không tồn tại');
         }
         $cateInfo->name = $data['name'];
         $cateInfo->sort = $data['sort'];
         $cateInfo->save();
-        return app('json')->success('修改成功');
+        return app('json')->success('Sửa thành công');
     }
 
     /**
-     * 删除
+     * Xóa
      * @param $id
      * @return mixed
      */
     public function delete($id)
     {
-        if ($id == 0) return app('json')->fail('系统分类不能删除');
+        if ($id == 0) return app('json')->fail('Không thể xóa danh mục hệ thống');
         $cateInfo = $this->services->get($id);
         if (!$cateInfo) {
-            return app('json')->fail('分类不存在');
+            return app('json')->fail('Danh mục không tồn tại');
         }
         $cateInfo->delete();
-        return app('json')->success('删除成功');
+        return app('json')->success('Xóa thành công');
     }
 }

@@ -70,34 +70,34 @@ export default {
             this.configData.list = [
               {
                 id: 0,
-                name: '配送方式',
+                name: 'Phương thức giao hàng',
               },
               {
                 id: 2,
-                name: '门店距离',
+                name: 'Khoảng cách đến cửa hàng',
               },
               {
                 id: 3,
-                name: '门店地址',
+                name: 'Địa chỉ cửa hàng',
               },
             ];
           } else {
             this.configData.list = [
               {
                 id: 0,
-                name: '配送方式',
+                name: 'Phương thức giao hàng',
               },
               {
                 id: 1,
-                name: '营业时间',
+                name: 'Giờ mở cửa',
               },
               {
                 id: 2,
-                name: '门店距离',
+                name: 'Khoảng cách đến cửa hàng',
               },
               {
                 id: 3,
-                name: '门店地址',
+                name: 'Địa chỉ cửa hàng',
               },
             ];
           }

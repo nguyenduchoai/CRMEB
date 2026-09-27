@@ -38,7 +38,7 @@
 <script>
 import { Throttle } from "@/utils/validate.js";
 
-// 生成全局唯一id
+// Tạo id duy nhất toàn cục
 function generateUUID() {
   return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
     let r = (Math.random() * 16) | 0,
@@ -98,7 +98,7 @@ export default {
       borderLoaded: 0,
       showTransition: false,
       scrollFn: Throttle(function () {
-        // 加载img时才执行滚动监听判断是否可加载
+        // Chỉ thực hiện theo dõi cuộn để kiểm tra có thể load hay không khi load img
         if (that.loadImg || that.isLoadError) return;
         const id = that.uid;
         const query = uni.createSelectorQuery().in(that);
@@ -180,12 +180,12 @@ export default {
   left: 0;
 }
 
-/* 官方优化图片tips */
+/* Tips tối ưu ảnh chính thức */
 image {
   will-change: transform;
 }
 
-/* 渐变过渡效果处理 */
+/* Xử lý hiệu ứng chuyển động gradient */
 image.origin-img {
   width: 100%;
   height: 100%;
@@ -202,7 +202,7 @@ image.origin-img.no-transition {
   opacity: 1;
 }
 
-/* 渐变过渡效果处理 */
+/* Xử lý hiệu ứng chuyển động gradient */
 image.border-img {
   width: 100%;
   height: 100%;
@@ -219,7 +219,7 @@ image.border-img.no-transition {
   opacity: 1;
 }
 
-/* 加载失败、加载中的占位图样式控制 */
+/* Điều khiển style ảnh placeholder khi load lỗi, đang load */
 .loadfail-img {
   height: 100%;
   background: url("~@/static/easy-loadimage/loadfail.png") no-repeat center;
@@ -230,13 +230,13 @@ image.border-img.no-transition {
   height: 100%;
 }
 
-/* 转圈 */
+/* Xoay vòng */
 .spin-circle {
   background: url("~@/static/easy-loadimage/loading.png") no-repeat center;
   background-size: 60%;
 }
 
-/* 动态灰色若隐若现 */
+/* Xám động ẩn hiện */
 .looming-gray {
   animation: looming-gray 1s infinite linear;
   background-color: #e3e3e3;
@@ -257,7 +257,7 @@ image.border-img.no-transition {
   }
 }
 
-/* 骨架屏1 */
+/* Khung xương (skeleton) 1 */
 .skeleton-1 {
   background-color: #e3e3e3;
   background-image: linear-gradient(
@@ -278,7 +278,7 @@ image.border-img.no-transition {
   }
 }
 
-/* 骨架屏2 */
+/* Khung xương (skeleton) 2 */
 .skeleton-2 {
   background-image: linear-gradient(
     -90deg,

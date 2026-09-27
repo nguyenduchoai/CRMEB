@@ -19,7 +19,7 @@
               type="text"
               v-model="formInline.username"
               prefix="ios-contact-outline"
-              placeholder="请输入用户名"
+              placeholder="Vui lòng nhập tên đăng nhập"
               size="large"
             />
           </el-form-item>
@@ -28,7 +28,7 @@
               type="password"
               v-model="formInline.password"
               prefix="ios-lock-outline"
-              placeholder="请输入密码"
+              placeholder="Vui lòng nhập mật khẩu"
               size="large"
               show-password
             />
@@ -39,7 +39,7 @@
                 type="text"
                 v-model="formInline.code"
                 prefix="ios-keypad-outline"
-                placeholder="请输入验证码"
+                placeholder="Vui lòng nhập mã xác thực"
                 size="large"
               />
               <img :src="imgcode" class="pictrue" v-db-click @click="captchas" />
@@ -53,7 +53,7 @@
               v-db-click
               @click="handleSubmit('formInline')"
               class="btn"
-              >登录</el-button
+              >Đăng nhập</el-button
             >
           </el-form-item>
         </el-form>
@@ -103,8 +103,8 @@ export default {
         password: '',
       },
       ruleInline: {
-        username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-        password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
+        username: [{ required: true, message: 'Vui lòng nhập tên đăng nhập', trigger: 'blur' }],
+        password: [{ required: true, message: 'Vui lòng nhập mật khẩu', trigger: 'blur' }],
       },
       login_captcha: 0,
       login_logo: '',
@@ -141,7 +141,7 @@ export default {
       loginInfoApi()
         .then((res) => {
           const data = res.data || {};
-          document.title = `${data.site_name} - 登录`;
+          document.title = `${data.site_name} - Đăng nhập`;
           localStorage.setItem('ADMIN_TITLE', data.site_name || '');
           this.$store.commit('setAdminTitle', data.site_name);
           this.login_logo = data.login_logo || require('@/assets/images/logo.png');
@@ -198,20 +198,20 @@ export default {
           try {
             if (data.queue === false) {
               this.$notify.warning({
-                title: '温馨提示',
+                title: 'Lưu ý',
                 dangerouslyUseHTMLString: true,
                 message:
-                  '您的【消息队列】未开启，没有开启会导致异步任务无法执行。请尽快执行命令开启！！<a href="https://doc.crmeb.com/single/v54/13667" target="_blank">点击查看开启方法</a>',
+                  'Dịch vụ [Hàng đợi tin nhắn] của bạn chưa được bật, nếu không bật, các tác vụ bất đồng bộ sẽ không thể thực thi. Vui lòng chạy lệnh để bật càng sớm càng tốt!! <a href="https://doc.crmeb.com/single/v54/13667" target="_blank">Nhấn để xem cách bật</a>',
                 duration: 30000,
               });
             }
             if (data.timer === false) {
               setTimeout(() => {
                 this.$notify.warning({
-                  title: '温馨提示',
+                  title: 'Lưu ý',
                   dangerouslyUseHTMLString: true,
                   message:
-                    '您的【定时任务】未开启，没有开启会导致自动收货、未支付自动取消订单、订单自动好评、拼团到期退款等任务无法正常执行。请尽快执行命令开启！！<a href="https://doc.crmeb.com/single/v54/13667" target="_blank">点击查看开启方法</a>',
+                    'Dịch vụ [Tác vụ định kỳ] của bạn chưa được bật, nếu không bật, các tác vụ như tự động xác nhận đã nhận hàng, tự động hủy đơn hàng chưa thanh toán, tự động đánh giá tốt đơn hàng, hoàn tiền mua chung khi hết hạn, v.v. sẽ không thể thực thi bình thường. Vui lòng chạy lệnh để bật càng sớm càng tốt!! <a href="https://doc.crmeb.com/single/v54/13667" target="_blank">Nhấn để xem cách bật</a>',
                   duration: 30000,
                 });
               }, 0);
@@ -225,7 +225,7 @@ export default {
         })
         .catch((res) => {
           const data = res || {};
-          this.$message.error(data.msg || '登录失败');
+          this.$message.error(data.msg || 'Đăng nhập thất bại');
           if (res && res.data) this.login_captcha = res.data.login_captcha;
         })
         .finally(() => {
@@ -259,9 +259,9 @@ export default {
           if (!isNotice) {
             isNotice = true;
             this.$notify.warning({
-              title: '温馨提示',
+              title: 'Lưu ý',
               message:
-                '您的【长连接】未开启，没有开启会导致系统默认客服无法使用,后台订单通知无法收到。请尽快执行命令开启！！<a href="https://doc.crmeb.com/single/v54/13667" target="_blank">点击查看开启方法</a>',
+                'Dịch vụ [Kết nối liên tục] của bạn chưa được bật, nếu không bật, CSKH mặc định của hệ thống sẽ không thể sử dụng và trang quản trị sẽ không nhận được thông báo đơn hàng. Vui lòng chạy lệnh để bật càng sớm càng tốt!! <a href="https://doc.crmeb.com/single/v54/13667" target="_blank">Nhấn để xem cách bật</a>',
               dangerouslyUseHTMLString: true,
               duration: 30000,
             });
@@ -275,7 +275,7 @@ export default {
       return parseFloat(expiresTimeNum / 60 / 60 / 24);
     },
     closefail() {
-      this.$message.error('校验错误');
+      this.$message.error('Lỗi xác thực');
     },
     handleResize() {
       this.fullWidth = document.documentElement.clientWidth;

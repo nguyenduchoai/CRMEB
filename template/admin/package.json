@@ -7,9 +7,9 @@
     "serve": "node src/libs/start.js && vue-cli-service serve --open --mode=dev",
     "dev": "node src/libs/start.js && vue-cli-service serve --open --mode=dev",
     "build": "vue-cli-service build --mode=production",
-    "eslint:comment": "使用 ESLint 检查并自动修复 src 目录下所有扩展名为 .js 和 .vue 的文件",
+    "eslint:comment": "Dùng ESLint kiểm tra và tự động sửa tất cả các tệp có phần mở rộng .js và .vue trong thư mục src",
     "eslint": "eslint --ext .js,.vue,.ts --ignore-path .gitignore --fix src",
-    "prettier:comment": "自动格式化当前目录下的所有文件",
+    "prettier:comment": "Tự động định dạng tất cả các tệp trong thư mục hiện tại",
     "prettier": "prettier --write ."
   },
   "dependencies": {

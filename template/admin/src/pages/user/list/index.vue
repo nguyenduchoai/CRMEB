@@ -12,19 +12,19 @@
         >
           <div class="acea-row search-form" v-if="!collapse">
             <div>
-              <el-form-item label="用户搜索：" label-for="nickname">
-                <el-input v-model="userFrom.nickname" placeholder="请输入用户" clearable class="form_content_width">
+              <el-form-item label="Tìm người dùng:" label-for="nickname">
+                <el-input v-model="userFrom.nickname" placeholder="Vui lòng nhập thông tin người dùng" clearable class="form_content_width">
                   <el-select v-model="field_key" slot="prepend" style="width: 100px">
-                    <el-option value="all" label="全部"></el-option>
+                    <el-option value="all" label="Tất cả"></el-option>
                     <el-option value="uid" label="UID"></el-option>
-                    <el-option value="phone" label="手机号"></el-option>
-                    <el-option value="nickname" label="用户昵称"></el-option>
+                    <el-option value="phone" label="Số điện thoại"></el-option>
+                    <el-option value="nickname" label="Biệt danh người dùng"></el-option>
                   </el-select>
                 </el-input>
               </el-form-item>
-              <el-form-item label="用户等级：" label-for="level">
-                <el-select v-model="level" placeholder="请选择用户等级" clearable class="form_content_width">
-                  <el-option value="all" label="全部">全部</el-option>
+              <el-form-item label="Hạng người dùng:" label-for="level">
+                <el-select v-model="level" placeholder="Vui lòng chọn hạng người dùng" clearable class="form_content_width">
+                  <el-option value="all" label="Tất cả">Tất cả</el-option>
                   <el-option
                     :value="item.id"
                     v-for="(item, index) in levelList"
@@ -33,9 +33,9 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="用户分组：">
-                <el-select v-model="group_id" placeholder="请选择用户分组" clearable class="form_content_width">
-                  <el-option value="all" label="全部"></el-option>
+              <el-form-item label="Nhóm người dùng:">
+                <el-select v-model="group_id" placeholder="Vui lòng chọn nhóm người dùng" clearable class="form_content_width">
+                  <el-option value="all" label="Tất cả"></el-option>
                   <el-option
                     :value="item.id"
                     v-for="(item, index) in groupList"
@@ -46,29 +46,29 @@
               </el-form-item>
             </div>
             <el-form-item class="search-form-sub">
-              <el-button type="primary" v-db-click @click="userSearchs">查询</el-button>
-              <el-button class="ResetSearch" v-db-click @click="reset('userFrom')">重置</el-button>
+              <el-button type="primary" v-db-click @click="userSearchs">Tra cứu</el-button>
+              <el-button class="ResetSearch" v-db-click @click="reset('userFrom')">Đặt lại</el-button>
               <a class="ivu-ml-8 font12 ml10" v-db-click @click="collapse = !collapse">
-                <template v-if="!collapse"> 展开 <i class="el-icon-arrow-down" /> </template>
-                <template v-else> 收起 <i class="el-icon-arrow-up" /> </template>
+                <template v-if="!collapse"> Mở rộng <i class="el-icon-arrow-down" /> </template>
+                <template v-else> Thu gọn <i class="el-icon-arrow-up" /> </template>
               </a>
             </el-form-item>
           </div>
           <div v-if="collapse" class="acea-row search-form">
             <div class="search-form-box">
-              <el-form-item label="用户搜索：" label-for="nickname">
-                <el-input v-model="userFrom.nickname" placeholder="请输入用户" clearable class="form_content_width">
+              <el-form-item label="Tìm người dùng:" label-for="nickname">
+                <el-input v-model="userFrom.nickname" placeholder="Vui lòng nhập thông tin người dùng" clearable class="form_content_width">
                   <el-select v-model="field_key" slot="prepend" style="width: 100px">
-                    <el-option value="all" label="全部"></el-option>
+                    <el-option value="all" label="Tất cả"></el-option>
                     <el-option value="uid" label="UID"></el-option>
-                    <el-option value="phone" label="手机号"></el-option>
-                    <el-option value="nickname" label="用户昵称"></el-option>
+                    <el-option value="phone" label="Số điện thoại"></el-option>
+                    <el-option value="nickname" label="Biệt danh người dùng"></el-option>
                   </el-select>
                 </el-input>
               </el-form-item>
-              <el-form-item label="用户等级：" label-for="level">
-                <el-select v-model="level" placeholder="请选择用户等级" clearable class="form_content_width">
-                  <el-option value="all" label="全部">全部</el-option>
+              <el-form-item label="Hạng người dùng:" label-for="level">
+                <el-select v-model="level" placeholder="Vui lòng chọn hạng người dùng" clearable class="form_content_width">
+                  <el-option value="all" label="Tất cả">Tất cả</el-option>
                   <el-option
                     :value="item.id"
                     v-for="(item, index) in levelList"
@@ -77,9 +77,9 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="用户分组：">
-                <el-select v-model="group_id" placeholder="请选择用户分组" clearable class="form_content_width">
-                  <el-option value="all" label="全部"></el-option>
+              <el-form-item label="Nhóm người dùng:">
+                <el-select v-model="group_id" placeholder="Vui lòng chọn nhóm người dùng" clearable class="form_content_width">
+                  <el-option value="all" label="Tất cả"></el-option>
                   <el-option
                     :value="item.id"
                     v-for="(item, index) in groupList"
@@ -88,9 +88,9 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="分销等级：">
-                <el-select v-model="agent_level" placeholder="请选择分销等级" clearable class="form_content_width">
-                  <el-option value="all" label="全部"></el-option>
+              <el-form-item label="Cấp độ CTV:">
+                <el-select v-model="agent_level" placeholder="Vui lòng chọn cấp độ CTV" clearable class="form_content_width">
+                  <el-option value="all" label="Tất cả"></el-option>
                   <el-option
                     :value="item.grade"
                     v-for="(item, index) in membershipList"
@@ -99,7 +99,7 @@
                   ></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="用户标签：" label-for="label_id">
+              <el-form-item label="Nhãn người dùng:" label-for="label_id">
                 <div class="labelInput acea-row row-between-wrapper" v-db-click @click="openSelectLabel">
                   <div style="width: 222px">
                     <div v-if="selectDataLabel.length">
@@ -107,56 +107,56 @@
                         item.label_name
                       }}</el-tag>
                     </div>
-                    <span class="span" v-else>选择用户关联标签</span>
+                    <span class="span" v-else>Chọn nhãn gắn cho người dùng</span>
                   </div>
                   <div class="ivu-icon ivu-icon-ios-arrow-down"></div>
                 </div>
               </el-form-item>
-              <el-form-item label="用户身份：">
-                <el-select v-model="userFrom.is_promoter" placeholder="请选择" clearable class="form_content_width">
-                  <el-option value="" label="全部"></el-option>
-                  <el-option value="1" label="推广员"></el-option>
-                  <el-option value="0" label="普通用户"></el-option>
+              <el-form-item label="Loại người dùng:">
+                <el-select v-model="userFrom.is_promoter" placeholder="Vui lòng chọn" clearable class="form_content_width">
+                  <el-option value="" label="Tất cả"></el-option>
+                  <el-option value="1" label="Cộng tác viên"></el-option>
+                  <el-option value="0" label="Người dùng thường"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="付费会员：" label-for="isMember">
-                <el-select v-model="userFrom.isMember" placeholder="请选择" clearable class="form_content_width">
-                  <el-option value="" label="全部"></el-option>
-                  <el-option value="1" label="是"></el-option>
-                  <el-option value="0" label="否"></el-option>
+              <el-form-item label="Thành viên trả phí:" label-for="isMember">
+                <el-select v-model="userFrom.isMember" placeholder="Vui lòng chọn" clearable class="form_content_width">
+                  <el-option value="" label="Tất cả"></el-option>
+                  <el-option value="1" label="Có"></el-option>
+                  <el-option value="0" label="Không"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="储值余额：" label-for="balance">
+              <el-form-item label="Số dư tài khoản:" label-for="balance">
                 <el-input
                   clearable
-                  placeholder="最小值"
+                  placeholder="Tối thiểu"
                   v-model="userFrom.balance[0]"
                   class="form_range_content_width"
                 />
                 ~
                 <el-input
                   clearable
-                  placeholder="最大值"
+                  placeholder="Tối đa"
                   v-model="userFrom.balance[1]"
                   class="form_range_content_width"
                 />
               </el-form-item>
-              <el-form-item label="积分剩余：" label-for="integral">
+              <el-form-item label="Điểm thưởng còn lại:" label-for="integral">
                 <el-input
                   clearable
-                  placeholder="最小值"
+                  placeholder="Tối thiểu"
                   v-model="userFrom.integral[0]"
                   class="form_range_content_width"
                 />
                 ~
                 <el-input
                   clearable
-                  placeholder="最大值"
+                  placeholder="Tối đa"
                   v-model="userFrom.integral[1]"
                   class="form_range_content_width"
                 />
               </el-form-item>
-              <el-form-item label="上次消费：" label-for="before_pay_time">
+              <el-form-item label="Lần mua gần nhất:" label-for="before_pay_time">
                 <el-date-picker
                   clearable
                   v-model="before_pay_time"
@@ -165,66 +165,66 @@
                   @change="(e) => onchangeTime(e, 'before_pay_time')"
                   format="yyyy/MM/dd"
                   value-format="yyyy/MM/dd"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
+                  start-placeholder="Ngày bắt đầu"
+                  end-placeholder="Ngày kết thúc"
                   :picker-options="pickerOptions"
                   style="width: 250px"
                 ></el-date-picker>
               </el-form-item>
-              <el-form-item label="下单次数：" label-for="pay_count">
+              <el-form-item label="Số lần đặt hàng:" label-for="pay_count">
                 <el-input
                   clearable
-                  placeholder="最小值"
+                  placeholder="Tối thiểu"
                   v-model="userFrom.pay_count_num[0]"
                   class="form_range_content_width"
                 />
                 ~
                 <el-input
                   clearable
-                  placeholder="最大值"
+                  placeholder="Tối đa"
                   v-model="userFrom.pay_count_num[1]"
                   class="form_range_content_width"
                 />
               </el-form-item>
-              <el-form-item label="消费金额：" label-for="store_name">
+              <el-form-item label="Số tiền chi tiêu:" label-for="store_name">
                 <el-input
                   clearable
-                  placeholder="最小值"
+                  placeholder="Tối thiểu"
                   v-model="userFrom.pay_count_money[0]"
                   class="form_range_content_width"
                 />
                 ~
                 <el-input
                   clearable
-                  placeholder="最大值"
+                  placeholder="Tối đa"
                   v-model="userFrom.pay_count_money[1]"
                   class="form_range_content_width"
                 />
               </el-form-item>
-              <el-form-item label="充值次数：" label-for="store_name">
+              <el-form-item label="Số lần nạp tiền:" label-for="store_name">
                 <el-input
                   clearable
-                  placeholder="最小值"
+                  placeholder="Tối thiểu"
                   v-model="userFrom.recharge_count[0]"
                   class="form_range_content_width"
                 />
                 ~
                 <el-input
                   clearable
-                  placeholder="最大值"
+                  placeholder="Tối đa"
                   v-model="userFrom.recharge_count[1]"
                   class="form_range_content_width"
                 />
               </el-form-item>
-              <el-form-item label="访问情况：" label-for="user_time_type">
-                <el-select v-model="user_time_type" placeholder="请选择访问情况" clearable class="form_content_width">
-                  <el-option value="" label="全部"></el-option>
-                  <el-option value="visitno" label="时间段未访问"></el-option>
-                  <el-option value="visit" label="时间段访问过"></el-option>
-                  <el-option value="add_time" label="首次访问"></el-option>
+              <el-form-item label="Tình trạng truy cập:" label-for="user_time_type">
+                <el-select v-model="user_time_type" placeholder="Vui lòng chọn tình trạng truy cập" clearable class="form_content_width">
+                  <el-option value="" label="Tất cả"></el-option>
+                  <el-option value="visitno" label="Không truy cập trong khoảng thời gian"></el-option>
+                  <el-option value="visit" label="Có truy cập trong khoảng thời gian"></el-option>
+                  <el-option value="add_time" label="Truy cập lần đầu"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="访问时间：" label-for="user_time" v-if="user_time_type">
+              <el-form-item label="Thời gian truy cập:" label-for="user_time" v-if="user_time_type">
                 <el-date-picker
                   clearable
                   v-model="timeVal"
@@ -233,25 +233,25 @@
                   @change="(e) => onchangeTime(e, 'user_time')"
                   format="yyyy/MM/dd"
                   value-format="yyyy/MM/dd"
-                  start-placeholder="开始日期"
-                  end-placeholder="结束日期"
+                  start-placeholder="Ngày bắt đầu"
+                  end-placeholder="Ngày kết thúc"
                   :picker-options="pickerOptions"
                   style="width: 250px"
                 ></el-date-picker>
               </el-form-item>
-              <!-- <el-form-item label="地区：" label-for="country">
+              <!-- <el-form-item label="Khu vực:" label-for="country">
                 <el-select
                   v-model="userFrom.country"
-                  placeholder="请选择国家"
+                  placeholder="Vui lòng chọn quốc gia"
                   clearable
                   @change="changeCountry"
                   class="form_content_width"
                 >
-                  <el-option value="domestic" label="中国"></el-option>
-                  <el-option value="abroad" label="外国"></el-option>
+                  <el-option value="domestic" label="Trung Quốc"></el-option>
+                  <el-option value="abroad" label="Nước ngoài"></el-option>
                 </el-select>
               </el-form-item>
-              <el-form-item label="省份：" v-if="userFrom.country === 'domestic'">
+              <el-form-item label="Tỉnh/Thành phố:" v-if="userFrom.country === 'domestic'">
                 <el-cascader
                   :options="addresData"
                   :value="address"
@@ -264,11 +264,11 @@
             </div>
 
             <el-form-item class="search-form-sub">
-              <el-button type="primary" label="default" v-db-click @click="userSearchs">搜索</el-button>
-              <el-button class="ResetSearch" v-db-click @click="reset('userFrom')">重置</el-button>
+              <el-button type="primary" label="default" v-db-click @click="userSearchs">Tìm kiếm</el-button>
+              <el-button class="ResetSearch" v-db-click @click="reset('userFrom')">Đặt lại</el-button>
               <a class="ivu-ml-8 font12 ml10" v-db-click @click="collapse = !collapse">
-                <template v-if="!collapse"> 展开 <i class="el-icon-arrow-down" /> </template>
-                <template v-else> 收起 <i class="el-icon-arrow-up" /> </template>
+                <template v-if="!collapse"> Mở rộng <i class="el-icon-arrow-down" /> </template>
+                <template v-else> Thu gọn <i class="el-icon-arrow-up" /> </template>
               </a>
             </el-form-item>
           </div>
@@ -282,9 +282,9 @@
       <el-row :gutter="24" justify="space-between">
         <el-col :span="24">
           <el-button v-auth="['admin-user-save']" type="primary" v-db-click @click="edit({ uid: 0 })"
-            >添加用户</el-button
+            >Thêm người dùng</el-button
           >
-          <el-button v-auth="['admin-user-coupon']" v-db-click @click="onSend">发送优惠券</el-button>
+          <el-button v-auth="['admin-user-coupon']" v-db-click @click="onSend">Gửi phiếu giảm giá</el-button>
           <el-button
             v-auth="['admin-wechat-news']"
             class="greens mr10"
@@ -292,18 +292,18 @@
             @click="onSendPic"
             v-if="userFrom.user_type === 'wechat'"
           >
-            发送图文消息
+            Gửi tin bài
           </el-button>
-          <el-button v-auth="['admin-user-group_set']" v-db-click @click="setGroup">批量设置分组</el-button>
-          <el-button v-auth="['admin-user-set_label']" v-db-click @click="setLabel">批量设置标签</el-button>
-          <el-button class="mr10" v-db-click @click="exportList">导出</el-button>
+          <el-button v-auth="['admin-user-group_set']" v-db-click @click="setGroup">Đặt nhóm hàng loạt</el-button>
+          <el-button v-auth="['admin-user-set_label']" v-db-click @click="setLabel">Đặt nhãn hàng loạt</el-button>
+          <el-button class="mr10" v-db-click @click="exportList">Xuất</el-button>
 
-          <!-- <el-button v-auth="['admin-user-synchro']" class="mr20" v-db-click @click="synchro">同步公众号用户</el-button> -->
+          <!-- <el-button v-auth="['admin-user-synchro']" class="mr20" v-db-click @click="synchro">Đồng bộ người dùng OA WeChat</el-button> -->
         </el-col>
         <el-col :span="24" class="userAlert" v-if="selectionList.length">
           <el-alert show-icon>
             <template slot="title">
-              已选择<i class="userI"> {{ selectionList.length }} </i>项
+              Đã chọn<i class="userI"> {{ selectionList.length }} </i>mục
             </template>
           </el-alert>
         </el-col>
@@ -314,8 +314,8 @@
         ref="table"
         highlight-current-row
         v-loading="loading"
-        empty-text="暂无数据"
-        no-filtered-userFrom-text="暂无筛选结果"
+        empty-text="Chưa có dữ liệu"
+        no-filtered-userFrom-text="Không có kết quả phù hợp"
         @sort-change="sortChanged"
         @select="handleSelectRow"
         @select-all="handleSelectAll"
@@ -326,91 +326,91 @@
           </template>
         </el-table-column>
         <el-table-column type="selection" :selectable="isSel" width="55"> </el-table-column>
-        <el-table-column label="用户ID" min-width="80">
+        <el-table-column label="ID người dùng" min-width="80">
           <template slot-scope="scope">
             <span>{{ scope.row.uid }}</span>
           </template>
         </el-table-column>
-        <el-table-column label="头像" min-width="60">
+        <el-table-column label="Ảnh đại diện" min-width="60">
           <template slot-scope="scope">
             <div class="tabBox_img" v-viewer>
               <img v-lazy="scope.row.avatar" />
             </div>
           </template>
         </el-table-column>
-        <el-table-column label="姓名" min-width="150">
+        <el-table-column label="Họ tên" min-width="150">
           <template slot-scope="scope">
             <div class="acea-row">
-              <i class="el-icon-male" v-show="scope.row.sex === '男'" style="color: #2db7f5; font-size: 15px"></i>
-              <i class="el-icon-female" v-show="scope.row.sex === '女'" style="color: #ed4014; font-size: 15px"></i>
+              <i class="el-icon-male" v-show="scope.row.sex === 'Nam'" style="color: #2db7f5; font-size: 15px"></i>
+              <i class="el-icon-female" v-show="scope.row.sex === 'Nữ'" style="color: #ed4014; font-size: 15px"></i>
               <div v-text="scope.row.nickname" class=""></div>
             </div>
-            <div v-if="scope.row.is_del == 1" style="color: red">用户已注销</div>
+            <div v-if="scope.row.is_del == 1" style="color: red">Người dùng đã hủy tài khoản</div>
           </template>
         </el-table-column>
-        <el-table-column label="付费会员" min-width="90">
+        <el-table-column label="Thành viên trả phí" min-width="90">
           <template slot-scope="scope">
-            <div>{{ scope.row.isMember ? '是' : '否' }}</div>
+            <div>{{ scope.row.isMember ? 'Có' : 'Không' }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="用户等级" min-width="90">
+        <el-table-column label="Hạng người dùng" min-width="90">
           <template slot-scope="scope">
             <div>{{ scope.row.level }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="分组" min-width="100">
+        <el-table-column label="Nhóm" min-width="100">
           <template slot-scope="scope">
             <div>{{ scope.row.group_id }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="分销等级" min-width="100">
+        <el-table-column label="Cấp độ CTV" min-width="100">
           <template slot-scope="scope">
             <div>{{ scope.row.agent_level_name }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="手机号" min-width="100">
+        <el-table-column label="Số điện thoại" min-width="100">
           <template slot-scope="scope">
             <div>{{ scope.row.phone }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="用户类型" min-width="100">
+        <el-table-column label="Loại người dùng" min-width="100">
           <template slot-scope="scope">
             <div>{{ scope.row.user_type }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="上级用户" min-width="100">
+        <el-table-column label="Người giới thiệu" min-width="100">
           <template slot-scope="scope">
             <div>{{ scope.row.spread_uid_nickname }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="余额" prop="now_money" min-width="100" :sortable="true">
+        <el-table-column label="Số dư" prop="now_money" min-width="100" :sortable="true">
           <template slot-scope="scope">
             <div>{{ scope.row.now_money }}</div>
           </template>
         </el-table-column>
-        <el-table-column label="操作" fixed="right" width="120">
+        <el-table-column label="Thao tác" fixed="right" width="120">
           <template slot-scope="scope">
             <template v-if="scope.row.is_del != 1">
-              <a v-db-click @click="userDetail(scope.row)">详情</a>
+              <a v-db-click @click="userDetail(scope.row)">Chi tiết</a>
 
               <el-divider direction="vertical"></el-divider>
               <el-dropdown size="small" @command="changeMenu(scope.row, $event, scope.$index)" :transfer="true">
-                <span class="el-dropdown-link">更多<i class="el-icon-arrow-down el-icon--right"></i> </span>
+                <span class="el-dropdown-link">Xem thêm<i class="el-icon-arrow-down el-icon--right"></i> </span>
                 <el-dropdown-menu slot="dropdown">
-                  <!-- <el-dropdown-item command="1">编辑</el-dropdown-item> -->
-                  <el-dropdown-item command="2">修改余额</el-dropdown-item>
-                  <el-dropdown-item command="8">修改积分</el-dropdown-item>
-                  <el-dropdown-item command="3">赠送会员</el-dropdown-item>
-                  <!--                                <el-dropdown-item command="4" v-if="row.vip_name">清除等级</el-dropdown-item>-->
-                  <el-dropdown-item command="5">设置分组</el-dropdown-item>
-                  <el-dropdown-item command="6">设置标签</el-dropdown-item>
-                  <el-dropdown-item command="7">修改上级推广人</el-dropdown-item>
-                  <el-dropdown-item command="99" v-if="scope.row.spread_uid">清除上级推广人</el-dropdown-item>
+                  <!-- <el-dropdown-item command="1">Sửa</el-dropdown-item> -->
+                  <el-dropdown-item command="2">Chỉnh sửa số dư</el-dropdown-item>
+                  <el-dropdown-item command="8">Chỉnh sửa điểm thưởng</el-dropdown-item>
+                  <el-dropdown-item command="3">Tặng gói thành viên</el-dropdown-item>
+                  <!--                                <el-dropdown-item command="4" v-if="row.vip_name">Xóa hạng</el-dropdown-item>-->
+                  <el-dropdown-item command="5">Đặt nhóm</el-dropdown-item>
+                  <el-dropdown-item command="6">Đặt nhãn</el-dropdown-item>
+                  <el-dropdown-item command="7">Sửa người giới thiệu</el-dropdown-item>
+                  <el-dropdown-item command="99" v-if="scope.row.spread_uid">Gỡ bỏ người giới thiệu</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </template>
             <template v-else>
-              <a v-db-click @click="userDetail(scope.row)">详情</a>
+              <a v-db-click @click="userDetail(scope.row)">Chi tiết</a>
             </template>
           </template>
         </el-table-column>
@@ -426,14 +426,14 @@
         />
       </div>
     </el-card>
-    <!-- 编辑表单 积分余额-->
+    <!-- Form sửa số dư điểm thưởng-->
     <edit-from ref="edits" :FromData="FromData" @submitFail="submitFail"></edit-from>
-    <!-- 发送优惠券-->
+    <!-- Gửi phiếu giảm giá-->
     <send-from ref="sends" :userIds="ids.toString()"></send-from>
-    <!-- 会员详情-->
+    <!-- Chi tiết thành viên-->
     <user-details ref="userDetails"></user-details>
-    <!--发送图文消息 -->
-    <el-dialog :visible.sync="modal13" title="发送消息" width="1200px" class="modelBox">
+    <!--Gửi tin bài -->
+    <el-dialog :visible.sync="modal13" title="Gửi tin nhắn" width="1200px" class="modelBox">
       <news-category
         v-if="modal13"
         :isShowSend="isShowSend"
@@ -444,10 +444,10 @@
         :maxCols="maxCols"
       ></news-category>
     </el-dialog>
-    <!--修改推广人-->
-    <el-dialog :visible.sync="promoterShow" title="修改推广人" width="540px" :show-close="true">
+    <!--Sửa người giới thiệu-->
+    <el-dialog :visible.sync="promoterShow" title="Sửa người giới thiệu" width="540px" :show-close="true">
       <el-form ref="formInline" :model="formInline" label-width="100px" @submit.native.prevent>
-        <el-form-item v-if="formInline" label="选择推广人：" prop="image">
+        <el-form-item v-if="formInline" label="Chọn người giới thiệu:" prop="image">
           <div class="picBox" v-db-click @click="customer">
             <div class="pictrue" v-if="formInline.image">
               <img v-lazy="formInline.image" />
@@ -459,14 +459,14 @@
         </el-form-item>
       </el-form>
       <div class="acea-row row-right mt20">
-        <el-button v-db-click @click="cancel('formInline')">取消</el-button>
-        <el-button type="primary" v-db-click @click="putSend('formInline')">提交</el-button>
+        <el-button v-db-click @click="cancel('formInline')">Hủy</el-button>
+        <el-button type="primary" v-db-click @click="putSend('formInline')">Gửi</el-button>
       </div>
     </el-dialog>
-    <el-dialog :visible.sync="customerShow" title="请选择商城用户" :show-close="true" width="1000px">
+    <el-dialog :visible.sync="customerShow" title="Vui lòng chọn người dùng cửa hàng" :show-close="true" width="1000px">
       <customerInfo v-if="customerShow" @imageObject="imageObject"></customerInfo>
     </el-dialog>
-    <el-dialog :visible.sync="labelShow" append-to-body title="请选择用户标签" width="540px" :show-close="true">
+    <el-dialog :visible.sync="labelShow" append-to-body title="Vui lòng chọn nhãn người dùng" width="540px" :show-close="true">
       <userLabel
         v-if="labelShow"
         :uid="labelActive.uid"
@@ -482,21 +482,21 @@
       :visible.sync="modals"
       :wrapperClosable="false"
       size="720"
-      title="用户信息填写"
+      title="Điền thông tin người dùng"
     >
       <div class="demo-drawer__content">
         <userEdit ref="userEdit" v-if="modals" :userData="userData"></userEdit>
         <div class="fix_footer acea-row row-center">
-          <el-button v-db-click @click="modals = false">取消</el-button>
-          <el-button type="primary" v-db-click @click="setUser">提交</el-button>
+          <el-button v-db-click @click="modals = false">Hủy</el-button>
+          <el-button type="primary" v-db-click @click="setUser">Gửi</el-button>
         </div>
       </div>
     </el-drawer>
-    <!-- 用户标签 -->
+    <!-- Nhãn người dùng -->
     <el-dialog
       :visible.sync="selectLabelShow"
       append-to-body
-      title="请选择用户标签"
+      title="Vui lòng chọn nhãn người dùng"
       width="540px"
       :show-close="true"
       :close-on-click-modal="false"
@@ -582,9 +582,9 @@ export default {
       pickerOptions: this.$timeOptions,
       collapse: false,
       headeNum: [
-        { type: '', name: '全部' },
-        { type: 'wechat', name: '微信公众号' },
-        { type: 'routine', name: '微信小程序' },
+        { type: '', name: 'Tất cả' },
+        { type: 'wechat', name: 'OA WeChat' },
+        { type: 'routine', name: 'WeChat Mini Program' },
         { type: 'h5', name: 'H5' },
         { type: 'pc', name: 'PC' },
         { type: 'app', name: 'APP' },
@@ -661,7 +661,7 @@ export default {
         limit: '',
       },
       labelLists: [],
-      selectedIds: [], //选中合并项的id
+      selectedIds: [], //Id của mục đã chọn để gộp
       ids: [],
     };
   },
@@ -691,10 +691,10 @@ export default {
         ids.push(i.id);
       });
       data.label_id = ids;
-      // if (!data.real_name) return this.$message.warning("请输入真实姓名");
-      // if (!data.phone) return this.$message.warning("请输入手机号");
-      // if (!data.pwd) return this.$message.warning("请输入密码");
-      // if (!data.true_pwd) return this.$message.warning("请输入确认密码");
+      // if (!data.real_name) return this.$message.warning("Vui lòng nhập họ tên thật");
+      // if (!data.phone) return this.$message.warning("Vui lòng nhập số điện thoại");
+      // if (!data.pwd) return this.$message.warning("Vui lòng nhập mật khẩu");
+      // if (!data.true_pwd) return this.$message.warning("Vui lòng nhập mật khẩu xác nhận");
       if (data.uid) {
         editUser(data)
           .then((res) => {
@@ -721,18 +721,18 @@ export default {
       this.labelActive.uid = 0;
       this.getList();
     },
-    // 标签弹窗关闭
+    // Đóng popup nhãn
     labelClose() {
       this.labelActive.uid = 0;
       this.labelShow = false;
       this.selectLabelShow = false;
     },
-    // 提交
+    // Gửi
     putSend(name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
           if (!this.formInline.spread_uid) {
-            return this.$message.error('请上传用户');
+            return this.$message.error('Vui lòng chọn người dùng');
           }
           agentSpreadApi(this.formInline)
             .then((res) => {
@@ -772,7 +772,7 @@ export default {
     isSel(row) {
       return !!!row.is_del;
     },
-    // 分组列表
+    // Danh sách nhóm
     groupLists() {
       this.loading = true;
       userLabelApi(this.labelFrom)
@@ -819,10 +819,10 @@ export default {
         this.membershipList = res.data.list;
       });
     },
-    // 批量设置分组；
+    // Đặt nhóm theo lô;
     setGroup() {
       if (this.ids.length === 0) {
-        this.$message.warning('请选择要设置分组的用户');
+        this.$message.warning('Vui lòng chọn người dùng cần đặt nhóm');
       } else {
         let uids = { uids: this.ids };
         this.$modalForm(userSetGroup(uids)).then(() => {
@@ -832,10 +832,10 @@ export default {
         });
       }
     },
-    // 批量设置标签；
+    // Đặt nhãn theo lô;
     setLabel() {
       if (this.ids.length === 0) {
-        this.$message.warning('请选择要设置标签的用户');
+        this.$message.warning('Vui lòng chọn người dùng cần gắn nhãn');
       } else {
         this.is_batch = true;
         let uids = { uids: this.ids };
@@ -878,7 +878,7 @@ export default {
       });
       // this.userSearchs();
     },
-    // 批量设置标签
+    // Đặt nhãn hàng loạt
     activeData(data, type) {
       let labels = [];
       if (!data.length) return;
@@ -896,12 +896,12 @@ export default {
         this.$message.success(res.msg);
       });
     },
-    //是否为付费会员；
+    //Có phải thành viên trả phí hay không;
     changeMember() {
       this.userFrom.page = 1;
       this.getList();
     },
-    // 选择国家
+    // Chọn quốc gia
     changeCountry() {
       if (this.userFrom.country === 'abroad' || !this.userFrom.country) {
         this.selectedData = [];
@@ -910,13 +910,13 @@ export default {
         this.address = [];
       }
     },
-    // 选择地址
+    // Chọn địa chỉ
     handleChange(selectedData) {
       this.selectedData = selectedData.map((o) => o.label);
       this.userFrom.province = this.selectedData[0];
       this.userFrom.city = this.selectedData[1];
     },
-    // 具体日期
+    // Ngày cụ thể
     onchangeTime(e, type) {
       this.userFrom[type] = e ? e.join('-') : '';
     },
@@ -924,7 +924,7 @@ export default {
       this.$refs.userDetails.modals = true;
       this.$refs.userDetails.getDetails(row.uid);
     },
-    // 操作
+    // Thao tác
     changeMenu(row, name, index) {
       let uid = [];
       uid.push(row.uid);
@@ -940,7 +940,7 @@ export default {
           this.giveLevelTime(row.uid);
           break;
         case '4':
-          this.del(row, '清除 【 ' + this.tenText(row.nickname) + ' 】的会员等级', index, 'user');
+          this.del(row, 'xóa hạng thành viên của [ ' + this.tenText(row.nickname) + ' ]', index, 'user');
           break;
         case '5':
           this.$modalForm(userSetGroup(uids)).then(() => this.getList());
@@ -955,13 +955,13 @@ export default {
           this.getOtherFrom(row.uid, 'point');
           break;
         default:
-          this.del(row, '解除【 ' + this.tenText(row.nickname) + ' 】的上级推广人', index, 'tuiguang');
+          this.del(row, 'gỡ người giới thiệu của [ ' + this.tenText(row.nickname) + ' ]', index, 'tuiguang');
       }
     },
     tenText(str) {
       if (str.length > 10) {
-        //如果字符长度超过10，后面的字符就变成...可自行调整长度和代替字符
-        str = str.substr(0, 10) + '...'; //截取从第一个字符开始，往后取10个字符，剩余的用...代替
+        //Nếu độ dài ký tự vượt quá 10, các ký tự sau sẽ đổi thành ... có thể tự điều chỉnh độ dài và ký tự thay thế
+        str = str.substr(0, 10) + '...'; //Cắt từ ký tự đầu tiên, lấy 10 ký tự tiếp theo, phần còn lại thay bằng ...
       }
       return str;
     },
@@ -994,7 +994,7 @@ export default {
         image: '',
       };
     },
-    // 赠送会员等级
+    // Tặng hạng thành viên
     giveLevel(id) {
       this.$modalForm(giveLevelApi(id)).then(() => this.getList(1));
 
@@ -1011,7 +1011,7 @@ export default {
       //     this.$message.error(res.msg);
       //   });
     },
-    // 赠送会员等级
+    // Tặng hạng thành viên
     giveLevelTime(id) {
       this.$modalForm(giveLevelTimeApi(id)).then(() => this.getList(1));
 
@@ -1027,7 +1027,7 @@ export default {
       //     this.$message.error(res.msg);
       //   });
     },
-    // 删除
+    // Xóa
     del(row, tit, num, name) {
       let delfromData = {
         title: tit,
@@ -1046,11 +1046,11 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 清除会员删除成功
+    // Xóa hạng thành viên thành công
     submitModel() {
       this.getList();
     },
-    // 会员列表
+    // Danh sách thành viên
     getList() {
       // if (this.selectDataLabel.length) {
       //   let activeIds = [];
@@ -1087,7 +1087,7 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 用户导出
+    // Xuất người dùng
     async exportList() {
       if (this.ids.length) {
         this.userFrom.ids = this.ids;
@@ -1135,16 +1135,16 @@ export default {
       this.getList();
     },
 
-    // 搜索
+    // Tìm kiếm
     userSearchs() {
-      // 清除已选用户
+      // Xóa người dùng đã chọn
       this.ids = [];
       this.selectedIds = [];
       this.selectionList = [];
       this.userFrom.page = 1;
       this.getList();
     },
-    // 重置
+    // Đặt lại
     reset(name) {
       this.userFrom = {
         label_id: '',
@@ -1170,8 +1170,8 @@ export default {
         group_id: '',
         agent_level: '',
         field_key: '',
-        page: 1, // 当前页
-        limit: 20, // 每页显示条数
+        page: 1, // Trang hiện tại
+        limit: 20, // Số mục hiển thị mỗi trang
       };
       this.field_key = '';
       this.level = '';
@@ -1185,7 +1185,7 @@ export default {
       this.selectedIds = new Set();
       this.getList();
     },
-    // 获取编辑表单数据
+    // Lấy dữ liệu form sửa
     getUserFrom(id) {
       getUserInfo(id)
         .then(async (res) => {
@@ -1196,11 +1196,11 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 获取积分余额表单
+    // Lấy form số dư điểm thưởng
     getOtherFrom(id, type) {
       this.$modalForm(editOtherApi(id, type)).then(() => this.getList(1));
     },
-    // 修改状态
+    // Sửa trạng thái
     onchangeIsShow(row) {
       let data = {
         id: row.uid,
@@ -1214,37 +1214,37 @@ export default {
           this.$message.error(res.msg);
         });
     },
-    // 点击发送优惠券
+    // Click để gửi phiếu giảm giá
     onSend() {
       if (this.ids.length === 0) {
-        this.$message.warning('请选择要发送优惠券的用户');
+        this.$message.warning('Vui lòng chọn người dùng cần gửi phiếu giảm giá');
       } else {
         this.$refs.sends.modals = true;
         this.$refs.sends.getList();
       }
     },
-    // 发送图文消息
+    // Gửi tin bài
     onSendPic() {
       if (this.ids.length === 0) {
-        this.$message.warning('请选择要发送图文消息的用户');
+        this.$message.warning('Vui lòng chọn người dùng cần gửi tin bài');
       } else {
         this.modal13 = true;
       }
     },
-    // 编辑
+    // Sửa
     edit(row) {
       this.getUserFrom(row.uid);
     },
-    // 修改成功
+    // Sửa thành công
     submitFail() {
       // this.getList();
     },
-    // 排序
+    // Thứ tự sắp xếp
     sortChanged(e, props, order) {
       this.userFrom[e.prop] = e.order;
       this.getList();
     },
-    //全选和取消全选时触发
+    //Kích hoạt khi chọn tất cả và bỏ chọn tất cả
     handleSelectAll(selection) {
       let ids = [];
       selection.map((e) => {
@@ -1252,11 +1252,11 @@ export default {
       });
       this.selectedIds = ids;
       this.$nextTick(() => {
-        //确保dom加载完毕
+        //Đảm bảo dom đã tải xong
         this.setChecked();
       });
     },
-    //  选中某一行
+    //  Chọn một dòng
     handleSelectRow(selection, row) {
       let ids = [];
       selection.map((e) => {
@@ -1264,14 +1264,14 @@ export default {
       });
       this.selectedIds = ids;
       this.$nextTick(() => {
-        //确保dom加载完毕
+        //Đảm bảo dom đã tải xong
         this.setChecked();
       });
     },
     setChecked() {
-      //将new Set()转化为数组
+      //Chuyển new Set() thành mảng
       this.ids = [...this.selectedIds];
-      // 找到绑定的table的ref对应的dom，找到table的objData对象，objData保存的是当前页的数据
+      // Tìm dom tương ứng với ref của table đã bind, tìm đối tượng objData của table, objData lưu dữ liệu của trang hiện tại
       let objData = this.$refs.table?.objData;
       if (!objData) return;
       for (let index in objData) {
