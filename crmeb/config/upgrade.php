@@ -9,11 +9,17 @@
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 
+use think\facade\Env;
+
 /**
  * Cấu hình nâng cấp
  * Danh sách phiên bản được sắp xếp từ nhỏ đến lớn, khi nâng cấp sẽ thực thi theo thứ tự
  */
 return [
+    // Bật nâng cấp trực tuyến và nâng cấp xuyên phiên bản (tải và chạy gói nâng cấp từ upgrade.crmeb.net).
+    // Mặc định tắt, chỉ nâng cấp qua Git/CI; bật bằng [UPGRADE] ONLINE_ENABLE = true trong .env
+    'online_enable' => filter_var(Env::get('upgrade.online_enable', false), FILTER_VALIDATE_BOOLEAN),
+
     // Yêu cầu phiên bản tối thiểu (chỉ khi đạt phiên bản này mới dùng được tính năng nâng cấp trực tuyến vượt phiên bản)
     // Vì tính năng nâng cấp trực tuyến vượt phiên bản được phát triển từ phiên bản v6.0.0, người dùng ở phiên bản thấp hơn không thể sử dụng
     'min_version' => [

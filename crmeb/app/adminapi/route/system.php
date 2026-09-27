@@ -9,6 +9,8 @@
 // | Author: CRMEB Team <admin@crmeb.com>
 // +----------------------------------------------------------------------
 
+use app\adminapi\middleware\AdminFeatureSwitchMiddleware;
+use crmeb\utils\FeatureSwitch;
 use think\facade\Route;
 
 /**
@@ -145,7 +147,7 @@ Route::group('system', function () {
         Route::get('rollback/versions', 'UpgradeController/rollbackVersions')->option(['real_name' => 'Danh sách phiên bản có thể quay lại']);
         //Thực hiện quay lại phiên bản
         Route::post('rollback/execute', 'UpgradeController/executeRollback')->option(['real_name' => 'Thực hiện quay lại phiên bản']);
-    })->option(['parent' => 'system', 'cate_name' => 'Nâng cấp trực tuyến']);
+    })->option(['parent' => 'system', 'cate_name' => 'Nâng cấp trực tuyến'])->middleware(AdminFeatureSwitchMiddleware::class, FeatureSwitch::ONLINE_UPGRADE);
 
     /** Tác vụ định kỳ */
     Route::group(function () {
@@ -207,17 +209,17 @@ Route::group('system', function () {
     /** Tạo mã nguồn */
     Route::group(function () {
         //Lưu tệp CRUD đã sửa
-        Route::post('crud/save_file/:id', 'v1.setting.SystemCrud/savefile')->option(['real_name' => 'Lưu tệp CRUD đã sửa']);
+        Route::post('crud/save_file/:id', 'v1.setting.SystemCrud/savefile')->option(['real_name' => 'Lưu tệp CRUD đã sửa'])->middleware(AdminFeatureSwitchMiddleware::class, FeatureSwitch::CRUD_MAKE, FeatureSwitch::FILE_EDITOR);
         //Lấy cấu hình CRUD
         Route::get('crud/config/:tableName', 'v1.setting.SystemCrud/getRouteList')->option(['real_name' => 'Lấy cấu hình CRUD']);
         //Tải xuống tệp đã tạo
-        Route::get('crud/download/:id', 'v1.setting.SystemCrud/download')->option(['real_name' => 'Tải xuống tệp đã tạo']);
+        Route::get('crud/download/:id', 'v1.setting.SystemCrud/download')->option(['real_name' => 'Tải xuống tệp đã tạo'])->middleware(AdminFeatureSwitchMiddleware::class, FeatureSwitch::CRUD_MAKE);
         //Lấy danh sách CRUD
         Route::get('crud/column_type', 'v1.setting.SystemCrud/columnType')->option(['real_name' => 'Lấy danh sách CRUD']);
         //Lấy dữ liệu menu dạng TREE
         Route::get('crud/menus', 'v1.setting.SystemCrud/getMenus')->option(['real_name' => 'Lấy dữ liệu menu dạng TREE']);
         //Lấy vị trí lưu tệp CRUD
-        Route::post('crud/file_path', 'v1.setting.SystemCrud/getFilePath')->option(['real_name' => 'Lấy vị trí lưu tệp CRUD']);
+        Route::post('crud/file_path', 'v1.setting.SystemCrud/getFilePath')->option(['real_name' => 'Lấy vị trí lưu tệp CRUD'])->middleware(AdminFeatureSwitchMiddleware::class, FeatureSwitch::CRUD_MAKE);
 
         //Lấy danh sách từ điển dữ liệu
         Route::get('crud/data_dictionary_list', 'v1.setting.SystemCrud/dataDictionaryList')->option(['real_name' => 'Lấy danh sách từ điển dữ liệu']);
@@ -249,13 +251,13 @@ Route::group('system', function () {
         //Lấy thông tin chi tiết của bảng
         Route::get('crud/association_table/:tableName', 'v1.setting.SystemCrud/getAssociationTableInfo')->option(['real_name' => 'Lấy thông tin chi tiết của bảng']);
         //Xóa CRUD
-        Route::delete('crud/:id', 'v1.setting.SystemCrud/delete')->option(['real_name' => 'Xóa CRUD']);
+        Route::delete('crud/:id', 'v1.setting.SystemCrud/delete')->option(['real_name' => 'Xóa CRUD'])->middleware(AdminFeatureSwitchMiddleware::class, FeatureSwitch::CRUD_MAKE);
         //Xem CRUD
         Route::get('crud/:id', 'v1.setting.SystemCrud/read')->option(['real_name' => 'Xem CRUD']);
         //Lấy danh sách CRUD
         Route::get('crud', 'v1.setting.SystemCrud/index')->option(['real_name' => 'Lấy danh sách CRUD']);
         //Lưu và tạo CRUD
-        Route::post('crud', 'v1.setting.SystemCrud/save')->option(['real_name' => 'Lưu và tạo CRUD']);
+        Route::post('crud', 'v1.setting.SystemCrud/save')->option(['real_name' => 'Lưu và tạo CRUD'])->middleware(AdminFeatureSwitchMiddleware::class, FeatureSwitch::CRUD_MAKE);
     })->option(['parent' => 'system', 'cate_name' => 'Tạo mã nguồn']);
 
     /** In biên lai */
@@ -272,7 +274,7 @@ Route::group('system', function () {
     /** Quản lý tệp */
     Route::group(function () {
         //Đăng nhập quản lý tệp
-        Route::post('file/login', 'v1.system.SystemFile/login')->option(['real_name' => 'Đăng nhập quản lý tệp']);
+        Route::post('file/login', 'v1.system.SystemFile/login')->option(['real_name' => 'Đăng nhập quản lý tệp'])->middleware(AdminFeatureSwitchMiddleware::class, FeatureSwitch::FILE_EDITOR);
         //Thực hiện ghi giá trị md5 của tất cả file trong hai thư mục app, crmeb vào cơ sở dữ liệu
         Route::get('write_md5', 'v1.system.SystemFile/writeMd5')->option(['real_name' => 'Thực hiện ghi giá trị md5']);
     })->option(['parent' => 'system', 'cate_name' => 'Quản lý tệp']);
@@ -308,6 +310,7 @@ Route::group('system', function () {
     \app\http\middleware\AllowOriginMiddleware::class,
     \app\adminapi\middleware\AdminAuthTokenMiddleware::class,
     \app\adminapi\middleware\AdminCheckRoleMiddleware::class,
+    [AdminFeatureSwitchMiddleware::class, [FeatureSwitch::FILE_EDITOR]],
     \app\adminapi\middleware\AdminEditorTokenMiddleware::class,
     \app\adminapi\middleware\AdminLogMiddleware::class
 ])->option(['mark' => 'system_file', 'mark_name' => 'Quản lý tệp']);

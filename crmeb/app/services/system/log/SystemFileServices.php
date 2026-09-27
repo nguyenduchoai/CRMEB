@@ -20,6 +20,7 @@ use crmeb\exceptions\AuthException;
 use crmeb\services\CacheService;
 use crmeb\services\FileService as FileClass;
 use crmeb\services\FormBuilder as Form;
+use crmeb\utils\FeatureSwitch;
 use crmeb\utils\JwtAuth;
 use Firebase\JWT\ExpiredException;
 use think\facade\Log;
@@ -56,6 +57,7 @@ class SystemFileServices extends BaseServices
      */
     public function Login(string $password, string $type)
     {
+        FeatureSwitch::check(FeatureSwitch::FILE_EDITOR);
         if (config('filesystem.password') !== $password) {
             throw new AdminException('Tài khoản hoặc mật khẩu không đúng');
         }
@@ -79,6 +81,7 @@ class SystemFileServices extends BaseServices
      */
     public function parseToken(string $token): bool
     {
+        FeatureSwitch::check(FeatureSwitch::FILE_EDITOR);
         /** @var CacheService $cacheService */
         $cacheService = app()->make(CacheService::class);
 

@@ -1260,4 +1260,7 @@ return [
     'Tài khoản này đã bị khóa, không thể thao tác' => 'Tài khoản này đã bị khóa, không thể thao tác',
     'Số lượng mẫu cá nhân đã đạt giới hạn, tối đa 25 mẫu' => 'Số lượng mẫu cá nhân đã đạt giới hạn, tối đa 25 mẫu',
     'Vui lòng kiểm tra danh mục của Mini Program' => 'Vui lòng kiểm tra danh mục của Mini Program',
+    'Trình sửa file online đang tắt, nếu cần dùng, vui lòng đặt mục PASSWORD trong phần [FILESYSTEM] của tệp .env' => 'Trình sửa file online đang tắt, nếu cần dùng, vui lòng đặt mục PASSWORD trong phần [FILESYSTEM] của tệp .env',
+    'Bộ sinh mã CRUD đang tắt, nếu cần dùng, vui lòng đặt mục CRUD_MAKE trong phần [APP] của tệp .env thành true' => 'Bộ sinh mã CRUD đang tắt, nếu cần dùng, vui lòng đặt mục CRUD_MAKE trong phần [APP] của tệp .env thành true',
+    'Nâng cấp trực tuyến đang tắt, nếu cần dùng, vui lòng đặt mục ONLINE_ENABLE trong phần [UPGRADE] của tệp .env thành true' => 'Nâng cấp trực tuyến đang tắt, nếu cần dùng, vui lòng đặt mục ONLINE_ENABLE trong phần [UPGRADE] của tệp .env thành true',
 ];

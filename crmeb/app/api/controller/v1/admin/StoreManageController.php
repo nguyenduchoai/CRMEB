@@ -16,7 +16,10 @@ use app\services\shipping\ShippingTemplatesServices;
 
 class StoreManageController
 {
-    protected StoreManageServices $services;
+    /**
+     * @var StoreManageServices
+     */
+    protected $services;
 
     public function __construct(StoreManageServices $services)
     {

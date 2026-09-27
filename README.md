@@ -5,6 +5,10 @@
 >   - Các gói ngôn ngữ khác vẫn còn và có thể bật lại trong trang quản trị.
 >   - README tiếng Anh gốc: [`README_EN.md`](README_EN.md).
 > - Đánh giá khả năng dùng CRMEB làm nền tảng TMĐT tại Việt Nam: [`PHAN_TICH_CRMEB_VIETNAM.md`](PHAN_TICH_CRMEB_VIETNAM.md).
+> - **Mặc định an toàn cho production** (chi tiết: [Cấu hình bảo mật khi triển khai](#cấu-hình-bảo-mật-khi-triển-khai)):
+>   - Trình cài đặt sinh `APP_KEY` (khóa ký JWT) ngẫu nhiên cho từng bản cài, không còn dùng chung khóa `crmeb`.
+>   - Trình sửa file online, bộ sinh mã CRUD và nâng cấp trực tuyến/xuyên phiên bản từ `upgrade.crmeb.net` **tắt sẵn**, kể cả trên bản đang chạy sau khi cập nhật code. Cần dùng thì bật trong `crmeb/.env`.
+>   - Bản đã cài từ trước: nên [đổi `APP_KEY`](#đổi-app_key-cho-bản-đã-cài). Sau khi đổi, mọi người dùng phải đăng nhập lại.
 > - Mã nguồn gốc thuộc bản quyền CRMEB (Xi'an Zhongbang). Văn bản license gốc giữ nguyên; bản dịch tham khảo nằm ở `crmeb/LICENSE.vi.txt`.
 > - Build lại frontend:
 >   - Admin: `cd template/admin && npm ci && NODE_OPTIONS=--openssl-legacy-provider npm run build`, sau đó chép `dist/` vào `crmeb/public/admin/`.
@@ -242,6 +246,31 @@ Giao diện: https://www.crmeb.com/theme (mở trên máy tính)
 | **Kết nối liên tục**       | Lệnh chạy: `sudo -u www php think workerman start --d`     (chạy bằng dòng lệnh)              |
 | **Tác vụ định kỳ**     | Lệnh chạy: `php think timer start --d`            (chạy bằng dòng lệnh)                       |
 > Lưu ý: không hỗ trợ hosting ảo, khuyên dùng BT Panel (Baota), về máy chủ khuyên dùng máy chủ JD Cloud: <a href="https://partner.jdcloud.com/partner/notice/b06c3232b6394fdfa496923b8e00b286" target="_blank">Đăng ký là được hưởng ưu đãi độc quyền giảm 35%, nhấn vào đây để nhận!</a>
+
+### Cấu hình bảo mật khi triển khai
+
+Ba tính năng dưới đây có thể ghi file, sửa bảng hoặc tải mã từ bên ngoài về server, nên **tắt mặc định**. Mặc định này áp dụng cho bản cài mới và cả bản đang chạy sau khi cập nhật code. Chỉ bật trong `crmeb/.env` khi thật sự cần, dùng xong thì tắt lại.
+
+| Tính năng | Bật trong `crmeb/.env` | Khi đang tắt |
+|---|---|---|
+| Trình sửa file online | Mục `[FILESYSTEM]`: `PASSWORD = <mật khẩu mạnh>` | Không đăng nhập được trình sửa file |
+| Bộ sinh mã CRUD | Mục `[APP]`: `CRUD_MAKE = true` | Vẫn xem được danh sách CRUD, mã đã sinh và từ điển dữ liệu. Không tạo mới, sửa file, xóa hay tải mã |
+| Nâng cấp trực tuyến và nâng cấp xuyên phiên bản | Mục `[UPGRADE]`: `ONLINE_ENABLE = true` | Không kết nối `upgrade.crmeb.net`. Trang nâng cấp thủ công `/adminapi/upgrade` (chạy SQL sau khi cập nhật code qua Git/CI) vẫn dùng được, kể cả khi server không có mạng ra ngoài |
+
+- `CRUD_MAKE`, `ONLINE_ENABLE` nhận `true`, `1`, `on`, `yes`. Để trống, thiếu dòng hoặc giá trị khác đều là tắt.
+- `PASSWORD` để trống là tắt. Không dùng `true`, `false`, `on`, `off` làm mật khẩu: ThinkPHP đọc các giá trị này thành kiểu bool nên hệ thống coi như tắt. Mật khẩu này cũng dùng cho mã tùy chỉnh của sự kiện và tác vụ định kỳ (chỉ khi `APP_DEBUG = true`).
+- Khi gọi tính năng đang tắt, trang quản trị báo lỗi tiếng Việt kèm cách bật.
+- PHP-FPM đọc lại `.env` ở mỗi request. Các tiến trình chạy nền (`workerman`, `timer`, hàng đợi) đọc `.env` lúc khởi động, nên sửa `.env` xong hãy khởi động lại chúng.
+
+#### Đổi APP_KEY cho bản đã cài
+
+`APP_KEY` là khóa ký JWT cho mọi phiên đăng nhập. Bản cài bằng trình cài đặt cũ đang dùng khóa ai cũng biết: `APP_KEY = crmeb` (v6.0.0), hoặc không có dòng này (bản 5.x, JWT dùng khóa `default`). Cách đổi:
+
+1. Sinh khóa mới: `openssl rand -hex 32` (hoặc `php -r 'echo bin2hex(random_bytes(32)), PHP_EOL;'`).
+2. Mở `crmeb/.env`, trong mục `[APP]` sửa hoặc thêm dòng `APP_KEY = <khóa vừa sinh>`.
+   File `.env` do trình cài đặt cũ tạo dùng ký tự xuống dòng CR (vim hiện cả file trên một dòng). Nên chuyển sang LF trước khi sửa: `sed -i 's/\r/\n/g' crmeb/.env`.
+3. Khởi động lại các tiến trình chạy nền (`workerman`, `timer`, hàng đợi) để chúng nhận khóa mới. Chat CSKH qua workerman cũng kiểm tra token bằng khóa này.
+4. Token cũ mất hiệu lực ngay: **admin, nhân viên CSKH và khách hàng (H5/App/Mini Program) phải đăng nhập lại**, tích hợp `outapi` phải lấy token mới. Nên đổi vào giờ ít khách và báo trước cho khách hàng.
 
 ---
 ### 📺 **Môi trường phát triển và công nghệ sử dụng**

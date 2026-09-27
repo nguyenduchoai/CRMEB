@@ -61,6 +61,6 @@ return [
     'admin_prefix'     => 'admin',
     //Đường dẫn file frontend do chức năng sinh code tạo ra
     'admin_template_path' => dirname(root_path()) . DS . 'template' . DS . 'admin' . DS . 'src' . DS,
-    //Khi lưu crud có tạo file trực tiếp luôn không
-    'crud_make'        => true
+    //Cho phép bộ sinh mã CRUD ghi file và sửa bảng trên server. Mặc định tắt, bật bằng [APP] CRUD_MAKE = true trong .env
+    'crud_make'        => filter_var(Env::get('app.crud_make', false), FILTER_VALIDATE_BOOLEAN)
 ];

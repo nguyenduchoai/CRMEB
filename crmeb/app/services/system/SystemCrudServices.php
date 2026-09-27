@@ -28,6 +28,7 @@ use crmeb\services\crud\ViewApi;
 use crmeb\services\crud\ViewPages;
 use crmeb\services\crud\ViewRouter;
 use crmeb\services\FileService;
+use crmeb\utils\FeatureSwitch;
 use Phinx\Db\Adapter\AdapterFactory;
 use think\facade\Db;
 use think\helper\Str;
@@ -676,6 +677,7 @@ class SystemCrudServices extends BaseServices
      */
     public function createCrud(int $id, array $data)
     {
+        FeatureSwitch::check(FeatureSwitch::CRUD_MAKE);
         $tableName = $data['tableName'];
         $tableField = $this->valueReplace($data['tableField']);
         $filePath = $this->valueReplace($data['filePath']);
@@ -1142,6 +1144,7 @@ class SystemCrudServices extends BaseServices
 
         //Tạo tệp
         if ($isMake) {
+            FeatureSwitch::check(FeatureSwitch::CRUD_MAKE);
             FileService::batchMakeFiles([$model, $validate, $dao, $service, $controller, $route, $viewApi, $viewPages, $viewRouter]);
         }
 
